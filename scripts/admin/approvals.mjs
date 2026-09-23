@@ -141,6 +141,29 @@ export function consumeStepToken(file, plan, n, { envPolicy = {}, now = Date.now
   });
 }
 
+// Finestra 3A valida per il passo n (funzione condivisa di guard-production):
+// A1 nella finestra, A2 valida (persona diversa se richiesto), A3 del passo n.
+// Il token può essere già stato consumato da guard-config-scope nella stessa
+// chiamata (gli hook di un evento girano in parallelo): conta se il consumo è
+// di al più `graceMs`; il monouso lo garantisce guard-config-scope, che consuma.
+// → { ok, reason, used: [record…] }
+export function threeAState(records, plan, n, envPolicy = {}, now = Date.now(), { graceMs = 30000 } = {}) {
+  const w = windowState(null, plan, envPolicy, now, { records });
+  const who = envPolicy?.second_approver_required ? " DA <Nome Cognome>" : "";
+  if (!w.a1) return { ok: false, reason: `manca A1: \`APPROVO PIANO ${plan}${who}\``, used: [] };
+  if (w.expired) return { ok: false, reason: `finestra 3A scaduta: si riparte da \`APPROVO PIANO ${plan}${who}\``, used: [] };
+  if (!w.a2) return { ok: false, reason: `manca A2${envPolicy?.second_approver_required ? " da persona diversa da A1" : ""}: \`APPROVO PROVA ${plan}${who}\``, used: [] };
+  let tok = w.tokenForStep(n);
+  if (!tok) {
+    const all = records.filter((r) => r.plan === plan);
+    const t1 = Date.parse(w.a1.ts);
+    const recent = new Set(all.filter((r) => r.kind === "consume" && r.step === n && now - Date.parse(r.ts) <= graceMs).map((r) => r.ref));
+    tok = all.find((r) => r.kind === "A3" && r.step === n && recent.has(r.hash) && Date.parse(r.ts) >= t1) ?? null;
+  }
+  if (!tok) return { ok: false, reason: `manca il token del passo: \`APPROVO PASSO ${n} ${plan}\``, used: [] };
+  return { ok: true, reason: null, used: [w.a1, w.a2, tok] };
+}
+
 // ---- conferma nel transcript (difesa in profondità) ----
 // Un record vale solo se nel transcript c'è un messaggio DELL'UTENTE (testo, mai
 // tool_result: una pagina web può contenere la frase) con la frase esatta.

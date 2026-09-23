@@ -46,7 +46,7 @@ export function writeSel(ws, code, { role = "button", effect = "read", label = "
   const dir = join(base, "scopes", scope, "selectors");
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, `${code}.yaml`), YAML.stringify({
-    id: code, type: "SEL", title: `Selettore ${label}`, summary: `Voce dell'Atlas: ${label}.`, role, effect,
+    id: code, type: "SEL", title: `Selettore ${label}`, summary: `Voce dell'Atlas: ${label}.`, role, ...(effect == null ? {} : { effect }),
     strategies: [{ kind: "role", value: role, name: label }],
     facets: { F1: "osservazione-chrome", F4: "comportamento-ui", F5: "saas-core", F6: [], F7: "nessuno", F8: "specifica", F9: "ripetitiva", F10: "R0", F11: "deterministico", F12: "validato", F13: { verified_at: "2026-09-01", release: "R25.2" }, F15: "empirica" },
     sources: [{ obs: "L.ACME.ADM.OBS.0001" }],

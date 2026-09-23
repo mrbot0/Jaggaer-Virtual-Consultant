@@ -30,8 +30,27 @@ export async function readSel(ctx, code) {
   const base = level === "S" ? join(ctx.ws, "product", "kb") : join(ctx.ws, "customers", ctx.customer, "kb");
   let text;
   try { text = readFileSync(join(base, "scopes", scope, "selectors", `${code}.yaml`), "utf8"); } catch { return null; }
-  let doc;
-  try { doc = (await import("yaml")).default.parse(text); } catch { return null; }
+  const fast = topScalars(text, ["id", "role", "effect"]);
+  let doc = fast;
+  if (!doc) { try { doc = (await import("yaml")).default.parse(text); } catch { return null; } }
   if (!doc || doc.id !== code) return null;
   return { code, role: typeof doc.role === "string" ? doc.role : null, effect: typeof doc.effect === "string" ? doc.effect : null };
+}
+
+// Lettura veloce (senza il modulo yaml, ~40 ms) delle chiavi scalari di primo
+// livello di una voce dell'Atlas: solo se ogni chiave compare al più una volta, in
+// colonna 0, con un valore semplice (parola, eventualmente fra virgolette) e il
+// file non ha più documenti né ancore. Altrimenti null ⇒ parser YAML completo.
+function topScalars(text, keys) {
+  if (/^(---|\.\.\.)\s*$/m.test(text.replace(/^---\s*\n/, "")) || /[&*!]\w/.test(text.split("\n").filter((l) => keys.some((k) => l.startsWith(`${k}:`))).join("\n"))) return null;
+  const out = {};
+  for (const k of keys) {
+    const lines = text.split(/\r?\n/).filter((l) => l.startsWith(`${k}:`));
+    if (lines.length > 1) return null;
+    if (!lines.length) continue;
+    const m = /^[A-Za-z_]+:\s*(?:"([A-Za-z0-9._-]*)"|'([A-Za-z0-9._-]*)'|([A-Za-z0-9._-]+))\s*(?:#.*)?$/.exec(lines[0]);
+    if (!m) return null;
+    out[k] = m[1] ?? m[2] ?? m[3];
+  }
+  return out;
 }
