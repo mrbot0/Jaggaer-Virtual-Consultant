@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -50,4 +50,15 @@ test("kb.mjs CLI: chiave di faccetta non valida esce con 1, non 2 (errore utente
   seed(openDb(dbPath));
   const r = spawnSync(process.execPath, [KB_CLI, "find", "--facet", "F16=x", "--db", dbPath, "--json"]);
   assert.equal(r.status, 1);
+});
+
+test("kb.mjs CLI: --db su file inesistente esce con 1 e non lo crea (delegato a openDb createIfMissing:false)", () => {
+  const dir = mkdtempSync(join(tmpdir(), "nodb-cli-"));
+  const missing = join(dir, "non-esiste.db");
+  const r = spawnSync(process.execPath, [KB_CLI, "find", "--db", missing, "--json"]);
+  assert.equal(r.status, 1);
+  const out = JSON.parse(r.stdout.toString());
+  assert.equal(out.ok, false);
+  assert.match(out.error, /non trovato/);
+  assert.equal(existsSync(missing), false);
 });

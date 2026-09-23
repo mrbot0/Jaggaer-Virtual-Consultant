@@ -1,4 +1,3 @@
-import { existsSync } from "node:fs";
 import { openDb } from "./db.mjs";
 import { find, InvalidFacetError } from "./find.mjs";
 import { resolve } from "./resolve.mjs";
@@ -37,12 +36,14 @@ export function run(argv) {
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}\n${HELP}`);
     return { exitCode: 1 };
   }
-  if (!existsSync(dbPath)) {
-    const msg = `database non trovato: ${dbPath}`;
+  let db;
+  try {
+    db = openDb(dbPath, { createIfMissing: false });
+  } catch (err) {
+    const msg = String(err?.message ?? err);
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
     return { exitCode: 1 };
   }
-  const db = openDb(dbPath);
   const top = Number(opt("top", 10));
   const t0 = Date.now();
   let items;
