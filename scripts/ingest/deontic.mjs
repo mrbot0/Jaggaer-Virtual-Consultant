@@ -21,8 +21,12 @@
 //   }
 //
 // Regole fisse (Review Focus 5 e §19.10):
-//   · una raccomandazione ("si consiglia", "dovrebbe", should, recommended…) non
-//     produce MAI un mandatory, anche con parole di obbligo nella frase;
+//   · una raccomandazione ("si consiglia", "consigliamo", "raccomandiamo", "andrebbe",
+//     "dovrebbe", should, advised, encouraged, recommend…) non produce MAI un mandatory,
+//     anche con parole di obbligo nella frase: il lessico si cerca nell'INTERA frase,
+//     protasi, eccezione e concessive comprese;
+//   · le concessive ("anche se", "even if") non sono condizioni; una condizione
+//     indeterminata ("se non diversamente configurato", "unless otherwise…") → ambiguo;
 //   · raccomandazione + eccezione ("dovrebbe essere obbligatorio salvo…"), doppia
 //     negazione, obbligo possibile ("potrebbe essere obbligatorio") e obbligo +
 //     facoltà in contrasto → `ambiguo`, nessun mandatory, residue `ambiguous`;
@@ -71,6 +75,10 @@ const LEX = {
     "\\bpreferibilmente\\b", "\\bsi suggerisce\\b", "\\bè suggerit[oa]\\b", "\\bè buona (?:norma|pratica)\\b",
     "\\bshould\\b", "\\brecommended\\b", "\\brecommend\\b", "\\badvisable\\b", "\\bpreferably\\b", "\\bideally\\b", "\\bas a rule\\b",
     "\\bbest practice\\b", "\\bit is preferable\\b", "\\bought to\\b", "\\bsuggested\\b",
+    // giro di correzione 1: ogni forma di consigliare/raccomandare/suggerire, il condizionale di dovere
+    // ("andrebbe", "sarebbe da") e advise/encourage/suggest/recommend in ogni forma
+    "\\bconsigli", "\\braccomand", "\\bsuggeri", "\\bandrebber?o?\\b", "\\bsarebbe(?:ro)? da\\b", "\\bsarebbe (?:utile|consigliabile)\\b",
+    "\\badvis", "\\bencourag", "\\bsuggest", "\\brecommend",
   ]),
   immut: set([
     "\\bpiù (?:essere )?modific", "\\bpiù possibile modific", "\\b(?:di )?sola lettura\\b", "\\bimmutabil", "\\bcongelat", "\\bnon più editabil",
@@ -145,6 +153,21 @@ const RX_EXC_LEAD = rx(`^(?:${alt(EXCEPTION)})\\b\\s*([^,]*?),\\s*(.+)$`, "i");
 const RX_EXC_ANY = rx(`(?:,\\s*|\\s)(?:${alt(EXCEPTION)})\\b\\s*(.*)$`, "i");
 const RX_PROT_CLAUSE = rx(`(^|,\\s*)(?:${alt(PROTASIS)})\\b\\s+([^,]+?),\\s*`, "i");
 const RX_PROT_TRAIL = rx(`\\s(?:${alt(PROTASIS_TRAILING)})\\b\\s+(.+)$`, "i");
+// Concessive ("anche se", "even if"): non sono condizioni, l'obbligo vale comunque. Il loro testo resta
+// nella scansione delle raccomandazioni, che guarda l'intera frase.
+const CONCESSIVE = "anche se|anche quando|anche qualora|pur se|sebbene|benché|nonostante|even if|even though|even when|although|though";
+const RX_CONCESSIVE_LEAD = rx(`^(?:${CONCESSIVE})\\b[^,]*,\\s*`, "i");
+const RX_CONCESSIVE_TRAIL = rx(`(?:,\\s*|\\s)(?:${CONCESSIVE})\\b.*$`, "i");
+// Condizione indeterminata ("se non diversamente configurato", "salvo ove diversamente indicato",
+// "unless otherwise…", "if not otherwise…"): il ramo non è verificabile, la regola va in residuo.
+const RX_VAGUE_CONDITION = rx([
+  "\\b(?:se|qualora|ove|dove|laddove|salvo(?: che| ove| dove| se)?|tranne(?: che| ove| dove)?|eccetto(?: che| ove| dove)?|a meno che)\\s+(?:non\\s+)?(?:(?:sia|venga|è)\\s+)?(?:(?:indicato|specificato|configurato|previsto|stabilito|disposto)\\s+)?(?:diversamente|altrimenti)\\b",
+  "\\bsalvo divers[aoie]\\b",
+  "\\b(?:unless|except|if not|where not|save|other than)\\s+(?:(?:as|where|when)\\s+)?(?:(?:stated|specified|configured|indicated|noted|agreed|provided)\\s+)?otherwise\\b",
+  "\\bunless (?:specified|stated|configured|indicated) otherwise\\b",
+].join("|"), "i");
+const RX_ONLY_NEGATION = /^(?:non|not|no|ne)$/iu;
+
 const RX_ELSE = rx("(?:[,;]\\s*|\\s)(?:altrimenti|in caso contrario|diversamente|otherwise|else)\\b.*$", "i");
 
 // Stati espressi a parole ("in approvazione", "during approval") → codice di stato.
@@ -260,7 +283,10 @@ export function parseRule(text, { lang } = {}) {
   const outLang = lang ?? detectLang(source);
   const signals = [];
   const base = { text: String(text ?? ""), lang: outLang };
-  const noElse = source.replace(RX_ELSE, "");
+  const fullLow = source.toLowerCase();
+  // l'eccezione dell'intera frase (concessive comprese) decide «raccomandazione + eccezione → ambiguo»
+  const { exception: anyException } = splitException(source.replace(RX_ELSE, ""));
+  const noElse = source.replace(RX_CONCESSIVE_LEAD, "").replace(RX_CONCESSIVE_TRAIL, "").replace(RX_ELSE, "");
   const { main: m1, exception } = splitException(noElse);
   const { main, condition } = splitProtasis(m1);
   const low = main.toLowerCase();
@@ -273,13 +299,16 @@ export function parseRule(text, { lang } = {}) {
   };
   const ambiguous = (why) => { signals.push(why); return result("ambiguo", {}, 0.3); };
   const found = (name, list) => { const p = hit(list, low); if (p) signals.push(name); return !!p; };
+  const foundAnywhere = (name, list) => { const p = hit(list, fullLow); if (p) signals.push(name); return !!p; };
 
   if (!source) return ambiguous("testo vuoto");
   if (found("doppia-negazione", LEX.doubleNeg)) return ambiguous("doppia negazione");
   if (found("obbligo-possibile", LEX.possibleOblig)) return ambiguous("obbligo solo possibile");
-  if (found("raccomandazione", LEX.rec)) {
+  if (RX_VAGUE_CONDITION.test(fullLow)) return ambiguous("condizione indeterminata");
+  // Le raccomandazioni si cercano nell'intera frase: protasi, eccezione e concessive comprese.
+  if (foundAnywhere("raccomandazione", LEX.rec)) {
     // Review Focus 5: raccomandazione + eccezione non si risolve lessicalmente.
-    if (exception !== null) return ambiguous("raccomandazione con eccezione");
+    if (exception !== null || anyException !== null) return ambiguous("raccomandazione con eccezione");
     return result("raccomandazione", {}, 0.85);
   }
   if (found("immutabilita", LEX.immut)) return result("immutabilita", {}, 0.85);
@@ -288,6 +317,7 @@ export function parseRule(text, { lang } = {}) {
   if (found("vincolo-esterno", LEX.external)) return result("vincolo-esterno", { reason: { kind: "integration" } }, 0.85);
   const obligation = () => {
     if (isVagueException(exception)) return ambiguous("eccezione indeterminata");
+    if (condition !== null && RX_ONLY_NEGATION.test(condition.trim())) return ambiguous("condizione indeterminata");
     if (!conditional) return result("obbligo", { mandatory: { kind: "always" } }, 0.9);
     return result("obbligo-condizionale", { mandatory: ruleFor("conditional", { condition, q, exception }) }, exception ? 0.75 : 0.8);
   };

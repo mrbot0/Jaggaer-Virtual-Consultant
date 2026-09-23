@@ -228,3 +228,27 @@ cases:
   - { id: en-ambg-07, lang: en, row: ambiguo, text: "The field may be mandatory depending on the configuration.", expect: { modality: ambiguo, residue: ambiguous } }
   - { id: en-ambg-08, lang: en, row: ambiguo, text: "The field is mandatory but may be left empty.", expect: { modality: ambiguo, residue: ambiguous } }
   - { id: en-amb-rf5-09, lang: en, row: ambiguo, text: "It is recommended that the field be mandatory except for foreign suppliers.", expect: { modality: ambiguo, residue: ambiguous } }
+
+  # ——— Giro di correzione 1 (revisione WP05, Important #1): raccomandazioni in altre forme, proposizioni
+  # concessive («anche se», «even if») che non sono condizioni, condizioni indeterminate («se non
+  # diversamente…», «unless otherwise…»). Attese scritte a mano; nessuna produce un kind di obbligo. ———
+  - { id: it-fix1-01, lang: it, row: raccomandazione, text: "Consigliamo di rendere il campo obbligatorio.", expect: { modality: raccomandazione } }
+  - { id: it-fix1-02, lang: it, row: raccomandazione, text: "Raccomandiamo che il campo sia obbligatorio.", expect: { modality: raccomandazione } }
+  - { id: it-fix1-03, lang: it, row: raccomandazione, text: "Suggeriamo di rendere obbligatorio il campo Note.", expect: { modality: raccomandazione } }
+  - { id: it-fix1-04, lang: it, row: raccomandazione, text: "Il campo andrebbe reso obbligatorio.", expect: { modality: raccomandazione } }
+  - { id: it-fix1-05, lang: it, row: raccomandazione, text: "Obbligatorio (consigliato).", expect: { modality: raccomandazione } }
+  - { id: it-fix1-06, lang: it, row: ambiguo, text: "Il campo è obbligatorio, anche se si consiglia di lasciarlo vuoto salvo casi urgenti.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-fix1-07, lang: it, row: ambiguo, text: "Il campo è obbligatorio se non diversamente configurato.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-fix1-08, lang: it, row: obbligo, text: "Il campo è obbligatorio anche se il fornitore è estero.", expect: { modality: obbligo, mandatory: { kind: always }, condition: null } }
+  - { id: it-fix1-09, lang: it, row: raccomandazione, text: "Sarebbe da rendere obbligatorio il campo Commessa.", expect: { modality: raccomandazione } }
+  - { id: it-fix1-10, lang: it, row: ambiguo, text: "Il campo Commessa è obbligatorio, salvo ove diversamente indicato.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-fix1-01, lang: en, row: raccomandazione, text: "It is advised that the cost center be mandatory.", expect: { modality: raccomandazione } }
+  - { id: en-fix1-02, lang: en, row: raccomandazione, text: "Users are encouraged to fill in the mandatory notes field.", expect: { modality: raccomandazione } }
+  - { id: en-fix1-03, lang: en, row: raccomandazione, text: "We suggest making the Notes field mandatory.", expect: { modality: raccomandazione } }
+  - { id: en-fix1-04, lang: en, row: raccomandazione, text: "We recommend that the field be required.", expect: { modality: raccomandazione } }
+  - { id: en-fix1-05, lang: en, row: raccomandazione, text: "Mandatory (recommended).", expect: { modality: raccomandazione } }
+  - { id: en-fix1-06, lang: en, row: ambiguo, text: "The field is mandatory, even though it is advisable to leave it empty except in urgent cases.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-fix1-07, lang: en, row: ambiguo, text: "The field is mandatory unless otherwise configured.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-fix1-08, lang: en, row: obbligo, text: "The field is mandatory even if the supplier is foreign.", expect: { modality: obbligo, mandatory: { kind: always }, condition: null } }
+  - { id: en-fix1-09, lang: en, row: ambiguo, text: "The field is required if not otherwise specified.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-fix1-10, lang: en, row: raccomandazione, text: "Customers are advised to make the project code compulsory.", expect: { modality: raccomandazione } }

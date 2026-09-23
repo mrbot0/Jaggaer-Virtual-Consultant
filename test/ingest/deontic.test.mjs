@@ -23,16 +23,21 @@ function mismatch(c, r) {
   return diffs;
 }
 
-test("golden deontico: 200 frasi (100 it, 100 en), ogni riga di §19.10 ≥ 8 volte", () => {
-  assert.equal(GOLDEN.length, 200);
-  assert.equal(GOLDEN.filter((c) => c.lang === "it").length, 100);
-  assert.equal(GOLDEN.filter((c) => c.lang === "en").length, 100);
-  assert.equal(new Set(GOLDEN.map((c) => c.id)).size, 200);
+test("golden deontico: ≥ 200 frasi (≥ 100 it, ≥ 100 en, bilanciate), ogni riga di §19.10 ≥ 8 volte", () => {
+  // 200 del brief + 20 del giro di correzione 1 (revisione WP05, Important #1)
+  assert.equal(GOLDEN.length, 220);
+  assert.equal(GOLDEN.filter((c) => c.lang === "it").length, 110);
+  assert.equal(GOLDEN.filter((c) => c.lang === "en").length, 110);
+  assert.equal(new Set(GOLDEN.map((c) => c.id)).size, GOLDEN.length);
+  for (const t of ["Consigliamo di rendere il campo obbligatorio.", "Obbligatorio (consigliato).", "Il campo è obbligatorio se non diversamente configurato.",
+    "Il campo è obbligatorio, anche se si consiglia di lasciarlo vuoto salvo casi urgenti.", "It is advised that the cost center be mandatory."]) {
+    assert.ok(GOLDEN.some((c) => c.text === t), `frase della revisione assente: ${t}`);
+  }
   for (const row of ROWS) assert.ok(GOLDEN.filter((c) => c.row === row).length >= 8, `riga ${row} < 8`);
   assert.ok(GOLDEN.some((c) => /dovrebbe essere obbligatorio salvo/.test(c.text)), "frase di Review Focus 5 presente");
 });
 
-test("golden deontico: 200/200 (100%)", () => {
+test("golden deontico: 100% (220/220)", () => {
   const failures = [];
   for (const c of GOLDEN) {
     const r = parseRule(c.text, { lang: c.lang });
