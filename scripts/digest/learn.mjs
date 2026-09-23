@@ -6,6 +6,7 @@ import { fail } from "../lib/args.mjs";
 const ACTIONS = {
   outcomes: () => import("./outcomes.mjs"),
   validate: () => import("../kb/lesson.mjs"),
+  calibrate: () => import("./calibrate.mjs"),
 };
 
 const HELP = `uso: node scripts/digest/learn.mjs <azione> [opzioni] [--json] [--help]
@@ -13,6 +14,7 @@ const HELP = `uso: node scripts/digest/learn.mjs <azione> [opzioni] [--json] [--
 Azioni:
   outcomes    registro degli esiti: pendenti, --confirm/--disprove <DEC> --by <chi>, --expire (§12.1)
   validate    valida le lezioni proposte con DT-004 (§21.2) [--session SES…]
+  calibrate   --propose: proposte di nuove versioni delle DT (§12.5), Brier e sovraconfidenza (§17.4)
 
 <azione> --help mostra le opzioni dell'azione.
 Exit code: 0 ok · 1 errore utente · 2 errore di sistema · 3 rifiutato per policy.`;

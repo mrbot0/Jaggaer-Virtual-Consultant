@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "why.schema.json",
+  "title": "Contratto di spiegazione (why, §17.5)",
+  "description": "Ogni result con effetti porta un blocco why; /vc why <codice> lo rende leggibile (scripts/decide/why.mjs). would_change_my_mind dichiara la falsificabilità: se l'osservazione indicata si verifica, step-check la marca come sorpresa prioritaria.",
+  "type": "object",
+  "required": ["decision", "because", "assumed", "would_change_my_mind", "did_not_choose"],
+  "additionalProperties": false,
+  "properties": {
+    "decision": { "type": "string", "minLength": 1, "description": "l'esito della DT" },
+    "because": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1, "maxItems": 3, "description": "i tre input che hanno pesato di più" },
+    "assumed": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "would_change_my_mind": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+    "did_not_choose": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["option", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "option": { "type": "string", "minLength": 1 },
+          "score_gap": { "type": ["number", "null"], "minimum": 0 },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}
