@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "audit-event.schema.json",
+  "title": "Evento di audit (§46.7, M11)",
+  "description": "Una riga JSON in customers/<CUST>/audit/YYYY-MM.jsonl (o <workspace>/.jvc/audit/ senza cliente). hash = sha256(prev_hash + JSON canonico dell'evento senza hash); prev_hash della prima riga = 64 zeri.",
+  "type": "object",
+  "required": ["ts", "session", "customer", "scope", "kind", "code", "correlation", "actor", "payload", "prev_hash", "hash"],
+  "additionalProperties": false,
+  "properties": {
+    "ts": { "type": "string", "format": "date-time" },
+    "session": { "type": ["string", "null"] },
+    "customer": { "type": ["string", "null"] },
+    "scope": { "type": ["string", "null"] },
+    "kind": { "enum": ["tool", "agent", "decision", "guard", "run", "compensation", "question", "budget", "session"] },
+    "code": { "type": ["string", "null"] },
+    "correlation": {
+      "type": "object",
+      "properties": {
+        "task": { "type": ["string", "null"] },
+        "dec": { "type": ["string", "null"] },
+        "run": { "type": ["string", "null"] }
+      }
+    },
+    "actor": { "type": "string", "minLength": 1 },
+    "payload": { "type": "object" },
+    "prev_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agent-prompt.schema.json",
+  "title": "Prompt del sub-agente (contratto in ingresso, §46.1)",
+  "description": "Header YAML in testa al prompt di ogni sub-agente, reso da templates/agent-prompt.md. allowed_paths è ripetuto qui E in session.json: il guard usa il file. guard-budget nega un'invocazione Agent senza questo header.",
+  "type": "object",
+  "required": ["task_id", "customer", "scope", "mode", "tier", "budget", "allowed_paths", "task"],
+  "properties": {
+    "task_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$" },
+    "customer": { "type": "string", "pattern": "^[A-Z0-9]{4}$" },
+    "scope": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC"] },
+    "mode": { "enum": ["nrt", "config", "ops", "diag"] },
+    "tier": { "enum": ["T0", "T1", "T2"] },
+    "depth": { "enum": ["rapida", "standard", "profonda"] },
+    "budget": {
+      "type": "object",
+      "required": ["tokens"],
+      "properties": {
+        "tokens": { "type": "integer", "minimum": 1 },
+        "minutes": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "allowed_paths": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "task": { "type": "string", "minLength": 1 },
+    "inputs": { "type": ["object", "null"] },
+    "expected_output": { "type": ["object", "null"] },
+    "constraints": { "type": "array", "items": { "type": "string" } },
+    "resume": {
+      "type": ["object", "null"],
+      "properties": { "checkpoint": { "type": "integer", "minimum": 0 }, "blackboard": { "type": "string" } }
+    }
+  }
+}

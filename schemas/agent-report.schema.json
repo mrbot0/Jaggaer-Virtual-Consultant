@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agent-report.schema.json",
+  "title": "Rapporto del sub-agente (contratto in uscita, §46.2)",
+  "description": "Messaggio finale di ogni sub-agente, in un blocco ```yaml. cognitive_trace e lesson sono obbligatori salvo status blocked per policy (error_class E1, §47.1). subagent-trace.mjs lo valida a SubagentStop.",
+  "type": "object",
+  "required": ["task_id", "status"],
+  "properties": {
+    "task_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$" },
+    "status": { "enum": ["ok", "partial", "blocked", "needs-input", "escalate"] },
+    "error_class": { "enum": ["E1", "E2", "E3", "E4", "E5"], "description": "Tassonomia §47.1; E1 = policy (guard, scope, budget)." },
+    "output": { "type": ["object", "null"] },
+    "cognitive_trace": { "$ref": "cognitive-trace.schema.json" },
+    "lesson": { "type": "string", "pattern": "^L\\.[A-Z0-9]{4}\\.[A-Z0-9]{3}\\.LSN\\.\\d{4}(\\.v\\d+)?$" },
+    "why": { "type": ["object", "null"] },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "tokens_in": { "type": "integer", "minimum": 0 },
+        "tokens_out": { "type": "integer", "minimum": 0 },
+        "model": { "type": "string" }
+      }
+    },
+    "needs_input": {
+      "type": ["object", "null"],
+      "properties": {
+        "question": { "type": "string", "minLength": 1 },
+        "options": { "type": "array" },
+        "gap": { "type": "string" }
+      }
+    },
+    "open_questions": { "type": "array" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "blocked" }, "error_class": { "const": "E1" } },
+        "required": ["status", "error_class"]
+      },
+      "then": {},
+      "else": { "required": ["cognitive_trace", "lesson"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "needs-input" } }, "required": ["status"] },
+      "then": {
+        "required": ["needs_input"],
+        "properties": { "needs_input": { "type": "object", "required": ["question"] } }
+      }
+    }
+  ]
+}

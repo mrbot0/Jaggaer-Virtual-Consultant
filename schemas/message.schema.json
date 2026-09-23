@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "message.schema.json",
+  "title": "Messaggio codificato (§24.1–24.3)",
+  "description": "Nessun contesto condiviso: messaggi codificati. Nessun agente parla direttamente con un altro: ogni handoff passa via agent-manager.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "id": { "type": "string" },
+        "reply_to": { "type": "string" },
+        "kind": { "enum": ["task", "query", "handoff", "result", "escalation", "ask-user", "observe"] },
+        "customer": { "type": "string", "pattern": "^[A-Z0-9]{4}$" },
+        "scope": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC"] },
+        "mode": { "enum": ["nrt", "config", "ops", "diag"] },
+        "tier": { "enum": ["T0", "T1", "T2"] },
+        "budget": {
+          "type": "object",
+          "required": ["tokens"],
+          "properties": { "tokens": { "type": "integer", "minimum": 1 }, "minutes": { "type": "number" } }
+        },
+        "task": { "type": "string" },
+        "inputs": { "type": "object" },
+        "expected_output": { "type": "object" },
+        "constraints": { "type": "array", "items": { "type": "string" } },
+        "from": { "type": "string" },
+        "via": { "type": "string" },
+        "to": { "type": "string" },
+        "contract": { "type": "string" },
+        "request": { "type": "string" },
+        "justification": { "type": "string" },
+        "risk_declared": { "enum": ["R0", "R1", "R2", "R3"] },
+        "status": { "enum": ["ok", "partial", "blocked", "needs-input", "escalate"] },
+        "output": { "type": ["object", "null"] },
+        "cognitive_trace": { "$ref": "cognitive-trace.schema.json" },
+        "lesson": { "type": "string" },
+        "usage": { "type": "object" },
+        "open_questions": { "type": "array" },
+        "reason": { "type": "string" },
+        "question": { "type": "string" },
+        "command": { "type": "string" },
+        "payload": { "type": "object" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "task" } } },
+          "then": { "required": ["customer", "scope", "mode", "tier", "budget", "task"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "handoff" } } },
+          "then": {
+            "required": ["from", "via", "to", "contract", "request", "justification", "risk_declared"],
+            "properties": { "via": { "const": "agent-manager" } }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "result" } } },
+          "then": { "required": ["reply_to", "status", "cognitive_trace", "lesson"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "query" } } },
+          "then": { "required": ["command"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "escalation" } } },
+          "then": { "required": ["reason"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "ask-user" } } },
+          "then": { "required": ["question"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "observe" } } },
+          "then": { "required": ["payload"] }
+        }
+      ]
+    }
+  }
+}

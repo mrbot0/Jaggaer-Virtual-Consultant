@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cognitive-trace.schema.json",
+  "title": "Traccia cognitiva del sub-agente (§10.1, §46.2)",
+  "description": "Le tracce del ciclo SITUARE→RIFLETTERE. Senza, il manager respinge il risultato (§23.2 vigilanza cognitiva; §42 M2).",
+  "type": "object",
+  "required": ["depth", "recalled", "epistemic", "strategy", "hypotheses", "decisions", "surprises", "self_check"],
+  "properties": {
+    "depth": { "enum": ["rapida", "standard", "profonda"] },
+    "recalled": {
+      "type": "object",
+      "description": "Le tre memorie: semantica (codici kb), episodica (DEC), di lavoro (OBS/blackboard).",
+      "required": ["semantic", "episodic", "working"],
+      "properties": {
+        "semantic": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "episodic": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "working": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "epistemic": {
+      "type": "object",
+      "required": ["subject", "shape_before", "shape_after"],
+      "properties": {
+        "subject": { "type": "string", "minLength": 1 },
+        "shape_before": { "$ref": "#/$defs/shape" },
+        "shape_after": { "$ref": "#/$defs/shape" }
+      }
+    },
+    "strategy": { "type": "string", "pattern": "^STR-[A-Z0-9-]+$" },
+    "hypotheses": { "type": ["array", "null"] },
+    "decisions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "surprises": { "type": "array", "items": { "type": ["string", "object"] } },
+    "self_check": {
+      "type": "object",
+      "required": ["passed", "failed"],
+      "properties": {
+        "passed": { "type": "integer", "minimum": 0, "maximum": 10 },
+        "failed": { "type": "array", "items": { "type": ["integer", "string"] } }
+      }
+    }
+  },
+  "$defs": {
+    "shape": { "enum": ["consolidato", "libresco", "empirico", "ignoto", "contraddittorio"] }
+  }
+}
