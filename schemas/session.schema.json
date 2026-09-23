@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "session.schema.json",
+  "title": "session.json — stato di sessione (§45.1)",
+  "description": "Unica fonte di stato per i guard: un hook non chiede al modello in che scope si trova, lo legge da qui. Vive in customers/<CUST>/.sessions/<session_id>/ (gitignored). Le fasi successive aggiungono campi (env, snapshots, approvals, integrity): le proprietà aggiuntive in radice sono ammesse.",
+  "type": "object",
+  "required": [
+    "session_id", "customer", "scope", "mode", "env", "budget", "allowed_paths", "pending", "surprises", "ledger",
+    "hypotheses_file", "blackboard_dir", "last_compact_summary", "knowledge_version", "plugin_version", "updated_at"
+  ],
+  "properties": {
+    "session_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
+    "customer": { "type": "string", "pattern": "^[A-Z0-9]{4}$" },
+    "scope": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC", null] },
+    "mode": { "enum": ["nrt", "config", "ops", "diag"] },
+    "env": { "type": ["object", "null"], "description": "Ambiente dichiarato e verificato; riempito in K5 (use env, env-check)." },
+    "budget": {
+      "type": "object",
+      "required": ["tokens", "used", "by_model"],
+      "properties": {
+        "tokens": { "type": "integer", "minimum": 1, "description": "Budget di sessione; default 200000; solo `use budget` lo cambia (§29.10)." },
+        "used": { "type": "integer", "minimum": 0 },
+        "by_model": {
+          "type": "object",
+          "required": ["haiku", "sonnet", "opus"],
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "allowed_paths": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "pending": {
+      "type": "object",
+      "required": ["compensations", "approvals", "questions", "expected_outcomes"],
+      "properties": {
+        "compensations": { "type": "array" },
+        "approvals": { "type": "array" },
+        "questions": { "type": "array" },
+        "expected_outcomes": { "type": "array" }
+      }
+    },
+    "surprises": {
+      "type": "array",
+      "items": { "type": "object", "required": ["at"], "properties": { "at": { "type": "string" }, "item": { "type": ["string", "null"] }, "obs": { "type": ["string", "null"] } } }
+    },
+    "ledger": {
+      "type": "object",
+      "required": ["invocations", "trace_blocks"],
+      "properties": {
+        "invocations": { "type": "array", "items": { "type": "object" } },
+        "trace_blocks": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } }
+      }
+    },
+    "hypotheses_file": { "type": "string", "minLength": 1 },
+    "blackboard_dir": { "type": "string", "minLength": 1 },
+    "last_compact_summary": { "type": ["string", "null"] },
+    "knowledge_version": { "type": ["string", "null"] },
+    "plugin_version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}
