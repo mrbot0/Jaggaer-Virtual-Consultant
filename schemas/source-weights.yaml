@@ -1,0 +1,17 @@
+# Peso della fonte per origine F1 (§6.2). Entra nella confidenza:
+#   confidenza = peso_fonte × freschezza × (1 + 0.05 × min(conferme, 3)) × (1 − 0.3 × contraddizioni_aperte)
+# osservazione-chrome: 0.85 la singola; ×3 confermata vale 1.00 (lo porta il conteggio delle conferme).
+# promozione-digest: "min dei contributori" — la digestione scrive il valore nell'item
+# (campo source_weight); in sua assenza vale il fallback, pari a doc-standard.
+esecuzione-test: 1.00
+esecuzione-config: 1.00
+osservazione-chrome: 0.85
+spec-integrazione-formale: 0.95
+dichiarazione-utente: 0.85
+doc-cliente-tecnica: 0.80
+release-notes: 0.75
+doc-cliente-utente: 0.70
+doc-standard: 0.70
+spec-integrazione-prosa: 0.65
+ticket: 0.50
+promozione-digest: { rule: min-contributori, fallback: 0.70 }

@@ -7,7 +7,39 @@ import { validateItem } from "./validate-schema.mjs";
 import { parseCode } from "./codes.mjs";
 import { validateCluster } from "./cluster-rules.mjs";
 import { fileURLToPath } from "node:url";
+import { confidence, weight } from "./weights.mjs";
+import { quality } from "./quality.mjs";
 import { isMain } from "../lib/is-main.mjs";
+
+const SOURCE_WEIGHTS = YAML.parse(readFileSync(new URL("../../schemas/source-weights.yaml", import.meta.url), "utf8"));
+
+// Peso della fonte da F1 (§6.2); promozione-digest usa il minimo dei
+// contributori scritto dalla digestione (source_weight), altrimenti il fallback.
+export function sourceWeight(obj) {
+  const w = SOURCE_WEIGHTS[obj?.facets?.F1];
+  if (typeof w === "number") return w;
+  if (w && typeof w === "object") return typeof obj.source_weight === "number" ? obj.source_weight : w.fallback;
+  return 0;
+}
+
+// Parametri neutri della qualità a reindex: nessuna età, release corrente,
+// nessuna corroborazione né contraddizione; i parametri che richiedono la
+// provenienza completa (specificità, completezza, verificabilità, metodo,
+// stabilità) valgono 0.5 finché la digestione non li fornisce.
+const NEUTRAL_Q = { ageDays: 0, releaseDistance: 0, docStatus: 1, corroboration: 0, openContradictions: 0, specificity: 0.5, completeness: 0.5,
+  verifiability: 0.5, verificationMethod: 0.5, lastVerifiedDays: 0, applicability: 1, stability: 0.5 };
+
+// Confidenza, peso W e qualità Q di un item al reindex (§6.3, §6.5), senza
+// contesto di sessione: freschezza 1.0, 0 conferme, 0 contraddizioni; una
+// portabilità condizionata vale "condizione non soddisfatta" (0.20) finché il
+// contesto del cliente non la verifica.
+export function scoreItem(obj) {
+  const sw = sourceWeight(obj);
+  const conf = Math.round(confidence({ sourceWeight: sw, freshness: 1.0, confirmations: 0, openContradictions: 0 }) * 1e4) / 1e4;
+  const w = weight({ confidence: conf, portability: obj.facets.F8, status: obj.facets.F12, condition_met: false, same_customer: true });
+  const q = quality({ ...NEUTRAL_Q, authority: sw }, "generic", obj.type).Q;
+  return { confidence: conf, weight: w, quality: q };
+}
 
 function* walk(dir) {
   for (const e of readdirSync(dir, { withFileTypes: true })) {
@@ -60,9 +92,10 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR } = {
   const stats = { scanned: 0, upserted: 0, unchanged: 0, deprecated: 0, invalid: 0 };
   const seen = new Set();
   const get = db.prepare("select hash from items where code=?");
-  const upsert = db.prepare(`insert into items(code,level,customer,scope,type,version,title,summary,facets,status,path,hash,updated_at,verified_at,release_ref)
-    values (@code,@level,@customer,@scope,@type,@version,@title,@summary,@facets,@status,@path,@hash,@updated_at,@verified_at,@release_ref)
+  const upsert = db.prepare(`insert into items(code,level,customer,scope,type,version,title,summary,facets,confidence,quality,weight,status,path,hash,updated_at,verified_at,release_ref)
+    values (@code,@level,@customer,@scope,@type,@version,@title,@summary,@facets,@confidence,@quality,@weight,@status,@path,@hash,@updated_at,@verified_at,@release_ref)
     on conflict(code) do update set title=excluded.title, summary=excluded.summary, facets=excluded.facets, status=excluded.status,
+    confidence=excluded.confidence, quality=excluded.quality, weight=excluded.weight,
     path=excluded.path, hash=excluded.hash, updated_at=excluded.updated_at, verified_at=excluded.verified_at, release_ref=excluded.release_ref, version=excluded.version`);
   const ftsDel = db.prepare("delete from items_fts where code=?");
   const ftsIns = db.prepare("insert into items_fts(code,title,summary) values (?,?,?)");
@@ -77,7 +110,7 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR } = {
       const c = parseCode(obj.id); seen.add(obj.id);
       if (get.get(obj.id)?.hash === hash) { stats.unchanged++; continue; }
       upsert.run({ code: obj.id, level: c.level, customer: c.customer, scope: c.scope, type: c.type, version: c.version, title: obj.title,
-        summary: obj.summary, facets: JSON.stringify(obj.facets), status: obj.facets.F12, path: relative(root, file), hash,
+        summary: obj.summary, facets: JSON.stringify(obj.facets), ...scoreItem(obj), status: obj.facets.F12, path: relative(root, file), hash,
         updated_at: new Date(statSync(file).mtimeMs).toISOString(), verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
       ftsDel.run(obj.id); ftsIns.run(obj.id, obj.title, obj.summary);
       stats.upserted++;
