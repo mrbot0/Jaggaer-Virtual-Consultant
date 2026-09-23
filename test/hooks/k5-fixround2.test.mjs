@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { writeFileSync, mkdirSync, mkdtempSync, appendFileSync, existsSync, realpathSync } from "node:fs";
 import { tmpdir, homedir } from "node:os";
 import { runHook, runSessionCli, decisionOf, reasonOf, mkWs, seedSession, ROOT } from "../helpers/hook-env.mjs";
-import { envWs, browserCall, patchSession, readSession } from "../helpers/env-fixture.mjs";
+import { envWs, browserCall, patchSession, readSession, navResponse } from "../helpers/env-fixture.mjs";
 import { classify } from "../../hooks/lib/browser-tools.mjs";
 import { confirmInTranscript, sha256, readApprovals, approvalsFile } from "../../scripts/admin/approvals.mjs";
 import { workspaceRoot } from "../../hooks/lib/workspace.mjs";
@@ -48,33 +48,35 @@ test("N1: browser-origin (PostToolUse) registra l'URL solo dopo un navigate rius
   assert.equal(post(ws, `${DT}take_snapshot`, {}, OK).status, 0);
   assert.equal(url(), null);
   // navigate riuscito ⇒ URL registrato
-  assert.equal(post(ws, `${DT}navigate_page`, { type: "url", url: "https://acme-sbx.jaggaer.com/home" }, OK).status, 0);
+  assert.equal(post(ws, `${DT}navigate_page`, { type: "url", url: "https://acme-sbx.jaggaer.com/home" }, navResponse(`${DT}navigate_page`, "https://acme-sbx.jaggaer.com/home")).status, 0);
   assert.equal(url(), "https://acme-sbx.jaggaer.com/home");
   assert.ok(silent(browserCall("guard-environment", ws, `${DT}click`, { uid: "1" })), "ora il click passa");
   // risposta d'errore ⇒ azzerato
   for (const resp of [{ content: [{ type: "text", text: "Error: net::ERR_ABORTED" }], isError: true }, { error: "timeout" }, [{ type: "text", text: "Error: Navigation timeout of 10000 ms exceeded" }], 42, null, "", { strange: true }]) {
-    post(ws, `${DT}navigate_page`, { type: "url", url: "https://acme-sbx.jaggaer.com/home" }, OK);
+    post(ws, `${DT}navigate_page`, { type: "url", url: "https://acme-sbx.jaggaer.com/home" }, navResponse(`${DT}navigate_page`, "https://acme-sbx.jaggaer.com/home"));
     assert.equal(url(), "https://acme-sbx.jaggaer.com/home");
     post(ws, `${DT}navigate_page`, { type: "url", url: "https://acme-sbx.jaggaer.com/other" }, resp);
     assert.equal(url(), null, `risposta ${JSON.stringify(resp)} ⇒ URL ignoto`);
   }
   // cambi di scheda/pagina ⇒ azzerato
   for (const [t, i] of [[`${CB}tabs_select`, { tabId: "2" }], [`${DT}select_page`, { pageId: 1 }], [`${DT}new_page`, { url: "https://acme-sbx.jaggaer.com/" }], [`${CB}switch_browser`, {}]]) {
-    post(ws, `${DT}navigate_page`, { type: "url", url: "https://acme-sbx.jaggaer.com/home" }, OK);
+    post(ws, `${DT}navigate_page`, { type: "url", url: "https://acme-sbx.jaggaer.com/home" }, navResponse(`${DT}navigate_page`, "https://acme-sbx.jaggaer.com/home"));
     post(ws, t, i, OK);
     assert.equal(url(), null, t);
   }
   // back/forward riusciti ⇒ destinazione ignota; reload la conserva
-  post(ws, `${DT}navigate_page`, { type: "url", url: "https://acme-sbx.jaggaer.com/home" }, OK);
-  post(ws, `${DT}navigate_page`, { type: "reload" }, OK);
+  post(ws, `${DT}navigate_page`, { type: "url", url: "https://acme-sbx.jaggaer.com/home" }, navResponse(`${DT}navigate_page`, "https://acme-sbx.jaggaer.com/home"));
+  // giro 3: storia riuscita solo con il marcatore della famiglia; si registra la pagina su cui si è arrivati
+  post(ws, `${DT}navigate_page`, { type: "reload" }, [{ type: "text", text: "# navigate_page response\nSuccessfully reloaded the page.\n## Pages\n0: https://acme-sbx.jaggaer.com/home [selected]" }]);
   assert.equal(url(), "https://acme-sbx.jaggaer.com/home");
-  post(ws, `${DT}navigate_page`, { type: "back" }, OK);
+  post(ws, `${DT}navigate_page`, { type: "back" }, OK);   // senza marcatore: destinazione ignota
   assert.equal(url(), null);
   // un navigate verso un host non dichiarato riuscito ⇒ registrato così com'è (il guard poi nega)
-  post(ws, `${CB}navigate`, { url: "https://evil.io/" }, OK);
+  post(ws, `${CB}navigate`, { url: "https://evil.io/" }, navResponse(`${CB}navigate`, "https://evil.io/"));
+  assert.equal(url(), "https://evil.io/");
   assert.ok(denied(browserCall("guard-environment", ws, `${DT}click`, { uid: "1" })));
   // lotto: navigate + click riuscito ⇒ URL del navigate
-  post(ws, `${CB}browser_batch`, { actions: [{ name: "navigate", input: { url: "https://acme-sbx.jaggaer.com/b" } }, { name: "computer", input: { action: "left_click", ref: "r" } }] }, OK);
+  post(ws, `${CB}browser_batch`, { actions: [{ name: "navigate", input: { url: "https://acme-sbx.jaggaer.com/b" } }, { name: "computer", input: { action: "left_click", ref: "r" } }] }, navResponse(`${CB}navigate`, "https://acme-sbx.jaggaer.com/b"));
   assert.equal(url(), "https://acme-sbx.jaggaer.com/b");
 });
 

@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { writeFileSync, mkdirSync, mkdtempSync, readFileSync, appendFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { runHook, runSessionCli, decisionOf, reasonOf, mkWs, seedSession, ROOT } from "../helpers/hook-env.mjs";
-import { envWs, browserCall, patchSession, readSession, writePlan, writeSel } from "../helpers/env-fixture.mjs";
+import { envWs, browserCall, patchSession, readSession, writePlan, writeSel, navResponse } from "../helpers/env-fixture.mjs";
 import { classify } from "../../hooks/lib/browser-tools.mjs";
 import { appendApproval, approvalsFile, confirmInTranscript, sha256 } from "../../scripts/admin/approvals.mjs";
 import { isJvcWorkspace } from "../../hooks/lib/workspace.mjs";
@@ -24,7 +24,7 @@ const anyDeny = (res) => res.some(({ r }) => denied(r));
 const OK = [{ type: "text", text: "## Pages" }];
 const navOk = (ws, tool, input) => {
   const r = browserCall("guard-environment", ws, tool, input);
-  if (r.status === 0 && r.stdout.trim() === "") runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: OK }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
+  if (r.status === 0 && r.stdout.trim() === "") runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: navResponse(tool, input.url) }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
   return r;
 };
 const nav = (ws, url, extra = {}) => navOk(ws, `${DT}navigate_page`, { type: "url", url, ...extra });

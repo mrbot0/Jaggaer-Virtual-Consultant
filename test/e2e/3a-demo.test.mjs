@@ -12,7 +12,7 @@ import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import YAML from "yaml";
 import { mkWs, seedSession, runHook, runSessionCli, decisionOf, reasonOf, cleanEnv, ROOT } from "../helpers/hook-env.mjs";
-import { browserCall, patchSession, readSession, writePlan, writeSel } from "../helpers/env-fixture.mjs";
+import { browserCall, patchSession, readSession, writePlan, writeSel, navResponse } from "../helpers/env-fixture.mjs";
 import { approvalsFile, readApprovals } from "../../scripts/admin/approvals.mjs";
 import { validatePlan } from "../../scripts/decide/validate-plan.mjs";
 import { verifyChain, auditFile } from "../../hooks/lib/audit.mjs";
@@ -63,7 +63,7 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
   // "riesce" e il PostToolUse browser-origin registra l'origine (giro 2, N1)
   const guards = (tool, input, order = GUARDS) => {
     const res = order.map((g) => ({ g, r: browserCall(g, ws, tool, input, { transcript_path: tr }) }));
-    if (res.every(({ r }) => r.status === 0 && r.stdout.trim() === "")) runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: [{ type: "text", text: "ok" }] }, E(ws));
+    if (res.every(({ r }) => r.status === 0 && r.stdout.trim() === "")) runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: typeof input.url === "string" ? navResponse(tool, input.url) : [{ type: "text", text: "ok" }] }, E(ws));
     return res;
   };
   const allSilent = (res) => res.every(({ r }) => r.status === 0 && r.stdout.trim() === "");
