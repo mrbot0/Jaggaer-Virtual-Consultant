@@ -39,6 +39,7 @@ chiede la frase esatta `APPROVO PASSO <n> <PLAN.id>`. Le frasi valide (§57.2):
 | Configurazione verde | `APPROVO PIANO <PLAN>` |
 | Configurazione giallo | `APPROVO PIANO <PLAN>` poi `APPROVO PASSO <n> <PLAN>` |
 | Configurazione rosso | `APPROVO PIANO` · `APPROVO PROVA` · `APPROVO PASSO <n>` |
+| Esplorare senza piano (solo sandbox) | `ESPLORA SANDBOX`, poi `/use mode esplorazione` |
 | Produzione, qualunque configurazione | le tre frasi entro la finestra (default 60 min da A1), A2 `DA <Nome Cognome>` di una persona diversa da A1 se `second_approver_required` |
 
 Un "ok", un "va bene" o una frase con piano o passo sbagliati non valgono: l'hook `approval-capture`

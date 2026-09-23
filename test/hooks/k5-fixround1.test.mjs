@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { join } from "node:path";
 import { writeFileSync, mkdirSync, mkdtempSync, readFileSync, appendFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { runHook, decisionOf, reasonOf, mkWs, seedSession, ROOT } from "../helpers/hook-env.mjs";
+import { runHook, runSessionCli, decisionOf, reasonOf, mkWs, seedSession, ROOT } from "../helpers/hook-env.mjs";
 import { envWs, browserCall, patchSession, readSession, writePlan, writeSel } from "../helpers/env-fixture.mjs";
 import { classify } from "../../hooks/lib/browser-tools.mjs";
 import { appendApproval, approvalsFile, confirmInTranscript, sha256 } from "../../scripts/admin/approvals.mjs";
@@ -20,7 +20,14 @@ const PW = "mcp__playwright__";
 const ALL = ["guard-environment", "guard-production", "guard-config-scope"];
 const each = (ws, tool, input, extra = {}) => ALL.map((g) => ({ g, r: browserCall(g, ws, tool, input, extra) }));
 const anyDeny = (res) => res.some(({ r }) => denied(r));
-const nav = (ws, url, extra = {}) => browserCall("guard-environment", ws, `${DT}navigate_page`, { type: "url", url, ...extra });
+// Giro 2 (N1): l'URL diventa noto solo dopo un navigate RIUSCITO, via il PostToolUse browser-origin.
+const OK = [{ type: "text", text: "## Pages" }];
+const navOk = (ws, tool, input) => {
+  const r = browserCall("guard-environment", ws, tool, input);
+  if (r.status === 0 && r.stdout.trim() === "") runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: OK }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
+  return r;
+};
+const nav = (ws, url, extra = {}) => navOk(ws, `${DT}navigate_page`, { type: "url", url, ...extra });
 
 // ---- Critical 1: navigate_page.initScript e chiavi sconosciute ----
 test("C1: navigate_page con initScript (prod, nessun piano; reload + submit) ⇒ deny; chiavi di input sconosciute ⇒ other ⇒ deny", () => {
@@ -66,14 +73,14 @@ test("C3: URL corrente ignoto ⇒ azioni con effetto negate; navigate consentito
   const click = () => browserCall("guard-environment", ws, `${CB}computer`, { action: "left_click", coordinate: [1, 1] });
   const r = click();
   assert.ok(denied(r)); assert.match(reasonOf(r), /navigate/);
-  // navigate su host dichiarato ⇒ current_url registrato ⇒ click consentito
-  assert.ok(silent(browserCall("guard-environment", ws, `${CB}navigate`, { url: "https://acme-sbx.jaggaer.com/home" })));
+  // navigate su host dichiarato riuscito ⇒ current_url registrato (PostToolUse, giro 2) ⇒ click consentito
+  assert.ok(silent(navOk(ws, `${CB}navigate`, { url: "https://acme-sbx.jaggaer.com/home" })));
   assert.equal(readSession(ws).browser.current_url, "https://acme-sbx.jaggaer.com/home");
   assert.ok(silent(click()));
   // ogni cambio di scheda/pagina/browser azzera
   for (const [t, i] of [[`${CB}tabs_select`, { tabId: "2" }], [`${CB}tabs_create`, {}], [`${DT}select_page`, { pageId: 2 }], [`${DT}new_page`, { url: "https://acme-sbx.jaggaer.com/" }],
     [`${CB}switch_browser`, {}], [`${PW}browser_tabs`, { action: "select", index: 1 }], [`${DT}close_page`, { pageId: 1 }]]) {
-    assert.ok(silent(browserCall("guard-environment", ws, `${CB}navigate`, { url: "https://acme-sbx.jaggaer.com/home" })));
+    assert.ok(silent(navOk(ws, `${CB}navigate`, { url: "https://acme-sbx.jaggaer.com/home" })));
     assert.ok(silent(click()), "dopo navigate il click passa");
     assert.ok(silent(browserCall("guard-environment", ws, t, i)), `${t} consentito`);
     assert.equal(readSession(ws).browser.current_url, null, `${t} azzera current_url`);
@@ -83,7 +90,7 @@ test("C3: URL corrente ignoto ⇒ azioni con effetto negate; navigate consentito
   patchSession(ws, (s) => { s.browser = { current_url: "https://acme.jaggaer.com/po" }; });
   assert.ok(denied(click()));
   // scheda diversa da quella della navigazione registrata ⇒ deny
-  assert.ok(silent(browserCall("guard-environment", ws, `${CB}navigate`, { url: "https://acme-sbx.jaggaer.com/home", tabId: 7 })));
+  assert.ok(silent(navOk(ws, `${CB}navigate`, { url: "https://acme-sbx.jaggaer.com/home", tabId: 7 })));
   assert.ok(denied(browserCall("guard-environment", ws, `${CB}computer`, { action: "left_click", coordinate: [1, 1], tabId: 8 })));
   assert.ok(silent(browserCall("guard-environment", ws, `${CB}computer`, { action: "left_click", coordinate: [1, 1], tabId: 7 })));
   // batch: navigate + click nello stesso lotto passa; switch + click no
@@ -118,12 +125,16 @@ test("I1: evaluate_script, javascript_tool, browser_evaluate, run_code_unsafe, i
 // ---- Important 2: nessun piano attivo ----
 test("I2: nessun piano attivo ⇒ azioni con effetto negate in ogni ambiente; esplorazione solo in sandbox, in audit, mai invio/salvataggio/upload/dialog", () => {
   const ws = envWs();
-  const c = (t, i) => browserCall("guard-config-scope", ws, t, i);
+  const tr = join(mkdtempSync(join(tmpdir(), "i2-")), "t.jsonl"); writeFileSync(tr, "");
+  const c = (t, i) => browserCall("guard-config-scope", ws, t, i, { transcript_path: tr });
   const r = c(`${DT}click`, { uid: "1_2" });
   assert.ok(denied(r)); assert.match(reasonOf(r), /piano attivo/);
   assert.ok(denied(c(`${DT}fill`, { uid: "1", value: "x" })));
   assert.ok(silent(c(`${DT}take_snapshot`, {})), "le letture restano libere");
-  patchSession(ws, (s) => { s.mode = "esplorazione"; });
+  // giro 2 (N2): l'esplorazione la apre l'utente (ESPLORA SANDBOX), poi /use mode esplorazione
+  appendFileSync(tr, `${JSON.stringify({ type: "user", isSidechain: false, userType: "external", message: { role: "user", content: "ESPLORA SANDBOX" }, timestamp: new Date().toISOString() })}\n`);
+  runHook("approval-capture", { session_id: "sess-1", cwd: ws, hook_event_name: "UserPromptSubmit", prompt: "ESPLORA SANDBOX", transcript_path: tr }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
+  assert.equal(runSessionCli(["use", "mode", "esplorazione", "--session", "sess-1"], { JVC_WORKSPACE: ws }).status, 0);
   assert.ok(silent(c(`${DT}click`, { uid: "1_2" })));
   assert.ok(silent(c(`${DT}fill`, { uid: "1", value: "x" })));
   for (const [t, i] of [[`${DT}press_key`, { key: "Enter" }], [`${DT}type_text`, { text: "x", submitKey: "Enter" }], [`${DT}upload_file`, { uid: "1", filePath: "x" }],

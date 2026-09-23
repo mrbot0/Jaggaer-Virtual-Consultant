@@ -30,7 +30,7 @@ import { guarded, denyAudited, targetsOf, allRels, shellWriteTargets, subtree, S
 import { browserGuarded, declaredEnv } from "./browser.mjs";
 import { activeStep } from "./plan-step.mjs";
 import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
-import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf } from "../../../scripts/admin/approvals.mjs";
+import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf, exploreRecord, EXPLORE_PHRASE } from "../../../scripts/admin/approvals.mjs";
 import { appendAudit } from "../audit.mjs";
 import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
 
@@ -62,6 +62,16 @@ function noPlan(ctx, no) {
   const s = ctx.session;
   const bad = ctx.actions.filter(isEffectful).find((a) => !["click", "input"].includes(a.kind) || a.submits);
   const explore = s.mode === "esplorazione" && s.env?.type === "sandbox";
+  // K5 giro 2 (N2): la modalità vale solo se l'ha aperta l'utente con ESPLORA SANDBOX
+  // (record nella catena, consumato dal cambio di modalità, per questo ambiente,
+  // confermato nel transcript).
+  if (explore) {
+    const reg = readApprovals(approvalsFile(ctx.ws, ctx.customer, ctx.sid));
+    const rec = reg.ok ? exploreRecord(reg.records, s.mode_approval, s.env.id) : null;
+    if (!rec) return no(`modalità esplorazione non aperta dall'utente: serve la sua frase \`${EXPLORE_PHRASE}\`, poi /use mode esplorazione (registro ${reg.ok ? "senza il record" : `corrotto: ${reg.reason}`})`);
+    const conf = confirmInTranscript(ctx.input.transcript_path, [rec]);
+    if (!conf.ok) return no(`modalità esplorazione non confermata dal transcript dell'utente (${conf.reason})`);
+  }
   if (explore && !bad) {
     try {
       appendAudit(ctx.ws, { session: ctx.sid, customer: ctx.customer, scope: s.scope ?? null, kind: "decision", actor: `hook:${G}`,

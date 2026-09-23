@@ -314,12 +314,22 @@ function useScope(ws, sid, raw, { actor }) {
   return { session };
 }
 
-function useMode(ws, sid, raw, { actor }) {
+async function useMode(ws, sid, raw, { actor }) {
   const m = MODE_ALIASES[String(raw ?? "").toLowerCase()] ?? String(raw ?? "").toLowerCase();
   if (!MODES.includes(m)) throw new CliError(1, `modalità non valida: ${raw} (${MODES.join(" · ")})`);
   const { session: before, file } = requireActive(ws, sid);
-  const session = updateSession(file, (s) => { s.mode = m; });
-  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "session", actor, payload: { action: "use-mode", from: before.mode, to: m } });
+  // K5 giro 2 (N2): l'esplorazione senza piano la apre solo l'utente, con la frase
+  // ESPLORA SANDBOX registrata da approval-capture (monouso, solo in sandbox).
+  let approval = null;
+  if (m === "esplorazione") {
+    if (before.env?.type !== "sandbox") throw new CliError(3, `la modalità esplorazione vale solo in sandbox (ambiente ${before.env ? `${before.env.id}: ${before.env.type}` : "non dichiarato"})`);
+    const { consumeExplore, approvalsFile, EXPLORE_PHRASE, EXPLORE_WINDOW_MS } = await import("./approvals.mjs");
+    const tok = consumeExplore(approvalsFile(ws, before.customer, sid), before.env.id);
+    if (!tok) throw new CliError(3, `la modalità esplorazione la sceglie l'utente: serve la sua frase \`${EXPLORE_PHRASE}\` negli ultimi ${EXPLORE_WINDOW_MS / 60000} minuti (vale per un solo cambio di modalità)`);
+    approval = tok.hash;
+  }
+  const session = updateSession(file, (s) => { s.mode = m; s.mode_approval = approval; });
+  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "session", actor, payload: { action: "use-mode", from: before.mode, to: m, ...(approval ? { approval } : {}) } });
   return { session };
 }
 
@@ -424,7 +434,7 @@ export async function run(argv, env = process.env) {
       result = { session_id: sid, pointer, session };
     } else if (action === "use" && what === "customer") result = await useCustomer(ws, sid, value, { create: !!opts.new, actor });
     else if (action === "use" && what === "scope") result = useScope(ws, sid, value, { actor });
-    else if (action === "use" && what === "mode") result = useMode(ws, sid, value, { actor });
+    else if (action === "use" && what === "mode") result = await useMode(ws, sid, value, { actor });
     else if (action === "use" && what === "budget") result = useBudget(ws, sid, value, { actor });
     else if (action === "use" && what === "env") result = await useEnv(ws, sid, value, { actor });
     else if (action === "use" && what === "close-stale") result = useCloseStale(ws, sid, { actor });

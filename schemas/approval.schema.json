@@ -2,26 +2,31 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "approval.schema.json",
   "title": "Record di customers/<C>/.sessions/<sid>/approvals.jsonl — 3A (§52.2, §57.2)",
-  "description": "Una riga per record, catena di hash come l'audit (hash = sha256(prev_hash + JSON canonico del record senza hash); la prima riga parte dal genesis di 64 zeri). A1/A2/A3/action li scrive SOLO l'hook approval-capture dal prompt dell'utente (mai il modello, mai una CLI); consume lo scrive guard-config-scope quando consente il passo (token monouso). Lo specchio in session.approvals è informativo: i guard leggono questo registro e confermano la frase nel transcript.",
+  "description": "Una riga per record, catena di hash come l'audit (hash = sha256(prev_hash + JSON canonico del record senza hash); la prima riga parte dal genesis di 64 zeri). A1/A2/A3/action/explore li scrive SOLO l'hook approval-capture dal prompt dell'utente (mai il modello, mai una CLI); consume lo scrivono guard-config-scope quando consente il passo (token monouso) e `use mode esplorazione` quando consuma la frase ESPLORA SANDBOX (K5 giro 2). Lo specchio in session.approvals è informativo: i guard leggono questo registro e confermano la frase nel transcript.",
   "type": "object",
-  "required": ["ts", "kind", "plan", "prev_hash", "hash"],
+  "required": ["ts", "kind", "prev_hash", "hash"],
   "additionalProperties": false,
   "properties": {
     "ts": { "type": "string", "format": "date-time" },
-    "kind": { "enum": ["A1", "A2", "A3", "action", "consume"] },
+    "kind": { "enum": ["A1", "A2", "A3", "action", "consume", "explore"] },
     "plan": { "type": "string", "pattern": "^PLAN\\.[A-Za-z0-9._-]+$" },
     "step": { "type": "integer", "minimum": 1 },
+    "env": { "type": "string", "description": "explore: id dell'ambiente sandbox in cui l'utente ha aperto l'esplorazione." },
     "approver_declared": { "type": ["string", "null"], "description": "Nome dichiarato con DA <Nome Cognome>: controllo organizzativo, non tecnico." },
     "prompt_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "sha256 del prompt dell'utente che ha prodotto il record." },
     "plan_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "A1: sha256 del file del piano approvato (un piano cambiato dopo A1 non vale)." },
     "session": { "type": "string" },
-    "ref": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "consume: hash del token A3/action consumato." },
-    "consumed_kind": { "enum": ["A3", "action"] },
+    "ref": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "consume: hash del token A3/action/explore consumato." },
+    "consumed_kind": { "enum": ["A3", "action", "explore"] },
     "prev_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
     "hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
   },
   "allOf": [
-    { "if": { "properties": { "kind": { "enum": ["A3", "action", "consume"] } } }, "then": { "required": ["step"] } },
-    { "if": { "properties": { "kind": { "const": "consume" } } }, "then": { "required": ["ref", "consumed_kind"] }, "else": { "required": ["prompt_sha256"] } }
+    { "if": { "properties": { "kind": { "enum": ["A1", "A2", "A3", "action"] } } }, "then": { "required": ["plan"] } },
+    { "if": { "properties": { "kind": { "enum": ["A3", "action"] } } }, "then": { "required": ["step"] } },
+    { "if": { "properties": { "kind": { "const": "explore" } } }, "then": { "required": ["env"] } },
+    { "if": { "properties": { "kind": { "const": "consume" } } },
+      "then": { "required": ["ref", "consumed_kind"], "if": { "properties": { "consumed_kind": { "enum": ["A3", "action"] } } }, "then": { "required": ["plan", "step"] } },
+      "else": { "required": ["prompt_sha256"] } }
   ]
 }

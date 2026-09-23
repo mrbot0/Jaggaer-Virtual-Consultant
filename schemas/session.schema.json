@@ -79,10 +79,10 @@
       "description": "Specchio di customers/<C>/.sessions/<id>/approvals.jsonl (catena di hash, scritta solo da approval-capture e dal consumo dei token). I guard leggono il file, non lo specchio.",
       "items": {
         "type": "object",
-        "required": ["ts", "kind", "plan"],
+        "required": ["ts", "kind"],
         "properties": {
           "ts": { "type": "string" },
-          "kind": { "enum": ["A1", "A2", "A3", "action", "consume"] },
+          "kind": { "enum": ["A1", "A2", "A3", "action", "consume", "explore"] },
           "plan": { "type": "string", "pattern": "^PLAN\\.[A-Za-z0-9._-]+$" },
           "step": { "type": "integer", "minimum": 1 },
           "approver_declared": { "type": ["string", "null"] },
@@ -90,6 +90,11 @@
           "hash": { "type": "string" }
         }
       }
+    },
+    "mode_approval": {
+      "type": ["string", "null"],
+      "description": "K5 giro 2: hash del record `explore` di approvals.jsonl (frase ESPLORA SANDBOX dell'utente) che ha aperto la modalità esplorazione; guard-config-scope lo verifica. Null per ogni altra modalità.",
+      "pattern": "^[0-9a-f]{64}$"
     },
     "active_plan": {
       "type": ["object", "null"],

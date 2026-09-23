@@ -31,7 +31,9 @@ di templates/workflow.md), scope, modalità, budget usato/totale, pendenze. Rego
   dichiarato (l'origine viene registrata; cambiare scheda o pagina la azzera); gli script nella pagina
   sono negati ovunque: si legge con snapshot, read_page, get_page_text. Senza piano attivo le azioni
   con effetto sono negate; `mode esplorazione` (solo sandbox, in audit) consente click e input, mai
-  invio, salvataggio, upload o conferma di dialog.
+  invio, salvataggio, upload o conferma di dialog. La sceglie solo l'utente: serve che abbia appena
+  scritto `ESPLORA SANDBOX` (frase registrata da approval-capture, vale per un solo cambio di modalità
+  entro 10 minuti); altrimenti exit 3 — riportalo e attendi, non scrivere tu la frase.
 - exit 1: mostra l'errore e la sintassi corretta (`customer <ID> [--new]`, `env <id>`, `scope <ID>`,
   `mode <nrt|config|ops|diag|esplorazione>`, `budget <n>`, `close-stale`, `show`). Se lo stato è illeggibile, `customer <ID>`
   lo ripara (ne resta una copia `.corrupt-<data>`).

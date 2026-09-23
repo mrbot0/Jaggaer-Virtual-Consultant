@@ -41,6 +41,10 @@ const RE_A1 = new RegExp(`^APPROVO PIANO (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_A2 = new RegExp(`^APPROVO PROVA (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_A3 = new RegExp(`^APPROVO PASSO ([1-9]\\d{0,3}) (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_YES = /^(sì|si|yes)$/iu;
+// K5 giro 2 (N2): la spec non nomina una frase per l'esplorazione; frase scelta dal
+// controller. Vale per un solo `use mode esplorazione` entro EXPLORE_WINDOW_MS.
+export const EXPLORE_PHRASE = "ESPLORA SANDBOX";
+export const EXPLORE_WINDOW_MS = 10 * 60000;
 const ATTEMPT = /^(ok|okay|va bene|vabbene|vabene|approvo|approvato|approvata|confermo|confermato|procedi|autorizzo|d'accordo|certo|sì|si|yes)(?=$|[\s,.;:!?])/iu;
 const normSpaces = (s) => s.replace(/\s+/gu, " ").trim();
 export const normName = (s) => (typeof s === "string" ? normSpaces(s).toLocaleLowerCase("it") : null);
@@ -56,11 +60,13 @@ export function parseApprovalPrompt(prompt) {
   if ((m = RE_A2.exec(bare))) return { kind: "A2", plan: m[1], approver: m[2] ? normSpaces(m[2]) : null };
   if ((m = RE_A3.exec(bare))) return { kind: "A3", plan: m[2], step: Number(m[1]), approver: m[3] ? normSpaces(m[3]) : null };
   if (RE_YES.test(bare)) return { kind: "yes" };
+  if (bare === EXPLORE_PHRASE) return { kind: "explore" };
+  if (/\bESPLORA\b/iu.test(s)) return { kind: "attempt" };
   if (/APPROV/iu.test(s) || (ATTEMPT.test(s) && s.length <= 30)) return { kind: "attempt" };
   return null;
 }
 
-export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : "");
+export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : r.kind === "explore" ? EXPLORE_PHRASE : "");
 
 // ---- registro ----
 // → { ok: true, records } | { ok: false, reason, records: [] }
@@ -141,6 +147,32 @@ export function consumeStepToken(file, plan, n, { envPolicy = {}, now = Date.now
   });
 }
 
+// K5 giro 2 (N2): consuma (monouso) l'ultima frase ESPLORA SANDBOX dell'utente per
+// l'ambiente envId, se registrata negli ultimi EXPLORE_WINDOW_MS. La chiama solo
+// `session.mjs use mode esplorazione`. → record explore consumato | null
+export function consumeExplore(file, envId, { now = Date.now(), date = new Date(now) } = {}) {
+  if (!existsSync(file)) return null;
+  return withFileLock(`${file}.lock`, () => {
+    const cur = readApprovals(file);
+    if (!cur.ok) return null;
+    const used = new Set(cur.records.filter((r) => r.kind === "consume").map((r) => r.ref));
+    const tok = cur.records.findLast((r) => r.kind === "explore" && r.env === envId && !used.has(r.hash) && now - Date.parse(r.ts) <= EXPLORE_WINDOW_MS && now >= Date.parse(r.ts) - 5000);
+    if (!tok) return null;
+    appendLocked(file, { kind: "consume", ref: tok.hash, consumed_kind: "explore" }, date);
+    return tok;
+  });
+}
+
+// Il record che ha aperto l'esplorazione (session.mode_approval) esiste nella
+// catena, è della frase dell'utente per l'ambiente envId ed è stato consumato
+// dal cambio di modalità. → record | null
+export function exploreRecord(records, hash, envId) {
+  if (typeof hash !== "string" || !hash) return null;
+  const rec = records.find((r) => r.kind === "explore" && r.hash === hash && r.env === envId);
+  if (!rec) return null;
+  return records.some((r) => r.kind === "consume" && r.ref === hash && r.consumed_kind === "explore") ? rec : null;
+}
+
 // Finestra 3A valida per il passo n (funzione condivisa di guard-production):
 // A1 nella finestra, A2 valida (persona diversa se richiesto), A3 del passo n.
 // Il token può essere già stato consumato da guard-config-scope nella stessa
@@ -183,14 +215,18 @@ function userPrompt(line) {
   try { o = JSON.parse(line); } catch { return null; }
   if (!o || o.type !== "user" || EXCLUDED.some((k) => o[k] != null && o[k] !== false)) return null;
   if (o.userType != null && o.userType !== "external") return null;
+  // giro 2 (N4): solo prompt umani (origin assente o kind "human"), mai righe di un agente
+  if (o.origin != null && o.origin?.kind !== "human") return null;
+  if (o.agentId != null) return null;
   const t = Date.parse(o.timestamp ?? "");
   const msg = o.message;
   if (!Number.isFinite(t) || !msg || msg.role !== "user") return null;
-  let texts;
-  if (typeof msg.content === "string") texts = [msg.content];
-  else if (Array.isArray(msg.content) && msg.content.every((b) => b?.type === "text" && typeof b.text === "string")) texts = [msg.content.map((b) => b.text).join("\n"), ...msg.content.map((b) => b.text)];
+  // il prompt INTERO: una stringa o un solo blocco di testo (mai un blocco fra altri)
+  let text;
+  if (typeof msg.content === "string") text = msg.content;
+  else if (Array.isArray(msg.content) && msg.content.length === 1 && msg.content[0]?.type === "text" && typeof msg.content[0].text === "string") text = msg.content[0].text;
   else return null;
-  return { t, shas: new Set(texts.map(sha256)) };
+  return { t, shas: new Set([sha256(text)]) };
 }
 
 export function confirmInTranscript(transcriptPath, recs) {
@@ -277,7 +313,14 @@ export async function capture(input, env = process.env) {
 
   let rec;
   let removeMatch;
-  if (p.kind === "yes") {
+  if (p.kind === "explore") {
+    // K5 giro 2 (N2): la modalità esplorazione la sceglie l'utente, solo in sandbox.
+    if (!s.env) return reject([EXPLORE_PHRASE], "nessun ambiente dichiarato: /use env <id> prima");
+    if (s.env.type !== "sandbox") return reject([], `l'esplorazione senza piano vale solo in sandbox (ambiente ${s.env.id}: ${s.env.type})`);
+    if (!reg.ok) return reject([EXPLORE_PHRASE], `registro delle approvazioni corrotto (${reg.reason})`);
+    rec = { kind: "explore", env: s.env.id };
+    removeMatch = () => false;
+  } else if (p.kind === "yes") {
     const acts = pending.filter((r) => r.kind === "action");
     if (!pending.length) return null;
     if (s.env?.type === "prod") return reject(expectedFor(null), "in produzione non si approvano azioni sui dati: non si scrivono dati, mai (§52.1)");
@@ -318,19 +361,20 @@ export async function capture(input, env = process.env) {
   rec.session = st.sid;
   // Prima il registro (la fonte dei guard); poi lo specchio e l'audit.
   const ev = appendApproval(file, rec);
-  const label = `${ev.kind} ${ev.plan}${ev.step ? ` passo ${ev.step}` : ""}${ev.approver_declared ? ` (${ev.approver_declared})` : ""}`;
+  const label = ev.kind === "explore" ? `esplorazione ${ev.env} (vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
+    : `${ev.kind} ${ev.plan}${ev.step ? ` passo ${ev.step}` : ""}${ev.approver_declared ? ` (${ev.approver_declared})` : ""}`;
   let warn = "";
   try {
     const { updateSession } = await import("./session.mjs");
     updateSession(st.sessionFile, (x) => {
-      x.approvals = [...(Array.isArray(x.approvals) ? x.approvals : []), { ts: ev.ts, kind: ev.kind, plan: ev.plan, ...(ev.step ? { step: ev.step } : {}), approver_declared: ev.approver_declared ?? null, prompt_sha256: ev.prompt_sha256, hash: ev.hash }];
+      x.approvals = [...(Array.isArray(x.approvals) ? x.approvals : []), { ts: ev.ts, kind: ev.kind, ...(ev.plan ? { plan: ev.plan } : {}), ...(ev.step ? { step: ev.step } : {}), approver_declared: ev.approver_declared ?? null, prompt_sha256: ev.prompt_sha256, hash: ev.hash }];
       const i = (x.pending?.approvals ?? []).findIndex(removeMatch);
       if (i >= 0) x.pending.approvals.splice(i, 1);
     });
   } catch (err) { warn = ` (specchio in session.json non aggiornato: ${String(err.message).slice(0, 120)})`; }
   try {
     appendAudit(st.ws, { session: st.sid, customer: st.customer, scope: s.scope ?? null, kind: "decision", actor: "hook:approval-capture", correlation: { task: null, dec: null, run: null },
-      payload: { approval: ev.kind, plan: ev.plan, step: ev.step ?? null, approver_declared: ev.approver_declared ?? null, hash: ev.hash } });
+      payload: { approval: ev.kind, plan: ev.plan ?? null, env: ev.env ?? null, step: ev.step ?? null, approver_declared: ev.approver_declared ?? null, hash: ev.hash } });
   } catch { /* l'audit non annulla un'approvazione già registrata */ }
   return ctxOut(`Approvazione registrata: ${label} alle ${ev.ts}${warn}. Vale solo per ciò che nomina${ev.kind === "A3" || ev.kind === "action" ? ", una sola volta" : ""}.`, `✓ Approvazione registrata: ${label}`);
 }
