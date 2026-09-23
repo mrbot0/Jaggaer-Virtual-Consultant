@@ -10,6 +10,10 @@ import { fileURLToPath } from "node:url";
 import { confidence, weight } from "./weights.mjs";
 import { quality } from "./quality.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { indexFieldModel, needsFieldIndex } from "./fields.mjs";
+
+// Tipi che alimentano il modello dei campi (K4.5): FLD → fields; FLD, INT, LCY → archi lineage.
+const FIELD_MODEL_TYPES = new Set(["FLD", "INT", "LCY"]);
 
 const SOURCE_WEIGHTS = YAML.parse(readFileSync(new URL("../../schemas/source-weights.yaml", import.meta.url), "utf8"));
 
@@ -115,12 +119,14 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
       if (prev?.hash === hash) {
         stats.unchanged++;
         if (recompute || !prev.confidence) { rescore.run({ code: obj.id, ...scoreItem(obj) }); stats.rescored++; }
+        if (FIELD_MODEL_TYPES.has(obj.type) && needsFieldIndex(db, obj)) indexFieldModel(db, obj);   // DB precedente a 0004-fld
         continue;
       }
       upsert.run({ code: obj.id, level: c.level, customer: c.customer, scope: c.scope, type: c.type, version: c.version, title: obj.title,
         summary: obj.summary, facets: JSON.stringify(obj.facets), ...scoreItem(obj), status: obj.facets.F12, path: relative(root, file), hash,
         updated_at: new Date(statSync(file).mtimeMs).toISOString(), verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
       ftsDel.run(obj.id); ftsIns.run(obj.id, obj.title, obj.summary);
+      if (FIELD_MODEL_TYPES.has(obj.type)) indexFieldModel(db, obj);
       stats.upserted++;
     }
     const dep = db.prepare("update items set status='deprecato' where code=?");
