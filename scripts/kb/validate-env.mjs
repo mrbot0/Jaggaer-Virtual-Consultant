@@ -6,11 +6,11 @@
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join, resolve } from "node:path";
-import { domainToASCII } from "node:url";
 import YAML from "yaml";
 import { validateWith } from "../lib/schemas.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { normalizeHost } from "../../hooks/lib/browser-tools.mjs";
 
 const POLICY_PATH = /prodPolicy/;
 const fmt = (e) => `${e.instancePath || "/"} ${e.message}${e.params?.missingProperty ? ` (${e.params.missingProperty})` : ""}${e.params?.allowedValue !== undefined ? ` (atteso ${JSON.stringify(e.params.allowedValue)})` : ""}`;
@@ -19,13 +19,8 @@ export const environmentsFile = (ws, customer) => join(ws, "customers", customer
 export const remediationScopeFile = (ws, customer) => join(ws, "customers", customer, "config", "remediation-scope.yaml");
 export const sha256 = (text) => createHash("sha256").update(text).digest("hex");
 
-// Host come lo confrontano i guard: minuscolo, IDN in punycode, senza punto finale.
-export function normalizeHost(h) {
-  const s = String(h ?? "").trim().replace(/\.$/, "");
-  const m = /^(.*?)(:\d{1,5})?$/.exec(s);
-  const ascii = domainToASCII(m[1].toLowerCase());
-  return ascii ? `${ascii}${m[2] ?? ""}` : "";
-}
+// Host come lo confrontano i guard (una sola definizione, in hooks/lib/browser-tools.mjs).
+export { normalizeHost };
 
 function regexOk(src) { try { new RegExp(src); return true; } catch { return false; } }
 
