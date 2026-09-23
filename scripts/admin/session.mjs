@@ -2,7 +2,7 @@
 // scrittura atomica validata, cella consentita (§31.4) e CLI `use`.
 // Nessun import pesante in testa: gli hook importano questo modulo e non
 // devono caricare better-sqlite3 (solo `use customer --new` apre il DB).
-import { existsSync, readFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, mkdirSync, writeFileSync, readdirSync, copyFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
@@ -10,9 +10,11 @@ import { validateWith } from "../lib/schemas.mjs";
 import { writeFileAtomic, withFileLock } from "../../hooks/lib/fsx.mjs";
 import {
   isSafeSessionId, readCurrentSession, readPointer, writePointer, writeCurrentSession,
-  sessionDir, sessionFile, CUSTOMER_RE,
+  sessionDir, sessionFile, pointerFile, invocationsFile, CUSTOMER_RE,
 } from "../../hooks/lib/workspace.mjs";
 import { appendAudit } from "../../hooks/lib/audit.mjs";
+import { readJsonl } from "../../hooks/lib/state-summary.mjs";
+import { openFrom } from "../../hooks/lib/invocations.mjs";
 
 const REGISTRY = JSON.parse(readFileSync(new URL("../../schemas/registry.json", import.meta.url), "utf8"));
 export const SCOPES = REGISTRY.scopes;
@@ -146,69 +148,149 @@ function parseBudget(v) {
   return n;
 }
 
+// Chi ha eseguito la CLI (fix round 1 #4): la sessione principale di Claude
+// Code (CLAUDECODE=1 nell'ambiente dei suoi comandi) o un terminale. La CLI non
+// sa se a chiamarla è "il manager": l'audit registra solo ciò che può sapere.
+export const actorOf = (env = process.env) => (env.CLAUDECODE === "1" ? "main-session" : "cli");
+
+// Stato illeggibile ⇒ errore utente (exit 1) con la via di riparazione (#16).
+function loadOrExplain(ws, sid) {
+  try { return loadSession(ws, sid); } catch (err) {
+    throw new CliError(1, `stato di sessione illeggibile (${err.message}): riparalo con \`use customer <ID>\` (ne resta una copia .corrupt-<data>)`);
+  }
+}
+
 function requireActive(ws, sid) {
-  const { pointer, session, file } = loadSession(ws, sid);
+  const { pointer, session, file } = loadOrExplain(ws, sid);
   if (!pointer?.customer) throw new CliError(1, "nessun cliente attivo: esegui prima `use customer <ID>`");
   if (!session) throw new CliError(1, `session.json assente per il cliente ${pointer.customer}: riesegui \`use customer ${pointer.customer}\``);
   return { pointer, session, file };
 }
 
-async function useCustomer(ws, sid, id, { create }) {
+const stamp = () => new Date().toISOString().replace(/[:.]/g, "-");
+function backupCorrupt(file) {
+  const to = `${file}.corrupt-${stamp()}`;
+  copyFileSync(file, to);
+  return to;
+}
+
+// session.json di questa sessione presso ogni cliente:
+// { customer, file, session } oppure { customer, file, corrupt: true }.
+function sessionsOf(ws, sid) {
+  let dirs = [];
+  try { dirs = readdirSync(join(ws, "customers")).filter((c) => CUSTOMER_RE.test(c)); } catch { return []; }
+  const out = [];
+  for (const c of dirs) {
+    const file = sessionFile(ws, c, sid);
+    if (!existsSync(file)) continue;
+    try {
+      const session = JSON.parse(readFileSync(file, "utf8"));
+      out.push(session?.budget && typeof session.budget === "object" ? { customer: c, file, session } : { customer: c, file, corrupt: true });
+    } catch { out.push({ customer: c, file, corrupt: true }); }
+  }
+  return out;
+}
+
+// Sotto-compiti dispatchati da guard-budget e non ancora chiusi da subagent-trace (#8).
+function openTasks(ws, customer, sid, session) {
+  return openFrom(readJsonl(invocationsFile(ws, customer, sid)), session?.ledger?.invocations ?? []).map((i) => i.task_id ?? `#${i.seq}`);
+}
+function refuseOpenTasks(open, what) {
+  if (open.length) throw new CliError(3, `${open.length} sotto-compiti aperti (${open.join(", ")}): attendi la chiusura dei sotto-compiti aperti prima di cambiare ${what}`, { open_tasks: open });
+}
+
+// Il budget è della sessione, non del cliente (#9): tokens dallo stato vivo
+// (la sessione che si lascia, poi il puntatore, poi la sessione aggiornata più
+// di recente); used e by_model = il massimo noto fra puntatore e session.json.
+function mergedBudget(candidates, live) {
+  const ok = candidates.filter((b) => b && Number.isInteger(b.used) && Number.isInteger(b.tokens));
+  const base = live ?? ok[0];
+  if (!base) return null;
+  const by_model = { haiku: 0, sonnet: 0, opus: 0 };
+  for (const b of ok) for (const [k, n] of Object.entries(b.by_model ?? {})) if (Number.isInteger(n) && n > (by_model[k] ?? 0)) by_model[k] = n;
+  return { tokens: base.tokens, used: Math.max(0, ...ok.map((b) => b.used)), by_model };
+}
+
+async function useCustomer(ws, sid, id, { create, actor }) {
   if (typeof id !== "string" || !CUSTOMER_RE.test(id)) throw new CliError(1, `codice cliente non valido: ${id} (4 caratteri A-Z 0-9)`);
   const custDir = join(ws, "customers", id);
   if (!existsSync(custDir) && !create) throw new CliError(1, `cliente inesistente: ${id} (usa --new per crearlo)`);
-  const pointer = readPointer(ws, sid);
+  // Puntatore corrotto (#16): se ne tiene una copia e il cliente precedente è
+  // sconosciuto; allora (come senza cliente nel puntatore) si controllano TUTTI
+  // gli altri clienti che hanno uno stato per questa sessione.
+  let pointer = null;
+  let pointerBackup = null;
+  try { pointer = readPointer(ws, sid); } catch { pointerBackup = backupCorrupt(pointerFile(ws, sid)); }
   const prev = pointer?.customer ?? null;
-  let prevSession = null;
-  if (prev && prev !== id) {
-    const pf = sessionFile(ws, prev, sid);
-    prevSession = existsSync(pf) ? JSON.parse(readFileSync(pf, "utf8")) : null;
-    const comps = prevSession?.pending?.compensations ?? [];
-    if (comps.length) {
-      throw new CliError(3, `il cliente ${prev} ha ${comps.length} compensazioni pendenti: chiudile prima di cambiare cliente`, { pending_compensations: comps });
-    }
+  const all = sessionsOf(ws, sid);
+  const toCheck = prev ? (prev !== id ? all.filter((x) => x.customer === prev) : []) : all.filter((x) => x.customer !== id);
+  const comps = [];
+  const open = [];
+  for (const x of toCheck) {
+    if (x.corrupt) throw new CliError(3, `session.json del cliente ${x.customer} illeggibile: non si sa se ha compensazioni pendenti. Riparalo con \`use customer ${x.customer}\` prima di cambiare cliente`, { unreadable: [x.customer] });
+    comps.push(...(x.session.pending?.compensations ?? []));
+    open.push(...openTasks(ws, x.customer, sid, x.session));
   }
+  if (comps.length) {
+    const from = toCheck.map((x) => x.customer).join(", ");
+    throw new CliError(3, `il cliente ${from} ha ${comps.length} compensazioni pendenti: chiudile prima di cambiare cliente`, { pending_compensations: comps });
+  }
+  refuseOpenTasks(open, "cliente");
   if (create) createCustomerSkeleton(custDir);
   const knowledgeVersion = await readKnowledgeVersion(join(custDir, "knowledge.db"), { create });
   const file = sessionFile(ws, id, sid);
   const dir = sessionDir(ws, id, sid);
   mkdirSync(join(dir, "blackboard"), { recursive: true });
   if (!existsSync(join(dir, "hypotheses.yaml"))) writeFileSync(join(dir, "hypotheses.yaml"), "hypotheses: []\n");
+  // session.json del cliente scelto corrotto (#16): copia di backup, poi stato nuovo.
+  const target = all.find((x) => x.customer === id);
+  const sessionBackup = target?.corrupt ? backupCorrupt(file) : null;
+  const readable = all.filter((x) => !x.corrupt);
+  const prevLive = prev ? readable.find((x) => x.customer === prev)?.session.budget : null;
+  const newest = [...readable].sort((a, b) => String(b.session.updated_at).localeCompare(String(a.session.updated_at)))[0]?.session.budget;
+  const budget = mergedBudget([pointer?.budget, ...readable.map((x) => x.session.budget)], prevLive ?? pointer?.budget ?? newest ?? null);
   let session;
-  if (existsSync(file)) {
-    session = updateSession(file, (s) => { s.knowledge_version = knowledgeVersion ?? s.knowledge_version; s.plugin_version = pluginVersion(); });
+  if (target && !target.corrupt) {
+    session = updateSession(file, (s) => {
+      s.knowledge_version = knowledgeVersion ?? s.knowledge_version;
+      s.plugin_version = pluginVersion();
+      if (budget) s.budget = budget;
+    });
   } else {
-    session = saveSession(file, newSession({ sid, customer: id, knowledgeVersion, budget: prevSession?.budget }));
+    session = saveSession(file, newSession({ sid, customer: id, knowledgeVersion, budget: budget ?? undefined }));
   }
-  writePointer(ws, sid, id);
+  writePointer(ws, sid, id, { budget: session.budget });
   writeCurrentSession(ws, sid);
-  appendAudit(ws, { session: sid, customer: id, scope: session.scope, kind: "session", actor: "manager", payload: { action: "use-customer", from: prev, to: id, created: !!create } });
-  return { session, previous: prev };
+  const backups = [pointerBackup, sessionBackup].filter(Boolean);
+  appendAudit(ws, { session: sid, customer: id, scope: session.scope, kind: "session", actor, payload: { action: "use-customer", from: prev, to: id, created: !!create, repaired: backups.length ? { pointer: !!pointerBackup, session: !!sessionBackup } : null } });
+  return { session, previous: prev, ...(backups.length ? { backups } : {}) };
 }
 
-function useScope(ws, sid, raw) {
+function useScope(ws, sid, raw, { actor }) {
   const S = String(raw ?? "").toUpperCase();
   if (!SCOPES.includes(S)) throw new CliError(1, `scope non valido: ${raw} (${SCOPES.join(" · ")})`);
   const { session: before, file } = requireActive(ws, sid);
+  if (before.scope !== S) refuseOpenTasks(openTasks(ws, before.customer, sid, before), "scope");
   const session = updateSession(file, (s) => { s.scope = S; s.allowed_paths = computeAllowedPaths(s.customer, S, { sessionId: sid }); });
-  appendAudit(ws, { session: sid, customer: session.customer, scope: S, kind: "session", actor: "manager", payload: { action: "use-scope", from: before.scope, to: S } });
+  appendAudit(ws, { session: sid, customer: session.customer, scope: S, kind: "session", actor, payload: { action: "use-scope", from: before.scope, to: S } });
   return { session };
 }
 
-function useMode(ws, sid, raw) {
+function useMode(ws, sid, raw, { actor }) {
   const m = MODE_ALIASES[String(raw ?? "").toLowerCase()] ?? String(raw ?? "").toLowerCase();
   if (!MODES.includes(m)) throw new CliError(1, `modalità non valida: ${raw} (${MODES.join(" · ")})`);
   const { session: before, file } = requireActive(ws, sid);
   const session = updateSession(file, (s) => { s.mode = m; });
-  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "session", actor: "manager", payload: { action: "use-mode", from: before.mode, to: m } });
+  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "session", actor, payload: { action: "use-mode", from: before.mode, to: m } });
   return { session };
 }
 
-function useBudget(ws, sid, raw) {
+function useBudget(ws, sid, raw, { actor }) {
   const n = parseBudget(raw);
-  const { session: before, file } = requireActive(ws, sid);
+  const { pointer, session: before, file } = requireActive(ws, sid);
   const session = updateSession(file, (s) => { s.budget.tokens = n; });
-  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "budget", actor: "manager", payload: { action: "use-budget", from: before.budget.tokens, to: n, used: before.budget.used } });
+  writePointer(ws, sid, session.customer, { budget: pointer?.budget && pointer.budget.used > session.budget.used ? { ...session.budget, used: pointer.budget.used } : session.budget });
+  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "budget", actor, payload: { action: "use-budget", from: before.budget.tokens, to: n, used: before.budget.used } });
   return { session };
 }
 
@@ -222,10 +304,10 @@ Azioni (§56.2):
   use scope <ID>              cella attiva (${SCOPES.join(" ")}); ricalcola allowed_paths
   use mode <m>                nrt | config | ops | diag
   use budget <n>              budget di sessione in token (es. 200000 o 200k); in audit
-  show                        stato corrente
+  show | use show             stato corrente
 
 Opzioni: --session <id> (default: $JVC_SESSION_ID, poi .jvc/current-session)
-         --workspace <dir> (default: $JVC_WORKSPACE, poi la cartella corrente)
+         --workspace <dir> (default: $JVC_WORKSPACE, poi $CLAUDE_PROJECT_DIR, poi la cartella corrente)
          --json --help
 
 Exit code: 0 ok · 1 errore utente · 2 errore di sistema · 3 violazione di policy.`;
@@ -239,19 +321,22 @@ export async function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv, { flags: ["new"] });
   const asJson = !!opts.json;
   if (opts.help || positional.length === 0) { console.log(HELP); return positional.length === 0 && !opts.help ? 1 : 0; }
-  const ws = resolve(opts.workspace ?? env.JVC_WORKSPACE ?? process.cwd());
+  // Come gli hook (workspaceRoot): JVC_WORKSPACE > CLAUDE_PROJECT_DIR > cwd (#15).
+  const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
+  const actor = actorOf(env);
   try {
     const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
     if (!sid) throw new CliError(1, "nessuna sessione risolvibile: passa --session <id> o avvia la sessione nel workspace (SessionStart scrive .jvc/current-session)");
     const [action, what, value] = positional;
     let result;
-    if (action === "show") {
-      const { pointer, session } = loadSession(ws, sid);
+    // `use show`: commands/use.md antepone sempre `use` agli argomenti (#10).
+    if (action === "show" || (action === "use" && what === "show")) {
+      const { pointer, session } = loadOrExplain(ws, sid);
       result = { session_id: sid, pointer, session };
-    } else if (action === "use" && what === "customer") result = await useCustomer(ws, sid, value, { create: !!opts.new });
-    else if (action === "use" && what === "scope") result = useScope(ws, sid, value);
-    else if (action === "use" && what === "mode") result = useMode(ws, sid, value);
-    else if (action === "use" && what === "budget") result = useBudget(ws, sid, value);
+    } else if (action === "use" && what === "customer") result = await useCustomer(ws, sid, value, { create: !!opts.new, actor });
+    else if (action === "use" && what === "scope") result = useScope(ws, sid, value, { actor });
+    else if (action === "use" && what === "mode") result = useMode(ws, sid, value, { actor });
+    else if (action === "use" && what === "budget") result = useBudget(ws, sid, value, { actor });
     else throw new CliError(1, `azione sconosciuta: ${positional.join(" ")}`);
     if (asJson) console.log(JSON.stringify({ ok: true, ...result }));
     else console.log(summary(result.session));

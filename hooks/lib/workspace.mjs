@@ -55,9 +55,11 @@ export function readPointer(ws, sid) {
   return p;
 }
 
-export function writePointer(ws, sid, customer) {
+// `extra`: campi aggiuntivi (es. `budget`, il massimo visto per la sessione,
+// che sopravvive ai cambi di cliente — fix round 1 #9).
+export function writePointer(ws, sid, customer, extra = {}) {
   mkdirSync(join(ws, ".jvc", "sessions"), { recursive: true });
-  const ptr = { session_id: sid, customer: customer ?? null, path: customer ? sessionRelPath(customer, sid) : null, updated_at: new Date().toISOString() };
+  const ptr = { session_id: sid, customer: customer ?? null, path: customer ? sessionRelPath(customer, sid) : null, ...extra, updated_at: new Date().toISOString() };
   writeFileAtomic(pointerFile(ws, sid), JSON.stringify(ptr, null, 2) + "\n");
   return ptr;
 }
