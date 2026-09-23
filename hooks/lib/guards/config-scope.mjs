@@ -25,6 +25,7 @@
 // costruisce il nome del file a runtime (node -e con stringhe calcolate) sfugge
 // all'analisi; per questo il token vale solo se la frase è anche nel transcript.
 import { dirname, resolve, join, basename } from "node:path";
+import { readFileSync, statSync } from "node:fs";
 import { intersects, resolveTarget, bases, PathPolicyError } from "../paths.mjs";
 import { guarded, denyAudited, targetsOf, allRels, shellWriteTargets, subtree, SHELL_TOOLS } from "./common.mjs";
 import { browserGuarded, declaredEnv } from "./browser.mjs";
@@ -198,7 +199,8 @@ function pluginScript(cmd, ctx) {
   if (!/^node(\.exe)?$/i.test(t[0] ?? "") || !/\.mjs$/i.test(t[1] ?? "")) return false;
   const abs = resolve(ctx.cwd, t[1]);
   const inside = bases(join(ctx.plugin, "scripts")).some((b) => { const a = resolveTarget(abs, { cwd: ctx.cwd, ws: ctx.ws }).abs; return [...a].every((x) => x.startsWith(`${b}/`)); });
-  return inside && !t.slice(2).some((a) => /^(-e|-p|--eval|--print|--import|-r|--require)$/.test(a));
+  if (!inside || t.slice(2).some((a) => /^(-e|-p|--eval|--print|--import|-r|--require)$/.test(a))) return null;
+  return { script: t[1], rest: t.slice(2).join(" ") };   // K5 giro 3: gli argomenti si controllano a parte
 }
 
 function transcriptDirs(ctx) {
@@ -208,7 +210,54 @@ function transcriptDirs(ctx) {
 }
 const under = (abs, dirs) => dirs.some((d) => abs === d || abs.startsWith(`${d}/`));
 
+// ---- K5 giro 3: PROTECTED_CONFIG e codice del plugin ----
+// Impostazioni di Claude Code (possono spegnere i guard: env come NODE_OPTIONS o
+// JVC_WORKSPACE, disableAllHooks, hook, plugin, server MCP): <workspace>/.claude/**,
+// <workspace>/.mcp.json, ogni .claude/** (anche ~/.claude/**, settings*.json,
+// plugins/**) e ~/.claude.json; e il codice del plugin (${CLAUDE_PLUGIN_ROOT}/**):
+// un guard modificato vale dalla chiamata successiva. Negati a sessione e sub-agenti
+// con gli strumenti di file, con i comandi di shell che li citano (anche one-liner
+// d'interprete, copy/curl/git/link) e con il contenuto di script che li scrivono.
+const SETTINGS_WHY = "le impostazioni di Claude Code (.claude/**, ~/.claude/**, ~/.claude.json, .mcp.json) le modifica solo l'utente, a mano, fuori sessione: possono spegnere i guard del plugin";
+const PLUGIN_WHY = "il codice del plugin (${CLAUDE_PLUGIN_ROOT}/**) è in sola lettura durante una sessione JVC: un guard modificato varrebbe dalla chiamata successiva";
+const CONFIG_TEXT = /(^|[^\w.-])\.claude(?=$|[.\\/\s'"`;|&)(,:])|(^|[^\w])claude~\d|\.mcp\.json/i;
+const CONFIG_ABS = /(^|\/)\.claude(\/|$)|(^|\/)\.claude\.json$|(^|\/)\.mcp\.json$|(^|\/)claude~\d(\/|$)/;
+const CLAUDE_ADMIN = /(^|[\s'"])(plugins?|config|mcp)(?=$|[\s'"])/i;
+const WRITE_ANY = /appendfile|writefile|createwritestream|opensync|writeall|\[io\.file\]|copyfile|renamesync|\bfs\.|add-content|set-content|out-file|new-item|\bni\b|\btee\b|>|\bcp\b|\bmv\b|\bcopy\b|robocopy|xcopy|copy-item|move-item|rename|\bdel\b|\brm\b|remove-item|\bcurl\b|\bwget\b|invoke-webrequest|\biwr\b|\birm\b|\bgit\s+(checkout|restore|apply|reset|stash|mv|rm|am)\b|mklink|\bln\b|\bsed\s+-[a-z]*i|\bperl\s+-[a-z]*i|\binstall\b|\brsync\b|\bdd\b|\.write\s*\(|\bopen\s*\(/i;
+const flatOf = (s) => String(s).replace(/\\/g, "/").toLowerCase();
+function mentionsPlugin(ctx, text) {
+  const f = flatOf(text);
+  return /claude_plugin_root/.test(f) || bases(ctx.plugin).some((b) => f.includes(b));
+}
+const underPlugin = (ctx, abs) => bases(ctx.plugin).some((b) => abs === b || abs.startsWith(`${b}/`));
+
+// Script locali eseguiti da un interprete (node x.mjs, python x.py, pwsh x.ps1, …):
+// il guard legge il file (≤ 256 KB) e applica gli stessi controlli del contenuto
+// scritto con Write/Edit. Un file illeggibile o assente non si esegue comunque.
+const SCRIPT_FILE = /(?:^|[\s'"])([^\s'"]+\.(?:mjs|cjs|js|ts|py|ps1|psm1|sh|bash|rb|pl|php|cmd|bat))(?=$|[\s'"])/gi;
+function scriptContentRefusal(ctx, cmd) {
+  if (!INTERP.test(cmd) && !/(^|[\s;&|])(bash|sh|cmd|\.\/)/i.test(cmd)) return null;
+  for (const m of cmd.matchAll(SCRIPT_FILE)) {
+    let text;
+    try {
+      const f = resolve(ctx.cwd, m[1]);
+      if (statSync(f).size > 256 * 1024) return `script troppo grande per l'analisi del guard: ${m[1]}`;
+      text = readFileSync(f, "utf8");
+    } catch { continue; }
+    if (!CODE_WRITE.test(text) && !WRITE_ANY.test(text)) continue;
+    if (STATE.test(text)) return `lo script ${m[1]} scrive file e cita il registro delle approvazioni o lo stato di sessione`;
+    if (CONFIG_TEXT.test(text)) return `lo script ${m[1]} scrive file e cita le impostazioni di Claude Code — ${SETTINGS_WHY}`;
+    if (mentionsPlugin(ctx, text)) return `lo script ${m[1]} scrive file e cita il plugin — ${PLUGIN_WHY}`;
+  }
+  return null;
+}
+
 function checkTarget(ctx, T, tree, tr) {
+  if (T.plugin?.size) return `${PLUGIN_WHY}: ${[...T.plugin][0] || "."}`;
+  for (const a of T.abs) {
+    if (underPlugin(ctx, a) || (tree && bases(ctx.plugin).some((b) => b.startsWith(`${a}/`)))) return `${PLUGIN_WHY}: ${a}`;
+    if (CONFIG_ABS.test(a)) return `${SETTINGS_WHY}: ${a}`;
+  }
   for (const p of allRels(T)) {
     for (const [area, why] of PROTECTED) if (intersects(p, area)) return `${why}: ${p}`;
     if (tree) for (const [area, why] of TREE) if (intersects(subtree(p), area)) return `${why} (la cartella lo contiene): ${p || "."}`;
@@ -248,6 +297,8 @@ const protectWrites = guarded(G, (ctx) => {
   if (texts.some((t) => PHRASE.test(t))) return no("l'input contiene una frase di approvazione (APPROVO PIANO/PROVA/PASSO): le approvazioni le scrive solo l'utente nel prompt, mai uno strumento");
   if (WRITE_FILE_TOOLS.has(ctx.tool)) {
     if (texts.some((t) => STATE.test(t) && CODE_WRITE.test(t))) return no("il contenuto scrive su file e cita il registro delle approvazioni o lo stato di sessione: codice che può falsificare i token");
+    if (texts.some((t) => CONFIG_TEXT.test(t) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive le impostazioni di Claude Code — ${SETTINGS_WHY}`);
+    if (texts.some((t) => mentionsPlugin(ctx, t) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive nel plugin — ${PLUGIN_WHY}`);
     const r = checkTarget(ctx, targetsOf(ctx), false, tr);
     return r ? no(r) : null;
   }
@@ -255,7 +306,17 @@ const protectWrites = guarded(G, (ctx) => {
   if (typeof cmd !== "string" || !cmd.trim()) return null;
   if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
   if (CLAUDE_BIN.test(cmd) && CLAUDE_FLAGS.test(cmd)) return no("la CLI di Claude in modalità headless o di ripresa (-p/--print, -r/--resume, -c/--continue) non si invoca da una sessione JVC: produrrebbe prompt 'dell'utente'");
-  if (pluginScript(cmd, ctx)) return null;
+  if (CLAUDE_BIN.test(cmd) && CLAUDE_ADMIN.test(cmd)) return no(`i sottocomandi claude plugin|config|mcp cambiano plugin, impostazioni e server MCP — ${SETTINGS_WHY}`);
+  const script = pluginScript(cmd, ctx);
+  if (script) {
+    // anche uno script del plugin non riceve come argomento un percorso delle impostazioni
+    if (CONFIG_TEXT.test(script.rest)) return no(`argomento verso le impostazioni di Claude Code — ${SETTINGS_WHY}`);
+    return null;
+  }
+  if (CONFIG_TEXT.test(cmd)) return no(`il comando cita le impostazioni di Claude Code (.claude, ~/.claude.json, .mcp.json) — ${SETTINGS_WHY}; si leggono con Read`);
+  if (mentionsPlugin(ctx, cmd) && (INTERP.test(cmd) || WRITE_ANY.test(cmd))) return no(`il comando cita il plugin insieme a un interprete o a una primitiva di scrittura — ${PLUGIN_WHY}`);
+  const sc = scriptContentRefusal(ctx, cmd);
+  if (sc) return no(sc);
   const flat = cmd.replace(/\\/g, "/").toLowerCase();
   if (/approvals\.json/.test(flat)) return no("il comando cita approvals.json(l): il registro delle approvazioni si legge con Read o con `approvals.mjs status`, non si tocca dalla shell");
   if (/approvals/.test(flat) && WRITE_PRIM.test(flat)) return no("il comando cita 'approvals' insieme a una primitiva di scrittura: nome del registro costruito a runtime");
