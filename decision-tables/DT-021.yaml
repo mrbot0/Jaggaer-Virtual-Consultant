@@ -1,0 +1,28 @@
+id: DT-021
+version: 1
+title: Livello S o C di un item
+decision: "Decidere se un item digerito è standard (S) o del cliente (C); in mezzo è ambiguo e si chiede"
+description: "Punteggio = propensione verso C. Il segnale 'verso S' (item S con stesso soggetto e valori uguali) contribuisce 0 se presente e il suo peso se assente. S con valori uguali = conferma, non nuovo item."
+inputs:
+  - { name: customer_origin, label: "Genere/origine del documento (origin: cliente, doc-configurazione-cliente)", weight: 0.25, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: deictic_lexicon, label: "Lessico deittico: 'in ACME', 'nel nostro', 'come concordato', nomi di società/persone", weight: 0.25, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: s_item_different_values, label: "Esiste un item S con lo stesso soggetto e valori diversi (deviates_from)", weight: 0.20, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: s_item_same_values, label: "Esiste un item S con lo stesso soggetto e valori uguali (verso S)", weight: 0.15, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: in_customer_export, label: "Presente nell'export di configurazione del cliente con questo valore", weight: 0.15, domain: { boolean: { true: 1, false: 0 } } }
+priors:
+  - name: disproved_by_signal
+    label: "Tasso di smentita per segnale"
+    weight: 0
+    neutral: 0
+    source: { metric: rate_disproved, note: "i pesi della spec sommano già a 1: il tasso entra nella calibrazione mensile (§12.5), non nel punteggio" }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.40, outcome: S }
+  - { from: 0.40, to: 0.600001, outcome: ambiguo }
+  - { from: 0.600001, to: 1, outcome: C }
+outcomes: [S, C, ambiguo]
+null_policy: { customer_origin: "default:false", deictic_lexicon: "default:false", s_item_different_values: "default:false", s_item_same_values: "default:false", in_customer_export: "default:false" }
+log_as: DEC
+calibration: spec
+calibration_note: "pesi e soglie da §19.13 ('sopra 0.60 → C; sotto 0.40 → S'); 0.60 esatto resta ambiguo"
+sources: ["§15.2", "§19.13", "§18.5"]

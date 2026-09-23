@@ -1,0 +1,30 @@
+id: DT-015
+version: 1
+title: Query consegnabile
+decision: "Decidere se una query Analytics è consegnabile"
+description: "Punteggio = dubbio. Mai consegnata se non eseguita con LIMIT e giudicata coerente (§20.3); su tabelle ignote porta l'avvertenza esplicita."
+inputs:
+  - { name: coherence, label: "Coerenza del risultato con il profilo (conteggi, campioni)", weight: 0.40, domain: { enum: { coerente: 0, parziale: 0.5, incoerente: 1 } } }
+  - { name: tables_knowledge, label: "Conoscenza delle tabelle interrogate", weight: 0.25, domain: { enum: { validate: 0, empiriche: 0.3, ignote: 1 } } }
+  - { name: pattern_known, label: "Costruita dal pattern CL-ANL-008", weight: 0.15, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: executed_with_limit, label: "Eseguita con LIMIT", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+priors:
+  - name: disproved_by_pattern
+    label: "Tasso di smentita per pattern di query"
+    weight: 0.20
+    neutral: 0
+    source: { metric: rate_disproved, outcome: "sì", by: [cluster] }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.35, outcome: "sì" }
+  - { from: 0.35, to: 1, outcome: "no" }
+overrides:
+  - { when: { executed_with_limit: false }, outcome: "no", source: "§20.3: eseguita con limite" }
+  - { when: { coherence: incoerente }, outcome: "no", source: "§20.3: giudicata coerente" }
+combinations:
+  - { when: { tables_knowledge: ignote }, add: avvertenza-tabelle-ignote, source: "§20.3: avvertenza esplicita; non diventa QRY finché non eseguita due volte coerente" }
+outcomes: ["sì", "no"]
+null_policy: { coherence: error, tables_knowledge: worst, pattern_known: worst, executed_with_limit: error }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§20.3"]

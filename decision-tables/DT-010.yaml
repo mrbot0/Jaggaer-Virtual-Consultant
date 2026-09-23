@@ -1,0 +1,32 @@
+id: DT-010
+version: 1
+title: Promuovere a S
+decision: "Decidere se un gruppo di item L di più clienti è candidato alla promozione a livello S (approvazione umana)"
+description: "Punteggio = dubbio sulla promozione; universali/condizionati con P ≥ 0.8 (§22 passo 6)."
+inputs:
+  - { name: portability_class, label: "Classe di portabilità (DT-006)", weight: 0.35,
+      domain: { enum: { universale: 0, condizionata: 0.2, specifica: 1, ignota: 1 } } }
+  - { name: p_value, label: "P (§6.3)", weight: 0.25, domain: { range: [-2, 1], invert: true } }
+  - { name: quality_class, label: "Classe d'uso della qualità Q (§6.5.3)", weight: 0.25,
+      domain: { enum: { operativa: 0, affidabile: 0.2, indicativa: 0.6, da-riverificare: 1 } } }
+  - { name: p_ge_08, label: "P ≥ 0.80", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: open_product_ctr, label: "CTR di prodotto aperto sul gruppo", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+priors:
+  - name: post_promotion_disproved
+    label: "Tasso di smentita post-promozione"
+    weight: 0.15
+    neutral: 0
+    source: { metric: rate_disproved, outcome: candidato, by: [cluster] }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.30, outcome: candidato }
+  - { from: 0.30, to: 1, outcome: "no" }
+overrides:
+  - { when: { portability_class: [specifica, ignota] }, outcome: "no", source: "§22.6: solo universali/condizionati" }
+  - { when: { p_ge_08: false }, outcome: "no", source: "§22.6: P ≥ 0.8" }
+  - { when: { open_product_ctr: true }, outcome: "no", source: "§22.5: gruppi divergenti → CTR di prodotto" }
+outcomes: [candidato, "no"]
+null_policy: { portability_class: error, p_value: error, quality_class: worst, p_ge_08: error, open_product_ctr: "default:true" }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§22", "§6.3", "§6.5"]

@@ -1,0 +1,25 @@
+id: DT-014
+version: 1
+title: Fermare un'esplorazione
+decision: "Continuare o fermare un'esplorazione a budget (STR-EXPLORE-BUDGET)"
+inputs:
+  - { name: budget_used, label: "Quota del budget di passi/token usata", weight: 0.40, domain: { range: [0, 1] } }
+  - { name: novelty_recent, label: "Novità prodotte negli ultimi passi (OBS, candidati)", weight: 0.30, domain: { enum: { alta: 0, bassa: 0.5, nulla: 1 } } }
+  - { name: surprises, label: "Sorprese nel compito", weight: 0.15, domain: { enum: { "0": 0, "1": 0.4, "2": 0.8, "3": 1 } } }
+  - { name: system_errors, label: "Errori di sistema (E2) durante l'esplorazione", weight: 0.15, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: budget_exhausted, label: "Budget esaurito", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: next_risk, label: "Rischio del prossimo passo", weight: 0, domain: { enum: { R0: 0, R1: 0, R2: 0, R3: 0 } } }
+priors: []
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.60, outcome: continua }
+  - { from: 0.60, to: 1, outcome: ferma }
+overrides:
+  - { when: { budget_exhausted: true }, outcome: ferma, source: "§14.2: esplora a budget" }
+  - { when: { next_risk: [R1, R2, R3] }, outcome: ferma, source: "§14.2: STR-EXPLORE-BUDGET è R0; niente verdetti" }
+  - { when: { surprises: "3" }, outcome: ferma, source: "§13.3: terza sorpresa" }
+outcomes: [continua, ferma]
+null_policy: { budget_used: error, novelty_recent: worst, surprises: "default:0", system_errors: "default:false", budget_exhausted: "default:false", next_risk: error }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§14.2", "§13.3"]

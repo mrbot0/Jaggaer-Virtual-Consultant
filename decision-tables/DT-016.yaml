@@ -1,0 +1,28 @@
+id: DT-016
+version: 1
+title: Sorpresa compatibile o incompatibile
+decision: "Classificare una sorpresa al passo come compatibile (procedi dichiarando l'assunzione) o incompatibile (ferma il passo)"
+inputs:
+  - name: divergence
+    label: "Tipo di divergenza (§13.2)"
+    weight: 0.50
+    domain: { enum: { elemento-in-piu: 0, tempo-fuori-norma: 0.2, attributo-diverso: 0.5, messaggio-inatteso: 0.6, stato-diverso: 1, elemento-assente: 1 } }
+  - { name: risk, label: "Rischio del passo", weight: 0.35, domain: { enum: { R0: 0, R1: 0.2, R2: 1, R3: 1 } } }
+priors:
+  - name: disproved_by_divergence
+    label: "Tasso per tipo di divergenza (compatibili poi smentite)"
+    weight: 0.15
+    neutral: 0
+    source: { metric: rate_disproved, outcome: compatibile, match_inputs: [divergence] }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.5, outcome: compatibile }
+  - { from: 0.5, to: 1, outcome: incompatibile }
+overrides:
+  - { when: { risk: [R2, R3] }, outcome: incompatibile, source: "§13.2: se R ≥ R2 ferma il passo" }
+  - { when: { divergence: [elemento-assente, stato-diverso] }, outcome: incompatibile, source: "§13.2: elemento mancante, stato diverso" }
+outcomes: [compatibile, incompatibile]
+null_policy: { divergence: error, risk: error }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§13.2", "§20.1", "§20.6.4"]

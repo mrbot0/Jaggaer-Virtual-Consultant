@@ -1,0 +1,39 @@
+id: DT-023
+version: 1
+title: Profondità di deliberazione
+decision: "Quanto pensare prima di agire: rapida · standard · profonda"
+description: "Pesi e bande da §10.4; scale dei valori come DT-017 (stessi input). Gli override riportano le condizioni della tabella di §10.4."
+inputs:
+  - { name: risk, label: "Rischio", weight: 0.30, domain: { enum: { R0: 0, R1: 0.3, R2: 0.7, R3: 1.0 } } }
+  - { name: shape, label: "Forma epistemica", weight: 0.30,
+      domain: { enum: { consolidato: 0, empirico: 0.4, libresco: 0.6, ignoto: 0.9, contraddittorio: 1.0 } } }
+  - { name: surprises, label: "Sorprese in sessione", weight: 0.15, domain: { enum: { "0": 0, "1": 0.4, "2": 0.8, "3": 1.0 } } }
+  - { name: precedent, label: "Precedente più vicino", weight: 0.15,
+      domain: { enum: { "confermato-d<0.2": 0, "confermato-d<0.5": 0.3, nessuno: 0.5, "smentito-d<0.3": 0.9 } } }
+  - { name: graph_radius_gt5, label: "Raggio d'impatto sul grafo > 5 nodi", weight: 0.10, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: never_executed_here, label: "Compito mai eseguito su questo cliente", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+priors:
+  - name: disproved_by_depth
+    label: "Tasso di smentita per profondità"
+    weight: 0
+    neutral: 0
+    source: { metric: rate_disproved, by: [cluster],
+      note: "i pesi della spec sommano già a 1: il tasso sposta le soglie alla calibrazione (rapide smentite > 3% → soglia giù), §10.4" }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.25, outcome: rapida }
+  - { from: 0.25, to: 0.600001, outcome: standard }
+  - { from: 0.600001, to: 1, outcome: profonda }
+overrides:
+  - { when: { risk: [R2, R3], shape: [libresco, ignoto, contraddittorio] }, outcome: profonda, source: "§10.4: R ≥ R2 × (libresco ∨ ignoto ∨ contraddittorio)" }
+  - { when: { surprises: ["2", "3"] }, outcome: profonda, source: "§10.4: ≥ 2 sorprese" }
+  - { when: { never_executed_here: true, graph_radius_gt5: true }, outcome: profonda, source: "§10.4: mai eseguito qui con impatto > 5 nodi" }
+  - { when: { shape: contraddittorio }, outcome: profonda, source: "§18.4: R0 ma forma contraddittoria → profonda" }
+  - { when: { shape: consolidato, risk: [R0, R1], precedent: ["confermato-d<0.2", "confermato-d<0.5"], surprises: "0" }, outcome: rapida,
+      source: "§10.4: consolidato × R ≤ R1 × precedente confermato × 0 sorprese" }
+outcomes: [rapida, standard, profonda]
+null_policy: { risk: error, shape: worst, surprises: "default:0", precedent: "default:nessuno", graph_radius_gt5: worst, never_executed_here: "default:true" }
+log_as: DEC
+calibration: spec
+calibration_note: "pesi e bande da §10.4 ('> 0.60 profonda': 0.60 esatto resta standard); valori degli input dalle scale di DT-017; override di §18.4 aggiunto perché la somma pesata (R0, contraddittorio) dà standard mentre la spec dice profonda"
+sources: ["§15.2", "§10.4", "§18.4"]

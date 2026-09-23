@@ -1,0 +1,26 @@
+id: DT-012
+version: 1
+title: Priorità di copertura
+decision: "Punteggio di priorità di copertura di test di una capability/soggetto dentro lo scope"
+description: "Approssimazione additiva del prodotto di §27.3: criticità × (1 − copertura) × volatilità × densità di difetti × fattore integrazione × identità × handoff."
+inputs:
+  - { name: criticality, label: "Criticità della capability", weight: 0.25, domain: { enum: { alta: 1, media: 0.5, bassa: 0.2 } } }
+  - { name: uncovered, label: "1 − copertura", weight: 0.25, domain: { range: [0, 1] } }
+  - { name: volatility, label: "Volatilità (delta di release)", weight: 0.15, domain: { enum: { alta: 1, media: 0.5, bassa: 0 } } }
+  - { name: integration, label: "Fattore integrazione", weight: 0.10, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: identity, label: "Fattore identità (chiavi KEY)", weight: 0.05, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: handoff, label: "Fattore handoff", weight: 0.05, domain: { boolean: { true: 1, false: 0 } } }
+priors:
+  - name: defect_density
+    label: "Densità di difetti in collaudo"
+    weight: 0.15
+    neutral: 0
+    source: { metric: external, note: "difetti per caso in collaudo sul soggetto, normalizzati in [0, 1]" }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 1, outcome: punteggio }
+outcomes: [punteggio]
+null_policy: { criticality: worst, uncovered: worst, volatility: worst, integration: worst, identity: worst, handoff: worst }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§27.3"]

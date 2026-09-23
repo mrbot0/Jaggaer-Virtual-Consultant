@@ -1,0 +1,22 @@
+id: DT-009
+version: 1
+title: Selezione evidenze
+decision: "Punteggio di rilevanza di un'evidenza candidata per la lista del dossier / contact sheet"
+description: "Una valutazione per evidenza candidata: la lista è composta dalle candidate con punteggio ≥ 0.5 in ordine decrescente; `failure` è sempre attivo (§27.5) e vale 1."
+inputs:
+  - name: point_kind
+    label: "Tipo di punto di evidenza (§27.5, §29.4)"
+    weight: 0.40
+    domain: { enum: { failure: 1, transition: 0.8, assertion: 0.8, integration: 0.7, snapshot: 0.6, input: 0.5, entry: 0.3 } }
+  - { name: required_by_action, label: "Richiesta come evidenza minima dalla classe d'azione (§29.4)", weight: 0.30, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: cited_by_finding, label: "Citata da un finding o da un'asserzione", weight: 0.20, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: duplicate, label: "Duplica un'evidenza già in lista", weight: 0.10, domain: { boolean: { true: 0, false: 1 } } }
+priors: []
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 1, outcome: lista }
+outcomes: [lista]
+null_policy: { point_kind: error, required_by_action: "default:false", cited_by_finding: "default:false", duplicate: "default:false" }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§27.5", "§29.4"]

@@ -1,0 +1,40 @@
+id: DT-007
+version: 1
+title: Rischio di una modifica di configurazione
+decision: "Rischio effettivo (R0–R3) e perimetro di una modifica di configurazione"
+description: "Base per area CL-CFG (§28.5) corretta da rollback, raggio sul grafo, finestra, maturità, forma epistemica e prior di smentita per area e cliente. Perimetro (annotation): verde = approvazione in sessione · giallo = + change request + finestra · rosso = approvazione passo per passo (§28.1)."
+inputs:
+  - name: area
+    label: "Area di configurazione CL-CFG (rischio tipico §28.5: R1 .30 · R2 .60 · R2/R3 .75 · R3 .95)"
+    weight: 0.55
+    domain:
+      enum: { "001": 0.95, "002": 0.75, "003": 0.95, "004": 0.95, "005": 0.6, "006": 0.3, "007": 0.95, "008": 0.3, "009": 0.95, "010": 0.6,
+              "011": 0.6, "012": 0.95, "013": 0.95, "014": 0.3, "015": 0.95, "016": 0.3, "017": 0.6, "018": 0.3, "019": 0.3, "020": 0.75 }
+  - { name: rollback_exists, label: "Rollback esistente", weight: 0.10, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: graph_radius_gt5, label: "Raggio sul grafo > 5 nodi", weight: 0.10, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: in_window, label: "Dentro la finestra di modifica", weight: 0.05, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: mature, label: "Maturità: ≥ 3 esecuzioni confermate", weight: 0.05, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: shape, label: "Forma epistemica", weight: 0.05,
+      domain: { enum: { consolidato: 0, empirico: 0.4, libresco: 0.6, ignoto: 0.9, contraddittorio: 1.0 } } }
+priors:
+  - name: disproved_area_customer
+    label: "Tasso di smentita per area CL-CFG e cliente"
+    weight: 0.10
+    neutral: 0
+    source: { metric: rate_disproved, by: [cluster, customer] }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.12, outcome: R0 }
+  - { from: 0.12, to: 0.33, outcome: R1 }
+  - { from: 0.33, to: 0.50, outcome: R2 }
+  - { from: 0.50, to: 1, outcome: R3 }
+overrides:
+  - { when: { area: ["002", "005", "010", "011", "017", "020"], shape: libresco }, outcome: R3,
+      source: "§28.5: un R2 su libresco sale a R3 di fatto" }
+outcomes: [R0, R1, R2, R3]
+outcome_annotations: { R0: verde, R1: verde, R2: giallo, R3: rosso }
+null_policy: { area: error, rollback_exists: worst, graph_radius_gt5: worst, in_window: worst, mature: worst, shape: worst }
+log_as: DEC
+calibration: spec
+calibration_note: "rischio base per area e correttivi da §28.5; i pesi dei correttivi (0.45 in tutto) e le bande sono calibrati perché, a correttivi favorevoli, R1/R2/R3 restino nella loro classe (R2/R3 → R2) e i correttivi sfavorevoli alzino la classe; R0 non è raggiungibile da una modifica (ACT-CFG-READ è R0)"
+sources: ["§15.2", "§28.1", "§28.5", "§12.1"]

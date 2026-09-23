@@ -1,0 +1,42 @@
+id: DT-001
+version: 1
+title: Classificare un fallimento
+decision: "Classificare un fallimento di test in una delle sette categorie di §30.1, con confidenza"
+description: "Il punteggio è la confidenza della categoria candidata. Confidenza < 0.60 → tier superiore, poi ask-user (§30.1): lo applica il chiamante."
+inputs:
+  - name: candidate_category
+    label: "Categoria candidata (dal dossier, incrociata con delta.yaml)"
+    weight: 0
+    domain: { enum: { test-defect: 0, config-drift: 0, product-defect: 0, baseline-change: 0, environment: 0, expected-change: 0, regression: 0 } }
+  - { name: evidence_consistency, label: "Coerenza del dossier con la categoria (prima divergenza, messaggio, stato)", weight: 0.42,
+      domain: { enum: { univoca: 1, prevalente: 0.6, debole: 0.2 } } }
+  - { name: delta_crosscheck, label: "Incrocio con delta.yaml", weight: 0.12, domain: { enum: { coerente: 1, assente: 0.5, incoerente: 0 } } }
+  - { name: err_catalog, label: "Confronto con il catalogo ERR (§20.6.3)", weight: 0.12, domain: { enum: { coerente: 1, non-noto: 0.5, incoerente: 0 } } }
+  - { name: precedent, label: "Precedente più vicino (kb precedents)", weight: 0.18,
+      domain: { enum: { confermato-stessa-categoria: 1, nessuno: 0.5, smentito-stessa-categoria: 0 } } }
+  - { name: precedent_fixed_defect, label: "Il precedente è un Defect chiuso come fixed", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+priors:
+  - name: category_disproved
+    label: "Tasso di smentita della categoria sul cluster del soggetto"
+    weight: 0.16
+    neutral: 0
+    invert: true
+    source: { metric: rate_disproved, outcome_input: candidate_category, by: [cluster] }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 1, outcome_from: candidate_category }
+outcome_selectors:
+  - { from: 0, to: 1, when: { candidate_category: product-defect, precedent_fixed_defect: true }, outcome: regression,
+      source: "§30.1: un product-defect il cui precedente è un Defect chiuso come fixed" }
+outcomes: [test-defect, config-drift, product-defect, baseline-change, environment, expected-change, regression]
+null_policy:
+  candidate_category: error
+  evidence_consistency: "default:debole"
+  delta_crosscheck: "default:assente"
+  err_catalog: "default:non-noto"
+  precedent: "default:nessuno"
+  precedent_fixed_defect: "default:false"
+log_as: DEC
+calibration: bootstrap
+calibration_note: "pesi scelti perché il caso §18.2 dia .88 con precedente confermato e .79 senza"
+sources: ["§15.2", "§30.1", "§18.2", "§20.6.3"]

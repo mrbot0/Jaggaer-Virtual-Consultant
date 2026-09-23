@@ -1,0 +1,28 @@
+id: DT-024
+version: 1
+title: Tipo di incertezza
+decision: "Classificare l'incertezza come epistemica (osservare, chiedere, aggiornare), aleatoria (riprovare con backoff, flaky) o mista (isolare con STR-BISECT)"
+inputs:
+  - { name: divergence_pattern, label: "Pattern delle osservazioni ripetute", weight: 0.65, domain: { enum: { coerente: 0, variabile: 1 } },
+      note: "coerente = una divergenza dall'atteso, uguale a ogni ripetizione; variabile = cambia a ogni ripetizione" }
+  - name: err_category
+    label: "Categoria dell'errore osservato (§20.6.4)"
+    weight: 0.20
+    domain: { enum: { nessuno: 0.3, validation: 0, permission: 0, business-rule: 0, integration: 0.5, session: 0.5, non-classificato: 0.5, system: 0.6, concurrency: 0.8, timeout: 1 } }
+  - { name: intermittent_timing, label: "Tempi fuori norma intermittenti", weight: 0.15, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: mixed_steps, label: "Aleatoria su un passo che maschera un'epistemica su un altro", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+priors: []
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.40, outcome: epistemica }
+  - { from: 0.40, to: 0.65, outcome: mista }
+  - { from: 0.65, to: 1, outcome: aleatoria }
+overrides:
+  - { when: { mixed_steps: true }, outcome: mista, source: "§13.7: il caso misto si risolve isolando il passo con STR-BISECT" }
+combinations:
+  - { when: { mixed_steps: true }, add: STR-BISECT, source: "§13.7" }
+outcomes: [epistemica, aleatoria, mista]
+null_policy: { divergence_pattern: error, err_category: "default:nessuno", intermittent_timing: "default:false", mixed_steps: "default:false" }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§13.7", "§20.6.4"]

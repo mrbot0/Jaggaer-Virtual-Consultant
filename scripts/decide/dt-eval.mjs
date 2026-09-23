@@ -128,6 +128,12 @@ export function validateTable(t) {
     if (p.startsWith("default:") && !inDomain(i.domain, parseDefault(i.domain, p.slice(8)))) errors.push(`null_policy '${i.name}': default fuori dominio`);
   }
   for (const k of Object.keys(t.null_policy)) if (!byName[k]) errors.push(`null_policy: input '${k}' inesistente`);
+  for (const p of t.priors) {
+    for (const k of [p.source.outcome_input, ...(p.source.match_inputs ?? [])].filter(Boolean)) {
+      if (!byName[k]) errors.push(`prior '${p.name}': input '${k}' inesistente`);
+    }
+    if (p.source.outcome && !p.source.table) checkOutcome(p.source.outcome, `prior '${p.name}'.source.outcome`);
+  }
   return { ok: errors.length === 0, errors };
 }
 
@@ -223,7 +229,13 @@ export function autoPriors(db, table, inputs, { customer, cluster, strategy } = 
     const by = p.source.by ?? [];
     const ctx = { customer, cluster, strategy, shape: inputs.shape };
     if (by.some((k) => ctx[k] === undefined || ctx[k] === null)) { out[p.name] = { value: null, n: 0, sufficient: false }; continue; }
-    const filter = { table: p.source.table ?? table.id, outcome: p.source.outcome };
+    const outcome = p.source.outcome_input ? inputs[p.source.outcome_input] : p.source.outcome;
+    const match = {};
+    for (const k of p.source.match_inputs ?? []) match[k] = inputs[k];
+    if ((p.source.outcome_input && outcome == null) || Object.values(match).some((v) => v == null)) {
+      out[p.name] = { value: null, n: 0, sufficient: false }; continue;
+    }
+    const filter = { table: p.source.table ?? table.id, outcome: outcome == null ? undefined : String(outcome), match };
     for (const k of by) filter[k] = ctx[k];
     const r = rates(db, filter);
     out[p.name] = { value: r.sufficient ? r.rate_disproved : null, n: r.n, sufficient: r.sufficient, source: "auto" };

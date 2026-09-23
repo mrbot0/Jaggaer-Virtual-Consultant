@@ -1,0 +1,27 @@
+id: DT-019
+version: 1
+title: Quale genere di fonte cercare per colmare un gap
+decision: "Scegliere il genere di fonte da cercare per colmare un gap su un attributo atteso"
+description: "Genere preferito dall'attributo: modello (dipendenze, impatti, mapping) → tecnica; sequenze ed etichette → d'uso; stato attuale → osservazione; intenzione ('è voluto?') → utente (§11.2, §11.3). Se il preferito non c'è: osservazione se R0-osservabile (§18.3: la schermata chiude più domande), altrimenti utente."
+inputs:
+  - { name: preferred_genre, label: "Genere preferito per l'attributo del gap", weight: 0,
+      domain: { enum: { tecnica: 0, "d'uso": 0, osservazione: 0, utente: 0 } } }
+  - { name: preferred_available, label: "Una fonte del genere preferito è disponibile", weight: 0.45, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: observable_r0, label: "Il gap è osservabile con passi R0", weight: 0.25, domain: { boolean: { true: 0, false: 1 } } }
+priors:
+  - name: gap_unresolved_rate
+    label: "Tasso di gap non risolti dal genere preferito"
+    weight: 0.30
+    neutral: 0
+    source: { metric: rate_disproved, outcome_input: preferred_genre, by: [cluster] }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.45, outcome_from: preferred_genre }
+  - { from: 0.45, to: 1, outcome: utente }
+outcome_selectors:
+  - { from: 0.45, to: 1, when: { observable_r0: true }, outcome: osservazione, source: "§18.3" }
+outcomes: [tecnica, "d'uso", osservazione, utente]
+null_policy: { preferred_genre: error, preferred_available: worst, observable_r0: worst }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§11.2", "§11.3", "§16.3", "§18.3"]

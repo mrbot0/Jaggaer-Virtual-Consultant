@@ -1,0 +1,29 @@
+id: DT-008
+version: 1
+title: Strategia di localizzazione
+decision: "Scegliere la strategia di localizzazione di un elemento nella catena testid → role → label → css (Selector Atlas)"
+description: "Punteggio = rischio che la prima strategia disponibile fallisca; oltre 0.5 si scende al gradino successivo della catena."
+inputs:
+  - { name: first_available, label: "Prima strategia della catena disponibile sull'elemento", weight: 0,
+      domain: { enum: { testid: 0, role: 0, label: 0, css: 0 } } }
+  - { name: stability, label: "Stabilità del selettore nell'Atlas", weight: 0.45, domain: { enum: { stabile: 0, variabile: 0.5, instabile: 1 } } }
+  - { name: dynamic_pattern, label: "Pattern CL-UIB dinamico (es. validazione asincrona in griglia)", weight: 0.20, domain: { boolean: { true: 1, false: 0 } } }
+priors:
+  - name: strategy_failure
+    label: "Tasso di insuccesso della strategia sul pattern CL-UIB"
+    weight: 0.35
+    neutral: 0
+    source: { metric: rate_disproved, outcome_input: first_available, by: [cluster] }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.5, outcome_from: first_available }
+  - { from: 0.5, to: 1, outcome: css }
+outcome_selectors:
+  - { from: 0.5, to: 1, when: { first_available: testid }, outcome: role, source: "§20.4: strategia 2 invece della 1" }
+  - { from: 0.5, to: 1, when: { first_available: role }, outcome: label, source: "§20.4" }
+  - { from: 0.5, to: 1, when: { first_available: label }, outcome: css, source: "§20.4" }
+outcomes: [testid, role, label, css]
+null_policy: { first_available: error, stability: worst, dynamic_pattern: worst }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§20.4", "§23.4", "§27.1"]

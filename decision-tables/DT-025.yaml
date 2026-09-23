@@ -1,0 +1,21 @@
+id: DT-025
+version: 1
+title: Priorità di un documento nel backlog di ingestion
+decision: "Punteggio di priorità di un documento nel backlog di ingestion, dal guadagno epistemico atteso"
+description: "guadagno(DOC) = Σ_soggetti (peso_soggetto × gap_corrente × affidabilità_DOC) / costo_stimato(DOC), calcolato da scripts/decide/ingestion-gain.mjs; l'input è il guadagno normalizzato sul massimo del backlog (preserva l'ordine)."
+inputs:
+  - { name: gain_normalized, label: "Guadagno epistemico atteso / massimo del backlog", weight: 1.0, domain: { range: [0, 1] } }
+priors:
+  - name: realized_over_expected
+    label: "Guadagno epistemico realizzato / atteso per tipo di documento"
+    weight: 0
+    neutral: 0
+    source: { metric: external, note: "agisce su reliability.base_by_kind (un tipo che delude scende, §19.18), quindi sull'affidabilità nella formula, non come addendo" }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 1, outcome: punteggio }
+outcomes: [punteggio]
+null_policy: { gain_normalized: error }
+log_as: DEC
+calibration: spec
+sources: ["§15.2", "§19.18"]

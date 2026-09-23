@@ -79,8 +79,10 @@
             "properties": {
               "metric": { "enum": ["rate_disproved", "external"] },
               "table": { "type": "string", "pattern": "^DT-0[0-9]{2}$" },
-              "outcome": { "type": "string" },
+              "outcome": { "type": "string", "description": "filtra le DEC con questo esito" },
+              "outcome_input": { "type": "string", "description": "filtra le DEC il cui esito è il valore di questo input (es. la categoria candidata)" },
               "by": { "type": "array", "items": { "enum": ["customer", "cluster", "shape", "strategy"] }, "uniqueItems": true },
+              "match_inputs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true, "description": "filtra le DEC con lo stesso valore di questi input" },
               "note": { "type": "string" }
             }
           },

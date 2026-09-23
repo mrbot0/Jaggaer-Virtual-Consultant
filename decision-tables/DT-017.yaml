@@ -20,7 +20,13 @@ inputs:
   - { name: config_hypothesis, label: "Configurazione con ipotesi da verificare", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
   - { name: depth, label: "Profondità di deliberazione (DT-023)", weight: 0, domain: { enum: { rapida: 0, standard: 0, profonda: 0 } } }
   - { name: preferred_hypothesis_strong, label: "Ipotesi preferita con prior > 0.6", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
-priors: []
+priors:
+  - name: strategy_disproved
+    label: "Tasso di smentita per strategia e cluster"
+    weight: 0
+    neutral: 0
+    source: { metric: rate_disproved, by: [cluster, strategy],
+      note: "i pesi di §14.3 sommano già a 1: il tasso alza le soglie per cluster alla calibrazione mensile (§14.3, §12.5), non entra nel punteggio" }
 scoring: weighted_sum
 thresholds:
   - { from: 0, to: 0.15, outcome: STR-REPLAY }

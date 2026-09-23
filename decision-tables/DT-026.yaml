@@ -1,0 +1,27 @@
+id: DT-026
+version: 1
+title: Classificazione dell'intento
+decision: "Dagli elementi estratti dall'intento (cliente, ambiente, scope, classi d'azione, dati) decidere se avviare da solo, mostrare il piano, seguire la tripla approvazione, rifiutare o chiedere"
+description: "Esiti dalle regole dell'avvio automatico (§29.5) e dal catalogo degli intenti (§61): parte da solo solo ≤ R1 in sandbox o R0 ovunque; R2 mostra il piano e attende; R3 e produzione seguono §52; elemento critico mancante o ambiguo → chiedi; classe d'azione non ammessa nell'ambiente (scrittura in prod, ACT-DELETE) → rifiuta."
+inputs:
+  - { name: critical_missing, label: "Elemento critico mancante o ambiguo (nessun ambiente, due scope plausibili)", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: action_class_allowed, label: "Tutte le classi d'azione sono ammesse nell'ambiente (§29.4)", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: config_change, label: "Contiene ACT-CFG-CHANGE", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: max_risk, label: "Rischio massimo delle classi d'azione", weight: 0.60, domain: { enum: { R0: 0, R1: 0.2, R2: 0.6, R3: 1 } } }
+  - { name: environment, label: "Ambiente dichiarato", weight: 0.40, domain: { enum: { sandbox: 0, preprod: 0.5, prod: 1 } } }
+priors: []
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.25, outcome: avvia }
+  - { from: 0.25, to: 1, outcome: mostra-piano }
+overrides:
+  - { when: { critical_missing: true }, outcome: chiedi, source: "§29.5: se un elemento critico manca o è ambiguo, l'esito è chiedi" }
+  - { when: { action_class_allowed: false }, outcome: rifiuta, source: "§61: 'Su ACME produzione crea un ordine di test' · 'Cancella la RdA' → rifiutato" }
+  - { when: { max_risk: R0 }, outcome: avvia, source: "§29.5: R0 ovunque" }
+  - { when: { environment: prod, config_change: true }, outcome: approvazione-3A, source: "§29.5, §52.2: configurazioni in produzione solo con tre approvazioni" }
+  - { when: { max_risk: R3 }, outcome: approvazione-3A, source: "§29.5: R3 e produzione seguono §52" }
+outcomes: [avvia, mostra-piano, approvazione-3A, rifiuta, chiedi]
+null_policy: { critical_missing: error, action_class_allowed: error, config_change: "default:false", max_risk: error, environment: error }
+log_as: DEC
+calibration: bootstrap
+sources: ["§29.5", "§29.4", "§52", "§61"]

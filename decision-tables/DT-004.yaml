@@ -1,0 +1,32 @@
+id: DT-004
+version: 1
+title: Validare una lezione
+decision: "Validare, fondere o rigettare una lezione (LSN) con i controlli di §21.2"
+inputs:
+  - { name: form_ok, label: "Forma: otto sezioni, frontmatter completo, codici esistenti", weight: 0.20, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: grounded, label: "Fondatezza: ogni affermazione della §6 sostenuta da OBS, DEC o esecuzione", weight: 0.20, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: boundaries_ok, label: "Confini: no analysis/, no altri clienti, no fuori scope senza handoff", weight: 0.20, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: portability_ok, label: "Portabilità: §7 coerente con l'ipotesi", weight: 0.15, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: expected_outcomes_declared, label: "Esiti attesi dichiarati per ogni DEC con effetti", weight: 0.15, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: novel, label: "Novità: non duplica una lezione validata", weight: 0.05, domain: { boolean: { true: 0, false: 1 } } }
+  - { name: actionable, label: "Azionabilità: almeno un artefatto candidato", weight: 0.05, domain: { boolean: { true: 0, false: 1 } } }
+priors: []
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.10, outcome: validated }
+  - { from: 0.10, to: 1, outcome: rejected }
+overrides:
+  - { when: { form_ok: false }, outcome: rejected, source: "§21.2 rejected: forma" }
+  - { when: { grounded: false }, outcome: rejected, source: "§21.2 rejected: non fondata" }
+  - { when: { boundaries_ok: false }, outcome: rejected, source: "§21.2 rejected: confine" }
+  - { when: { portability_ok: false }, outcome: rejected, source: "§21.2 rejected: portabilità" }
+  - { when: { expected_outcomes_declared: false }, outcome: rejected, source: "§21.2 rejected: non verificabile" }
+  - { when: { novel: false }, outcome: merged, source: "§21.2 merged (+1 conferma)" }
+combinations:
+  - { when: { actionable: false }, add: inerte, source: "§21.2 validated: inerte" }
+outcomes: [validated, merged, rejected]
+null_policy: { form_ok: worst, grounded: worst, boundaries_ok: worst, portability_ok: worst, expected_outcomes_declared: worst, novel: worst, actionable: worst }
+log_as: DEC
+calibration: bootstrap
+calibration_note: "i rigetti precedono la fusione: una lezione che viola un confine non si fonde con una validata"
+sources: ["§15.2", "§21.2"]

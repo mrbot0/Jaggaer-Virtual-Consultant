@@ -8,9 +8,17 @@ import { openDb } from "../kb/db.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
-export function rates(db, { table, cluster, customer, shape, strategy, outcome, windowMin = 30 } = {}) {
+const INPUT_NAME = /^[a-z][a-z0-9_]*$/;
+
+// `match`: { nome_input: valore } confrontati sugli input registrati nella DEC
+// (json_extract); i nomi sono validati, mai interpolati da input libero.
+export function rates(db, { table, cluster, customer, shape, strategy, outcome, match = {}, windowMin = 30 } = {}) {
   const where = ["o.result in ('confermata','smentita','parziale')"];
   const params = [];
+  for (const [k, v] of Object.entries(match)) {
+    if (!INPUT_NAME.test(k)) throw new Error(`nome di input non valido: ${k}`);
+    where.push(`json_extract(d.inputs, '$.${k}') = ?`); params.push(typeof v === "boolean" ? (v ? 1 : 0) : v);
+  }
   if (table) { where.push("d.table_code = ?"); params.push(table); }
   if (cluster) { where.push("d.subject_cluster = ?"); params.push(cluster); }
   if (customer) { where.push("d.code like ?"); params.push(`L.${customer}.%`); }

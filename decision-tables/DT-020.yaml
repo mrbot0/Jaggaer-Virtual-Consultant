@@ -1,0 +1,35 @@
+id: DT-020
+version: 1
+title: Tipo di un item digerito
+decision: "Tipo di registro di un'unità digerita, con confidenza; sotto 0.70 l'item è ambiguo"
+description: "Punteggio = confidenza del tipo candidato: segnali concordi con il candidato (posizione nel documento, forma dell'unità, lessico, nome tecnico, riferimento a sistemi esterni). Ambiguo → validatore con i due tipi candidati (§19.13)."
+inputs:
+  - name: candidate_type
+    label: "Tipo candidato"
+    weight: 0
+    domain:
+      enum: { CAP: 0, FLW: 0, KEY: 0, LCY: 0, FLD: 0, INT: 0, CFG: 0, CFP: 0, SEL: 0, HND: 0, INV: 0, GLS: 0, PMP: 0, PRF: 0, TBL: 0, QRY: 0,
+              CHK: 0, STR: 0, OBS: 0, CTR: 0, EVD: 0, LSN: 0, CLS: 0, DT: 0, DEC: 0, EPI: 0, DOC: 0, UNT: 0, DIN: 0, USR: 0, PSP: 0,
+              ERR: 0, ACT: 0, RPT: 0, ENV: 0, PAT: 0, PBK: 0, BRF: 0, RUL: 0 }
+  - { name: position, label: "Posizione nel documento concorde (Setup → CFG, Procedure → FLW, tabella campi → FLD)", weight: 0.30, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: unit_form, label: "Forma dell'unità concorde (passi numerati → FLW, frase deontica → KEY/LCY/INV, tracciato → INT)", weight: 0.25, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: lexicon, label: "Lessico concorde (verbi di configurazione vs d'uso)", weight: 0.20, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: technical_name, label: "Presenza di un nome tecnico", weight: 0.10, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: external_ref, label: "Riferimento a sistemi esterni concorde", weight: 0.05, domain: { boolean: { true: 1, false: 0 } } }
+priors:
+  - name: reclassification_rate
+    label: "Tasso di riclassificazione per tipo"
+    weight: 0.10
+    neutral: 0
+    invert: true
+    source: { metric: rate_disproved, outcome_input: candidate_type }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.70, outcome: ambiguo }
+  - { from: 0.70, to: 1, outcome_from: candidate_type }
+outcomes: [CAP, FLW, KEY, LCY, FLD, INT, CFG, CFP, SEL, HND, INV, GLS, PMP, PRF, TBL, QRY, CHK, STR, OBS, CTR, EVD, LSN, CLS, DT, DEC,
+  EPI, DOC, UNT, DIN, USR, PSP, ERR, ACT, RPT, ENV, PAT, PBK, BRF, RUL, ambiguo]
+null_policy: { candidate_type: error, position: "default:false", unit_form: "default:false", lexicon: "default:false", technical_name: "default:false", external_ref: "default:false" }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§19.13", "§18.5"]

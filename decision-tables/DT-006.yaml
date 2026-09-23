@@ -1,0 +1,27 @@
+id: DT-006
+version: 1
+title: Portabilità
+decision: "Classe di portabilità di un soggetto osservato su più clienti"
+description: "P = (clienti_confermanti − 2 × clienti_contraddicenti) / clienti_osservati, in [−2, 1], normalizzato in [0, 1]: P ≥ 0.80 ⇔ punteggio ≥ 0.933333"
+inputs:
+  - { name: p_value, label: "P (§6.3)", weight: 1.0, domain: { range: [-2, 1] } }
+  - { name: enough_customers, label: "Almeno 2 clienti osservati", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: contradictions, label: "Clienti contraddicenti > 0", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: facet_explains, label: "Una faccetta spiega la partizione", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+priors: []
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.933333, outcome: specifica }
+  - { from: 0.933333, to: 1, outcome: universale }
+outcome_selectors:
+  - { from: 0.933333, to: 1, when: { contradictions: true, facet_explains: true }, outcome: condizionata, source: "§6.3: universale richiede 0 contraddizioni" }
+  - { from: 0.933333, to: 1, when: { contradictions: true }, outcome: specifica, source: "§6.3" }
+  - { from: 0, to: 0.933333, when: { facet_explains: true }, outcome: condizionata, source: "§6.3: condizionata se una faccetta spiega la partizione" }
+overrides:
+  - { when: { enough_customers: false }, outcome: ignota, source: "§6.3: ignota se < 2 clienti" }
+outcomes: [universale, condizionata, specifica, ignota]
+null_policy: { p_value: error, enough_customers: error, contradictions: error, facet_explains: "default:false" }
+log_as: DEC
+calibration: bootstrap
+calibration_note: "formula di P e soglie da §6.3; la tabella le traduce in bande e selettori"
+sources: ["§15.2", "§6.3", "§22"]

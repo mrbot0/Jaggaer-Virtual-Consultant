@@ -1,0 +1,29 @@
+id: DT-005
+version: 1
+title: Ammettere in un cluster
+decision: "Ammettere un item in un cluster, rigettarlo con il criterio violato o metterlo in quarantena (nel dubbio non entra)"
+inputs:
+  - { name: inclusion, label: "Criteri di inclusione", weight: 0.35, domain: { enum: { tutti-veri: 0, qualcuno-indeterminato: 0.5, qualcuno-falso: 1 } } }
+  - { name: exclusion, label: "Criteri di esclusione", weight: 0.35, domain: { enum: { nessuno: 0, indeterminato: 0.5, almeno-uno: 1 } } }
+  - { name: signature_match, label: "L'item ha la firma di faccette del cluster", weight: 0.10, domain: { boolean: { true: 0, false: 1 } } }
+priors:
+  - name: family_quarantine_rate
+    label: "Tasso di quarantena della famiglia"
+    weight: 0.20
+    neutral: 0
+    source: { metric: external, note: "calcolato dalla digestione settimanale (quarantene / valutazioni per famiglia)" }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.25, outcome: ammesso }
+  - { from: 0.25, to: 0.60, outcome: quarantena }
+  - { from: 0.60, to: 1, outcome: rigettato }
+overrides:
+  - { when: { exclusion: almeno-uno }, outcome: rigettato, source: "§7.3: nessun criterio di esclusione" }
+  - { when: { inclusion: qualcuno-falso }, outcome: rigettato, source: "§7.3: tutti i criteri di inclusione" }
+  - { when: { inclusion: qualcuno-indeterminato }, outcome: quarantena, source: "§7.3: nel dubbio non entra, il dubbio è registrato" }
+  - { when: { exclusion: indeterminato }, outcome: quarantena, source: "§7.3: nel dubbio non entra, il dubbio è registrato" }
+outcomes: [ammesso, rigettato, quarantena]
+null_policy: { inclusion: error, exclusion: error, signature_match: worst }
+log_as: DEC
+calibration: bootstrap
+sources: ["§15.2", "§7.3", "§19.5"]

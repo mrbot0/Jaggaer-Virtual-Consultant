@@ -1,0 +1,30 @@
+id: DT-003
+version: 1
+title: Tier di modello
+decision: "Scegliere il tier di modello (T0 · T1 · T2) per un compito, con la copertura epistemica"
+inputs:
+  - { name: risk, label: "Rischio (F10)", weight: 0.25, domain: { enum: { R0: 0, R1: 0.3, R2: 0.7, R3: 1.0 } } }
+  - { name: task_novelty, label: "Novità del compito", weight: 0.20, domain: { enum: { "ok-3+": 0, "ok-1-2": 0.5, mai: 1.0 } },
+      note: "≥ 3 esiti ok: 0 · 1-2: 0.5 · mai: 1.0" }
+  - { name: shape, label: "Forma epistemica del soggetto", weight: 0.25,
+      domain: { enum: { consolidato: 0, empirico: 0.4, libresco: 0.6, ignoto: 0.9, contraddittorio: 1.0 } } }
+  - { name: synthesis, label: "Necessità di sintesi", weight: 0.15, domain: { enum: { codice-lista: 0, artefatto: 0.5, giudizio-progetto: 1.0 } } }
+  - { name: volume, label: "Volume", weight: 0.05, domain: { enum: { "<5k": 0, "5-30k": 0.5, ">30k": 1.0 } } }
+priors:
+  - name: escalation_rate
+    label: "Tasso di escalation su questo tipo di compito"
+    weight: 0.10
+    neutral: 0
+    source: { metric: rate_disproved, by: [cluster],
+      note: "una DEC di DT-003 è smentita quando il compito è stato scalato di tier; cluster = tipo di compito (CL-DEC)" }
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.30, outcome: T0 }
+  - { from: 0.30, to: 0.600001, outcome: T1 }
+  - { from: 0.600001, to: 1, outcome: T2 }
+outcomes: [T0, T1, T2]
+null_policy: { risk: error, task_novelty: worst, shape: worst, synthesis: worst, volume: worst }
+log_as: DEC
+calibration: spec
+calibration_note: "bande '< 0.30 · 0.30–0.60 · > 0.60': 0.60 esatto resta T1 (limite 0.600001)"
+sources: ["§15.2", "§25.2"]
