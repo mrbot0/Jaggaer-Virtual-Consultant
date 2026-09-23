@@ -1,0 +1,66 @@
+id: DT-017
+version: 1
+title: Selezione della strategia
+decision: "Scegliere la strategia di ragionamento (repertorio §14.2) da forma epistemica, rischio, precedenti e sorprese"
+inputs:
+  - { name: shape, label: "Forma epistemica", weight: 0.35,
+      domain: { enum: { consolidato: 0, empirico: 0.4, libresco: 0.6, ignoto: 0.9, contraddittorio: 1.0 } } }
+  - { name: risk, label: "Rischio del passo", weight: 0.30, domain: { enum: { R0: 0, R1: 0.3, R2: 0.7, R3: 1.0 } } }
+  - name: precedent
+    label: "Precedente più vicino"
+    weight: 0.20
+    domain: { enum: { "confermato-d<0.2": 0, "confermato-d<0.5": 0.3, nessuno: 0.5, "smentito-d<0.3": 0.9 } }
+    note: "precedenti più lontani (confermati d ≥ 0.5, smentiti d ≥ 0.3) valgono come 'nessuno' (§12.4)"
+  - name: surprises
+    label: "Sorprese già in sessione"
+    weight: 0.15
+    domain: { enum: { "0": 0, "1": 0.4, "2": 0.8, "3": 1.0 } }
+    note: "3 = terza sorpresa: il compito si ferma (§13.3), override → STR-STOP-RECORD"
+  - { name: diagnosis_unknown_divergence, label: "Diagnosi con prima divergenza ignota", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: config_hypothesis, label: "Configurazione con ipotesi da verificare", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: depth, label: "Profondità di deliberazione (DT-023)", weight: 0, domain: { enum: { rapida: 0, standard: 0, profonda: 0 } } }
+  - { name: preferred_hypothesis_strong, label: "Ipotesi preferita con prior > 0.6", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+priors: []
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.15, outcome: STR-REPLAY }
+  - { from: 0.15, to: 0.35, outcome: nessuna }
+  - { from: 0.35, to: 0.55, outcome: STR-VERIFY-FIRST }
+  - { from: 0.55, to: 0.75, outcome: STR-VERIFY-FIRST }
+  - { from: 0.75, to: 1, outcome: STR-STOP-RECORD }
+outcome_selectors:
+  - { from: 0, to: 0.15, when: { precedent: ["confermato-d<0.5", nessuno, "smentito-d<0.3"] }, outcome: nessuna,
+      source: "§14.2, §17.3: STR-REPLAY solo con precedente confermato d < 0.2" }
+  - { from: 0, to: 0.15, when: { shape: [empirico, libresco, ignoto, contraddittorio] }, outcome: nessuna,
+      source: "§14.2: STR-REPLAY richiede forma consolidato" }
+  - { from: 0.35, to: 0.55, when: { shape: libresco }, outcome: STR-VERIFY-FIRST, source: "§14.3" }
+  - { from: 0.35, to: 0.55, when: { shape: empirico }, outcome: STR-GENERALIZE-CAUTIOUSLY, source: "§14.3" }
+  - { from: 0.35, to: 0.55, when: { shape: contraddittorio }, outcome: STR-TRIANGULATE, source: "§14.3" }
+  - { from: 0.35, to: 0.55, when: { shape: ignoto }, outcome: STR-VERIFY-FIRST,
+      source: "§18.3: ignoto a 0.505 → STR-VERIFY-FIRST (riga assente in §14.3)" }
+  - { from: 0.55, to: 0.75, when: { risk: [R2, R3] }, outcome: STR-DRY-RUN, source: "§14.3 (poi la strategia di forma)" }
+  - { from: 0.55, to: 0.75, when: { shape: ignoto, risk: R0 }, outcome: STR-EXPLORE-BUDGET, source: "§14.3" }
+  - { from: 0.55, to: 0.75, when: { shape: ignoto, risk: [R1, R2, R3] }, outcome: STR-ASK-EARLY, source: "§14.3" }
+  - { from: 0.55, to: 0.75, when: { shape: contraddittorio }, outcome: STR-TRIANGULATE, source: "§14.2: strategia di forma" }
+overrides:
+  - { when: { diagnosis_unknown_divergence: true }, outcome: STR-BISECT, source: "§14.3: indipendente dal punteggio" }
+  - { when: { surprises: "3" }, outcome: STR-STOP-RECORD, source: "§13.3, §14.2: terza sorpresa" }
+combinations:
+  - { when: { config_hypothesis: true }, add: STR-MIN-CHANGE, source: "§14.3: configurazione con ipotesi (in combinazione)" }
+  - { when: { risk: [R2, R3], depth: profonda }, add: STR-PREMORTEM, source: "§14.2" }
+  - { when: { preferred_hypothesis_strong: true }, add: STR-DISCONFIRM, source: "§14.2" }
+outcomes: [STR-REPLAY, nessuna, STR-VERIFY-FIRST, STR-GENERALIZE-CAUTIOUSLY, STR-TRIANGULATE, STR-DRY-RUN,
+  STR-EXPLORE-BUDGET, STR-ASK-EARLY, STR-STOP-RECORD, STR-BISECT]
+null_policy:
+  shape: worst
+  risk: error
+  precedent: "default:nessuno"
+  surprises: "default:0"
+  diagnosis_unknown_divergence: "default:false"
+  config_hypothesis: "default:false"
+  depth: "default:standard"
+  preferred_hypothesis_strong: "default:false"
+log_as: DEC
+calibration: spec
+calibration_note: "pesi, valori e bande da §14.3; le default di banda (0.35–0.55 e 0.55–0.75 → STR-VERIFY-FIRST) e i selettori di STR-REPLAY/contraddittorio coprono le combinazioni che §14.3 non elenca, citando §12.4, §14.2, §17.3"
+sources: ["§14.2", "§14.3", "§12.4", "§13.3", "§17.3", "§18.1", "§18.3"]

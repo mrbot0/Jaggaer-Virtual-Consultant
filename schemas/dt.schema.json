@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dt.schema.json",
+  "title": "Tabella di decisione (DT)",
+  "description": "Tabella di decisione valutata da scripts/decide/dt-eval.mjs (§15). Punteggio = Σ peso × punteggio_input + Σ peso × prior; la somma dei pesi di inputs e priors deve valere 1.0 ± 0.001 (controllo semantico in dt-eval). Ordine di valutazione: overrides (il primo che corrisponde vince) → banda di thresholds che contiene il punteggio → outcome_selectors di quella banda (il primo che corrisponde) → outcome o outcome_from della banda. Bande [from, to) contigue da 0 a 1, l'ultima include 1. Priori: valore in [0,1] calcolato dal registro degli esiti (scripts/digest/outcomes-rates.mjs); con --priors auto, se il tasso non è `sufficient` (< 30 DEC con esito) il prior assume il valore `neutral` dichiarato (default 0 = nessuna evidenza di smentita: non sposta il punteggio). `invert: true` usa 1 − valore (per le tabelle il cui punteggio è una confidenza).",
+  "type": "object",
+  "required": ["id", "version", "title", "decision", "inputs", "priors", "scoring", "thresholds", "outcomes", "null_policy", "log_as", "calibration", "sources"],
+  "additionalProperties": false,
+  "$defs": {
+    "value": { "type": ["string", "number", "boolean"] },
+    "when": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "oneOf": [
+          { "$ref": "#/$defs/value" },
+          { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/value" } }
+        ]
+      }
+    },
+    "score01": { "type": "number", "minimum": 0, "maximum": 1 },
+    "domain": {
+      "oneOf": [
+        {
+          "type": "object", "required": ["enum"], "additionalProperties": false,
+          "properties": { "enum": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/score01" } } }
+        },
+        {
+          "type": "object", "required": ["range"], "additionalProperties": false,
+          "properties": {
+            "range": { "type": "array", "prefixItems": [{ "type": "number" }, { "type": "number" }], "minItems": 2, "maxItems": 2 },
+            "invert": { "type": "boolean", "description": "punteggio = 1 − valore normalizzato" },
+            "saturate": { "type": "boolean", "description": "valori oltre il massimo valgono il massimo (es. età in release: 'tre+'); sotto il minimo resta errore" }
+          }
+        },
+        {
+          "type": "object", "required": ["boolean"], "additionalProperties": false,
+          "properties": {
+            "boolean": {
+              "type": "object", "required": ["true", "false"], "additionalProperties": false,
+              "properties": { "true": { "$ref": "#/$defs/score01" }, "false": { "$ref": "#/$defs/score01" } }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "id": { "type": "string", "pattern": "^DT-0[0-9]{2}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 3 },
+    "decision": { "type": "string", "minLength": 3 },
+    "description": { "type": "string" },
+    "inputs": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["name", "weight", "domain"], "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "label": { "type": "string" },
+          "weight": { "$ref": "#/$defs/score01" },
+          "domain": { "$ref": "#/$defs/domain" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "priors": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["name", "weight", "source", "neutral"], "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "label": { "type": "string" },
+          "weight": { "$ref": "#/$defs/score01" },
+          "neutral": { "$ref": "#/$defs/score01" },
+          "invert": { "type": "boolean" },
+          "source": {
+            "type": "object", "required": ["metric"], "additionalProperties": false,
+            "properties": {
+              "metric": { "enum": ["rate_disproved", "external"] },
+              "table": { "type": "string", "pattern": "^DT-0[0-9]{2}$" },
+              "outcome": { "type": "string" },
+              "by": { "type": "array", "items": { "enum": ["customer", "cluster", "shape", "strategy"] }, "uniqueItems": true },
+              "note": { "type": "string" }
+            }
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "scoring": { "const": "weighted_sum" },
+    "thresholds": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["from", "to"], "additionalProperties": false,
+        "properties": {
+          "from": { "$ref": "#/$defs/score01" },
+          "to": { "$ref": "#/$defs/score01" },
+          "outcome": { "type": "string" },
+          "outcome_from": { "type": "string", "description": "l'esito è il valore dell'input con questo nome (dominio enum)" }
+        },
+        "oneOf": [{ "required": ["outcome"] }, { "required": ["outcome_from"] }]
+      }
+    },
+    "outcome_selectors": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["from", "to", "when", "outcome"], "additionalProperties": false,
+        "properties": {
+          "from": { "$ref": "#/$defs/score01" },
+          "to": { "$ref": "#/$defs/score01" },
+          "when": { "$ref": "#/$defs/when" },
+          "outcome": { "type": "string" },
+          "source": { "type": "string" }
+        }
+      }
+    },
+    "overrides": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["when", "outcome"], "additionalProperties": false,
+        "properties": { "when": { "$ref": "#/$defs/when" }, "outcome": { "type": "string" }, "source": { "type": "string" } }
+      }
+    },
+    "combinations": {
+      "type": "array",
+      "description": "strategie o annotazioni da applicare in combinazione con l'esito (es. STR-MIN-CHANGE, §14.3)",
+      "items": {
+        "type": "object", "required": ["when", "add"], "additionalProperties": false,
+        "properties": { "when": { "$ref": "#/$defs/when" }, "add": { "type": "string" }, "source": { "type": "string" } }
+      }
+    },
+    "outcomes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+    "outcome_annotations": { "type": "object", "additionalProperties": { "type": "string" } },
+    "null_policy": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^(error|worst|default:.+)$" }
+    },
+    "log_as": { "const": "DEC" },
+    "calibration": { "enum": ["spec", "bootstrap"] },
+    "calibration_note": { "type": "string" },
+    "sources": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+  }
+}

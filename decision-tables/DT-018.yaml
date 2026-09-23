@@ -1,0 +1,28 @@
+id: DT-018
+version: 1
+title: Il precedente è applicabile?
+decision: "Decidere se riusare le scelte di un precedente (replay), usarlo per orientare la strategia o ignorarlo"
+inputs:
+  - { name: distance, label: "Distanza di contesto (§12.3)", weight: 0.40, domain: { range: [0, 1] } }
+  - { name: precedent_outcome, label: "Esito del precedente", weight: 0.25, domain: { enum: { confermata: 0, parziale: 0.5, smentita: 1 } } }
+  - { name: chk_incorporated, label: "Il precedente ha prodotto un CHK o una deviazione già incorporata", weight: 0.15,
+      domain: { boolean: { true: 0, false: 1 } } }
+  - { name: age_releases, label: "Età in release (release/3)", weight: 0.10, domain: { range: [0, 3], saturate: true },
+      note: "tre release o più valgono 1 (scala di freschezza §6.3: 'tre+')" }
+  - { name: same_shape, label: "Stessa forma epistemica allora e ora", weight: 0.10, domain: { boolean: { true: 0, false: 1 } } }
+priors: []
+scoring: weighted_sum
+thresholds:
+  - { from: 0, to: 0.25, outcome: replay }
+  - { from: 0.25, to: 0.60, outcome: orienta }
+  - { from: 0.60, to: 1, outcome: ignora }
+outcomes: [replay, orienta, ignora]
+null_policy:
+  distance: error
+  precedent_outcome: error
+  chk_incorporated: worst
+  age_releases: worst
+  same_shape: worst
+log_as: DEC
+calibration: spec
+sources: ["§15.4", "§12.3", "§12.4", "§18.2"]
