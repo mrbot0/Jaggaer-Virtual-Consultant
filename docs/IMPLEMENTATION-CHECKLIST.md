@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 23/09/2026 15:50 — **punto corrente: WP04 (K3) avviato; WP03 (K2) chiuso**.
+Ultimo aggiornamento: 23/09/2026 16:50 — **punto corrente: WP05 (K4) avviato; WP04 (K3) chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 21 % del progetto** (stima pesata sullo sforzo) · 3 pacchetti su 16 chiusi.
+**≈ 28 % del progetto** (stima pesata sullo sforzo) · 4 pacchetti su 16 chiusi.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 21 %** (22 / 106 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 3 / 16 = **19 %** | WP01, WP02, WP03 con review pulita e tag |
+| Avanzamento pesato | **≈ 28 %** (30 / 106 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 4 / 16 = **25 %** | WP01–WP04 con review pulita e tag |
 | Hook del catalogo §44.4 | 9 / 16 = **56 %** | 15 hook + approval-capture |
-| Test automatici | 230 / 230 verdi | `npm test` al tag `k2-done` (`0bfb2a2`); tempi dei guard max 127 ms |
+| Test automatici | 305 / 305 verdi | `npm test` al tag `k3-done` (`43f935f`); golden di strategy-select 20/20 |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -22,6 +22,13 @@ Ultimo aggiornamento: 23/09/2026 15:50 — **punto corrente: WP04 (K3) avviato; 
 - Novità per l'utente: `use close-stale` chiude a mano i sotto-compiti rimasti aperti; quelli più vecchi di 2 ore scadono da soli. La sessione principale non può più cancellare la propria cartella di sessione dalla shell.
 - Problemi minori rinviati alla review finale: alcuni comandi di sola lettura negati per eccesso di prudenza (per esempio `grep sed …`), script sed letti da stdin non analizzati, nomi di comando offuscati.
 - Da segnalare per WP08/WP10a: i guard richiedono `npm install` nel plugin, altrimenti negano ogni chiamata. La prenotazione del budget per dispatch paralleli passa a WP07.
+
+### Chiusura di WP04 (K3)
+- Implementato in 8 commit, più 2 giri di correzione (`205496d..43f935f`). Tag `k3-done` → `43f935f`.
+- Consegnato: precedenti ed esiti, le 12 strategie con `strategy-select` (golden 20/20), revisione delle credenze, profondità, schema del piano di esecuzione, self-check a 13 controlli, `why`, calibrazione (solo proposte), lezioni e loro validazione.
+- Corretto dopo la review: gli effetti non dichiarati di una decisione ora sono "sconosciuti", non "assenti". Una credenza non si sostituisce senza un successore. I detector di spreco bloccano. Il self-check richiede il database. Ogni sessione riceve il codice `SES.<CLIENTE>.<AAAAMMDD>.<SEQ>`.
+- Decisione da confermare: il pre-mortem si applica solo ai compiti a profondità "profonda" con rischio ≥ R2. La spec è ambigua tra §10.4, §14.2 e §17.3.
+- Rinviati come minori: il numero progressivo del codice di sessione usa la data UTC, più alcune duplicazioni e rifiniture elencate nel ledger.
 
 ## Stato per pacchetto di lavoro
 
@@ -32,8 +39,8 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va
 | WP01 | Codifica, faccette, pesi, qualità, DB, reindex, `kb` find/resolve/get, epistemica, confini | K0 | 6 | 100 | ✅ | tag `k0-done`, 29 test, `docs/phase-reports/K0.md` |
 | WP02 | Formato DT e `dt-eval`, DT-001…DT-026, 195 cluster di bootstrap, regole RC-01…10, operazioni del validator, priori | K1 | 8 | 100 | ✅ | tag `k1-done`, 98 test, golden 10/10, DT-002 100/100 |
 | WP03 | Stato di sessione, contratti prompt/rapporto, hook base, guard di partizione, budget, traccia cognitiva | K2 | 8 | 100 | ✅ | tag `k2-done` → `0bfb2a2`, 230 test, 4 giri di correzione, `docs/phase-reports/K2.md` |
-| WP04 | Precedenti, esiti, 12 strategie, `strategy-select`, revisione delle credenze, profondità, piano, self-check, why, calibrazione, lezioni | K3 | 8 | 0 | 🔄 | `.superpowers/sdd/briefs/wp04-k3.md` |
-| WP05 | Modello dei campi FLD, carta d'identità, pipeline a lotti ≤ 50, parser deontico, catene, `kb fields/impact/identity` | K4 | 7 | 0 | ⬜ Brief | `wp05-k4.md` |
+| WP04 | Precedenti, esiti, 12 strategie, `strategy-select`, revisione delle credenze, profondità, piano, self-check, why, calibrazione, lezioni | K3 | 8 | 100 | ✅ | tag `k3-done` → `43f935f`, 305 test, golden 20/20, `docs/phase-reports/K3.md` |
+| WP05 | Modello dei campi FLD, carta d'identità, pipeline a lotti ≤ 50, parser deontico, catene, `kb fields/impact/identity` | K4 | 7 | 0 | 🔄 | `wp05-k4.md` |
 | WP06 | Ambienti, `env-check`, guard-environment/production/config-scope, catalogo azioni ACT, tripla approvazione 3A | K5 | 6 | 0 | ⬜ Brief | `wp06-k5.md` |
 | WP07 | `step-check`, `observe-append`, errori della piattaforma, evidenze, intento DT-026, workflow, report ed esiti, budget, `compile-plan` opzionale | K6 | 8 | 0 | ⬜ Brief | `wp07-k6.md` |
 | WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 0 | ⬜ Brief | `wp08-f0.md` |
@@ -45,7 +52,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 0 | ⬜ Brief | `wp10b-agents.md` |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **106** | **≈ 21** | | 22 unità completate |
+| **Totale** | | | **106** | **≈ 28** | | 30 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
