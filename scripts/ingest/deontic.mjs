@@ -75,10 +75,17 @@ const LEX = {
     "\\bpreferibilmente\\b", "\\bsi suggerisce\\b", "\\bè suggerit[oa]\\b", "\\bè buona (?:norma|pratica)\\b",
     "\\bshould\\b", "\\brecommended\\b", "\\brecommend\\b", "\\badvisable\\b", "\\bpreferably\\b", "\\bideally\\b", "\\bas a rule\\b",
     "\\bbest practice\\b", "\\bit is preferable\\b", "\\bought to\\b", "\\bsuggested\\b",
-    // giro di correzione 1: ogni forma di consigliare/raccomandare/suggerire, il condizionale di dovere
-    // ("andrebbe", "sarebbe da") e advise/encourage/suggest/recommend in ogni forma
-    "\\bconsigli", "\\braccomand", "\\bsuggeri", "\\bandrebber?o?\\b", "\\bsarebbe(?:ro)? da\\b", "\\bsarebbe (?:utile|consigliabile)\\b",
-    "\\badvis", "\\bencourag", "\\bsuggest", "\\brecommend",
+    // giri di correzione 1-2: le forme VERBALI e AGGETTIVALI di consigliare/raccomandare/suggerire e di
+    // advise/encourage/suggest/recommend — non i nomi: «raccomandata» (posta) e «raccomandate» sono
+    // participi solo dopo copula, avverbio o parentesi («è raccomandata», «(raccomandata)»); «Consiglio»
+    // (organo), «consigli», «suggerimenti», advisory/advisor, recommendation(s), suggestion(s) non contano.
+    "\\bconsigli(?:a|amo|ano|ate|avo|ava|avano|ato|ata|ati|ate|abile|abili|ando|erei|eremmo|erebbe|erebbero|erà|eranno)\\b",
+    "\\braccomand(?:o|iamo|ano|ava|avano|ato|ati|abile|abili|ando|erei|eremmo|erebbe|erebbero|erà|eranno)\\b",
+    "\\b(?:è|sono|viene|vengono|risulta|risultano|resta|restano|fortemente|vivamente|caldamente|particolarmente|molto)\\s+raccomandat[ae]\\b",
+    "\\(\\s*(?:raccomandat|consigliat)[oaie]\\s*\\)",
+    "\\bsuggerisc(?:o|e|ono)\\b", "\\bsuggeri(?:amo|te|re|rei|remmo|rebbe|rebbero|to|ta|ti|te|va|vano)\\b",
+    "\\bandrebber?o?\\b", "\\bsarebbe(?:ro)? da\\b", "\\bsarebbe (?:utile|consigliabile)\\b",
+    "\\badvis(?:e|es|ed|ing|able)\\b", "\\bencourag(?:e|es|ed|ing)\\b", "\\bsuggest(?:s|ed|ing)?\\b", "\\brecommend(?:s|ed|ing)?\\b",
   ]),
   immut: set([
     "\\bpiù (?:essere )?modific", "\\bpiù possibile modific", "\\b(?:di )?sola lettura\\b", "\\bimmutabil", "\\bcongelat", "\\bnon più editabil",

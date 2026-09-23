@@ -24,20 +24,21 @@ function mismatch(c, r) {
 }
 
 test("golden deontico: ≥ 200 frasi (≥ 100 it, ≥ 100 en, bilanciate), ogni riga di §19.10 ≥ 8 volte", () => {
-  // 200 del brief + 20 del giro di correzione 1 (revisione WP05, Important #1)
-  assert.equal(GOLDEN.length, 220);
-  assert.equal(GOLDEN.filter((c) => c.lang === "it").length, 110);
-  assert.equal(GOLDEN.filter((c) => c.lang === "en").length, 110);
+  // 200 del brief + 20 del giro di correzione 1 (revisione WP05, Important #1) + 8 del giro 2 (regressione del lessico)
+  assert.equal(GOLDEN.length, 228);
+  assert.equal(GOLDEN.filter((c) => c.lang === "it").length, 114);
+  assert.equal(GOLDEN.filter((c) => c.lang === "en").length, 114);
   assert.equal(new Set(GOLDEN.map((c) => c.id)).size, GOLDEN.length);
   for (const t of ["Consigliamo di rendere il campo obbligatorio.", "Obbligatorio (consigliato).", "Il campo è obbligatorio se non diversamente configurato.",
-    "Il campo è obbligatorio, anche se si consiglia di lasciarlo vuoto salvo casi urgenti.", "It is advised that the cost center be mandatory."]) {
+    "Il campo è obbligatorio, anche se si consiglia di lasciarlo vuoto salvo casi urgenti.", "It is advised that the cost center be mandatory.",
+    "L'invio del documento deve avvenire tramite raccomandata.", "Il Consiglio di amministrazione ha reso obbligatorio il campo."]) {
     assert.ok(GOLDEN.some((c) => c.text === t), `frase della revisione assente: ${t}`);
   }
   for (const row of ROWS) assert.ok(GOLDEN.filter((c) => c.row === row).length >= 8, `riga ${row} < 8`);
   assert.ok(GOLDEN.some((c) => /dovrebbe essere obbligatorio salvo/.test(c.text)), "frase di Review Focus 5 presente");
 });
 
-test("golden deontico: 100% (220/220)", () => {
+test("golden deontico: 100% (228/228)", () => {
   const failures = [];
   for (const c of GOLDEN) {
     const r = parseRule(c.text, { lang: c.lang });
@@ -117,5 +118,26 @@ test("eccezione indeterminata («salvo eccezioni», «unless otherwise specified
     assert.equal(r.modality, "ambiguo", t);
     assert.equal(r.mandatory, undefined, t);
     assert.equal(r.residue, "ambiguous", t);
+  }
+});
+
+test("giro 2: le raccomandazioni in ogni forma verbale o aggettivale restano raccomandazioni (sonde della rilettura)", () => {
+  for (const t of ["We recommend that the field be mandatory.", "It is suggested that the field be mandatory.", "Ideally, the field should be mandatory.",
+    "CONSIGLIAMO di rendere obbligatorio il campo.", "Il campo È OBBLIGATORIO (CONSIGLIATO).", "Obbligatorio (raccomandato).", "Obbligatorio (raccomandata).",
+    "I would recommend making this field mandatory.", "They recommended that the field become mandatory.", "Si raccomandava di rendere obbligatorio il campo.",
+    "Sarebbe consigliabile rendere obbligatorio questo campo.", "It would be advisable to make the field mandatory.", "La compilazione è raccomandata.",
+    "La compilazione del campo è fortemente raccomandata.", "Suggerisco di rendere il campo obbligatorio.", "Consiglierei di rendere obbligatorio il campo."]) {
+    const r = parseRule(t);
+    assert.equal(r.modality, "raccomandazione", t);
+    assert.equal(r.mandatory, undefined, t);
+  }
+});
+
+test("giro 2: i nomi non sono raccomandazioni — raccomandata (posta), Consiglio (organo), advisory, recommendation, suggestions", () => {
+  for (const t of ["Il documento va inserito e spedito per raccomandata; il campo Data invio è obbligatorio.", "Il campo Protocollo del Consiglio è obbligatorio.",
+    "The advisory note field is required.", "Recommendations must be attached to the report."]) {
+    const r = parseRule(t);
+    assert.equal(r.modality, "obbligo", t);
+    assert.deepEqual(r.mandatory, { kind: "always" }, t);
   }
 });

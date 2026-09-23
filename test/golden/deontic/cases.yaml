@@ -252,3 +252,15 @@ cases:
   - { id: en-fix1-08, lang: en, row: obbligo, text: "The field is mandatory even if the supplier is foreign.", expect: { modality: obbligo, mandatory: { kind: always }, condition: null } }
   - { id: en-fix1-09, lang: en, row: ambiguo, text: "The field is required if not otherwise specified.", expect: { modality: ambiguo, residue: ambiguous } }
   - { id: en-fix1-10, lang: en, row: raccomandazione, text: "Customers are advised to make the project code compulsory.", expect: { modality: raccomandazione } }
+
+  # ——— Giro di correzione 2 (rilettura WP05, regressione del giro 1): i nomi «raccomandata» (posta),
+  # «Consiglio» (organo), advisory/advisor, recommendation (nome), suggestions non sono raccomandazioni:
+  # l'obbligo resta. Attese scritte a mano. ———
+  - { id: it-fix2-01, lang: it, row: obbligo, text: "L'invio del documento deve avvenire tramite raccomandata.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-fix2-02, lang: it, row: obbligo, text: "Il Consiglio di amministrazione ha reso obbligatorio il campo.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-fix2-03, lang: it, row: obbligo, text: "Il verbale del Consiglio di amministrazione deve essere allegato.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-fix2-04, lang: it, row: obbligo, text: "La ricevuta della raccomandata è obbligatoria.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-fix2-01, lang: en, row: obbligo, text: "The advisory board approval is mandatory.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-fix2-02, lang: en, row: obbligo, text: "The recommendation letter must be attached.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-fix2-03, lang: en, row: obbligo, text: "The Suggestions box field is required.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-fix2-04, lang: en, row: obbligo, text: "The advisor's name is required.", expect: { modality: obbligo, mandatory: { kind: always } } }
