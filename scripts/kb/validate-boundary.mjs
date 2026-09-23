@@ -21,7 +21,8 @@ function printHelp() {
 Verifica che kb/ non citi analysis/ né identificatori PAT/PBK/BRF/RUL, e
 che analysis/ non citi identificatori di test NRT.* (§1.1, §5.4).
 
-Exit code: 0 nessuna violazione · 1 violazioni trovate.`);
+Exit code: 0 nessuna violazione · 1 errore utente (percorso non valido) ·
+3 violazione di policy (§44.5).`);
 }
 
 if (isMain(import.meta.url)) {
@@ -29,8 +30,13 @@ if (isMain(import.meta.url)) {
   if (args.includes("--help")) { printHelp(); process.exit(0); }
   const asJson = args.includes("--json");
   const root = args.find((a) => !a.startsWith("--")) ?? ".";
+  if (!existsSync(root)) {
+    const msg = `percorso non trovato: ${root}`;
+    console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
+    process.exit(1);
+  }
   const v = checkBoundary(root);
   if (asJson) console.log(JSON.stringify({ ok: v.length === 0, violations: v }));
   else for (const x of v) console.error(`✗ ${x.file}: ${x.rule} → "${x.match}"`);
-  process.exit(v.length ? 1 : 0);
+  process.exit(v.length ? 3 : 0);
 }
