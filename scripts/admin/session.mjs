@@ -344,6 +344,38 @@ function useCloseStale(ws, sid, { actor }) {
   return { session, closed };
 }
 
+// Dichiarazione dell'ambiente (§51.2): copia in session.env la voce di
+// environments.yaml (validata: RF2 e le altre regole di prod ⇒ exit 3) con
+// l'hash del file; verified:false finché env-check non verifica l'impronta.
+// Dichiarare (anche di nuovo lo stesso) ambiente azzera la verifica e l'URL
+// corrente del browser. K5.6: allega il perimetro di remediation-scope.yaml.
+async function useEnv(ws, sid, raw, { actor }) {
+  const id = String(raw ?? "").trim();
+  if (!id) throw new CliError(1, "ambiente mancante: use env <id>");
+  const { session: before, file } = requireActive(ws, sid);
+  const { loadEnvironmentsFile, environmentsFile, normalizeEnvironment, loadRemediationScope, EnvFileError } = await import("../kb/validate-env.mjs");
+  let envs;
+  let remediation;
+  try {
+    envs = loadEnvironmentsFile(environmentsFile(ws, before.customer));
+    remediation = loadRemediationScope ? loadRemediationScope(ws, before.customer) : { doc: null, sha256: null };
+  } catch (err) {
+    if (err instanceof EnvFileError) throw new CliError(err.code, err.message, err.extra);
+    throw err;
+  }
+  const decl = envs.doc.environments.find((e) => e.id === id);
+  if (!decl) throw new CliError(1, `ambiente inesistente: ${id} (${envs.doc.environments.map((e) => e.id).join(", ")})`);
+  const n = normalizeEnvironment(decl);
+  const env = {
+    id: n.id, type: n.type, label: n.label ?? null, base_url: n.base_url, allowed_hosts: n.allowed_hosts, policy: n.policy,
+    source_sha256: envs.sha256, remediation: remediation.doc, remediation_sha256: remediation.sha256,
+    declared_at: new Date().toISOString(), verified: false, verified_at: null, signals: {},
+  };
+  const session = updateSession(file, (s) => { s.env = env; s.browser = { ...(s.browser ?? {}), current_url: null }; });
+  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "session", actor, payload: { action: "use-env", from: before.env?.id ?? null, to: id, type: n.type, source_sha256: envs.sha256 } });
+  return { session };
+}
+
 const HELP = `uso: node scripts/admin/session.mjs <azione> [opzioni]
 
 Azioni (§56.2):
@@ -353,6 +385,9 @@ Azioni (§56.2):
                               compensazioni pendenti (exit 3, le elenca).
   use scope <ID>              cella attiva (${SCOPES.join(" ")}); ricalcola allowed_paths
   use mode <m>                nrt | config | ops | diag
+  use env <id>                ambiente dichiarato da customers/<C>/config/environments.yaml
+                              (§51.2): verified:false finché env-check non lo verifica;
+                              cambiarlo azzera la verifica. RF2 & c. ⇒ exit 3
   use budget <n>              budget di sessione in token (es. 200000 o 200k); in audit
   use close-stale             chiude a mano i sotto-compiti rimasti aperti (dispatch
                               mai arrivati a SubagentStop); in audit. Senza, un
@@ -367,7 +402,7 @@ Exit code: 0 ok · 1 errore utente · 2 errore di sistema · 3 violazione di pol
 
 function summary(session) {
   if (!session) return "nessun cliente attivo";
-  return `cliente ${session.customer}${session.session_code ? ` · sessione ${session.session_code}` : ""} · scope ${session.scope ?? "—"} · modalità ${session.mode} · budget ${session.budget.used}/${session.budget.tokens}`;
+  return `cliente ${session.customer}${session.session_code ? ` · sessione ${session.session_code}` : ""} · ambiente ${session.env ? `${session.env.id} (${session.env.type}${session.env.verified ? ", verificato" : ", non verificato"})` : "—"} · scope ${session.scope ?? "—"} · modalità ${session.mode} · budget ${session.budget.used}/${session.budget.tokens}`;
 }
 
 export async function run(argv, env = process.env) {
@@ -390,6 +425,7 @@ export async function run(argv, env = process.env) {
     else if (action === "use" && what === "scope") result = useScope(ws, sid, value, { actor });
     else if (action === "use" && what === "mode") result = useMode(ws, sid, value, { actor });
     else if (action === "use" && what === "budget") result = useBudget(ws, sid, value, { actor });
+    else if (action === "use" && what === "env") result = await useEnv(ws, sid, value, { actor });
     else if (action === "use" && what === "close-stale") result = useCloseStale(ws, sid, { actor });
     else throw new CliError(1, `azione sconosciuta: ${positional.join(" ")}`);
     if (asJson) console.log(JSON.stringify({ ok: true, ...result }));

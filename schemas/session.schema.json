@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "session.schema.json",
   "title": "session.json — stato di sessione (§45.1)",
-  "description": "Unica fonte di stato per i guard: un hook non chiede al modello in che scope si trova, lo legge da qui. Vive in customers/<CUST>/.sessions/<session_id>/ (gitignored). Le fasi successive aggiungono campi (env, snapshots, approvals, integrity): le proprietà aggiuntive in radice sono ammesse.",
+  "description": "Unica fonte di stato per i guard: un hook non chiede al modello in che scope si trova, lo legge da qui. Vive in customers/<CUST>/.sessions/<session_id>/ (gitignored). K5 aggiunge env (dichiarato con use env, verificato con env-check), approvals (specchio di approvals.jsonl, la fonte per i guard), active_plan, snapshots, browser.current_url. Le fasi successive aggiungono campi: le proprietà aggiuntive in radice sono ammesse.",
   "type": "object",
   "required": [
     "session_id", "customer", "scope", "mode", "env", "budget", "allowed_paths", "pending", "surprises", "ledger",
@@ -13,7 +13,26 @@
     "customer": { "type": "string", "pattern": "^[A-Z0-9]{4}$" },
     "scope": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC", null] },
     "mode": { "enum": ["nrt", "config", "ops", "diag"] },
-    "env": { "type": ["object", "null"], "description": "Ambiente dichiarato e verificato; riempito in K5 (use env, env-check)." },
+    "env": {
+      "type": ["object", "null"],
+      "description": "Ambiente dichiarato (use env <id>) e verificato (env-check --write-session, §51.2). Copia della dichiarazione di environments.yaml (e di remediation-scope.yaml) al momento di use env: i guard leggono solo session.json e confrontano gli hash con i file (cambiati ⇒ deny, riesegui use env). Cambiare ambiente azzera la verifica.",
+      "required": ["id", "type", "allowed_hosts", "policy", "source_sha256", "verified", "verified_at", "signals"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{0,31}$" },
+        "type": { "enum": ["dev", "sandbox", "preprod", "prod"] },
+        "label": { "type": "string" },
+        "base_url": { "type": "string" },
+        "allowed_hosts": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "policy": { "type": "object", "required": ["write_data", "config_levels", "approvals"] },
+        "source_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "remediation": { "type": ["object", "null"] },
+        "remediation_sha256": { "type": ["string", "null"] },
+        "declared_at": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "verified_at": { "type": ["string", "null"] },
+        "signals": { "type": "object" }
+      }
+    },
     "budget": {
       "type": "object",
       "required": ["tokens", "used", "by_model"],
@@ -32,11 +51,65 @@
       "type": "object",
       "required": ["compensations", "approvals", "questions", "expected_outcomes"],
       "properties": {
-        "compensations": { "type": "array" },
-        "approvals": { "type": "array" },
+        "compensations": {
+          "type": "array",
+          "description": "Compensazioni registrate PRIMA del passo che crea/modifica/invia (§29.6): codice CMP o { plan, step, kind: close|cancel|deactivate|restore, … }.",
+          "items": { "type": ["string", "object"] }
+        },
+        "approvals": {
+          "type": "array",
+          "description": "Richieste di approvazione aperte (le scrive step-check, K6): la frase esatta dell'utente le soddisfa. Un sì nudo vale solo con UNA richiesta { kind: action } aperta.",
+          "items": {
+            "type": "object",
+            "required": ["kind", "plan"],
+            "properties": {
+              "kind": { "enum": ["A1", "A2", "A3", "action"] },
+              "plan": { "type": "string", "pattern": "^PLAN\\.[A-Za-z0-9._-]+$" },
+              "step": { "type": "integer", "minimum": 1 },
+              "file": { "type": "string" }
+            }
+          }
+        },
         "questions": { "type": "array" },
         "expected_outcomes": { "type": "array" }
       }
+    },
+    "approvals": {
+      "type": "array",
+      "description": "Specchio di customers/<C>/.sessions/<id>/approvals.jsonl (catena di hash, scritta solo da approval-capture e dal consumo dei token). I guard leggono il file, non lo specchio.",
+      "items": {
+        "type": "object",
+        "required": ["ts", "kind", "plan"],
+        "properties": {
+          "ts": { "type": "string" },
+          "kind": { "enum": ["A1", "A2", "A3", "action", "consume"] },
+          "plan": { "type": "string", "pattern": "^PLAN\\.[A-Za-z0-9._-]+$" },
+          "step": { "type": "integer", "minimum": 1 },
+          "approver_declared": { "type": ["string", "null"] },
+          "prompt_sha256": { "type": "string" },
+          "hash": { "type": "string" }
+        }
+      }
+    },
+    "active_plan": {
+      "type": ["object", "null"],
+      "description": "Piano in esecuzione e passo corrente (lo mantiene step-check, K6; lo leggono guard-production e guard-config-scope). file: relativo alla cartella del cliente.",
+      "required": ["plan_id", "file", "step"],
+      "properties": {
+        "plan_id": { "type": "string", "pattern": "^PLAN\\.[A-Za-z0-9._-]+$" },
+        "file": { "type": "string", "minLength": 1 },
+        "step": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "snapshots": {
+      "type": "array",
+      "description": "Snapshot degli oggetti governati prima di una modifica di configurazione (§28.1): guard-config-scope ne richiede uno degli ultimi 60 s.",
+      "items": { "type": "object", "required": ["objects", "ts"], "properties": { "objects": { "type": "array", "items": { "type": "string" } }, "ts": { "type": "string" } } }
+    },
+    "browser": {
+      "type": "object",
+      "description": "Stato del browser (observe-append lo mantiene, K6): current_url = ultima pagina osservata.",
+      "properties": { "current_url": { "type": ["string", "null"] } }
     },
     "surprises": {
       "type": "array",
