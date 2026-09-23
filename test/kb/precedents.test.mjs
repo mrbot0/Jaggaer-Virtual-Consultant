@@ -125,6 +125,9 @@ test("CLI kb precedents <soggetto> --top N --json", () => {
   const out = JSON.parse(r.stdout);
   assert.equal(out.ok, true);
   assert.deepEqual(out.items.map((x) => x.dec), ["L.ACME.ADM.DEC.0402", "L.ACME.ADM.DEC.0377"]);
+  // --releases sostituisce l'elenco del DB: con R25.3 come release corrente DEC.0402 ha età 0 → d = 0
+  const rel = spawnSync(process.execPath, [KB_CLI, "precedents", "C.ACME.ADM.CFG.0019", "--top", "1", "--customer", "ACME", "--releases", "R25.1,R25.2,R25.3", "--db", file, "--json"], { encoding: "utf8" });
+  approx(JSON.parse(rel.stdout).items[0].d, 0);
   const bad = spawnSync(process.execPath, [KB_CLI, "precedents", "--db", file, "--json"], { encoding: "utf8" });
   assert.equal(bad.status, 1);
 });

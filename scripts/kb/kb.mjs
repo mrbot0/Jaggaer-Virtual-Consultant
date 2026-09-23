@@ -11,8 +11,9 @@ Comandi:
   resolve   "<testo libero>" --top N
   summary   <codice>
   get       <codice>
-  precedents <soggetto> --top N [--customer ACME] [--shape <forma>] [--release R] [--cluster CL-…]
-            decisioni passate con esito, ordinate per distanza di contesto (§12.3)
+  precedents <soggetto> --top N [--customer ACME] [--shape <forma>] [--release R] [--releases R1,R2,…] [--cluster CL-…]
+            decisioni passate con esito, ordinate per distanza di contesto (§12.3); le release (dalla più
+            vecchia) danno l'età dei precedenti, altrimenti meta 'releases' del DB
 
 Opzioni comuni: --db <file> (default knowledge.db) --json --help
 
@@ -66,7 +67,8 @@ export function run(argv) {
     } else if (cmd === "get") {
       items = db.prepare("select * from items where code=?").all(positional[0]);
     } else if (cmd === "precedents") {
-      const context = { shape: opt("shape"), release: opt("release"), cluster: opt("cluster") };
+      const releases = opt("releases") ? String(opt("releases")).split(",").map((x) => x.trim()).filter(Boolean) : undefined;
+      const context = { shape: opt("shape"), release: opt("release"), releases, cluster: opt("cluster") };
       items = precedents(db, positional[0], { top, customer: opt("customer"), context });
     }
   } catch (err) {
