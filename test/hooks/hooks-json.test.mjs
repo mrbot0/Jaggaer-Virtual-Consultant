@@ -26,6 +26,9 @@ const EXPECTED = [
   ["PreToolUse", BROWSER_MATCHER, "guard-config-scope"],
   ["PreToolUse", "Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit", "guard-config-scope"],
   ["UserPromptSubmit", undefined, "approval-capture"],
+  // K5 giro 2: frasi dell'utente negate in ogni input (N5); origine del browser a consuntivo (N1).
+  ["PreToolUse", ".*", "guard-phrase"],
+  ["PostToolUse", BROWSER_MATCHER, "browser-origin"],
 ];
 
 const entries = () => Object.entries(HOOKS.hooks).flatMap(([event, groups]) => groups.flatMap((g) => g.hooks.map((h) => ({ event, matcher: g.matcher, ...h }))));
