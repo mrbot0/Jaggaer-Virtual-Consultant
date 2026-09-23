@@ -73,7 +73,12 @@ const browser = browserGuarded(G, (ctx, no) => {
     const r = check(ctx, env, a, st);
     if (r) return no(r);
   }
-  if (st.changed) updateSessionFile(ctx.sessionFile, (s) => { s.browser = { ...(s.browser ?? {}), current_url: st.url, tab: st.tab, updated_by: G }; });
+  // Giro 2 (N1): PreToolUse non registra MAI un URL (la chiamata può ancora essere
+  // negata da un altro guard, dal permesso o fallire). Può solo AZZERARLO quando la
+  // chiamata naviga o cambia scheda: l'URL tornerà noto solo se browser-origin
+  // (PostToolUse) vede il navigate riuscito.
+  const cur = ctx.session.browser ?? {};
+  if (st.changed && (cur.current_url != null || cur.tab != null)) updateSessionFile(ctx.sessionFile, (s) => { s.browser = { ...(s.browser ?? {}), current_url: null, tab: null, updated_by: G }; });
   return null;
 });
 

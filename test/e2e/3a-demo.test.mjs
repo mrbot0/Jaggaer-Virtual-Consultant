@@ -59,7 +59,13 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
     const r = runHook("approval-capture", { session_id: "sess-1", cwd: ws, hook_event_name: "UserPromptSubmit", prompt, transcript_path: tr }, E(ws));
     return r.json?.hookSpecificOutput?.additionalContext ?? "";
   };
-  const guards = (tool, input, order = GUARDS) => order.map((g) => ({ g, r: browserCall(g, ws, tool, input, { transcript_path: tr }) }));
+  // ciclo di vita completo di una chiamata: i tre guard PreToolUse; se nessuno nega, la chiamata
+  // "riesce" e il PostToolUse browser-origin registra l'origine (giro 2, N1)
+  const guards = (tool, input, order = GUARDS) => {
+    const res = order.map((g) => ({ g, r: browserCall(g, ws, tool, input, { transcript_path: tr }) }));
+    if (res.every(({ r }) => r.status === 0 && r.stdout.trim() === "")) runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: [{ type: "text", text: "ok" }] }, E(ws));
+    return res;
+  };
   const allSilent = (res) => res.every(({ r }) => r.status === 0 && r.stdout.trim() === "");
   const denyOf = (res) => res.filter(({ r }) => decisionOf(r) === "deny").map(({ g, r }) => `${g}: ${reasonOf(r)}`);
   const snapshot = () => patchSession(ws, (s) => { s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0019"], ts: new Date().toISOString() }]; });

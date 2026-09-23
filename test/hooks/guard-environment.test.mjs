@@ -6,7 +6,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { join } from "node:path";
 import { writeFileSync, unlinkSync, readFileSync, appendFileSync } from "node:fs";
-import { decisionOf, reasonOf, mkWs, seedSession, runHook } from "../helpers/hook-env.mjs";
+import { decisionOf, reasonOf, mkWs, seedSession, runHook, ROOT } from "../helpers/hook-env.mjs";
 import { envWs, browserCall, patchSession, sessionPath } from "../helpers/env-fixture.mjs";
 import { auditFile } from "../../hooks/lib/audit.mjs";
 
@@ -40,6 +40,8 @@ test("host dichiarato ⇒ consentito in silenzio; varianti innocue (maiuscole, p
   // giro di correzione 1: new_page azzera l'URL corrente; la storia richiede un URL corrente noto
   assert.ok(denied(call(ws, `${DT}navigate_page`, { type: "back" })), "storia con URL corrente ignoto");
   assert.ok(silent(nav(ws, "https://acme-sbx.jaggaer.com/")));
+  // giro 2 (N1): l'URL diventa noto solo quando PostToolUse vede il navigate riuscito
+  runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: `${DT}navigate_page`, tool_input: { type: "url", url: "https://acme-sbx.jaggaer.com/" }, tool_response: [{ type: "text", text: "ok" }] }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
   assert.ok(silent(call(ws, `${DT}navigate_page`, { type: "back" })), "storia: pagine già visitate");
 });
 

@@ -111,7 +111,7 @@ const CLAUDE_OPS = {
     return { kind: "navigate", url: u };
   } },
   computer: { keys: ["action", "coordinate", "ref", "text", "duration", "scroll_direction", "scroll_amount", "start_coordinate", "region", "scale", "modifiers", "repeat", ...TAB], fn: (ti) => {
-    const kind = COMPUTER[ti.action];
+    const kind = typeof ti.action === "string" && Object.hasOwn(COMPUTER, ti.action) ? COMPUTER[ti.action] : null;   // giro 2 (N3): mai membri di Object.prototype
     if (!kind) return { kind: "other", action: ti.action ?? null };
     const text = str(ti.text);
     const submits = ti.action === "type" ? /[\r\n]/.test(text ?? "") : ti.action === "key" ? ENTER.test((text ?? "").trim()) || /(^|\s)(enter|return)(\s|$)/i.test(text ?? "") : false;
@@ -177,7 +177,7 @@ const PW_OPS = {
 };
 
 function apply(family, table, op, ti) {
-  const spec = table[op];
+  const spec = Object.hasOwn(table, op) ? table[op] : null;   // giro 2 (N3)
   if (!spec) return { family, op, kind: "other", submits: false };
   if (!spec.any) {
     const unknown = Object.keys(ti).filter((k) => !spec.keys.includes(k));
