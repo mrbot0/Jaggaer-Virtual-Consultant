@@ -26,6 +26,7 @@ export const GOVERNED = [
   "customers/*/kb/handoffs/**", "product/kb/handoffs/**",
 ];
 export const WEEKLY_READ = ["lessons", "decisions", "outcomes", "observations", "kb"].map((d) => `customers/*/${d}/**`);
+const SETTINGS_WHY = "le impostazioni di Claude Code (.claude/**, .mcp.json) le modifica solo l'utente, a mano, fuori sessione: possono spegnere i guard del plugin";
 const WRITE_DENY = [
   ["product/**", "product/ è in sola lettura: si scrive solo con gli script dopo validazione (§29.6)"],
   ["customers/*/kb/**", "kb/ si scrive solo con gli script dopo validazione, mai con gli strumenti (§29.6)"],
@@ -36,7 +37,12 @@ const WRITE_DENY = [
   ["customers/*/.sessions/*/compact-summary.md", "il riassunto lo scrive solo precompact-save"],
   [".jvc/**", "lo stato di sessione si modifica solo con /use e con gli hook del plugin"],
   ["**/session.json", "session.json si modifica solo con /use e con gli hook del plugin"],
+  // K5 giro 2: le impostazioni di progetto possono spegnere i guard (env JVC_WORKSPACE, hook, agenti, server MCP)
+  [".claude/**", SETTINGS_WHY],
+  [".mcp.json", SETTINGS_WHY],
 ];
+// Impostazioni di Claude Code fuori dal workspace (es. ~/.claude/settings.json): negate ovunque.
+const CLAUDE_SETTINGS_ABS = /(^|\/)\.claude\/(settings[^/]*\.json|hooks|agents|commands|skills)(\/|$)/;
 const PLUGIN_RO = ["decision-tables/**", "strategies/**", "clusters/**"];
 const HANDOFF_MAX = 64 * 1024;
 const require = createRequire(import.meta.url);
@@ -60,7 +66,7 @@ function handoffRefusal(ctx) {
 // Scritture via shell (fix round 2 F5): per i sub-agenti valgono tutte le aree
 // di WRITE_DENY; per la sessione principale lo stato di sessione (la CLI lo
 // scrive con node, mai con una redirezione della shell).
-const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl", "customers/*/.sessions/*/approvals.jsonl"].includes(a));
+const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl", "customers/*/.sessions/*/approvals.jsonl", ".claude/**", ".mcp.json"].includes(a));
 // Bersagli-cartella (rm/mv di una cartella, cp/mv dentro una cartella — fix
 // round 3): conta tutto ciò che la cartella contiene, cioè ogni antenato di un
 // file protetto è protetto. `**/session.json` qui diventa il session.json reale
@@ -83,6 +89,7 @@ function checkShellWrites(ctx, cmd) {
         if (tree) for (const [area, why] of treeAreas) if (intersects(subtree(p), area)) return no(`${why} (la cartella lo contiene)`, p || ".");
       }
       for (const a of T.abs) if (/(^|\/)session\.json$/.test(a)) return denyAudited(ctx, G, `scrittura via shell negata — session.json si modifica solo con /use e con gli hook del plugin: ${a}`);
+      for (const a of T.abs) if (CLAUDE_SETTINGS_ABS.test(a) || (tree && /(^|\/)\.claude$/.test(a))) return denyAudited(ctx, G, `scrittura via shell negata — ${SETTINGS_WHY}: ${a}`);
     }
   }
   return null;
@@ -121,6 +128,7 @@ export const decide = guarded(G, (ctx) => {
       for (const [area, why] of WRITE_DENY) if (intersects(p, area)) return denyAudited(ctx, G, `${why}: ${p}`);
     }
     for (const a of T.abs) if (/(^|\/)session\.json$/.test(a)) return denyAudited(ctx, G, `session.json si modifica solo con /use e con gli hook del plugin: ${a}`);
+    for (const a of T.abs) if (CLAUDE_SETTINGS_ABS.test(a)) return denyAudited(ctx, G, `${SETTINGS_WHY}: ${a}`);
     for (const p of T.plugin) {
       if (PLUGIN_RO.some((a) => intersects(p, a))) return denyAudited(ctx, G, `tabelle di decisione, strategie e cluster del plugin non si modificano in sessione (T9): ${p}`);
     }

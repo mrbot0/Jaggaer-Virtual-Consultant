@@ -14,8 +14,15 @@ export const isSafeSessionId = (s) => typeof s === "string" && SESSION_ID_RE.tes
 
 // JVC_WORKSPACE (override esplicito) > CLAUDE_PROJECT_DIR (radice del progetto,
 // stabile anche se la shell cambia cartella) > cwd dell'hook > cwd del processo.
+// K5 giro 2: JVC_WORKSPACE non può spegnere i guard puntando a una cartella senza
+// marcatori JVC (o alla radice del plugin) quando CLAUDE_PROJECT_DIR è un
+// workspace JVC: in quel caso vale il progetto (le impostazioni di progetto che
+// potrebbero impostare JVC_WORKSPACE sono comunque protette da guard-scope).
 export function workspaceRoot(input = {}, env = process.env) {
-  return resolve(env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || input.cwd || process.cwd());
+  const explicit = env.JVC_WORKSPACE ? resolve(env.JVC_WORKSPACE) : null;
+  const project = env.CLAUDE_PROJECT_DIR ? resolve(env.CLAUDE_PROJECT_DIR) : null;
+  if (explicit && project && explicit !== project && !isJvcWorkspace(explicit, env) && isJvcWorkspace(project, env)) return project;
+  return resolve(explicit || project || input.cwd || process.cwd());
 }
 
 export function pluginRoot(env = process.env) {
