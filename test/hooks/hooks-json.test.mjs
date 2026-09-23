@@ -15,6 +15,9 @@ const EXPECTED = [
   ["PreToolUse", "Write|Edit|MultiEdit|NotebookEdit|Read|Glob|Grep", "guard-domain-boundary"],
   ["PreToolUse", "Write|Edit|MultiEdit|NotebookEdit|Read|Glob|Grep", "guard-scope"],
   ["PreToolUse", "Write|Edit|MultiEdit|NotebookEdit|Read|Glob|Grep|Bash|PowerShell", "guard-customer"],
+  ["PreToolUse", "Agent|Task", "guard-budget"],
+  ["PreToolUse", "Bash|PowerShell", "guard-budget"],
+  ["SubagentStop", undefined, "subagent-trace"],
 ];
 
 const entries = () => Object.entries(HOOKS.hooks).flatMap(([event, groups]) => groups.flatMap((g) => g.hooks.map((h) => ({ event, matcher: g.matcher, ...h }))));

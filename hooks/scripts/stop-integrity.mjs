@@ -14,7 +14,8 @@ export function handle(input, env = process.env) {
   const s = st.session;
   const comps = s?.pending?.compensations ?? [];
   const outcomes = s?.pending?.expected_outcomes ?? [];
-  const noLesson = (s?.ledger?.invocations ?? []).filter((i) => !i.lesson && !(i.status_effective === "blocked" && i.error_class === "E1")).map((i) => i.task_id ?? i.agent_id);
+  // Solo i sub-agenti del plugin (enforced): gli altri non hanno l'obbligo della lezione.
+  const noLesson = (s?.ledger?.invocations ?? []).filter((i) => i.enforced !== false && !i.lesson && !(i.status === "blocked" && i.error_class === "E1")).map((i) => i.task_id ?? i.agent_id);
   const open = s ? openInvocations(invocationsFile(st.ws, st.customer, st.sid), s.ledger).map((i) => i.task_id) : [];
   appendAudit(st.ws, {
     session: st.sid, customer: st.customer, scope: s?.scope ?? null, kind: "session", actor: "hook:stop-integrity",
