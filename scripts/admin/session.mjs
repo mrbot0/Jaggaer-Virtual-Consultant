@@ -214,6 +214,31 @@ function mergedBudget(candidates, live) {
   return { tokens: base.tokens, used: Math.max(0, ...ok.map((b) => b.used)), by_model };
 }
 
+// Codice di sessione (§5.3 "Run e sessioni": SES.<CLIENTE>.<AAAAMMGG>.<SEQ>, SEQ di 3 cifre): è il
+// riferimento che lezioni e DEC citano (§21.1); la cartella resta per session_id di runtime. SEQ =
+// successivo per (cliente, data UTC) fra i session_code dei session.json del cliente; calcolato e
+// scritto sotto il lock del cliente (customers/<C>/.sessions/.session-code.lock).
+export const SESSION_CODE_RE = /^SES\.([A-Z0-9]{4})\.(\d{8})\.(\d{3})$/;
+export function nextSessionCode(ws, customer, date = new Date()) {
+  const day = date.toISOString().slice(0, 10).replace(/-/g, "");
+  let max = 0;
+  let dirs = [];
+  try { dirs = readdirSync(join(ws, "customers", customer, ".sessions"), { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name); } catch { dirs = []; }
+  for (const d of dirs) {
+    let code = null;
+    try { code = JSON.parse(readFileSync(join(ws, "customers", customer, ".sessions", d, "session.json"), "utf8")).session_code; } catch { continue; }
+    const m = typeof code === "string" ? SESSION_CODE_RE.exec(code) : null;
+    if (m && m[1] === customer && m[2] === day) max = Math.max(max, Number(m[3]));
+  }
+  if (max >= 999) throw new CliError(2, `codici di sessione esauriti per ${customer} il ${day}`);
+  return `SES.${customer}.${day}.${String(max + 1).padStart(3, "0")}`;
+}
+const withSessionCodeLock = (ws, customer, fn) => {
+  const dir = join(ws, "customers", customer, ".sessions");
+  mkdirSync(dir, { recursive: true });
+  return withFileLock(join(dir, ".session-code.lock"), fn, { timeoutMs: 5000 });
+};
+
 async function useCustomer(ws, sid, id, { create, actor }) {
   if (typeof id !== "string" || !CUSTOMER_RE.test(id)) throw new CliError(1, `codice cliente non valido: ${id} (4 caratteri A-Z 0-9)`);
   const custDir = join(ws, "customers", id);
@@ -255,15 +280,21 @@ async function useCustomer(ws, sid, id, { create, actor }) {
   const salvaged = all.filter((x) => x.corrupt && x.parsed?.budget).map((x) => x.parsed.budget);
   const budget = mergedBudget([pointer?.budget, ...readable.map((x) => x.session.budget), ...salvaged], prevLive ?? pointer?.budget ?? newest ?? null);
   let session;
-  if (target && !target.corrupt) {
-    session = updateSession(file, (s) => {
-      s.knowledge_version = knowledgeVersion ?? s.knowledge_version;
-      s.plugin_version = pluginVersion();
-      if (budget) s.budget = budget;
-    });
-  } else {
-    session = saveSession(file, newSession({ sid, customer: id, knowledgeVersion, budget: budget ?? undefined }));
-  }
+  // Il codice si conserva: dallo stato leggibile, o recuperato da uno stato corrotto ma analizzabile.
+  const keepCode = (c) => (typeof c === "string" && SESSION_CODE_RE.exec(c)?.[1] === id ? c : null);
+  session = withSessionCodeLock(ws, id, () => {
+    if (target && !target.corrupt) {
+      const code = keepCode(target.session.session_code) ?? nextSessionCode(ws, id);
+      return updateSession(file, (s) => {
+        s.knowledge_version = knowledgeVersion ?? s.knowledge_version;
+        s.plugin_version = pluginVersion();
+        if (budget) s.budget = budget;
+        if (!keepCode(s.session_code)) s.session_code = code;
+      });
+    }
+    const code = keepCode(target?.parsed?.session_code) ?? nextSessionCode(ws, id);
+    return saveSession(file, { ...newSession({ sid, customer: id, knowledgeVersion, budget: budget ?? undefined }), session_code: code });
+  });
   writePointer(ws, sid, id, { budget: session.budget });
   writeCurrentSession(ws, sid);
   // Successo solo se il risultato passa il predicato che useranno gli hook (F1).
@@ -336,7 +367,7 @@ Exit code: 0 ok · 1 errore utente · 2 errore di sistema · 3 violazione di pol
 
 function summary(session) {
   if (!session) return "nessun cliente attivo";
-  return `cliente ${session.customer} · scope ${session.scope ?? "—"} · modalità ${session.mode} · budget ${session.budget.used}/${session.budget.tokens}`;
+  return `cliente ${session.customer}${session.session_code ? ` · sessione ${session.session_code}` : ""} · scope ${session.scope ?? "—"} · modalità ${session.mode} · budget ${session.budget.used}/${session.budget.tokens}`;
 }
 
 export async function run(argv, env = process.env) {
