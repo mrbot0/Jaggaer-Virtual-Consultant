@@ -10,12 +10,15 @@
 //  - Bash/PowerShell dei sub-agenti: ogni token-percorso (anche senza '/', anche
 //    dopo un cd) il cui sottoalbero tocca una cella governata deve stare dentro
 //    allowed_paths (niente `grep -r` su un antenato della cella);
-//  - percorsi assoluti fuori dal workspace: valutati sui suffissi customers/… product/….
+//  - percorsi assoluti fuori dal workspace: valutati sui suffissi customers/… product/…;
+//  - scritture via shell (redirezioni, tee, Out-File/Set-Content, cp/mv, rm…):
+//    sub-agenti ⇒ tutte le aree di WRITE_DENY; sessione principale ⇒ stato di
+//    sessione (session.json, invocations.jsonl, .jvc/**) — fix round 2 F5.
 import { statSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { createRequire } from "node:module";
-import { intersects, subset, PathPolicyError } from "../paths.mjs";
-import { guarded, denyAudited, targetsOf, allRels, shellPaths, subtree, PATH_TOOLS, WRITE_TOOLS, READ_TOOLS, SHELL_TOOLS } from "./common.mjs";
+import { intersects, subset, resolveTarget, PathPolicyError } from "../paths.mjs";
+import { guarded, denyAudited, targetsOf, allRels, shellPaths, shellWriteTargets, subtree, PATH_TOOLS, WRITE_TOOLS, READ_TOOLS, SHELL_TOOLS } from "./common.mjs";
 
 const G = "guard-scope";
 export const GOVERNED = [
@@ -53,10 +56,30 @@ function handoffRefusal(ctx) {
   return declared.includes(scope) ? null : `lo handoff non dichiara lo scope ${scope} in from_scope, to_scope o scopes`;
 }
 
+// Scritture via shell (fix round 2 F5): per i sub-agenti valgono tutte le aree
+// di WRITE_DENY; per la sessione principale lo stato di sessione (la CLI lo
+// scrive con node, mai con una redirezione della shell).
+const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl"].includes(a));
+function checkShellWrites(ctx, cmd) {
+  const areas = ctx.agentId ? WRITE_DENY : MAIN_SHELL_DENY;
+  for (const { tok, cwds } of shellWriteTargets(ctx, cmd)) {
+    for (const cwd of cwds) {
+      const T = resolveTarget(tok, { cwd, ws: ctx.ws });
+      for (const p of allRels(T)) {
+        for (const [area, why] of areas) if (intersects(p, area)) return denyAudited(ctx, G, `scrittura via shell negata (file che scrivono solo /use, gli script e gli hook del plugin) — ${why}: ${p}`);
+      }
+      for (const a of T.abs) if (/(^|\/)session\.json$/.test(a)) return denyAudited(ctx, G, `scrittura via shell negata — session.json si modifica solo con /use e con gli hook del plugin: ${a}`);
+    }
+  }
+  return null;
+}
+
 function checkShell(ctx) {
   const cmd = ctx.ti.command;
-  if (!ctx.agentId || typeof cmd !== "string" || !cmd.trim()) return null;
+  if (typeof cmd !== "string" || !cmd.trim()) return null;
   if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
+  const w = checkShellWrites(ctx, cmd);
+  if (w || !ctx.agentId) return w;
   const allowed = Array.isArray(ctx.session?.allowed_paths) ? ctx.session.allowed_paths : [];
   const weekly = ctx.agentType === "weekly-digest";
   for (const v of new Set([cmd, cmd.replace(/\\(?=[^\s\\/])/g, "")])) {

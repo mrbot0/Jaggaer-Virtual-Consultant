@@ -95,7 +95,10 @@ export function pluginSessionCommand(cmd, { cwd, plugin }) {
 
 // Il comando di riparazione passa anche con stato corrotto (fix round 1 #16):
 // `use customer <ID>` ricrea session.json/puntatore, `show` li diagnostica.
+// Solo per la sessione principale: un sub-agente (agent_id) non ripara nulla
+// (fix round 2 F2 — altrimenti con stato corrotto cambierebbe cliente).
 function isRepairCommand(input, env) {
+  if (input.agent_id) return false;
   const tool = String(input.tool_name ?? "");
   if (!SHELL_TOOLS.has(tool)) return false;
   const c = pluginSessionCommand(input.tool_input?.command, { cwd: input.cwd ? resolve(String(input.cwd)) : process.cwd(), plugin: pluginRoot(env) });
@@ -165,3 +168,40 @@ export function shellPaths(ctx, cmd, { bareWords = false, maxTokens = 256 } = {}
 }
 
 export const subtree = (p) => (p ? `${p}/**` : "**");
+
+// ---- bersagli di scrittura di un comando di shell (fix round 2 F5) ----
+// Redirezioni (`>`, `>>`, `>|`, `n>`, `&>`; non `n>&m`) e comandi che scrivono,
+// spostano o cancellano file (bash e PowerShell). Si seguono i `cd` come in
+// shellPaths. → [{ tok, cwds }] (tok grezzo, da risolvere con resolveTarget
+// rispetto a ciascuna cwd). Euristica come shellPaths: variabili, sostituzioni
+// di comando e script che scrivono restano fuori (rischio residuo).
+const REDIR = /(?:\d*|&)>>?\|?[ \t]*([^\s;|&<>()]+)/g;
+const WRITE_ALL = /^(tee|out-file|set-content|add-content|clear-content|sc|ac|clc|new-item|ni|mv|move|move-item|mi|ren|rename|rename-item|rni|rm|del|erase|rd|rmdir|remove-item|ri|unlink|truncate|shred|touch|sed|perl)$/i;
+const WRITE_LAST = /^(cp|copy|copy-item|cpi|install|rsync|scp|ln|mklink)$/i;
+const DEST_PARAM = /^-(destination|path|literalpath|filepath|target)$/i;
+export function shellWriteTargets(ctx, cmd) {
+  const out = [];
+  let cwds = [ctx.cwd];
+  const unq = cmd.replace(/["'`]/g, "");
+  for (const seg of unq.split(/&&|\|\||[;|\r\n]/)) {
+    const s = seg.trim();
+    if (!s) continue;
+    for (const m of s.matchAll(REDIR)) out.push({ tok: m[1], cwds });
+    const words = s.replace(REDIR, " ").split(/\s+/).filter(Boolean);
+    const head = (words[0] ?? "").replace(/^.*[\\/]/, "").replace(/\.exe$/i, "");
+    if (CD.test(head)) {
+      const arg = words.slice(1).find((w) => !w.startsWith("-"));
+      if (arg) cwds = [...new Set([...cwds, ...cwds.map((d) => resolve(d, arg.replace(/\\/g, "/")))])].slice(0, 16);
+      continue;
+    }
+    if (/^dd$/i.test(head)) { for (const w of words) if (/^of=/i.test(w)) out.push({ tok: w.slice(3), cwds }); continue; }
+    const args = words.slice(1);
+    const pos = args.filter((w) => !w.startsWith("-"));
+    if (WRITE_ALL.test(head)) for (const w of pos) out.push({ tok: w, cwds });
+    else if (WRITE_LAST.test(head)) {
+      args.forEach((w, i) => { if (DEST_PARAM.test(w) && args[i + 1]) out.push({ tok: args[i + 1], cwds }); });
+      if (pos.length) out.push({ tok: pos.at(-1), cwds });
+    }
+  }
+  return out;
+}
