@@ -35,7 +35,11 @@ const DEVTOOLS = [
   ["take_snapshot", {}, "read"], ["take_screenshot", {}, "read"], ["list_console_messages", {}, "read"], ["get_console_message", { msgid: 1 }, "read"],
   ["list_network_requests", {}, "read"], ["get_network_request", { reqid: 1 }, "read"], ["wait_for", { text: "x" }, "read"], ["emulate", {}, "read"],
   ["resize_page", { width: 1, height: 1 }, "read"], ["performance_start_trace", {}, "read"], ["performance_stop_trace", {}, "read"],
-  ["performance_analyze_insight", {}, "read"], ["lighthouse_audit", {}, "read"], ["take_heapsnapshot", {}, "read"],
+  ["performance_analyze_insight", {}, "read"], ["lighthouse_audit", {}, "navigate", { history: true }], ["lighthouse_audit", { mode: "snapshot" }, "read"], ["take_heapsnapshot", {}, "read"],
+  // giro di correzione 1: type esatto, initScript = script, chiavi sconosciute = other
+  ["navigate_page", { type: "URL", url: "https://a.example.com/" }, "other"], ["navigate_page", { type: "url", url: "https://a.example.com/", initScript: "x()" }, "script"],
+  ["navigate_page", { url: "https://a.example.com/", extra: 1 }, "other"], ["click", { uid: "1", force: true }, "other"],
+  ["emulate", { userAgent: "x" }, "input", { emulation: true }], ["select_page", { pageId: 2 }, "read", { switches: true }],
   ["some_future_tool", {}, "other"],
 ];
 const CLAUDE = [
@@ -55,7 +59,8 @@ const CLAUDE = [
   ["javascript_tool", { action: "javascript_exec", text: "1+1" }, "script", { text: "1+1" }],
   ["file_upload", { paths: ["x"] }, "upload"], ["upload_image", {}, "upload"],
   ["tabs_context", {}, "read"], ["tabs_create", {}, "read"], ["tabs_close", { tabId: "1" }, "read"], ["tabs_select", {}, "read"],
-  ["resize_window", {}, "read"], ["read_console_messages", {}, "read"], ["read_network_requests", {}, "read"], ["gif_creator", {}, "read"],
+  ["resize_window", {}, "read"], ["read_console_messages", {}, "read"], ["read_network_requests", {}, "read"], ["gif_creator", {}, "other"],
+  ["tabs_select", { tabId: "2" }, "read", { switches: true }], ["computer", { action: "screenshot", evil: 1 }, "other"],
   ["shortcuts_execute", { id: "x" }, "script"],
   ["preview_start", { url: "https://a.example.com/" }, "navigate", { url: "https://a.example.com/" }],
   ["preview_start", { name: "dev" }, "navigate", { url: null }],
@@ -73,7 +78,8 @@ const PLAYWRIGHT = [
   ["browser_hover", {}, "read"], ["browser_drag", {}, "input"], ["browser_drop", {}, "input"],
   ["browser_file_upload", { paths: [] }, "upload"],
   ["browser_evaluate", { function: "() => 1" }, "script", { text: "() => 1" }],
-  ["browser_run_code_unsafe", { code: "await page.goto('x')" }, "script", { text: "await page.goto('x')" }],
+  ["browser_run_code_unsafe", { code: "await page.goto('x')" }, "other"], ["browser_run_code_unsafe", { code: "1", filename: "evil.js" }, "other"],
+  ["browser_tabs", { action: "select", index: 1 }, "read", { switches: true }], ["browser_click", { ref: "e1", filename: "x" }, "other"],
   ["browser_snapshot", {}, "read"], ["browser_take_screenshot", {}, "read"], ["browser_tabs", { action: "list" }, "read"],
   ["browser_wait_for", {}, "read"], ["browser_handle_dialog", { accept: true }, "dialog", { submits: true }],
   ["browser_handle_dialog", { accept: false }, "dialog", { submits: false }],

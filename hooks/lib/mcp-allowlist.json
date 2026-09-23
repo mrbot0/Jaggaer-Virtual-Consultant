@@ -1,0 +1,7 @@
+{
+  "description": "Server MCP NON da browser ammessi quando la sessione ha un ambiente dichiarato (giro di correzione 1, I5). Ogni altro server mcp__* che non è una famiglia del browser classificata (Chrome DevTools, Claude browser / Claude in Chrome, Playwright) è negato da guard-environment. File del plugin, non del cliente: si estende solo con una release del plugin. Nomi esatti del server (mcp__<server>__<strumento>).",
+  "servers": [
+    "alm",
+    "plugin_jaggaer-virtual-consultant_alm"
+  ]
+}

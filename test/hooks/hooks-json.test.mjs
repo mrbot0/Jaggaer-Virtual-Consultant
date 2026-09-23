@@ -21,7 +21,7 @@ const EXPECTED = [
   ["PreToolUse", "Bash|PowerShell", "guard-scope"],
   ["SubagentStop", undefined, "subagent-trace"],
   // K5: guard del browser (matcher condiviso con hooks/lib/browser-tools.mjs), protezione del registro 3A, cattura delle approvazioni.
-  ["PreToolUse", BROWSER_MATCHER, "guard-environment"],
+  ["PreToolUse", "mcp__.*", "guard-environment"],   // giro di correzione 1 (I5): ogni server MCP
   ["PreToolUse", BROWSER_MATCHER, "guard-production"],
   ["PreToolUse", BROWSER_MATCHER, "guard-config-scope"],
   ["PreToolUse", "Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit", "guard-config-scope"],
@@ -63,5 +63,9 @@ test("hooks.json K5: il matcher del browser cattura le tre famiglie e i server d
   for (const t of ["mcp__chrome-devtools__click", "mcp__plugin_chrome-devtools-mcp_chrome-devtools__fill", "mcp__Claude_Browser__computer", "mcp__claude-in-chrome__navigate",
     "mcp__playwright__browser_click", "mcp__plugin_playwright_playwright__browser_type", "mcp__plugin_jaggaer-virtual-consultant_chrome-devtools__click"]) assert.ok(re.test(t), t);
   for (const t of ["Read", "Bash", "mcp__alm__create_issue"]) assert.equal(re.test(t), false, t);
-  assert.deepEqual(g.hooks.map((h) => /scripts\/([a-z-]+)\.mjs/.exec(h.command)[1]), ["guard-environment", "guard-production", "guard-config-scope"]);
+  assert.deepEqual(g.hooks.map((h) => /scripts\/([a-z-]+)\.mjs/.exec(h.command)[1]), ["guard-production", "guard-config-scope"]);
+  // guard-environment su ogni strumento MCP (I5), una sola volta per chiamata
+  const all = HOOKS.hooks.PreToolUse.filter((x) => x.hooks.some((h) => h.command.includes("/guard-environment.mjs")));
+  assert.deepEqual(all.map((x) => x.matcher), ["mcp__.*"]);
+  for (const t of ["mcp__webdriver__click", "mcp__computer-use__left_click", "mcp__stagehand__act", "mcp__chrome-devtools__click"]) assert.ok(new RegExp(all[0].matcher).test(t), t);
 });

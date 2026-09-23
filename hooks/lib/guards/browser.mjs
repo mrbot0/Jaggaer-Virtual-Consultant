@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { guardContext, denyAudited } from "./common.mjs";
+import { resolveTarget, subset } from "../paths.mjs";
 import { classify, isBrowserTool, normalizeHost } from "../browser-tools.mjs";
 
 // Come `guarded` di common.mjs ma sul predicato isBrowserTool (tool_name
@@ -72,21 +73,23 @@ export function urlRefusal(raw, env) {
   return null;
 }
 
-// Script eseguiti nella pagina: primitive di rete/navigazione ammesse solo se
-// ogni URL letterale è di un host dichiarato (e ne esiste almeno uno); codice
-// dinamico (eval, accesso calcolato a window, atob…) negato. → null | motivo.
-const NET = /\blocation\b|\bopen\s*\(|\bfetch\s*\(|XMLHttpRequest|sendBeacon|\bimport\s*\(|WebSocket|EventSource|RTCPeerConnection|\.src\s*=|\bhref\s*=|\.action\s*=|\.submit\s*\(|requestSubmit|srcdoc|\bgoto\s*\(|\.request\b/;
-const DYNAMIC = /\beval\s*\(|\bFunction\s*\(|\b(window|globalThis|self|top|parent|frames|document|navigator)\s*\[|\bconstructor\b|\batob\s*\(|fromCharCode|\\x[0-9a-f]{2}|\\u[0-9a-f{]/i;
-const URL_LIT = /(?:\b[a-z][a-z0-9+.-]*:)?\/\/[^\s'"`<>()\\]+/gi;
-export function scriptRefusal(code, env) {
-  if (typeof code !== "string" || !code.trim()) return "script non ispezionabile (nessun codice): negato";
-  if (DYNAMIC.test(code)) return "script con codice dinamico non verificabile (eval, accessi calcolati, decodifiche): negato";
-  if (!NET.test(code)) return null;
-  const lits = code.match(URL_LIT) ?? [];
-  if (!lits.length) return "script con primitive di rete o navigazione senza URL letterali verificabili: negato";
-  for (const l of lits) {
-    const r = urlRefusal(l.startsWith("//") ? `https:${l}` : l, env);
-    if (r) return `script verso una destinazione non consentita — ${r}`;
+// Script nella pagina (giro di correzione 1, I1): negati in ogni ambiente,
+// senza denylist. La lettura passa da snapshot / read_page / get_page_text.
+export const SCRIPT_DENIED = "script nella pagina negati in ogni ambiente (evaluate_script, javascript_tool, browser_evaluate, run_code, initScript): per leggere usa take_snapshot, read_page o get_page_text";
+
+// File scritti dal server MCP (filePath, filename, outputDirPath, …): solo nelle
+// cartelle di lavoro del cliente attivo (sessione, evidenze, run), mai su file
+// di stato, registro delle approvazioni, audit o conoscenza.
+const OUTPUT_OK = (c, sid) => [`customers/${c}/.sessions/${sid}/**`, `customers/${c}/evidence/**`, `customers/${c}/runs/**`].map((x) => x.toLowerCase());
+const OUTPUT_NO = /(^|\/)(session\.json|approvals\.jsonl|invocations\.jsonl|current-session|compact-summary\.md|[^/]*\.lock)$|(^|\/)blackboard(\/|$)/;
+export function outputRefusal(ctx, outputs) {
+  for (const raw of outputs ?? []) {
+    if (typeof raw !== "string" || !raw.trim()) return "percorso di output non valido";
+    let T;
+    try { T = resolveTarget(raw, { cwd: ctx.cwd, ws: ctx.ws }); } catch (err) { return `percorso di output negato: ${err.message}`; }
+    const rels = [...T.ws];
+    const ok = ctx.customer && ctx.sid && rels.length > 0 && rels.every((p) => OUTPUT_OK(ctx.customer, ctx.sid).some((g) => subset(p, g)) && !OUTPUT_NO.test(p));
+    if (!ok) return `il server del browser scriverebbe un file fuori dalle cartelle di lavoro della sessione (customers/<C>/.sessions/<sid>/, evidence/, runs/) o su un file di stato: ${raw}`;
   }
   return null;
 }

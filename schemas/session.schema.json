@@ -12,7 +12,7 @@
     "session_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
     "customer": { "type": "string", "pattern": "^[A-Z0-9]{4}$" },
     "scope": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC", null] },
-    "mode": { "enum": ["nrt", "config", "ops", "diag"] },
+    "mode": { "enum": ["nrt", "config", "ops", "diag", "esplorazione"], "description": "esplorazione (giro di correzione 1 K5): solo in sandbox, senza piano attivo, click e input consentiti e in audit; mai invio, salvataggio, upload, conferma di dialog." },
     "env": {
       "type": ["object", "null"],
       "description": "Ambiente dichiarato (use env <id>) e verificato (env-check --write-session, §51.2). Copia della dichiarazione di environments.yaml (e di remediation-scope.yaml) al momento di use env: i guard leggono solo session.json e confrontano gli hash con i file (cambiati ⇒ deny, riesegui use env). Cambiare ambiente azzera la verifica.",
@@ -108,8 +108,8 @@
     },
     "browser": {
       "type": "object",
-      "description": "Stato del browser (observe-append lo mantiene, K6): current_url = ultima pagina osservata.",
-      "properties": { "current_url": { "type": ["string", "null"] } }
+      "description": "Origine del browser: guard-environment registra current_url a ogni navigate consentito e lo azzera ai cambi di scheda/pagina (giro di correzione 1); observe-append (K6) lo aggiornerà con la pagina osservata. tab = scheda/pagina nominata dalla navigazione registrata.",
+      "properties": { "current_url": { "type": ["string", "null"] }, "tab": { "type": ["string", "null"] }, "updated_by": { "type": "string" } }
     },
     "surprises": {
       "type": "array",

@@ -74,13 +74,18 @@
         ]
       },
       {
-        "matcher": "mcp__.*([Cc]hrome|[Bb]rowser|[Pp]laywright|[Pp]uppeteer|[Ss]elenium|[Dd]ev[Tt]ools).*",
+        "matcher": "mcp__.*",
         "hooks": [
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/guard-environment.mjs\"",
             "timeout": 5
-          },
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__.*([Cc]hrome|[Bb]rowser|[Pp]laywright|[Pp]uppeteer|[Ss]elenium|[Dd]ev[Tt]ools).*",
+        "hooks": [
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/guard-production.mjs\"",

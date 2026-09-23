@@ -5,7 +5,9 @@
 // precompilato, vedi scripts/lib/build-session-validator.mjs), il suo
 // `customer` coincide con quello atteso (puntatore o cartella) e il suo
 // `session_id` con la sessione.
+import { readFileSync } from "node:fs";
 import validate from "./generated/session-validate.mjs";
+import { withFileLock, writeFileAtomic } from "./fsx.mjs";
 
 const fmt = (e) => `${e.instancePath || "/"} ${e.message}${e.params?.missingProperty ? ` (${e.params.missingProperty})` : ""}`;
 
@@ -26,4 +28,19 @@ export function parseSessionText(text, expect) {
   const r = checkSessionText(text, expect);
   if (!r.ok) throw new SessionStateError(`stato di sessione illeggibile: ${r.reason}`);
   return r.session;
+}
+
+// Scrittura di session.json dagli hook sul percorso caldo (guard che registrano
+// l'origine del browser o consumano un token): read-modify-write sotto il lock
+// di session.json (lo stesso di updateSession della CLI), validato con il
+// validatore PRECOMPILATO (niente Ajv a runtime), poi tmp + rename.
+export function updateSessionFile(file, mutate) {
+  return withFileLock(`${file}.lock`, () => {
+    const s = JSON.parse(readFileSync(file, "utf8"));
+    const r = mutate(s);
+    const obj = { ...(r && typeof r === "object" ? r : s), updated_at: new Date().toISOString() };
+    if (!validate(obj)) throw new SessionStateError(`session.json non valido: ${validate.errors.slice(0, 3).map(fmt).join("; ")}`);
+    writeFileAtomic(file, `${JSON.stringify(obj, null, 2)}\n`);
+    return obj;
+  });
 }

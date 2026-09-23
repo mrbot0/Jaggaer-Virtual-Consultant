@@ -4,7 +4,7 @@
 // il passo attivo del piano, l'Atlas (SEL) e la classe dell'azione.
 //   - navigate (host dichiarati) e letture ⇒ consentiti;
 //   - upload, dialog accettato, invio (Enter / submit), script, strumenti non
-//     classificati ⇒ deny sempre;
+//     classificati, emulazione di rete/intestazioni, reload ⇒ deny sempre;
 //   - input ⇒ solo se il passo attivo (classe di lettura) punta a un SEL con
 //     role search_box; click ⇒ solo se il SEL del passo ha effect: read
 //     (write o ignoto ⇒ deny); nessun piano attivo ⇒ deny di ogni input/click;
@@ -28,7 +28,9 @@ function alwaysDenied(a, env) {
   if (a.kind === "upload") return `caricamento di file in produzione. ${PROD_NO_WRITE}`;
   if (a.kind === "dialog" && a.submits) return `conferma di una finestra di dialogo in produzione. ${PROD_NO_WRITE}`;
   if (a.submits) return `invio (Enter/submit) in produzione. ${PROD_NO_WRITE}`;
-  if (a.kind === "navigate") return a.history ? null : urlRefusal(a.url, env);
+  if (a.emulation) return `emulazione di rete o intestazioni (userAgent, extraHttpHeaders, networkConditions) in produzione. ${PROD_NO_WRITE}`;
+  if (a.kind === "navigate" && a.history) return a.historyKind === "reload" ? `ricaricare la pagina in produzione può ripetere un invio (POST). ${PROD_NO_WRITE}` : null;
+  if (a.kind === "navigate") return urlRefusal(a.url, env);
   return null;
 }
 
