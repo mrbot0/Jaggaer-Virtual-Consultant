@@ -1,0 +1,29 @@
+banner "SANDBOX" [ref_1]
+generic "Tenant acme-sbx" [ref_2]
+heading "Richiesta d'acquisto" [ref_3]
+alert "Il centro di costo è obbligatorio (REQ-VAL-014)" [ref_4]
+form [ref_5]
+ label "Descrizione" [ref_6]
+  textbox "RdA di prova - 5 sedie" [ref_7]
+ label "Articolo" [ref_8]
+  textbox "Sedia ergonomica" [ref_9]
+ label "Quantità" [ref_10]
+  textbox "5" [ref_11] type="number"
+ label "Centro di costo" [ref_12]
+  textbox [ref_13]
+ label "Codice progetto" [ref_14]
+  textbox [ref_15]
+ label "Referente" [ref_16]
+  textbox "mario.rossi@acme.it" [ref_17]
+ label "Importo stimato" [ref_18]
+  textbox "€ 1.250,00" [ref_19]
+ button "Salva bozza" [ref_20] type="button"
+ button "Invia in approvazione" [ref_21] type="button"
+link "Elenco richieste" [ref_22] href="requisitions.html"
+
+Viewport: 490x417
+
+Tab Context:
+- Executed on tabId: tab-4
+- Available tabs:
+  • tabId tab-4: "Nuova richiesta - ACME SBX" (data:)

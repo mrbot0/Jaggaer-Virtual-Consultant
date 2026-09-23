@@ -1,0 +1,18 @@
+### Page state
+- Page URL: https://acme-sbx.jaggaer.com/p2p/requisition/edit/10045
+- Page Title: Richiesta d'acquisto - ACME SBX
+- Page Snapshot:
+```yaml
+- banner [ref=e2]: SANDBOX
+- heading "Richiesta d'acquisto" [level=1] [ref=e3]
+- textbox "Descrizione" [ref=e4]: RdA di prova - 5 sedie
+- spinbutton "Quantità" [ref=e5]: 5
+- textbox "Centro di costo" [ref=e6]: IT-0442
+- combobox "Categoria" [ref=e7]:
+  - option "Arredi" [selected]
+  - option "Informatica"
+- checkbox "Urgente" [ref=e8]
+- button "Salva bozza" [ref=e9] [cursor=pointer]
+- link "Elenco richieste" [ref=e10] [cursor=pointer]:
+  - /url: /p2p/requisition/list
+```

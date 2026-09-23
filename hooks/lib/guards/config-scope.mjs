@@ -43,8 +43,9 @@ const R2_DATA = new Set(["ACT-SUBMIT", "ACT-APPROVE", "ACT-TRANSMIT", "ACT-PUBLI
 const SNAPSHOT_MS = 60000;
 export const isEffectful = (a) => ["input", "click", "upload", "script", "other"].includes(a.kind) || (a.kind === "dialog" && a.submits) || a.submits === true;
 
-// Approvazioni richieste per il passo → { a1, a2, a3, action }.
-function required(cls, step, env, level) {
+// Approvazioni richieste per il passo → { a1, a2, a3, action }. Esportata per step-check (K6.1),
+// che chiede le approvazioni (pending.approvals) PRIMA del passo con la stessa regola del guard.
+export function requiredApprovals(cls, step, env, level) {
   if (cls === "ACT-CFG-CHANGE") {
     if (env.type === "prod") return { a1: true, a2: true, a3: true, action: false };
     const n = env.policy?.approvals?.[`config_${level}`] ?? 3;
@@ -138,7 +139,7 @@ async function browserDecide(ctx, no) {
     if (!fresh) return no(`${at}: serve uno snapshot degli oggetti governati${obj ? ` (${obj})` : ""} negli ultimi 60 s prima della modifica (§28.1)`);
   }
   // (d) approvazioni
-  const req = required(cls, step, env, level);
+  const req = requiredApprovals(cls, step, env, level);
   if (!req.a1 && !req.a2 && !req.a3 && !req.action) return null;
   const file = approvalsFile(ctx.ws, ctx.customer, ctx.sid);
   const reg = readApprovals(file);

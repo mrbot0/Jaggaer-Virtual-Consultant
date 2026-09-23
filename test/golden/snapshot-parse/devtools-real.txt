@@ -1,0 +1,27 @@
+## Latest page snapshot
+uid=1_0 RootWebArea "Nuova richiesta - ACME SBX" url="file:///C:/Users/PC-Marco/Desktop/plugin/jaggaer-virtual-consultant/test/fixtures/demo-tenant/requisition.html"
+  uid=1_1 banner
+    uid=1_2 StaticText "SANDBOX"
+  uid=1_3 StaticText "Tenant acme-sbx"
+  uid=1_4 heading "Richiesta d'acquisto" level="1"
+  uid=1_5 alert atomic live="assertive" relevant="additions text"
+    uid=1_6 StaticText "Il centro di costo è obbligatorio (REQ-VAL-014)"
+  uid=1_7 form
+    uid=1_8 StaticText "Descrizione "
+    uid=1_9 textbox "Descrizione " value="RdA di prova - 5 sedie"
+    uid=1_10 StaticText "Articolo "
+    uid=1_11 textbox "Articolo " value="Sedia ergonomica"
+    uid=1_12 StaticText "Quantità "
+    uid=1_13 spinbutton "Quantità " value="5" valuemax="0" valuemin="0" valuetext="5"
+    uid=1_14 StaticText "Centro di costo "
+    uid=1_15 textbox "Centro di costo " required
+    uid=1_16 StaticText "Codice progetto "
+    uid=1_17 textbox "Codice progetto "
+    uid=1_18 StaticText "Referente "
+    uid=1_19 textbox "Referente " value="mario.rossi@acme.it"
+    uid=1_20 StaticText "Importo stimato "
+    uid=1_21 textbox "Importo stimato " value="€ 1.250,00"
+    uid=1_22 button "Salva bozza"
+    uid=1_23 button "Invia in approvazione" disableable disabled
+  uid=1_24 link "Elenco richieste" url="file:///C:/Users/PC-Marco/Desktop/plugin/jaggaer-virtual-consultant/test/fixtures/demo-tenant/requisitions.html"
+    uid=1_25 StaticText "Elenco richieste"

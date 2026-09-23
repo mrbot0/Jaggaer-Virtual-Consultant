@@ -1,0 +1,21 @@
+banner "SANDBOX" [ref_1]
+heading "Richiesta d'acquisto" [ref_2]
+label "Descrizione" [ref_3]
+ textbox "RdA di prova - 5 sedie" [ref_4]
+label "Quantità" [ref_5]
+ spinbutton "5" [ref_6]
+label "Categoria" [ref_7]
+ combobox "Arredi" [ref_8]
+  option "Arredi" [ref_9]
+  option "Informatica" [ref_10]
+label "Urgente" [ref_11]
+ checkbox [ref_12]
+button "Salva bozza" [ref_13] type="button"
+link "Elenco richieste" [ref_14] href="/p2p/requisition/list"
+
+Viewport: 1280x800
+
+Tab Context:
+- Executed on tabId: 101
+- Available tabs:
+  • tabId 101: "Richiesta d'acquisto - ACME SBX" (https://acme-sbx.jaggaer.com/p2p/requisition/edit/10045)

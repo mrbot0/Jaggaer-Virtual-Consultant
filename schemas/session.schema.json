@@ -98,12 +98,13 @@
     },
     "active_plan": {
       "type": ["object", "null"],
-      "description": "Piano in esecuzione e passo corrente (lo mantiene step-check, K6; lo leggono guard-production e guard-config-scope). file: relativo alla cartella del cliente.",
+      "description": "Piano in esecuzione e passo corrente (lo mantiene step-check, K6: attivazione, avanzamento, chiusura; lo leggono guard-production e guard-config-scope). file: relativo alla cartella del cliente; run: la cartella runs/<RUN>/ di checkpoint e compensazioni.",
       "required": ["plan_id", "file", "step"],
       "properties": {
         "plan_id": { "type": "string", "pattern": "^PLAN\\.[A-Za-z0-9._-]+$" },
         "file": { "type": "string", "minLength": 1 },
-        "step": { "type": "integer", "minimum": 1 }
+        "step": { "type": "integer", "minimum": 1 },
+        "run": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" }
       }
     },
     "snapshots": {
@@ -118,7 +119,8 @@
     },
     "surprises": {
       "type": "array",
-      "items": { "type": "object", "required": ["at"], "properties": { "at": { "type": "string" }, "item": { "type": ["string", "null"] }, "obs": { "type": ["string", "null"] } } }
+      "description": "Sorprese registrate da step-check (§13.2–13.3): plan e step le attribuiscono al compito (2ª ⇒ tier +1, 3ª ⇒ escalate); kind = tipo di divergenza di DT-016, compat = esito.",
+      "items": { "type": "object", "required": ["at"], "properties": { "at": { "type": "string" }, "item": { "type": ["string", "null"] }, "obs": { "type": ["string", "null"] }, "plan": { "type": "string" }, "step": { "type": "integer", "minimum": 1 }, "kind": { "type": "string" }, "compat": { "type": "string" } } }
     },
     "ledger": {
       "type": "object",
