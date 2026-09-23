@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["F1","F4","F5","F6","F7","F8","F9","F10","F11","F12","F13","F15"],
+  "properties": {
+    "F1": { "enum": ["doc-standard","doc-cliente-tecnica","doc-cliente-utente","spec-integrazione-formale","spec-integrazione-prosa","release-notes","ticket","osservazione-chrome","esecuzione-test","esecuzione-config","dichiarazione-utente","promozione-digest"] },
+    "F4": { "enum": ["procedura","vincolo","struttura-dati","regola-business","comportamento-ui","contratto-interfaccia","oggetto-config","anomalia","decisione","query","check","mappa-processo","profilo","strategia"] },
+    "F5": { "enum": ["saas-core","modulo-addon","app-integrata-erp","middleware","identity-provider","portale-fornitori","reporting-analytics","notifica-email","trasferimento-file","plugin-cliente"] },
+    "F6": { "type": "array", "items": { "enum": ["direct","indirect","misto","pubblico-normato","privato","centralizzato","decentralizzato","catalogo-centrico","testo-libero","con-gare","senza-gare","con-contratti","multi-società","multi-valuta","multi-lingua"] } },
+    "F7": { "enum": ["sap-ecc","sap-s4","oracle","dynamics","altro","nessuno"] },
+    "F8": { "enum": ["universale","condizionata","specifica","ignota"] },
+    "F9": { "enum": ["una-tantum","periodica","ripetitiva","continua"] },
+    "F10": { "enum": ["R0","R1","R2","R3"] },
+    "F11": { "enum": ["deterministico","probabilistico","richiede-input"] },
+    "F12": { "enum": ["grezzo","digerito","validato","clusterizzato","promosso","deprecato","quarantena"] },
+    "F13": { "type": "object", "required": ["verified_at","release"], "properties": { "verified_at": { "type": "string", "format": "date" }, "release": { "type": "string" } } },
+    "F15": { "enum": ["tecnica","d'uso","empirica","testimoniale"] }
+  }
+}
