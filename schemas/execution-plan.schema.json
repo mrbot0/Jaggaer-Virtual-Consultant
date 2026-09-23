@@ -72,7 +72,8 @@
         }
       }
     },
-    "checkpoint_dir": { "type": "string", "minLength": 1 }
+    "checkpoint_dir": { "type": "string", "minLength": 1 },
+    "approvals": { "const": "3A", "description": "Protocollo di tripla approvazione (§52.2): obbligatorio per un piano con ACT-CFG-CHANGE in produzione (validate-plan)." }
   },
   "$defs": {
     "verb": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "WAIT", "VERIFY", "READ", "CAPTURE", "ASK"] },
@@ -96,6 +97,18 @@
         "risk": { "enum": ["R0", "R1", "R2", "R3"] },
         "approval": { "enum": ["required", "none"] },
         "action_class": { "type": "string", "pattern": "^ACT-[A-Z0-9-]+$" },
+        "config": {
+          "type": "object",
+          "description": "Perimetro di un passo di configurazione (ACT-CFG-CHANGE): oggetto governato, area CL-CFG e livello DT-007 (verde/giallo/rosso). guard-config-scope lo confronta con config_levels dell'ambiente e con remediation-scope.yaml.",
+          "additionalProperties": false,
+          "properties": {
+            "object": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CFG\\.\\d{4}(\\.v\\d+)?$" },
+            "area": { "type": "string", "pattern": "^CL-CFG-\\d{3}$" },
+            "level": { "enum": ["verde", "giallo", "rosso"] },
+            "dec": { "type": "string" }
+          },
+          "anyOf": [{ "required": ["object"] }, { "required": ["area"] }]
+        },
         "expect": { "type": "object", "minProperties": 1, "description": "Cosa si osserva dopo il passo: page_sig, elements, value, toast, messages, result…" },
         "on_divergence": { "type": "object" },
         "wait_for": { "$ref": "#/$defs/sel" },

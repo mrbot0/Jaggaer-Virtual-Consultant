@@ -1,0 +1,61 @@
+# ACT-TRANSMIT — classe di azione del catalogo (§29.4). Il codice dell'item è il nome del file.
+id: S.STD.XSC.ACT.0009
+type: ACT
+code: ACT-TRANSMIT
+name: Trasmettere (integrazione)
+title: Trasmettere un documento verso un sistema integrato
+summary: Trasmettere un documento verso un sistema integrato; un'approvazione più handoff XSC, in pre-produzione con referente. In produzione mai.
+risk: R2
+environments:
+  sandbox: allowed
+  preprod: referent
+  prod: never
+approvals:
+  sandbox: 1
+  preprod: 1
+  prod: null
+approvals_note: 1 approvazione + handoff XSC
+evidence_min:
+  - integration
+report_kind: action
+db_writes:
+  - OBS
+  - CMP
+  - RPT
+budget_tokens: 25000
+verbs_allowed:
+  - NAVIGATE
+  - CLICK
+  - FILL
+  - CHOOSE
+  - SELECT
+  - TOGGLE
+  - SAVE
+  - READ
+  - WAIT
+  - VERIFY
+  - CAPTURE
+  - ASK
+  - SUBMIT
+effect: write
+handoff: XSC
+facets:
+  F1: doc-standard
+  F4: vincolo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R2
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-23
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "29.4"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "52.1"

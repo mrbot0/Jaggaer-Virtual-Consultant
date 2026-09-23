@@ -1,0 +1,54 @@
+# ACT-OBS — classe di azione del catalogo (§29.4). Il codice dell'item è il nome del file.
+id: S.STD.XSC.ACT.0001
+type: ACT
+code: ACT-OBS
+name: Osservare
+title: "Osservare: navigare, leggere, fare snapshot"
+summary: "Navigare, leggere e fotografare pagine JAGGAER senza effetti sui dati. Ammesso in ogni ambiente, produzione compresa; nessuna approvazione. Evidenza minima: entry, se dichiarata."
+risk: R0
+environments:
+  sandbox: allowed
+  preprod: allowed
+  prod: allowed
+approvals:
+  sandbox: 0
+  preprod: 0
+  prod: 0
+evidence_min:
+  - entry
+report_kind: action
+db_writes:
+  - OBS
+  - RPT
+budget_tokens: 5000
+verbs_allowed:
+  - NAVIGATE
+  - CLICK
+  - SELECT
+  - FILL
+  - READ
+  - CAPTURE
+  - WAIT
+  - VERIFY
+  - ASK
+effect: read
+facets:
+  F1: doc-standard
+  F4: vincolo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-23
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "29.4"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "52.1"

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "act.schema.json",
+  "title": "ACT — classe di azione del catalogo (§29.4)",
+  "description": "Parte specifica degli item ACT (oltre a item.base): la classe decide rischio, ambienti ammessi, approvazioni, evidenze minime, report, scritture nel DB, budget e verbi. Un'azione fuori catalogo non esiste per il plugin: validate-plan rifiuta il piano. ACT-DELETE esiste solo perché guard-destructive possa nominarla: mai in nessun ambiente, nessun verbo.",
+  "type": "object",
+  "required": ["code", "name", "risk", "environments", "approvals", "evidence_min", "report_kind", "db_writes", "budget_tokens", "verbs_allowed", "effect"],
+  "properties": {
+    "type": { "const": "ACT" },
+    "code": { "type": "string", "pattern": "^ACT-[A-Z]+(-[A-Z]+)*$" },
+    "name": { "type": "string", "minLength": 3 },
+    "risk": { "description": "R0–R3; R1/R2 e R2/R3 = dipende dall'istanza (§29.4); null per ACT-DELETE (non eseguibile).", "enum": ["R0", "R1", "R2", "R3", "R1/R2", "R2/R3", null] },
+    "environments": {
+      "type": "object",
+      "required": ["sandbox", "preprod", "prod"],
+      "additionalProperties": false,
+      "properties": {
+        "sandbox": { "$ref": "#/$defs/admission" },
+        "preprod": { "$ref": "#/$defs/admission" },
+        "prod": { "$ref": "#/$defs/admission" }
+      }
+    },
+    "approvals": {
+      "type": "object",
+      "required": ["sandbox", "preprod", "prod"],
+      "additionalProperties": false,
+      "properties": {
+        "sandbox": { "$ref": "#/$defs/approvalCount" },
+        "preprod": { "$ref": "#/$defs/approvalCount" },
+        "prod": { "$ref": "#/$defs/approvalCount" }
+      }
+    },
+    "approvals_note": { "type": "string" },
+    "evidence_min": { "type": "array", "items": { "enum": ["entry", "input", "transition", "assertion", "integration", "risultato", "snapshot", "tutte"] } },
+    "report_kind": { "enum": ["action", "test", "none"] },
+    "db_writes": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z]{3}$" } },
+    "budget_tokens": { "type": ["integer", "null"], "minimum": 0 },
+    "budget_tokens_rosso": { "type": "integer", "minimum": 0 },
+    "verbs_allowed": { "type": "array", "uniqueItems": true, "items": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "WAIT", "VERIFY", "READ", "CAPTURE", "ASK"] } },
+    "effect": { "enum": ["read", "write", "config", "none"] },
+    "handoff": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "code": { "const": "ACT-DELETE" } }, "required": ["code"] },
+      "then": {
+        "properties": {
+          "environments": { "properties": { "sandbox": { "const": "never" }, "preprod": { "const": "never" }, "prod": { "const": "never" } } },
+          "verbs_allowed": { "maxItems": 0 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "effect": { "const": "write" } }, "required": ["effect"] },
+      "then": { "properties": { "environments": { "properties": { "prod": { "const": "never" } } } } }
+    }
+  ],
+  "$defs": {
+    "admission": { "description": "allowed · never · referent (con referente presente) · approval (solo con approvazione esplicita) · 3A (§52.2)", "enum": ["allowed", "never", "referent", "approval", "3A"] },
+    "approvalCount": {
+      "description": "Numero di approvazioni; per livello di perimetro (verde/giallo/rosso) o di rischio; \"3A\" = protocollo di §52.2; null = non applicabile (classe mai ammessa).",
+      "oneOf": [
+        { "type": "integer", "minimum": 0, "maximum": 3 },
+        { "const": "3A" },
+        { "type": "null" },
+        { "type": "object", "minProperties": 1, "additionalProperties": false, "patternProperties": { "^(verde|giallo|rosso|R0|R1|R2|R3)$": { "type": "integer", "minimum": 0, "maximum": 3 } } }
+      ]
+    }
+  }
+}

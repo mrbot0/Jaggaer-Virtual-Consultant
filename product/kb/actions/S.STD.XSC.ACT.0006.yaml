@@ -1,0 +1,64 @@
+# ACT-UPLOAD — classe di azione del catalogo (§29.4). Il codice dell'item è il nome del file.
+id: S.STD.XSC.ACT.0006
+type: ACT
+code: ACT-UPLOAD
+name: Caricare file o allegato
+title: Caricare un file o un allegato
+summary: Caricare un file o un allegato; R2 richiede un'approvazione, in pre-produzione solo caricamenti R1. In produzione mai.
+risk: R1/R2
+environments:
+  sandbox: allowed
+  preprod: allowed
+  prod: never
+approvals:
+  sandbox:
+    R1: 0
+    R2: 1
+  preprod:
+    R1: 0
+    R2: 1
+  prod: null
+approvals_note: "R2: 1 approvazione; in pre-produzione solo caricamenti R1 (§29.4)"
+evidence_min:
+  - input
+report_kind: action
+db_writes:
+  - OBS
+  - CMP
+  - RPT
+budget_tokens: 10000
+verbs_allowed:
+  - NAVIGATE
+  - CLICK
+  - FILL
+  - CHOOSE
+  - SELECT
+  - TOGGLE
+  - SAVE
+  - READ
+  - WAIT
+  - VERIFY
+  - CAPTURE
+  - ASK
+  - UPLOAD
+effect: write
+facets:
+  F1: doc-standard
+  F4: vincolo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R2
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-23
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "29.4"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "52.1"

@@ -1,0 +1,58 @@
+# ACT-UPDATE — classe di azione del catalogo (§29.4). Il codice dell'item è il nome del file.
+id: S.STD.XSC.ACT.0005
+type: ACT
+code: ACT-UPDATE
+name: Modificare bozza
+title: Modificare un documento in bozza
+summary: Modificare una bozza esistente in sandbox o pre-produzione, con compensazione registrata prima. In produzione mai.
+risk: R1
+environments:
+  sandbox: allowed
+  preprod: allowed
+  prod: never
+approvals:
+  sandbox: 0
+  preprod: 0
+  prod: null
+evidence_min:
+  - input
+report_kind: action
+db_writes:
+  - OBS
+  - CMP
+  - RPT
+budget_tokens: 10000
+verbs_allowed:
+  - NAVIGATE
+  - CLICK
+  - FILL
+  - CHOOSE
+  - SELECT
+  - TOGGLE
+  - SAVE
+  - READ
+  - WAIT
+  - VERIFY
+  - CAPTURE
+  - ASK
+effect: write
+facets:
+  F1: doc-standard
+  F4: vincolo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R1
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-23
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "29.4"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "52.1"

@@ -13,6 +13,8 @@ const ajv = new Ajv2020({ allErrors: true, strict: false });
 addFormats(ajv);
 ajv.addSchema(load("facets.schema.json"), "facets.schema.json");
 const validateBase = ajv.compile(load("item.base.schema.json"));
+// ACT: parte specifica del catalogo delle azioni (§29.4, schemas/act.schema.json).
+const validateAct = ajv.compile(load("act.schema.json"));
 const words = (s) => (s || "").trim().split(/\s+/).filter(Boolean).length;
 
 export function validateItem(obj) {
@@ -23,6 +25,7 @@ export function validateItem(obj) {
   if (words(obj?.summary) > limit) errors.push(`summary: oltre ${limit} parole`);
   // FLD: parte specifica di schemas/fld.schema.json e regole di grafo (scripts/kb/validate-fld.mjs)
   if (obj?.type === "FLD") for (const e of fldErrors(obj)) if (!e.startsWith("summary:") && !errors.includes(e)) errors.push(e);
+  if (obj?.type === "ACT" && !validateAct(obj)) for (const e of validateAct.errors) if (e.keyword !== "if") errors.push(`${e.instancePath || "/"} ${e.message}${e.params?.missingProperty ? ` (${e.params.missingProperty})` : ""}${e.params?.allowedValue !== undefined ? ` (atteso ${JSON.stringify(e.params.allowedValue)})` : ""}`);
   return { ok: errors.length === 0, errors };
 }
 
