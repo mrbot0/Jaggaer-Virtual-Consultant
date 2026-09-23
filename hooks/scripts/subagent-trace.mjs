@@ -143,8 +143,11 @@ export function handle(input, env = process.env) {
       // Con identità solo per ordine (niente transcript) e il task_id dichiarato
       // che è un altro dispatch aperto dello stesso tipo, l'ordine può essere
       // sbagliato (dispatch paralleli): avviso di traccia, non blocco (F3).
+      // Ambiguo anche se quel dispatch è già stato reclamato da un altro stop
+      // abbinato per ordine (il "gemello" finito prima: fix round 3).
       const claimed = claimedSeqs(invs, s.ledger.invocations);
-      const ambiguous = source === "dispatch-order" && invs.some((x, i) => i !== seq && !claimed.has(i) && String(x?.task_id) === declared && invocationType(x) === agentType);
+      const byOrder = new Set(s.ledger.invocations.filter((e) => e !== entry && e?.task_id_source === "dispatch-order" && Number.isInteger(e.inv_seq)).map((e) => e.inv_seq));
+      const ambiguous = source === "dispatch-order" && invs.some((x, i) => i !== seq && (!claimed.has(i) || byOrder.has(i)) && String(x?.task_id) === declared && invocationType(x) === agentType);
       if (ambiguous) {
         const w = `task_id dichiarato ${declared} ≠ ${expected} abbinato per ordine di dispatch (transcript assente, dispatch paralleli dello stesso tipo): identità non verificabile`;
         entry.trace_warnings = [...new Set([...(entry.trace_warnings ?? []), w])];
