@@ -1,12 +1,21 @@
 // guard-scope (FAIL-CLOSED): cella dello scope (§1.2, §31.4, §32).
 //  - percorsi governati (celle kb, handoff, _inbox, tests) ⇒ solo se in
 //    session.allowed_paths; altrimenti deny con suggerimento di handoff;
-//  - scrittura negata a tutti su product/**, sulle decision-tables/,
-//    strategies/, clusters/ del plugin (§29.6, T9) e sullo stato di sessione;
-//  - INT possedute (kb/scopes/XSC/**) in sola lettura fuori da XSC;
-//  - weekly-digest: lettura di customers/*/{lessons,decisions,outcomes,observations,kb}.
+//  - handoff nominati per codice: Read consentita se lo YAML dichiara lo scope
+//    attivo in from_scope / to_scope / scopes[] (file ≤ 64 KB; YAML rotto ⇒ deny);
+//  - scrittura negata a tutti su product/**, customers/*/kb/** (§29.6: solo gli
+//    script scrivono la conoscenza), audit, blackboard, stato di sessione,
+//    session.json ovunque, e su decision-tables/ strategies/ clusters/ del plugin (T9);
+//  - weekly-digest: lettura di customers/*/{lessons,decisions,outcomes,observations,kb};
+//  - Bash/PowerShell dei sub-agenti: ogni token-percorso (anche senza '/', anche
+//    dopo un cd) il cui sottoalbero tocca una cella governata deve stare dentro
+//    allowed_paths (niente `grep -r` su un antenato della cella);
+//  - percorsi assoluti fuori dal workspace: valutati sui suffissi customers/… product/….
+import { statSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { createRequire } from "node:module";
 import { intersects, subset, PathPolicyError } from "../paths.mjs";
-import { guarded, denyAudited, targetsOf, shellPaths, FILE_TOOLS, SEARCH_TOOLS, WRITE_TOOLS, READ_TOOLS, SHELL_TOOLS } from "./common.mjs";
+import { guarded, denyAudited, targetsOf, allRels, shellPaths, subtree, PATH_TOOLS, WRITE_TOOLS, READ_TOOLS, SHELL_TOOLS } from "./common.mjs";
 
 const G = "guard-scope";
 export const GOVERNED = [
@@ -14,27 +23,51 @@ export const GOVERNED = [
   "customers/*/kb/handoffs/**", "product/kb/handoffs/**",
 ];
 export const WEEKLY_READ = ["lessons", "decisions", "outcomes", "observations", "kb"].map((d) => `customers/*/${d}/**`);
-const SESSION_STATE = [".jvc/**", "customers/*/.sessions/*/session.json", "customers/*/.sessions/*/invocations.jsonl"];
+const WRITE_DENY = [
+  ["product/**", "product/ è in sola lettura: si scrive solo con gli script dopo validazione (§29.6)"],
+  ["customers/*/kb/**", "kb/ si scrive solo con gli script dopo validazione, mai con gli strumenti (§29.6)"],
+  ["customers/*/audit/**", "l'audit è append-only e lo scrive solo l'hook audit-append (T8)"],
+  ["customers/*/.sessions/**/blackboard/**", "il blackboard lo scrive solo l'hook subagent-trace"],
+  ["customers/*/.sessions/*/invocations.jsonl", "le invocazioni le registra solo guard-budget"],
+  ["customers/*/.sessions/*/compact-summary.md", "il riassunto lo scrive solo precompact-save"],
+  [".jvc/**", "lo stato di sessione si modifica solo con /use e con gli hook del plugin"],
+  ["**/session.json", "session.json si modifica solo con /use e con gli hook del plugin"],
+];
 const PLUGIN_RO = ["decision-tables/**", "strategies/**", "clusters/**"];
+const HANDOFF_MAX = 64 * 1024;
+const require = createRequire(import.meta.url);
 
-// Shell (solo sub-agenti, agent_id presente): i percorsi citati dal comando che
-// cadono in una cella governata devono essere in allowed_paths. La sessione
-// principale e gli script (`node scripts/…`) non citano celle altrui: non
-// vengono toccati. Euristica (vedi shellPaths): complementa, non sostituisce,
-// i guard sugli strumenti di file.
+// Lo handoff che Read aprirà dichiara lo scope attivo? null = sì, altrimenti il motivo.
+function handoffRefusal(ctx) {
+  const scope = ctx.session?.scope;
+  if (!scope) return "nessuno scope attivo";
+  const f = resolve(ctx.cwd, String(ctx.ti.file_path));
+  let st;
+  try { st = statSync(f); } catch { return "handoff inesistente"; }
+  if (!st.isFile()) return "lo handoff non è un file";
+  if (st.size > HANDOFF_MAX) return `handoff oltre ${HANDOFF_MAX / 1024} KB`;
+  let doc;
+  try { doc = require("yaml").parse(readFileSync(f, "utf8")); } catch { return "handoff con YAML non valido"; }
+  const declared = [doc?.from_scope, doc?.to_scope, ...(Array.isArray(doc?.scopes) ? doc.scopes : [])]
+    .filter((x) => typeof x === "string").map((x) => x.toUpperCase());
+  return declared.includes(scope) ? null : `lo handoff non dichiara lo scope ${scope} in from_scope, to_scope o scopes`;
+}
+
 function checkShell(ctx) {
   const cmd = ctx.ti.command;
   if (!ctx.agentId || typeof cmd !== "string" || !cmd.trim()) return null;
   if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
   const allowed = Array.isArray(ctx.session?.allowed_paths) ? ctx.session.allowed_paths : [];
-  const variants = new Set([cmd, cmd.replace(/\\(?=[^\s\\/])/g, "")]);
-  for (const v of variants) {
-    for (const { rels } of shellPaths(ctx, v)) {
+  const weekly = ctx.agentType === "weekly-digest";
+  for (const v of new Set([cmd, cmd.replace(/\\(?=[^\s\\/])/g, "")])) {
+    for (const { rels, cd } of shellPaths(ctx, v, { bareWords: true })) {
       for (const p of rels) {
-        if (!GOVERNED.some((a) => intersects(p, a))) continue;
-        if (ctx.agentType === "weekly-digest" && WEEKLY_READ.some((q) => subset(p, q))) continue;
-        if (allowed.some((q) => subset(p, q))) continue;
-        return denyAudited(ctx, G, `comando fuori cella (${ctx.session?.scope ? `${ctx.session.customer}×${ctx.session.scope}` : "nessuno scope attivo"}): ${p} non è in allowed_paths. Chiedi un handoff tramite il manager.`);
+        const sp = subtree(p);
+        if (!GOVERNED.some((a) => intersects(sp, a))) continue;
+        if (weekly && WEEKLY_READ.some((q) => subset(sp, q))) continue;
+        if (allowed.some((q) => subset(sp, q))) continue;
+        const cell = ctx.session?.scope ? `${ctx.session.customer}×${ctx.session.scope}` : "nessuno scope attivo";
+        return denyAudited(ctx, G, `comando fuori cella (${cell}): ${cd ? "cd verso " : ""}${p || "."} copre percorsi non in allowed_paths. Chiedi un handoff tramite il manager.`);
       }
     }
   }
@@ -44,28 +77,32 @@ function checkShell(ctx) {
 export const decide = guarded(G, (ctx) => {
   const { tool, session } = ctx;
   if (SHELL_TOOLS.has(tool)) return checkShell(ctx);
-  if (!FILE_TOOLS.has(tool) && !SEARCH_TOOLS.has(tool)) return null;
   const T = targetsOf(ctx);
-  const write = WRITE_TOOLS.has(tool);
-  if (write) {
-    for (const p of T.ws) {
-      if (intersects(p, "product/**")) return denyAudited(ctx, G, `product/ è in sola lettura: si scrive solo con gli script dopo validazione (§29.6). Percorso: ${p}`);
-      if (SESSION_STATE.some((a) => intersects(p, a))) return denyAudited(ctx, G, `lo stato di sessione si modifica solo con /use e con gli hook del plugin: ${p}`);
-      if (session?.scope !== "XSC" && intersects(p, "customers/*/kb/scopes/xsc/**")) return denyAudited(ctx, G, `le INT possedute sono in sola lettura fuori dallo scope XSC: ${p}`);
+  const rels = allRels(T);
+  if (WRITE_TOOLS.has(tool)) {
+    for (const p of rels) {
+      for (const [area, why] of WRITE_DENY) if (intersects(p, area)) return denyAudited(ctx, G, `${why}: ${p}`);
     }
+    for (const a of T.abs) if (/(^|\/)session\.json$/.test(a)) return denyAudited(ctx, G, `session.json si modifica solo con /use e con gli hook del plugin: ${a}`);
     for (const p of T.plugin) {
       if (PLUGIN_RO.some((a) => intersects(p, a))) return denyAudited(ctx, G, `tabelle di decisione, strategie e cluster del plugin non si modificano in sessione (T9): ${p}`);
     }
   }
   const allowed = Array.isArray(session?.allowed_paths) ? session.allowed_paths : [];
   const weekly = ctx.agentType === "weekly-digest" && READ_TOOLS.has(tool);
-  for (const p of T.ws) {
+  const handoffAreas = ctx.customerLc ? [`customers/${ctx.customerLc}/kb/handoffs/**`, "product/kb/handoffs/**"] : ["product/kb/handoffs/**"];
+  let handoff;
+  for (const p of rels) {
     if (!GOVERNED.some((a) => intersects(p, a))) continue;
     if (weekly && WEEKLY_READ.some((q) => subset(p, q))) continue;
     if (allowed.some((q) => subset(p, q))) continue;
+    if (tool === "Read" && handoffAreas.some((q) => subset(p, q))) {
+      handoff ??= { why: handoffRefusal(ctx) };
+      if (!handoff.why) continue;
+      return denyAudited(ctx, G, `${handoff.why}: ${p}`);
+    }
     const cell = session?.scope ? `cella ${session.customer}×${session.scope}` : "nessuno scope attivo (use scope <ID>)";
     return denyAudited(ctx, G, `fuori cella (${cell}): ${p} non è in allowed_paths. Se serve un altro scope, chiedi un handoff tramite il manager.`);
   }
   return null;
-});
-
+}, { tools: new Set([...PATH_TOOLS, ...SHELL_TOOLS]) });

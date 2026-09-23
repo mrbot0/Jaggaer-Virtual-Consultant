@@ -7,7 +7,7 @@
 //    proprio scope (Read puntuale).
 import { intersects, segs, skeleton } from "../paths.mjs";
 import { BOUNDARY_RULES } from "../../../scripts/kb/validate-boundary.mjs";
-import { guarded, denyAudited, targetsOf, FILE_TOOLS, SEARCH_TOOLS, WRITE_TOOLS } from "./common.mjs";
+import { guarded, denyAudited, targetsOf, allRels, PATH_TOOLS, WRITE_TOOLS } from "./common.mjs";
 
 const G = "guard-domain-boundary";
 const KB = ["product/kb/**", "customers/*/kb/**"];
@@ -42,21 +42,21 @@ function isOwnBrf(p, session) {
 
 export const decide = guarded(G, (ctx) => {
   const { tool, ti, session } = ctx;
-  if (!FILE_TOOLS.has(tool) && !SEARCH_TOOLS.has(tool)) return null;
   const T = targetsOf(ctx);
+  const rels = allRels(T);
   if (WRITE_TOOLS.has(tool)) {
     const content = writtenContent(tool, ti);
-    for (const p of T.ws) {
+    for (const p of rels) {
       if (KB.some((a) => intersects(p, a))) { const v = firstViolation("kb", content); if (v) return denyAudited(ctx, G, `kb/ non referenzia mai il dominio analitico (§1.1): ${v}`); }
       if (AN.some((a) => intersects(p, a))) { const v = firstViolation("analysis", content); if (v) return denyAudited(ctx, G, `analysis/ non referenzia mai un test (§1.1): ${v}`); }
     }
     return null;
   }
-  for (const p of T.ws) {
+  for (const p of rels) {
     if (!AN.some((a) => intersects(p, a))) continue;
     if (ANALYSTS.has(ctx.agentType)) continue;
     if (ctx.agentType === "scope-expert" && session?.mode === "diag" && tool === "Read" && isOwnBrf(p, session)) continue;
     return denyAudited(ctx, G, `analysis/ è riservato alla diagnosi (root-cause-analyst, failure-triage, defect-reporter; scope-expert solo il BRF del proprio scope in modalità diag): ${p}`);
   }
   return null;
-});
+}, { tools: PATH_TOOLS });

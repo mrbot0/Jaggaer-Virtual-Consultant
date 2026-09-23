@@ -3,6 +3,7 @@
 import { readdirSync, readFileSync, statSync, existsSync, openSync, readSync, fstatSync, closeSync } from "node:fs";
 import { join } from "node:path";
 import { redact, truncate } from "./redact.mjs";
+import { openFrom } from "./invocations.mjs";
 
 const list = (a, n = 5) => (Array.isArray(a) && a.length ? `${a.length} [${a.slice(0, n).map((x) => (typeof x === "string" ? x : x?.code ?? x?.id ?? JSON.stringify(x))).join(", ")}${a.length > n ? ", …" : ""}]` : "0");
 
@@ -40,10 +41,10 @@ export function readJsonl(file) {
   return readFileSync(file, "utf8").split("\n").filter((l) => l.trim()).flatMap((l) => { try { return [JSON.parse(l)]; } catch { return []; } });
 }
 
-// Invocazioni registrate da guard-budget non ancora chiuse da subagent-trace.
+// Invocazioni registrate da guard-budget non ancora chiuse da subagent-trace
+// (abbinamento per ordine di dispatch: vedi invocations.mjs).
 export function openInvocations(invocationsFile, ledger = {}) {
-  const closed = new Set((ledger.invocations ?? []).map((i) => i.task_id).filter(Boolean));
-  return readJsonl(invocationsFile).filter((i) => i.task_id && !closed.has(i.task_id));
+  return openFrom(readJsonl(invocationsFile), ledger?.invocations ?? []);
 }
 
 // Ultimo prompt dell'utente nel transcript (lettura della sola coda).

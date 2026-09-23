@@ -8,7 +8,7 @@
 // attivo ⇒ customers/** negato, salvo `node …session.mjs use customer …`.
 import { posix } from "node:path";
 import { intersects, subset, segs, bases, skeleton, PathPolicyError } from "../paths.mjs";
-import { guarded, denyAudited, targetsOf, shellPaths, FILE_TOOLS, SEARCH_TOOLS, SHELL_TOOLS, READ_TOOLS } from "./common.mjs";
+import { guarded, denyAudited, targetsOf, shellPaths, pluginSessionCommand, PATH_TOOLS, SHELL_TOOLS, READ_TOOLS } from "./common.mjs";
 import { WEEKLY_READ } from "./scope.mjs";
 
 const G = "guard-customer";
@@ -46,7 +46,6 @@ function checkFileTool(ctx) {
 }
 
 // ---- shell ----
-const USE_CUSTOMER = /^\s*node\s+("[^"]*session\.mjs"|'[^']*session\.mjs'|\S*session\.mjs)\s+use\s+customer\s+\S+/i;
 
 function shellVariants(cmd) {
   const out = new Set([cmd]);
@@ -64,7 +63,8 @@ function checkShell(ctx) {
   const cmd = ctx.ti.command;
   if (typeof cmd !== "string" || !cmd.trim()) return null;
   if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
-  if (!ctx.customerLc && USE_CUSTOMER.test(cmd) && !/[;&|`$<>\r\n]/.test(cmd.replace(/"?\$\{CLAUDE_SESSION_ID\}"?/g, ""))) return null;
+  // Senza cliente: solo `node <plugin>/scripts/admin/session.mjs use customer …` (fix round 1 #13).
+  if (!ctx.customerLc) { const sc = pluginSessionCommand(cmd, { cwd: ctx.cwd, plugin: ctx.plugin }); if (sc?.action === "use" && sc.what === "customer") return null; }
   const refs = new Set();
   for (const v of shellVariants(cmd)) {
     for (const m of v.matchAll(/--customer(?:=|\s+)([^\s;|&<>()]+)/gi)) refs.add(m[1].toLowerCase());
@@ -92,6 +92,6 @@ function checkRelativeWithCwd(ctx, cmd) {
 export const decide = guarded(G, (ctx) => {
   let reason = null;
   if (SHELL_TOOLS.has(ctx.tool)) reason = checkShell(ctx);
-  else if (FILE_TOOLS.has(ctx.tool) || SEARCH_TOOLS.has(ctx.tool)) reason = checkFileTool(ctx);
+  else reason = checkFileTool(ctx);
   return reason ? denyAudited(ctx, G, reason) : null;
-});
+}, { tools: new Set([...PATH_TOOLS, ...SHELL_TOOLS]) });

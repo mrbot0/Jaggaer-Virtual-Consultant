@@ -34,8 +34,19 @@ export function skeleton(s) {
 const slash = (s) => s.replace(/\\/g, "/");
 const lower = (s) => s.normalize("NFC").toLowerCase();
 
-function stripDevice(s) {
-  return s.replace(/^\/\/[?.]\/UNC\//i, "//").replace(/^\/\/[?.]\//, "");
+// Prefissi di dispositivo Win32: si accetta solo `\\?\X:\` / `\\.\X:\` (che
+// equivalgono a `X:\`). Volume{GUID}, GLOBALROOT, UNC\ e ogni altra forma sono
+// negati: dopo lo strip resterebbe un percorso senza unità risolto rispetto
+// alla cwd. I percorsi UNC (`\\server\share`, share amministrative `C$`) sono
+// negati sempre: aggirano il confronto con il workspace (fix round 1 #1–#2).
+function checkDevice(s) {
+  if (/^\/\/[?.]\//.test(s)) {
+    const rest = s.slice(4);
+    if (/^[A-Za-z]:(\/|$)/.test(rest)) return rest;
+    throw new PathPolicyError(`percorso di dispositivo non supportato (solo \\\\?\\X:\\): ${s.slice(0, 80)}`);
+  }
+  if (/^\/\//.test(s)) throw new PathPolicyError(`percorsi UNC non consentiti: ${s.slice(0, 80)}`);
+  return s;
 }
 
 // Variante Windows: via punti e spazi finali dei segmenti, via gli stream
@@ -71,31 +82,68 @@ export function variants(raw) {
     out.add(d);
   }
   for (const v of [...out]) {
-    if (/^file:\/\//i.test(v)) { try { out.add(fileURLToPath(v.replace(/\\/g, "/"))); } catch { /* URL non valido */ } }
+    if (/^file:/i.test(v)) {
+      try { out.add(fileURLToPath(v.replace(/\\/g, "/"))); } catch { throw new PathPolicyError(`URL file: non risolvibile: ${v.slice(0, 80)}`); }
+    }
   }
-  for (const v of [...out]) { out.add(skeleton(v)); out.add(winStrip(v)); out.add(winStrip(skeleton(v))); }
-  return [...out].map((v) => stripDevice(slash(v)));
+  // Prima il controllo dei prefissi di dispositivo/UNC (winStrip toglierebbe il
+  // ':' dell'unità), poi le varianti derivate, controllate di nuovo: uno
+  // scheletro può produrre '//' da barre sosia (es. U+FF0F).
+  const base = [...out].map((v) => checkDevice(slash(v)));
+  const all = new Set(base);
+  for (const v of base) { all.add(skeleton(v)); all.add(winStrip(v)); all.add(winStrip(skeleton(v))); }
+  return [...all].map((v) => checkDevice(slash(v)));
 }
 
-// Risoluzione fisica: segmento per segmento, realpath dopo ogni passo, così
-// `link/..` va al padre del BERSAGLIO del link, come fa il sistema operativo.
+// realpath con cache per processo (un hook è un processo breve).
+const realCache = new Map();
+function real(p) {
+  if (!realCache.has(p)) {
+    try { realCache.set(p, { ok: realpathSync.native(p) }); } catch (err) { realCache.set(p, { err: err.code ?? "ERR" }); }
+  }
+  const r = realCache.get(p);
+  if (r.err === "ELOOP") throw new PathPolicyError("percorso con ciclo di link simbolici");
+  return r.ok ?? null;
+}
+
+// Risoluzione fisica (semantica POSIX): segmento per segmento, realpath dopo
+// ogni passo, così `link/..` va al padre del BERSAGLIO del link. Dopo un
+// segmento inesistente, ogni `..` riporta su una cartella che può esistere:
+// l'esistenza si ricontrolla e la risoluzione riprende (fix round 1 #3).
 function physical(v, cwd) {
   const native = IS_WIN ? v.replace(/\//g, "\\") : v;
   let cur; let rest;
-  if (P.isAbsolute(native)) { const root = P.parse(P.resolve(native)).root; cur = root; rest = native.slice(P.parse(native).root.length); } else { cur = cwd; rest = native; }
-  try { cur = realpathSync.native(cur); } catch { /* radice inesistente: resta lessicale */ }
+  if (P.isAbsolute(native)) { cur = P.parse(P.resolve(native)).root; rest = native.slice(P.parse(native).root.length); } else { cur = cwd; rest = native; }
+  cur = real(cur) ?? cur;
   let exists = true;
   for (const seg of rest.split(/[\\/]+/)) {
     if (seg === "" || seg === ".") continue;
-    if (seg === "..") { cur = P.dirname(cur); continue; }
+    if (seg === "..") {
+      cur = P.dirname(cur);
+      if (!exists) { const r = real(cur); if (r) { cur = r; exists = true; } }
+      continue;
+    }
     cur = P.join(cur, seg);
     if (!exists) continue;
-    try { cur = realpathSync.native(cur); } catch (err) {
-      if (err.code === "ELOOP") throw new PathPolicyError("percorso con ciclo di link simbolici");
-      exists = false;
-    }
+    const r = real(cur);
+    if (r) cur = r; else exists = false;
   }
   return cur;
+}
+
+// Risoluzione Win32: i `..` si collassano lessicalmente PRIMA di toccare il file
+// system; poi realpath del prefisso esistente più lungo e resto riattaccato.
+function lexicalThenReal(abs) {
+  let cur = abs;
+  const rest = [];
+  for (;;) {
+    const r = real(cur);
+    if (r) return rest.length ? P.join(r, ...rest.reverse()) : r;
+    const parent = P.dirname(cur);
+    if (parent === cur) return abs;
+    rest.push(P.basename(cur));
+    cur = parent;
+  }
 }
 
 const absForm = (p) => lower(slash(p)).replace(/\/+$/, (m, off, s) => (s.length === 1 || /^[a-z]:\/$/.test(s) ? m : ""));
@@ -108,28 +156,42 @@ function relTo(abs, base) {
 
 export function bases(dir) {
   const out = new Set([absForm(P.resolve(dir))]);
-  try { out.add(absForm(realpathSync.native(dir))); } catch { /* inesistente */ }
+  const r = real(dir);
+  if (r) out.add(absForm(r));
   return [...out];
 }
 
-// → { ws: Set<rel minuscolo>, plugin: Set<rel>, abs: Set<assoluto minuscolo> }
+const insideAny = (abs, bs) => bs.some((b) => relTo(abs, b) !== null);
+
+// Percorsi assoluti FUORI dal workspace: ogni suffisso che parte da un segmento
+// `customers` o `product` è valutato come se fosse nel workspace (copie, altri
+// repository, share): i guard di scope e di dominio li trattano allo stesso modo.
+function outsideSuffixes(abs, wsB, set) {
+  if (insideAny(abs, wsB)) return;
+  const s = abs.split("/");
+  for (let i = 0; i < s.length; i++) if (s[i] === "customers" || s[i] === "product") set.add(s.slice(i).join("/"));
+}
+
+// → { ws: Set<rel minuscolo>, plugin: Set<rel>, abs: Set<assoluto minuscolo>, outside: Set<suffisso> }
 export function resolveTarget(raw, { cwd, ws, plugin }) {
   const wsB = bases(ws);
   const plB = plugin ? bases(plugin) : [];
-  const out = { ws: new Set(), plugin: new Set(), abs: new Set() };
+  const out = { ws: new Set(), plugin: new Set(), abs: new Set(), outside: new Set() };
   for (const v of variants(raw)) {
     const native = IS_WIN ? v.replace(/\//g, "\\") : v;
-    for (const a of [P.resolve(cwd, native), physical(v, cwd)]) {
+    const lex = P.resolve(cwd, native);
+    for (const a of [lex, physical(v, cwd), lexicalThenReal(lex)]) {
       const abs = absForm(a);
       out.abs.add(abs);
       for (const b of wsB) { const r = relTo(abs, b); if (r !== null) out.ws.add(r); }
       for (const b of plB) { const r = relTo(abs, b); if (r !== null) out.plugin.add(r); }
+      outsideSuffixes(abs, wsB, out.outside);
     }
   }
   // Lo scheletro va applicato anche al relativo: con un percorso assoluto il
   // prefisso del workspace (es. una cartella utente con accenti) non
   // sopravvive allo scheletro e il mascheramento sfuggirebbe.
-  for (const set of [out.ws, out.plugin]) for (const r of [...set]) { set.add(lower(skeleton(r))); set.add(lower(winStrip(skeleton(r)))); }
+  for (const set of [out.ws, out.plugin, out.outside]) for (const r of [...set]) { set.add(lower(skeleton(r))); set.add(lower(winStrip(skeleton(r)))); }
   return out;
 }
 
@@ -141,7 +203,8 @@ export function resolveTarget(raw, { cwd, ws, plugin }) {
 export function resolvePattern(baseDir, pattern, { cwd, ws, plugin, unanchoredBasename = false }) {
   if (typeof pattern !== "string" || pattern === "") throw new PathPolicyError("pattern mancante");
   if (pattern.includes("\0")) throw new PathPolicyError("pattern con byte NUL");
-  const out = { ws: new Set(), plugin: new Set(), abs: new Set() };
+  const wsB = bases(ws);
+  const out = { ws: new Set(), plugin: new Set(), abs: new Set(), outside: new Set() };
   for (const pv of new Set([pattern, ...decodeAll(pattern), skeleton(pattern)])) {
     let pat = slash(pv);
     if (unanchoredBasename && !pat.replace(/\/+$/, "").includes("/") && !P.isAbsolute(pat)) pat = `**/${pat}`;
@@ -158,10 +221,13 @@ export function resolvePattern(baseDir, pattern, { cwd, ws, plugin, unanchoredBa
     const join = (r) => (r === "" ? rest : rest ? `${r}/${rest}` : r);
     for (const r of t.ws) out.ws.add(join(r));
     for (const r of t.plugin) out.plugin.add(join(r));
+    for (const r of t.outside) out.outside.add(join(r));
     for (const a of t.abs) {
-      out.abs.add(rest ? `${a}/${rest}` : a);
+      const full = rest ? `${a}/${rest}` : a;
+      out.abs.add(full);
+      outsideSuffixes(full, wsB, out.outside);
       if (rest) {
-        for (const b of bases(ws)) if (b.startsWith(a.endsWith("/") ? a : `${a}/`)) out.ws.add("**");
+        for (const b of wsB) if (b.startsWith(a.endsWith("/") ? a : `${a}/`)) out.ws.add("**");
         if (plugin) for (const b of bases(plugin)) if (b.startsWith(a.endsWith("/") ? a : `${a}/`)) out.plugin.add("**");
       }
     }
