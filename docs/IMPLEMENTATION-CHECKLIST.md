@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 23/09/2026 16:50 — **punto corrente: WP05 (K4) avviato; WP04 (K3) chiuso**.
+Ultimo aggiornamento: 23/09/2026 20:15 — **punto corrente: WP06 (K5) avviato; WP05 (K4) chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 28 % del progetto** (stima pesata sullo sforzo) · 4 pacchetti su 16 chiusi.
+**≈ 35 % del progetto** (stima pesata sullo sforzo) · 5 pacchetti su 16 chiusi.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 28 %** (30 / 106 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 4 / 16 = **25 %** | WP01–WP04 con review pulita e tag |
+| Avanzamento pesato | **≈ 35 %** (37 / 106 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 5 / 16 = **31 %** | WP01–WP05 con review pulita e tag |
 | Hook del catalogo §44.4 | 9 / 16 = **56 %** | 15 hook + approval-capture |
-| Test automatici | 305 / 305 verdi | `npm test` al tag `k3-done` (`43f935f`); golden di strategy-select 20/20 |
+| Test automatici | 370 / 370 verdi | `npm test` al tag `k4-done` (`d985f8d`); golden deontico 228/228, strategy-select 20/20 |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -30,6 +30,13 @@ Ultimo aggiornamento: 23/09/2026 16:50 — **punto corrente: WP05 (K4) avviato; 
 - Decisione da confermare: il pre-mortem si applica solo ai compiti a profondità "profonda" con rischio ≥ R2. La spec è ambigua tra §10.4, §14.2 e §17.3.
 - Rinviati come minori: il numero progressivo del codice di sessione usa la data UTC, più alcune duplicazioni e rifiniture elencate nel ledger.
 
+### Chiusura di WP05 (K4)
+- Implementato in 6 commit, più 2 giri di correzione (`783f561..d985f8d`). Tag `k4-done` → `d985f8d`.
+- Consegnato: lo schema dei campi FLD con l'obbligatorietà come regola e la carta d'identità a 12 blocchi. Poi la pipeline dei campi a lotti di al massimo 50, il parser deontico italiano e inglese (golden 228/228), le catene tra documenti e i comandi `kb fields`, `kb impact` e `kb identity`.
+- Corretto dopo la review: nessuna formula di raccomandazione produce più un obbligo, e anche la validazione a valle lo impedisce. Il budget per documento non si può alzare, e il consumo resta legato alla sessione reale.
+- Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
+- Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
+
 ## Stato per pacchetto di lavoro
 
 Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va ricalibrata quando un pacchetto si chiude.
@@ -40,8 +47,8 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va
 | WP02 | Formato DT e `dt-eval`, DT-001…DT-026, 195 cluster di bootstrap, regole RC-01…10, operazioni del validator, priori | K1 | 8 | 100 | ✅ | tag `k1-done`, 98 test, golden 10/10, DT-002 100/100 |
 | WP03 | Stato di sessione, contratti prompt/rapporto, hook base, guard di partizione, budget, traccia cognitiva | K2 | 8 | 100 | ✅ | tag `k2-done` → `0bfb2a2`, 230 test, 4 giri di correzione, `docs/phase-reports/K2.md` |
 | WP04 | Precedenti, esiti, 12 strategie, `strategy-select`, revisione delle credenze, profondità, piano, self-check, why, calibrazione, lezioni | K3 | 8 | 100 | ✅ | tag `k3-done` → `43f935f`, 305 test, golden 20/20, `docs/phase-reports/K3.md` |
-| WP05 | Modello dei campi FLD, carta d'identità, pipeline a lotti ≤ 50, parser deontico, catene, `kb fields/impact/identity` | K4 | 7 | 0 | 🔄 | `wp05-k4.md` |
-| WP06 | Ambienti, `env-check`, guard-environment/production/config-scope, catalogo azioni ACT, tripla approvazione 3A | K5 | 6 | 0 | ⬜ Brief | `wp06-k5.md` |
+| WP05 | Modello dei campi FLD, carta d'identità, pipeline a lotti ≤ 50, parser deontico, catene, `kb fields/impact/identity` | K4 | 7 | 100 | ✅ | tag `k4-done` → `d985f8d`, 370 test, deontico 228/228, `docs/phase-reports/K4.md` |
+| WP06 | Ambienti, `env-check`, guard-environment/production/config-scope, catalogo azioni ACT, tripla approvazione 3A | K5 | 6 | 0 | 🔄 | `wp06-k5.md` |
 | WP07 | `step-check`, `observe-append`, errori della piattaforma, evidenze, intento DT-026, workflow, report ed esiti, budget, `compile-plan` opzionale | K6 | 8 | 0 | ⬜ Brief | `wp07-k6.md` |
 | WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 0 | ⬜ Brief | `wp08-f0.md` |
 | WP09a | Pipeline di ingestion: parser DOCX/XLSX/PDF/XSD/export/screenshot/trascrizioni/e-mail, unità, profilo DOC, banche di domande, back-check, alias, versioni, residuo, revisione, survey del tenant, PRF/PMP | F1' (strumenti) | 10 | 0 | ⬜ Brief | `wp09a-ingest.md` |
@@ -52,7 +59,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 0 | ⬜ Brief | `wp10b-agents.md` |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **106** | **≈ 28** | | 30 unità completate |
+| **Totale** | | | **106** | **≈ 35** | | 37 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
