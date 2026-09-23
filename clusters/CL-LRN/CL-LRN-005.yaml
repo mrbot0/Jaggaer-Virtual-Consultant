@@ -1,0 +1,34 @@
+code: CL-LRN-005
+family: CL-LRN
+name: Passo non documentato
+definition: "Insieme degli item che nascono da un passo necessario non documentato: CHK o deviazione di CFP."
+inclusion:
+  - id: I1
+    field: learning_kind
+    op: eq
+    value: "005"
+  - id: I2
+    facet: F1
+    op: eq
+    value: osservazione-chrome
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F1: osservazione-chrome
+owner: lesson-validator
+portability:
+  class: universale
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §20.2, §20.4

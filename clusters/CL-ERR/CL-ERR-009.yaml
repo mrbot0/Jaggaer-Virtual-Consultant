@@ -1,0 +1,39 @@
+code: CL-ERR-009
+family: CL-ERR
+name: Errore non classificato
+definition: Insieme degli item che riportano un messaggio d'errore riconosciuto ma non ancora assegnato a una categoria dal digester.
+inclusion:
+  - id: I1
+    field: page_signature
+    op: exists
+  - id: I2
+    field: message
+    op: exists
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+  - id: E2
+    field: category
+    op: exists
+    note: classificati nei cluster 001–008
+facet_signature:
+  F4: anomalia
+owner: failure-triage
+portability:
+  class: condizionata
+  condition: F5
+domain: kb
+status: bootstrap
+depth: 1
+note: "nona famiglia derivata: ERR scritti da observe-append prima della digestione"
+sources:
+  - §7.2
+  - §20.6.2
+  - §20.6.3

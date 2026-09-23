@@ -1,0 +1,35 @@
+code: CL-CUS-003
+family: CL-CUS
+name: Gruppi multi-società
+definition: Insieme degli item che descrivono clienti organizzati in gruppo con più società.
+inclusion:
+  - id: I1
+    field: legal.group
+    op: eq
+    value: true
+  - id: I2
+    field: type
+    op: eq
+    value: PRF
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: profilo
+owner: customer-profiler
+portability:
+  class: specifica
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §19.2
+  - §63

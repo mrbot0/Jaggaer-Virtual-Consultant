@@ -1,0 +1,39 @@
+code: CL-CFG-008
+family: CL-CFG
+name: Notifiche
+definition: "Insieme degli item che configurano l'area 'notifiche' (area 008): oggetti di configurazione e procedure che li modificano."
+inclusion:
+  - id: I1
+    field: cfg_area
+    op: eq
+    value: "008"
+  - id: I2
+    facet: F4
+    op: in
+    value:
+      - oggetto-config
+      - procedura
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: oggetto-config
+owner: config-designer
+portability:
+  class: condizionata
+  condition: F7 e parametri di modulo (CL-CFG-020)
+domain: kb
+status: bootstrap
+depth: 1
+base_risk: R1
+sources:
+  - §7.2
+  - §28.5
+  - §28.2

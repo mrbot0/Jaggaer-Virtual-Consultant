@@ -1,0 +1,36 @@
+code: CL-FLD-MAND-007
+family: CL-FLD-MAND
+name: Obbligatorietà non documentata
+definition: "Insieme degli item che sono campi osservati obbligatori senza fonte documentale (mandatory.kind: undocumented)."
+inclusion:
+  - id: I1
+    field: mandatory.kind
+    op: eq
+    value: undocumented
+  - id: I2
+    field: type
+    op: eq
+    value: FLD
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: struttura-dati
+owner: scope-digester
+portability:
+  class: condizionata
+  condition: F6 e società del documento (mandatory.when)
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §19.6.3
+  - §19.6.2
+  - §27.2

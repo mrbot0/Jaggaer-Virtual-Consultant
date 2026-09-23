@@ -1,0 +1,39 @@
+code: CL-PRT-001
+family: CL-PRT
+name: Universale
+definition: "Insieme degli item che valgono su tutti i clienti osservati: P ≥ 0.80 su almeno due clienti, nessuna contraddizione."
+inclusion:
+  - id: I1
+    facet: F8
+    op: eq
+    value: universale
+  - id: I2
+    facet: F12
+    op: in
+    value:
+      - validato
+      - clusterizzato
+      - promosso
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F8: universale
+owner: weekly-digest
+portability:
+  class: universale
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.3
+  - §11.6
+  - §22

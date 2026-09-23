@@ -1,0 +1,45 @@
+code: CL-SYS-001
+family: CL-SYS
+name: Nucleo SaaS JAGGAER
+definition: "Insieme degli item che descrivono il comportamento del nucleo SaaS visibile in UI: validazioni, stati, schermate configurate dall'admin JAGGAER."
+inclusion:
+  - id: I1
+    facet: F5
+    op: eq
+    value: saas-core
+  - id: I2
+    facet: F12
+    op: in
+    value:
+      - digerito
+      - validato
+      - clusterizzato
+      - promosso
+    note: almeno digerito
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+  - id: E2
+    facet: F4
+    op: eq
+    value: contratto-interfaccia
+    note: il contratto va in CL-INT, collegato (§19.4)
+facet_signature:
+  F5: saas-core
+owner: xsc-expert
+portability:
+  class: universale
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.1 F5
+  - §7.4

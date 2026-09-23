@@ -1,0 +1,35 @@
+code: CL-DEC-003
+family: CL-DEC
+name: Progettare una configurazione
+definition: "Insieme degli item che sono decisioni di progettazione di una configurazione (§6.4: tecnica .50)."
+inclusion:
+  - id: I1
+    field: decision_kind
+    op: eq
+    value: "003"
+  - id: I2
+    facet: F4
+    op: eq
+    value: decisione
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: decisione
+owner: agent-manager
+portability:
+  class: universale
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.4
+  - §11.2

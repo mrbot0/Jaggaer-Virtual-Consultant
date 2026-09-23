@@ -1,0 +1,41 @@
+code: CL-PRO-003
+family: CL-PRO
+name: Diretti e indiretti
+definition: Insieme degli item che valgono per un modello di procurement 'misto' (faccetta F6, ereditata dal profilo del cliente).
+inclusion:
+  - id: I1
+    facet: F6
+    op: eq
+    value: misto
+  - id: I2
+    facet: F12
+    op: in
+    value:
+      - digerito
+      - validato
+      - clusterizzato
+      - promosso
+    note: almeno digerito
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F6: misto
+owner: customer-profiler
+portability:
+  class: condizionata
+  condition: F6
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.1 F6
+  - §63

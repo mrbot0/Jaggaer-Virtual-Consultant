@@ -1,0 +1,41 @@
+code: CL-RSK-001
+family: CL-RSK
+name: "Rischio R0: osservare"
+definition: "Insieme degli item che hanno rischio R0: osservano o leggono senza effetti sul tenant."
+inclusion:
+  - id: I1
+    facet: F10
+    op: eq
+    value: R0
+  - id: I2
+    facet: F12
+    op: in
+    value:
+      - digerito
+      - validato
+      - clusterizzato
+      - promosso
+    note: almeno digerito
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F10: R0
+owner: config-designer
+portability:
+  class: universale
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.1 F10
+  - §29.4
+  - §28.5

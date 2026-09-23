@@ -1,0 +1,35 @@
+code: CL-EPI-003
+family: CL-EPI
+name: Empirico
+definition: "Insieme degli item che hanno forma empirico: osservati o eseguiti senza fonte tecnica."
+inclusion:
+  - id: I1
+    field: shape
+    op: eq
+    value: empirico
+  - id: I2
+    field: type
+    op: eq
+    value: EPI
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: profilo
+owner: cluster-validator
+portability:
+  class: specifica
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §9.3
+  - §23.4

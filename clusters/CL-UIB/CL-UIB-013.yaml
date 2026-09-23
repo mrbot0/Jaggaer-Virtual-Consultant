@@ -1,0 +1,36 @@
+code: CL-UIB-013
+family: CL-UIB
+name: Griglia di righe del documento
+definition: Insieme degli item che gestiscono le righe del documento in una griglia modificabile.
+inclusion:
+  - id: I1
+    field: ui_pattern
+    op: eq
+    value: "013"
+  - id: I2
+    facet: F4
+    op: eq
+    value: comportamento-ui
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: comportamento-ui
+owner: test-mechanic
+portability:
+  class: condizionata
+  condition: F5 (CL-SYS-010 plugin del cliente)
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §7.4
+  - §19.6.3 CL-FLD-002

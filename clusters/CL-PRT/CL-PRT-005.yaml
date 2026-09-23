@@ -1,0 +1,39 @@
+code: CL-PRT-005
+family: CL-PRT
+name: Specifica del cliente
+definition: "Insieme degli item che valgono solo per un cliente: nessuna faccetta spiega la divergenza."
+inclusion:
+  - id: I1
+    facet: F8
+    op: eq
+    value: specifica
+  - id: I2
+    facet: F12
+    op: in
+    value:
+      - validato
+      - clusterizzato
+      - promosso
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F8: specifica
+owner: weekly-digest
+portability:
+  class: specifica
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.3
+  - §11.6
+  - §22

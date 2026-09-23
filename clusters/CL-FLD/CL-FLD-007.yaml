@@ -1,0 +1,34 @@
+code: CL-FLD-007
+family: CL-FLD
+name: Prezzi e valute
+definition: Insieme degli item che sono campi della sezione funzionale 'prezzi e valute' di un documento; ogni FLD appartiene a esattamente un CL-FLD.
+inclusion:
+  - id: I1
+    field: functional_section
+    op: eq
+    value: prezzi-valute
+  - id: I2
+    field: type
+    op: eq
+    value: FLD
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: struttura-dati
+owner: scope-digester
+portability:
+  class: universale
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §19.6.3
+  - §19.6.2

@@ -1,0 +1,39 @@
+code: CL-KNW-010
+family: CL-KNW
+name: Query
+definition: "Insieme degli item che hanno natura 'query' (faccetta F4): stessa forma di conoscenza, a prescindere da scope e cliente."
+inclusion:
+  - id: I1
+    facet: F4
+    op: eq
+    value: query
+  - id: I2
+    facet: F12
+    op: in
+    value:
+      - digerito
+      - validato
+      - clusterizzato
+      - promosso
+    note: almeno digerito
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: query
+owner: cluster-validator
+portability:
+  class: universale
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.1 F4

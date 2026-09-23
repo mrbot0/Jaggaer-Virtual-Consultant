@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cluster.schema.json",
+  "title": "Cluster semantico (CLS)",
+  "description": "Cluster curato (§7.1, §7.3). I criteri sono verificabili da script: { facet: Fn, op: eq|in|neq, value } oppure { field: percorso.nel.contenuto, op: exists|eq|in, value }. Un item entra se e solo se soddisfa tutti i criteri di inclusione e nessuno di esclusione; nel dubbio non entra (DT-005). Le regole RC-01..RC-10 sono in scripts/kb/cluster-rules.mjs.",
+  "type": "object",
+  "required": ["code", "family", "name", "definition", "inclusion", "exclusion", "facet_signature", "owner", "portability", "domain", "status", "depth"],
+  "additionalProperties": false,
+  "$defs": {
+    "scalar": { "type": ["string", "number", "boolean"] },
+    "criterion": {
+      "oneOf": [
+        {
+          "type": "object", "required": ["facet", "op", "value"], "additionalProperties": false,
+          "properties": {
+            "id": { "type": "string" },
+            "facet": { "type": "string", "pattern": "^F([1-9]|1[0-5])$" },
+            "op": { "enum": ["eq", "in", "neq"] },
+            "value": { "oneOf": [{ "$ref": "#/$defs/scalar" }, { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/scalar" } }] },
+            "note": { "type": "string" }
+          }
+        },
+        {
+          "type": "object", "required": ["field", "op"], "additionalProperties": false,
+          "properties": {
+            "id": { "type": "string" },
+            "field": { "type": "string", "pattern": "^[a-z_][A-Za-z0-9_]*(\\.[A-Za-z0-9_]+)*$" },
+            "op": { "enum": ["exists", "eq", "in"] },
+            "value": { "oneOf": [{ "$ref": "#/$defs/scalar" }, { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/scalar" } }] },
+            "note": { "type": "string" }
+          },
+          "if": { "properties": { "op": { "enum": ["eq", "in"] } } },
+          "then": { "required": ["value"] }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "code": { "type": "string", "pattern": "^CL-[A-Z]{3}(-[A-Z]{3,5})?-\\d{3}$" },
+    "family": { "type": "string", "pattern": "^CL-[A-Z]{3}(-[A-Z]{3,5})?$" },
+    "name": { "type": "string", "minLength": 2 },
+    "definition": { "type": "string", "pattern": "^Insieme degli item che " },
+    "inclusion": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/criterion" } },
+    "exclusion": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/criterion" } },
+    "facet_signature": {
+      "type": "object", "minProperties": 1,
+      "propertyNames": { "pattern": "^F([1-9]|1[0-5])$" },
+      "additionalProperties": { "oneOf": [{ "$ref": "#/$defs/scalar" }, { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/scalar" } }] }
+    },
+    "owner": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "portability": {
+      "type": "object", "required": ["class"], "additionalProperties": false,
+      "properties": {
+        "class": { "enum": ["universale", "condizionata", "specifica", "ignota"] },
+        "condition": { "type": "string", "minLength": 2 }
+      },
+      "if": { "properties": { "class": { "const": "condizionata" } } },
+      "then": { "required": ["condition"] }
+    },
+    "domain": { "enum": ["kb", "analysis"] },
+    "status": { "enum": ["bootstrap", "attivo", "quarantena", "deprecato", "fuso"] },
+    "depth": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "parent": { "type": "string", "pattern": "^CL-[A-Z]{3}(-[A-Z]{3,5})?-\\d{3}$" },
+    "base_risk": { "enum": ["R0", "R1", "R2", "R3", "R2/R3"] },
+    "note": { "type": "string" },
+    "sources": { "type": "array", "items": { "type": "string" } }
+  }
+}

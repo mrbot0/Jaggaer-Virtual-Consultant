@@ -1,0 +1,35 @@
+code: CL-FLD-CHAIN-012
+family: CL-FLD-CHAIN
+name: CdC → ordine → ERP → fattura
+definition: Insieme degli item che portano il centro di costo lungo la catena richiesta, ordine, ERP, fattura (PMP procure-to-pay).
+inclusion:
+  - id: I1
+    field: key_ref
+    op: eq
+    value: keys.cost_center.code
+  - id: I2
+    field: lineage.propagates_to
+    op: exists
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: struttura-dati
+owner: process-mapper
+portability:
+  class: condizionata
+  condition: F7
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §19.6.3
+  - §19.6.2
+  - §27.2

@@ -1,0 +1,41 @@
+code: CL-RSK-003
+family: CL-RSK
+name: "Rischio R2: effetti con approvazione"
+definition: "Insieme degli item che hanno rischio R2: inviano, approvano, trasmettono, pubblicano o configurano con un'approvazione."
+inclusion:
+  - id: I1
+    facet: F10
+    op: eq
+    value: R2
+  - id: I2
+    facet: F12
+    op: in
+    value:
+      - digerito
+      - validato
+      - clusterizzato
+      - promosso
+    note: almeno digerito
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F10: R2
+owner: config-designer
+portability:
+  class: universale
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.1 F10
+  - §29.4
+  - §28.5

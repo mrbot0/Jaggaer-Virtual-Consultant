@@ -1,0 +1,35 @@
+code: CL-CUS-009
+family: CL-CUS
+name: Acquisti decentralizzati
+definition: Insieme degli item che descrivono clienti con acquisti affidati ai referenti di sede.
+inclusion:
+  - id: I1
+    field: procurement_model.centralization
+    op: eq
+    value: decentralizzato
+  - id: I2
+    field: type
+    op: eq
+    value: PRF
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: profilo
+owner: customer-profiler
+portability:
+  class: specifica
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §19.2
+  - §63

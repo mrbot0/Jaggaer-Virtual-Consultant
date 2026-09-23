@@ -1,0 +1,35 @@
+code: CL-ANL-002
+family: CL-ANL
+name: Colonne chiave
+definition: Insieme degli item che descrivono colonne chiave primarie o esterne con key_ref verso il Key Registry.
+inclusion:
+  - id: I1
+    field: analytics_pattern
+    op: eq
+    value: "002"
+  - id: I2
+    facet: F5
+    op: eq
+    value: reporting-analytics
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F5: reporting-analytics
+owner: analytics-learner
+portability:
+  class: condizionata
+  condition: CL-CFG-020 parametri Analytics
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §20.3

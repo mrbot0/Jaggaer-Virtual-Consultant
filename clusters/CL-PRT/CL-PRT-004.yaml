@@ -1,0 +1,37 @@
+code: CL-PRT-004
+family: CL-PRT
+name: Condizionata da un parametro
+definition: Insieme degli item che valgono dove coincide un parametro di configurazione, come strict_import in CL-CFG-020.
+inclusion:
+  - id: I1
+    facet: F8
+    op: eq
+    value: condizionata
+  - id: I2
+    field: portability_condition
+    op: eq
+    value: CL-CFG
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F8: condizionata
+owner: weekly-digest
+portability:
+  class: condizionata
+  condition: CL-CFG-020 parametri di modulo
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.3
+  - §11.6
+  - §22

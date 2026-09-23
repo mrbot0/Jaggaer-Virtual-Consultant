@@ -1,0 +1,35 @@
+code: CL-ERR-008
+family: CL-ERR
+name: Sessione scaduta
+definition: Insieme degli item che segnalano una sessione scaduta da ri-autenticare.
+inclusion:
+  - id: I1
+    field: category
+    op: eq
+    value: session
+  - id: I2
+    field: message
+    op: exists
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: anomalia
+owner: failure-triage
+portability:
+  class: condizionata
+  condition: F5
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §20.6.2
+  - §20.6.4

@@ -1,0 +1,35 @@
+code: CL-CUS-013
+family: CL-CUS
+name: Multi-lingua
+definition: Insieme degli item che descrivono clienti che operano in più lingue.
+inclusion:
+  - id: I1
+    facet: F6
+    op: eq
+    value: multi-lingua
+  - id: I2
+    field: type
+    op: eq
+    value: PRF
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: profilo
+owner: customer-profiler
+portability:
+  class: specifica
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §19.2
+  - §63

@@ -1,0 +1,36 @@
+code: CL-DEC-004
+family: CL-DEC
+name: Eseguire configurazione od operazione
+definition: "Insieme degli item che sono decisioni di esecuzione di una configurazione o di un'operazione a richiesta (§6.4: empirica .50 / .40)."
+inclusion:
+  - id: I1
+    field: decision_kind
+    op: eq
+    value: "004"
+  - id: I2
+    facet: F4
+    op: eq
+    value: decisione
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F4: decisione
+owner: agent-manager
+portability:
+  class: universale
+domain: kb
+status: bootstrap
+depth: 1
+note: unisce le righe 'eseguire una configurazione' ed 'eseguire un'operazione a richiesta' (entrambe decisioni di esecuzione, §11.2); 'decidere la portabilità' è coperta da CL-PRT e DT-006
+sources:
+  - §7.2
+  - §6.4
+  - §11.2

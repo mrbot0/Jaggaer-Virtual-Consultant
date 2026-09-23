@@ -1,0 +1,40 @@
+code: CL-ERP-005
+family: CL-ERP
+name: Altro ERP
+definition: Insieme degli item che valgono per clienti con ERP 'altro' (faccetta F7, ereditata dal profilo).
+inclusion:
+  - id: I1
+    facet: F7
+    op: eq
+    value: altro
+  - id: I2
+    facet: F12
+    op: in
+    value:
+      - digerito
+      - validato
+      - clusterizzato
+      - promosso
+    note: almeno digerito
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F7: altro
+owner: xsc-expert
+portability:
+  class: condizionata
+  condition: F7
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.1 F7

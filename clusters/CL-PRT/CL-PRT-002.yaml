@@ -1,0 +1,37 @@
+code: CL-PRT-002
+family: CL-PRT
+name: Condizionata dall'ERP
+definition: "Insieme degli item che valgono dove l'ERP del cliente coincide: la faccetta F7 spiega la partizione fra clienti."
+inclusion:
+  - id: I1
+    facet: F8
+    op: eq
+    value: condizionata
+  - id: I2
+    field: portability_condition
+    op: eq
+    value: F7
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+facet_signature:
+  F8: condizionata
+owner: weekly-digest
+portability:
+  class: condizionata
+  condition: F7
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §7.2
+  - §6.3
+  - §11.6
+  - §22

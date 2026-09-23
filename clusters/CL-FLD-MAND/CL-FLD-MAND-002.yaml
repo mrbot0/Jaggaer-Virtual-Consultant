@@ -1,0 +1,45 @@
+code: CL-FLD-MAND-002
+family: CL-FLD-MAND
+name: Obbligatorietà per stato
+definition: Insieme degli item che sono campi obbligatori solo in alcuni stati del documento (in_states).
+inclusion:
+  - id: I1
+    field: mandatory.in_states
+    op: exists
+  - id: I2
+    field: type
+    op: eq
+    value: FLD
+exclusion:
+  - id: E1
+    field: type
+    op: in
+    value:
+      - PAT
+      - PBK
+      - BRF
+      - RUL
+    note: dominio analitico escluso (§1.1)
+  - id: E2
+    field: mandatory.when_kind
+    op: exists
+  - id: E3
+    field: mandatory.by_role
+    op: exists
+  - id: E4
+    field: mandatory.reason.kind
+    op: eq
+    value: integration
+facet_signature:
+  F4: struttura-dati
+owner: scope-digester
+portability:
+  class: condizionata
+  condition: F6 e società del documento (mandatory.when)
+domain: kb
+status: bootstrap
+depth: 1
+sources:
+  - §19.6.3
+  - §19.6.2
+  - §27.2
