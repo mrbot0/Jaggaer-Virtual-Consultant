@@ -1,0 +1,58 @@
+# Golden eval del validatore di cluster (K1, criterio di uscita §33: 10 item
+# ammessi/rigettati con la regola corretta in 10/10). Parte script: la
+# decisione è di judgeAdmission (criteri del cluster + DT-005), deterministica.
+# rule: ok · inclusion:<id> (criterio di inclusione falso) · exclusion:<id>
+# (criterio di esclusione vero) · undetermined:<id> (criterio indeterminato:
+# nel dubbio non entra → quarantena).
+cases:
+  - name: "CFG dell'area form e campi"
+    cluster: CL-CFG-005
+    item: { id: C.ACME.ADM.CFG.0011, type: CFG, cfg_area: "005", facets: { F4: oggetto-config, F12: validato, F10: R2 } }
+    verdict: ammesso
+    rule: ok
+  - name: "CFG di un'altra area (template)"
+    cluster: CL-CFG-005
+    item: { id: C.ACME.ADM.CFG.0012, type: CFG, cfg_area: "006", facets: { F4: oggetto-config, F12: validato, F10: R1 } }
+    verdict: rigettato
+    rule: inclusion:I1
+  - name: "pattern analitico con faccette da configurazione (confine di dominio)"
+    cluster: CL-CFG-005
+    item: { id: C.ACME.ADM.PAT.0001, type: PAT, cfg_area: "005", facets: { F4: oggetto-config, F12: validato } }
+    verdict: rigettato
+    rule: exclusion:E1
+  - name: "campo sempre obbligatorio ma per integrazione: va in CL-FLD-MAND-006"
+    cluster: CL-FLD-MAND-001
+    item: { id: S.STD.P2P.FLD.0117, type: FLD, mandatory: { kind: always, reason: { kind: integration } }, facets: { F4: struttura-dati, F12: validato } }
+    verdict: rigettato
+    rule: exclusion:E2
+  - name: "stesso campo nel cluster dell'integrazione"
+    cluster: CL-FLD-MAND-006
+    item: { id: S.STD.P2P.FLD.0117, type: FLD, mandatory: { kind: always, reason: { kind: integration } }, facets: { F4: struttura-dati, F12: validato } }
+    verdict: ammesso
+    rule: ok
+  - name: "ragione dell'obbligatorietà dichiarata ignota: nel dubbio non entra"
+    cluster: CL-FLD-MAND-001
+    item: { id: S.STD.P2P.FLD.0201, type: FLD, mandatory: { kind: always, reason: { kind: null } }, facets: { F4: struttura-dati, F12: digerito } }
+    verdict: quarantena
+    rule: undetermined:E2
+  - name: "errore di timeout"
+    cluster: CL-ERR-005
+    item: { id: C.ACME.P2P.ERR.0009, type: ERR, category: timeout, message: { it: "Tempo scaduto" }, facets: { F4: anomalia, F12: digerito } }
+    verdict: ammesso
+    rule: ok
+  - name: "errore già classificato non è 'non classificato'"
+    cluster: CL-ERR-009
+    item: { id: C.ACME.P2P.ERR.0007, type: ERR, category: validation, page_signature: "p2p/requisition/edit#header",
+            message: { it: "Il centro di costo non è attivo per la società selezionata" }, facets: { F4: anomalia, F12: validato } }
+    verdict: rigettato
+    rule: exclusion:E2
+  - name: "procedura senza stato (F12 assente)"
+    cluster: CL-KNW-001
+    item: { id: S.STD.SRC.FLW.0003, type: FLW, facets: { F4: procedura } }
+    verdict: quarantena
+    rule: undetermined:I2
+  - name: "procedura con il pattern di griglia ma natura procedura"
+    cluster: CL-UIB-001
+    item: { id: S.STD.CAT.FLW.0004, type: FLW, ui_pattern: "001", facets: { F4: procedura, F12: validato } }
+    verdict: rigettato
+    rule: inclusion:I2
