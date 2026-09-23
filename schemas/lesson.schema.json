@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lesson.schema.json",
+  "title": "Frontmatter della lezione (LSN, §21.1)",
+  "description": "La lezione è un file markdown lessons/<id>.md: questo frontmatter e le otto sezioni '## 1.' … '## 8.' (scripts/kb/lesson.mjs parseLesson). La validazione di §21.2 (DT-004) è validateLesson; lo stato lo cambia solo lo script (`learn validate`), mai l'agente (§29.6).",
+  "type": "object",
+  "required": ["id", "agent", "session", "task", "scope", "mode", "decision_refs", "strategy", "epistemic_before", "epistemic_after",
+    "surprises", "expected_outcomes", "status", "confidence", "portability_hypothesis", "cluster_proposal"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^L\\.[A-Z0-9]{4}\\.[A-Z0-9]{3}\\.LSN\\.\\d{4}(\\.v\\d+)?$" },
+    "agent": { "type": "string", "minLength": 1 },
+    "session": { "type": "string", "minLength": 1 },
+    "task": { "type": "string", "minLength": 1 },
+    "scope": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC"] },
+    "mode": { "enum": ["nrt", "config", "ops", "diag", "NRT", "CONFIG", "OPS", "DIAG"] },
+    "decision_refs": { "type": "array", "items": { "$ref": "#/$defs/dec" } },
+    "strategy": { "type": "string", "pattern": "^(STR-[A-Z]+(-[A-Z]+)*|nessuna)$" },
+    "epistemic_before": { "$ref": "#/$defs/shape" },
+    "epistemic_after": { "$ref": "#/$defs/shape" },
+    "surprises": { "type": "integer", "minimum": 0 },
+    "expected_outcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["decision", "expect"],
+        "additionalProperties": false,
+        "properties": {
+          "decision": { "$ref": "#/$defs/dec" },
+          "expect": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "status": { "enum": ["proposed", "validated", "merged", "rejected"] },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "portability_hypothesis": {
+      "type": "object",
+      "required": ["class"],
+      "properties": {
+        "class": { "enum": ["universale", "condizionata", "specifica", "ignota"] },
+        "condition": { "type": "string", "minLength": 1 }
+      },
+      "if": { "properties": { "class": { "const": "condizionata" } } },
+      "then": { "required": ["condition"] }
+    },
+    "cluster_proposal": { "type": ["string", "null"], "pattern": "^CL-[A-Z]+(-[A-Z]+)*-\\d{3}$" },
+    "subject": { "type": "string", "description": "Soggetto della lezione (facoltativo; altrimenti il primo codice citato nella §1)." },
+    "candidates": { "type": "array", "items": { "type": "string" }, "description": "Artefatti candidati (CHK, regole, attributi) oltre alla cluster_proposal." },
+    "confirmations": { "type": "integer", "minimum": 0 },
+    "merged_into": { "type": "string" },
+    "validation": {
+      "type": "object",
+      "description": "Scritto da `learn validate`: esito di DT-004 e DEC corrispondente.",
+      "properties": {
+        "table": { "const": "DT-004" },
+        "decision": { "type": ["string", "null"] },
+        "reason": { "type": ["string", "null"] },
+        "reasons": { "type": "array" },
+        "by": { "type": "string" },
+        "at": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "shape": { "enum": ["consolidato", "libresco", "empirico", "ignoto", "contraddittorio"] },
+    "dec": { "type": "string", "pattern": "^L\\.[A-Z0-9]{4}\\.[A-Z0-9]{3}\\.DEC\\.\\d{4}(\\.v\\d+)?$" }
+  }
+}

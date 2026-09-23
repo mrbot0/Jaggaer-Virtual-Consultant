@@ -104,7 +104,7 @@ export function applyObservation(state, { item, coherent, kind = "obs", with: wi
 }
 
 // ——— sorprese (§13.2, DT-016) ———
-const norm = (s) => String(s ?? "").trim().toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, "-");
+const norm = (s) => String(s ?? "").trim().toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-");
 
 export function classifySurprise(divergenceKind, risk, { priors = {} } = {}) {
   const r = evaluate(loadTable("DT-016"), { divergence: norm(divergenceKind), risk }, { priors });
