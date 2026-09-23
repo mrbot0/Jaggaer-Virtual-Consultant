@@ -1,23 +1,24 @@
 // Profondità di deliberazione (§10.4) con DT-023: quanto pensare prima di agire. Il manager la
 // assegna prima del passo 2 (RICHIAMARE); fissa quanti item e precedenti richiamare, quante
 // alternative confrontare, se aprire i file oltre i summary, se fare pre-mortem, il tier e
-// l'auto-verifica (ridotta in rapida: controlli 1, 3, 9).
+// l'auto-verifica (ridotta in rapida: controlli 1, 3, 9 più #11; l'insieme viene da self-check-controls.mjs,
+// la stessa fonte che self-check esegue).
 import { evaluate, loadTable, DtDomainError, DtTableError } from "./dt-eval.mjs";
 import { precedentClass } from "./strategy-select.mjs";
+import { controlsFor } from "./self-check-controls.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
 const RISK_RANK = { R0: 0, R1: 1, R2: 2, R3: 3 };
-const ALL_CONTROLS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 // La tabella di §10.4, colonna "Cosa cambia nel ciclo".
 export const PROFILES = {
   rapida: { recall: { items: 3, precedents: 1, other_customers: false }, alternatives: 0, open_files: "no", hypotheses_register: false,
-    self_check_controls: [1, 3, 9], tier: "T0" },
+    self_check_controls: controlsFor("rapida"), tier: "T0" },
   standard: { recall: { items: 8, precedents: 3, other_customers: false }, alternatives: 2, open_files: "se-il-summary-non-basta",
-    hypotheses_register: false, self_check_controls: ALL_CONTROLS, tier: "T1" },
+    hypotheses_register: false, self_check_controls: controlsFor("standard"), tier: "T1" },
   profonda: { recall: { items: 15, precedents: 5, other_customers: true }, alternatives: "esplicite con costi e rischi", open_files: "sì",
-    hypotheses_register: true, self_check_controls: ALL_CONTROLS, tier: "T2" },
+    hypotheses_register: true, self_check_controls: controlsFor("standard"), tier: "T2" },
 };
 
 export function deliberationDepth({ risk, shape, surprises = 0, precedent, graph_radius, graph_radius_gt5, never_executed_here } = {}) {

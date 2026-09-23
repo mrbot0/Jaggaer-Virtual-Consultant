@@ -13,8 +13,8 @@
 //   9  la lezione esiste, otto sezioni, §7 non vuota                     blocco
 //  10  esito ok con open_questions non marcate non bloccanti             riclassifica partial
 //  11  ogni azione ha un report (RPT) (§29.6)                            blocco
-//  12  spreco: stessa query kb ripetuta nel compito (§29.10)             riclassifica (il manager lo vede)
-//  13  spreco: snapshot della stessa pagina senza azione in mezzo        riclassifica
+//  12  spreco: stessa query kb ripetuta nel compito (§29.10)             blocco ("Controllo fallito")
+//  13  spreco: snapshot della stessa pagina senza azione in mezzo        blocco ("Controllo fallito")
 // Profondità rapida (§10.4): auto-verifica ridotta ai controlli 1, 3, 9 (più #11, obbligatorio per §29.6).
 import { readFileSync } from "node:fs";
 import YAML from "yaml";
@@ -25,24 +25,13 @@ import { matchGlob } from "../../hooks/lib/paths.mjs";
 import { openDb } from "../kb/db.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { CONTROLS, controlsFor } from "./self-check-controls.mjs";
 
-export const CONTROLS = {
-  1: "ogni codice citato esiste",
-  2: "nessuna lettura fuori cella (audit)",
-  3: "ogni entità creata ha compensazione registrata",
-  4: "ogni decisione con effetti ha una DEC con tabella e strategia; ogni passo del piano ha un expect",
-  5: "ogni DEC con effetti ha un esito atteso dichiarato",
-  6: "le sorprese di sessione sono tutte in CTR",
-  7: "forma epistemica iniziale e finale registrate",
-  8: "risultato in YAML compatto con codici, non prosa",
-  9: "la lezione esiste, con otto sezioni e la sezione 7 non vuota",
-  10: "esito ok con open_questions solo non bloccanti",
-  11: "ogni azione ha un report (RPT)",
-  12: "spreco: nessuna query kb ripetuta con gli stessi argomenti",
-  13: "spreco: nessuno snapshot ripetuto della stessa pagina senza azione in mezzo",
-};
-const ACTION = { 8: "reformat", 10: "reclassify", 12: "reclassify", 13: "reclassify" };
-const RAPIDA = [1, 3, 9, 11];
+export { CONTROLS, SELF_CHECK_CONTROLS } from "./self-check-controls.mjs";
+// §29.10: i due rilevatori di spreco sono "Controllo fallito" e §17.1 blocca l'invio se un controllo
+// fallisce: bloccano (azione di default). Solo #8 riformatta (§29.10 "Riformattazione, non rigetto")
+// e #10 riclassifica (§17.1).
+const ACTION = { 8: "reformat", 10: "reclassify" };
 const SHAPES = new Set(["consolidato", "libresco", "empirico", "ignoto", "contraddittorio"]);
 const PERSISTING_VERBS = new Set(["SAVE", "SUBMIT", "UPLOAD"]);
 const READ_TOOLS = new Set(["Read", "Glob", "Grep", "NotebookRead"]);
@@ -67,12 +56,14 @@ function cellPath(p) {
   return m ? m[1] : null;
 }
 
-export function selfCheck({ report, session = {}, audit = [], plan = null, lesson = null, kbExists = () => true, getDecision = () => null,
+// kbExists e getDecision arrivano dal DB (CLI: --db obbligatorio). Senza kbExists i controlli che
+// verificano l'esistenza dei codici (1, 11) falliscono come "non eseguiti": mai un passaggio a vuoto.
+export function selfCheck({ report, session = {}, audit = [], plan = null, lesson = null, kbExists = null, getDecision = () => null,
   observations, depth, agentId, contradictions = [] } = {}) {
   const failed = [];
   const signals = [];
   const fail1 = (n, reason) => failed.push({ n, control: CONTROLS[n], reason, action: ACTION[n] ?? "block" });
-  const run = depth === "rapida" ? RAPIDA : Object.keys(CONTROLS).map(Number);
+  const run = controlsFor(depth);
   const rep = report && typeof report === "object" && !Array.isArray(report) ? report : null;
   const trace = rep?.cognitive_trace ?? {};
   const output = rep?.output && typeof rep.output === "object" ? rep.output : {};
@@ -84,15 +75,27 @@ export function selfCheck({ report, session = {}, audit = [], plan = null, lesso
   const taskEffects = asList(output.effects).length > 0 || asList(output.created).length > 0 || steps.some((s) => PERSISTING_VERBS.has(s.verb));
   const decs = asList(trace.decisions).filter((d) => typeof d === "string");
   const decInfo = (d) => getDecision(d) ?? null;
+  // Effetti di una DEC: citata in output.effects → sì (prevale su effects:false registrato); registrata
+  // con effetti → sì; effetti ignoti (NULL, dt-eval senza --effects) → quelli del compito; registrata
+  // senza effetti in un compito con effetti → resta senza, ma la contraddizione è segnalata.
   const effectDecs = decs.filter((d) => {
     const info = decInfo(d);
-    if (info && typeof info.effects === "boolean") return info.effects;
     const listed = asList(output.effects).some((e) => e?.decision === d);
-    return listed || taskEffects;
+    if (listed) {
+      if (info?.effects === false) signals.push({ control: 4, reason: `${d}: registrata senza effetti ma citata in output.effects — trattata con effetti` });
+      return true;
+    }
+    if (info?.effects === true) return true;
+    if (info?.effects === false) {
+      if (taskEffects) signals.push({ control: 4, reason: `${d}: registrata senza effetti in un compito con effetti — verificare` });
+      return false;
+    }
+    return taskEffects;
   });
 
   const checks = {
     1: () => {
+      if (typeof kbExists !== "function") { fail1(1, "verifica dei codici non eseguita: nessun accesso al DB (kbExists)"); return; }
       const missing = [...codesIn(rep), ...codesIn(plan)].filter((c, i, a) => a.indexOf(c) === i && !kbExists(c));
       if (missing.length) fail1(1, `codici inesistenti: ${missing.join(", ")}`);
     },
@@ -186,6 +189,7 @@ export function selfCheck({ report, session = {}, audit = [], plan = null, lesso
       if (!hasAction) return;
       const rpts = [...codesIn(rep)].filter((c) => parseCode(c)?.type === "RPT");
       if (!rpts.length) fail1(11, "azione senza report RPT (§29.6)");
+      else if (typeof kbExists !== "function") fail1(11, `esistenza di ${rpts.join(", ")} non eseguita: nessun accesso al DB (kbExists)`);
       else if (!rpts.some((c) => kbExists(c))) fail1(11, `report inesistente: ${rpts.join(", ")}`);
     },
     12: () => {
@@ -235,7 +239,9 @@ export function selfCheck({ report, session = {}, audit = [], plan = null, lesso
     status_effective: status,
     controls_run: run,
     signals,
-    trace_self_check: { passed: base.filter((n) => !failedNs.has(n)).length, failed: base.filter((n) => failedNs.has(n)) },
+    // per cognitive_trace.self_check: `passed` sui controlli 1–10 (lo schema lo limita a 10), `failed` con
+    // OGNI controllo fallito 1–13, perché il manager (Review Focus 4) veda anche #11–#13.
+    trace_self_check: { passed: base.filter((n) => !failedNs.has(n)).length, failed: [...failedNs].sort((a, b) => a - b) },
   };
 }
 
@@ -251,12 +257,12 @@ const readYaml = (file) => YAML.parse(readFileSync(file, "utf8"));
 const readJsonl = (file) => readFileSync(file, "utf8").split("\n").filter((l) => l.trim()).map((l) => JSON.parse(l));
 
 const HELP = `uso: node scripts/decide/self-check.mjs --report <messaggio|yaml> --session <session.json> --audit <file.jsonl[,…]>
-       [--plan <piano.yaml>] [--lesson <lezione.md>] [--db <knowledge.db>] [--observations <file.jsonl>]
+       --db <knowledge.db> [--plan <piano.yaml>] [--lesson <lezione.md>] [--observations <file.jsonl>]
        [--depth rapida|standard|profonda] [--agent-id <id>] [--json] [--help]
 
 Auto-verifica prima del risultato (§17.1): i dieci controlli, #11 (ogni azione ha un RPT, §29.6) e i
-rilevatori di spreco di §29.10. Con --db i codici si verificano nel DB e le DEC (tabella, strategia,
-effetti) si leggono da decisions/decision_context. Stampa { passed, failed[{n, control, reason, action}],
+rilevatori di spreco di §29.10 (controlli falliti, bloccanti). --db è obbligatorio: i codici si verificano
+nel DB e le DEC (tabella, strategia, effetti) si leggono da decisions/decision_context. Stampa { passed, failed[{n, control, reason, action}],
 blocked, status_effective, trace_self_check }.
 
 Exit code: 0 nessun blocco (anche con riformattazione o riclassificazione) · 1 errore utente (file
@@ -266,7 +272,7 @@ export function run(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
-  if (!opts.report || !opts.session || !opts.audit) return fail(asJson, 1, "richiesti --report, --session, --audit");
+  if (!opts.report || !opts.session || !opts.audit || !opts.db) return fail(asJson, 1, "richiesti --report, --session, --audit, --db");
   let input;
   let db = null;
   try {
@@ -279,10 +285,10 @@ export function run(argv) {
       observations: opts.observations ? readJsonl(opts.observations) : undefined,
       depth: opts.depth, agentId: opts["agent-id"],
     };
-    if (opts.db) db = openDb(opts.db, { createIfMissing: false });
+    db = openDb(opts.db, { createIfMissing: false });
   } catch (e) { return fail(asJson, 1, `input illeggibile: ${e.message ?? e}`); }
   try {
-    if (db) {
+    {
       const stmts = ["items", "decisions", "lessons", "observations", "contradictions"].map((t) => db.prepare(`select 1 from ${t} where code=?`));
       input.kbExists = (c) => stmts.some((s) => s.get(c));
       const dec = db.prepare(`select d.table_code, d.strategy, c.effects from decisions d left join decision_context c on c.decision_code=d.code where d.code=?`);

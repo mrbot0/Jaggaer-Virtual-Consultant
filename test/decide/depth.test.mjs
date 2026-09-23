@@ -6,7 +6,7 @@ import { deliberationDepth } from "../../scripts/decide/depth.mjs";
 
 const CLI = fileURLToPath(new URL("../../scripts/decide/depth.mjs", import.meta.url));
 
-test("§10.4 rapida: consolidato × R ≤ R1 × precedente confermato × 0 sorprese → top 3, 1 precedente, niente alternative, niente file, self-check 1/3/9, T0", () => {
+test("§10.4 rapida: consolidato × R ≤ R1 × precedente confermato × 0 sorprese → top 3, 1 precedente, niente alternative, niente file, self-check 1/3/9 (+ #11), T0", () => {
   const r = deliberationDepth({ risk: "R1", shape: "consolidato", surprises: 0, precedent: [{ d: 0.1, result: "confermata" }], graph_radius: 2 });
   assert.equal(r.depth, "rapida");
   assert.deepEqual(r.recall, { items: 3, precedents: 1, other_customers: false });
@@ -14,7 +14,8 @@ test("§10.4 rapida: consolidato × R ≤ R1 × precedente confermato × 0 sorpr
   assert.equal(r.open_files, "no");
   assert.equal(r.premortem, false);
   assert.equal(r.hypotheses_register, false);
-  assert.deepEqual(r.self_check_controls, [1, 3, 9]);
+  // §10.4 riduce a 1, 3, 9; #11 (RPT, §29.6) resta: stessa fonte di self-check (fix round 1, Minor #2)
+  assert.deepEqual(r.self_check_controls, [1, 3, 9, 11]);
   assert.equal(r.tier, "T0");
 });
 
@@ -24,7 +25,7 @@ test("§10.4 standard: il resto dei casi ordinari → top 8, 3 precedenti, 2 alt
   assert.deepEqual(r.recall, { items: 8, precedents: 3, other_customers: false });
   assert.equal(r.alternatives, 2);
   assert.equal(r.open_files, "se-il-summary-non-basta");
-  assert.deepEqual(r.self_check_controls, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  assert.deepEqual(r.self_check_controls, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
   assert.equal(r.tier, "T1");
 });
 
