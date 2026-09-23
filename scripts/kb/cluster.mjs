@@ -6,14 +6,15 @@
 // e nessuno di esclusione; nel dubbio non entra, e il dubbio è registrato
 // (cluster_events). La decisione è di DT-005 valutata da dt-eval, sugli esiti
 // dei criteri calcolati da cluster-rules. Transazioni brevi, output JSON.
-import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import YAML from "yaml";
 import { openDb } from "./db.mjs";
 import { evaluateCriterion, matchesSignature, jaccard, checkCluster, validateCluster } from "./cluster-rules.mjs";
-import { evaluate, loadTable } from "../decide/dt-eval.mjs";
+import { evaluate, loadTable, writeDecision } from "../decide/dt-eval.mjs";
+import { parseCode } from "./codes.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
@@ -22,6 +23,7 @@ export class AdmissionError extends Error {
 }
 export class PolicyError extends Error { constructor(m) { super(m); this.name = "PolicyError"; } }
 export class NotFoundError extends Error { constructor(m) { super(m); this.name = "NotFoundError"; } }
+export class UsageError extends Error { constructor(m) { super(m); this.name = "UsageError"; } }
 
 const DT005 = loadTable("DT-005");
 const DEFAULT_CLUSTERS_DIR = fileURLToPath(new URL("../../clusters", import.meta.url));
@@ -52,7 +54,7 @@ export function judgeAdmission(cluster, item, { priors = {} } = {}) {
     else if (excNull) { rule = `undetermined:${excNull.id}`; criterion = excNull.id; }
     else { rule = "signature"; criterion = "facet_signature"; }
   }
-  return { verdict, rule, criterion, inclusion, exclusion, dt: { table: dt.table, table_version: dt.table_version, score: dt.score, outcome: dt.outcome, rule: dt.rule, inputs: dt.inputs } };
+  return { verdict, rule, criterion, inclusion, exclusion, dt: { table: dt.table, table_version: dt.table_version, score: dt.score, outcome: dt.outcome, rule: dt.rule, inputs: dt.inputs }, dtResult: dt };
 }
 
 // ——— accesso al DB ———
@@ -78,22 +80,38 @@ export function loadItem(db, code, { root } = {}) {
 const members = (db, code) => db.prepare("select item_code from cluster_members where cluster_code = ? order by item_code").all(code).map((r) => r.item_code);
 
 // ——— operazioni ———
-export function admit(db, clusterCode, itemCode, { decisionCode = null, root, priors = {}, now } = {}) {
+// La DEC di DT-005 (log_as: DEC) è scritta con lo stesso percorso di dt-eval
+// (writeDecision: riga in decisions + <root>/decisions/<codice>.yaml) prima di
+// restituire l'esito, anche quando l'item non entra (§29.6: una DEC per ogni
+// valutazione). Il codice DEC è registrato nel membro e nell'evento.
+// `root` = cartella del cliente (item YAML e decisions/); `customer` serve per
+// gli item S (il codice DEC è sempre di livello L con un cliente, §5).
+export function admit(db, clusterCode, itemCode, { root, customer, agent = "cluster-validator", session = null, priors = {}, now } = {}) {
   const at = nowIso(now);
+  if (!root) throw new UsageError("admit richiede root (cartella del cliente: item e decisions/)");
   const cluster = loadCluster(db, clusterCode);
   if (["fuso", "deprecato"].includes(cluster.status)) throw new PolicyError(`cluster ${clusterCode} non ammette membri (stato ${cluster.status})`);
   const item = loadItem(db, itemCode, { root });
+  const code = parseCode(itemCode);
+  const cust = customer ?? (code && code.level !== "S" ? code.customer : null);
+  if (!cust) throw new UsageError(`admit di ${itemCode}: serve customer (4 caratteri) per il codice della DEC`);
   const j = judgeAdmission(cluster, item, { priors });
-  if (j.verdict !== "ammesso") {
-    const reason = `${j.verdict}: ${j.rule}`;
-    logEvent(db, { at, op: "admit-denied", cluster: clusterCode, item: itemCode, reason, decision: decisionCode, payload: { dt: j.dt } });
-    throw new AdmissionError(j.verdict, j.rule, j.criterion, `${itemCode} non entra in ${clusterCode}: ${j.verdict}, criterio ${j.criterion} (nel dubbio non entra)`);
-  }
+  let decCode = null;
   db.transaction(() => {
-    db.prepare("insert or ignore into cluster_members(cluster_code,item_code,admitted_at,decision_code) values (?,?,?,?)").run(clusterCode, itemCode, at, decisionCode);
-    logEvent(db, { at, op: "admit", cluster: clusterCode, item: itemCode, decision: decisionCode, payload: { dt: j.dt } });
+    decCode = writeDecision(db, { customer: cust, scope: code.scope, root, result: j.dtResult, agent, session, subject: itemCode, cluster: clusterCode, at });
+    if (j.verdict === "ammesso") {
+      db.prepare("insert or ignore into cluster_members(cluster_code,item_code,admitted_at,decision_code) values (?,?,?,?)").run(clusterCode, itemCode, at, decCode);
+      logEvent(db, { at, op: "admit", cluster: clusterCode, item: itemCode, decision: decCode, payload: { dt: j.dt } });
+    } else {
+      logEvent(db, { at, op: "admit-denied", cluster: clusterCode, item: itemCode, reason: `${j.verdict}: ${j.rule}`, decision: decCode, payload: { dt: j.dt } });
+    }
   })();
-  return { ok: true, verdict: j.verdict, rule: j.rule, cluster: clusterCode, item: itemCode, decision_code: decisionCode, dt: j.dt };
+  if (j.verdict !== "ammesso") {
+    const err = new AdmissionError(j.verdict, j.rule, j.criterion, `${itemCode} non entra in ${clusterCode}: ${j.verdict}, criterio ${j.criterion} (nel dubbio non entra)`);
+    err.dec_code = decCode;
+    throw err;
+  }
+  return { ok: true, verdict: j.verdict, rule: j.rule, cluster: clusterCode, item: itemCode, dec_code: decCode, dt: j.dt };
 }
 
 export function reject(db, clusterCode, itemCode, { reason, now } = {}) {
@@ -152,15 +170,25 @@ export function split(db, code, { facet, minShare = 0.2, now } = {}) {
   return { ok: true, proposal: true, cluster: code, members: ms.length, by: facet, groups: list };
 }
 
-export function quarantine(db, itemCode, reason, { now } = {}) {
+// Il file è la verità (§8.1): la quarantena scrive `F12: quarantena` nel file
+// dell'item (uno script, non un agente, §29.6) e nel DB, così il reindex la
+// mantiene. Scrittura del file nella stessa transazione della riga.
+export function quarantine(db, itemCode, reason, { root, now } = {}) {
   if (!reason || !String(reason).trim()) throw new PolicyError("la quarantena richiede un motivo (il dubbio è registrato)");
+  if (!root) throw new UsageError("quarantine richiede root (cartella del cliente con il file dell'item)");
+  const row = db.prepare("select path from items where code = ?").get(itemCode);
+  if (!row) throw new NotFoundError(`item inesistente: ${itemCode}`);
+  const file = join(root, row.path);
+  if (!existsSync(file)) throw new NotFoundError(`file dell'item non trovato: ${file}`);
   const at = nowIso(now);
   db.transaction(() => {
-    const ch = db.prepare("update items set status = 'quarantena' where code = ?").run(itemCode).changes;
-    if (!ch) throw new NotFoundError(`item inesistente: ${itemCode}`);
+    db.prepare("update items set status = 'quarantena' where code = ?").run(itemCode);
     logEvent(db, { at, op: "quarantine", item: itemCode, reason });
+    const doc = YAML.parseDocument(readFileSync(file, "utf8"));
+    doc.setIn(["facets", "F12"], "quarantena");
+    writeFileSync(file, doc.toString());
   })();
-  return { ok: true, item: itemCode, status: "quarantena", reason };
+  return { ok: true, item: itemCode, status: "quarantena", reason, file: row.path };
 }
 
 // PRNG deterministico (mulberry32) seminato dall'hash del seme.
@@ -216,11 +244,11 @@ export function deprecate(db, code, { now } = {}) {
 const HELP = `uso: node scripts/kb/cluster.mjs <comando> [argomenti] --db <file> [--json] [--help]
 
 Comandi (§7.3):
-  admit <CL-…> <codice-item> [--decision L.….DEC.nnnn] [--root <dir>]   ammissione con DT-005
+  admit <CL-…> <codice-item> --root <dir cliente> [--customer ACME]       ammissione con DT-005 (scrive la DEC)
   reject <CL-…> <codice-item> --reason "<motivo>"                        rigetto motivato
   merge <CL-a> <CL-b>                                                    fusione se sovrapposizione > 70%
   split <CL-…> --facet Fn                                                proposta di scissione (> 40 membri, varianza alta)
-  quarantine <codice-item> --reason "<motivo>"                           item in quarantena
+  quarantine <codice-item> --reason "<motivo>" --root <dir cliente>      item in quarantena (anche nel file)
   sample <famiglia> --seed <seme> [--pct 10]                             campione deterministico
   digest-tick                                                            conta le digestioni a vuoto
   deprecate <CL-…>                                                       deprecazione (vuoto per 2 digestioni)
@@ -267,18 +295,19 @@ function main(argv) {
   try {
     const [a, b] = positional;
     switch (cmd) {
-      case "admit": return out(admit(db, a, b, { decisionCode: opts.decision ?? null, root: opts.root }));
+      case "admit": return out(admit(db, a, b, { root: opts.root, customer: opts.customer, agent: opts.agent ?? "cluster-validator", session: opts.session ?? null }));
       case "reject": return out(reject(db, a, b, { reason: opts.reason }));
       case "merge": return out(merge(db, a, b));
       case "split": return out(split(db, a, { facet: opts.facet }));
-      case "quarantine": return out(quarantine(db, a, opts.reason));
+      case "quarantine": return out(quarantine(db, a, opts.reason, { root: opts.root }));
       case "sample": return out(sample(db, a, { pct: opts.pct ? Number(opts.pct) : 10, seed: opts.seed }));
       case "digest-tick": return out(recordDigest(db));
       case "deprecate": return out(deprecate(db, a));
     }
     return 1;
   } catch (e) {
-    if (e instanceof AdmissionError) return fail(asJson, 3, e.message, { verdict: e.verdict, rule: e.rule, criterion: e.criterion });
+    if (e instanceof AdmissionError) return fail(asJson, 3, e.message, { verdict: e.verdict, rule: e.rule, criterion: e.criterion, dec_code: e.dec_code });
+    if (e instanceof UsageError) return fail(asJson, 1, e.message);
     if (e instanceof PolicyError) return fail(asJson, 3, e.message);
     if (e instanceof NotFoundError) return fail(asJson, 1, e.message);
     return fail(asJson, 2, `errore di sistema: ${e.message ?? e}`);

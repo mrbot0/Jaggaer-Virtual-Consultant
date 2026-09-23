@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import { openDb } from "../../scripts/kb/db.mjs";
 import { reindex } from "../../scripts/kb/reindex.mjs";
-import { admit, reject, merge, split, quarantine, sample, deprecate, recordDigest, AdmissionError, PolicyError } from "../../scripts/kb/cluster.mjs";
+import { admit, reject, merge, split, quarantine, sample, deprecate, recordDigest, judgeAdmission, AdmissionError, PolicyError } from "../../scripts/kb/cluster.mjs";
 
 const CLI = fileURLToPath(new URL("../../scripts/kb/cluster.mjs", import.meta.url));
 const NOW = "2026-09-23T10:00:00.000Z";
@@ -25,9 +25,9 @@ function writeItem(root, obj) {
 }
 function workspace() {
   const root = mkdtempSync(join(tmpdir(), "cls-"));
-  writeItem(root, { id: "C.ACME.ADM.CFG.0001", type: "CFG", cfg_area: "005", facets: facets() });
-  writeItem(root, { id: "C.ACME.ADM.CFG.0002", type: "CFG", cfg_area: "006", facets: facets({ F10: "R1" }) });
-  writeItem(root, { id: "C.ACME.ADM.CFG.0003", type: "CFG", cfg_area: "005", unknown: null, facets: facets() });
+  writeItem(root, { id: "C.ACME.ADM.CFG.0001", type: "CFG", classification: { cfg_area: "005" }, facets: facets() });
+  writeItem(root, { id: "C.ACME.ADM.CFG.0002", type: "CFG", classification: { cfg_area: "006" }, facets: facets({ F10: "R1" }) });
+  writeItem(root, { id: "C.ACME.ADM.CFG.0003", type: "CFG", classification: { cfg_area: "005" }, unknown: null, facets: facets() });
   const dbPath = join(root, "knowledge.db");
   const stats = reindex(root, dbPath);
   return { root, dbPath, db: openDb(dbPath), stats };
@@ -39,29 +39,46 @@ test("reindex carica i cluster del plugin (--clusters, default clusters/)", () =
   assert.equal(stats.clusters_invalid, 0);
   const row = db.prepare("select * from clusters where code='CL-CFG-005'").get();
   assert.equal(row.family, "CL-CFG");
-  assert.equal(JSON.parse(row.inclusion)[0].field, "cfg_area");
+  assert.equal(JSON.parse(row.inclusion)[0].field, "classification.cfg_area");
   assert.equal(db.prepare("select depth, domain, base_risk from cluster_details where code='CL-CFG-005'").get().base_risk, "R2");
 });
 
-test("admit: ammette se tutti i criteri di inclusione valgono e nessuno di esclusione, con DT-005", () => {
+test("admit: classification.cfg_area '005' + criteri di inclusione → ammesso in CL-CFG-005; DEC scritta e registrata nel membro", () => {
   const { db, root } = workspace();
-  const r = admit(db, "CL-CFG-005", "C.ACME.ADM.CFG.0001", { decisionCode: "L.ACME.ADM.DEC.0001", root, now: NOW });
+  const r = admit(db, "CL-CFG-005", "C.ACME.ADM.CFG.0001", { root, now: NOW });
   assert.equal(r.verdict, "ammesso");
   assert.equal(r.dt.table, "DT-005");
+  assert.equal(r.dec_code, "L.ACME.ADM.DEC.0001");
   const m = db.prepare("select * from cluster_members where cluster_code='CL-CFG-005'").all();
   assert.deepEqual(m.map((x) => [x.item_code, x.decision_code, x.admitted_at]), [["C.ACME.ADM.CFG.0001", "L.ACME.ADM.DEC.0001", NOW]]);
+  const dec = db.prepare("select * from decisions where code='L.ACME.ADM.DEC.0001'").get();
+  assert.deepEqual([dec.table_code, dec.subject_code, dec.subject_cluster, dec.outcome, dec.agent], ["DT-005", "C.ACME.ADM.CFG.0001", "CL-CFG-005", "ammesso", "cluster-validator"]);
+  const yml = YAML.parse(readFileSync(join(root, "decisions", "L.ACME.ADM.DEC.0001.yaml"), "utf8"));
+  assert.equal(yml.outcome, "ammesso");
+  assert.equal(yml.inputs.inclusion, "tutti-veri");
 });
 
-test("admit: nel dubbio non entra — lancia nominando il criterio, nessuna scrittura di membro", () => {
+test("admit: nel dubbio non entra — DEC scritta, lancia nominando il criterio, nessun membro", () => {
   const { db, root } = workspace();
   assert.throws(() => admit(db, "CL-CFG-005", "C.ACME.ADM.CFG.0002", { root, now: NOW }),
-    (e) => e instanceof AdmissionError && e.verdict === "rigettato" && e.criterion === "I1" && /I1/.test(e.message));
+    (e) => e instanceof AdmissionError && e.verdict === "rigettato" && e.criterion === "I1" && /I1/.test(e.message) && e.dec_code === "L.ACME.ADM.DEC.0001");
   assert.equal(db.prepare("select count(*) n from cluster_members").get().n, 0);
-  const ev = db.prepare("select op, reason from cluster_events where item_code='C.ACME.ADM.CFG.0002'").get();
+  assert.equal(db.prepare("select outcome from decisions where code='L.ACME.ADM.DEC.0001'").get().outcome, "rigettato");
+  const ev = db.prepare("select op, reason, decision_code from cluster_events where item_code='C.ACME.ADM.CFG.0002'").get();
   assert.equal(ev.op, "admit-denied");
   assert.match(ev.reason, /I1/);
+  assert.equal(ev.decision_code, "L.ACME.ADM.DEC.0001");
   assert.throws(() => admit(db, "CL-CFG-999", "C.ACME.ADM.CFG.0001", { root }), /cluster inesistente/);
   assert.throws(() => admit(db, "CL-CFG-005", "C.ACME.ADM.CFG.0999", { root }), /item inesistente/);
+  assert.throws(() => admit(db, "CL-CFG-005", "C.ACME.ADM.CFG.0001", {}), /root/);   // la DEC richiede la cartella del cliente
+});
+
+test("admit di un item S: la DEC richiede il cliente esplicito", () => {
+  const { db, root } = workspace();
+  writeItem(root, { id: "S.STD.ADM.CFG.0005", type: "CFG", classification: { cfg_area: "005" }, facets: facets() });
+  reindex(root, join(root, "knowledge.db"));
+  assert.throws(() => admit(db, "CL-CFG-005", "S.STD.ADM.CFG.0005", { root, now: NOW }), /customer/);
+  assert.equal(admit(db, "CL-CFG-005", "S.STD.ADM.CFG.0005", { root, customer: "ACME", now: NOW }).dec_code, "L.ACME.ADM.DEC.0001");
 });
 
 test("reject richiede un motivo e rimuove l'appartenenza", () => {
@@ -73,12 +90,25 @@ test("reject richiede un motivo e rimuove l'appartenenza", () => {
   assert.equal(db.prepare("select count(*) n from cluster_members").get().n, 0);
 });
 
-test("quarantine: stato dell'item 'quarantena' con il motivo registrato", () => {
-  const { db } = workspace();
-  quarantine(db, "C.ACME.ADM.CFG.0003", "criterio insufficiente: area ambigua", { now: NOW });
+test("quarantine: F12 'quarantena' scritto nel FILE dell'item e nel DB; il reindex la mantiene", () => {
+  const { db, root, dbPath } = workspace();
+  quarantine(db, "C.ACME.ADM.CFG.0003", "criterio insufficiente: area ambigua", { root, now: NOW });
+  assert.equal(db.prepare("select status from items where code='C.ACME.ADM.CFG.0003'").get().status, "quarantena");
+  const file = join(root, db.prepare("select path from items where code='C.ACME.ADM.CFG.0003'").get().path);
+  assert.equal(YAML.parse(readFileSync(file, "utf8")).facets.F12, "quarantena");
+  const again = reindex(root, dbPath);
+  assert.equal(again.invalid, 0);
   assert.equal(db.prepare("select status from items where code='C.ACME.ADM.CFG.0003'").get().status, "quarantena");
   assert.equal(db.prepare("select reason from cluster_events where op='quarantine'").get().reason, "criterio insufficiente: area ambigua");
-  assert.throws(() => quarantine(db, "C.ACME.ADM.CFG.0003", ""), /motivo/);
+  assert.throws(() => quarantine(db, "C.ACME.ADM.CFG.0003", "", { root }), /motivo/);
+  assert.throws(() => quarantine(db, "C.ACME.ADM.CFG.0001", "x", {}), /root/);
+});
+
+test("CL-PRT-004: una condizione su CL-CFG-020 soddisfa il cluster condizionato da un parametro (match 'in')", () => {
+  const c = YAML.parse(readFileSync(fileURLToPath(new URL("../../clusters/CL-PRT/CL-PRT-004.yaml", import.meta.url)), "utf8"));
+  const it = { id: "S.STD.CAT.CFG.0020", type: "CFG", classification: { portability_condition: "CL-CFG-020" }, facets: { F8: "condizionata", F12: "validato" } };
+  assert.equal(judgeAdmission(c, it).verdict, "ammesso");
+  assert.equal(judgeAdmission(c, { ...it, classification: { portability_condition: "F7" } }).rule, "inclusion:I2");
 });
 
 function seedMembers(db, cluster, codes) {
@@ -152,6 +182,7 @@ test("CLI: admit con --json, rifiuto di policy → exit 3, argomenti → exit 1"
   const denied = spawnSync(process.execPath, [CLI, "admit", "CL-CFG-005", "C.ACME.ADM.CFG.0002", "--db", dbPath, "--root", root, "--json"], { encoding: "utf8" });
   assert.equal(denied.status, 3);
   assert.equal(JSON.parse(denied.stdout).criterion, "I1");
+  assert.equal(JSON.parse(denied.stdout).dec_code, "L.ACME.ADM.DEC.0002");
   assert.equal(spawnSync(process.execPath, [CLI, "admit", "--db", dbPath, "--json"], { encoding: "utf8" }).status, 1);
   assert.equal(spawnSync(process.execPath, [CLI, "--help"], { encoding: "utf8" }).status, 0);
   const s = spawnSync(process.execPath, [CLI, "sample", "CL-CFG", "--seed", "x", "--db", dbPath, "--json"], { encoding: "utf8" });

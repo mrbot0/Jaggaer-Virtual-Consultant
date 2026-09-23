@@ -87,11 +87,14 @@ export function upsertClusters(db, dir) {
   return stats;
 }
 
-export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR } = {}) {
+// recompute: ricalcola confidenza/peso/qualità anche degli item invariati. Senza,
+// si ricalcolano solo gli invariati ancora senza punteggio (confidenza 0: DB scritti da K0).
+export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, recompute = false } = {}) {
   const db = openDb(dbPath);
-  const stats = { scanned: 0, upserted: 0, unchanged: 0, deprecated: 0, invalid: 0 };
+  const stats = { scanned: 0, upserted: 0, unchanged: 0, rescored: 0, deprecated: 0, invalid: 0 };
   const seen = new Set();
-  const get = db.prepare("select hash from items where code=?");
+  const get = db.prepare("select hash, confidence from items where code=?");
+  const rescore = db.prepare("update items set confidence=@confidence, weight=@weight, quality=@quality where code=@code");
   const upsert = db.prepare(`insert into items(code,level,customer,scope,type,version,title,summary,facets,confidence,quality,weight,status,path,hash,updated_at,verified_at,release_ref)
     values (@code,@level,@customer,@scope,@type,@version,@title,@summary,@facets,@confidence,@quality,@weight,@status,@path,@hash,@updated_at,@verified_at,@release_ref)
     on conflict(code) do update set title=excluded.title, summary=excluded.summary, facets=excluded.facets, status=excluded.status,
@@ -108,7 +111,12 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR } = {
       const obj = YAML.parse(text);
       if (!validateItem(obj).ok) { stats.invalid++; continue; }
       const c = parseCode(obj.id); seen.add(obj.id);
-      if (get.get(obj.id)?.hash === hash) { stats.unchanged++; continue; }
+      const prev = get.get(obj.id);
+      if (prev?.hash === hash) {
+        stats.unchanged++;
+        if (recompute || !prev.confidence) { rescore.run({ code: obj.id, ...scoreItem(obj) }); stats.rescored++; }
+        continue;
+      }
       upsert.run({ code: obj.id, level: c.level, customer: c.customer, scope: c.scope, type: c.type, version: c.version, title: obj.title,
         summary: obj.summary, facets: JSON.stringify(obj.facets), ...scoreItem(obj), status: obj.facets.F12, path: relative(root, file), hash,
         updated_at: new Date(statSync(file).mtimeMs).toISOString(), verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
@@ -123,11 +131,12 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR } = {
 }
 
 function printHelp() {
-  console.log(`uso: node scripts/kb/reindex.mjs --root <dir> --db <file> [--clusters <dir>] [--json] [--help]
+  console.log(`uso: node scripts/kb/reindex.mjs --root <dir> --db <file> [--clusters <dir>] [--recompute] [--json] [--help]
 
 Scansiona <dir>/kb, calcola l'hash di ogni item YAML, aggiorna items e
 items_fts nel DB SQLite; deprecato per gli item spariti dal filesystem.
 --clusters: cartella dei file CLS da caricare in clusters (default: clusters/ del plugin).
+--recompute: ricalcola confidenza, peso e qualità anche degli item invariati.
 
 Exit code: 0 ok · 1 errore utente (argomenti mancanti) · 2 errore di sistema.`);
 }
@@ -145,7 +154,7 @@ if (isMain(import.meta.url)) {
   }
   try {
     const ci = a.indexOf("--clusters");
-    const stats = reindex(root, db, ci >= 0 && a[ci + 1] ? { clustersDir: a[ci + 1] } : {});
+    const stats = reindex(root, db, { ...(ci >= 0 && a[ci + 1] ? { clustersDir: a[ci + 1] } : {}), recompute: a.includes("--recompute") });
     console.log(JSON.stringify(asJson ? { ok: true, ...stats } : stats));
     process.exit(0);
   } catch (err) {

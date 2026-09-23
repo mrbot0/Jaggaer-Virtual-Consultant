@@ -30,6 +30,24 @@ test("reindex calcola confidenza (peso della fonte §6.2), peso W e qualità Q",
   assert.equal(row("S.STD.SRC.FLW.0003").weight, 0.17); // 1.00 × condizionata non soddisfatta 0.20 × validato 0.85
 });
 
+test("item invariati senza punteggi (DB di K0) vengono ricalcolati; --recompute li ricalcola tutti", () => {
+  const root = mkdtempSync(join(tmpdir(), "kb-rs-"));
+  const dir = join(root, "kb", "scopes", "SRC", "flows"); mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, "S.STD.SRC.FLW.0003.yaml"), fixture);
+  const dbPath = join(root, "k.db");
+  reindex(root, dbPath, { clustersDir: null });
+  const db = openDb(dbPath);
+  const w0 = db.prepare("select weight, confidence, quality from items where code='S.STD.SRC.FLW.0003'").get();
+  db.prepare("update items set confidence=0, weight=0, quality=0").run();      // come un DB scritto da K0
+  let r = reindex(root, dbPath, { clustersDir: null });
+  assert.deepEqual([r.unchanged, r.upserted, r.rescored], [1, 0, 1]);
+  assert.deepEqual(db.prepare("select weight, confidence, quality from items where code='S.STD.SRC.FLW.0003'").get(), w0);
+  r = reindex(root, dbPath, { clustersDir: null });
+  assert.equal(r.rescored, 0);                                                  // già calcolati: nulla da fare
+  r = reindex(root, dbPath, { clustersDir: null, recompute: true });
+  assert.equal(r.rescored, 1);
+});
+
 test("indicizza, salta gli invariati, depreca gli spariti", () => {
   const root = mkdtempSync(join(tmpdir(), "kb-root-"));
   const dir = join(root, "kb", "scopes", "SRC", "flows"); mkdirSync(dir, { recursive: true });
