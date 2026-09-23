@@ -10,7 +10,9 @@
 //   nessun artefatto candidato                           → validated: inerte
 // La lezione la scrive l'agente; lo stato lo cambia solo questo script (§29.6).
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname, basename } from "node:path";
+import { sessionDir, isSafeSessionId } from "../../hooks/lib/workspace.mjs";
+import { checkSessionText } from "../../hooks/lib/session-state.mjs";
 import YAML from "yaml";
 import { validateWith } from "../lib/schemas.mjs";
 import { evaluate, loadTable, writeDecision } from "../decide/dt-eval.mjs";
@@ -74,7 +76,8 @@ export function subjectOf(lesson) {
 }
 
 // Reason in ordine di brief/§21.2; `code` = etichetta dell'esito (rejected: <code>).
-export function validateLesson(lesson, { kbExists = () => true, sessionSurprises = 0, hypotheses = null, validatedLessons = [], hasEffects = () => true } = {}) {
+// sessionError: la sessione della lezione non si è potuta leggere → la fondatezza (§17.3) non è verificabile.
+export function validateLesson(lesson, { kbExists = () => true, sessionSurprises = 0, hypotheses = null, sessionError = null, validatedLessons = [], hasEffects = () => true } = {}) {
   const l = typeof lesson === "string" ? parseLesson(lesson) : lesson;
   const fm = l.frontmatter ?? {};
   const reasons = [];
@@ -115,6 +118,7 @@ export function validateLesson(lesson, { kbExists = () => true, sessionSurprises
   }
   // fondatezza (§17.3): la lezione non racconta una linea retta che non c'è stata
   const s3 = l.sections?.[3] ?? "";
+  if (sessionError) add("non fondata", `fondatezza non verificabile: ${sessionError}`);
   const surprisesCount = Number(sessionSurprises) || 0;
   if (surprisesCount > 0) {
     if ((fm.surprises ?? 0) < surprisesCount) add("non fondata", `la sessione ha registrato ${surprisesCount} sorprese, la lezione ne dichiara ${fm.surprises ?? 0}`);
@@ -177,13 +181,45 @@ export function serializeLesson(fm, body) {
   return `---\n${YAML.stringify(fm).trimEnd()}\n---\n${body.startsWith("\n") ? body.slice(1) : body}`;
 }
 
-function readSessionContext(root, sid) {
-  const dir = join(root, ".sessions", sid ?? "");
-  let surprises = 0;
+// La lezione cita la sessione col codice SES (§21.1); le cartelle di sessione sono per session_id di
+// runtime (resolveSessionId, workspace.sessionDir: customers/<C>/.sessions/<sid>/). Si cerca prima la
+// cartella del riferimento stesso (la lezione cita il sid), poi il session.json il cui `session_code` è
+// il riferimento. Stesso predicato di hook e CLI (checkSessionText: JSON + schema + cliente + sid).
+// Sessione non trovata o illeggibile → { error }, che la validazione riporta come motivo: mai "0 sorprese".
+export function resolveLessonSession(root, ref, { customer } = {}) {
+  if (typeof ref !== "string" || !ref) return { error: "la lezione non cita la sessione" };
+  const up = dirname(root);
+  const base = basename(up).toLowerCase() === "customers" && customer ? dirname(sessionDir(dirname(up), customer, "x")) : join(root, ".sessions");
+  const load = (sid) => {
+    const file = join(base, sid, "session.json");
+    let text;
+    try { text = readFileSync(file, "utf8"); } catch (e) { return e.code === "ENOENT" ? null : { error: `session.json della sessione ${sid} illeggibile: ${e.code ?? e.message}` }; }
+    const c = checkSessionText(text, { customer, sid });
+    return c.ok ? { sid, session: c.session } : { error: `session.json della sessione ${sid} illeggibile: ${c.reason}` };
+  };
+  let found = isSafeSessionId(ref) ? load(ref) : null;
+  if (!found) {
+    const unreadable = [];
+    let dirs = [];
+    try { dirs = readdirSync(base, { withFileTypes: true }).filter((d) => d.isDirectory() && isSafeSessionId(d.name)).map((d) => d.name).sort(); } catch { dirs = []; }
+    for (const sid of dirs) {
+      const r = load(sid);
+      if (!r) continue;
+      if (r.error) { unreadable.push(r.error); continue; }
+      if (r.session.session_code === ref) { found = r; break; }
+    }
+    if (!found) {
+      return { error: `sessione ${ref} non trovata in ${base} (né come session_id né come session_code)${unreadable.length ? `; illeggibili: ${unreadable.join("; ")}` : ""}` };
+    }
+  }
+  if (found.error) return found;
+  const session = found.session;
   let hypotheses = null;
-  try { if (sid && existsSync(join(dir, "session.json"))) surprises = (JSON.parse(readFileSync(join(dir, "session.json"), "utf8")).surprises ?? []).length; } catch { /* stato illeggibile: 0 */ }
-  try { if (sid && existsSync(join(dir, "hypotheses.yaml"))) hypotheses = YAML.parse(readFileSync(join(dir, "hypotheses.yaml"), "utf8")); } catch { /* registro illeggibile */ }
-  return { surprises, hypotheses };
+  const hfile = session.hypotheses_file ? join(root, session.hypotheses_file) : join(base, found.sid, "hypotheses.yaml");
+  if (existsSync(hfile)) {
+    try { hypotheses = YAML.parse(readFileSync(hfile, "utf8")); } catch (e) { return { error: `registro delle ipotesi della sessione ${found.sid} illeggibile: ${e.message}` }; }
+  }
+  return { sid: found.sid, surprises: (session.surprises ?? []).length, hypotheses };
 }
 
 export function validateLessons(db, root, { session, at = new Date().toISOString(), by = "lesson-validator" } = {}) {
@@ -193,6 +229,7 @@ export function validateLessons(db, root, { session, at = new Date().toISOString
   const validated = parsed.filter((p) => p.lesson.frontmatter?.status === "validated").map((p) => p.lesson);
   const kbExists = kbExistsFromDb(db);
   const effectsStmt = db.prepare("select effects from decision_context where decision_code=?");
+  // effetti ignoti (NULL: dt-eval senza --effects) contano come effetti: serve l'esito atteso.
   const hasEffects = (dec) => effectsStmt.get(dec)?.effects !== 0;
   const release = (() => { try { return JSON.parse(db.prepare("select value from meta where key='releases'").get()?.value ?? "[]").at(-1) ?? null; } catch { return null; } })();
   const results = [];
@@ -200,8 +237,9 @@ export function validateLessons(db, root, { session, at = new Date().toISOString
     const fm = p.lesson.frontmatter;
     if (!fm || (fm.status ?? "proposed") !== "proposed") continue;
     if (session && fm.session !== session) continue;
-    const ctx = readSessionContext(root, fm.session);
-    const r = validateLesson(p.lesson, { kbExists, sessionSurprises: ctx.surprises, hypotheses: ctx.hypotheses, validatedLessons: validated, hasEffects });
+    const ctx = resolveLessonSession(root, fm.session, { customer: parseCode(fm.id ?? "")?.customer });
+    const r = validateLesson(p.lesson, { kbExists, sessionSurprises: ctx.surprises ?? 0, hypotheses: ctx.hypotheses ?? null, sessionError: ctx.error ?? null,
+      validatedLessons: validated, hasEffects });
     const own = parseCode(fm.id ?? "");
     let decCode = null;
     if (own) {
@@ -235,7 +273,8 @@ export function validateLessons(db, root, { session, at = new Date().toISOString
 export const HELP = `uso: learn validate [--session SES…] --root <cartella del cliente> --db <knowledge.db> [--json] [--help]
 
 Valida le lezioni 'proposed' di <root>/lessons/ con DT-004 (§21.2): forma, §7, esiti attesi, confini,
-fondatezza (sorprese e ipotesi rifiutate della sessione, da <root>/.sessions/<SES>/), portabilità,
+fondatezza (sorprese e ipotesi rifiutate della sessione: <root>/.sessions/<sid>/ il cui session.json ha
+session_id o session_code uguale alla sessione della lezione; non trovata o illeggibile → rejected), portabilità,
 novità, azionabilità. Aggiorna lo stato nel frontmatter e nel DB, scrive la DEC di DT-004 e, per le
 validate, registra gli esiti attesi (learn outcomes li verificherà).
 

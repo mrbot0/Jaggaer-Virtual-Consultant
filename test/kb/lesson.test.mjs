@@ -8,6 +8,16 @@ import { fileURLToPath } from "node:url";
 import { parseLesson, validateLesson, sectionEmpty } from "../../scripts/kb/lesson.mjs";
 import { validateWith } from "../../scripts/lib/schemas.mjs";
 import { openDb } from "../../scripts/kb/db.mjs";
+import { newSession } from "../../scripts/admin/session.mjs";
+
+// Sessione di runtime (§45.1): la cartella è per session_id (sid), la lezione cita il codice SES (§21.1);
+// session.json porta il codice in `session_code` (proprietà aggiuntiva ammessa dallo schema).
+function addSession(root, sid, sesCode, { surprises = [] } = {}) {
+  const s = { ...newSession({ sid, customer: "ACME", scope: "P2P" }), session_code: sesCode, surprises };
+  mkdirSync(join(root, ".sessions", sid), { recursive: true });
+  writeFileSync(join(root, ".sessions", sid, "session.json"), JSON.stringify(s, null, 2));
+}
+const customerRoot = () => { const r = join(mkdtempSync(join(tmpdir(), "lsn-ws-")), "customers", "ACME"); mkdirSync(join(r, "lessons"), { recursive: true }); return r; };
 
 const LEARN = fileURLToPath(new URL("../../scripts/digest/learn.mjs", import.meta.url));
 const TEMPLATE = fileURLToPath(new URL("../../templates/lesson.md", import.meta.url));
@@ -143,8 +153,8 @@ test("templates/lesson.md: lo scheletro di §21.1 con il frontmatter completo e 
 });
 
 test("CLI learn validate --session: aggiorna lo stato nei file e nel DB, registra gli esiti attesi e la DEC di DT-004", () => {
-  const root = mkdtempSync(join(tmpdir(), "lsn-"));
-  mkdirSync(join(root, "lessons"), { recursive: true });
+  const root = customerRoot();
+  addSession(root, "sess-1", "SES.ACME.20260922.003");
   const dbFile = join(root, "knowledge.db");
   const db = openDb(dbFile);
   const dec = db.prepare("insert into decisions(code,table_code,agent,session,inputs,outcome,at) values (?,?,?,?,?,?,?)");
@@ -173,4 +183,68 @@ test("CLI learn validate --session: aggiorna lo stato nei file e nel DB, registr
   assert.deepEqual(check.prepare("select decision_code, lesson_code from expected_outcomes order by decision_code").all(),
     [{ decision_code: "L.ACME.P2P.DEC.0412", lesson_code: "L.ACME.P2P.LSN.0088" }, { decision_code: "L.ACME.P2P.DEC.0413", lesson_code: "L.ACME.P2P.LSN.0088" }]);
   assert.equal(check.prepare("select count(*) as n from decisions where table_code='DT-004'").get().n, 2);
+});
+
+test("fix #2 learn validate: la sessione della lezione (codice SES) si trova per session_code nella cartella del sid; con sorprese e §3 muta → rejected: non fondata", () => {
+  const root = customerRoot();
+  addSession(root, "7f3c9a2e-sid", "SES.ACME.20260922.003", { surprises: [{ at: "2026-09-22T10:41:00Z", item: "L.ACME.P2P.DEC.0290", obs: "L.ACME.P2P.OBS.0240" }] });
+  const dbFile = join(root, "knowledge.db");
+  const db = openDb(dbFile);
+  for (const c of ["L.ACME.P2P.DEC.0412", "L.ACME.P2P.DEC.0413", "L.ACME.P2P.DEC.0290"]) db.prepare("insert into decisions(code,table_code,inputs,outcome) values (?,?,?,?)").run(c, "DT-001", "{}", "x");
+  db.prepare("insert into observations(code) values (?)").run("L.ACME.P2P.OBS.0240");
+  db.close();
+  writeFileSync(join(root, "lessons", "L.ACME.P2P.LSN.0088.md"), edit(LESSON, "Ordine SENT con errore 51 (L.ACME.P2P.OBS.0240).", "Tutto come previsto."));
+  const r = spawnSync(process.execPath, [LEARN, "validate", "--root", root, "--db", dbFile, "--json"], { encoding: "utf8" });
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  const [res] = JSON.parse(r.stdout).results;
+  assert.equal(res.status, "rejected");
+  assert.equal(res.reason, "non fondata");
+});
+
+test("fix #2 learn validate: sessione della lezione non trovata o illeggibile → motivo riportato (rejected: non fondata), mai 'zero sorprese'", () => {
+  const root = customerRoot();
+  const dbFile = join(root, "knowledge.db");
+  const db = openDb(dbFile);
+  for (const c of ["L.ACME.P2P.DEC.0412", "L.ACME.P2P.DEC.0413", "L.ACME.P2P.DEC.0290"]) db.prepare("insert into decisions(code,table_code,inputs,outcome) values (?,?,?,?)").run(c, "DT-001", "{}", "x");
+  db.prepare("insert into observations(code) values (?)").run("L.ACME.P2P.OBS.0240");
+  db.close();
+  writeFileSync(join(root, "lessons", "L.ACME.P2P.LSN.0088.md"), LESSON);
+  const run = () => JSON.parse(spawnSync(process.execPath, [LEARN, "validate", "--root", root, "--db", dbFile, "--json"], { encoding: "utf8" }).stdout).results[0];
+  const missing = run();
+  assert.equal(missing.status, "rejected");
+  assert.equal(missing.reason, "non fondata");
+  const f = parseLesson(readFileSync(join(root, "lessons", "L.ACME.P2P.LSN.0088.md"), "utf8"));
+  assert.ok(f.frontmatter.validation.reasons.some((x) => /sessione SES\.ACME\.20260922\.003 non trovata/.test(x)));
+  // session.json illeggibile nella cartella della sessione
+  writeFileSync(join(root, "lessons", "L.ACME.P2P.LSN.0088.md"), LESSON);
+  mkdirSync(join(root, ".sessions", "SES.ACME.20260922.003"), { recursive: true });
+  writeFileSync(join(root, ".sessions", "SES.ACME.20260922.003", "session.json"), "{ non json");
+  const corrupt = run();
+  assert.equal(corrupt.status, "rejected");
+  const f2 = parseLesson(readFileSync(join(root, "lessons", "L.ACME.P2P.LSN.0088.md"), "utf8"));
+  assert.ok(f2.frontmatter.validation.reasons.some((x) => /illeggibile/.test(x)));
+});
+
+test("fix #1 learn validate: DEC scritta da dt-eval senza --effects (effetti ignoti) e nessun esito atteso → rejected: non verificabile", () => {
+  const root = customerRoot();
+  addSession(root, "sess-1", "SES.ACME.20260922.003");
+  const dbFile = join(root, "knowledge.db");
+  openDb(dbFile).close();
+  const DT_EVAL = fileURLToPath(new URL("../../scripts/decide/dt-eval.mjs", import.meta.url));
+  const inputs = JSON.stringify({ risk: "R1", shape: "consolidato", mandatory_missing: false, open_contradiction: false, novelty: false });
+  const w = spawnSync(process.execPath, [DT_EVAL, "--table", "DT-002", "--inputs", inputs, "--db", dbFile, "--root", root, "--customer", "ACME", "--scope", "P2P",
+    "--agent", "p2p-expert", "--write-dec", "--json"], { encoding: "utf8" });
+  assert.equal(w.status, 0, w.stdout + w.stderr);
+  const dec = JSON.parse(w.stdout).dec_code;
+  const db = openDb(dbFile);
+  db.prepare("insert into observations(code) values (?)").run("L.ACME.P2P.OBS.0240");
+  db.prepare("insert into decisions(code,table_code,inputs,outcome) values (?,?,?,?)").run("L.ACME.P2P.DEC.0290", "DT-001", "{}", "x");
+  db.close();
+  const md = LESSON.replace("decision_refs: [L.ACME.P2P.DEC.0412, L.ACME.P2P.DEC.0413]", `decision_refs: [${dec}]`)
+    .replace(/expected_outcomes: \[.*\]/, "expected_outcomes: []").replace("(L.ACME.P2P.DEC.0412)", `(${dec})`);
+  writeFileSync(join(root, "lessons", "L.ACME.P2P.LSN.0088.md"), md);
+  const r = spawnSync(process.execPath, [LEARN, "validate", "--root", root, "--db", dbFile, "--json"], { encoding: "utf8" });
+  const [res] = JSON.parse(r.stdout).results;
+  assert.equal(res.status, "rejected");
+  assert.equal(res.reason, "non verificabile");
 });
