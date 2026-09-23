@@ -1,0 +1,14 @@
+id: S.STD.XSC.STR.0011
+code: STR-PREMORTEM
+name: "Pre-mortem"
+applies_when: { risk_min: R2, depth: profonda, combination: true }
+plan:
+  - { n: 1, do: "prima di agire: se fra un'ora questa modifica risulta un errore, qual è la causa più probabile? elenca le cause" }
+  - { n: 2, do: "per ciascuna causa aggiungi al piano un CHK pre o una verifica post" }
+  - { n: 3, do: "prova a vuoto il rollback (la compensazione) prima dell'azione" }
+  - { n: 4, do: "repair_policy non vuota: abort_on sui passi R ≥ R2" }
+cost: { tier: T2 }
+success_criteria: "ogni causa elencata ha un CHK pre o una verifica post; rollback provato a vuoto"
+cluster: CL-STR-011
+facets: { F4: strategia }
+sources: ["§14.2", "§10.4", "§17.3"]

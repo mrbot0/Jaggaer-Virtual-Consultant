@@ -1,0 +1,14 @@
+id: S.STD.XSC.STR.0012
+code: STR-DISCONFIRM
+name: "Cerca la smentita"
+applies_when: { preferred_prior_min: 0.6, combination: true, condition: "ipotesi preferita con prior > 0.6" }
+plan:
+  - { n: 1, do: "identifica l'ipotesi preferita nel registro delle ipotesi" }
+  - { n: 2, do: "progetta un'osservazione o un test che la smentirebbe se fosse falsa" }
+  - { n: 3, do: "eseguilo prima di concludere e cita l'evidenza nel registro" }
+  - { n: 4, do: "se non esiste un test eseguibile: la conclusione porta confidence ridotta di 0.15" }
+cost: { tier: T1 }
+success_criteria: "test di smentita eseguito, o confidence ridotta di 0.15 dichiarata"
+cluster: CL-STR-012
+facets: { F4: strategia }
+sources: ["§14.2", "§17.3", "§18.4"]

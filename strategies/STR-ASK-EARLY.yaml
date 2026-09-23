@@ -1,0 +1,16 @@
+id: S.STD.XSC.STR.0008
+code: STR-ASK-EARLY
+name: "Chiedi presto"
+applies_when: { shape: [ignoto, libresco], risk_min: R2, condition: "gaps su attributi critici; per ignoto già da R1 (§14.3)" }
+plan:
+  - { n: 1, do: "kb epistemic <subject> → gaps sugli attributi critici" }
+  - { n: 2, do: "escludi ciò che il DB sa: item con confidenza ≥ 0.70 e stato ≥ validato (§16.1)" }
+  - { n: 3, do: "formula le domande dai gaps nel formato §16.2, prima di qualunque azione" }
+  - { n: 4, do: "a lotti se indipendenti, una per volta se dipendenti; mai due volte la stessa domanda" }
+  - { n: 5, do: "registra le risposte come item L (0.85, testimoniale) e ricalcola la forma" }
+cost: { tier: T0 }
+success_criteria: "gaps critici chiusi da risposta prima dell'azione"
+combines_with: [STR-VERIFY-FIRST]
+cluster: CL-STR-008
+facets: { F4: strategia }
+sources: ["§14.2", "§14.3", "§16", "§18.3"]

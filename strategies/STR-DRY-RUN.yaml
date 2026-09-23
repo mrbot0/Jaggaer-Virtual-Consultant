@@ -1,0 +1,16 @@
+id: S.STD.XSC.STR.0004
+code: STR-DRY-RUN
+name: "Prova a vuoto"
+applies_when: { risk_min: R2, shape: [empirico, libresco, ignoto, contraddittorio] }
+plan:
+  - { n: 1, do: "compila il piano come traccia attesa: ogni passo con expect (§10.5), repair_policy e compensazioni" }
+  - { n: 2, do: "sostituisci ogni SAVE/SUBMIT con CAPTURE" }
+  - { n: 3, do: "esegui la procedura su Chrome confrontando ogni schermata con expect (step-check)" }
+  - { n: 4, do: "una divergenza è una sorpresa: DT-016; se incompatibile → STR-STOP-RECORD" }
+  - { n: 5, do: "solo dopo, esegui per davvero con l'approvazione del passo R ≥ R2, poi la strategia di forma" }
+cost: { tier: T1 }
+success_criteria: "tutte le schermate della prova coincidono con l'atteso prima dell'esecuzione reale"
+combines_with: [STR-VERIFY-FIRST, STR-GENERALIZE-CAUTIOUSLY, STR-TRIANGULATE, STR-ASK-EARLY, STR-PREMORTEM]
+cluster: CL-STR-004
+facets: { F4: strategia }
+sources: ["§14.2", "§14.3", "§18.1"]

@@ -1,0 +1,16 @@
+id: S.STD.XSC.STR.0006
+code: STR-BISECT
+name: "Bisezione"
+applies_when: { mode: [diag], condition: "procedura lunga fallita, prima divergenza ignota (indipendente dal punteggio di DT-017)" }
+plan:
+  - { n: 1, do: "prendi la sequenza dei passi del run fallito con i checkpoint" }
+  - { n: 2, do: "verifica lo stato a metà sequenza (READ/VERIFY, R0)" }
+  - { n: 3, do: "se a metà coincide con l'atteso la divergenza è nella seconda metà, altrimenti nella prima" }
+  - { n: 4, do: "ripeti sulla metà divergente finché il primo passo divergente è isolato" }
+  - { n: 5, do: "classifica l'incertezza di quel passo (DT-024) e prosegui con la strategia di forma" }
+cost: { tier: T1, budget: "≈ log2(n) verifiche R0" }
+success_criteria: "primo passo divergente identificato con un'osservazione"
+combines_with: [STR-DISCONFIRM]
+cluster: CL-STR-006
+facets: { F4: strategia }
+sources: ["§14.2", "§14.3", "§13.7"]

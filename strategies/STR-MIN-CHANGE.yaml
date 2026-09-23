@@ -1,0 +1,15 @@
+id: S.STD.XSC.STR.0005
+code: STR-MIN-CHANGE
+name: "Minimo cambiamento"
+applies_when: { mode: [config], combination: true, condition: "configurazione con ipotesi da verificare" }
+plan:
+  - { n: 1, do: "registro delle ipotesi con almeno due ipotesi aperte, ciascuna con prior (§13.6)" }
+  - { n: 2, do: "belief-update nextTest: il passo più piccolo che distingue le ipotesi (rischio, poi passi, poi tier)" }
+  - { n: 3, do: "registra la compensazione, poi applica solo quel passo" }
+  - { n: 4, do: "verifica (READ/VERIFY) e chiudi le ipotesi con evidenza citata" }
+  - { n: 5, do: "poi il resto del cambiamento, sull'ipotesi sopravvissuta" }
+cost: { tier: T1 }
+success_criteria: "una sola ipotesi sopravvissuta con evidenza prima del cambiamento completo"
+cluster: CL-STR-005
+facets: { F4: strategia }
+sources: ["§14.2", "§14.3", "§13.6"]

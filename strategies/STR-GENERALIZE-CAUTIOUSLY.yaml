@@ -1,0 +1,14 @@
+id: S.STD.XSC.STR.0009
+code: STR-GENERALIZE-CAUTIOUSLY
+name: "Generalizza con cautela"
+applies_when: { shape: empirico, condition: "precedenti solo presso altri clienti" }
+plan:
+  - { n: 1, do: "agisci qui solo a R ≤ R1" }
+  - { n: 2, do: "cerca la fonte tecnica che spieghi il comportamento osservato (DT-019)" }
+  - { n: 3, do: "chiedi all'utente se il comportamento è voluto" }
+  - { n: 4, do: "dichiara la portabilità ignota nella lezione (§7) e usa i precedenti altrui solo per orientare (DT-018)" }
+cost: { tier: T1 }
+success_criteria: "azione limitata a R ≤ R1 e portabilità dichiarata ignota"
+cluster: CL-STR-009
+facets: { F4: strategia }
+sources: ["§14.2", "§11.6", "§12.4"]

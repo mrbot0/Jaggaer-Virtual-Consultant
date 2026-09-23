@@ -1,0 +1,16 @@
+id: S.STD.XSC.STR.0003
+code: STR-TRIANGULATE
+name: "Triangola"
+applies_when: { shape: contraddittorio, condition: "fonti di genere diverso in disaccordo, o forma contraddittorio" }
+plan:
+  - { n: 1, do: "kb epistemic <subject> → CTR aperti e generi di fonte in disaccordo" }
+  - { n: 2, do: "recupera un terzo genere, di norma un'osservazione R0 mirata sul punto di disaccordo" }
+  - { n: 3, do: "applica DT-011 alla contraddizione con il terzo genere come input" }
+  - { n: 4, do: "se risolta: chiudi il CTR con il vincitore (superseded_by sul perdente) e ricalcola la forma" }
+  - { n: 5, do: "se resta aperta: chiedi (DT-002, formato §16.2); mai agire sul soggetto finché il CTR è aperto (§11.5)" }
+cost: { tier: T1 }
+success_criteria: "CTR chiuso con evidenza citata, oppure domanda posta e soggetto non toccato"
+combines_with: [STR-DISCONFIRM, STR-PREMORTEM]
+cluster: CL-STR-003
+facets: { F4: strategia }
+sources: ["§14.2", "§11.4", "§11.5", "§18.4"]

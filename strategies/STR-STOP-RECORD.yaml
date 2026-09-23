@@ -1,0 +1,14 @@
+id: S.STD.XSC.STR.0010
+code: STR-STOP-RECORD
+name: "Fermati e registra"
+applies_when: { surprises_min: 3, condition: "sorpresa incompatibile su R ≥ R2; terza sorpresa; R3 senza approvazione; punteggio DT-017 ≥ 0.75" }
+plan:
+  - { n: 1, do: "non eseguire il passo" }
+  - { n: 2, do: "registra il CTR fra l'item contraddetto e l'osservazione" }
+  - { n: 3, do: "prepara il piano di osservazioni per riprendere" }
+  - { n: 4, do: "restituisci escalate o needs-input con la lista dei CTR e il piano" }
+cost: { tier: T0 }
+success_criteria: "nessuna azione sul soggetto; CTR e piano di ripresa registrati"
+cluster: CL-STR-010
+facets: { F4: strategia }
+sources: ["§14.2", "§13.2", "§13.3"]

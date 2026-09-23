@@ -1,0 +1,19 @@
+# §14.4 — la strategia codificata come procedura, riportata alla lettera.
+id: S.STD.XSC.STR.0002
+code: STR-VERIFY-FIRST
+name: "Verifica prima di agire"
+applies_when: { shape: libresco, risk_min: R1 }
+plan:
+  - { n: 1, do: "kb epistemic <subject> → gaps" }
+  - { n: 2, do: "per ogni gap con attributo critico: pianifica un'osservazione R0 mirata
+                 (NAVIGATE + READ/CAPTURE sul target dell'Atlas o sulla pagina attesa)" }
+  - { n: 3, do: "l'agente esegue le osservazioni su Chrome (R0); budget: ≤ 8 passi, ≤ 5 min" }
+  - { n: 4, do: "reindex-lite del soggetto → nuova forma" }
+  - { n: 5, do: "se consolidato → DT ordinaria e procedi; se contraddittorio → STR-TRIANGULATE;
+                 se ancora libresco (gaps non osservabili) → STR-ASK-EARLY" }
+cost: { tier: "T0 per i passi 1-4, T1 per il 5" }
+success_criteria: "forma finale ≠ libresco"
+combines_with: [STR-MIN-CHANGE, STR-PREMORTEM, STR-DISCONFIRM]
+cluster: CL-STR-002
+facets: { F4: strategia }
+sources: ["§14.2", "§14.4"]

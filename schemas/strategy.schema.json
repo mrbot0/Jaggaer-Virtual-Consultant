@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "strategy.schema.json",
+  "title": "Strategia di ragionamento codificata (STR, §14.1, §14.4)",
+  "description": "Un piano di ragionamento: in che ordine fare le cose e quali tabelle applicare. Selezionata da DT-017 (scripts/decide/strategy-select.mjs), mai inventata dall'agente. File strategies/STR-<NOME>.yaml, id S.STD.XSC.STR.nnnn (livello S, scope XSC: vale per tutti gli scope).",
+  "type": "object",
+  "required": ["id", "code", "name", "applies_when", "plan", "cost", "success_criteria"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^S\\.STD\\.XSC\\.STR\\.\\d{4}$" },
+    "code": { "type": "string", "pattern": "^STR-[A-Z]+(-[A-Z]+)*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "applies_when": {
+      "type": "object",
+      "description": "Quando (forma × rischio × precedenti, §14.2). I campi strutturati sono quelli che DT-017 legge; `condition` riporta in parole ciò che non è un input della tabella.",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "shape": { "oneOf": [{ "$ref": "#/$defs/shape" }, { "type": "array", "items": { "$ref": "#/$defs/shape" }, "minItems": 1 }] },
+        "risk_min": { "$ref": "#/$defs/risk" },
+        "risk_max": { "$ref": "#/$defs/risk" },
+        "precedent": { "oneOf": [{ "$ref": "#/$defs/precedent" }, { "type": "array", "items": { "$ref": "#/$defs/precedent" }, "minItems": 1 }] },
+        "surprises_min": { "type": "integer", "minimum": 0 },
+        "mode": { "type": "array", "items": { "enum": ["nrt", "config", "ops", "diag"] }, "minItems": 1 },
+        "depth": { "enum": ["rapida", "standard", "profonda"] },
+        "preferred_prior_min": { "type": "number", "minimum": 0, "maximum": 1 },
+        "combination": { "type": "boolean", "description": "true = si applica sempre in combinazione con la strategia principale (§14.2)" },
+        "condition": { "type": "string", "minLength": 1 }
+      }
+    },
+    "plan": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["n", "do"],
+        "additionalProperties": false,
+        "properties": {
+          "n": { "type": "integer", "minimum": 1 },
+          "do": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "cost": {
+      "type": "object",
+      "required": ["tier"],
+      "properties": {
+        "tier": { "type": "string", "minLength": 1 },
+        "budget": { "type": "string", "minLength": 1 }
+      }
+    },
+    "success_criteria": { "type": "string", "minLength": 1 },
+    "combines_with": { "type": "array", "items": { "type": "string", "pattern": "^STR-[A-Z]+(-[A-Z]+)*$" } },
+    "cluster": { "type": "string", "pattern": "^CL-STR-\\d{3}$" },
+    "facets": { "type": "object" },
+    "sources": { "type": "array", "items": { "type": "string" } }
+  },
+  "$defs": {
+    "shape": { "enum": ["consolidato", "libresco", "empirico", "ignoto", "contraddittorio"] },
+    "risk": { "enum": ["R0", "R1", "R2", "R3"] },
+    "precedent": { "enum": ["confermato-d<0.2", "confermato-d<0.5", "nessuno", "smentito-d<0.3"] }
+  }
+}

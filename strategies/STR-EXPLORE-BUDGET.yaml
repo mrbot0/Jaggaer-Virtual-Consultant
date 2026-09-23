@@ -1,0 +1,15 @@
+id: S.STD.XSC.STR.0007
+code: STR-EXPLORE-BUDGET
+name: "Esplora a budget"
+applies_when: { shape: ignoto, risk_max: R0 }
+plan:
+  - { n: 1, do: "fissa il budget di passi e token dell'esplorazione (DT-014 decide quando fermarsi)" }
+  - { n: 2, do: "naviga solo a R0: NAVIGATE, READ, CAPTURE" }
+  - { n: 3, do: "produci OBS e candidati in _inbox con origine osservazione-chrome (§13.5)" }
+  - { n: 4, do: "nessun verdetto e nessuna DEC con effetti" }
+  - { n: 5, do: "a budget esaurito o su DT-014 ferma: ricalcola la forma del soggetto" }
+cost: { tier: T0, budget: "passi e token fissati prima di partire" }
+success_criteria: "forma finale ≠ ignoto entro il budget"
+cluster: CL-STR-007
+facets: { F4: strategia }
+sources: ["§14.2", "§14.3", "§13.5"]

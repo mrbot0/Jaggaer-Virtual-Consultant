@@ -1,0 +1,16 @@
+id: S.STD.XSC.STR.0001
+code: STR-REPLAY
+name: "Replica del precedente"
+applies_when: { shape: consolidato, precedent: "confermato-d<0.2", condition: "precedente confermato, stesso cliente, d < 0.2 (§12.4 fast path)" }
+plan:
+  - { n: 1, do: "kb precedents <subject> --top 1 → precedente confermato con d < 0.2 sullo stesso cliente" }
+  - { n: 2, do: "DT-018 sul precedente: se replay riusa le scelte; se orienta o ignora → DT ordinaria (il precedente non si ripete, si incorpora)" }
+  - { n: 3, do: "esegui i CHK pre del cluster del soggetto, inclusi quelli nati da smentite (CL-CHK)" }
+  - { n: 4, do: "agisci con le stesse scelte del precedente, un passo codificato alla volta con step-check" }
+  - { n: 5, do: "verifica leggera: VERIFY della postcondizione principale; una divergenza è una sorpresa (§13)" }
+cost: { tier: T0 }
+success_criteria: "stesso esito del precedente, nessuna sorpresa"
+combines_with: [STR-DISCONFIRM]
+cluster: CL-STR-001
+facets: { F4: strategia }
+sources: ["§14.2", "§12.4", "§17.3"]

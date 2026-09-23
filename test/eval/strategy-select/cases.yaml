@@ -1,0 +1,85 @@
+# Golden di strategy-select (K3.2, criterio di uscita §33 K3: strategia attesa in ≥ 18/20).
+# Punteggio DT-017 (§14.3) = forma×0.35 + rischio×0.30 + precedente×0.20 + sorprese×0.15.
+# Copertura: le quattro tracce di §18, i bordi delle bande (0.15, 0.35, 0.55, 0.75), ogni strategia
+# del repertorio §14.2 almeno una volta (le tre di combinazione in `combine`).
+- id: s18-1-config-libresco
+  source: "§18.1 — 0.35×0.6 + 0.30×0.7 + 0.20×0.9 + 0 = 0.60 → STR-DRY-RUN, poi STR-VERIFY-FIRST"
+  # la traccia stampa 'd .31' per L.ACME.ADM.DEC.0377 ma lo pesa 0.9 (smentito d<0.3): si usa la classe della traccia
+  input: { shape: libresco, risk: R2, precedent: "smentito-d<0.3", surprises: 0, mode: config, depth: standard }
+  expect: { strategy: STR-DRY-RUN, then: STR-VERIFY-FIRST, combine: [], score: 0.60 }
+- id: s18-2-triage-replay
+  source: "§18.2 — consolidato, precedente confermato d .12 stesso soggetto → STR-REPLAY della classificazione"
+  input: { shape: consolidato, risk: R0, precedent: [{ dec: L.ACME.P2P.DEC.0290, d: 0.12, result: confermata, customer: ACME }], surprises: 0, mode: diag, divergence_unknown: false }
+  expect: { strategy: STR-REPLAY, combine: [], score: 0 }
+- id: s18-3-ops-ignoto
+  source: "§18.3 — ignoto .9×.35 + R1 .3×.30 + nessun prec .5×.20 + 0 = .505 → STR-VERIFY-FIRST"
+  input: { shape: ignoto, risk: R1, precedent: [], surprises: 0, mode: ops }
+  expect: { strategy: STR-VERIFY-FIRST, combine: [], score: 0.505 }
+- id: s18-4-diag-contraddittorio
+  source: "§18.4 — contraddittorio R0 senza precedente, due CTR aperti → si risolvono prima (DT-011): STR-TRIANGULATE"
+  input: { shape: contraddittorio, risk: R0, precedent: nessuno, surprises: 0, mode: diag, divergence_unknown: false, has_hypotheses: true, depth: profonda, preferred_prior: 0.40 }
+  expect: { strategy: STR-TRIANGULATE, combine: [], score: 0.45 }
+- id: edge-015-lower
+  source: "bordo 0.15 (incluso nella banda 0.15–0.35): consolidato R1 confermato d<0.5 → DT ordinaria"
+  input: { shape: consolidato, risk: R1, precedent: "confermato-d<0.5", surprises: 0, mode: config }
+  expect: { strategy: nessuna, combine: [], score: 0.15 }
+- id: edge-015-below
+  source: "sotto 0.15 con precedente confermato d<0.2 da precedents(): 0.09 → STR-REPLAY"
+  input: { shape: consolidato, risk: R1, precedent: [{ dec: L.ACME.ADM.DEC.0402, d: 0.05, result: confermata }, { dec: L.ACME.ADM.DEC.0377, d: 0.31, result: smentita }], surprises: 0, mode: config }
+  expect: { strategy: STR-REPLAY, combine: [], score: 0.09 }
+- id: edge-035-empirico
+  source: "bordo 0.35 (incluso in 0.35–0.55): empirico R2 → STR-GENERALIZE-CAUTIOUSLY"
+  input: { shape: empirico, risk: R2, precedent: "confermato-d<0.2", surprises: 0, mode: config }
+  expect: { strategy: STR-GENERALIZE-CAUTIOUSLY, combine: [], score: 0.35 }
+- id: edge-035-contraddittorio
+  source: "bordo 0.35: contraddittorio R0 → STR-TRIANGULATE"
+  input: { shape: contraddittorio, risk: R0, precedent: "confermato-d<0.2", surprises: 0, mode: nrt }
+  expect: { strategy: STR-TRIANGULATE, combine: [], score: 0.35 }
+- id: edge-055-below
+  source: "0.54 (sotto 0.55): empirico R3 senza precedenti → STR-GENERALIZE-CAUTIOUSLY"
+  input: { shape: empirico, risk: R3, precedent: nessuno, surprises: 0, mode: config }
+  expect: { strategy: STR-GENERALIZE-CAUTIOUSLY, combine: [], score: 0.54 }
+- id: edge-055-explore
+  source: "0.555 (sopra 0.55): ignoto R0, precedente smentito, 1 sorpresa → STR-EXPLORE-BUDGET"
+  input: { shape: ignoto, risk: R0, precedent: "smentito-d<0.3", surprises: 1, mode: ops }
+  expect: { strategy: STR-EXPLORE-BUDGET, combine: [], score: 0.555 }
+- id: ask-early
+  source: "0.585: ignoto R1 con precedente smentito → STR-ASK-EARLY (§14.3)"
+  input: { shape: ignoto, risk: R1, precedent: [{ dec: L.ACME.SRC.DEC.0041, d: 0.22, result: smentita }], surprises: 0, mode: ops }
+  expect: { strategy: STR-ASK-EARLY, combine: [], score: 0.585 }
+- id: edge-075-below
+  source: "0.74 (sotto 0.75): contraddittorio R2 con smentita → STR-DRY-RUN, poi STR-TRIANGULATE"
+  input: { shape: contraddittorio, risk: R2, precedent: "smentito-d<0.3", surprises: 0, mode: config }
+  expect: { strategy: STR-DRY-RUN, then: STR-TRIANGULATE, combine: [], score: 0.74 }
+- id: edge-075-stop
+  source: "bordo 0.75 (> 0.75 → STR-STOP-RECORD; l'ultima banda parte da 0.75): contraddittorio R3"
+  input: { shape: contraddittorio, risk: R3, precedent: nessuno, surprises: 0, mode: config }
+  expect: { strategy: STR-STOP-RECORD, combine: [], score: 0.75 }
+- id: third-surprise
+  source: "§13.3: terza sorpresa → ferma il compito, qualunque sia il punteggio"
+  input: { shape: consolidato, risk: R1, precedent: "confermato-d<0.2", surprises: 3, mode: nrt }
+  expect: { strategy: STR-STOP-RECORD, combine: [] }
+- id: bisect
+  source: "§14.3: diagnosi con prima divergenza ignota → STR-BISECT, indipendente dal punteggio"
+  input: { shape: empirico, risk: R1, precedent: nessuno, surprises: 0, mode: diag, divergence_unknown: true }
+  expect: { strategy: STR-BISECT, combine: [] }
+- id: min-change
+  source: "§14.3: configurazione con ipotesi → STR-MIN-CHANGE in combinazione (libresco R1: .40 → STR-VERIFY-FIRST)"
+  input: { shape: libresco, risk: R1, precedent: nessuno, surprises: 0, mode: config, has_hypotheses: true }
+  expect: { strategy: STR-VERIFY-FIRST, combine: [STR-MIN-CHANGE], score: 0.40 }
+- id: min-change-only-config
+  source: "STR-MIN-CHANGE solo in modalità configurazione: stesse ipotesi in modalità operativa → nessuna combinazione"
+  input: { shape: libresco, risk: R1, precedent: nessuno, surprises: 0, mode: ops, has_hypotheses: true }
+  expect: { strategy: STR-VERIFY-FIRST, combine: [], score: 0.40 }
+- id: premortem
+  source: "§14.2: R ≥ R2 in deliberazione profonda → STR-PREMORTEM in combinazione (.58 → STR-DRY-RUN)"
+  input: { shape: libresco, risk: R2, precedent: nessuno, surprises: 1, mode: config, depth: profonda }
+  expect: { strategy: STR-DRY-RUN, then: STR-VERIFY-FIRST, combine: [STR-PREMORTEM], score: 0.58 }
+- id: disconfirm
+  source: "§14.2, §17.3: ipotesi preferita con prior > 0.6 → STR-DISCONFIRM in combinazione"
+  input: { shape: contraddittorio, risk: R1, precedent: nessuno, surprises: 0, mode: diag, divergence_unknown: false, has_hypotheses: true, preferred_prior: 0.7 }
+  expect: { strategy: STR-TRIANGULATE, combine: [STR-DISCONFIRM], score: 0.54 }
+- id: replay-needs-close-precedent
+  source: "§17.3 ancoraggio: STR-REPLAY solo con d < 0.2; confermato a d .35 → DT ordinaria"
+  input: { shape: consolidato, risk: R0, precedent: [{ dec: L.ACME.CAT.DEC.0101, d: 0.35, result: confermata }], surprises: 0, mode: nrt }
+  expect: { strategy: nessuna, combine: [], score: 0.06 }
