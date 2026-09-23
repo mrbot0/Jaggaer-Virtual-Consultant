@@ -1,0 +1,56 @@
+# customers/ACME/config/environments.yaml — esempio di §51.1 (valido)
+environments:
+  - id: sandbox
+    type: sandbox                              # dev · sandbox · preprod · prod
+    label: "ACME Sandbox"
+    base_url: "https://acme-sbx.jaggaer.com"
+    allowed_hosts: ["acme-sbx.jaggaer.com", "sso-test.acme.it", "cdn.jaggaer.com"]
+    fingerprint:                               # ≥ 2 segnali devono coincidere
+      title_pattern: "^ACME SBX"
+      banner: { selector: S.STD.ADM.SEL.0001, text_pattern: "SANDBOX", color: "#f5a623" }
+      tenant_id: { selector: S.STD.ADM.SEL.0002, value: "acme-sbx" }
+      login_url_pattern: "^https://sso-test\\.acme\\.it/"
+    policy:
+      write_data: true
+      config_levels: [verde, giallo, rosso]     # rosso con approvazione per passo
+      approvals: { config_verde: 1, config_giallo: 2, config_rosso: 3 }
+      evidence_profile: standard
+      budget_multiplier: 1.0
+    alignment: { with: prod, last_refresh: "2026-09-01", drift_known: ["CL-CFG-020 strict_import"] }
+    credentials_prefix: "NRT_SBX_"
+    personas: [buyer, approver, admin, supplier]
+
+  - id: preprod
+    type: preprod
+    label: "ACME Pre-produzione"
+    base_url: "https://acme-pre.jaggaer.com"
+    allowed_hosts: ["acme-pre.jaggaer.com", "sso.acme.it"]
+    fingerprint: { title_pattern: "^ACME PRE", banner: { text_pattern: "PRE-PROD" }, tenant_id: { value: "acme-pre" } }
+    policy:
+      write_data: true                          # false se la pre-produzione è una copia con dati reali
+      write_data_requires_referent: true        # ACT-APPROVE / TRANSMIT / PUBLISH solo con referente presente
+      config_levels: [verde, giallo, rosso]
+      approvals: { config_verde: 1, config_giallo: 2, config_rosso: 3 }
+      evidence_profile: strict
+      budget_multiplier: 0.8
+    alignment: { with: prod, last_refresh: "2026-09-15", drift_known: [] }
+    credentials_prefix: "NRT_PRE_"
+
+  - id: prod
+    type: prod
+    label: "ACME Produzione"
+    base_url: "https://acme.jaggaer.com"
+    allowed_hosts: ["acme.jaggaer.com", "sso.acme.it"]
+    fingerprint: { title_pattern: "^ACME$|^ACME Procurement", banner: null, tenant_id: { value: "acme" },
+                   absence_required: ["SANDBOX", "PRE-PROD", "TEST"] }
+    policy:
+      write_data: false                         # ← NON MODIFICABILE: lo schema rifiuta true per type: prod
+      config_levels: [verde, giallo]            # il rosso in produzione è vietato salvo prod_allowed_red esplicito
+      approvals: { config_verde: 3, config_giallo: 3 }      # ← sempre tre, qualunque livello
+      prod_allowed_red: []                      # oggetti rossi configurabili in prod: nessuno per default
+      evidence_profile: strict
+      budget_multiplier: 0.5
+      second_approver_required: true            # A2 da persona diversa da A1
+      config_window_minutes: 60
+    credentials_prefix: "NRT_PRD_"
+    personas: [admin-readonly, admin-config]     # nessuna persona di business: non si creano documenti

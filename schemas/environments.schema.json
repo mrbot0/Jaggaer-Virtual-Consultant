@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "environments.schema.json",
+  "title": "customers/<C>/config/environments.yaml — ambienti del cliente (§51.1)",
+  "description": "Il plugin dichiara, rileva e verifica l'ambiente prima di ogni azione (§51.2). Le regole di produzione di §52.1 (strato 1) sono imposte QUI, come if/then: type prod ⇒ write_data false, 3 approvazioni per ogni livello, niente rosso in config_levels (solo prod_allowed_red, per oggetto). Le violazioni di $defs/prodPolicy sono violazioni di policy (validate-env exit 3), le altre errori di forma (exit 1).",
+  "type": "object",
+  "required": ["environments"],
+  "additionalProperties": false,
+  "properties": {
+    "environments": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/env" } }
+  },
+  "$defs": {
+    "host": {
+      "description": "Nome host in minuscolo ASCII (IDN già in punycode, senza punto finale), con porta opzionale. Niente schema, percorso, userinfo, IP letterali.",
+      "type": "string",
+      "pattern": "^(?=.*[a-z])[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+(?::\\d{1,5})?$",
+      "not": { "pattern": "^[0-9.]+(:\\d+)?$" }
+    },
+    "level": { "enum": ["verde", "giallo", "rosso"] },
+    "env": {
+      "type": "object",
+      "required": ["id", "type", "base_url", "allowed_hosts", "fingerprint", "policy"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{0,31}$" },
+        "type": { "enum": ["dev", "sandbox", "preprod", "prod"] },
+        "label": { "type": "string" },
+        "base_url": { "type": "string", "pattern": "^https?://[^/@\\s]+(/.*)?$" },
+        "allowed_hosts": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/host" } },
+        "fingerprint": { "$ref": "#/$defs/fingerprint" },
+        "policy": { "$ref": "#/$defs/policy" },
+        "alignment": { "type": "object" },
+        "credentials_prefix": { "type": "string", "pattern": "^NRT_[A-Z0-9_]*$" },
+        "personas": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      },
+      "allOf": [
+        { "if": { "properties": { "type": { "const": "prod" } }, "required": ["type"] }, "then": { "properties": { "policy": { "$ref": "#/$defs/prodPolicy" } } } }
+      ]
+    },
+    "fingerprint": {
+      "description": "≥ 2 segnali fra title_pattern, banner, tenant_id, login_url_pattern devono essere dichiarati (non null); absence_required = parole che NON devono comparire.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title_pattern": { "type": "string", "minLength": 1 },
+        "banner": {
+          "type": ["object", "null"],
+          "required": ["text_pattern"],
+          "additionalProperties": false,
+          "properties": {
+            "selector": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.SEL\\.\\d{4}(\\.v\\d+)?$" },
+            "text_pattern": { "type": "string", "minLength": 1 },
+            "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{3,8}$" }
+          }
+        },
+        "tenant_id": {
+          "type": ["object", "null"],
+          "required": ["value"],
+          "additionalProperties": false,
+          "properties": {
+            "selector": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.SEL\\.\\d{4}(\\.v\\d+)?$" },
+            "value": { "type": "string", "minLength": 1 }
+          }
+        },
+        "login_url_pattern": { "type": "string", "minLength": 1 },
+        "absence_required": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      },
+      "anyOf": [
+        { "required": ["title_pattern", "banner"], "properties": { "banner": { "type": "object" } } },
+        { "required": ["title_pattern", "tenant_id"], "properties": { "tenant_id": { "type": "object" } } },
+        { "required": ["title_pattern", "login_url_pattern"] },
+        { "required": ["banner", "tenant_id"], "properties": { "banner": { "type": "object" }, "tenant_id": { "type": "object" } } },
+        { "required": ["banner", "login_url_pattern"], "properties": { "banner": { "type": "object" } } },
+        { "required": ["tenant_id", "login_url_pattern"], "properties": { "tenant_id": { "type": "object" } } }
+      ]
+    },
+    "policy": {
+      "type": "object",
+      "required": ["write_data", "config_levels", "approvals"],
+      "additionalProperties": false,
+      "properties": {
+        "write_data": { "type": "boolean" },
+        "write_data_requires_referent": { "type": "boolean" },
+        "config_levels": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/level" } },
+        "approvals": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "config_verde": { "type": "integer", "minimum": 1, "maximum": 3 },
+            "config_giallo": { "type": "integer", "minimum": 1, "maximum": 3 },
+            "config_rosso": { "type": "integer", "minimum": 1, "maximum": 3 }
+          }
+        },
+        "prod_allowed_red": { "type": "array", "default": [], "uniqueItems": true, "items": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CFG\\.\\d{4}(\\.v\\d+)?$" } },
+        "evidence_profile": { "enum": ["standard", "strict"] },
+        "budget_multiplier": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+        "second_approver_required": { "type": "boolean" },
+        "config_window_minutes": { "type": "integer", "minimum": 1, "maximum": 480, "default": 60 }
+      },
+      "allOf": [
+        { "if": { "properties": { "config_levels": { "contains": { "const": "verde" } } } }, "then": { "properties": { "approvals": { "required": ["config_verde"] } } } },
+        { "if": { "properties": { "config_levels": { "contains": { "const": "giallo" } } } }, "then": { "properties": { "approvals": { "required": ["config_giallo"] } } } },
+        { "if": { "properties": { "config_levels": { "contains": { "const": "rosso" } } } }, "then": { "properties": { "approvals": { "required": ["config_rosso"] } } } }
+      ]
+    },
+    "prodPolicy": {
+      "description": "§52.1: in produzione non si scrivono dati, mai; ogni configurazione con 3A; il rosso solo per oggetto in prod_allowed_red.",
+      "type": "object",
+      "properties": {
+        "write_data": { "const": false },
+        "config_levels": { "not": { "contains": { "const": "rosso" } } },
+        "approvals": {
+          "type": "object",
+          "properties": {
+            "config_verde": { "const": 3 },
+            "config_giallo": { "const": 3 },
+            "config_rosso": { "const": 3 }
+          }
+        }
+      }
+    }
+  }
+}
