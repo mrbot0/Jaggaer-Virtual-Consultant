@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 23/09/2026 20:15 — **punto corrente: WP06 (K5) avviato; WP05 (K4) chiuso**.
+Ultimo aggiornamento: 23/09/2026 22:30 — **punto corrente: WP07 (K6) avviato; WP06 (K5, cancello di sicurezza) chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 35 % del progetto** (stima pesata sullo sforzo) · 5 pacchetti su 16 chiusi.
+**≈ 41 % del progetto** (stima pesata sullo sforzo) · 6 pacchetti su 16 chiusi.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 35 %** (37 / 106 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 5 / 16 = **31 %** | WP01–WP05 con review pulita e tag |
-| Hook del catalogo §44.4 | 9 / 16 = **56 %** | 15 hook + approval-capture |
-| Test automatici | 370 / 370 verdi | `npm test` al tag `k4-done` (`d985f8d`); golden deontico 228/228, strategy-select 20/20 |
+| Avanzamento pesato | **≈ 41 %** (43 / 106 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 6 / 16 = **38 %** | WP01–WP06 con review pulita e tag |
+| Hook del catalogo §44.4 | 13 / 16 = **81 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
+| Test automatici | 466 / 466 verdi | `npm test` al tag `k5-done` (`69cc6e7`); 100/100 scritture in produzione negate; guard ≤ 151 ms |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -37,6 +37,20 @@ Ultimo aggiornamento: 23/09/2026 20:15 — **punto corrente: WP06 (K5) avviato; 
 - Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
 - Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
 
+### Chiusura di WP06 (K5, cancello di sicurezza)
+- Implementato in 7 commit, più 3 giri di correzione (`8f2103d..69cc6e7`). Tag `k5-done` → `69cc6e7`.
+- Consegnato: lo schema degli ambienti (prod con scrittura dati rifiutato), `env-check` e `use env`, e il guard dell'ambiente con allow-list degli host (il redirect SSO non dichiarato è negato). Poi il catalogo delle 15 classi di azione, `validate-plan`, il guard di produzione (100/100 scritture negate), la tripla approvazione 3A con registro concatenato e il guard di configurazione.
+- Irrobustito dopo la review:
+  - gli script di pagina sono vietati in ogni ambiente;
+  - l'URL corrente è registrato solo dopo una navigazione riuscita, e viene azzerato al cambio scheda;
+  - senza piano attivo niente azioni con effetto, salvo l'esplorazione in sandbox richiesta scrivendo `ESPLORA SANDBOX`;
+  - i server MCP fuori da una allow-list sono negati;
+  - impostazioni di Claude e codice del plugin sono protetti in scrittura.
+- **Rischi residui dichiarati** (in `docs/phase-reports/K5.md`):
+  - La protezione di impostazioni, codice del plugin e registro delle approvazioni si basa sul testo dei comandi. Un modello deliberatamente ostile può aggirarla, per esempio con nomi di file costruiti durante l'esecuzione. Le varianti d'attacco oltre quelle note non sono state provate fino in fondo.
+  - Raccomandazione: rendere la cartella del plugin e `~/.claude` di sola lettura a livello di sistema operativo, oppure usare impostazioni gestite.
+- **Prerequisito bloccante:** prima che un agente usi il browser serve WP07, in particolare `observe-append`, che registra la pagina realmente osservata.
+
 ## Stato per pacchetto di lavoro
 
 Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va ricalibrata quando un pacchetto si chiude.
@@ -48,8 +62,8 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va
 | WP03 | Stato di sessione, contratti prompt/rapporto, hook base, guard di partizione, budget, traccia cognitiva | K2 | 8 | 100 | ✅ | tag `k2-done` → `0bfb2a2`, 230 test, 4 giri di correzione, `docs/phase-reports/K2.md` |
 | WP04 | Precedenti, esiti, 12 strategie, `strategy-select`, revisione delle credenze, profondità, piano, self-check, why, calibrazione, lezioni | K3 | 8 | 100 | ✅ | tag `k3-done` → `43f935f`, 305 test, golden 20/20, `docs/phase-reports/K3.md` |
 | WP05 | Modello dei campi FLD, carta d'identità, pipeline a lotti ≤ 50, parser deontico, catene, `kb fields/impact/identity` | K4 | 7 | 100 | ✅ | tag `k4-done` → `d985f8d`, 370 test, deontico 228/228, `docs/phase-reports/K4.md` |
-| WP06 | Ambienti, `env-check`, guard-environment/production/config-scope, catalogo azioni ACT, tripla approvazione 3A | K5 | 6 | 0 | 🔄 | `wp06-k5.md` |
-| WP07 | `step-check`, `observe-append`, errori della piattaforma, evidenze, intento DT-026, workflow, report ed esiti, budget, `compile-plan` opzionale | K6 | 8 | 0 | ⬜ Brief | `wp07-k6.md` |
+| WP06 | Ambienti, `env-check`, guard-environment/production/config-scope, catalogo azioni ACT, tripla approvazione 3A | K5 | 6 | 100 | ✅ | tag `k5-done` → `69cc6e7`, 466 test, 3 giri di correzione, `docs/phase-reports/K5.md` |
+| WP07 | `step-check`, `observe-append`, errori della piattaforma, evidenze, intento DT-026, workflow, report ed esiti, budget, `compile-plan` opzionale | K6 | 8 | 0 | 🔄 | `wp07-k6.md` |
 | WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 0 | ⬜ Brief | `wp08-f0.md` |
 | WP09a | Pipeline di ingestion: parser DOCX/XLSX/PDF/XSD/export/screenshot/trascrizioni/e-mail, unità, profilo DOC, banche di domande, back-check, alias, versioni, residuo, revisione, survey del tenant, PRF/PMP | F1' (strumenti) | 10 | 0 | ⬜ Brief | `wp09a-ingest.md` |
 | WP09b | Schemi NRT/SEL/HND/CHK/CFP/FLW/KEY/LCY/INT/CFG, compile-case/cfp, lint, Atlas, corsie di esecuzione, compensazioni, snapshot, evidenze, negativi, promozione, copertura | F3–F7, C1 (strumenti) | 12 | 0 | ⬜ Brief | `wp09b-run.md` |
@@ -59,7 +73,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 0 | ⬜ Brief | `wp10b-agents.md` |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **106** | **≈ 35** | | 37 unità completate |
+| **Totale** | | | **106** | **≈ 41** | | 43 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
@@ -67,7 +81,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va
 - [x] session-context · precompact-save · stop-integrity · audit-append (WP03 ✅)
 - [x] guard-domain-boundary · guard-scope · guard-customer (WP03 ✅)
 - [x] guard-budget · subagent-trace (WP03 ✅)
-- [ ] guard-environment · guard-production · guard-config-scope · approval-capture (WP06)
+- [x] guard-environment · guard-production · guard-config-scope · approval-capture (WP06 ✅) · in più browser-origin, guard-phrase
 - [ ] observe-append (WP07)
 - [ ] guard-destructive · guard-alm-write (WP08)
 
