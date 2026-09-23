@@ -1,7 +1,7 @@
 // Helper condivisi dai test degli hook e degli script di sessione: workspace
 // temporaneo, ambiente pulito (niente variabili della sessione Claude Code
 // che esegue i test), esecuzione di un hook come processo con stdin simulato.
-import { mkdtempSync, mkdirSync, writeFileSync, realpathSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, realpathSync, appendFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -75,6 +75,9 @@ export function runHook(name, input, env = {}) {
     env: cleanEnv(env), encoding: "utf8", timeout: 15000,
   });
   const ms = performance.now() - t0;
+  // test/timing/guards.timing.mjs: registra ogni chiamata (nome, durata).
+  if (process.env.JVC_TIMING_LOG) appendFileSync(process.env.JVC_TIMING_LOG, `${JSON.stringify({ name, ms })}
+`);
   let json = null;
   try { json = r.stdout.trim() ? JSON.parse(r.stdout) : null; } catch { json = { unparsable: r.stdout }; }
   return { status: r.status, stdout: r.stdout, stderr: r.stderr, json, ms };
