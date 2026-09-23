@@ -72,9 +72,11 @@ function checkShellWrites(ctx, cmd) {
   const areas = ctx.agentId ? WRITE_DENY : MAIN_SHELL_DENY;
   const treeAreas = ctx.agentId ? SUB_TREE_DENY : MAIN_TREE_DENY;
   const no = (why, p) => denyAudited(ctx, G, `scrittura via shell negata (file che scrivono solo /use, gli script e gli hook del plugin) — ${why}: ${p}`);
-  for (const { tok, cwds, tree } of shellWriteTargets(ctx, cmd)) {
+  for (const { tok, cwds, tree, soft } of shellWriteTargets(ctx, cmd)) {
     for (const cwd of cwds) {
-      const T = resolveTarget(tok, { cwd, ws: ctx.ws });
+      // `soft`: candidato estratto da testo di script (round 4) — se non è un percorso risolvibile non è un bersaglio.
+      let T;
+      try { T = resolveTarget(tok, { cwd, ws: ctx.ws }); } catch (err) { if (soft && err instanceof PathPolicyError) continue; throw err; }
       for (const p of allRels(T)) {
         for (const [area, why] of areas) if (intersects(p, area)) return no(why, p);
         if (tree) for (const [area, why] of treeAreas) if (intersects(subtree(p), area)) return no(`${why} (la cartella lo contiene)`, p || ".");

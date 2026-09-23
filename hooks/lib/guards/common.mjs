@@ -7,6 +7,7 @@ import { loadHookState, pluginRoot, baseAgentType } from "../workspace.mjs";
 import { resolveTarget, resolvePattern, PathPolicyError } from "../paths.mjs";
 import { appendAudit } from "../audit.mjs";
 import { summarizeInput } from "../tool-summary.mjs";
+import { scriptWriteTargets } from "./script-writes.mjs";
 
 export { PathPolicyError };
 export const FILE_TOOLS = new Set(["Read", "Write", "Edit", "MultiEdit", "NotebookEdit"]);
@@ -169,22 +170,23 @@ export function shellPaths(ctx, cmd, { bareWords = false, maxTokens = 256 } = {}
 
 export const subtree = (p) => (p ? `${p}/**` : "**");
 
-// ---- bersagli di scrittura di un comando di shell (fix round 2 F5, round 3) ----
+// ---- bersagli di scrittura di un comando di shell (fix round 2 F5, round 3, round 4) ----
 // Redirezioni (`>`, `>>`, `>|`, `n>`, `&>`; non `n>&m`) e comandi che scrivono,
 // spostano o cancellano file (bash e PowerShell). Si seguono i `cd` come in
 // shellPaths. → [{ tok, cwds, tree }]: tok grezzo, da risolvere con resolveTarget
 // rispetto a ciascuna cwd; `tree` = il bersaglio può essere una cartella (rm/mv
 // di una cartella, cp/mv dentro una cartella), quindi conta anche tutto ciò che
-// contiene. Euristica come shellPaths: variabili, sostituzioni di comando e
-// script che scrivono restano fuori (rischio residuo).
+// contiene. sed/perl/ruby (-i, `w` di sed, codice -e) li analizza
+// script-writes.mjs (round 4), con le virgolette: i suoi bersagli possono
+// essere `soft` (candidati euristici). Euristica come shellPaths: variabili e
+// script in file che scrivono restano fuori (rischio residuo).
 const REDIR = /(?:\d*|&)>>?[ \t]*([^\s;|&<>()]+)/g;
 const WRITE_FILE = /^(tee|out-file|set-content|add-content|clear-content|sc|ac|clc|new-item|ni|touch|truncate)$/i;
 const WRITE_TREE = /^(mv|move|move-item|mi|ren|rename|rename-item|rni|rm|del|erase|rd|rmdir|remove-item|ri|unlink|shred)$/i;
-const IN_PLACE = /^(sed|perl|ruby)$/i;
 const WRITE_LAST = /^(cp|copy|copy-item|cpi|install|rsync|scp|ln|mklink|xcopy|robocopy)$/i;
 const DEST_PARAM = /^-(destination|path|literalpath|filepath|target)$/i;
 export function shellWriteTargets(ctx, cmd) {
-  const out = [];
+  const out = scriptWriteTargets(ctx.cwd, cmd);
   let cwds = [ctx.cwd];
   // `>|` (noclobber forzato) è una redirezione: va riconosciuta prima di spezzare sui `|`.
   const unq = cmd.replace(/["'`]/g, "").replace(/>\|/g, ">");
@@ -204,8 +206,6 @@ export function shellWriteTargets(ctx, cmd) {
     const pos = args.filter((w) => !w.startsWith("-"));
     if (WRITE_FILE.test(head)) for (const w of pos) out.push({ tok: w, cwds, tree: false });
     else if (WRITE_TREE.test(head)) for (const w of pos) out.push({ tok: w, cwds, tree: true });
-    // sed/perl scrivono solo con -i (anche -pi, -i.bak, --in-place): altrimenti leggono.
-    else if (IN_PLACE.test(head)) { if (args.some((w) => /^-[a-z]*i/i.test(w) || /^--in-place/.test(w))) for (const w of pos) out.push({ tok: w, cwds, tree: false }); }
     else if (WRITE_LAST.test(head)) {
       args.forEach((w, i) => { if (DEST_PARAM.test(w) && args[i + 1]) out.push({ tok: args[i + 1], cwds, tree: true }); });
       if (pos.length) out.push({ tok: pos.at(-1), cwds, tree: true });
