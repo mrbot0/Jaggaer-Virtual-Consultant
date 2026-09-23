@@ -233,6 +233,14 @@ export async function capture(input, env = process.env) {
   const p = parseApprovalPrompt(input.prompt);
   if (!p) return null;
   const s = st.session;
+  // Anche i tentativi respinti vanno in audit (§52.2: "tutte registrate in audit"), senza il testo del prompt.
+  const reject = (expected, why) => {
+    try {
+      appendAudit(st.ws, { session: st.sid, customer: st.customer, scope: s.scope ?? null, kind: "decision", actor: "hook:approval-capture",
+        payload: { approval: "rejected", parsed: p.kind, plan: p.plan ?? null, step: p.step ?? null, reason: why, prompt_sha256: sha256(input.prompt) } });
+    } catch { /* l'audit non cambia l'esito: nessun token */ }
+    return invalid(expected, why);
+  };
   const pending = Array.isArray(s.pending?.approvals) ? s.pending.approvals : [];
   const active = s.active_plan ?? null;
   const known = new Set([...pending.map((r) => r.plan), ...(active?.plan_id ? [active.plan_id] : [])]);
@@ -252,42 +260,42 @@ export async function capture(input, env = process.env) {
     return [`APPROVO PROVA ${pl}${second ? " DA <Nome Cognome>" : ""}`, `APPROVO PASSO <n> ${pl}`];
   };
 
-  if (p.kind === "attempt") return known.size ? invalid(expectedFor(null), "la frase non è quella richiesta") : null;
+  if (p.kind === "attempt") return known.size ? reject(expectedFor(null), "la frase non è quella richiesta") : null;
 
   let rec;
   let removeMatch;
   if (p.kind === "yes") {
     const acts = pending.filter((r) => r.kind === "action");
     if (!pending.length) return null;
-    if (s.env?.type === "prod") return invalid(expectedFor(null), "in produzione non si approvano azioni sui dati: non si scrivono dati, mai (§52.1)");
-    if (acts.length !== 1) return invalid(expectedFor(null), acts.length ? `un sì vale solo con UNA richiesta aperta (ce ne sono ${acts.length})` : "nessuna azione in attesa di un sì");
+    if (s.env?.type === "prod") return reject(expectedFor(null), "in produzione non si approvano azioni sui dati: non si scrivono dati, mai (§52.1)");
+    if (acts.length !== 1) return reject(expectedFor(null), acts.length ? `un sì vale solo con UNA richiesta aperta (ce ne sono ${acts.length})` : "nessuna azione in attesa di un sì");
     rec = { kind: "action", plan: acts[0].plan, step: acts[0].step, approver_declared: null };
     removeMatch = (r) => r.kind === "action" && r.plan === rec.plan && r.step === rec.step;
   } else {
-    if (!known.has(p.plan)) return invalid(expectedFor(null), `nessun piano ${p.plan} in attesa di approvazione`);
-    if (!reg.ok) return invalid(expectedFor(p.plan), `registro delle approvazioni corrotto (${reg.reason})`);
+    if (!known.has(p.plan)) return reject(expectedFor(null), `nessun piano ${p.plan} in attesa di approvazione`);
+    if (!reg.ok) return reject(expectedFor(p.plan), `registro delle approvazioni corrotto (${reg.reason})`);
     const w = windowState(null, p.plan, envPolicy, now, { records: reg.records });
     const restart = `APPROVO PIANO ${p.plan}${second ? " DA <Nome Cognome>" : ""}`;
     let planInfo = null;
     const pfile = pending.find((r) => r.plan === p.plan && r.file)?.file ?? (active?.plan_id === p.plan ? active.file : null);
     if (pfile) { try { planInfo = await loadPlanFile(st.ws, st.customer, pfile); } catch { planInfo = null; } }
     if (p.kind === "A1") {
-      if (second && !p.approver) return invalid([restart], "serve DA <Nome Cognome>: in questo ambiente A2 deve venire da una persona diversa da A1");
+      if (second && !p.approver) return reject([restart], "serve DA <Nome Cognome>: in questo ambiente A2 deve venire da una persona diversa da A1");
     } else {
-      if (!w.a1) return invalid([restart], `manca A1 per ${p.plan}: si comincia da APPROVO PIANO`);
-      if (w.expired) return invalid([restart], `finestra di ${w.windowMs / 60000} minuti scaduta: si riparte da A1`);
+      if (!w.a1) return reject([restart], `manca A1 per ${p.plan}: si comincia da APPROVO PIANO`);
+      if (w.expired) return reject([restart], `finestra di ${w.windowMs / 60000} minuti scaduta: si riparte da A1`);
     }
     if (p.kind === "A2") {
-      if (second && !p.approver) return invalid([`APPROVO PROVA ${p.plan} DA <Nome Cognome>`], "serve DA <Nome Cognome> (secondo approvatore richiesto)");
-      if (second && normName(p.approver) === normName(w.a1.approver_declared)) return invalid([`APPROVO PROVA ${p.plan} DA <Nome Cognome>`], `A2 deve venire da una persona diversa da A1 (${w.a1.approver_declared})`);
-      if (w.a2) return invalid([], "A2 già registrata in questa finestra");
+      if (second && !p.approver) return reject([`APPROVO PROVA ${p.plan} DA <Nome Cognome>`], "serve DA <Nome Cognome> (secondo approvatore richiesto)");
+      if (second && normName(p.approver) === normName(w.a1.approver_declared)) return reject([`APPROVO PROVA ${p.plan} DA <Nome Cognome>`], `A2 deve venire da una persona diversa da A1 (${w.a1.approver_declared})`);
+      if (w.a2) return reject([], "A2 già registrata in questa finestra");
     }
     if (p.kind === "A3") {
       const steps = Array.isArray(planInfo?.plan?.steps) ? planInfo.plan.steps.map((x) => x?.n) : null;
-      if (steps && !steps.includes(p.step)) return invalid(expectedFor(p.plan), `il piano ${p.plan} non ha il passo ${p.step}`);
+      if (steps && !steps.includes(p.step)) return reject(expectedFor(p.plan), `il piano ${p.plan} non ha il passo ${p.step}`);
       const waiting = pending.filter((r) => r.kind === "A3" && r.plan === p.plan).map((r) => r.step);
-      if (waiting.length && !waiting.includes(p.step)) return invalid(expectedFor(p.plan), `il passo ${p.step} non è in attesa di approvazione (in attesa: ${waiting.join(", ")})`);
-      if (w.validForStep(p.step)) return invalid([], `il passo ${p.step} ha già un token non usato`);
+      if (waiting.length && !waiting.includes(p.step)) return reject(expectedFor(p.plan), `il passo ${p.step} non è in attesa di approvazione (in attesa: ${waiting.join(", ")})`);
+      if (w.validForStep(p.step)) return reject([], `il passo ${p.step} ha già un token non usato`);
     }
     rec = { kind: p.kind, plan: p.plan, ...(p.kind === "A3" ? { step: p.step } : {}), approver_declared: p.approver ?? null,
       ...(p.kind === "A1" && planInfo ? { plan_sha256: planInfo.sha256 } : {}) };

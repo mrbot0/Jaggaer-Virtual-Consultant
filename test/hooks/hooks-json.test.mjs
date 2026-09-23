@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT } from "../helpers/hook-env.mjs";
+import { BROWSER_MATCHER } from "../../hooks/lib/browser-tools.mjs";
 
 const HOOKS = JSON.parse(readFileSync(join(ROOT, "hooks/hooks.json"), "utf8"));
 
@@ -19,6 +20,12 @@ const EXPECTED = [
   ["PreToolUse", "Bash|PowerShell", "guard-budget"],
   ["PreToolUse", "Bash|PowerShell", "guard-scope"],
   ["SubagentStop", undefined, "subagent-trace"],
+  // K5: guard del browser (matcher condiviso con hooks/lib/browser-tools.mjs), protezione del registro 3A, cattura delle approvazioni.
+  ["PreToolUse", BROWSER_MATCHER, "guard-environment"],
+  ["PreToolUse", BROWSER_MATCHER, "guard-production"],
+  ["PreToolUse", BROWSER_MATCHER, "guard-config-scope"],
+  ["PreToolUse", "Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit", "guard-config-scope"],
+  ["UserPromptSubmit", undefined, "approval-capture"],
 ];
 
 const entries = () => Object.entries(HOOKS.hooks).flatMap(([event, groups]) => groups.flatMap((g) => g.hooks.map((h) => ({ event, matcher: g.matcher, ...h }))));
@@ -47,4 +54,14 @@ test("hooks.json: ogni script referenziato esiste; le registrazioni di questa fa
   for (const [event, matcher, name] of EXPECTED) {
     assert.ok(entries().some((e) => e.event === event && e.matcher === matcher && e.command.includes(`/${name}.mjs`)), `${event} ${matcher ?? ""} → ${name}`);
   }
+});
+
+test("hooks.json K5: il matcher del browser cattura le tre famiglie e i server del plugin; ogni guard ricontrolla tool_name", () => {
+  const g = HOOKS.hooks.PreToolUse.find((x) => x.matcher === BROWSER_MATCHER);
+  assert.ok(g, "gruppo del browser");
+  const re = new RegExp(g.matcher);
+  for (const t of ["mcp__chrome-devtools__click", "mcp__plugin_chrome-devtools-mcp_chrome-devtools__fill", "mcp__Claude_Browser__computer", "mcp__claude-in-chrome__navigate",
+    "mcp__playwright__browser_click", "mcp__plugin_playwright_playwright__browser_type", "mcp__plugin_jaggaer-virtual-consultant_chrome-devtools__click"]) assert.ok(re.test(t), t);
+  for (const t of ["Read", "Bash", "mcp__alm__create_issue"]) assert.equal(re.test(t), false, t);
+  assert.deepEqual(g.hooks.map((h) => /scripts\/([a-z-]+)\.mjs/.exec(h.command)[1]), ["guard-environment", "guard-production", "guard-config-scope"]);
 });
