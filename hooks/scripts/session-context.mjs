@@ -37,7 +37,7 @@ function recoverMissedAudit(ws) {
 
 export function handle(input, env = process.env) {
   const ws = workspaceRoot(input, env);
-  if (!isJvcWorkspace(ws) && !env.JVC_WORKSPACE) return null;
+  if (!isJvcWorkspace(ws, env) && !env.JVC_WORKSPACE) return null;
   const sid = input.session_id;
   if (!isSafeSessionId(sid)) return warning(`[${PLUGIN}] session_id non valido: stato di sessione non caricato.`);
   const pointer = readPointer(ws, sid) ?? writePointer(ws, sid, null);

@@ -1,7 +1,7 @@
 // Dove sono le cose: radice del workspace (il repository di conoscenza),
 // radice del plugin, puntatore di sessione e session.json. Gli hook leggono
 // un solo file di stato (§49.2): niente DB, niente moduli pesanti.
-import { existsSync, readFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, mkdirSync, realpathSync } from "node:fs";
 import { join, resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { writeFileAtomic } from "./fsx.mjs";
@@ -25,7 +25,22 @@ export function pluginRoot(env = process.env) {
 // Un workspace è "JVC" se contiene almeno una delle cartelle del plugin: fuori
 // da un workspace JVC gli hook non esprimono opinioni (il plugin può essere
 // abilitato a livello utente e non deve interferire con altri progetti).
-export function isJvcWorkspace(ws) {
+//
+// Il repository del plugin stesso non è un workspace (giro di correzione 1, I6):
+// contiene product/kb/actions, ma i guard non devono attivarsi mentre si sviluppa
+// il plugin con il plugin abilitato. Il confronto è fra realpath della radice e
+// realpath di CLAUDE_PLUGIN_ROOT (impostato dall'host, non dal modello),
+// case-insensitive su Windows. Niente marcatori su file: un file piantato dal
+// modello in un workspace vero diventerebbe l'interruttore di tutti i guard.
+const canon = (p) => {
+  let r;
+  try { r = realpathSync.native(p); } catch { r = resolve(p); }
+  r = r.replace(/[\\/]+$/, "");
+  return process.platform === "win32" ? r.replace(/\//g, "\\").toLowerCase() : r;
+};
+export const isPluginRoot = (ws, env = process.env) => canon(ws) === canon(pluginRoot(env));
+export function isJvcWorkspace(ws, env = process.env) {
+  if (isPluginRoot(ws, env)) return false;
   return existsSync(join(ws, ".jvc")) || existsSync(join(ws, "customers")) || existsSync(join(ws, "product"));
 }
 
@@ -74,7 +89,7 @@ export function writeCurrentSession(ws, sid) {
 // dal puntatore, session.json calcolato (mai dal campo `path` del puntatore).
 export function loadHookState(input = {}, env = process.env) {
   const ws = workspaceRoot(input, env);
-  const jvc = isJvcWorkspace(ws);
+  const jvc = isJvcWorkspace(ws, env);
   const sid = isSafeSessionId(input.session_id) ? input.session_id : readCurrentSession(ws);
   const state = { ws, jvc, sid, pointer: null, customer: null, session: null, sessionFile: null };
   if (!jvc || !sid) return state;
