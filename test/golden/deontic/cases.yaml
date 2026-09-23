@@ -1,0 +1,230 @@
+# Golden del parser deontico (K4.3, §19.10) — 200 frasi, 100 it e 100 en.
+# `row` è la riga della tabella di §19.10 che la frase esercita (≥ 8 volte ciascuna).
+# Confronto (test/ingest/deontic.test.mjs): `modality` sempre; `mandatory` e `residue`
+# sempre (assenti in `expect` = attesi assenti nel risultato); `validation`, `reason`,
+# `exception`, `condition` solo se dichiarati. Le frasi genuinamente ambigue attendono
+# `ambiguo`, nessun `mandatory`, `residue: ambiguous` (Review Focus 5).
+cases:
+  # ——— 1 · obbligo → mandatory.kind: always ———
+  - { id: it-obb-01, lang: it, row: obbligo, text: "Il campo Centro di costo è obbligatorio.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-obb-02, lang: it, row: obbligo, text: "La data di consegna deve essere compilata.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-obb-03, lang: it, row: obbligo, text: "Il codice IVA è richiesto.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-obb-04, lang: it, row: obbligo, text: "La descrizione della riga va inserita.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-obb-05, lang: it, row: obbligo, text: "Il fornitore deve essere selezionato prima dell'invio.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-obb-06, lang: it, row: obbligo, text: "Il campo Valuta non può essere lasciato vuoto.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-obb-07, lang: it, row: obbligo, text: "Gli allegati tecnici sono obbligatori.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-obb-08, lang: it, row: obbligo, text: "Occorre indicare il motivo dell'acquisto.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: it-obb-09, lang: it, row: obbligo, text: "Il campo Commessa va compilato.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-obb-01, lang: en, row: obbligo, text: "The Cost center field is mandatory.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-obb-02, lang: en, row: obbligo, text: "The delivery date must be entered.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-obb-03, lang: en, row: obbligo, text: "The VAT code is required.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-obb-04, lang: en, row: obbligo, text: "The supplier shall be selected before submission.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-obb-05, lang: en, row: obbligo, text: "The line description has to be filled in.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-obb-06, lang: en, row: obbligo, text: "The currency field cannot be left empty.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-obb-07, lang: en, row: obbligo, text: "Technical attachments are compulsory.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-obb-08, lang: en, row: obbligo, text: "The requester needs to provide a justification.", expect: { modality: obbligo, mandatory: { kind: always } } }
+  - { id: en-obb-09, lang: en, row: obbligo, text: "The project code field must not be left blank.", expect: { modality: obbligo, mandatory: { kind: always } } }
+
+  # ——— 2 · obbligo condizionale → kind: conditional, when dalla protasi ———
+  - { id: it-cond-01, lang: it, row: obbligo-condizionale, text: "Se l'importo supera 5.000 EUR, il campo Motivazione è obbligatorio.", expect: { modality: obbligo-condizionale, condition: "l'importo supera 5.000 EUR", mandatory: { kind: conditional, when: "l'importo supera 5.000 EUR" } } }
+  - { id: it-cond-02, lang: it, row: obbligo-condizionale, text: "Quando la categoria è Servizi, deve essere indicato il periodo di erogazione.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "la categoria è Servizi" } } }
+  - { id: it-cond-03, lang: it, row: obbligo-condizionale, text: "In caso di acquisto urgente, è richiesta la motivazione.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "acquisto urgente" } } }
+  - { id: it-cond-04, lang: it, row: obbligo-condizionale, text: "Il campo Codice CIG è obbligatorio se la gara è pubblica.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "la gara è pubblica" } } }
+  - { id: it-cond-05, lang: it, row: obbligo-condizionale, text: "Qualora il fornitore sia estero, va inserito il codice fiscale estero.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "il fornitore sia estero" } } }
+  - { id: it-cond-06, lang: it, row: obbligo-condizionale, text: "Il numero di contratto deve essere indicato quando la richiesta fa riferimento a un contratto quadro.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "la richiesta fa riferimento a un contratto quadro" } } }
+  - { id: it-cond-07, lang: it, row: obbligo-condizionale, text: "Nel caso in cui la consegna sia parziale, occorre specificare la quantità residua.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "la consegna sia parziale" } } }
+  - { id: it-cond-08, lang: it, row: obbligo-condizionale, text: "Se il pagamento è anticipato, la garanzia bancaria è obbligatoria.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "il pagamento è anticipato" } } }
+  - { id: it-cond-09, lang: it, row: obbligo-condizionale, text: "Il campo Cespite deve essere compilato se il conto è di immobilizzazione.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "il conto è di immobilizzazione" } } }
+  - { id: en-cond-01, lang: en, row: obbligo-condizionale, text: "If the amount exceeds 5000 EUR, the Justification field is mandatory.", expect: { modality: obbligo-condizionale, condition: "the amount exceeds 5000 EUR", mandatory: { kind: conditional, when: "the amount exceeds 5000 EUR" } } }
+  - { id: en-cond-02, lang: en, row: obbligo-condizionale, text: "When the category is Services, the service period must be entered.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "the category is Services" } } }
+  - { id: en-cond-03, lang: en, row: obbligo-condizionale, text: "In case of urgent purchases, a justification is required.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "urgent purchases" } } }
+  - { id: en-cond-04, lang: en, row: obbligo-condizionale, text: "The tender code is mandatory if the tender is public.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "the tender is public" } } }
+  - { id: en-cond-05, lang: en, row: obbligo-condizionale, text: "Where the supplier is foreign, the foreign tax ID must be provided.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "the supplier is foreign" } } }
+  - { id: en-cond-06, lang: en, row: obbligo-condizionale, text: "The contract number must be entered when the request refers to a framework agreement.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "the request refers to a framework agreement" } } }
+  - { id: en-cond-07, lang: en, row: obbligo-condizionale, text: "If the delivery is partial, the remaining quantity has to be specified.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "the delivery is partial" } } }
+  - { id: en-cond-08, lang: en, row: obbligo-condizionale, text: "The bank guarantee is required if payment is made in advance.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "payment is made in advance" } } }
+  - { id: en-cond-09, lang: en, row: obbligo-condizionale, text: "The asset field must be filled in whenever the account is a fixed-asset account.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "the account is a fixed-asset account" } } }
+
+  # ——— 3 · qualificatori di ambito → when (società/categoria), by_role, in_states ———
+  - { id: it-amb-01, lang: it, row: qualificatore-ambito, text: "Per la società IT01 il campo Centro di costo è obbligatorio.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "document.company IN (IT01)" } } }
+  - { id: it-amb-02, lang: it, row: qualificatore-ambito, text: "Il campo Commessa è obbligatorio per le società IT01 e IT02.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "document.company IN (IT01, IT02)" } } }
+  - { id: it-amb-03, lang: it, row: qualificatore-ambito, text: "Per il ruolo APPROVER il campo Note di approvazione è obbligatorio.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, by_role: [APPROVER] } } }
+  - { id: it-amb-04, lang: it, row: qualificatore-ambito, text: "Il campo Priorità deve essere compilato per i ruoli BUYER e REQUESTER.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, by_role: [BUYER, REQUESTER] } } }
+  - { id: it-amb-05, lang: it, row: qualificatore-ambito, text: "Nello stato PENDING_APPROVAL il campo Centro di costo è obbligatorio.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, in_states: [PENDING_APPROVAL] } } }
+  - { id: it-amb-06, lang: it, row: qualificatore-ambito, text: "Il campo Data di consegna è obbligatorio negli stati SUBMITTED e APPROVED.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, in_states: [SUBMITTED, APPROVED] } } }
+  - { id: it-amb-07, lang: it, row: qualificatore-ambito, text: "Per la società IT01, nello stato APPROVED, il conto di contabilità generale deve essere indicato.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "document.company IN (IT01)", in_states: [APPROVED] } } }
+  - { id: it-amb-08, lang: it, row: qualificatore-ambito, text: "Per la categoria SERVIZI il campo Periodo di erogazione è obbligatorio.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "document.category IN (SERVIZI)" } } }
+  - { id: it-amb-09, lang: it, row: qualificatore-ambito, text: "Per il ruolo BUYER, nello stato DRAFT, il campo Fornitore è obbligatorio.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, by_role: [BUYER], in_states: [DRAFT] } } }
+  - { id: en-amb-01, lang: en, row: qualificatore-ambito, text: "For company IT01 the Cost center field is mandatory.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "document.company IN (IT01)" } } }
+  - { id: en-amb-02, lang: en, row: qualificatore-ambito, text: "The Project field is mandatory for companies IT01 and IT02.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "document.company IN (IT01, IT02)" } } }
+  - { id: en-amb-03, lang: en, row: qualificatore-ambito, text: "For the APPROVER role the approval notes field is mandatory.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, by_role: [APPROVER] } } }
+  - { id: en-amb-04, lang: en, row: qualificatore-ambito, text: "The Priority field must be filled in for roles BUYER and REQUESTER.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, by_role: [BUYER, REQUESTER] } } }
+  - { id: en-amb-05, lang: en, row: qualificatore-ambito, text: "In state PENDING_APPROVAL the Cost center field is required.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, in_states: [PENDING_APPROVAL] } } }
+  - { id: en-amb-06, lang: en, row: qualificatore-ambito, text: "The delivery date is mandatory in states SUBMITTED and APPROVED.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, in_states: [SUBMITTED, APPROVED] } } }
+  - { id: en-amb-07, lang: en, row: qualificatore-ambito, text: "For company IT01, in the APPROVED state, the general ledger account must be entered.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "document.company IN (IT01)", in_states: [APPROVED] } } }
+  - { id: en-amb-08, lang: en, row: qualificatore-ambito, text: "For category SERVICES the service period field is required.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "document.category IN (SERVICES)" } } }
+  - { id: en-amb-09, lang: en, row: qualificatore-ambito, text: "For role BUYER, in state DRAFT, the Supplier field is mandatory.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, by_role: [BUYER], in_states: [DRAFT] } } }
+
+  # ——— 4 · divieto → INV / validation.on_fail: block, nessun mandatory ———
+  - { id: it-div-01, lang: it, row: divieto, text: "Il prezzo unitario non deve essere modificato dal richiedente.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: it-div-02, lang: it, row: divieto, text: "Non è consentito inserire un fornitore bloccato.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: it-div-03, lang: it, row: divieto, text: "Il richiedente non può approvare la propria richiesta.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: it-div-04, lang: it, row: divieto, text: "È vietato utilizzare codici IVA disattivati.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: it-div-05, lang: it, row: divieto, text: "Le righe con quantità negativa non sono ammesse.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: it-div-06, lang: it, row: divieto, text: "Non si può selezionare una valuta diversa da quella del contratto.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: it-div-07, lang: it, row: divieto, text: "Il buyer non deve mai modificare il codice fornitore.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: it-div-08, lang: it, row: divieto, text: "Non è permesso allegare file eseguibili.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: en-div-01, lang: en, row: divieto, text: "The unit price must not be changed by the requester.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: en-div-02, lang: en, row: divieto, text: "It is not allowed to enter a blocked supplier.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: en-div-03, lang: en, row: divieto, text: "The requester cannot approve their own request.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: en-div-04, lang: en, row: divieto, text: "Using deactivated VAT codes is prohibited.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: en-div-05, lang: en, row: divieto, text: "Lines with negative quantities are not allowed.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: en-div-06, lang: en, row: divieto, text: "Users may not select a currency different from the contract currency.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: en-div-07, lang: en, row: divieto, text: "The buyer shall not change the supplier code.", expect: { modality: divieto, validation: { on_fail: block } } }
+  - { id: en-div-08, lang: en, row: divieto, text: "Attaching executable files is forbidden.", expect: { modality: divieto, validation: { on_fail: block } } }
+
+  # ——— 5 · facoltà → mandatory.kind: never ———
+  - { id: it-fac-01, lang: it, row: facolta, text: "Il campo Note interne è facoltativo.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: it-fac-02, lang: it, row: facolta, text: "Il richiedente può allegare un preventivo.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: it-fac-03, lang: it, row: facolta, text: "È possibile indicare un indirizzo di consegna alternativo.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: it-fac-04, lang: it, row: facolta, text: "Il campo Riferimento esterno è opzionale.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: it-fac-05, lang: it, row: facolta, text: "Il codice progetto non è obbligatorio.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: it-fac-06, lang: it, row: facolta, text: "Non è necessario compilare il campo Telefono.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: it-fac-07, lang: it, row: facolta, text: "Gli allegati possono essere aggiunti in qualsiasi momento.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: it-fac-08, lang: it, row: facolta, text: "La compilazione del campo Sconto è a discrezione del buyer.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: en-fac-01, lang: en, row: facolta, text: "The Internal notes field is optional.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: en-fac-02, lang: en, row: facolta, text: "The requester may attach a quotation.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: en-fac-03, lang: en, row: facolta, text: "It is possible to specify an alternative delivery address.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: en-fac-04, lang: en, row: facolta, text: "The project code is not mandatory.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: en-fac-05, lang: en, row: facolta, text: "Filling in the Phone field is not required.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: en-fac-06, lang: en, row: facolta, text: "Attachments can be added at any time.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: en-fac-07, lang: en, row: facolta, text: "The external reference can optionally be entered.", expect: { modality: facolta, mandatory: { kind: never } } }
+  - { id: en-fac-08, lang: en, row: facolta, text: "The discount field is left at the discretion of the buyer.", expect: { modality: facolta, mandatory: { kind: never } } }
+
+  # ——— 6 · raccomandazione → mai obbligo ———
+  - { id: it-rac-01, lang: it, row: raccomandazione, text: "Si consiglia di compilare il campo Note.", expect: { modality: raccomandazione } }
+  - { id: it-rac-02, lang: it, row: raccomandazione, text: "È preferibile indicare il codice CPV.", expect: { modality: raccomandazione } }
+  - { id: it-rac-03, lang: it, row: raccomandazione, text: "Di norma il campo Commessa è obbligatorio.", expect: { modality: raccomandazione } }
+  - { id: it-rac-04, lang: it, row: raccomandazione, text: "Il campo Telefono dovrebbe essere compilato.", expect: { modality: raccomandazione } }
+  - { id: it-rac-05, lang: it, row: raccomandazione, text: "Si raccomanda di allegare la scheda tecnica.", expect: { modality: raccomandazione } }
+  - { id: it-rac-06, lang: it, row: raccomandazione, text: "Il campo Data di consegna dovrebbe essere obbligatorio.", expect: { modality: raccomandazione } }
+  - { id: it-rac-07, lang: it, row: raccomandazione, text: "È consigliato indicare un referente tecnico.", expect: { modality: raccomandazione } }
+  - { id: it-rac-08, lang: it, row: raccomandazione, text: "Sarebbe opportuno compilare la descrizione estesa.", expect: { modality: raccomandazione } }
+  - { id: en-rac-01, lang: en, row: raccomandazione, text: "It is recommended to fill in the Notes field.", expect: { modality: raccomandazione } }
+  - { id: en-rac-02, lang: en, row: raccomandazione, text: "The CPV code should be provided.", expect: { modality: raccomandazione } }
+  - { id: en-rac-03, lang: en, row: raccomandazione, text: "As a rule, the project field is mandatory.", expect: { modality: raccomandazione } }
+  - { id: en-rac-04, lang: en, row: raccomandazione, text: "The phone field should be filled in.", expect: { modality: raccomandazione } }
+  - { id: en-rac-05, lang: en, row: raccomandazione, text: "Attaching the data sheet is recommended.", expect: { modality: raccomandazione } }
+  - { id: en-rac-06, lang: en, row: raccomandazione, text: "The delivery date should be mandatory.", expect: { modality: raccomandazione } }
+  - { id: en-rac-07, lang: en, row: raccomandazione, text: "Ideally, a technical contact is specified.", expect: { modality: raccomandazione } }
+  - { id: en-rac-08, lang: en, row: raccomandazione, text: "It is advisable to enter the extended description.", expect: { modality: raccomandazione } }
+
+  # ——— 7 · comportamento del sistema → validation.on_fail: block ———
+  - { id: it-sys-01, lang: it, row: comportamento-sistema, text: "Il sistema impedisce il salvataggio se il centro di costo è vuoto.", expect: { modality: comportamento-sistema, validation: { on_fail: block }, condition: "il centro di costo è vuoto" } }
+  - { id: it-sys-02, lang: it, row: comportamento-sistema, text: "La richiesta viene bloccata se manca il fornitore.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: it-sys-03, lang: it, row: comportamento-sistema, text: "Senza codice IVA il documento non è salvabile.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: it-sys-04, lang: it, row: comportamento-sistema, text: "Il sistema non consente di inviare l'ordine senza allegati.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: it-sys-05, lang: it, row: comportamento-sistema, text: "Se la data di consegna è nel passato, l'invio viene bloccato.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: it-sys-06, lang: it, row: comportamento-sistema, text: "Non è possibile salvare la riga senza quantità.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: it-sys-07, lang: it, row: comportamento-sistema, text: "Il sistema rifiuta le fatture con partita IVA non valida.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: it-sys-08, lang: it, row: comportamento-sistema, text: "L'ordine non può essere inviato finché il budget non è approvato.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: en-sys-01, lang: en, row: comportamento-sistema, text: "The system prevents saving if the cost center is empty.", expect: { modality: comportamento-sistema, validation: { on_fail: block }, condition: "the cost center is empty" } }
+  - { id: en-sys-02, lang: en, row: comportamento-sistema, text: "The request is blocked if the supplier is missing.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: en-sys-03, lang: en, row: comportamento-sistema, text: "Without a VAT code the document cannot be saved.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: en-sys-04, lang: en, row: comportamento-sistema, text: "The system does not allow the order to be sent without attachments.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: en-sys-05, lang: en, row: comportamento-sistema, text: "If the delivery date is in the past, submission is blocked.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: en-sys-06, lang: en, row: comportamento-sistema, text: "The line cannot be saved without a quantity.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: en-sys-07, lang: en, row: comportamento-sistema, text: "The system rejects invoices with an invalid VAT number.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+  - { id: en-sys-08, lang: en, row: comportamento-sistema, text: "The order cannot be submitted until the budget is approved.", expect: { modality: comportamento-sistema, validation: { on_fail: block } } }
+
+  # ——— 8 · comportamento non bloccante → validation.on_fail: warn ———
+  - { id: it-warn-01, lang: it, row: non-bloccante, text: "Se il prezzo supera il listino, viene segnalato al buyer.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: it-warn-02, lang: it, row: non-bloccante, text: "Compare un avviso quando la data di consegna è inferiore a 5 giorni.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: it-warn-03, lang: it, row: non-bloccante, text: "Il sistema avvisa l'utente se il fornitore non è qualificato.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: it-warn-04, lang: it, row: non-bloccante, text: "Viene visualizzato un avviso per gli importi fuori budget.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: it-warn-05, lang: it, row: non-bloccante, text: "Le righe duplicate vengono segnalate senza bloccare il salvataggio.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: it-warn-06, lang: it, row: non-bloccante, text: "Il campo viene evidenziato con un avviso non bloccante.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: it-warn-07, lang: it, row: non-bloccante, text: "Appare un avviso se la quantità supera la giacenza.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: it-warn-08, lang: it, row: non-bloccante, text: "Il sistema segnala le fatture con scostamento di prezzo.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: en-warn-01, lang: en, row: non-bloccante, text: "If the price exceeds the list price, a warning is shown to the buyer.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: en-warn-02, lang: en, row: non-bloccante, text: "A warning appears when the delivery date is less than 5 days away.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: en-warn-03, lang: en, row: non-bloccante, text: "The system warns the user if the supplier is not qualified.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: en-warn-04, lang: en, row: non-bloccante, text: "Out-of-budget amounts are flagged.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: en-warn-05, lang: en, row: non-bloccante, text: "Duplicate lines are flagged without blocking the save.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: en-warn-06, lang: en, row: non-bloccante, text: "The field is highlighted with a non-blocking warning.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: en-warn-07, lang: en, row: non-bloccante, text: "A warning is displayed if the quantity exceeds the stock.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+  - { id: en-warn-08, lang: en, row: non-bloccante, text: "The system flags invoices with a price variance.", expect: { modality: non-bloccante, validation: { on_fail: warn } } }
+
+  # ——— 9 · immutabilità → LCY.immutable_fields_after ———
+  - { id: it-imm-01, lang: it, row: immutabilita, text: "Dopo la conferma il campo non è più modificabile.", expect: { modality: immutabilita } }
+  - { id: it-imm-02, lang: it, row: immutabilita, text: "Una volta approvato, l'ordine è di sola lettura.", expect: { modality: immutabilita } }
+  - { id: it-imm-03, lang: it, row: immutabilita, text: "Il codice fornitore non può più essere modificato dopo l'invio.", expect: { modality: immutabilita } }
+  - { id: it-imm-04, lang: it, row: immutabilita, text: "Dopo l'emissione la fattura diventa immutabile.", expect: { modality: immutabilita } }
+  - { id: it-imm-05, lang: it, row: immutabilita, text: "Una volta inviata al fornitore, la richiesta di offerta non è più modificabile.", expect: { modality: immutabilita } }
+  - { id: it-imm-06, lang: it, row: immutabilita, text: "Dopo l'approvazione non è più possibile modificare il centro di costo.", expect: { modality: immutabilita } }
+  - { id: it-imm-07, lang: it, row: immutabilita, text: "Il contratto firmato diventa di sola lettura.", expect: { modality: immutabilita } }
+  - { id: it-imm-08, lang: it, row: immutabilita, text: "Dopo la pubblicazione i documenti di gara vengono congelati.", expect: { modality: immutabilita } }
+  - { id: en-imm-01, lang: en, row: immutabilita, text: "After confirmation the field is no longer editable.", expect: { modality: immutabilita } }
+  - { id: en-imm-02, lang: en, row: immutabilita, text: "Once approved, the order is read-only.", expect: { modality: immutabilita } }
+  - { id: en-imm-03, lang: en, row: immutabilita, text: "The supplier code cannot be changed after submission.", expect: { modality: immutabilita } }
+  - { id: en-imm-04, lang: en, row: immutabilita, text: "After issue the invoice becomes immutable.", expect: { modality: immutabilita } }
+  - { id: en-imm-05, lang: en, row: immutabilita, text: "Once sent to the supplier, the RFQ can no longer be modified.", expect: { modality: immutabilita } }
+  - { id: en-imm-06, lang: en, row: immutabilita, text: "After approval it is no longer possible to change the cost center.", expect: { modality: immutabilita } }
+  - { id: en-imm-07, lang: en, row: immutabilita, text: "The signed contract becomes read-only.", expect: { modality: immutabilita } }
+  - { id: en-imm-08, lang: en, row: immutabilita, text: "After publication the tender documents are frozen.", expect: { modality: immutabilita } }
+
+  # ——— 10 · vincolo esterno → KEY.cross_system, reason.kind: integration ———
+  - { id: it-ext-01, lang: it, row: vincolo-esterno, text: "Il codice fornitore deve corrispondere al codice del gestionale.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: it-ext-02, lang: it, row: vincolo-esterno, text: "Il centro di costo deve esistere in SAP.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: it-ext-03, lang: it, row: vincolo-esterno, text: "Il codice articolo deve coincidere con quello dell'anagrafica ERP.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: it-ext-04, lang: it, row: vincolo-esterno, text: "Il conto di contabilità deve esistere nel piano dei conti del gestionale.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: it-ext-05, lang: it, row: vincolo-esterno, text: "Il codice commessa deve essere un codice valido del gestionale.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: it-ext-06, lang: it, row: vincolo-esterno, text: "Il codice IVA deve corrispondere alla tabella IVA dell'ERP.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: it-ext-07, lang: it, row: vincolo-esterno, text: "Le unità di misura devono corrispondere a quelle del gestionale.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: it-ext-08, lang: it, row: vincolo-esterno, text: "Il fornitore deve essere censito nell'anagrafica SAP.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: en-ext-01, lang: en, row: vincolo-esterno, text: "The supplier code must match the ERP code.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: en-ext-02, lang: en, row: vincolo-esterno, text: "The cost center must exist in SAP.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: en-ext-03, lang: en, row: vincolo-esterno, text: "The item code must correspond to the ERP item master.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: en-ext-04, lang: en, row: vincolo-esterno, text: "The GL account must exist in the ERP chart of accounts.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: en-ext-05, lang: en, row: vincolo-esterno, text: "The project code must be a valid ERP code.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: en-ext-06, lang: en, row: vincolo-esterno, text: "The VAT code must match the tax table of the ERP.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: en-ext-07, lang: en, row: vincolo-esterno, text: "Units of measure must match those defined in the ERP.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+  - { id: en-ext-08, lang: en, row: vincolo-esterno, text: "The supplier must be registered in the SAP vendor master.", expect: { modality: vincolo-esterno, reason: { kind: integration } } }
+
+  # ——— 11 · eccezione → ramo unless; su un obbligo è un when negato ———
+  - { id: it-exc-01, lang: it, row: eccezione, text: "Il campo Centro di costo è obbligatorio, salvo per le richieste di importo inferiore a 100 EUR.", expect: { modality: obbligo-condizionale, exception: "le richieste di importo inferiore a 100 EUR", mandatory: { kind: conditional, when: "NOT (le richieste di importo inferiore a 100 EUR)", unless: "le richieste di importo inferiore a 100 EUR" } } }
+  - { id: it-exc-02, lang: it, row: eccezione, text: "La data di consegna è obbligatoria, eccetto per i servizi continuativi.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (i servizi continuativi)", unless: "i servizi continuativi" } } }
+  - { id: it-exc-03, lang: it, row: eccezione, text: "Il codice CIG deve essere indicato tranne che per gli affidamenti diretti.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (gli affidamenti diretti)", unless: "gli affidamenti diretti" } } }
+  - { id: it-exc-04, lang: it, row: eccezione, text: "Tutti i campi della testata sono obbligatori ad eccezione delle note.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (note)", unless: "note" } } }
+  - { id: it-exc-05, lang: it, row: eccezione, text: "Il fornitore deve essere indicato, a meno che la richiesta sia un fondo spese.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (la richiesta sia un fondo spese)", unless: "la richiesta sia un fondo spese" } } }
+  - { id: it-exc-06, lang: it, row: eccezione, text: "Non è consentito modificare il prezzo, salvo per il ruolo ADMIN.", expect: { modality: divieto, exception: "il ruolo ADMIN", validation: { on_fail: block } } }
+  - { id: it-exc-07, lang: it, row: eccezione, text: "La motivazione è richiesta, fatta eccezione per gli acquisti da catalogo.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (gli acquisti da catalogo)", unless: "gli acquisti da catalogo" } } }
+  - { id: it-exc-08, lang: it, row: eccezione, text: "Salvo i casi di urgenza, il campo Preventivo è obbligatorio.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (i casi di urgenza)", unless: "i casi di urgenza" } } }
+  - { id: en-exc-01, lang: en, row: eccezione, text: "The Cost center field is mandatory, except for requests below 100 EUR.", expect: { modality: obbligo-condizionale, exception: "requests below 100 EUR", mandatory: { kind: conditional, when: "NOT (requests below 100 EUR)", unless: "requests below 100 EUR" } } }
+  - { id: en-exc-02, lang: en, row: eccezione, text: "The delivery date is required, except for recurring services.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (recurring services)", unless: "recurring services" } } }
+  - { id: en-exc-03, lang: en, row: eccezione, text: "The tender code must be entered unless the award is direct.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (the award is direct)", unless: "the award is direct" } } }
+  - { id: en-exc-04, lang: en, row: eccezione, text: "All header fields are mandatory with the exception of the notes.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (the notes)", unless: "the notes" } } }
+  - { id: en-exc-05, lang: en, row: eccezione, text: "The supplier must be specified, unless the request is a petty cash request.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (the request is a petty cash request)", unless: "the request is a petty cash request" } } }
+  - { id: en-exc-06, lang: en, row: eccezione, text: "Changing the price is not allowed, except for the ADMIN role.", expect: { modality: divieto, exception: "the ADMIN role", validation: { on_fail: block } } }
+  - { id: en-exc-07, lang: en, row: eccezione, text: "A justification is required, excluding catalog purchases.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (catalog purchases)", unless: "catalog purchases" } } }
+  - { id: en-exc-08, lang: en, row: eccezione, text: "Except in urgent cases, the quotation field is mandatory.", expect: { modality: obbligo-condizionale, mandatory: { kind: conditional, when: "NOT (urgent cases)", unless: "urgent cases" } } }
+
+  # ——— 12 · ambiguo → nessun mandatory, residue: ambiguous (Review Focus 5) ———
+  - { id: it-amb-rf5-01, lang: it, row: ambiguo, text: "Il campo dovrebbe essere obbligatorio salvo diversa configurazione.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-amb-rf5-02, lang: it, row: ambiguo, text: "Il centro di costo dovrebbe essere obbligatorio, salvo per le richieste urgenti.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-amb-rf5-03, lang: it, row: ambiguo, text: "Di norma il campo è obbligatorio, tranne quando il fornitore è estero.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-ambg-04, lang: it, row: ambiguo, text: "Non è vero che il campo non sia obbligatorio.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-ambg-05, lang: it, row: ambiguo, text: "Il campo non può non essere compilato.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-ambg-06, lang: it, row: ambiguo, text: "Non è escluso che il campo sia obbligatorio.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-ambg-07, lang: it, row: ambiguo, text: "Il campo potrebbe essere obbligatorio a seconda della configurazione.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-ambg-08, lang: it, row: ambiguo, text: "Il campo è obbligatorio ma può essere lasciato vuoto.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: it-amb-rf5-09, lang: it, row: ambiguo, text: "Il campo dovrebbe essere obbligatorio salvo…", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-amb-rf5-01, lang: en, row: ambiguo, text: "The field should be mandatory unless otherwise configured.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-amb-rf5-02, lang: en, row: ambiguo, text: "The cost center should be mandatory, except for urgent requests.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-amb-rf5-03, lang: en, row: ambiguo, text: "As a rule the field is mandatory, except when the supplier is foreign.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-ambg-04, lang: en, row: ambiguo, text: "It is not true that the field is not mandatory.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-ambg-05, lang: en, row: ambiguo, text: "The field cannot not be filled in.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-ambg-06, lang: en, row: ambiguo, text: "It is not excluded that the field is mandatory.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-ambg-07, lang: en, row: ambiguo, text: "The field may be mandatory depending on the configuration.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-ambg-08, lang: en, row: ambiguo, text: "The field is mandatory but may be left empty.", expect: { modality: ambiguo, residue: ambiguous } }
+  - { id: en-amb-rf5-09, lang: en, row: ambiguo, text: "It is recommended that the field be mandatory except for foreign suppliers.", expect: { modality: ambiguo, residue: ambiguous } }
