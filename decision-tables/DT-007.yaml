@@ -35,6 +35,6 @@ outcomes: [R0, R1, R2, R3]
 outcome_annotations: { R0: verde, R1: verde, R2: giallo, R3: rosso }
 null_policy: { area: error, rollback_exists: worst, graph_radius_gt5: worst, in_window: worst, mature: worst, shape: worst }
 log_as: DEC
-calibration: spec
-calibration_note: "rischio base per area e correttivi da §28.5; i pesi dei correttivi (0.45 in tutto) e le bande sono calibrati perché, a correttivi favorevoli, R1/R2/R3 restino nella loro classe (R2/R3 → R2) e i correttivi sfavorevoli alzino la classe; R0 non è raggiungibile da una modifica (ACT-CFG-READ è R0)"
+calibration: mixed
+calibration_note: "spec: il rischio base per area (§28.5) e l'elenco dei correttivi; progettati (bootstrap): i pesi dei correttivi (0.45 in tutto) e le bande sono calibrati perché, a correttivi favorevoli, R1/R2/R3 restino nella loro classe (R2/R3 → R2) e i correttivi sfavorevoli alzino la classe; R0 non è raggiungibile da una modifica (ACT-CFG-READ è R0)"
 sources: ["§15.2", "§28.1", "§28.5", "§12.1"]

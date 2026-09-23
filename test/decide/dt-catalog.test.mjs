@@ -40,7 +40,8 @@ const EXPECTED = {
   "DT-025": ["punteggio"],
   "DT-026": ["avvia", "mostra-piano", "approvazione-3A", "rifiuta", "chiedi"],
 };
-const SPEC_CALIBRATED = new Set(["DT-002", "DT-003", "DT-007", "DT-017", "DT-018", "DT-021", "DT-023", "DT-025"]);
+const SPEC_CALIBRATED = new Set(["DT-002", "DT-003", "DT-017", "DT-018", "DT-021", "DT-023", "DT-025"]);
+const MIXED = new Set(["DT-007"]);  // rischio base per area dalla spec, correttivi progettati
 
 test("ogni file di decision-tables/ valida; DT-001 … DT-026 tutte presenti", () => {
   const files = readdirSync(TABLES_DIR).filter((f) => /^DT-\d{3}\.yaml$/.test(f)).sort();
@@ -61,7 +62,9 @@ test("gli esiti di ogni tabella sono esattamente quelli del catalogo (§15.2)", 
 
 test("calibrazione: spec dove la spec dà pesi/soglie, bootstrap altrove", () => {
   for (const id of Object.keys(EXPECTED)) {
-    assert.equal(loadTable(id).calibration, SPEC_CALIBRATED.has(id) ? "spec" : "bootstrap", id);
+    const t = loadTable(id);
+    assert.equal(t.calibration, SPEC_CALIBRATED.has(id) ? "spec" : MIXED.has(id) ? "mixed" : "bootstrap", id);
+    if (t.calibration === "mixed") assert.ok(t.calibration_note, `${id}: mixed richiede calibration_note`);
   }
 });
 
@@ -120,17 +123,25 @@ test("DT-016 §13.2: elemento in più su R1 compatibile; elemento assente o R �
 test("DT-020/021/022 §18.5: CFG con confidenza ≥ .70; livello C; digerito con gaps", () => {
   const t20 = evaluate(loadTable("DT-020"), { candidate_type: "CFG", position: true, unit_form: true, lexicon: true, technical_name: true, external_ref: false });
   assert.equal(t20.outcome, "CFG");
-  assert.ok(t20.score >= 0.9);
+  approx(t20.score, 0.85);   // prior senza dati: neutral, nessuno spostamento
+  const t20p = evaluate(loadTable("DT-020"), { candidate_type: "CFG", position: true, unit_form: true, lexicon: true, technical_name: true, external_ref: false }, { priors: { reclassification_rate: 0 } });
+  approx(t20p.score, 0.95);  // tasso di riclassificazione misurato 0 → confidenza piena
   assert.equal(evaluate(loadTable("DT-020"), { candidate_type: "CFG", position: true, unit_form: false, lexicon: false, technical_name: true }).outcome, "ambiguo");
   const t21 = evaluate(loadTable("DT-021"), { customer_origin: true, deictic_lexicon: true, s_item_different_values: true, s_item_same_values: false, in_customer_export: false });
   assert.equal(t21.outcome, "C");
   assert.equal(evaluate(loadTable("DT-021"), { customer_origin: false, deictic_lexicon: false, s_item_different_values: false, s_item_same_values: true, in_customer_export: false }).outcome, "S");
   assert.equal(evaluate(loadTable("DT-021"), { customer_origin: true, deictic_lexicon: false, s_item_different_values: false, s_item_same_values: false, in_customer_export: false }).outcome, "ambiguo");
   // 5/7 attributi coperti, impacts e rollback (critici per R ≥ R2) mancanti, location e options presenti
-  const t22 = evaluate(loadTable("DT-022"), { coverage_deficit: 2 / 7, critical_missing: false, r2_critical_missing: true });
+  const t22 = evaluate(loadTable("DT-022"), { coverage_deficit: 2 / 7, critical_missing: false, r2_critical_missing: true, below_type_threshold: false });
   assert.equal(t22.outcome, "digerito");
-  assert.deepEqual(t22.combined, ["non-in-uso-R2+"]);
-  assert.equal(evaluate(loadTable("DT-022"), { coverage_deficit: 0.2, critical_missing: true, r2_critical_missing: false }).outcome, "quarantena");
+  assert.deepEqual(t22.combined, ["non-in-uso-R2+", "gaps-dichiarati"]);
+  assert.equal(evaluate(loadTable("DT-022"), { coverage_deficit: 0.2, critical_missing: true, r2_critical_missing: false, below_type_threshold: false }).outcome, "quarantena");
+  // sotto la soglia del tipo ma senza attributi critici mancanti → digerito con gaps, non in uso per R ≥ R2 (§19.13)
+  const low = evaluate(loadTable("DT-022"), { coverage_deficit: 0.9, critical_missing: false, r2_critical_missing: false, below_type_threshold: true });
+  assert.equal(low.outcome, "digerito");
+  assert.deepEqual(low.combined, ["non-in-uso-R2+", "gaps-dichiarati"]);
+  const full = evaluate(loadTable("DT-022"), { coverage_deficit: 0, critical_missing: false, r2_critical_missing: false, below_type_threshold: false });
+  assert.deepEqual(full.combined, []);
 });
 
 test("DT-023 §10.4 e §18.4: profondità", () => {
@@ -176,6 +187,55 @@ test("DT-026 §29.5/§61: avvio automatico solo ≤ R1 in sandbox o R0 ovunque",
   assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "prod", config_change: true }).outcome, "approvazione-3A");
   assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "prod", action_class_allowed: false }).outcome, "rifiuta");
   assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "sandbox", critical_missing: true }).outcome, "chiedi");
+  // produzione: mai 'mostra-piano' — configurazione → 3A (§52.2), scrittura di dati → rifiuto (§52.1)
+  assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "prod" }).outcome, "rifiuta");
+  assert.equal(evaluate(t, { ...base, max_risk: "R2", environment: "prod" }).outcome, "rifiuta");
+  assert.equal(evaluate(t, { ...base, max_risk: "R2", environment: "prod", config_change: true }).outcome, "approvazione-3A");
+  for (const risk of ["R1", "R2", "R3"]) for (const config_change of [true, false]) {
+    assert.notEqual(evaluate(t, { ...base, max_risk: risk, environment: "prod", config_change }).outcome, "mostra-piano");
+  }
+});
+
+test("DT-023: 'rapida' solo con consolidato × R ≤ R1 × precedente confermato × 0 sorprese (§10.4)", () => {
+  const t = loadTable("DT-023");
+  const probe1 = evaluate(t, { risk: "R0", shape: "empirico", surprises: 0, precedent: "nessuno", graph_radius_gt5: false });
+  approx(probe1.score, 0.195);
+  assert.equal(probe1.outcome, "standard");
+  const probe2 = evaluate(t, { risk: "R1", shape: "consolidato", surprises: 0, precedent: "nessuno", graph_radius_gt5: false });
+  approx(probe2.score, 0.165);
+  assert.equal(probe2.outcome, "standard");
+  assert.equal(evaluate(t, { risk: "R1", shape: "consolidato", surprises: 1, precedent: "confermato-d<0.2", graph_radius_gt5: false }).outcome, "standard");
+  assert.equal(evaluate(t, { risk: "R0", shape: "consolidato", surprises: 0, precedent: "confermato-d<0.5", graph_radius_gt5: false }).outcome, "rapida");
+});
+
+test("DT-017: la terza sorpresa (STR-STOP-RECORD) prevale su STR-BISECT (§13.3)", () => {
+  const r = evaluate(loadTable("DT-017"), { shape: "consolidato", risk: "R0", precedent: "nessuno", surprises: 3, diagnosis_unknown_divergence: true });
+  assert.equal(r.outcome, "STR-STOP-RECORD");
+});
+
+test("DT-011: prior sul GENERE della fonte vincente e sul cluster (§15.2, §11.5)", async () => {
+  const { openDb } = await import("../../scripts/kb/db.mjs");
+  const { autoPriors } = await import("../../scripts/decide/dt-eval.mjs");
+  const t = loadTable("DT-011");
+  assert.deepEqual(t.priors[0].source.match_inputs, ["winner_genre"]);
+  assert.deepEqual(t.priors[0].source.by, ["cluster"]);
+  const db = openDb(":memory:");
+  const dec = db.prepare("insert into decisions(code,table_code,subject_cluster,inputs,outcome) values (?,?,?,?,?)");
+  const out = db.prepare("insert into outcomes(decision_code,result) values (?,?)");
+  for (let i = 1; i <= 40; i++) {
+    const code = `L.ACME.ADM.DEC.${String(i).padStart(4, "0")}`;
+    const genre = i <= 30 ? "testimoniale" : "empirica";
+    dec.run(code, "DT-011", "CL-CFG-020", JSON.stringify({ winner_genre: genre, candidate_winner: "vince-L" }), "vince-L");
+    out.run(code, i <= 12 ? "smentita" : "confermata");   // 12 dichiarazioni smentite su 30
+  }
+  const inputs = { candidate_winner: "vince-L", winner_genre: "testimoniale", winner_evidence: "dichiarazione", genre_fit: true, confidence_gap: 0.2, user_answer: "nessuna" };
+  const p = autoPriors(db, t, inputs, { cluster: "CL-CFG-020" });
+  assert.equal(p.winner_genre_disproved.n, 30);
+  assert.equal(p.winner_genre_disproved.value, 0.4);
+  const few = autoPriors(db, t, { ...inputs, winner_genre: "empirica" }, { cluster: "CL-CFG-020" });
+  assert.equal(few.winner_genre_disproved.sufficient, false);   // 10 DEC < 30
+  const r = evaluate(t, inputs, { priors: p });
+  assert.equal(r.prior_used[0].applied, "auto");
 });
 
 test("tabelle con outcome_from, selettori e combinazioni: casi rappresentativi", () => {
@@ -188,9 +248,12 @@ test("tabelle con outcome_from, selettori e combinazioni: casi rappresentativi",
   assert.equal(evaluate(loadTable("DT-006"), { p_value: 1, enough_customers: false, contradictions: false, facet_explains: false }).outcome, "ignota");
   assert.equal(evaluate(loadTable("DT-008"), { first_available: "testid", stability: "stabile", dynamic_pattern: false }).outcome, "testid");
   assert.equal(evaluate(loadTable("DT-008"), { first_available: "testid", stability: "instabile", dynamic_pattern: true }).outcome, "role");
-  assert.equal(evaluate(loadTable("DT-011"), { candidate_winner: "vince-L", winner_evidence: "osservazione-confermata", genre_fit: true, confidence_gap: 0.3, user_answer: "nessuna" }).outcome, "vince-L");
-  assert.equal(evaluate(loadTable("DT-011"), { candidate_winner: "vince-C", winner_evidence: "documento", genre_fit: true, confidence_gap: 0.1, user_answer: "non-lo-so" }).outcome, "irrisolta");
-  assert.equal(evaluate(loadTable("DT-013"), { blocking_impact: false, silence_possible: false, latency_declared: true }).outcome, "queued_accepted");
+  assert.equal(evaluate(loadTable("DT-011"), { candidate_winner: "vince-L", winner_genre: "empirica", winner_evidence: "osservazione-confermata", genre_fit: true, confidence_gap: 0.3, user_answer: "nessuna" }).outcome, "vince-L");
+  assert.equal(evaluate(loadTable("DT-011"), { candidate_winner: "vince-C", winner_genre: "tecnica", winner_evidence: "documento", genre_fit: true, confidence_gap: 0.1, user_answer: "non-lo-so" }).outcome, "irrisolta");
+  const q = evaluate(loadTable("DT-013"), { blocking_impact: false, silence_possible: false, latency_declared: true });
+  assert.equal(q.outcome, "queued_accepted");
+  assert.equal(q.score, 0);              // prior invertito senza dati: neutral = nessuno spostamento (non +0.30)
+  assert.equal(q.prior_used[0].applied, "neutral");
   assert.equal(evaluate(loadTable("DT-014"), { budget_used: 0.3, novelty_recent: "alta", surprises: 0, system_errors: false, budget_exhausted: false, next_risk: "R1" }).outcome, "ferma");
   assert.equal(evaluate(loadTable("DT-015"), { coherence: "coerente", tables_knowledge: "validate", pattern_known: true, executed_with_limit: false }).outcome, "no");
   assert.equal(evaluate(loadTable("DT-019"), { preferred_genre: "tecnica", preferred_available: false, observable_r0: true }).outcome, "osservazione");

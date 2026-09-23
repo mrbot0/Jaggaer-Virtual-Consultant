@@ -20,7 +20,7 @@ priors:
   - name: reclassification_rate
     label: "Tasso di riclassificazione per tipo"
     weight: 0.10
-    neutral: 0
+    neutral: 1
     invert: true
     source: { metric: rate_disproved, outcome_input: candidate_type }
 scoring: weighted_sum

@@ -129,6 +129,9 @@ export function validateTable(t) {
   }
   for (const k of Object.keys(t.null_policy)) if (!byName[k]) errors.push(`null_policy: input '${k}' inesistente`);
   for (const p of t.priors) {
+    // neutral = il valore che NON sposta il punteggio: 0 per un prior diretto, 1 per un prior invertito.
+    const noShift = p.invert ? 1 : 0;
+    if (p.neutral !== noShift) errors.push(`prior '${p.name}': neutral ${p.neutral} sposta il punteggio (deve valere ${noShift}${p.invert ? " per un prior invertito" : ""})`);
     for (const k of [p.source.outcome_input, ...(p.source.match_inputs ?? [])].filter(Boolean)) {
       if (!byName[k]) errors.push(`prior '${p.name}': input '${k}' inesistente`);
     }
@@ -156,6 +159,13 @@ export function loadTable(ref) {
 // ——— valutazione (pura) ———
 export function evaluate(table, inputs = {}, { priors = {} } = {}) {
   ensureValid(table);
+  // Un refuso non deve cadere nella null_policy: le chiavi non dichiarate sono un errore.
+  const declared = new Set(table.inputs.map((i) => i.name));
+  const undeclared = Object.keys(inputs ?? {}).filter((k) => !declared.has(k));
+  if (undeclared.length) throw new DtDomainError(`input non dichiarati in ${table.id}: ${undeclared.join(", ")} (ammessi: ${[...declared].join(", ")})`);
+  const declaredPriors = new Set(table.priors.map((p) => p.name));
+  const undeclaredPriors = Object.keys(priors ?? {}).filter((k) => !declaredPriors.has(k));
+  if (undeclaredPriors.length) throw new DtDomainError(`priori non dichiarati in ${table.id}: ${undeclaredPriors.join(", ")}`);
   const values = {};
   const components = [];
   for (const inp of table.inputs) {
@@ -288,10 +298,12 @@ function main(argv) {
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
   if (!opts.table || !opts.inputs) return fail(asJson, 1, "richiesti --table e --inputs");
-  let table, inputs, db = null;
+  let table, inputs, filePriors = null, db = null;
   try {
     table = loadTable(opts.table);
     inputs = readJsonArg(opts.inputs);
+    // file dei priori letto qui: un file mancante o malformato è un errore utente (exit 1)
+    if (opts.priors && opts.priors !== "auto") filePriors = readJsonArg(opts.priors);
   } catch (e) { return fail(asJson, 1, String(e.message ?? e)); }
   const needDb = opts.priors === "auto" || opts["write-dec"];
   if (needDb && !opts.db) return fail(asJson, 1, "--priors auto e --write-dec richiedono --db");
@@ -304,7 +316,7 @@ function main(argv) {
   try {
     let priors = {};
     if (opts.priors === "auto") priors = autoPriors(db, table, inputs, { customer: opts.customer, cluster: opts.cluster, strategy: opts.strategy });
-    else if (opts.priors) priors = readJsonArg(opts.priors);
+    else if (filePriors) priors = filePriors;
     const result = evaluate(table, inputs, { priors });
     let dec_code = null;
     if (opts["write-dec"]) {

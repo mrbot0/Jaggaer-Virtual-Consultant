@@ -12,12 +12,14 @@ Regole comuni:
 
 - punteggio = Σ peso × punteggio dell'input + Σ peso × prior; la somma dei pesi vale 1.0 ± 0.001;
 - ordine: `overrides` → banda `[from, to)` (l'ultima include 1) → `outcome_selectors` → esito della banda;
-- input fuori dominio → errore (`exit 1`), mai un'approssimazione; input mancante → `null_policy`
+- input fuori dominio o chiave non dichiarata (refuso) → errore (`exit 1`), mai un'approssimazione; input mancante → `null_policy`
   (`error` · `default:<valore>` · `worst` = il valore di punteggio massimo);
 - priori dal registro degli esiti (`scripts/digest/outcomes-rates.mjs`); sotto 30 DEC verificate vale
-  il `neutral` dichiarato (default 0: nessuna evidenza di smentita, il punteggio non si sposta);
-- `calibration: spec` = pesi e soglie della spec; `bootstrap` = progettati dal testo della spec,
-  da ricalibrare sugli esiti (§12.5). Le tabelle cambiano con motivazione e nuova `version`, mai in sessione.
+  il `neutral` dichiarato, che per costruzione non sposta il punteggio (0 per un prior diretto, 1 per un
+  prior invertito: dt-eval rifiuta altri valori);
+- `calibration: spec` = pesi e soglie della spec; `bootstrap` = progettati dal testo della spec; `mixed` = in parte
+  dalla spec, in parte progettati (con `calibration_note`); i bootstrap vanno
+  ricalibrati sugli esiti (§12.5). Le tabelle cambiano con motivazione e nuova `version`, mai in sessione.
 
 Un prior con peso 0 (DT-017, DT-021, DT-023, DT-025) è dichiarato ma agisce alla calibrazione
 mensile delle soglie (o, per DT-025, sull'affidabilità del documento), perché i pesi della spec
@@ -33,11 +35,11 @@ sommano già a 1.
 | DT-004 | Validare una lezione | — | validated · merged · rejected | bootstrap |
 | DT-005 | Ammettere in un cluster | Tasso di quarantena della famiglia (0.20) | ammesso · rigettato · quarantena | bootstrap |
 | DT-006 | Portabilità | — (è essa stessa un calcolo sui clienti) | universale · condizionata · specifica · ignota | bootstrap |
-| DT-007 | Rischio di una modifica di configurazione | Tasso di smentita per area CL-CFG e cliente (0.10) | R0 · R1 · R2 · R3 + perimetro verde/giallo/rosso | spec |
+| DT-007 | Rischio di una modifica di configurazione | Tasso di smentita per area CL-CFG e cliente (0.10) | R0 · R1 · R2 · R3 + perimetro verde/giallo/rosso | mixed (base per area: spec; correttivi: bootstrap) |
 | DT-008 | Strategia di localizzazione | Tasso di insuccesso della strategia sul pattern CL-UIB (0.35) | testid · role · label · css | bootstrap |
 | DT-009 | Selezione evidenze | — | lista | bootstrap |
 | DT-010 | Promuovere a S | Tasso di smentita post-promozione (0.15) | candidato · no | bootstrap |
-| DT-011 | Risolvere una contraddizione | Tasso di smentita delle risoluzioni vinte da questo lato (0.15) | vince-L · vince-C · vince-S · irrisolta | bootstrap |
+| DT-011 | Risolvere una contraddizione | Tasso di smentita per genere di fonte vincente sull'area (0.15) | vince-L · vince-C · vince-S · irrisolta | bootstrap |
 | DT-012 | Priorità di copertura | Densità di difetti in collaudo (0.15) | punteggio | bootstrap |
 | DT-013 | Stadio di checkpoint | Tasso di timeout per stadio e interfaccia (0.30, invertito) | queued_accepted · processed · acknowledged | bootstrap |
 | DT-014 | Fermare un'esplorazione | — | continua · ferma | bootstrap |

@@ -19,7 +19,7 @@ priors:
   - name: category_disproved
     label: "Tasso di smentita della categoria sul cluster del soggetto"
     weight: 0.16
-    neutral: 0
+    neutral: 1
     invert: true
     source: { metric: rate_disproved, outcome_input: candidate_category, by: [cluster] }
 scoring: weighted_sum
@@ -38,5 +38,5 @@ null_policy:
   precedent_fixed_defect: "default:false"
 log_as: DEC
 calibration: bootstrap
-calibration_note: "pesi scelti perché il caso §18.2 dia .88 con precedente confermato e .79 senza"
+calibration_note: "pesi scelti perché il caso §18.2 (tasso di smentita della categoria misurato 0) dia .88 con precedente confermato e .79 senza; senza dati sufficienti il prior è neutro (contributo 0)"
 sources: ["§15.2", "§30.1", "§18.2", "§20.6.3"]

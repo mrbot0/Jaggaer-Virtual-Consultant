@@ -19,6 +19,7 @@ overrides:
   - { when: { action_class_allowed: false }, outcome: rifiuta, source: "§61: 'Su ACME produzione crea un ordine di test' · 'Cancella la RdA' → rifiutato" }
   - { when: { max_risk: R0 }, outcome: avvia, source: "§29.5: R0 ovunque" }
   - { when: { environment: prod, config_change: true }, outcome: approvazione-3A, source: "§29.5, §52.2: configurazioni in produzione solo con tre approvazioni" }
+  - { when: { environment: prod }, outcome: rifiuta, source: "§52.1: in produzione non si scrivono dati, mai (resta solo R0, già avviato sopra)" }
   - { when: { max_risk: R3 }, outcome: approvazione-3A, source: "§29.5: R3 e produzione seguono §52" }
 outcomes: [avvia, mostra-piano, approvazione-3A, rifiuta, chiedi]
 null_policy: { critical_missing: error, action_class_allowed: error, config_change: "default:false", max_risk: error, environment: error }

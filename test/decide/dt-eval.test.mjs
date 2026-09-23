@@ -110,6 +110,36 @@ test("null policy: error, default, worst; prior mancante → neutral", () => {
   assert.equal(insufficient.prior_used[0].applied, "neutral");
 });
 
+test("chiavi non dichiarate rifiutate: un refuso non cade nella null_policy", () => {
+  const t = loadTable("DT-002");
+  const { novelty, ...rest } = DT002_181;
+  assert.throws(() => evaluate(t, { ...rest, novelity: false }), (e) => e instanceof DtDomainError && /novelity/.test(e.message));
+  assert.throws(() => evaluate(t, DT002_181, { priors: { disproved_procedii: 0.2 } }), (e) => e instanceof DtDomainError && /disproved_procedii/.test(e.message));
+  const d = tmp();
+  const f = join(d, "in.json");
+  writeFileSync(f, JSON.stringify({ ...rest, novelity: false }));
+  assert.equal(run(["--table", "DT-002", "--inputs", f, "--json"]).status, 1);
+});
+
+test("CLI: file dei priori inesistente → exit 1", () => {
+  const d = tmp();
+  const f = join(d, "in.json");
+  writeFileSync(f, JSON.stringify(DT002_181));
+  const r = run(["--table", "DT-002", "--inputs", f, "--priors", join(d, "manca.json"), "--json"]);
+  assert.equal(r.status, 1, r.stdout);
+});
+
+test("neutral = valore che non sposta il punteggio: per un prior invertito vale 1", () => {
+  const t = structuredClone(loadTable("DT-013"));
+  assert.equal(t.priors[0].invert, true);
+  assert.equal(t.priors[0].neutral, 1);
+  t.priors[0].neutral = 0;
+  assert.match(validateTable(t).errors.join(" "), /neutral/);
+  const d = structuredClone(loadTable("DT-002"));
+  d.priors[0].neutral = 0.3;
+  assert.match(validateTable(d).errors.join(" "), /neutral/);
+});
+
 test("validazione della tabella: somma dei pesi, bande contigue, esiti dichiarati", () => {
   const t = structuredClone(loadTable("DT-002"));
   assert.equal(validateTable(t).ok, true);

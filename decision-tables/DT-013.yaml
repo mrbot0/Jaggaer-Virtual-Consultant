@@ -2,7 +2,7 @@ id: DT-013
 version: 1
 title: Stadio di checkpoint
 decision: "Stadio di checkpoint di un'integrazione asincrona nella corsia integration (L2)"
-description: "Stadi: queued_accepted (default, ADR-13) · processed (messaggio processato entro la p95, §62 CL-CHK-004) · acknowledged (risposta del controparte, §20.6.4). Un alto tasso di timeout sugli stadi profondi riporta verso queued_accepted (prior invertito)."
+description: "Stadi: queued_accepted (default, ADR-13) · processed (messaggio processato entro la p95, §62 CL-CHK-004) · acknowledged (risposta del controparte, §20.6.4). Prior invertito: senza dati è neutro (contributo 0); un basso tasso di timeout misurato permette uno stadio più profondo, un alto tasso riporta verso queued_accepted."
 inputs:
   - { name: blocking_impact, label: "document_impact.severity: blocking", weight: 0.30, domain: { boolean: { true: 1, false: 0 } } }
   - { name: silence_possible, label: "silence_semantics: il controparte può fallire in silenzio", weight: 0.25, domain: { boolean: { true: 1, false: 0 } } }
@@ -11,14 +11,14 @@ priors:
   - name: stage_timeout_rate
     label: "Tasso di timeout per stadio e interfaccia"
     weight: 0.30
-    neutral: 0
+    neutral: 1
     invert: true
     source: { metric: external, note: "dai checkpoint della corsia integration (§20.4: latenza reale vs dichiarata)" }
 scoring: weighted_sum
 thresholds:
-  - { from: 0, to: 0.40, outcome: queued_accepted }
-  - { from: 0.40, to: 0.70, outcome: processed }
-  - { from: 0.70, to: 1, outcome: acknowledged }
+  - { from: 0, to: 0.25, outcome: queued_accepted }
+  - { from: 0.25, to: 0.50, outcome: processed }
+  - { from: 0.50, to: 1, outcome: acknowledged }
 outcomes: [queued_accepted, processed, acknowledged]
 null_policy: { blocking_impact: worst, silence_possible: worst, latency_declared: worst }
 log_as: DEC

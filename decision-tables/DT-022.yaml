@@ -2,22 +2,25 @@ id: DT-022
 version: 1
 title: Completezza di un item digerito
 decision: "Decidere se un item è digerito (con gaps dichiarati) o va in quarantena con la lista degli attributi mancanti"
-description: "Manca un attributo sempre critico (per CFG: location, options) → quarantena. Mancano attributi critici solo per R ≥ R2 (impacts, rollback; current_state per il livello C) → digerito ma non in uso per R ≥ R2 (combinazione)."
+description: "Quarantena SOLO se manca un attributo sempre critico (per CFG: location, options), §19.13. Sotto la soglia del tipo, o con attributi critici solo per R ≥ R2 mancanti (impacts, rollback; current_state per il livello C), l'item è digerito con gaps dichiarati e non entra in uso per azioni R ≥ R2 (combinazioni). Il punteggio misura il deficit di completezza."
 inputs:
-  - { name: coverage_deficit, label: "1 − attributi attesi coperti / attesi, pesati per criticità (§64)", weight: 0.60, domain: { range: [0, 1] } }
-  - { name: critical_missing, label: "Manca un attributo sempre critico", weight: 0.25, domain: { boolean: { true: 1, false: 0 } } }
-  - { name: r2_critical_missing, label: "Manca un attributo critico per R ≥ R2 o per il livello C", weight: 0.15, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: coverage_deficit, label: "1 − attributi attesi coperti / attesi, pesati per criticità (§64)", weight: 0.70, domain: { range: [0, 1] } }
+  - { name: r2_critical_missing, label: "Manca un attributo critico per R ≥ R2 o per il livello C", weight: 0.30, domain: { boolean: { true: 1, false: 0 } } }
+  - { name: critical_missing, label: "Manca un attributo sempre critico", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
+  - { name: below_type_threshold, label: "Copertura sotto la soglia del tipo", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
 priors: []
 scoring: weighted_sum
 thresholds:
-  - { from: 0, to: 0.5, outcome: digerito }
-  - { from: 0.5, to: 1, outcome: quarantena }
+  - { from: 0, to: 1, outcome: digerito }
 overrides:
   - { when: { critical_missing: true }, outcome: quarantena, source: "§19.13: sotto la soglia minima (manca un attributo critico) → quarantena" }
 combinations:
   - { when: { r2_critical_missing: true }, add: "non-in-uso-R2+", source: "§19.13: non entra in uso per azioni R ≥ R2" }
+  - { when: { below_type_threshold: true }, add: "non-in-uso-R2+", source: "§19.13: sotto la soglia del tipo → non in uso per R ≥ R2" }
+  - { when: { r2_critical_missing: true }, add: gaps-dichiarati, source: "§19.13" }
+  - { when: { below_type_threshold: true }, add: gaps-dichiarati, source: "§19.13: digerito ma con gaps dichiarati" }
 outcomes: [digerito, quarantena]
-null_policy: { coverage_deficit: error, critical_missing: error, r2_critical_missing: worst }
+null_policy: { coverage_deficit: error, r2_critical_missing: worst, critical_missing: error, below_type_threshold: "default:true" }
 log_as: DEC
 calibration: bootstrap
 sources: ["§15.2", "§19.13", "§64", "§18.5"]

@@ -2,8 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "dt.schema.json",
   "title": "Tabella di decisione (DT)",
-  "description": "Tabella di decisione valutata da scripts/decide/dt-eval.mjs (§15). Punteggio = Σ peso × punteggio_input + Σ peso × prior; la somma dei pesi di inputs e priors deve valere 1.0 ± 0.001 (controllo semantico in dt-eval). Ordine di valutazione: overrides (il primo che corrisponde vince) → banda di thresholds che contiene il punteggio → outcome_selectors di quella banda (il primo che corrisponde) → outcome o outcome_from della banda. Bande [from, to) contigue da 0 a 1, l'ultima include 1. Priori: valore in [0,1] calcolato dal registro degli esiti (scripts/digest/outcomes-rates.mjs); con --priors auto, se il tasso non è `sufficient` (< 30 DEC con esito) il prior assume il valore `neutral` dichiarato (default 0 = nessuna evidenza di smentita: non sposta il punteggio). `invert: true` usa 1 − valore (per le tabelle il cui punteggio è una confidenza).",
+  "description": "Tabella di decisione valutata da scripts/decide/dt-eval.mjs (§15). Punteggio = Σ peso × punteggio_input + Σ peso × prior; la somma dei pesi di inputs e priors deve valere 1.0 ± 0.001 (controllo semantico in dt-eval). Ordine di valutazione: overrides (il primo che corrisponde vince) → banda di thresholds che contiene il punteggio → outcome_selectors di quella banda (il primo che corrisponde) → outcome o outcome_from della banda. Bande [from, to) contigue da 0 a 1, l'ultima include 1. Priori: valore in [0,1] calcolato dal registro degli esiti (scripts/digest/outcomes-rates.mjs); con --priors auto, se il tasso non è `sufficient` (< 30 DEC con esito) il prior assume il valore `neutral` dichiarato. `neutral` è il valore che NON sposta il punteggio: 0 per un prior diretto, 1 per un prior con `invert: true` (che usa 1 − valore, per le tabelle il cui punteggio è una confidenza); dt-eval rifiuta un neutral diverso.",
   "type": "object",
+  "if": { "properties": { "calibration": { "const": "mixed" } } },
+  "then": { "required": ["calibration_note"] },
   "required": ["id", "version", "title", "decision", "inputs", "priors", "scoring", "thresholds", "outcomes", "null_policy", "log_as", "calibration", "sources"],
   "additionalProperties": false,
   "$defs": {
@@ -139,7 +141,7 @@
       "additionalProperties": { "type": "string", "pattern": "^(error|worst|default:.+)$" }
     },
     "log_as": { "const": "DEC" },
-    "calibration": { "enum": ["spec", "bootstrap"] },
+    "calibration": { "enum": ["spec", "bootstrap", "mixed"], "description": "spec = pesi e soglie della spec; bootstrap = progettati dal testo; mixed = in parte dalla spec, in parte progettati (calibration_note obbligatoria)" },
     "calibration_note": { "type": "string" },
     "sources": { "type": "array", "minItems": 1, "items": { "type": "string" } }
   }

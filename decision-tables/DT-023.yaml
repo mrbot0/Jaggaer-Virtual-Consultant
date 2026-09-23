@@ -29,11 +29,16 @@ overrides:
   - { when: { surprises: ["2", "3"] }, outcome: profonda, source: "§10.4: ≥ 2 sorprese" }
   - { when: { never_executed_here: true, graph_radius_gt5: true }, outcome: profonda, source: "§10.4: mai eseguito qui con impatto > 5 nodi" }
   - { when: { shape: contraddittorio }, outcome: profonda, source: "§18.4: R0 ma forma contraddittoria → profonda" }
-  - { when: { shape: consolidato, risk: [R0, R1], precedent: ["confermato-d<0.2", "confermato-d<0.5"], surprises: "0" }, outcome: rapida,
-      source: "§10.4: consolidato × R ≤ R1 × precedente confermato × 0 sorprese" }
+# Sotto 0.25 'rapida' vale solo con consolidato × R ≤ R1 × precedente confermato × 0 sorprese (§10.4):
+# se una delle quattro condizioni manca, la banda bassa dà 'standard'.
+outcome_selectors:
+  - { from: 0, to: 0.25, when: { shape: [empirico, libresco, ignoto, contraddittorio] }, outcome: standard, source: "§10.4: rapida richiede consolidato" }
+  - { from: 0, to: 0.25, when: { risk: [R2, R3] }, outcome: standard, source: "§10.4: rapida richiede R ≤ R1" }
+  - { from: 0, to: 0.25, when: { precedent: [nessuno, "smentito-d<0.3"] }, outcome: standard, source: "§10.4: rapida richiede un precedente confermato" }
+  - { from: 0, to: 0.25, when: { surprises: ["1", "2", "3"] }, outcome: standard, source: "§10.4: rapida richiede 0 sorprese" }
 outcomes: [rapida, standard, profonda]
 null_policy: { risk: error, shape: worst, surprises: "default:0", precedent: "default:nessuno", graph_radius_gt5: worst, never_executed_here: "default:true" }
 log_as: DEC
 calibration: spec
-calibration_note: "pesi e bande da §10.4 ('> 0.60 profonda': 0.60 esatto resta standard); valori degli input dalle scale di DT-017; override di §18.4 aggiunto perché la somma pesata (R0, contraddittorio) dà standard mentre la spec dice profonda"
+calibration_note: "pesi e bande da §10.4 ('> 0.60 profonda': 0.60 esatto resta standard); valori degli input dalle scale di DT-017; override di §18.4 aggiunto perché la somma pesata (R0, contraddittorio) dà standard mentre la spec dice profonda; selettori perché 'rapida' esca solo con le quattro condizioni di §10.4"
 sources: ["§15.2", "§10.4", "§18.4"]

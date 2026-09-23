@@ -5,6 +5,8 @@ decision: "Risolvere un CTR: vince l'item L, C o S, oppure la contraddizione res
 description: "Punteggio = dubbio sulla risoluzione. Di norma vince l'osservazione confermata (§28.4); il manuale vince sulla UI, la spec sul modello (§11.3); 'non lo so' dell'utente → irrisolta, quarantena sul soggetto (§11.5)."
 inputs:
   - { name: candidate_winner, label: "Lato con l'evidenza migliore", weight: 0, domain: { enum: { vince-L: 0, vince-C: 0, vince-S: 0 } } }
+  - { name: winner_genre, label: "Genere di fonte (F15) dell'item vincente", weight: 0,
+      domain: { enum: { tecnica: 0, "d'uso": 0, empirica: 0, testimoniale: 0 } } }
   - name: winner_evidence
     label: "Evidenza del lato vincente (§13.8)"
     weight: 0.35
@@ -14,11 +16,12 @@ inputs:
   - { name: confidence_gap, label: "Scarto di confidenza fra i due item", weight: 0.20, domain: { range: [0, 1], invert: true } }
   - { name: user_answer, label: "Risposta dell'utente (§11.5)", weight: 0.10, domain: { enum: { conferma: 0, nessuna: 0.5, non-lo-so: 1 } } }
 priors:
-  - name: winner_disproved
-    label: "Tasso di smentita delle risoluzioni vinte da questo lato"
+  - name: winner_genre_disproved
+    label: "Tasso di smentita per genere vincente sull'area (1 − tasso di correttezza, §15.2)"
     weight: 0.15
     neutral: 0
-    source: { metric: rate_disproved, outcome_input: candidate_winner, by: [customer] }
+    source: { metric: rate_disproved, match_inputs: [winner_genre], by: [cluster],
+      note: "cluster = area del soggetto (es. CL-CFG-020): se le dichiarazioni dell'utente su un'area vengono smentite, il prior del genere testimoniale su quell'area sale e si chiede più spesso 'posso verificarlo?' (§11.5)" }
 scoring: weighted_sum
 thresholds:
   - { from: 0, to: 0.5, outcome_from: candidate_winner }
@@ -26,7 +29,7 @@ thresholds:
 overrides:
   - { when: { user_answer: non-lo-so }, outcome: irrisolta, source: "§11.5: 'non lo so' → quarantena sul soggetto" }
 outcomes: [vince-L, vince-C, vince-S, irrisolta]
-null_policy: { candidate_winner: error, winner_evidence: worst, genre_fit: worst, confidence_gap: worst, user_answer: "default:nessuna" }
+null_policy: { candidate_winner: error, winner_genre: error, winner_evidence: worst, genre_fit: worst, confidence_gap: worst, user_answer: "default:nessuna" }
 log_as: DEC
 calibration: bootstrap
 sources: ["§15.2", "§11.3", "§11.5", "§13.8", "§28.4", "§18.4"]
