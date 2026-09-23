@@ -11,7 +11,7 @@ import { writeFileSync, mkdtempSync, appendFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { decisionOf, reasonOf } from "../helpers/hook-env.mjs";
 import { envWs, browserCall, patchSession, writePlan, writeSel } from "../helpers/env-fixture.mjs";
-import { appendApproval, approvalsFile } from "../../scripts/admin/approvals.mjs";
+import { appendApproval, approvalsFile, sha256 } from "../../scripts/admin/approvals.mjs";
 import { ACT } from "../../hooks/lib/act-classes.mjs";
 import { loadCatalog } from "../../scripts/decide/validate-plan.mjs";
 
@@ -151,10 +151,25 @@ test("input solo sul search_box del passo attivo (anche SEL standard); click sol
 });
 
 test("configurazione in prod: consentita solo con 3A valida (A1, A2 da persona diversa, token del passo, frasi nel transcript)", () => {
-  const ws = prodWs("CFG-CHANGE senza A2");
+  // record autentici: stesso sha del prompt e stesso orario della riga del transcript
+  // (come li produce approval-capture); il registro dello scenario "senza A2" ha sha falsi.
+  const forged = prodWs("CFG-CHANGE senza A2");
+  appendApproval(approvalsFile(forged, "ACME", "sess-1"), { kind: "A2", plan: PLAN, approver_declared: "Luca Bianchi", prompt_sha256: "0".repeat(64) });
+  const trF = transcript(["APPROVO PIANO PLAN.0077 DA Mario Rossi", "APPROVO PROVA PLAN.0077 DA Luca Bianchi", "APPROVO PASSO 1 PLAN.0077"]);
+  assert.ok(denied(browserCall(G, forged, `${DT}click`, { uid: "1_4" }, { transcript_path: trF })), "record con sha che non corrisponde a nessun prompt ⇒ deny");
+  const ws = prodWs("senza piano");
+  patchSession(ws, (s) => { s.active_plan = { plan_id: PLAN, file: writePlan(ws, planOf([step(1, "TOGGLE", "ACT-CFG-CHANGE", SEL.write, { config: { object: "C.ACME.ADM.CFG.0019", area: "CL-CFG-020", level: "giallo" } })])), step: 1 }; });
   const f = approvalsFile(ws, "ACME", "sess-1");
-  appendApproval(f, { kind: "A2", plan: PLAN, approver_declared: "Luca Bianchi", prompt_sha256: "0".repeat(64) });
-  const tr = transcript(["APPROVO PIANO PLAN.0077 DA Mario Rossi", "APPROVO PROVA PLAN.0077 DA Luca Bianchi", "APPROVO PASSO 1 PLAN.0077"]);
+  const tr = join(mkdtempSync(join(tmpdir(), "trp-")), "t.jsonl");
+  writeFileSync(tr, "");
+  const genuine = (rec, phrase, minAgo) => {
+    const d = new Date(Date.now() - minAgo * 60000);
+    appendFileSync(tr, `${JSON.stringify({ type: "user", isSidechain: false, userType: "external", message: { role: "user", content: phrase }, timestamp: d.toISOString() })}\n`);
+    appendApproval(f, { ...rec, prompt_sha256: sha256(phrase) }, { date: d });
+  };
+  genuine({ kind: "A1", plan: PLAN, approver_declared: "Mario Rossi" }, "APPROVO PIANO PLAN.0077 DA Mario Rossi", 3);
+  genuine({ kind: "A2", plan: PLAN, approver_declared: "Luca Bianchi" }, "APPROVO PROVA PLAN.0077 DA Luca Bianchi", 2);
+  genuine({ kind: "A3", plan: PLAN, step: 1, approver_declared: null }, "APPROVO PASSO 1 PLAN.0077", 1);
   const ok = browserCall(G, ws, `${DT}click`, { uid: "1_4" }, { transcript_path: tr });
   assert.ok(silent(ok), ok.stdout);
   assert.ok(denied(browserCall(G, ws, `${DT}click`, { uid: "1_4" }, { transcript_path: transcript(["APPROVO PIANO PLAN.0077 DA Mario Rossi"]) })), "frasi assenti dal transcript");

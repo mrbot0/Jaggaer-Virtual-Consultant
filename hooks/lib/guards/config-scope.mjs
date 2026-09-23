@@ -32,7 +32,7 @@ import { activeStep } from "./plan-step.mjs";
 import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
 import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf } from "../../../scripts/admin/approvals.mjs";
 import { appendAudit } from "../audit.mjs";
-import { updateSessionFast } from "../session-write.mjs";
+import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
 
 const G = "guard-config-scope";
 export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
@@ -54,14 +54,30 @@ function required(cls, step, env, level) {
   return { a1: false, a2: false, a3: false, action: false };
 }
 
+// Nessun piano attivo (giro di correzione 1, I2): ogni azione con effetto è
+// negata in ogni ambiente. Unica eccezione la modalità `esplorazione` (use mode),
+// solo in sandbox: click e input consentiti e in audit; invio, salvataggio,
+// upload, conferma di dialog, script e strumenti non classificati mai.
+function noPlan(ctx, no) {
+  const s = ctx.session;
+  const bad = ctx.actions.filter(isEffectful).find((a) => !["click", "input"].includes(a.kind) || a.submits);
+  const explore = s.mode === "esplorazione" && s.env?.type === "sandbox";
+  if (explore && !bad) {
+    try {
+      appendAudit(ctx.ws, { session: ctx.sid, customer: ctx.customer, scope: s.scope ?? null, kind: "decision", actor: `hook:${G}`,
+        payload: { decision: "allow", mode: "esplorazione", tool: ctx.tool, kinds: ctx.actions.map((a) => a.kind) } });
+    } catch { /* l'audit non cambia la decisione */ }
+    return null;
+  }
+  if (explore) return no(`esplorazione senza piano: consentiti solo click e input, mai invio, salvataggio, upload, conferma di dialog, script (${bad.tool ?? ctx.tool})`);
+  return no(`nessun piano attivo: ogni azione con effetto sul browser richiede un piano attivo (step-check)${s.mode === "esplorazione" ? "; la modalità esplorazione vale solo in sandbox" : "; per esplorare in sandbox: /use mode esplorazione"}`);
+}
+
 async function browserDecide(ctx, no) {
   if (!ctx.actions.some(isEffectful)) return null;
   const s = ctx.session;
   if (!s) return null;   // senza sessione guard-environment nega già ogni strumento del browser
-  if (!s.active_plan) {
-    if (s.mode === "config") return no("in modalità config ogni azione con effetto sul browser richiede un piano attivo (step-check): nessun piano attivo in sessione");
-    return null;
-  }
+  if (!s.active_plan) return noPlan(ctx, no);
   const st = await activeStep(ctx);
   if (st.reason) return no(st.reason);
   const { step, ap } = st;
@@ -194,19 +210,46 @@ function checkTarget(ctx, T, tree, tr) {
   return null;
 }
 
+// ---- canali di falsificazione dei token (giro di correzione 1, I4) ----
+// (a) una frase di approvazione in un input di strumento: solo l'utente la scrive;
+// (b) la CLI di Claude in modalità headless o di ripresa (-p/--print, -r/--resume,
+//     -c/--continue, anche via npx o node …/claude-code/cli.js): un prompt così
+//     passerebbe da approval-capture e finirebbe nel transcript come dell'utente;
+// (c) nomi costruiti a runtime: il registro citato insieme a una primitiva di
+//     scrittura, o uno script non del plugin i cui argomenti citano lo stato.
+const PHRASE = /APPROVO\s+(PIANO|PROVA|PASSO)/i;
+const CLAUDE_BIN = /(^|[\s;&|(`'"=\\/])(claude(\.exe|\.cmd|\.ps1)?|@anthropic-ai[\\/]claude-code(@[\w.-]+)?|claude-code[\\/](dist[\\/])?cli\.m?js)(?=$|[\s;&|)`'"])/i;
+const CLAUDE_FLAGS = /(^|[\s'"])(-p|--print|-r|--resume|-c|--continue)(?=$|[\s=;'"])|(^|\s)-[a-z]*[prc][a-z]*(?=[\s'"]|$)/i;
+const STATE = /approvals|session\.json|\.sessions[\\/]|\.jvc|current-session|invocations\.jsonl|compact-summary/i;
+const WRITE_PRIM = /appendfile|writefile|createwritestream|opensync|\bfs\.|add-content|set-content|out-file|\btee\b|>|\bopen\s*\(|\bcp\b|\bmv\b|copy-item|move-item|\.write\s*\(|\bac\b|\bsc\b/i;
+const CODE_WRITE = /appendfile|writefile|createwritestream|opensync|add-content|set-content|out-file|\bopen\s*\(|\.write\s*\(|copyfile|renamesync|\brename\s*\(/i;
+const INTERP = /(^|[\s;&|(`'"\\/])(node|nodejs|deno|bun|python3?|py|perl|ruby|pwsh|powershell|php)(\.exe)?(?=$|[\s;&|)`'"])/i;
+function strings(v, out = []) {
+  if (typeof v === "string") out.push(v);
+  else if (Array.isArray(v)) for (const x of v) strings(x, out);
+  else if (v && typeof v === "object") for (const x of Object.values(v)) strings(x, out);
+  return out;
+}
+
 const protectWrites = guarded(G, (ctx) => {
   const tr = transcriptDirs(ctx);
   const no = (why) => denyAudited(ctx, G, `scrittura negata — ${why}`);
+  const texts = strings(ctx.ti);
+  if (texts.some((t) => PHRASE.test(t))) return no("l'input contiene una frase di approvazione (APPROVO PIANO/PROVA/PASSO): le approvazioni le scrive solo l'utente nel prompt, mai uno strumento");
   if (WRITE_FILE_TOOLS.has(ctx.tool)) {
+    if (texts.some((t) => STATE.test(t) && CODE_WRITE.test(t))) return no("il contenuto scrive su file e cita il registro delle approvazioni o lo stato di sessione: codice che può falsificare i token");
     const r = checkTarget(ctx, targetsOf(ctx), false, tr);
     return r ? no(r) : null;
   }
   const cmd = ctx.ti.command;
   if (typeof cmd !== "string" || !cmd.trim()) return null;
   if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
+  if (CLAUDE_BIN.test(cmd) && CLAUDE_FLAGS.test(cmd)) return no("la CLI di Claude in modalità headless o di ripresa (-p/--print, -r/--resume, -c/--continue) non si invoca da una sessione JVC: produrrebbe prompt 'dell'utente'");
   if (pluginScript(cmd, ctx)) return null;
   const flat = cmd.replace(/\\/g, "/").toLowerCase();
-  if (/approvals\.jsonl/.test(flat)) return no("il comando cita approvals.jsonl: il registro delle approvazioni si legge con Read o con `approvals.mjs status`, non si tocca dalla shell");
+  if (/approvals\.json/.test(flat)) return no("il comando cita approvals.json(l): il registro delle approvazioni si legge con Read o con `approvals.mjs status`, non si tocca dalla shell");
+  if (/approvals/.test(flat) && WRITE_PRIM.test(flat)) return no("il comando cita 'approvals' insieme a una primitiva di scrittura: nome del registro costruito a runtime");
+  if (INTERP.test(cmd) && STATE.test(cmd)) return no("uno script non del plugin con argomenti o codice che citano il registro delle approvazioni o lo stato di sessione: solo gli script del plugin toccano lo stato");
   if (tr.name && (flat.includes(tr.name) || tr.dirs.some((d) => flat.includes(d)))) return no("il comando cita il transcript della sessione");
   for (const { tok, cwds, tree, soft } of shellWriteTargets(ctx, cmd)) {
     for (const cwd of cwds) {

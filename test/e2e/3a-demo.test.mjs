@@ -54,7 +54,8 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
   const tr = join(mkdtempSync(join(tmpdir(), "demo-tr-")), "sess-1.jsonl");
   writeFileSync(tr, "");
   const say = (prompt) => {
-    appendFileSync(tr, `${JSON.stringify({ type: "user", message: { role: "user", content: prompt } })}\n`);
+    // riga del transcript come la scrive Claude Code per un prompt dell'utente
+    appendFileSync(tr, `${JSON.stringify({ type: "user", isSidechain: false, userType: "external", message: { role: "user", content: prompt }, timestamp: new Date().toISOString() })}\n`);
     const r = runHook("approval-capture", { session_id: "sess-1", cwd: ws, hook_event_name: "UserPromptSubmit", prompt, transcript_path: tr }, E(ws));
     return r.json?.hookSpecificOutput?.additionalContext ?? "";
   };

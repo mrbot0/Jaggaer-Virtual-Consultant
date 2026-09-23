@@ -1,6 +1,6 @@
 ---
 description: Imposta il contesto di sessione JAGGAER — cliente, ambiente, scope, modalità, budget (scrive session.json; i guard lo leggono)
-argument-hint: customer <ID> [--new] | env <id> | scope <ID> | mode <nrt|config|ops|diag> | budget <n> | close-stale | show
+argument-hint: customer <ID> [--new] | env <id> | scope <ID> | mode <nrt|config|ops|diag|esplorazione> | budget <n> | close-stale | show
 allowed-tools: Bash(node *)
 ---
 
@@ -27,8 +27,13 @@ di templates/workflow.md), scope, modalità, budget usato/totale, pendenze. Rego
      (§58 "Ambiente non riconosciuto"), **non forzare** e non ripetere con un altro snapshot.
   Cambiare ambiente azzera la verifica. exit 3 su `use env` = environments.yaml viola le regole di
   produzione (es. `type: prod` con `write_data: true`): si corregge il file fuori sessione.
+- Sul browser (giro di correzione 1): prima di ogni click o input serve una navigate verso un host
+  dichiarato (l'origine viene registrata; cambiare scheda o pagina la azzera); gli script nella pagina
+  sono negati ovunque: si legge con snapshot, read_page, get_page_text. Senza piano attivo le azioni
+  con effetto sono negate; `mode esplorazione` (solo sandbox, in audit) consente click e input, mai
+  invio, salvataggio, upload o conferma di dialog.
 - exit 1: mostra l'errore e la sintassi corretta (`customer <ID> [--new]`, `env <id>`, `scope <ID>`,
-  `mode <nrt|config|ops|diag>`, `budget <n>`, `close-stale`, `show`). Se lo stato è illeggibile, `customer <ID>`
+  `mode <nrt|config|ops|diag|esplorazione>`, `budget <n>`, `close-stale`, `show`). Se lo stato è illeggibile, `customer <ID>`
   lo ripara (ne resta una copia `.corrupt-<data>`).
 - Il budget si alza solo con questo comando, su richiesta esplicita dell'utente: mai di tua iniziativa.
 - Il file di stato non si modifica a mano: solo tramite questo comando e gli hook del plugin.

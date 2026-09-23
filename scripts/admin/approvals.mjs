@@ -165,37 +165,50 @@ export function threeAState(records, plan, n, envPolicy = {}, now = Date.now(), 
 }
 
 // ---- conferma nel transcript (difesa in profondità) ----
-// Un record vale solo se nel transcript c'è un messaggio DELL'UTENTE (testo, mai
-// tool_result: una pagina web può contenere la frase) con la frase esatta.
-function userTexts(line) {
+// Un record vale solo se nel transcript c'è un PROMPT VERO DELL'UTENTE (giro di
+// correzione 1, I3):
+//  - riga `type: user`, ruolo user, testo (mai tool_result: una pagina web può
+//    contenere la frase), con `timestamp`;
+//  - escluse le righe dei sub-agenti (isSidechain: il loro prompt lo scrive il
+//    modello), i riassunti di compattazione, le righe solo di visualizzazione, i
+//    risultati di strumenti (toolUseResult, sourceToolUseID), le righe meta;
+//  - sha256 del prompt UGUALE a prompt_sha256 del record E orario della riga entro
+//    CAPTURE_TOLERANCE_MS dal ts del record (approval-capture registra mentre
+//    l'utente invia: un "sì" o una frase identica di un altro momento non valgono);
+//  - una riga del transcript conferma al più un record.
+export const CAPTURE_TOLERANCE_MS = 30000;
+const EXCLUDED = ["isSidechain", "isCompactSummary", "isVisibleInTranscriptOnly", "toolUseResult", "sourceToolUseID", "isMeta", "isApiErrorMessage"];
+function userPrompt(line) {
   let o;
-  try { o = JSON.parse(line); } catch { return []; }
-  if (o?.type !== "user" || o.isMeta === true) return [];
+  try { o = JSON.parse(line); } catch { return null; }
+  if (!o || o.type !== "user" || EXCLUDED.some((k) => o[k] != null && o[k] !== false)) return null;
+  if (o.userType != null && o.userType !== "external") return null;
+  const t = Date.parse(o.timestamp ?? "");
   const msg = o.message;
-  if (!msg || msg.role !== "user") return [];
-  if (typeof msg.content === "string") return [msg.content];
-  if (!Array.isArray(msg.content)) return [];
-  if (msg.content.some((b) => b?.type === "tool_result")) return [];
-  return msg.content.filter((b) => b?.type === "text" && typeof b.text === "string").map((b) => b.text);
+  if (!Number.isFinite(t) || !msg || msg.role !== "user") return null;
+  let texts;
+  if (typeof msg.content === "string") texts = [msg.content];
+  else if (Array.isArray(msg.content) && msg.content.every((b) => b?.type === "text" && typeof b.text === "string")) texts = [msg.content.map((b) => b.text).join("\n"), ...msg.content.map((b) => b.text)];
+  else return null;
+  return { t, shas: new Set(texts.map(sha256)) };
 }
-const sameApproval = (p, r) => p && p.kind === r.kind && p.plan === r.plan && (r.kind !== "A3" || p.step === r.step)
-  && (!r.approver_declared || normName(p.approver) === normName(r.approver_declared));
 
 export function confirmInTranscript(transcriptPath, recs) {
   if (typeof transcriptPath !== "string" || !transcriptPath) return { ok: false, missing: recs.map(phraseOf), reason: "transcript assente" };
   let text;
   try { text = readFileSync(transcriptPath, "utf8"); } catch { return { ok: false, missing: recs.map(phraseOf), reason: "transcript illeggibile" }; }
-  const needYes = recs.some((r) => r.kind === "action");
-  const lines = text.split("\n").filter((l) => l.includes("APPROVO") || (needYes && /"(s[iì]|yes)[.!]?"/i.test(l)));
-  const said = [];
-  for (const l of lines) for (const t of userTexts(l)) said.push({ sha: sha256(t), p: parseApprovalPrompt(t) });
+  const prompts = [];
+  for (const l of text.split("\n")) if (l.includes('"user"')) { const p = userPrompt(l); if (p) prompts.push(p); }
+  const used = new Set();
   const missing = [];
   for (const r of recs) {
-    const ok = said.some((x) => (r.prompt_sha256 && x.sha === r.prompt_sha256 && (r.kind === "action" ? x.p?.kind === "yes" : sameApproval(x.p, r)))
-      || (r.kind === "action" ? false : sameApproval(x.p, r)));
-    if (!ok) missing.push(phraseOf(r));
+    const t = Date.parse(r?.ts ?? "");
+    const k = typeof r?.prompt_sha256 === "string" && Number.isFinite(t)
+      ? prompts.findIndex((p, i) => !used.has(i) && p.shas.has(r.prompt_sha256) && Math.abs(p.t - t) <= CAPTURE_TOLERANCE_MS)
+      : -1;
+    if (k < 0) missing.push(phraseOf(r)); else used.add(k);
   }
-  return { ok: missing.length === 0, missing, reason: missing.length ? `frase non trovata nel transcript: ${missing.join(" · ")}` : null };
+  return { ok: missing.length === 0, missing, reason: missing.length ? `prompt dell'utente non trovato nel transcript (sha e orario del record): ${missing.join(" · ")}` : null };
 }
 
 // ---- piano ----

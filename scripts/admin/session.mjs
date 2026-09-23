@@ -19,8 +19,8 @@ import { checkSessionText, parseSessionText } from "../../hooks/lib/session-stat
 
 const REGISTRY = JSON.parse(readFileSync(new URL("../../schemas/registry.json", import.meta.url), "utf8"));
 export const SCOPES = REGISTRY.scopes;
-export const MODES = ["nrt", "config", "ops", "diag"];
-const MODE_ALIASES = { configurazione: "config", configuration: "config", operativa: "ops", operations: "ops", diagnosi: "diag", diagnosis: "diag", collaudo: "nrt" };
+export const MODES = ["nrt", "config", "ops", "diag", "esplorazione"];
+const MODE_ALIASES = { configurazione: "config", configuration: "config", operativa: "ops", operations: "ops", diagnosi: "diag", diagnosis: "diag", collaudo: "nrt", esplora: "esplorazione", explore: "esplorazione", exploration: "esplorazione" };
 export const DEFAULT_BUDGET = 200000;
 const CUSTOMER_DIRS = ["lessons", "decisions", "outcomes", "observations", "epistemic", "contradictions", "runs", "reports", "evidence"];
 
@@ -384,7 +384,8 @@ Azioni (§56.2):
                               Rifiuta il cambio se il cliente precedente ha
                               compensazioni pendenti (exit 3, le elenca).
   use scope <ID>              cella attiva (${SCOPES.join(" ")}); ricalcola allowed_paths
-  use mode <m>                nrt | config | ops | diag
+  use mode <m>                nrt | config | ops | diag | esplorazione (solo sandbox:
+                              click/input senza piano, in audit; mai invio/salvataggio)
   use env <id>                ambiente dichiarato da customers/<C>/config/environments.yaml
                               (§51.2): verified:false finché env-check non lo verifica;
                               cambiarlo azzera la verifica. RF2 & c. ⇒ exit 3
