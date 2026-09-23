@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hypotheses.schema.json",
+  "title": "Registro delle ipotesi (hypotheses.yaml, §13.6)",
+  "description": "Nel blackboard di sessione (session.json.hypotheses_file). Ogni ipotesi ha un prior dichiarato; si chiude solo con evidenza citata; le evidenze citano codici (OBS, DEC, RUN, …). Le regole che lo schema non esprime (≥ 2 aperte prima di un test discriminante, chiuse con evidenza, test più economico) sono in scripts/kb/belief-update.mjs (validateHypotheses, nextTest).",
+  "type": "object",
+  "required": ["hypotheses"],
+  "properties": {
+    "subject": { "type": "string" },
+    "session": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "hypotheses": { "type": "array", "items": { "$ref": "#/$defs/hypothesis" } }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "string",
+      "description": "Un'evidenza cita almeno un codice: item (…OBS.0240), forma breve (OBS.0241), run/test/sessione (RUN.…, NRT.…, SES.…, EV-…).",
+      "pattern": "([A-Z]{3}\\.\\d{4})|((RUN|NRT|SES)\\.[A-Z0-9])|(EV-[A-Za-z0-9])"
+    },
+    "hypothesis": {
+      "type": "object",
+      "required": ["id", "claim", "prior", "evidence_for", "evidence_against", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^H\\d+$" },
+        "claim": { "type": "string", "minLength": 1 },
+        "prior": { "type": "number", "minimum": 0, "maximum": 1, "description": "da precedenti, briefing, o 1/n se nulla (§13.6)" },
+        "prior_source": { "type": "string" },
+        "evidence_for": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+        "evidence_against": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+        "discriminating_test": { "type": "string", "minLength": 1 },
+        "cost_of_test": {
+          "type": "object",
+          "required": ["risk", "steps", "tier"],
+          "additionalProperties": false,
+          "properties": {
+            "risk": { "enum": ["R0", "R1", "R2", "R3"] },
+            "steps": { "type": "integer", "minimum": 0 },
+            "tier": { "enum": ["T0", "T1", "T2"] }
+          }
+        },
+        "status": { "enum": ["open", "supported", "refuted"] },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}
