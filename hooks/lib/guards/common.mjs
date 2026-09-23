@@ -169,24 +169,29 @@ export function shellPaths(ctx, cmd, { bareWords = false, maxTokens = 256 } = {}
 
 export const subtree = (p) => (p ? `${p}/**` : "**");
 
-// ---- bersagli di scrittura di un comando di shell (fix round 2 F5) ----
+// ---- bersagli di scrittura di un comando di shell (fix round 2 F5, round 3) ----
 // Redirezioni (`>`, `>>`, `>|`, `n>`, `&>`; non `n>&m`) e comandi che scrivono,
 // spostano o cancellano file (bash e PowerShell). Si seguono i `cd` come in
-// shellPaths. → [{ tok, cwds }] (tok grezzo, da risolvere con resolveTarget
-// rispetto a ciascuna cwd). Euristica come shellPaths: variabili, sostituzioni
-// di comando e script che scrivono restano fuori (rischio residuo).
-const REDIR = /(?:\d*|&)>>?\|?[ \t]*([^\s;|&<>()]+)/g;
-const WRITE_ALL = /^(tee|out-file|set-content|add-content|clear-content|sc|ac|clc|new-item|ni|mv|move|move-item|mi|ren|rename|rename-item|rni|rm|del|erase|rd|rmdir|remove-item|ri|unlink|truncate|shred|touch|sed|perl)$/i;
-const WRITE_LAST = /^(cp|copy|copy-item|cpi|install|rsync|scp|ln|mklink)$/i;
+// shellPaths. → [{ tok, cwds, tree }]: tok grezzo, da risolvere con resolveTarget
+// rispetto a ciascuna cwd; `tree` = il bersaglio può essere una cartella (rm/mv
+// di una cartella, cp/mv dentro una cartella), quindi conta anche tutto ciò che
+// contiene. Euristica come shellPaths: variabili, sostituzioni di comando e
+// script che scrivono restano fuori (rischio residuo).
+const REDIR = /(?:\d*|&)>>?[ \t]*([^\s;|&<>()]+)/g;
+const WRITE_FILE = /^(tee|out-file|set-content|add-content|clear-content|sc|ac|clc|new-item|ni|touch|truncate)$/i;
+const WRITE_TREE = /^(mv|move|move-item|mi|ren|rename|rename-item|rni|rm|del|erase|rd|rmdir|remove-item|ri|unlink|shred)$/i;
+const IN_PLACE = /^(sed|perl|ruby)$/i;
+const WRITE_LAST = /^(cp|copy|copy-item|cpi|install|rsync|scp|ln|mklink|xcopy|robocopy)$/i;
 const DEST_PARAM = /^-(destination|path|literalpath|filepath|target)$/i;
 export function shellWriteTargets(ctx, cmd) {
   const out = [];
   let cwds = [ctx.cwd];
-  const unq = cmd.replace(/["'`]/g, "");
+  // `>|` (noclobber forzato) è una redirezione: va riconosciuta prima di spezzare sui `|`.
+  const unq = cmd.replace(/["'`]/g, "").replace(/>\|/g, ">");
   for (const seg of unq.split(/&&|\|\||[;|\r\n]/)) {
     const s = seg.trim();
     if (!s) continue;
-    for (const m of s.matchAll(REDIR)) out.push({ tok: m[1], cwds });
+    for (const m of s.matchAll(REDIR)) out.push({ tok: m[1], cwds, tree: false });
     const words = s.replace(REDIR, " ").split(/\s+/).filter(Boolean);
     const head = (words[0] ?? "").replace(/^.*[\\/]/, "").replace(/\.exe$/i, "");
     if (CD.test(head)) {
@@ -194,13 +199,16 @@ export function shellWriteTargets(ctx, cmd) {
       if (arg) cwds = [...new Set([...cwds, ...cwds.map((d) => resolve(d, arg.replace(/\\/g, "/")))])].slice(0, 16);
       continue;
     }
-    if (/^dd$/i.test(head)) { for (const w of words) if (/^of=/i.test(w)) out.push({ tok: w.slice(3), cwds }); continue; }
+    if (/^dd$/i.test(head)) { for (const w of words) if (/^of=/i.test(w)) out.push({ tok: w.slice(3), cwds, tree: false }); continue; }
     const args = words.slice(1);
     const pos = args.filter((w) => !w.startsWith("-"));
-    if (WRITE_ALL.test(head)) for (const w of pos) out.push({ tok: w, cwds });
+    if (WRITE_FILE.test(head)) for (const w of pos) out.push({ tok: w, cwds, tree: false });
+    else if (WRITE_TREE.test(head)) for (const w of pos) out.push({ tok: w, cwds, tree: true });
+    // sed/perl scrivono solo con -i (anche -pi, -i.bak, --in-place): altrimenti leggono.
+    else if (IN_PLACE.test(head)) { if (args.some((w) => /^-[a-z]*i/i.test(w) || /^--in-place/.test(w))) for (const w of pos) out.push({ tok: w, cwds, tree: false }); }
     else if (WRITE_LAST.test(head)) {
-      args.forEach((w, i) => { if (DEST_PARAM.test(w) && args[i + 1]) out.push({ tok: args[i + 1], cwds }); });
-      if (pos.length) out.push({ tok: pos.at(-1), cwds });
+      args.forEach((w, i) => { if (DEST_PARAM.test(w) && args[i + 1]) out.push({ tok: args[i + 1], cwds, tree: true }); });
+      if (pos.length) out.push({ tok: pos.at(-1), cwds, tree: true });
     }
   }
   return out;

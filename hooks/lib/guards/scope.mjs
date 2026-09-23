@@ -60,13 +60,24 @@ function handoffRefusal(ctx) {
 // di WRITE_DENY; per la sessione principale lo stato di sessione (la CLI lo
 // scrive con node, mai con una redirezione della shell).
 const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl"].includes(a));
+// Bersagli-cartella (rm/mv di una cartella, cp/mv dentro una cartella — fix
+// round 3): conta tutto ciò che la cartella contiene, cioè ogni antenato di un
+// file protetto è protetto. `**/session.json` qui diventa il session.json reale
+// (customers/*/.sessions/*/session.json): altrimenti ogni cartella del
+// workspace risulterebbe "antenata" di un session.json ipotetico.
+const TREE_ONLY = (areas) => areas.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a, why]);
+const SUB_TREE_DENY = TREE_ONLY(WRITE_DENY);
+const MAIN_TREE_DENY = TREE_ONLY(MAIN_SHELL_DENY);
 function checkShellWrites(ctx, cmd) {
   const areas = ctx.agentId ? WRITE_DENY : MAIN_SHELL_DENY;
-  for (const { tok, cwds } of shellWriteTargets(ctx, cmd)) {
+  const treeAreas = ctx.agentId ? SUB_TREE_DENY : MAIN_TREE_DENY;
+  const no = (why, p) => denyAudited(ctx, G, `scrittura via shell negata (file che scrivono solo /use, gli script e gli hook del plugin) — ${why}: ${p}`);
+  for (const { tok, cwds, tree } of shellWriteTargets(ctx, cmd)) {
     for (const cwd of cwds) {
       const T = resolveTarget(tok, { cwd, ws: ctx.ws });
       for (const p of allRels(T)) {
-        for (const [area, why] of areas) if (intersects(p, area)) return denyAudited(ctx, G, `scrittura via shell negata (file che scrivono solo /use, gli script e gli hook del plugin) — ${why}: ${p}`);
+        for (const [area, why] of areas) if (intersects(p, area)) return no(why, p);
+        if (tree) for (const [area, why] of treeAreas) if (intersects(subtree(p), area)) return no(`${why} (la cartella lo contiene)`, p || ".");
       }
       for (const a of T.abs) if (/(^|\/)session\.json$/.test(a)) return denyAudited(ctx, G, `scrittura via shell negata — session.json si modifica solo con /use e con gli hook del plugin: ${a}`);
     }
