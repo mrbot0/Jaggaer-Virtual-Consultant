@@ -5,6 +5,7 @@ import { existsSync, readFileSync, mkdirSync } from "node:fs";
 import { join, resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { writeFileAtomic } from "./fsx.mjs";
+import { parseSessionText } from "./session-state.mjs";
 
 export const SESSION_ID_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 export const CUSTOMER_RE = /^[A-Z0-9]{4}$/;
@@ -84,10 +85,8 @@ export function loadHookState(input = {}, env = process.env) {
   state.sessionFile = sessionFile(ws, customer, sid);
   let text = null;
   try { text = readFileSync(state.sessionFile, "utf8"); } catch (err) { if (err.code !== "ENOENT") throw err; }
-  if (text != null) {
-    state.session = JSON.parse(text);
-    if (state.session.customer !== customer) throw new Error("session.json e puntatore indicano clienti diversi");
-  }
+  // Predicato condiviso con la CLI (F1): JSON + schema + coerenza col puntatore.
+  if (text != null) state.session = parseSessionText(text, { customer, sid });
   return state;
 }
 

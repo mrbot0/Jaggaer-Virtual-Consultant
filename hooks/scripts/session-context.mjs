@@ -12,6 +12,7 @@ import {
 } from "../lib/workspace.mjs";
 import { appendAudit } from "../lib/audit.mjs";
 import { stateLine, pendingLine, surprisesLine } from "../lib/state-summary.mjs";
+import { checkSessionText } from "../lib/session-state.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
 
 const PLUGIN = "jaggaer-virtual-consultant";
@@ -57,9 +58,14 @@ export function handle(input, env = process.env) {
     if (!existsSync(file)) {
       lines.push(`Cliente ${pointer.customer} indicato dal puntatore ma session.json assente: riesegui /${PLUGIN}:use customer ${pointer.customer}.`);
     } else {
-      const s = JSON.parse(readFileSync(file, "utf8"));
-      lines.push(stateLine(s), pendingLine(s.pending), surprisesLine(s.surprises));
-      if (s.budget.used >= 0.8 * s.budget.tokens) lines.push("Budget ≥ 80%: le nuove invocazioni vanno su haiku; chiedi all'utente se continuare (§29.10).");
+      const chk = checkSessionText(readFileSync(file, "utf8"), { customer: pointer.customer, sid });
+      if (!chk.ok) {
+        lines.push(`Stato di sessione illeggibile (${chk.reason}): i guard negano tutto finché non esegui /${PLUGIN}:use customer ${pointer.customer}, che lo ripara (ne resta una copia .corrupt-<data>).`);
+      } else {
+        const s = chk.session;
+        lines.push(stateLine(s), pendingLine(s.pending), surprisesLine(s.surprises));
+        if (s.budget.used >= 0.8 * s.budget.tokens) lines.push("Budget ≥ 80%: le nuove invocazioni vanno su haiku; chiedi all'utente se continuare (§29.10).");
+      }
     }
   }
   lines.push(...notes);

@@ -14,7 +14,8 @@ import {
 } from "../../hooks/lib/workspace.mjs";
 import { appendAudit } from "../../hooks/lib/audit.mjs";
 import { readJsonl } from "../../hooks/lib/state-summary.mjs";
-import { openFrom } from "../../hooks/lib/invocations.mjs";
+import { openFrom, closeOpen, OPEN_TTL_MS } from "../../hooks/lib/invocations.mjs";
+import { checkSessionText, parseSessionText } from "../../hooks/lib/session-state.mjs";
 
 const REGISTRY = JSON.parse(readFileSync(new URL("../../schemas/registry.json", import.meta.url), "utf8"));
 export const SCOPES = REGISTRY.scopes;
@@ -43,7 +44,8 @@ export function loadSession(ws, sid) {
   if (!pointer?.customer) return { pointer, session: null, file: null };
   const file = sessionFile(ws, pointer.customer, sid);
   if (!existsSync(file)) return { pointer, session: null, file };
-  return { pointer, session: JSON.parse(readFileSync(file, "utf8")), file };
+  // Stesso predicato degli hook (F1): JSON + schema + coerenza col puntatore.
+  return { pointer, session: parseSessionText(readFileSync(file, "utf8"), { customer: pointer.customer, sid }), file };
 }
 
 // Valida PRIMA di scrivere; poi tmp + rename nella stessa cartella.
@@ -174,8 +176,9 @@ function backupCorrupt(file) {
   return to;
 }
 
-// session.json di questa sessione presso ogni cliente:
-// { customer, file, session } oppure { customer, file, corrupt: true }.
+// session.json di questa sessione presso ogni cliente, giudicati con il
+// predicato condiviso (F1): { customer, file, session } oppure
+// { customer, file, corrupt: true, reason, parsed }.
 function sessionsOf(ws, sid) {
   let dirs = [];
   try { dirs = readdirSync(join(ws, "customers")).filter((c) => CUSTOMER_RE.test(c)); } catch { return []; }
@@ -183,10 +186,10 @@ function sessionsOf(ws, sid) {
   for (const c of dirs) {
     const file = sessionFile(ws, c, sid);
     if (!existsSync(file)) continue;
-    try {
-      const session = JSON.parse(readFileSync(file, "utf8"));
-      out.push(session?.budget && typeof session.budget === "object" ? { customer: c, file, session } : { customer: c, file, corrupt: true });
-    } catch { out.push({ customer: c, file, corrupt: true }); }
+    let text;
+    try { text = readFileSync(file, "utf8"); } catch (err) { out.push({ customer: c, file, corrupt: true, reason: err.message, parsed: null }); continue; }
+    const r = checkSessionText(text, { customer: c, sid });
+    out.push(r.ok ? { customer: c, file, session: r.session } : { customer: c, file, corrupt: true, reason: r.reason, parsed: r.parsed });
   }
   return out;
 }
@@ -248,7 +251,9 @@ async function useCustomer(ws, sid, id, { create, actor }) {
   const readable = all.filter((x) => !x.corrupt);
   const prevLive = prev ? readable.find((x) => x.customer === prev)?.session.budget : null;
   const newest = [...readable].sort((a, b) => String(b.session.updated_at).localeCompare(String(a.session.updated_at)))[0]?.session.budget;
-  const budget = mergedBudget([pointer?.budget, ...readable.map((x) => x.session.budget)], prevLive ?? pointer?.budget ?? newest ?? null);
+  // Anche i budget leggibili di stati corrotti contano per il massimo di `used` (F1).
+  const salvaged = all.filter((x) => x.corrupt && x.parsed?.budget).map((x) => x.parsed.budget);
+  const budget = mergedBudget([pointer?.budget, ...readable.map((x) => x.session.budget), ...salvaged], prevLive ?? pointer?.budget ?? newest ?? null);
   let session;
   if (target && !target.corrupt) {
     session = updateSession(file, (s) => {
@@ -261,6 +266,8 @@ async function useCustomer(ws, sid, id, { create, actor }) {
   }
   writePointer(ws, sid, id, { budget: session.budget });
   writeCurrentSession(ws, sid);
+  // Successo solo se il risultato passa il predicato che useranno gli hook (F1).
+  try { loadSession(ws, sid); } catch (err) { throw new CliError(2, `riparazione non riuscita: ${err.message}`); }
   const backups = [pointerBackup, sessionBackup].filter(Boolean);
   appendAudit(ws, { session: sid, customer: id, scope: session.scope, kind: "session", actor, payload: { action: "use-customer", from: prev, to: id, created: !!create, repaired: backups.length ? { pointer: !!pointerBackup, session: !!sessionBackup } : null } });
   return { session, previous: prev, ...(backups.length ? { backups } : {}) };
@@ -294,6 +301,18 @@ function useBudget(ws, sid, raw, { actor }) {
   return { session };
 }
 
+// Chiusura manuale dei sotto-compiti rimasti aperti (fix round 2 F4): un
+// dispatch che non arriverà mai a SubagentStop. Solo sessione principale
+// (i sub-agenti sono negati da guard-budget su ogni `session.mjs use`); in audit.
+function useCloseStale(ws, sid, { actor }) {
+  const { session: before, file } = requireActive(ws, sid);
+  const invs = readJsonl(invocationsFile(ws, before.customer, sid));
+  let closed = [];
+  const session = updateSession(file, (s) => { closed = closeOpen(invs, s.ledger.invocations); });
+  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "session", actor, payload: { action: "close-stale", closed } });
+  return { session, closed };
+}
+
 const HELP = `uso: node scripts/admin/session.mjs <azione> [opzioni]
 
 Azioni (§56.2):
@@ -304,6 +323,9 @@ Azioni (§56.2):
   use scope <ID>              cella attiva (${SCOPES.join(" ")}); ricalcola allowed_paths
   use mode <m>                nrt | config | ops | diag
   use budget <n>              budget di sessione in token (es. 200000 o 200k); in audit
+  use close-stale             chiude a mano i sotto-compiti rimasti aperti (dispatch
+                              mai arrivati a SubagentStop); in audit. Senza, un
+                              dispatch aperto scade dopo ${OPEN_TTL_MS / 3600000} h.
   show | use show             stato corrente
 
 Opzioni: --session <id> (default: $JVC_SESSION_ID, poi .jvc/current-session)
@@ -337,6 +359,7 @@ export async function run(argv, env = process.env) {
     else if (action === "use" && what === "scope") result = useScope(ws, sid, value, { actor });
     else if (action === "use" && what === "mode") result = useMode(ws, sid, value, { actor });
     else if (action === "use" && what === "budget") result = useBudget(ws, sid, value, { actor });
+    else if (action === "use" && what === "close-stale") result = useCloseStale(ws, sid, { actor });
     else throw new CliError(1, `azione sconosciuta: ${positional.join(" ")}`);
     if (asJson) console.log(JSON.stringify({ ok: true, ...result }));
     else console.log(summary(result.session));
