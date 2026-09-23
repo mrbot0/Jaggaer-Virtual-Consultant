@@ -4,9 +4,9 @@ name: Query su tabelle ignote
 definition: Insieme degli item che sono query su tabelle non ancora validate, consegnate con avvertenza esplicita.
 inclusion:
   - id: I1
-    field: analytics_pattern
+    field: classification.analytics_pattern
     op: eq
-    value: "010"
+    value: query-tabelle-ignote
   - id: I2
     facet: F5
     op: eq

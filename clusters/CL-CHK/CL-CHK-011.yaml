@@ -4,9 +4,9 @@ name: Ambiente pronto
 definition: Insieme degli item che verificano tenant raggiungibile, nessun banner di manutenzione, budget residuo sufficiente.
 inclusion:
   - id: I1
-    field: check_area
+    field: classification.check_area
     op: eq
-    value: "011"
+    value: ambiente-pronto
   - id: I2
     facet: F4
     op: eq

@@ -4,7 +4,7 @@ name: Scadenze
 definition: "Insieme degli item che configurano l'area 'scadenze' (area 018): oggetti di configurazione e procedure che li modificano."
 inclusion:
   - id: I1
-    field: cfg_area
+    field: classification.cfg_area
     op: eq
     value: "018"
   - id: I2

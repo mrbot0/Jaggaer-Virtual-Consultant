@@ -4,9 +4,9 @@ name: Campo obbligatorio marcato
 definition: "Insieme degli item che descrivono campi marcati come obbligatori nel form (required: true)."
 inclusion:
   - id: I1
-    field: ui_pattern
+    field: classification.ui_pattern
     op: eq
-    value: "005"
+    value: obbligatorio-marcato
   - id: I2
     facet: F4
     op: eq

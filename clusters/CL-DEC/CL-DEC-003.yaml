@@ -4,9 +4,9 @@ name: Progettare una configurazione
 definition: "Insieme degli item che sono decisioni di progettazione di una configurazione (§6.4: tecnica .50)."
 inclusion:
   - id: I1
-    field: decision_kind
+    field: classification.decision_kind
     op: eq
-    value: "003"
+    value: progettare-configurazione
   - id: I2
     facet: F4
     op: eq

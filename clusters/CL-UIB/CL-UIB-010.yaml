@@ -4,9 +4,9 @@ name: Caricamento di file
 definition: Insieme degli item che caricano file o allegati da interfaccia.
 inclusion:
   - id: I1
-    field: ui_pattern
+    field: classification.ui_pattern
     op: eq
-    value: "010"
+    value: caricamento-file
   - id: I2
     facet: F4
     op: eq

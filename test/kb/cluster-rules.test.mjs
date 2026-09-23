@@ -14,7 +14,7 @@ const CLUSTERS_DIR = fileURLToPath(new URL("../../clusters", import.meta.url));
 const base = () => ({
   code: "CL-CFG-005", family: "CL-CFG", name: "Form e campi",
   definition: "Insieme degli item che descrivono form documento e campi configurabili.",
-  inclusion: [{ id: "I1", field: "cfg_area", op: "eq", value: "005" }, { id: "I2", facet: "F4", op: "in", value: ["oggetto-config", "procedura"] }],
+  inclusion: [{ id: "I1", field: "classification.cfg_area", op: "eq", value: "005" }, { id: "I2", facet: "F4", op: "in", value: ["oggetto-config", "procedura"] }],
   exclusion: [{ id: "E1", field: "type", op: "in", value: ["PAT", "PBK", "BRF", "RUL"] }],
   facet_signature: { F4: "oggetto-config" }, owner: "config-designer",
   portability: { class: "condizionata", condition: "F7" }, domain: "kb", status: "bootstrap", depth: 1,
@@ -37,7 +37,7 @@ test("firma di faccette: copertura ≥ 80% dei membri; F6 è un array", () => {
 });
 
 test("criteri verificabili: facet eq/in/neq, field exists/eq/in; null = indeterminato", () => {
-  const it = item("C.ACME.ADM.CFG.0001", { F6: ["indirect"] }, { cfg_area: "005", mandatory: { kind: "conditional", by_role: null } });
+  const it = item("C.ACME.ADM.CFG.0001", { F6: ["indirect"] }, { classification: { cfg_area: "005" }, mandatory: { kind: "conditional", by_role: null } });
   assert.equal(evaluateCriterion({ facet: "F4", op: "eq", value: "oggetto-config" }, it), true);
   assert.equal(evaluateCriterion({ facet: "F6", op: "eq", value: "indirect" }, it), true);
   assert.equal(evaluateCriterion({ facet: "F6", op: "in", value: ["direct", "misto"] }, it), false);
@@ -85,7 +85,7 @@ test("RC-04 ≥ 3 membri validati; saltata per i cluster di bootstrap", () => {
 });
 
 test("RC-05 distinzione: Jaccard < 50% con ogni cluster della famiglia", () => {
-  const other = { ...base(), code: "CL-CFG-006", inclusion: [{ field: "cfg_area", op: "eq", value: "006" }, base().inclusion[1]] };
+  const other = { ...base(), code: "CL-CFG-006", inclusion: [{ field: "classification.cfg_area", op: "eq", value: "006" }, base().inclusion[1]] };
   assert.equal(rc05(base(), { familyClusters: [base(), other] }).ok, true);   // 1/3
   const twin = { ...base(), code: "CL-CFG-099" };
   assert.equal(rc05(base(), { familyClusters: [base(), twin] }).ok, false);   // 1
@@ -174,6 +174,29 @@ test("ogni cluster di bootstrap valida e passa RC-01, 02, 03, 05, 07, 08, 09, 10
     }
     assert.equal(r.ok, true, c.code);
   }
+});
+
+// Campi di contenuto definiti dalla spec (§19.2 PRF, §19.6.2 FLD, §20.6.2 ERR, §9.4 EPI, §14.4 STR);
+// tutto il resto deve passare da `classification.*` a vocabolario chiuso (schemas/item.base.schema.json).
+const SPEC_FIELDS = new Set(["type", "message", "category", "page_signature", "key_ref", "lineage.propagates_to", "mandatory.kind",
+  "mandatory.in_states", "mandatory.by_role", "mandatory.reason.kind", "shape", "code", "sector", "legal.public_procurement_law",
+  "legal.group", "erp.system", "erp.middleware", "procurement_model.centralization", "procurement_model.catalog_usage", "procurement_model.sourcing"]);
+
+test("ogni criterio su un campo usa un campo della spec o classification.<campo> con valori del vocabolario chiuso", () => {
+  const schema = JSON.parse(readFileSync(new URL("../../schemas/item.base.schema.json", import.meta.url), "utf8"));
+  const vocab = schema.properties.classification.properties;
+  const used = new Set();
+  for (const { c } of loadCatalog()) {
+    for (const k of [...c.inclusion, ...c.exclusion].filter((x) => x.field)) {
+      if (k.field.startsWith("classification.")) {
+        const name = k.field.slice("classification.".length);
+        assert.ok(vocab[name], `${c.code}: ${k.field} non dichiarato in item.base.classification`);
+        for (const v of k.value === undefined ? [] : Array.isArray(k.value) ? k.value : [k.value]) assert.ok(vocab[name].enum.includes(v), `${c.code}: ${k.field}=${v} fuori vocabolario`);
+        used.add(name);
+      } else assert.ok(SPEC_FIELDS.has(k.field), `${c.code}: campo '${k.field}' non della spec e non in classification`);
+    }
+  }
+  assert.deepEqual([...used].sort(), Object.keys(vocab).sort());   // ogni campo del vocabolario è usato da almeno un cluster
 });
 
 test("nomi della spec: CL-CFG da §7.2 con rischio base §28.5; CL-CHK da §62; CL-FLD da §19.6.3", () => {

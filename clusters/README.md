@@ -4,10 +4,12 @@ Cluster semantici curati (§7.1), un file per cluster: `clusters/<FAMIGLIA>/<COD
 `schemas/cluster.schema.json` e dalle regole RC-01..RC-10 di `scripts/kb/cluster-rules.mjs`. Tutti hanno
 `status: bootstrap`: RC-04 (≥ 3 membri validati) e RC-06 (firma su ≥ 80% dei membri) sono saltate con motivo
 finché la prima digestione non porta membri. `reindex --clusters` li carica nella tabella `clusters` del DB;
-`scripts/kb/cluster.mjs` ammette, rigetta, fonde, scinde, mette in quarantena, campiona e depreca (§7.3).
+`scripts/kb/cluster.mjs` ammette (scrivendo la DEC di DT-005), rigetta, fonde, scinde, mette in quarantena, campiona e depreca (§7.3).
 
-Criteri: `{ facet: Fn, op: eq|in|neq, value }` o `{ field: percorso, op: exists|eq|in, value }`. Un campo
-dichiarato con valore `null` o una faccetta assente rendono il criterio indeterminato → quarantena (nel dubbio non
+Criteri: `{ facet: Fn, op: eq|in|neq, value }` o `{ field: percorso, op: exists|eq|in, value }`. I campi sono quelli della
+spec (PRF §19.2, FLD §19.6.2, ERR §20.6.2, EPI §9.4, STR §14.4) oppure `classification.<campo>`, a vocabolario chiuso in
+`schemas/item.base.schema.json` e descritti in `docs/classification-fields.md`. Un campo non dichiarato non soddisfa
+eq/in; un campo dichiarato `null` o una faccetta assente rendono il criterio indeterminato → quarantena (nel dubbio non
 entra). Ogni cluster di dominio `kb` esclude i tipi analitici PAT PBK BRF RUL (§1.1).
 
 Nomi dalla spec dove li dà (CL-SYS ← F5, CL-KNW ← F4, CL-PRO ← F6, CL-ERP ← F7, CL-CFG ← §7.2 con rischio §28.5,

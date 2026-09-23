@@ -4,9 +4,9 @@ name: Testo di validazione in rosso
 definition: Insieme degli item che mostrano testo di validazione in rosso accanto al campo.
 inclusion:
   - id: I1
-    field: ui_pattern
+    field: classification.ui_pattern
     op: eq
-    value: "008"
+    value: validazione-in-rosso
   - id: I2
     facet: F4
     op: eq

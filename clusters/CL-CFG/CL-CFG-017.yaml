@@ -4,7 +4,7 @@ name: Regole di validazione
 definition: "Insieme degli item che configurano l'area 'regole di validazione' (area 017): oggetti di configurazione e procedure che li modificano."
 inclusion:
   - id: I1
-    field: cfg_area
+    field: classification.cfg_area
     op: eq
     value: "017"
   - id: I2

@@ -4,7 +4,7 @@ name: Obbligatorietà per importo
 definition: Insieme degli item che sono campi obbligatori sopra o sotto una condizione di importo.
 inclusion:
   - id: I1
-    field: mandatory.when_kind
+    field: classification.mandatory_condition
     op: eq
     value: importo
   - id: I2

@@ -4,9 +4,9 @@ name: Griglia di righe del documento
 definition: Insieme degli item che gestiscono le righe del documento in una griglia modificabile.
 inclusion:
   - id: I1
-    field: ui_pattern
+    field: classification.ui_pattern
     op: eq
-    value: "013"
+    value: griglia-righe
   - id: I2
     facet: F4
     op: eq

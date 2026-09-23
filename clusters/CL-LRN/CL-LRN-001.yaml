@@ -4,9 +4,9 @@ name: Elemento nuovo
 definition: "Insieme degli item che nascono da un elemento osservato non presente nell'Atlas: SEL candidato."
 inclusion:
   - id: I1
-    field: learning_kind
+    field: classification.learning_kind
     op: eq
-    value: "001"
+    value: elemento-nuovo
   - id: I2
     facet: F1
     op: eq

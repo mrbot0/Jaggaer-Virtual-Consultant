@@ -4,9 +4,9 @@ name: Scrivere una query Analytics
 definition: "Insieme degli item che sono decisioni di scrittura di una query Analytics (§6.4: empirica .75)."
 inclusion:
   - id: I1
-    field: decision_kind
+    field: classification.decision_kind
     op: eq
-    value: "006"
+    value: scrivere-query-analytics
   - id: I2
     facet: F4
     op: eq

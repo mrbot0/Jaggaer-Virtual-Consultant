@@ -4,9 +4,9 @@ name: Schede di sezione del documento
 definition: "Insieme degli item che organizzano il documento in schede o sezioni (page_signature con #sezione)."
 inclusion:
   - id: I1
-    field: ui_pattern
+    field: classification.ui_pattern
     op: eq
-    value: "012"
+    value: schede-sezione
   - id: I2
     facet: F4
     op: eq

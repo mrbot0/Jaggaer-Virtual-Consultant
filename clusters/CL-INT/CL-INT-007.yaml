@@ -4,9 +4,9 @@ name: Notifica in uscita
 definition: Insieme degli item che inviano notifiche email o messaggi a destinatari esterni.
 inclusion:
   - id: I1
-    field: interface_pattern
+    field: classification.interface_pattern
     op: eq
-    value: "007"
+    value: notifica-uscita
   - id: I2
     facet: F4
     op: eq

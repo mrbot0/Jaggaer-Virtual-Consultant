@@ -4,9 +4,9 @@ name: Validazione asincrona in griglia
 definition: Insieme degli item che mostrano validazioni asincrone su righe di una griglia, con esito che arriva dopo l'azione.
 inclusion:
   - id: I1
-    field: ui_pattern
+    field: classification.ui_pattern
     op: eq
-    value: "001"
+    value: validazione-asincrona-griglia
   - id: I2
     facet: F4
     op: eq

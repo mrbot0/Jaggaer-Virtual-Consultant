@@ -4,9 +4,9 @@ name: Post-modifica di configurazione
 definition: Insieme degli item che verificano dopo il salvataggio che il valore letto sia quello impostato e che NRT.*.CFG sia verde.
 inclusion:
   - id: I1
-    field: check_area
+    field: classification.check_area
     op: eq
-    value: "003"
+    value: post-modifica-config
   - id: I2
     facet: F4
     op: eq

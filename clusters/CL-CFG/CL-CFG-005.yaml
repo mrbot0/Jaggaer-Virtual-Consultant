@@ -4,7 +4,7 @@ name: Form e campi
 definition: "Insieme degli item che configurano l'area 'form e campi' (area 005): oggetti di configurazione e procedure che li modificano."
 inclusion:
   - id: I1
-    field: cfg_area
+    field: classification.cfg_area
     op: eq
     value: "005"
   - id: I2

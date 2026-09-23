@@ -4,9 +4,9 @@ name: Messaggio toast
 definition: Insieme degli item che mostrano messaggi toast transitori dopo un'azione.
 inclusion:
   - id: I1
-    field: ui_pattern
+    field: classification.ui_pattern
     op: eq
-    value: "006"
+    value: toast
   - id: I2
     facet: F4
     op: eq

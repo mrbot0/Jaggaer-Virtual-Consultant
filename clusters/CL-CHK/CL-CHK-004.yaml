@@ -4,9 +4,9 @@ name: Salute delle integrazioni
 definition: Insieme degli item che verificano code di uscita, latenza entro la p95 dichiarata e raggiungibilità degli stub.
 inclusion:
   - id: I1
-    field: check_area
+    field: classification.check_area
     op: eq
-    value: "004"
+    value: salute-integrazioni
   - id: I2
     facet: F4
     op: eq

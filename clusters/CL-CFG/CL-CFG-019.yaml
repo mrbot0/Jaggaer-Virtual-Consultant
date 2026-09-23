@@ -4,7 +4,7 @@ name: Scorecard
 definition: "Insieme degli item che configurano l'area 'scorecard' (area 019): oggetti di configurazione e procedure che li modificano."
 inclusion:
   - id: I1
-    field: cfg_area
+    field: classification.cfg_area
     op: eq
     value: "019"
   - id: I2

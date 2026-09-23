@@ -4,7 +4,7 @@ name: Campi di sistema e audit
 definition: Insieme degli item che sono campi della sezione funzionale 'campi di sistema e audit' di un documento; ogni FLD appartiene a esattamente un CL-FLD.
 inclusion:
   - id: I1
-    field: functional_section
+    field: classification.functional_section
     op: eq
     value: sistema-audit
   - id: I2

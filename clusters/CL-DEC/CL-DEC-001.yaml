@@ -4,9 +4,9 @@ name: Generare un test
 definition: "Insieme degli item che sono decisioni di generazione di un test (§6.4: tecnica .30, d'uso .35, empirica .35)."
 inclusion:
   - id: I1
-    field: decision_kind
+    field: classification.decision_kind
     op: eq
-    value: "001"
+    value: generare-test
   - id: I2
     facet: F4
     op: eq

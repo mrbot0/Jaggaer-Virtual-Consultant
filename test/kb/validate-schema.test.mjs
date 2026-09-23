@@ -16,6 +16,15 @@ test("una faccetta mancante rende l'item invalido (F10)", () => {
   assert.ok(r.errors.some((e) => e.includes("F10")));
 });
 
+test("classification: campi a vocabolario chiuso, opzionali", () => {
+  const it = load("valid.flw.yaml");
+  assert.equal(validateItem({ ...it, classification: { cfg_area: "005", functional_section: "contabilita" } }).ok, true);
+  const bad = validateItem({ ...it, classification: { cfg_area: "021" } });
+  assert.equal(bad.ok, false);
+  assert.ok(bad.errors.some((e) => e.includes("classification")));
+  assert.equal(validateItem({ ...it, classification: { area_cfg: "005" } }).ok, false);   // campo non dichiarato
+});
+
 test("un summary oltre 60 parole è rifiutato", () => {
   const it = load("valid.flw.yaml");
   it.summary = Array(61).fill("parola").join(" ");

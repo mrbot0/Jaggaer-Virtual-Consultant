@@ -4,9 +4,9 @@ name: Dialogo modale di conferma
 definition: Insieme degli item che richiedono conferma in un dialogo modale prima di procedere.
 inclusion:
   - id: I1
-    field: ui_pattern
+    field: classification.ui_pattern
     op: eq
-    value: "009"
+    value: modale-conferma
   - id: I2
     facet: F4
     op: eq

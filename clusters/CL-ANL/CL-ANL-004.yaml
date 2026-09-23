@@ -4,9 +4,9 @@ name: Metriche ricorrenti
 definition: Insieme degli item che descrivono metriche ricorrenti inferite dai report esistenti.
 inclusion:
   - id: I1
-    field: analytics_pattern
+    field: classification.analytics_pattern
     op: eq
-    value: "004"
+    value: metrica-ricorrente
   - id: I2
     facet: F5
     op: eq

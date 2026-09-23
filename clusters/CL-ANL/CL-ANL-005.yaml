@@ -4,9 +4,9 @@ name: Validazione per conteggi e campioni
 definition: Insieme degli item che sono stati validati con conteggi e campioni contro il profilo del cliente.
 inclusion:
   - id: I1
-    field: analytics_pattern
+    field: classification.analytics_pattern
     op: eq
-    value: "005"
+    value: validazione-conteggi-campioni
   - id: I2
     facet: F5
     op: eq

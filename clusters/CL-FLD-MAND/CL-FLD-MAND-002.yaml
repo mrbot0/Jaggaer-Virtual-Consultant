@@ -21,7 +21,7 @@ exclusion:
       - RUL
     note: dominio analitico escluso (§1.1)
   - id: E2
-    field: mandatory.when_kind
+    field: classification.mandatory_condition
     op: exists
   - id: E3
     field: mandatory.by_role

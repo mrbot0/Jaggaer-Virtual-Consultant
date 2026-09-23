@@ -4,7 +4,7 @@ name: Replica del precedente
 definition: Insieme degli item che codificano o applicano la strategia STR-REPLAY ('replica del precedente') del repertorio di §14.2.
 inclusion:
   - id: I1
-    field: strategy
+    field: code
     op: eq
     value: STR-REPLAY
   - id: I2

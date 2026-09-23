@@ -4,9 +4,9 @@ name: Qualità delle anagrafiche
 definition: Insieme degli item che verificano fixture strutturali, assenza di duplicati per P.IVA ed entità di test datate.
 inclusion:
   - id: I1
-    field: check_area
+    field: classification.check_area
     op: eq
-    value: "005"
+    value: qualita-anagrafiche
   - id: I2
     facet: F4
     op: eq

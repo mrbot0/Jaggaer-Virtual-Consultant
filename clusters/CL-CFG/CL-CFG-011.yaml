@@ -4,7 +4,7 @@ name: Tassonomie
 definition: "Insieme degli item che configurano l'area 'tassonomie' (area 011): oggetti di configurazione e procedure che li modificano."
 inclusion:
   - id: I1
-    field: cfg_area
+    field: classification.cfg_area
     op: eq
     value: "011"
   - id: I2

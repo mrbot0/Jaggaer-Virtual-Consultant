@@ -4,7 +4,7 @@ name: Utenti e ruoli
 definition: "Insieme degli item che configurano l'area 'utenti e ruoli' (area 002): oggetti di configurazione e procedure che li modificano."
 inclusion:
   - id: I1
-    field: cfg_area
+    field: classification.cfg_area
     op: eq
     value: "002"
   - id: I2

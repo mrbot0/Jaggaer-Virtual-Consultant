@@ -4,9 +4,9 @@ name: Uscita asincrona verso ERP
 definition: Insieme degli item che inviano documenti all'ERP in modo asincrono attraverso una coda di uscita.
 inclusion:
   - id: I1
-    field: interface_pattern
+    field: classification.interface_pattern
     op: eq
-    value: "001"
+    value: uscita-asincrona-erp
   - id: I2
     facet: F4
     op: eq

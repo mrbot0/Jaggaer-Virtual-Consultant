@@ -4,7 +4,7 @@ name: Obbligatorietà per categoria o società
 definition: Insieme degli item che sono campi obbligatori per una condizione di categoria o di società.
 inclusion:
   - id: I1
-    field: mandatory.when_kind
+    field: classification.mandatory_condition
     op: eq
     value: categoria-societa
   - id: I2

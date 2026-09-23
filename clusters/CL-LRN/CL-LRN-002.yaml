@@ -4,9 +4,9 @@ name: Divergenza dal documentato
 definition: "Insieme degli item che nascono da un'osservazione che contraddice il documentato: CTR con aggiornamento proposto."
 inclusion:
   - id: I1
-    field: learning_kind
+    field: classification.learning_kind
     op: eq
-    value: "002"
+    value: divergenza-dal-documentato
   - id: I2
     facet: F1
     op: eq

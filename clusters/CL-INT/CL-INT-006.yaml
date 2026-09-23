@@ -4,9 +4,9 @@ name: Autenticazione federata
 definition: Insieme degli item che autenticano gli utenti attraverso un identity provider esterno.
 inclusion:
   - id: I1
-    field: interface_pattern
+    field: classification.interface_pattern
     op: eq
-    value: "006"
+    value: autenticazione-federata
   - id: I2
     facet: F4
     op: eq

@@ -4,9 +4,9 @@ name: Vincolo dal messaggio
 definition: "Insieme degli item che nascono da un messaggio di validazione: vincolo KEY o LCY con il testo esatto."
 inclusion:
   - id: I1
-    field: learning_kind
+    field: classification.learning_kind
     op: eq
-    value: "004"
+    value: vincolo-dal-messaggio
   - id: I2
     facet: F1
     op: eq

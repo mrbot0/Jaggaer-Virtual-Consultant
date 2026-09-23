@@ -4,9 +4,9 @@ name: Notifiche
 definition: Insieme degli item che verificano che i template di notifica referenziati dai workflow esistano.
 inclusion:
   - id: I1
-    field: check_area
+    field: classification.check_area
     op: eq
-    value: "007"
+    value: notifiche
   - id: I2
     facet: F4
     op: eq

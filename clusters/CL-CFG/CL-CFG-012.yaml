@@ -4,7 +4,7 @@ name: Valute e unità di misura
 definition: "Insieme degli item che configurano l'area 'valute e unità di misura' (area 012): oggetti di configurazione e procedure che li modificano."
 inclusion:
   - id: I1
-    field: cfg_area
+    field: classification.cfg_area
     op: eq
     value: "012"
   - id: I2

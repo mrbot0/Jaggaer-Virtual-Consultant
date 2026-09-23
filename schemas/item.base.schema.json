@@ -9,6 +9,24 @@
     "title": { "type": "string", "minLength": 3, "maxLength": 140 },
     "summary": { "type": "string" },
     "facets": { "$ref": "facets.schema.json" },
-    "sources": { "type": "array", "minItems": 1 }
+    "sources": { "type": "array", "minItems": 1 },
+    "classification": {
+      "description": "Campi di classificazione assegnati dal digester, a vocabolario chiuso, su cui si verificano i criteri dei cluster (clusters/**, docs/classification-fields.md). Opzionale; ogni campo presente deve avere un valore del vocabolario.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cfg_area": { "description": "area di configurazione §7.2 (CL-CFG)", "enum": ["001","002","003","004","005","006","007","008","009","010","011","012","013","014","015","016","017","018","019","020"] },
+        "ui_pattern": { "description": "pattern UI (CL-UIB)", "enum": ["validazione-asincrona-griglia","lookup-ricerca","combobox-opzioni-chiuse","testo-libero","obbligatorio-marcato","toast","banner","validazione-in-rosso","modale-conferma","caricamento-file","salva-pubblica","schede-sezione","griglia-righe","visibile-per-ruolo"] },
+        "interface_pattern": { "description": "pattern di interfaccia (CL-INT)", "enum": ["uscita-asincrona-erp","ingresso-erp","chiamata-sincrona","file-pianificato","punchout","autenticazione-federata","notifica-uscita","conferma-controparte","errore-silente","sincronizzazione-anagrafiche"] },
+        "check_area": { "description": "area del check ripetitivo (CL-CHK, §62)", "enum": ["pre-azione-operativa","pre-modifica-config","post-modifica-config","salute-integrazioni","qualita-anagrafiche","permessi","notifiche","coerenza-workflow","coerenza-query-analytics","fixture-test","ambiente-pronto"] },
+        "learning_kind": { "description": "tipo di apprendimento dall'osservazione (CL-LRN, §20.2)", "enum": ["elemento-nuovo","divergenza-dal-documentato","configurazione-osservata","vincolo-dal-messaggio","passo-non-documentato","conferma-ripetuta"] },
+        "analytics_pattern": { "description": "pattern Analytics (CL-ANL, §20.3)", "enum": ["tabella-enumerata","colonna-chiave","join-da-report","metrica-ricorrente","validazione-conteggi-campioni","valori-enumerati","colonna-testo-libero","query-con-limit","query-validata","query-tabelle-ignote"] },
+        "decision_kind": { "description": "tipo di decisione (CL-DEC, §6.4)", "enum": ["generare-test","scegliere-selettore","progettare-configurazione","eseguire","classificare-fallimento","scrivere-query-analytics"] },
+        "functional_section": { "description": "sezione funzionale del documento per un FLD (CL-FLD, §19.6.3)", "enum": ["intestazione","righe","contabilita","fiscalita","logistica","riferimento-fornitore","prezzi-valute","allegati","workflow-approvazione","riferimenti-monte","custom-cliente","sistema-audit","testi-note"] },
+        "mandatory_condition": { "description": "tipo di condizione di un'obbligatorietà condizionale (CL-FLD-MAND-003/004)", "enum": ["importo","categoria-societa"] },
+        "portability_condition": { "description": "faccetta o cluster che condiziona la portabilità (CL-PRT-002..004)", "enum": ["F6","F7","CL-CFG-001","CL-CFG-002","CL-CFG-003","CL-CFG-004","CL-CFG-005","CL-CFG-006","CL-CFG-007","CL-CFG-008","CL-CFG-009","CL-CFG-010","CL-CFG-011","CL-CFG-012","CL-CFG-013","CL-CFG-014","CL-CFG-015","CL-CFG-016","CL-CFG-017","CL-CFG-018","CL-CFG-019","CL-CFG-020"] },
+        "configured_by": { "description": "chi configura il soggetto (criterio SaaS vs integrato §19.4, CL-SYS-011)", "enum": ["admin-jaggaer","team-erp"] }
+      }
+    }
   }
 }

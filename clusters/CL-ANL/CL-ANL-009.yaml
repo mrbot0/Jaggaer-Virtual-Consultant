@@ -4,9 +4,9 @@ name: Query validate
 definition: Insieme degli item che sono query eseguite due volte con risultati coerenti e salvate con portabilità.
 inclusion:
   - id: I1
-    field: analytics_pattern
+    field: classification.analytics_pattern
     op: eq
-    value: "009"
+    value: query-validata
   - id: I2
     facet: F5
     op: eq

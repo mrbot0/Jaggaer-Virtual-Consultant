@@ -4,7 +4,7 @@ name: Cataloghi e punchout
 definition: "Insieme degli item che configurano l'area 'cataloghi e punchout' (area 010): oggetti di configurazione e procedure che li modificano."
 inclusion:
   - id: I1
-    field: cfg_area
+    field: classification.cfg_area
     op: eq
     value: "010"
   - id: I2

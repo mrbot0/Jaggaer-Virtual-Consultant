@@ -4,9 +4,9 @@ name: Sincronizzazione anagrafiche
 definition: Insieme degli item che allineano anagrafiche (fornitori, centri di costo) con il sistema che ne è proprietario.
 inclusion:
   - id: I1
-    field: interface_pattern
+    field: classification.interface_pattern
     op: eq
-    value: "010"
+    value: sincronizzazione-anagrafiche
   - id: I2
     facet: F4
     op: eq

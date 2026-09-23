@@ -4,9 +4,9 @@ name: Banner di errore o avviso
 definition: Insieme degli item che mostrano banner di errore, avviso o manutenzione in testa alla pagina.
 inclusion:
   - id: I1
-    field: ui_pattern
+    field: classification.ui_pattern
     op: eq
-    value: "007"
+    value: banner
   - id: I2
     facet: F4
     op: eq

@@ -8,9 +8,29 @@ inclusion:
     op: eq
     value: condizionata
   - id: I2
-    field: portability_condition
-    op: eq
-    value: CL-CFG
+    field: classification.portability_condition
+    op: in
+    value:
+      - CL-CFG-001
+      - CL-CFG-002
+      - CL-CFG-003
+      - CL-CFG-004
+      - CL-CFG-005
+      - CL-CFG-006
+      - CL-CFG-007
+      - CL-CFG-008
+      - CL-CFG-009
+      - CL-CFG-010
+      - CL-CFG-011
+      - CL-CFG-012
+      - CL-CFG-013
+      - CL-CFG-014
+      - CL-CFG-015
+      - CL-CFG-016
+      - CL-CFG-017
+      - CL-CFG-018
+      - CL-CFG-019
+      - CL-CFG-020
 exclusion:
   - id: E1
     field: type

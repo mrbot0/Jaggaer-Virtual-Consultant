@@ -4,7 +4,7 @@ name: Cerca la smentita
 definition: Insieme degli item che codificano o applicano la strategia STR-DISCONFIRM ('cerca la smentita') del repertorio di §14.2.
 inclusion:
   - id: I1
-    field: strategy
+    field: code
     op: eq
     value: STR-DISCONFIRM
   - id: I2

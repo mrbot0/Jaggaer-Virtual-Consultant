@@ -7,17 +7,17 @@
 cases:
   - name: "CFG dell'area form e campi"
     cluster: CL-CFG-005
-    item: { id: C.ACME.ADM.CFG.0011, type: CFG, cfg_area: "005", facets: { F4: oggetto-config, F12: validato, F10: R2 } }
+    item: { id: C.ACME.ADM.CFG.0011, type: CFG, classification: { cfg_area: "005" }, facets: { F4: oggetto-config, F12: validato, F10: R2 } }
     verdict: ammesso
     rule: ok
   - name: "CFG di un'altra area (template)"
     cluster: CL-CFG-005
-    item: { id: C.ACME.ADM.CFG.0012, type: CFG, cfg_area: "006", facets: { F4: oggetto-config, F12: validato, F10: R1 } }
+    item: { id: C.ACME.ADM.CFG.0012, type: CFG, classification: { cfg_area: "006" }, facets: { F4: oggetto-config, F12: validato, F10: R1 } }
     verdict: rigettato
     rule: inclusion:I1
   - name: "pattern analitico con faccette da configurazione (confine di dominio)"
     cluster: CL-CFG-005
-    item: { id: C.ACME.ADM.PAT.0001, type: PAT, cfg_area: "005", facets: { F4: oggetto-config, F12: validato } }
+    item: { id: C.ACME.ADM.PAT.0001, type: PAT, classification: { cfg_area: "005" }, facets: { F4: oggetto-config, F12: validato } }
     verdict: rigettato
     rule: exclusion:E1
   - name: "campo sempre obbligatorio ma per integrazione: va in CL-FLD-MAND-006"
@@ -53,6 +53,6 @@ cases:
     rule: undetermined:I2
   - name: "procedura con il pattern di griglia ma natura procedura"
     cluster: CL-UIB-001
-    item: { id: S.STD.CAT.FLW.0004, type: FLW, ui_pattern: "001", facets: { F4: procedura, F12: validato } }
+    item: { id: S.STD.CAT.FLW.0004, type: FLW, classification: { ui_pattern: validazione-asincrona-griglia }, facets: { F4: procedura, F12: validato } }
     verdict: rigettato
     rule: inclusion:I2

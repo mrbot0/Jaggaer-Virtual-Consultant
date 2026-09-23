@@ -4,7 +4,7 @@ name: Lato ERP del cliente
 definition: Insieme degli item che descrivono il lato ERP del cliente, configurato dal team ERP e non dall'admin JAGGAER, con errori spesso silenti.
 inclusion:
   - id: I1
-    field: configured_by
+    field: classification.configured_by
     op: eq
     value: team-erp
   - id: I2
