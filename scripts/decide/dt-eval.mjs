@@ -254,7 +254,10 @@ export function autoPriors(db, table, inputs, { customer, cluster, strategy } = 
 }
 
 // ——— scrittura della DEC (§29.6: prima di restituire l'esito) ———
-export function writeDecision(db, { customer, scope, root, result, agent = null, session = null, subject = null, cluster = null, strategy = null, at }) {
+// `context` (facoltativo, K3): { release, shape, facets, confidence, effects } in decision_context —
+// età in release e forma al momento per la distanza dei precedenti (§12.3), confidenza dichiarata
+// per la calibrazione (§17.4), effetti per il self-check (§17.1 #4-#5).
+export function writeDecision(db, { customer, scope, root, result, agent = null, session = null, subject = null, cluster = null, strategy = null, at, context = null }) {
   return db.transaction(() => {
     const key = { level: "L", customer, scope, type: "DEC" };
     const code = formatCode({ ...key, seq: assignSeq(db, key, { table: "decisions" }) });
@@ -263,6 +266,12 @@ export function writeDecision(db, { customer, scope, root, result, agent = null,
     db.prepare(`insert into decisions(code,table_code,agent,session,subject_code,subject_cluster,inputs,priors,score,outcome,strategy,at)
       values (?,?,?,?,?,?,?,?,?,?,?,?)`).run(code, result.table, agent, session, subject, cluster, JSON.stringify(result.inputs),
       JSON.stringify(result.prior_used), result.score, result.outcome, strat, at);
+    if (context) {
+      const shape = context.shape ?? result.inputs?.shape ?? null;
+      db.prepare("insert into decision_context(decision_code,release_ref,shape,facets,confidence,effects) values (?,?,?,?,?,?)")
+        .run(code, context.release ?? null, shape, context.facets ? JSON.stringify(context.facets) : null,
+          Number.isFinite(context.confidence) ? context.confidence : null, context.effects === undefined ? null : context.effects ? 1 : 0);
+    }
     const doc = { id: code, type: "DEC", table: result.table, table_version: result.table_version, at, agent, session,
       subject, subject_cluster: cluster, strategy: strat, inputs: result.inputs, priors: result.prior_used,
       score: result.score, outcome: result.outcome, rule: result.rule, combined: result.combined, components: result.components };
@@ -275,7 +284,8 @@ export function writeDecision(db, { customer, scope, root, result, agent = null,
 
 const HELP = `uso: node scripts/decide/dt-eval.mjs --table DT-002 --inputs inputs.json [--priors auto|file.json]
        [--customer ACME] [--scope ADM] [--db path] [--root <dir cliente>] [--session SES…] [--agent nome]
-       [--subject CODICE] [--cluster CL-…] [--strategy STR-…] [--write-dec] [--json] [--help]
+       [--subject CODICE] [--cluster CL-…] [--strategy STR-…] [--write-dec]
+       [--release R] [--confidence 0.85] [--effects] [--json] [--help]
 
 Valuta una tabella di decisione (§15, §46.6) e stampa
 { outcome, score, components, prior_used, table_version, dec_code }.
@@ -283,7 +293,9 @@ Valuta una tabella di decisione (§15, §46.6) e stampa
 --priors auto: tassi dal registro (outcomes-rates); sotto 30 DEC verificate vale il 'neutral' dichiarato.
 --priors file.json: { nome_prior: valore } in [0, 1].
 --write-dec: scrive la DEC (riga in decisions + <root>/decisions/<codice>.yaml) PRIMA di stampare
-l'esito (§29.6); richiede --db, --root, --customer (4 caratteri), --scope.
+l'esito (§29.6); richiede --db, --root, --customer (4 caratteri), --scope. --release, --confidence
+e --effects registrano il contesto della DEC (età in release per i precedenti §12.3, confidenza
+dichiarata per la calibrazione §17.4, decisione con effetti per il self-check §17.1).
 
 Exit code: 0 ok · 1 errore utente (input fuori dominio o mancante con null_policy error, tabella
 non valida o sconosciuta, argomenti) · 2 errore di sistema · 3 riservato (violazione di policy).`;
@@ -294,7 +306,7 @@ function readJsonArg(v) {
 }
 
 function main(argv) {
-  const { opts } = parseArgs(argv, { flags: ["write-dec"] });
+  const { opts } = parseArgs(argv, { flags: ["write-dec", "effects"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
   if (!opts.table || !opts.inputs) return fail(asJson, 1, "richiesti --table e --inputs");
@@ -322,7 +334,8 @@ function main(argv) {
     if (opts["write-dec"]) {
       dec_code = writeDecision(db, { customer: opts.customer, scope: opts.scope, root: opts.root, result, agent: opts.agent ?? null,
         session: opts.session ?? null, subject: opts.subject ?? null, cluster: opts.cluster ?? null, strategy: opts.strategy ?? null,
-        at: new Date().toISOString() });
+        at: new Date().toISOString(),
+        context: { release: opts.release ?? null, confidence: opts.confidence !== undefined ? Number(opts.confidence) : null, effects: !!opts.effects } });
     }
     const out = { outcome: result.outcome, score: result.score, components: result.components, prior_used: result.prior_used,
       table_version: result.table_version, dec_code, table: result.table, rule: result.rule, combined: result.combined, annotation: result.annotation };

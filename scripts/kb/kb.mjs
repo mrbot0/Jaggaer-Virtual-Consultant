@@ -1,6 +1,7 @@
 import { openDb } from "./db.mjs";
 import { find, InvalidFacetError } from "./find.mjs";
 import { resolve } from "./resolve.mjs";
+import { precedents } from "./precedents.mjs";
 import { isMain } from "../lib/is-main.mjs";
 
 const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
@@ -10,6 +11,8 @@ Comandi:
   resolve   "<testo libero>" --top N
   summary   <codice>
   get       <codice>
+  precedents <soggetto> --top N [--customer ACME] [--shape <forma>] [--release R] [--cluster CL-…]
+            decisioni passate con esito, ordinate per distanza di contesto (§12.3)
 
 Opzioni comuni: --db <file> (default knowledge.db) --json --help
 
@@ -31,9 +34,14 @@ export function run(argv) {
   }
   const { opt, facet, positional } = parseArgs(rest);
   const dbPath = opt("db", "knowledge.db");
-  if (!["find", "resolve", "summary", "get"].includes(cmd)) {
+  if (!["find", "resolve", "summary", "get", "precedents"].includes(cmd)) {
     const msg = `comando sconosciuto: ${cmd}`;
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}\n${HELP}`);
+    return { exitCode: 1 };
+  }
+  if (cmd === "precedents" && !positional[0]) {
+    const msg = "precedents richiede il codice del soggetto";
+    console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
     return { exitCode: 1 };
   }
   let db;
@@ -44,7 +52,7 @@ export function run(argv) {
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
     return { exitCode: 1 };
   }
-  const top = Number(opt("top", 10));
+  const top = Number(opt("top", cmd === "precedents" ? 5 : 10));
   const t0 = Date.now();
   let items;
   try {
@@ -57,6 +65,9 @@ export function run(argv) {
       items = db.prepare("select code,summary from items where code=?").all(positional[0]);
     } else if (cmd === "get") {
       items = db.prepare("select * from items where code=?").all(positional[0]);
+    } else if (cmd === "precedents") {
+      const context = { shape: opt("shape"), release: opt("release"), cluster: opt("cluster") };
+      items = precedents(db, positional[0], { top, customer: opt("customer"), context });
     }
   } catch (err) {
     const msg = String(err?.message ?? err);
