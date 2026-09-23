@@ -15,6 +15,7 @@ import { openDb } from "./db.mjs";
 import { evaluateCriterion, matchesSignature, jaccard, checkCluster, validateCluster } from "./cluster-rules.mjs";
 import { evaluate, loadTable, writeDecision } from "../decide/dt-eval.mjs";
 import { parseCode } from "./codes.mjs";
+import { hasParsedMandatory } from "./validate-fld.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
@@ -32,6 +33,10 @@ const nowIso = (now) => now ?? new Date().toISOString();
 // ——— giudizio puro ———
 export function judgeAdmission(cluster, item, { priors = {} } = {}) {
   const inclusion = cluster.inclusion.map((c, i) => ({ id: c.id ?? `inclusion[${i}]`, result: evaluateCriterion(c, item) }));
+  // §19.6.4 passo 6: un FLD entra in CL-FLD-MAND solo se la regola di obbligatorietà è
+  // parsata (kind del vocabolario), mai da testo libero. Criterio implicito della famiglia,
+  // valutato per primo: il rigetto nomina I-PARSED.
+  if (cluster.family === "CL-FLD-MAND") inclusion.unshift({ id: "I-PARSED", result: hasParsedMandatory(item) });
   const exclusion = cluster.exclusion.map((c, i) => ({ id: c.id ?? `exclusion[${i}]`, result: evaluateCriterion(c, item) }));
   const incFalse = inclusion.find((x) => x.result === false);
   const incNull = inclusion.find((x) => x.result === null);
@@ -95,6 +100,14 @@ export function admit(db, clusterCode, itemCode, { root, customer, agent = "clus
   const code = parseCode(itemCode);
   const cust = customer ?? (code && code.level !== "S" ? code.customer : null);
   if (!cust) throw new UsageError(`admit di ${itemCode}: serve customer (4 caratteri) per il codice della DEC`);
+  // §19.6.3: un FLD appartiene a esattamente un cluster CL-FLD di sezione e a esattamente un
+  // CL-FLD-MAND. Un secondo cluster della stessa famiglia è un rifiuto di policy: prima si
+  // rigetta (reject) l'appartenenza esistente.
+  if (["CL-FLD", "CL-FLD-MAND"].includes(cluster.family)) {
+    const other = db.prepare(`select m.cluster_code from cluster_members m join clusters c on c.code = m.cluster_code
+      where c.family = ? and m.item_code = ? and m.cluster_code <> ?`).get(cluster.family, itemCode, clusterCode);
+    if (other) throw new PolicyError(`${itemCode} è già in ${other.cluster_code}: un FLD sta in esattamente un cluster ${cluster.family} (§19.6.3)`);
+  }
   const j = judgeAdmission(cluster, item, { priors });
   let decCode = null;
   db.transaction(() => {

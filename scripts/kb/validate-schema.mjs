@@ -5,6 +5,7 @@ import addFormats from "ajv-formats";
 import { readFileSync } from "node:fs";
 import YAML from "yaml";
 import { isValidCode } from "./codes.mjs";
+import { fldErrors } from "./validate-fld.mjs";
 import { isMain } from "../lib/is-main.mjs";
 
 const load = (f) => JSON.parse(readFileSync(new URL(`../../schemas/${f}`, import.meta.url), "utf8"));
@@ -20,6 +21,8 @@ export function validateItem(obj) {
   if (obj?.id && !isValidCode(obj.id)) errors.push("id: codice non valido per livello/tipo/scope");
   const limit = obj?.type === "FLD" ? 20 : 60;
   if (words(obj?.summary) > limit) errors.push(`summary: oltre ${limit} parole`);
+  // FLD: parte specifica di schemas/fld.schema.json e regole di grafo (scripts/kb/validate-fld.mjs)
+  if (obj?.type === "FLD") for (const e of fldErrors(obj)) if (!e.startsWith("summary:") && !errors.includes(e)) errors.push(e);
   return { ok: errors.length === 0, errors };
 }
 

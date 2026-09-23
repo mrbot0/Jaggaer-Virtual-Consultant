@@ -1,0 +1,140 @@
+# L'esempio di §19.6.2 con il blocco identity di §19.20. Rispetto al testo
+# della spec: `type: FLD` è il tipo dell'item (item.base, criteri dei cluster
+# `type eq FLD`), il tipo del campo è `field_type` (vedi schemas/fld.schema.json);
+# title, facets e sources sono richiesti da item.base.
+id: S.STD.P2P.FLD.0117
+type: FLD
+title: "Centro di costo della richiesta"
+document: document.requisition
+label: { it: "Centro di costo", en: "Cost center" }
+technical_name: "REQ_HDR_COST_CENTER"
+section: header.accounting
+field_type: lookup
+options_source: master.cost_center
+key_ref: keys.cost_center.code
+
+mandatory:
+  kind: conditional
+  in_states: [PENDING_APPROVAL, APPROVED]
+  when: "document.company IN (IT01, IT02)"
+  by_role: null
+  reason:
+    kind: integration
+    ref: S.STD.XSC.INT.0001
+  source: { doc: "JAGGAER User Guide P2P 24.3", section: "3.4.2", genre: "d'uso" }
+  confirmed_by: [L.ACME.P2P.OBS.0231]
+
+editable_in_states: [DRAFT, PENDING_APPROVAL]
+default: { kind: from_user_profile, ref: "user.default_cost_center" }
+validation: [{ rule: "esiste in master.cost_center", on_fail: block }]
+visibility: { roles: [BUYER, APPROVER], when: null }
+
+lineage:
+  derived_from: null
+  propagates_to:
+    - { field: S.STD.P2P.FLD.0342, document: document.purchase_order, transform: direct }
+    - { field: S.STD.INV.FLD.0088, document: document.invoice, transform: "via ordine" }
+  required_by:
+    - { ref: S.STD.XSC.INT.0001, mapping: "E1EDP19-IDTNR", mandatory_there: true }
+    - { ref: S.STD.INV.FLD.0088, note: "abbinamento a 3 vie usa il CdC dell'ordine" }
+
+integration_relevance: high
+custom: false
+cluster: [CL-FLD-003, CL-FLD-CHAIN-012]
+summary: "CdC richiesta: lookup, obbligatorio in approvazione, alimenta ordine e IDoc, chiave ERP"
+epistemic: { shape: consolidato, k_tech: .8, k_use: .9, k_obs: .85, k_exec: .7 }
+
+identity:
+  names:
+    ui: { it: "Centro di costo", en: "Cost center" }
+    technical: "REQ_HDR_COST_CENTER"
+    db_column: "REQ_HEADER.COST_CENTER"
+    api: "costCenter"
+    integration: "E1EDP19-IDTNR"
+    aliases: ["CdC", "centro di imputazione", "cost centre"]
+  datatype:
+    type: string
+    format: "^[A-Z]{1,2}-[0-9]{4}$"
+    length: { min: 6, max: 10 }
+    case: upper
+    precision: null
+    unit: null
+    currency_col: null
+    timezone: null
+    encoding: "UTF-8, no diacritics"
+  domain:
+    kind: lookup
+    source_table: master.cost_center
+    source_system: erp_sap
+    values_count_observed: 412
+    sample_values: ["IT-0001", "IT-0442"]
+    closed: true
+    filter: "solo CdC attivi della società del documento"
+  constraints:
+    mandatory_ref: mandatory
+    unique: false
+    immutable_after: APPROVED
+    default: from_user_profile
+    validations: [{ rule: "esiste in master.cost_center", on_fail: block, message_ref: S.STD.P2P.ERR.0031 }]
+  structure:
+    entity: document.requisition
+    level: header
+    cardinality: "1"
+    part_of_table: null
+    copies_to_lines: true
+  relations:
+    fk_to: [L.ACME.ANL.TBL.0015.CC_CODE]
+    referenced_by: [S.STD.P2P.FLD.0342, S.STD.INV.FLD.0088]
+    derived_from: null
+    propagates_to: [S.STD.P2P.FLD.0342, S.STD.INV.FLD.0088]
+    depends_on: [S.STD.ADM.CFG.0012]
+  system_of_record:
+    master: erp_sap
+    replicated_to: jaggaer
+    sync: { direction: inbound, frequency: "notturna", interface: C.ACME.XSC.INT.0004 }
+    conflict_rule: "vince l'ERP; JAGGAER non crea CdC"
+  ownership:
+    business_owner: "Controllo di gestione"
+    data_steward: "Team ERP"
+    scope_owner: P2P
+  lifecycle:
+    created_at_stage: DRAFT
+    editable_until: APPROVED
+    archived_with: document
+    retention: "10 anni (fiscale)"
+  sensitivity:
+    class: interno
+    pii: false
+    commercial: false
+    financial: true
+    redact_in_evidence: false
+  errors:
+    known: [S.STD.P2P.ERR.0031, C.ACME.P2P.ERR.0007]
+  real_data:
+    fill_rate: 0.998
+    distinct_values_90d: 210
+    top_values_share: "5 CdC coprono il 61%"
+    empty_in_states: []
+    de_facto_mandatory: true
+
+identity_quality:
+  blocks_covered: 11
+  missing: [precision]
+  Q: 0.88
+  shape: consolidato
+
+facets:
+  F1: doc-standard
+  F4: struttura-dati
+  F5: saas-core
+  F6: [indirect, multi-società]
+  F7: sap-ecc
+  F8: condizionata
+  F9: continua
+  F10: R2
+  F11: deterministico
+  F12: digerito
+  F13: { verified_at: "2026-09-01", release: "R24.3" }
+  F15: d'uso
+sources:
+  - { doc: "JAGGAER User Guide P2P 24.3", section: "3.4.2", genre: "d'uso" }
