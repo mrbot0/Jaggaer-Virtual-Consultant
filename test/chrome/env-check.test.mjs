@@ -149,3 +149,15 @@ test("env-check senza --write-session: solo diagnosi, --help", () => {
   assert.equal(envCheck(["--help"]).status, 0);
   assert.equal(envCheck([]).status, 1);
 });
+
+test("K5.6 use env: remediation-scope.yaml validato e copiato in session.env con il suo hash; invalido → exit 1", () => {
+  const ws = wsWithEnv();
+  const f = join(ws, "customers/ACME/config/remediation-scope.yaml");
+  writeFileSync(f, YAML.stringify({ levels: { verde: { areas: ["CL-CFG-006"], objects: [] }, giallo: { areas: ["CL-CFG-020"], objects: ["C.ACME.ADM.CFG.0019"] } } }));
+  assert.equal(runSessionCli(["use", "env", "sandbox", "--session", "sess-1"], E(ws)).status, 0);
+  const s = sessionOf(ws);
+  assert.deepEqual(s.env.remediation.levels.giallo.objects, ["C.ACME.ADM.CFG.0019"]);
+  assert.match(s.env.remediation_sha256, /^[0-9a-f]{64}$/);
+  writeFileSync(f, YAML.stringify({ levels: { blu: { areas: ["X"] } } }));
+  assert.equal(runSessionCli(["use", "env", "sandbox", "--session", "sess-1", "--json"], E(ws)).status, 1);
+});

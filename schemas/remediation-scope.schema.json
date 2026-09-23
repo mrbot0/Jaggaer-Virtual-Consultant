@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "remediation-scope.schema.json",
+  "title": "customers/<C>/config/remediation-scope.yaml — perimetro delle correzioni di configurazione (§28.1, §52.2)",
+  "description": "Per ogni livello di perimetro DT-007 (verde · giallo · rosso) le aree CL-CFG e gli oggetti CFG che il plugin può modificare. guard-config-scope nega un passo ACT-CFG-CHANGE il cui oggetto (o area) non è elencato al livello del passo. Si modifica fuori sessione, come environments.yaml: `use env` ne copia contenuto e hash in session.env, un file cambiato dopo ⇒ deny.",
+  "type": "object",
+  "required": ["levels"],
+  "additionalProperties": false,
+  "properties": {
+    "levels": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "verde": { "$ref": "#/$defs/level" },
+        "giallo": { "$ref": "#/$defs/level" },
+        "rosso": { "$ref": "#/$defs/level" }
+      }
+    },
+    "note": { "type": "string" }
+  },
+  "$defs": {
+    "level": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "areas": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^CL-CFG-\\d{3}$" } },
+        "objects": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CFG\\.\\d{4}(\\.v\\d+)?$" } }
+      }
+    }
+  }
+}

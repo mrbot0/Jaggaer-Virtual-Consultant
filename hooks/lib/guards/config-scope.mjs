@@ -1,0 +1,229 @@
+// guard-config-scope (PreToolUse, FAIL-CLOSED) — §28.1, §29.6, §52.2, §44.4.
+//
+// Strumenti MCP del browser: attivo quando il passo attivo del piano ha verbo
+// SAVE|SUBMIT|TOGGLE|UPLOAD o classe ACT-CFG-CHANGE|SUBMIT|APPROVE|TRANSMIT|
+// PUBLISH|BULK|CREATE|UPDATE|CLOSE|UPLOAD e la chiamata ha un effetto (input,
+// click, upload, invio, dialog accettato; script e strumenti non classificati
+// durante un passo con effetto ⇒ deny). Richiede, nell'ordine:
+//   (c) perimetro (ACT-CFG-CHANGE): livello DT-007 del passo in config_levels
+//       dell'ambiente (rosso in prod solo per oggetti in prod_allowed_red) e
+//       oggetto/area elencati in remediation-scope.yaml a quel livello;
+//   (a) compensazione registrata per i passi CREATE/UPDATE/SUBMIT che salvano (§29.6);
+//   (b) ACT-CFG-CHANGE: snapshot degli oggetti governati negli ultimi 60 s;
+//   (d) approvazioni per livello e ambiente — sandbox/preprod: verde 1 (A1) ·
+//       giallo 2 (A1 + A3 del passo, §57.2) · rosso 3 (A1 + A2 + A3); prod: sempre
+//       3A; azioni R2 sui dati: il "sì" alla richiesta del passo; ACT-BULK: A1 + A3;
+//       ogni approvazione confermata nel transcript (messaggio dell'utente);
+//   (e) il token del passo (A3 o action) consumato qui, monouso, quando consente.
+// Senza piano attivo in modalità config: ogni azione con effetto è negata.
+//
+// Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit: nega le scritture su
+// approvals.jsonl, session.json, .jvc/** e sul transcript (e la sua cartella),
+// per la sessione principale e per i sub-agenti, riusando l'analisi dei comandi
+// di guard-scope (shellWriteTargets). Unica eccezione: `node <plugin>/scripts/…`
+// senza metacaratteri di shell. Rischio residuo documentato: un interprete che
+// costruisce il nome del file a runtime (node -e con stringhe calcolate) sfugge
+// all'analisi; per questo il token vale solo se la frase è anche nel transcript.
+import { dirname, resolve, join, basename } from "node:path";
+import { intersects, resolveTarget, bases, PathPolicyError } from "../paths.mjs";
+import { guarded, denyAudited, targetsOf, allRels, shellWriteTargets, subtree, SHELL_TOOLS } from "./common.mjs";
+import { browserGuarded, declaredEnv } from "./browser.mjs";
+import { activeStep } from "./plan-step.mjs";
+import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
+import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf } from "../../../scripts/admin/approvals.mjs";
+import { appendAudit } from "../audit.mjs";
+import { updateSessionFast } from "../session-write.mjs";
+
+const G = "guard-config-scope";
+export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
+export const GUARDED_CLASSES = new Set(["ACT-CFG-CHANGE", "ACT-SUBMIT", "ACT-APPROVE", "ACT-TRANSMIT", "ACT-PUBLISH", "ACT-BULK", "ACT-CREATE", "ACT-UPDATE", "ACT-CLOSE", "ACT-UPLOAD"]);
+const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
+const R2_DATA = new Set(["ACT-SUBMIT", "ACT-APPROVE", "ACT-TRANSMIT", "ACT-PUBLISH", "ACT-UPLOAD", "ACT-CLOSE"]);
+const SNAPSHOT_MS = 60000;
+export const isEffectful = (a) => ["input", "click", "upload", "script", "other"].includes(a.kind) || (a.kind === "dialog" && a.submits) || a.submits === true;
+
+// Approvazioni richieste per il passo → { a1, a2, a3, action }.
+function required(cls, step, env, level) {
+  if (cls === "ACT-CFG-CHANGE") {
+    if (env.type === "prod") return { a1: true, a2: true, a3: true, action: false };
+    const n = env.policy?.approvals?.[`config_${level}`] ?? 3;
+    return { a1: n >= 1, a2: n >= 3, a3: n >= 2, action: false };
+  }
+  if (cls === "ACT-BULK") return { a1: true, a2: false, a3: true, action: false };
+  if (R2_DATA.has(cls) && ["R2", "R3"].includes(stepRisk(step))) return { a1: false, a2: false, a3: false, action: true };
+  return { a1: false, a2: false, a3: false, action: false };
+}
+
+async function browserDecide(ctx, no) {
+  if (!ctx.actions.some(isEffectful)) return null;
+  const s = ctx.session;
+  if (!s) return null;   // senza sessione guard-environment nega già ogni strumento del browser
+  if (!s.active_plan) {
+    if (s.mode === "config") return no("in modalità config ogni azione con effetto sul browser richiede un piano attivo (step-check): nessun piano attivo in sessione");
+    return null;
+  }
+  const st = await activeStep(ctx);
+  if (st.reason) return no(st.reason);
+  const { step, ap } = st;
+  const cls = step.action_class;
+  if (!COMMIT_VERBS.has(step.verb) && !GUARDED_CLASSES.has(cls)) return null;
+  const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"}) del piano ${ap.plan_id}`;
+  if (ctx.actions.some((a) => a.kind === "script" || a.kind === "other")) return no(`script o strumento non classificato durante il ${at}: non verificabile, negato`);
+  const { env, reason } = declaredEnv(ctx, { withRemediation: true });
+  if (!env) return no(reason);
+  const info = ACT[cls];
+  if (!info) return no(`${at}: classe di azione fuori catalogo`);
+  if (info.effect === "write" && env.type === "prod") return no(`${at}: in produzione non si scrivono dati; posso farlo in sandbox o pre-produzione (§52.1)`);
+  if (info[envColumn(env.type)] === "never") return no(`${at}: ${cls} non è ammessa in ${env.type} (§29.4)`);
+
+  // (c) perimetro
+  let level = null;
+  if (cls === "ACT-CFG-CHANGE") {
+    const cfg = step.config ?? {};
+    if (!cfg.object && !cfg.area) return no(`${at}: passo di configurazione senza oggetto né area CL-CFG (config)`);
+    level = stepLevel(step);
+    const levels = env.policy?.config_levels ?? [];
+    const redOk = env.type === "prod" && level === "rosso" && !!cfg.object && (env.policy?.prod_allowed_red ?? []).includes(cfg.object);
+    if (!levels.includes(level) && !redOk) {
+      return no(`${at}: livello ${level} non ammesso nell'ambiente ${env.id} (config_levels: ${levels.join(", ") || "—"})${env.type === "prod" && level === "rosso" ? "; in produzione il rosso solo per oggetti in prod_allowed_red" : ""}`);
+    }
+    const L = env.remediation?.levels?.[level];
+    if (!env.remediation) return no(`${at}: remediation-scope.yaml assente: il perimetro delle correzioni non è dichiarato`);
+    if (!((cfg.object && L?.objects?.includes(cfg.object)) || (cfg.area && L?.areas?.includes(cfg.area)))) {
+      return no(`${at}: fuori perimetro di remediation-scope.yaml per il livello ${level}: ${[cfg.object, cfg.area].filter(Boolean).join(" / ")}`);
+    }
+  }
+  // (a) compensazione
+  if (COMP_CLASSES.has(cls) && COMMIT_VERBS.has(step.verb)) {
+    const comps = Array.isArray(s.pending?.compensations) ? s.pending.compensations : [];
+    if (!comps.some((c) => c && typeof c === "object" && c.plan === ap.plan_id && c.step === step.n)) {
+      return no(`${at}: compensazione non registrata (close/cancel/deactivate/restore) prima del passo che crea, modifica o invia (§29.6)`);
+    }
+  }
+  const now = Date.now();
+  // (b) snapshot
+  if (cls === "ACT-CFG-CHANGE") {
+    const obj = step.config?.object;
+    const fresh = (Array.isArray(s.snapshots) ? s.snapshots : []).some((x) => {
+      const age = now - Date.parse(x?.ts ?? "");
+      return age <= SNAPSHOT_MS && age >= -5000 && (!obj || (Array.isArray(x.objects) && x.objects.includes(obj)));
+    });
+    if (!fresh) return no(`${at}: serve uno snapshot degli oggetti governati${obj ? ` (${obj})` : ""} negli ultimi 60 s prima della modifica (§28.1)`);
+  }
+  // (d) approvazioni
+  const req = required(cls, step, env, level);
+  if (!req.a1 && !req.a2 && !req.a3 && !req.action) return null;
+  const file = approvalsFile(ctx.ws, ctx.customer, ctx.sid);
+  const reg = readApprovals(file);
+  if (!reg.ok) return no(`registro delle approvazioni corrotto (${reg.reason}): nessuna approvazione è valida`);
+  const second = env.policy?.second_approver_required ?? env.type === "prod";
+  const envPolicy = { ...env.policy, second_approver_required: second };
+  const w = windowState(null, ap.plan_id, envPolicy, now, { records: reg.records });
+  const P = ap.plan_id;
+  const who = second ? " DA <Nome Cognome>" : "";
+  if (req.a1 || req.a2 || req.a3) {
+    if (!w.a1) return no(`${at}: manca A1 — l'utente deve scrivere \`APPROVO PIANO ${P}${who}\` (§52.2)`);
+    if (w.expired) return no(`${at}: finestra 3A scaduta (${w.windowMs / 60000} min da A1): si riparte da \`APPROVO PIANO ${P}${who}\``);
+    if (w.a1.plan_sha256 && w.a1.plan_sha256 !== st.sha256) return no(`${at}: il piano è cambiato dopo A1: serve una nuova \`APPROVO PIANO ${P}\``);
+  }
+  if (req.a2 && !w.a2) return no(`${at}: manca A2 — l'utente deve scrivere \`APPROVO PROVA ${P}${who}\`${second ? " (persona diversa da A1)" : ""} (§52.2)`);
+  const tok = req.a3 ? w.tokenForStep(step.n) : null;
+  if (req.a3 && !tok) return no(`${at}: manca il token del passo (monouso) — l'utente deve scrivere \`APPROVO PASSO ${step.n} ${P}\``);
+  const act = req.action ? w.actionFor(step.n) : null;
+  if (req.action && !act) return no(`${at}: azione R2 senza approvazione — il manager mostra importo, stato di arrivo e compensazione e l'utente risponde \`sì\` (§57.2)`);
+  const recs = [req.a1 ? w.a1 : null, req.a2 ? w.a2 : null, tok, act].filter(Boolean);
+  const conf = confirmInTranscript(ctx.input.transcript_path, recs);
+  if (!conf.ok) return no(`${at}: approvazione non confermata dal transcript dell'utente (${conf.reason})`);
+  // (e) consumo monouso
+  const consumed = [];
+  for (const [t, kind] of [[tok, "A3"], [act, "action"]]) {
+    if (!t) continue;
+    const c = consumeStepToken(file, P, step.n, { envPolicy, now, kind });
+    if (!c) return no(`${at}: il token ${phraseOf(t)} è già stato usato (vale una volta sola)`);
+    consumed.push(c);
+  }
+  if (consumed.length) {
+    try {
+      const recsNow = readApprovals(file).records.slice(-consumed.length);
+      updateSessionFast(ctx.sessionFile, (x) => { x.approvals = [...(Array.isArray(x.approvals) ? x.approvals : []), ...recsNow.map((r) => ({ ts: r.ts, kind: r.kind, plan: r.plan, step: r.step, hash: r.hash }))]; });
+    } catch { /* lo specchio è informativo: il registro è già aggiornato */ }
+    try {
+      appendAudit(ctx.ws, { session: ctx.sid, customer: ctx.customer, scope: s.scope ?? null, kind: "decision", actor: `hook:${G}`,
+        payload: { decision: "allow", tool: ctx.tool, plan: P, step: step.n, consumed: consumed.map((c) => ({ kind: c.kind, hash: c.hash })) } });
+    } catch { /* l'audit non cambia la decisione */ }
+  }
+  return null;
+}
+
+// ---- scritture protette (Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit) ----
+const PROTECTED = [
+  ["**/approvals.jsonl", "il registro delle approvazioni lo scrive solo l'hook approval-capture (dalle frasi dell'utente)"],
+  ["**/session.json", "session.json si modifica solo con /use, env-check e gli hook del plugin"],
+  [".jvc/**", "lo stato di sessione si modifica solo con /use e con gli hook del plugin"],
+];
+const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
+const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);
+
+// `node <plugin>/scripts/…/*.mjs <argomenti>` senza metacaratteri né espansioni.
+function pluginScript(cmd, ctx) {
+  const s = cmd.trim().replace(/"\$\{CLAUDE_SESSION_ID\}"/g, "SID");
+  if (/[;&|`<>\r\n$]/.test(s)) return false;
+  const t = [...s.matchAll(/"([^"]*)"|'([^']*)'|(\S+)/g)].map((m) => m[1] ?? m[2] ?? m[3]);
+  if (!/^node(\.exe)?$/i.test(t[0] ?? "") || !/\.mjs$/i.test(t[1] ?? "")) return false;
+  const abs = resolve(ctx.cwd, t[1]);
+  const inside = bases(join(ctx.plugin, "scripts")).some((b) => { const a = resolveTarget(abs, { cwd: ctx.cwd, ws: ctx.ws }).abs; return [...a].every((x) => x.startsWith(`${b}/`)); });
+  return inside && !t.slice(2).some((a) => /^(-e|-p|--eval|--print|--import|-r|--require)$/.test(a));
+}
+
+function transcriptDirs(ctx) {
+  const tp = ctx.input.transcript_path;
+  if (typeof tp !== "string" || !tp) return { dirs: [], name: null };
+  return { dirs: bases(dirname(tp)), name: basename(tp).toLowerCase() };
+}
+const under = (abs, dirs) => dirs.some((d) => abs === d || abs.startsWith(`${d}/`));
+
+function checkTarget(ctx, T, tree, tr) {
+  for (const p of allRels(T)) {
+    for (const [area, why] of PROTECTED) if (intersects(p, area)) return `${why}: ${p}`;
+    if (tree) for (const [area, why] of TREE) if (intersects(subtree(p), area)) return `${why} (la cartella lo contiene): ${p || "."}`;
+  }
+  for (const a of T.abs) {
+    if (/(^|\/)(approvals\.jsonl|session\.json)$/.test(a)) return `${PROTECTED[/approvals/.test(a) ? 0 : 1][1]}: ${a}`;
+    if (under(a, tr.dirs) || (tree && tr.dirs.some((d) => d.startsWith(`${a}/`)))) return `il transcript della sessione (e la sua cartella) non si scrive: ${a}`;
+  }
+  return null;
+}
+
+const protectWrites = guarded(G, (ctx) => {
+  const tr = transcriptDirs(ctx);
+  const no = (why) => denyAudited(ctx, G, `scrittura negata — ${why}`);
+  if (WRITE_FILE_TOOLS.has(ctx.tool)) {
+    const r = checkTarget(ctx, targetsOf(ctx), false, tr);
+    return r ? no(r) : null;
+  }
+  const cmd = ctx.ti.command;
+  if (typeof cmd !== "string" || !cmd.trim()) return null;
+  if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
+  if (pluginScript(cmd, ctx)) return null;
+  const flat = cmd.replace(/\\/g, "/").toLowerCase();
+  if (/approvals\.jsonl/.test(flat)) return no("il comando cita approvals.jsonl: il registro delle approvazioni si legge con Read o con `approvals.mjs status`, non si tocca dalla shell");
+  if (tr.name && (flat.includes(tr.name) || tr.dirs.some((d) => flat.includes(d)))) return no("il comando cita il transcript della sessione");
+  for (const { tok, cwds, tree, soft } of shellWriteTargets(ctx, cmd)) {
+    for (const cwd of cwds) {
+      let T;
+      try { T = resolveTarget(tok, { cwd, ws: ctx.ws }); } catch (err) { if (soft && err instanceof PathPolicyError) continue; throw err; }
+      const r = checkTarget(ctx, T, tree, tr);
+      if (r) return no(r);
+    }
+  }
+  return null;
+}, { tools: new Set([...WRITE_FILE_TOOLS, ...SHELL_TOOLS]) });
+
+const browser = browserGuarded(G, browserDecide);
+
+export function decide(input, env = process.env) {
+  const tool = String(input.tool_name ?? "");
+  if (WRITE_FILE_TOOLS.has(tool) || SHELL_TOOLS.has(tool)) return protectWrites(input, env);
+  return browser(input, env);
+}
+

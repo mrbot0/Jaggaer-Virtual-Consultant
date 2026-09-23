@@ -32,6 +32,7 @@ const WRITE_DENY = [
   ["customers/*/audit/**", "l'audit è append-only e lo scrive solo l'hook audit-append (T8)"],
   ["customers/*/.sessions/**/blackboard/**", "il blackboard lo scrive solo l'hook subagent-trace"],
   ["customers/*/.sessions/*/invocations.jsonl", "le invocazioni le registra solo guard-budget"],
+  ["customers/*/.sessions/*/approvals.jsonl", "il registro delle approvazioni lo scrive solo l'hook approval-capture (K5, §52.2)"],
   ["customers/*/.sessions/*/compact-summary.md", "il riassunto lo scrive solo precompact-save"],
   [".jvc/**", "lo stato di sessione si modifica solo con /use e con gli hook del plugin"],
   ["**/session.json", "session.json si modifica solo con /use e con gli hook del plugin"],
@@ -59,7 +60,7 @@ function handoffRefusal(ctx) {
 // Scritture via shell (fix round 2 F5): per i sub-agenti valgono tutte le aree
 // di WRITE_DENY; per la sessione principale lo stato di sessione (la CLI lo
 // scrive con node, mai con una redirezione della shell).
-const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl"].includes(a));
+const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl", "customers/*/.sessions/*/approvals.jsonl"].includes(a));
 // Bersagli-cartella (rm/mv di una cartella, cp/mv dentro una cartella — fix
 // round 3): conta tutto ciò che la cartella contiene, cioè ogni antenato di un
 // file protetto è protetto. `**/session.json` qui diventa il session.json reale

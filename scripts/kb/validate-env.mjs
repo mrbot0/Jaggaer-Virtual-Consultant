@@ -80,6 +80,24 @@ export function loadEnvironmentsFile(file) {
   return { file, text, sha256: sha256(text), doc };
 }
 
+// remediation-scope.yaml (§28.1): aree CL-CFG e oggetti CFG modificabili per livello.
+export function validateRemediationScope(doc) {
+  const v = validateWith("remediation-scope.schema.json", doc);
+  return { ok: v.ok, errors: v.errors };
+}
+
+// → { doc, sha256 } (null/null se il file non esiste). Invalido ⇒ EnvFileError(1).
+export function loadRemediationScope(ws, customer) {
+  const file = remediationScopeFile(ws, customer);
+  let text;
+  try { text = readFileSync(file, "utf8"); } catch (err) { if (err.code === "ENOENT") return { doc: null, sha256: null }; throw new EnvFileError(1, `remediation-scope.yaml illeggibile (${err.code ?? err.message})`); }
+  let doc;
+  try { doc = YAML.parse(text); } catch (err) { throw new EnvFileError(1, `remediation-scope.yaml: YAML non valido (${err.message.split("\n")[0]})`); }
+  const r = validateRemediationScope(doc);
+  if (!r.ok) throw new EnvFileError(1, `remediation-scope.yaml non valido: ${r.errors.join("; ")}`, { errors: r.errors });
+  return { doc, sha256: sha256(text) };
+}
+
 const HELP = `uso: node scripts/kb/validate-env.mjs <environments.yaml> [--json]
      node scripts/kb/validate-env.mjs --customer <C> [--workspace <dir>] [--json]
 
