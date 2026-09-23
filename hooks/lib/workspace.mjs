@@ -33,6 +33,9 @@ export const currentSessionFile = (ws) => join(ws, ".jvc", "current-session");
 export const sessionDir = (ws, customer, sid) => join(ws, "customers", customer, ".sessions", sid);
 export const sessionFile = (ws, customer, sid) => join(sessionDir(ws, customer, sid), "session.json");
 export const sessionRelPath = (customer, sid) => `customers/${customer}/.sessions/${sid}/session.json`;
+export const invocationsFile = (ws, customer, sid) => join(sessionDir(ws, customer, sid), "invocations.jsonl");
+// Senza cliente il riassunto di compattazione vive accanto al puntatore.
+export const compactSummaryFile = (ws, customer, sid) => (customer ? join(sessionDir(ws, customer, sid), "compact-summary.md") : join(ws, ".jvc", "sessions", `${sid}.compact-summary.md`));
 
 export function readCurrentSession(ws) {
   try {
