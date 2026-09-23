@@ -15,7 +15,8 @@
 //   R3 al più un cluster di sezione CL-FLD-nnn e al più un CL-FLD-MAND-nnn in `cluster[]`
 //      (un FLD appartiene a esattamente uno di ciascuno, §19.6.3: l'unicità nel DB la
 //      impone l'ammissione, scripts/kb/cluster.mjs);
-//   R4 summary ≤ 20 parole (§8.3).
+//   R4 summary ≤ 20 parole (§8.3);
+//   R5 mandatory.modality raccomandazione ammette solo kind never; ambiguo non ammette alcun kind.
 // Nessun I/O oltre al caricamento degli schemi.
 import { validateWith, getValidator } from "../lib/schemas.mjs";
 import { isValidCode, parseCode } from "./codes.mjs";
@@ -52,6 +53,14 @@ export function graphRules(obj) {
   const m = obj?.mandatory;
   if (m && typeof m === "object" && m.kind === "conditional" && !nonEmpty(m.when) && !nonEmpty(m.in_states) && !nonEmpty(m.by_role)) {
     errors.push("mandatory: kind conditional richiede when, in_states o by_role (R1)");
+  }
+  // R5 (§19.10, Review Focus 5): una raccomandazione non è mai promossa a obbligo (solo kind never);
+  // una regola a modalità non determinata non produce alcun kind (il testo resta in mandatory_text).
+  if (m && typeof m === "object" && m.modality === "raccomandazione" && m.kind && m.kind !== "never") {
+    errors.push(`mandatory: kind ${m.kind} con modality raccomandazione — una raccomandazione non è mai un obbligo (R5)`);
+  }
+  if (m && typeof m === "object" && m.modality === "ambiguo" && m.kind) {
+    errors.push(`mandatory: kind ${m.kind} con modality ambiguo — una regola non determinata non produce un kind, resta in mandatory_text (R5)`);
   }
   const ints = intRefs(obj);
   if (ints.length && !(obj?.identity?.system_of_record && typeof obj.identity.system_of_record === "object")) {

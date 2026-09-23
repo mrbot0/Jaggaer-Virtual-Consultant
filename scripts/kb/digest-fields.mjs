@@ -236,8 +236,17 @@ export function accept(batchFile, digested, { root } = {}) {
     const row = (it?.technical_name && byTech.get(normalizeTechnicalName(it.technical_name)))
       ?? [it?.label?.it, it?.label?.en].filter(Boolean).map((l) => byLabel.get(normalizeLabel(l))).find(Boolean);
     if (!row) errors.push(`il campo non appartiene al lotto ${batch.batch} (né nome tecnico né label corrispondono)`);
-    else if (row.suggested?.residue === "ambiguous" && it?.mandatory?.kind) {
-      errors.push(`regola ambigua in residuo («${row.mandatory_text}»): nessun mandatory.kind finché la revisione non la risolve (Review Focus 5)`);
+    else {
+      // §19.10 e Review Focus 5, qualunque cosa dichiari il digester: la modalità suggerita dal parser
+      // deontico sulla riga del lotto vincola il kind. Ambiguo (o in residuo) → nessun kind, nemmeno
+      // never: la regola resta in revisione. Raccomandazione → al più never, mai un obbligo.
+      const modality = row.suggested?.modality ?? null;
+      const kind = it?.mandatory?.kind;
+      if (kind && (modality === "ambiguo" || row.suggested?.residue === "ambiguous")) {
+        errors.push(`regola ambigua in residuo («${row.mandatory_text}»): nessun mandatory.kind finché la revisione non la risolve (Review Focus 5)`);
+      } else if (kind && kind !== "never" && modality === "raccomandazione") {
+        errors.push(`la regola della riga è una raccomandazione («${row.mandatory_text}»): kind ${kind} non ammesso, al più never (§19.10: mai promossa a obbligo)`);
+      }
     }
     if (errors.length) { rejected.push({ id, errors }); continue; }
     mkdirSync(outDir, { recursive: true });

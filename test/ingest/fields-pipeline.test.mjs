@@ -292,3 +292,35 @@ test("plan con --related: il campo del manuale e quello della spec (stesso nome 
   assert.match(cc.suggested.contradiction, /CTR/);
   assert.equal(cc.suggested.cluster, "CL-FLD-003");
 });
+
+// ——— Giro di correzione 1 (revisione WP05) ———
+function smallInbox(rows) {
+  const root = mkdtempSync(join(tmpdir(), "fx1-"));
+  writeRawFields(root, "P2P", { id: "DOC-FX1", title: "t", format: "docx", sections: [{ path: "1", title: "Intestazione", level: 1, paragraphs: [], figures: [],
+    tables: [{ headers: ["Campo", "Nome tecnico", "Tipo", "Obbligatorio"], rows }] }] });
+  plan("DOC-FX1", { root });
+  return { root, batchFile: join(root, "_inbox", "P2P", "fields", "DOC-FX1", "batch-01.yaml") };
+}
+
+test("giro 1 (#2): accept rifiuta un kind di obbligo su una riga suggerita come raccomandazione; never passa; ambiguo non ammette kind", () => {
+  const { root, batchFile } = smallInbox([["Note", "HDR_NOTES", "Testo", "Si consiglia di compilarlo"], ["Commessa", "HDR_PROJECT", "Testo", "Consigliato"],
+    ["Priorità", "HDR_PRIO", "Testo", "Il campo è obbligatorio se non diversamente configurato."]]);
+  const b = YAML.parse(readFileSync(batchFile, "utf8"));
+  const row = (t) => b.rows.find((r) => r.technical_name === t);
+  assert.equal(row("HDR_NOTES").suggested.modality, "raccomandazione");
+  assert.equal(row("HDR_PROJECT").suggested.modality, "raccomandazione");
+  assert.equal(row("HDR_PRIO").suggested.modality, "ambiguo");
+  const items = [
+    fldFor(row("HDR_NOTES"), "C.ACME.P2P.FLD.0011", { mandatory: { kind: "always", modality: "raccomandazione" } }),
+    fldFor(row("HDR_PROJECT"), "C.ACME.P2P.FLD.0012", { mandatory: { kind: "always" } }),              // il digester omette la modalità
+    fldFor(row("HDR_NOTES"), "C.ACME.P2P.FLD.0013", { label: { it: "Note" }, technical_name: "HDR_NOTES", mandatory: { kind: "never" } }),
+    fldFor(row("HDR_PRIO"), "C.ACME.P2P.FLD.0014", { mandatory: { kind: "never" } }),                 // ambiguo: nessun kind, nemmeno never
+    fldFor(row("HDR_PRIO"), "C.ACME.P2P.FLD.0015", { mandatory_text: row("HDR_PRIO").mandatory_text }),
+  ];
+  const r = accept(batchFile, items, { root });
+  assert.deepEqual(r.accepted.map((a) => a.id).sort(), ["C.ACME.P2P.FLD.0013", "C.ACME.P2P.FLD.0015"]);
+  const why = Object.fromEntries(r.rejected.map((x) => [x.id, x.errors.join(" | ")]));
+  assert.match(why["C.ACME.P2P.FLD.0011"], /raccomandazione/);
+  assert.match(why["C.ACME.P2P.FLD.0012"], /raccomandazione/);
+  assert.match(why["C.ACME.P2P.FLD.0014"], /ambigu/);
+});

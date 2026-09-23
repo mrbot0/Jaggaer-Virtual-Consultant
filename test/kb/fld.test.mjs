@@ -154,3 +154,17 @@ test("admit: un FLD sta in esattamente un CL-FLD-MAND (secondo cluster della fam
   assert.throws(() => admit(db, "CL-FLD-MAND-003", "C.ACME.P2P.FLD.0003", { root, now: NOW }),
     (e) => e instanceof PolicyError && /CL-FLD-MAND-001/.test(e.message));
 });
+
+test("giro 1 (#2): validateFld rifiuta un kind di obbligo con modalità raccomandazione o ambiguo", () => {
+  const it = load();
+  const m = (over) => ({ ...it, mandatory: { ...it.mandatory, ...over } });
+  for (const [kind, modality] of [["always", "ambiguo"], ["conditional", "ambiguo"], ["always", "raccomandazione"], ["undocumented", "raccomandazione"], ["never", "ambiguo"]]) {
+    const r = validateFld(m({ kind, modality }));
+    assert.equal(r.ok, false, `${kind}+${modality}`);
+    assert.ok(r.errors.some((e) => /modality/.test(e) && new RegExp(modality).test(e)), r.errors.join("\n"));
+    assert.equal(validateItem(m({ kind, modality })).ok, false);
+  }
+  // una raccomandazione può restare "non obbligatorio" (§19.10: mai promossa a obbligo)
+  assert.deepEqual(validateFld({ ...it, mandatory: { kind: "never", modality: "raccomandazione" } }).errors, []);
+  assert.deepEqual(validateFld(m({ modality: "obbligo-condizionale" })).errors, []);
+});
