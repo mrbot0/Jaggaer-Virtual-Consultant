@@ -11,7 +11,8 @@
 //     (`over_unit_budget`), il piano si ferma al primo lotto che sforerebbe il budget e restituisce
 //     il cursore (`resume: "batch-nn"` riprende da lì, alla sessione successiva). budget e unitBudget si possono
 //     solo abbassare (sopra 80000/3000 → BudgetPolicyError, exit 3). I token consumati sono salvati con il
-//     cursore in _cursor.yaml: una ripresa nella stessa sessione (o senza sessione) continua il conteggio.
+//     cursore in _cursor.yaml per sessione REALE (resolveDigestSession): la stessa sessione continua il
+//     conteggio, una sessione reale nuova del cliente riparte da zero, senza sessione reale si somma tutto.
 //     _inbox/<scope>/fields/<doc>/_residue.yaml: righe ambigue (regola non determinata) e oltre budget.
 //   accept(batchFile, digested, { root? })
 //     valida ogni FLD digerito del lotto con validateFld e scrive i candidati in
@@ -30,6 +31,9 @@ import { parseMandatoryText } from "../ingest/deontic.mjs";
 import { validateFld } from "./validate-fld.mjs";
 import { SCOPES, parseCode } from "./codes.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { resolveSessionId } from "../admin/session.mjs";
+import { readPointer, sessionFile } from "../../hooks/lib/workspace.mjs";
+import { checkSessionText } from "../../hooks/lib/session-state.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
 export const MAX_BATCH = 50;
@@ -182,28 +186,67 @@ function buildBatches(root, scope, docId, { related = [], unitBudget = UNIT_BUDG
   return { batches, residue, merge_candidates };
 }
 
-export function plan(docId, { root, scope, related = [], budget = DOC_BUDGET, unitBudget = UNIT_BUDGET, resume = null, maxBatch = MAX_BATCH, session = null } = {}) {
+// ——— sessione del consumo (§29.10) ———
+// La sessione NON è scelta dal chiamante: si risolve come ovunque nel plugin (resolveSessionId:
+// JVC_SESSION_ID, poi .jvc/current-session del workspace) e conta solo se è REALE per il cliente del
+// documento — root = <workspace>/customers/<C>, puntatore .jvc/sessions/<sid>.json del cliente C e
+// session.json leggibile per il predicato condiviso degli hook (checkSessionText: JSON, schema, cliente,
+// session_id). Altrimenti (nessuna sessione, id inventato, puntatore forgiato, session.json non conforme,
+// sessione di un altro cliente) il consumo di partenza è la SOMMA di tutte le sessioni del cursore.
+export const NO_SESSION = "_senza-sessione";
+export function resolveDigestSession(root, env = process.env) {
+  const abs = resolve(root);
+  const m = /[\\/]customers[\\/]([A-Z0-9]{4})[\\/]?$/.exec(abs);
+  if (!m) return { sid: null, customer: null, reason: "root fuori da <workspace>/customers/<C>: nessuna sessione di cliente" };
+  const customer = m[1];
+  const ws = resolve(abs, "..", "..");
+  const sid = resolveSessionId({ workspace: ws, arg: undefined, env });
+  if (!sid) return { sid: null, customer, reason: "nessuna sessione (JVC_SESSION_ID, .jvc/current-session)" };
+  let ptr = null;
+  try { ptr = readPointer(ws, sid); } catch (e) { return { sid: null, customer, reason: `puntatore di sessione illeggibile: ${e.message}` }; }
+  if (!ptr || ptr.customer !== customer) return { sid: null, customer, reason: `la sessione ${sid} non è del cliente ${customer}` };
+  const file = sessionFile(ws, customer, sid);
+  if (!existsSync(file)) return { sid: null, customer, reason: `session.json di ${sid} assente` };
+  const c = checkSessionText(readFileSync(file, "utf8"), { customer, sid });
+  if (!c.ok) return { sid: null, customer, reason: `session.json di ${sid} non valido: ${c.reason}` };
+  return { sid, customer, reason: null };
+}
+
+export function plan(docId, { root, scope, related = [], budget = DOC_BUDGET, unitBudget = UNIT_BUDGET, resume = null, maxBatch = MAX_BATCH, env = process.env, ...rest } = {}) {
   if (!root) throw new UsageError("plan richiede root");
+  if ("session" in rest) throw new UsageError("la sessione non si passa a plan: si risolve da JVC_SESSION_ID / .jvc/current-session e deve essere reale (§29.10)");
   checkBudgets(budget, unitBudget);
   const sc = scope ?? findScope(root, docId);
   if (!sc) throw new UsageError(`nessun grezzo per ${docId} in _inbox/*/fields/`);
   if (!SCOPES.has(sc)) throw new UsageError(`scope sconosciuto: ${sc}`);
   const { batches, residue, merge_candidates } = buildBatches(root, sc, docId, { related, unitBudget, maxBatch });
   for (const b of batches) if (b.content.rows.length > MAX_BATCH) throw new RangeError(`lotto ${b.name} > ${MAX_BATCH}`);
+  // Stato del cursore: consumo per sessione (by_session). Un piano interrotto si riprende con --resume;
+  // un piano nuovo non lo azzera; --resume senza cursore salvato è rifiutato.
+  const stateFile = join(docDir(root, sc, docId), "_cursor.yaml");
+  const prevState = existsSync(stateFile) ? YAML.parse(readFileSync(stateFile, "utf8")) ?? {} : null;
   let start = 0;
   if (resume) {
     start = batches.findIndex((b) => b.name === resume);
     if (start < 0) throw new UsageError(`cursore ${resume} inesistente (lotti: batch-01…batch-${String(batches.length).padStart(2, "0")})`);
+    if (!prevState) throw new UsageError(`nessun cursore salvato per ${docId} (_cursor.yaml): --resume richiede un piano interrotto`);
   } else {
+    if (prevState?.cursor) throw new BudgetPolicyError(`il piano di ${docId} è interrotto al cursore ${prevState.cursor}: riprendere con --resume ${prevState.cursor} (un piano nuovo non azzera il consumo, §29.10)`);
     const dir = docDir(root, sc, docId);
     for (const f of readdirSync(dir)) if (/^batch-\d+\.yaml$/.test(f)) unlinkSync(join(dir, f));   // piano nuovo: niente lotti vecchi
   }
-  // I token consumati viaggiano con il cursore (_cursor.yaml): una ripresa nella STESSA sessione (o senza
-  // sessione dichiarata) continua il conteggio, così il budget del documento vale per sessione e non per
-  // chiamata; alla sessione successiva il conteggio riparte (§29.10: "riprende alla sessione successiva").
-  const stateFile = join(docDir(root, sc, docId), "_cursor.yaml");
-  const prev = resume && existsSync(stateFile) ? YAML.parse(readFileSync(stateFile, "utf8")) ?? {} : null;
-  const carried = prev && (prev.session ?? null) === (session ?? null) && Number.isFinite(prev.tokens_used) ? prev.tokens_used : 0;
+  // I token consumati viaggiano con il cursore, per sessione reale: la stessa sessione continua il suo
+  // conteggio; una sessione reale nuova del cliente riparte da zero (§29.10: "riprende alla sessione
+  // successiva"); senza sessione reale si parte dalla somma di tutte le sessioni — mai un azzeramento.
+  const ledger = {};
+  if (resume && prevState) {
+    Object.assign(ledger, prevState.by_session ?? {});
+    if (!prevState.by_session && Number.isFinite(prevState.tokens_used)) ledger[prevState.session ?? NO_SESSION] = prevState.tokens_used;   // cursore del giro 1
+  }
+  const who = resolveDigestSession(root, env);
+  const key = who.sid ?? NO_SESSION;
+  const total = Object.values(ledger).reduce((a, v) => a + (Number(v) || 0), 0);
+  const carried = who.sid ? Number(ledger[who.sid]) || 0 : total;
   const written = [];
   let used = carried;
   let cursor = null;
@@ -215,9 +258,10 @@ export function plan(docId, { root, scope, related = [], budget = DOC_BUDGET, un
     written.push({ batch: b.name, file, section: b.content.section, rows: b.content.rows.length, tokens: b.content.tokens_estimate });
   }
   writeFileSync(join(docDir(root, sc, docId), "_residue.yaml"), YAML.stringify({ document: docId, scope: sc, ...residue }));
-  writeFileSync(stateFile, YAML.stringify({ document: docId, scope: sc, cursor, session: session ?? null, tokens_used: used, budget, at: new Date().toISOString() }));
+  if (used > carried || key in ledger) ledger[key] = (Number(ledger[key]) || 0) + (used - carried);
+  writeFileSync(stateFile, YAML.stringify({ document: docId, scope: sc, cursor, by_session: ledger, budget, at: new Date().toISOString() }));
   return { ok: true, status: cursor ? "budget-exceeded" : "complete", document: docId, scope: sc, batches: written, cursor,
-    total_batches: batches.length, tokens_used: used, tokens_carried: carried, session: session ?? null, budget, residue: { ambiguous: residue.ambiguous.length, over_unit_budget: residue.over_unit_budget.length },
+    total_batches: batches.length, tokens_used: used, tokens_carried: carried, session: who.sid, session_note: who.reason, budget, residue: { ambiguous: residue.ambiguous.length, over_unit_budget: residue.over_unit_budget.length },
     merge_candidates };
 }
 
@@ -280,7 +324,8 @@ const HELP = `uso: node scripts/kb/digest-fields.mjs <comando> [opzioni] [--json
 
 Comandi:
   plan <documento> --root <dir> [--scope P2P] [--related DOC2,DOC3] [--budget ≤80000] [--unit-budget ≤3000] [--resume batch-nn]
-       [--session <id>] (default JVC_SESSION_ID)
+       sessione: JVC_SESSION_ID, poi .jvc/current-session; conta solo una sessione reale del cliente
+       (<root> = <workspace>/customers/<C>), altrimenti il consumo è la somma di tutte le sessioni
        lotti ≤ 50 campi per sezione in _inbox/<scope>/fields/<documento>/batch-nn.yaml, con regola di
        obbligatorietà e cluster CL-FLD suggeriti; si ferma al budget del documento con un cursore
   accept <batch-nn.yaml> --digested <file.yaml> [--root <dir>]
@@ -298,10 +343,11 @@ function main(argv) {
   try {
     if (cmd === "plan") {
       if (!positional[0] || !opts.root) return fail(asJson, 1, "plan richiede <documento> e --root");
+      if (rest.includes("--session")) return fail(asJson, 1, "--session non è ammesso: la sessione si risolve da JVC_SESSION_ID / .jvc/current-session e deve essere reale (§29.10)");
       const num = (v, d) => (v === undefined ? d : Number(v));
       const r = plan(positional[0], { root: opts.root, scope: opts.scope, related: opts.related ? String(opts.related).split(",").filter(Boolean) : [],
         budget: num(opts.budget, DOC_BUDGET), unitBudget: num(opts["unit-budget"], UNIT_BUDGET), resume: opts.resume ?? null,
-        session: opts.session ?? process.env.JVC_SESSION_ID ?? null });
+        env: process.env });
       console.log(JSON.stringify(r));
       return r.status === "complete" ? 0 : 3;
     }

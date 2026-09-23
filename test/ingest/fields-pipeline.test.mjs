@@ -3,7 +3,8 @@
 // deduplica, piano dei lotti ≤ 50 con budget e ripresa, accettazione in _inbox.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, realpathSync } from "node:fs";
+import { runSessionCli } from "../helpers/hook-env.mjs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -157,6 +158,21 @@ test("suggerimenti: CL-FLD dalla sezione, field_type dal testo del tipo", () => 
   assert.equal(suggestFieldType("???"), null);
 });
 
+// Workspace JVC con il cliente ACME creato dalla CLI di sessione (sessione reale `sid`) e i grezzi del
+// documento da 300 campi in customers/ACME/_inbox.
+function realWorkspace(sid) {
+  const ws = realpathSync.native(mkdtempSync(join(tmpdir(), "jvc-dg-")));
+  mkdirSync(join(ws, ".jvc"), { recursive: true });
+  const r = newRealSession(ws, sid, "ACME", true);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  const root = join(ws, "customers", "ACME");
+  writeRawFields(root, "P2P", synthDoc(), { genre: "tecnica" });
+  return { ws, root };
+}
+function newRealSession(ws, sid, customer = "ACME", create = false) {
+  return runSessionCli(["use", "customer", customer, ...(create ? ["--new"] : []), "--workspace", ws, "--session", sid, "--json"]);
+}
+
 function inboxWith300() {
   const root = mkdtempSync(join(tmpdir(), "dg-"));
   writeRawFields(root, "P2P", synthDoc(), { genre: "tecnica" });
@@ -194,25 +210,27 @@ test("plan: documento da 300 campi → nessun lotto > 50; ogni riga in un lotto;
   assert.equal(plan("DOC-REQ-SPEC", { root }).batches.reduce((s, b) => s + b.rows, 0), 300);
 });
 
-test("plan: budget per documento superato → si ferma al lotto corrente con un cursore; --resume alla sessione successiva riprende e completa", () => {
-  const root = inboxWith300();
+test("plan: budget per documento superato → si ferma al lotto corrente con un cursore; --resume in una sessione REALE successiva riprende e completa", () => {
+  const { ws, root } = realWorkspace("sess-1");
   const full = plan("DOC-REQ-SPEC", { root: inboxWith300() });
   const perBatch = Math.max(...full.batches.map((b) => b.tokens));
-  const p1 = plan("DOC-REQ-SPEC", { root, budget: perBatch * 3, session: "S1" });
+  const p1 = plan("DOC-REQ-SPEC", { root, budget: perBatch * 3, env: { JVC_SESSION_ID: "sess-1" } });
   assert.equal(p1.status, "budget-exceeded");
   assert.ok(p1.batches.length >= 2 && p1.batches.length < full.batches.length);
   assert.equal(p1.cursor, `batch-${String(p1.batches.length + 1).padStart(2, "0")}`);
   let written = p1.batches.length;
   let cursor = p1.cursor;
   for (let guard = 0; cursor && guard < 20; guard++) {
-    // §29.10: «si ferma al lotto corrente e riprende alla sessione successiva» — ogni ripresa è una sessione nuova
-    const pn = plan("DOC-REQ-SPEC", { root, budget: perBatch * 3, resume: cursor, session: `S${guard + 2}` });
+    // §29.10: «si ferma al lotto corrente e riprende alla sessione successiva» — ogni ripresa è una sessione nuova, creata dalla CLI di sessione
+    const sid = `sess-${guard + 2}`;
+    newRealSession(ws, sid);
+    const pn = plan("DOC-REQ-SPEC", { root, budget: perBatch * 3, resume: cursor, env: { JVC_SESSION_ID: sid } });
     assert.equal(pn.batches[0].batch, cursor);
     written += pn.batches.length;
     cursor = pn.cursor;
   }
   assert.equal(written, full.batches.length);
-  assert.throws(() => plan("DOC-REQ-SPEC", { root, resume: "batch-99" }), /cursore/);
+  assert.throws(() => plan("DOC-REQ-SPEC", { root, resume: "batch-99", env: { JVC_SESSION_ID: "sess-1" } }), /cursore/);
 });
 
 test("un lotto > 50 campi è un errore (assert rigido), prima di qualsiasi scrittura", () => {
@@ -340,24 +358,56 @@ test("giro 1 (#3): i budget si possono solo abbassare — budget > 80000 o unit-
   }
 });
 
-test("giro 1 (#3): i token consumati sono nel cursore — nella stessa sessione --resume non riparte da zero; una sessione nuova sì", () => {
-  const root = inboxWith300();
+test("giro 2 (#3): il consumo è per sessione REALE del cliente — senza sessione, con un id inventato, con un puntatore forgiato o una sessione di un altro cliente si somma tutto (mai un azzeramento)", () => {
+  const { ws, root } = realWorkspace("sess-a");
   const full = plan("DOC-REQ-SPEC", { root: inboxWith300() });
-  const perBatch = Math.max(...full.batches.map((b) => b.tokens));
-  const budget = perBatch * 3;
-  const p1 = plan("DOC-REQ-SPEC", { root, budget, session: "S1" });
+  const budget = Math.max(...full.batches.map((b) => b.tokens)) * 3;
+  const p1 = plan("DOC-REQ-SPEC", { root, budget, env: { JVC_SESSION_ID: "sess-a" } });
   assert.equal(p1.status, "budget-exceeded");
-  const state = YAML.parse(readFileSync(join(root, "_inbox", "P2P", "fields", "DOC-REQ-SPEC", "_cursor.yaml"), "utf8"));
-  assert.deepEqual([state.cursor, state.session, state.tokens_used], [p1.cursor, "S1", p1.tokens_used]);
-  const same = plan("DOC-REQ-SPEC", { root, budget, session: "S1", resume: p1.cursor });
-  assert.equal(same.status, "budget-exceeded");
-  assert.equal(same.batches.length, 0);                       // il budget della sessione è già consumato
-  assert.equal(same.cursor, p1.cursor);
-  assert.equal(same.tokens_used, p1.tokens_used);
-  const anon = plan("DOC-REQ-SPEC", { root: inboxWith300(), budget });   // senza sessione: il conteggio prosegue comunque
-  const anonAgain = plan("DOC-REQ-SPEC", { root: join(anon.batches[0].file, "..", "..", "..", "..", ".."), budget, resume: anon.cursor });
-  assert.equal(anonAgain.batches.length, 0);
-  const next = plan("DOC-REQ-SPEC", { root, budget, session: "S2", resume: p1.cursor });
+  assert.equal(p1.session, "sess-a");
+  const cursorFile = join(root, "_inbox", "P2P", "fields", "DOC-REQ-SPEC", "_cursor.yaml");
+  const st = YAML.parse(readFileSync(cursorFile, "utf8"));
+  assert.equal(st.cursor, p1.cursor);
+  assert.deepEqual(st.by_session, { "sess-a": p1.tokens_used });
+  const capped = (label, env) => {
+    const r = plan("DOC-REQ-SPEC", { root, budget, resume: p1.cursor, env });
+    assert.equal(r.batches.length, 0, label);
+    assert.equal(r.status, "budget-exceeded", label);
+    assert.equal(r.cursor, p1.cursor, label);
+    assert.ok(r.tokens_used >= p1.tokens_used, label);
+    return r;
+  };
+  capped("stessa sessione reale", { JVC_SESSION_ID: "sess-a" });
+  rmSync(join(ws, ".jvc", "current-session"), { force: true });
+  assert.equal(capped("nessuna sessione", {}).session, null);
+  assert.equal(capped("id inventato", { JVC_SESSION_ID: "invented-1" }).session, null);
+  writeFileSync(join(ws, ".jvc", "sessions", "forged.json"), JSON.stringify({ session_id: "forged", customer: "ACME", path: "customers/ACME/.sessions/forged/session.json" }));
+  capped("puntatore senza session.json", { JVC_SESSION_ID: "forged" });
+  mkdirSync(join(root, ".sessions", "forged2"), { recursive: true });
+  writeFileSync(join(root, ".sessions", "forged2", "session.json"), JSON.stringify({ session_id: "forged2", customer: "ACME" }));
+  writeFileSync(join(ws, ".jvc", "sessions", "forged2.json"), JSON.stringify({ session_id: "forged2", customer: "ACME", path: "customers/ACME/.sessions/forged2/session.json" }));
+  capped("session.json non conforme allo schema", { JVC_SESSION_ID: "forged2" });
+  assert.equal(newRealSession(ws, "sess-beta", "BETA", true).status, 0);
+  capped("sessione reale di un altro cliente", { JVC_SESSION_ID: "sess-beta" });
+  // una sessione reale nuova dello stesso cliente riparte da zero (§29.10)
+  assert.equal(newRealSession(ws, "sess-b").status, 0);
+  const next = plan("DOC-REQ-SPEC", { root, budget, resume: p1.cursor, env: { JVC_SESSION_ID: "sess-b" } });
   assert.ok(next.batches.length >= 1);
   assert.equal(next.batches[0].batch, p1.cursor);
+  assert.equal(next.session, "sess-b");
+  const st2 = YAML.parse(readFileSync(cursorFile, "utf8"));
+  assert.deepEqual(Object.keys(st2.by_session).sort(), ["sess-a", "sess-b"]);
+  // di nuovo senza sessione: la somma di tutte le sessioni supera il budget → nessun lotto
+  if (next.cursor) capped("somma dopo due sessioni", {});
+  // ripresa senza cursore salvato: rifiutata (cancellare _cursor.yaml non azzera il consumo)
+  rmSync(cursorFile);
+  assert.throws(() => plan("DOC-REQ-SPEC", { root, budget, resume: p1.cursor, env: {} }), /cursore/);
+});
+
+test("giro 2 (#3): nessuna sessione a scelta del chiamante — l'opzione session e il flag --session sono rifiutati", () => {
+  const root = inboxWith300();
+  assert.throws(() => plan("DOC-REQ-SPEC", { root, session: "S1" }), /session/);
+  const r = spawnSync(process.execPath, [DIGEST_CLI, "plan", "DOC-REQ-SPEC", "--root", root, "--session", "S1", "--json"], { encoding: "utf8" });
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(JSON.parse(r.stdout).error, /JVC_SESSION_ID/);
 });
