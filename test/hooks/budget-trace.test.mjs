@@ -244,3 +244,21 @@ test("subagent-trace: eccezione → avviso, mai blocco (fail-open, niente cicli)
   assert.notEqual(r.json?.decision, "block");
   assert.ok(r.json.systemMessage);
 });
+
+test("#14 il task_id dichiarato nel rapporto non decide l'abbinamento: si abbina per tipo e ordine di dispatch; discrepanza = errore di traccia", () => {
+  const ws = mkWs(); seedSession(ws);
+  agentCall(ws, header());
+  const text = readFileSync(join(FIX, "valid-report.jsonl"), "utf8").replace(/MSG\.sess-1\.0001/g, "MSG.sess-1.9999");
+  const r = stop(ws, text);
+  assert.equal(r.json?.decision, "block");
+  assert.match(r.json.reason, /task_id/);
+  assert.match(r.json.reason, /MSG\.sess-1\.0001/);
+  const inv = readSession(ws).ledger.invocations.find((i) => i.agent_id === "agent-a1");
+  assert.equal(inv.task_id, "MSG.sess-1.0001", "abbinato all'invocazione aperta, non al task_id dichiarato");
+  stop(ws, text, { stopHookActive: true });
+  stop(ws, text, { stopHookActive: true });
+  const fin = readSession(ws).ledger.invocations.find((i) => i.agent_id === "agent-a1");
+  assert.equal(fin.trace_incomplete, true);
+  assert.equal(fin.status_effective, "partial");
+  assert.ok(existsSync(join(ws, "customers/ACME/.sessions/sess-1/blackboard/MSG.sess-1.0001.yaml")));
+});
