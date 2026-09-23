@@ -17,6 +17,16 @@ test("contraddittorio vince su tutto; ignoto quando tutto è basso", () => {
 });
 
 test("consolidato con osservazione ed esecuzione", () => {
-  const full = { type: "CFG", attrs: { location: "tecnica", options: "tecnica", dependencies: "tecnica", impacts: "tecnica", current_state: "d'uso", risk: "d'uso", rollback: "tecnica" } };
+  // Un attributo può essere coperto da più generi di fonte contemporaneamente
+  // (§9.2: "attributi_attesi_coperti_da_fonti_tecniche / attributi_attesi" —
+  // un genere non esclude l'altro sullo stesso attributo).
+  const full = { type: "CFG", attrs: { location: ["tecnica", "d'uso"], options: ["tecnica", "d'uso"], dependencies: "tecnica", impacts: "tecnica", current_state: ["d'uso", "tecnica"], risk: "d'uso", rollback: "tecnica" } };
   assert.equal(coverage(full, { ...ev0, obsConfirmations: 3, execWithOutcome: 3, userStatements: 1 }).shape, "consolidato");
+});
+
+test("k_user non influenza k_use: i due canali restano indipendenti (§9.2, §9.4)", () => {
+  const withUser = coverage(cfg, { ...ev0, userStatements: 10 });
+  const withoutUser = coverage(cfg, { ...ev0, userStatements: 0 });
+  assert.equal(withUser.k_use, withoutUser.k_use);
+  assert.ok(withUser.k_user > withoutUser.k_user);
 });
