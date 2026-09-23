@@ -3,14 +3,15 @@ import { join, relative } from "node:path";
 import { isMain } from "../lib/is-main.mjs";
 
 function* walk(d) { for (const e of readdirSync(d, { withFileTypes: true })) { const p = join(d, e.name); if (e.isDirectory()) yield* walk(p); else if (/\.(ya?ml|md)$/.test(e.name)) yield p; } }
-const RULES = [
+// Esportate: guard-domain-boundary usa le stesse regole sul contenuto in scrittura.
+export const BOUNDARY_RULES = [
   { dir: "kb", re: /analysis\//, rule: "kb referenzia analysis/" },
   { dir: "kb", re: /\b[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.(PAT|PBK|BRF|RUL)\.\d{4}\b|\b(INC|TICKET|PAT)-\d+/, rule: "kb cita un identificatore analitico" },
   { dir: "analysis", re: /\bNRT\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}\b|\bNRT-[A-Z]+-\d+/, rule: "analysis referenzia un test" },
 ];
 export function checkBoundary(root) {
   const out = [];
-  for (const r of RULES) { const dir = join(root, r.dir); if (!existsSync(dir)) continue;
+  for (const r of BOUNDARY_RULES) { const dir = join(root, r.dir); if (!existsSync(dir)) continue;
     for (const f of walk(dir)) { const m = r.re.exec(readFileSync(f, "utf8")); if (m) out.push({ file: relative(root, f), rule: r.rule, match: m[0] }); } }
   return out;
 }

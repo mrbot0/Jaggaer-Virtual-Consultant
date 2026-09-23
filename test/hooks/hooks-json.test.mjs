@@ -12,6 +12,9 @@ const EXPECTED = [
   ["PreCompact", undefined, "precompact-save"],
   ["Stop", undefined, "stop-integrity"],
   ["PostToolUse", ".*", "audit-append"],
+  ["PreToolUse", "Write|Edit|MultiEdit|NotebookEdit|Read|Glob|Grep", "guard-domain-boundary"],
+  ["PreToolUse", "Write|Edit|MultiEdit|NotebookEdit|Read|Glob|Grep", "guard-scope"],
+  ["PreToolUse", "Write|Edit|MultiEdit|NotebookEdit|Read|Glob|Grep|Bash|PowerShell", "guard-customer"],
 ];
 
 const entries = () => Object.entries(HOOKS.hooks).flatMap(([event, groups]) => groups.flatMap((g) => g.hooks.map((h) => ({ event, matcher: g.matcher, ...h }))));
