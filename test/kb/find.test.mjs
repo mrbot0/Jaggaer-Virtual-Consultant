@@ -3,9 +3,13 @@ import assert from "node:assert/strict";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { openDb } from "../../scripts/kb/db.mjs";
 import { find } from "../../scripts/kb/find.mjs";
 import { resolve } from "../../scripts/kb/resolve.mjs";
+
+const KB_CLI = fileURLToPath(new URL("../../scripts/kb/kb.mjs", import.meta.url));
 
 function seed(db) {
   const ins = db.prepare("insert into items(code,level,customer,scope,type,title,summary,facets,weight,status,path,hash,updated_at) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -30,4 +34,20 @@ test("resolve usa FTS e ordina per rank × W", () => {
   const r = resolve(db, "evento di gara", { top: 2 });
   assert.equal(r[0].code, "S.STD.SRC.FLW.0001");
   assert.equal(r.length, 2);
+});
+
+test("find rifiuta chiavi di faccetta non in allowlist (SQL injection guard)", () => {
+  const db = openDb(join(mkdtempSync(join(tmpdir(), "inj-")), "k.db")); seed(db);
+  assert.throws(() => find(db, { facet: { "F10') OR ('1'='1": "x" } }), /faccetta non valida/);
+  assert.throws(() => find(db, { facet: { F16: "x" } }), /faccetta non valida/);
+  assert.throws(() => find(db, { facet: { F0: "x" } }), /faccetta non valida/);
+  // le chiavi valide F1..F15 continuano a funzionare
+  assert.doesNotThrow(() => find(db, { facet: { F10: "R0" } }));
+});
+
+test("kb.mjs CLI: chiave di faccetta non valida esce con 1, non 2 (errore utente, §44.5)", () => {
+  const dbPath = join(mkdtempSync(join(tmpdir(), "inj-cli-")), "k.db");
+  seed(openDb(dbPath));
+  const r = spawnSync(process.execPath, [KB_CLI, "find", "--facet", "F16=x", "--db", dbPath, "--json"]);
+  assert.equal(r.status, 1);
 });

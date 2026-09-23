@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { openDb } from "./db.mjs";
-import { find } from "./find.mjs";
+import { find, InvalidFacetError } from "./find.mjs";
 import { resolve } from "./resolve.mjs";
 import { isMain } from "../lib/is-main.mjs";
 
@@ -59,6 +59,10 @@ export function run(argv) {
     }
   } catch (err) {
     const msg = String(err?.message ?? err);
+    if (err instanceof InvalidFacetError) {
+      console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
+      return { exitCode: 1 };
+    }
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore di sistema: ${msg}`);
     return { exitCode: 2 };
   }
