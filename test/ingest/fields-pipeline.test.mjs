@@ -13,7 +13,7 @@ import { validateWith } from "../../scripts/lib/schemas.mjs";
 import { recognizeFieldTable, segmentFieldTables, MAX_ROWS_PER_UNIT } from "../../scripts/ingest/segment.mjs";
 import { extractFieldRows, writeRawFields } from "../../scripts/ingest/field-table.mjs";
 import { dedupe, normalizeLabel, normalizeTechnicalName, labelDistance } from "../../scripts/ingest/dedupe.mjs";
-import { plan, accept, estimateTokens, writeBatch, suggestCluster, suggestFieldType, MAX_BATCH } from "../../scripts/kb/digest-fields.mjs";
+import { plan, accept, estimateTokens, writeBatch, suggestCluster, suggestFieldType, MAX_BATCH, BudgetPolicyError } from "../../scripts/kb/digest-fields.mjs";
 
 const DIGEST_CLI = fileURLToPath(new URL("../../scripts/kb/digest-fields.mjs", import.meta.url));
 const FT_CLI = fileURLToPath(new URL("../../scripts/ingest/field-table.mjs", import.meta.url));
@@ -194,18 +194,19 @@ test("plan: documento da 300 campi → nessun lotto > 50; ogni riga in un lotto;
   assert.equal(plan("DOC-REQ-SPEC", { root }).batches.reduce((s, b) => s + b.rows, 0), 300);
 });
 
-test("plan: budget per documento superato → si ferma al lotto corrente con un cursore; --resume riprende e completa", () => {
+test("plan: budget per documento superato → si ferma al lotto corrente con un cursore; --resume alla sessione successiva riprende e completa", () => {
   const root = inboxWith300();
   const full = plan("DOC-REQ-SPEC", { root: inboxWith300() });
   const perBatch = Math.max(...full.batches.map((b) => b.tokens));
-  const p1 = plan("DOC-REQ-SPEC", { root, budget: perBatch * 3 });
+  const p1 = plan("DOC-REQ-SPEC", { root, budget: perBatch * 3, session: "S1" });
   assert.equal(p1.status, "budget-exceeded");
   assert.ok(p1.batches.length >= 2 && p1.batches.length < full.batches.length);
   assert.equal(p1.cursor, `batch-${String(p1.batches.length + 1).padStart(2, "0")}`);
   let written = p1.batches.length;
   let cursor = p1.cursor;
   for (let guard = 0; cursor && guard < 20; guard++) {
-    const pn = plan("DOC-REQ-SPEC", { root, budget: perBatch * 3, resume: cursor });
+    // §29.10: «si ferma al lotto corrente e riprende alla sessione successiva» — ogni ripresa è una sessione nuova
+    const pn = plan("DOC-REQ-SPEC", { root, budget: perBatch * 3, resume: cursor, session: `S${guard + 2}` });
     assert.equal(pn.batches[0].batch, cursor);
     written += pn.batches.length;
     cursor = pn.cursor;
@@ -323,4 +324,40 @@ test("giro 1 (#2): accept rifiuta un kind di obbligo su una riga suggerita come 
   assert.match(why["C.ACME.P2P.FLD.0011"], /raccomandazione/);
   assert.match(why["C.ACME.P2P.FLD.0012"], /raccomandazione/);
   assert.match(why["C.ACME.P2P.FLD.0014"], /ambigu/);
+});
+
+test("giro 1 (#3): i budget si possono solo abbassare — budget > 80000 o unit-budget > 3000 → rifiuto di policy (exit 3)", () => {
+  const root = inboxWith300();
+  assert.throws(() => plan("DOC-REQ-SPEC", { root, budget: 10_000_000 }), (e) => e instanceof BudgetPolicyError && /80000/.test(e.message));
+  assert.throws(() => plan("DOC-REQ-SPEC", { root, budget: 80001 }), BudgetPolicyError);
+  assert.throws(() => plan("DOC-REQ-SPEC", { root, unitBudget: 3001 }), (e) => e instanceof BudgetPolicyError && /3000/.test(e.message));
+  assert.equal(plan("DOC-REQ-SPEC", { root, budget: 80000, unitBudget: 3000 }).status, "complete");
+  assert.equal(plan("DOC-REQ-SPEC", { root, budget: 20000 }).status, "budget-exceeded");       // abbassare è consentito
+  for (const args of [["--budget", "10000000"], ["--unit-budget", "5000"]]) {
+    const r = spawnSync(process.execPath, [DIGEST_CLI, "plan", "DOC-REQ-SPEC", "--root", root, ...args, "--json"], { encoding: "utf8" });
+    assert.equal(r.status, 3, r.stdout + r.stderr);
+    assert.equal(JSON.parse(r.stdout).ok, false);
+  }
+});
+
+test("giro 1 (#3): i token consumati sono nel cursore — nella stessa sessione --resume non riparte da zero; una sessione nuova sì", () => {
+  const root = inboxWith300();
+  const full = plan("DOC-REQ-SPEC", { root: inboxWith300() });
+  const perBatch = Math.max(...full.batches.map((b) => b.tokens));
+  const budget = perBatch * 3;
+  const p1 = plan("DOC-REQ-SPEC", { root, budget, session: "S1" });
+  assert.equal(p1.status, "budget-exceeded");
+  const state = YAML.parse(readFileSync(join(root, "_inbox", "P2P", "fields", "DOC-REQ-SPEC", "_cursor.yaml"), "utf8"));
+  assert.deepEqual([state.cursor, state.session, state.tokens_used], [p1.cursor, "S1", p1.tokens_used]);
+  const same = plan("DOC-REQ-SPEC", { root, budget, session: "S1", resume: p1.cursor });
+  assert.equal(same.status, "budget-exceeded");
+  assert.equal(same.batches.length, 0);                       // il budget della sessione è già consumato
+  assert.equal(same.cursor, p1.cursor);
+  assert.equal(same.tokens_used, p1.tokens_used);
+  const anon = plan("DOC-REQ-SPEC", { root: inboxWith300(), budget });   // senza sessione: il conteggio prosegue comunque
+  const anonAgain = plan("DOC-REQ-SPEC", { root: join(anon.batches[0].file, "..", "..", "..", "..", ".."), budget, resume: anon.cursor });
+  assert.equal(anonAgain.batches.length, 0);
+  const next = plan("DOC-REQ-SPEC", { root, budget, session: "S2", resume: p1.cursor });
+  assert.ok(next.batches.length >= 1);
+  assert.equal(next.batches[0].batch, p1.cursor);
 });
