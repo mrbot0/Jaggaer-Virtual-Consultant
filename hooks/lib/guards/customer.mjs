@@ -7,8 +7,8 @@
 // customers/*/{lessons,decisions,outcomes,observations,kb}. Nessun cliente
 // attivo ⇒ customers/** negato, salvo `node …session.mjs use customer …`.
 import { posix } from "node:path";
-import { intersects, subset, segs, bases, skeleton, resolveTarget, PathPolicyError } from "../paths.mjs";
-import { guarded, denyAudited, targetsOf, FILE_TOOLS, SEARCH_TOOLS, SHELL_TOOLS, READ_TOOLS } from "./common.mjs";
+import { intersects, subset, segs, bases, skeleton, PathPolicyError } from "../paths.mjs";
+import { guarded, denyAudited, targetsOf, shellPaths, FILE_TOOLS, SEARCH_TOOLS, SHELL_TOOLS, READ_TOOLS } from "./common.mjs";
 import { WEEKLY_READ } from "./scope.mjs";
 
 const G = "guard-customer";
@@ -66,25 +66,25 @@ function checkShell(ctx) {
   if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
   if (!ctx.customerLc && USE_CUSTOMER.test(cmd) && !/[;&|`$<>\r\n]/.test(cmd.replace(/"?\$\{CLAUDE_SESSION_ID\}"?/g, ""))) return null;
   const refs = new Set();
-  const pathTokens = new Set();
   for (const v of shellVariants(cmd)) {
     for (const m of v.matchAll(/--customer(?:=|\s+)([^\s;|&<>()]+)/gi)) refs.add(m[1].toLowerCase());
     for (const tok of v.split(/[\s;|&<>()=,]+/)) {
       if (!tok) continue;
       const t = tok.replace(/\\/g, "/");
       if (/customers/i.test(t)) for (const m of posix.normalize(t).matchAll(CUST_IN_PATH)) refs.add((m[1] ?? "").toLowerCase());
-      if (/[/\\]|^\.\.?$/.test(tok) && pathTokens.size < 64) pathTokens.add(tok);
     }
   }
   for (const x of refs) {
     if (!ctx.customerLc) return NO_CUSTOMER;
     if (x !== ctx.customerLc) return `il comando fa riferimento a un altro cliente (${x ? x.toUpperCase() : "customers/*"}): il cliente attivo è ${ctx.customer}`;
   }
-  // Percorsi relativi alla cwd (es. `cat ../BETA/kb/x` da customers/ACME).
-  for (const tok of pathTokens) {
-    let T;
-    try { T = resolveTarget(tok, { cwd: ctx.cwd, ws: ctx.ws }); } catch (err) { if (err instanceof PathPolicyError) throw err; continue; }
-    for (const p of T.ws) { const r = checkRel({ ...ctx, tool: "Bash" }, p); if (r) return r; }
+  return checkRelativeWithCwd(ctx, cmd);
+}
+
+function checkRelativeWithCwd(ctx, cmd) {
+  const c2 = { ...ctx, tool: "Bash" };
+  for (const { rels, cd } of shellPaths(ctx, cmd)) {
+    for (const p of rels) { const r = checkRel(c2, p); if (r) return cd ? `cambio di cartella verso un percorso non consentito: ${r}` : r; }
   }
   return null;
 }

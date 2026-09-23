@@ -17,6 +17,7 @@ const EXPECTED = [
   ["PreToolUse", "Write|Edit|MultiEdit|NotebookEdit|Read|Glob|Grep|Bash|PowerShell", "guard-customer"],
   ["PreToolUse", "Agent|Task", "guard-budget"],
   ["PreToolUse", "Bash|PowerShell", "guard-budget"],
+  ["PreToolUse", "Bash|PowerShell", "guard-scope"],
   ["SubagentStop", undefined, "subagent-trace"],
 ];
 

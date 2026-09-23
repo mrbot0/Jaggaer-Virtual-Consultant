@@ -5,8 +5,8 @@
 //    strategies/, clusters/ del plugin (§29.6, T9) e sullo stato di sessione;
 //  - INT possedute (kb/scopes/XSC/**) in sola lettura fuori da XSC;
 //  - weekly-digest: lettura di customers/*/{lessons,decisions,outcomes,observations,kb}.
-import { intersects, subset } from "../paths.mjs";
-import { guarded, denyAudited, targetsOf, FILE_TOOLS, SEARCH_TOOLS, WRITE_TOOLS, READ_TOOLS } from "./common.mjs";
+import { intersects, subset, PathPolicyError } from "../paths.mjs";
+import { guarded, denyAudited, targetsOf, shellPaths, FILE_TOOLS, SEARCH_TOOLS, WRITE_TOOLS, READ_TOOLS, SHELL_TOOLS } from "./common.mjs";
 
 const G = "guard-scope";
 export const GOVERNED = [
@@ -17,8 +17,33 @@ export const WEEKLY_READ = ["lessons", "decisions", "outcomes", "observations", 
 const SESSION_STATE = [".jvc/**", "customers/*/.sessions/*/session.json", "customers/*/.sessions/*/invocations.jsonl"];
 const PLUGIN_RO = ["decision-tables/**", "strategies/**", "clusters/**"];
 
+// Shell (solo sub-agenti, agent_id presente): i percorsi citati dal comando che
+// cadono in una cella governata devono essere in allowed_paths. La sessione
+// principale e gli script (`node scripts/…`) non citano celle altrui: non
+// vengono toccati. Euristica (vedi shellPaths): complementa, non sostituisce,
+// i guard sugli strumenti di file.
+function checkShell(ctx) {
+  const cmd = ctx.ti.command;
+  if (!ctx.agentId || typeof cmd !== "string" || !cmd.trim()) return null;
+  if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
+  const allowed = Array.isArray(ctx.session?.allowed_paths) ? ctx.session.allowed_paths : [];
+  const variants = new Set([cmd, cmd.replace(/\\(?=[^\s\\/])/g, "")]);
+  for (const v of variants) {
+    for (const { rels } of shellPaths(ctx, v)) {
+      for (const p of rels) {
+        if (!GOVERNED.some((a) => intersects(p, a))) continue;
+        if (ctx.agentType === "weekly-digest" && WEEKLY_READ.some((q) => subset(p, q))) continue;
+        if (allowed.some((q) => subset(p, q))) continue;
+        return denyAudited(ctx, G, `comando fuori cella (${ctx.session?.scope ? `${ctx.session.customer}×${ctx.session.scope}` : "nessuno scope attivo"}): ${p} non è in allowed_paths. Chiedi un handoff tramite il manager.`);
+      }
+    }
+  }
+  return null;
+}
+
 export const decide = guarded(G, (ctx) => {
   const { tool, session } = ctx;
+  if (SHELL_TOOLS.has(tool)) return checkShell(ctx);
   if (!FILE_TOOLS.has(tool) && !SEARCH_TOOLS.has(tool)) return null;
   const T = targetsOf(ctx);
   const write = WRITE_TOOLS.has(tool);

@@ -70,3 +70,37 @@ export function guarded(guard, fn) {
     }
   };
 }
+
+// Percorsi citati da un comando di shell, relativi al workspace, seguendo i
+// cambi di cartella dentro il comando (`cd customers/ACME && cd .. && cat BETA/x`).
+// Per prudenza si tiene l'insieme di tutte le cwd possibili (un cd può fallire)
+// e si risolve ogni token con aspetto di percorso rispetto a ciascuna. Restituisce
+// [{ rels: Set<rel>, cd: boolean }]. Euristica: variabili, sostituzioni di comando
+// e script restano fuori (rischio residuo documentato).
+const CD = /^(cd|pushd|chdir|set-location|sl|push-location)$/i;
+export function shellPaths(ctx, cmd, { maxTokens = 64 } = {}) {
+  const out = [];
+  const add = (raw, cwd, cd) => {
+    try { out.push({ rels: resolveTarget(raw, { cwd, ws: ctx.ws }).ws, cd }); } catch (err) { if (err instanceof PathPolicyError) throw err; }
+  };
+  const unq = cmd.replace(/["'`]/g, "");
+  let cwds = [ctx.cwd];
+  let budget = maxTokens;
+  for (const seg of unq.split(/&&|\|\||[;|\r\n]/)) {
+    const words = seg.trim().split(/\s+/).filter(Boolean);
+    if (!words.length) continue;
+    if (CD.test(words[0])) {
+      const arg = words.slice(1).find((w) => !w.startsWith("-"));
+      if (!arg) continue;
+      const next = cwds.map((d) => resolve(d, arg.replace(/\\/g, "/")));
+      for (const n of next) add(n, ctx.cwd, true);
+      cwds = [...new Set([...cwds, ...next])].slice(0, 16);
+      continue;
+    }
+    for (const tok of words.flatMap((w) => w.split(/[=,<>()]+/))) {
+      if (!tok || !/[/\\]|^\.\.?$/.test(tok) || budget-- <= 0) continue;
+      for (const d of cwds) add(tok, d, false);
+    }
+  }
+  return out;
+}

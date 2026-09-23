@@ -52,10 +52,11 @@ test("K2 exit: handoff CAT→ADM via manager; cat-expert non legge mai ADM (deny
   const admFile = join(ws, "customers/ACME/kb/scopes/ADM/configs/C.ACME.ADM.CFG.0019.yaml");
   for (const ti of [{ tool_name: "Read", tool_input: { file_path: admFile } },
     { tool_name: "Read", tool_input: { file_path: `${ws}/customers/ACME/kb/scopes/CAT/../ADM/configs/C.ACME.ADM.CFG.0019.yaml` } },
-    { tool_name: "Grep", tool_input: { pattern: "strict_import", path: join(ws, "customers/ACME/kb/scopes") } }]) {
+    { tool_name: "Grep", tool_input: { pattern: "strict_import", path: join(ws, "customers/ACME/kb/scopes") } },
+    { tool_name: "Bash", tool_input: { command: "cat customers/ACME/kb/scopes/ADM/configs/C.ACME.ADM.CFG.0019.yaml" } }]) {
     const rs = pre({ ...ti, ...CAT });
     assert.equal(verdict(rs), "deny", JSON.stringify(ti));
-    log.push(`cat-1 ${ti.tool_name} ${ti.tool_input.file_path ? ti.tool_input.file_path.replace(ws, "<ws>") : ti.tool_input.path.replace(ws, "<ws>")} · deny (${rs.filter(({ r }) => decisionOf(r) === "deny").map(({ g }) => g).join(", ")})`);
+    log.push(`cat-1 ${ti.tool_name} ${(ti.tool_input.file_path ?? ti.tool_input.path ?? ti.tool_input.command).replace(ws, "<ws>")} · deny (${rs.filter(({ r }) => decisionOf(r) === "deny").map(({ g }) => g).join(", ")})`);
   }
 
   // 4. cat-expert chiude con una richiesta di handoff nel rapporto (mai direttamente ad ADM)
@@ -94,7 +95,7 @@ test("K2 exit: handoff CAT→ADM via manager; cat-expert non legge mai ADM (deny
   const catToolAdm = cat.filter((e) => e.kind === "tool" && /\/ADM\/|\\\\ADM\\\\/i.test(e.payload.input_summary));
   assert.deepEqual(catToolAdm, [], "nessuna lettura ADM riuscita da cat-1");
   const catDenied = cat.filter((e) => e.kind === "guard" && e.payload.decision === "deny");
-  assert.ok(catDenied.length >= 3);
+  assert.ok(catDenied.length >= 4);
   assert.ok(catDenied.every((e) => e.actor === "hook:guard-scope"));
   assert.ok(events.some((e) => e.kind === "tool" && e.payload.agent_id === "adm-1" && /ADM/.test(e.payload.input_summary)));
   const inv = readFileSync(join(ws, `customers/ACME/.sessions/${SID}/invocations.jsonl`), "utf8").trim().split("\n").map((l) => JSON.parse(l));
