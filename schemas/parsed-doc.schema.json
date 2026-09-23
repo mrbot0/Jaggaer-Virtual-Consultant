@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "parsed-doc.schema.json",
+  "title": "Documento normalizzato (uscita dei parser di ingest)",
+  "description": "La forma comune che ogni parser (parse-docx, parse-pdf, parse-xlsx, …: WP09a) produce e che i segmentatori leggono (scripts/ingest/segment.mjs). Le sezioni sono in ordine di documento; `path` è il numero o percorso della sezione (\"3.4.2\", \"header.accounting\"), unico nel documento. Le tabelle hanno intestazioni e righe come celle di testo.",
+  "type": "object",
+  "required": ["id", "title", "format", "sections"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1, "pattern": "^[^/\\\\]+$", "description": "identificativo del documento (codice DOC o nome stabile), senza separatori di percorso" },
+    "title": { "type": "string" },
+    "format": { "enum": ["docx", "pdf", "xlsx", "html", "md", "txt", "xsd", "json", "xml", "csv", "pptx", "other"] },
+    "lang": { "type": "string", "pattern": "^[a-z]{2}$" },
+    "genre": { "type": "string", "description": "genere di fonte (F15: tecnica · d'uso · empirica · testimoniale)" },
+    "version": { "type": "string" },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "title", "level", "paragraphs", "tables", "figures"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "title": { "type": "string" },
+          "level": { "type": "integer", "minimum": 1 },
+          "page": { "type": ["integer", "null"], "minimum": 1 },
+          "paragraphs": { "type": "array", "items": { "type": "string" } },
+          "tables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["headers", "rows"],
+              "properties": {
+                "caption": { "type": "string" },
+                "headers": { "type": "array", "items": { "type": "string" } },
+                "rows": { "type": "array", "items": { "type": "array", "items": { "type": ["string", "number", "boolean", "null"] } } }
+              }
+            }
+          },
+          "figures": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                { "type": "string" },
+                { "type": "object", "properties": { "caption": { "type": "string" }, "ref": { "type": "string" }, "page": { "type": ["integer", "null"] } } }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
