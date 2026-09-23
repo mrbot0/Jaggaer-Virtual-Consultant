@@ -17,10 +17,11 @@ import { dirname, join } from "node:path";
 import YAML from "yaml";
 import { runHook, block } from "../lib/io.mjs";
 import { loadHookState, baseAgentType, invocationsFile, sessionDir } from "../lib/workspace.mjs";
-import { matchInvocation } from "../lib/invocations.mjs";
+import { matchInvocation, claimedSeqs, invocationType } from "../lib/invocations.mjs";
 import { appendAudit } from "../lib/audit.mjs";
 import { readJsonl } from "../lib/state-summary.mjs";
 import { extractReport, validateReport } from "../../scripts/admin/agent-report.mjs";
+import { parsePromptHeader } from "../../scripts/admin/agent-prompt.mjs";
 import { updateSession } from "../../scripts/admin/session.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
 
@@ -43,12 +44,18 @@ function agentTranscript(input) {
   return null;
 }
 
+const textOf = (m) => (Array.isArray(m?.content) ? m.content.filter((c) => c?.type === "text").map((c) => c.text).join("\n") : typeof m?.content === "string" ? m.content : "");
+
 // Uso dal transcript: una voce per message.id (le righe di uno stesso
 // messaggio ripetono lo stesso usage), input + output + cache_creation.
+// `firstPrompt`: il testo del primo messaggio user = il prompt scritto dal
+// dispatcher (con l'header che guard-budget ha verificato).
 export function transcriptUsage(file) {
   const byId = new Map();
   let lastText = null;
+  let firstPrompt = null;
   readJsonl(file).forEach((ev, i) => {
+    if (firstPrompt == null && ev?.type === "user" && ev.message) { const t = textOf(ev.message); if (t.trim()) firstPrompt = t; }
     if (ev?.type !== "assistant" || !ev.message) return;
     const m = ev.message;
     if (m.usage) byId.set(m.id ?? `line-${i}`, { usage: m.usage, model: m.model });
@@ -64,7 +71,7 @@ export function transcriptUsage(file) {
     by_model[k] = (by_model[k] ?? 0) + n;
     total += n;
   }
-  return { total, by_model, source: "transcript", lastText };
+  return { total, by_model, source: "transcript", lastText, firstPrompt };
 }
 
 function selfDeclared(report) {
@@ -91,26 +98,60 @@ export function handle(input, env = process.env) {
   const report = extractReport(text);
   const v0 = validateReport(report);
   const measured = measuredT && measuredT.total > 0 ? measuredT : selfDeclared(report);
+  // Identità del dispatch (fix round 2 F3): dall'header del primo prompt nel
+  // transcript del sub-agente — scritto dal dispatcher, verificato da
+  // guard-budget, non autodichiarato. Senza transcript: tipo + ordine.
+  const hdr = measuredT?.firstPrompt ? parsePromptHeader(measuredT.firstPrompt) : null;
+  const hdrTask = hdr?.task_id != null ? String(hdr.task_id) : null;
 
   const invs = readJsonl(invocationsFile(st.ws, st.customer, st.sid));
   let outcome = null;
   let v = v0;
   const session = updateSession(st.sessionFile, (s) => {
-    // Abbinamento per tipo e ordine di dispatch (fix round 1 #14): il task_id
-    // dichiarato nel rapporto non sceglie l'invocazione; se non coincide con
-    // quello del dispatch è un errore di traccia.
+    // Il task_id dichiarato nel rapporto non sceglie mai l'invocazione (#14).
+    // 1) header del primo prompt nel transcript (F3): l'invocazione non ancora
+    //    reclamata con quel task_id (o, se chiusa a mano, l'ultima con quel task_id);
+    // 2) senza transcript: primo dispatch libero dello stesso tipo, in ordine.
     let entry = s.ledger.invocations.find((i) => i.agent_id === agentId);
-    const seq = entry ? (Number.isInteger(entry.inv_seq) ? entry.inv_seq : null) : matchInvocation(invs, s.ledger.invocations, agentType);
+    let seq = null;
+    let source = entry?.task_id_source ?? null;
+    if (entry) seq = Number.isInteger(entry.inv_seq) ? entry.inv_seq : null;
+    else {
+      // L'header vale solo se corrisponde a un dispatch registrato da guard-budget
+      // (altrimenti non è verificato: si ricade su tipo + ordine).
+      if (hdrTask) {
+        const claimed = claimedSeqs(invs, s.ledger.invocations);
+        let k = invs.findIndex((x, i) => !claimed.has(i) && String(x?.task_id) === hdrTask);
+        if (k < 0) k = invs.findLastIndex((x) => String(x?.task_id) === hdrTask);
+        if (k >= 0) { seq = k; source = "header"; }
+      }
+    }
+    if (!entry && source !== "header") {
+      seq = matchInvocation(invs, s.ledger.invocations, agentType);
+      source = seq != null ? "dispatch-order" : "declared";
+    }
     const match = seq != null ? invs[seq] ?? null : null;
     const enforce = entry ? !!entry.enforced : !!match || PLUGIN_AGENTS.has(agentType);
     if (!entry) {
-      entry = { agent_id: agentId, agent_type: agentType, inv_seq: seq, task_id: match?.task_id ?? report?.task_id ?? null, task_id_source: match ? "dispatch" : "declared", enforced: enforce, tokens: 0, tokens_by_model: {}, blocks: 0 };
+      entry = { agent_id: agentId, agent_type: agentType, inv_seq: seq, task_id: match?.task_id ?? report?.task_id ?? null, task_id_source: source, enforced: enforce, tokens: 0, tokens_by_model: {}, blocks: 0 };
       s.ledger.invocations.push(entry);
     }
     const declared = report?.task_id != null ? String(report.task_id) : null;
-    v = match && declared && declared !== String(match.task_id)
-      ? { ...v0, ok: false, invalid: [...(v0.invalid ?? []), `task_id: il rapporto dichiara ${declared} ma il dispatch è ${match.task_id}`], errors: [...v0.errors, `task_id ${declared} ≠ ${match.task_id}`] }
-      : v0;
+    const expected = entry.task_id != null ? String(entry.task_id) : null;
+    v = v0;
+    if (declared && expected && declared !== expected && (source === "header" || match)) {
+      // Con identità solo per ordine (niente transcript) e il task_id dichiarato
+      // che è un altro dispatch aperto dello stesso tipo, l'ordine può essere
+      // sbagliato (dispatch paralleli): avviso di traccia, non blocco (F3).
+      const claimed = claimedSeqs(invs, s.ledger.invocations);
+      const ambiguous = source === "dispatch-order" && invs.some((x, i) => i !== seq && !claimed.has(i) && String(x?.task_id) === declared && invocationType(x) === agentType);
+      if (ambiguous) {
+        const w = `task_id dichiarato ${declared} ≠ ${expected} abbinato per ordine di dispatch (transcript assente, dispatch paralleli dello stesso tipo): identità non verificabile`;
+        entry.trace_warnings = [...new Set([...(entry.trace_warnings ?? []), w])];
+      } else {
+        v = { ...v0, ok: false, invalid: [...(v0.invalid ?? []), `task_id: il rapporto dichiara ${declared} ma il dispatch è ${expected}`], errors: [...v0.errors, `task_id ${declared} ≠ ${expected}`] };
+      }
+    }
     // Uso: si somma solo il delta rispetto a quanto già contato per questo agente.
     for (const [k, n] of Object.entries(measured.by_model)) {
       const delta = n - (entry.tokens_by_model[k] ?? 0);
@@ -131,7 +172,7 @@ export function handle(input, env = process.env) {
       return;
     }
     const reclassified = [...(v.reclassified ?? [])];
-    if (v !== v0) reclassified.push(`task_id dichiarato ${declared} ≠ task_id del dispatch ${match.task_id}`);
+    if (v !== v0 && declared !== expected) reclassified.push(`task_id dichiarato ${declared} ≠ task_id del dispatch ${expected}`);
     let effective = v.ok ? v.status_effective : "partial";
     if (match?.budget_tokens && entry.tokens > match.budget_tokens) {
       reclassified.push(`budget del compito superato (${entry.tokens}/${match.budget_tokens})`);
