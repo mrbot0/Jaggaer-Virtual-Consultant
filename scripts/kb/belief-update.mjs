@@ -54,9 +54,18 @@ function replace(state, item, withCode, effects) {
   effects.push(`sostituito: ${withCode} diventa il riferimento, ${item} superseded_by`);
 }
 
+export class MissingSuccessorError extends Error { constructor(m) { super(m); this.name = "MissingSuccessorError"; } }
+
 export function applyObservation(state, { item, coherent, kind = "obs", with: withCode = null } = {}) {
   if (!KINDS.includes(kind)) throw new Error(`kind '${kind}' non valido (${KINDS.join(" · ")})`);
   if (typeof item !== "string" || !item) throw new Error("item mancante");
+  // §13.8: sostituire vuol dire "l'item contrario diventa il nuovo riferimento" — senza il codice del
+  // contrario non c'è successore: si rifiuta (lo stato ricevuto non cambia, CTR e blocco restano).
+  const prior = state.items?.[item]?.contrary?.[kind] ?? 0;
+  const replacing = !coherent && ((kind === "obs" && prior + 1 >= 3) || (kind === "exec" && prior + 1 >= 2));
+  if (replacing && !(typeof withCode === "string" && withCode)) {
+    throw new MissingSuccessorError(`sostituzione di ${item} senza successore: serve il codice dell'item contrario (with)`);
+  }
   const s = structuredClone(state);
   s.items[item] = blankItem(s.items[item]);
   const it = s.items[item];
