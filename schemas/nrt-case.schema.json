@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "nrt-case.schema.json",
   "title": "Caso di test NRT",
-  "description": "§27.1, §27.2, §27.3: NRT.<CLIENTE>.<SCOPE>.<GENERE>.<SEQ> (genere POS NEG INT HND BSL CFG SMK OPS), composizione di FLW e SEL, derivation (da quale KEY/LCY/FLD/INT/HND e da quale risk mode di §27.2) e boundary (stop_at_step, does_not_assert) OBBLIGATORI: un caso senza non si emette. evidence, alm, epistemic_at_generation, fixtures con lookup_or_fail (mai create al volo), compensations (close · cancel · deactivate · restore, mai delete), expected_errors (codici ERR, obbligatori per NEG), state candidate · shadow · promoted · quarantine. Il dominio analitico non si cita (PAT PBK BRF RUL: compile-case e lint-spec rifiutano).",
+  "description": "§27.1, §27.2, §27.3: NRT.<CLIENTE>.<SCOPE>.<GENERE>.<SEQ> (genere POS NEG INT HND BSL CFG SMK OPS), composizione di FLW e SEL, derivation (da quale KEY/LCY/FLD/INT/HND e da quale risk mode di §27.2) e boundary (stop_at_step, does_not_assert) OBBLIGATORI: un caso senza non si emette. evidence, alm, epistemic_at_generation, fixtures con lookup_or_fail (mai create al volo), compensations (close · cancel · deactivate · restore, mai delete), expected_errors (codici ERR: chiave obbligatoria per NEG, almeno un ERR per promuovere — in shadow l'osservazione preliminare lo trova), state candidate · shadow · promoted · quarantine. Il dominio analitico non si cita (PAT PBK BRF RUL: compile-case e lint-spec rifiutano).",
   "type": "object",
   "required": ["id", "type", "title", "scope", "genre", "state", "composition", "derivation", "boundary", "epistemic_at_generation"],
   "additionalProperties": false,
@@ -97,6 +97,6 @@
   },
   "allOf": [
     { "if": { "properties": { "genre": { "const": "NEG" } } }, "then": { "required": ["expected_errors"] } },
-    { "if": { "properties": { "genre": { "const": "NEG" }, "state": { "enum": ["shadow", "promoted"] } } }, "then": { "properties": { "expected_errors": { "minItems": 1 } } } }
+    { "if": { "properties": { "genre": { "const": "NEG" }, "state": { "const": "promoted" } } }, "then": { "properties": { "expected_errors": { "minItems": 1 } } } }
   ]
 }

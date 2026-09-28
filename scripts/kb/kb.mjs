@@ -13,6 +13,7 @@ import { main as reviewMain } from "./review.mjs";
 import { main as coverageMain } from "./coverage-report.mjs";
 import { main as compensationMain } from "./compensation.mjs";
 import { main as snapshotMain } from "./snapshot.mjs";
+import { main as kbCoverageMain } from "./coverage.mjs";
 
 const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
 
@@ -39,6 +40,7 @@ Comandi:
   epistemic --scope <S> [--plan] → scripts/kb/coverage-report.mjs (report di copertura §9.6, piano R0)
   compensation add|list|done → scripts/kb/compensation.mjs (compensazione PRIMA del passo, §29.6)
   snapshot <CFG…> → scripts/kb/snapshot.mjs (stato degli oggetti governati prima di una modifica, §28.1)
+  coverage [--scope S] → scripts/kb/coverage.mjs (matrice CL-CFG × scope con forma epistemica, §28.2; copertura NRT: coverage.mjs nrt)
 
 Opzioni comuni: --db <file> (default knowledge.db) --json --help
 
@@ -66,6 +68,7 @@ export function run(argv) {
   // WP09b: compensazioni e snapshot (stato della sessione e del run, non il solo DB)
   if (cmd === "compensation") return { exitCode: compensationMain(rest) };
   if (cmd === "snapshot") return { exitCode: snapshotMain(rest) };
+  if (cmd === "coverage") return { exitCode: kbCoverageMain(rest) };
   const { opt, facet, positional } = parseArgs(rest);
   const dbPath = opt("db", "knowledge.db");
   if (!["find", "resolve", "summary", "get", "precedents", "fields", "impact", "identity", "units"].includes(cmd)) {

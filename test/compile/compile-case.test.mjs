@@ -33,7 +33,7 @@ test("caso → piano valido: traccia attesa per passo, compensazioni legate ai p
   assert.deepEqual(r.plan.compensations.map((c) => [c.step, c.kind, c.action]), [[3, "cancel", "requisition.cancel-draft"], [4, "cancel", "requisition.withdraw"]]);
   assert.deepEqual(r.plan.repair_policy.abort_on, [3, 4]);
   assert.equal(r.plan.storage_state, ".auth/buyer.json");
-  assert.equal(r.plan.checkpoint_dir, "runs/RUN.ACME.20260929.1000.P2P/checkpoints/");
+  assert.equal(r.plan.checkpoint_dir, undefined, "il run si deduce dal percorso: lo stesso caso ha lo stesso piano in ogni run");
   assert.deepEqual(r.plan.evidence, [{ at: 4, kind: "assertion", caption: "assertion al passo 4" }]);
   assert.deepEqual(r.trace.filter((t) => t.compensation).map((t) => t.compensation.before_step), [3, 4]);
   assert.equal(r.trace[3].boundary, true);

@@ -87,7 +87,7 @@ test("CFG: valido; rollback delete e options scalare invalidi", () => {
   bad(cfg("S.STD.ADM.CFG.0031", { options: "testo" }), /options/);
 });
 
-test("NRT (F7): caso valido; senza derivation o boundary invalido; genere/scope del codice coerenti; NEG in shadow senza expected_errors invalido; compensazione delete invalida", () => {
+test("NRT (F7): caso valido; senza derivation o boundary invalido; genere/scope del codice coerenti; NEG promosso senza expected_errors invalido; compensazione delete invalida", () => {
   const c = nrtCase();
   assert.equal(validateCase(c).ok, true, validateCase(c).errors.join("; "));
   assert.equal(validateItem(c).ok, true, "validate-schema instrada i codici NRT.* su nrt-case.schema.json");
@@ -95,7 +95,8 @@ test("NRT (F7): caso valido; senza derivation o boundary invalido; genere/scope 
   bad(without(c, "boundary"), /boundary/);
   bad({ ...c, genre: "POS" }, /genere/);
   bad({ ...c, id: "NRT.ACME.P2P.XYZ.0001" }, /id/);
-  bad({ ...c, state: "shadow", expected_errors: [] }, /expected_errors/);
+  bad({ ...c, state: "promoted", expected_errors: [] }, /expected_errors/);
+  assert.equal(validateCase({ ...c, state: "shadow", expected_errors: [] }).ok, true, "in shadow l'ERR lo trova l'osservazione");
   bad({ ...c, compensations: [{ step: 3, kind: "delete" }] }, /compensations/);
   bad({ ...c, boundary: { stop_at_step: 9, does_not_assert: [] } }, /stop_at_step/);
   bad({ ...c, state: "archiviato" }, /state/);

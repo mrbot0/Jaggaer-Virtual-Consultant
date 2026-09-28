@@ -6,7 +6,7 @@
 //
 // CLI: compile-plan --plan <file> [--scope <S>] [--allow-fragile] [--min-green 3]
 //      compile-plan verify --plan <file> --spec <file.spec.ts>
-import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
+import { readFileSync, existsSync, mkdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { createHash } from "node:crypto";
 import YAML from "yaml";
@@ -16,6 +16,7 @@ import { canonical } from "../../hooks/lib/audit.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { selFile } from "./atlas.mjs";
 import { locatorExpr } from "../compile/generate-atlas-po.mjs";
+import { runResults } from "../lib/run-results.mjs";
 
 export const MIN_GREEN = 3;
 const GREEN = new Set(["green", "pass", "passed", "success"]);
@@ -24,17 +25,9 @@ export class CompileError extends Error { constructor(code, msg) { super(msg); t
 // Hash del piano: sha256 del JSON canonico (chiavi ordinate) — indipendente da formattazione e YAML/JSON.
 export const planHash = (plan) => createHash("sha256").update(canonical(plan)).digest("hex");
 
+// WP09b: anche runs/<RUN>/results/<plan_id>.yaml (un esito per piano nei run con più casi), scripts/lib/run-results.mjs
 export function greenRuns(ws, customer, hash) {
-  const dir = join(ws, "customers", customer, "runs");
-  let runs = [];
-  try { runs = readdirSync(dir, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name); } catch { return []; }
-  const out = [];
-  for (const r of runs) {
-    const f = join(dir, r, "result.yaml");
-    if (!existsSync(f)) continue;
-    try { const y = YAML.parse(readFileSync(f, "utf8")); if (y?.plan_hash === hash && GREEN.has(String(y.status).toLowerCase())) out.push(r); } catch { /* illeggibile: non conta */ }
-  }
-  return out;
+  return [...new Set(runResults(ws, customer).filter((y) => y.plan_hash === hash && GREEN.has(y.status)).map((y) => y.run))].sort();
 }
 
 const q = (s) => JSON.stringify(String(s));

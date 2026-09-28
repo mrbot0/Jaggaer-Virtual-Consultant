@@ -6,7 +6,7 @@
 //     L-COMP         ogni passo che crea, modifica o invia ha la sua compensazione (§29.6)
 //     L-DERIVATION   derivation (from + risk_mode) e boundary (stop_at_step + does_not_assert) presenti (§27.1)
 //     L-ANALYTIC     nessun codice del dominio analitico (PAT PBK BRF RUL, §1.1)
-//     L-NEG          un NEG oltre candidate dichiara expected_errors
+//     L-NEG          un NEG promosso dichiara expected_errors
 //     con --against <vecchio>: L-WEAKEN (§30.4 "mai indebolire un'asserzione") — uguaglianza sostituita da verità o
 //     contenimento (value → value_contains/contains/truthy), asserzione rimossa (chiave di expect, messaggio, elemento,
 //     passo con expect, expected_errors), tolleranza allargata (tolerance, tolerances.numeric, ignore_fields), confine
@@ -106,7 +106,7 @@ export function lintCase(caso, { previous = null } = {}) {
   if (!Number.isInteger(caso?.boundary?.stop_at_step) || !Array.isArray(caso?.boundary?.does_not_assert)) out.push(v("L-DERIVATION", "boundary", "boundary mancante o incompleto (stop_at_step, does_not_assert)"));
   const a = analyticCodes(caso);
   if (a.length) out.push(v("L-ANALYTIC", "caso", `cita il dominio analitico: ${a.join(", ")} (§1.1)`));
-  if (caso?.genre === "NEG" && caso?.state !== "candidate" && !asArr(caso?.expected_errors).length) out.push(v("L-NEG", "expected_errors", "un NEG oltre candidate dichiara gli errori attesi (ERR)"));
+  if (caso?.genre === "NEG" && caso?.state === "promoted" && !asArr(caso?.expected_errors).length) out.push(v("L-NEG", "expected_errors", "un NEG promosso dichiara gli errori attesi (ERR)"));
   commonRules(stepsOfCase(caso), asArr(caso?.compensations), out);
   if (previous) out.push(...weakening(previous, caso));
   return out;

@@ -143,7 +143,7 @@ export function compileCase(ws, caso, { customer = null, env = "sandbox", envTyp
     plan_id: `PLAN.${caso.id}`, customer: cust, env, ...(caso.persona ? { persona: caso.persona, storage_state: `.auth/${caso.persona}.json` } : {}),
     goal: caso.title, ...(subject ? { subject } : {}), steps, ...(evidence.length ? { evidence } : {}),
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: abortOn },
-    ...(compensations.length ? { compensations } : {}), ...(run ? { checkpoint_dir: `runs/${run}/checkpoints/` } : {}),
+    ...(compensations.length ? { compensations } : {}),
   };
   const pv = validatePlan(plan, { env: { id: env, type: envType ?? (["sandbox", "dev", "preprod", "prod"].includes(env) ? env : "sandbox") } });
   if (!pv.ok) throw new CompileError(3, `piano non valido: ${pv.errors.join("; ")}`, { plan });

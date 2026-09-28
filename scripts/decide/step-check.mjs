@@ -368,7 +368,12 @@ export async function check(opts) {
     const cps = readdirSync(cpDir).filter((f) => /^\d+\.json$/.test(f)).map((f) => { try { return JSON.parse(readFileSync(join(cpDir, f), "utf8")); } catch { return null; } }).filter((c) => c?.plan_id === plan.plan_id && verifyCheckpoint(checkpointKey(ws), c));
     const status = finish ? "stopped" : cps.every((c) => c.status === "ok" || c.status === "novelty") ? "green" : "yellow";
     const { planHash } = await import("../chrome/compile-plan.mjs");
-    writeFileAtomic(join(runDir, "result.yaml"), YAML.stringify({ plan_id: plan.plan_id, plan_hash: planHash(plan), plan_file: planFile, run, status, steps: steps.length, completed_at: now.toISOString() }));
+    const resultDoc = YAML.stringify({ plan_id: plan.plan_id, plan_hash: planHash(plan), plan_file: planFile, run, status, steps: steps.length, completed_at: now.toISOString() });
+    writeFileAtomic(join(runDir, "result.yaml"), resultDoc);
+    // WP09b: un run di select-suite esegue più casi: l'esito resta anche per piano (runs/<RUN>/results/<plan_id>.yaml),
+    // che compile-plan (≥ 3 verdi) e la promozione (3 run coerenti) contano senza che il caso successivo lo sovrascriva
+    mkdirSync(join(runDir, "results"), { recursive: true });
+    writeFileAtomic(join(runDir, "results", `${plan.plan_id}.yaml`), resultDoc);
     res.result = `runs/${run}/result.yaml`;
   } else {
     updateSessionFile(sFile, mutate);
