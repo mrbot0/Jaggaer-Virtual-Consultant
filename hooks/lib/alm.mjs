@@ -4,15 +4,21 @@
 // classifyAlm(tool) → { server, op, category, object } | null (non un server ALM)
 //   category: read · delete · create · update · import · additive · unknown
 //   object:   execution · defect · test · incident · issue · page · comment · link · other
-// Il nome dello strumento si spezza in parole (camelCase, _ e -); la prima parola d'azione riconosciuta decide la
-// categoria, ma una parola di cancellazione ovunque nel nome vince sempre (fail-closed).
-export const ALM_MATCHER = "mcp__.*([Aa][Ll][Mm]|[Jj][Ii][Rr][Aa]|[Aa][Tt][Ll][Aa][Ss][Ss][Ii][Aa][Nn]).*__.*";
-const SERVER_RE = /(^|[_-])alm($|[_-])|jira|atlassian/i;
+// WP08 giro 1 (I7, decisione del controllore): DENY-BY-DEFAULT. Una lettura è SOLO uno strumento il cui nome sta
+// nell'elenco esplicito hooks/lib/alm-read-tools.json (file del plugin, sotto integrità); ogni altro nome è una
+// scrittura soggetta a tutti i divieti: il nome si spezza in parole (camelCase, _ e -); una parola di cancellazione
+// ovunque ⇒ delete; poi creazione, poi aggiornamento (resolve, deactivate, upsert, bulk, lock… compresi); nessuna parola
+// d'azione nota ⇒ unknown (negato). M3: anche i server Xray.
+import { readFileSync } from "node:fs";
+
+export const ALM_MATCHER = "mcp__.*([Aa][Ll][Mm]|[Jj][Ii][Rr][Aa]|[Aa][Tt][Ll][Aa][Ss][Ss][Ii][Aa][Nn]|[Xx][Rr][Aa][Yy]).*__.*";
+const SERVER_RE = /(^|[_-])alm($|[_-])|jira|atlassian|xray/i;
+const READ_TOOLS = new Set(JSON.parse(readFileSync(new URL("./alm-read-tools.json", import.meta.url), "utf8")).tools.map((t) => String(t).toLowerCase()));
 
 const DELETE = new Set(["delete", "remove", "destroy", "purge", "trash", "erase", "drop", "archive", "unlink", "wipe", "discard"]);
-const READ = new Set(["get", "find", "search", "list", "query", "fetch", "lookup", "read", "view", "status", "download", "export", "info", "whoami", "check", "count", "describe", "preview", "render", "resolve", "user"]);
-const CREATE = new Set(["create", "new", "add", "post", "log", "upload", "attach", "clone", "copy"]);
-const UPDATE = new Set(["update", "edit", "set", "modify", "patch", "put", "assign", "unassign", "move", "rank", "transition", "close", "reopen", "change", "replace", "overwrite", "rename", "link"]);
+const CREATE = new Set(["create", "new", "add", "post", "log", "upload", "attach", "clone", "copy", "import", "duplicate"]);
+const UPDATE = new Set(["update", "edit", "set", "modify", "patch", "put", "assign", "unassign", "move", "rank", "transition", "close", "reopen", "change", "replace", "overwrite", "rename", "link",
+  "resolve", "deactivate", "activate", "upsert", "bulk", "batch", "lock", "unlock", "enable", "disable", "grant", "revoke", "approve", "reject", "merge", "restore", "sync", "mark", "complete", "cancel", "start", "stop", "vote", "watch", "unwatch", "convert"]);
 const OBJECTS = [
   ["comment", /^(comment|comments|worklog|worklogs)$/], ["link", /^(link|links|remote|weblink)$/], ["execution", /^(execution|executions|exec|run|runs)$/],
   ["defect", /^(defect|defects|bug|bugs)$/], ["incident", /^(incident|incidents)$/], ["test", /^(test|tests)$/], ["page", /^(page|pages|blog|blogpost)$/],
@@ -27,15 +33,11 @@ export function classifyAlm(tool) {
   const [, server, op] = m;
   const w = words(op);
   let category = "unknown";
-  if (w.some((x) => DELETE.has(x))) category = "delete";
+  if (READ_TOOLS.has(op.toLowerCase()) && !w.some((x) => DELETE.has(x) || CREATE.has(x) || UPDATE.has(x))) category = "read";
+  else if (w.some((x) => DELETE.has(x))) category = "delete";
   else if (w.includes("import") && w.some((x) => /^results?$/.test(x))) category = "import";
-  else {
-    for (const x of w) {
-      if (READ.has(x)) { category = "read"; break; }
-      if (CREATE.has(x)) { category = "create"; break; }
-      if (UPDATE.has(x)) { category = "update"; break; }
-    }
-  }
+  else if (w.some((x) => CREATE.has(x))) category = "create";
+  else if (w.some((x) => UPDATE.has(x))) category = "update";
   const objs = OBJECTS.filter(([, re]) => w.some((x) => re.test(x))).map(([o]) => o);
   // "execution" o "plan" accanto a "test" (Test Execution, Test Plan) non è un issue di tipo Test
   let object = objs[0] ?? "other";
@@ -80,6 +82,19 @@ export function issueTypes(ti) {
     const typed = path.some((p) => /^(issue_?type(_?name)?|issuetype|type)$/i.test(p));
     const last = path.at(-1);
     if (typed && (/^(name|value|issue_?type(_?name)?|issuetype|type)$/i.test(last) || path.length === 1)) out.push(val.trim());
+  }
+  return out;
+}
+
+// WP08 giro 1 (I6): tipo dell'issue dato per id — { issuetype: { id } }, issuetype_id, issueTypeId (stringa o numero).
+export function issueTypeIds(ti) {
+  const out = [];
+  for (const [path, val] of leaves(ti)) {
+    if (typeof val !== "string" && typeof val !== "number") continue;
+    const last = path.at(-1) ?? "";
+    const byKey = /^issue_?type_?id$/i.test(last);
+    const nested = /^id$/i.test(last) && path.slice(0, -1).some((p) => /^(issue_?type|issuetype)$/i.test(p));
+    if (byKey || nested) out.push(String(val).trim());
   }
   return out;
 }

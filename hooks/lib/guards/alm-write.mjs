@@ -14,14 +14,15 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { guardContext, denyAudited } from "./common.mjs";
 import { skeleton } from "../paths.mjs";
-import { classifyAlm, leaves, targetKeys, issueTypes, createdKeys } from "../alm.mjs";
+import { classifyAlm, leaves, targetKeys, issueTypes, issueTypeIds, createdKeys } from "../alm.mjs";
 import { BOUNDARY_RULES } from "../../../scripts/kb/validate-boundary.mjs";
 
 const G = "guard-alm-write";
 const DELETED = /\b(delet|remov|elimin|cancellat|trash|archiv|purg|destroy)/i;
 const ALLOWED_TYPES = /^(bug|defect|difetto|test execution|test esecuzione|esecuzione di test)$/i;
 const TEST_TYPE = /^(test|xray test|test case|caso di test)$/i;
-const KB_RULES = BOUNDARY_RULES.filter((r) => r.dir === "kb");
+// giro 1 (M3): senza distinzione di maiuscole (c.acme.p2p.pat.0003, Analysis/)
+const KB_RULES = BOUNDARY_RULES.filter((r) => r.dir === "kb").map((r) => ({ ...r, re: new RegExp(r.re.source, r.re.flags.includes("i") ? r.re.flags : `${r.re.flags}i`) }));
 
 function allowTestIssues(ctx) {
   if (!ctx.customer) return false;
@@ -30,13 +31,22 @@ function allowTestIssues(ctx) {
   return /^allow_test_issue_creation:\s*true\s*(#.*)?$/m.test(text);
 }
 
+// WP08 giro 1 (I6): mappa id → nome del tipo di issue, dichiarata dal cliente in config/xray.yaml (issuetype_ids).
+async function issueTypeMap(ctx) {
+  let text;
+  try { text = readFileSync(join(ctx.ws, "customers", ctx.customer, "config", "xray.yaml"), "utf8"); } catch { return {}; }
+  const YAML = (await import("yaml")).default;
+  const m = YAML.parse(text)?.issuetype_ids;
+  return m && typeof m === "object" && !Array.isArray(m) ? Object.fromEntries(Object.entries(m).map(([k, v]) => [String(k).trim(), String(v)])) : {};
+}
+
 function boundaryViolation(ti) {
   const texts = leaves(ti).flatMap(([path, v]) => [String(v), ...path]);
   for (const t of texts) for (const s of [t, skeleton(t)]) for (const r of KB_RULES) { const m = r.re.exec(s); if (m) return `${r.rule} → "${m[0]}"`; }
   return null;
 }
 
-export function decide(input, env = process.env) {
+export async function decide(input, env = process.env) {
   const c = classifyAlm(input.tool_name);
   if (!c) return null;
   const ctx = guardContext(input, env);
@@ -74,6 +84,14 @@ export function decide(input, env = process.env) {
   }
   // create
   const types = issueTypes(ti);
+  // 3a. tipo per id: solo se la mappa del cliente lo risolve; id sconosciuto ⇒ deny (un Incident si nasconde così)
+  const ids = issueTypeIds(ti);
+  if (ids.length) {
+    const map = await issueTypeMap(ctx);
+    const unknown = ids.find((id) => !Object.hasOwn(map, id));
+    if (unknown) return no(`${at}: tipo di issue per id "${unknown}" non risolvibile (issuetype_ids in customers/${ctx.customer}/config/xray.yaml): il plugin crea solo Defect (ADR-27)`);
+    types.push(...ids.map((id) => map[id]));
+  }
   // 3. Incident
   if (c.object === "incident" || types.some((t) => /incident/i.test(t))) return no(`${at}: creare un Incident è vietato: il plugin apre solo Defect (ADR-27)`);
   // 4. Test issue

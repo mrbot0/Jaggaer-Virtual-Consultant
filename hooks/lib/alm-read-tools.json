@@ -1,0 +1,14 @@
+{
+  "description": "WP08 giro 1 (I7): elenco ESPLICITO degli strumenti MCP dell'ALM (server del plugin, Jira, Atlassian, Xray) che sono letture. guard-alm-write tratta ogni altro nome come scrittura soggetta a tutti i divieti (deny-by-default). Nomi esatti dello strumento (senza mcp__<server>__), senza distinzione di maiuscole; un nome che contiene anche una parola di scrittura non è mai una lettura. File del plugin (sotto integrità): si estende solo con una release.",
+  "tools": [
+    "alm_get_test", "alm_find_tests", "alm_queue_status",
+    "getJiraIssue", "searchJiraIssuesUsingJql", "getTransitionsForJiraIssue", "getJiraIssueRemoteIssueLinks", "getVisibleJiraProjects",
+    "getJiraProjectIssueTypesMetadata", "getJiraIssueTypeMetaWithFields", "lookupJiraAccountId", "atlassianUserInfo", "getAccessibleAtlassianResources",
+    "getConfluencePage", "getConfluenceSpaces", "getPagesInConfluenceSpace", "getConfluencePageFooterComments", "getConfluencePageInlineComments",
+    "getConfluencePageDescendants", "searchConfluenceUsingCql", "search", "fetch",
+    "jira_get_issue", "jira_search", "jira_search_fields", "jira_get_transitions", "jira_get_project_issues", "jira_get_project_versions",
+    "jira_get_all_projects", "jira_get_user_profile", "jira_get_agile_boards", "jira_get_board_issues",
+    "jira_get_sprints_from_board", "jira_get_sprint_issues", "jira_get_worklog",
+    "xray_get_test", "xray_get_tests", "xray_get_test_execution", "xray_get_test_plan", "xray_get_test_runs", "xray_search_tests"
+  ]
+}
