@@ -274,6 +274,12 @@ export async function check(opts) {
   } else if ((res.proceed && idx === steps.length - 1) || finish) {
     updateSessionFile(sFile, (x) => { mutate(x); x.active_plan = null; });
     res.plan_status = finish ? "stopped" : "completed";
+    // runs/<RUN>/result.yaml (K6.8): verde = piano completato senza sorprese; lo conta compile-plan (≥ 3 verdi)
+    const cps = readdirSync(cpDir).filter((f) => /^\d+\.json$/.test(f)).map((f) => { try { return JSON.parse(readFileSync(join(cpDir, f), "utf8")); } catch { return null; } }).filter((c) => c?.plan_id === plan.plan_id);
+    const status = finish ? "stopped" : cps.every((c) => c.status === "ok" || c.status === "novelty") ? "green" : "yellow";
+    const { planHash } = await import("../chrome/compile-plan.mjs");
+    writeFileAtomic(join(runDir, "result.yaml"), YAML.stringify({ plan_id: plan.plan_id, plan_hash: planHash(plan), plan_file: planFile, run, status, steps: steps.length, completed_at: now.toISOString() }));
+    res.result = `runs/${run}/result.yaml`;
   } else {
     updateSessionFile(sFile, mutate);
   }

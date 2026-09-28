@@ -1,0 +1,178 @@
+// compile-plan (K6.8, §23.5, §27.4 — corsia COMPILATA, opzionale, mai il default): da un piano già verde
+// ≥ 3 volte (runs/*/result.yaml con lo stesso hash) genera uno spec Playwright per la CI notturna.
+// Target dalla catena di strategie dell'Atlas (DT-008): testid → role → label → css; css solo se la
+// stabilità "fragile" è ammessa (--allow-fragile). L'hash del piano è nell'intestazione: un piano cambiato
+// invalida lo spec (`compile-plan verify`). Solo generazione di testo: questo script NON importa playwright.
+//
+// CLI: compile-plan --plan <file> [--scope <S>] [--allow-fragile] [--min-green 3]
+//      compile-plan verify --plan <file> --spec <file.spec.ts>
+import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
+import { join, resolve as resolvePath } from "node:path";
+import { createHash } from "node:crypto";
+import YAML from "yaml";
+import { parseArgs, fail } from "../lib/args.mjs";
+import { isMain } from "../lib/is-main.mjs";
+import { canonical } from "../../hooks/lib/audit.mjs";
+import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
+import { selFile } from "./atlas.mjs";
+
+export const MIN_GREEN = 3;
+const GREEN = new Set(["green", "pass", "passed", "success"]);
+export class CompileError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
+
+// Hash del piano: sha256 del JSON canonico (chiavi ordinate) — indipendente da formattazione e YAML/JSON.
+export const planHash = (plan) => createHash("sha256").update(canonical(plan)).digest("hex");
+
+export function greenRuns(ws, customer, hash) {
+  const dir = join(ws, "customers", customer, "runs");
+  let runs = [];
+  try { runs = readdirSync(dir, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name); } catch { return []; }
+  const out = [];
+  for (const r of runs) {
+    const f = join(dir, r, "result.yaml");
+    if (!existsSync(f)) continue;
+    try { const y = YAML.parse(readFileSync(f, "utf8")); if (y?.plan_hash === hash && GREEN.has(String(y.status).toLowerCase())) out.push(r); } catch { /* illeggibile: non conta */ }
+  }
+  return out;
+}
+
+const q = (s) => JSON.stringify(String(s));
+function locatorFor(ws, customer, code, { allowFragile }) {
+  const f = selFile(ws, code, customer);
+  if (!f || !existsSync(f)) throw new CompileError(3, `${code} non è nell'Atlas: il piano non si compila`);
+  const sel = YAML.parse(readFileSync(f, "utf8"));
+  const strategies = Array.isArray(sel?.strategies) ? sel.strategies : [];
+  const by = (k) => strategies.find((s) => s?.kind === k);
+  if (by("testid")) return `page.getByTestId(${q(by("testid").value)})`;
+  if (by("role")) { const s = by("role"); return `page.getByRole(${q(s.value ?? sel.role)}${s.name ? `, { name: ${q(s.name)} }` : ""})`; }
+  if (by("label")) return `page.getByLabel(${q(by("label").value)})`;
+  if (by("css")) {
+    if (!allowFragile) throw new CompileError(3, `${code}: solo strategia css (stabilità ${sel.stability ?? "ignota"}): ammessa solo con --allow-fragile (stabilità fragile consentita)`);
+    return `page.locator(${q(by("css").value)})`;
+  }
+  throw new CompileError(3, `${code}: nessuna strategia utilizzabile nell'Atlas`);
+}
+
+const reEsc = (s) => String(s).replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
+function expectLines(ws, customer, step, target, opts) {
+  const e = step.expect ?? {};
+  const L = [];
+  const loc = (code) => { try { return locatorFor(ws, customer, code, opts); } catch (err) { if (err.code === 3 && /non è nell'Atlas/.test(err.message)) return null; throw err; } };
+  if (e.page_sig) L.push(`await expect(page).toHaveURL(/${reEsc(String(e.page_sig).split("#")[0])}/);`);
+  for (const el of Array.isArray(e.elements) ? e.elements : []) {
+    const code = typeof el === "string" ? el : el?.sel;
+    const l = code ? loc(code) : null;
+    if (!l) { L.push(`// expect: ${code ?? JSON.stringify(el)} non risolto nell'Atlas — verifica omessa`); continue; }
+    L.push(`await expect(${l}).toBeVisible();`);
+    if (el && typeof el === "object" && el.value !== undefined) L.push(typeof el.value === "boolean" ? `await expect(${l})${el.value ? "" : ".not"}.toBeChecked();` : `await expect(${l}).toHaveValue(${q(el.value)});`);
+  }
+  if (e.value !== undefined && target) L.push(/^(true|false)$/i.test(String(e.value)) ? `await expect(${target})${String(e.value).toLowerCase() === "true" ? "" : ".not"}.toBeChecked();` : `await expect(${target}).toHaveValue(${q(e.value)});`);
+  if (e.toast) { const l = loc(e.toast); L.push(l ? `await expect(${l}).toBeVisible();` : `await expect(page.getByText(${q(e.toast)})).toBeVisible();`); }
+  if (Array.isArray(e.messages)) {
+    if (!e.messages.length) L.push(`await expect(page.getByRole("alert")).toHaveCount(0);`);
+    for (const m of e.messages) L.push(`await expect(page.getByText(${q(m)})).toBeVisible();`);
+  }
+  for (const k of Object.keys(e).filter((x) => !["page_sig", "elements", "value", "toast", "messages"].includes(x))) L.push(`// expect.${k}: non compilato (resta alla corsia guidata)`);
+  return L;
+}
+
+export function generateSpec(ws, customer, plan, { allowFragile = false } = {}) {
+  const hash = planHash(plan);
+  const body = [];
+  for (const s of [...(plan.steps ?? [])].sort((a, b) => a.n - b.n)) {
+    body.push(`  // passo ${s.n} ${s.verb} (${s.action_class ?? "—"})`);
+    if (s.verb === "ASK") throw new CompileError(3, `passo ${s.n}: ASK richiede una persona: il piano non si compila`);
+    const target = typeof s.target === "string" ? locatorFor(ws, customer, s.target, { allowFragile }) : null;
+    const d = s.data;
+    const act = {
+      NAVIGATE: () => (s.target?.url_pattern ? `await page.goto(${q(s.target.url_pattern)});` : `await ${target}.click();`),
+      CLICK: () => `await ${target}.click();`, SAVE: () => `await ${target}.click();`, SUBMIT: () => `await ${target}.click();`,
+      FILL: () => `await ${target}.fill(${q(d ?? "")});`,
+      CHOOSE: () => `await ${target}.selectOption(${q(d ?? "")});`, SELECT: () => `await ${target}.selectOption(${q(d ?? "")});`,
+      TOGGLE: () => `await ${target}.setChecked(${d === false || d === "false" ? "false" : "true"});`,
+      UPLOAD: () => `await ${target}.setInputFiles(${q(d ?? "")});`,
+      WAIT: () => (target ? `await ${target}.waitFor();` : `await page.waitForLoadState();`),
+      READ: () => `await expect(${target}).toBeVisible();`,
+      VERIFY: () => (target ? `await expect(${target}).toBeVisible();` : `// VERIFY ${s.check ?? ""}: asserzione del caso NRT`),
+      CAPTURE: () => `await page.screenshot({ path: ${q(`evidence/${plan.plan_id}-${s.n}.png`)} });`,
+    }[s.verb];
+    if (!act) throw new CompileError(3, `passo ${s.n}: verbo ${s.verb} non compilabile`);
+    body.push(`  ${act()}`);
+    for (const l of expectLines(ws, customer, s, target, { allowFragile })) body.push(`  ${l}`);
+  }
+  const text = [
+    `// plan-hash: ${hash}`,
+    `// ${plan.plan_id} — ${plan.goal ?? ""}`,
+    "// Generato da scripts/chrome/compile-plan.mjs (corsia compilata, §27.4): non modificare. Un piano cambiato invalida",
+    "// lo spec (compile-plan verify); l'Atlas resta la fonte dei target.",
+    'import { test, expect } from "@playwright/test";',
+    "",
+    `test(${q(`${plan.plan_id} — ${plan.goal ?? ""}`)}, async ({ page }) => {`,
+    ...body,
+    "});",
+    "",
+  ].join("\n");
+  return { hash, text };
+}
+
+export function readSpecHash(text) { return /^\/\/ plan-hash: ([0-9a-f]{64})$/m.exec(String(text))?.[1] ?? null; }
+
+async function loadPlan(ws, customer, rel) {
+  const { loadPlanFile } = await import("../admin/approvals.mjs");
+  const info = await loadPlanFile(ws, customer, rel);
+  if (!info) throw new CompileError(1, `piano non trovato: ${rel}`);
+  return info.plan;
+}
+
+const HELP = `uso: node scripts/chrome/compile-plan.mjs --plan <file> [--scope <S>] [--allow-fragile] [--min-green 3] [--customer <C>]
+       node scripts/chrome/compile-plan.mjs verify --plan <file> --spec <file.spec.ts>
+       Opzioni: [--session <id>] [--workspace <dir>] [--json] [--help]
+
+Corsia compilata (opzionale, §27.4): spec Playwright da un piano verde ≥ 3 volte, nell'Atlas la catena
+testid → role → label → css (css solo con --allow-fragile). verify: lo spec vale solo per l'hash del piano.
+Exit: 0 · 1 argomenti · 2 errore di sistema · 3 rifiuto (meno di 3 verdi, target non compilabile, spec invalidato).`;
+
+export async function run(argv, env = process.env) {
+  const { opts, positional } = parseArgs(argv, { flags: ["allow-fragile"] });
+  const asJson = !!opts.json;
+  if (opts.help) { console.log(HELP); return 0; }
+  const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
+  try {
+    if (!opts.plan) return fail(asJson, 1, "richiesto --plan");
+    let customer = opts.customer;
+    let scope = opts.scope;
+    if (!customer || !scope) {
+      const { resolveSessionId, loadSession } = await import("../admin/session.mjs");
+      const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
+      const s = sid ? loadSession(ws, sid).session : null;
+      customer ??= s?.customer;
+      scope ??= s?.scope;
+    }
+    if (!customer) return fail(asJson, 1, "cliente non risolto: --customer <C>");
+    const plan = await loadPlan(ws, customer, opts.plan);
+    scope ??= /^[SCL]\.[A-Z0-9]{3,4}\.([A-Z0-9]{3})\./.exec(plan.subject ?? "")?.[1] ?? "XSC";
+    if (positional[0] === "verify") {
+      if (!opts.spec) return fail(asJson, 1, "verify richiede --spec");
+      const specHash = readSpecHash(readFileSync(resolvePath(ws, opts.spec), "utf8"));
+      const hash = planHash(plan);
+      if (specHash !== hash) return fail(asJson, 3, `spec invalidato: hash del piano ${hash.slice(0, 12)}… ≠ hash dello spec ${String(specHash).slice(0, 12)}… (il piano è cambiato: ricompila dopo 3 nuove esecuzioni verdi)`, { valid: false });
+      console.log(asJson ? JSON.stringify({ ok: true, valid: true, hash }) : "spec valido");
+      return 0;
+    }
+    const hash = planHash(plan);
+    const min = opts["min-green"] ? Math.max(MIN_GREEN, Number(opts["min-green"])) : MIN_GREEN;
+    const green = greenRuns(ws, customer, hash);
+    if (green.length < min) return fail(asJson, 3, `${green.length} esecuzioni verdi con questo hash: ne servono almeno ${min} per compilare (§27.4)`, { green });
+    const { text } = generateSpec(ws, customer, plan, { allowFragile: !!opts["allow-fragile"] });
+    const rel = `customers/${customer}/tests/specs/${scope}/${plan.plan_id}.spec.ts`;
+    mkdirSync(join(ws, "customers", customer, "tests", "specs", scope), { recursive: true });
+    writeFileAtomic(join(ws, rel), text);
+    console.log(asJson ? JSON.stringify({ ok: true, spec: rel, hash, green }) : rel);
+    return 0;
+  } catch (err) {
+    if (err instanceof CompileError) return fail(asJson, err.code, err.message);
+    return fail(asJson, 2, `errore di sistema: ${err?.message ?? err}`);
+  }
+}
+
+if (isMain(import.meta.url)) run(process.argv.slice(2)).then((c) => process.exit(c), (e) => { console.error(e); process.exit(2); });

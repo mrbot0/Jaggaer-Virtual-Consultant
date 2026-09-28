@@ -76,6 +76,14 @@ export async function buildReport(opts) {
       budget: { used: session.budget?.used ?? 0, estimated, total: session.budget?.tokens, by_model: session.budget?.by_model ?? {} },
       evidence, lesson: cls.lesson ? lesson : null, surprises: st.surprises, novelties: 0, errors: errList,
     };
+    // K6.7, spreco a livello di report (§29.10): file dell'Atlas aperti quando il summary bastava.
+    if (opts.result) {
+      const { filesOpenedUnused } = await import("../decide/budget.mjs");
+      const { auditFile } = await import("../../hooks/lib/audit.mjs");
+      let events = [];
+      try { events = readFileSync(auditFile(ws, C, now), "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l)).filter((e) => e.session === sid); } catch { events = []; }
+      doc.waste = { files_opened_unused: filesOpenedUnused(events, opts.result) };
+    }
     if (kind === "action") Object.assign(doc, {
       intent, plan: plan ? { plan_id: plan.plan_id, actions: [...new Set((plan.steps ?? []).map((s) => s.action_class).filter(Boolean))], strategy: plan.strategy ?? null } : null,
       approvals, execution, entities, next,
