@@ -21,7 +21,18 @@ import { skeleton } from "../paths.mjs";
 import { openInvocations } from "../state-summary.mjs";
 import { parsePromptHeader } from "../../../scripts/admin/agent-prompt.mjs";
 import { guarded, denyAudited, sameFile, SHELL_TOOLS } from "./common.mjs";
-import { checkRemaining, enforceClass } from "../../../scripts/decide/budget.mjs";
+import { checkRemaining, enforceClass, estimateTask } from "../../../scripts/decide/budget.mjs";
+import { withFileLock } from "../fsx.mjs";
+import { planFilePath } from "../../../scripts/admin/approvals.mjs";
+import YAML from "yaml";
+import { readFileSync } from "node:fs";
+
+// Il file del piano attivo (relativo alla cartella del cliente) → oggetto | null.
+function readPlan(ctx, rel) {
+  const f = planFilePath(ctx.ws, ctx.session.customer, rel);
+  if (!f) return null;
+  try { const t = readFileSync(f, "utf8"); return t.trimStart().startsWith("{") ? JSON.parse(t) : YAML.parse(t); } catch { return null; }
+}
 
 const G = "guard-budget";
 const AGENT_TOOLS = new Set(["Agent", "Task"]);
@@ -138,22 +149,46 @@ export const decide = guarded(G, (ctx) => {
   if (used >= tokens) return denyAudited(ctx, G, `budget di sessione esaurito (${used}/${tokens}): nessuna nuova invocazione; chiudi con report e pendenze. Solo l'utente può alzarlo con /jaggaer-virtual-consultant:use budget <n>`);
   const taskBudget = h.budget?.tokens;
   if (taskBudget != null && !(Number.isInteger(taskBudget) && taskBudget > 0)) return denyAudited(ctx, G, `budget del compito non valido: ${JSON.stringify(taskBudget)}`);
-  // K6.7 (debito di WP03): le invocazioni aperte PRENOTANO il loro budget — due compiti paralleli da 40k
-  // con 50k di residuo: il secondo è negato.
-  const open = openInvocations(invocationsFile(ctx.ws, session.customer, session.session_id), session.ledger);
-  const rem = checkRemaining(session, taskBudget ?? undefined, { open });
-  if (taskBudget != null && !rem.ok) return denyAudited(ctx, G, `${rem.reason}: ridisegna il compito (meno passi, più STR-REPLAY) o chiedi all'utente di alzare il budget`);
-  // K6.7: per classe di azione (§29.10) — il budget del compito non supera quello delle classi dichiarate nell'header.
-  const cls = enforceClass({ action_class: h.action_class, actions: h.actions, level: h.level, budget_tokens: taskBudget }, session.env);
-  if (!cls.ok) return denyAudited(ctx, G, `budget per classe: ${cls.reason}`);
+  // WP07 giro 1 (budget rigidi, spec I7 e revisione di sicurezza):
+  //  - le classi d'azione vengono dal piano ATTIVO (validato da step-check) quando c'è, non dall'header;
+  //  - senza budget.tokens vale il limite delle classi, che si prenota; senza budget e senza classi ⇒ deny;
+  //  - lettura delle invocazioni aperte, verifica del residuo e registrazione sotto lo stesso lock (niente
+  //    doppia prenotazione con dispatch paralleli).
+  let classes = [...new Set([...(h.action_class ? [h.action_class] : []), ...(Array.isArray(h.actions) ? h.actions : [])])];
+  let limit = null;
+  let source = "header";
+  const ap = session.active_plan;
+  if (ap) {
+    const plan = readPlan(ctx, ap.file);
+    if (!plan || plan.plan_id !== ap.plan_id) return denyAudited(ctx, G, `piano attivo ${ap.plan_id} illeggibile: le classi d'azione del compito non si possono verificare`);
+    classes = [...new Set((plan.steps ?? []).map((x) => x?.action_class).filter(Boolean))];
+    limit = estimateTask(plan, session.env).tokens;
+    source = "piano";
+  }
+  if (!classes.length && taskBudget == null) return denyAudited(ctx, G, "budget del compito non dichiarato e nessuna classe d'azione (header action_class/actions o piano attivo): il budget si deduce dalla classe (§29.10)");
+  if (classes.length && limit == null) {
+    const c = enforceClass({ actions: classes, level: h.level }, session.env);
+    if (!c.ok) return denyAudited(ctx, G, `budget per classe: ${c.reason}`);
+    limit = c.limit;
+    source = "classe";
+  }
+  if (taskBudget != null && limit != null && taskBudget > limit) return denyAudited(ctx, G, `budget per classe: budget ${taskBudget} oltre il limite di ${classes.join(" + ")} dal ${source === "piano" ? "piano attivo" : "catalogo"}: ${limit} (§29.10: si ridisegna il compito, non si finanzia)`);
+  const effective = taskBudget ?? limit;
   const downgrade = used >= HAIKU_THRESHOLD * tokens;
   const model = downgrade ? "haiku" : ti.model ?? null;
   const file = invocationsFile(ctx.ws, session.customer, session.session_id);
   mkdirSync(dirname(file), { recursive: true });
-  appendFileSync(file, `${JSON.stringify({
-    ts: new Date().toISOString(), task_id: String(h.task_id), subagent_type: ti.subagent_type ?? null,
-    model_requested: ti.model ?? null, model, budget_tokens: taskBudget ?? null, scope: h.scope, parent_agent_id: ctx.agentId,
-  })}\n`);
+  const refused = withFileLock(`${file}.lock`, () => {
+    const open = openInvocations(file, session.ledger);
+    const rem = checkRemaining(session, effective, { open });
+    if (!rem.ok) return rem.reason;
+    appendFileSync(file, `${JSON.stringify({
+      ts: new Date().toISOString(), task_id: String(h.task_id), subagent_type: ti.subagent_type ?? null,
+      model_requested: ti.model ?? null, model, budget_tokens: effective, budget_source: taskBudget != null ? "header" : source, classes, scope: h.scope, parent_agent_id: ctx.agentId,
+    })}\n`);
+    return null;
+  }, { timeoutMs: 4000 });
+  if (refused) return denyAudited(ctx, G, `${refused}: ridisegna il compito (meno passi, più STR-REPLAY) o chiedi all'utente di alzare il budget`);
   if (downgrade) {
     return allowWithInput(`[${G}] budget di sessione ≥ 80% (${used}/${tokens}): tier forzato a haiku; chiedi all'utente se continuare (§29.10)`, { ...ti, model: "haiku" });
   }

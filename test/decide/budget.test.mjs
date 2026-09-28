@@ -3,7 +3,7 @@
 // (query kb ripetuta ⇒ controllo fallito; file aperto quando bastava il summary).
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import YAML from "yaml";
@@ -79,7 +79,7 @@ test("guard-budget: budget del compito oltre il budget della classe dichiarata �
   const r = agent(ws, header(30000, { action_class: "ACT-CREATE" }));
   assert.equal(decisionOf(r), "deny");
   // ambiente non dichiarato ⇒ il moltiplicatore più restrittivo (0.5, come la produzione): 15000 × 0.5
-  assert.match(reasonOf(r), /ACT-CREATE: 7500/);
+  assert.match(reasonOf(r), /ACT-CREATE.*: 7500/);
 });
 
 test("spreco: la stessa query kb ripetuta con gli stessi argomenti ⇒ il self-check #12 fallisce (ledger delle chiamate)", () => {
@@ -104,4 +104,46 @@ test("spreco a livello di report: file aperto quando il summary bastava (nessun 
     { kind: "tool", payload: { tool: "Read", input_summary: JSON.stringify({ file_path: "customers/ACME/kb/scopes/CAT/flows/C.ACME.CAT.FLW.0002.yaml" }) } },
   ];
   assert.deepEqual(filesOpenedUnused(audit, { output: { used: ["C.ACME.CAT.FLW.0001"] } }), ["C.ACME.CAT.FLW.0002"]);
+});
+
+// ---- WP07 giro 1: budget rigidi anche senza budget dichiarato, classe dal piano validato, prenotazione atomica ----
+test("guard-budget senza budget.tokens: vale il limite della classe e si prenota; senza classe e senza budget ⇒ deny", () => {
+  const ws = mkWs(); seedSession(ws, { budget: { tokens: 200000, used: 150000, by_model: { haiku: 0, sonnet: 150000, opus: 0 } } });
+  const h = (extra) => `\`\`\`yaml\n${YAML.stringify({ task_id: "T-x", customer: "ACME", scope: "CAT", allowed_paths: ["customers/ACME/**"], ...extra }).trim()}\n\`\`\`\n\nIstruzioni`;
+  const none = agent(ws, h({}));
+  assert.equal(decisionOf(none), "deny"); assert.match(reasonOf(none), /budget del compito non dichiarato/);
+  const obs = agent(ws, h({ action_class: "ACT-OBS" }));
+  assert.equal(obs.stdout.trim(), "", reasonOf(obs));
+  const inv = readFileSync(join(ws, "customers/ACME/.sessions/sess-1/invocations.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
+  assert.equal(inv.at(-1).budget_tokens, 2500, "5000 × 0.5 (ambiente non dichiarato) prenotati");
+  assert.equal(inv.at(-1).budget_source, "classe");
+});
+
+test("guard-budget: con un piano attivo le classi vengono dal piano validato, non dall'header", () => {
+  const ws = mkWs(); seedSession(ws);
+  mkdirSync(join(ws, "customers/ACME/runs/RUN.B"), { recursive: true });
+  writeFileSync(join(ws, "customers/ACME/runs/RUN.B/plan.json"), JSON.stringify({ plan_id: "PLAN.B.1", customer: "ACME", env: "sandbox", goal: "x", steps: [{ n: 1, verb: "NAVIGATE", action_class: "ACT-OBS", target: { url_pattern: "https://a/" }, expect: { page_sig: "a" } }], repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } }));
+  const s = JSON.parse(readFileSync(join(ws, "customers/ACME/.sessions/sess-1/session.json"), "utf8"));
+  s.active_plan = { plan_id: "PLAN.B.1", file: "runs/RUN.B/plan.json", step: 1 };
+  writeFileSync(join(ws, "customers/ACME/.sessions/sess-1/session.json"), JSON.stringify(s));
+  const r = agent(ws, header(50000, { actions: ["ACT-CFG-CHANGE", "ACT-BULK"] }));
+  assert.equal(decisionOf(r), "deny", "l'header non alza il limite: il piano ha solo ACT-OBS");
+  assert.match(reasonOf(r), /ACT-OBS/);
+});
+
+test("guard-budget: prenotazione atomica — due dispatch paralleli da 40k con 50k di residuo: mai entrambi consentiti (6 prove)", async () => {
+  const { spawn } = await import("node:child_process");
+  const { hookScript } = await import("../helpers/hook-env.mjs");
+  const par = (ws, p) => new Promise((res) => {
+    const ch = spawn(process.execPath, [hookScript("guard-budget")], { env: cleanEnv({ JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT }) });
+    let out = "";
+    ch.stdout.on("data", (d) => { out += d; });
+    ch.on("close", () => res(out.trim() ? JSON.parse(out).hookSpecificOutput?.permissionDecision : "allow"));
+    ch.stdin.end(JSON.stringify({ session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: "Agent", tool_input: { subagent_type: "scope-expert", prompt: p } }));
+  });
+  for (let i = 0; i < 6; i++) {
+    const ws = mkWs(); seedSession(ws, { budget: { tokens: 200000, used: 150000, by_model: { haiku: 0, sonnet: 150000, opus: 0 } } });
+    const r = await Promise.all([par(ws, header(40000, { task_id: "A" })), par(ws, header(40000, { task_id: "B" }))]);
+    assert.deepEqual([...r].sort(), ["allow", "deny"], `prova ${i}: ${r}`);
+  }
 });
