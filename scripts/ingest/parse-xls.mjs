@@ -16,7 +16,10 @@ const END = 0xfffffffe, FREE = 0xffffffff;
 
 export function isCfb(buf) { return Buffer.isBuffer(buf) && buf.length >= 512 && buf.subarray(0, 8).toString("hex") === SIG; }
 
-export function readCfb(buf) {
+// Giro 1 (I5): catene FAT e mini-FAT con rilevamento dei cicli (settori già visitati) e tetto dei byte per stream.
+export const LIMITS = Object.freeze({ maxStreamBytes: 64 * 1024 * 1024 });
+
+export function readCfb(buf, limits = LIMITS) {
   if (!isCfb(buf)) throw new ParseError("non è un Compound File (OLE2)", { residue: "unsupported" });
   const ss = 1 << buf.readUInt16LE(0x1e);
   const mss = 1 << buf.readUInt16LE(0x20);
@@ -36,7 +39,19 @@ export function readCfb(buf) {
   }
   const fat = [];
   for (const s of fatSectors) { const d = sector(s); for (let i = 0; i < ss / 4; i++) fat.push(d.readUInt32LE(i * 4)); }
-  const chain = (start, table) => { const out = []; let s = start, g = 0; while (s !== END && s !== FREE && s < table.length && g++ < 1e6) { out.push(s); s = table[s]; } return out; };
+  const chain = (start, table, unit = ss) => {
+    const out = [];
+    const seen = new Set();
+    let s = start;
+    while (s !== END && s !== FREE && s < table.length) {
+      if (seen.has(s)) throw new ParseError(`Compound File non valido: ciclo nella catena dei settori (${s})`, { residue: "unsupported" });
+      seen.add(s);
+      out.push(s);
+      if (out.length * unit > limits.maxStreamBytes) throw new ParseError(`stream oltre ${limits.maxStreamBytes} byte`, { residue: "unsupported" });
+      s = table[s];
+    }
+    return out;
+  };
   const readChain = (start) => Buffer.concat(chain(start, fat).map(sector));
   const dir = readChain(dirStart);
   const entries = [];
@@ -53,7 +68,7 @@ export function readCfb(buf) {
   const streams = new Map();
   for (const e of entries.filter((x) => x.type === 2)) {
     let data;
-    if (e.size < cutoff) data = Buffer.concat(chain(e.start, miniFat).map((s) => miniStream.subarray(s * mss, (s + 1) * mss)));
+    if (e.size < cutoff) data = Buffer.concat(chain(e.start, miniFat, mss).map((s) => miniStream.subarray(s * mss, (s + 1) * mss)));
     else data = readChain(e.start);
     streams.set(e.name, data.subarray(0, e.size));
   }

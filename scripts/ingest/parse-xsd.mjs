@@ -5,7 +5,8 @@
 //   parseXsd(buffer, { id, title?, source? }) → parsed-doc (sections[].kind = "tracciato", records[])
 //   schemaRecords(schemaNode) → [{ kind: "element"|"attribute", name, path, type, min_occurs, max_occurs,
 //       required, length?, min_length?, max_length?, pattern?, enumeration?, documentation? }]
-//     i complexType con nome sono espansi sotto l'elemento che li usa (profondità ≤ 12, niente cicli).
+//     i complexType con nome sono espansi sotto l'elemento che li usa (profondità ≤ 12, niente cicli, ≤ LIMITS.maxRecords);
+//     giro 1: choice_group/one_of_required, required_in_parent, nillable (vedi schemaRecords).
 // CLI: node scripts/ingest/parse-xsd.mjs --in <file.xsd> [--id <id>] [--out <file.json>] [--json]
 import { parseXml, local, kids, kid, find, textOf, attr, XmlError } from "./lib/xml.mjs";
 import { newDoc, newSection, finishDoc, oneLine, ParseError, sha256 } from "./lib/parsed.mjs";
@@ -32,55 +33,81 @@ function restrictions(node) {
   return out;
 }
 
-export function schemaRecords(schema) {
+// Giro 1 (I5): limite di record (tipi riusati in modo esponenziale) ⇒ ParseError, il file va al residuo.
+export const LIMITS = Object.freeze({ maxRecords: 20000 });
+
+// Giro 1 (I3): l'obbligatorietà TECNICA dipende dal contesto, non solo da minOccurs dell'elemento:
+//   - un gruppo (sequence/all/choice/group) con minOccurs=0 o un elemento antenato facoltativo rendono facoltativi i
+//     discendenti: required=false, required_in_parent=true se l'elemento è obbligatorio DENTRO il suo contenitore;
+//   - i rami di xs:choice sono uno-fra: required=false, choice_group (id del gruppo) e one_of_required (la scelta
+//     stessa è obbligatoria nel suo contesto);
+//   - nillable è un attributo a sé (l'elemento va presente, anche vuoto): non nega required.
+export function schemaRecords(schema, { limits = LIMITS } = {}) {
   const complex = new Map(kids(schema, "complexType").map((c) => [attr(c, "name"), c]));
   const simple = new Map(kids(schema, "simpleType").map((c) => [attr(c, "name"), c]));
   const globals = new Map(kids(schema, "element").map((e) => [attr(e, "name"), e]));
   const groups = new Map(kids(schema, "group").map((g) => [attr(g, "name"), g]));
   const records = [];
+  let choiceSeq = 0;
+  const push = (r) => {
+    if (records.length >= limits.maxRecords) throw new ParseError(`schema oltre ${limits.maxRecords} record (tipi riusati in modo esponenziale?)`, { residue: "unsupported" });
+    records.push(r);
+  };
   const doc = (n) => oneLine(textOf(find(n, "documentation")[0] ?? null)) || undefined;
+  const minOf = (n) => Number(attr(n, "minOccurs") ?? 1);
+  const ROOT_CTX = { optional: false, choice: null, choiceOptional: false };
 
-  const expandComplex = (ct, path, depth, seen) => {
+  const expandComplex = (ct, path, depth, seen, ctx) => {
     if (!ct || depth > 12) return;
     const ext = find(ct, "extension")[0];
-    if (ext) { const base = complex.get(bare(attr(ext, "base"))); if (base && !seen.has(base)) expandComplex(base, path, depth + 1, new Set([...seen, base])); }
-    const visit = (node) => {
+    if (ext) { const base = complex.get(bare(attr(ext, "base"))); if (base && !seen.has(base)) expandComplex(base, path, depth + 1, new Set([...seen, base]), ctx); }
+    const visit = (node, c0) => {
       for (const c of kids(node)) {
         const n = local(c.name);
-        if (n === "element") element(c, path, depth + 1, seen);
-        else if (n === "attribute") attribute(c, path);
-        else if (n === "group" && attr(c, "ref")) { const g = groups.get(bare(attr(c, "ref"))); if (g) visit(g); }
-        else if (["sequence", "all", "choice", "complexContent", "simpleContent", "extension", "restriction"].includes(n)) visit(c);
+        if (n === "element") element(c, path, depth + 1, seen, c0);
+        else if (n === "attribute") attribute(c, path, c0);
+        else if (n === "group" && attr(c, "ref")) { const g = groups.get(bare(attr(c, "ref"))); if (g) visit(g, { ...c0, optional: c0.optional || minOf(c) === 0 }); }
+        else if (n === "choice") visit(c, { optional: c0.optional, choice: `${path}#choice-${++choiceSeq}`, choiceOptional: c0.optional || minOf(c) === 0 });
+        else if (n === "sequence" || n === "all") visit(c, { ...c0, optional: c0.optional || minOf(c) === 0 });
+        else if (["complexContent", "simpleContent", "extension", "restriction"].includes(n)) visit(c, c0);
       }
     };
-    visit(ct);
+    visit(ct, ctx);
   };
-  const attribute = (a, path) => {
+  const attribute = (a, path, ctx) => {
     const name = attr(a, "name") ?? bare(attr(a, "ref")) ?? "";
     const st = kid(a, "simpleType") ?? simple.get(bare(attr(a, "type")));
-    records.push({ kind: "attribute", name, path: `${path}/@${name}`, type: bare(attr(a, "type")) ?? restrictions(st ?? { children: [] }).base ?? "string",
-      min_occurs: attr(a, "use") === "required" ? 1 : 0, max_occurs: "1", required: attr(a, "use") === "required", ...stripBase(restrictions(st ?? { children: [] })), documentation: doc(a) });
+    const req = attr(a, "use") === "required";
+    push({ kind: "attribute", name, path: `${path}/@${name}`, type: bare(attr(a, "type")) ?? restrictions(st ?? { children: [] }).base ?? "string",
+      min_occurs: req ? 1 : 0, max_occurs: "1", required: req && !ctx.optional, ...(req && ctx.optional ? { required_in_parent: true } : {}),
+      ...stripBase(restrictions(st ?? { children: [] })), documentation: doc(a) });
   };
   const stripBase = ({ base, ...rest }) => rest;
-  const element = (e, parentPath, depth, seen) => {
+  const element = (e, parentPath, depth, seen, ctx) => {
     let el = e;
     if (attr(e, "ref")) el = globals.get(bare(attr(e, "ref"))) ?? e;
     const name = attr(el, "name") ?? bare(attr(e, "ref")) ?? "";
     const path = `${parentPath}/${name}`;
-    const min = Number(attr(e, "minOccurs") ?? 1);
+    const min = minOf(e);
     const max = attr(e, "maxOccurs") ?? "1";
     const typeName = bare(attr(el, "type"));
     const inlineCt = kid(el, "complexType");
     const namedCt = typeName ? complex.get(typeName) : null;
     const st = kid(el, "simpleType") ?? (typeName ? simple.get(typeName) : null);
     const r = restrictions(st ?? { children: [] });
-    records.push({ kind: "element", name, path, type: typeName ?? (inlineCt ? "complex" : r.base ?? "string"), min_occurs: min, max_occurs: String(max),
-      required: min >= 1 && attr(e, "nillable") !== "true", ...stripBase(r), documentation: doc(el) });
+    const localRequired = min >= 1;
+    const rec = { kind: "element", name, path, type: typeName ?? (inlineCt ? "complex" : r.base ?? "string"), min_occurs: min, max_occurs: String(max),
+      required: localRequired && !ctx.optional && !ctx.choice, ...stripBase(r), documentation: doc(el) };
+    if (ctx.choice) { rec.choice_group = ctx.choice; rec.one_of_required = !ctx.choiceOptional; }
+    else if (localRequired && ctx.optional) rec.required_in_parent = true;
+    if (attr(e, "nillable") === "true" || attr(el, "nillable") === "true") rec.nillable = true;
+    push(rec);
     const ct = inlineCt ?? namedCt;
-    if (ct && !seen.has(ct)) expandComplex(ct, path, depth, new Set([...seen, ct]));
+    // i figli di un elemento facoltativo (o di un ramo di choice) sono facoltativi in assoluto
+    if (ct && !seen.has(ct)) expandComplex(ct, path, depth, new Set([...seen, ct]), { optional: ctx.optional || !localRequired || !!ctx.choice, choice: null, choiceOptional: false });
   };
-  for (const e of globals.values()) element(e, "", 0, new Set());
-  if (!globals.size) for (const [name, ct] of complex) expandComplex(ct, `/${name}`, 0, new Set([ct]));
+  for (const e of globals.values()) element(e, "", 0, new Set(), ROOT_CTX);
+  if (!globals.size) for (const [name, ct] of complex) expandComplex(ct, `/${name}`, 0, new Set([ct]), ROOT_CTX);
   return records.map((r) => Object.fromEntries(Object.entries(r).filter(([, v]) => v !== undefined)));
 }
 
@@ -107,14 +134,14 @@ export function tracciatoSections(records, { prefix = "xsd", titlePrefix = "Trac
   });
 }
 
-export function parseXsd(buffer, { id, title, source = null } = {}) {
+export function parseXsd(buffer, { id, title, source = null, limits = {} } = {}) {
   let root;
   try { root = parseXml(Buffer.isBuffer(buffer) ? buffer.toString("utf8") : String(buffer)); } catch (e) { throw new ParseError(`XSD non leggibile: ${e.message}`, { residue: "unsupported" }); }
   if (local(root.name) !== "schema") throw new ParseError(`radice ${root.name}: non è uno schema XSD`, { residue: "unsupported" });
   const doc = newDoc({ id, title: title ?? `Schema ${attr(root, "targetNamespace") ?? id}`, format: "xsd", source, parser: "parse-xsd" });
   doc.meta.sha256 = sha256(Buffer.isBuffer(buffer) ? buffer : Buffer.from(String(buffer)));
   doc.meta.kind_hint = "spec-integrazione";
-  const records = schemaRecords(root);
+  const records = schemaRecords(root, { limits: { ...LIMITS, ...limits } });
   doc.sections.push(...tracciatoSections(records));
   const versions = find(root, "schema").length;
   if (versions > 0) doc.warnings.push("schemi annidati: versioni multiple nello stesso file");

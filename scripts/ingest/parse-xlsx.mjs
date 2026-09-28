@@ -60,9 +60,15 @@ function sheetTargets(zip) {
   }));
 }
 
-function readSheet(zip, path, strings) {
+// Giro 1 (I5): tetto di celle (lette e dell'area della tabella) e colonne; le aree unite sono ridotte all'area usata
+// (A1:XFD1048576 non si espande cella per cella). Oltre ⇒ ParseError, il file va al residuo.
+export const LIMITS = Object.freeze({ maxCells: 5000000, maxColumns: 16384 });
+const cellsError = (n, max) => new ParseError(`foglio oltre ${max} celle (${n})`, { residue: "unsupported" });
+
+function readSheet(zip, path, strings, limits = LIMITS) {
   const root = parseXml(zip.text(path));
   const grid = [];
+  let cells = 0;
   for (const row of find(root, "row")) {
     const r = Number(attr(row, "r") ?? grid.length + 1) - 1;
     let nextC = 0;
@@ -79,14 +85,21 @@ function readSheet(zip, path, strings) {
       else if (t === "str" || t === "e") val = textOf(v);
       else if (v) { const s = textOf(v); const n = Number(s); val = s !== "" && Number.isFinite(n) ? n : s; }
       if (val === null || val === "") continue;
+      if (pos.c >= limits.maxColumns) continue;
+      if (++cells > limits.maxCells) throw cellsError(cells, limits.maxCells);
       (grid[pos.r] ??= [])[pos.c] = typeof val === "string" ? oneLine(val) : val;
     }
   }
   const merges = find(root, "mergeCell").map((m) => rangeRef(attr(m, "ref"))).filter(Boolean);
+  const usedRows = grid.length;
+  const usedCols = Math.min(limits.maxColumns, grid.reduce((a, r) => Math.max(a, r?.length ?? 0), 0));
+  if (usedRows * usedCols > limits.maxCells) throw cellsError(usedRows * usedCols, limits.maxCells);   // area usata (celle lontane)
   for (const m of merges) {
     const v = grid[m.r1]?.[m.c1] ?? null;
     if (v === null || v === undefined) continue;
-    for (let r = m.r1; r <= m.r2; r++) for (let c = m.c1; c <= m.c2; c++) if (!(r === m.r1 && c === m.c1)) (grid[r] ??= [])[c] = v;
+    const r2 = Math.min(m.r2, usedRows - 1), c2 = Math.min(m.c2, usedCols - 1);
+    if ((r2 - m.r1 + 1) * (c2 - m.c1 + 1) + cells > limits.maxCells) throw cellsError((r2 - m.r1 + 1) * (c2 - m.c1 + 1) + cells, limits.maxCells);
+    for (let r = m.r1; r <= r2; r++) for (let c = m.c1; c <= c2; c++) if (!(r === m.r1 && c === m.c1)) (grid[r] ??= [])[c] = v;
   }
   const validations = find(root, "dataValidation").map((dv) => ({
     sqref: attr(dv, "sqref") ?? "",
@@ -128,7 +141,8 @@ export function parseXlsx(buffer, opts = {}) {
   }
 }
 
-function parseXlsxInner(buffer, { id, title, source = null } = {}) {
+function parseXlsxInner(buffer, { id, title, source = null, limits: lim = {} } = {}) {
+  const limits = { ...LIMITS, ...lim };
   let zip;
   try { zip = openZip(buffer); } catch (e) { throw new ParseError(`archivio ZIP rifiutato: ${e.message}`, { residue: "unsupported" }); }
   if (!zip.has("xl/workbook.xml")) throw new ParseError("XLSX senza xl/workbook.xml", { residue: "unsupported" });
@@ -138,7 +152,7 @@ function parseXlsxInner(buffer, { id, title, source = null } = {}) {
   doc.meta.sha256 = sha256(buffer);
   doc.meta.size = buffer.length;
   doc.meta.dated = officeMeta(zip).dated;
-  for (const s of sheets) if (zip.has(s.path)) s.data = readSheet(zip, s.path, strings);
+  for (const s of sheets) if (zip.has(s.path)) s.data = readSheet(zip, s.path, strings, limits);
   sheets.forEach((s, i) => {
     const sec = newSection({ path: `sheet-${i + 1}`, title: s.name, level: 1 });
     if (s.state !== "visible") sec.hidden = true;
@@ -154,6 +168,7 @@ function parseXlsxInner(buffer, { id, title, source = null } = {}) {
     let last = rows.length - 1;
     while (last > first && !rows[last].some((v) => !isBlank(v))) last--;
     const width = Math.max(...rows.slice(first, last + 1).map((r) => r.length));
+    if ((last - first + 1) * width > limits.maxCells) throw cellsError((last - first + 1) * width, limits.maxCells);
     const cell = (r, c) => (isBlank(rows[r]?.[c]) ? "" : rows[r][c]);
     let headers = Array.from({ length: width }, (_, c) => String(cell(first, c)));
     let bodyStart = first + 1;

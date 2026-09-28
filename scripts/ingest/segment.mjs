@@ -290,7 +290,10 @@ export function describeRecord(r) {
   const bits = [`${label} ${r.name}`];
   if (r.path && r.kind !== "operation") bits.push(`percorso ${r.path}`);
   if (r.type) bits.push(`tipo ${r.type}`);
-  if (r.required !== undefined && r.required !== null) bits.push(r.required ? "obbligatorio" : "facoltativo");
+  if (r.choice_group) bits.push(r.one_of_required ? "uno fra le alternative della scelta (obbligatoria)" : "alternativa di una scelta facoltativa");
+  else if (r.required_in_parent) bits.push("obbligatorio se il contenitore è presente");
+  else if (r.required !== undefined && r.required !== null) bits.push(r.required ? "obbligatorio" : "facoltativo");
+  if (r.nillable) bits.push("può essere vuoto (nillable)");
   if (r.min_occurs !== undefined) bits.push(`occorrenze ${r.min_occurs}..${r.max_occurs ?? "1"}`);
   if (r.length !== undefined) bits.push(`lunghezza ${r.length}`);
   if (r.max_length !== undefined) bits.push(`lunghezza massima ${r.max_length}`);
