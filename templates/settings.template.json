@@ -1,0 +1,23 @@
+{
+  "enabledPlugins": {
+    "jaggaer-virtual-consultant@jaggaer-vc": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "Read(product/**)",
+      "Read(customers/**)",
+      "Edit(customers/**)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(**/.env*)",
+      "Read(.auth/**)",
+      "Read(**/.auth/**)",
+      "Bash(rm:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "WebFetch"
+    ]
+  }
+}
