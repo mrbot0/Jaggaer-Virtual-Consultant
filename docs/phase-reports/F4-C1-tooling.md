@@ -77,3 +77,26 @@ richiesto per promuovere (non per lo shadow); esiti per piano in `runs/<RUN>/res
   stesso run è negata (checkpoint non corrispondente) — si riprende in un run nuovo.
 - Le prove sul tenant (3 esecuzioni identiche M12, ≥ 5 negativi che falliscono quando devono M14, R2 su libresco M16)
   richiedono Chrome e il tenant demo: gli script le preparano e ne registrano l'esito.
+
+## Giro di correzione 1
+
+Esito della review: "Needs fixes" (1 critico, 2 importanti) più i minori che rompono funzioni. Suite alla chiusura:
+**802 test, 802 pass, 0 fail, 0 skipped** (`npm test` con il corpus); test di tempo dei guard verde (guard-config-scope
+p95 97 ms, observe-append p95 158 ms). Test nuovi: `test/kb/wp09b-fixround1.test.mjs` (8).
+
+| Rilievo | Correzione | Prova |
+|---------|------------|-------|
+| C1 `kb snapshot --area` sbloccava un passo di sola area senza osservazioni | guard-config-scope accetta una voce solo con un'osservazione per oggetto governato (observe-append: `obs`; kb snapshot: `obs[]` per ogni oggetto); sola area solo da observe-append (che ora la registra sulla pagina con il SEL del passo); kb snapshot richiede ≥ 1 CFG | sonda del revisore: negato prima e dopo `--area` |
+| I2 prove forgiabili o vecchie | `customers/*/observations/**` protetto in scrittura (file e shell, sessione e sub-agenti); kb snapshot legge solo le righe del DB di observe-append; età ≤ 900 s anche con `--max-age-s`; pagina esatta | Write/Bash negati; OBS solo-file rifiutata; OBS di 10 giorni rifiutata; `setup/forms-archive` ≠ `setup/forms` |
+| I3 promozione per plan_id | impronta del caso (senza stato, ALM, priorità, tag) nel piano prima delle sostituzioni del run e in ogni esito; contano solo gli esiti della versione attuale; precedente verde dai risultati di un altro caso promosso | i verdi della v1 non promuovono la v2; `green_precedent` dichiarato ignorato |
+| M4 checks-run e gli esiti per piano | `runResults()` | rollback verde in `results/` riconosciuto |
+| M5 rollback provato a vuoto | `.DRY` non conta | rollback-proven fallisce con il solo `.DRY` |
+| M6 script sconosciuto | check fallito (exit 3), niente passo browser | `does-not-exist` ⇒ fail |
+| M7 compensazione della FLW | stessa regola in lint-spec (`--workspace`) e compile-case | L-COMP assente con il workspace |
+| M8 scheletri libresco | shadow solo se lint-spec e lint-scope puliti (altrimenti candidate, elencati in `gated`) | HND con passi segnaposto resta candidate |
+| M9 dry-run e UPLOAD | UPLOAD ⇒ CAPTURE | piano .DRY senza UPLOAD |
+| M17 corsia compilata per i casi che creano | compile-plan conta i verdi per impronta | tre run con prefissi diversi ⇒ 3 verdi |
+
+Rinviati per decisione del controllore: deviazioni della CFP cliente nel verificatore, altri vuoti dell'anti-indebolimento,
+lint-scope senza workspace, validazione di --xray-cap/--run/--release, file sorgente di auth-setup, ambiente di L3
+dichiarato dal chiamante.
