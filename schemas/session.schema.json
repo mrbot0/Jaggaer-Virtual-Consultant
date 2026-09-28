@@ -106,7 +106,9 @@
         "file": { "type": "string", "minLength": 1 },
         "step": { "type": "integer", "minimum": 1 },
         "run": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
-        "plan_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "WP07 giro 1: impronta del file del piano all'attivazione; i guard negano se il file non la ha più." }
+        "plan_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "WP07 giro 1: impronta del file del piano all'attivazione; i guard negano se il file non la ha più." },
+        "last_verified_step": { "type": "integer", "minimum": 1, "description": "WP07 giro 3 (I-B): ultimo passo verificato da step-check (checkpoint con proceed). È l'AUTORITÀ per --resume: i file dei checkpoint sono dati di supporto e devono corrispondere a checkpoint_sha256." },
+        "checkpoint_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "WP07 giro 3 (I-B): impronta (JSON canonico, firma compresa) del checkpoint di last_verified_step." }
       }
     },
     "snapshots": {

@@ -17,10 +17,10 @@
 //    (2ª ⇒ tier_up, 3ª ⇒ escalate, §13.3), DEC se il DB del cliente esiste, checkpoint atomico; se si
 //    procede, attivazione del passo successivo (o piano completato ⇒ active_plan = null);
 //  - --resume n: le letture (READ) da fare prima di ripetere i passi con effetto dopo l'ultimo checkpoint.
-import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, mkdirSync, realpathSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import YAML from "yaml";
-import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { canonical } from "../../hooks/lib/audit.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
@@ -47,6 +47,28 @@ export class StepCheckError extends Error { constructor(code, msg) { super(msg);
 
 const runFromPath = (rel) => /(?:^|\/)runs\/([^/]+)\//.exec(String(rel ?? "").replace(/\\/g, "/"))?.[1] ?? null;
 const ymd = (d) => d.toISOString().slice(0, 10).replace(/-/g, "");
+
+// WP07 giro 3 (I-B): il run è UN nome di codice RUN (grammatica dei codici della spec, §3: "RUN." e segmenti
+// maiuscoli alfanumerici separati da punti, es. RUN.<CLIENTE>.<AAAAMMDD>.<HHMM>.<SCOPE>) la cui cartella, se esiste, è
+// figlia DIRETTA di customers/<C>/runs/ anche dopo realpath: niente sotto-cartelle, risalite, giunzioni, link o
+// percorsi esterni (lo stesso per runs/ e per checkpoints/).
+export const RUN_RE = /^RUN(\.[A-Z0-9]{1,32}){1,6}$/;
+function realOrNull(p) {
+  try { return realpathSync.native(p); } catch (err) { if (err?.code === "ENOENT") return null; throw err; }
+}
+export function runRefusal(ws, customer, run) {
+  if (typeof run !== "string" || !RUN_RE.test(run)) return `nome di run non valido: ${JSON.stringify(run)} (atteso un codice RUN.<CLIENTE>.… senza separatori di percorso)`;
+  const cust = realOrNull(join(ws, "customers", customer));
+  const root = realOrNull(join(ws, "customers", customer, "runs"));
+  if (cust && root && root !== join(cust, "runs")) return "la cartella runs/ del cliente è un collegamento (giunzione o link): i checkpoint non si leggono";
+  const dir = realOrNull(join(ws, "customers", customer, "runs", run));
+  if (dir && (!root || dir !== join(root, run))) return `la cartella del run ${run} è un collegamento (giunzione o link) o fuori da runs/: i checkpoint non si leggono`;
+  const cps = realOrNull(join(ws, "customers", customer, "runs", run, "checkpoints"));
+  if (cps && (!dir || cps !== join(dir, "checkpoints"))) return `la cartella checkpoints/ del run ${run} è un collegamento (giunzione o link): i checkpoint non si leggono`;
+  return null;
+}
+// impronta di un checkpoint (JSON canonico, firma compresa): la registra session.active_plan.checkpoint_sha256
+export const checkpointSha = (cp) => createHash("sha256").update(canonical(cp)).digest("hex");
 const stepsOf = (plan) => (Array.isArray(plan?.steps) ? [...plan.steps].sort((a, b) => a.n - b.n) : []);
 
 // Frasi che l'utente deve scrivere (§57.2) per le richieste aperte.
@@ -141,20 +163,16 @@ export function verifyCheckpoint(key, cp) {
   return a.length === b.length && timingSafeEqual(a, b);
 }
 
-function lastCheckpoint(dir, planId = null, { key = null, planSha = null } = {}) {
-  let files = [];
-  try { files = readdirSync(dir).filter((f) => /^\d+\.json$/.test(f)); } catch { return null; }
-  let best = null;
-  for (const f of files) {
-    try {
-      const cp = JSON.parse(readFileSync(join(dir, f), "utf8"));
-      if (key && !verifyCheckpoint(key, cp)) continue;
-      if (planSha && cp.plan_sha256 !== planSha) continue;
-      if (`${cp.step}.json` !== f) continue;
-      if (cp.proceed && (!planId || cp.plan_id === planId) && (best == null || cp.step > best)) best = cp.step;
-    } catch { /* checkpoint illeggibile: non conta */ }
-  }
-  return best;
+// WP07 giro 3 (I-B): l'AUTORITÀ sull'ultimo passo verificato è session.active_plan (stato protetto: last_verified_step
+// + checkpoint_sha256); il file del checkpoint è un dato di supporto e deve corrispondere (impronta, firma, piano, passo).
+// Senza riferimento nella sessione nessun passo è verificato: la ripresa non si fida mai di un file non referenziato.
+function lastVerified(ap, cpDir, key, planSha) {
+  if (!ap || !Number.isInteger(ap.last_verified_step)) return { last: null };
+  const n = ap.last_verified_step;
+  let cp = null;
+  try { cp = JSON.parse(readFileSync(join(cpDir, `${n}.json`), "utf8")); } catch { /* assente o illeggibile */ }
+  const ok = !!cp && checkpointSha(cp) === ap.checkpoint_sha256 && verifyCheckpoint(key, cp) && cp.step === n && cp.plan_sha256 === planSha && cp.proceed === true;
+  return ok ? { last: n } : { last: null, broken: n };
 }
 
 async function writeDec(ws, customer, scope, sid, session, cls, now) {
@@ -199,7 +217,10 @@ export async function check(opts) {
   const steps = stepsOf(plan);
   const active = session.active_plan ?? null;
   if (active && active.plan_id !== plan.plan_id) return deny(`un altro piano è attivo: ${active.plan_id} (passo ${active.step}); chiudilo con --close prima di attivarne uno nuovo`);
-  const run = opts.run ?? (active?.run ?? null) ?? runFromPath(planFile) ?? runFromPath(plan.checkpoint_dir) ?? `RUN.${customer}.${ymd(now)}.${plan.plan_id.split(".").pop()}`;
+  if (active && opts.run != null && active.run != null && opts.run !== active.run) return deny(`il piano ${plan.plan_id} è attivo nel run ${active.run}, non in ${opts.run}`);
+  const run = opts.run ?? (active?.run ?? null) ?? runFromPath(planFile) ?? runFromPath(plan.checkpoint_dir) ?? `RUN.${customer}.${ymd(now)}.${String(plan.plan_id.split(".").pop()).toUpperCase().replace(/[^A-Z0-9]/g, "") || "0"}`;
+  const badRun = runRefusal(ws, customer, run);
+  if (badRun) return deny(badRun);
   const runDir = join(ws, "customers", customer, "runs", run);
   const cpDir = join(runDir, "checkpoints");
   const reg = readApprovals(approvalsFile(ws, customer, sid));
@@ -233,7 +254,11 @@ export async function check(opts) {
     if (g.compensation) g.compensation.registered_at = now.toISOString();
     if (g.compensation) writeCompensations(runDir, [g.compensation]);   // prima su disco nel run (§47.2 #1)
     updateSessionFile(sFile, (x) => {
-      x.active_plan = { plan_id: plan.plan_id, file: planFile, step: s.n, run, plan_sha256: info.sha256 };
+      // l'ultimo passo verificato resta con il piano (stesso piano, stessa impronta, stesso run)
+      const pa = x.active_plan;
+      const keep = pa && pa.plan_id === plan.plan_id && pa.plan_sha256 === info.sha256 && pa.run === run && Number.isInteger(pa.last_verified_step)
+        ? { last_verified_step: pa.last_verified_step, checkpoint_sha256: pa.checkpoint_sha256 } : {};
+      x.active_plan = { plan_id: plan.plan_id, file: planFile, step: s.n, run, plan_sha256: info.sha256, ...keep };
       if (g.compensation) {
         const comps = Array.isArray(x.pending.compensations) ? x.pending.compensations : [];
         if (!comps.some((c) => c && typeof c === "object" && c.plan === plan.plan_id && c.step === s.n)) comps.push(g.compensation);
@@ -251,7 +276,9 @@ export async function check(opts) {
   if (resume != null) {
     const target = steps.find((s) => s.n === Number(resume));
     if (!target) throw new StepCheckError(1, `il piano ${plan.plan_id} non ha il passo ${resume}`);
-    const last = lastCheckpoint(cpDir, plan.plan_id, { key: checkpointKey(ws), planSha: info.sha256 });
+    const lv = lastVerified(active && active.plan_id === plan.plan_id ? active : null, cpDir, checkpointKey(ws), info.sha256);
+    if (lv.broken != null) return deny(`ripresa negata: il checkpoint del passo ${lv.broken} registrato nella sessione manca o non corrisponde (impronta, firma o contenuto diversi)`);
+    const last = lv.last;
     const lastN = last ?? 0;
     if (!(target.n <= lastN + 1 || skippable(lastN + 1, target.n))) return deny(`ripresa al passo ${target.n} negata: l'ultimo passo verificato è ${last ?? "nessuno"} e i passi intermedi non sono in repair_policy.skip_allowed`);
     const pa = planApproval();
@@ -270,10 +297,12 @@ export async function check(opts) {
       if (!cmp.divergences.length) {
         // già eseguito: checkpoint del passo, poi il successivo (o piano completato)
         mkdirSync(cpDir, { recursive: true });
-        writeFileAtomic(join(cpDir, `${target.n}.json`), `${JSON.stringify(signCheckpoint(checkpointKey(ws), { plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: target.n, status: "ok", proceed: true, resumed: "already_done", page_signature: cmp.page_signature, observation, ts: now.toISOString() }), null, 2)}\n`);
+        const cpDone = signCheckpoint(checkpointKey(ws), { plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: target.n, status: "ok", proceed: true, resumed: "already_done", page_signature: cmp.page_signature, observation, ts: now.toISOString() });
+        writeFileAtomic(join(cpDir, `${target.n}.json`), `${JSON.stringify(cpDone, null, 2)}\n`);
+        const verified = { last_verified_step: target.n, checkpoint_sha256: checkpointSha(cpDone) };
         const nxt = steps[steps.indexOf(target) + 1] ?? null;
         let g = null;
-        if (nxt) g = activate(nxt, clearReads);
+        if (nxt) g = activate(nxt, (x) => { clearReads(x); if (x.active_plan && x.active_plan.plan_id === plan.plan_id) Object.assign(x.active_plan, verified); });
         else updateSessionFile(sFile, (x) => { clearReads(x); x.active_plan = null; });
         audit(ws, sid, customer, session.scope, { action: "resume", plan: plan.plan_id, step: target.n, already_done: true });
         return { status: "ok", already_done: true, resume_from: target.n, last_checkpoint: last, reads, proceed: true, ...noEffect,
@@ -338,15 +367,20 @@ export async function check(opts) {
   const red = (v) => (typeof v === "string" ? redact(v, { profile }) : Array.isArray(v) ? v.map(red) : v);
   mkdirSync(cpDir, { recursive: true });
   const cpFile = join(cpDir, `${cur.n}.json`);
-  writeFileAtomic(cpFile, `${JSON.stringify(signCheckpoint(checkpointKey(ws), { plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: cur.n, status: res.status, kind: res.kind, compat: res.compat,
+  const cpObj = signCheckpoint(checkpointKey(ws), { plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: cur.n, status: res.status, kind: res.kind, compat: res.compat,
     proceed: res.proceed, stop: !!res.stop, divergences: res.divergences.map((d) => ({ ...d, expected: red(d.expected), observed: red(d.observed), ...(d.target ? { target: red(d.target) } : {}) })),
     novelties: res.novelties.map((x) => ({ ...x, label: red(x.label) })), confirmations: res.confirmations,
-    page_signature: res.page_signature, observation, ts: now.toISOString() }), null, 2)}\n`);
+    page_signature: res.page_signature, observation, ts: now.toISOString() });
+  writeFileAtomic(cpFile, `${JSON.stringify(cpObj, null, 2)}\n`);
+  const verified = res.proceed ? { last_verified_step: cur.n, checkpoint_sha256: checkpointSha(cpObj) } : null;
   res.checkpoint = `runs/${run}/checkpoints/${cur.n}.json`;
 
   const idx = steps.indexOf(cur);
   const nextStep = res.proceed ? steps[idx + 1] ?? null : null;
-  const mutate = (x) => { if (surpriseRec) x.surprises = [...(Array.isArray(x.surprises) ? x.surprises : []), surpriseRec]; };
+  const mutate = (x) => {
+    if (surpriseRec) x.surprises = [...(Array.isArray(x.surprises) ? x.surprises : []), surpriseRec];
+    if (verified && x.active_plan && x.active_plan.plan_id === plan.plan_id) Object.assign(x.active_plan, verified);
+  };
   if (nextStep) {
     const g = activate(nextStep, mutate);
     res.next = { step: nextStep.n, status: g.status, ...(g.reason ? { reason: g.reason } : {}), ...(g.ask ? { ask: g.ask } : {}), ...(g.compensation ? { compensation: g.compensation } : {}) };
