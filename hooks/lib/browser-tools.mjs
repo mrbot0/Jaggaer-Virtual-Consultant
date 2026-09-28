@@ -56,6 +56,8 @@ const outputsOf = (ti, keys) => keys.map((k) => ti[k]).filter((v) => v !== undef
 const R = (extra = {}) => ({ kind: "read", ...extra });
 
 // ---- Chrome DevTools MCP ----
+// K6 (M7): le versioni recenti del server richiedono `pageId` su ogni strumento di pagina (verificato il
+// 2026-09-23): è la scheda della chiamata (tabOf), confrontata da guard-environment con quella registrata.
 const SNAP = ["includeSnapshot"];
 const DEVTOOLS_OPS = {
   navigate_page: { keys: ["type", "url", "timeout", "ignoreCache", "initScript", "handleBeforeUnload", "pageId"], fn: (ti) => {
@@ -70,31 +72,31 @@ const DEVTOOLS_OPS = {
   select_page: { keys: ["pageId", "bringToFront"], fn: () => R({ switches: true }) },
   close_page: { keys: ["pageId"], fn: () => R({ switches: true }) },
   list_pages: { keys: [], fn: () => R() },
-  click: { keys: ["uid", "dblClick", ...SNAP], fn: (ti) => ({ kind: "click", target: targetOf(ti) }) },
-  hover: { keys: ["uid", ...SNAP], fn: (ti) => R({ target: targetOf(ti) }) },
-  drag: { keys: ["from_uid", "to_uid", ...SNAP], fn: (ti) => ({ kind: "input", target: targetOf(ti) }) },
-  fill: { keys: ["uid", "value", ...SNAP], fn: (ti) => ({ kind: "input", target: targetOf(ti), text: str(ti.value) ?? String(ti.value ?? "") }) },
-  fill_form: { keys: ["elements", ...SNAP], fn: (ti) => ({ kind: "input", text: valuesText(ti.elements) }) },
-  type_text: { keys: ["text", "submitKey", ...SNAP], fn: (ti) => { const text = str(ti.text) ?? ""; return { kind: "input", text, submits: (typeof ti.submitKey === "string" && ENTER.test(ti.submitKey)) || (ti.submitKey != null && typeof ti.submitKey !== "string") || /[\r\n]/.test(text) }; } },
-  press_key: { keys: ["key", ...SNAP], fn: (ti) => ({ kind: "input", text: str(ti.key), submits: ENTER.test(str(ti.key) ?? "") }) },
-  upload_file: { keys: ["uid", "filePath", ...SNAP], fn: (ti) => ({ kind: "upload", target: targetOf(ti) }) },
-  handle_dialog: { keys: ["action", "promptText"], fn: (ti) => ({ kind: "dialog", submits: ti.action === "accept" }) },
-  evaluate_script: { keys: ["function", "args"], fn: (ti) => ({ kind: "script", text: str(ti.function) }) },
-  take_snapshot: { keys: ["verbose", "filePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["filePath"]) }) },
-  take_screenshot: { keys: ["format", "quality", "uid", "fullPage", "filePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["filePath"]) }) },
-  list_console_messages: { keys: ["pageSize", "pageIdx", "types", "includePreservedMessages"], fn: () => R() },
-  get_console_message: { keys: ["msgid"], fn: () => R() },
-  list_network_requests: { keys: ["pageSize", "pageIdx", "resourceTypes", "includePreservedRequests"], fn: () => R() },
-  get_network_request: { keys: ["reqid", "requestFilePath", "responseFilePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["requestFilePath", "responseFilePath"]) }) },
-  wait_for: { keys: ["text", "timeout"], fn: () => R() },
-  emulate: { keys: ["networkConditions", "cpuThrottlingRate", "geolocation", "userAgent", "colorScheme", "viewport", "extraHttpHeaders"], fn: (ti) =>
+  click: { keys: ["pageId", "uid", "dblClick", ...SNAP], fn: (ti) => ({ kind: "click", target: targetOf(ti) }) },
+  hover: { keys: ["pageId", "uid", ...SNAP], fn: (ti) => R({ target: targetOf(ti) }) },
+  drag: { keys: ["pageId", "from_uid", "to_uid", ...SNAP], fn: (ti) => ({ kind: "input", target: targetOf(ti) }) },
+  fill: { keys: ["pageId", "uid", "value", ...SNAP], fn: (ti) => ({ kind: "input", target: targetOf(ti), text: str(ti.value) ?? String(ti.value ?? "") }) },
+  fill_form: { keys: ["pageId", "elements", ...SNAP], fn: (ti) => ({ kind: "input", text: valuesText(ti.elements) }) },
+  type_text: { keys: ["pageId", "text", "submitKey", ...SNAP], fn: (ti) => { const text = str(ti.text) ?? ""; return { kind: "input", text, submits: (typeof ti.submitKey === "string" && ENTER.test(ti.submitKey)) || (ti.submitKey != null && typeof ti.submitKey !== "string") || /[\r\n]/.test(text) }; } },
+  press_key: { keys: ["pageId", "key", ...SNAP], fn: (ti) => ({ kind: "input", text: str(ti.key), submits: ENTER.test(str(ti.key) ?? "") }) },
+  upload_file: { keys: ["pageId", "uid", "filePath", ...SNAP], fn: (ti) => ({ kind: "upload", target: targetOf(ti) }) },
+  handle_dialog: { keys: ["pageId", "action", "promptText"], fn: (ti) => ({ kind: "dialog", submits: ti.action === "accept" }) },
+  evaluate_script: { keys: ["pageId", "function", "args"], fn: (ti) => ({ kind: "script", text: str(ti.function) }) },
+  take_snapshot: { keys: ["pageId", "verbose", "filePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["filePath"]) }) },
+  take_screenshot: { keys: ["pageId", "format", "quality", "uid", "fullPage", "filePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["filePath"]) }) },
+  list_console_messages: { keys: ["pageId", "pageSize", "pageIdx", "types", "includePreservedMessages"], fn: () => R() },
+  get_console_message: { keys: ["pageId", "msgid"], fn: () => R() },
+  list_network_requests: { keys: ["pageId", "pageSize", "pageIdx", "resourceTypes", "includePreservedRequests"], fn: () => R() },
+  get_network_request: { keys: ["pageId", "reqid", "requestFilePath", "responseFilePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["requestFilePath", "responseFilePath"]) }) },
+  wait_for: { keys: ["pageId", "text", "timeout"], fn: () => R() },
+  emulate: { keys: ["pageId", "networkConditions", "cpuThrottlingRate", "geolocation", "userAgent", "colorScheme", "viewport", "extraHttpHeaders"], fn: (ti) =>
     (["userAgent", "extraHttpHeaders", "networkConditions"].some((k) => nonEmpty(ti[k])) ? { kind: "input", emulation: true } : R()) },
-  resize_page: { keys: ["width", "height"], fn: () => R() },
-  performance_start_trace: { keys: ["reload", "autoStop", "filePath"], fn: (ti) => (ti.reload === true ? { kind: "navigate", history: true, historyKind: "reload", url: null, outputs: outputsOf(ti, ["filePath"]) } : R({ outputs: outputsOf(ti, ["filePath"]) })) },
-  performance_stop_trace: { keys: ["filePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["filePath"]) }) },
-  performance_analyze_insight: { keys: ["insightSetId", "insightName"], fn: () => R() },
-  lighthouse_audit: { keys: ["mode", "device", "outputDirPath"], fn: (ti) => (ti.mode === "snapshot" ? R({ outputs: outputsOf(ti, ["outputDirPath"]) }) : { kind: "navigate", history: true, historyKind: "reload", url: null, outputs: outputsOf(ti, ["outputDirPath"]) }) },
-  take_heapsnapshot: { keys: ["filePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["filePath"]) }) },
+  resize_page: { keys: ["pageId", "width", "height"], fn: () => R() },
+  performance_start_trace: { keys: ["pageId", "reload", "autoStop", "filePath"], fn: (ti) => (ti.reload === true ? { kind: "navigate", history: true, historyKind: "reload", url: null, outputs: outputsOf(ti, ["filePath"]) } : R({ outputs: outputsOf(ti, ["filePath"]) })) },
+  performance_stop_trace: { keys: ["pageId", "filePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["filePath"]) }) },
+  performance_analyze_insight: { keys: ["pageId", "insightSetId", "insightName"], fn: () => R() },
+  lighthouse_audit: { keys: ["pageId", "mode", "device", "outputDirPath"], fn: (ti) => (ti.mode === "snapshot" ? R({ outputs: outputsOf(ti, ["outputDirPath"]) }) : { kind: "navigate", history: true, historyKind: "reload", url: null, outputs: outputsOf(ti, ["outputDirPath"]) }) },
+  take_heapsnapshot: { keys: ["pageId", "filePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["filePath"]) }) },
 };
 
 // ---- Claude browser / Claude in Chrome ----

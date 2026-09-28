@@ -68,9 +68,12 @@ export async function buildObservation({ ws, customer, session, call, state, res
   const atlas = hasPage ? atlasIndex(ws, customer, session.scope) : [];
   const ap = session.active_plan ?? null;
   let cmp = null;
+  let cfgObject = null;
   if (hasPage && kind === "snapshot" && ap) {
     const st = await activeStep(ws, customer, ap);
     if (st) cmp = compareExpect(st.step, page, { resolve: (c) => resolveSel(ws, c, customer), atlas });
+    // §28.1: lo snapshot della pagina durante un passo ACT-CFG-CHANGE è lo snapshot dell'oggetto governato
+    if (st?.step?.action_class === "ACT-CFG-CHANGE" && st.step.config?.object && state === "ok") cfgObject = st.step.config.object;
   }
   const sensitiveCache = new Map();
   const sensitive = (m) => {
@@ -112,7 +115,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
   };
   if (kind === "error") doc.error_text = ft(text || "risposta d'errore dello strumento");
   doc.redaction.masks = [...masks].sort();
-  return { doc, errors, scope, profile };
+  return { doc, errors, scope, profile, cfgObject };
 }
 
 function writeDb(ws, customer, scope, doc, errors, now) {
@@ -196,7 +199,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   }
 
   // 2. osservazione
-  const { doc, errors, scope } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, env, now });
+  const { doc, errors, scope, cfgObject } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, env, now });
   const { code, errs } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
   const dir = join(st.ws, "customers", st.customer, "observations");
   mkdirSync(dir, { recursive: true });
@@ -215,6 +218,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       }
       o.snapshot_sig = doc.page_signature;
     } else if (obsKindForLedger === "action" || doc.kind === "error") o.snapshot_sig = null;
+    if (cfgObject) s.snapshots = [...(Array.isArray(s.snapshots) ? s.snapshots : []), { objects: [cfgObject], ts: doc.ts, obs: code }].slice(-20);
     s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
     return s;
   });
