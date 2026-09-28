@@ -19,7 +19,8 @@ import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { loadItems, loadItem } from "../lib/kb-items.mjs";
-import { runRefusal, RUN_RE } from "../lib/run-code.mjs";
+import { runRefusal } from "../lib/run-code.mjs";
+import { runResults } from "../lib/run-results.mjs";
 import { loadSession, resolveSessionId } from "../admin/session.mjs";
 import { governedObjects, snapshotCovers } from "../../hooks/lib/guards/config-scope.mjs";
 import { obsMatchesLocation } from "../kb/snapshot.mjs";
@@ -33,19 +34,10 @@ const pass = (detail) => ({ status: "pass", detail });
 const failed = (detail) => ({ status: "fail", detail });
 const skip = (detail) => ({ status: "skip", detail });
 
+// WP09b giro 1: esiti per piano (runs/<RUN>/results/<plan_id>.yaml) e di run (result.yaml), scripts/lib/run-results.mjs
 function greenRunsOf(ws, customer, planIds, sinceMs = 0) {
-  const base = join(ws, "customers", customer, "runs");
-  if (!existsSync(base)) return [];
-  const out = [];
-  for (const r of readdirSync(base).filter((x) => RUN_RE.test(x))) {
-    const f = join(base, r, "result.yaml");
-    if (!existsSync(f)) continue;
-    try {
-      const y = YAML.parse(readFileSync(f, "utf8"));
-      if (planIds.includes(y?.plan_id) && String(y.status).toLowerCase() === "green" && Date.parse(y.completed_at ?? 0) >= sinceMs) out.push({ run: r, completed_at: y.completed_at, plan_id: y.plan_id });
-    } catch { /* illeggibile: non conta */ }
-  }
-  return out.sort((a, b) => Date.parse(b.completed_at) - Date.parse(a.completed_at));
+  return runResults(ws, customer, { planIds }).filter((y) => y.status === "green" && Date.parse(y.completed_at ?? 0) >= sinceMs)
+    .map((y) => ({ run: y.run, completed_at: y.completed_at, plan_id: y.plan_id })).sort((x, y) => Date.parse(y.completed_at) - Date.parse(x.completed_at));
 }
 const governedOf = (ctx) => {
   const fromPlan = (ctx.plan?.steps ?? []).filter((s) => s.action_class === "ACT-CFG-CHANGE").flatMap((s) => governedObjects(s));
@@ -71,7 +63,8 @@ export const SCRIPT_CHECKS = Object.freeze({
     if (!["R2", "R3"].includes(S.risk)) return skip(`rischio ${S.risk}: il check vale per R ≥ R2`);
     const ref = S.rollback?.ref;
     if (!ref) return failed(`${S.id} (${S.risk}) senza rollback dichiarato`);
-    const g = greenRunsOf(ctx.ws, ctx.customer, [`PLAN.${ref}`, `PLAN.${ref}.DRY`], ctx.now.getTime() - 14 * DAY);
+    // giro 1: la prova a vuoto (.DRY, SAVE/SUBMIT sostituiti da CAPTURE) non applica il rollback: non lo prova
+    const g = greenRunsOf(ctx.ws, ctx.customer, [`PLAN.${ref}`], ctx.now.getTime() - 14 * DAY);
     return g.length ? pass(`rollback ${ref} verde in ${g[0].run}`) : failed(`nessun run verde della CFP di rollback ${ref} negli ultimi 14 giorni: provala (anche a vuoto) prima della modifica`);
   },
   // S.STD.XSC.CHK.0001 — ambiente dichiarato = rilevato (env-check con ≥ 2 segnali)
@@ -171,14 +164,16 @@ export function runChecks(ctx, { cluster = null, codes = null } = {}) {
   const planSteps = [];
   for (const c of checks) {
     const impl = c.how?.script ? SCRIPT_CHECKS[c.how.script] : null;
-    let r = impl ? impl(ctx) : { status: "browser", detail: `da eseguire sul browser: ${c.how?.verb} ${c.how?.target ?? ""} · atteso ${c.how?.expect}` };
+    // giro 1: uno script nominato ma non implementato fallisce (fail-closed), mai un passo del browser silenzioso
+    let r = c.how?.script && !impl ? { status: "fail", detail: `how.script ${c.how.script} non implementato in checks-run: il check non si può eseguire` }
+      : impl ? impl(ctx) : { status: "browser", detail: `da eseguire sul browser: ${c.how?.verb} ${c.how?.target ?? ""} · atteso ${c.how?.expect}` };
     if (r.status === "browser") {
       const n = planSteps.length + 1;
       planSteps.push(c.how?.target
         ? { n, verb: "READ", action_class: "ACT-READ", target: c.how.target, expect: { check: c.id, expected: c.how.expect }, note: `${c.id}: ${c.title}` }
         : { n, verb: "VERIFY", action_class: "ACT-READ", check: c.id, expect: { check: c.id, expected: c.how?.expect ?? "ok" }, note: `${c.id}: ${c.title}` });
     }
-    results.push({ code: c.id, title: c.title, kind: c.kind, status: r.status, detail: r.detail, via: impl && r.status !== "browser" ? "script" : "browser", ...(r.items ? { items: r.items } : {}) });
+    results.push({ code: c.id, title: c.title, kind: c.kind, status: r.status, detail: r.detail, via: c.how?.script && r.status !== "browser" ? "script" : "browser", ...(r.items ? { items: r.items } : {}) });
   }
   const blocked = results.some((r) => r.status === "fail");
   return { results, plan_steps: planSteps, blocked };

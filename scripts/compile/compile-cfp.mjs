@@ -10,7 +10,7 @@
 //       level DT-007 dal rischio }; gli altri ⇒ ACT-CFG-READ; ogni passo ha un expect (dichiarato, wait_for, target SEL,
 //       check VERIFY);
 //     - {{a.b}} risolti da params (file YAML o chiave=valore): un segnaposto non risolto ⇒ errore;
-//     - --dry-run: SAVE e SUBMIT sostituiti da CAPTURE (STR-DRY-RUN), piano PLAN.<CFP>.DRY senza compensazioni;
+//     - --dry-run: SAVE, SUBMIT e UPLOAD sostituiti da CAPTURE (STR-DRY-RUN), piano PLAN.<CFP>.DRY senza compensazioni;
 //     - rollback come compensazione del primo passo che salva: deactivate → CFP di rollback (disattivare, mai eliminare),
 //       proposto e non applicato in autonomia (§28.1);
 //     - sidecar: check pre/post (preconditions/postconditions), snapshot_before (default: governs), origine dei passi.
@@ -130,7 +130,8 @@ export function cfpPlan(ws, cfp, { customer = null, env = "sandbox", envType = n
     const s = fill(s0, params, missing);
     if (s.verb === "DELETE") throw new CfpError(1, `passo ${s.n}: DELETE non è nel vocabolario (disattivare, mai eliminare)`);
     let step;
-    if (dryRun && SAVE_VERBS.has(s.verb)) {
+    // giro 1: in prova a vuoto anche UPLOAD diventa CAPTURE (un caricamento spesso salva da solo)
+    if (dryRun && (SAVE_VERBS.has(s.verb) || s.verb === "UPLOAD")) {
       step = { n: s.n, verb: "CAPTURE", action_class: "ACT-CFG-READ", ...(s.target ? { target: s.target } : {}), expect: typeof s.target === "string" ? { elements: [s.target] } : { page_sig: s.target?.url_pattern ?? "?" },
         note: `STR-DRY-RUN: ${s.verb} sostituito da CAPTURE (§14): nessun salvataggio` };
     } else {

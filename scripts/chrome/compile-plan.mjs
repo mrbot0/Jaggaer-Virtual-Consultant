@@ -26,8 +26,11 @@ export class CompileError extends Error { constructor(code, msg) { super(msg); t
 export const planHash = (plan) => createHash("sha256").update(canonical(plan)).digest("hex");
 
 // WP09b: anche runs/<RUN>/results/<plan_id>.yaml (un esito per piano nei run con più casi), scripts/lib/run-results.mjs
-export function greenRuns(ws, customer, hash) {
-  return [...new Set(runResults(ws, customer).filter((y) => y.plan_hash === hash && GREEN.has(y.status)).map((y) => y.run))].sort();
+// WP09b giro 1 (M17): si conta per impronta (fingerprintOf: l'impronta del caso, uguale in ogni run anche con il prefisso
+// NRT-<data>-<run> nei dati; per i piani senza impronta, l'hash del piano); un esito vale se una delle due coincide.
+export const fingerprintOf = (plan) => plan?.fingerprint ?? planHash(plan);
+export function greenRuns(ws, customer, key) {
+  return [...new Set(runResults(ws, customer).filter((y) => (y.fingerprint === key || y.plan_hash === key) && GREEN.has(y.status)).map((y) => y.run))].sort();
 }
 
 const q = (s) => JSON.stringify(String(s));
@@ -170,7 +173,7 @@ export async function run(argv, env = process.env) {
     }
     const hash = planHash(plan);
     const min = opts["min-green"] ? Math.max(MIN_GREEN, Number(opts["min-green"])) : MIN_GREEN;
-    const green = greenRuns(ws, customer, hash);
+    const green = greenRuns(ws, customer, fingerprintOf(plan));
     if (green.length < min) return fail(asJson, 3, `${green.length} esecuzioni verdi con questo hash: ne servono almeno ${min} per compilare (§27.4)`, { green });
     const { text } = generateSpec(ws, customer, plan, { allowFragile: !!opts["allow-fragile"], atlas: opts.atlas ? JSON.parse(readFileSync(resolvePath(ws, opts.atlas), "utf8")) : null });
     const rel = `customers/${customer}/tests/specs/${scope}/${plan.plan_id}.spec.ts`;

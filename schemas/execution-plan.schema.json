@@ -73,6 +73,7 @@
       }
     },
     "checkpoint_dir": { "type": "string", "minLength": 1 },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "WP09b giro 1: impronta indipendente dal run (caso NRT prima delle sostituzioni del run: prefisso, fixture). step-check la scrive negli esiti; compile-plan e la promozione contano solo gli esiti con la stessa impronta." },
     "approvals": { "const": "3A", "description": "Protocollo di tripla approvazione (§52.2): obbligatorio per un piano con ACT-CFG-CHANGE in produzione (validate-plan)." }
   },
   "$defs": {

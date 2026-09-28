@@ -26,8 +26,10 @@ test("F7: shadow → promoted dopo 3 run coerenti (non prima); consolidato con p
   const d = decide(c, { results: [R("green", 1), R("green", 2), R("green", 3)] });
   assert.equal(d.to, "promoted"); assert.equal(d.evidence.length, 3);
   assert.equal(decide(c, { results: [R("green", 1), R("green", 2), R("yellow", 3)] }).to, "shadow", "ultimi 3 non tutti verdi; un solo cambio non è flakiness");
+  // giro 1 (I3): il precedente verde lo ricava evaluateCase dai risultati (greenPrecedent), non la dichiarazione del caso
   const fast = { ...c, epistemic_at_generation: { shape: "consolidato", subject: "S.STD.P2P.FLD.0001", green_precedent: true } };
-  assert.equal(decide(fast, { results: [R("green", 1)] }).to, "promoted");
+  assert.equal(decide(fast, { results: [R("green", 1)] }).to, "shadow", "dichiarato dal caso: non basta");
+  assert.equal(decide(fast, { results: [R("green", 1)], greenPrecedent: true }).to, "promoted");
   assert.equal(decide({ ...c, expected_errors: [] }, { results: [R("green", 1), R("green", 2), R("green", 3)] }).to, "shadow");
   const ctr = decide(c, { results: [R("green", 1), R("green", 2), R("green", 3)], openCtr: [{ code: "C.ACME.P2P.CTR.0001", a_code: "S.STD.P2P.FLD.0001", b_code: "L.ACME.P2P.OBS.0004" }] });
   assert.equal(ctr.to, "shadow"); assert.match(ctr.reason, /contraddizione aperta/);

@@ -21,7 +21,8 @@ import YAML from "yaml";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { analyticCodes } from "../lib/kb-items.mjs";
-import { classOf, isCreating } from "./compile-case.mjs";
+import { classOf, isCreating, flowCompensationFor, mergedStep } from "./compile-case.mjs";
+import { loadItem } from "../lib/kb-items.mjs";
 
 const DELETE_ACTION = /\b(delete|deletion|remove|purge|elimina\w*|cancella\w*|rimuov\w*)\b/i;
 const v = (rule, at, message) => ({ rule, at, message });
@@ -100,14 +101,29 @@ export function weakening(prev, cur) {
   return out;
 }
 
-export function lintCase(caso, { previous = null } = {}) {
+export function lintCase(caso, { previous = null, ws = null, customer = null } = {}) {
   const out = [];
   if (!caso?.derivation?.from?.length || !caso?.derivation?.risk_mode) out.push(v("L-DERIVATION", "derivation", "derivation mancante o incompleta (from, risk_mode): un caso senza derivation non si emette (§27.1)"));
   if (!Number.isInteger(caso?.boundary?.stop_at_step) || !Array.isArray(caso?.boundary?.does_not_assert)) out.push(v("L-DERIVATION", "boundary", "boundary mancante o incompleto (stop_at_step, does_not_assert)"));
   const a = analyticCodes(caso);
   if (a.length) out.push(v("L-ANALYTIC", "caso", `cita il dominio analitico: ${a.join(", ")} (§1.1)`));
   if (caso?.genre === "NEG" && caso?.state === "promoted" && !asArr(caso?.expected_errors).length) out.push(v("L-NEG", "expected_errors", "un NEG promosso dichiara gli errori attesi (ERR)"));
-  commonRules(stepsOfCase(caso), asArr(caso?.compensations), out);
+  // giro 1: con il workspace la FLW si risolve come in compile-case (passi ereditati, compensazione fornita dalla FLW)
+  let steps = stepsOfCase(caso);
+  let comps = asArr(caso?.compensations);
+  if (ws) {
+    const cust = customer ?? (String(caso?.id ?? "").split(".")[1] !== "STD" ? String(caso?.id ?? "").split(".")[1] : null);
+    const cache = new Map();
+    const flowOf = (code) => { if (!cache.has(code)) cache.set(code, loadItem(ws, code, cust)); return cache.get(code); };
+    steps = steps.map((s0) => mergedStep(s0, flowOf));
+    comps = [...comps];
+    for (const s of steps) {
+      if (!s || comps.some((c) => c?.step === s.n) || !isCreating(s, classOf(s))) continue;
+      const fc = flowCompensationFor(caso, stepsOfCase(caso).find((x) => x.n === s.n), flowOf);
+      if (fc) comps.push({ ...fc, step: s.n });
+    }
+  }
+  commonRules(steps, comps, out);
   if (previous) out.push(...weakening(previous, caso));
   return out;
 }
@@ -123,7 +139,7 @@ export function lintPlan(plan, { previous = null } = {}) {
 
 export const lintAny = (doc, opts) => (isPlan(doc) ? lintPlan(doc, opts) : lintCase(doc, opts));
 
-const HELP = `uso: node scripts/compile/lint-spec.mjs <file…> [--against <file vecchio>] [--json] [--help]
+const HELP = `uso: node scripts/compile/lint-spec.mjs <file…> [--against <file vecchio>] [--workspace <dir> [--customer C]] [--json] [--help]
 
 Lint di casi NRT e piani: expect su ogni passo, nessun DELETE, compensazione per i passi che creano, derivation e
 boundary, nessun codice analitico; con --against il linter anti-indebolimento (§30.4) confronta con la versione
@@ -144,7 +160,7 @@ export function run(argv) {
     for (const f of positional) {
       let doc;
       try { doc = read(f); } catch (err) { return fail(asJson, 1, `${f} illeggibile: ${err.message}`); }
-      results.push({ file: f, violations: lintAny(doc, { previous }) });
+      results.push({ file: f, violations: lintAny(doc, { previous, ws: opts.workspace ? resolvePath(opts.workspace) : null, customer: opts.customer ?? null }) });
     }
   } catch (err) { return fail(asJson, 2, `errore di sistema: ${err?.message ?? err}`); }
   const n = results.reduce((a, r) => a + r.violations.length, 0);

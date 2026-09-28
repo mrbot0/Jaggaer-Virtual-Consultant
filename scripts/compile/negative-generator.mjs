@@ -34,6 +34,8 @@ import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { validateCase } from "../kb/validate-schema.mjs";
+import { lintCase } from "./lint-spec.mjs";
+import { lintScope } from "./lint-scope.mjs";
 import { loadItems, scopeOf, typeOf, CODE_RE } from "../lib/kb-items.mjs";
 import { chains as chainsOf } from "../kb/chains.mjs";
 import { workspaceCustomer } from "../run/fixtures.mjs";
@@ -168,7 +170,7 @@ export function generate(items, { customer, existing = {}, shapes = {} } = {}) {
   const byId = new Map(items.filter((x) => x?.id).map((x) => [x.id, x]));
   const seq = new Map(Object.entries(existing));
   const next = (scope, genre) => { const k = `${scope}.${genre}`; const n = (seq.get(k) ?? 0) + 1; seq.set(k, n); return `NRT.${customer}.${scope}.${genre}.${String(n).padStart(4, "0")}`; };
-  const cases = []; const explorations = []; const questions = []; const dropped = [];
+  const cases = []; const explorations = []; const questions = []; const dropped = []; const gated = [];
   const deductions = [...items.flatMap((it) => deduce(it, { byId }).map((dd) => ({ dd, item: it }))), ...chainDeductions(items).map((dd) => ({ dd, item: byId.get(dd.subject) }))];
   const exploring = new Set();
   for (const { dd, item } of deductions) {
@@ -181,10 +183,16 @@ export function generate(items, { customer, existing = {}, shapes = {} } = {}) {
     const c = skeleton(dd, { customer, id: next(dd.owner, dd.genre), shape });
     const e = emit(c);
     if (!e.ok) { dropped.push({ subject: dd.subject, risk_mode: dd.risk_mode, reason: e.reason }); continue; }
+    // giro 1: lo scheletro libresco entra in shadow solo se passa lo stesso cancello della promozione candidate → shadow
+    // (lint-spec e lint-scope); altrimenti resta candidate finché nrt-author non lo compone
+    if (c.state === "shadow") {
+      const lint = [...lintCase(c), ...lintScope(c)];
+      if (lint.length) { c.state = "candidate"; gated.push({ case: c.id, rules: [...new Set(lint.map((x) => x.rule))] }); }
+    }
     cases.push(c);
     if (dd.question) questions.push({ case: c.id, subject: dd.subject, question: dd.question });
   }
-  return { cases, explorations, questions, dropped };
+  return { cases, explorations, questions, dropped, gated };
 }
 
 export function existingSeqs(ws, customer) {

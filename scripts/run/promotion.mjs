@@ -6,6 +6,7 @@
 //       consecutivi (verde ↔ non verde) oltre `flakyBudget` ⇒ quarantine (da shadow o promoted): esiti incoerenti
 //       non sono un segnale; un solo passaggio a rosso resta un segnale (regressione), non flakiness;
 //     - candidate → shadow: caso valido, lint-spec e lint-scope puliti;
+//     - (giro 1, I3) contano solo gli esiti con l'impronta della versione attuale del caso (scripts/lib/fingerprint.mjs);
 //     - shadow → promoted: 3 run coerenti (gli ultimi 3 esiti verdi del piano: il piano può differire fra run solo per i
 //       dati del run, come il prefisso NRT-<data>-<run>; le modifiche del caso le sorveglia lint-spec --against), 1 se il soggetto era
 //       consolidato con precedente di suite verde (epistemic_at_generation.green_precedent); mai con una contraddizione
@@ -28,6 +29,8 @@ import { validateCase } from "../kb/validate-schema.mjs";
 import { lintCase } from "../compile/lint-spec.mjs";
 import { lintScope } from "../compile/lint-scope.mjs";
 import { workspaceCustomer } from "./fixtures.mjs";
+import { caseFingerprint } from "../lib/fingerprint.mjs";
+export { caseFingerprint };
 
 export const PROMOTE_AFTER = 3;
 const green = (r) => r?.status === "green" || r?.status === "pass";
@@ -40,8 +43,10 @@ export function flakiness(results, { window = 10 } = {}) {
   return flips;
 }
 
-export function decide(caso, { results = [], openCtr = [], lint = [], window = 10, flakyBudget = 1 } = {}) {
+export function decide(caso, { results: all = [], fingerprint = null, greenPrecedent = false, openCtr = [], lint = [], window = 10, flakyBudget = 1 } = {}) {
   const from = caso.state;
+  // WP09b giro 1 (I3): con l'impronta contano solo gli esiti della versione attuale del caso
+  const results = fingerprint ? all.filter((r) => r.fingerprint === fingerprint) : all;
   const stay = (reason) => ({ from, to: from, reason });
   const subjects = new Set([...(caso.derivation?.from ?? []), caso.epistemic_at_generation?.subject].filter(Boolean));
   const flips = flakiness(results, { window });
@@ -58,7 +63,8 @@ export function decide(caso, { results = [], openCtr = [], lint = [], window = 1
     const ctr = openCtr.filter((c) => subjects.has(c.a_code) || subjects.has(c.b_code) || subjects.has(c.subject));
     if (ctr.length) return stay(`contraddizione aperta sul soggetto (${ctr.map((c) => c.code).join(", ")}): mai promuovere`);
     if (caso.genre === "NEG" && !(caso.expected_errors ?? []).length) return stay("un NEG si promuove solo con gli errori attesi (ERR) dichiarati");
-    const fast = caso.epistemic_at_generation?.shape === "consolidato" && caso.epistemic_at_generation?.green_precedent === true;
+    // il precedente verde si ricava dai risultati (greenPrecedent), mai dalla dichiarazione del caso stesso
+    const fast = caso.epistemic_at_generation?.shape === "consolidato" && greenPrecedent === true;
     const need = fast ? 1 : PROMOTE_AFTER;
     const tail = results.slice(-need);
     if (tail.length === need && tail.every(green)) return { from, to: "promoted", reason: `${need} run coerenti verdi${fast ? " (consolidato con precedente verde: una basta)" : ""}`, evidence: tail.map((r) => r.run) };
@@ -75,10 +81,27 @@ export function openContradictions(ws, customer) {
   return out;
 }
 
+// Precedente di suite verde (§27.3): un ALTRO caso promosso sullo stesso soggetto il cui ultimo esito (con la sua impronta
+// attuale) è verde. Letto dai risultati, mai dal caso che chiede la promozione.
+export function greenPrecedentOf(ws, customer, caso) {
+  const subject = caso.epistemic_at_generation?.subject ?? caso.derivation?.from?.[0];
+  const dir = join(ws, "customers", customer, "tests", "cases", caso.scope ?? "");
+  if (!subject || !existsSync(dir)) return false;
+  for (const f of readdirSync(dir).filter((x) => /\.ya?ml$/.test(x))) {
+    let o; try { o = YAML.parse(readFileSync(join(dir, f), "utf8")); } catch { continue; }
+    if (!o?.id || o.id === caso.id || o.state !== "promoted") continue;
+    if (!(o.derivation?.from ?? []).includes(subject) && o.epistemic_at_generation?.subject !== subject) continue;
+    const fp = caseFingerprint(o);
+    const last = runResults(ws, customer, { planIds: [`PLAN.${o.id}`] }).filter((r) => r.fingerprint === fp).at(-1);
+    if (green(last)) return true;
+  }
+  return false;
+}
+
 export function evaluateCase(ws, customer, caso) {
   const results = runResults(ws, customer, { planIds: [`PLAN.${caso.id}`] });
-  const lint = caso.state === "candidate" ? [...lintCase(caso), ...lintScope(caso, { ws, customer })] : [];
-  return decide(caso, { results, openCtr: openContradictions(ws, customer), lint });
+  const lint = caso.state === "candidate" ? [...lintCase(caso, { ws, customer }), ...lintScope(caso, { ws, customer })] : [];
+  return decide(caso, { results, fingerprint: caseFingerprint(caso), greenPrecedent: greenPrecedentOf(ws, customer, caso), openCtr: openContradictions(ws, customer), lint });
 }
 
 export function apply(ws, { customer, file, caso, decision, now = new Date(), by = "promotion" }) {

@@ -30,6 +30,7 @@ import { validatePlan } from "../decide/validate-plan.mjs";
 import { loadItem, analyticCodes, typeOf } from "../lib/kb-items.mjs";
 import { loadRegistry, resolveCaseFixtures, entityPrefix } from "../run/fixtures.mjs";
 import { COMMIT_VERBS } from "../../hooks/lib/guards/config-scope.mjs";
+import { caseFingerprint } from "../lib/fingerprint.mjs";
 
 export class CompileError extends Error { constructor(code, msg, extra = {}) { super(msg); this.code = code; Object.assign(this, extra); } }
 export const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
@@ -44,6 +45,19 @@ export function classOf(step) {
   if (step.verb === "TOGGLE") return k === "create" ? "ACT-CREATE" : "ACT-UPDATE";
   if (step.verb === "CHOOSE") return "ACT-CREATE";
   return "ACT-OBS";   // NAVIGATE · READ · WAIT · VERIFY · CAPTURE · ASK · CLICK · FILL · SELECT
+}
+// Compensazione fornita dalla FLW per un passo del caso (la stessa regola in compile-case e lint-spec, giro 1): quella
+// della FLW del passo (from_flow) o, senza, quella dell'unica FLW della composizione.
+export function flowCompensationFor(caso, s0, flowOf) {
+  if (s0?.from_flow) return flowOf(s0.from_flow.flow)?.compensation ?? null;
+  const flows = caso?.composition?.flows ?? [];
+  return flows.length === 1 ? flowOf(flows[0])?.compensation ?? null : null;
+}
+// Passo del caso con ciò che eredita dalla FLW (from_flow).
+export function mergedStep(s0, flowOf) {
+  if (!s0?.from_flow) return s0;
+  const fs = (flowOf(s0.from_flow.flow)?.steps ?? []).find((x) => x.n === s0.from_flow.step);
+  return fs ? { ...fs, ...s0, expect: s0.expect ?? fs.expect } : s0;
 }
 export const isCreating = (step, cls = classOf(step)) => !!step.creates || (COMP_CLASSES.has(cls) && COMMIT_VERBS.has(step.verb));
 
@@ -122,7 +136,7 @@ export function compileCase(ws, caso, { customer = null, env = "sandbox", envTyp
     let comp = null;
     if (isCreating(s, cls)) {
       const c = (caso.compensations ?? []).find((x) => x.step === s.n);
-      const fromFlow = s0.from_flow ? flowOf(s0.from_flow.flow)?.compensation : (caso.composition.flows?.length === 1 ? flowOf(caso.composition.flows[0])?.compensation : null);
+      const fromFlow = flowCompensationFor(caso, s0, flowOf);
       const cc = c ?? (fromFlow ? { ...fromFlow, step: s.n } : null);
       if (!cc) throw new CompileError(3, `passo ${s.n} (${s.verb}, ${cls}) crea o modifica ${s.creates?.entity ?? "un'entità"} senza compensazione (close · cancel · deactivate · restore): va registrata PRIMA del passo (§29.6)`);
       if (!["close", "cancel", "deactivate", "restore"].includes(cc.kind)) throw new CompileError(3, `passo ${s.n}: compensazione ${cc.kind} non ammessa (mai delete, ADR-06)`);
@@ -140,7 +154,7 @@ export function compileCase(ws, caso, { customer = null, env = "sandbox", envTyp
     caption: e.caption ?? `${e.kind} al passo ${e.at}` }));
   const subject = (caso.derivation.from ?? []).find((c) => /^[SCL]\./.test(c));
   const plan = {
-    plan_id: `PLAN.${caso.id}`, customer: cust, env, ...(caso.persona ? { persona: caso.persona, storage_state: `.auth/${caso.persona}.json` } : {}),
+    plan_id: `PLAN.${caso.id}`, fingerprint: caseFingerprint(caso), customer: cust, env, ...(caso.persona ? { persona: caso.persona, storage_state: `.auth/${caso.persona}.json` } : {}),
     goal: caso.title, ...(subject ? { subject } : {}), steps, ...(evidence.length ? { evidence } : {}),
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: abortOn },
     ...(compensations.length ? { compensations } : {}),
