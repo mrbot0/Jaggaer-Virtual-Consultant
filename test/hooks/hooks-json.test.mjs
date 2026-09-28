@@ -31,6 +31,8 @@ const EXPECTED = [
   ["PostToolUse", BROWSER_MATCHER, "browser-origin"],
   // K6.2: un'OBS per ogni risultato del browser (fail-open), origine osservata.
   ["PostToolUse", BROWSER_MATCHER, "observe-append"],
+  // F0.1: deny-list (policy/deny-rules.yaml) su shell, scritture e browser.
+  ["PreToolUse", `Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit|${BROWSER_MATCHER}`, "guard-destructive"],
 ];
 
 const entries = () => Object.entries(HOOKS.hooks).flatMap(([event, groups]) => groups.flatMap((g) => g.hooks.map((h) => ({ event, matcher: g.matcher, ...h }))));
@@ -73,4 +75,13 @@ test("hooks.json K5: il matcher del browser cattura le tre famiglie e i server d
   const all = HOOKS.hooks.PreToolUse.filter((x) => x.hooks.some((h) => h.command.includes("/guard-environment.mjs")));
   assert.deepEqual(all.map((x) => x.matcher), ["mcp__.*"]);
   for (const t of ["mcp__webdriver__click", "mcp__computer-use__left_click", "mcp__stagehand__act", "mcp__chrome-devtools__click"]) assert.ok(new RegExp(all[0].matcher).test(t), t);
+});
+
+test("hooks.json F0.1: guard-destructive su Bash, PowerShell, scritture e tre famiglie del browser, una sola volta per chiamata", () => {
+  const groups = HOOKS.hooks.PreToolUse.filter((x) => x.hooks.some((h) => h.command.includes("/guard-destructive.mjs")));
+  assert.equal(groups.length, 1);
+  const re = new RegExp(`^(?:${groups[0].matcher})$`);
+  for (const t of ["Bash", "PowerShell", "Write", "Edit", "MultiEdit", "NotebookEdit", "mcp__Claude_Browser__computer", "mcp__claude-in-chrome__form_input",
+    "mcp__chrome-devtools__click", "mcp__plugin_playwright_playwright__browser_click"]) assert.ok(re.test(t), t);
+  for (const t of ["Read", "Glob", "Grep", "Agent", "mcp__alm__alm_get_test"]) assert.equal(re.test(t), false, t);
 });

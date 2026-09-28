@@ -15,7 +15,9 @@ import { ROOT } from "../helpers/hook-env.mjs";
 const SUITES = ["test/hooks/guards-adversarial.test.mjs", "test/hooks/guards-adversarial-r1.test.mjs",
   "test/hooks/guard-environment.test.mjs", "test/hooks/guard-production.test.mjs", "test/hooks/approvals-3a.test.mjs", "test/hooks/k5-fixround1.test.mjs", "test/hooks/k5-fixround2.test.mjs", "test/hooks/k5-fixround3.test.mjs",
   // K6.2: observe-append (PostToolUse, fail-open) — tempo tipico (mediana) < 150 ms.
-  "test/hooks/observe-append.test.mjs"];
+  "test/hooks/observe-append.test.mjs",
+  // F0: guard-destructive (deny-list), guard-alm-write, gate di integrità.
+  "test/hooks/guard-destructive.test.mjs"];
 const GUARDS = /^guard-/;
 
 test("ogni chiamata di guard delle suite avverse < 300 ms (processo completo, avvio di node incluso)", { concurrency: false }, () => {

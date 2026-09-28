@@ -166,6 +166,15 @@ export async function buildObservation({ ws, customer, session, call, state, res
     labels = (page.elements ?? []).filter((e) => e.ref != null && e.ref !== "").slice(0, LABELS_MAX).map((e) => [String(e.ref), labelKey(e)]);
     if (labels.length) labelLoc = loc ?? observedLocation(call.family, text, { asked, resp });
   }
+  // F0.1: nome (redatto, ≤ 80 caratteri) di ogni ref della risposta, per guard-destructive: il bersaglio di un click
+  // o di un input si riconosce anche quando la chiamata nomina solo l'uid/ref (dato, mai istruzione)
+  const names = {};
+  if (page && state === "ok") {
+    for (const e of page.elements ?? []) {
+      if (e.ref == null || e.ref === "" || Object.keys(names).length >= 300) continue;
+      if (typeof e.name === "string" && e.name.trim()) names[String(e.ref)] = ft(e.name).slice(0, 80);
+    }
+  }
   const binds = mode === "complete" || (mode === null && call.family !== "claude-browser");
   if (binds && loc?.url && (page.elements ?? []).some((e) => e.ref)) {
     pageUrl = loc.url;
@@ -193,7 +202,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
       refs[String(e.ref)] = page.formatMismatch || unbound(String(e.ref)) ? null : atlasMatch(atlas, e)?.code ?? null;
     }
   }
-  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text };
+  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names };
 }
 
 // Nuovo stato del legame ref ↔ SEL in session.browser e della storia dei ref dopo la chiamata (puro: copie).
@@ -209,7 +218,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
 // Firma del giro 4 nextBinding(b, opts) → browser ancora accettata (storia vuota); altrimenti → { browser, hist }.
 export function nextBinding(b, hist, opts) {
   if (opts === undefined && hist && typeof hist === "object" && "call" in hist) return nextBinding(b, null, hist).browser;
-  const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null } = opts;
+  const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null, names = null } = opts;
   const out = { ...b };
   delete out.ref_labels;   // storia del giro 4 (un solo posto in session.json): sostituita dal file per scheda
   const tab = asked != null ? String(asked) : null;
@@ -238,6 +247,7 @@ export function nextBinding(b, hist, opts) {
     } else {
       out.snapshot = { obs, url: pageUrl, tab, ts, refs: bound };
     }
+    if (names && typeof names === "object") out.snapshot.names = Object.fromEntries(Object.entries(names).filter(([r]) => Object.hasOwn(bound, r)));
   }
   const browser = key ? settlePending(out, key, cleared.flatMap((c) => c.pend)) : out;
   return { browser, hist: h };
@@ -324,7 +334,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   }
 
   // 2. osservazione
-  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
+  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
   const { code, errs } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
   const dir = join(st.ws, "customers", st.customer, "observations");
   mkdirSync(dir, { recursive: true });
@@ -355,7 +365,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     // obs_pending di questa chiamata (se questa scrittura non avviene, la voce resta e i guard non legano)
     // lock della storia dentro quello di session.json (stesso ordine per tutte le sessioni del cliente)
     s.browser = withFileLock(`${histFile}.lock`, () => {
-      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key });
+      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names });
       if (labels.length || cleared.length || labelLoc?.url) saveHistory(histFile, r.hist);
       return r.browser;
     });

@@ -1,0 +1,270 @@
+# policy/deny-rules.yaml — deny-list di guard-destructive (F0.1, §32, §44.4, §48.3 T1 T7 T9).
+# Il codice (hooks/lib/guards/destructive.mjs) è solo un interprete di queste regole; il modulo
+# hooks/lib/generated/deny-rules.mjs ne è la copia compilata (node scripts/admin/build-deny-rules.mjs), usata
+# solo se l'impronta di questo file coincide: altrimenti il guard rilegge questo file.
+#
+# Campi di una regola:
+#   id          DR-<AREA>-nnn (univoco)
+#   severity    hard-deny ⇒ deny · confirm ⇒ ask (l'utente decide)
+#   reason      motivo mostrato all'agente (e in audit)
+#   applies_to  shell (Bash, PowerShell) · write (Write, Edit, MultiEdit, NotebookEdit) · browser (strumenti MCP del browser)
+#   on          shell:   command (ogni sotto-comando normalizzato, da ogni parola in poi) · text (il comando intero, ogni vista)
+#               write:   path (bersaglio) · content (testo scritto)
+#               browser: label (nome/etichetta dell'elemento, testo digitato, selettore) · key (tasto premuto)
+#   patterns    regex (stringa, flag "iu") · { re, flags?, unless? } (unless: regex sul tratto trovato che annulla il match)
+#               · per on: path { glob } (relativo al workspace o assoluto, ** a ogni profondità) o { plugin_glob } (relativo
+#               a CLAUDE_PLUGIN_ROOT)
+#   unless_env  la regola non si applica se la variabile d'ambiente del processo è impostata (JVC_DEV: sviluppo del plugin)
+#   when_step_class / unless_step_class   la regola vale solo dentro / fuori da un passo di piano attivo di quelle classi
+#   supersedes  regole annullate quando questa trova un match sulla stessa azione
+#
+# Le viste di un comando di shell (l'interprete le calcola tutte e nega se ANCHE UNA viola una regola): grezza, senza
+# virgolette, senza escape (\rm), senza ^ e backtick di cmd/PowerShell, con le concatenazioni 'r'+'m' unite, con le
+# variabili semplici sostituite (a=r; $a), con le sequenze \xNN/\NNN decodificate, i token base64 decodificati
+# (anche -EncodedCommand UTF-16LE), lo scheletro Unicode (sosia, larghezza piena, caratteri invisibili), il contenuto
+# degli script locali eseguiti (≤ 256 KB). Separatori: ; && || | & a capo ( ) { } $( ) backtick.
+version: 1
+
+sanctioned:
+  - id: DR-OK-001
+    applies_to: [shell]
+    script: scripts/admin/purge.mjs
+    require_args: ["--approval-1", "--approval-2"]
+    reason: "customer purge è l'unica cancellazione del plugin (§54.4) e si esegue solo come `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`: le due approvazioni con frase le verifica lo script"
+
+rules:
+  # ---------------- shell: cancellazioni ----------------
+  - id: DR-SHELL-001
+    severity: hard-deny
+    applies_to: [shell]
+    on: command
+    reason: "cancellazione ricorsiva (rm -r, rmdir /s, Remove-Item -Recurse, del /s): il plugin non cancella file; chiedi all'utente di farlo a mano"
+    patterns:
+      - '^rm(\s.*)?\s(-(?!force\b)[a-z]*r[a-z]*|--recursive)(\s|$)'
+      - '^(remove-item|ri|rm|del|erase|rd|rmdir|rmd)(\s.*)?\s-r(e(c(u(r(s(e)?)?)?)?)?)?(\s|$|:)'
+      - '^(rd|rmdir|del|erase)(\s.*)?\s/s(\s|$)'
+      - '^(rimraf|del-cli|trash|trash-put)(\s|$)'
+      - '^find\s.*\s-delete(\s|$)'
+      - '^find\s.*\s-exec(dir)?\s+(rm|shred|unlink|rmdir|del)(\s|$)'
+      - '^for\s+/r\s.*\sdo\s+(del|erase|rd|rmdir)(\s|$)'
+      - '^(rm|del|erase|remove-item|ri|unlink)\s(.*\s)?[^\s-]*[*?]\S*(\s|$)'
+      - '^xargs(\s.*)?\s(rm|del|unlink|shred|rmdir)(\s|$)'
+      - '^(mv|move|move-item)\s.*\s(/dev/null|nul|\$null)(\s|$)'
+  - id: DR-SHELL-002
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "cancellazione ricorsiva da un interprete o da una pipeline (rmSync recursive, shutil.rmtree, rimraf, Get-ChildItem -Recurse | Remove-Item)"
+    patterns:
+      - '\b(shutil\.)?rmtree\b'
+      - '\brimraf\b'
+      - '\b(rm|rmdir)(sync)?\s*\([^)]*recursive'
+      - '\[(system\.)?io\.directory\]::delete\s*\('
+      - '\bdirectory\.delete\s*\([^)]*,\s*(\$?true|1)\s*\)'
+      - '\b(get-childitem|gci|ls|dir)\b[^|\n]*\s-r[a-z]*\b[^|\n]*\|\s*(remove-item|ri|rm|del|erase)\b'
+  - id: DR-SHELL-003
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "cancellazione sotto customers/: l'unica cancellazione ammessa è `admin customer purge` con due approvazioni (§54.4)"
+    patterns:
+      - '^(?=[\s\S]*\bcustomers\b)(?=[\s\S]*((^|[\s;&|(){}`])(rm|del|erase|rd|rmdir|remove-item|ri|unlink|shred|rimraf|truncate)(\.exe)?(\s|$)|\bgit\s+rm\b|\s-delete\b|\b(unlinksync|rmsync|rmdirsync|rmtree|unlink|rmdir)\s*\(|\bos\.remove\b|\bfs\.rm\b|\bfs\.promises\.rm\b|\bio\.(file|directory)\]::delete\b))'
+  - id: DR-SHELL-005
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "nome del comando calcolato a runtime ($VAR, $(…), backtick) con opzioni di cancellazione o forzatura: il comando eseguito non è verificabile"
+    patterns:
+      - '(^|[;&|\n({]\s*)(\$\{?[\w:!#%/-]+\}?|\$\([^)]*\)|`[^`]*`)+\S*(\s+\S+)*\s+(-[a-z]*r[a-z]*f[a-z]*|-f[a-z]*r[a-z]*|-r|--recursive|--force|--hard|/s|-recurse|-delete)(\s|$)'
+  - id: DR-SHELL-004
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "purge.mjs si invoca solo nella forma esatta `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`, senza catene né espansioni"
+    patterns:
+      - '\bpurge\.mjs\b'
+  # ---------------- shell: git ----------------
+  - id: DR-SHELL-010
+    severity: hard-deny
+    applies_to: [shell]
+    on: command
+    reason: "git push forzato (--force, -f, --force-with-lease, +refspec) riscrive la storia remota"
+    patterns:
+      - '^git(\s.*)?\spush(\s.*)?\s(-[a-z]*f[a-z]*|--force(-with-lease|-if-includes)?(=\S*)?|\+\S+)(\s|$)'
+  - id: DR-SHELL-011
+    severity: hard-deny
+    applies_to: [shell]
+    on: command
+    reason: "git reset --hard, git clean -f, git branch -D, checkout/restore di tutto, stash drop/clear, push --delete, filter-branch distruggono lavoro non recuperabile"
+    patterns:
+      - '^git(\s.*)?\sreset(\s.*)?\s--hard(\s|$)'
+      - '^git(\s.*)?\s(checkout|restore)(\s.*)?\s(--\s+)?\.(\s|$)'
+      - '^git(\s.*)?\sstash\s+(drop|clear)(\s|$)'
+      - '^git(\s.*)?\spush(\s.*)?\s(--delete|-d)(\s|$)'
+      - '^git(\s.*)?\spush\s(.*\s)?:[^\s:]+(\s|$)'
+      - '^git(\s.*)?\s(filter-branch|filter-repo)(\s|$)'
+      - '^git(\s.*)?\sclean(\s.*)?\s(-[a-z]*f[a-z]*|--force)(\s|$)'
+      - { re: '^git(\s.*)?\sbranch(\s.*)?\s(-[a-zA-Z]*D[a-zA-Z]*|--delete\s(.*\s)?--force|--force\s(.*\s)?--delete|-d\s(.*\s)?-f|-f\s(.*\s)?-d)(\s|$)', flags: "u" }
+  # ---------------- shell: dischi e file ----------------
+  - id: DR-SHELL-020
+    severity: hard-deny
+    applies_to: [shell]
+    on: command
+    reason: "formattazione, scrittura grezza su dispositivi, distruzione o troncamento di file (format, mkfs, dd of=, shred, truncate, diskpart)"
+    patterns:
+      - '^format(\.com)?\s+[a-z]:'
+      - '^(mkfs|mke2fs|newfs)(\.[a-z0-9]+)?(\s|$)'
+      - '^dd\s(.*\s)?of='
+      - '^shred(\s|$)'
+      - '^truncate(\s|$)'
+      - '^(diskpart|format-volume|clear-disk|initialize-disk|clear-content|clc|clear-recyclebin)(\s|$)'
+      - '^cipher(\s.*)?\s/w'
+      - '^vssadmin(\s.*)?\sdelete(\s|$)'
+      - '^robocopy\s.*\s/(mir|purge)(\s|$)'
+      - '^rsync\s.*\s--(delete|delete-[a-z]+|remove-source-files)(\s|$|=)'
+  # ---------------- shell: SQL distruttivo ----------------
+  - id: DR-SHELL-030
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "SQL distruttivo (DROP, TRUNCATE, DELETE senza WHERE, ALTER TABLE … DROP): il DB della conoscenza si ricostruisce dai file con gli script, mai a mano"
+    patterns:
+      - '\bdrop\s+(table|database|schema|index|view|trigger|user|role|column)\b'
+      - '\btruncate\s+table\b'
+      - '\btruncate\s+[\w."`\[\]]+\s*(;|$)'
+      - { re: '\bdelete\s+from\s+[^;]*', unless: '\bwhere\b' }
+      - '\balter\s+table\b[^;]*\bdrop\b'
+  # ---------------- shell: esecuzione di codice scaricato ----------------
+  - id: DR-SHELL-040
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "esecuzione di codice scaricato o decodificato in una shell (curl | sh, iwr | iex, base64 -d | sh, bash <(curl …))"
+    patterns:
+      - '(^|[^|])\|(?!\|)\s*(sudo\s+)?(sh|bash|zsh|dash|ksh|fish|pwsh|powershell|iex|invoke-expression)(\.exe)?(\s|$|;|\))'
+      - '\b(curl|wget|iwr|irm|invoke-webrequest|invoke-restmethod)\b[^|\n]*\|\s*(sudo\s+)?(python3?|node|perl|ruby|php|cmd)(\.exe)?\b'
+      - '\b(iex|invoke-expression)\b[\s\S]*\b(iwr|irm|invoke-webrequest|invoke-restmethod|downloadstring|downloadfile|net\.webclient)\b'
+      - '\b(sh|bash|zsh|dash|ksh|source|\.)\s+(-\w+\s+)*<\('
+      - '\$\(\s*(curl|wget|iwr|irm)\b'
+  # ---------------- shell: segreti (T7) ----------------
+  - id: DR-SHELL-050
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "file di segreti (.env, .env.*, .auth/): non si leggono né si copiano dalla shell (T7); le credenziali arrivano solo come variabili d'ambiente"
+    patterns:
+      - '(^|[\s/\\''"=:<>(|;&,])\.env(\.[\w.-]+|-[\w.-]+)?(?=$|[\s''"/\\;|&)<>,])'
+      - '(^|[\s/\\''"=:<>(|;&,])\.auth(?=$|[\s''"/\\;|&)<>,])'
+  # ---------------- shell: pubblicazione e permessi ----------------
+  - id: DR-SHELL-060
+    severity: hard-deny
+    applies_to: [shell]
+    on: command
+    reason: "pubblicazione di pacchetti (npm publish) e permessi ricorsivi aperti a tutti (chmod -R 777): fuori dal perimetro del plugin"
+    patterns:
+      - '^(npm|pnpm|yarn|bun)(\s.*)?\spublish(\s|$)'
+      - '^chmod(?=(\s.*)?\s(-[a-z]*r[a-z]*|--recursive)(\s|$))(?=(\s.*)?\s0?777(\s|$))'
+  # ---------------- shell e scrittura: JVC_DEV ----------------
+  - id: DR-SHELL-070
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "JVC_DEV (sviluppo del plugin: salta l'integrità e la protezione del codice) è una variabile del processo di Claude Code impostata dall'utente fuori sessione: non si imposta né si cita dalla sessione"
+    patterns:
+      - '\bJVC_DEV\b'
+
+  # ---------------- scrittura ----------------
+  - id: DR-WRITE-001
+    severity: hard-deny
+    applies_to: [write]
+    on: path
+    reason: "l'audit è append-only e lo scrive solo l'hook audit-append (T8)"
+    patterns:
+      - { glob: "customers/*/audit/**" }
+      - { glob: ".jvc/audit/**" }
+  - id: DR-WRITE-002
+    severity: hard-deny
+    applies_to: [write]
+    on: path
+    reason: "file di segreti (.env*, .auth/**): li gestisce solo l'utente, fuori sessione (T7)"
+    patterns:
+      - { glob: "**/.env*" }
+      - { glob: "**/.auth/**" }
+      - { glob: "**/.auth" }
+  - id: DR-WRITE-003
+    severity: hard-deny
+    applies_to: [write]
+    on: path
+    unless_env: JVC_DEV
+    reason: "codice e politiche del plugin in sola lettura a runtime (T9): hooks/, scripts/, policy/, tabelle, strategie, schemi, manifest e integrity.json si cambiano solo con una release; lo sviluppo del plugin avviene nel suo repository"
+    patterns:
+      - { plugin_glob: "hooks/**" }
+      - { plugin_glob: "scripts/**" }
+      - { plugin_glob: "policy/**" }
+      - { plugin_glob: "decision-tables/**" }
+      - { plugin_glob: "strategies/**" }
+      - { plugin_glob: "schemas/**" }
+      - { plugin_glob: "mcp/**" }
+      - { plugin_glob: ".claude-plugin/**" }
+      - { plugin_glob: ".mcp.json" }
+      - { plugin_glob: "integrity.json" }
+      - { plugin_glob: "integrity.json.sig" }
+  - id: DR-WRITE-004
+    severity: hard-deny
+    applies_to: [write]
+    on: content
+    reason: "JVC_DEV (sviluppo del plugin) è una variabile del processo di Claude Code impostata dall'utente fuori sessione: nessun file scritto in sessione la imposta"
+    patterns:
+      - '\bJVC_DEV\b'
+
+  # ---------------- browser ----------------
+  - id: DR-BROWSER-001
+    severity: confirm
+    applies_to: [browser]
+    on: label
+    when_step_class: [ACT-UPDATE]
+    supersedes: [DR-BROWSER-002]
+    reason: "etichetta ambigua (rimozione di una riga o di un allegato di una bozza) dentro un passo ACT-UPDATE: conferma dell'utente prima di premere"
+    patterns:
+      - '^\s*(rimuovi|elimina|cancella|togli|remove|delete)\s+(la\s+|il\s+|l''|the\s+)?(riga|righe|linea|linee|row|rows|line|lines|posizione|posizioni|articolo|articoli|item|items|allegato|allegati|attachment|attachments)\b'
+  - id: DR-BROWSER-002
+    severity: hard-deny
+    applies_to: [browser]
+    on: label
+    reason: "ACT-DELETE: cancellare non esiste nel vocabolario dei piani (§29.4, ADR-06); usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano"
+    patterns:
+      - '\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|svuota|svuotare|distruggi|purge|delete|remove|erase|destroy|wipe)\b'
+      - '\b(elimina|cancella|rimuovi)\s+tutt[oi]\b'
+      - '\b(delete|remove)\s+all\b'
+  - id: DR-BROWSER-003
+    severity: hard-deny
+    applies_to: [browser]
+    on: label
+    unless_step_class: [ACT-CFG-CHANGE]
+    reason: "amministrazione degli utenti (disattivazione, reset della password, cambio di ruolo, impersonificazione): solo dentro un passo di piano ACT-CFG-CHANGE approvato (§52)"
+    patterns:
+      - '\b(disattiva|disattivare|disabilita|disabilitare|blocca|bloccare|sospendi)\s+(l''\s*|lo\s+|gli\s+|il\s+)?(utente|utenti|account|user|users)\b'
+      - '\b(deactivate|disable|lock|suspend)\s+(the\s+)?(user|users|account)\b'
+      - '\b(reset|resetta|reimposta|reimpostare|azzera)\s+(la\s+|the\s+)?password\b'
+      - '\bpassword\s+reset\b'
+      - '\b(cambia|cambiare|modifica|modificare|assegna|assegnare|revoca|revocare)\s+(il\s+|i\s+)?(ruolo|ruoli|permessi|profilo)\b'
+      - '\b(change|assign|revoke)\s+(the\s+)?(role|roles|permissions)\b'
+      - '\b(impersona|impersonate|accedi\s+come|login\s+as|log\s+in\s+as)\b'
+  - id: DR-BROWSER-004
+    severity: hard-deny
+    applies_to: [browser]
+    on: label
+    unless_step_class: [ACT-BULK]
+    reason: "azione massiva (Seleziona tutti + azione): solo dentro un passo di piano ACT-BULK approvato"
+    patterns:
+      - '\b(seleziona|selezionare)\s+tutt[io]\b'
+      - '\bselect\s+all\b'
+      - '\b(azioni?|modifica|aggiornamento)\s+(di\s+)?mass[ai]v[ao]\b'
+      - '\bbulk\s+(action|actions|delete|update|edit|change)\b'
+  - id: DR-BROWSER-005
+    severity: confirm
+    applies_to: [browser]
+    on: key
+    reason: "tasto Canc/Delete su un elemento selezionato può cancellare una riga o un record: conferma dell'utente"
+    patterns:
+      - '^\s*((ctrl|control|cmd|meta|shift|alt)\+)*(delete|del|canc|supr)\s*$'
