@@ -18,7 +18,7 @@ import { SCOPES } from "../kb/codes.mjs";
 import { docIdFor, ParseError } from "./lib/parsed.mjs";
 import { workspacePaths, ensureWorkspace } from "./lib/paths.mjs";
 import { residueEntry, writeResidue } from "./residue.mjs";
-import { isZip } from "./lib/zip.mjs";
+import { isZip, ZipError } from "./lib/zip.mjs";
 import { parseDocx } from "./parse-docx.mjs";
 import { parseXlsx } from "./parse-xlsx.mjs";
 import { parsePptx } from "./parse-pptx.mjs";
@@ -106,6 +106,7 @@ export function parseFile(path, { id, relPath, buffer = null }) {
     return { doc, parser: det.parser, format: det.format };
   } catch (e) {
     if (e instanceof ParseError) return { residue: { class: e.residue ?? "unsupported", reason: e.reason ?? e.message }, parser: det.parser, format: det.format };
+    if (e instanceof ZipError) return { residue: { class: "unsupported", reason: `archivio ZIP rifiutato: ${e.message}` }, parser: det.parser, format: det.format };
     return { residue: { class: "unsupported", reason: `errore del parser ${det.parser}: ${e?.message ?? e}` }, parser: det.parser, format: det.format };
   }
 }

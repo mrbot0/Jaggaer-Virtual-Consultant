@@ -119,9 +119,17 @@ function listValues(formula, sheets) {
   return { values: [], source: formula };
 }
 
-export function parseXlsx(buffer, { id, title, source = null } = {}) {
+// ZipError in qualunque lettura (archivio ostile, voce troncata) ⇒ ParseError: il file va al residuo con il motivo.
+export function parseXlsx(buffer, opts = {}) {
+  try { return parseXlsxInner(buffer, opts); } catch (e) {
+    if (e instanceof ZipError) throw new ParseError(`archivio ZIP rifiutato: ${e.message}`, { residue: "unsupported" });
+    throw e;
+  }
+}
+
+function parseXlsxInner(buffer, { id, title, source = null } = {}) {
   let zip;
-  try { zip = openZip(buffer); } catch (e) { throw new ParseError(`XLSX non leggibile: ${e.message}`, { residue: "unsupported" }); }
+  try { zip = openZip(buffer); } catch (e) { throw new ParseError(`archivio ZIP rifiutato: ${e.message}`, { residue: "unsupported" }); }
   if (!zip.has("xl/workbook.xml")) throw new ParseError("XLSX senza xl/workbook.xml", { residue: "unsupported" });
   const strings = sharedStrings(zip);
   const sheets = sheetTargets(zip);

@@ -11,9 +11,17 @@ import { runParserCli } from "./lib/cli.mjs";
 
 const paraText = (p) => oneLine(find(p, "t").map((t) => textOf(t)).join(""));
 
-export function parsePptx(buffer, { id, title, source = null } = {}) {
+// ZipError in qualunque lettura (archivio ostile, voce troncata) ⇒ ParseError: il file va al residuo con il motivo.
+export function parsePptx(buffer, opts = {}) {
+  try { return parsePptxInner(buffer, opts); } catch (e) {
+    if (e instanceof ZipError) throw new ParseError(`archivio ZIP rifiutato: ${e.message}`, { residue: "unsupported" });
+    throw e;
+  }
+}
+
+function parsePptxInner(buffer, { id, title, source = null } = {}) {
   let zip;
-  try { zip = openZip(buffer); } catch (e) { throw new ParseError(`PPTX non leggibile: ${e.message}`, { residue: "unsupported" }); }
+  try { zip = openZip(buffer); } catch (e) { throw new ParseError(`archivio ZIP rifiutato: ${e.message}`, { residue: "unsupported" }); }
   if (!zip.has("ppt/presentation.xml")) throw new ParseError("PPTX senza ppt/presentation.xml", { residue: "unsupported" });
   const rels = new Map();
   if (zip.has("ppt/_rels/presentation.xml.rels")) for (const r of kids(parseXml(zip.text("ppt/_rels/presentation.xml.rels")), "Relationship")) rels.set(attr(r, "Id"), posix.normalize(posix.join("ppt", attr(r, "Target"))));
