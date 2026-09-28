@@ -114,7 +114,7 @@
     },
     "browser": {
       "type": "object",
-      "description": "Origine del browser: guard-environment registra current_url a ogni navigate consentito e lo azzera ai cambi di scheda/pagina (giro di correzione 1); observe-append (K6) lo aggiornerà con la pagina osservata. tab = scheda/pagina nominata dalla navigazione registrata.",
+      "description": "Origine del browser: guard-environment registra current_url a ogni navigate consentito e lo azzera ai cambi di scheda/pagina (giro di correzione 1); observe-append (K6.2) lo aggiorna dalla pagina osservata (marcatore positivo della famiglia; fail-closed). tab = scheda/pagina nominata dalla navigazione registrata.",
       "properties": { "current_url": { "type": ["string", "null"] }, "tab": { "type": ["string", "null"] }, "updated_by": { "type": "string" } }
     },
     "surprises": {
@@ -127,7 +127,9 @@
       "required": ["invocations", "trace_blocks"],
       "properties": {
         "invocations": { "type": "array", "items": { "type": "object" } },
-        "trace_blocks": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } }
+        "trace_blocks": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "observe": { "type": "object", "description": "K6.2 observe-append: ultima OBS (last_obs, letta da step-check), tipo, firma e snapshot_sig (firma dell'ultimo snapshot senza azione dopo)." },
+        "waste": { "type": "array", "description": "K6.2/K6.7 rilevatori di spreco (§29.10): { kind: repeated-snapshot, page_sig, obs, at, plan?, step? }; il self-check #13 li fa fallire.", "items": { "type": "object", "required": ["kind"] } }
       }
     },
     "hypotheses_file": { "type": "string", "minLength": 1 },

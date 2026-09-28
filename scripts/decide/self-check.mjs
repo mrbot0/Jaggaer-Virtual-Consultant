@@ -220,6 +220,8 @@ export function selfCheck({ report, session = {}, audit = [], plan = null, lesso
         if (last && o.page_sig && o.page_sig === last) repeated.add(o.page_sig);
         last = o.page_sig ?? null;
       }
+      // K6.2: le voci di spreco che observe-append scrive nel registro di sessione (session.ledger.waste)
+      for (const w of asList(session.ledger?.waste)) if (w?.kind === "repeated-snapshot" && w.page_sig) repeated.add(w.page_sig);
       if (repeated.size) fail1(13, `snapshot ripetuti della stessa pagina senza azione in mezzo: ${[...repeated].join(", ")}`);
     },
   };

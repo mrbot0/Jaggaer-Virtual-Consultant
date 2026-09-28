@@ -13,7 +13,9 @@ import { ROOT } from "../helpers/hook-env.mjs";
 
 // K5: anche le suite avverse dei guard del browser (ambiente, produzione, 3A).
 const SUITES = ["test/hooks/guards-adversarial.test.mjs", "test/hooks/guards-adversarial-r1.test.mjs",
-  "test/hooks/guard-environment.test.mjs", "test/hooks/guard-production.test.mjs", "test/hooks/approvals-3a.test.mjs", "test/hooks/k5-fixround1.test.mjs", "test/hooks/k5-fixround2.test.mjs", "test/hooks/k5-fixround3.test.mjs"];
+  "test/hooks/guard-environment.test.mjs", "test/hooks/guard-production.test.mjs", "test/hooks/approvals-3a.test.mjs", "test/hooks/k5-fixround1.test.mjs", "test/hooks/k5-fixround2.test.mjs", "test/hooks/k5-fixround3.test.mjs",
+  // K6.2: observe-append (PostToolUse, fail-open) — tempo tipico (mediana) < 150 ms.
+  "test/hooks/observe-append.test.mjs"];
 const GUARDS = /^guard-/;
 
 test("ogni chiamata di guard delle suite avverse < 300 ms (processo completo, avvio di node incluso)", { concurrency: false }, () => {
@@ -35,6 +37,11 @@ test("ogni chiamata di guard delle suite avverse < 300 ms (processo completo, av
     const s = [...arr].sort((a, b) => a - b);
     console.log(`${g}: n=${s.length} media ${(s.reduce((a, b) => a + b) / s.length).toFixed(0)} ms · p50 ${s[s.length >> 1].toFixed(0)} · p95 ${s[Math.floor(s.length * 0.95)].toFixed(0)} · max ${s[s.length - 1].toFixed(0)} ms`);
   }
+  const obs = readFileSync(log, "utf8").trim().split("\n").map((l) => JSON.parse(l)).filter((c) => c.name === "observe-append").map((c) => c.ms).sort((a, b) => a - b);
+  assert.ok(obs.length >= 20, `observe-append: ${obs.length} chiamate misurate`);
+  const p50 = obs[obs.length >> 1];
+  console.log(`observe-append: n=${obs.length} p50 ${p50.toFixed(0)} · p95 ${obs[Math.floor(obs.length * 0.95)].toFixed(0)} · max ${obs.at(-1).toFixed(0)} ms`);
+  assert.ok(p50 < 150, `observe-append tipico ${p50.toFixed(0)} ms ≥ 150 ms`);
   const slow = calls.filter((c) => c.ms >= 300);
   assert.deepEqual(slow, [], `chiamate ≥ 300 ms: ${JSON.stringify(slow)}`);
 });

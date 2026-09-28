@@ -113,3 +113,30 @@ export function atlasMatch(atlas, el) {
   if (!n) return null;
   return (atlas ?? []).find((a) => a.label && normLabel(a.label) === n && roleCompatible(a.role, el.role)) ?? null;
 }
+
+// Sensibilità di un FLD (§19.20, identity.sensitivity): pii, commercial o redact_in_evidence ⇒ il valore
+// si maschera per selettore. Il FLD è in kb/scopes/<SCOPE>/fields/<codice>.yaml (prodotto o cliente).
+// Lettura leggera del blocco `sensitivity:`; file assente ⇒ null (non sensibile per quanto noto).
+const FLD_RE = /^([SCL])\.([A-Z0-9]{3,4})\.([A-Z0-9]{3})\.FLD\.\d{4}(\.v\d+)?$/;
+export function fieldSensitivity(ws, code, customer) {
+  const m = typeof code === "string" ? FLD_RE.exec(code) : null;
+  if (!m) return null;
+  const [, level, cust, scope] = m;
+  if (level !== "S" && customer && cust !== customer) return null;
+  const root = level === "S" ? join(ws, "product", "kb") : join(ws, "customers", cust, "kb");
+  let text;
+  try { text = readFileSync(join(root, "scopes", scope, "fields", `${code}.yaml`), "utf8"); } catch { return null; }
+  const i = text.search(/^\s*sensitivity:\s*$/m);
+  if (i < 0) return null;
+  const block = text.slice(i).split(/\r?\n/).slice(1);
+  const ind = /^(\s*)/.exec(text.slice(i))[1].length;
+  const out = {};
+  for (const l of block) {
+    if (!l.trim()) continue;
+    const lead = /^(\s*)/.exec(l)[1].length;
+    if (lead <= ind) break;
+    const kv = /^\s*([a-z_]+):\s*(\S+)/.exec(l);
+    if (kv) out[kv[1]] = kv[2] === "true" ? true : kv[2] === "false" ? false : kv[2].replace(/^["']|["']$/g, "");
+  }
+  return { ...out, sensitive: out.pii === true || out.commercial === true || out.redact_in_evidence === true };
+}

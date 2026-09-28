@@ -29,6 +29,8 @@ const EXPECTED = [
   // K5 giro 2: frasi dell'utente negate in ogni input (N5); origine del browser a consuntivo (N1).
   ["PreToolUse", ".*", "guard-phrase"],
   ["PostToolUse", BROWSER_MATCHER, "browser-origin"],
+  // K6.2: un'OBS per ogni risultato del browser (fail-open), origine osservata.
+  ["PostToolUse", BROWSER_MATCHER, "observe-append"],
 ];
 
 const entries = () => Object.entries(HOOKS.hooks).flatMap(([event, groups]) => groups.flatMap((g) => g.hooks.map((h) => ({ event, matcher: g.matcher, ...h }))));

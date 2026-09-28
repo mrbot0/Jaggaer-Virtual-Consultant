@@ -48,8 +48,7 @@ export function landedUrl(family, text) {
     if (!/Successfully (navigated|reloaded)\b/i.test(text) || /Unable to navigate/i.test(text)) return null;
     const pages = text.slice(text.lastIndexOf("## Pages"));
     if (!pages.startsWith("## Pages")) return null;
-    const sel = [...pages.matchAll(/^\s*\d+:\s*(\S+)\s+\[selected\]\s*$/gm)];
-    return sel.length === 1 ? hrefOf(sel[0][1]) : null;
+    return selectedPageUrl(pages);
   }
   if (family === "claude-browser") {
     if (!/\bNavigated to\b/i.test(text)) return null;
@@ -66,7 +65,18 @@ export function landedUrl(family, text) {
   return null;
 }
 
-const textOfResponse = (resp) => (typeof resp === "string" ? resp : Array.isArray(resp) ? textOf(resp) : resp && typeof resp === "object" && Array.isArray(resp.content) ? textOf(resp.content) : "");
+// Pagina "[selected]" dell'elenco "## Pages" di Chrome DevTools, nei due formati del server:
+// `N: <url> [selected]` e (versioni recenti, verificato il 2026-09-23) `N: <titolo> (<url>) [selected]`.
+// Il titolo è della pagina: l'URL si prende SOLO dall'ultimo gruppo fra parentesi ancorato a
+// "[selected]" in fondo alla riga; esattamente una riga selezionata, altrimenti ignoto (K6).
+export function selectedPageUrl(pages) {
+  const sel = String(pages).split(/\r?\n/).filter((l) => /^\s*\d+:.*\s\[selected\]\s*$/.test(l));
+  if (sel.length !== 1) return null;
+  const m = /\((\S+)\)\s+\[selected\]\s*$/.exec(sel[0]) ?? /^\s*\d+:\s*(\S+)\s+\[selected\]\s*$/.exec(sel[0]);
+  return m ? hrefOf(m[1]) : null;
+}
+
+export const textOfResponse = (resp) => (typeof resp === "string" ? resp : Array.isArray(resp) ? textOf(resp) : resp && typeof resp === "object" && Array.isArray(resp.content) ? textOf(resp.content) : "");
 
 // Nuovo stato { url, tab } dopo la chiamata, dato lo stato precedente e la risposta.
 // Solo un navigate (o una storia) riuscito con l'URL effettivo rende noto l'URL;

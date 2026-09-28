@@ -1,0 +1,67 @@
+// GENERATO da scripts/chrome/build-error-patterns.mjs a partire da scripts/chrome/error-patterns.yaml: non modificare.
+export default {
+  "version": 1,
+  "kinds": {
+    "alert": "toast",
+    "status": "toast",
+    "log": "toast",
+    "marquee": "toast",
+    "dialog": "dialog",
+    "alertdialog": "dialog",
+    "banner": "banner",
+    "text": "red-text"
+  },
+  "code": "\\b(?:[A-Z]{2,5}-[A-Z]{2,5}-\\d{2,4}|[A-Z]{3}-\\d{5}|(?:HTTP|Errore|Error)\\s(?:4\\d\\d|5\\d\\d))\\b",
+  "success": "\\b(salvat[oa]|salvataggio riuscito|inviat[oa] con successo|completat[oa]|operazione riuscita|saved|successfully|success|completed)\\b",
+  "error_text": "^(errore|error|attenzione|warning|impossibile|non è possibile|cannot|unable to)\\b",
+  "categories": [
+    {
+      "id": "session",
+      "blocking": true,
+      "it": "sessione (è )?scadut[ao]|effettua(re)? di nuovo l.accesso|accedi di nuovo|sessione non valida",
+      "en": "session (has )?expired|log ?in again|please sign in|session timed out"
+    },
+    {
+      "id": "permission",
+      "blocking": true,
+      "it": "non (sei )?autorizzat[oa]|permess[oi] (negat[oi]|insufficienti)|accesso negato|non hai i permessi|ruolo non abilitato",
+      "en": "not authori[sz]ed|forbidden|access denied|insufficient (privileges|permissions)|\\b403\\b"
+    },
+    {
+      "id": "concurrency",
+      "blocking": true,
+      "it": "modificat[oa] da (un )?altr[oi] utent[ei]|conflitto di aggiornamento|documento bloccato da",
+      "en": "modified by another user|optimistic lock|record (has )?changed|locked by another"
+    },
+    {
+      "id": "timeout",
+      "blocking": true,
+      "it": "tempo (di attesa )?scaduto|nessuna risposta dal|timeout",
+      "en": "timed? ?out|gateway timeout|\\b504\\b|no response from"
+    },
+    {
+      "id": "system",
+      "blocking": true,
+      "it": "errore interno|errore imprevisto|errore di sistema|si è verificato un errore",
+      "en": "internal server error|unexpected error|system error|exception|stack ?trace|nullpointer|\\b500\\b"
+    },
+    {
+      "id": "integration",
+      "blocking": true,
+      "it": "integrazione|trasmissione (non riuscita|fallita)|errore (di|dell.)interfaccia|\\bERP\\b|\\bSAP\\b|\\bIDoc\\b",
+      "en": "integration (error|failed)|transmission failed|interface error|remote system|\\bIDoc\\b"
+    },
+    {
+      "id": "business-rule",
+      "blocking": true,
+      "it": "lo stato .* non (consente|permette)|non è possibile .* nello stato|operazione non consentita|azione non ammessa",
+      "en": "not allowed in (status|state)|cannot be .* in (status|state)|operation not (allowed|permitted)"
+    },
+    {
+      "id": "validation",
+      "blocking": true,
+      "it": "obbligatori[oa]|non (è )?valid[oa]|non è attiv[oa]|formato non|deve essere|campo richiesto|valore non ammesso|inserire un",
+      "en": "required|invalid|is not active|must be|mandatory|not a valid|please enter"
+    }
+  ]
+};
