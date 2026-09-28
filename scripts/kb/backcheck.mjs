@@ -28,21 +28,25 @@ const STOP = new Set(["della", "delle", "dello", "degli", "nella", "nelle", "son
 const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
 const flat = (v) => (v === null || v === undefined ? "" : typeof v === "object" ? (Array.isArray(v) ? v.map(flat).join(" ") : Object.values(v).map(flat).join(" ")) : String(v));
 
+const CODE_RE = /\b[A-Za-z]*\d[\w.\-/]*\b|\b[A-Z][A-Z0-9]*_[A-Z0-9_]+\b|\b[A-Z]{2,}[0-9]*\b/g;
+// Token di numeri e codici (tutti, senza filtro): la base del confronto ESATTO.
+export function codeTokens(text) {
+  return [...String(text ?? "").matchAll(CODE_RE)].map((m) => m[0].replace(/[.\-/]+$/, "")).filter(Boolean);
+}
 export function codesIn(text) {
-  const t = String(text ?? "");
   const out = new Set();
-  for (const m of t.matchAll(/\b[A-Za-z]*\d[\w.\-/]*\b|\b[A-Z][A-Z0-9]*_[A-Z0-9_]+\b|\b[A-Z]{2,}[0-9]*\b/g)) {
-    const c = m[0].replace(/[.\-/]+$/, "");
-    if (c.length >= 2 && !/^[A-Z]{2,3}$/.test(c) || /\d/.test(c)) out.add(c);
-  }
+  for (const c of codeTokens(text)) if ((c.length >= 2 && !/^[A-Z]{2,3}$/.test(c)) || /\d/.test(c)) out.add(c);
   return [...out];
 }
+// Forma canonica di un token: minuscolo; separatori delle migliaia tolti ("50.000" = "50000", "1,234,567" = "1234567").
+export const canonCode = (c) => (/^\d{1,3}(?:[.,]\d{3})+$/.test(c) ? c.replace(/[.,]/g, "") : c).toLowerCase();
 
 export function supportOf(claimText, unitTexts) {
   const hay = norm(unitTexts.join(" \n "));
-  const hayRaw = unitTexts.join(" \n ");
   const codes = codesIn(claimText);
-  const missing_codes = codes.filter((c) => !hayRaw.includes(c) && !hay.includes(norm(c)));
+  // giro 1 (C1): appartenenza all'insieme dei token del testo citato, mai sottostringa ("10" ≠ "100", REQ_CC_1 ≠ REQ_CC_12)
+  const tokens = new Set(unitTexts.flatMap((t) => codeTokens(t)).map(canonCode));
+  const missing_codes = codes.filter((c) => !tokens.has(canonCode(c)));
   const words = [...new Set((norm(claimText).match(/[\p{L}]{4,}/gu) ?? []).filter((w) => !STOP.has(w)))];
   const found = words.filter((w) => hay.includes(w.slice(0, 5)));
   const ratio = words.length ? found.length / words.length : codes.length ? 1 : 0;
