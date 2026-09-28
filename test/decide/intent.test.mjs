@@ -10,8 +10,8 @@ import { parseIntent } from "../../scripts/decide/intent.mjs";
 
 const G = YAML.parse(readFileSync(join(ROOT, "test/golden/intent/cases.yaml"), "utf8"));
 
-test("intent: 30 intenti golden (le 16 righe di §61 e 14 casi limite) → 30/30", () => {
-  assert.equal(G.cases.length, 30);
+test("intent: 33 intenti golden (le 16 righe di §61, 14 casi limite, 3 fuori vocabolario) → 33/33", () => {
+  assert.equal(G.cases.length, 33);
   const failures = [];
   for (const c of G.cases) {
     const session = c.session ? { customer: c.session.customer ?? null, env: c.session.env ? { type: c.session.env } : null } : null;

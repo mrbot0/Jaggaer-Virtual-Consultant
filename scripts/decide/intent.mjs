@@ -185,6 +185,8 @@ export function parseIntent(text, { customers = [], session = null } = {}) {
   // fin dove (§57.1): in bozza ⇒ dopo CREATE; in approvazione ⇒ PENDING_APPROVAL; default il più conservativo
   const stop_at = actions.includes("ACT-SUBMIT") ? "PENDING_APPROVAL" : /\bin bozza\b|\bas (a )?draft\b/.test(t) || actions.includes("ACT-CREATE") ? (actions.some((a) => ["ACT-CREATE", "ACT-UPDATE"].includes(a)) ? "bozza" : null) : null;
 
+  // WP07 giro 1 (spec I5, §57.1): senza "cosa fare" riconosciuto si chiede, non si avvia
+  if (!actions.length && !task) missing.push("action");
   const needsBrowser = actions.length > 0 || task === "nrt-run";
   if (needsBrowser && !env) missing.push("env");
   if ((needsBrowser || task) && !customer) missing.push("customer");
@@ -196,7 +198,7 @@ export function parseIntent(text, { customers = [], session = null } = {}) {
   const col = envColumn(env ?? "prod");
   const notAllowed = actions.filter((a) => ACT[a]?.[col] === "never" || !ACT[a]);
   const isDelete = actions.includes("ACT-DELETE");
-  const critical = !isDelete && (missing.includes("env") || missing.includes("customer") || missing.includes("scope"));
+  const critical = !isDelete && (missing.includes("env") || missing.includes("customer") || missing.includes("scope") || missing.includes("action"));
   const dt = evaluate(loadTable("DT-026"), {
     critical_missing: critical,
     action_class_allowed: isDelete ? false : notAllowed.length === 0 || !env,
@@ -211,6 +213,7 @@ export function parseIntent(text, { customers = [], session = null } = {}) {
     const ask = [];
     if (missing.includes("env")) ask.push("in quale ambiente (sandbox, pre-produzione, produzione)?");
     if (missing.includes("customer")) ask.push("per quale cliente?");
+    if (missing.includes("action")) ask.push("che cosa devo fare (crea, modifica, invia, approva, annulla, mostra, …)?");
     if (missing.includes("scope")) ask.push(`su quale oggetto (${uniq.join(" o ")})?`);
     reason = `Serve un chiarimento prima di qualunque passo (§29.5): ${ask.join(" ")}`;
   } else if (outcome === "rifiuta") reason = env === "prod" && notAllowed.some((a) => ACT[a]?.effect === "write") ? PROD_REFUSAL : `${notAllowed.join(", ")} non è ammessa in ${env} (§29.4)`;

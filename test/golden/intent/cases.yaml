@@ -1,7 +1,7 @@
 # Intenti golden per scripts/decide/intent.mjs (K6.4, DT-026). Le righe 1–16 sono il catalogo di §61
 # (una per riga della tabella); 17–30 coprono i casi limite (ambiente o cliente mancanti, scope ambigui,
 # inglese, ogni classe d'azione). `session` = stato di sessione attivo (cliente, tipo di ambiente).
-# `expect` confronta solo le chiavi elencate; data: sottoinsieme; missing: sottoinsieme.
+# (x-31…x-33, giro di correzione 1: fuori vocabolario ⇒ chiedi.) `expect` confronta solo le chiavi elencate; data: sottoinsieme; missing: sottoinsieme.
 customers: [ACME, BETA]
 cases:
   - id: 61-01
@@ -100,3 +100,13 @@ cases:
     text: "Crea una RdA per 2 sedie, CdC IT-0442, lasciala in bozza"
     session: { customer: ACME, env: sandbox }
     expect: { customer: ACME, env: sandbox, scopes: [P2P], actions: [ACT-CREATE], stop_at: bozza, outcome: avvia, data: { quantity: 2, cost_center: IT-0442 } }
+  # WP07 giro 1 (spec I5): verbi fuori vocabolario ⇒ nessuna azione riconosciuta ⇒ chiedi (§57.1), mai avvia
+  - id: x-31-fuori-vocabolario-prod
+    text: "Su ACME produzione aggiungi una riga all'ordine 4500012345"
+    expect: { customer: ACME, env: prod, actions: [], outcome: chiedi, missing: [action] }
+  - id: x-32-fuori-vocabolario-carrello
+    text: "Su ACME produzione svuota il carrello"
+    expect: { actions: [], outcome: chiedi, missing: [action] }
+  - id: x-33-fuori-vocabolario-sandbox
+    text: "Su ACME sandbox distruggi la RdA NRT-20260923-B2C1-REQ-001"
+    expect: { env: sandbox, actions: [], outcome: chiedi, missing: [action] }
