@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "chk.schema.json",
+  "title": "Check ripetitivo (CHK)",
+  "description": "§5.6, §62, §64: kind, how (verbo, target, atteso), cost, deterministic, frequency, cluster CL-CHK. how.verb: READ (lettura sul browser di un SEL, target obbligatorio) · SCRIPT (eseguito da scripts/run/checks-run.mjs: how.script è il nome dell'implementazione) · QUERY (ACT-QRY) · OBS (conteggio sulle osservazioni) · ENV-CHECK (scripts/chrome/env-check.mjs). Critico: how.",
+  "allOf": [{ "$ref": "item.base" }, { "$ref": "#/$defs/chk" }],
+  "$defs": {
+    "chk": {
+      "type": "object",
+      "required": ["type", "kind", "how", "cost", "deterministic", "frequency", "cluster"],
+      "properties": {
+        "type": { "const": "CHK" },
+        "kind": { "enum": ["precondition", "postcondition", "health", "data-quality", "permission"] },
+        "how": {
+          "type": "object",
+          "required": ["verb", "expect"],
+          "additionalProperties": false,
+          "properties": {
+            "verb": { "enum": ["READ", "SCRIPT", "QUERY", "OBS", "ENV-CHECK"] },
+            "target": { "$ref": "defs.schema.json#/$defs/sel" },
+            "script": { "type": "string", "pattern": "^[a-z][a-z0-9-]{2,40}$" },
+            "expect": { "type": "string", "minLength": 1 },
+            "query": { "type": "string" }
+          },
+          "allOf": [
+            { "if": { "properties": { "verb": { "const": "READ" } } }, "then": { "required": ["target"] } },
+            { "if": { "properties": { "verb": { "const": "SCRIPT" } } }, "then": { "required": ["script"] } }
+          ]
+        },
+        "cost": { "enum": ["cheap", "medium", "expensive"] },
+        "deterministic": { "type": "boolean" },
+        "frequency": { "type": "string", "minLength": 1 },
+        "when": { "type": "string", "description": "condizione di applicazione (es. 'CFP ≥ R2', 'CL-CFG-005', 'use env prod')" },
+        "cluster": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^CL-CHK-\\d{3}$" } },
+        "invariant": { "type": "string", "description": "invariante documentale che il check protegge (§30.3)" }
+      }
+    }
+  }
+}

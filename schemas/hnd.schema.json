@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hnd.schema.json",
+  "title": "Handoff fra scope (HND)",
+  "description": "§27.1, §64: contratto fra lo scope che consegna e quello che riceve; chi possiede il test (owner_of_test, §27.2 ultimo paragrafo), cosa il test asserisce e cosa NON deve passare (does_not_pass), cosa non asserisce (does_not_assert), a quale passo il test si ferma (stop_at_step: il confine), fixture condivise e test reciproco. Critici: stop_at_step, does_not_pass.",
+  "allOf": [{ "$ref": "item.base" }, { "$ref": "#/$defs/hnd" }],
+  "$defs": {
+    "strings": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "hnd": {
+      "type": "object",
+      "required": ["type", "contract", "owner_of_test", "stop_at_step", "does_not_pass"],
+      "properties": {
+        "type": { "const": "HND" },
+        "from_scope": { "$ref": "defs.schema.json#/$defs/scope" },
+        "to_scope": { "$ref": "defs.schema.json#/$defs/scope" },
+        "contract": {
+          "oneOf": [
+            { "type": "string", "minLength": 3 },
+            { "type": "object", "minProperties": 1, "properties": { "produces": { "type": "string" }, "consumes": { "type": "string" }, "entity": { "type": "string" }, "state": { "type": "string" }, "via": { "type": "string" } } }
+          ]
+        },
+        "owner_of_test": { "$ref": "defs.schema.json#/$defs/scope" },
+        "asserts": { "$ref": "#/$defs/strings" },
+        "does_not_pass": { "$ref": "#/$defs/strings", "minItems": 1 },
+        "does_not_assert": { "$ref": "#/$defs/strings" },
+        "stop_at_step": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "type": "object", "required": ["step"], "additionalProperties": false, "properties": { "flow": { "type": "string" }, "step": { "type": "integer", "minimum": 1 }, "note": { "type": "string" } } }
+          ]
+        },
+        "shared_fixtures": { "$ref": "#/$defs/strings" },
+        "reciprocal_test": { "oneOf": [{ "$ref": "defs.schema.json#/$defs/nrt" }, { "type": "null" }] },
+        "flows": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

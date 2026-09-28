@@ -1,0 +1,25 @@
+id: S.STD.P2P.SEL.0013
+type: SEL
+title: "Pulsante senza catena semantica"
+summary: "Selettore con una sola strategia css: invalido."
+concept: "pulsante salva"
+role: button
+effect: delete
+strategies:
+  - { kind: css, value: "#save" }
+stability: stable
+facets:
+  F1: osservazione-chrome
+  F4: comportamento-ui
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: specifica
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13: { verified_at: "2026-09-20", release: "R25.2" }
+  F15: empirica
+sources:
+  - { obs: L.ACME.P2P.OBS.0001 }

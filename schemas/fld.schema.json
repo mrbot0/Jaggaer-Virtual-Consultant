@@ -84,7 +84,8 @@
               "type": "array",
               "items": {
                 "type": "object", "required": ["ref"], "additionalProperties": false,
-                "properties": { "ref": { "$ref": "#/$defs/code" }, "mapping": { "type": "string" }, "mandatory_there": { "type": "boolean" }, "note": { "type": "string" } }
+                "properties": { "ref": { "$ref": "#/$defs/code" }, "mapping": { "type": "string" }, "mandatory_there": { "type": "boolean" }, "note": { "type": "string" },
+                  "one_of": { "type": "object", "description": "obbligatorietà uno-fra di una xs:choice (WP09b): il campo non è obbligatorio da solo (mandatory_there false), il gruppo sì se required", "required": ["group", "required"], "additionalProperties": false, "properties": { "group": { "type": "string", "minLength": 1 }, "required": { "type": "boolean" } } } }
               }
             }
           }

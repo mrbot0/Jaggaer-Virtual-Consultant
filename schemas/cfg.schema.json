@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cfg.schema.json",
+  "title": "Oggetto di configurazione (CFG)",
+  "description": "§28, §28.4: location (percorso, firma della pagina, SEL), options, dependencies, impacts, current_state (con baseline_hash per le ricognizioni), risk, rollback, deviates_from (versione cliente). location e options sono sempre critici (§19.13); lo schema ne verifica la forma quando presenti. La location lega lo snapshot (kb snapshot) alla pagina dell'oggetto.",
+  "allOf": [{ "$ref": "item.base" }, { "$ref": "#/$defs/cfg" }],
+  "$defs": {
+    "cfg": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "CFG" },
+        "area": { "type": "string", "pattern": "^CL-CFG-\\d{3}$" },
+        "location": {
+          "type": "object",
+          "minProperties": 1,
+          "properties": {
+            "path": { "type": "string" },
+            "page_sig": { "type": "string" },
+            "url_pattern": { "type": "string" },
+            "selectors": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/sel" } }
+          }
+        },
+        "options": { "oneOf": [{ "type": "array" }, { "type": "object" }] },
+        "dependencies": { "type": "array", "items": { "type": "string" } },
+        "impacts": { "type": "array", "items": { "oneOf": [{ "type": "string" }, { "type": "object" }] } },
+        "current_state": {
+          "type": "object",
+          "properties": { "value": {}, "observed_at": { "type": ["string", "null"] }, "source": { "type": "string" }, "baseline_hash": { "type": "string" }, "obs": { "type": "string" } }
+        },
+        "risk": { "$ref": "defs.schema.json#/$defs/risk" },
+        "rollback": {
+          "type": "object",
+          "required": ["kind"],
+          "properties": { "kind": { "enum": ["procedure", "restore-value", "deactivate"] }, "ref": { "type": "string" }, "note": { "type": "string" } }
+        },
+        "deviates_from": { "$ref": "defs.schema.json#/$defs/cfg" }
+      }
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nrt-case.schema.json",
+  "title": "Caso di test NRT",
+  "description": "§27.1, §27.2, §27.3: NRT.<CLIENTE>.<SCOPE>.<GENERE>.<SEQ> (genere POS NEG INT HND BSL CFG SMK OPS), composizione di FLW e SEL, derivation (da quale KEY/LCY/FLD/INT/HND e da quale risk mode di §27.2) e boundary (stop_at_step, does_not_assert) OBBLIGATORI: un caso senza non si emette. evidence, alm, epistemic_at_generation, fixtures con lookup_or_fail (mai create al volo), compensations (close · cancel · deactivate · restore, mai delete), expected_errors (codici ERR, obbligatori per NEG), state candidate · shadow · promoted · quarantine. Il dominio analitico non si cita (PAT PBK BRF RUL: compile-case e lint-spec rifiutano).",
+  "type": "object",
+  "required": ["id", "type", "title", "scope", "genre", "state", "composition", "derivation", "boundary", "epistemic_at_generation"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "$ref": "defs.schema.json#/$defs/nrt" },
+    "type": { "const": "NRT" },
+    "title": { "type": "string", "minLength": 3, "maxLength": 140 },
+    "summary": { "type": "string" },
+    "scope": { "$ref": "defs.schema.json#/$defs/scope" },
+    "genre": { "enum": ["POS", "NEG", "INT", "HND", "BSL", "CFG", "SMK", "OPS"] },
+    "state": { "enum": ["candidate", "shadow", "promoted", "quarantine"] },
+    "version": { "type": "integer", "minimum": 1 },
+    "capability": { "type": "string" },
+    "criticality": { "enum": ["alta", "media", "bassa"] },
+    "priority": { "type": "number", "minimum": 0, "maximum": 1 },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "persona": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,40}$" },
+    "env": { "type": "string" },
+    "composition": {
+      "type": "object",
+      "required": ["steps"],
+      "additionalProperties": false,
+      "properties": {
+        "flows": { "type": "array", "items": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.FLW\\.\\d{4}(\\.v\\d+)?$" } },
+        "steps": { "type": "array", "minItems": 1, "items": { "$ref": "defs.schema.json#/$defs/step" } }
+      }
+    },
+    "derivation": {
+      "type": "object",
+      "required": ["from", "risk_mode"],
+      "additionalProperties": false,
+      "properties": {
+        "from": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.(KEY|LCY|FLD|INT|HND|FLW|CFP|CFG|CAP)\\.\\d{4}(\\.v\\d+)?$" } },
+        "risk_mode": { "type": "string", "minLength": 3, "description": "risk mode della tabella di deduzione §27.2 (collisione, riuso, aggiramento, mutazione tardiva, troncamento silenzioso, formato, riferimento pendente, propagazione, obbligatorio omesso, ignoto, obbligatorio condizionale non applicato, obbligatorio per ruolo, campo vuoto al tracciato, valore alterato lungo la catena, obbligatorietà senza catena) o 'configurazione effettiva' (§28.6), 'flusso nominale'" },
+        "rule": { "type": "string" },
+        "strategy": { "enum": ["delta", "vicini", "identita", "ciclo-di-vita", "contratto", "handoff", "cfp", "manuale", "archeologia"] },
+        "condition": { "type": "string" },
+        "role": { "type": "string" },
+        "state": { "type": "string" },
+        "chain": { "type": "string", "pattern": "^CL-FLD-CHAIN-\\d{3}$" }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "required": ["stop_at_step", "does_not_assert"],
+      "additionalProperties": false,
+      "properties": {
+        "stop_at_step": { "type": "integer", "minimum": 1 },
+        "does_not_assert": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "handoff": { "type": "string", "pattern": "^[SC]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.HND\\.\\d{4}(\\.v\\d+)?$" }
+      }
+    },
+    "evidence": { "$ref": "defs.schema.json#/$defs/evidence" },
+    "alm": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "test_key": { "type": ["string", "null"] }, "labels": { "type": "array", "items": { "type": "string" } }, "folder": { "type": "string" }, "precondition": { "type": ["string", "null"] } }
+    },
+    "epistemic_at_generation": {
+      "type": "object",
+      "required": ["shape"],
+      "additionalProperties": false,
+      "properties": {
+        "shape": { "$ref": "defs.schema.json#/$defs/shape" },
+        "subject": { "type": "string" },
+        "at": { "type": "string" },
+        "green_precedent": { "type": "boolean" },
+        "preliminary_observation": { "type": "string" }
+      }
+    },
+    "fixtures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "lookup_or_fail"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,40}$" },
+          "kind": { "type": "string" },
+          "lookup_or_fail": { "type": "object", "minProperties": 1, "description": "criteri di ricerca nel registro customers/<C>/tests/fixtures.yaml: la fixture esiste o il caso fallisce (mai creata al volo)" },
+          "from_handoff": { "type": "string", "pattern": "^[SC]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.HND\\.\\d{4}(\\.v\\d+)?$" },
+          "scope": { "$ref": "defs.schema.json#/$defs/scope" }
+        }
+      }
+    },
+    "compensations": { "type": "array", "items": { "allOf": [{ "$ref": "defs.schema.json#/$defs/compensation" }, { "required": ["step"] }] } },
+    "expected_errors": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/err" } },
+    "baseline": { "type": "object", "description": "BSL: riferimento alla baseline registrata (scripts/run/baseline.mjs)", "properties": { "ref": { "type": "string" }, "tolerances": { "type": "object" } } },
+    "question": { "type": "string", "description": "domanda all'utente che accompagna un BSL (obbligatorietà senza catena: è voluta?)" },
+    "previous_version": { "type": "string" },
+    "sources": { "type": "array" }
+  },
+  "allOf": [
+    { "if": { "properties": { "genre": { "const": "NEG" } } }, "then": { "required": ["expected_errors"] } },
+    { "if": { "properties": { "genre": { "const": "NEG" }, "state": { "enum": ["shadow", "promoted"] } } }, "then": { "properties": { "expected_errors": { "minItems": 1 } } } }
+  ]
+}

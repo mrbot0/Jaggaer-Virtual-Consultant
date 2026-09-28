@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "int.schema.json",
+  "title": "Integration Map (INT)",
+  "description": "§27.1, §27.4: protocollo, trigger, latenze, mapping con key_ref, errori, silence_semantics, e2e_checkpoint.stage, tolleranze, owner_scope, touches_scopes. mappings[].field è il CODICE del FLD (dopo la digestione; l'estrazione produce field_ref con l'id grezzo, scripts/kb/chains.mjs normalizeIntMappings lo converte). one_of esprime l'obbligatorietà uno-fra di una xs:choice (WP09a parse-xsd: choice_group/one_of_required): il campo non è obbligatorio da solo, il gruppo sì (required). Un INT senza silence_semantics è invalido (piano F2).",
+  "allOf": [{ "$ref": "item.base" }, { "$ref": "#/$defs/int" }],
+  "$defs": {
+    "mapping": {
+      "type": "object",
+      "required": ["field", "target"],
+      "additionalProperties": false,
+      "properties": {
+        "field": { "$ref": "defs.schema.json#/$defs/fld" },
+        "target": { "type": "string", "minLength": 1 },
+        "mandatory": { "type": "boolean" },
+        "key_ref": { "$ref": "defs.schema.json#/$defs/key" },
+        "transform": { "type": "string" },
+        "max_length": { "type": "integer", "minimum": 1 },
+        "one_of": {
+          "type": "object",
+          "required": ["group", "required"],
+          "additionalProperties": false,
+          "properties": { "group": { "type": "string", "minLength": 1 }, "required": { "type": "boolean" } }
+        }
+      },
+      "if": { "required": ["one_of"] },
+      "then": { "properties": { "mandatory": { "const": false } } }
+    },
+    "int": {
+      "type": "object",
+      "required": ["type", "protocol", "mappings", "silence_semantics", "e2e_checkpoint", "owner_scope", "touches_scopes", "tolerances"],
+      "properties": {
+        "type": { "const": "INT" },
+        "protocol": { "oneOf": [{ "type": "string", "minLength": 1 }, { "type": "array", "minItems": 1, "items": { "type": "string" } }] },
+        "direction": { "enum": ["outbound", "inbound", "bidirectional"] },
+        "trigger": { "type": "string" },
+        "counterpart": { "type": "string" },
+        "mode_latency": {
+          "type": "object",
+          "properties": { "mode": { "enum": ["sync", "async", "file", "batch"] }, "p95_s": { "type": "number", "minimum": 0 }, "timeout_s": { "type": "number", "minimum": 0 } }
+        },
+        "mappings": { "type": "array", "items": { "$ref": "#/$defs/mapping" } },
+        "error_catalog": { "type": "array", "items": { "type": "object", "required": ["code"], "properties": { "code": { "type": "string" }, "description": { "type": "string" }, "err": { "$ref": "defs.schema.json#/$defs/err" } } } },
+        "observability": { "oneOf": [{ "type": "string" }, { "type": "object" }] },
+        "silence_semantics": {
+          "type": "object",
+          "required": ["silent_failure_possible"],
+          "properties": {
+            "silent_failure_possible": { "type": "boolean", "description": "il controparte può fallire senza segnalarlo (input silence_possible di DT-013)" },
+            "on_empty_mandatory": { "enum": ["rejected", "flagged", "silent", "unknown"] },
+            "detection": { "type": "string" }
+          }
+        },
+        "e2e_checkpoint": {
+          "type": "object",
+          "required": ["stage"],
+          "properties": { "stage": { "enum": ["queued_accepted", "processed", "acknowledged"] }, "where": { "type": "string" }, "sel": { "$ref": "defs.schema.json#/$defs/sel" } }
+        },
+        "owner_scope": { "$ref": "defs.schema.json#/$defs/scope" },
+        "touches_scopes": { "type": "array", "minItems": 1, "items": { "$ref": "defs.schema.json#/$defs/scope" } },
+        "tolerances": {
+          "type": "object",
+          "properties": {
+            "numeric": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0 } },
+            "ignore_fields": { "type": "array", "items": { "type": "string" } },
+            "order_insensitive": { "type": "array", "items": { "type": "string" } },
+            "date_formats": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "document_impact": { "type": "object", "properties": { "severity": { "enum": ["blocking", "degrading", "none"] } } },
+        "counterpart_owner": { "type": "string" },
+        "test_strategy": { "type": "string" }
+      }
+    }
+  }
+}

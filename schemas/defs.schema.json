@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "defs.schema.json",
+  "title": "Definizioni comuni agli schemi di tipo (WP09b)",
+  "description": "Codici degli item (§5), vocabolario dei verbi (§5.5: NAVIGATE · CLICK · FILL · CHOOSE · TOGGLE · UPLOAD · SAVE · SUBMIT · WAIT · VERIFY · READ · CAPTURE · ASK, più SELECT come in execution-plan.schema.json), passo procedurale, compensazione (mai delete: close · cancel · deactivate · restore, ADR-06), fonte.",
+  "$defs": {
+    "code": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.[A-Z]{3}\\.\\d{4}(\\.v\\d+)?$" },
+    "sel": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.SEL\\.\\d{4}(\\.v\\d+)?$" },
+    "chk": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CHK\\.\\d{4}(\\.v\\d+)?$" },
+    "cfg": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CFG\\.\\d{4}(\\.v\\d+)?$" },
+    "cfp": { "type": "string", "pattern": "^[SC]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CFP\\.\\d{4}(\\.v\\d+)?$" },
+    "fld": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.FLD\\.\\d{4}(\\.v\\d+)?$" },
+    "key": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.KEY\\.\\d{4}(\\.v\\d+)?$" },
+    "int": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.INT\\.\\d{4}(\\.v\\d+)?$" },
+    "err": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.ERR\\.\\d{4}(\\.v\\d+)?$" },
+    "obs": { "type": "string", "pattern": "^L\\.[A-Z0-9]{4}\\.[A-Z0-9]{3}\\.OBS\\.\\d{4}$" },
+    "nrt": { "type": "string", "pattern": "^NRT\\.(STD|[A-Z0-9]{4})\\.[A-Z0-9]{3}\\.(POS|NEG|INT|HND|BSL|CFG|SMK|OPS)\\.\\d{4}$" },
+    "scope": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC"] },
+    "risk": { "enum": ["R0", "R1", "R2", "R3"] },
+    "shape": { "enum": ["consolidato", "libresco", "empirico", "contraddittorio", "ignoto"] },
+    "verb": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "WAIT", "VERIFY", "READ", "CAPTURE", "ASK"] },
+    "target": {
+      "oneOf": [
+        { "$ref": "#/$defs/sel" },
+        { "type": "object", "required": ["url_pattern"], "additionalProperties": false, "properties": { "url_pattern": { "type": "string", "minLength": 1 } } }
+      ]
+    },
+    "step": {
+      "type": "object",
+      "required": ["n", "verb"],
+      "additionalProperties": false,
+      "properties": {
+        "n": { "type": "integer", "minimum": 1 },
+        "verb": { "$ref": "#/$defs/verb" },
+        "target": { "$ref": "#/$defs/target" },
+        "check": { "oneOf": [{ "$ref": "#/$defs/chk" }, { "$ref": "#/$defs/nrt" }] },
+        "data": {},
+        "wait_for": { "$ref": "#/$defs/sel" },
+        "expect": { "type": "object", "minProperties": 1 },
+        "risk": { "$ref": "#/$defs/risk" },
+        "action_class": { "type": "string", "pattern": "^ACT-[A-Z0-9-]+$" },
+        "creates": {
+          "type": "object",
+          "description": "Il passo crea (o modifica/invia) un'entità: la compensazione va registrata PRIMA (§29.6).",
+          "required": ["entity"],
+          "additionalProperties": false,
+          "properties": { "entity": { "type": "string", "minLength": 1 }, "kind": { "enum": ["create", "update", "submit"] } }
+        },
+        "from_flow": {
+          "type": "object", "required": ["flow", "step"], "additionalProperties": false,
+          "properties": { "flow": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.FLW\\.\\d{4}(\\.v\\d+)?$" }, "step": { "type": "integer", "minimum": 1 } }
+        },
+        "timeout_ms": { "type": "integer", "minimum": 1 },
+        "note": { "type": "string" }
+      },
+      "allOf": [
+        { "if": { "properties": { "verb": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "READ"] } } }, "then": { "required": ["target"] } },
+        { "if": { "properties": { "verb": { "const": "VERIFY" } } }, "then": { "anyOf": [{ "required": ["check"] }, { "required": ["target"] }] } }
+      ]
+    },
+    "compensation": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["close", "cancel", "deactivate", "restore"] },
+        "step": { "type": "integer", "minimum": 1 },
+        "entity": { "type": "string" },
+        "action": { "type": "string" },
+        "ref": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["at", "kind"],
+        "properties": {
+          "at": { "type": "integer", "minimum": 1 },
+          "kind": { "enum": ["entry", "input", "transition", "assertion", "integration", "failure", "result", "snapshot"] },
+          "capture": { "enum": ["page", "region", "element"] },
+          "region": { "$ref": "#/$defs/sel" },
+          "caption": { "type": "string" }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": { "doc": { "type": "string" }, "section": { "type": "string" }, "kind": { "type": "string" }, "obs": { "type": "string" }, "unit": { "type": "string" } }
+    }
+  }
+}

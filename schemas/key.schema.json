@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "key.schema.json",
+  "title": "Key Registry (KEY)",
+  "description": "§27.1–27.2: unicità (scope, normalizzazione, canali, gaps), riuso dopo disattivazione, mutabilità, formato, cross_system, document_impact, canali di enforcement, obbligatorietà per stato; i risk mode (§27.2) si deducono da questi attributi (scripts/compile/negative-generator.mjs). Critici: uniqueness, cross_system.",
+  "allOf": [{ "$ref": "item.base" }, { "$ref": "#/$defs/key" }],
+  "$defs": {
+    "key": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "KEY" },
+        "entity": { "type": "string" },
+        "field": { "$ref": "defs.schema.json#/$defs/fld" },
+        "uniqueness": {
+          "type": "object",
+          "required": ["scope"],
+          "properties": {
+            "scope": { "enum": ["none", "document", "company", "tenant", "global"] },
+            "normalization": { "type": ["string", "null"] },
+            "channels": { "type": "array", "items": { "type": "string" } },
+            "gaps": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "reuse_after_deactivation": { "enum": ["allowed", "forbidden", "unknown"] },
+        "mutability": {
+          "type": "object",
+          "properties": { "immutable_after": { "type": ["string", "null"] }, "editable_by": { "type": "array", "items": { "type": "string" } } }
+        },
+        "immutable_after": { "type": ["string", "null"] },
+        "format": {
+          "type": "object",
+          "properties": {
+            "pattern": { "type": ["string", "null"] },
+            "max_length": { "type": ["integer", "null"], "minimum": 1 },
+            "transform": { "type": ["string", "null"] },
+            "truncation": { "enum": ["explicit", "none", "unknown", null] }
+          }
+        },
+        "cross_system": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["system"],
+            "properties": { "system": { "type": "string" }, "field": { "type": "string" }, "existence_validated_locally": { "type": "boolean" }, "int": { "$ref": "defs.schema.json#/$defs/int" } }
+          }
+        },
+        "document_impact": {
+          "type": "object",
+          "properties": { "severity": { "enum": ["blocking", "degrading", "none"] }, "documents": { "type": "array", "items": { "type": "string" } } }
+        },
+        "enforced_at": { "type": "array", "items": { "enum": ["ui", "import", "api", "integration", "workflow"] } },
+        "enforcement_channels": { "type": "array", "items": { "type": "string" } },
+        "mandatory_in": { "type": "array", "items": { "type": "string" } },
+        "risk_modes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

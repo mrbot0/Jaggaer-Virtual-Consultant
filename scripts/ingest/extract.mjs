@@ -17,7 +17,7 @@
 //     export di configurazione: FLW dal workflow_definition (attività in ordine di transizione), CFG per parametro
 //       (current_state = valore all'export, confidenza 0.95), CFG per cartella del workflow;
 //     spec di integrazione (dev kit, XSD/WSDL/OpenAPI): INT con protocollo, endpoint, operazioni, mapping
-//       { field_ref, target, mandatory } verso i FLD di integrazione (che ricevono lineage.required_by → INT),
+//       { field_ref, target, mandatory, one_of? } verso i FLD di integrazione (che ricevono lineage.required_by → INT),
 //       catalogo degli errori dalle tabelle codice/descrizione. Forma provvisoria per chains.mjs: vedi docs/phase-reports/F1-tooling.md.
 //   typeHint(unit, raw) → { candidates[], dt020 } (DT-020 valutata a T0 con i segnali deterministici)
 //   extractDocument(doc, units, { profile, scope }) → { items[], stats, llm_plan }
@@ -152,7 +152,8 @@ export function extractUnit(unit, ctx = {}) {
       const r = unit.record ?? {};
       extraction = { element: r.name ?? unit.text.slice(0, 60), kind: r.kind ?? "element", path: r.path ?? null, type: r.type ?? null, required: r.required ?? null,
         min_occurs: typeof r.min_occurs === "number" ? r.min_occurs : null, max_occurs: r.max_occurs ?? null, length: r.length ?? null, min_length: r.min_length ?? null,
-        max_length: r.max_length ?? null, pattern: r.pattern ?? null, enumeration: r.enumeration ?? [], operation: r.kind === "operation" ? r.name : null, documentation: r.documentation ?? null, source_unit: unit.id };
+        max_length: r.max_length ?? null, pattern: r.pattern ?? null, enumeration: r.enumeration ?? [], operation: r.kind === "operation" ? r.name : null, documentation: r.documentation ?? null, source_unit: unit.id,
+        ...(r.choice_group ? { choice_group: String(r.choice_group), one_of_required: r.one_of_required === true } : {}) };
       candidates = ["operation", "endpoint"].includes(r.kind) ? ["INT"] : ["FLD"];
       break;
     }
@@ -258,9 +259,14 @@ export function documentCandidates(doc, units, raw, { profile = null } = {}) {
       const e = r.extraction;
       const target = e.technical_name ?? e.path ?? e.element ?? e.label;
       const mand = r.unit_type === "tracciato" ? e.required === true : /^(s[iì]|y|yes|x|true|m|mandatory|required|obbligatorio)$/i.test(String(e.mandatory_text ?? "").trim());
+      // WP09b: ramo di una xs:choice ⇒ non obbligatorio da solo; one_of { group, required } porta l'obbligatorietà uno-fra
+      if (e.choice_group) return { field_ref: r.raw_id, target, mandatory: false, one_of: { group: e.choice_group, required: e.one_of_required === true } };
       return { field_ref: r.raw_id, target, mandatory: mand };
     });
-    for (const r of fldRaw) (r.lineage ??= { required_by: [] }).required_by.push({ ref: intId, mandatory_there: mappings.find((m) => m.field_ref === r.raw_id)?.mandatory ?? null });
+    for (const r of fldRaw) {
+      const m = mappings.find((x) => x.field_ref === r.raw_id);
+      (r.lineage ??= { required_by: [] }).required_by.push({ ref: intId, mandatory_there: m?.mandatory ?? null, ...(m?.one_of ? { one_of: m.one_of } : {}) });
+    }
     const errors = [];
     for (const u of units.filter((x) => x.type === "tabella" && /error|errore|code|codice|status/i.test(`${x.context.section} ${x.table?.headers?.join(" ")}`))) {
       const h = u.table?.headers ?? [];

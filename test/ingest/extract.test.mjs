@@ -11,7 +11,7 @@ import { validateWith } from "../../scripts/lib/schemas.mjs";
 import { segmentUnits } from "../../scripts/ingest/segment.mjs";
 import { harvest } from "../../scripts/ingest/harvest.mjs";
 import { extractUnit, extractDocument, planLlm, ruleSubject, stepParts, writeRaw, DOC_BUDGET } from "../../scripts/ingest/extract.mjs";
-import { lineageRelations } from "../../scripts/kb/chains.mjs";
+import { lineageRelations, normalizeIntMappings } from "../../scripts/kb/chains.mjs";
 
 const SCHEMAS = new URL("../../schemas/unit-extraction/", import.meta.url);
 const fixDir = new URL("../fixtures/docs/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
@@ -111,8 +111,11 @@ test("export di configurazione → FLW (attività in ordine di transizione) e CF
   assert.equal(vat.mandatory, true);
   const fld = s.items.find((x) => x.raw_id === vat.field_ref);
   assert.deepEqual(fld.lineage.required_by, [{ ref: int.raw_id, mandatory_there: true }]);
-  // forma provvisoria per chains.mjs: dopo la digestione field_ref → codice FLD e il mapping diventa { field, target, mandatory }
-  const digested = { id: "S.STD.XSC.INT.0001", type: "INT", mappings: int.extraction.mappings.map((m, i) => ({ field: `S.STD.XSC.FLD.${String(i + 1).padStart(4, "0")}`, target: m.target, mandatory: m.mandatory })) };
+  // WP09b: dopo la digestione field_ref → codice FLD (normalizeIntMappings, schema INT mappings[].field)
+  const codes = Object.fromEntries(int.extraction.mappings.map((m, i) => [m.field_ref, `S.STD.XSC.FLD.${String(i + 1).padStart(4, "0")}`]));
+  const digested = normalizeIntMappings({ id: "S.STD.XSC.INT.0001", type: "INT", mappings: int.extraction.mappings }, codes);
+  assert.deepEqual(digested.unresolved, []);
+  assert.ok(digested.mappings.every((m) => /^S\.STD\.XSC\.FLD\.\d{4}$/.test(m.field) && !("field_ref" in m)));
   assert.ok(lineageRelations(digested).some((rel) => rel.kind === "required_by" && rel.detail.mandatory_there === true));
 });
 

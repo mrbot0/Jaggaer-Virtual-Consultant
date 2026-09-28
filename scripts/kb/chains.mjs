@@ -32,16 +32,40 @@ const CLUSTERS_DIR = fileURLToPath(new URL("../../clusters/CL-FLD-CHAIN", import
 const MANDATORY = new Set(["always", "conditional", "undocumented"]);
 const typeOf = (code) => parseCode(String(code ?? ""))?.type ?? null;
 
+const mappingField = (m) => (m?.field && typeOf(m.field) === "FLD" ? m.field : m?.field_ref && typeOf(m.field_ref) === "FLD" ? m.field_ref : null);
+
+// field_ref (id grezzo dell'estrazione, scripts/ingest/extract.mjs) → field (codice FLD assegnato dalla digestione).
+// codeOf: { rawId: codice } | (rawId) => codice. Un field_ref già codice FLD resta; uno non risolto va in unresolved.
+export function normalizeIntMappings(intItem, codeOf = {}) {
+  const lookup = typeof codeOf === "function" ? codeOf : (r) => codeOf?.[r] ?? null;
+  const mappings = [];
+  const unresolved = [];
+  for (const m of intItem?.mappings ?? []) {
+    const { field_ref: ref, field: f0, ...rest } = m ?? {};
+    const field = f0 && typeOf(f0) === "FLD" ? f0 : ref && typeOf(ref) === "FLD" ? ref : ref ? lookup(ref) : null;
+    if (!field || typeOf(field) !== "FLD") { unresolved.push(ref ?? f0 ?? null); continue; }
+    mappings.push({ field, ...rest });
+  }
+  return { ...intItem, mappings, unresolved };
+}
+
 export function lineageRelations(item) {
   const out = [];
   if (!item?.id) return out;
   if (item.type === "FLD") {
     const l = item.lineage ?? {};
     for (const p of l.propagates_to ?? []) if (p?.field) out.push({ from: item.id, to: p.field, kind: "propagates_to", detail: { document: p.document ?? null, transform: p.transform ?? null, source: item.id } });
-    for (const r of l.required_by ?? []) if (r?.ref) out.push({ from: item.id, to: r.ref, kind: "required_by", detail: { mapping: r.mapping ?? null, mandatory_there: r.mandatory_there ?? null, note: r.note ?? null, reason_kind: typeOf(r.ref) === "INT" ? "integration" : null, source: item.id } });
+    for (const r of l.required_by ?? []) if (r?.ref) out.push({ from: item.id, to: r.ref, kind: "required_by", detail: { mapping: r.mapping ?? null, mandatory_there: r.mandatory_there ?? null, note: r.note ?? null, reason_kind: typeOf(r.ref) === "INT" ? "integration" : null, source: item.id, ...(r.one_of ? { one_of: { group: String(r.one_of.group), required: r.one_of.required === true } } : {}) } });
     if (l.derived_from) out.push({ from: item.id, to: l.derived_from, kind: "derived_from", detail: { source: item.id } });
   } else if (item.type === "INT") {
-    for (const m of item.mappings ?? []) if (m?.field && typeOf(m.field) === "FLD") out.push({ from: m.field, to: item.id, kind: "required_by", detail: { mapping: m.target ?? null, mandatory_there: m.mandatory === true, reason_kind: "integration", source: item.id } });
+    // WP09b: mappings[].field è il codice FLD (schemas/int.schema.json); field_ref vale solo se è già un codice FLD
+    // (l'id grezzo dell'estrazione si converte con normalizeIntMappings). one_of: obbligatorietà uno-fra (xs:choice).
+    for (const m of item.mappings ?? []) {
+      const field = mappingField(m);
+      if (!field) continue;
+      out.push({ from: field, to: item.id, kind: "required_by", detail: { mapping: m.target ?? null, mandatory_there: m.mandatory === true, reason_kind: "integration", source: item.id,
+        ...(m.one_of ? { one_of: { group: String(m.one_of.group), required: m.one_of.required === true }, note: `uno fra le alternative del gruppo ${m.one_of.group}${m.one_of.required === true ? " (obbligatorio)" : " (facoltativo)"}` } : {}) } });
+    }
   } else if (item.type === "LCY") {
     for (const [state, list] of Object.entries(item.mandatory_by_state ?? {})) for (const f of list ?? []) out.push({ from: f, to: item.id, kind: "required_by", detail: { note: `obbligatorio nello stato ${state} (${item.id})`, state, reason_kind: "workflow", source: item.id } });
   }
@@ -104,7 +128,7 @@ export function chains(items, { existing } = {}) {
   for (const r of relations) if (r.kind === "propagates_to" && r.detail.document && !docOf.has(r.to)) docOf.set(r.to, r.detail.document);
   // lati della passata: dai soli FLD con obbligo; i mapping INT solo se obbligatori; i LCY
   const passEdges = relations.filter((r) => seeds.has(r.from) || (r.kind !== "required_by" && seeds.has(r.to)))
-    .filter((r) => !(r.kind === "required_by" && typeOf(r.to) === "INT" && r.detail.mandatory_there === false))
+    .filter((r) => !(r.kind === "required_by" && typeOf(r.to) === "INT" && r.detail.mandatory_there === false && r.detail.one_of?.required !== true))
     .filter((r) => typeOf(r.to) !== "LCY");
   const parent = new Map();
   const find = (x) => { if (!parent.has(x)) parent.set(x, x); while (parent.get(x) !== x) { parent.set(x, parent.get(parent.get(x))); x = parent.get(x); } return x; };

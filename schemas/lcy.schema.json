@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lcy.schema.json",
+  "title": "Document Lifecycle (LCY)",
+  "description": "§27.1: stati, transizioni, obbligatorietà per stato (mandatory_by_state { STATO: [FLD] }, letto da scripts/kb/chains.mjs), immutabilità, validazioni con esito block · none · undocumented (undocumented ⇒ BSL, §27.2), punti di contatto con le integrazioni.",
+  "allOf": [{ "$ref": "item.base" }, { "$ref": "#/$defs/lcy" }],
+  "$defs": {
+    "lcy": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "LCY" },
+        "document": { "type": "string" },
+        "states": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "transitions": {
+          "type": "array",
+          "items": { "type": "object", "required": ["from", "to"], "properties": { "from": { "type": "string" }, "to": { "type": "string" }, "action": { "type": "string" }, "role": { "type": "string" }, "sel": { "$ref": "defs.schema.json#/$defs/sel" } } }
+        },
+        "mandatory_by_state": { "type": "object", "additionalProperties": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/fld" } } },
+        "immutable_after": { "type": ["string", "null"] },
+        "validations": {
+          "type": "array",
+          "items": { "type": "object", "required": ["rule", "on_fail"], "properties": { "rule": { "type": "string" }, "on_fail": { "enum": ["block", "none", "undocumented"] }, "message_ref": { "$ref": "defs.schema.json#/$defs/err" }, "state": { "type": "string" } } }
+        },
+        "integration_touchpoints": {
+          "type": "array",
+          "items": { "type": "object", "required": ["state"], "properties": { "state": { "type": "string" }, "int": { "$ref": "defs.schema.json#/$defs/int" } } }
+        }
+      }
+    }
+  }
+}

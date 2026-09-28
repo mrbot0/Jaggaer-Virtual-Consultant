@@ -28,10 +28,34 @@ const STOP = new Set(["della", "delle", "dello", "degli", "nella", "nelle", "son
 const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
 const flat = (v) => (v === null || v === undefined ? "" : typeof v === "object" ? (Array.isArray(v) ? v.map(flat).join(" ") : Object.values(v).map(flat).join(" ")) : String(v));
 
-const CODE_RE = /\b[A-Za-z]*\d[\w.\-/]*\b|\b[A-Z][A-Z0-9]*_[A-Z0-9_]+\b|\b[A-Z]{2,}[0-9]*\b/g;
+// WP09b (carry WP09a): (1) il segno meno di un numero fa parte del token ("-5" ≠ "5"), riconosciuto solo quando il
+// trattino non è interno a una parola; (2) un codice unito da trattini, punti o barre (REQ-CC-1, E-51-B, E1EDK01/BELNR)
+// resta UN token se contiene una cifra o è un codice maiuscolo (CL-CFG): il prefisso si confronta. Le parole unite
+// senza cifre (sì/no, e/o) non sono codici: si rileggono con le regole semplici.
+const SIMPLE_RE = /\b[A-Za-z]*\d[\w.\-/]*\b|\b[A-Z][A-Z0-9]*_[A-Z0-9_]+\b|\b[A-Z]{2,}[0-9]*\b/g;
+const CODE_RE = /(?<![\w\-./])-?\d[\w.\-/]*\b|\b[A-Za-z0-9]+(?:[-./][A-Za-z0-9]+)+\b|\b[A-Za-z]*\d[\w.\-/]*\b|\b[A-Z][A-Z0-9]*_[A-Z0-9_]+\b|\b[A-Z]{2,}[0-9]*\b/g;
+const JOINED = /^[A-Za-z0-9]+(?:[-./][A-Za-z0-9]+)+$/;
+const isCodeLike = (t) => /\d/.test(t) || /^[A-Z][A-Z0-9]*(?:[-_][A-Z0-9]+)+$/.test(t);
+const trim = (t) => t.replace(/[.\-/]+$/, "");
 // Token di numeri e codici (tutti, senza filtro): la base del confronto ESATTO.
 export function codeTokens(text) {
-  return [...String(text ?? "").matchAll(CODE_RE)].map((m) => m[0].replace(/[.\-/]+$/, "")).filter(Boolean);
+  const out = [];
+  for (const m of String(text ?? "").matchAll(CODE_RE)) {
+    const t = m[0];
+    if (JOINED.test(t) && !isCodeLike(t)) { for (const s of t.matchAll(SIMPLE_RE)) out.push(trim(s[0])); continue; }
+    out.push(trim(t));
+  }
+  return out.filter(Boolean);
+}
+// Token del testo CITATO: i codici uniti valgono anche per le loro parti (un numero isolato dell'affermazione resta
+// confermato dal codice che lo contiene, come prima); un numero con segno vale solo con il segno.
+function haystackTokens(text) {
+  const out = [];
+  for (const t of codeTokens(text)) {
+    out.push(t);
+    if (!t.startsWith("-") && /[-./]/.test(t)) for (const p of t.split(/[-./]+/)) if (p) out.push(p);
+  }
+  return out;
 }
 export function codesIn(text) {
   const out = new Set();
@@ -45,7 +69,7 @@ export function supportOf(claimText, unitTexts) {
   const hay = norm(unitTexts.join(" \n "));
   const codes = codesIn(claimText);
   // giro 1 (C1): appartenenza all'insieme dei token del testo citato, mai sottostringa ("10" ≠ "100", REQ_CC_1 ≠ REQ_CC_12)
-  const tokens = new Set(unitTexts.flatMap((t) => codeTokens(t)).map(canonCode));
+  const tokens = new Set(unitTexts.flatMap((t) => haystackTokens(t)).map(canonCode));
   const missing_codes = codes.filter((c) => !tokens.has(canonCode(c)));
   const words = [...new Set((norm(claimText).match(/[\p{L}]{4,}/gu) ?? []).filter((w) => !STOP.has(w)))];
   const found = words.filter((w) => hay.includes(w.slice(0, 5)));

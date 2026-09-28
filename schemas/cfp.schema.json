@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cfp.schema.json",
+  "title": "Procedura di configurazione (CFP)",
+  "description": "§5.5: versione standard S (governs, risk, preconditions, steps nel vocabolario dei verbi dei piani, verification_test NRT.*.CFG, rollback { kind: procedure, ref } — disattivare, mai eliminare —, snapshot_before, evidence, sources) oppure versione cliente C che dichiara il DELTA (derives_from + deviations[{ step | after, insert?, reason, source }] + confirmed_by_observation), mai una copia. Un verbo fuori vocabolario (DELETE compreso) rende la CFP invalida (C1.1). Rollback obbligatorio per risk ≥ R2.",
+  "allOf": [{ "$ref": "item.base" }, { "$ref": "#/$defs/cfp" }],
+  "$defs": {
+    "deviation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["step", "reason", "source"],
+          "additionalProperties": false,
+          "properties": {
+            "step": { "type": "integer", "minimum": 1 },
+            "reason": { "type": "string", "minLength": 3 },
+            "source": { "$ref": "defs.schema.json#/$defs/source" },
+            "data_options_from": { "$ref": "defs.schema.json#/$defs/cfg" },
+            "replace": { "type": "object", "description": "campi del passo S sostituiti (verb, target, data, note, wait_for, expect)", "not": { "required": ["n"] },
+              "properties": { "verb": { "$ref": "defs.schema.json#/$defs/verb" }, "target": { "$ref": "defs.schema.json#/$defs/target" }, "wait_for": { "$ref": "defs.schema.json#/$defs/sel" } } },
+            "skip": { "const": true, "description": "il passo S non si esegue per questo cliente (resta dichiarato)" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["after", "insert", "source"],
+          "additionalProperties": false,
+          "properties": {
+            "after": { "type": "integer", "minimum": 0 },
+            "insert": {
+              "type": "object",
+              "required": ["verb"],
+              "not": { "required": ["n"] },
+              "properties": {
+                "verb": { "$ref": "defs.schema.json#/$defs/verb" },
+                "target": { "$ref": "defs.schema.json#/$defs/target" },
+                "check": { "$ref": "defs.schema.json#/$defs/chk" },
+                "wait_for": { "$ref": "defs.schema.json#/$defs/sel" },
+                "data": {},
+                "expect": { "type": "object" },
+                "note": { "type": "string" }
+              }
+            },
+            "reason": { "type": "string", "minLength": 3 },
+            "source": { "$ref": "defs.schema.json#/$defs/source" }
+          }
+        }
+      ]
+    },
+    "cfp": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "CFP" },
+        "governs": { "type": "array", "minItems": 1, "items": { "$ref": "defs.schema.json#/$defs/cfg" } },
+        "area": { "type": "string", "pattern": "^CL-CFG-\\d{3}$" },
+        "risk": { "$ref": "defs.schema.json#/$defs/risk" },
+        "preconditions": { "type": "array", "items": { "type": "object", "required": ["check"], "additionalProperties": false, "properties": { "check": { "$ref": "defs.schema.json#/$defs/chk" } } } },
+        "postconditions": { "type": "array", "items": { "type": "object", "required": ["check"], "additionalProperties": false, "properties": { "check": { "$ref": "defs.schema.json#/$defs/chk" } } } },
+        "steps": { "type": "array", "minItems": 1, "items": { "$ref": "defs.schema.json#/$defs/step" } },
+        "verification_test": { "type": "string", "pattern": "^NRT\\.(STD|[A-Z0-9]{4})\\.[A-Z0-9]{3}\\.CFG\\.\\d{4}$" },
+        "verification": {
+          "type": "object",
+          "description": "Cosa verifica il NRT.*.CFG generato (§28.6): campi e valori dichiarati.",
+          "properties": {
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["sel"],
+                "additionalProperties": false,
+                "properties": {
+                  "sel": { "$ref": "defs.schema.json#/$defs/sel" },
+                  "label": { "type": "string" },
+                  "mandatory": { "type": "boolean" },
+                  "accepts": { "type": "array", "items": {} },
+                  "in_payload": { "$ref": "defs.schema.json#/$defs/int" },
+                  "form": { "$ref": "defs.schema.json#/$defs/target" },
+                  "save": { "$ref": "defs.schema.json#/$defs/sel" },
+                  "error": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "rollback": {
+          "type": "object",
+          "required": ["kind", "ref"],
+          "additionalProperties": false,
+          "properties": { "kind": { "const": "procedure" }, "ref": { "$ref": "defs.schema.json#/$defs/cfp" }, "note": { "type": "string" } }
+        },
+        "snapshot_before": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/cfg" } },
+        "evidence": { "$ref": "defs.schema.json#/$defs/evidence" },
+        "derives_from": { "$ref": "defs.schema.json#/$defs/cfp" },
+        "deviations": { "type": "array", "items": { "$ref": "#/$defs/deviation" } },
+        "confirmed_by_observation": { "type": "array", "items": { "type": "string" } }
+      },
+      "if": { "required": ["derives_from"] },
+      "then": { "required": ["deviations"], "not": { "required": ["steps"] } },
+      "else": {
+        "required": ["governs", "risk", "steps"],
+        "if": { "properties": { "risk": { "enum": ["R2", "R3"] } }, "required": ["risk"] },
+        "then": { "required": ["rollback"] }
+      }
+    }
+  }
+}
