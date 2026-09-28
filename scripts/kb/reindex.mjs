@@ -17,9 +17,24 @@ const FIELD_MODEL_TYPES = new Set(["FLD", "INT", "LCY"]);
 
 const SOURCE_WEIGHTS = YAML.parse(readFileSync(new URL("../../schemas/source-weights.yaml", import.meta.url), "utf8"));
 
+// WP09a (§19.7): se una fonte dell'item è un DOC profilato, il suo reliability.score è il peso di base
+// (il minimo fra i DOC profilati citati), in luogo del peso generico per origine.
+const DOC_CODE_RE = /^[SC]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.DOC\.\d{4}(?:\.v\d+)?$/;
+export function profiledSourceScore(obj, docReliability) {
+  if (!docReliability?.size) return null;
+  const scores = [];
+  for (const s of obj?.sources ?? []) {
+    const refs = typeof s === "string" ? [s] : [s?.doc, s?.ref, s?.code, s?.document].filter(Boolean);
+    for (const r of refs) if (DOC_CODE_RE.test(String(r)) && docReliability.has(String(r))) scores.push(docReliability.get(String(r)));
+  }
+  return scores.length ? Math.min(...scores) : null;
+}
+
 // Peso della fonte da F1 (§6.2); promozione-digest usa il minimo dei
 // contributori scritto dalla digestione (source_weight), altrimenti il fallback.
-export function sourceWeight(obj) {
+export function sourceWeight(obj, { docReliability = null } = {}) {
+  const profiled = profiledSourceScore(obj, docReliability);
+  if (profiled !== null) return profiled;
   const w = SOURCE_WEIGHTS[obj?.facets?.F1];
   if (typeof w === "number") return w;
   if (w && typeof w === "object") return typeof obj.source_weight === "number" ? obj.source_weight : w.fallback;
@@ -37,8 +52,8 @@ const NEUTRAL_Q = { ageDays: 0, releaseDistance: 0, docStatus: 1, corroboration:
 // contesto di sessione: freschezza 1.0, 0 conferme, 0 contraddizioni; una
 // portabilità condizionata vale "condizione non soddisfatta" (0.20) finché il
 // contesto del cliente non la verifica.
-export function scoreItem(obj) {
-  const sw = sourceWeight(obj);
+export function scoreItem(obj, { docReliability = null } = {}) {
+  const sw = sourceWeight(obj, { docReliability });
   const conf = Math.round(confidence({ sourceWeight: sw, freshness: 1.0, confirmations: 0, openContradictions: 0 }) * 1e4) / 1e4;
   const w = weight({ confidence: conf, portability: obj.facets.F8, status: obj.facets.F12, condition_met: false, same_customer: true });
   const q = quality({ ...NEUTRAL_Q, authority: sw }, "generic", obj.type).Q;
@@ -107,6 +122,12 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
   const ftsDel = db.prepare("delete from items_fts where code=?");
   const ftsIns = db.prepare("insert into items_fts(code,title,summary) values (?,?,?)");
   const kbDir = existsSync(join(root, "kb")) ? join(root, "kb") : root;
+  // WP09a: affidabilità dei DOC profilati (doc_profiles, più i DOC in kb/ di questa scansione)
+  const docReliability = new Map(db.prepare("select code, reliability from doc_profiles where reliability is not null").all().map((r) => [r.code, r.reliability]));
+  for (const file of walk(kbDir)) {
+    if (!/\.DOC\.\d{4}(?:\.v\d+)?\.ya?ml$/.test(file)) continue;
+    try { const d = YAML.parse(readFileSync(file, "utf8")); if (d?.type === "DOC" && typeof d.reliability?.score === "number") docReliability.set(d.id, d.reliability.score); } catch { /* validato sotto */ }
+  }
   db.transaction(() => {
     for (const file of walk(kbDir)) {
       stats.scanned++;
@@ -118,12 +139,12 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
       const prev = get.get(obj.id);
       if (prev?.hash === hash) {
         stats.unchanged++;
-        if (recompute || !prev.confidence) { rescore.run({ code: obj.id, ...scoreItem(obj) }); stats.rescored++; }
+        if (recompute || !prev.confidence) { rescore.run({ code: obj.id, ...scoreItem(obj, { docReliability }) }); stats.rescored++; }
         if (FIELD_MODEL_TYPES.has(obj.type) && needsFieldIndex(db, obj)) indexFieldModel(db, obj);   // DB precedente a 0004-fld
         continue;
       }
       upsert.run({ code: obj.id, level: c.level, customer: c.customer, scope: c.scope, type: c.type, version: c.version, title: obj.title,
-        summary: obj.summary, facets: JSON.stringify(obj.facets), ...scoreItem(obj), status: obj.facets.F12, path: relative(root, file), hash,
+        summary: obj.summary, facets: JSON.stringify(obj.facets), ...scoreItem(obj, { docReliability }), status: obj.facets.F12, path: relative(root, file), hash,
         updated_at: new Date(statSync(file).mtimeMs).toISOString(), verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
       ftsDel.run(obj.id); ftsIns.run(obj.id, obj.title, obj.summary);
       if (FIELD_MODEL_TYPES.has(obj.type)) indexFieldModel(db, obj);

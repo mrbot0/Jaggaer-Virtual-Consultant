@@ -15,6 +15,7 @@ import { openZip, ZipError } from "./lib/zip.mjs";
 import { parseXml, kids, kid, find, textOf, attr } from "./lib/xml.mjs";
 import { newDoc, newSection, finishDoc, oneLine, ParseError, sha256 } from "./lib/parsed.mjs";
 import { runParserCli } from "./lib/cli.mjs";
+import { officeMeta } from "./lib/office.mjs";
 import { posix } from "node:path";
 
 export function colIndex(letters) {
@@ -136,6 +137,7 @@ function parseXlsxInner(buffer, { id, title, source = null } = {}) {
   const doc = newDoc({ id, title, format: "xlsx", source, parser: "parse-xlsx" });
   doc.meta.sha256 = sha256(buffer);
   doc.meta.size = buffer.length;
+  doc.meta.dated = officeMeta(zip).dated;
   for (const s of sheets) if (zip.has(s.path)) s.data = readSheet(zip, s.path, strings);
   sheets.forEach((s, i) => {
     const sec = newSection({ path: `sheet-${i + 1}`, title: s.name, level: 1 });

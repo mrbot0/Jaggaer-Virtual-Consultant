@@ -1,0 +1,34 @@
+# Affidabilità di un documento (§19.7): calcolata, non dichiarata.
+#   score = base_by_kind × freshness × authorship × internal_consistency × corroboration   (arrotondato a 2 decimali)
+# Lo score diventa il PESO DI BASE delle affermazioni estratte dal documento (reindex: sourceWeight di un item la cui
+# fonte è un DOC profilato), in luogo del peso generico per origine di schemas/source-weights.yaml (§6.2).
+# §19.18: il guadagno realizzato vs atteso per tipo di documento ricalibra base_by_kind (un tipo che delude scende).
+version: 1
+base_by_kind:
+  spec-integrazione: 0.90        # tracciati e dev kit dei web service; XSD/WSDL/OpenAPI puri valgono 0.95 (formal)
+  config-export: 0.95            # stato reale del tenant alla data dell'export
+  doc-configurazione-cliente: 0.80
+  doc-progetto: 0.75
+  guida-admin: 0.75
+  release-notes: 0.75
+  manuale-utente: 0.70
+  help-online: 0.65
+  training-deck: 0.60
+  set-screenshot: 0.70           # etichette e asterischi: d'uso, dipende dalla versione della UI
+  tenant-survey: 0.85            # osservazione del tenant (§19.17): 1.00 dopo 3 ricognizioni
+  registrazione: 0.60
+  thread-email: 0.55
+  dati-import: 0.60              # modelli e campioni di import (anagrafiche, cataloghi, vocabolari)
+# formati di specifica formale (parse-xsd, parse-spec): peso della spec §19.8
+formal_spec_base: 0.95
+# freschezza per distanza in release fra covers_release e la release corrente (come weights.freshness)
+freshness_by_release_distance: { 0: 1.00, 1: 0.90, 2: 0.75, 3: 0.50 }
+freshness_unknown_release: 0.80  # release non dichiarata: né nuova né vecchia
+# paternità per origine; "non ufficiale", "bozza", "draft" nel titolo ⇒ × unofficial_factor
+authorship_by_origin: { vendor: 1.00, cliente: 1.00, partner: 0.90, interno: 0.90 }
+authorship_unknown: 0.80
+unofficial_factor: 0.80
+# coerenza interna: 1 − contraddizioni/regole, mai sotto il minimo
+internal_consistency_min: 0.50
+# corroborazione: quota di affermazioni verificabili concordi con altri DOC; neutra finché non misurata
+corroboration_default: 1.00

@@ -27,6 +27,7 @@ function find(node, name, out = []) {
 }
 import { newDoc, newSection, finishDoc, oneLine, ParseError, sha256 } from "./lib/parsed.mjs";
 import { runParserCli } from "./lib/cli.mjs";
+import { officeMeta } from "./lib/office.mjs";
 
 const HEADING_NAME = /^(?:heading|titolo|berschrift|titre|t[ií]tulo)\s*([1-9])$/i;
 
@@ -95,6 +96,7 @@ function parseDocxInner(buffer, { id, title, source = null } = {}) {
   const doc = newDoc({ id, title, format: "docx", source, parser: "parse-docx" });
   doc.meta.sha256 = sha256(buffer);
   doc.meta.size = buffer.length;
+  doc.meta.dated = officeMeta(zip).dated;
   const counters = [];
   let page = 1;
   let docTitle = null;

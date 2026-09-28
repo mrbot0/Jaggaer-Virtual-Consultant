@@ -478,6 +478,8 @@ export function parsePdf(buffer, { id, title, source = null } = {}) {
   const doc = newDoc({ id, title, format: "pdf", source, parser: "parse-pdf" });
   doc.meta.sha256 = sha256(buffer);
   doc.meta.size = buffer.length;
+  const dm = /\/(?:ModDate|CreationDate)\s*\(D:(\d{4})(\d{2})(\d{2})/.exec(pdf.s);
+  doc.meta.dated = dm ? `${dm[1]}-${dm[2]}-${dm[3]}` : null;
   const pages = pdf.pages();
   const fontCache = new Map();
   const perPage = [];

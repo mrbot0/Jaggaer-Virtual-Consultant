@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "doc.schema.json",
+  "title": "Profilo del documento (DOC, §19.7)",
+  "description": "Nessun documento entra nella pipeline senza un profilo. Parte specifica del tipo DOC (la parte comune è item.base: id, type, title, summary, facets, sources). Prodotto da scripts/ingest/profile-doc.mjs in _inbox/<scope>/profiles/; promosso in kb/ dopo la validazione. reliability.score è il peso di base delle affermazioni estratte dal documento.",
+  "type": "object",
+  "required": ["id", "type", "title", "kind", "genre", "origin", "languages", "scopes", "structure", "units", "reliability", "ingestion"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[SC]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.DOC\\.\\d{4}(\\.v\\d+)?$" },
+    "type": { "const": "DOC" },
+    "title": { "type": "string", "minLength": 1 },
+    "kind": { "enum": ["manuale-utente", "guida-admin", "doc-progetto", "doc-configurazione-cliente", "spec-integrazione", "config-export", "release-notes", "training-deck", "registrazione", "thread-email", "set-screenshot", "help-online", "tenant-survey", "dati-import"] },
+    "genre": { "enum": ["tecnica", "d'uso", "empirica", "testimoniale"] },
+    "origin": { "enum": ["vendor", "cliente", "partner", "interno"] },
+    "version": { "type": ["string", "null"] },
+    "dated": { "type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "covers_release": { "type": ["string", "null"] },
+    "languages": { "type": "array", "items": { "enum": ["it", "en"] } },
+    "scopes": { "type": "array", "items": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC"] } },
+    "source": { "type": "object", "required": ["path", "sha256"], "properties": { "path": { "type": "string" }, "sha256": { "type": "string" }, "size": { "type": "integer" }, "format": { "type": "string" }, "doc_id": { "type": "string" }, "doc_key": { "type": "string" } } },
+    "structure": {
+      "type": "object",
+      "required": ["pages", "chapters", "sections", "tables", "figures", "field_tables"],
+      "properties": {
+        "pages": { "type": ["integer", "null"] }, "chapters": { "type": "integer" }, "sections": { "type": "integer" }, "tables": { "type": "integer" },
+        "figures": { "type": "integer" }, "field_tables": { "type": "integer" }, "hidden_sheets": { "type": "integer" }, "revisions": { "type": "integer" }, "comments": { "type": "integer" }, "scanned": { "type": "boolean" }
+      }
+    },
+    "units": { "type": "object", "required": ["total", "by_type"], "properties": { "total": { "type": "integer", "minimum": 0 }, "by_type": { "type": "object", "additionalProperties": { "type": "integer" } } } },
+    "reliability": {
+      "type": "object",
+      "required": ["base_by_kind", "freshness", "authorship", "internal_consistency", "corroboration", "score"],
+      "properties": {
+        "base_by_kind": { "type": "number", "minimum": 0, "maximum": 1 },
+        "freshness": { "type": "number", "minimum": 0, "maximum": 1 },
+        "authorship": { "type": "number", "minimum": 0, "maximum": 1 },
+        "internal_consistency": { "type": "number", "minimum": 0, "maximum": 1 },
+        "corroboration": { "type": "number", "minimum": 0, "maximum": 1 },
+        "score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "known_issues": { "type": "array", "items": { "type": "object", "required": ["note", "status"], "properties": { "section": { "type": ["string", "null"] }, "note": { "type": "string" }, "status": { "enum": ["superseded", "labels-only", "parser", "open"] } } } },
+    "ingestion": {
+      "type": "object",
+      "required": ["status", "last_run"],
+      "properties": {
+        "status": { "enum": ["profiled", "segmented", "extracted", "digested", "reviewed"] },
+        "units_processed": { "type": "integer" }, "items_produced": { "type": "integer" },
+        "residue": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "coverage_ratio": { "type": ["number", "null"] }, "last_run": { "type": "string" },
+        "estimated_tokens": { "type": "integer" }, "sessions_planned": { "type": "integer" }
+      }
+    }
+  }
+}
