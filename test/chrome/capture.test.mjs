@@ -99,7 +99,8 @@ test("record: maschere applicate sui pixel, sha256 del file finale, metadati EVD
 
 test("record: una maschera richiesta senza riquadro ⇒ non pubblicabile; con --mask ⇒ pubblicabile", async () => {
   const { ws, file } = setup();
-  const noBox = PW.replace(/ \[box=[^\]]+\]/g, "");
+  // riquadri tolti ai campi (maschere senza riquadro), non alla regione: la scala resta misurabile (giro 2, I-2)
+  const noBox = PW.split("\n").map((l) => (l.includes('form "Dati richiesta"') ? l : l.replace(/ \[box=[^\]]+\]/g, ""))).join("\n");
   const s = await prepare({ ws, sid: "sess-1", planFile: file, step: 3, profile: "strict", snapshot: noBox, env: {} });
   assert.ok(s.masks_without_rect.length >= 3);
   writeFileSync(join(ws, s.file), white());

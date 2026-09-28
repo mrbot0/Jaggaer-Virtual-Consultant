@@ -62,7 +62,7 @@ function expectLines(ws, customer, step, target, opts) {
   for (const el of Array.isArray(e.elements) ? e.elements : []) {
     const code = typeof el === "string" ? el : el?.sel;
     const l = code ? loc(code) : null;
-    if (!l) { L.push(`// expect: ${code ?? JSON.stringify(el)} non risolto nell'Atlas — verifica omessa`); continue; }
+    if (!l) { L.push(`test.info().annotations.push({ type: "verifica omessa", description: ${q(`expect ${code ?? JSON.stringify(el)}: non risolto nell'Atlas`)} });`); continue; }
     L.push(`await expect(${l}).toBeVisible();`);
     if (el && typeof el === "object" && el.value !== undefined) L.push(typeof el.value === "boolean" ? `await expect(${l})${el.value ? "" : ".not"}.toBeChecked();` : `await expect(${l}).toHaveValue(${q(el.value)});`);
   }
@@ -72,7 +72,7 @@ function expectLines(ws, customer, step, target, opts) {
     if (!e.messages.length) L.push(`await expect(page.getByRole("alert")).toHaveCount(0);`);
     for (const m of e.messages) L.push(`await expect(page.getByText(${q(m)})).toBeVisible();`);
   }
-  for (const k of Object.keys(e).filter((x) => !["page_sig", "elements", "value", "toast", "messages"].includes(x))) L.push(`// expect.${k}: non compilato (resta alla corsia guidata)`);
+  for (const k of Object.keys(e).filter((x) => !["page_sig", "elements", "value", "toast", "messages"].includes(x))) L.push(`test.info().annotations.push({ type: "non compilato", description: ${q(`expect.${k}: resta alla corsia guidata`)} });`);
   return L;
 }
 
@@ -80,7 +80,7 @@ export function generateSpec(ws, customer, plan, { allowFragile = false } = {}) 
   const hash = planHash(plan);
   const body = [];
   for (const s of [...(plan.steps ?? [])].sort((a, b) => a.n - b.n)) {
-    body.push(`  // passo ${s.n} ${s.verb} (${s.action_class ?? "—"})`);
+    body.push(`  // passo ${oneLine(s.n)} ${oneLine(s.verb)} (${oneLine(s.action_class ?? "—")})`);
     if (s.verb === "ASK") throw new CompileError(3, `passo ${s.n}: ASK richiede una persona: il piano non si compila`);
     const target = typeof s.target === "string" ? locatorFor(ws, customer, s.target, { allowFragile }) : null;
     const d = s.data;
@@ -93,7 +93,7 @@ export function generateSpec(ws, customer, plan, { allowFragile = false } = {}) 
       UPLOAD: () => `await ${target}.setInputFiles(${q(d ?? "")});`,
       WAIT: () => (target ? `await ${target}.waitFor();` : `await page.waitForLoadState();`),
       READ: () => `await expect(${target}).toBeVisible();`,
-      VERIFY: () => (target ? `await expect(${target}).toBeVisible();` : `// VERIFY ${s.check ?? ""}: asserzione del caso NRT`),
+      VERIFY: () => (target ? `await expect(${target}).toBeVisible();` : `test.info().annotations.push({ type: "VERIFY", description: ${q(`${s.check ?? ""}: asserzione del caso NRT`)} });`),
       CAPTURE: () => `await page.screenshot({ path: ${q(`evidence/${plan.plan_id}-${s.n}.png`)} });`,
     }[s.verb];
     if (!act) throw new CompileError(3, `passo ${s.n}: verbo ${s.verb} non compilabile`);

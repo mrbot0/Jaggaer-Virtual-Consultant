@@ -103,8 +103,9 @@ test("I4 c: geometria verificata — immagine 2× la regione ⇒ maschere scalat
   writeFileSync(join(ws, s3.file), img(800, 600));
   const nr = await record({ ws, sid: "sess-1", file: s3.file, kind: "assertion", env: {} });
   assert.equal(nr.publishable, false);
+  // giro di correzione 2 (I-2): un dpr dichiarato non sostituisce la misura — senza riquadro della regione resta non verificabile
   const withDpr = await record({ ws, sid: "sess-1", file: s3.file, kind: "assertion", dpr: 2, env: {} });
-  assert.equal(withDpr.publishable, true, withDpr.not_publishable_reason);
+  assert.equal(withDpr.publishable, false); assert.match(withDpr.not_publishable_reason, /non verificabile/);
 });
 
 test("I5: nessuna azione riconosciuta ⇒ chiedi (casi fuori vocabolario della revisione)", () => {

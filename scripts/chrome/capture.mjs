@@ -144,25 +144,34 @@ export async function record({ ws, sid, file, step = null, kind, caption = "", s
   const required = (spec?.masks ?? []).map((m) => ({ ...m, rect: m.rect ?? extraRects[k++] ?? null }));
   const extra = extraRects.slice(Math.min(k, extraRects.length)).map((r) => ({ label: null, reason: "manuale", rect: r }));
   const all = [...required, ...extra];
-  // WP07 giro 1 (spec I4 c): i riquadri sono in pixel CSS; l'immagine può essere a scala del dispositivo. La scala è
-  // dpr (dichiarato) oppure dimensioni dell'immagine / riquadro della regione, coerente sui due assi (±5%);
-  // altrimenti le maschere non si applicano e l'evidenza non è pubblicabile.
+  // WP07 giro 1 (spec I4 c): i riquadri sono in pixel CSS; l'immagine può essere a scala del dispositivo; senza una
+  // scala verificata le maschere non si applicano e l'evidenza non è pubblicabile.
   const size = pngSize(abs);
   const ref = spec?.region?.box ?? null;
   const needsScale = all.some((m) => m.rect) || !!(outline ?? spec?.outline);
-  let scale = Number.isFinite(dpr) && dpr > 0 ? dpr : null;
+  // WP07 giro 2 (I-2): la scala si MISURA (immagine / riquadro della regione, coerente sui due assi ±5%); un dpr
+  // dichiarato vale solo se sta in [1, 4] ed è coerente (±5%) con la scala misurata — non la sostituisce mai.
+  let scale = null;
   let geomErr = null;
-  if (scale == null && ref && size) {
+  let measured = null;
+  if (ref && size) {
     const sx = size.width / ref.w; const sy = size.height / ref.h;
     if (!(sx > 0) || Math.abs(sx - sy) / Math.max(sx, sy) > 0.05) geomErr = `geometria dell'immagine (${size.width}×${size.height}) incoerente con la regione (${ref.w}×${ref.h} px CSS): scala non verificabile`;
-    else scale = Math.round(((sx + sy) / 2) * 100) / 100;
+    else measured = Math.round(((sx + sy) / 2) * 100) / 100;
   }
-  if (scale == null && needsScale && !geomErr) geomErr = "scala dell'immagine non verificabile: nessuna regione con riquadro né devicePixelRatio dichiarato (--dpr)";
+  if (!geomErr && dpr != null) {
+    if (!(Number.isFinite(dpr) && dpr >= 1 && dpr <= 4)) geomErr = `devicePixelRatio dichiarato ${dpr} fuori da [1, 4]`;
+    else if (measured == null) geomErr = `devicePixelRatio dichiarato ${dpr} non verificabile: manca il riquadro della regione catturata`;
+    else if (Math.abs(dpr - measured) / measured > 0.05) geomErr = `devicePixelRatio dichiarato ${dpr} incoerente con la scala misurata ${measured}`;
+  }
+  if (!geomErr) scale = measured;
+  if (scale == null && needsScale && !geomErr) geomErr = "scala dell'immagine non verificabile: nessuna regione con riquadro (la scala si misura, non si dichiara)";
   const scaled = (r) => (r && scale ? { x: r.x * scale, y: r.y * scale, w: r.w * scale, h: r.h * scale } : null);
-  const outside = (r) => !!(r && size && (r.x >= size.width || r.y >= size.height || r.x + r.w <= 0 || r.y + r.h <= 0));
+  // una maschera vale solo se il suo riquadro scalato sta INTERAMENTE dentro l'immagine
+  const inside = (r) => !!(r && size && r.x >= 0 && r.y >= 0 && r.x + r.w <= size.width && r.y + r.h <= size.height);
   const ov = geomErr ? { supported: true, applied: all.map(() => false), outline: false }
-    : applyOverlay(abs, { masks: all.map((m) => ({ ...m, rect: outside(scaled(m.rect)) ? null : scaled(m.rect) })), outline: scaled(outline ?? spec?.outline ?? null) });
-  const applied = all.map((m, i) => ({ label: m.label ?? null, sel: m.sel ?? null, reason: m.reason, rect: m.rect ?? null, applied: !!ov.applied[i] || (!geomErr && outside(scaled(m.rect))) }));
+    : applyOverlay(abs, { masks: all.map((m) => ({ ...m, rect: inside(scaled(m.rect)) ? scaled(m.rect) : null })), outline: scaled(outline ?? spec?.outline ?? null) });
+  const applied = all.map((m, i) => ({ label: m.label ?? null, sel: m.sel ?? null, reason: m.reason, rect: m.rect ?? null, applied: !!ov.applied[i] && inside(scaled(m.rect)) }));
   const missing = applied.filter((m, i) => i < required.length && !m.applied);
   const unchecked = profile === "strict" && !spec?.content_checked;
   const publishable = ov.supported && !geomErr && !unchecked && missing.length === 0;
