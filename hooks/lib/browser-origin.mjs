@@ -11,6 +11,7 @@
 import { loadHookState } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
 import { updateSessionFile } from "./session-state.mjs";
+import { devtoolsPageUrl, claudeTabContext, playwrightPageUrl, hasDialog, RECONNECT } from "./origin-markers.mjs";
 
 const ERROR_TEXT = /^\s*(error\b|errore\b|failed\b|timeout\b|timed out\b)|net::ERR_|navigation (failed|timeout)|timeout of \d+ ?ms exceeded|protocol error|target closed|no page selected|leave site\?/i;
 const textOf = (blocks) => blocks.filter((b) => b && typeof b === "object" && b.type === "text" && typeof b.text === "string").map((b) => b.text).join("\n");
@@ -30,69 +31,61 @@ export function responseState(resp) {
   return "unknown";
 }
 
-function hrefOf(url) { try { return new URL(String(url).trim()).href; } catch { return null; } }
 
-// K5 giro 3 (Minor A+B): un navigate conta come riuscito solo con il MARCATORE
-// POSITIVO della sua famiglia, e si registra l'URL su cui la scheda è ARRIVATA come
-// lo riporta la risposta (redirect compresi), non quello chiesto. Tutto ciò che non
-// si interpreta con certezza ⇒ ignoto.
-//  - chrome-devtools: "Successfully navigated …" / "Successfully reloaded …", URL
-//    della pagina "[selected]" nell'ultimo elenco "## Pages";
-//  - Claude browser / Claude in Chrome: "Navigated to …", URL della scheda
-//    "Executed on tabId: N" nell'ultimo "Tab Context";
-//  - Playwright: ultimo "- Page URL: …".
-const lastMatch = (re, text) => { let m; let last = null; const g = new RegExp(re.source, `${re.flags.replace("g", "")}g`); while ((m = g.exec(text))) last = m; return last; };
-export function landedUrl(family, text) {
+// K5 giro 3 (Minor A+B), WP07 giro 1 (C1, I2): un navigate conta come riuscito solo con il MARCATORE
+// POSITIVO della sua famiglia, e si registra l'URL su cui la scheda è ARRIVATA come lo riporta la risposta
+// (redirect compresi), non quello chiesto — letto SOLO da posizioni controllate dal server
+// (hooks/lib/origin-markers.mjs): uscita strutturata se c'è; altrimenti marcatore unico, ancorato dopo
+// l'intestazione del server, senza separatori di riga Unicode. Tutto ciò che non si interpreta con certezza ⇒ ignoto.
+//  - chrome-devtools: "Successfully navigated …" / "Successfully reloaded …", nessun "# Open dialog" né avviso di
+//    riconnessione; URL della riga dell'id chiesto (pageId) o dell'unica "[selected]" nell'unico "## Pages";
+//  - Claude browser / Claude in Chrome: "Navigated to …", URL della scheda "Executed on tabId: N" nel Tab Context
+//    finale e unico;
+//  - Playwright: l'unico "- Page URL:" subito dopo l'unico "### Page" / "### Page state".
+export function landedUrl(family, text, { asked = null, resp = null } = {}) {
   if (typeof text !== "string" || !text) return null;
   if (family === "chrome-devtools") {
-    if (!/Successfully (navigated|reloaded)\b/i.test(text) || /Unable to navigate/i.test(text)) return null;
-    const pages = text.slice(text.lastIndexOf("## Pages"));
-    if (!pages.startsWith("## Pages")) return null;
-    return selectedPageUrl(pages);
+    if (!/^Successfully (navigated|reloaded)\b/im.test(text) || /Unable to navigate/i.test(text) || hasDialog(text) || RECONNECT.test(text)) return null;
+    return devtoolsPageUrl(text, { asked, resp });
   }
   if (family === "claude-browser") {
-    if (!/\bNavigated to\b/i.test(text)) return null;
-    const ex = lastMatch(/Executed on tabId:\s*(\S+)/, text);
-    if (!ex) return null;
-    const tail = text.slice(ex.index);
-    const tab = new RegExp(`tabId\\s+${ex[1].replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}:.*\\((\\S+)\\)\\s*$`, "m").exec(tail);
-    return tab ? hrefOf(tab[1]) : null;
+    if (!/^Navigated to\b/im.test(text)) return null;
+    const c = claudeTabContext(text);
+    if (!c || (asked != null && String(asked) !== String(c.tab))) return null;
+    return c.url;
   }
-  if (family === "playwright") {
-    const m = lastMatch(/^-\s*Page URL:\s*(\S+)\s*$/m, text);
-    return m ? hrefOf(m[1]) : null;
-  }
+  if (family === "playwright") return playwrightPageUrl(text);
   return null;
 }
 
-// Pagina "[selected]" dell'elenco "## Pages" di Chrome DevTools, nei due formati del server:
-// `N: <url> [selected]` e (versioni recenti, verificato il 2026-09-23) `N: <titolo> (<url>) [selected]`.
-// Il titolo è della pagina: l'URL si prende SOLO dall'ultimo gruppo fra parentesi ancorato a
-// "[selected]" in fondo alla riga; esattamente una riga selezionata, altrimenti ignoto (K6).
-export function selectedPageUrl(pages) {
-  const sel = String(pages).split(/\r?\n/).filter((l) => /^\s*\d+:.*\s\[selected\]\s*$/.test(l));
-  if (sel.length !== 1) return null;
-  const m = /\((\S+)\)\s+\[selected\]\s*$/.exec(sel[0]) ?? /^\s*\d+:\s*(\S+)\s+\[selected\]\s*$/.exec(sel[0]);
-  return m ? hrefOf(m[1]) : null;
-}
+// Compatibilità: la pagina "[selected]" di un elenco "## Pages" (stesse regole di devtoolsPageUrl).
+export function selectedPageUrl(pages) { return devtoolsPageUrl(String(pages)); }
 
 export const textOfResponse = (resp) => (typeof resp === "string" ? resp : Array.isArray(resp) ? textOf(resp) : resp && typeof resp === "object" && Array.isArray(resp.content) ? textOf(resp.content) : "");
 
+// Azioni che possono cambiare la pagina senza che la risposta lo dica: click, invio, dialog accettato.
+export const mayNavigate = (a) => a.kind === "click" || a.submits === true || (a.kind === "dialog" && a.submits);
+
 // Nuovo stato { url, tab } dopo la chiamata, dato lo stato precedente e la risposta.
-// Solo un navigate (o una storia) riuscito con l'URL effettivo rende noto l'URL;
-// i cambi di scheda lo azzerano; le letture e le azioni lo lasciano com'è.
+// Solo un navigate (o una storia) riuscito con l'URL effettivo rende noto l'URL; i cambi di scheda, i click,
+// gli invii e i dialog accettati lo azzerano (WP07 giro 1, I3: qui, nell'hook leggero, non solo in observe-append,
+// che può riportarlo noto solo con un marcatore positivo); dialog aperti e riconnessioni del server DevTools lo
+// azzerano; le letture e gli input senza invio lo lasciano com'è.
 export function nextOrigin(prev, call, state, resp) {
   const reset = { url: null, tab: null };
   if (state !== "ok") return reset;
+  const text = textOfResponse(resp);
+  if (call.family === "chrome-devtools" && (hasDialog(text) || RECONNECT.test(text))) return reset;
   let st = { ...prev };
   let navigated = null;
   for (const a of call.actions ?? [call]) {
     if (a.kind === "other" || a.kind === "script") return reset;
     if (a.switches) { st = { ...reset }; navigated = null; continue; }
     if (a.kind === "navigate") navigated = a;
+    else if (mayNavigate(a)) st = { ...reset };
   }
   if (!navigated) return st;
-  const landed = landedUrl(call.family, textOfResponse(resp));
+  const landed = landedUrl(call.family, text, { asked: navigated.tab ?? null, resp });
   return landed ? { url: landed, tab: navigated.tab ?? null } : reset;
 }
 

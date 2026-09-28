@@ -55,14 +55,15 @@ export function writeSel(ws, code, { role = "button", effect = "read", label = "
 
 // Risposta di un navigate riuscito come la restituiscono i server MCP (K5 giro 3):
 // `landed` = URL su cui la scheda è arrivata, `requested` = URL chiesto (se diverso).
-export function navResponse(tool, landed, { requested = landed } = {}) {
+// WP07 giro 1: la scheda eseguita (Claude) è quella chiesta dalla chiamata (tab), come fa il server.
+export function navResponse(tool, landed, { requested = landed, tab = 101 } = {}) {
   if (/chrome-devtools/i.test(tool)) {
     return [{ type: "text", text: `# navigate_page response\nSuccessfully navigated to ${requested}.\n## Pages\n0: about:blank\n1: ${landed} [selected]` }];
   }
   if (/playwright/i.test(tool)) {
     return [{ type: "text", text: `### Ran Playwright code\n\`\`\`js\nawait page.goto('${requested}');\n\`\`\`\n\n### Page state\n- Page URL: ${landed}\n- Page Title: ACME` }];
   }
-  return [{ type: "text", text: `Navigated to ${requested}\n\nTab Context:\n- Executed on tabId: 101\n- Available tabs:\n  • tabId 101: "ACME" (${landed})\n  • tabId 102: "Altro" (https://example.org/)` }];
+  return [{ type: "text", text: `Navigated to ${requested}\n\nTab Context:\n- Executed on tabId: ${tab}\n- Available tabs:\n  • tabId ${tab}: "ACME" (${landed})\n  • tabId 102: "Altro" (https://example.org/)` }];
 }
 
 // Piano (JSON) in customers/ACME/runs/<run>/plan.json → percorso relativo alla cartella del cliente.

@@ -96,6 +96,9 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
   snapshot();
   assert.ok(denyOf(guards("mcp__chrome-devtools__click", { uid: "4_20" })).length >= 2);
   assert.match(say("APPROVO PASSO 3 PLAN.DEMO.0001"), /registrata: A3/);
+  // WP07 giro 1 (I3): un click senza marcatore rende ignota la pagina anche per browser-origin ⇒ si torna
+  // sulla pagina con un navigate (o uno snapshot, in observe-append) prima dell'azione successiva
+  assert.ok(allSilent(guards("mcp__chrome-devtools__navigate_page", { url: "https://acme.jaggaer.com/setup/import-profiles" })));
   const ok3 = guards("mcp__chrome-devtools__click", { uid: "4_20" }, ["guard-config-scope", "guard-environment", "guard-production"]);
   assert.ok(allSilent(ok3), denyOf(ok3).join("\n"));
 

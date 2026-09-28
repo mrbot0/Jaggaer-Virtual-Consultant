@@ -24,7 +24,7 @@ const anyDeny = (res) => res.some(({ r }) => denied(r));
 const OK = [{ type: "text", text: "## Pages" }];
 const navOk = (ws, tool, input) => {
   const r = browserCall("guard-environment", ws, tool, input);
-  if (r.status === 0 && r.stdout.trim() === "") runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: navResponse(tool, input.url) }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
+  if (r.status === 0 && r.stdout.trim() === "") runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: navResponse(tool, input.url, { tab: input.tabId ?? 101 }) }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
   return r;
 };
 const nav = (ws, url, extra = {}) => navOk(ws, `${DT}navigate_page`, { type: "url", url, ...extra });

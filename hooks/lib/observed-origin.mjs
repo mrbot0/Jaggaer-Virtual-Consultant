@@ -1,48 +1,41 @@
-// Origine OSSERVATA del browser (K6.2, prerequisito bloccante della revisione WP06): observe-append
+// Origine OSSERVATA del browser (K6.2; WP07 giro di correzione 1, sicurezza C1, I2, I3): observe-append
 // mantiene session.browser.current_url dalla pagina che il risultato dello strumento mostra — snapshot,
 // read_page, redirect, click su link, cambi di scheda — con la semantica fail-closed di browser-origin:
-//  - un URL diventa noto SOLO con un marcatore positivo della famiglia, nella posizione che la pagina
-//    non controlla: DevTools = la PRIMA riga `uid=… RootWebArea … url="…"` dello snapshot, oppure la sola
-//    pagina "[selected]" di "## Pages"; Claude browser / Claude in Chrome = la scheda "Executed on tabId"
-//    del Tab Context; Playwright = "- Page URL:" della sezione "### Page state";
+//  - un URL diventa noto SOLO con un marcatore positivo letto da posizioni che il server controlla
+//    (hooks/lib/origin-markers.mjs: uscita strutturata; marcatore unico e ancorato subito dopo l'intestazione
+//    del server; nessun separatore di riga Unicode nella riga);
+//  - gli strumenti che restituiscono testo della pagina (console, rete, dialog, script, get_page_text, find,
+//    WebMCP, audit) non promuovono MAI: lasciano com'è o azzerano;
 //  - navigate/back/forward: esattamente la semantica di browser-origin (nextOrigin, URL di arrivo);
-//  - cambio di scheda senza marcatore della nuova scheda, click, invio, dialog accettato senza marcatore
-//    ⇒ ignoto (la pagina può essere cambiata); risposta d'errore o non interpretabile ⇒ ignoto;
-//  - scheda del marcatore diversa da quella chiesta dalla chiamata ⇒ ignoto;
+//  - dialog aperto o riconnessione del server DevTools ⇒ ignoto;
+//  - cambio di scheda senza marcatore della nuova scheda, click, invio, dialog accettato senza marcatore ⇒ ignoto;
+//  - con pageId: la pagina chiesta, non la selezionata; scheda del marcatore diversa da quella chiesta ⇒ ignoto;
 //  - letture e input senza invio, senza marcatore ⇒ invariato (mai promuovere un ignoto).
-import { nextOrigin, selectedPageUrl, textOfResponse } from "./browser-origin.mjs";
+import { nextOrigin, textOfResponse, mayNavigate } from "./browser-origin.mjs";
+import { devtoolsPageUrl, devtoolsRootUrl, claudeTabContext, playwrightPageUrl, hasDialog, RECONNECT, isPageTextOp } from "./origin-markers.mjs";
 
 const RESET = { url: null, tab: null };
-function hrefOf(url) { try { return new URL(String(url).trim()).href; } catch { return null; } }
 
 // → { url, tab? } | null
-export function observedLocation(family, text) {
+export function observedLocation(family, text, { asked = null, resp = null } = {}) {
   if (typeof text !== "string" || !text) return null;
   if (family === "chrome-devtools") {
-    const first = /^[ \t]*uid=\S+[ \t]+(\S+)(.*)$/m.exec(text);
-    if (first && first[1] === "RootWebArea") {
-      const u = /\surl="((?:[^"\\]|\\.)*)"\s*$/.exec(first[2]);
-      if (u) return { url: hrefOf(u[1].replace(/\\"/g, '"')) };
-    }
-    const i = text.lastIndexOf("## Pages");
-    if (i >= 0) { const u = selectedPageUrl(text.slice(i)); if (u) return { url: u }; }
-    return null;
+    if (hasDialog(text) || RECONNECT.test(text)) return null;
+    const root = devtoolsRootUrl(text);
+    const hasPages = /^## Pages$/m.test(text) || Array.isArray(resp?.structuredContent?.pages);
+    const listed = hasPages ? devtoolsPageUrl(text, { asked, resp }) : null;
+    if (hasPages && !listed) return null;
+    if (root && listed && root !== listed) return null;
+    const url = listed ?? root;
+    return url ? { url } : null;
   }
   if (family === "claude-browser") {
-    const i = text.lastIndexOf("Tab Context:");
-    if (i < 0) return null;
-    const tail = text.slice(i);
-    const ex = /Executed on tabId:\s*(\S+)/.exec(tail);
-    if (!ex) return null;
-    const esc = ex[1].replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const m = new RegExp(`tabId\\s+${esc}:.*\\((\\S+)\\)\\s*$`, "m").exec(tail);
-    return m ? { url: hrefOf(m[1]), tab: ex[1] } : null;
+    const c = claudeTabContext(text);
+    return c?.url ? c : null;
   }
   if (family === "playwright") {
-    const i = text.indexOf("### Page state");
-    if (i < 0) return null;
-    const m = /^-\s*Page URL:\s*(\S+)\s*$/m.exec(text.slice(i));
-    return m ? { url: hrefOf(m[1]) } : null;
+    const u = playwrightPageUrl(text);
+    return u ? { url: u } : null;
   }
   return null;
 }
@@ -52,10 +45,14 @@ export function nextObserved(prev, call, state, resp) {
   if (state !== "ok") return RESET;
   const actions = call.actions ?? [call];
   if (actions.some((a) => a.kind === "other" || a.kind === "script")) return RESET;
+  const text = textOfResponse(resp);
+  if (call.family === "chrome-devtools" && (hasDialog(text) || RECONNECT.test(text))) return RESET;
   if (actions.some((a) => a.kind === "navigate")) return nextOrigin(prev, call, state, resp);
-  const loc = observedLocation(call.family, textOfResponse(resp));
-  const asked = actions.map((a) => a.tab).filter((t) => t != null).at(-1) ?? null;
   const switches = actions.some((a) => a.switches);
+  const effect = actions.some(mayNavigate);
+  if (actions.some(isPageTextOp)) return switches || effect ? RESET : { url: prev.url ?? null, tab: prev.tab ?? null };
+  const asked = actions.map((a) => a.tab).filter((t) => t != null).at(-1) ?? null;
+  const loc = observedLocation(call.family, text, { asked, resp });
   if (loc?.url) {
     if (loc.tab != null && asked != null && String(loc.tab) !== String(asked)) return RESET;
     // scheda come la confronta guard-environment: quella nominata dalla chiamata (null = scheda attiva);
@@ -63,7 +60,6 @@ export function nextObserved(prev, call, state, resp) {
     const tab = asked != null ? String(asked) : !switches && prev.tab != null && loc.tab != null && String(loc.tab) === String(prev.tab) ? String(prev.tab) : null;
     return { url: loc.url, tab };
   }
-  if (switches) return RESET;
-  if (actions.some((a) => a.kind === "click" || a.submits || (a.kind === "dialog" && a.submits))) return RESET;
+  if (switches || effect) return RESET;
   return { url: prev.url ?? null, tab: prev.tab ?? null };
 }

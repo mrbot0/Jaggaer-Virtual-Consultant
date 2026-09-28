@@ -50,7 +50,8 @@ const targetOf = (ti) => {
   for (const k of ["uid", "ref", "selector", "element"]) if (typeof ti[k] === "string" || typeof ti[k] === "number") t[k] = ti[k];
   return Object.keys(t).length ? t : undefined;
 };
-const tabOf = (ti) => (ti.tabId ?? ti.pageId ?? null);
+// WP07 giro 1 (I2): pageId solo intero (il server ignora gli altri e ricade sulla pagina selezionata).
+const tabOf = (ti) => (ti.tabId ?? (Number.isInteger(ti.pageId) ? ti.pageId : null));
 const valuesText = (arr, key = "value") => (Array.isArray(arr) ? arr.map((x) => (x && typeof x === "object" ? String(x[key] ?? "") : "")).join("\n") : null);
 const outputsOf = (ti, keys) => keys.map((k) => ti[k]).filter((v) => v !== undefined);
 const R = (extra = {}) => ({ kind: "read", ...extra });
@@ -182,6 +183,7 @@ const PW_OPS = {
 function apply(family, table, op, ti) {
   const spec = Object.hasOwn(table, op) ? table[op] : null;   // giro 2 (N3)
   if (!spec) return { family, op, kind: "other", submits: false };
+  if (Object.hasOwn(ti, "pageId") && !Number.isInteger(ti.pageId)) return { family, op, kind: "other", submits: false, unknownKeys: ["pageId (non intero)"] };
   if (!spec.any) {
     const unknown = Object.keys(ti).filter((k) => !spec.keys.includes(k));
     if (unknown.length) return { family, op, kind: "other", submits: false, unknownKeys: unknown };
