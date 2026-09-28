@@ -347,6 +347,24 @@
             "null"
           ],
           "description": "data del documento (docProps/core.xml, /ModDate del PDF)"
+        },
+        "date_source": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "origine della data: xml, dichiarata, mtime (giro 1, M9)"
+        },
+        "ocr": {
+          "type": "string",
+          "description": "sidecar: testo OCR letto da <file>.ocr.txt"
+        },
+        "image_only_pages": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "pagine di sole immagini ancora senza testo (residuo deferred per pagina)"
         }
       }
     }

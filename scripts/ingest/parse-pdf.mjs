@@ -15,6 +15,7 @@
 // testo), ordine di lettura = ordine del flusso, intestazioni riconosciute solo dalla dimensione del font.
 // CLI: node scripts/ingest/parse-pdf.mjs --in <file.pdf> [--id <id>] [--out <file.json>] [--json]
 import { inflateSync, inflateRawSync, constants as Z } from "node:zlib";
+import { existsSync, readFileSync } from "node:fs";
 import { newDoc, newSection, finishDoc, oneLine, ParseError, sha256 } from "./lib/parsed.mjs";
 import { runParserCli } from "./lib/cli.mjs";
 
@@ -155,14 +156,25 @@ function asciiHex(data) {
   const h = data.toString("latin1").replace(/>.*$/s, "").replace(/[^0-9a-fA-F]/g, "");
   return Buffer.from(h.length % 2 ? `${h}0` : h, "hex");
 }
-function lzw(data) {
+// Giro 1 (I5): limiti di risorse. Un PDF di 300 KB può decomprimersi in un GB: ogni flusso è limitato (come le voci
+// ZIP), il documento ha un tetto complessivo, gli XObject Form sono memorizzati e contati, gli operatori per pagina
+// contati. Oltre un limite ⇒ ParseError (residuo unsupported con motivo), mai un'eccezione non gestita.
+export const LIMITS = Object.freeze({
+  maxStreamBytes: 64 * 1024 * 1024,   // un flusso decompresso
+  maxDocBytes: 256 * 1024 * 1024,     // somma dei flussi decompressi del documento
+  maxFormCalls: 2000,                 // invocazioni di XObject Form per pagina (ventaglio × profondità)
+  maxOpsPerPage: 2000000,             // operatori di contenuto per pagina, Form comprese
+});
+const limitError = (m) => new ParseError(m, { residue: "unsupported" });
+
+export function lzwDecode(data, cap = LIMITS.maxStreamBytes) {
   const out = [];
   let dict = [];
   const reset = () => { dict = []; for (let i = 0; i < 256; i++) dict.push([i]); dict.push(null, null); };
   reset();
   let bits = 9, buf = 0, nbits = 0, prev = null;
   for (const byte of data) {
-    buf = (buf << 8) | byte; nbits += 8;
+    buf = ((buf << 8) | byte) & 0xffffff; nbits += 8;
     while (nbits >= bits) {
       const code = (buf >>> (nbits - bits)) & ((1 << bits) - 1);
       nbits -= bits;
@@ -172,24 +184,31 @@ function lzw(data) {
       if (code < dict.length && dict[code]) entry = dict[code];
       else if (prev) entry = [...prev, prev[0]];
       else return Buffer.from(out);
-      out.push(...entry);
-      if (prev) dict.push([...prev, entry[0]]);
+      if (out.length + entry.length > cap) throw limitError(`flusso LZW oltre ${cap} byte decompressi`);
+      for (const x of entry) out.push(x);
+      if (prev && dict.length < 4096) dict.push([...prev, entry[0]]);
       prev = entry;
       if (dict.length + 1 >= 1 << bits && bits < 12) bits++;
     }
   }
   return Buffer.from(out);
 }
-function flate(data) {
-  try { return inflateSync(data); } catch { /* prova le varianti */ }
-  try { return inflateSync(data, { finishFlush: Z.Z_SYNC_FLUSH }); } catch { /* raw */ }
-  try { return inflateRawSync(data, { finishFlush: Z.Z_SYNC_FLUSH }); } catch { return null; }
+function flate(data, cap) {
+  const tooBig = (e) => e?.code === "ERR_BUFFER_TOO_LARGE" || /maxOutputLength|larger than/i.test(e?.message ?? "");
+  const tries = [(d) => inflateSync(d, { maxOutputLength: cap }), (d) => inflateSync(d, { finishFlush: Z.Z_SYNC_FLUSH, maxOutputLength: cap }), (d) => inflateRawSync(d, { finishFlush: Z.Z_SYNC_FLUSH, maxOutputLength: cap })];
+  for (const t of tries) {
+    try { return t(data); } catch (e) { if (tooBig(e)) throw limitError(`flusso Flate oltre ${cap} byte decompressi`); }
+  }
+  return null;
 }
 const IMAGE_FILTERS = new Set(["DCTDecode", "JPXDecode", "CCITTFaxDecode", "JBIG2Decode", "RunLengthDecode"]);
 
 // ---------------------------------------------------------------- documento
 class PdfFile {
-  constructor(buf) {
+  constructor(buf, limits = LIMITS) {
+    this.limits = limits;
+    this.inflated = 0;
+    this.decoded = new Map();   // flussi decodificati per oggetto (memo: un Form usato 1000 volte si decodifica una volta)
     this.buf = buf;
     this.s = buf.toString("latin1");
     this.objects = new Map();
@@ -245,14 +264,25 @@ class PdfFile {
   obj(v) { return v instanceof Ref ? this.objects.get(v.n) : null; }
   streamData(o) {
     if (!o?.stream) return null;
+    if (this.decoded.has(o)) return this.decoded.get(o);
+    const data = this.decodeStream(o);
+    this.decoded.set(o, data);
+    if (data) {
+      this.inflated += data.length;
+      if (this.inflated > this.limits.maxDocBytes) throw limitError(`documento oltre ${this.limits.maxDocBytes} byte di flussi decompressi`);
+    }
+    return data;
+  }
+  decodeStream(o) {
     let data = this.buf.subarray(o.stream.start, o.stream.end);
+    const cap = Math.max(1, Math.min(this.limits.maxStreamBytes, this.limits.maxDocBytes - this.inflated));
     const f = this.get(o.value.Filter);
     const filters = (Array.isArray(f) ? f : f ? [f] : []).map((x) => (this.get(x) ?? "").toString());
     for (const name of filters) {
-      if (name === "FlateDecode" || name === "Fl") data = flate(data);
+      if (name === "FlateDecode" || name === "Fl") data = flate(data, cap);
       else if (name === "ASCII85Decode" || name === "A85") data = ascii85(data);
       else if (name === "ASCIIHexDecode" || name === "AHx") data = asciiHex(data);
-      else if (name === "LZWDecode" || name === "LZW") data = lzw(data);
+      else if (name === "LZWDecode" || name === "LZW") data = lzwDecode(data, cap);
       else if (IMAGE_FILTERS.has(name)) return null;
       else return null;
       if (!data) return null;
@@ -391,6 +421,7 @@ function pageText(pdf, content, resources, state, depth = 0) {
       continue;
     }
     const op = t.v;
+    if (++state.ops > pdf.limits.maxOpsPerPage) throw limitError(`pagina oltre ${pdf.limits.maxOpsPerPage} operatori di contenuto`);
     const a = ops.splice(0);
     switch (op) {
       case "BT": tm = [1, 0, 0, 1, 0, 0]; lm = [...tm]; break;
@@ -425,6 +456,7 @@ function pageText(pdf, content, resources, state, depth = 0) {
         const st = pdf.get(xo?.value?.Subtype)?.v;
         if (st === "Image") state.images++;
         else if (st === "Form" && depth < 8) {
+          if (++state.formCalls > pdf.limits.maxFormCalls) throw limitError(`XObject Form: oltre ${pdf.limits.maxFormCalls} invocazioni per pagina`);
           const d = pdf.streamData(xo);
           if (d) pageText(pdf, d.toString("latin1"), xo.value.Resources ?? resources, state, depth + 1);
         }
@@ -469,9 +501,26 @@ function paragraphs(lines) {
   return out.map(oneLine).filter(Boolean);
 }
 
-export function parsePdf(buffer, { id, title, source = null } = {}) {
+// Sidecar OCR (<file>.ocr.txt, come per le schermate): marcatori "--- pagina N ---" / "--- page N ---" o salti pagina
+// (form feed); senza marcatori il testo va alla prima pagina di sole immagini. → Map<pagina, testo>
+const FORM_FEED = String.fromCharCode(12);
+const OCR_MARKER = /^\s*-{2,}\s*(?:pagina|page)\s+(\d+)\s*-{2,}\s*$/gim;
+export function readOcrSidecar(path, imagePages) {
+  const file = path ? `${path}.ocr.txt` : null;
+  if (!file || !existsSync(file)) return null;
+  const text = readFileSync(file, "utf8");
+  const out = new Map();
+  const marks = [...text.matchAll(OCR_MARKER)];
+  if (marks.length) marks.forEach((m, i) => out.set(Number(m[1]), text.slice(m.index + m[0].length, i + 1 < marks.length ? marks[i + 1].index : text.length)));
+  else if (text.includes(FORM_FEED)) text.split(FORM_FEED).forEach((t, i) => out.set(i + 1, t));
+  else out.set(imagePages[0] ?? 1, text);
+  return out;
+}
+const ocrParagraphs = (t) => t.split(/\r?\n\s*\r?\n/).flatMap((b) => b.split(/\r?\n/)).map(oneLine).filter(Boolean);
+
+export function parsePdf(buffer, { id, title, source = null, path = null, limits = {} } = {}) {
   if (!Buffer.isBuffer(buffer) || buffer.subarray(0, 1024).toString("latin1").indexOf("%PDF-") < 0) throw new ParseError("non è un PDF (manca %PDF-)", { residue: "unsupported" });
-  const pdf = new PdfFile(buffer);
+  const pdf = new PdfFile(buffer, { ...LIMITS, ...limits });
   if (/\/Encrypt\s+(\d+\s+\d+\s+R|<<)/.test(pdf.s.slice(-4096)) || /\/Encrypt\s+\d+\s+\d+\s+R/.test(pdf.s.slice(0, 4096))) {
     throw new ParseError("PDF cifrato: serve una copia senza protezione o il testo esportato", { residue: "deferred" });
   }
@@ -485,14 +534,18 @@ export function parsePdf(buffer, { id, title, source = null } = {}) {
   const perPage = [];
   let imageOnly = 0, withText = 0, badFont = false;
   pages.forEach((p, i) => {
-    const state = { lines: [], cur: { text: "", size: 0, y: null }, lastX: null, images: 0, hasText: false, badFont: false, fontCache };
-    try { pageText(pdf, contentsOf(pdf, p), p.resources, state); } catch (e) { doc.warnings.push(`pagina ${i + 1}: contenuto non interpretabile (${e.message})`); }
+    const state = { lines: [], cur: { text: "", size: 0, y: null }, lastX: null, images: 0, hasText: false, badFont: false, fontCache, ops: 0, formCalls: 0 };
+    try { pageText(pdf, contentsOf(pdf, p), p.resources, state); } catch (e) {
+      if (e instanceof ParseError) throw e;   // limiti di risorse: il documento va al residuo con il motivo
+      doc.warnings.push(`pagina ${i + 1}: contenuto non interpretabile (${e.message})`);
+    }
     if (state.cur.text.trim()) state.lines.push(state.cur);
     if (state.badFont) badFont = true;
     const hasText = state.lines.some((l) => l.text.trim());
     if (hasText) withText++; else if (state.images) imageOnly++;
     perPage.push({ n: i + 1, lines: state.lines, images: state.images, hasText });
   });
+  const ocr = readOcrSidecar(path, perPage.filter((p) => !p.hasText && p.images).map((p) => p.n));
   const sizes = perPage.flatMap((p) => p.lines.map((l) => l.size)).filter((x) => x > 0).sort((a, b) => a - b);
   const body = sizes.length ? sizes[Math.floor(sizes.length / 2)] : 0;
   for (const p of perPage) {
@@ -501,7 +554,16 @@ export function parsePdf(buffer, { id, title, source = null } = {}) {
     const rest = heading ? p.lines.filter((l) => l !== heading) : p.lines;
     sec.paragraphs = paragraphs(rest);
     for (let k = 0; k < p.images; k++) sec.figures.push({ ref: `p${p.n}-img${k + 1}`, page: p.n });
-    if (!p.hasText && p.images) sec.meta = { image_only: true };
+    if (!p.hasText && p.images) {
+      sec.meta = { image_only: true };
+      const t = ocr?.get(p.n);
+      if (t && t.trim()) {
+        const paras = ocrParagraphs(t);
+        sec.title = paras[0].slice(0, 120);
+        sec.paragraphs = paras.slice(1);
+        sec.meta.ocr = "sidecar";
+      }
+    }
     doc.sections.push(sec);
   }
   doc.page_count = pages.length;
@@ -509,6 +571,9 @@ export function parsePdf(buffer, { id, title, source = null } = {}) {
   if (imageOnly) doc.warnings.push(`${imageOnly} pagine con sole immagini (testo da OCR)`);
   if (badFont) doc.warnings.push("font CID senza /ToUnicode: parte del testo non decodificabile");
   doc.scanned = withText === 0 && imageOnly > 0;
+  if (ocr) doc.meta.ocr = "sidecar";
+  // pagine di sole immagini ancora senza testo (nessun sidecar o sidecar senza quella pagina): residuo deferred per pagina
+  doc.meta.image_only_pages = doc.sections.filter((s) => s.meta?.image_only && !s.meta?.ocr).map((s) => s.page);
   const t = title ?? perPage.flatMap((p) => p.lines).find((l) => l.size >= body * 1.2)?.text;
   if (t) doc.title = oneLine(t).slice(0, 140);
   return finishDoc(doc);
