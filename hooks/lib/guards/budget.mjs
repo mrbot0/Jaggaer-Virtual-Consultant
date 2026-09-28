@@ -21,6 +21,7 @@ import { skeleton } from "../paths.mjs";
 import { openInvocations } from "../state-summary.mjs";
 import { parsePromptHeader } from "../../../scripts/admin/agent-prompt.mjs";
 import { guarded, denyAudited, sameFile, SHELL_TOOLS } from "./common.mjs";
+import { checkRemaining, enforceClass } from "../../../scripts/decide/budget.mjs";
 
 const G = "guard-budget";
 const AGENT_TOOLS = new Set(["Agent", "Task"]);
@@ -135,10 +136,16 @@ export const decide = guarded(G, (ctx) => {
   if (String(h.scope) !== session.scope) return denyAudited(ctx, G, `scope del prompt ${h.scope} ≠ scope di sessione ${session.scope ?? "—"}: esegui use scope ${h.scope} prima del dispatch (i guard leggono session.json)`);
   const { tokens, used } = session.budget;
   if (used >= tokens) return denyAudited(ctx, G, `budget di sessione esaurito (${used}/${tokens}): nessuna nuova invocazione; chiudi con report e pendenze. Solo l'utente può alzarlo con /jaggaer-virtual-consultant:use budget <n>`);
-  const remaining = tokens - used;
   const taskBudget = h.budget?.tokens;
   if (taskBudget != null && !(Number.isInteger(taskBudget) && taskBudget > 0)) return denyAudited(ctx, G, `budget del compito non valido: ${JSON.stringify(taskBudget)}`);
-  if (taskBudget != null && taskBudget > remaining) return denyAudited(ctx, G, `budget del compito ${taskBudget} supera il residuo di sessione ${remaining}: ridisegna il compito (meno passi, più STR-REPLAY) o chiedi all'utente di alzare il budget`);
+  // K6.7 (debito di WP03): le invocazioni aperte PRENOTANO il loro budget — due compiti paralleli da 40k
+  // con 50k di residuo: il secondo è negato.
+  const open = openInvocations(invocationsFile(ctx.ws, session.customer, session.session_id), session.ledger);
+  const rem = checkRemaining(session, taskBudget ?? undefined, { open });
+  if (taskBudget != null && !rem.ok) return denyAudited(ctx, G, `${rem.reason}: ridisegna il compito (meno passi, più STR-REPLAY) o chiedi all'utente di alzare il budget`);
+  // K6.7: per classe di azione (§29.10) — il budget del compito non supera quello delle classi dichiarate nell'header.
+  const cls = enforceClass({ action_class: h.action_class, actions: h.actions, level: h.level, budget_tokens: taskBudget }, session.env);
+  if (!cls.ok) return denyAudited(ctx, G, `budget per classe: ${cls.reason}`);
   const downgrade = used >= HAIKU_THRESHOLD * tokens;
   const model = downgrade ? "haiku" : ti.model ?? null;
   const file = invocationsFile(ctx.ws, session.customer, session.session_id);

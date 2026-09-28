@@ -129,6 +129,7 @@
         "invocations": { "type": "array", "items": { "type": "object" } },
         "trace_blocks": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
         "observe": { "type": "object", "description": "K6.2 observe-append: ultima OBS (last_obs, letta da step-check), tipo, firma e snapshot_sig (firma dell'ultimo snapshot senza azione dopo)." },
+        "calls": { "type": "array", "description": "K6.7 ledger delle chiamate di consultazione (scripts/lib/call-ledger.mjs, usato da kb.mjs): { cmd, args_hash, ts, task?, agent_id? }, ultime 500; il self-check #12 fallisce sulla stessa query ripetuta.", "items": { "type": "object", "required": ["cmd", "args_hash", "ts"] } },
         "waste": { "type": "array", "description": "K6.2/K6.7 rilevatori di spreco (§29.10): { kind: repeated-snapshot, page_sig, obs, at, plan?, step? }; il self-check #13 li fa fallire.", "items": { "type": "object", "required": ["kind"] } }
       }
     },

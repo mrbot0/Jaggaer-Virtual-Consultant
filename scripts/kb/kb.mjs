@@ -6,6 +6,7 @@ import { fields, InvalidInputError, NotFoundError } from "./fields.mjs";
 import { impact } from "./impact.mjs";
 import { identityCard, identityMissing } from "./identity.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { recordCall } from "../lib/call-ledger.mjs";
 
 const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
 
@@ -62,6 +63,8 @@ export function run(argv) {
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
     return { exitCode: 1 };
   }
+  // K6.7: ledger delle chiamate (spreco: la stessa query ripetuta nel compito ⇒ self-check #12)
+  recordCall(`kb ${cmd}`, rest);
   let db;
   try {
     db = openDb(dbPath, { createIfMissing: false });
