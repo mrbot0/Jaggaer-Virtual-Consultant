@@ -221,9 +221,20 @@ function parseText(text) {
   return out;
 }
 
-export function parseSnapshot(text) {
+// WP07 giro 3 (I-A): con family (la famiglia dello strumento che ha prodotto il testo) si legge SOLO con il parser di
+// quella famiglia: il formato non si fiuta dal contenuto, che la pagina controlla in parte (Claude read_page stampa
+// placeholder e valori grezzi, a capo compresi). Un formato fiutato diverso dalla famiglia resta in formatMismatch
+// (il chiamante non lega alcun ref). Il testo semplice (nessun formato strutturato) si legge come testo.
+const PARSERS = { "chrome-devtools": parseDevtools, "claude-browser": parseClaude, playwright: parsePlaywright };
+export function parseSnapshot(text, { family = null } = {}) {
   const s = String(text ?? "");
   const f = detectFormat(s);
+  if (family && Object.hasOwn(PARSERS, family)) {
+    if (f === "text") return parseText(s);
+    const out = PARSERS[family](s);
+    if (f !== family) out.formatMismatch = f;
+    return out;
+  }
   if (f === "chrome-devtools") return parseDevtools(s);
   if (f === "claude-browser") return parseClaude(s);
   if (f === "playwright") return parsePlaywright(s);

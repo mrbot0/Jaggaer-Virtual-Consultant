@@ -85,6 +85,8 @@ const OUTPUT_NO = /(^|\/)(session\.json|approvals\.jsonl|invocations\.jsonl|curr
 export function outputRefusal(ctx, outputs) {
   for (const raw of outputs ?? []) {
     if (typeof raw !== "string" || !raw.trim()) return "percorso di output non valido";
+    // WP07 giro 3: il server ripete il nome del file nel risultato (prima del marcatore di pagina): mai a capo o controlli
+    if (/[\u0000-\u001f\u007f\u0085\u2028\u2029]/.test(raw)) return `nome del file di output con caratteri di controllo o separatori di riga: ${JSON.stringify(raw)}`;
     let T;
     try { T = resolveTarget(raw, { cwd: ctx.cwd, ws: ctx.ws }); } catch (err) { return `percorso di output negato: ${err.message}`; }
     const rels = [...T.ws];

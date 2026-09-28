@@ -94,7 +94,8 @@ export function claudeTabContext(text) {
 // WP07 giro 2 (C-1): "### Modal state" porta il messaggio grezzo di un dialog della pagina ⇒ come "# Open dialog" di
 // DevTools, ignoto; "### Page" deve precedere ogni sezione con testo della pagina (ordine di _build() del server:
 // Page, poi Modal state, WebMCP tools, Snapshot, Events, Paused).
-export const hasModal = (text) => /^### Modal state\s*$/m.test(String(text ?? ""));
+// giro 3: tollerante su maiuscole, spazi e ":" (varianti dell'intestazione ⇒ ignoto comunque, fail-closed)
+export const hasModal = (text) => /^#{2,4}\s*modal\s*state\b/im.test(String(text ?? ""));
 const PW_PAGE_DERIVED = /^### (Modal state|WebMCP tools|Snapshot|Events|Paused|New console messages|Console messages)\s*$/;
 export function playwrightPageUrl(text) {
   const L = String(text ?? "").split("\n");

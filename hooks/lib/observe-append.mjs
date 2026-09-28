@@ -63,7 +63,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
   const text = responseText(resp);
   const kind = obsKind(call, state, text);
   const profile = profileFor({ envType: session.env?.type ?? null });
-  const page = text && kind !== "error" ? parseSnapshot(text) : null;
+  const page = text && kind !== "error" ? parseSnapshot(text, { family: call.family }) : null;
   const hasPage = !!page && (page.format !== "text" || kind === "snapshot");
   const scope = session.scope ?? "XSC";
   const atlas = hasPage ? atlasIndex(ws, customer, session.scope) : [];
@@ -126,14 +126,27 @@ export async function buildObservation({ ws, customer, session, call, state, res
     pageUrl = loc.url;
     // WP07 giro 2 (I-1): un ref è legato solo se compare UNA volta fra tutti i nodi e UNA volta nel testo grezzo
     // (DevTools stampa nomi e valori senza escape: una riga "uid=…" iniettata in un valore la ripete)
+    // WP07 giro 3 (I-A): i token si contano in TUTTI i formati (uid=X, [ref=X], [X]): la somma deve essere 1; un
+    // token dentro un valore fra virgolette (placeholder, value, name, description, aria-*) ⇒ slegato; formato
+    // fiutato diverso dalla famiglia dello strumento ⇒ nessun ref legato (la mappa si scrive tutta a null).
     const count = {};
     for (const r of page.allRefs ?? []) count[r] = (count[r] ?? 0) + 1;
     const esc = (x) => String(x).replace(/[.*+?^${}()|[\]\\]/g, (m) => `\\${m}`);
-    const token = (r) => (call.family === "chrome-devtools" ? new RegExp(`(^|[^\\w])uid=${esc(r)}(?![\\w])`, "g")
-      : call.family === "playwright" ? new RegExp(`\\[ref=${esc(r)}\\]`, "g") : new RegExp(`\\[${esc(r)}\\]`, "g"));
-    for (const e of page.elements) if (e.ref) count[e.ref] = Math.max(count[e.ref] ?? 0, (text.match(token(e.ref)) ?? []).length);
+    const tokenRe = (r) => new RegExp(`(?:(?:^|[^\\w])uid=${esc(r)}(?![\\w])|\\[ref=${esc(r)}\\]|\\[${esc(r)}\\])`, "g");
+    // valori fra virgolette: su tutto il testo per DevTools e Claude (stampano a capo grezzi dentro i valori), riga per
+    // riga per Playwright (YAML: le stringhe fra virgolette non vanno a capo; un " isolato in un testo non le accoppia)
+    const QUOTED = /"((?:[^"\\]|\\.)*)"/gs;
+    const quoted = (call.family === "playwright" ? text.split("\n") : [text]).flatMap((t) => [...t.matchAll(QUOTED)].map((m) => m[1]));
+    const unbound = (r) => {
+      const re = tokenRe(r);
+      if (Math.max(count[r] ?? 0, (text.match(re) ?? []).length) !== 1) return true;
+      return quoted.some((q) => { re.lastIndex = 0; return re.test(q); });
+    };
     refs = {};
-    for (const e of page.elements) if (e.ref && Object.keys(refs).length < 300) refs[String(e.ref)] = count[e.ref] > 1 ? null : atlasMatch(atlas, e)?.code ?? null;
+    for (const e of page.elements) {
+      if (!e.ref || Object.keys(refs).length >= 300) continue;
+      refs[String(e.ref)] = page.formatMismatch || unbound(String(e.ref)) ? null : atlasMatch(atlas, e)?.code ?? null;
+    }
   }
   return { doc, errors, scope, profile, cfgObject, refs, pageUrl };
 }

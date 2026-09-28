@@ -217,8 +217,9 @@ const PROTECTED = [
   ["**/approvals.jsonl", "il registro delle approvazioni lo scrive solo l'hook approval-capture (dalle frasi dell'utente)"],
   ["**/session.json", "session.json si modifica solo con /use, env-check e gli hook del plugin"],
   [".jvc/**", "lo stato di sessione si modifica solo con /use e con gli hook del plugin"],
-  // WP07 giro 2 (N-3): la ripresa (--resume) si fonda sui checkpoint: li scrive solo step-check (script del plugin)
-  ["**/runs/*/checkpoints/**", "i checkpoint dei piani li scrive solo step-check (script del plugin): la ripresa di un piano si fonda su di essi"],
+  // WP07 giro 2 (N-3): la ripresa (--resume) si fonda sui checkpoint: li scrive solo step-check (script del plugin);
+  // giro 3 (I-B): a ogni profondità sotto runs/ (un --run annidato non è più ammesso, ma i file non si scrivono comunque)
+  ["**/runs/**/checkpoints/**", "i checkpoint dei piani li scrive solo step-check (script del plugin): la ripresa di un piano si fonda su di essi"],
 ];
 const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
 const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);
@@ -256,6 +257,8 @@ const CONFIG_TEXT = /(^|[^\w.-])\.claude(?=$|[.\\/\s'"`;|&)(,:])|(^|[^\w])claude
 const CONFIG_ABS = /(^|\/)\.claude(\/|$)|(^|\/)\.claude\.json$|(^|\/)\.mcp\.json$|(^|\/)claude~\d(\/|$)/;
 const CLAUDE_ADMIN = /(^|[\s'"])(plugins?|config|mcp)(?=$|[\s'"])/i;
 const WRITE_ANY = /appendfile|writefile|createwritestream|opensync|writeall|\[io\.file\]|copyfile|renamesync|\bfs\.|add-content|set-content|out-file|new-item|\bni\b|\btee\b|>|\bcp\b|\bmv\b|\bcopy\b|robocopy|xcopy|copy-item|move-item|rename|\bdel\b|\brm\b|remove-item|\bcurl\b|\bwget\b|invoke-webrequest|\biwr\b|\birm\b|\bgit\s+(checkout|restore|apply|reset|stash|mv|rm|am)\b|mklink|\bln\b|\bsed\s+-[a-z]*i|\bperl\s+-[a-z]*i|\binstall\b|\brsync\b|\bdd\b|\.write\s*\(|\bopen\s*\(/i;
+const LINK_CMD = /\bmklink\b|\bln\b|\bjunction\b|symboliclink|hardlink|symlink|createsymbolic/;
+const RUNS_SEG = /(^|[/\s'"=:(])runs($|[/\s'"),;&|])/;
 const flatOf = (s) => String(s).replace(/\\/g, "/").toLowerCase();
 function mentionsPlugin(ctx, text) {
   const f = flatOf(text);
@@ -296,7 +299,7 @@ function checkTarget(ctx, T, tree, tr) {
   }
   for (const a of T.abs) {
     if (/(^|\/)(approvals\.jsonl|session\.json)$/.test(a)) return `${PROTECTED[/approvals/.test(a) ? 0 : 1][1]}: ${a}`;
-    if (/(^|\/)runs\/[^/]+\/checkpoints(\/|$)/.test(a)) return `${PROTECTED[3][1]}: ${a}`;
+    if (/(^|\/)runs\/(.+\/)?checkpoints(\/|$)/.test(a)) return `${PROTECTED[3][1]}: ${a}`;
     if (under(a, tr.dirs) || (tree && tr.dirs.some((d) => d.startsWith(`${a}/`)))) return `il transcript della sessione (e la sua cartella) non si scrive: ${a}`;
   }
   return null;
@@ -373,6 +376,8 @@ const protectWrites = guarded(G, (ctx) => {
   const sc = scriptContentRefusal(ctx, cmd);
   if (sc) return no(sc);
   const flat = cmd.replace(/\\/g, "/").toLowerCase();
+  // WP07 giro 3 (I-B): niente link simbolici, giunzioni o hard link sotto runs/ (step-check verifica comunque il realpath)
+  if (LINK_CMD.test(flat) && RUNS_SEG.test(flat)) return no("il comando crea un collegamento (link simbolico, giunzione, hard link) e cita runs/: le cartelle dei run e i loro checkpoint non si ridirigono");
   if (/approvals\.json/.test(flat)) return no("il comando cita approvals.json(l): il registro delle approvazioni si legge con Read o con `approvals.mjs status`, non si tocca dalla shell");
   if (/approvals/.test(flat) && WRITE_PRIM.test(flat)) return no("il comando cita 'approvals' insieme a una primitiva di scrittura: nome del registro costruito a runtime");
   if (INTERP.test(cmd) && STATE.test(cmd)) return no("uno script non del plugin con argomenti o codice che citano il registro delle approvazioni o lo stato di sessione: solo gli script del plugin toccano lo stato");

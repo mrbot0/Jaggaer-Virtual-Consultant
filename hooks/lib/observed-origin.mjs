@@ -40,6 +40,15 @@ export function observedLocation(family, text, { asked = null, resp = null } = {
   return null;
 }
 
+// Un'intestazione o riga di marcatore di pagina della famiglia, anche non valida (duplicata, fuori posto).
+export function anyPageMarker(family, text, resp = null) {
+  const t = String(text ?? "");
+  if (family === "chrome-devtools") return /^## (Pages|Latest page snapshot)\s*$/m.test(t) || Array.isArray(resp?.structuredContent?.pages);
+  if (family === "playwright") return /^### Page( state)?\s*$/m.test(t) || /^- Page URL:/m.test(t);
+  if (family === "claude-browser") return /^Tab Context:/m.test(t) || /Executed on tabId:/.test(t);
+  return false;
+}
+
 // Nuovo stato { url, tab } dopo la chiamata. state: "ok" | "error" | "unknown" (responseState).
 export function nextObserved(prev, call, state, resp) {
   if (state !== "ok") return RESET;
@@ -54,10 +63,12 @@ export function nextObserved(prev, call, state, resp) {
   const asked = actions.map((a) => a.tab).filter((t) => t != null).at(-1) ?? null;
   // WP07 giro 2 (C-1): uno strumento di testo della pagina non promuove mai; se però il SUO marcatore del server
   // indica una pagina diversa da quella registrata, l'origine registrata non vale più ⇒ ignoto (mai "mantieni").
+  // WP07 giro 3 (N-A): se c'è un qualunque marcatore di pagina e quello unico del server non è ESATTAMENTE l'origine
+  // registrata (diverso, o ambiguo perché la pagina ne ha scritto un secondo) ⇒ ignoto.
   if (actions.some(isPageTextOp)) {
     if (switches || effect) return RESET;
     const own = observedLocation(call.family, text, { asked, resp });
-    if (own?.url && own.url !== (prev.url ?? null)) return RESET;
+    if (anyPageMarker(call.family, text, resp) && (!own?.url || own.url !== (prev.url ?? null))) return RESET;
     return { url: prev.url ?? null, tab: prev.tab ?? null };
   }
   const loc = observedLocation(call.family, text, { asked, resp });
