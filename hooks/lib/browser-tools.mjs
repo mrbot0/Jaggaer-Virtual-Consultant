@@ -161,7 +161,8 @@ const PW_OPS = {
   drop: { keys: [...EL, "startElement", "startRef", "endElement", "endRef"], fn: () => ({ kind: "input" }) },
   file_upload: { keys: ["paths"], fn: () => ({ kind: "upload" }) },
   evaluate: { keys: ["function", ...EL], fn: (ti) => ({ kind: "script", text: str(ti.function) }) },
-  snapshot: { keys: ["filename"], fn: (ti) => R({ outputs: outputsOf(ti, ["filename"]) }) },
+  // K6.3: boxes/depth/target sono parametri di sola lettura (riquadri per le maschere delle evidenze)
+  snapshot: { keys: ["filename", "boxes", "depth", "target"], fn: (ti) => R({ outputs: outputsOf(ti, ["filename"]) }) },
   take_screenshot: { keys: ["type", "filename", ...EL, "fullPage"], fn: (ti) => R({ outputs: outputsOf(ti, ["filename"]) }) },
   tabs: { keys: ["action", "index"], fn: (ti) => (ti.action === "list" ? R() : ["select", "new", "close"].includes(ti.action) ? R({ switches: true }) : { kind: "other" }) },
   wait_for: { keys: ["time", "text", "textGone"], fn: () => R() },

@@ -55,7 +55,7 @@ function finish(out, nodes) {
     if (n.role === "heading" && n.name) out.headings.push({ text: n.name, level: n.level ?? null });
     if (TEXT_ROLES.has(n.role) || n.role === "RootWebArea" || n.role === "label") continue;
     const e = { role: n.role, name: n.name ?? "", ref: n.ref ?? null };
-    for (const k of ["required", "disabled", "checked", "value", "level"]) if (n[k] !== undefined) e[k] = n[k];
+    for (const k of ["required", "disabled", "checked", "value", "level", "box"]) if (n[k] !== undefined) e[k] = n[k];
     out.elements.push(e);
   }
   return out;
@@ -189,6 +189,8 @@ function parsePlaywright(text) {
     if ("disabled" in attrs) n.disabled = boolAttr(attrs.disabled);
     if ("checked" in attrs) n.checked = attrs.checked === "mixed" ? "mixed" : boolAttr(attrs.checked);
     if ("level" in attrs) n.level = Number(attrs.level);
+    // browser_snapshot con boxes: true ⇒ [box=x,y,w,h] (pixel CSS del viewport): servono a capture per le maschere
+    if (/^-?[\d.]+,-?[\d.]+,[\d.]+,[\d.]+$/.test(attrs.box ?? "")) { const [x, y, w, h] = attrs.box.split(",").map(Number); n.box = { x, y, w, h }; }
     if (!FIELD_ROLES.has(role) && !MESSAGE_ROLES.has(role) && TEXT_ROLES.has(role) && n.name && !n.text) n.text = n.name;
     nodes.push(n);
     stack.push({ depth, id });
