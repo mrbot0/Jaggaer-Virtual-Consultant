@@ -10,10 +10,9 @@
 //       le righe di tutte le tabelle di campi di una sezione, in parti uguali ≤ max righe:
 //       nessun passaggio a valle vede più di 50 campi (§19.6.4).
 //
-// Spazio per WP09a: il segmentatore generale delle unità di significato (§19.9: procedura,
-// passo, tabella, nota, regola, definizione, figura, esempio, riferimento, tracciato,
-// decisione) va accanto a segmentFieldTables in questo modulo, sullo stesso documento
-// normalizzato; le tabelle di campi restano unità `riga-tabella-campi`.
+// WP09a: il segmentatore generale delle unità di significato (§19.9) è segmentUnits, in fondo a questo
+// modulo, sullo stesso documento normalizzato; le tabelle di campi restano unità `riga-tabella-campi`
+// (una per riga) e segmentFieldTables continua a farne le parti ≤ 50 per la digestione a lotti.
 import { createHash as _createHash } from "node:crypto";
 import { validateWith } from "../lib/schemas.mjs";
 import { parseRule as _parseRule } from "./deontic.mjs";

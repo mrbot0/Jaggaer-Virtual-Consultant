@@ -302,6 +302,10 @@ export function extractDocument(doc, units, { profile = null } = {}) {
   const items = [];
   for (const u of units) { const r = extractUnit(u, ctx); if (r) items.push(r); }
   const docItems = documentCandidates(doc, units, items, { profile });
+  // Candidati di documento: lo scope-extractor non rilegge l'estrazione intera (mapping, passi): per ogni attributo
+  // mancante pone la domanda della banca a ≤ 5 unità (§19.11). Costo = attributi mancanti × 5 unità × ~120 token,
+  // entro il budget per unità (3k).
+  for (const c of docItems) c.tokens = Math.min(UNIT_BUDGET - LLM_OVERHEAD, Math.max(200, (c.missing?.length ?? 1) * 5 * 120));
   const all = [...items, ...docItems];
   const byCandidate = {};
   for (const r of all) byCandidate[r.candidates?.[0] ?? "?"] = (byCandidate[r.candidates?.[0] ?? "?"] ?? 0) + 1;

@@ -42,7 +42,7 @@ export function writeUnits(unitsDir, units) {
 
 function stmts(db) {
   return {
-    get: db.prepare("select hash from units where code=?"),
+    get: db.prepare("select hash, doc from units where code=?"),
     up: db.prepare(`insert into units(code, doc, doc_id, type, section, section_path, chapter, page, lang, text, hash, prev, next, path, updated_at)
       values (@code,@doc,@doc_id,@type,@section,@section_path,@chapter,@page,@lang,@text,@hash,@prev,@next,@path,@updated_at)
       on conflict(code) do update set doc=excluded.doc, doc_id=excluded.doc_id, type=excluded.type, section=excluded.section, section_path=excluded.section_path,
@@ -55,7 +55,8 @@ function stmts(db) {
 
 function upsertOne(s, u, path) {
   const prev = s.get.get(u.id);
-  if (prev?.hash === u.hash) return false;
+  // hash e documento invariati ⇒ nessuna scrittura; una nuova versione del DOC riprende le unità invariate (§19.16)
+  if (prev?.hash === u.hash && prev?.doc === u.doc) return false;
   s.up.run({ code: u.id, doc: u.doc, doc_id: u.doc_id ?? null, type: u.type, section: u.context?.section ?? null, section_path: u.context?.section_path ?? null,
     chapter: u.context?.chapter ?? null, page: u.context?.page ?? null, lang: u.lang ?? u.context?.lang ?? null, text: u.text, hash: u.hash,
     prev: u.context?.prev ?? null, next: u.context?.next ?? null, path, updated_at: new Date().toISOString() });
