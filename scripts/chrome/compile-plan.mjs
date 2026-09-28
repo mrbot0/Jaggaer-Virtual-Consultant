@@ -58,7 +58,8 @@ function expectLines(ws, customer, step, target, opts) {
   const e = step.expect ?? {};
   const L = [];
   const loc = (code) => { try { return locatorFor(ws, customer, code, opts); } catch (err) { if (err.code === 3 && /non è nell'Atlas/.test(err.message)) return null; throw err; } };
-  if (e.page_sig) L.push(`await expect(page).toHaveURL(/${reEsc(String(e.page_sig).split("#")[0])}/);`);
+  // WP07 giro 3: page_sig come letterale JSON (un a capo in un letterale regex sarebbe un errore di sintassi)
+  if (e.page_sig) L.push(`await expect(page).toHaveURL(new RegExp(${q(reEsc(String(e.page_sig).split("#")[0]))}));`);
   for (const el of Array.isArray(e.elements) ? e.elements : []) {
     const code = typeof el === "string" ? el : el?.sel;
     const l = code ? loc(code) : null;
