@@ -3,16 +3,16 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 23/09/2026 22:30 — **punto corrente: WP07 (K6) avviato; WP06 (K5, cancello di sicurezza) chiuso**.
+Ultimo aggiornamento: 28/09/2026 13:05 — **punto corrente: WP07 (K6) in corso (K6.1 fatto); aggiunto WP10d, il layer di orchestrazione e controllo degli agenti**.
 
 ## Avanzamento complessivo
 
-**≈ 41 % del progetto** (stima pesata sullo sforzo) · 6 pacchetti su 16 chiusi.
+**≈ 39 % del progetto** (stima pesata sullo sforzo) · 6 pacchetti su 17 chiusi. La percentuale scende di 2 punti perché il perimetro è cresciuto con WP10d, non per lavoro perso.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 41 %** (43 / 106 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 6 / 16 = **38 %** | WP01–WP06 con review pulita e tag |
+| Avanzamento pesato | **≈ 39 %** (43 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 6 / 17 = **35 %** | WP01–WP06 con review pulita e tag |
 | Hook del catalogo §44.4 | 13 / 16 = **81 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
 | Test automatici | 466 / 466 verdi | `npm test` al tag `k5-done` (`69cc6e7`); 100/100 scritture in produzione negate; guard ≤ 151 ms |
 
@@ -37,6 +37,16 @@ Ultimo aggiornamento: 23/09/2026 22:30 — **punto corrente: WP07 (K6) avviato; 
 - Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
 - Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
 
+### Agent manager come layer di orchestrazione (valutazione del 28/09/2026)
+- **Cosa dice la spec:** il manager è l'orchestratore (§23.2). Gestisce stato, routing, handoff, escalation, blackboard, budget e vigilanza cognitiva, ed è l'unico che parla con l'utente. È una skill che gira nella sessione principale, perché in Claude Code solo lei può lanciare sub-agenti.
+- **Cosa esiste già nel codice:** ogni dispatch è registrato con budget e stato. Ogni chiamata di strumento di ogni agente finisce in audit con il suo identificativo. Ogni rapporto viene validato e archiviato.
+- **Cosa mancava:** una vista unica di cosa fanno gli agenti e di come lo fanno. Mancavano anche l'applicazione nel codice della vigilanza (stop al terzo compito fermato per sorprese sullo stesso scope) e del limite di un'escalation di tier per compito, e la verifica degli handoff. Infine non c'era alcun modo per l'utente di mettere in pausa o fermare un agente.
+- **Decisione: tre livelli separati.**
+  1. Il manager, un modello nella sessione principale, dialoga e instrada.
+  2. Le regole di orchestrazione sono codice deterministico che il manager non può scavalcare.
+  3. Il monitor è indipendente da agenti e manager. Ricava tutto dalle registrazioni degli hook, sorveglia anche il manager e si può seguire da un terminale separato.
+- **Controllo dell'utente:** pausa, ripresa e stop per agente o per tutti, modalità passo-passo con conferma di ogni azione con effetto, e limiti di chiamate e durata per ogni dispatch. Tutto è applicato dai guard, non dal modello. Pianificato in WP10d.
+
 ### Chiusura di WP06 (K5, cancello di sicurezza)
 - Implementato in 7 commit, più 3 giri di correzione (`8f2103d..69cc6e7`). Tag `k5-done` → `69cc6e7`.
 - Consegnato: lo schema degli ambienti (prod con scrittura dati rifiutato), `env-check` e `use env`, e il guard dell'ambiente con allow-list degli host (il redirect SSO non dichiarato è negato). Poi il catalogo delle 15 classi di azione, `validate-plan`, il guard di produzione (100/100 scritture negate), la tripla approvazione 3A con registro concatenato e il guard di configurazione.
@@ -53,7 +63,7 @@ Ultimo aggiornamento: 23/09/2026 22:30 — **punto corrente: WP07 (K6) avviato; 
 
 ## Stato per pacchetto di lavoro
 
-Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va ricalibrata quando un pacchetto si chiude.
+Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va ricalibrata quando un pacchetto si chiude.
 
 | # | Pacchetto | Fase piano | Peso | % | Stato | Evidenza |
 |---|-----------|-----------|-----|---|-------|----------|
@@ -71,9 +81,10 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va
 | WP09d | Comandi `kb` restanti, digestione settimanale, Analytics (TBL/QRY/DIN/USR/PSP/ERR), dominio analitico, audit config, admin (status, lock, retention, purge) | F8–F12, G2–G3 (strumenti) | 8 | 0 | ⬜ Brief | `wp09d-ops.md` |
 | WP10a | Comandi `vc use kb nrt cfg ops learn admin`, template restanti, README, manuale integrato | §44.1, §55–58 | 4 | 0 | ⬜ Brief | `wp10a-commands.md` |
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 0 | ⬜ Brief | `wp10b-agents.md` |
+| WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 0 | ⬜ Brief | `wp10d-orchestration.md` — da eseguire prima di WP10c |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **106** | **≈ 41** | | 43 unità completate |
+| **Totale** | | | **111** | **≈ 39** | | 43 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
@@ -105,6 +116,6 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 106). È una stima: va
 - [ ] 15 agenti · [ ] 27 skill · [ ] 8 comandi (esiste solo `commands/use.md` minimale) · [ ] server MCP ALM + `.mcp.json` completo
 
 ## Punti aperti da decidere con il committente
-- Il KB JAGGAER verrà caricato con la pipeline di WP09a: fino ad allora il livello S contiene solo il bootstrap (DT, cluster, strategie, azioni, check).
+- **Documentazione JAGGAER di partenza caricata** (28/09/2026) in `JAGGAER DOC/`: 385 file tra corsi (guide, workbook, XML di workflow e configurazione, form) e kit di sviluppo dei web service. È esclusa da git perché materiale proprietario. WP09a la userà come corpus reale: la pipeline di ingestion la elaborerà per intero e scriverà la conoscenza di livello S in un workspace separato, `jvc-knowledge`, non nel repo del plugin. Fino ad allora il livello S contiene solo il bootstrap (DT, cluster, strategie, azioni, check).
 - 18 tabelle di decisione hanno pesi `bootstrap` progettati: vanno calibrate sui DEC reali (≥ 10 per tabella).
 - La latenza dei guard (~110–150 ms per processo, di cui ~74 ms di avvio di Node) supera l'obiettivo di 100 ms della spec: limite accettato.
