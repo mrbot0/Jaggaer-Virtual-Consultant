@@ -100,3 +100,19 @@ p95 97 ms, observe-append p95 158 ms). Test nuovi: `test/kb/wp09b-fixround1.test
 Rinviati per decisione del controllore: deviazioni della CFP cliente nel verificatore, altri vuoti dell'anti-indebolimento,
 lint-scope senza workspace, validazione di --xray-cap/--run/--release, file sorgente di auth-setup, ambiente di L3
 dichiarato dal chiamante.
+
+## Giro di correzione 2
+
+Esito della ri-revisione: C1, I3 e i minori risolti; I2 applicato come deciso ma inefficace, perché `knowledge.db` si
+scrive dalla shell (sqlite3, `python -c sqlite3`, `node -e node:sqlite`) e una riga forgiata in `observations` bastava a
+`kb snapshot`. Suite alla chiusura: **806 test, 806 pass, 0 fail, 0 skipped** (`npm test` con il corpus); test di tempo
+dei guard verde (guard-config-scope p95 89 ms, observe-append p95 145 ms). Test nuovi: `test/kb/wp09b-fixround2.test.mjs` (4).
+
+| Decisione | Correzione | Prova |
+|-----------|------------|-------|
+| 1 prova di autenticità delle OBS | observe-append tiene in `session.json` l'anello `obs_ring` (ultime 200 OBS: codice, page_sig, ts, sha256 del payload scritto nel DB); `kb snapshot` accetta una riga del DB solo se coincide con una voce dell'anello (il DB resta il deposito dei dati, l'anello è la prova); validatore di sessione rigenerato | riga inserita con l'handle sqlite del test ⇒ ignorata anche se più recente, rifiutata con `--obs`; payload modificato nel DB ⇒ rifiutato; OBS vera di observe-append ⇒ accettata |
+| 2 compile-plan e l'impronta | `compileEligibility`: almeno un verde contato con il `plan_hash` del piano compilato | 3 verdi con la stessa impronta ma altri hash ⇒ non legato; un verde del piano ⇒ legato |
+| 3 esiti protetti | `runs/**/results/**` e `runs/**/result.yaml` nel set protetto (strumenti di file, shell, interpreti che li citano con una scrittura; sessione e sub-agenti) | Write, `echo >`, `python -c`, `node -e` negati; `runs/<RUN>/cases/…/plan.json` resta scrivibile |
+| 4 minori | messaggio di rollback-proven "non a vuoto"; `url_pattern` ancorato (* un segmento, ** più segmenti); percorsi di soli ID mai uguali | test (4) |
+
+Residuo accettato dal controllore: `.jvc/checkpoint.key` leggibile.
