@@ -77,7 +77,8 @@
                   "in_payload": { "$ref": "defs.schema.json#/$defs/int" },
                   "form": { "$ref": "defs.schema.json#/$defs/target" },
                   "save": { "$ref": "defs.schema.json#/$defs/sel" },
-                  "error": { "type": "string" }
+                  "error": { "type": "string", "description": "codice ERR atteso al salvataggio a campo vuoto" },
+                  "error_text": { "type": "string", "description": "testo del messaggio atteso (expect.messages)" }
                 }
               }
             }

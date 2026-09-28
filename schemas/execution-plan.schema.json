@@ -103,6 +103,7 @@
           "additionalProperties": false,
           "properties": {
             "object": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CFG\\.\\d{4}(\\.v\\d+)?$" },
+            "governs": { "type": "array", "description": "WP09b: tutti gli oggetti governati dalla CFP (object compreso); guard-config-scope richiede uno snapshot che li copra tutti (§28.1, S.STD.ADM.CHK.0051).", "items": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CFG\\.\\d{4}(\\.v\\d+)?$" } },
             "area": { "type": "string", "pattern": "^CL-CFG-\\d{3}$" },
             "level": { "enum": ["verde", "giallo", "rosso"] },
             "dec": { "type": "string" }

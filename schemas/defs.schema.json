@@ -44,7 +44,7 @@
           "description": "Il passo crea (o modifica/invia) un'entità: la compensazione va registrata PRIMA (§29.6).",
           "required": ["entity"],
           "additionalProperties": false,
-          "properties": { "entity": { "type": "string", "minLength": 1 }, "kind": { "enum": ["create", "update", "submit"] } }
+          "properties": { "entity": { "type": "string", "minLength": 1 }, "kind": { "enum": ["create", "update", "submit"] }, "scope": { "$ref": "#/$defs/scope" } }
         },
         "from_flow": {
           "type": "object", "required": ["flow", "step"], "additionalProperties": false,
@@ -54,8 +54,8 @@
         "note": { "type": "string" }
       },
       "allOf": [
-        { "if": { "properties": { "verb": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "READ"] } } }, "then": { "required": ["target"] } },
-        { "if": { "properties": { "verb": { "const": "VERIFY" } } }, "then": { "anyOf": [{ "required": ["check"] }, { "required": ["target"] }] } }
+        { "if": { "properties": { "verb": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "READ"] } }, "not": { "required": ["from_flow"] } }, "then": { "required": ["target"] } },
+        { "if": { "properties": { "verb": { "const": "VERIFY" } }, "not": { "required": ["from_flow"] } }, "then": { "anyOf": [{ "required": ["check"] }, { "required": ["target"] }] } }
       ]
     },
     "compensation": {

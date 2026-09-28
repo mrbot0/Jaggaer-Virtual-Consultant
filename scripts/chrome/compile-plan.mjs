@@ -15,6 +15,7 @@ import { isMain } from "../lib/is-main.mjs";
 import { canonical } from "../../hooks/lib/audit.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { selFile } from "./atlas.mjs";
+import { locatorExpr } from "../compile/generate-atlas-po.mjs";
 
 export const MIN_GREEN = 3;
 const GREEN = new Set(["green", "pass", "passed", "success"]);
@@ -37,7 +38,15 @@ export function greenRuns(ws, customer, hash) {
 }
 
 const q = (s) => JSON.stringify(String(s));
-function locatorFor(ws, customer, code, { allowFragile }) {
+function locatorFor(ws, customer, code, { allowFragile, atlas = null }) {
+  // WP09b: con la mappa di generate-atlas-po (--atlas) la catena DT-008 si risolve con locator.or() (css solo se ammesso)
+  const po = atlas?.selectors?.[code];
+  if (po) {
+    const chain = (po.chain ?? []).filter((c) => c.kind !== "css" || allowFragile);
+    if (!chain.length) throw new CompileError(3, `${code}: solo strategia css nella mappa dell'Atlas: ammessa solo con --allow-fragile`);
+    const [first, ...rest] = chain.map((c) => locatorExpr(c));
+    return [first, ...rest.map((o) => `.or(${o})`)].join("");
+  }
   const f = selFile(ws, code, customer);
   if (!f || !existsSync(f)) throw new CompileError(3, `${code} non è nell'Atlas: il piano non si compila`);
   const sel = YAML.parse(readFileSync(f, "utf8"));
@@ -77,13 +86,13 @@ function expectLines(ws, customer, step, target, opts) {
   return L;
 }
 
-export function generateSpec(ws, customer, plan, { allowFragile = false } = {}) {
+export function generateSpec(ws, customer, plan, { allowFragile = false, atlas = null } = {}) {
   const hash = planHash(plan);
   const body = [];
   for (const s of [...(plan.steps ?? [])].sort((a, b) => a.n - b.n)) {
     body.push(`  // passo ${oneLine(s.n)} ${oneLine(s.verb)} (${oneLine(s.action_class ?? "—")})`);
     if (s.verb === "ASK") throw new CompileError(3, `passo ${s.n}: ASK richiede una persona: il piano non si compila`);
-    const target = typeof s.target === "string" ? locatorFor(ws, customer, s.target, { allowFragile }) : null;
+    const target = typeof s.target === "string" ? locatorFor(ws, customer, s.target, { allowFragile, atlas }) : null;
     const d = s.data;
     const act = {
       NAVIGATE: () => (s.target?.url_pattern ? `await page.goto(${q(s.target.url_pattern)});` : `await ${target}.click();`),
@@ -99,7 +108,7 @@ export function generateSpec(ws, customer, plan, { allowFragile = false } = {}) 
     }[s.verb];
     if (!act) throw new CompileError(3, `passo ${s.n}: verbo ${s.verb} non compilabile`);
     body.push(`  ${act()}`);
-    for (const l of expectLines(ws, customer, s, target, { allowFragile })) body.push(`  ${l}`);
+    for (const l of expectLines(ws, customer, s, target, { allowFragile, atlas })) body.push(`  ${l}`);
   }
   const text = [
     `// plan-hash: ${hash}`,
@@ -131,7 +140,7 @@ async function loadPlan(ws, customer, rel) {
   return info.plan;
 }
 
-const HELP = `uso: node scripts/chrome/compile-plan.mjs --plan <file> [--scope <S>] [--allow-fragile] [--min-green 3] [--customer <C>]
+const HELP = `uso: node scripts/chrome/compile-plan.mjs --plan <file> [--scope <S>] [--allow-fragile] [--min-green 3] [--customer <C>] [--atlas <S.po.json>]
        node scripts/chrome/compile-plan.mjs verify --plan <file> --spec <file.spec.ts>
        Opzioni: [--session <id>] [--workspace <dir>] [--json] [--help]
 
@@ -170,7 +179,7 @@ export async function run(argv, env = process.env) {
     const min = opts["min-green"] ? Math.max(MIN_GREEN, Number(opts["min-green"])) : MIN_GREEN;
     const green = greenRuns(ws, customer, hash);
     if (green.length < min) return fail(asJson, 3, `${green.length} esecuzioni verdi con questo hash: ne servono almeno ${min} per compilare (§27.4)`, { green });
-    const { text } = generateSpec(ws, customer, plan, { allowFragile: !!opts["allow-fragile"] });
+    const { text } = generateSpec(ws, customer, plan, { allowFragile: !!opts["allow-fragile"], atlas: opts.atlas ? JSON.parse(readFileSync(resolvePath(ws, opts.atlas), "utf8")) : null });
     const rel = `customers/${customer}/tests/specs/${scope}/${plan.plan_id}.spec.ts`;
     mkdirSync(join(ws, "customers", customer, "tests", "specs", scope), { recursive: true });
     writeFileAtomic(join(ws, rel), text);
