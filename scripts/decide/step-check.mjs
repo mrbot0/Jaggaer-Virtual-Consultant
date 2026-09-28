@@ -20,6 +20,8 @@
 import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import YAML from "yaml";
+import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { canonical } from "../../hooks/lib/audit.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
@@ -119,13 +121,36 @@ const dedupePending = (cur, add) => {
   return out;
 };
 
-function lastCheckpoint(dir, planId = null) {
+// WP07 giro 2 (N-3): i checkpoint sono firmati (HMAC-SHA256 con la chiave del workspace .jvc/checkpoint.key, che solo
+// gli script del plugin scrivono: .jvc/** e runs/*/checkpoints/** sono protetti in scrittura da guard-config-scope).
+// Scelta: HMAC invece di una catena di sha, perché una catena la ricalcola chiunque possa scrivere i file; la firma
+// no, e lega il checkpoint al piano (plan_sha256) e al passo. Firma assente o sbagliata ⇒ il checkpoint non conta.
+export function checkpointKey(ws) {
+  const f = join(ws, ".jvc", "checkpoint.key");
+  try { const k = readFileSync(f, "utf8").trim(); if (/^[0-9a-f]{64}$/.test(k)) return k; } catch { /* assente: si crea */ }
+  mkdirSync(join(ws, ".jvc"), { recursive: true });
+  const k = randomBytes(32).toString("hex");
+  writeFileAtomic(f, `${k}\n`);
+  return k;
+}
+const cpMac = (key, cp) => { const { hmac, ...rest } = cp; return createHmac("sha256", key).update(canonical(rest)).digest("hex"); };
+export const signCheckpoint = (key, cp) => ({ ...cp, hmac: cpMac(key, cp) });
+export function verifyCheckpoint(key, cp) {
+  if (!cp || typeof cp.hmac !== "string" || !/^[0-9a-f]{64}$/.test(cp.hmac)) return false;
+  const a = Buffer.from(cp.hmac, "hex"); const b = Buffer.from(cpMac(key, cp), "hex");
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
+function lastCheckpoint(dir, planId = null, { key = null, planSha = null } = {}) {
   let files = [];
   try { files = readdirSync(dir).filter((f) => /^\d+\.json$/.test(f)); } catch { return null; }
   let best = null;
   for (const f of files) {
     try {
       const cp = JSON.parse(readFileSync(join(dir, f), "utf8"));
+      if (key && !verifyCheckpoint(key, cp)) continue;
+      if (planSha && cp.plan_sha256 !== planSha) continue;
+      if (`${cp.step}.json` !== f) continue;
       if (cp.proceed && (!planId || cp.plan_id === planId) && (best == null || cp.step > best)) best = cp.step;
     } catch { /* checkpoint illeggibile: non conta */ }
   }
@@ -226,7 +251,7 @@ export async function check(opts) {
   if (resume != null) {
     const target = steps.find((s) => s.n === Number(resume));
     if (!target) throw new StepCheckError(1, `il piano ${plan.plan_id} non ha il passo ${resume}`);
-    const last = lastCheckpoint(cpDir, plan.plan_id);
+    const last = lastCheckpoint(cpDir, plan.plan_id, { key: checkpointKey(ws), planSha: info.sha256 });
     const lastN = last ?? 0;
     if (!(target.n <= lastN + 1 || skippable(lastN + 1, target.n))) return deny(`ripresa al passo ${target.n} negata: l'ultimo passo verificato è ${last ?? "nessuno"} e i passi intermedi non sono in repair_policy.skip_allowed`);
     const pa = planApproval();
@@ -245,7 +270,7 @@ export async function check(opts) {
       if (!cmp.divergences.length) {
         // già eseguito: checkpoint del passo, poi il successivo (o piano completato)
         mkdirSync(cpDir, { recursive: true });
-        writeFileAtomic(join(cpDir, `${target.n}.json`), `${JSON.stringify({ plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: target.n, status: "ok", proceed: true, resumed: "already_done", page_signature: cmp.page_signature, observation, ts: now.toISOString() }, null, 2)}\n`);
+        writeFileAtomic(join(cpDir, `${target.n}.json`), `${JSON.stringify(signCheckpoint(checkpointKey(ws), { plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: target.n, status: "ok", proceed: true, resumed: "already_done", page_signature: cmp.page_signature, observation, ts: now.toISOString() }), null, 2)}\n`);
         const nxt = steps[steps.indexOf(target) + 1] ?? null;
         let g = null;
         if (nxt) g = activate(nxt, clearReads);
@@ -313,10 +338,10 @@ export async function check(opts) {
   const red = (v) => (typeof v === "string" ? redact(v, { profile }) : Array.isArray(v) ? v.map(red) : v);
   mkdirSync(cpDir, { recursive: true });
   const cpFile = join(cpDir, `${cur.n}.json`);
-  writeFileAtomic(cpFile, `${JSON.stringify({ plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: cur.n, status: res.status, kind: res.kind, compat: res.compat,
+  writeFileAtomic(cpFile, `${JSON.stringify(signCheckpoint(checkpointKey(ws), { plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: cur.n, status: res.status, kind: res.kind, compat: res.compat,
     proceed: res.proceed, stop: !!res.stop, divergences: res.divergences.map((d) => ({ ...d, expected: red(d.expected), observed: red(d.observed), ...(d.target ? { target: red(d.target) } : {}) })),
     novelties: res.novelties.map((x) => ({ ...x, label: red(x.label) })), confirmations: res.confirmations,
-    page_signature: res.page_signature, observation, ts: now.toISOString() }, null, 2)}\n`);
+    page_signature: res.page_signature, observation, ts: now.toISOString() }), null, 2)}\n`);
   res.checkpoint = `runs/${run}/checkpoints/${cur.n}.json`;
 
   const idx = steps.indexOf(cur);
@@ -329,7 +354,7 @@ export async function check(opts) {
     updateSessionFile(sFile, (x) => { mutate(x); x.active_plan = null; });
     res.plan_status = finish ? "stopped" : "completed";
     // runs/<RUN>/result.yaml (K6.8): verde = piano completato senza sorprese; lo conta compile-plan (≥ 3 verdi)
-    const cps = readdirSync(cpDir).filter((f) => /^\d+\.json$/.test(f)).map((f) => { try { return JSON.parse(readFileSync(join(cpDir, f), "utf8")); } catch { return null; } }).filter((c) => c?.plan_id === plan.plan_id);
+    const cps = readdirSync(cpDir).filter((f) => /^\d+\.json$/.test(f)).map((f) => { try { return JSON.parse(readFileSync(join(cpDir, f), "utf8")); } catch { return null; } }).filter((c) => c?.plan_id === plan.plan_id && verifyCheckpoint(checkpointKey(ws), c));
     const status = finish ? "stopped" : cps.every((c) => c.status === "ok" || c.status === "novelty") ? "green" : "yellow";
     const { planHash } = await import("../chrome/compile-plan.mjs");
     writeFileAtomic(join(runDir, "result.yaml"), YAML.stringify({ plan_id: plan.plan_id, plan_hash: planHash(plan), plan_file: planFile, run, status, steps: steps.length, completed_at: now.toISOString() }));

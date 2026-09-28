@@ -11,7 +11,7 @@
 import { loadHookState } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
 import { updateSessionFile } from "./session-state.mjs";
-import { devtoolsPageUrl, claudeTabContext, playwrightPageUrl, hasDialog, RECONNECT } from "./origin-markers.mjs";
+import { devtoolsPageUrl, claudeTabContext, playwrightPageUrl, hasDialog, hasModal, RECONNECT } from "./origin-markers.mjs";
 
 const ERROR_TEXT = /^\s*(error\b|errore\b|failed\b|timeout\b|timed out\b)|net::ERR_|navigation (failed|timeout)|timeout of \d+ ?ms exceeded|protocol error|target closed|no page selected|leave site\?/i;
 const textOf = (blocks) => blocks.filter((b) => b && typeof b === "object" && b.type === "text" && typeof b.text === "string").map((b) => b.text).join("\n");
@@ -76,6 +76,7 @@ export function nextOrigin(prev, call, state, resp) {
   if (state !== "ok") return reset;
   const text = textOfResponse(resp);
   if (call.family === "chrome-devtools" && (hasDialog(text) || RECONNECT.test(text))) return reset;
+  if (call.family === "playwright" && hasModal(text)) return reset;   // WP07 giro 2 (C-1): dialog della pagina
   let st = { ...prev };
   let navigated = null;
   for (const a of call.actions ?? [call]) {

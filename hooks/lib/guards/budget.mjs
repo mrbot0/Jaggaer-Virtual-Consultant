@@ -25,13 +25,15 @@ import { checkRemaining, enforceClass, estimateTask } from "../../../scripts/dec
 import { withFileLock } from "../fsx.mjs";
 import { planFilePath } from "../../../scripts/admin/approvals.mjs";
 import YAML from "yaml";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 // Il file del piano attivo (relativo alla cartella del cliente) → oggetto | null.
 function readPlan(ctx, rel) {
   const f = planFilePath(ctx.ws, ctx.session.customer, rel);
   if (!f) return null;
-  try { const t = readFileSync(f, "utf8"); return t.trimStart().startsWith("{") ? JSON.parse(t) : YAML.parse(t); } catch { return null; }
+  // WP07 giro 2 (N-2): con l'impronta del testo, confrontata con active_plan.plan_sha256 come negli altri guard
+  try { const t = readFileSync(f, "utf8"); const plan = t.trimStart().startsWith("{") ? JSON.parse(t) : YAML.parse(t); return { plan, sha256: createHash("sha256").update(t).digest("hex") }; } catch { return null; }
 }
 
 const G = "guard-budget";
@@ -159,8 +161,10 @@ export const decide = guarded(G, (ctx) => {
   let source = "header";
   const ap = session.active_plan;
   if (ap) {
-    const plan = readPlan(ctx, ap.file);
+    const info = readPlan(ctx, ap.file);
+    const plan = info?.plan;
     if (!plan || plan.plan_id !== ap.plan_id) return denyAudited(ctx, G, `piano attivo ${ap.plan_id} illeggibile: le classi d'azione del compito non si possono verificare`);
+    if (typeof ap.plan_sha256 !== "string" || ap.plan_sha256 !== info.sha256) return denyAudited(ctx, G, `il piano ${ap.plan_id} è stato modificato dopo l'attivazione (impronta diversa): le sue classi d'azione non valgono per il budget; riattivalo con step-check`);
     classes = [...new Set((plan.steps ?? []).map((x) => x?.action_class).filter(Boolean))];
     limit = estimateTask(plan, session.env).tokens;
     source = "piano";

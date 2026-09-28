@@ -12,7 +12,7 @@
 //  - con pageId: la pagina chiesta, non la selezionata; scheda del marcatore diversa da quella chiesta ⇒ ignoto;
 //  - letture e input senza invio, senza marcatore ⇒ invariato (mai promuovere un ignoto).
 import { nextOrigin, textOfResponse, mayNavigate } from "./browser-origin.mjs";
-import { devtoolsPageUrl, devtoolsRootUrl, claudeTabContext, playwrightPageUrl, hasDialog, RECONNECT, isPageTextOp } from "./origin-markers.mjs";
+import { devtoolsPageUrl, devtoolsRootUrl, claudeTabContext, playwrightPageUrl, hasDialog, hasModal, RECONNECT, isPageTextOp } from "./origin-markers.mjs";
 
 const RESET = { url: null, tab: null };
 
@@ -47,11 +47,19 @@ export function nextObserved(prev, call, state, resp) {
   if (actions.some((a) => a.kind === "other" || a.kind === "script")) return RESET;
   const text = textOfResponse(resp);
   if (call.family === "chrome-devtools" && (hasDialog(text) || RECONNECT.test(text))) return RESET;
+  if (call.family === "playwright" && hasModal(text)) return RESET;   // WP07 giro 2 (C-1)
   if (actions.some((a) => a.kind === "navigate")) return nextOrigin(prev, call, state, resp);
   const switches = actions.some((a) => a.switches);
   const effect = actions.some(mayNavigate);
-  if (actions.some(isPageTextOp)) return switches || effect ? RESET : { url: prev.url ?? null, tab: prev.tab ?? null };
   const asked = actions.map((a) => a.tab).filter((t) => t != null).at(-1) ?? null;
+  // WP07 giro 2 (C-1): uno strumento di testo della pagina non promuove mai; se però il SUO marcatore del server
+  // indica una pagina diversa da quella registrata, l'origine registrata non vale più ⇒ ignoto (mai "mantieni").
+  if (actions.some(isPageTextOp)) {
+    if (switches || effect) return RESET;
+    const own = observedLocation(call.family, text, { asked, resp });
+    if (own?.url && own.url !== (prev.url ?? null)) return RESET;
+    return { url: prev.url ?? null, tab: prev.tab ?? null };
+  }
   const loc = observedLocation(call.family, text, { asked, resp });
   if (loc?.url) {
     if (loc.tab != null && asked != null && String(loc.tab) !== String(asked)) return RESET;

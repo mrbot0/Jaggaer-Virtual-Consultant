@@ -60,6 +60,8 @@ function finish(out, nodes) {
     for (const k of ["required", "disabled", "checked", "value", "level", "box"]) if (n[k] !== undefined) e[k] = n[k];
     out.elements.push(e);
   }
+  // WP07 giro 2 (I-1): i ref di TUTTI i nodi (anche testo, generic, label, RootWebArea) per i duplicati
+  out.allRefs = nodes.map((n) => n.ref).filter((r) => r != null).map(String);
   return out;
 }
 

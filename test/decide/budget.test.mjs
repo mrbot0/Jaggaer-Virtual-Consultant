@@ -7,6 +7,7 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import YAML from "yaml";
+import { createHash } from "node:crypto";
 import { mkWs, seedSession, runHook, decisionOf, reasonOf, cleanEnv, ROOT } from "../helpers/hook-env.mjs";
 import { ACT_BUDGET, classBudget, estimateTask, checkRemaining, enforceClass, checkDocument, filesOpenedUnused, DOC_BUDGET, UNIT_BUDGET } from "../../scripts/decide/budget.mjs";
 import { selfCheck } from "../../scripts/decide/self-check.mjs";
@@ -124,7 +125,9 @@ test("guard-budget: con un piano attivo le classi vengono dal piano validato, no
   mkdirSync(join(ws, "customers/ACME/runs/RUN.B"), { recursive: true });
   writeFileSync(join(ws, "customers/ACME/runs/RUN.B/plan.json"), JSON.stringify({ plan_id: "PLAN.B.1", customer: "ACME", env: "sandbox", goal: "x", steps: [{ n: 1, verb: "NAVIGATE", action_class: "ACT-OBS", target: { url_pattern: "https://a/" }, expect: { page_sig: "a" } }], repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } }));
   const s = JSON.parse(readFileSync(join(ws, "customers/ACME/.sessions/sess-1/session.json"), "utf8"));
-  s.active_plan = { plan_id: "PLAN.B.1", file: "runs/RUN.B/plan.json", step: 1 };
+  // impronta come la scrive step-check (giro 2, N-2: guard-budget la verifica prima di leggere le classi)
+  const planText = readFileSync(join(ws, "customers/ACME/runs/RUN.B/plan.json"), "utf8");
+  s.active_plan = { plan_id: "PLAN.B.1", file: "runs/RUN.B/plan.json", step: 1, plan_sha256: createHash("sha256").update(planText).digest("hex") };
   writeFileSync(join(ws, "customers/ACME/.sessions/sess-1/session.json"), JSON.stringify(s));
   const r = agent(ws, header(50000, { actions: ["ACT-CFG-CHANGE", "ACT-BULK"] }));
   assert.equal(decisionOf(r), "deny", "l'header non alza il limite: il piano ha solo ACT-OBS");

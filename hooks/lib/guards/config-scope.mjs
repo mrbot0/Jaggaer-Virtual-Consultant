@@ -217,6 +217,8 @@ const PROTECTED = [
   ["**/approvals.jsonl", "il registro delle approvazioni lo scrive solo l'hook approval-capture (dalle frasi dell'utente)"],
   ["**/session.json", "session.json si modifica solo con /use, env-check e gli hook del plugin"],
   [".jvc/**", "lo stato di sessione si modifica solo con /use e con gli hook del plugin"],
+  // WP07 giro 2 (N-3): la ripresa (--resume) si fonda sui checkpoint: li scrive solo step-check (script del plugin)
+  ["**/runs/*/checkpoints/**", "i checkpoint dei piani li scrive solo step-check (script del plugin): la ripresa di un piano si fonda su di essi"],
 ];
 const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
 const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);
@@ -294,6 +296,7 @@ function checkTarget(ctx, T, tree, tr) {
   }
   for (const a of T.abs) {
     if (/(^|\/)(approvals\.jsonl|session\.json)$/.test(a)) return `${PROTECTED[/approvals/.test(a) ? 0 : 1][1]}: ${a}`;
+    if (/(^|\/)runs\/[^/]+\/checkpoints(\/|$)/.test(a)) return `${PROTECTED[3][1]}: ${a}`;
     if (under(a, tr.dirs) || (tree && tr.dirs.some((d) => d.startsWith(`${a}/`)))) return `il transcript della sessione (e la sua cartella) non si scrive: ${a}`;
   }
   return null;

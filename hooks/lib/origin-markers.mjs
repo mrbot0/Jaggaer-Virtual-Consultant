@@ -91,11 +91,19 @@ export function claudeTabContext(text) {
 }
 
 // ---- Playwright MCP ("### Page" nelle versioni attuali, "### Page state" nelle precedenti) ----
+// WP07 giro 2 (C-1): "### Modal state" porta il messaggio grezzo di un dialog della pagina ⇒ come "# Open dialog" di
+// DevTools, ignoto; "### Page" deve precedere ogni sezione con testo della pagina (ordine di _build() del server:
+// Page, poi Modal state, WebMCP tools, Snapshot, Events, Paused).
+export const hasModal = (text) => /^### Modal state\s*$/m.test(String(text ?? ""));
+const PW_PAGE_DERIVED = /^### (Modal state|WebMCP tools|Snapshot|Events|Paused|New console messages|Console messages)\s*$/;
 export function playwrightPageUrl(text) {
   const L = String(text ?? "").split("\n");
+  if (hasModal(text)) return null;
   const h = idx(L, (l) => l === "### Page" || l === "### Page state");
   const u = idx(L, (l) => l.startsWith("- Page URL:"));
   if (h.length !== 1 || u.length !== 1 || u[0] !== h[0] + 1) return null;
+  const firstDerived = L.findIndex((l) => PW_PAGE_DERIVED.test(l));
+  if (firstDerived >= 0 && firstDerived < h[0]) return null;
   if (BAD_LINE.test(L[u[0]])) return null;
   const m = /^- Page URL: (\S+)$/.exec(L[u[0]]);
   return m ? hrefOf(m[1]) : null;

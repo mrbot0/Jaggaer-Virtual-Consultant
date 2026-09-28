@@ -124,8 +124,14 @@ export async function buildObservation({ ws, customer, session, call, state, res
   const loc = hasPage && state === "ok" && !(call.actions ?? [call]).some(isPageTextOp) ? observedLocation(call.family, text, { asked, resp }) : null;
   if (loc?.url && (page.elements ?? []).some((e) => e.ref)) {
     pageUrl = loc.url;
+    // WP07 giro 2 (I-1): un ref è legato solo se compare UNA volta fra tutti i nodi e UNA volta nel testo grezzo
+    // (DevTools stampa nomi e valori senza escape: una riga "uid=…" iniettata in un valore la ripete)
     const count = {};
-    for (const e of page.elements) if (e.ref) count[e.ref] = (count[e.ref] ?? 0) + 1;
+    for (const r of page.allRefs ?? []) count[r] = (count[r] ?? 0) + 1;
+    const esc = (x) => String(x).replace(/[.*+?^${}()|[\]\\]/g, (m) => `\\${m}`);
+    const token = (r) => (call.family === "chrome-devtools" ? new RegExp(`(^|[^\\w])uid=${esc(r)}(?![\\w])`, "g")
+      : call.family === "playwright" ? new RegExp(`\\[ref=${esc(r)}\\]`, "g") : new RegExp(`\\[${esc(r)}\\]`, "g"));
+    for (const e of page.elements) if (e.ref) count[e.ref] = Math.max(count[e.ref] ?? 0, (text.match(token(e.ref)) ?? []).length);
     refs = {};
     for (const e of page.elements) if (e.ref && Object.keys(refs).length < 300) refs[String(e.ref)] = count[e.ref] > 1 ? null : atlasMatch(atlas, e)?.code ?? null;
   }
