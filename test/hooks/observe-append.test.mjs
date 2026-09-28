@@ -7,7 +7,7 @@ import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import YAML from "yaml";
 import Database from "better-sqlite3";
-import { envWs, readSession, patchSession, writePlan, ROOT } from "../helpers/env-fixture.mjs";
+import { envWs, readSession, patchSession, writePlan, sealActivePlan, ROOT } from "../helpers/env-fixture.mjs";
 import { runHook } from "../helpers/hook-env.mjs";
 import { snap, demoAtlas, demoPlan, PLAN } from "../helpers/k6-fixture.mjs";
 import { check } from "../../scripts/decide/step-check.mjs";
@@ -31,6 +31,7 @@ function ws0({ env = "sandbox", plan = false } = {}) {
   if (plan) {
     const file = writePlan(ws, demoPlan(), "RUN.ACME.K6");
     patchSession(ws, (s) => { s.active_plan = { plan_id: PLAN, file, step: 2, run: "RUN.ACME.K6" }; });
+    sealActivePlan(ws);
   }
   patchSession(ws, (s) => { s.session_code = "SES.ACME.20260923.001"; s.browser = { current_url: "https://acme-sbx.jaggaer.com/home", tab: null, updated_by: "browser-origin" }; });
   return ws;
@@ -55,7 +56,7 @@ const CASES = [
   ["dt-errore-rete", DT + "navigate_page", { type: "url", url: EDIT }, () => T("Error: net::ERR_NAME_NOT_RESOLVED"), { kind: "error", url: null }],
   ["cl-read-page-ok", CL + "read_page", {}, () => T(snap("claude-browser", "ok")), { kind: "snapshot", url: EDIT, page_signature: "p2p/requisition/edit#richiesta-d-acquisto" }],
   ["cl-read-page-novita", CL + "read_page", {}, () => T(snap("claude-browser", "novelty")), { kind: "snapshot", novelty: 1, surprise: 0 }, { plan: true }],
-  ["cl-read-page-sorpresa", CL + "read_page", {}, () => T(snap("claude-browser", "attributo-diverso")), { kind: "snapshot", surprise: 1 }, { plan: true }],
+  ["cl-read-page-sorpresa", CL + "read_page", {}, () => T(snap("claude-browser", "stato-diverso")), { kind: "snapshot", surprise: 1 }, { plan: true }],
   ["cl-get-page-text", CL + "get_page_text", {}, () => T("Richiesta d'acquisto\nDescrizione RdA di prova"), { kind: "snapshot", url: "https://acme-sbx.jaggaer.com/home" }],
   ["cl-screenshot", CL + "computer", { action: "screenshot" }, () => [{ type: "image", data: "x", mimeType: "image/png" }], { kind: "screenshot" }],
   ["cl-navigate", CL + "navigate", { url: EDIT }, () => T(`Navigated to ${EDIT}\n\nTab Context:\n- Executed on tabId: 101\n- Available tabs:\n  • tabId 101: "ACME" (${EDIT})`), { kind: "navigate", url: EDIT }],
@@ -171,9 +172,9 @@ test("fail-open: un guasto interno avvisa senza bloccare e azzera l'origine; fuo
 
 test("step-check e observe-append usano lo stesso confronto: surprise/novelty coincidono", async () => {
   const ws = ws0({ plan: true });
-  const r = post(ws, CL + "read_page", {}, T(snap("claude-browser", "attributo-diverso")));
+  const r = post(ws, CL + "read_page", {}, T(snap("claude-browser", "stato-diverso")));
   const o = obsOf(ws, r);
-  const sc = await check({ ws, sid: "sess-1", planFile: readSession(ws).active_plan.file, step: 2, snapshot: snap("claude-browser", "attributo-diverso") });
+  const sc = await check({ ws, sid: "sess-1", planFile: readSession(ws).active_plan.file, step: 2, snapshot: snap("claude-browser", "stato-diverso") });
   assert.equal(o.surprise, sc.divergences.length);
   assert.equal(o.divergences[0].kind, sc.kind);
   assert.equal(sc.observation, o.id, "step-check cita l'OBS dell'ultimo risultato");

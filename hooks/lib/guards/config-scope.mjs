@@ -85,6 +85,26 @@ function noPlan(ctx, no) {
   return no(`nessun piano attivo: ogni azione con effetto sul browser richiede un piano attivo (step-check)${s.mode === "esplorazione" ? "; la modalità esplorazione vale solo in sandbox" : "; per esplorare in sandbox: /use mode esplorazione"}`);
 }
 
+const TARGETED = new Set(["input", "click", "upload"]);
+const SEL_CODE = /^[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.SEL\.\d{4}(\.v\d+)?$/;
+export function bindingRefusal(ctx, step) {
+  const b = ctx.session?.browser ?? {};
+  for (const a of ctx.actions) {
+    if (!TARGETED.has(a.kind)) continue;
+    if (typeof step.target !== "string" || !SEL_CODE.test(step.target)) return "il passo non ha come target un SEL dell'Atlas: input, click e upload non si possono legare al passo";
+    const refs = Array.isArray(a.targets) ? a.targets : [];
+    if (!refs.length || a.untargeted) return `azione senza uid/ref (${a.op ?? a.tool}): non si può legare al SEL del passo ${step.target}; usa l'uid o il ref dell'ultimo snapshot`;
+    const snap = b.snapshot;
+    if (!snap || !snap.refs || typeof snap.refs !== "object") return "nessuno snapshot osservato della pagina: esegui take_snapshot / read_page / browser_snapshot prima dell'azione";
+    if (!b.current_url || snap.url !== b.current_url) return "l'ultimo snapshot osservato non è della pagina corrente: rifai lo snapshot";
+    if ((snap.tab ?? null) !== (a.tab ?? null)) return "l'ultimo snapshot osservato è di un'altra scheda: rifai lo snapshot in questa scheda";
+    for (const r of refs) {
+      if (!Object.hasOwn(snap.refs, r) || snap.refs[r] !== step.target) return `l'elemento ${r} non corrisponde al SEL del passo ${step.target} (nell'ultimo snapshot: ${Object.hasOwn(snap.refs, r) ? snap.refs[r] ?? "nessuna voce dell'Atlas" : "assente"})`;
+    }
+  }
+  return null;
+}
+
 async function browserDecide(ctx, no) {
   if (!ctx.actions.some(isEffectful)) return null;
   const s = ctx.session;
@@ -94,6 +114,15 @@ async function browserDecide(ctx, no) {
   if (st.reason) return no(st.reason);
   const { step, ap } = st;
   const cls = step.action_class;
+  const at0 = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"}) del piano ${ap.plan_id}`;
+  // WP07 giro 1 (C2 d): invio (Enter/submit) e dialog accettato sotto un passo di classe di lettura, in ogni ambiente
+  if ((!ACT[cls] || ACT[cls].effect === "read") && ctx.actions.some((a) => a.submits === true || (a.kind === "dialog" && a.submits))) {
+    return no(`${at0}: invio (Enter/submit) o conferma di un dialog sotto un passo di classe di lettura: negato in ogni ambiente`);
+  }
+  // WP07 giro 1 (C2 c): ogni uid/ref di input, click e upload deve essere, nell'ultimo snapshot osservato della pagina
+  // corrente, l'elemento del SEL del passo attivo (mappa di observe-append: ref → atlas_match)
+  const bind = bindingRefusal(ctx, step);
+  if (bind) return no(`${at0}: ${bind}`);
   if (!COMMIT_VERBS.has(step.verb) && !GUARDED_CLASSES.has(cls)) return null;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"}) del piano ${ap.plan_id}`;
   if (ctx.actions.some((a) => a.kind === "script" || a.kind === "other")) return no(`script o strumento non classificato durante il ${at}: non verificabile, negato`);
@@ -291,6 +320,24 @@ function strings(v, out = []) {
   return out;
 }
 
+// WP07 giro 1 (C2): un sub-agente esegue step-check solo su un piano già attivo (active_plan.file) o già approvato
+// dall'utente (A1 nel registro); attivare un piano nuovo è della sessione principale. --close è sempre ammesso.
+function subAgentStepCheck(ctx, rest) {
+  const t = [...String(rest).matchAll(/"([^"]*)"|'([^']*)'|(\S+)/g)].map((m) => m[1] ?? m[2] ?? m[3]);
+  if (t.includes("--close")) return null;
+  const i = t.indexOf("--plan");
+  const plan = i >= 0 ? t[i + 1] : null;
+  const ap = ctx.session?.active_plan;
+  if (plan && ap && ap.file === plan) return null;
+  if (plan && ctx.customer) {
+    let id = null;
+    try { const txt = readFileSync(join(ctx.ws, "customers", ctx.customer, plan), "utf8"); id = /"plan_id"\s*:\s*"([^"]+)"|^plan_id:\s*["']?([^"'\s]+)/m.exec(txt)?.slice(1).find(Boolean) ?? null; } catch { id = null; }
+    const reg = id ? readApprovals(approvalsFile(ctx.ws, ctx.customer, ctx.sid)) : null;
+    if (id && reg?.ok && reg.records.some((r) => r.kind === "A1" && r.plan === id)) return null;
+  }
+  return "un sub-agente esegue step-check solo su un piano già attivo o approvato dall'utente: l'attivazione di un piano è della sessione principale";
+}
+
 const protectWrites = guarded(G, (ctx) => {
   const tr = transcriptDirs(ctx);
   const no = (why) => denyAudited(ctx, G, `scrittura negata — ${why}`);
@@ -309,6 +356,10 @@ const protectWrites = guarded(G, (ctx) => {
   if (CLAUDE_BIN.test(cmd) && CLAUDE_FLAGS.test(cmd)) return no("la CLI di Claude in modalità headless o di ripresa (-p/--print, -r/--resume, -c/--continue) non si invoca da una sessione JVC: produrrebbe prompt 'dell'utente'");
   if (CLAUDE_BIN.test(cmd) && CLAUDE_ADMIN.test(cmd)) return no(`i sottocomandi claude plugin|config|mcp cambiano plugin, impostazioni e server MCP — ${SETTINGS_WHY}`);
   const script = pluginScript(cmd, ctx);
+  if (script && ctx.agentId && /(^|[\\/])step-check\.mjs$/i.test(script.script)) {
+    const r = subAgentStepCheck(ctx, script.rest);
+    if (r) return no(r);
+  }
   if (script) {
     // anche uno script del plugin non riceve come argomento un percorso delle impostazioni
     if (CONFIG_TEXT.test(script.rest)) return no(`argomento verso le impostazioni di Claude Code — ${SETTINGS_WHY}`);

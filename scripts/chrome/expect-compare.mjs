@@ -70,9 +70,18 @@ function wcmTokens(entry, resolve) {
   return out.length ? out : [s];
 }
 
-export function compareExpect(step, page, { resolve = () => null, atlas = null, why = null, elapsedMs = null, timings = null, result } = {}) {
+export function compareExpect(step, page, { resolve = () => null, atlas = null, why = null, elapsedMs = null, timings = null, result, profile = "strict" } = {}) {
   const expect = step?.expect ?? {};
   const divergences = [];
+  // WP07 giro 1 (spec I2): un attributo che il formato dello snapshot non espone è IGNOTO: si salta e si segnala
+  const exposes = Array.isArray(page?.exposes) ? new Set(page.exposes) : null;
+  const unverified = [];
+  const known = (attr, el, label) => {
+    const a = attr === "value" && el && ["checkbox", "switch", "radio"].includes(el.role) ? "checked" : attr;
+    if (!exposes || exposes.has(a)) return true;
+    unverified.push({ target: label ?? null, attr: a, format: page.format });
+    return false;
+  };
   const confirmations = [];
   const expectedLabels = new Set();
   const perLabel = new Map();
@@ -95,11 +104,11 @@ export function compareExpect(step, page, { resolve = () => null, atlas = null, 
     if (!el) { add({ kind: "elemento-assente", what: "element", expected: t.code ?? t.label, observed: null, target: t.label }); continue; }
     let ok = true;
     for (const a of ATTRS) {
-      if (spec[a] === undefined) continue;
+      if (spec[a] === undefined || !known(a, el, t.label)) continue;
       const obs = el[a] === true;
       if (Boolean(spec[a]) !== obs) { ok = false; add({ kind: "attributo-diverso", what: a, expected: Boolean(spec[a]), observed: obs, target: t.label }); }
     }
-    if (spec.value !== undefined && !sameValue(spec.value, observedValue(el))) { ok = false; add({ kind: "stato-diverso", what: "value", expected: spec.value, observed: observedValue(el), target: t.label }); }
+    if (spec.value !== undefined && known("value", el, t.label) && !sameValue(spec.value, observedValue(el))) { ok = false; add({ kind: "stato-diverso", what: "value", expected: spec.value, observed: observedValue(el), target: t.label }); }
     if (ok) confirmations.push(t.code ?? t.label);
   }
 
@@ -108,6 +117,7 @@ export function compareExpect(step, page, { resolve = () => null, atlas = null, 
   if (expect.value !== undefined) {
     const el = target ? findElement(page, target) : null;
     if (!el) add({ kind: "elemento-assente", what: "value", expected: target?.code ?? target?.label ?? null, observed: null, target: target?.label ?? "target" });
+    else if (!known("value", el, target.label)) { /* ignoto nel formato */ }
     else if (!sameValue(expect.value, observedValue(el))) add({ kind: "stato-diverso", what: "value", expected: expect.value, observed: observedValue(el), target: target.label });
     else confirmations.push(`${target.code ?? target.label}=${expect.value}`);
   }
@@ -176,5 +186,5 @@ export function compareExpect(step, page, { resolve = () => null, atlas = null, 
   });
 
   const primary = divergences.find((d) => d.priority) ?? [...divergences].sort((a, b) => SEVERITY.indexOf(a.kind) - SEVERITY.indexOf(b.kind))[0] ?? null;
-  return { page_signature: pageSignature(page), divergences, novelties, confirmations, elements_seen, messages_seen: observed, primary };
+  return { page_signature: pageSignature(page, { profile }), unverified, divergences, novelties, confirmations, elements_seen, messages_seen: observed, primary };
 }

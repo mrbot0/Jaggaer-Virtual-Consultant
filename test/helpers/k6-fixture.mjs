@@ -24,7 +24,7 @@ export function demoPlan(extra = {}) {
       { n: 1, verb: "NAVIGATE", action_class: "ACT-OBS", target: { url_pattern: "https://acme-sbx.jaggaer.com/p2p/requisition/new" }, expect: { page_sig: "p2p/requisition/new" } },
       { n: 2, verb: "FILL", action_class: "ACT-CREATE", target: "C.ACME.P2P.SEL.0044", data: "IT-0442", timeout_ms: 15000,
         expect: { page_sig: "p2p/requisition/edit", options: ["Arredi", "Informatica"],
-          elements: ["C.ACME.P2P.SEL.0048", "C.ACME.P2P.SEL.0045", { sel: "C.ACME.P2P.SEL.0044", required: false, value: "IT-0442" }, { sel: "C.ACME.P2P.SEL.0047", value: false }] } },
+          elements: ["C.ACME.P2P.SEL.0048", { sel: "C.ACME.P2P.SEL.0045", value: "5" }, { sel: "C.ACME.P2P.SEL.0044", required: false, value: "IT-0442" }, { sel: "C.ACME.P2P.SEL.0047", value: false }] } },
       { n: 3, verb: "SAVE", action_class: "ACT-CREATE", target: "C.ACME.P2P.SEL.0120", expect: { toast: "C.ACME.P2P.SEL.0121" } },
       { n: 4, verb: "SUBMIT", action_class: "ACT-SUBMIT", risk: "R2", target: "C.ACME.P2P.SEL.0130", expect: { messages: [] } },
     ],

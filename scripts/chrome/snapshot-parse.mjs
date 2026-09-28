@@ -15,6 +15,8 @@
 //    `- textbox "Nome" [ref=e8]: valore`, attributi fra quadre ([checked] [disabled] [level=1]).
 //  - altrimenti testo semplice (get_page_text): solo texts.
 
+import { redact } from "./redact.mjs";
+
 export const MESSAGE_ROLES = new Set(["alert", "status", "alertdialog", "dialog", "log", "marquee"]);
 export const FIELD_ROLES = new Set(["textbox", "searchbox", "spinbutton", "combobox", "listbox", "checkbox", "radio", "switch", "slider", "textarea"]);
 const TEXT_ROLES = new Set(["StaticText", "text", "InlineTextBox", "paragraph", "generic", "none", "LineBreak"]);
@@ -51,7 +53,7 @@ function finish(out, nodes) {
     if (text) out.messages.push({ text, role: m.role });
   }
   for (const n of nodes) {
-    if (n.text) out.texts.push(n.text);
+    if (n.text) { out.texts.push(n.text); out.textNodes.push({ text: n.text, ref: n.ref ?? null, box: n.box ?? null }); }
     if (n.role === "heading" && n.name) out.headings.push({ text: n.name, level: n.level ?? null });
     if (TEXT_ROLES.has(n.role) || n.role === "RootWebArea" || n.role === "label") continue;
     const e = { role: n.role, name: n.name ?? "", ref: n.ref ?? null };
@@ -61,7 +63,16 @@ function finish(out, nodes) {
   return out;
 }
 
-const base = (format) => ({ format, url: null, title: null, tab: null, elements: [], texts: [], messages: [], headings: [] });
+// Attributi che ciascun formato ESPONE (WP07 giro 1, spec I2): un attributo che il formato non rende è ignoto, non
+// falso. Verificato sulle catture reali: Claude read_page non rende required/disabled/checked (il valore sì, come
+// testo del controllo dentro il suo label); l'aria snapshot di Playwright non rende required.
+export const EXPOSES = {
+  "chrome-devtools": ["required", "disabled", "checked", "value", "level"],
+  playwright: ["disabled", "checked", "value", "level"],
+  "claude-browser": ["value"],
+  text: [],
+};
+const base = (format) => ({ format, exposes: EXPOSES[format], url: null, title: null, tab: null, elements: [], texts: [], textNodes: [], messages: [], headings: [] });
 
 // ---- Chrome DevTools ----
 const DT_LINE = /^(\s*)uid=(\S+)\s+(\S+)(?:\s+"((?:[^"\\]|\\.)*)")?(.*)$/;
@@ -244,9 +255,11 @@ export function mainHeading(page) {
   const h = page?.headings ?? [];
   return (h.find((x) => x.level === 1) ?? h[0])?.text ?? null;
 }
-export function pageSignature(page) {
+// WP07 giro 1 (spec I3): il titolo si redige (profilo) PRIMA dello slug — dopo, la redazione non lo riconosce più.
+export function pageSignature(page, { profile = "strict" } = {}) {
   const p = page?.url ? normalizePath(page.url) : null;
-  const h = mainHeading(page);
+  const raw = mainHeading(page);
+  const h = raw ? redact(raw, { profile }) : null;
   if (p == null && !h) return null;
   return `${p ?? ""}${h ? `#${slug(h)}` : ""}`;
 }

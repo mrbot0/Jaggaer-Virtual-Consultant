@@ -71,7 +71,8 @@
           }
         },
         "questions": { "type": "array" },
-        "expected_outcomes": { "type": "array" }
+        "expected_outcomes": { "type": "array" },
+        "reads": { "type": "array", "description": "WP07 giro 1: letture di verifica attese da step-check --resume prima di riattivare un passo con effetto (§47.2 #2).", "items": { "type": "object", "required": ["plan", "step"] } }
       }
     },
     "approvals": {
@@ -104,7 +105,8 @@
         "plan_id": { "type": "string", "pattern": "^PLAN\\.[A-Za-z0-9._-]+$" },
         "file": { "type": "string", "minLength": 1 },
         "step": { "type": "integer", "minimum": 1 },
-        "run": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" }
+        "run": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
+        "plan_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "WP07 giro 1: impronta del file del piano all'attivazione; i guard negano se il file non la ha più." }
       }
     },
     "snapshots": {
@@ -115,7 +117,8 @@
     "browser": {
       "type": "object",
       "description": "Origine del browser: guard-environment registra current_url a ogni navigate consentito e lo azzera ai cambi di scheda/pagina (giro di correzione 1); observe-append (K6.2) lo aggiorna dalla pagina osservata (marcatore positivo della famiglia; fail-closed). tab = scheda/pagina nominata dalla navigazione registrata.",
-      "properties": { "current_url": { "type": ["string", "null"] }, "tab": { "type": ["string", "null"] }, "updated_by": { "type": "string" } }
+      "properties": { "current_url": { "type": ["string", "null"] }, "tab": { "type": ["string", "null"] }, "updated_by": { "type": "string" },
+        "snapshot": { "type": "object", "description": "WP07 giro 1 (C2 c): ultimo snapshot osservato da observe-append (pagina confermata dal marcatore del server): { obs, url, tab, ts, refs: { uid/ref → SEL dell'Atlas | null } }; guard-config-scope lega a esso input e click.", "required": ["url", "refs"] } }
     },
     "surprises": {
       "type": "array",

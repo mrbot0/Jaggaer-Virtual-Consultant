@@ -75,3 +75,19 @@ export function writePlan(ws, plan, run = "RUN.0001") {
 }
 
 export { mkWs, seedSession, ROOT };
+
+// WP07 giro 1 (C2 b, c): lo stato che step-check e observe-append scrivono per un piano attivo — l'impronta del file
+// del piano (active_plan.plan_sha256) e l'ultimo snapshot osservato (browser.snapshot: uid/ref → SEL). I test dei
+// guard che seminano active_plan a mano lo completano con questa funzione.
+export function sealActivePlan(ws, { refs = null, url = null, tab = null } = {}) {
+  const ap = readSession(ws).active_plan;
+  if (!ap) return;
+  const text = readFileSync(join(ws, "customers/ACME", ap.file), "utf8");
+  patchSession(ws, (x) => {
+    x.active_plan.plan_sha256 = sha256(text);
+    if (refs) {
+      const cur = x.browser?.current_url ?? url ?? "https://acme-sbx.jaggaer.com/home";
+      x.browser = { ...(x.browser ?? {}), current_url: cur, snapshot: { obs: "L.ACME.ADM.OBS.0001", url: cur, tab, ts: new Date().toISOString(), refs } };
+    }
+  });
+}

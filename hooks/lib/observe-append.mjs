@@ -13,7 +13,8 @@ import { createHash } from "node:crypto";
 import { loadHookState, sessionDir } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
 import { responseState } from "./browser-origin.mjs";
-import { nextObserved } from "./observed-origin.mjs";
+import { nextObserved, observedLocation } from "./observed-origin.mjs";
+import { isPageTextOp } from "./origin-markers.mjs";
 import { updateSessionFile } from "./session-state.mjs";
 import { writeFileAtomic } from "./fsx.mjs";
 import { parseSnapshot, responseText, responseHasImage } from "../../scripts/chrome/snapshot-parse.mjs";
@@ -71,7 +72,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
   let cfgObject = null;
   if (hasPage && kind === "snapshot" && ap) {
     const st = await activeStep(ws, customer, ap);
-    if (st) cmp = compareExpect(st.step, page, { resolve: (c) => resolveSel(ws, c, customer), atlas });
+    if (st) cmp = compareExpect(st.step, page, { resolve: (c) => resolveSel(ws, c, customer), atlas, profile });
     // §28.1: lo snapshot della pagina durante un passo ACT-CFG-CHANGE è lo snapshot dell'oggetto governato
     if (st?.step?.action_class === "ACT-CFG-CHANGE" && st.step.config?.object && state === "ok") cfgObject = st.step.config.object;
   }
@@ -83,7 +84,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
   };
   const masks = new Set();
   const ft = (s) => { const r = freeText(s, { profile, env }); r.masks.forEach((x) => masks.add(x)); return r.text; };
-  const seen = (cmp?.elements_seen ?? (hasPage ? compareExpect({ expect: {} }, page, { atlas }).elements_seen : [])).slice(0, MAX_ELEMENTS).map((e) => {
+  const seen = (cmp?.elements_seen ?? (hasPage ? compareExpect({ expect: {} }, page, { atlas, profile }).elements_seen : [])).slice(0, MAX_ELEMENTS).map((e) => {
     const m = e.atlas_match ? atlas.find((a) => a.code === e.atlas_match) : atlasMatch(atlas, { name: e.label, role: e.role });
     const o = { ...e, label: ft(e.label) };
     if (e.value !== undefined) {
@@ -99,7 +100,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
     at_step: ap ? { plan: ap.plan_id, n: ap.step, run: ap.run ?? null } : null,
     tool: call.tool, family: call.family, kind,
     url: cleanUrl(page?.url, profile),
-    page_signature: cmp?.page_signature ?? (hasPage ? (await import("../../scripts/chrome/snapshot-parse.mjs")).pageSignature(page) : null),
+    page_signature: cmp?.page_signature ?? (hasPage ? (await import("../../scripts/chrome/snapshot-parse.mjs")).pageSignature(page, { profile }) : null),
     title: page?.title ? ft(page.title) : null,
     elements_seen: seen,
     messages_seen: (page?.messages ?? []).map((m) => ft(m.text)),
@@ -115,7 +116,20 @@ export async function buildObservation({ ws, customer, session, call, state, res
   };
   if (kind === "error") doc.error_text = ft(text || "risposta d'errore dello strumento");
   doc.redaction.masks = [...masks].sort();
-  return { doc, errors, scope, profile, cfgObject };
+  // Solo da uno snapshot la cui pagina è confermata dal marcatore del server (stesse regole dell'origine) e mai da
+  // uno strumento che restituisce testo della pagina; un ref che compare due volte (riga forgiata) vale null.
+  let refs = null;
+  let pageUrl = null;
+  const asked = (call.actions ?? [call]).map((a) => a.tab).filter((t) => t != null).at(-1) ?? null;
+  const loc = hasPage && state === "ok" && !(call.actions ?? [call]).some(isPageTextOp) ? observedLocation(call.family, text, { asked, resp }) : null;
+  if (loc?.url && (page.elements ?? []).some((e) => e.ref)) {
+    pageUrl = loc.url;
+    const count = {};
+    for (const e of page.elements) if (e.ref) count[e.ref] = (count[e.ref] ?? 0) + 1;
+    refs = {};
+    for (const e of page.elements) if (e.ref && Object.keys(refs).length < 300) refs[String(e.ref)] = count[e.ref] > 1 ? null : atlasMatch(atlas, e)?.code ?? null;
+  }
+  return { doc, errors, scope, profile, cfgObject, refs, pageUrl };
 }
 
 function writeDb(ws, customer, scope, doc, errors, now) {
@@ -199,7 +213,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   }
 
   // 2. osservazione
-  const { doc, errors, scope, cfgObject } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, env, now });
+  const { doc, errors, scope, cfgObject, refs, pageUrl } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, env, now });
   const { code, errs } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
   const dir = join(st.ws, "customers", st.customer, "observations");
   mkdirSync(dir, { recursive: true });
@@ -218,6 +232,11 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       }
       o.snapshot_sig = doc.page_signature;
     } else if (obsKindForLedger === "action" || doc.kind === "error") o.snapshot_sig = null;
+    // ultimo snapshot osservato: vale solo per la pagina (URL) e la scheda su cui è stato preso
+    if (refs && pageUrl) {
+      const asked = (call.actions ?? [call]).map((a) => a.tab).filter((t) => t != null).at(-1) ?? null;
+      s.browser = { ...(s.browser ?? {}), snapshot: { obs: code, url: pageUrl, tab: asked != null ? String(asked) : null, ts: doc.ts, refs } };
+    }
     if (cfgObject) s.snapshots = [...(Array.isArray(s.snapshots) ? s.snapshots : []), { objects: [cfgObject], ts: doc.ts, obs: code }].slice(-20);
     s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
     return s;

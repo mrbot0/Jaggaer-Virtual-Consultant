@@ -31,7 +31,9 @@ const find = (p, name) => p.find((n) => n.name === name);
 export const CASES = {
   ok: basePage(),
   "elemento-assente": edit((p) => p.splice(p.indexOf(find(p, "Centro di costo")), 1)),
-  "stato-diverso": edit((p) => { find(p, "Urgente").checked = true; }),
+  // WP07 giro 1 (spec I2): lo stato diverso è un valore, che tutti e tre i formati espongono
+  "stato-diverso": edit((p) => { find(p, "Quantità").value = "7"; }),
+  "checkbox-diverso": edit((p) => { find(p, "Urgente").checked = true; }),
   "attributo-diverso": edit((p) => { find(p, "Centro di costo").required = true; }),
   "elemento-in-piu": edit((p) => { find(p, "Categoria").options.push("Servizi"); }),
   "messaggio-inatteso": edit((p) => p.splice(2, 0, { role: "alert", text: "Il centro di costo non è attivo per la società selezionata (REQ-VAL-014)" })),
@@ -73,14 +75,14 @@ function claude(page) {
   for (const e of page) {
     if (e.role === "banner" || e.role === "alert" || e.role === "status") { out.push(`${e.role} "${e.text}" ${ref()}`); continue; }
     if (e.role === "heading") { out.push(`heading "${e.name}" ${ref()}`); continue; }
-    if (e.role === "button") { out.push(`button "${e.name}" ${ref()} type="button"${e.disabled ? " disabled" : ""}`); continue; }
+    if (e.role === "button") { out.push(`button "${e.name}" ${ref()} type="button"`); continue; }
     if (e.role === "link") { out.push(`link "${e.name}" ${ref()} href="/p2p/requisition/list"`); continue; }
+    // Fedele alla cattura reale (test/golden/snapshot-parse/claude-real.txt): il controllo sta dentro il suo label,
+    // il testo fra virgolette è il valore, required/checked/disabled NON sono resi; un input numerico è un textbox.
     out.push(`label "${e.name}" ${ref()}`);
-    const attrs = [];
-    if (e.role === "checkbox" && e.checked) attrs.push("checked");
-    if (e.required) attrs.push("required");
+    const role = e.role === "spinbutton" ? "textbox" : e.role;
     const val = e.role === "checkbox" ? "" : e.value ? ` "${e.value}"` : "";
-    out.push(` ${e.role}${val} ${ref()}${attrs.length ? ` ${attrs.join(" ")}` : ""}`);
+    out.push(` ${role}${val} ${ref()}${e.role === "spinbutton" ? ' type="number"' : ""}`);
     for (const o of e.options ?? []) out.push(`  option "${o}" ${ref()}`);
   }
   out.push("", "Viewport: 1280x800", "", "Tab Context:", "- Executed on tabId: 101", "- Available tabs:", `  • tabId 101: "${TITLE}" (${URL_EDIT})`);
@@ -99,7 +101,7 @@ function playwright(page) {
     if (e.role === "link") { out.push(`- link "${e.name}" ${ref()} [cursor=pointer]:`, "  - /url: /p2p/requisition/list"); continue; }
     const br = [];
     if (e.role === "checkbox" && e.checked) br.push("[checked]");
-    if (e.required) br.push("[required]");
+    // l'aria snapshot di Playwright non rende required (WP07 giro 1, spec I2)
     br.push(ref());
     if (e.options) {
       out.push(`- combobox "${e.name}" ${br.join(" ")}:`);

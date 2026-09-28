@@ -35,6 +35,7 @@ import { evaluate, loadTable } from "./dt-eval.mjs";
 import { parseSnapshot } from "../chrome/snapshot-parse.mjs";
 import { compareExpect } from "../chrome/expect-compare.mjs";
 import { resolveSel, atlasIndex } from "../chrome/atlas.mjs";
+import { profileFor, redact } from "../chrome/redact.mjs";
 
 export const STATUSES = ["ok", "surprise", "novelty", "approval_required", "denied"];
 const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
@@ -118,14 +119,14 @@ const dedupePending = (cur, add) => {
   return out;
 };
 
-function lastCheckpoint(dir) {
+function lastCheckpoint(dir, planId = null) {
   let files = [];
   try { files = readdirSync(dir).filter((f) => /^\d+\.json$/.test(f)); } catch { return null; }
   let best = null;
   for (const f of files) {
     try {
       const cp = JSON.parse(readFileSync(join(dir, f), "utf8"));
-      if (cp.proceed && (best == null || cp.step > best)) best = cp.step;
+      if (cp.proceed && (!planId || cp.plan_id === planId) && (best == null || cp.step > best)) best = cp.step;
     } catch { /* checkpoint illeggibile: non conta */ }
   }
   return best;
@@ -165,6 +166,9 @@ export async function check(opts) {
   const plan = info.plan;
   if (!session.env) return deny("nessun ambiente dichiarato: /use env <id> prima di eseguire un piano (§51.2)");
   if (plan?.customer !== customer) return deny(`il piano è del cliente ${plan?.customer}, la sessione di ${customer}`);
+  const active0 = session.active_plan ?? null;
+  // WP07 giro 1 (C2 b): il piano attivo è legato alla sua impronta; un file cambiato dopo l'attivazione non vale
+  if (active0 && active0.plan_id === plan.plan_id && active0.plan_sha256 !== info.sha256) return deny(`il piano ${plan.plan_id} è stato modificato dopo l'attivazione (impronta diversa): chiudilo con --close e riattivalo${["sandbox", "dev"].includes(session.env.type) ? "" : " con una nuova APPROVO PIANO"}`);
   const v = validatePlan(plan, { env: { id: session.env.id, type: session.env.type } });
   if (!v.ok) return deny(`piano non valido per l'ambiente ${session.env.id} (${session.env.type}): ${v.errors.join("; ")}`);
   const steps = stepsOf(plan);
@@ -176,14 +180,35 @@ export async function check(opts) {
   const reg = readApprovals(approvalsFile(ws, customer, sid));
   if (!reg.ok) return deny(`registro delle approvazioni corrotto (${reg.reason})`);
   const observation = session.ledger?.observe?.last_obs ?? null;
+  const profile = profileFor({ envType: session.env.type });
+  const noEffect = { divergences: [], novelties: [], checkpoint: null, observation };
 
-  // attiva il passo s: scrive active_plan, compensazione, richieste di approvazione
+  // WP07 giro 1 (C2 a): fuori sandbox un piano si attiva solo dopo APPROVO PIANO <id> dell'utente (A1 registrato da
+  // approval-capture, con l'impronta di QUESTO file). Senza: richiesta aperta in pending.approvals, active_plan intatto.
+  const sandbox = ["sandbox", "dev"].includes(session.env.type);
+  const second = session.env.policy?.second_approver_required ?? session.env.type === "prod";
+  const planApproved = () => {
+    const a1 = reg.records.filter((r) => r.kind === "A1" && r.plan === plan.plan_id).at(-1);
+    return !!a1 && a1.plan_sha256 === info.sha256;
+  };
+  const planApproval = () => {
+    if (active || sandbox || planApproved()) return null;
+    const req = { kind: "A1", plan: plan.plan_id, file: planFile };
+    updateSessionFile(sFile, (x) => { x.pending.approvals = dedupePending(Array.isArray(x.pending.approvals) ? x.pending.approvals : [], [req]); });
+    audit(ws, sid, customer, session.scope, { action: "activate", plan: plan.plan_id, status: "approval_required", reason: "plan-approval" });
+    return { status: "approval_required", proceed: false, ...noEffect, pending: [req],
+      reason: `attivare un piano in ${session.env.type} richiede l'approvazione dell'utente sul piano (§52, §57.2)`, ask: phrase({ kind: "A1" }, plan.plan_id, second) };
+  };
+
+  // attiva il passo s: scrive active_plan (con l'impronta), compensazione, richieste di approvazione.
+  // Un gate negato non scrive nulla (WP07 giro 1, spec I1): il piano resta dov'era.
   const activate = (s, extraMutate) => {
     const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile });
+    if (g.status === "denied") { if (extraMutate) updateSessionFile(sFile, (x) => { extraMutate(x); }); return g; }
     if (g.compensation) g.compensation.registered_at = now.toISOString();
     if (g.compensation) writeCompensations(runDir, [g.compensation]);   // prima su disco nel run (§47.2 #1)
     updateSessionFile(sFile, (x) => {
-      x.active_plan = { plan_id: plan.plan_id, file: planFile, step: s.n, run };
+      x.active_plan = { plan_id: plan.plan_id, file: planFile, step: s.n, run, plan_sha256: info.sha256 };
       if (g.compensation) {
         const comps = Array.isArray(x.pending.compensations) ? x.pending.compensations : [];
         if (!comps.some((c) => c && typeof c === "object" && c.plan === plan.plan_id && c.step === s.n)) comps.push(g.compensation);
@@ -194,44 +219,71 @@ export async function check(opts) {
     });
     return g;
   };
+  const skippable = (a, b) => steps.filter((s) => s.n >= a && s.n < b).every((s) => (plan.repair_policy?.skip_allowed ?? []).includes(s.n));
+  const cmpOpts = { resolve: (code) => resolveSel(ws, code, customer), atlas: atlasIndex(ws, customer, session.scope), why, elapsedMs, result, profile };
 
+  // ---- ripresa (§47.2): nessun salto di passi non verificati; il passo con effetto chiede prima la lettura ----
   if (resume != null) {
     const target = steps.find((s) => s.n === Number(resume));
     if (!target) throw new StepCheckError(1, `il piano ${plan.plan_id} non ha il passo ${resume}`);
-    const last = lastCheckpoint(cpDir);
-    const from = (last ?? 0) + 1;
-    const reads = steps.filter((s) => s.n >= from && s.n <= target.n && EFFECT_VERBS.has(s.verb))
-      .map((s) => ({ step: s.n, verb: "READ", target: s.wait_for ?? s.target, expect: s.expect, why: `verifica se il passo ${s.n} (${s.verb}) risulta già eseguito: se sì, saltalo (idempotenza, §47.2 #2)` }));
-    const g = activate(target);
-    audit(ws, sid, customer, session.scope, { action: "resume", plan: plan.plan_id, step: target.n, last_checkpoint: last });
-    return { status: g.status === "ok" ? "ok" : g.status, resume_from: target.n, last_checkpoint: last, reads, gate: g, ask: g.ask, reason: g.reason, proceed: g.status === "ok",
-      divergences: [], novelties: [], checkpoint: null, observation, active_plan: { plan_id: plan.plan_id, file: planFile, step: target.n, run } };
+    const last = lastCheckpoint(cpDir, plan.plan_id);
+    const lastN = last ?? 0;
+    if (!(target.n <= lastN + 1 || skippable(lastN + 1, target.n))) return deny(`ripresa al passo ${target.n} negata: l'ultimo passo verificato è ${last ?? "nessuno"} e i passi intermedi non sono in repair_policy.skip_allowed`);
+    const pa = planApproval();
+    if (pa) return pa;
+    const reads = EFFECT_VERBS.has(target.verb) ? [{ step: target.n, verb: "READ", target: target.wait_for ?? target.target, expect: target.expect, why: `verifica se il passo ${target.n} (${target.verb}) risulta già eseguito: se sì, si salta (idempotenza, §47.2 #2)` }] : [];
+    const clearReads = (x) => { x.pending.reads = (Array.isArray(x.pending.reads) ? x.pending.reads : []).filter((r) => r.plan !== plan.plan_id); };
+    if (reads.length && snapshot == null) {
+      updateSessionFile(sFile, (x) => { clearReads(x); x.pending.reads.push({ plan: plan.plan_id, step: target.n, file: planFile, run, since: now.toISOString() }); });
+      audit(ws, sid, customer, session.scope, { action: "resume", plan: plan.plan_id, step: target.n, last_checkpoint: last, awaiting_read: true });
+      return { status: "ok", activated: false, resume_from: target.n, last_checkpoint: last, reads, proceed: false, ...noEffect,
+        ask: `esegui la lettura (snapshot) e richiama step-check --resume ${target.n} --snapshot <file>: il passo con effetto non si riattiva senza verifica` };
+    }
+    if (reads.length) {
+      const page = typeof snapshot === "string" ? parseSnapshot(snapshot) : snapshot;
+      const cmp = compareExpect(target, page, { ...cmpOpts, atlas: null });
+      if (!cmp.divergences.length) {
+        // già eseguito: checkpoint del passo, poi il successivo (o piano completato)
+        mkdirSync(cpDir, { recursive: true });
+        writeFileAtomic(join(cpDir, `${target.n}.json`), `${JSON.stringify({ plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: target.n, status: "ok", proceed: true, resumed: "already_done", page_signature: cmp.page_signature, observation, ts: now.toISOString() }, null, 2)}\n`);
+        const nxt = steps[steps.indexOf(target) + 1] ?? null;
+        let g = null;
+        if (nxt) g = activate(nxt, clearReads);
+        else updateSessionFile(sFile, (x) => { clearReads(x); x.active_plan = null; });
+        audit(ws, sid, customer, session.scope, { action: "resume", plan: plan.plan_id, step: target.n, already_done: true });
+        return { status: "ok", already_done: true, resume_from: target.n, last_checkpoint: last, reads, proceed: true, ...noEffect,
+          ...(g ? { next: { step: nxt.n, status: g.status, ...(g.reason ? { reason: g.reason } : {}), ...(g.ask ? { ask: g.ask } : {}) } } : { plan_status: "completed" }) };
+      }
+    }
+    const g = activate(target, (x) => { x.pending.reads = (Array.isArray(x.pending.reads) ? x.pending.reads : []).filter((r) => r.plan !== plan.plan_id); });
+    audit(ws, sid, customer, session.scope, { action: "resume", plan: plan.plan_id, step: target.n, last_checkpoint: last, status: g.status });
+    return { status: g.status, activated: g.status !== "denied", resume_from: target.n, last_checkpoint: last, reads, gate: g, ask: g.ask, reason: g.reason, proceed: g.status === "ok",
+      ...noEffect, active_plan: g.status === "denied" ? active : { plan_id: plan.plan_id, file: planFile, step: target.n, run, plan_sha256: info.sha256 } };
   }
 
   const cur = steps.find((s) => s.n === Number(n));
   if (!cur) throw new StepCheckError(1, `il piano ${plan.plan_id} non ha il passo ${n}`);
-  const skippable = (a, b) => steps.filter((s) => s.n >= a && s.n < b).every((s) => (plan.repair_policy?.skip_allowed ?? []).includes(s.n));
 
   // ---- attivazione ----
   if (snapshot == null) {
     const expected = active ? active.step : steps[0].n;
     if (cur.n !== expected && !(cur.n > expected && skippable(expected, cur.n))) return deny(`passo fuori sequenza: il piano ${plan.plan_id} è al passo ${expected} (saltabili solo i passi in repair_policy.skip_allowed)`);
+    const pa = planApproval();
+    if (pa) return pa;
     const g = activate(cur);
     audit(ws, sid, customer, session.scope, { action: "activate", plan: plan.plan_id, step: cur.n, status: g.status });
     return { status: g.status, reason: g.reason, ask: g.ask, compensation: g.compensation, pending: g.pending, proceed: g.status === "ok",
-      divergences: [], novelties: [], checkpoint: null, observation, active_plan: { plan_id: plan.plan_id, file: planFile, step: cur.n, run } };
+      ...noEffect, active_plan: g.status === "denied" ? active : { plan_id: plan.plan_id, file: planFile, step: cur.n, run, plan_sha256: info.sha256 } };
   }
 
   // ---- verifica ----
   if (!active) return deny(`piano ${plan.plan_id} non attivo: attivalo con --step ${steps[0].n} senza snapshot`);
   if (active.step !== cur.n) return deny(`passo fuori sequenza: il piano ${plan.plan_id} è al passo ${active.step}, non al ${cur.n}`);
   const page = typeof snapshot === "string" ? parseSnapshot(snapshot) : snapshot;
-  const cmp = compareExpect(cur, page, {
-    resolve: (code) => resolveSel(ws, code, customer), atlas: atlasIndex(ws, customer, session.scope), why, elapsedMs, result,
-  });
+  const cmp = compareExpect(cur, page, cmpOpts);
   const risk = stepRisk(cur);
   const res = { status: "ok", kind: null, compat: null, proceed: true, divergences: cmp.divergences, novelties: cmp.novelties,
-    confirmations: cmp.confirmations, page_signature: cmp.page_signature, observation, risk };
+    confirmations: cmp.confirmations, page_signature: cmp.page_signature, observation, risk, ...(cmp.unverified.length ? { unverified: cmp.unverified } : {}) };
   let surpriseRec = null;
   let finish = false;
   if (cmp.primary) {
@@ -257,11 +309,13 @@ export async function check(opts) {
     }
   } else if (cmp.novelties.length) res.status = "novelty";
 
-  // checkpoint atomico (§29.6)
+  // checkpoint atomico (§29.6); i valori delle divergenze redatti come l'OBS (spec I3)
+  const red = (v) => (typeof v === "string" ? redact(v, { profile }) : Array.isArray(v) ? v.map(red) : v);
   mkdirSync(cpDir, { recursive: true });
   const cpFile = join(cpDir, `${cur.n}.json`);
   writeFileAtomic(cpFile, `${JSON.stringify({ plan_id: plan.plan_id, plan_sha256: info.sha256, run, step: cur.n, status: res.status, kind: res.kind, compat: res.compat,
-    proceed: res.proceed, stop: !!res.stop, divergences: res.divergences, novelties: res.novelties, confirmations: res.confirmations,
+    proceed: res.proceed, stop: !!res.stop, divergences: res.divergences.map((d) => ({ ...d, expected: red(d.expected), observed: red(d.observed), ...(d.target ? { target: red(d.target) } : {}) })),
+    novelties: res.novelties.map((x) => ({ ...x, label: red(x.label) })), confirmations: res.confirmations,
     page_signature: res.page_signature, observation, ts: now.toISOString() }, null, 2)}\n`);
   res.checkpoint = `runs/${run}/checkpoints/${cur.n}.json`;
 

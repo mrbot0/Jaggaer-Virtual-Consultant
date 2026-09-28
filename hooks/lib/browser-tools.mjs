@@ -194,6 +194,13 @@ function apply(family, table, op, ti) {
   if (out.outputs && !out.outputs.length) delete out.outputs;
   const tab = tabOf(ti);
   if (tab != null) out.tab = String(tab);
+  // WP07 giro 1 (C2 c): tutti gli elementi che la chiamata tocca (uid DevTools, ref Claude/Playwright, anche nei
+  // moduli e nei trascinamenti), per legarli al SEL del passo attivo.
+  const refs = [ti.uid, ti.ref, ti.from_uid, ti.to_uid, ti.startRef, ti.endRef,
+    ...(Array.isArray(ti.elements) ? ti.elements.map((e) => e?.uid) : []), ...(Array.isArray(ti.fields) ? ti.fields.map((e) => e?.ref) : [])]
+    .filter((x) => typeof x === "string" || typeof x === "number").map(String);
+  out.targets = refs;
+  if ((Array.isArray(ti.elements) && ti.elements.some((e) => e?.uid == null)) || (Array.isArray(ti.fields) && ti.fields.some((e) => e?.ref == null))) out.untargeted = true;
   return out;
 }
 

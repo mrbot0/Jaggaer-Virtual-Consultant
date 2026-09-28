@@ -55,19 +55,26 @@ test("3A su stato K6: step-check attiva il piano e chiede A1/A3, observe-append 
   const page = (checked) => `## Latest page snapshot\nuid=1_0 RootWebArea "ACME Procurement" url="${P}/setup/import-profiles/7"\n  uid=1_1 heading "Profili di import" level="1"\n  uid=1_2 StaticText "strict_import "\n  uid=1_3 checkbox "strict_import "${checked ? " checked" : ""}\n`;
   const snapFile = (checked) => { const f = join(ws, "customers/ACME/.sessions/sess-1/p.txt"); writeFileSync(f, page(checked)); return f; };
 
-  // step-check attiva il passo 1 (ACT-OBS: nessuna approvazione)
+  // WP07 giro 1 (C2 a): in produzione step-check non attiva il piano senza APPROVO PIANO; la richiesta A1 la scrive lui
+  const a0 = sc(["--step", "1"]);
+  assert.equal(a0.status, "approval_required"); assert.match(a0.ask, /APPROVO PIANO PLAN\.ACME\.K6\.3A DA <Nome Cognome>/);
+  assert.equal(readSession(ws).active_plan ?? null, null);
+  assert.deepEqual(readSession(ws).pending.approvals.map((a) => [a.kind, a.step ?? null]), [["A1", null]]);
+  assert.match(say(`APPROVO PIANO ${PLAN} DA Mario Rossi`), /registrata: A1/);
+  // ora step-check attiva il passo 1 (ACT-OBS), con l'impronta del piano
   assert.equal(sc(["--step", "1"]).status, "ok");
-  assert.deepEqual(readSession(ws).active_plan, { plan_id: PLAN, file, step: 1, run: "RUN.ACME.3A" });
+  const ap = readSession(ws).active_plan;
+  assert.deepEqual({ ...ap, plan_sha256: undefined }, { plan_id: PLAN, file, step: 1, run: "RUN.ACME.3A", plan_sha256: undefined });
+  assert.match(ap.plan_sha256, /^[0-9a-f]{64}$/);
   assert.deepEqual(call("navigate_page", { type: "url", url: `${P}/setup/import-profiles/7`, pageId: 1 }, `Successfully navigated to ${P}/setup/import-profiles/7.\n## Pages\n1: ACME Procurement (${P}/setup/import-profiles/7) [selected]`), []);
   call("take_snapshot", { pageId: 1 }, page(false));
   // passo 1 verificato ⇒ passo 2 (config in prod) richiede A1 e A3: le richieste le scrive step-check
   const r1 = sc(["--step", "1", "--snapshot", snapFile(false)]);
   assert.equal(r1.status, "ok"); assert.equal(r1.next.status, "approval_required");
-  assert.match(r1.next.ask, /APPROVO PIANO PLAN\.ACME\.K6\.3A DA <Nome Cognome>/);
-  assert.deepEqual(readSession(ws).pending.approvals.map((a) => [a.kind, a.step ?? null]), [["A1", null], ["A3", 2]]);
+  assert.match(r1.next.ask, /APPROVO PROVA PLAN\.ACME\.K6\.3A DA <Nome Cognome>/);
+  assert.deepEqual(readSession(ws).pending.approvals.map((a) => [a.kind, a.step ?? null]), [["A2", null], ["A3", 2]]);
   // senza approvazioni il passo con effetto è negato
-  assert.ok(call("click", { uid: "1_3", pageId: 1 }, "Successfully clicked").some((d) => /A1|APPROVO/.test(d)));
-  assert.match(say(`APPROVO PIANO ${PLAN} DA Mario Rossi`), /registrata: A1/);
+  assert.ok(call("click", { uid: "1_3", pageId: 1 }, "Successfully clicked").some((d) => /A2|APPROVO/.test(d)));
   assert.match(say(`APPROVO PROVA ${PLAN} DA Luca Bianchi`), /registrata: A2/);
   // lo snapshot dell'oggetto governato (§28.1) lo registra observe-append durante il passo di configurazione
   call("take_snapshot", { pageId: 1 }, page(false));

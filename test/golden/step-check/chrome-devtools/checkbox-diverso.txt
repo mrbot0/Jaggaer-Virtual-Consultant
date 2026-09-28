@@ -1,0 +1,19 @@
+## Latest page snapshot
+uid=1_0 RootWebArea "Richiesta d'acquisto - ACME SBX" url="https://acme-sbx.jaggaer.com/p2p/requisition/edit/10045"
+  uid=1_1 banner
+    uid=1_2 StaticText "SANDBOX"
+  uid=1_3 heading "Richiesta d'acquisto" level="1"
+  uid=1_4 StaticText "Descrizione "
+  uid=1_5 textbox "Descrizione " value="RdA di prova - 5 sedie"
+  uid=1_6 StaticText "Quantità "
+  uid=1_7 spinbutton "Quantità " value="5"
+  uid=1_8 StaticText "Centro di costo "
+  uid=1_9 textbox "Centro di costo " value="IT-0442"
+  uid=1_10 StaticText "Categoria "
+  uid=1_11 combobox "Categoria " value="Arredi" expandable haspopup="listbox"
+    uid=1_12 option "Arredi" selectable selected
+    uid=1_13 option "Informatica" selectable
+  uid=1_14 StaticText "Urgente "
+  uid=1_15 checkbox "Urgente " checked
+  uid=1_16 button "Salva bozza"
+  uid=1_17 link "Elenco richieste"

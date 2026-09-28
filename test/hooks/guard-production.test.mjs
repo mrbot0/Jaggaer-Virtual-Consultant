@@ -10,7 +10,7 @@ import { join } from "node:path";
 import { writeFileSync, mkdtempSync, appendFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { decisionOf, reasonOf } from "../helpers/hook-env.mjs";
-import { envWs, browserCall, patchSession, writePlan, writeSel } from "../helpers/env-fixture.mjs";
+import { envWs, browserCall, patchSession, writePlan, writeSel, sealActivePlan } from "../helpers/env-fixture.mjs";
 import { appendApproval, approvalsFile, sha256 } from "../../scripts/admin/approvals.mjs";
 import { ACT } from "../../hooks/lib/act-classes.mjs";
 import { loadCatalog } from "../../scripts/decide/validate-plan.mjs";
@@ -61,7 +61,7 @@ function prodWs(scenario) {
     "SEL di un altro cliente": step(1, "CLICK", "ACT-OBS", SEL.other),
     "target url_pattern": step(1, "CLICK", "ACT-OBS", { url_pattern: "/orders" }),
   }[scenario];
-  if (S !== null) patchSession(ws, (s) => { s.active_plan = { plan_id: PLAN, file: writePlan(ws, planOf([S])), step: 1 }; });
+  if (S !== null) { patchSession(ws, (s) => { s.active_plan = { plan_id: PLAN, file: writePlan(ws, planOf([S])), step: 1 }; }); sealActivePlan(ws); }   // impronta come la scrive step-check (WP07 giro 1)
   if (scenario === "CFG-CHANGE finestra scaduta") { a({ kind: "A1", plan: PLAN, approver_declared: "Mario Rossi" }, 61); a({ kind: "A2", plan: PLAN, approver_declared: "Luca Bianchi" }, 60.5); a({ kind: "A3", plan: PLAN, step: 1 }, 60.2); }
   if (scenario === "CFG-CHANGE senza A2") { a({ kind: "A1", plan: PLAN, approver_declared: "Mario Rossi" }, 3); a({ kind: "A3", plan: PLAN, step: 1 }, 1); }
   if (scenario === "CFG-CHANGE A2 dalla stessa persona") { a({ kind: "A1", plan: PLAN, approver_declared: "Mario Rossi" }, 3); a({ kind: "A2", plan: PLAN, approver_declared: "MARIO ROSSI" }, 2); a({ kind: "A3", plan: PLAN, step: 1 }, 1); }
@@ -132,7 +132,7 @@ test("letture in prod ⇒ consentite (nessun output); navigazione verso host dic
 
 test("input solo sul search_box del passo attivo (anche SEL standard); click solo su SEL effect: read; Enter e dialog accettati mai", () => {
   const ws = prodWs("senza piano");
-  const set = (s) => patchSession(ws, (x) => { x.active_plan = { plan_id: PLAN, file: writePlan(ws, planOf([s])), step: 1 }; });
+  const set = (s) => { patchSession(ws, (x) => { x.active_plan = { plan_id: PLAN, file: writePlan(ws, planOf([s])), step: 1 }; }); sealActivePlan(ws); };
   set(step(1, "FILL", "ACT-READ", SEL.search, { data: "4500012345" }));
   assert.ok(silent(browserCall(G, ws, `${DT}fill`, { uid: "1_5", value: "4500012345" })));
   assert.ok(silent(browserCall(G, ws, `${CB}form_input`, { ref: "r", value: "4500012345" })));
@@ -159,6 +159,7 @@ test("configurazione in prod: consentita solo con 3A valida (A1, A2 da persona d
   assert.ok(denied(browserCall(G, forged, `${DT}click`, { uid: "1_4" }, { transcript_path: trF })), "record con sha che non corrisponde a nessun prompt ⇒ deny");
   const ws = prodWs("senza piano");
   patchSession(ws, (s) => { s.active_plan = { plan_id: PLAN, file: writePlan(ws, planOf([step(1, "TOGGLE", "ACT-CFG-CHANGE", SEL.write, { config: { object: "C.ACME.ADM.CFG.0019", area: "CL-CFG-020", level: "giallo" } })])), step: 1 }; });
+  sealActivePlan(ws);
   const f = approvalsFile(ws, "ACME", "sess-1");
   const tr = join(mkdtempSync(join(tmpdir(), "trp-")), "t.jsonl");
   writeFileSync(tr, "");

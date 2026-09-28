@@ -4,7 +4,7 @@ alert "Il centro di costo non è attivo per la società selezionata (REQ-VAL-014
 label "Descrizione" [ref_4]
  textbox "RdA di prova - 5 sedie" [ref_5]
 label "Quantità" [ref_6]
- spinbutton "5" [ref_7]
+ textbox "5" [ref_7] type="number"
 label "Centro di costo" [ref_8]
  textbox "IT-0442" [ref_9]
 label "Categoria" [ref_10]

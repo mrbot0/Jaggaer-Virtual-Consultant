@@ -3,7 +3,7 @@ heading "Richiesta d'acquisto" [ref_2]
 label "Descrizione" [ref_3]
  textbox "RdA di prova - 5 sedie" [ref_4]
 label "Quantità" [ref_5]
- spinbutton "5" [ref_6]
+ textbox "5" [ref_6] type="number"
 label "Categoria" [ref_7]
  combobox "Arredi" [ref_8]
   option "Arredi" [ref_9]

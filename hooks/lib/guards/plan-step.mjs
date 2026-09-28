@@ -14,6 +14,9 @@ export async function activeStep(ctx) {
   if (!info) return { reason: `piano attivo non trovato o fuori dalla cartella del cliente: ${ap.file}` };
   const plan = info.plan;
   if (!plan || plan.plan_id !== ap.plan_id) return { reason: `il file ${ap.file} non è il piano attivo ${ap.plan_id}` };
+  // WP07 giro 1 (C2 b, I1): il piano attivo è quello validato e attivato da step-check, con la sua impronta
+  if (typeof ap.plan_sha256 !== "string") return { reason: `piano attivo ${ap.plan_id} senza impronta: riattivalo con step-check` };
+  if (ap.plan_sha256 !== info.sha256) return { reason: `il piano ${ap.plan_id} è stato modificato dopo l'attivazione (impronta diversa): chiudilo e riattivalo con step-check` };
   const step = Array.isArray(plan.steps) ? plan.steps.find((s) => s && s.n === ap.step) : null;
   if (!step) return { reason: `il piano ${ap.plan_id} non ha il passo attivo ${ap.step}` };
   return { ap, plan, step, sha256: info.sha256, file: info.file };

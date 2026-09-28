@@ -7,7 +7,7 @@ import { readFileSync, existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { envWs, readSession, patchSession, writePlan, browserCall, ROOT } from "../helpers/env-fixture.mjs";
-import { cleanEnv, decisionOf, reasonOf } from "../helpers/hook-env.mjs";
+import { cleanEnv, decisionOf, reasonOf, runHook } from "../helpers/hook-env.mjs";
 import { parseSnapshot, pageSignature } from "../../scripts/chrome/snapshot-parse.mjs";
 import { check } from "../../scripts/decide/step-check.mjs";
 import { PLAN, snap, demoAtlas, demoPlan } from "../helpers/k6-fixture.mjs";
@@ -38,7 +38,10 @@ test("snapshot-parse: i tre formati danno URL, titolo, firma e gli stessi elemen
     assert.equal(p.title, "Richiesta d'acquisto - ACME SBX");
     assert.equal(pageSignature(p), "p2p/requisition/edit#richiesta-d-acquisto");
     const cdc = p.elements.find((e) => e.name === "Centro di costo");
-    assert.equal(cdc.role, "textbox"); assert.equal(cdc.value, "IT-0442"); assert.equal(cdc.required, true);
+    assert.equal(cdc.role, "textbox"); assert.equal(cdc.value, "IT-0442");
+    // required: solo DevTools lo rende; negli altri formati è ignoto (WP07 giro 1, spec I2)
+    if (f === "chrome-devtools") assert.equal(cdc.required, true);
+    else { assert.equal(cdc.required, undefined); assert.ok(!p.exposes.includes("required"), f); }
     assert.deepEqual(p.elements.filter((e) => e.role === "option").map((e) => e.name), ["Arredi", "Informatica"]);
   }
 });
@@ -61,7 +64,12 @@ const GOLDEN = [
   ["ok", {}, { status: "ok" }],
   ["elemento-assente", {}, { status: "surprise", kind: "elemento-assente", compat: "incompatibile" }],
   ["stato-diverso", {}, { status: "surprise", kind: "stato-diverso", compat: "incompatibile" }],
-  ["attributo-diverso", {}, { status: "surprise", kind: "attributo-diverso", compat: "compatibile" }],
+  // WP07 giro 1 (spec I2): un attributo che il formato non espone è ignoto (saltato e segnalato), non falso.
+  // required: solo Chrome DevTools lo rende; checked: DevTools e Playwright, non Claude read_page.
+  ["attributo-diverso", {}, { "chrome-devtools": { status: "surprise", kind: "attributo-diverso", compat: "compatibile" },
+    playwright: { status: "ok", unverified: ["required"] }, "claude-browser": { status: "ok", unverified: ["required", "checked"] } }],
+  ["checkbox-diverso", {}, { "chrome-devtools": { status: "surprise", kind: "stato-diverso", compat: "incompatibile" },
+    playwright: { status: "surprise", kind: "stato-diverso", compat: "incompatibile" }, "claude-browser": { status: "ok", unverified: ["required", "checked"] } }],
   ["elemento-in-piu", {}, { status: "surprise", kind: "elemento-in-piu", compat: "compatibile" }],
   ["messaggio-inatteso", {}, { status: "surprise", kind: "messaggio-inatteso", compat: "compatibile" }],
   ["ok", { elapsedMs: 21000 }, { status: "surprise", kind: "tempo-fuori-norma", compat: "compatibile" }],
@@ -70,12 +78,14 @@ const GOLDEN = [
 
 for (const f of FORMATS) {
   test(`golden step-check (${f}): ogni tipo di divergenza classificato con DT-016`, async () => {
-    for (const [name, extra, want] of GOLDEN) {
+    for (const [name, extra, wantAll] of GOLDEN) {
+      const want = wantAll[f] ?? wantAll;
       const { ws, file } = setup();
       await toStep2(ws, file);
       const r = await at(ws, file, 2, snap(f, name), extra);
       assert.equal(r.status, want.status, `${f}/${name}: ${JSON.stringify(r.divergences)}`);
       if (want.kind) { assert.equal(r.kind, want.kind, `${f}/${name}`); assert.equal(r.compat, want.compat, `${f}/${name}`); assert.equal(r.proceed, want.compat === "compatibile"); }
+      if (want.unverified) assert.deepEqual([...new Set(r.unverified.map((u) => u.attr))].sort(), [...want.unverified].sort(), `${f}/${name}: ${JSON.stringify(r.unverified)}`);
       if (name === "novelty") assert.deepEqual(r.novelties, [{ role: "textbox", label: "Codice progetto" }]);
       assert.ok(existsSync(join(ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints/2.json")), "checkpoint");
     }
@@ -97,7 +107,9 @@ test("attivazione: active_plan {plan_id, file, step, run}; passo ok ⇒ avanza e
   const { ws, file } = setup();
   const g = await at(ws, file, 1, null);
   assert.equal(g.status, "ok");
-  assert.deepEqual(readSession(ws).active_plan, { plan_id: PLAN, file, step: 1, run: "RUN.ACME.K6" });
+  const ap = readSession(ws).active_plan;
+  assert.deepEqual({ ...ap, plan_sha256: undefined }, { plan_id: PLAN, file, step: 1, run: "RUN.ACME.K6", plan_sha256: undefined });
+  assert.match(ap.plan_sha256, /^[0-9a-f]{64}$/, "impronta del piano (WP07 giro 1)");
   await toStep2(ws, file);
   assert.equal(readSession(ws).active_plan.step, 2);
   const r = await at(ws, file, 2, snap("playwright", "ok"));
@@ -117,7 +129,12 @@ test("guard-config-scope consente il SAVE sullo stato scritto da step-check (com
   const { ws, file } = setup();
   await toStep2(ws, file);
   await at(ws, file, 2, snap("chrome-devtools", "ok"));
-  const ok = browserCall("guard-config-scope", ws, "mcp__chrome-devtools__click", { uid: "1_22" });
+  // l'ultimo snapshot osservato (observe-append) lega l'uid al SEL del passo (WP07 giro 1, C2 c)
+  patchSession(ws, (s) => { s.browser = { current_url: "https://acme-sbx.jaggaer.com/p2p/requisition/edit/10045", tab: null, updated_by: "browser-origin" }; });
+  runHook("observe-append", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: "mcp__chrome-devtools__take_snapshot", tool_input: {}, tool_response: [{ type: "text", text: snap("chrome-devtools", "ok") }] }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
+  const refs = readSession(ws).browser.snapshot.refs;
+  const save = Object.keys(refs).find((k) => refs[k] === "C.ACME.P2P.SEL.0120");
+  const ok = browserCall("guard-config-scope", ws, "mcp__chrome-devtools__click", { uid: save });
   assert.equal(ok.stdout.trim(), "", reasonOf(ok));
   const bare = setup(demoPlan({ compensations: [] }));
   await toStep2(bare.ws, bare.file);
@@ -160,7 +177,7 @@ test("on_divergence onorato: valore già al target ⇒ stop 'nulla da fare' (§1
   plan.steps[1] = { n: 2, verb: "READ", action_class: "ACT-OBS", target: "C.ACME.P2P.SEL.0047", expect: { value: "false" }, on_divergence: { true: "stop: nulla da fare, registra", other: "surprise" } };
   const { ws, file } = setup(plan);
   await toStep2(ws, file);
-  const r = await at(ws, file, 2, snap("chrome-devtools", "stato-diverso"));
+  const r = await at(ws, file, 2, snap("chrome-devtools", "checkbox-diverso"));
   assert.equal(r.status, "ok"); assert.equal(r.stop, true); assert.match(r.on_divergence, /nulla da fare/);
 });
 

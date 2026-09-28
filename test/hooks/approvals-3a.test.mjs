@@ -9,7 +9,7 @@ import { join } from "node:path";
 import { readFileSync, writeFileSync, existsSync, mkdtempSync, appendFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { runHook, decisionOf, reasonOf, ROOT } from "../helpers/hook-env.mjs";
-import { envWs, browserCall, patchSession, readSession, writePlan } from "../helpers/env-fixture.mjs";
+import { envWs, browserCall, patchSession, readSession, writePlan, sealActivePlan } from "../helpers/env-fixture.mjs";
 import {
   parseApprovalPrompt, readApprovals, appendApproval, windowState, consumeStepToken, approvalsFile, confirmInTranscript, sha256,
 } from "../../scripts/admin/approvals.mjs";
@@ -44,6 +44,8 @@ function setup({ env = "prod", level = "giallo", step = 2, pending = [], plan } 
     s.pending.approvals = pending;
     s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0019", "C.ACME.ADM.CFG.0031"], ts: new Date().toISOString() }];
   });
+  // WP07 giro 1: l'impronta del piano e l'ultimo snapshot (uid 1_7 = SEL del passo), come li scrivono step-check e observe-append
+  sealActivePlan(ws, { refs: { "1_7": "C.ACME.ADM.SEL.0120" } });
   return { ws, tr: transcript() };
 }
 const say = (ws, tr, prompt, env = {}) => {
