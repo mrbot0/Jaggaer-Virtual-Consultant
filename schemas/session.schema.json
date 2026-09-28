@@ -116,6 +116,12 @@
       "description": "Snapshot degli oggetti governati prima di una modifica di configurazione (§28.1): guard-config-scope ne richiede uno degli ultimi 60 s.",
       "items": { "type": "object", "required": ["objects", "ts"], "properties": { "objects": { "type": "array", "items": { "type": "string" } }, "ts": { "type": "string" } } }
     },
+    "integrity": {
+      "type": "object",
+      "description": "F0.3 (§53.1): esito della verifica d'integrità del pacchetto a SessionStart (session-context; anche in <workspace>/.jvc/integrity.json). ok: false ⇒ i guard FAIL-CLOSED negano tutto tranne Read/Glob/Grep e doctor / integrity verify (hooks/lib/integrity-gate.mjs), salvo JVC_DEV=1.",
+      "required": ["ok"],
+      "properties": { "ok": { "type": "boolean" }, "status": { "type": "string" }, "checked_at": { "type": "string" }, "plugin_root": { "type": "string" }, "mismatched": { "type": "array", "items": { "type": "string" } } }
+    },
     "alm": {
       "type": "object",
       "description": "F0.2: ciò che il plugin ha creato nell'ALM in questa sessione. created[] lo scrive solo alm-record (PostToolUse, risposta riuscita di una creazione): { key, kind: execution|defect|test|issue|page, tool, ts }. guard-alm-write consente update, transizioni e alm_import_results solo su questi bersagli (mai sovrascrivere contenuto umano).",

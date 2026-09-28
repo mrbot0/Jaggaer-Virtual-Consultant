@@ -60,6 +60,12 @@ export async function runHook(fn, { name = "hook", failClosed = false } = {}) {
     const input = raw.trim() ? JSON.parse(raw) : {};
     if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("input dell'hook non è un oggetto JSON");
     if (process.env.JVC_TEST_THROW === "1") throw new Error("JVC_TEST_THROW: guasto simulato");
+    // F0.3: ogni guard FAIL-CLOSED consulta prima il gate di integrità del pacchetto (integrity-gate.mjs):
+    // integrità registrata a SessionStart non ok ⇒ deny di tutto tranne letture del workspace e doctor/verify.
+    if (failClosed) {
+      const gate = await (await import("./integrity-gate.mjs")).integrityGate(input, process.env);
+      if (gate) { if (finished) return; finished = true; write(gate); return; }
+    }
     const out = await fn(input);
     if (finished) return;
     finished = true;
