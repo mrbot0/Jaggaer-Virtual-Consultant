@@ -64,10 +64,10 @@ Comandi `kb` nuovi: `kb units` (`--doc --near --query | --query-file | --questio
   aliases.proposed.yaml, backlog.yaml, ingest-summary.yaml
 ```
 
-## Statistiche reali del corpus (JAGGAER DOC, 28/09/2026 — solo conteggi, nessun contenuto)
+## Statistiche reali del corpus (JAGGAER DOC, 28/09/2026, riesecuzione dopo il giro di correzione 1 — solo conteggi, nessun contenuto)
 
 Esecuzione: `node scripts/ingest/ingest.mjs --input "JAGGAER DOC" --root ../jvc-knowledge --scope XSC --origin vendor`
-→ 71 s (harvest 6 s), workspace `C:\Users\PC-Marco\Desktop\plugin\jvc-knowledge` (unità + _inbox ≈ 43 MB, DB 26 MB).
+→ 69 s (harvest 6 s), 0 eccezioni inattese dei parser (`parser_error`), workspace `C:\Users\PC-Marco\Desktop\plugin\jvc-knowledge` (unità + _inbox ≈ 43 MB, DB 26 MB).
 
 **File per tipo** (385):
 
@@ -104,14 +104,15 @@ riferimento 250 · esempio 202 · nota 146 · passo 142 · definizione 116 · fi
 **Campi**: 3.501 righe di campi (DOCX dei dev kit WS 2.613, export XML document_config/form 888); 0 elementi di tracciato
 formale (nessun XSD/WSDL/OpenAPI nel corpus: i dev kit sono prosa + tabelle). Lotti di digestione dei campi: 577, il più
 grande 43 righe (limite 50); 3 dev kit superano gli 80k token di digestione e riprendono dal cursore nella sessione
-successiva (§29.10).
+successiva (§29.10). Date degli export (64 XML): dalla data del file (`date_source: mtime`, 2019–2020), nessuna data
+nell'XML; arrivano a `current_state.observed_at` dei 540 candidati CFG.
 
 **Item grezzi T0: 5.797** — FLD 4.391 · CFG 540 · FLW 489 · INV 130 · GLS 116 · CFP 112 · INT 20 (uno per dev kit /
 spec) · KEY 19 · LCY 8 · 9 regole ambigue a residuo.
 
 **Residuo** — per file (201): deferred 137 (133 immagini senza sidecar OCR, 4 archivi .zip/.7z da estrarre) ·
 duplicate 35 (stesso sha256) · unsupported 19 (Snagit .snag) · irrelevant 10 (Thumbs.db). Per unità: irrelevant 84 ·
-tacit 30 · ambiguous 9. Righe di tabelle-dataset fuori campione (commodity codes, 2 × 86k righe): 99.059, conservate nel
+tacit 30 · ambiguous 9 · deferred 6 (pagine PDF di sole immagini in 4 PDF, in attesa del sidecar OCR per pagina). Righe di tabelle-dataset fuori campione (commodity codes, 2 × 86k righe): 99.059, conservate nel
 documento normalizzato, non unità. Avvisi dei parser: 20 fogli con intestazione su due righe, 11 tabelle annidate
 appiattite, 4 PDF con pagine di sole immagini, 3 DOCX con caselle di testo; nessun PDF interamente scansionato.
 
@@ -147,3 +148,25 @@ campione; oggi esistono i loro grezzi. Cosa è pronto per chiuderla:
 - **Versioni**: riconosciute dal nome senza marcatori di versione e dal formato; due copie diverse con lo stesso nome in
   cartelle diverse sono trattate come versioni (ordine = ordine del percorso).
 - **Stime di token**: caratteri/4, per la pianificazione dei budget; non sono misure di consumo.
+
+## Giro di correzione 1 (revisione: .superpowers/sdd/wp09a-review.md)
+
+| Rilievo | Correzione | Prova |
+|---------|------------|-------|
+| C1 back-check per sottostringa | numeri e codici confrontati come token esatti del testo citato (separatori delle migliaia normalizzati) | `wp09a-fixround1` C1: 10≠100, 5000≠50000, REQ_CC_1≠REQ_CC_12 |
+| I2 sidecar OCR dei PDF mai letto | `parsePdf` legge `<file>.ocr.txt` (marcatori `--- pagina N ---` o salti pagina); ogni pagina di sole immagini ancora senza testo è un residuo deferred per pagina | I2 (PDF scansionato con e senza sidecar, PDF misto nella pipeline) |
+| I3 XSD choice/gruppi facoltativi/nillable | contesto facoltativo trasmesso ai discendenti (`required_in_parent`), rami di choice uno-fra (`choice_group`, `one_of_required`), `nillable` separato | I3 (schema della sonda) |
+| I4 difetti del parser nascosti nel residuo | `parser_error: true` per le eccezioni inattese; il test sul corpus ne esige zero e verifica che ogni documento strutturato non duplicato sia letto | I4 + `corpus-acceptance` |
+| I5 limiti fuori dallo ZIP | PDF: 64 MB/flusso, 256 MB/documento, LZW limitato, flussi memorizzati, tetti di Form e operatori per pagina; XSD 20.000 record; XLSX 5M celle, 16384 colonne, aree unite ridotte all'area usata; XLS cicli FAT e 64 MB/stream. Oltre ⇒ ParseError (residuo) | una bomba sintetica in memoria per formato |
+| M7 domande solo italiane | `keywords { it, en }` per domanda, usate da digest-plan e `kb units --question` | M7 |
+| M9 data dell'export | dall'XML, dichiarata o dalla data del file (`meta.date_source`) → `observed_at` | M9 |
+| M10 affidabilità dalle unità citate | reindex risolve `U.*` → `units.doc` → `reliability` | M10 |
+| M14 uscita nel repository del plugin | `ingest`/`harvest` rifiutano una radice dentro il plugin (exit 3) | M14 |
+
+Suite dopo il giro: **721 test, 721 pass, 0 fail, 0 skipped** (`npm test`, 131 s, corpus presente); `integrity.json`
+ricostruito.
+
+Rinviati dal controllore: M6 (filtri FTS prima del limite), M8 (soglia di somiglianza nel diff), M11 (unicità dei codici
+di unità fra livelli), M12 (significato di `unsupported` a livello di file), M13 (pulizia del workspace temporaneo del
+test sul corpus), M15 (validazione prima della scrittura in record-answers). L'ingestion reale è stata rieseguita (la
+precedente spostata nello scratchpad della sessione, non cancellata); le statistiche sopra sono della riesecuzione.
