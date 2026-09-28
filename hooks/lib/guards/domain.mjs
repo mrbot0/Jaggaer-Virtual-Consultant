@@ -1,5 +1,6 @@
 // guard-domain-boundary (FAIL-CLOSED): kb/ ↔ analysis/ (§1.1, §5.4, §32).
 //  - scrittura in kb/ che cita analysis/ o codici PAT/PBK/BRF/RUL ⇒ deny;
+//  - scrittura in tests/ (dominio dei test, F0 §33) che cita analysis/, codici PAT/PBK/BRF/RUL o ID INC-/TICKET-/PAT- ⇒ deny;
 //  - scrittura in analysis/ che cita test NRT.* ⇒ deny
 //    (stesse regex di scripts/kb/validate-boundary.mjs);
 //  - lettura/ricerca in analysis/ ⇒ solo root-cause-analyst, failure-triage,
@@ -12,6 +13,7 @@ import { guarded, denyAudited, targetsOf, allRels, PATH_TOOLS, WRITE_TOOLS } fro
 const G = "guard-domain-boundary";
 const KB = ["product/kb/**", "customers/*/kb/**"];
 const AN = ["product/analysis/**", "customers/*/analysis/**"];
+const TESTS = ["product/tests/**", "customers/*/tests/**"];
 const ANALYSTS = new Set(["root-cause-analyst", "failure-triage", "defect-reporter"]);
 
 function writtenContent(tool, ti) {
@@ -48,6 +50,7 @@ export const decide = guarded(G, (ctx) => {
     const content = writtenContent(tool, ti);
     for (const p of rels) {
       if (KB.some((a) => intersects(p, a))) { const v = firstViolation("kb", content); if (v) return denyAudited(ctx, G, `kb/ non referenzia mai il dominio analitico (§1.1): ${v}`); }
+      if (TESTS.some((a) => intersects(p, a))) { const v = firstViolation("kb", content); if (v) return denyAudited(ctx, G, `tests/ (dominio dei test) non referenzia mai il dominio analitico (§1.1, §33 F0): ${v}`); }
       if (AN.some((a) => intersects(p, a))) { const v = firstViolation("analysis", content); if (v) return denyAudited(ctx, G, `analysis/ non referenzia mai un test (§1.1): ${v}`); }
     }
     return null;
