@@ -19,7 +19,7 @@ import { SCRIPT_CHECKS, runChecks } from "../../scripts/run/checks-run.mjs";
 import { lintCase } from "../../scripts/compile/lint-spec.mjs";
 import { generate } from "../../scripts/compile/negative-generator.mjs";
 import { cfpPlan } from "../../scripts/compile/compile-cfp.mjs";
-import { writeItem, writeCase, writeYaml, cfg, cfp, sel, flw, nrtCase, hnd } from "../helpers/wp09b-items.mjs";
+import { writeItem, writeCase, writeYaml, cfg, cfp, sel, flw, nrtCase, hnd, recordObs } from "../helpers/wp09b-items.mjs";
 
 const RUN = "RUN.ACME.20260929.1000.ADM";
 const PLAN = "PLAN.0042";
@@ -40,13 +40,8 @@ function approved(ws, steps) {
   return tr;
 }
 // OBS come le registra observe-append: riga nel DB del cliente (autorità) + file in observations/
-function obs(ws, code, doc) {
-  const full = { id: code, type: "OBS", session: "SES.ACME.20260929.001", ts: new Date().toISOString(), elements_seen: [], ...doc };
-  const db = openDb(join(ws, "customers/ACME/knowledge.db"));
-  try { db.prepare("insert into observations(code, session, scope, page_sig, payload, confirmed_count) values (?,?,?,?,?,1)").run(code, full.session, "ADM", full.page_signature ?? null, JSON.stringify(full)); } finally { db.close(); }
-  mkdirSync(join(ws, "customers/ACME/observations"), { recursive: true });
-  writeFileSync(join(ws, "customers/ACME/observations", `${code}.yaml`), YAML.stringify(full));
-}
+// OBS come le registra observe-append: riga nel DB, copia nel file e voce dell'anello (giro 2)
+const obs = (ws, code, doc) => recordObs(ws, code, doc);
 
 test("C1: passo di sola area — negato prima e dopo `kb snapshot --area` (rifiutato: serve un oggetto); solo uno snapshot di observe-append per l'area vale", () => {
   const ws = envWs({ env: "sandbox", remediation: REM });

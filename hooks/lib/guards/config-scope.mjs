@@ -258,6 +258,10 @@ const PROTECTED = [
   // WP07 giro 2 (N-3): la ripresa (--resume) si fonda sui checkpoint: li scrive solo step-check (script del plugin);
   // giro 3 (I-B): a ogni profondità sotto runs/ (un --run annidato non è più ammesso, ma i file non si scrivono comunque)
   ["**/runs/**/checkpoints/**", "i checkpoint dei piani li scrive solo step-check (script del plugin): la ripresa di un piano si fonda su di essi"],
+  // WP09b giro 2: gli esiti dei piani li scrive solo step-check: la promozione (3 run coerenti) e la corsia compilata
+  // (≥ 3 verdi) li contano
+  ["**/runs/**/results/**", "gli esiti dei piani li scrive solo step-check (script del plugin): la promozione dei casi e la corsia compilata li contano"],
+  ["**/runs/**/result.yaml", "gli esiti dei piani li scrive solo step-check (script del plugin): la promozione dei casi e la corsia compilata li contano"],
   // WP08: storia dei ref e marcatore "inaffidabile" del cliente (li scrivono solo browser-origin e observe-append)
   ["customers/*/.sessions/ref-history.json*", "la storia dei ref del browser la scrivono solo gli hook browser-origin e observe-append: forgiarla legherebbe ref a SEL"],
   ["customers/*/.sessions/ref-pending.json*", "il marcatore delle osservazioni mancate lo scrivono solo gli hook browser-origin e observe-append"],
@@ -355,6 +359,7 @@ function checkTarget(ctx, T, tree, tr) {
   for (const a of T.abs) {
     if (/(^|\/)(approvals\.jsonl|session\.json)$/.test(a)) return `${PROTECTED[/approvals/.test(a) ? 0 : 1][1]}: ${a}`;
     if (/(^|\/)runs\/(.+\/)?checkpoints(\/|$)/.test(a)) return `${PROTECTED[3][1]}: ${a}`;
+    if (/(^|\/)runs\/(.+\/)?(results(\/|$)|result\.yaml$)/.test(a)) return `${PROTECTED[4][1]}: ${a}`;
     if (under(a, tr.dirs) || (tree && tr.dirs.some((d) => d.startsWith(`${a}/`)))) return `il transcript della sessione (e la sua cartella) non si scrive: ${a}`;
   }
   return null;
@@ -370,6 +375,8 @@ function checkTarget(ctx, T, tree, tr) {
 const PHRASE = /APPROVO\s+(PIANO|PROVA|PASSO)/i;
 const CLAUDE_BIN = /(^|[\s;&|(`'"=\\/])(claude(\.exe|\.cmd|\.ps1)?|@anthropic-ai[\\/]claude-code(@[\w.-]+)?|claude-code[\\/](dist[\\/])?cli\.m?js)(?=$|[\s;&|)`'"])/i;
 const CLAUDE_FLAGS = /(^|[\s'"])(-p|--print|-r|--resume|-c|--continue)(?=$|[\s=;'"])|(^|\s)-[a-z]*[prc][a-z]*(?=[\s'"]|$)/i;
+// WP09b giro 2: esiti dei run (testo in minuscolo con le barre normalizzate)
+const RESULTS = /result\.ya?ml|runs\/[^\s'"`]*\/results(\/|['"`\s]|$)/;
 const STATE = /approvals|session\.json|\.sessions[\\/]|\.jvc|current-session|invocations\.jsonl|compact-summary/i;
 const WRITE_PRIM = /appendfile|writefile|createwritestream|opensync|\bfs\.|add-content|set-content|out-file|\btee\b|>|\bopen\s*\(|\bcp\b|\bmv\b|copy-item|move-item|\.write\s*\(|\bac\b|\bsc\b/i;
 const CODE_WRITE = /appendfile|writefile|createwritestream|opensync|add-content|set-content|out-file|\bopen\s*\(|\.write\s*\(|copyfile|renamesync|\brename\s*\(/i;
@@ -406,6 +413,7 @@ const protectWrites = guarded(G, (ctx) => {
   if (texts.some((t) => PHRASE.test(t))) return no("l'input contiene una frase di approvazione (APPROVO PIANO/PROVA/PASSO): le approvazioni le scrive solo l'utente nel prompt, mai uno strumento");
   if (WRITE_FILE_TOOLS.has(ctx.tool)) {
     if (texts.some((t) => STATE.test(t) && CODE_WRITE.test(t))) return no("il contenuto scrive su file e cita il registro delle approvazioni o lo stato di sessione: codice che può falsificare i token");
+    if (texts.some((t) => RESULTS.test(t.replace(/\\/g, "/").toLowerCase()) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive gli esiti dei run — ${PROTECTED[4][1]}`);
     if (texts.some((t) => CONFIG_TEXT.test(t) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive le impostazioni di Claude Code — ${SETTINGS_WHY}`);
     if (texts.some((t) => mentionsPlugin(ctx, t) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive nel plugin — ${PLUGIN_WHY}`);
     const r = checkTarget(ctx, targetsOf(ctx), false, tr);
@@ -437,6 +445,9 @@ const protectWrites = guarded(G, (ctx) => {
   if (LINK_CMD.test(flat) && RUNS_SEG.test(flat)) return no("il comando crea un collegamento (link simbolico, giunzione, hard link) e cita runs/: le cartelle dei run e i loro checkpoint non si ridirigono");
   if (/approvals\.json/.test(flat)) return no("il comando cita approvals.json(l): il registro delle approvazioni si legge con Read o con `approvals.mjs status`, non si tocca dalla shell");
   if (/approvals/.test(flat) && WRITE_PRIM.test(flat)) return no("il comando cita 'approvals' insieme a una primitiva di scrittura: nome del registro costruito a runtime");
+  // WP09b giro 2: gli esiti dei run (results/, result.yaml) li scrive solo step-check: un interprete non del plugin che li
+  // cita insieme a una primitiva di scrittura è negato (il nome dentro il codice non lo vede l'analisi dei bersagli)
+  if (INTERP.test(cmd) && RESULTS.test(flat) && WRITE_PRIM.test(flat)) return no(`${PROTECTED[4][1]}: uno script non del plugin li cita insieme a una scrittura`);
   if (INTERP.test(cmd) && STATE.test(cmd)) return no("uno script non del plugin con argomenti o codice che citano il registro delle approvazioni o lo stato di sessione: solo gli script del plugin toccano lo stato");
   if (tr.name && (flat.includes(tr.name) || tr.dirs.some((d) => flat.includes(d)))) return no("il comando cita il transcript della sessione");
   for (const { tok, cwds, tree, soft } of shellWriteTargets(ctx, cmd)) {

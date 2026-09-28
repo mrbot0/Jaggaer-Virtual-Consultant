@@ -16,6 +16,7 @@
 //      [--session <id>] [--workspace <dir>] [--json]      (anche: node scripts/kb/kb.mjs snapshot …)
 // Exit: 0 ok · 1 errore utente · 2 errore di sistema · 3 rifiuto (oggetto non legato a una pagina osservata di recente).
 import { existsSync, mkdirSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join, resolve as resolvePath, relative } from "node:path";
 import YAML from "yaml";
 import { parseArgs, fail } from "../lib/args.mjs";
@@ -39,17 +40,26 @@ const MAX_OBS_ROWS = 500;
 // observations: codice, page_sig, payload), nella stessa transazione che assegna il codice; i file in observations/
 // sono una copia (protetta in scrittura da guard-config-scope) e non si leggono qui. DB assente ⇒ nessuna OBS.
 export const MAX_AGE_S = 900;
-function recentObservations(ws, customer, { code = null } = {}) {
+// WP09b giro 2: il DB del cliente si scrive dalla shell (sqlite3, python, node:sqlite): la PROVA di autenticità è
+// l'anello session.obs_ring che observe-append aggiorna nella stessa chiamata (session.json è protetto in scrittura,
+// anche dai comandi d'interprete che lo nominano). Una riga vale solo se codice, page_sig, ts e sha256 del payload
+// coincidono con una voce dell'anello; le altre (inserite o modificate fuori da observe-append) si ignorano.
+const sha256 = (s) => createHash("sha256").update(String(s)).digest("hex");
+function recentObservations(ws, customer, { code = null, ring = [] } = {}) {
   const f = join(ws, "customers", customer, "knowledge.db");
   if (!existsSync(f)) return [];
+  const byCode = new Map((Array.isArray(ring) ? ring : []).filter((e) => e && typeof e.code === "string").map((e) => [e.code, e]));
+  if (!byCode.size) return [];
   const db = openDb(f, { createIfMissing: false });
   try {
     const rows = code ? db.prepare("select code, page_sig, payload from observations where code = ?").all(code)
       : db.prepare("select code, page_sig, payload from observations order by code desc limit ?").all(MAX_OBS_ROWS);
     const out = [];
     for (const r of rows) {
+      const e = byCode.get(r.code);
+      if (!e || e.sha256 !== sha256(r.payload) || (e.page_sig ?? null) !== (r.page_sig ?? null)) continue;
       let p; try { p = JSON.parse(r.payload); } catch { continue; }
-      if (!p || typeof p !== "object") continue;
+      if (!p || typeof p !== "object" || p.ts !== e.ts) continue;
       out.push({ ...p, id: r.code, page_signature: r.page_sig ?? p.page_signature ?? null });
     }
     return out.sort((x, y) => Date.parse(y.ts ?? 0) - Date.parse(x.ts ?? 0));
@@ -60,11 +70,19 @@ function recentObservations(ws, customer, { code = null } = {}) {
 // (per intero o nella parte di percorso prima di #), il percorso normalizzato dell'URL uguale a quello di url_pattern,
 // oppure un elemento legato dall'Atlas a un SEL della location. Nessuna sottostringa.
 const pathOf = (u) => { if (typeof u !== "string" || !u) return null; return normalizePath(/^https?:\/\//i.test(u) ? u : `https://x.invalid/${u.replace(/^\/+/, "")}`); };
+// giro 2 (minore 4): url_pattern è un pattern ANCORATO sul percorso normalizzato (* = un segmento, ** = uno o più
+// segmenti); un percorso vuoto (solo segmenti ID) non corrisponde mai.
+export function urlPatternMatches(url, pattern) {
+  const a = pathOf(url); const b = pathOf(pattern);
+  if (!a || !b) return false;
+  const re = b.split("/").map((seg) => (seg === "**" ? ".+" : seg.split("*").map((x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("[^/]+"))).join("/");
+  return new RegExp(`^${re}$`).test(a);
+}
 export function obsMatchesLocation(o, loc) {
   if (!o || !loc) return false;
   const sig = typeof o.page_signature === "string" ? o.page_signature : null;
   if (loc.page_sig && sig && (sig === loc.page_sig || sig.split("#")[0] === loc.page_sig)) return true;
-  if (loc.url_pattern) { const a = pathOf(o.url); const b = pathOf(loc.url_pattern); if (a != null && b != null && a === b) return true; }
+  if (loc.url_pattern && urlPatternMatches(o.url, loc.url_pattern)) return true;
   const sels = Array.isArray(loc.selectors) ? loc.selectors : [];
   return sels.length > 0 && (o.elements_seen ?? []).some((e) => sels.includes(e?.atlas_match));
 }
@@ -83,7 +101,7 @@ export function takeSnapshot({ ws, sid, objects = [], areas = [], run = null, ob
   if (!r) throw new SnapshotError(1, "run non determinato: --run <RUN> (o attiva il piano con step-check)");
   const bad = runRefusal(ws, customer, r);
   if (bad) throw new SnapshotError(1, bad);
-  const all = recentObservations(ws, customer, { code: obs });
+  const all = recentObservations(ws, customer, { code: obs, ring: session.obs_ring });
   const recorded = [];
   for (const code of objects) {
     const cfg = loadItem(ws, code, customer);

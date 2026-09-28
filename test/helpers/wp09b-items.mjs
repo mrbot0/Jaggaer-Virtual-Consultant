@@ -1,6 +1,8 @@
 // WP09b: item di esempio (validi per gli schemi di tipo) e workspace con kb/ di prodotto e cliente per i test
 // di compile-case, compile-cfp, generate-atlas-po, lint-*, run lanes, negative-generator e coverage.
-import { mkdirSync, writeFileSync, mkdtempSync } from "node:fs";
+import { mkdirSync, writeFileSync, mkdtempSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { openDb } from "../../scripts/kb/db.mjs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import YAML from "yaml";
@@ -153,3 +155,21 @@ export function writeCase(ws, c, customer = "ACME") {
   return f;
 }
 export function writeYaml(ws, rel, obj) { const f = join(ws, rel); mkdirSync(join(f, ".."), { recursive: true }); writeFileSync(f, YAML.stringify(obj)); return f; }
+
+// OBS come le registra observe-append (WP09b giri 1-2): riga nel DB del cliente, copia in observations/ e voce
+// dell'anello session.obs_ring (codice, page_sig, ts, sha256 del payload) nella sessione sess-1.
+export function recordObs(ws, code, doc, { customer = "ACME", sid = "sess-1", ring = true } = {}) {
+  const full = { id: code, type: "OBS", session: `SES.${customer}.20260929.001`, ts: new Date().toISOString(), elements_seen: [], ...doc };
+  const payload = JSON.stringify(full);
+  const db = openDb(join(ws, "customers", customer, "knowledge.db"));
+  try { db.prepare("insert into observations(code, session, scope, page_sig, payload, confirmed_count) values (?,?,?,?,?,1)").run(code, full.session, code.split(".")[2], full.page_signature ?? null, payload); } finally { db.close(); }
+  mkdirSync(join(ws, "customers", customer, "observations"), { recursive: true });
+  writeFileSync(join(ws, "customers", customer, "observations", `${code}.yaml`), YAML.stringify(full));
+  if (ring) {
+    const f = join(ws, "customers", customer, ".sessions", sid, "session.json");
+    const s = JSON.parse(readFileSync(f, "utf8"));
+    s.obs_ring = [...(s.obs_ring ?? []), { code, page_sig: full.page_signature ?? null, ts: full.ts, sha256: createHash("sha256").update(payload).digest("hex") }];
+    writeFileSync(f, JSON.stringify(s, null, 2));
+  }
+  return full;
+}

@@ -18,7 +18,7 @@ import { openDb } from "../../scripts/kb/db.mjs";
 import { gateStep } from "../../scripts/decide/step-check.mjs";
 import { registerCreated, createdEntities } from "../../scripts/run/fixtures.mjs";
 import { governedObjects, snapshotCovers } from "../../hooks/lib/guards/config-scope.mjs";
-import { writeItem, cfg } from "../helpers/wp09b-items.mjs";
+import { writeItem, cfg, recordObs } from "../helpers/wp09b-items.mjs";
 
 const KB = fileURLToPath(new URL("../../scripts/kb/kb.mjs", import.meta.url));
 const RUN = "RUN.ACME.20260929.1000.ADM";
@@ -77,15 +77,8 @@ test("kb compensation: mai delete (tipo o azione), mai dopo il passo verificato;
 });
 
 // ——— snapshot ———
-// OBS come le registra observe-append (giro 1: la riga del DB è l'autorità, il file è una copia)
-function obs(ws, code, { page_signature, url, ts = new Date(), elements = [] }) {
-  const doc = { id: code, type: "OBS", page_signature, url, elements_seen: elements, ts: ts.toISOString() };
-  const db = openDb(join(ws, "customers/ACME/knowledge.db"));
-  try { db.prepare("insert into observations(code, session, scope, page_sig, payload, confirmed_count) values (?,?,?,?,?,1)").run(code, "SES.ACME.20260929.001", "ADM", page_signature ?? null, JSON.stringify(doc)); } finally { db.close(); }
-  const dir = join(ws, "customers/ACME/observations");
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, `${code}.yaml`), YAML.stringify(doc));
-}
+// OBS come le registra observe-append (giri 1-2: riga del DB, copia nel file, voce dell'anello in session.json)
+const obs = (ws, code, { page_signature, url, ts = new Date(), elements = [] }) => recordObs(ws, code, { page_signature, url, elements_seen: elements, ts: ts.toISOString() });
 const REM = { levels: { verde: { areas: ["CL-CFG-005"], objects: ["C.ACME.ADM.CFG.0031", "C.ACME.ADM.CFG.0032"] } } };
 function transcript(prompts) {
   const f = join(mkdtempSync(join(tmpdir(), "tr-")), "t.jsonl");

@@ -29,6 +29,8 @@ const SNAPSHOT_OPS = new Set(["take_snapshot", "read_page", "get_page_text", "fi
 const SCREENSHOT_OPS = new Set(["take_screenshot", "browser_take_screenshot", "upload_image"]);
 const MAX_ELEMENTS = 60;
 const sha = (s) => createHash("sha256").update(String(s)).digest("hex");
+// WP09b giro 2: voci dell'anello delle OBS in session.json (kb snapshot accetta al più 900 s: 200 bastano)
+export const OBS_RING_MAX = 200;
 const stamp = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.(\d{3})Z$/, "$1Z");
 
 // Tipo di osservazione: snapshot · screenshot · navigate · action · read · error.
@@ -289,9 +291,10 @@ function writeDb(ws, customer, scope, doc, errors, now) {
           }
         }
         doc.errors = errs.map((e) => ({ raw_id: e.raw_id, code: e.code, category: e.category, kind: e.kind, count: e.count }));
+        const payload = JSON.stringify(doc);
         db.prepare("insert into observations(code, session, scope, page_sig, payload, confirmed_count) values (?,?,?,?,?,?)")
-          .run(code, doc.session, scope, doc.page_signature, JSON.stringify(doc), confirmed);
-        return { code, errs };
+          .run(code, doc.session, scope, doc.page_signature, payload, confirmed);
+        return { code, errs, payload };
       }).immediate();
     } finally { db.close(); }
   });
@@ -341,7 +344,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
 
   // 2. osservazione
   const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
-  const { code, errs } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
+  const { code, errs, payload } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
   const dir = join(st.ws, "customers", st.customer, "observations");
   mkdirSync(dir, { recursive: true });
   writeFileAtomic(join(dir, `${code}.yaml`), toYaml({ id: code, ...doc }));
@@ -382,6 +385,9 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       return r.browser;
     });
     if (cfgObject) s.snapshots = [...(Array.isArray(s.snapshots) ? s.snapshots : []), { ...cfgObject, ts: doc.ts, obs: code, source: "observe-append", ...(doc.url ? { page: doc.url } : {}) }].slice(-20);
+    // WP09b giro 2: anello delle OBS di questa sessione (prova di autenticità per kb snapshot): session.json è protetto,
+    // il DB no; una riga del DB vale solo se codice, page_sig, ts e sha256 del payload coincidono con una voce qui
+    s.obs_ring = [...(Array.isArray(s.obs_ring) ? s.obs_ring : []), { code, page_sig: doc.page_signature ?? null, ts: doc.ts, sha256: sha(payload) }].slice(-OBS_RING_MAX);
     s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
     return s;
   });

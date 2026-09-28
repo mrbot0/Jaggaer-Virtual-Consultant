@@ -111,6 +111,12 @@
         "checkpoint_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "WP07 giro 3 (I-B): impronta (JSON canonico, firma compresa) del checkpoint di last_verified_step." }
       }
     },
+    "obs_ring": {
+      "type": "array",
+      "maxItems": 200,
+      "description": "WP09b giro 2: anello delle ultime OBS scritte da observe-append in questa sessione (al più 200): { code, page_sig, ts, sha256 del payload scritto nel DB }. È la prova di autenticità di kb snapshot: una riga di observations del DB vale solo se coincide con una voce qui (session.json è protetto in scrittura, il DB no).",
+      "items": { "type": "object", "required": ["code", "ts", "sha256"], "properties": { "code": { "type": "string", "pattern": "^L\\.[A-Z0-9]{4}\\.[A-Z0-9]{3}\\.OBS\\.\\d{4}$" }, "page_sig": { "type": ["string", "null"] }, "ts": { "type": "string" }, "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" } } }
+    },
     "snapshots": {
       "type": "array",
       "description": "Snapshot degli oggetti governati prima di una modifica di configurazione (§28.1): guard-config-scope ne richiede uno degli ultimi 60 s che COPRA tutti gli oggetti governati del passo (config.object + config.governs; con la sola area: areas). Li scrivono kb snapshot (source kb-snapshot: almeno un oggetto, un'OBS verificata sul DB per ciascuno in obs[], file in runs/<RUN>/snapshots/) e observe-append (source observe-append: il config.object del passo — o, per un passo di sola area, areas — con l'OBS in obs, solo se la pagina mostra l'elemento del SEL del passo). WP09b giro 1: una voce senza osservazioni non vale; una voce di sola area vale solo da observe-append.",
