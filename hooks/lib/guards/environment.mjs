@@ -23,7 +23,7 @@
 // Consentito = nessun output (un allow esplicito scavalcherebbe i permessi).
 import { readFileSync } from "node:fs";
 import { guardContext, denyAudited } from "./common.mjs";
-import { browserGuarded, declaredEnv, urlRefusal, outputRefusal, SCRIPT_DENIED } from "./browser.mjs";
+import { browserGuarded, declaredEnv, urlRefusal, outputRefusal, SCRIPT_DENIED, claudeEffectRefusal } from "./browser.mjs";
 import { isBrowserTool, mcpServer } from "../browser-tools.mjs";
 import { updateSessionFile } from "../session-state.mjs";
 
@@ -67,6 +67,9 @@ function check(ctx, env, a, st) {
 const browser = browserGuarded(G, (ctx, no) => {
   const { env, reason } = declaredEnv(ctx);
   if (!env) return no(reason);
+  // WP08 (decisione del controllore su WP07): effetti del browser di Claude solo in sandbox
+  const ce = claudeEffectRefusal(ctx, env.type);
+  if (ce) return no(ce);
   const b = ctx.session.browser ?? {};
   const st = { url: typeof b.current_url === "string" && b.current_url ? b.current_url : null, tab: b.tab ?? null, changed: false };
   for (const a of ctx.actions) {

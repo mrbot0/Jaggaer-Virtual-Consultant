@@ -97,3 +97,18 @@ export function outputRefusal(ctx, outputs) {
 }
 
 export { normalizeHost };
+
+// WP08 — decisione vincolante del controllore su WP07 (sicurezza): la famiglia del browser di Claude (Claude in Chrome,
+// Claude Browser) assegna ref a elementi che non stampa (read_page troncato o profondo, find), quindi il legame
+// ref ↔ SEL non è mai affidabile per lei. Fuori dalla sandbox (preprod, prod, dev e ogni tipo diverso da "sandbox")
+// ogni sua azione CON EFFETTO (click, testo, tasti, trascinamento, form_input, upload, script, strumenti non
+// classificati, batch che ne contiene una) è negata; letture e navigazione restano ammesse ovunque.
+const EFFECT_KINDS = new Set(["input", "click", "upload", "script", "other"]);
+const effectful = (a) => EFFECT_KINDS.has(a.kind) || (a.kind === "dialog" && a.submits) || a.submits === true;
+export function claudeEffectRefusal(ctx, envType) {
+  if (envType === "sandbox") return null;
+  const bad = (ctx.actions ?? []).find((a) => (a.family ?? ctx.call?.family) === "claude-browser" && effectful(a));
+  if (!bad) return null;
+  return `azione con effetto del browser di Claude (${bad.op ?? ctx.tool}${bad.action ? ` ${bad.action}` : ""}) negata in ${envType ? `ambiente ${envType}` : "ambiente ignoto"}: `
+    + "questa famiglia assegna ref a elementi che non mostra, il legame con il SEL del passo non è verificabile. Fuori dalla sandbox i passi con effetto si eseguono con Chrome DevTools MCP (o Playwright); letture e navigazione con il browser di Claude restano ammesse";
+}

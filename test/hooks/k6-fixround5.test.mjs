@@ -48,6 +48,11 @@ const blocks = (body, url, tab = 101) => [{ type: "text", text: body }, { type: 
 const R = (ws, body, url, ti = { tabId: 101 }) => post(ws, CL + "read_page", ti, blocks(body, url, ti.tabId ?? 101));
 const nav = (ws, url, tab = 101, target = url) => post(ws, CL + "navigate", { url: target, tabId: tab }, [{ type: "text", text: `Navigated to ${url}` }, { type: "text", text: ctx(url, tab) }]);
 const refsOf = (ws) => readSession(ws).browser.snapshot?.refs ?? {};
+
+// WP08 (decisione vincolante del controllore su WP07): fuori dalla sandbox ogni azione con effetto del browser di Claude è
+// negata da guard-environment con l'indicazione di usare Chrome DevTools MCP (o Playwright). Le asserzioni positive in
+// preprod diventano: legame corretto (refsOf) + click negato per la decisione, non per il legame.
+const claudeRuling = (res) => res.some(({ g, r }) => g === "guard-environment" && /Chrome DevTools MCP/.test(r.json?.hookSpecificOutput?.permissionDecisionReason ?? ""));
 const clClick = (ws, tr, ref, tab = 101) => guards(ws, CL + "computer", { action: "left_click", ref, tabId: tab }, { transcript_path: tr });
 
 async function readPlanWs(envId, tab = "101") {
@@ -152,26 +157,26 @@ test("I-A' positivo: in preprod navigate, due letture complete, click sull'eleme
   assert.ok(!allowed(clClick(ws, tr, "ref_3")), "una sola lettura non basta in preprod");
   R(ws, PAGE, url);
   assert.equal(refsOf(ws).ref_3, SEL, JSON.stringify(refsOf(ws)));
-  assert.ok(allowed(clClick(ws, tr, "ref_3")), "preprod: il click legittimo dopo navigate e due letture è negato");
+  assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "preprod: legato; click di Claude negato dalla decisione WP08");
   assert.ok(!allowed(clClick(ws, tr, "ref_1")));
   // un'altra scheda letta in mezzo non rompe il legame di questa storia (ma rompe la catena: servono di nuovo due letture)
   R(ws, `link "Home" [ref_1]\n\nViewport: 490x417`, OTHER, { tabId: 102 });
   R(ws, PAGE, url); R(ws, PAGE, url);
   assert.equal(refsOf(ws).ref_3, SEL, JSON.stringify(refsOf(ws)));
-  assert.ok(allowed(clClick(ws, tr, "ref_3")), "dopo la lettura di un'altra scheda il legame legittimo non torna");
+  assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "dopo la lettura di un'altra scheda il legame torna; click negato dalla decisione WP08");
   // nuovo documento (navigate senza frammento): l'estensione ricomincia da ref_1, la storia della scheda pure
   const list = "https://acme-pre.jaggaer.com/p2p/requisition/list";
   nav(ws, list);
   const LIST = `link "Elenco richieste" [ref_1]\nbutton "Nuova" [ref_3]\n\nViewport: 490x417`;
   R(ws, LIST, list); R(ws, LIST, list);
   assert.equal(refsOf(ws).ref_1, SEL, JSON.stringify(refsOf(ws)));
-  assert.ok(allowed(clClick(ws, tr, "ref_1")), "dopo un navigate a un nuovo documento il legame legittimo è negato");
+  assert.ok(claudeRuling(clClick(ws, tr, "ref_1")), "dopo un navigate a un nuovo documento il legame torna; click negato dalla decisione WP08");
   // un navigate allo stesso URL SENZA frammento ricarica il documento (verificato dal vivo: ref vecchi non più validi)
   nav(ws, list);
   const LIST2 = `button "Nuova" [ref_1]\nlink "Elenco richieste" [ref_2]\n\nViewport: 490x417`;
   R(ws, LIST2, list); R(ws, LIST2, list);
   assert.equal(refsOf(ws).ref_2, SEL, JSON.stringify(refsOf(ws)));
-  assert.ok(allowed(clClick(ws, tr, "ref_2")));
+  assert.ok(claudeRuling(clClick(ws, tr, "ref_2")));
 });
 
 test("I-A' regola 5: observe-append fallito o scaduto (solo browser-origin) ⇒ nulla si lega in quella scheda finché non naviga; l'ordine dei due hook non conta; un'altra scheda non è toccata", async () => {
@@ -189,7 +194,7 @@ test("I-A' regola 5: observe-append fallito o scaduto (solo browser-origin) ⇒ 
       nav(ws, url);
       R(ws, PAGE, url); R(ws, PAGE, url);
       assert.equal(refsOf(ws).ref_3, SEL, JSON.stringify(refsOf(ws)));
-      assert.ok(allowed(clClick(ws, tr, "ref_3")), "dopo il navigate il flusso legittimo è negato");
+      assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "dopo il navigate il legame torna; click negato dalla decisione WP08");
     }
   }
   // observe-append che si guasta davvero (DB inutilizzabile) ⇒ stesso effetto
@@ -206,7 +211,7 @@ test("I-A' regola 5: observe-append fallito o scaduto (solo browser-origin) ⇒ 
   }
   // ordine inverso (observe-append prima di browser-origin): nessun marcatore residuo, il flusso legittimo funziona
   {
-    const { ws, tr, url } = await readPlanWs("preprod");
+    const { ws, tr, url } = await readPlanWs("sandbox");   // WP08: effetti di Claude solo in sandbox (meccanismo indipendente dall ambiente)
     const PAGE = `link "Elenco richieste" [ref_3]\n\nViewport: 490x417`;
     postRev(ws, CL + "navigate", { url, tabId: 101 }, [{ type: "text", text: `Navigated to ${url}` }, { type: "text", text: ctx(url) }]);
     postRev(ws, CL + "read_page", { tabId: 101 }, blocks(PAGE, url));
@@ -216,7 +221,7 @@ test("I-A' regola 5: observe-append fallito o scaduto (solo browser-origin) ⇒ 
   }
   // un observe-append mancato sulla scheda 102 non blocca la 101
   {
-    const { ws, tr, url } = await readPlanWs("preprod");
+    const { ws, tr, url } = await readPlanWs("sandbox");   // WP08: effetti di Claude solo in sandbox (meccanismo indipendente dall ambiente)
     postNoObserve(ws, CL + "read_page", { tabId: 102 }, blocks(`link "Home" [ref_1]`, OTHER, 102));
     const PAGE = `link "Elenco richieste" [ref_3]\n\nViewport: 490x417`;
     R(ws, PAGE, url); R(ws, PAGE, url);
@@ -287,7 +292,8 @@ test("I-A': storia illeggibile ⇒ nessuna scheda lega finché non naviga; navig
   assert.ok(!allowed(clClick(ws, tr, "ref_3")), "storia persa: click consentito");
   nav(ws, url);
   R(ws, PAGE, url); R(ws, PAGE, url);
-  assert.ok(allowed(clClick(ws, tr, "ref_3")), "dopo il navigate il flusso legittimo è negato");
+  assert.equal(refsOf(ws).ref_3, SEL, JSON.stringify(refsOf(ws)));
+  assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "dopo il navigate il legame torna; click negato dalla decisione WP08");
 });
 
 test("I-A' unit.mjs: con una sola lettura completa di Claude legano solo sandbox e dev (prod, preprod, ignoto, 'qa', 'SANDBOX' no)", async () => {

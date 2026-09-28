@@ -197,7 +197,7 @@ function writeMatches(ctx, rules, env) {
   const texts = writtenTexts(ctx.tool, ctx.ti).filter((t) => typeof t === "string" && t);
   const hits = [];
   for (const r of rules.rules.filter((x) => x.applies_to.includes("write"))) {
-    if (r.unless_env && env[r.unless_env]) continue;
+    if (r.unless_env && env[r.unless_env] && env[r.unless_env] !== "0") continue;
     let found = null;
     if (r.on === "path") {
       for (const q of r.compiled) {

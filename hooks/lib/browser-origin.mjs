@@ -12,7 +12,20 @@ import { loadHookState } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
 import { updateSessionFile } from "./session-state.mjs";
 import { devtoolsPageUrl, claudeTabContext, playwrightPageUrl, hasDialog, hasModal, RECONNECT } from "./origin-markers.mjs";
-import { callKey, markPending } from "./ref-history.mjs";
+import { callKey, markPending, pendingFile, loadPending, savePending } from "./ref-history.mjs";
+import { withFileLock } from "./fsx.mjs";
+import { join } from "node:path";
+
+// WP08 (decisione del controllore su WP07): la voce "in attesa di observe-append" va anche nel file del cliente
+// (customers/<C>/.sessions/ref-pending.json), come la storia dei ref: una sessione nuova sulla stessa scheda la ritrova.
+function markCustomerPending(st, key, family, tab, ts) {
+  if (!st.customer) return;
+  const f = pendingFile(join(st.ws, "customers", st.customer, ".sessions"));
+  withFileLock(`${f}.lock`, () => {
+    const p = loadPending(f);
+    savePending(f, markPending(p.corrupt ? { obs_pending: {}, obs_done: [] } : p, key, family, tab, ts));
+  });
+}
 
 const ERROR_TEXT = /^\s*(error\b|errore\b|failed\b|timeout\b|timed out\b)|net::ERR_|navigation (failed|timeout)|timeout of \d+ ?ms exceeded|protocol error|target closed|no page selected|leave site\?/i;
 const textOf = (blocks) => blocks.filter((b) => b && typeof b === "object" && b.type === "text" && typeof b.text === "string").map((b) => b.text).join("\n");
@@ -111,8 +124,10 @@ export function record(input, env = process.env) {
   const moved = !(next.url === prev.url && (next.tab ?? null) === (prev.tab ?? null));
   // ogni chiamata del browser resta "in attesa di observe-append" finché observe-append non la registra (regola 5)
   const key = callKey(input);
+  const ts = new Date().toISOString();
+  markCustomerPending(st, key, call?.family ?? "unknown", call ? pendingTab(call) : null, ts);
   updateSessionFile(st.sessionFile, (s) => {
-    let nb = markPending(s.browser ?? {}, key, call?.family ?? "unknown", call ? pendingTab(call) : null, new Date().toISOString());
+    let nb = markPending(s.browser ?? {}, key, call?.family ?? "unknown", call ? pendingTab(call) : null, ts);
     if (moved) nb = { ...nb, current_url: next.url, tab: next.tab, updated_by: "browser-origin" };
     s.browser = nb;
   });
@@ -126,6 +141,7 @@ export function resetOnFailure(input, env = process.env) {
     if (st.jvc && st.sessionFile && st.session?.env) {
       let call = null;
       try { call = classify(String(input.tool_name ?? ""), input.tool_input); } catch { /* scheda ignota */ }
+      try { markCustomerPending(st, callKey(input), call?.family ?? "unknown", call ? pendingTab(call) : null, new Date().toISOString()); } catch { /* resta il marcatore di sessione */ }
       updateSessionFile(st.sessionFile, (s) => {
         const nb = markPending(s.browser ?? {}, callKey(input), call?.family ?? "unknown", call ? pendingTab(call) : null, new Date().toISOString());
         s.browser = { ...nb, current_url: null, tab: null, updated_by: "browser-origin" };

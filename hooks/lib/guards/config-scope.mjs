@@ -28,13 +28,13 @@ import { dirname, resolve, join, basename } from "node:path";
 import { readFileSync, statSync } from "node:fs";
 import { intersects, resolveTarget, bases, PathPolicyError } from "../paths.mjs";
 import { guarded, denyAudited, targetsOf, allRels, shellWriteTargets, subtree, SHELL_TOOLS } from "./common.mjs";
-import { browserGuarded, declaredEnv } from "./browser.mjs";
+import { browserGuarded, declaredEnv, claudeEffectRefusal } from "./browser.mjs";
 import { activeStep } from "./plan-step.mjs";
 import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
 import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf, exploreRecord, EXPLORE_PHRASE } from "../../../scripts/admin/approvals.mjs";
 import { appendAudit } from "../audit.mjs";
 import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
-import { pendingRefusal } from "../ref-history.mjs";
+import { pendingRefusal, mergedPending, loadPending, pendingFile } from "../ref-history.mjs";
 
 const G = "guard-config-scope";
 export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
@@ -97,7 +97,9 @@ export function bindingRefusal(ctx, step) {
     if (!refs.length || a.untargeted) return `azione senza uid/ref (${a.op ?? a.tool}): non si può legare al SEL del passo ${step.target}; usa l'uid o il ref dell'ultimo snapshot`;
     // WP07 giro 5 (I-A', regola 5): una chiamata precedente su questa scheda che observe-append non ha registrato
     // (fallito, scaduto) ⇒ la storia dei ref della scheda è inaffidabile: nessun legame finché la scheda non naviga
-    const pend = pendingRefusal(b, a.family ?? ctx.call?.family, a.tab);
+    // WP08: anche il marcatore del cliente (customers/<C>/.sessions/ref-pending.json), che sopravvive alla sessione
+    ctx.pendingFile ??= loadPending(pendingFile(join(ctx.ws, "customers", ctx.customer, ".sessions")));
+    const pend = pendingRefusal(mergedPending(b, ctx.pendingFile), a.family ?? ctx.call?.family, a.tab);
     if (pend) return pend;
     const snap = b.snapshot;
     if (!snap || !snap.refs || typeof snap.refs !== "object") return "nessuno snapshot osservato della pagina: esegui take_snapshot / read_page / browser_snapshot prima dell'azione";
@@ -114,6 +116,9 @@ async function browserDecide(ctx, no) {
   if (!ctx.actions.some(isEffectful)) return null;
   const s = ctx.session;
   if (!s) return null;   // senza sessione guard-environment nega già ogni strumento del browser
+  // WP08 (decisione del controllore su WP07): il legame ref ↔ SEL del browser di Claude vale solo in sandbox
+  const ce = claudeEffectRefusal(ctx, s.env?.type ?? null);
+  if (ce) return no(ce);
   if (!s.active_plan) return noPlan(ctx, no);
   const st = await activeStep(ctx);
   if (st.reason) return no(st.reason);
@@ -225,6 +230,9 @@ const PROTECTED = [
   // WP07 giro 2 (N-3): la ripresa (--resume) si fonda sui checkpoint: li scrive solo step-check (script del plugin);
   // giro 3 (I-B): a ogni profondità sotto runs/ (un --run annidato non è più ammesso, ma i file non si scrivono comunque)
   ["**/runs/**/checkpoints/**", "i checkpoint dei piani li scrive solo step-check (script del plugin): la ripresa di un piano si fonda su di essi"],
+  // WP08: storia dei ref e marcatore "inaffidabile" del cliente (li scrivono solo browser-origin e observe-append)
+  ["customers/*/.sessions/ref-history.json*", "la storia dei ref del browser la scrivono solo gli hook browser-origin e observe-append: forgiarla legherebbe ref a SEL"],
+  ["customers/*/.sessions/ref-pending.json*", "il marcatore delle osservazioni mancate lo scrivono solo gli hook browser-origin e observe-append"],
 ];
 const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
 const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);

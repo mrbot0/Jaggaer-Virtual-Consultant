@@ -79,6 +79,28 @@ export function pendingRefusal(b, family, tab) {
   return null;
 }
 
+// ---- marcatore per cliente (WP08, decisione del controllore su WP07): customers/<C>/.sessions/ref-pending.json
+// { v: 1, obs_pending: { <chiave>: { tab, ts } }, obs_done: [..] } — lo stesso marcatore di session.browser.obs_pending,
+// ma del cliente come la storia dei ref: una sessione nuova sulla stessa scheda lo ritrova. Lo scrive browser-origin
+// (hook leggero), lo chiude observe-append (stessa logica di markPending/settlePending); illeggibile ⇒ nessun legame.
+export const pendingFile = (sessionsDir) => join(sessionsDir, "ref-pending.json");
+export function loadPending(file) {
+  if (!existsSync(file)) return { v: 1, obs_pending: {}, obs_done: [] };
+  try {
+    const p = JSON.parse(readFileSync(file, "utf8"));
+    if (p && p.v === 1 && p.obs_pending && typeof p.obs_pending === "object" && !Array.isArray(p.obs_pending)) return { v: 1, obs_pending: p.obs_pending, obs_done: Array.isArray(p.obs_done) ? p.obs_done : [] };
+  } catch { /* sotto */ }
+  return { v: 1, corrupt: true, obs_pending: {}, obs_done: [] };
+}
+export const savePending = (file, p) => writeFileAtomic(file, JSON.stringify({ v: 1, obs_pending: p.obs_pending ?? {}, obs_done: (p.obs_done ?? []).slice(-OBS_DONE_MAX) }));
+// Voci aperte di sessione e cliente insieme, per pendingRefusal (file illeggibile ⇒ stato malformato ⇒ nessun legame).
+export function mergedPending(b, filePending) {
+  if (filePending?.corrupt) return { obs_pending: "illeggibile" };
+  const s = b?.obs_pending && typeof b.obs_pending === "object" && !Array.isArray(b.obs_pending) ? b.obs_pending : b?.obs_pending;
+  if (s !== undefined && s !== null && (typeof s !== "object" || Array.isArray(s))) return { obs_pending: s };
+  return { obs_pending: { ...(s ?? {}), ...(filePending?.obs_pending ?? {}) } };
+}
+
 // ---- file della storia: customers/<C>/.sessions/ref-history.json (del cliente, protetto come .sessions/) { v: 1, strict?, tabs: { "<fam>|<scheda>": { l: {ref: etichetta|"!"}, full?, url?, nav? } } }
 export const historyFile = (sessionsDir) => join(sessionsDir, "ref-history.json");
 export function loadHistory(file) {

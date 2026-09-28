@@ -13,7 +13,7 @@ import { createHash } from "node:crypto";
 import { loadHookState, sessionDir } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
 import { responseState, landedUrl } from "./browser-origin.mjs";
-import { tabKey, callKey, settlePending, historyFile, loadHistory, saveHistory, clearedBy, updateHistory, bindable } from "./ref-history.mjs";
+import { tabKey, callKey, settlePending, historyFile, loadHistory, saveHistory, clearedBy, updateHistory, bindable, pendingFile, loadPending, savePending } from "./ref-history.mjs";
 import { nextObserved, observedLocation } from "./observed-origin.mjs";
 import { isPageTextOp } from "./origin-markers.mjs";
 import { updateSessionFile } from "./session-state.mjs";
@@ -346,6 +346,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   const key = callKey(input);
   // storia del browser del cliente (sopravvive alla sessione: la mappa dei ref dell'estensione sopravvive a lei)
   const histFile = historyFile(join(st.ws, "customers", st.customer, ".sessions"));
+  const pendFile = pendingFile(join(st.ws, "customers", st.customer, ".sessions"));
   // schede azzerate: navigate riuscito (marcatore positivo di arrivo) a un nuovo documento, o chiusura della scheda
   const cleared = clearedBy(call, { ok: state === "ok", landedTab: labelLoc?.tab ?? observedLocation(call.family, text, { asked, resp })?.tab ?? null,
     landed: (a) => !!landedUrl(call.family, text, { asked: a.tab ?? null, resp }) });
@@ -367,6 +368,11 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     s.browser = withFileLock(`${histFile}.lock`, () => {
       const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names });
       if (labels.length || cleared.length || labelLoc?.url) saveHistory(histFile, r.hist);
+      // WP08: il marcatore del cliente si chiude qui, sotto gli stessi lock (ordine: session.json → storia → marcatore)
+      withFileLock(`${pendFile}.lock`, () => {
+        const p = loadPending(pendFile);
+        savePending(pendFile, settlePending(p.corrupt ? { obs_pending: {}, obs_done: [] } : p, key, cleared.flatMap((c) => c.pend)));
+      });
       return r.browser;
     });
     if (cfgObject) s.snapshots = [...(Array.isArray(s.snapshots) ? s.snapshots : []), { objects: [cfgObject], ts: doc.ts, obs: code }].slice(-20);

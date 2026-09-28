@@ -57,6 +57,11 @@ async function readPlanWs(envId, tab = "101") {
   assert.equal((await check({ ws, sid: "sess-1", planFile: file, step: 1 })).status, "ok");
   return { ws, tr, url: URLS[envId] };
 }
+
+// WP08 (decisione vincolante del controllore su WP07): fuori dalla sandbox ogni azione con effetto del browser di Claude è
+// negata da guard-environment con l'indicazione di usare Chrome DevTools MCP (o Playwright). Le asserzioni positive in
+// preprod diventano: legame corretto (refsOf) + click negato per la decisione, non per il legame.
+const claudeRuling = (res) => res.some(({ g, r }) => g === "guard-environment" && /Chrome DevTools MCP/.test(r.json?.hookSpecificOutput?.permissionDecisionReason ?? ""));
 const clClick = (ws, tr, ref) => guards(ws, CL + "computer", { action: "left_click", ref, tabId: 101 }, { transcript_path: tr });
 
 // Prima lettura completa legittima: l'estensione ha assegnato ref_1 al bottone di invio e ref_2 alla ricerca.
@@ -119,7 +124,7 @@ test("I-A: legame legittimo dopo DUE letture complete consecutive in preprod ⇒
     post(ws, CL + "read_page", { tabId: 101, filter: "all" }, claude(PAGE, url));
     assert.equal(refsOf(ws).ref_3, SEL, `${envId}: ${JSON.stringify(refsOf(ws))}`);
     assert.equal(refsOf(ws).ref_1, null);
-    if (envId === "preprod") assert.ok(allowed(clClick(ws, tr, "ref_3")), "preprod: il click legittimo dopo due letture è negato");
+    if (envId === "preprod") assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "preprod: legato dopo due letture; il click di Claude è negato dalla decisione WP08 (usa DevTools)");
     assert.ok(!allowed(clClick(ws, tr, "ref_1")));
   }
   const { ws, tr, url } = await readPlanWs("sandbox");
