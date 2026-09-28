@@ -49,6 +49,9 @@ export function classifyOutcome({ expected = {}, observed = {}, errors = [], pol
   if (userAbort) return result("ABORTED-BY-USER", "l'utente ha detto no");
   const expErr = expected?.error ?? null;
   const unexpected = errs.filter((e) => !matchesExpected(e, expErr));
+  // WP07 giro 1 (spec I6, §29.8 NEG.0031): l'errore atteso non basta — anche lo stato finale deve essere quello atteso
+  const stateMismatch = expected?.state != null && low(expected.state) !== low(observed?.state);
+  if (errs.length && unexpected.length === 0 && stateMismatch) return result("ERROR-BLOCKING", `errore atteso ricevuto ma stato finale ${observed?.state ?? "ignoto"} invece di ${expected.state}`);
   if (errs.length && unexpected.length === 0) return result("EXPECTED-ERROR-AS-SUCCESS", `errore atteso ricevuto (${errs.map((e) => e.code ?? e.category).join(", ")}): la regola esiste e funziona`);
   if (unexpected.some(isEnvironmentError)) return result("ERROR-ENVIRONMENT", `errore d'ambiente (${unexpected.filter(isEnvironmentError).map((e) => e.category ?? e.code).join(", ")}): riprova, poi blocked; mai un Defect`);
   if (unexpected.length) {
