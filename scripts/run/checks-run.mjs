@@ -65,7 +65,7 @@ export const SCRIPT_CHECKS = Object.freeze({
     if (!ref) return failed(`${S.id} (${S.risk}) senza rollback dichiarato`);
     // giro 1: la prova a vuoto (.DRY, SAVE/SUBMIT sostituiti da CAPTURE) non applica il rollback: non lo prova
     const g = greenRunsOf(ctx.ws, ctx.customer, [`PLAN.${ref}`], ctx.now.getTime() - 14 * DAY);
-    return g.length ? pass(`rollback ${ref} verde in ${g[0].run}`) : failed(`nessun run verde della CFP di rollback ${ref} negli ultimi 14 giorni: provala (anche a vuoto) prima della modifica`);
+    return g.length ? pass(`rollback ${ref} verde in ${g[0].run}`) : failed(`nessun run verde della CFP di rollback ${ref} negli ultimi 14 giorni: provala (non a vuoto: una prova .DRY non applica il rollback) prima della modifica`);
   },
   // S.STD.XSC.CHK.0001 — ambiente dichiarato = rilevato (env-check con ≥ 2 segnali)
   "env-verified": (ctx) => {

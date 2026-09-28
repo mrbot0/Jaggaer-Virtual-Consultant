@@ -29,6 +29,14 @@ export const planHash = (plan) => createHash("sha256").update(canonical(plan)).d
 // WP09b giro 1 (M17): si conta per impronta (fingerprintOf: l'impronta del caso, uguale in ogni run anche con il prefisso
 // NRT-<data>-<run> nei dati; per i piani senza impronta, l'hash del piano); un esito vale se una delle due coincide.
 export const fingerprintOf = (plan) => plan?.fingerprint ?? planHash(plan);
+// WP09b giro 2 (minore 1): l'impronta dichiarata dal piano non basta: almeno uno dei verdi contati deve avere il
+// plan_hash del piano che si compila (un piano modificato dopo compile-case non eredita i verdi degli altri).
+export function compileEligibility(ws, customer, plan) {
+  const hash = planHash(plan);
+  const key = fingerprintOf(plan);
+  const res = runResults(ws, customer).filter((y) => (y.fingerprint === key || y.plan_hash === key) && GREEN.has(y.status));
+  return { green: [...new Set(res.map((y) => y.run))].sort(), bound: res.some((y) => y.plan_hash === hash) };
+}
 export function greenRuns(ws, customer, key) {
   return [...new Set(runResults(ws, customer).filter((y) => (y.fingerprint === key || y.plan_hash === key) && GREEN.has(y.status)).map((y) => y.run))].sort();
 }
@@ -173,8 +181,9 @@ export async function run(argv, env = process.env) {
     }
     const hash = planHash(plan);
     const min = opts["min-green"] ? Math.max(MIN_GREEN, Number(opts["min-green"])) : MIN_GREEN;
-    const green = greenRuns(ws, customer, fingerprintOf(plan));
-    if (green.length < min) return fail(asJson, 3, `${green.length} esecuzioni verdi con questo hash: ne servono almeno ${min} per compilare (§27.4)`, { green });
+    const { green, bound } = compileEligibility(ws, customer, plan);
+    if (green.length < min) return fail(asJson, 3, `${green.length} esecuzioni verdi con questa impronta: ne servono almeno ${min} per compilare (§27.4)`, { green });
+    if (!bound) return fail(asJson, 3, `nessuna delle esecuzioni verdi è di questo piano (plan_hash ${hash.slice(0, 12)}…): il piano è cambiato dopo l'esecuzione, rieseguilo`, { green });
     const { text } = generateSpec(ws, customer, plan, { allowFragile: !!opts["allow-fragile"], atlas: opts.atlas ? JSON.parse(readFileSync(resolvePath(ws, opts.atlas), "utf8")) : null });
     const rel = `customers/${customer}/tests/specs/${scope}/${plan.plan_id}.spec.ts`;
     mkdirSync(join(ws, "customers", customer, "tests", "specs", scope), { recursive: true });
