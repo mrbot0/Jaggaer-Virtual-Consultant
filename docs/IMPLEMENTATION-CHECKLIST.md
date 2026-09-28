@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 28/09/2026 13:05 — **punto corrente: WP07 (K6) in corso (K6.1 fatto); aggiunto WP10d, il layer di orchestrazione e controllo degli agenti**.
+Ultimo aggiornamento: 28/09/2026 19:20 — **punto corrente: WP08 (F0) avviato; WP07 (K6) chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 39 % del progetto** (stima pesata sullo sforzo) · 6 pacchetti su 17 chiusi. La percentuale scende di 2 punti perché il perimetro è cresciuto con WP10d, non per lavoro perso.
+**≈ 46 % del progetto** (stima pesata sullo sforzo) · 7 pacchetti su 17 chiusi.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 39 %** (43 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 6 / 17 = **35 %** | WP01–WP06 con review pulita e tag |
-| Hook del catalogo §44.4 | 13 / 16 = **81 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
-| Test automatici | 466 / 466 verdi | `npm test` al tag `k5-done` (`69cc6e7`); 100/100 scritture in produzione negate; guard ≤ 151 ms |
+| Avanzamento pesato | **≈ 46 %** (51 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 7 / 17 = **41 %** | WP01–WP07 con review e tag |
+| Hook del catalogo §44.4 | 14 / 16 = **88 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
+| Test automatici | 578 / 578 verdi | `npm test` al tag `k6-done` (`ea67488`); intento 33/33; observe-append p50 125 ms |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -36,6 +36,24 @@ Ultimo aggiornamento: 28/09/2026 13:05 — **punto corrente: WP07 (K6) in corso 
 - Corretto dopo la review: nessuna formula di raccomandazione produce più un obbligo, e anche la validazione a valle lo impedisce. Il budget per documento non si può alzare, e il consumo resta legato alla sessione reale.
 - Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
 - Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
+
+### Chiusura di WP07 (K6, esecuzione su Chrome)
+- Implementato in 10 commit, più 5 giri di correzione (`4380433..ea67488`). Tag `k6-done` → `ea67488`.
+- Consegnato:
+  - `step-check` con i parser dei tre formati di browser e `observe-append`, che registra le osservazioni e riconosce gli errori della piattaforma;
+  - redazione dei dati personali al momento della cattura, ed evidenze mascherate senza script di pagina;
+  - riconoscimento dell'intento (33/33) e workflow a schermo;
+  - report con esito classificato, budget rigidi con riserva per gli agenti paralleli e compile-plan opzionale;
+  - la prova M7 simulata, in cui la 3A lavora sullo stato scritto da K6.
+- Corretto nelle review, che hanno avuto un peso forte sulla sicurezza:
+  - l'origine della pagina non si ricava più dal testo della pagina;
+  - un piano fuori dalla sandbox richiede `APPROVO PIANO`, ed è legato al suo hash;
+  - ogni click o input deve colpire l'elemento previsto dal passo;
+  - checkpoint protetti, e l'ultimo passo verificato vive nello stato di sessione;
+  - dati personali rimossi dalla firma di pagina e dalle evidenze;
+  - nessun falso "superato" sugli errori attesi.
+- **Deciso al limite dei 5 giri.** Il browser integrato di Claude assegna riferimenti a elementi che non mostra, quindi un legame affidabile tra elemento e passo non è garantito. Fuori dalla sandbox le azioni con effetto tramite il browser di Claude saranno negate: per quelle si usa Chrome DevTools MCP. Letture e navigazione restano libere. La correzione è inclusa in WP08.
+- Da verificare dal vivo su Chrome reale: il ritorno indietro con la cache della pagina (bfcache).
 
 ### Agent manager come layer di orchestrazione (valutazione del 28/09/2026)
 - **Cosa dice la spec:** il manager è l'orchestratore (§23.2). Gestisce stato, routing, handoff, escalation, blackboard, budget e vigilanza cognitiva, ed è l'unico che parla con l'utente. È una skill che gira nella sessione principale, perché in Claude Code solo lei può lanciare sub-agenti.
@@ -73,8 +91,8 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP04 | Precedenti, esiti, 12 strategie, `strategy-select`, revisione delle credenze, profondità, piano, self-check, why, calibrazione, lezioni | K3 | 8 | 100 | ✅ | tag `k3-done` → `43f935f`, 305 test, golden 20/20, `docs/phase-reports/K3.md` |
 | WP05 | Modello dei campi FLD, carta d'identità, pipeline a lotti ≤ 50, parser deontico, catene, `kb fields/impact/identity` | K4 | 7 | 100 | ✅ | tag `k4-done` → `d985f8d`, 370 test, deontico 228/228, `docs/phase-reports/K4.md` |
 | WP06 | Ambienti, `env-check`, guard-environment/production/config-scope, catalogo azioni ACT, tripla approvazione 3A | K5 | 6 | 100 | ✅ | tag `k5-done` → `69cc6e7`, 466 test, 3 giri di correzione, `docs/phase-reports/K5.md` |
-| WP07 | `step-check`, `observe-append`, errori della piattaforma, evidenze, intento DT-026, workflow, report ed esiti, budget, `compile-plan` opzionale | K6 | 8 | 0 | 🔄 | `wp07-k6.md` |
-| WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 0 | ⬜ Brief | `wp08-f0.md` |
+| WP07 | `step-check`, `observe-append`, errori della piattaforma, evidenze, intento DT-026, workflow, report ed esiti, budget, `compile-plan` opzionale | K6 | 8 | 100 | ✅ | tag `k6-done` → `ea67488`, 578 test, 5 giri di correzione, `docs/phase-reports/K6.md` |
+| WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 0 | 🔄 | `wp08-f0.md` + decisione portata da WP07 |
 | WP09a | Pipeline di ingestion: parser DOCX/XLSX/PDF/XSD/export/screenshot/trascrizioni/e-mail, unità, profilo DOC, banche di domande, back-check, alias, versioni, residuo, revisione, survey del tenant, PRF/PMP | F1' (strumenti) | 10 | 0 | ⬜ Brief | `wp09a-ingest.md` |
 | WP09b | Schemi NRT/SEL/HND/CHK/CFP/FLW/KEY/LCY/INT/CFG, compile-case/cfp, lint, Atlas, corsie di esecuzione, compensazioni, snapshot, evidenze, negativi, promozione, copertura | F3–F7, C1 (strumenti) | 12 | 0 | ⬜ Brief | `wp09b-run.md` |
 | WP09c | AlmAdapter (Xray Cloud/Server/Mock), server MCP ALM, script xray, coda offline, Defect, `.mcp.json`, NETWORK.md | F5 | 6 | 0 | ⬜ Brief | `wp09c-alm.md` |
@@ -84,7 +102,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 0 | ⬜ Brief | `wp10d-orchestration.md` — da eseguire prima di WP10c |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **111** | **≈ 39** | | 43 unità completate |
+| **Totale** | | | **111** | **≈ 46** | | 51 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
@@ -93,7 +111,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 - [x] guard-domain-boundary · guard-scope · guard-customer (WP03 ✅)
 - [x] guard-budget · subagent-trace (WP03 ✅)
 - [x] guard-environment · guard-production · guard-config-scope · approval-capture (WP06 ✅) · in più browser-origin, guard-phrase
-- [ ] observe-append (WP07)
+- [x] observe-append (WP07 ✅)
 - [ ] guard-destructive · guard-alm-write (WP08)
 
 ### Script (gruppi §44.5)
