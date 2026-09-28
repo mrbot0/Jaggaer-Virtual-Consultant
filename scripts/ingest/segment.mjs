@@ -26,10 +26,13 @@ export function normalizeHeader(h) {
 
 // Sinonimi delle intestazioni, per ruolo di colonna (match esatto sull'intestazione normalizzata).
 const HEADER_SYNONYMS = {
-  technical_name: ["nome tecnico", "technical name", "technical id", "id", "codice campo", "field id", "field code", "api name", "nome campo tecnico", "db column"],
+  technical_name: ["nome tecnico", "technical name", "technical id", "id", "codice campo", "field id", "field code", "api name", "nome campo tecnico", "db column",
+    // WP09a: tracciati dei development kit dei web service (elemento/attributo XML o JSON = nome tecnico)
+    "attribute", "attribute name", "attributo", "element", "element name", "elemento", "xml element", "xml tag", "tag", "json attribute", "parameter name", "property", "property name"],
   label: ["campo", "field", "nome", "name", "etichetta", "label", "nome campo", "field name", "descrizione campo"],
   type: ["tipo", "type", "tipo campo", "field type", "tipo dato", "data type", "formato", "format"],
-  mandatory: ["obbligatorio", "obbligatorieta", "mandatory", "required", "obbl", "richiesto", "obbligatorio s n", "mandatory y n", "required y n"],
+  mandatory: ["obbligatorio", "obbligatorieta", "mandatory", "required", "obbl", "richiesto", "obbligatorio s n", "mandatory y n", "required y n",
+    "mandatory optional", "m o", "obbligatorio facoltativo", "is required", "required field"],
   notes: ["note", "notes", "descrizione", "description", "commenti", "comments", "osservazioni", "remarks"],
   allowed_values: ["valori ammessi", "allowed values", "valori", "values", "opzioni", "options", "dominio", "domain", "valori possibili", "possible values"],
 };
@@ -42,6 +45,8 @@ export function recognizeFieldTable(headers) {
     const role = LOOKUP.get(normalizeHeader(h));
     if (role && cols[role] === undefined) cols[role] = i;
   });
+  // WP09a: nei tracciati il nome tecnico fa anche da label (nessuna colonna "campo" separata)
+  if (cols.label === undefined && cols.technical_name !== undefined) cols.label = cols.technical_name;
   if (cols.label === undefined || cols.mandatory === undefined) return null;
   if (cols.type === undefined && cols.technical_name === undefined) return null;
   return cols;

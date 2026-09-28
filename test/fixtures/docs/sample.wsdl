@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="DemoSupplierService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:acme:demo:supplier" targetNamespace="urn:acme:demo:supplier">
+  <wsdl:types>
+    <xs:schema targetNamespace="urn:acme:demo:supplier">
+      <xs:element name="SupplierRequest">
+        <xs:complexType><xs:sequence>
+          <xs:element name="VatNumber" type="xs:string"/>
+          <xs:element name="Name" type="xs:string"/>
+          <xs:element name="ErpCode" type="xs:string" minOccurs="0"/>
+        </xs:sequence></xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="SupplierIn"><wsdl:part name="body" element="tns:SupplierRequest"/></wsdl:message>
+  <wsdl:message name="SupplierOut"><wsdl:part name="body" element="tns:SupplierRequest"/></wsdl:message>
+  <wsdl:portType name="SupplierPort">
+    <wsdl:operation name="UpsertSupplier"><wsdl:input message="tns:SupplierIn"/><wsdl:output message="tns:SupplierOut"/></wsdl:operation>
+  </wsdl:portType>
+  <wsdl:service name="DemoSupplierService"><wsdl:port name="SupplierPortSoap" binding="tns:SupplierBinding"><soap:address location="https://demo.example.invalid/ws/supplier"/></wsdl:port></wsdl:service>
+</wsdl:definitions>

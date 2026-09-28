@@ -1,0 +1,223 @@
+{
+  "id": "wf",
+  "title": "Workflow dimostrativo ACME",
+  "format": "xml",
+  "sections": [
+    {
+      "path": "impostazioni",
+      "title": "Impostazioni del workflow",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "impostazioni",
+          "headers": [
+            "Parametro",
+            "Valore"
+          ],
+          "rows": [
+            [
+              "WorkflowType",
+              "DemoRequisition"
+            ],
+            [
+              "Usable",
+              "true"
+            ],
+            [
+              "Version",
+              "3"
+            ],
+            [
+              "VersionDescription",
+              "Workflow dimostrativo ACME"
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "config-export"
+    },
+    {
+      "path": "passi",
+      "title": "Passi (Step)",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "passi",
+          "headers": [
+            "Passo",
+            "Attributi"
+          ],
+          "rows": [
+            [
+              "Budget Check",
+              "Description: Verifica del budget"
+            ],
+            [
+              "Manager Approval",
+              "Description: Approvazione del responsabile"
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "config-export",
+      "records": [
+        {
+          "kind": "step",
+          "name": "Budget Check",
+          "attributes": {
+            "Description": "Verifica del budget"
+          }
+        },
+        {
+          "kind": "step",
+          "name": "Manager Approval",
+          "attributes": {
+            "Description": "Approvazione del responsabile"
+          }
+        }
+      ]
+    },
+    {
+      "path": "attivita",
+      "title": "Attività (Activity)",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "attività",
+          "headers": [
+            "Attività",
+            "Tipo",
+            "Passo",
+            "Cartelle",
+            "Regola",
+            "Selezione cartella"
+          ],
+          "rows": [
+            [
+              "Start",
+              "Start",
+              "",
+              "",
+              "",
+              "Default"
+            ],
+            [
+              "Approve Manager",
+              "Approval",
+              "Manager Approval",
+              "Manager Folder",
+              "[Document.Total] > 50000",
+              "Default"
+            ],
+            [
+              "End",
+              "End",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "config-export",
+      "records": [
+        {
+          "kind": "activity",
+          "name": "Start",
+          "type": "Start",
+          "step": null,
+          "folders": [],
+          "rule": null,
+          "folder_selection_rule": "Default",
+          "attributes": {}
+        },
+        {
+          "kind": "activity",
+          "name": "Approve Manager",
+          "type": "Approval",
+          "step": "Manager Approval",
+          "folders": [
+            "Manager Folder"
+          ],
+          "rule": "[Document.Total] > 50000",
+          "folder_selection_rule": "Default",
+          "attributes": {}
+        },
+        {
+          "kind": "activity",
+          "name": "End",
+          "type": "End",
+          "step": null,
+          "folders": [],
+          "rule": null,
+          "folder_selection_rule": null,
+          "attributes": {}
+        }
+      ]
+    },
+    {
+      "path": "transizioni",
+      "title": "Transizioni (ActivityRelationship)",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "transizioni",
+          "headers": [
+            "Da",
+            "A",
+            "Condizione"
+          ],
+          "rows": [
+            [
+              "Start",
+              "Approve Manager",
+              ""
+            ],
+            [
+              "Approve Manager",
+              "End",
+              ""
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "config-export",
+      "records": [
+        {
+          "kind": "transition",
+          "name": "Start → Approve Manager",
+          "from": "Start",
+          "to": "Approve Manager"
+        },
+        {
+          "kind": "transition",
+          "name": "Approve Manager → End",
+          "from": "Approve Manager",
+          "to": "End"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "workflow_definition_demo.xml",
+    "parser": "parse-config-export",
+    "parser_version": "1",
+    "sha256": "sha256:84da03129999a77346b9b37bd50146a9fee977003f85266551042fd4ba4f341d",
+    "size": 1190,
+    "exported_at": null,
+    "kind_hint": "workflow-definition"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "demo-xls",
+  "title": "demo-xls",
+  "format": "xls",
+  "sections": [
+    {
+      "path": "sheet-1",
+      "title": "Articoli",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "headers": [
+            "Codice",
+            "Descrizione",
+            "Prezzo"
+          ],
+          "rows": [
+            [
+              "A-100",
+              "Sedia ergonomica",
+              129.5
+            ],
+            [
+              "A-200",
+              "Scrivania",
+              310
+            ]
+          ]
+        }
+      ],
+      "figures": []
+    },
+    {
+      "path": "sheet-2",
+      "title": "Nascosto",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "headers": [
+            "Valuta"
+          ],
+          "rows": [
+            [
+              "EUR"
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "hidden": true
+    }
+  ],
+  "meta": {
+    "source": "sample.xls",
+    "parser": "parse-xls",
+    "parser_version": "1",
+    "sha256": "sha256:2824e80b375310d073647b50512cfe4e6c9ced18723c33d9f4b7479d5d4a9441",
+    "size": 5632
+  }
+}

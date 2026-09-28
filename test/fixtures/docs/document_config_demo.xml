@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- esempio sintetico -->
+<ReqConfig>
+  <VersionDescription>Configurazione richiesta ACME</VersionDescription>
+  <AllowedCartViews>Simple</AllowedCartViews>
+  <InitialCartView>Simple</InitialCartView>
+  <Section id="S1"><Name>General</Name><TitleAndHelp lang="00"><Title>Informazioni generali</Title><HelpText></HelpText></TitleAndHelp></Section>
+  <Group id="G1"><Name>Header</Name><SectionRef id="S1"/><TitleAndHelp lang="00"><Title>Testata</Title><HelpText></HelpText></TitleAndHelp></Group>
+  <Element type="custom" id="CostCenter">
+    <GroupRef id="G1"/>
+    <DisplayOrder>1</DisplayOrder>
+    <MaxLength>10</MaxLength>
+    <TitleAndHelp lang="00"><Title>Centro di costo</Title><HelpText>Codice contabile SAP</HelpText></TitleAndHelp>
+    <ElementValidation event="Empty"><ValidationEventHandling type="Checkout">Error</ValidationEventHandling><ValidationEventHandling type="Default">Ignore</ValidationEventHandling></ElementValidation>
+    <ElementValidation event="Invalid"><ValidationEventHandling type="Checkout">Error</ValidationEventHandling></ElementValidation>
+  </Element>
+  <Element type="static" id="ProjectCode">
+    <GroupRef id="G1"/>
+    <DisplayOrder>2</DisplayOrder>
+    <ElementValidation event="Empty"><ValidationEventHandling type="Default">Ignore</ValidationEventHandling></ElementValidation>
+  </Element>
+</ReqConfig>

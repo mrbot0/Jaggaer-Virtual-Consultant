@@ -1,0 +1,181 @@
+{
+  "id": "demo-openapi",
+  "title": "Demo Requisition API",
+  "format": "openapi",
+  "sections": [
+    {
+      "path": "operazioni",
+      "title": "Operazioni (OpenAPI)",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "operazioni",
+          "headers": [
+            "Operazione",
+            "Metodo",
+            "Percorso",
+            "Parametri obbligatori",
+            "Descrizione"
+          ],
+          "rows": [
+            [
+              "createRequisition",
+              "POST",
+              "/requisitions",
+              "company (query)",
+              "Crea una richiesta di acquisto"
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "tracciato",
+      "records": [
+        {
+          "kind": "operation",
+          "name": "createRequisition",
+          "method": "POST",
+          "path": "/requisitions",
+          "summary": "Crea una richiesta di acquisto",
+          "parameters": [
+            {
+              "name": "company",
+              "in": "query",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "schema-1",
+      "title": "Tracciato Requisition",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "tracciato Requisition",
+          "headers": [
+            "Elemento",
+            "Percorso",
+            "Tipo",
+            "Obbligatorio",
+            "Min",
+            "Max",
+            "Lunghezza",
+            "Pattern",
+            "Valori ammessi",
+            "Note"
+          ],
+          "rows": [
+            [
+              "costCenter",
+              "/Requisition/costCenter",
+              "string",
+              "Sì",
+              "1",
+              "1",
+              "0..10",
+              "",
+              "",
+              "Centro di costo"
+            ],
+            [
+              "priority",
+              "/Requisition/priority",
+              "string",
+              "No",
+              "0",
+              "1",
+              "",
+              "",
+              "low; high",
+              ""
+            ],
+            [
+              "lines",
+              "/Requisition/lines",
+              "array",
+              "Sì",
+              "1",
+              "unbounded",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "quantity",
+              "/Requisition/lines/quantity",
+              "number",
+              "Sì",
+              "1",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "tracciato",
+      "records": [
+        {
+          "kind": "property",
+          "name": "costCenter",
+          "path": "/Requisition/costCenter",
+          "type": "string",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true,
+          "max_length": 10,
+          "documentation": "Centro di costo"
+        },
+        {
+          "kind": "property",
+          "name": "priority",
+          "path": "/Requisition/priority",
+          "type": "string",
+          "min_occurs": 0,
+          "max_occurs": "1",
+          "required": false,
+          "enumeration": [
+            "low",
+            "high"
+          ]
+        },
+        {
+          "kind": "property",
+          "name": "lines",
+          "path": "/Requisition/lines",
+          "type": "array",
+          "min_occurs": 1,
+          "max_occurs": "unbounded",
+          "required": true
+        },
+        {
+          "kind": "property",
+          "name": "quantity",
+          "path": "/Requisition/lines/quantity",
+          "type": "number",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "sample-openapi.json",
+    "parser": "parse-spec",
+    "parser_version": "1",
+    "sha256": "sha256:ec175675941ade1065587b23bc155e09f9b6517baf6437a78324bfd7557866fd",
+    "kind_hint": "spec-integrazione"
+  },
+  "version": "1.2"
+}

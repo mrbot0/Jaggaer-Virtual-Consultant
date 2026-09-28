@@ -1,0 +1,67 @@
+{
+  "id": "vtt",
+  "title": "vtt",
+  "format": "vtt",
+  "sections": [
+    {
+      "path": "t1",
+      "title": "Inizio",
+      "level": 1,
+      "page": null,
+      "paragraphs": [
+        "[00:00:01.000] Oggi vediamo come si crea una richiesta."
+      ],
+      "tables": [],
+      "figures": [],
+      "kind": "trascrizione",
+      "records": [
+        {
+          "kind": "cue",
+          "name": "00:00:01.000",
+          "start": "00:00:01.000",
+          "end": "00:00:05.000",
+          "speaker": "Trainer",
+          "text": "Oggi vediamo come si crea una richiesta."
+        }
+      ]
+    },
+    {
+      "path": "t2",
+      "title": "Nuova richiesta",
+      "level": 1,
+      "page": null,
+      "paragraphs": [
+        "[00:00:06.000] Di solito inseriamo prima il centro di costo, poi le righe.",
+        "[00:00:11.000] Il sistema blocca il salvataggio se manca il fornitore."
+      ],
+      "tables": [],
+      "figures": [],
+      "kind": "trascrizione",
+      "records": [
+        {
+          "kind": "tacit",
+          "name": "00:00:06.000",
+          "start": "00:00:06.000",
+          "end": "00:00:10.000",
+          "speaker": "Trainer",
+          "text": "Di solito inseriamo prima il centro di costo, poi le righe."
+        },
+        {
+          "kind": "cue",
+          "name": "00:00:11.000",
+          "start": "00:00:11.000",
+          "end": "00:00:14.000",
+          "speaker": null,
+          "text": "Il sistema blocca il salvataggio se manca il fornitore."
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "training.vtt",
+    "parser": "parse-transcript",
+    "parser_version": "1",
+    "sha256": "sha256:ea5435c29147b9793610d8e2dff57fdba28a6da34495d732b78039399eafb684",
+    "kind_hint": "registrazione"
+  }
+}

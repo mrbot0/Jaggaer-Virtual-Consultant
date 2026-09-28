@@ -1,0 +1,107 @@
+{
+  "id": "screen",
+  "title": "Nuova richiesta",
+  "format": "image",
+  "sections": [
+    {
+      "path": "schermata",
+      "title": "Nuova richiesta",
+      "level": 1,
+      "page": null,
+      "paragraphs": [
+        "Nuova richiesta",
+        "Centro di costo *",
+        "Codice progetto",
+        "Il centro di costo è obbligatorio"
+      ],
+      "tables": [
+        {
+          "caption": "campi osservati",
+          "headers": [
+            "Campo",
+            "Tipo",
+            "Obbligatorio",
+            "Valori ammessi",
+            "Note"
+          ],
+          "rows": [
+            [
+              "Centro di costo",
+              "textbox",
+              "Sì",
+              "",
+              "sezione Testata"
+            ],
+            [
+              "Codice progetto",
+              "textbox",
+              "No",
+              "",
+              ""
+            ]
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "ref": "screen.png"
+        }
+      ],
+      "kind": "schermata",
+      "meta": {
+        "image": {
+          "format": "png",
+          "width": 4,
+          "height": 3,
+          "sha256": "sha256:132db11d5d92a079ca1d8a10d5cd63576f7cdd17209869e56cb820010fb52239",
+          "size": 33
+        }
+      },
+      "records": [
+        {
+          "kind": "field",
+          "name": "Centro di costo",
+          "type": "textbox",
+          "required": true,
+          "options": [],
+          "section": "Testata"
+        },
+        {
+          "kind": "field",
+          "name": "Codice progetto",
+          "type": "textbox",
+          "required": false,
+          "options": [],
+          "section": null
+        },
+        {
+          "kind": "button",
+          "name": "Salva bozza"
+        },
+        {
+          "kind": "tab",
+          "name": "Testata",
+          "order": 1
+        },
+        {
+          "kind": "tab",
+          "name": "Righe",
+          "order": 2
+        },
+        {
+          "kind": "message",
+          "name": "Il centro di costo è obbligatorio",
+          "severity": "error"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "screen.png",
+    "parser": "parse-screenshots",
+    "parser_version": "1",
+    "sha256": "sha256:132db11d5d92a079ca1d8a10d5cd63576f7cdd17209869e56cb820010fb52239",
+    "size": 33,
+    "kind_hint": "set-screenshot"
+  }
+}

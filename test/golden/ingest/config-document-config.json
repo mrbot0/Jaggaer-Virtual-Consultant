@@ -1,0 +1,172 @@
+{
+  "id": "dc",
+  "title": "Configurazione richiesta ACME",
+  "format": "xml",
+  "sections": [
+    {
+      "path": "impostazioni",
+      "title": "Impostazioni (ReqConfig)",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "impostazioni",
+          "headers": [
+            "Parametro",
+            "Valore"
+          ],
+          "rows": [
+            [
+              "VersionDescription",
+              "Configurazione richiesta ACME"
+            ],
+            [
+              "AllowedCartViews",
+              "Simple"
+            ],
+            [
+              "InitialCartView",
+              "Simple"
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "config-export"
+    },
+    {
+      "path": "struttura",
+      "title": "Sezioni e gruppi del form",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "gruppi",
+          "headers": [
+            "Gruppo",
+            "Titolo",
+            "Sezione"
+          ],
+          "rows": [
+            [
+              "Header",
+              "Testata",
+              "Informazioni generali"
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "config-export"
+    },
+    {
+      "path": "campi-1",
+      "title": "Campi — Informazioni generali",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "campi",
+          "headers": [
+            "Nome tecnico",
+            "Campo",
+            "Tipo",
+            "Obbligatorio",
+            "Gruppo",
+            "Sola lettura",
+            "Lunghezza massima",
+            "Convalide",
+            "Note"
+          ],
+          "rows": [
+            [
+              "CostCenter",
+              "Centro di costo",
+              "custom",
+              "Obbligatorio in Checkout",
+              "Testata",
+              "",
+              "10",
+              "Empty: Checkout=Error, Default=Ignore; Invalid: Checkout=Error",
+              "Codice contabile SAP · id=CostCenter · tipo=custom"
+            ],
+            [
+              "ProjectCode",
+              "ProjectCode",
+              "static",
+              "No",
+              "Testata",
+              "",
+              "",
+              "Empty: Default=Ignore",
+              "id=ProjectCode · tipo=static"
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "config-export",
+      "records": [
+        {
+          "kind": "element",
+          "name": "CostCenter",
+          "internal_name": null,
+          "title": "Centro di costo",
+          "group": "Header",
+          "element_type": "custom",
+          "field_type": null,
+          "mandatory": "Obbligatorio in Checkout",
+          "read_only": null,
+          "max_length": "10",
+          "validations": [
+            {
+              "event": "Empty",
+              "handling": [
+                "Checkout=Error",
+                "Default=Ignore"
+              ]
+            },
+            {
+              "event": "Invalid",
+              "handling": [
+                "Checkout=Error"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "element",
+          "name": "ProjectCode",
+          "internal_name": null,
+          "title": null,
+          "group": "Header",
+          "element_type": "static",
+          "field_type": null,
+          "mandatory": "No",
+          "read_only": null,
+          "max_length": null,
+          "validations": [
+            {
+              "event": "Empty",
+              "handling": [
+                "Default=Ignore"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "document_config_demo.xml",
+    "parser": "parse-config-export",
+    "parser_version": "1",
+    "sha256": "sha256:824e35fc14b4c5ecaa0e8d05000bb7a1fcf52ddf0a13872765b2103f30a16d72",
+    "size": 1386,
+    "exported_at": null,
+    "kind_hint": "document-config"
+  }
+}

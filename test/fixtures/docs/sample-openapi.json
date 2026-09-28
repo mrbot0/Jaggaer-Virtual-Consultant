@@ -1,0 +1,27 @@
+{
+  "openapi": "3.0.1",
+  "info": { "title": "Demo Requisition API", "version": "1.2" },
+  "paths": {
+    "/requisitions": {
+      "post": {
+        "operationId": "createRequisition",
+        "summary": "Crea una richiesta di acquisto",
+        "parameters": [{ "name": "company", "in": "query", "required": true }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Requisition" } } } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Requisition": {
+        "type": "object",
+        "required": ["costCenter", "lines"],
+        "properties": {
+          "costCenter": { "type": "string", "maxLength": 10, "description": "Centro di costo" },
+          "priority": { "type": "string", "enum": ["low", "high"] },
+          "lines": { "type": "array", "items": { "type": "object", "required": ["quantity"], "properties": { "quantity": { "type": "number" } } } }
+        }
+      }
+    }
+  }
+}

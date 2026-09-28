@@ -1,0 +1,219 @@
+{
+  "id": "demo-xsd",
+  "title": "Schema urn:acme:demo:order",
+  "format": "xsd",
+  "sections": [
+    {
+      "path": "xsd-1",
+      "title": "Tracciato OrderMessage",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "tracciato OrderMessage",
+          "headers": [
+            "Elemento",
+            "Percorso",
+            "Tipo",
+            "Obbligatorio",
+            "Min",
+            "Max",
+            "Lunghezza",
+            "Pattern",
+            "Valori ammessi",
+            "Note"
+          ],
+          "rows": [
+            [
+              "OrderMessage",
+              "/OrderMessage",
+              "OrderType",
+              "Sì",
+              "1",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "OrderNumber",
+              "/OrderMessage/OrderNumber",
+              "string",
+              "Sì",
+              "1",
+              "1",
+              "0..20",
+              "PO-[0-9]+",
+              "",
+              "Numero ordine assegnato dal sistema"
+            ],
+            [
+              "CostCenter",
+              "/OrderMessage/CostCenter",
+              "string",
+              "Sì",
+              "1",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Currency",
+              "/OrderMessage/Currency",
+              "string",
+              "No",
+              "0",
+              "1",
+              "",
+              "",
+              "EUR; USD",
+              ""
+            ],
+            [
+              "Line",
+              "/OrderMessage/Line",
+              "LineType",
+              "Sì",
+              "1",
+              "unbounded",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Quantity",
+              "/OrderMessage/Line/Quantity",
+              "decimal",
+              "Sì",
+              "1",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Note",
+              "/OrderMessage/Line/Note",
+              "string",
+              "No",
+              "0",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "version",
+              "/OrderMessage/@version",
+              "string",
+              "Sì",
+              "1",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "tracciato",
+      "records": [
+        {
+          "kind": "element",
+          "name": "OrderMessage",
+          "path": "/OrderMessage",
+          "type": "OrderType",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true
+        },
+        {
+          "kind": "element",
+          "name": "OrderNumber",
+          "path": "/OrderMessage/OrderNumber",
+          "type": "string",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true,
+          "max_length": 20,
+          "pattern": "PO-[0-9]+",
+          "documentation": "Numero ordine assegnato dal sistema"
+        },
+        {
+          "kind": "element",
+          "name": "CostCenter",
+          "path": "/OrderMessage/CostCenter",
+          "type": "string",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true
+        },
+        {
+          "kind": "element",
+          "name": "Currency",
+          "path": "/OrderMessage/Currency",
+          "type": "string",
+          "min_occurs": 0,
+          "max_occurs": "1",
+          "required": false,
+          "enumeration": [
+            "EUR",
+            "USD"
+          ]
+        },
+        {
+          "kind": "element",
+          "name": "Line",
+          "path": "/OrderMessage/Line",
+          "type": "LineType",
+          "min_occurs": 1,
+          "max_occurs": "unbounded",
+          "required": true
+        },
+        {
+          "kind": "element",
+          "name": "Quantity",
+          "path": "/OrderMessage/Line/Quantity",
+          "type": "decimal",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true
+        },
+        {
+          "kind": "element",
+          "name": "Note",
+          "path": "/OrderMessage/Line/Note",
+          "type": "string",
+          "min_occurs": 0,
+          "max_occurs": "1",
+          "required": false
+        },
+        {
+          "kind": "attribute",
+          "name": "version",
+          "path": "/OrderMessage/@version",
+          "type": "string",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "sample.xsd",
+    "parser": "parse-xsd",
+    "parser_version": "1",
+    "sha256": "sha256:04de4e195feacb914c745928a0a96f984e18170847b121f024446f9b1ea83be1",
+    "kind_hint": "spec-integrazione"
+  }
+}

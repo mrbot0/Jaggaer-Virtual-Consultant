@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ProcessDefinition SYSTEM "WorkflowDefinition.dtd">
+<ProcessDefinition>
+  <WorkflowType>DemoRequisition</WorkflowType>
+  <Usable>true</Usable>
+  <Version>3</Version>
+  <VersionDescription>Workflow dimostrativo ACME</VersionDescription>
+  <Step name="Budget Check"><Attribute name="Description"><AttrValue lang="it">Verifica del budget</AttrValue></Attribute></Step>
+  <Step name="Manager Approval"><Attribute name="Description"><AttrValue lang="it">Approvazione del responsabile</AttrValue></Attribute></Step>
+  <Activity name="Start"><ActivityType>Start</ActivityType><Rule/><FolderSelectionRule>Default</FolderSelectionRule></Activity>
+  <Activity name="Approve Manager">
+    <ActivityType>Approval</ActivityType>
+    <StepRef name="Manager Approval"/>
+    <FolderRef name="Manager Folder"/>
+    <Rule><![CDATA[[Document.Total] > 50000]]></Rule>
+    <FolderSelectionRule>Default</FolderSelectionRule>
+  </Activity>
+  <Activity name="End"><ActivityType>End</ActivityType><Rule/></Activity>
+  <ActivityRelationship previous="Start" next="Approve Manager"/>
+  <ActivityRelationship previous="Approve Manager" next="End"/>
+</ProcessDefinition>

@@ -1,0 +1,40 @@
+{
+  "id": "demo-pptx",
+  "title": "Workflow delle richieste",
+  "format": "pptx",
+  "sections": [
+    {
+      "path": "s1",
+      "title": "Workflow delle richieste",
+      "level": 1,
+      "page": 1,
+      "paragraphs": [
+        "Le richieste passano per due livelli di approvazione.",
+        "Il secondo livello scatta sopra 50.000 EUR.",
+        "Nota del relatore: Di solito il secondo livello lo approva il CFO."
+      ],
+      "tables": [],
+      "figures": []
+    },
+    {
+      "path": "s2",
+      "title": "Cartelle",
+      "level": 1,
+      "page": 2,
+      "paragraphs": [
+        "Ogni attività deposita il documento in una cartella."
+      ],
+      "tables": [],
+      "figures": []
+    }
+  ],
+  "meta": {
+    "source": "sample.pptx",
+    "parser": "parse-pptx",
+    "parser_version": "1",
+    "sha256": "sha256:6e1156a024787d89f2588e2ab601d944ea2da0829b8e65f89ca3659ae386731f",
+    "size": 1963,
+    "kind_hint": "training-deck"
+  },
+  "page_count": 2
+}

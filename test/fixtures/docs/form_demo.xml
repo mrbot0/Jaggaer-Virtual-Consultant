@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FormConfig>
+  <FormType>Demo</FormType>
+  <List id="L1"><InternalName>TravelClass</InternalName><ListValue id="V1"><InternalName>Economy</InternalName></ListValue><ListValue id="V2"><InternalName>Business</InternalName></ListValue></List>
+  <Section id="S1"><Name>Trip</Name></Section>
+  <Group id="G1"><Name>Trip</Name><SectionRef id="S1"/></Group>
+  <Element type="custom" id="E1">
+    <GroupRef id="G1"/><DisplayOrder>1</DisplayOrder><InternalName>Destination</InternalName><FieldType>Text</FieldType>
+    <IsReadOnly>false</IsReadOnly><IsRequired>true</IsRequired>
+    <TitleAndHelp lang="it"><Title>Destinazione</Title><HelpText/></TitleAndHelp>
+  </Element>
+  <Element type="custom" id="E2">
+    <GroupRef id="G1"/><DisplayOrder>2</DisplayOrder><InternalName>Class</InternalName><FieldType>List</FieldType>
+    <IsReadOnly>false</IsReadOnly><IsRequired>false</IsRequired>
+    <UserDefinedFieldConfiguration><ConfigParam name="UserDefinedFieldParamFormListId">L1</ConfigParam></UserDefinedFieldConfiguration>
+  </Element>
+</FormConfig>

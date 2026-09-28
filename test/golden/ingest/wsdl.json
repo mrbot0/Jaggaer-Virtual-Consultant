@@ -1,0 +1,176 @@
+{
+  "id": "demo-wsdl",
+  "title": "Servizio DemoSupplierService",
+  "format": "wsdl",
+  "sections": [
+    {
+      "path": "operazioni",
+      "title": "Operazioni del servizio",
+      "level": 1,
+      "page": null,
+      "paragraphs": [
+        "Endpoint DemoSupplierService/SupplierPortSoap: https://demo.example.invalid/ws/supplier (binding SupplierBinding)"
+      ],
+      "tables": [
+        {
+          "caption": "operazioni",
+          "headers": [
+            "Operazione",
+            "PortType",
+            "Input",
+            "Output",
+            "Fault"
+          ],
+          "rows": [
+            [
+              "UpsertSupplier",
+              "SupplierPort",
+              "SupplierIn",
+              "SupplierOut",
+              ""
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "tracciato",
+      "records": [
+        {
+          "kind": "endpoint",
+          "name": "DemoSupplierService/SupplierPortSoap",
+          "binding": "SupplierBinding",
+          "address": "https://demo.example.invalid/ws/supplier"
+        },
+        {
+          "kind": "operation",
+          "name": "UpsertSupplier",
+          "port_type": "SupplierPort",
+          "input": "SupplierIn",
+          "output": "SupplierOut",
+          "fault": null
+        }
+      ]
+    },
+    {
+      "path": "types-1",
+      "title": "Tracciato SupplierRequest",
+      "level": 1,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "caption": "tracciato SupplierRequest",
+          "headers": [
+            "Elemento",
+            "Percorso",
+            "Tipo",
+            "Obbligatorio",
+            "Min",
+            "Max",
+            "Lunghezza",
+            "Pattern",
+            "Valori ammessi",
+            "Note"
+          ],
+          "rows": [
+            [
+              "SupplierRequest",
+              "/SupplierRequest",
+              "complex",
+              "Sì",
+              "1",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "VatNumber",
+              "/SupplierRequest/VatNumber",
+              "string",
+              "Sì",
+              "1",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Name",
+              "/SupplierRequest/Name",
+              "string",
+              "Sì",
+              "1",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "ErpCode",
+              "/SupplierRequest/ErpCode",
+              "string",
+              "No",
+              "0",
+              "1",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "kind": "tracciato",
+      "records": [
+        {
+          "kind": "element",
+          "name": "SupplierRequest",
+          "path": "/SupplierRequest",
+          "type": "complex",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true
+        },
+        {
+          "kind": "element",
+          "name": "VatNumber",
+          "path": "/SupplierRequest/VatNumber",
+          "type": "string",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true
+        },
+        {
+          "kind": "element",
+          "name": "Name",
+          "path": "/SupplierRequest/Name",
+          "type": "string",
+          "min_occurs": 1,
+          "max_occurs": "1",
+          "required": true
+        },
+        {
+          "kind": "element",
+          "name": "ErpCode",
+          "path": "/SupplierRequest/ErpCode",
+          "type": "string",
+          "min_occurs": 0,
+          "max_occurs": "1",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "sample.wsdl",
+    "parser": "parse-spec",
+    "parser_version": "1",
+    "sha256": "sha256:509969cb6da72bc3cfda56cd2c392557c269534d1481649d97e2863f0b180136",
+    "kind_hint": "spec-integrazione"
+  }
+}

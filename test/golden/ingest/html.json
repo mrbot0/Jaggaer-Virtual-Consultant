@@ -1,0 +1,51 @@
+{
+  "id": "htm",
+  "title": "Articolo demo",
+  "format": "html",
+  "sections": [
+    {
+      "path": "1",
+      "title": "Sedia ergonomica",
+      "level": 1,
+      "page": null,
+      "paragraphs": [
+        "Sedia per ufficio con braccioli regolabili."
+      ],
+      "tables": [],
+      "figures": []
+    },
+    {
+      "path": "1.1",
+      "title": "Specifiche",
+      "level": 2,
+      "page": null,
+      "paragraphs": [],
+      "tables": [
+        {
+          "headers": [
+            "Attributo",
+            "Valore"
+          ],
+          "rows": [
+            [
+              "Colore",
+              "Nero"
+            ]
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "ref": "sedia.jpg",
+          "caption": "Foto della sedia"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "page.htm",
+    "parser": "parse-text",
+    "parser_version": "1",
+    "sha256": "sha256:8a9298d86e9ab0f94c15248f4cc1b2144b9310c875931f180dd8a4cabfaec255"
+  }
+}

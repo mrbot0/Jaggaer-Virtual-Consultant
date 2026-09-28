@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FormRequestTemplate>
+  <Setup purpose="Request"><Title>Richiesta badge</Title><FormType>Demo</FormType></Setup>
+  <Instructions><InstructionsContent>Compilare per ogni nuovo dipendente.</InstructionsContent></Instructions>
+  <RequestContent><Questions><QuestionPage name="Pagina 1"><QuestionGroup name="Dipendente">
+    <Question id="Q1"><QuestionText>Nome del dipendente</QuestionText><QuestionLabel>Nome</QuestionLabel><ResponseType>Text</ResponseType><IsReponseRequired>true</IsReponseRequired></Question>
+    <Question id="Q2"><QuestionText>Note aggiuntive</QuestionText><QuestionLabel>Note</QuestionLabel><ResponseType>TextArea</ResponseType></Question>
+  </QuestionGroup></QuestionPage></Questions></RequestContent>
+</FormRequestTemplate>

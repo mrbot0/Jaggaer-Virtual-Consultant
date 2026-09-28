@@ -1,0 +1,57 @@
+{
+  "id": "eml",
+  "title": "Centro di costo in bozza",
+  "format": "eml",
+  "sections": [
+    {
+      "path": "m1",
+      "title": "Centro di costo in bozza",
+      "level": 1,
+      "page": null,
+      "paragraphs": [
+        "Ciao a tutti, dopo la riunione di ieri abbiamo deciso che il centro di costo è obbligatorio anche in bozza. Grazie."
+      ],
+      "tables": [],
+      "figures": [],
+      "kind": "messaggio",
+      "meta": {
+        "from": "Laura Bianchi <laura@example.invalid>",
+        "date": "Tue, 10 Mar 2026 09:12:00 +0100",
+        "subject": "Centro di costo in bozza"
+      },
+      "records": [
+        {
+          "kind": "decision",
+          "name": "Ciao a tutti, dopo la riunione di ieri abbiamo deciso che il centro di costo è o",
+          "text": "Ciao a tutti, dopo la riunione di ieri abbiamo deciso che il centro di costo è obbligatorio anche in bozza.",
+          "author": "Laura Bianchi <laura@example.invalid>",
+          "date": "Tue, 10 Mar 2026 09:12:00 +0100"
+        }
+      ]
+    },
+    {
+      "path": "m2",
+      "title": "Centro di costo in bozza",
+      "level": 1,
+      "page": null,
+      "paragraphs": [
+        "Propongo di rendere obbligatorio il centro di costo già in bozza. Voi che ne dite?"
+      ],
+      "tables": [],
+      "figures": [],
+      "kind": "messaggio",
+      "meta": {
+        "from": "Mario Rossi <mario@example.invalid>",
+        "date": "Mon, 9 Mar 2026 17:40:00 +0100",
+        "subject": "Centro di costo in bozza"
+      }
+    }
+  ],
+  "meta": {
+    "source": "thread.eml",
+    "parser": "parse-email",
+    "parser_version": "1",
+    "sha256": "sha256:76dc318b6d5eab97021430ee856d27ba6b06dc77090773cb3b021855c0e74a4c",
+    "kind_hint": "thread-email"
+  }
+}

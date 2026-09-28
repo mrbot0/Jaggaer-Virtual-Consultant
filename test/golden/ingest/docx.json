@@ -1,0 +1,152 @@
+{
+  "id": "demo-docx",
+  "title": "Manuale di configurazione ACME",
+  "format": "docx",
+  "sections": [
+    {
+      "path": "1",
+      "title": "1 Richieste di acquisto",
+      "level": 1,
+      "page": 1,
+      "paragraphs": [
+        "Il centro di costo è il codice contabile che identifica chi sostiene la spesa."
+      ],
+      "tables": [],
+      "figures": []
+    },
+    {
+      "path": "1.1",
+      "title": "1.1 Campi della testata",
+      "level": 2,
+      "page": 1,
+      "paragraphs": [
+        "Il campo Fornitore deve essere compilato prima dell'invio.",
+        "Nota: in ACME il parametro strict_import è impostato a false dal go-live."
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Campo",
+            "Nome tecnico",
+            "Tipo",
+            "Obbligatorio",
+            "Note"
+          ],
+          "rows": [
+            [
+              "Centro di costo",
+              "REQ_HDR_COST_CENTER",
+              "lookup",
+              "Sì",
+              "Deve esistere in SAP"
+            ],
+            [
+              "Codice progetto",
+              "REQ_HDR_PROJECT",
+              "testo",
+              "No",
+              ""
+            ],
+            [
+              "Data di consegna",
+              "REQ_HDR_DELIVERY_DATE",
+              "data",
+              "Se la categoria è servizi è obbligatorio",
+              ""
+            ]
+          ]
+        }
+      ],
+      "figures": [],
+      "revisions": [
+        {
+          "kind": "insert",
+          "author": "Mario Rossi",
+          "date": "2026-03-02T10:00:00Z",
+          "text": "deve essere compilato prima dell'invio."
+        },
+        {
+          "kind": "delete",
+          "author": "Mario Rossi",
+          "date": "2026-03-02T10:00:00Z",
+          "text": "è facoltativo."
+        }
+      ],
+      "comments": [
+        {
+          "id": "0",
+          "author": "Laura Bianchi",
+          "date": "2026-03-03T09:00:00Z",
+          "text": "Verificare con il referente se vale anche per IT02."
+        }
+      ]
+    },
+    {
+      "path": "1.2",
+      "title": "1.2 Creare una richiesta",
+      "level": 2,
+      "page": 1,
+      "paragraphs": [
+        "1. Aprire il menu Acquisti.",
+        "2. Selezionare Nuova richiesta.",
+        "3. Inserire il centro di costo e salvare.",
+        "Ad esempio, il centro di costo CC-1000 identifica la sede di Milano.",
+        "Per i dettagli vedi §2.1.",
+        "Attenzione: il budget è verificato all'invio."
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Parametro",
+            "Valore"
+          ],
+          "rows": [
+            [
+              "strict_import",
+              "false | dal go-live"
+            ]
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "ref": "fig-1",
+          "page": 2,
+          "caption": "Figura 1 - Nuova richiesta"
+        }
+      ]
+    },
+    {
+      "path": "2",
+      "title": "2 Approvazioni",
+      "level": 1,
+      "page": 2,
+      "paragraphs": [],
+      "tables": [],
+      "figures": []
+    },
+    {
+      "path": "2.1",
+      "title": "2.1 Livelli",
+      "level": 2,
+      "page": 2,
+      "paragraphs": [
+        "Se l'importo supera 50.000 EUR la richiesta deve essere approvata dal direttore acquisti."
+      ],
+      "tables": [],
+      "figures": []
+    }
+  ],
+  "warnings": [
+    "tabelle annidate appiattite nel testo della cella",
+    "testo in caselle di testo: estratto come paragrafi (ordine di lettura approssimato)"
+  ],
+  "meta": {
+    "source": "sample.docx",
+    "parser": "parse-docx",
+    "parser_version": "1",
+    "sha256": "sha256:a552f1d4ec0bdf5c8d49c939857a14a02a8980575c19c43c80725925685344a0",
+    "size": 2217
+  },
+  "page_count": 2
+}

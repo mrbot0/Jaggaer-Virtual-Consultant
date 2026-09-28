@@ -4,34 +4,134 @@
   "title": "Documento normalizzato (uscita dei parser di ingest)",
   "description": "La forma comune che ogni parser (parse-docx, parse-pdf, parse-xlsx, …: WP09a) produce e che i segmentatori leggono (scripts/ingest/segment.mjs). Le sezioni sono in ordine di documento; `path` è il numero o percorso della sezione (\"3.4.2\", \"header.accounting\"), unico nel documento. Le tabelle hanno intestazioni e righe come celle di testo.",
   "type": "object",
-  "required": ["id", "title", "format", "sections"],
+  "required": [
+    "id",
+    "title",
+    "format",
+    "sections"
+  ],
   "properties": {
-    "id": { "type": "string", "minLength": 1, "pattern": "^[^/\\\\]+$", "description": "identificativo del documento (codice DOC o nome stabile), senza separatori di percorso" },
-    "title": { "type": "string" },
-    "format": { "enum": ["docx", "pdf", "xlsx", "html", "md", "txt", "xsd", "json", "xml", "csv", "pptx", "other"] },
-    "lang": { "type": "string", "pattern": "^[a-z]{2}$" },
-    "genre": { "type": "string", "description": "genere di fonte (F15: tecnica · d'uso · empirica · testimoniale)" },
-    "version": { "type": "string" },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^/\\\\]+$",
+      "description": "identificativo del documento (codice DOC o nome stabile), senza separatori di percorso"
+    },
+    "title": {
+      "type": "string"
+    },
+    "format": {
+      "enum": [
+        "docx",
+        "pdf",
+        "xlsx",
+        "html",
+        "md",
+        "txt",
+        "xsd",
+        "json",
+        "xml",
+        "csv",
+        "pptx",
+        "xls",
+        "wsdl",
+        "openapi",
+        "yaml",
+        "image",
+        "vtt",
+        "srt",
+        "eml",
+        "other"
+      ]
+    },
+    "lang": {
+      "type": "string",
+      "pattern": "^[a-z]{2}$"
+    },
+    "genre": {
+      "type": "string",
+      "description": "genere di fonte (F15: tecnica · d'uso · empirica · testimoniale)"
+    },
+    "version": {
+      "type": "string"
+    },
     "sections": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["path", "title", "level", "paragraphs", "tables", "figures"],
+        "required": [
+          "path",
+          "title",
+          "level",
+          "paragraphs",
+          "tables",
+          "figures"
+        ],
         "properties": {
-          "path": { "type": "string", "minLength": 1 },
-          "title": { "type": "string" },
-          "level": { "type": "integer", "minimum": 1 },
-          "page": { "type": ["integer", "null"], "minimum": 1 },
-          "paragraphs": { "type": "array", "items": { "type": "string" } },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "page": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "paragraphs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "tables": {
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["headers", "rows"],
+              "required": [
+                "headers",
+                "rows"
+              ],
               "properties": {
-                "caption": { "type": "string" },
-                "headers": { "type": "array", "items": { "type": "string" } },
-                "rows": { "type": "array", "items": { "type": "array", "items": { "type": ["string", "number", "boolean", "null"] } } }
+                "caption": {
+                  "type": "string"
+                },
+                "headers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "header_rows": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "rows_total": {
+                  "type": "integer",
+                  "minimum": 0
+                }
               }
             }
           },
@@ -39,11 +139,207 @@
             "type": "array",
             "items": {
               "oneOf": [
-                { "type": "string" },
-                { "type": "object", "properties": { "caption": { "type": "string" }, "ref": { "type": "string" }, "page": { "type": ["integer", "null"] } } }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "caption": {
+                      "type": "string"
+                    },
+                    "ref": {
+                      "type": "string"
+                    },
+                    "page": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    }
+                  }
+                }
               ]
             }
+          },
+          "hidden": {
+            "type": "boolean",
+            "description": "XLSX: foglio nascosto"
+          },
+          "revisions": {
+            "type": "array",
+            "description": "DOCX: revisioni tracciate (w:ins, w:del) della sezione (§19.8)",
+            "items": {
+              "type": "object",
+              "required": [
+                "kind",
+                "text"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "insert",
+                    "delete"
+                  ]
+                },
+                "author": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "comments": {
+            "type": "array",
+            "description": "DOCX: commenti ancorati alla sezione (comments.xml)",
+            "items": {
+              "type": "object",
+              "required": [
+                "text"
+              ],
+              "properties": {
+                "id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "author": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "validations": {
+            "type": "array",
+            "description": "XLSX: convalide di cella (liste = vocabolari chiusi)",
+            "items": {
+              "type": "object",
+              "required": [
+                "sqref"
+              ],
+              "properties": {
+                "sqref": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "source": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "records": {
+            "type": "array",
+            "description": "elementi formali (XSD/WSDL/OpenAPI/export di configurazione, schermate): un record per elemento/parametro",
+            "items": {
+              "type": "object",
+              "required": [
+                "kind",
+                "name"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "kind": {
+            "type": "string",
+            "description": "natura della sezione quando non è prosa: tracciato, config-export, schermata, messaggio, trascrizione"
+          },
+          "meta": {
+            "type": "object"
           }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "limiti incontrati dal parser (tabelle annidate, testo in caselle, intestazioni su due righe, pagine senza testo…)"
+    },
+    "scanned": {
+      "type": "boolean",
+      "description": "PDF: pagine con immagini ma senza testo; serve il sidecar OCR"
+    },
+    "page_count": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "meta": {
+      "type": "object",
+      "description": "provenienza: percorso relativo, sha256, dimensione, parser e versione, data dell export se nota",
+      "properties": {
+        "source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "parser": {
+          "type": "string"
+        },
+        "parser_version": {
+          "type": "string"
+        },
+        "kind_hint": {
+          "type": "string"
+        },
+        "exported_at": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       }
     }

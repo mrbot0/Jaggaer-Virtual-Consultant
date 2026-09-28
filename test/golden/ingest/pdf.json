@@ -1,0 +1,39 @@
+{
+  "id": "demo-pdf",
+  "title": "Guida alla richiesta di acquisto",
+  "format": "pdf",
+  "sections": [
+    {
+      "path": "p1",
+      "title": "Guida alla richiesta di acquisto",
+      "level": 1,
+      "page": 1,
+      "paragraphs": [
+        "Il centro di costo è obbligatorio per tutte le richieste. La richiesta viene inviata al primo approvatore.",
+        "Nota: dopo l'approvazione non è più modificabile. Seconda riga del paragrafo."
+      ],
+      "tables": [],
+      "figures": []
+    },
+    {
+      "path": "p2",
+      "title": "approvazione",
+      "level": 1,
+      "page": 2,
+      "paragraphs": [
+        "la richiesta passa al direttore"
+      ],
+      "tables": [],
+      "figures": []
+    }
+  ],
+  "meta": {
+    "source": "sample.pdf",
+    "parser": "parse-pdf",
+    "parser_version": "1",
+    "sha256": "sha256:4c342aa493c4de1069a1b1ecd08509b70203069ea6e6b6f07f1af69be995d03c",
+    "size": 1688
+  },
+  "page_count": 2,
+  "scanned": false
+}
