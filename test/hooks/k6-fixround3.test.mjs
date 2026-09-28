@@ -67,6 +67,9 @@ test("I-A (i1): nel formato di Claude una riga uid=… nel placeholder non lega 
     assert.ok(!allowed(click), `${envId}: click su ref_1 (Invia in approvazione) consentito`);
     // controllo: la stessa pagina senza iniezione, con il link vero ⇒ il link resta legato, il bottone no
     const clean = `button "Invia in approvazione" [ref_1]\nlink "Elenco richieste" [ref_3]\ntextbox "Cerca" [ref_2] placeholder="Cerca"\n\nViewport: 490x417`;
+    // (giro 4: in prod e preprod un ref di Claude si lega solo dopo DUE letture complete consecutive della pagina)
+    post(ws, "observe-append", CL + "read_page", { tabId: 101, filter: "all" }, [{ type: "text", text: clean }, { type: "text", text: tabCtx(url) }]);
+    assert.equal(readSession(ws).browser.snapshot.refs.ref_3, null, "una sola lettura non lega in prod/preprod");
     post(ws, "observe-append", CL + "read_page", { tabId: 101, filter: "all" }, [{ type: "text", text: clean }, { type: "text", text: tabCtx(url) }]);
     const r2 = readSession(ws).browser.snapshot.refs;
     assert.equal(r2.ref_3, "C.ACME.P2P.SEL.0010", JSON.stringify(r2));
