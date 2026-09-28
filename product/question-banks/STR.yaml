@@ -1,25 +1,56 @@
 type: STR
 source: §64, §14
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: applies_when
     question: Quando si applica la strategia?
+    keywords:
+      it:
+        - quando
+        - si
+        - applica
+      en:
+        - applies
+        - when
     genre: regola
     critical_for_r2: false
     always_critical: false
   - attribute: plan
     question: Qual è il piano della strategia?
+    keywords:
+      it:
+        - piano
+        - passi
+      en:
+        - plan
+        - steps
     genre: tecnica
     critical_for_r2: true
     always_critical: true
   - attribute: cost
     question: Quanto costa applicarla?
+    keywords:
+      it:
+        - costo
+        - tempo
+      en:
+        - cost
+        - time
+        - effort
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: success_criteria
     question: Come si capisce che ha funzionato?
+    keywords:
+      it:
+        - successo
+        - criteri
+      en:
+        - success
+        - criteria
     genre: regola
     critical_for_r2: false
     always_critical: false

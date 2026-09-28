@@ -1,35 +1,84 @@
 type: DIN
 source: §64, §20.5
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: document
     question: Di quale documento sono i dati?
+    keywords:
+      it:
+        - documento
+        - richiesta
+        - ordine
+        - fattura
+      en:
+        - document
+        - requisition
+        - order
+        - invoice
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: sample
     question: Quale campione è stato analizzato (dimensione, periodo)?
+    keywords:
+      it:
+        - campione
+        - periodo
+      en:
+        - sample
+        - period
     genre: empirica
     critical_for_r2: true
     always_critical: false
   - attribute: fields
     question: Quali tassi di compilazione hanno i campi?
+    keywords:
+      it:
+        - campi
+        - compilazione
+      en:
+        - fields
+        - filled
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: lifecycle
     question: Quali tempi e percorsi mostrano i documenti?
+    keywords:
+      it:
+        - ciclo
+        - tempi
+        - percorsi
+      en:
+        - lifecycle
+        - times
+        - paths
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: by_role
     question: Come varia per ruolo?
+    keywords:
+      it:
+        - ruolo
+        - utenti
+      en:
+        - role
+        - users
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: privacy
     question: Il profilo rispetta il gruppo minimo di 20 e nessun valore identificativo?
+    keywords:
+      it:
+        - privacy
+        - anonimo
+      en:
+        - privacy
+        - anonymous
     genre: regola
     critical_for_r2: true
     always_critical: true

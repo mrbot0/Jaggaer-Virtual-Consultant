@@ -1,30 +1,78 @@
 type: SEL
 source: §64
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: strategies
     question: Con quali strategie si trova l'elemento (almeno due, una semantica)?
+    keywords:
+      it:
+        - selettore
+        - etichetta
+        - ruolo
+      en:
+        - selector
+        - label
+        - role
+        - locator
     genre: empirica
     critical_for_r2: true
     always_critical: true
   - attribute: stability
     question: Quanto è stabile il selettore fra release e sessioni?
+    keywords:
+      it:
+        - stabile
+        - cambia
+        - release
+      en:
+        - stable
+        - changes
+        - release
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: frame_context
     question: In quale frame, modale o griglia vive l'elemento?
+    keywords:
+      it:
+        - frame
+        - finestra
+        - modale
+        - griglia
+      en:
+        - frame
+        - modal
+        - grid
+        - iframe
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: effect
     question: L'azione sull'elemento legge o scrive?
+    keywords:
+      it:
+        - legge
+        - scrive
+        - salva
+      en:
+        - read
+        - write
+        - save
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: last_success
     question: Quando ha funzionato l'ultima volta, e in quale ambiente?
+    keywords:
+      it:
+        - ultimo
+        - funzionato
+      en:
+        - last
+        - worked
+        - success
     genre: empirica
     critical_for_r2: false
     always_critical: false

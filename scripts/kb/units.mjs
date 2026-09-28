@@ -109,7 +109,7 @@ const STOP = new Set(["che", "chi", "cosa", "come", "dove", "quando", "quale", "
   "how", "who", "where", "when", "does", "this", "that", "with", "from", "are", "is", "its", "it", "can", "has", "have", "been", "any", "all", "esiste", "esistono", "vale", "viene", "cui", "suo", "sua"]);
 export function ftsQuery(text) {
   const words = String(text ?? "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "").match(/[\p{L}\p{N}_]{3,}/gu) ?? [];
-  const terms = [...new Set(words.filter((w) => !STOP.has(w)))].slice(0, 16).map((w) => (w.length > 6 ? `${w.slice(0, 6)}*` : `"${w}"`));
+  const terms = [...new Set(words.filter((w) => !STOP.has(w)))].slice(0, 24).map((w) => (w.length > 6 ? `${w.slice(0, 6)}*` : `"${w}"`));
   return terms.join(" OR ");
 }
 

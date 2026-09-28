@@ -1,35 +1,103 @@
 type: LCY
 source: §64
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: states
     question: Quali stati attraversa il documento?
+    keywords:
+      it:
+        - stato
+        - stati
+        - bozza
+        - approvato
+      en:
+        - status
+        - state
+        - draft
+        - approved
     genre: d'uso
     critical_for_r2: false
     always_critical: true
   - attribute: transitions
     question: Quali transizioni sono ammesse fra gli stati, e chi le esegue?
+    keywords:
+      it:
+        - transizione
+        - passa
+        - stato
+      en:
+        - transition
+        - moves
+        - status
+        - workflow
     genre: d'uso
     critical_for_r2: false
     always_critical: false
   - attribute: mandatory_by_state
     question: Quali campi diventano obbligatori in ciascuno stato?
+    keywords:
+      it:
+        - obbligatorio
+        - stato
+        - quando
+      en:
+        - required
+        - mandatory
+        - status
+        - when
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: immutable_after
     question: Dopo quale stato quali campi non sono più modificabili?
+    keywords:
+      it:
+        - non
+        - modificabile
+        - dopo
+        - sola
+        - lettura
+      en:
+        - read-only
+        - locked
+        - after
+        - cannot
+        - edit
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: validations
     question: Quali convalide scattano a ogni transizione, e con quali messaggi?
+    keywords:
+      it:
+        - convalida
+        - errore
+        - messaggio
+        - controllo
+      en:
+        - validation
+        - error
+        - message
+        - check
     genre: empirica
     critical_for_r2: true
     always_critical: false
   - attribute: integration_touchpoints
     question: In quali stati il documento viene inviato o ricevuto da un'integrazione?
+    keywords:
+      it:
+        - integrazione
+        - inviato
+        - erp
+        - esportato
+      en:
+        - integration
+        - sent
+        - erp
+        - export
+        - exported
     genre: tecnica
     critical_for_r2: false
     always_critical: false

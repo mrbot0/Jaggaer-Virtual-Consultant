@@ -1,35 +1,98 @@
 type: KEY
 source: §64
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: uniqueness
     question: In quale ambito il valore deve essere univoco (società, fornitore, sistema)?
+    keywords:
+      it:
+        - univoco
+        - duplicato
+        - unico
+      en:
+        - unique
+        - duplicate
+        - uniqueness
     genre: tecnica
     critical_for_r2: true
     always_critical: true
   - attribute: mutability
     question: Il valore può cambiare dopo la creazione, e fino a quando?
+    keywords:
+      it:
+        - modificabile
+        - cambiare
+        - dopo
+      en:
+        - editable
+        - change
+        - modify
+        - after
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: format
     question: Quale formato, lunghezza e pattern deve rispettare?
+    keywords:
+      it:
+        - formato
+        - lunghezza
+        - caratteri
+      en:
+        - format
+        - length
+        - characters
+        - pattern
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: cross_system
     question: Deve corrispondere a un codice di un altro sistema (ERP, middleware)? Quale?
+    keywords:
+      it:
+        - erp
+        - sap
+        - esterno
+        - corrispondere
+      en:
+        - erp
+        - sap
+        - external
+        - match
+        - exist
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: document_impact
     question: Quali documenti si bloccano o cambiano se la chiave è duplicata o errata?
+    keywords:
+      it:
+        - documento
+        - bloccato
+        - errore
+        - duplicato
+      en:
+        - document
+        - blocked
+        - error
+        - duplicate
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: enforcement_channels
     question: Dove viene fatto rispettare il vincolo (UI, import, integrazione) e con quale messaggio?
+    keywords:
+      it:
+        - convalida
+        - import
+        - messaggio
+      en:
+        - validation
+        - import
+        - message
+        - enforced
     genre: empirica
     critical_for_r2: false
     always_critical: false

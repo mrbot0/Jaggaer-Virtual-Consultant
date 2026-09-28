@@ -1,30 +1,68 @@
 type: TBL
 source: §64
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: subject_area
     question: Quale area tematica copre la tabella?
+    keywords:
+      it:
+        - area
+        - tema
+      en:
+        - subject
+        - area
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: columns
     question: Quali colonne, di che tipo, quali chiavi?
+    keywords:
+      it:
+        - colonne
+        - campi
+      en:
+        - columns
+        - fields
     genre: tecnica
     critical_for_r2: true
     always_critical: true
   - attribute: joins_known
     question: Con quali tabelle si unisce, su quali chiavi?
+    keywords:
+      it:
+        - join
+        - relazione
+        - chiave
+      en:
+        - join
+        - relation
+        - key
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: row_count_observed
     question: Quante righe sono state osservate, e quando?
+    keywords:
+      it:
+        - righe
+        - conteggio
+      en:
+        - rows
+        - count
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: validated
     question: È stata validata con conteggi e campioni?
+    keywords:
+      it:
+        - validato
+        - verificato
+      en:
+        - validated
+        - verified
     genre: empirica
     critical_for_r2: true
     always_critical: false

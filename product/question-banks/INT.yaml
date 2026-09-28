@@ -1,50 +1,151 @@
 type: INT
 source: §19.11 (banca per INT, 8 domande), §64 (+ test_strategy)
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: protocol
     question: Quale protocollo e tracciato usa?
+    keywords:
+      it:
+        - protocollo
+        - servizio
+        - xml
+        - json
+      en:
+        - protocol
+        - rest
+        - soap
+        - xml
+        - json
+        - service
     genre: tecnica
     critical_for_r2: false
     always_critical: true
   - attribute: trigger
     question: Cosa lo scatena?
+    keywords:
+      it:
+        - avvia
+        - scatena
+        - attiva
+        - evento
+        - quando
+      en:
+        - trigger
+        - triggered
+        - starts
+        - initiates
+        - event
+        - when
+        - submitted
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: mode_latency
     question: È sincrono o asincrono, con quali tempi?
+    keywords:
+      it:
+        - sincrono
+        - asincrono
+        - tempo
+      en:
+        - synchronous
+        - asynchronous
+        - real-time
+        - batch
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: mappings
     question: Come si mappano i campi, con quali trasformazioni?
+    keywords:
+      it:
+        - mappatura
+        - campo
+        - elemento
+        - attributo
+      en:
+        - mapping
+        - field
+        - element
+        - attribute
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: error_catalog
     question: Quali errori esistono e cosa significano?
+    keywords:
+      it:
+        - errore
+        - codice
+        - messaggio
+      en:
+        - error
+        - code
+        - message
+        - response
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: observability
     question: Dove si osserva lo stato di un messaggio?
+    keywords:
+      it:
+        - stato
+        - messaggio
+        - log
+        - monitoraggio
+      en:
+        - status
+        - message
+        - log
+        - monitor
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: silence_semantics
     question: Cosa significa il silenzio (nessuna risposta, nessun messaggio)?
+    keywords:
+      it:
+        - nessuna
+        - risposta
+        - timeout
+      en:
+        - no
+        - response
+        - timeout
+        - silent
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: counterpart_owner
     question: Chi possiede il sistema controparte?
+    keywords:
+      it:
+        - sistema
+        - esterno
+        - responsabile
+      en:
+        - external
+        - system
+        - owner
+        - counterpart
     genre: testimoniale
     critical_for_r2: false
     always_critical: false
   - attribute: test_strategy
     question: Come si collauda l'interfaccia (payload d'oro, checkpoint asincroni, stub)?
+    keywords:
+      it:
+        - test
+        - collaudo
+        - prova
+      en:
+        - test
+        - testing
+        - sandbox
+        - verify
     genre: tecnica
     critical_for_r2: false
     always_critical: false

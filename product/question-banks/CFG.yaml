@@ -1,40 +1,127 @@
 type: CFG
 source: §19.11 (banca per CFG, 7 attributi), §64
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: location
     question: Dove si trova nella UI (menu, pagina, sezione)?
+    keywords:
+      it:
+        - menu
+        - pagina
+        - sezione
+        - scheda
+        - percorso
+      en:
+        - menu
+        - page
+        - section
+        - tab
+        - navigate
+        - located
     genre: d'uso
     critical_for_r2: false
     always_critical: true
   - attribute: options
     question: Quali valori o opzioni ammette?
+    keywords:
+      it:
+        - valori
+        - opzioni
+        - impostazioni
+        - scelta
+      en:
+        - values
+        - options
+        - settings
+        - choose
+        - available
     genre: tecnica
     critical_for_r2: false
     always_critical: true
   - attribute: dependencies
     question: "Da cosa dipende: cosa deve esistere o essere configurato prima?"
+    keywords:
+      it:
+        - prerequisito
+        - dipende
+        - richiede
+        - prima
+      en:
+        - prerequisite
+        - depends
+        - requires
+        - before
+        - dependency
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: impacts
     question: Cosa cambia, a valle, se questo oggetto viene modificato?
+    keywords:
+      it:
+        - impatto
+        - conseguenze
+        - modifica
+        - effetto
+      en:
+        - impact
+        - affects
+        - change
+        - effect
+        - consequence
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: current_state
     question: Qual è il valore attuale per questo cliente, e da quando?
+    keywords:
+      it:
+        - valore
+        - attuale
+        - impostato
+        - configurato
+      en:
+        - current
+        - value
+        - set
+        - configured
+        - enabled
     genre: empirica
     critical_for_r2: true
     always_critical: false
   - attribute: risk
     question: Quanto è rischioso modificarlo (dati, processi, integrazioni toccati)?
+    keywords:
+      it:
+        - rischio
+        - attenzione
+        - pericolo
+        - dati
+      en:
+        - risk
+        - caution
+        - warning
+        - careful
+        - data
     genre: regola
     critical_for_r2: false
     always_critical: false
   - attribute: rollback
     question: Come si torna indietro dopo una modifica?
+    keywords:
+      it:
+        - ripristino
+        - annullare
+        - tornare
+        - disattivare
+      en:
+        - revert
+        - undo
+        - rollback
+        - restore
+        - disable
     genre: tecnica
     critical_for_r2: true
     always_critical: false

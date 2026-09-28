@@ -1,55 +1,144 @@
 type: PRF
 source: §64, §19.2, §63
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: sector
     question: In quale settore opera il cliente?
+    keywords:
+      it:
+        - settore
+        - industria
+      en:
+        - sector
+        - industry
     genre: testimoniale
     critical_for_r2: false
     always_critical: false
   - attribute: size
     question: Quanti utenti, fornitori attivi e ordini l'anno?
+    keywords:
+      it:
+        - utenti
+        - fornitori
+        - ordini
+      en:
+        - users
+        - suppliers
+        - orders
     genre: testimoniale
     critical_for_r2: false
     always_critical: false
   - attribute: legal
     question: Quale contesto legale (appalti pubblici, paese, gruppo)?
+    keywords:
+      it:
+        - legale
+        - normativa
+        - appalti
+      en:
+        - legal
+        - regulation
+        - public
     genre: testimoniale
     critical_for_r2: false
     always_critical: false
   - attribute: procurement_model
     question: Qual è il modello di procurement (diretto/indiretto, centralizzazione, catalogo, gare, contratti)?
+    keywords:
+      it:
+        - acquisti
+        - catalogo
+        - gare
+        - contratti
+      en:
+        - procurement
+        - catalog
+        - sourcing
+        - contracts
     genre: testimoniale
     critical_for_r2: true
     always_critical: false
   - attribute: erp
     question: Quale ERP, versione e middleware?
+    keywords:
+      it:
+        - erp
+        - sap
+        - oracle
+      en:
+        - erp
+        - sap
+        - oracle
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: modules
     question: Quali moduli JAGGAER sono attivi?
+    keywords:
+      it:
+        - moduli
+        - attivi
+      en:
+        - modules
+        - active
+        - licensed
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: integrations
     question: Quali integrazioni esistono (INT)?
+    keywords:
+      it:
+        - integrazione
+        - interfaccia
+        - erp
+      en:
+        - integration
+        - interface
+        - erp
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: documentation_inventory
     question: Quale documentazione esiste, di che genere e su quali scope?
+    keywords:
+      it:
+        - documentazione
+        - manuale
+      en:
+        - documentation
+        - manual
+        - guide
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: approval_culture
     question: Come si approva (livelli, soglie, deleghe)?
+    keywords:
+      it:
+        - approvazione
+        - livelli
+        - soglie
+      en:
+        - approval
+        - levels
+        - thresholds
     genre: testimoniale
     critical_for_r2: false
     always_critical: false
   - attribute: environments
     question: Quali ambienti esistono (environments.yaml) e come si allineano?
+    keywords:
+      it:
+        - ambiente
+        - sandbox
+        - produzione
+      en:
+        - environment
+        - sandbox
+        - production
     genre: tecnica
     critical_for_r2: true
     always_critical: false

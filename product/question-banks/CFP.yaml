@@ -1,40 +1,120 @@
 type: CFP
 source: §64
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: steps
     question: Quali passi, in che ordine e con quali valori, applicano la configurazione?
+    keywords:
+      it:
+        - passi
+        - procedura
+        - selezionare
+        - cliccare
+      en:
+        - steps
+        - procedure
+        - select
+        - click
+        - enter
     genre: d'uso
     critical_for_r2: false
     always_critical: true
   - attribute: preconditions
     question: Cosa deve essere vero prima di iniziare (dati, permessi, altre configurazioni)?
+    keywords:
+      it:
+        - prima
+        - prerequisito
+        - necessario
+        - deve
+      en:
+        - before
+        - prerequisite
+        - required
+        - must
+        - ensure
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: verification
     question: Come si verifica che la configurazione ha avuto effetto?
+    keywords:
+      it:
+        - verifica
+        - controllare
+        - conferma
+      en:
+        - verify
+        - check
+        - confirm
+        - validate
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: rollback
     question: Come si annulla la configurazione (disattivare, mai eliminare)?
+    keywords:
+      it:
+        - ripristino
+        - annullare
+        - tornare
+        - disattivare
+      en:
+        - revert
+        - undo
+        - rollback
+        - restore
+        - disable
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: risk
     question: Quale classe di rischio ha l'applicazione e perché?
+    keywords:
+      it:
+        - rischio
+        - attenzione
+        - pericolo
+        - dati
+      en:
+        - risk
+        - caution
+        - warning
+        - careful
+        - data
     genre: regola
     critical_for_r2: false
     always_critical: false
   - attribute: approvals
     question: Quali approvazioni servono prima di applicarla, e di chi?
+    keywords:
+      it:
+        - approvazione
+        - approvatore
+        - autorizzazione
+      en:
+        - approval
+        - approver
+        - authorization
+        - approve
     genre: regola
     critical_for_r2: false
     always_critical: false
   - attribute: evidence
     question: Quali evidenze documentano che è stata applicata (schermate, export)?
+    keywords:
+      it:
+        - evidenza
+        - schermata
+        - conferma
+        - registro
+      en:
+        - evidence
+        - screenshot
+        - confirmation
+        - log
     genre: d'uso
     critical_for_r2: false
     always_critical: false

@@ -1,35 +1,78 @@
 type: QRY
 source: §64
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: purpose
     question: A quale domanda risponde la query?
+    keywords:
+      it:
+        - scopo
+        - domanda
+      en:
+        - purpose
+        - question
     genre: testimoniale
     critical_for_r2: false
     always_critical: false
   - attribute: pattern
     question: Quale pattern di query usa?
+    keywords:
+      it:
+        - schema
+        - modello
+      en:
+        - pattern
+        - template
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: tables
     question: Quali tabelle legge?
+    keywords:
+      it:
+        - tabelle
+      en:
+        - tables
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: query
     question: Qual è il testo della query?
+    keywords:
+      it:
+        - query
+        - interrogazione
+      en:
+        - query
+        - sql
     genre: tecnica
     critical_for_r2: false
     always_critical: true
   - attribute: validation
     question: È stata eseguita e validata (righe, coerenza)?
+    keywords:
+      it:
+        - validazione
+        - verifica
+      en:
+        - validation
+        - check
     genre: empirica
     critical_for_r2: true
     always_critical: false
   - attribute: portability
     question: Funziona per altri clienti o solo per questo?
+    keywords:
+      it:
+        - portabile
+        - altri
+        - clienti
+      en:
+        - portable
+        - other
+        - customers
     genre: tecnica
     critical_for_r2: false
     always_critical: false

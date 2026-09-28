@@ -1,35 +1,76 @@
 type: DT
 source: §64, §15
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: inputs
     question: Quali input, con quali domini e pesi?
+    keywords:
+      it:
+        - ingressi
+        - pesi
+        - domini
+      en:
+        - inputs
+        - weights
+        - domains
     genre: tecnica
     critical_for_r2: false
     always_critical: true
   - attribute: scoring
     question: Come si calcola il punteggio?
+    keywords:
+      it:
+        - punteggio
+        - calcolo
+      en:
+        - scoring
+        - score
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: thresholds
     question: Quali soglie separano gli esiti?
+    keywords:
+      it:
+        - soglie
+      en:
+        - thresholds
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: priors
     question: Quali priori dagli esiti passati?
+    keywords:
+      it:
+        - priori
+        - esiti
+      en:
+        - priors
+        - outcomes
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: null_policy
     question: Cosa succede quando un input manca?
+    keywords:
+      it:
+        - mancante
+        - nullo
+      en:
+        - missing
+        - "null"
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: version
     question: Quale versione, e cosa è cambiato?
+    keywords:
+      it:
+        - versione
+      en:
+        - version
     genre: tecnica
     critical_for_r2: false
     always_critical: false

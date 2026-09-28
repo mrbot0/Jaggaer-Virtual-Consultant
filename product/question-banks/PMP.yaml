@@ -1,35 +1,88 @@
 type: PMP
 source: §64, §19.3
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: stages
     question: Quali fasi, in quali scope e con quali flussi?
+    keywords:
+      it:
+        - fasi
+        - fase
+        - processo
+        - flusso
+      en:
+        - stages
+        - stage
+        - process
+        - flow
     genre: d'uso
     critical_for_r2: true
     always_critical: true
   - attribute: variants
     question: Quali varianti esistono, a quali condizioni e con che quote?
+    keywords:
+      it:
+        - variante
+        - caso
+        - percorso
+      en:
+        - variant
+        - case
+        - path
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: handoffs
     question: Quali passaggi fra scope (HND) attraversa?
+    keywords:
+      it:
+        - passaggio
+        - scope
+        - consegna
+      en:
+        - handoff
+        - scope
+        - transfer
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: integrations
     question: Quali integrazioni tocca e in quale fase?
+    keywords:
+      it:
+        - integrazione
+        - interfaccia
+        - erp
+      en:
+        - integration
+        - interface
+        - erp
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: owner
     question: Chi possiede il processo?
+    keywords:
+      it:
+        - responsabile
+        - proprietario
+      en:
+        - owner
+        - responsible
     genre: testimoniale
     critical_for_r2: false
     always_critical: false
   - attribute: epistemic_by_stage
     question: Quanto sappiamo di ciascuna fase (forma epistemica)?
+    keywords:
+      it:
+        - fase
+        - conoscenza
+      en:
+        - stage
+        - knowledge
     genre: empirica
     critical_for_r2: false
     always_critical: false

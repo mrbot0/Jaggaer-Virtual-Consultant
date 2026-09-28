@@ -50,14 +50,18 @@ function candidateCodes(db, { subject, label }) {
   return out;
 }
 
+export const retrievalQuery = (q) => [...(q.keywords?.en ?? []), ...(q.keywords?.it ?? []), q.question].join(" ");
+
 export function planSubject(db, { subject, type, label = null, doc = null, top = 5 }) {
   if (!subject) throw new DigestInputError("serve il soggetto (codice o etichetta)");
   const bank = loadBank(type);
   const within = candidateCodes(db, { subject, label: label ?? (parseCode(subject) ? null : subject) });
   const questions = bank.questions.map((q) => {
-    let hits = within.size ? searchUnits(db, { doc, near: subject, query: q.question, top, within }) : [];
+    // giro 1 (M7): la ricerca usa le parole chiave it+en della domanda (il corpus è in gran parte in inglese)
+    const query = retrievalQuery(q);
+    let hits = within.size ? searchUnits(db, { doc, near: subject, query, top, within }) : [];
     if (!hits.length && within.size) hits = searchUnits(db, { doc, near: subject, query: label ?? subject, top, within });
-    if (!hits.length && doc) hits = searchUnits(db, { doc, near: subject, query: q.question, top });
+    if (!hits.length && doc) hits = searchUnits(db, { doc, near: subject, query, top });
     return { attribute: q.attribute, question: q.question, genre: q.genre, critical_for_r2: !!q.critical_for_r2, always_critical: !!q.always_critical,
       units: hits.map((h) => ({ code: h.code, doc: h.doc, section: h.section, page: h.page, score: h.score, near: h.near, text: h.text })) };
   });

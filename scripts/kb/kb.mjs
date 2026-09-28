@@ -114,7 +114,7 @@ export function run(argv) {
       let query = opt("query");
       if (opt("query-file")) query = readFileSync(opt("query-file"), "utf8");
       let question = null;
-      if (opt("question")) { question = questionFor(opt("question")); query = question.question; }
+      if (opt("question")) { question = questionFor(opt("question")); query = [...(question.keywords?.en ?? []), ...(question.keywords?.it ?? []), question.question].join(" "); }
       const r = searchUnits(db, { doc: opt("doc"), near: opt("near"), query, type: opt("type"), top: Number(opt("top", 5)) });
       console.log(JSON.stringify({ ok: true, question: question ? { type: question.type, attribute: question.attribute, question: question.question } : undefined, items: r, took_ms: Date.now() - t0 }));
       return { exitCode: 0 };

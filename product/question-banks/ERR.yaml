@@ -1,45 +1,116 @@
 type: ERR
 source: §64
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: message
     question: Qual è il testo esatto del messaggio?
+    keywords:
+      it:
+        - messaggio
+        - testo
+        - errore
+      en:
+        - message
+        - text
+        - error
     genre: empirica
     critical_for_r2: false
     always_critical: true
   - attribute: trigger
     question: Quale azione e quale campo lo provocano?
+    keywords:
+      it:
+        - avvia
+        - scatena
+        - attiva
+        - evento
+        - quando
+      en:
+        - trigger
+        - triggered
+        - starts
+        - initiates
+        - event
+        - when
+        - submitted
     genre: empirica
     critical_for_r2: true
     always_critical: false
   - attribute: category
     question: Di che categoria è (convalida, permessi, integrazione, dati)?
+    keywords:
+      it:
+        - categoria
+        - tipo
+        - errore
+      en:
+        - category
+        - type
+        - error
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: blocking
     question: Blocca l'azione o è un avviso?
+    keywords:
+      it:
+        - blocca
+        - avviso
+      en:
+        - blocks
+        - warning
     genre: empirica
     critical_for_r2: false
     always_critical: false
   - attribute: meaning
     question: Cosa significa, in termini di regola violata?
+    keywords:
+      it:
+        - significa
+        - causa
+      en:
+        - means
+        - cause
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: resolution
     question: Come si risolve?
+    keywords:
+      it:
+        - risolvere
+        - soluzione
+        - correggere
+      en:
+        - resolve
+        - solution
+        - fix
     genre: d'uso
     critical_for_r2: true
     always_critical: false
   - attribute: related
     question: A quali FLD, KEY, INT è collegato?
+    keywords:
+      it:
+        - collegato
+        - campo
+      en:
+        - related
+        - field
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: observed
     question: Quando e dove è stato osservato?
+    keywords:
+      it:
+        - osservato
+        - visto
+      en:
+        - observed
+        - seen
     genre: empirica
     critical_for_r2: false
     always_critical: false

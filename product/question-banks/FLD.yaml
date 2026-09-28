@@ -1,70 +1,207 @@
 type: FLD
 source: §19.11 (banca per FLD, 9 domande), §19.20 (12 blocchi della carta d'identità), §64
-note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
-  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+note: "Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP. Le parole chiave it/en servono solo al recupero delle unità (FTS),
+  non si mostrano: il corpus è in gran parte in inglese."
 questions:
   - attribute: document
     question: A quale documento appartiene?
+    keywords:
+      it:
+        - documento
+        - richiesta
+        - ordine
+        - fattura
+      en:
+        - document
+        - requisition
+        - order
+        - invoice
     genre: tecnica
     critical_for_r2: false
     always_critical: true
   - attribute: section
     question: In quale sezione del documento o del form si trova?
+    keywords:
+      it:
+        - sezione
+        - testata
+        - riga
+        - gruppo
+      en:
+        - section
+        - header
+        - line
+        - group
     genre: d'uso
     critical_for_r2: false
     always_critical: false
   - attribute: datatype
     question: Di che tipo è?
+    keywords:
+      it:
+        - tipo
+        - campo
+        - testo
+        - numero
+        - data
+      en:
+        - type
+        - field
+        - text
+        - number
+        - date
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: domain
     question: Quali valori ammette (lista chiusa, formato, intervallo)?
+    keywords:
+      it:
+        - valori
+        - lista
+        - elenco
+        - ammessi
+      en:
+        - values
+        - list
+        - allowed
+        - picklist
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: mandatory
     question: Quando è obbligatorio, e per chi (sempre, per società, per ruolo, in quali stati)?
+    keywords:
+      it:
+        - obbligatorio
+        - richiesto
+        - necessario
+      en:
+        - required
+        - mandatory
+        - must
     genre: regola
     critical_for_r2: true
     always_critical: false
   - attribute: mandatory_reason
     question: "Perché è obbligatorio: cosa a valle lo richiede (integrazione, workflow, norma, policy)?"
+    keywords:
+      it:
+        - perché
+        - richiesto
+        - integrazione
+        - workflow
+      en:
+        - because
+        - required
+        - integration
+        - workflow
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: editable_in_states
     question: In quali stati è modificabile?
+    keywords:
+      it:
+        - modificabile
+        - stato
+      en:
+        - editable
+        - status
+        - state
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: default
     question: Da dove prende il valore di default?
+    keywords:
+      it:
+        - predefinito
+        - default
+        - valore
+        - iniziale
+      en:
+        - default
+        - value
+        - initial
+        - populated
     genre: tecnica
     critical_for_r2: false
     always_critical: false
   - attribute: lineage
     question: Verso quali campi di altri documenti si propaga, e da quali deriva?
+    keywords:
+      it:
+        - propaga
+        - copiato
+        - deriva
+      en:
+        - propagates
+        - copied
+        - derived
+        - flows
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: visibility
     question: Chi lo vede (ruoli, sezioni nascoste, condizioni)?
+    keywords:
+      it:
+        - visibile
+        - nascosto
+        - ruolo
+        - mostra
+      en:
+        - visible
+        - hidden
+        - role
+        - displayed
     genre: d'uso
     critical_for_r2: false
     always_critical: false
   - attribute: system_of_record
     question: Il valore nasce in JAGGAER o in un altro sistema (ERP)? Chi ne è il sistema di riferimento?
+    keywords:
+      it:
+        - origine
+        - erp
+        - sistema
+        - anagrafica
+      en:
+        - source
+        - erp
+        - system
+        - master
     genre: tecnica
     critical_for_r2: true
     always_critical: false
   - attribute: sensitivity
     question: Contiene dati personali o commerciali da mascherare?
+    keywords:
+      it:
+        - personale
+        - riservato
+        - privacy
+      en:
+        - personal
+        - confidential
+        - privacy
+        - sensitive
     genre: regola
     critical_for_r2: false
     always_critical: false
   - attribute: custom
     question: È un campo standard del prodotto o aggiunto dal cliente?
+    keywords:
+      it:
+        - personalizzato
+        - aggiuntivo
+        - cliente
+      en:
+        - custom
+        - additional
+        - user-defined
     genre: tecnica
     critical_for_r2: false
     always_critical: false

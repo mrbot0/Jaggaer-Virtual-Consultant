@@ -26,11 +26,13 @@ const SOURCE_WEIGHTS = YAML.parse(readFileSync(new URL("../../schemas/source-wei
 // WP09a (§19.7): se una fonte dell'item è un DOC profilato, il suo reliability.score è il peso di base
 // (il minimo fra i DOC profilati citati), in luogo del peso generico per origine.
 const DOC_CODE_RE = /^[SC]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.DOC\.\d{4}(?:\.v\d+)?$/;
-export function profiledSourceScore(obj, docReliability) {
+// Giro 1 (M10): la digestione guidata cita UNITÀ (sources[].unit): unitDoc(codice) → DOC dell'unità (units.doc).
+export function profiledSourceScore(obj, docReliability, unitDoc = null) {
   if (!docReliability?.size) return null;
   const scores = [];
   for (const s of obj?.sources ?? []) {
     const refs = typeof s === "string" ? [s] : [s?.doc, s?.ref, s?.code, s?.document].filter(Boolean);
+    if (unitDoc) for (const u of sourceUnits({ sources: [s] })) { const d = unitDoc(u); if (d) refs.push(d); }
     for (const r of refs) if (DOC_CODE_RE.test(String(r)) && docReliability.has(String(r))) scores.push(docReliability.get(String(r)));
   }
   return scores.length ? Math.min(...scores) : null;
@@ -38,8 +40,8 @@ export function profiledSourceScore(obj, docReliability) {
 
 // Peso della fonte da F1 (§6.2); promozione-digest usa il minimo dei
 // contributori scritto dalla digestione (source_weight), altrimenti il fallback.
-export function sourceWeight(obj, { docReliability = null } = {}) {
-  const profiled = profiledSourceScore(obj, docReliability);
+export function sourceWeight(obj, { docReliability = null, unitDoc = null } = {}) {
+  const profiled = profiledSourceScore(obj, docReliability, unitDoc);
   if (profiled !== null) return profiled;
   const w = SOURCE_WEIGHTS[obj?.facets?.F1];
   if (typeof w === "number") return w;
@@ -58,8 +60,8 @@ const NEUTRAL_Q = { ageDays: 0, releaseDistance: 0, docStatus: 1, corroboration:
 // contesto di sessione: freschezza 1.0, 0 conferme, 0 contraddizioni; una
 // portabilità condizionata vale "condizione non soddisfatta" (0.20) finché il
 // contesto del cliente non la verifica.
-export function scoreItem(obj, { docReliability = null } = {}) {
-  const sw = sourceWeight(obj, { docReliability });
+export function scoreItem(obj, { docReliability = null, unitDoc = null } = {}) {
+  const sw = sourceWeight(obj, { docReliability, unitDoc });
   const conf = Math.round(confidence({ sourceWeight: sw, freshness: 1.0, confirmations: 0, openContradictions: 0 }) * 1e4) / 1e4;
   const w = weight({ confidence: conf, portability: obj.facets.F8, status: obj.facets.F12, condition_met: false, same_customer: true });
   const q = quality({ ...NEUTRAL_Q, authority: sw }, "generic", obj.type).Q;
@@ -134,6 +136,10 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
     if (!/\.DOC\.\d{4}(?:\.v\d+)?\.ya?ml$/.test(file)) continue;
     try { const d = YAML.parse(readFileSync(file, "utf8")); if (d?.type === "DOC" && typeof d.reliability?.score === "number") docReliability.set(d.id, d.reliability.score); } catch { /* validato sotto */ }
   }
+  // giro 1 (M10): le unità si indicizzano PRIMA degli item, così una fonte U.* risolve il suo DOC
+  const unitStats = indexUnits(db, join(root, "sources", "units"), { root });
+  const unitDocSt = db.prepare("select doc from units where code=?");
+  const unitDoc = (code) => unitDocSt.get(code)?.doc ?? null;
   db.transaction(() => {
     for (const file of walk(kbDir)) {
       stats.scanned++;
@@ -145,12 +151,12 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
       const prev = get.get(obj.id);
       if (prev?.hash === hash) {
         stats.unchanged++;
-        if (recompute || !prev.confidence) { rescore.run({ code: obj.id, ...scoreItem(obj, { docReliability }) }); stats.rescored++; }
+        if (recompute || !prev.confidence) { rescore.run({ code: obj.id, ...scoreItem(obj, { docReliability, unitDoc }) }); stats.rescored++; }
         if (FIELD_MODEL_TYPES.has(obj.type) && needsFieldIndex(db, obj)) indexFieldModel(db, obj);   // DB precedente a 0004-fld
         continue;
       }
       upsert.run({ code: obj.id, level: c.level, customer: c.customer, scope: c.scope, type: c.type, version: c.version, title: obj.title,
-        summary: obj.summary, facets: JSON.stringify(obj.facets), ...scoreItem(obj, { docReliability }), status: obj.facets.F12, path: relative(root, file), hash,
+        summary: obj.summary, facets: JSON.stringify(obj.facets), ...scoreItem(obj, { docReliability, unitDoc }), status: obj.facets.F12, path: relative(root, file), hash,
         updated_at: new Date(statSync(file).mtimeMs).toISOString(), verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
       ftsDel.run(obj.id); ftsIns.run(obj.id, obj.title, obj.summary);
       if (FIELD_MODEL_TYPES.has(obj.type)) indexFieldModel(db, obj);
@@ -162,7 +168,7 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
     for (const { code } of db.prepare("select code from items where status<>'deprecato'").all()) if (!seen.has(code)) { dep.run(code); stats.deprecated++; }
     Object.assign(stats, upsertClusters(db, clustersDir));
     // WP09a: unità di significato (<root>/sources/units/<DOCID>/<codice>.yaml) → units + units_fts
-    Object.assign(stats, indexUnits(db, join(root, "sources", "units"), { root }));
+    Object.assign(stats, unitStats);
   })();
   return stats;
 }
