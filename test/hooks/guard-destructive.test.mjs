@@ -54,8 +54,11 @@ test("policy/deny-rules.yaml: ogni regola ha id, severity (hard-deny|confirm), r
   await assert.rejects(loadRules(bad("rotto.yaml", "rules: [ {")));
   await assert.rejects(loadRules(bad("sev.yaml", "rules:\n  - { id: DR-X-001, severity: forse, reason: 'abcdefghijk', applies_to: [shell], on: text, patterns: ['x'] }\n")));
   await assert.rejects(loadRules(bad("re.yaml", "rules:\n  - { id: DR-X-001, severity: hard-deny, reason: 'abcdefghijk', applies_to: [shell], on: text, patterns: ['(('] }\n")));
-  const ok = await loadRules(bad("ok.yaml", "rules:\n  - { id: DR-X-001, severity: hard-deny, reason: 'abcdefghijk', applies_to: [shell], on: text, patterns: ['xyz'] }\n"));
-  assert.equal(ok.rules.length, 1);
+  // giro 1 (M5): la policy minima valida contiene le regole cardine delle tre aree
+  const rule = (id, area, on) => `  - { id: ${id}, severity: hard-deny, reason: 'abcdefghijk', applies_to: [${area}], on: ${on}, patterns: ['xyz'] }`;
+  const core = [rule("DR-SHELL-001", "shell", "text"), rule("DR-SHELL-003", "shell", "text"), rule("DR-WRITE-001", "write", "content"), rule("DR-WRITE-003", "write", "content"), rule("DR-BROWSER-002", "browser", "label")];
+  const ok = await loadRules(bad("ok.yaml", `rules:\n${core.join("\n")}\n`));
+  assert.equal(ok.rules.length, 5);
 });
 
 test("policy cambiata senza rigenerare: il guard applica il YAML (la copia compilata vale solo con la stessa impronta)", async () => {
@@ -229,7 +232,8 @@ test("browser: pulsante ambiguo 'Rimuovi riga' ⇒ ask in un passo ACT-UPDATE, d
   const r = call(upd, CL + "computer", { action: "left_click", ref: "ref_5", tabId: 101 });
   assert.equal(decisionOf(r), "ask", r.stdout);
   assert.match(reasonOf(r), /DR-BROWSER-\d{3}/);
-  assert.ok(asked(call(upd, PW + "browser_click", { element: "Rimuovi riga 3", ref: "e9" })));
+  // WP08 giro 1 (I4): element del modello non declassa mai (e9 non è legato: nessuna etichetta affidabile) ⇒ deny
+  assert.ok(denied(call(upd, PW + "browser_click", { element: "Rimuovi riga 3", ref: "e9" })));
   const obs = planWs("ACT-OBS");
   assert.ok(denied(call(obs, CL + "computer", { action: "left_click", ref: "ref_5", tabId: 101 })), "fuori da ACT-UPDATE");
   const none = envWs({ env: "sandbox", scope: "P2P" });

@@ -22,14 +22,30 @@
 # virgolette, senza escape (\rm), senza ^ e backtick di cmd/PowerShell, con le concatenazioni 'r'+'m' unite, con le
 # variabili semplici sostituite (a=r; $a), con le sequenze \xNN/\NNN decodificate, i token base64 decodificati
 # (anche -EncodedCommand UTF-16LE), lo scheletro Unicode (sosia, larghezza piena, caratteri invisibili), il contenuto
-# degli script locali eseguiti (≤ 256 KB). Separatori: ; && || | & a capo ( ) { } $( ) backtick.
+# degli script locali eseguiti (≤ 256 KB), i commenti SQL come spazi, Get-Command/gcm/Get-Alias risolti, e un nome di
+# comando con jolly (r?.exe, r[m]*, Remove-It*) sostituito da ogni parola di command_vocabulary che il jolly produce.
+# Separatori: ; && || | & a capo backtick; ( ) { } $( ) tolti dal nome del comando.
+# on: glob (shell) — patterns sono NOMI CAMPIONE: nega ogni token con * ? [ che la shell può espandere in uno di essi.
+# trusted_labels_only (browser) — la regola vede solo le etichette affidabili (Atlas, snapshot osservato), mai
+# element/selector/testo forniti dal modello; ogni regola con supersedes è implicitamente trusted_labels_only.
+# sanctioned — l'unica eccezione: UNA invocazione semplice `node <plugin>/<script> …` (nessuno di ( ) , @ { } $ ` ; & | < >
+# né a capo), ogni argomento validato per forma (positional, flags); le regole valgono comunque sugli argomenti.
+# Le regole cardine DR-SHELL-001, DR-SHELL-003, DR-WRITE-001, DR-WRITE-003, DR-BROWSER-002 sono obbligatorie: una policy
+# senza di esse (o svuotata) non si carica e il guard nega.
 version: 1
+
+command_vocabulary: [rm, rmdir, rd, del, erase, remove-item, ri, unlink, shred, rimraf, trash, truncate, dd, mkfs, format,
+  diskpart, find, xargs, mv, move, move-item, cp, copy, robocopy, rsync, git, chmod, npm, curl, wget, iwr, irm, iex,
+  invoke-expression, invoke-webrequest, sh, bash, zsh, cmd, powershell, pwsh, node, python, perl, ruby, sqlite3, setx,
+  reg, clear-content, set-content, add-content, out-file, tee, cat, type, get-content, gc, select-string, launchctl]
 
 sanctioned:
   - id: DR-OK-001
     applies_to: [shell]
     script: scripts/admin/purge.mjs
     require_args: ["--approval-1", "--approval-2"]
+    positional: ['^[A-Z0-9]{4}$']
+    flags: { "--execute": null, "--json": null, "--approval-1": '^[A-Za-z0-9][A-Za-z0-9._:-]{3,127}$', "--approval-2": '^[A-Za-z0-9][A-Za-z0-9._:-]{3,127}$', "--session": '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$' }
     reason: "customer purge è l'unica cancellazione del plugin (§54.4) e si esegue solo come `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`: le due approvazioni con frase le verifica lo script"
 
 rules:
@@ -42,7 +58,7 @@ rules:
     patterns:
       - '^rm(\s.*)?\s(-(?!force\b)[a-z]*r[a-z]*|--recursive)(\s|$)'
       - '^(remove-item|ri|rm|del|erase|rd|rmdir|rmd)(\s.*)?\s-r(e(c(u(r(s(e)?)?)?)?)?)?(\s|$|:)'
-      - '^(rd|rmdir|del|erase)(\s.*)?\s/s(\s|$)'
+      - '^(rd|rmdir|del|erase)(\s.*)?\s/([a-z]/)*s(\s|/|$)'
       - '^(rimraf|del-cli|trash|trash-put)(\s|$)'
       - '^find\s.*\s-delete(\s|$)'
       - '^find\s.*\s-exec(dir)?\s+(rm|shred|unlink|rmdir|del)(\s|$)'
@@ -54,21 +70,28 @@ rules:
     severity: hard-deny
     applies_to: [shell]
     on: text
-    reason: "cancellazione ricorsiva da un interprete o da una pipeline (rmSync recursive, shutil.rmtree, rimraf, Get-ChildItem -Recurse | Remove-Item)"
+    reason: "cancellazione ricorsiva o massiva da un interprete o da una pipeline (rmSync con opzioni, shutil.rmtree, FileUtils.rm_rf, File::Path remove_tree, rimraf, cancellazioni in un ciclo, elenco | Remove-Item)"
     patterns:
       - '\b(shutil\.)?rmtree\b'
       - '\brimraf\b'
       - '\b(rm|rmdir)(sync)?\s*\([^)]*recursive'
+      - '\b(fs\.|fs\.promises\.|\.)?(rm|rmdir)(sync)?\s*\([^)]*,'
       - '\[(system\.)?io\.directory\]::delete\s*\('
       - '\bdirectory\.delete\s*\([^)]*,\s*(\$?true|1)\s*\)'
-      - '\b(get-childitem|gci|ls|dir)\b[^|\n]*\s-r[a-z]*\b[^|\n]*\|\s*(remove-item|ri|rm|del|erase)\b'
+      - '\bfileutils\s*\.\s*(rm_rf|rm_r|rm_f|rm|remove_dir|remove_entry(_secure)?|rmtree|rmdir|remove)\b'
+      - '\b(rm_rf|rm_r|remove_tree|remove_entry_secure|deltree)\b'
+      - '\bfile::path\b'
+      - '\b(get-childitem|gci|ls|dir|get-item|gi|resolve-path|select-string)\b[^|\n]*\|\s*(remove-item|ri|rm|del|erase|rd|rmdir)\b'
+      - '\|\s*(%|foreach-object|foreach)\s*\{[^}]*\b(remove-item|ri|rm|del|erase|rd|rmdir)\b'
+      - '\b(os\.(remove|unlink|rmdir)|unlinksync|fs\.unlink|file\.delete|os\.removedirs)\b[\s\S]*\b(for|foreach|map|listdir|scandir|readdir(sync)?|glob|walk|iterdir)\b'
+      - '\b(for|foreach|listdir|scandir|readdir(sync)?|glob|walk|iterdir)\b[\s\S]*\b(os\.(remove|unlink|rmdir)|unlinksync|fs\.unlink|file\.delete|os\.removedirs)\b'
   - id: DR-SHELL-003
     severity: hard-deny
     applies_to: [shell]
     on: text
     reason: "cancellazione sotto customers/: l'unica cancellazione ammessa è `admin customer purge` con due approvazioni (§54.4)"
     patterns:
-      - '^(?=[\s\S]*\bcustomers\b)(?=[\s\S]*((^|[\s;&|(){}`])(rm|del|erase|rd|rmdir|remove-item|ri|unlink|shred|rimraf|truncate)(\.exe)?(\s|$)|\bgit\s+rm\b|\s-delete\b|\b(unlinksync|rmsync|rmdirsync|rmtree|unlink|rmdir)\s*\(|\bos\.remove\b|\bfs\.rm\b|\bfs\.promises\.rm\b|\bio\.(file|directory)\]::delete\b))'
+      - '^(?=[\s\S]*\bcustomers\b)(?=[\s\S]*((^|[\s;&|(){}`])(rm|del|erase|rd|rmdir|remove-item|ri|unlink|shred|rimraf|truncate)(\.exe)?(\s|$)|\bgit\s+rm\b|\s-delete\b|\b(unlinksync|rmsync|rmdirsync|rmtree|unlink|rmdir)\s*\(|\bos\.remove\b|\bfs\.rm\b|\bfs\.promises\.rm\b|\bio\.(file|directory)\]::delete\b|\bfileutils\b|\b(rm_rf|rm_r|remove_tree|rmtree|deltree)\b|\bfile::path\b|\bshutil\b|\bfile\.delete\b))'
   - id: DR-SHELL-005
     severity: hard-deny
     applies_to: [shell]
@@ -76,6 +99,13 @@ rules:
     reason: "nome del comando calcolato a runtime ($VAR, $(…), backtick) con opzioni di cancellazione o forzatura: il comando eseguito non è verificabile"
     patterns:
       - '(^|[;&|\n({]\s*)(\$\{?[\w:!#%/-]+\}?|\$\([^)]*\)|`[^`]*`)+\S*(\s+\S+)*\s+(-[a-z]*r[a-z]*f[a-z]*|-f[a-z]*r[a-z]*|-r|--recursive|--force|--hard|/s|-recurse|-delete)(\s|$)'
+  - id: DR-SHELL-006
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "nome del comando dinamico (jolly nel nome, Get-Command/gcm/Get-Alias, & ( … ), & $var, iex/Invoke-Expression, Start-Process) con argomenti che toccano customers/ o percorsi protetti: il comando eseguito non è verificabile"
+    patterns:
+      - '^(?=[\s\S]*(customers|\.jvc|[\\/]audit([\\/]|\b)|\.claude|session\.json|approvals|\.env|\.auth|claude_plugin_root|integrity\.json|deny-rules))(?=[\s\S]*((^|[;&|\n({]\s*)[&.]\s*[($]|\b(iex|invoke-expression|invoke-command|icm|get-command|gcm|get-alias|gal|start-process|saps|invoke-item|ii)\b|(^|[;&|\n({]\s*)((sudo|doas|env|command|exec|nohup)\s+|[A-Za-z_]\w*=\S*\s+)*[^\s;&|()]*[*?\[][^\s;&|()]*(\s|$)))'
   - id: DR-SHELL-004
     severity: hard-deny
     applies_to: [shell]
@@ -90,7 +120,7 @@ rules:
     on: command
     reason: "git push forzato (--force, -f, --force-with-lease, +refspec) riscrive la storia remota"
     patterns:
-      - '^git(\s.*)?\spush(\s.*)?\s(-[a-z]*f[a-z]*|--force(-with-lease|-if-includes)?(=\S*)?|\+\S+)(\s|$)'
+      - '^git(\s.*)?\spush(\s.*)?\s(-[a-z]*f[a-z]*|--force(-with-lease|-if-includes)?(=\S*)?|\+\S+|--mirror|--prune)(\s|$)'
   - id: DR-SHELL-011
     severity: hard-deny
     applies_to: [shell]
@@ -103,6 +133,10 @@ rules:
       - '^git(\s.*)?\spush(\s.*)?\s(--delete|-d)(\s|$)'
       - '^git(\s.*)?\spush\s(.*\s)?:[^\s:]+(\s|$)'
       - '^git(\s.*)?\s(filter-branch|filter-repo)(\s|$)'
+      - '^git(\s.*)?\s(checkout|switch)(\s.*)?\s(-f|--force|--discard-changes)(\s|$)'
+      - '^git(\s.*)?\supdate-ref(\s.*)?\s(-d|--delete)(\s|$)'
+      - '^git(\s.*)?\sreflog\s+(expire|delete)(\s|$)'
+      - '^git(\s.*)?\sgc(\s.*)?\s--prune(=\S*)?(\s|$)'
       - '^git(\s.*)?\sclean(\s.*)?\s(-[a-z]*f[a-z]*|--force)(\s|$)'
       - { re: '^git(\s.*)?\sbranch(\s.*)?\s(-[a-zA-Z]*D[a-zA-Z]*|--delete\s(.*\s)?--force|--force\s(.*\s)?--delete|-d\s(.*\s)?-f|-f\s(.*\s)?-d)(\s|$)', flags: "u" }
   # ---------------- shell: dischi e file ----------------
@@ -133,6 +167,8 @@ rules:
       - '\btruncate\s+table\b'
       - '\btruncate\s+[\w."`\[\]]+\s*(;|$)'
       - { re: '\bdelete\s+from\s+[^;]*', unless: '\bwhere\b' }
+      - '\bdelete\s+from\b[^;]*\bwhere\s+\(?\s*(1\s*=\s*1|0\s*=\s*0|true|1|not\s+0|not\s+false|''[^'']*''\s*=\s*''[^'']*'')\s*\)?\s*(;|$|\)|"|or\b|and\b)'
+      - '\bdelete\s+from\b[^;]*\bor\s+(1\s*=\s*1|true)\b'
       - '\balter\s+table\b[^;]*\bdrop\b'
   # ---------------- shell: esecuzione di codice scaricato ----------------
   - id: DR-SHELL-040
@@ -155,6 +191,12 @@ rules:
     patterns:
       - '(^|[\s/\\''"=:<>(|;&,])\.env(\.[\w.-]+|-[\w.-]+)?(?=$|[\s''"/\\;|&)<>,])'
       - '(^|[\s/\\''"=:<>(|;&,])\.auth(?=$|[\s''"/\\;|&)<>,])'
+  - id: DR-SHELL-051
+    severity: hard-deny
+    applies_to: [shell]
+    on: glob
+    reason: "un nome con caratteri jolly (* ? […]) che la shell può espandere in un file di segreti (.env*, .auth): non si leggono né si copiano (T7)"
+    patterns: [".env", ".env.local", ".env.production", ".env.development", ".envrc", ".auth"]
   # ---------------- shell: pubblicazione e permessi ----------------
   - id: DR-SHELL-060
     severity: hard-deny
@@ -172,6 +214,25 @@ rules:
     reason: "JVC_DEV (sviluppo del plugin: salta l'integrità e la protezione del codice) è una variabile del processo di Claude Code impostata dall'utente fuori sessione: non si imposta né si cita dalla sessione"
     patterns:
       - '\bJVC_DEV\b'
+  - id: DR-SHELL-071
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "variabili d'ambiente persistenti (setx, [Environment]::SetEnvironmentVariable, registro Environment, launchctl setenv): renderebbero stabile JVC_DEV o un'altra variabile che cambia i guard nei processi futuri"
+    patterns:
+      - '(^|[\s;&|(])setx(\.exe)?(\s|$)'
+      - '\[\s*(system\.)?environment\s*\]\s*::\s*setenvironmentvariable'
+      - '\bsetenvironmentvariable\b'
+      - '(hkcu|hkey_current_user|hklm|hkey_local_machine)(:)?[\\/]+(system[\\/]+currentcontrolset[\\/]+control[\\/]+session manager[\\/]+)?environment\b'
+      - '\breg(\.exe)?\s+(add|import|load|restore|copy)\b'
+      - '\blaunchctl\s+(setenv|config)\b'
+  - id: DR-SHELL-072
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "scrittura nei profili della shell (.bashrc, .zshrc, .profile, $PROFILE, …): impostano variabili per i processi futuri (JVC_*), anche con nomi costruiti a runtime"
+    patterns:
+      - '^(?=[\s\S]*((^|[\s''"=>/\\~:])(\.bashrc|\.bash_profile|\.bash_login|\.profile|\.zshrc|\.zshenv|\.zprofile|\.zlogin|\.cshrc|\.tcshrc|config\.fish|\.pam_environment)\b|/etc/(environment|profile)\b|\$profile\b|[\w.-]*profile\.ps1\b))(?=[\s\S]*(>|\btee\b|add-content|set-content|out-file|\bac\b|\bsc\b|\bcp\b|\bmv\b|copy-item|move-item|new-item|\bni\b|\bsed\s+-[a-z]*i|\bln\b|writefile|appendfile|\bopen\s*\(|\bdd\b|\binstall\b))'
 
   # ---------------- scrittura ----------------
   - id: DR-WRITE-001
@@ -216,6 +277,27 @@ rules:
     reason: "JVC_DEV (sviluppo del plugin) è una variabile del processo di Claude Code impostata dall'utente fuori sessione: nessun file scritto in sessione la imposta"
     patterns:
       - '\bJVC_DEV\b'
+  - id: DR-WRITE-005
+    severity: hard-deny
+    applies_to: [write]
+    on: path
+    reason: "profili della shell e file d'ambiente del sistema: impostano variabili (JVC_*) per i processi futuri; li modifica solo l'utente, fuori sessione"
+    patterns:
+      - { glob: "**/.bashrc" }
+      - { glob: "**/.bash_profile" }
+      - { glob: "**/.bash_login" }
+      - { glob: "**/.profile" }
+      - { glob: "**/.zshrc" }
+      - { glob: "**/.zshenv" }
+      - { glob: "**/.zprofile" }
+      - { glob: "**/.zlogin" }
+      - { glob: "**/.cshrc" }
+      - { glob: "**/.tcshrc" }
+      - { glob: "**/config.fish" }
+      - { glob: "**/.pam_environment" }
+      - { glob: "**/*profile.ps1" }
+      - { glob: "**/etc/environment" }
+      - { glob: "**/etc/profile" }
 
   # ---------------- browser ----------------
   - id: DR-BROWSER-001
@@ -224,7 +306,8 @@ rules:
     on: label
     when_step_class: [ACT-UPDATE]
     supersedes: [DR-BROWSER-002]
-    reason: "etichetta ambigua (rimozione di una riga o di un allegato di una bozza) dentro un passo ACT-UPDATE: conferma dell'utente prima di premere"
+    trusted_labels_only: true
+    reason: "etichetta ambigua (rimozione di una riga o di un allegato di una bozza) dentro un passo ACT-UPDATE, letta dall'Atlas o dallo snapshot osservato (mai da element/testo del modello): conferma dell'utente prima di premere"
     patterns:
       - '^\s*(rimuovi|elimina|cancella|togli|remove|delete)\s+(la\s+|il\s+|l''|the\s+)?(riga|righe|linea|linee|row|rows|line|lines|posizione|posizioni|articolo|articoli|item|items|allegato|allegati|attachment|attachments)\b'
   - id: DR-BROWSER-002

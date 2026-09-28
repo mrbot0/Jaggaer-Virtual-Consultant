@@ -48,7 +48,8 @@ export function checkIntegrity(ws, sid, file, env = process.env) {
 }
 
 function integrityLine(rec) {
-  if (rec.ok) return null;
+  // WP08 giro 1 (I8): con JVC_DEV=1 l'avviso è sempre visibile, anche con integrità ok
+  if (rec.ok) return rec.dev ? "JVC_DEV=1 attivo: gate d'integrità dei guard e protezione del codice del plugin disattivati (solo sviluppo del plugin; mai presso un cliente)." : null;
   const what = [rec.reason, rec.mismatched?.length ? `alterati: ${rec.mismatched.slice(0, 5).join(", ")}` : null, rec.missing?.length ? `mancanti: ${rec.missing.slice(0, 5).join(", ")}` : null,
     rec.extra?.length ? `in più: ${rec.extra.slice(0, 5).join(", ")}` : null, rec.signature === "invalid" || (rec.signature === "absent" && rec.status === "fail") ? `firma: ${rec.signature}` : null].filter(Boolean).join(" · ");
   return rec.dev

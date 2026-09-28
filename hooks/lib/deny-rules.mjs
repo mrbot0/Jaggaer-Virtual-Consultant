@@ -11,8 +11,10 @@ export const POLICY_FILE = fileURLToPath(new URL("../../policy/deny-rules.yaml",
 export const policySha = (text) => createHash("sha256").update(String(text).replace(/\r\n/g, "\n")).digest("hex");
 
 const SEVERITIES = new Set(["hard-deny", "confirm"]);
+// regole cardine: senza di esse la policy è considerata manomessa
+export const REQUIRED = ["DR-SHELL-001", "DR-SHELL-003", "DR-WRITE-001", "DR-WRITE-003", "DR-BROWSER-002"];
 const APPLIES = new Set(["shell", "write", "browser"]);
-const ON = { shell: new Set(["command", "text"]), write: new Set(["path", "content"]), browser: new Set(["label", "key"]) };
+const ON = { shell: new Set(["command", "text", "glob"]), write: new Set(["path", "content"]), browser: new Set(["label", "key"]) };
 
 // Documento YAML → forma normalizzata (solo dati JSON): lancia su ogni campo non valido.
 export function normalizeDoc(doc) {
@@ -29,6 +31,7 @@ export function normalizeDoc(doc) {
     if (!r.applies_to.every((a) => ON[a].has(r.on))) throw new Error(`${at}: on "${r.on}" non valido per ${r.applies_to.join(",")}`);
     if (!Array.isArray(r.patterns) || !r.patterns.length) throw new Error(`${at}: patterns mancanti`);
     const patterns = r.patterns.map((p) => {
+      if (typeof p === "string" && r.on === "glob") return { sample: p };
       if (typeof p === "string") return { re: p, flags: "iu" };
       if (p && typeof p === "object" && typeof p.re === "string") return { re: p.re, flags: typeof p.flags === "string" ? p.flags : "iu", ...(typeof p.unless === "string" ? { unless: p.unless } : {}) };
       if (p && typeof p === "object" && typeof p.glob === "string" && r.on === "path") return { glob: p.glob };
@@ -38,6 +41,8 @@ export function normalizeDoc(doc) {
     const list = (k) => (r[k] === undefined ? undefined : Array.isArray(r[k]) && r[k].every((x) => typeof x === "string") ? r[k] : (() => { throw new Error(`${at}: ${k} deve essere un elenco di stringhe`); })());
     const out = { id: r.id, severity: r.severity, reason: r.reason.trim(), applies_to: r.applies_to, on: r.on, patterns };
     for (const k of ["when_step_class", "unless_step_class", "supersedes"]) { const v = list(k); if (v) out[k] = v; }
+    if (r.trusted_labels_only === true) out.trusted_labels_only = true;
+    if (r.on === "glob") out.samples = patterns.map((p) => p.sample);
     if (r.unless_env !== undefined) { if (typeof r.unless_env !== "string" || !/^[A-Z_][A-Z0-9_]*$/.test(r.unless_env)) throw new Error(`${at}: unless_env non valido`); out.unless_env = r.unless_env; }
     return out;
   });
@@ -45,9 +50,20 @@ export function normalizeDoc(doc) {
   const sanctioned = (Array.isArray(doc.sanctioned) ? doc.sanctioned : []).map((s, i) => {
     if (!s || typeof s.id !== "string" || typeof s.script !== "string" || !/^[\w./-]+\.mjs$/.test(s.script) || s.script.includes("..")) throw new Error(`deny-rules: sanctioned ${i + 1} non valida`);
     if (!Array.isArray(s.require_args) || !s.require_args.every((a) => typeof a === "string" && /^--[\w-]+$/.test(a))) throw new Error(`deny-rules: sanctioned ${s.id}: require_args non valido`);
-    return { id: s.id, script: s.script, require_args: s.require_args, reason: String(s.reason ?? "") };
+    // giro 1 (C1): forma di ogni argomento (posizionali e opzioni); ogni regex deve compilare
+    const positional = Array.isArray(s.positional) ? s.positional : null;
+    const flags = s.flags && typeof s.flags === "object" && !Array.isArray(s.flags) ? s.flags : null;
+    if (!positional || !positional.every((x) => typeof x === "string") || !flags || !Object.entries(flags).every(([k, v]) => /^--[\w-]+$/.test(k) && (v === null || typeof v === "string"))) throw new Error(`deny-rules: sanctioned ${s.id}: positional/flags mancanti o non validi`);
+    for (const re of [...positional, ...Object.values(flags).filter(Boolean)]) new RegExp(re);
+    if (!s.require_args.every((a) => Object.hasOwn(flags, a))) throw new Error(`deny-rules: sanctioned ${s.id}: require_args fuori da flags`);
+    return { id: s.id, script: s.script, require_args: s.require_args, positional, flags, reason: String(s.reason ?? "") };
   });
-  return { version: doc.version ?? 1, sanctioned, rules };
+  // giro 1 (M5): una policy svuotata o senza le regole cardine non è valida (il guard nega)
+  for (const area of ["shell", "write", "browser"]) if (!rules.some((r) => r.applies_to.includes(area))) throw new Error(`deny-rules: nessuna regola per ${area}`);
+  for (const id of REQUIRED) if (!ids.has(id)) throw new Error(`deny-rules: manca la regola cardine ${id}`);
+  const vocab = doc.command_vocabulary === undefined ? [] : doc.command_vocabulary;
+  if (!Array.isArray(vocab) || !vocab.every((v) => typeof v === "string" && /^[a-z0-9._-]+$/.test(v))) throw new Error("deny-rules: command_vocabulary non valido");
+  return { version: doc.version ?? 1, sanctioned, rules, command_vocabulary: vocab };
 }
 
 // Forma normalizzata → regole con regex compilate (lancia se una regex non compila).
@@ -56,7 +72,7 @@ export function compileRules(norm) {
     ...r,
     compiled: r.patterns.map((p) => (p.re ? { re: new RegExp(p.re, p.flags), unless: p.unless ? new RegExp(p.unless, "iu") : null } : p)),
   }));
-  return { version: norm.version, sanctioned: norm.sanctioned, rules };
+  return { version: norm.version, sanctioned: norm.sanctioned, rules, command_vocabulary: norm.command_vocabulary ?? [] };
 }
 
 // → regole compilate dal file di policy (o dalla copia generata con la stessa impronta).

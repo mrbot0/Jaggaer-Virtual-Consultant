@@ -8,6 +8,7 @@ import { resolveTarget, resolvePattern, PathPolicyError } from "../paths.mjs";
 import { appendAudit } from "../audit.mjs";
 import { summarizeInput } from "../tool-summary.mjs";
 import { scriptWriteTargets } from "./script-writes.mjs";
+import { simpleArgv } from "../exact-argv.mjs";
 
 export { PathPolicyError };
 export const FILE_TOOLS = new Set(["Read", "Write", "Edit", "MultiEdit", "NotebookEdit"]);
@@ -76,12 +77,10 @@ export function sameFile(a, b) {
 
 // Riconosce ESATTAMENTE `node <CLAUDE_PLUGIN_ROOT>/scripts/admin/session.mjs <argomenti>`
 // senza concatenazioni né espansioni di shell → { action, what, args } o null.
+// WP08 giro 1 (C1): stesso tokenizzatore delle altre eccezioni a forma esatta (hooks/lib/exact-argv.mjs).
 export function pluginSessionCommand(cmd, { cwd, plugin }) {
-  if (typeof cmd !== "string") return null;
-  const s = cmd.trim().replace(/"\$\{CLAUDE_SESSION_ID\}"/g, "SID");
-  if (/[;&|`<>\r\n$]/.test(s)) return null;
-  const tokens = [...s.matchAll(/"([^"]*)"|'([^']*)'|(\S+)/g)].map((m) => m[1] ?? m[2] ?? m[3]);
-  if (!/^node(\.exe)?$/i.test(tokens[0] ?? "") || !tokens[1]) return null;
+  const tokens = simpleArgv(cmd);
+  if (!tokens || !/^node(\.exe)?$/i.test(tokens[0] ?? "") || !tokens[1]) return null;
   if (!sameFile(resolve(cwd, tokens[1]), join(plugin, "scripts", "admin", "session.mjs"))) return null;
   const pos = [];
   for (let i = 2; i < tokens.length; i++) {

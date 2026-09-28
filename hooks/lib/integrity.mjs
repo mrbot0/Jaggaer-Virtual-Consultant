@@ -107,4 +107,5 @@ export function verifyPackage(root, { cache = null } = {}) {
   return { ok, status: ok ? "ok" : "fail", version: m.version ?? null, generated_at: m.generated_at ?? null, mismatched: mismatched.sort(), missing: missing.sort(), extra, signature, key_present: keyPresent };
 }
 
-export const devMode = (env = process.env) => typeof env.JVC_DEV === "string" && env.JVC_DEV !== "" && env.JVC_DEV !== "0";
+// WP08 giro 1 (I8): solo il valore esatto "1" (non "true", "yes", " 1", …).
+export const devMode = (env = process.env) => env.JVC_DEV === "1";

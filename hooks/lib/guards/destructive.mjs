@@ -21,6 +21,7 @@ import { ask } from "../io.mjs";
 import { appendAudit } from "../audit.mjs";
 import { summarizeInput } from "../tool-summary.mjs";
 import { loadRules } from "../deny-rules.mjs";
+import { simpleNodeCall, argsRefusal } from "../exact-argv.mjs";
 
 const G = "guard-destructive";
 export const SHELL_TOOLS = new Set(["Bash", "PowerShell"]);
@@ -39,6 +40,10 @@ const ifs = (s) => s.replace(/\$\{IFS\}|\$IFS\b/g, " ").replace(/\$\{?[@*]\}?/g,
 // $(echo rm) / `printf rm` ⇒ rm
 const echoSubst = (s) => s.replace(/\$\(\s*(?:echo|printf|write-output|write-host)\s+([^()]*)\)|`\s*(?:echo|printf)\s+([^`]*)`/gi, (_, a, b) => (a ?? b ?? "").replace(/["']/g, "").replace(/%s\s*/g, ""));
 const eqSpace = (s) => s.replace(/=/g, " ");
+// commenti SQL come spazi (drop/**/table) — vista in più, mai sostitutiva
+const noSqlComments = (s) => s.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/--[^\n]*/g, " ");
+// WP08 giro 1 (C2): nome di comando risolto a runtime da Get-Command/gcm/Get-Alias/gal dentro & ( … ) o . ( … ) ⇒ il nome
+const resolveGetCommand = (s) => s.replace(/([&.])\s*\(\s*(?:get-command|gcm|get-alias|gal)\s+(?:-name\s+)?["']?([^)"'\s]+)["']?[^)]*\)/gi, "$1 $2");
 const escapes = (s) => s.replace(/\\x([0-9a-f]{2})/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
   .replace(/\\u\{?([0-9a-f]{4,6})\}?/gi, (_, h) => { try { return String.fromCodePoint(parseInt(h, 16)); } catch { return ""; } })
   .replace(/\\([0-7]{1,3})/g, (_, o) => String.fromCharCode(parseInt(o, 8)));
@@ -48,7 +53,46 @@ function substVars(s) {
   if (!vars.size) return s;
   return s.replace(/\$\{([A-Za-z_]\w*)\}|\$([A-Za-z_]\w*)|%([A-Za-z_]\w*)%|!([A-Za-z_]\w*)!/g, (all, a, b, c, d) => { const k = a ?? b ?? c ?? d; return vars.has(k) ? vars.get(k) : all; });
 }
-const CHAIN = [joinConcat, noCaret, ifs, escapes, substVars, echoSubst, noTick, noQuotes];
+const CHAIN = [joinConcat, noCaret, ifs, escapes, substVars, echoSubst, resolveGetCommand, noTick, noQuotes];
+
+// WP08 giro 1 (C2): un nome di comando con caratteri jolly (/usr/bin/r?.exe, r[m]*, Remove-It*) è espanso dalla shell:
+// la vista sostituisce il nome con ogni parola del vocabolario dei comandi (policy: command_vocabulary) che il jolly
+// può produrre, così le regole vedono "rm -rf …". Una classe [ non terminata vale come letterale.
+export function globRegex(glob) {
+  let re = "";
+  for (let i = 0; i < glob.length; i++) {
+    const c = glob[i];
+    if (c === "*") re += ".*";
+    else if (c === "?") re += ".";
+    else if (c === "[") {
+      const j = glob.indexOf("]", i + 2);
+      if (j < 0) { re += "\\["; continue; }
+      let cls = glob.slice(i + 1, j);
+      if (cls.startsWith("!") || cls.startsWith("^")) cls = "^" + cls.slice(1);
+      re += "[" + cls.replace(/\\/g, "\\\\") + "]";
+      i = j;
+    } else re += c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+  try { return new RegExp("^" + re + "$", "i"); } catch { return null; }
+}
+const GLOB = /[*?[]/;
+const WRAPPERS = /^(sudo|doas|env|command|builtin|exec|nohup|time|nice|&|\.|call|start)$/i;
+function expandGlobHeads(view, vocab) {
+  if (!vocab.length || !GLOB.test(view)) return [];
+  const out = [];
+  for (const seg of view.split(SPLIT)) {
+    const tokens = seg.trim().split(/\s+/).filter(Boolean);
+    let i = 0;
+    while (i < tokens.length && (WRAPPERS.test(tokens[i]) || /^[A-Za-z_]\w*=\S*$/.test(tokens[i]))) i++;
+    const head = tokens[i];
+    if (!head || !GLOB.test(head)) continue;
+    const base = head.replace(/^[@&.$({]+/, "").replace(/[)}]+$/, "").replace(/^.*[\\/]/, "");
+    const re = globRegex(base);
+    if (!re) continue;
+    for (const v of vocab) if (re.test(v) || re.test(v + ".exe")) out.push([...tokens.slice(0, i), v, ...tokens.slice(i + 1)].join(" "));
+  }
+  return out;
+}
 
 const printable = (t) => t.length >= 4 && [...t].filter((c) => /[\x20-\x7e\t\r\n]/.test(c)).length / t.length >= 0.9;
 function decodedPayloads(s) {
@@ -87,7 +131,7 @@ function scriptContents(ctx, s) {
   return out;
 }
 
-export function shellViews(cmd, ctx = null, depth = 0, out = new Set()) {
+export function shellViews(cmd, ctx = null, depth = 0, out = new Set(), vocab = []) {
   const add = (v) => {
     if (typeof v !== "string" || !v || out.has(v)) return;
     out.add(v);
@@ -101,12 +145,14 @@ export function shellViews(cmd, ctx = null, depth = 0, out = new Set()) {
     for (const f of CHAIN) { s = f(s); add(s); }
     add(s.replace(/`/g, " ; "));
     add(eqSpace(s));
+    add(noSqlComments(s));
   }
   for (const v of [...out]) add(skeleton(v));
+  for (const v of [...out]) for (const e of expandGlobHeads(v, vocab)) add(e);
   if (depth < 3) {
     const base = [...out];
-    for (const v of base) for (const p of decodedPayloads(v)) shellViews(p, ctx, depth + 1, out);
-    if (ctx) for (const text of scriptContents(ctx, cmd)) shellViews(text, ctx, depth + 1, out);
+    for (const v of base) for (const p of decodedPayloads(v)) shellViews(p, ctx, depth + 1, out, vocab);
+    if (ctx) for (const text of scriptContents(ctx, cmd)) shellViews(text, ctx, depth + 1, out, vocab);
   }
   return out;
 }
@@ -136,22 +182,33 @@ function testPatterns(rule, text) {
 }
 
 // ---------------- operazioni ammesse (forma esatta) ----------------
-function tokensOf(s) { return [...s.matchAll(/"([^"]*)"|'([^']*)'|(\S+)/g)].map((m) => m[1] ?? m[2] ?? m[3]); }
+// WP08 giro 1 (C1): una sola invocazione semplice (hooks/lib/exact-argv.mjs), ogni argomento validato per forma
+// (positional/flags della policy); le altre regole della shell valgono comunque sugli argomenti.
 function sanctionedDecision(ctx, cmd, list) {
+  const call = simpleNodeCall(cmd, ctx.cwd);
+  if (!call) return null;
   for (const s of list) {
-    const target = join(ctx.plugin, ...s.script.split("/"));
-    const c = cmd.trim().replace(/\$\{CLAUDE_PLUGIN_ROOT\}|\$CLAUDE_PLUGIN_ROOT\b/g, ctx.plugin);
-    if (/[;&|`<>\r\n$\0]/.test(c)) continue;
-    const t = tokensOf(c);
-    if (!/^node(\.exe)?$/i.test(t[0] ?? "") || !t[1] || !sameFile(resolve(ctx.cwd, t[1]), target)) continue;
-    const args = t.slice(2);
-    const ok = s.require_args.every((flag) => {
-      const i = args.findIndex((a) => a === flag || a.startsWith(`${flag}=`));
-      if (i < 0) return false;
-      const v = args[i].includes("=") ? args[i].slice(flag.length + 1) : args[i + 1];
-      return typeof v === "string" && v.trim() !== "" && !v.startsWith("--");
-    });
-    return ok ? { allow: s } : { deny: s };
+    if (!sameFile(call.script, join(ctx.plugin, ...s.script.split("/")))) continue;
+    const bad = argsRefusal(call.args, s);
+    const missing = s.require_args.filter((flag) => !call.args.some((a) => a === flag || a.startsWith(`${flag}=`)));
+    if (bad || missing.length) return { deny: s, why: bad ?? `mancano ${missing.join(" e ")}` };
+    return { allow: s, args: call.args };
+  }
+  return null;
+}
+
+// Token con jolly che la shell può espandere in un nome di file segreto (on: glob): ogni segmento di percorso di ogni
+// token (anche dopo = e :) con * ? [ è confrontato con i nomi campione della regola (.env, .env.local, .auth, …).
+function globHits(rule, views) {
+  for (const v of views) {
+    for (const tok of v.split(/[\s;&|()<>]+/)) {
+      if (!GLOB.test(tok)) continue;
+      for (const seg of tok.split(/[\\/=:]+/)) {
+        if (!GLOB.test(seg)) continue;
+        const re = globRegex(seg);
+        if (re && rule.samples.some((n) => re.test(n))) return tok;
+      }
+    }
   }
   return null;
 }
@@ -162,15 +219,17 @@ function shellMatches(ctx, rules) {
   if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
   if (cmd.length > MAX_COMMAND) throw new PathPolicyError(`comando troppo lungo per l'analisi del guard (oltre ${MAX_COMMAND} caratteri)`);
   const s = sanctionedDecision(ctx, cmd, rules.sanctioned);
-  if (s?.allow) return { hits: [], sanctioned: s.allow };
-  if (s?.deny) return { hits: [hitOf({ id: s.deny.id, severity: "hard-deny", reason: `${s.deny.reason}: mancano ${s.deny.require_args.join(" e ")}` }, cmd)] };
-  const views = [...shellViews(cmd, ctx)];
+  if (s?.deny) return { hits: [hitOf({ id: s.deny.id, severity: "hard-deny", reason: `${s.deny.reason}: ${s.why}` }, cmd)] };
+  // operazione ammessa: le regole valgono sugli argomenti (senza node e il percorso dello script)
+  const views = [...shellViews(s?.allow ? s.args.join(" ") : cmd, ctx, 0, new Set(), rules.command_vocabulary ?? [])];
   const hits = [];
   const shellRules = rules.rules.filter((r) => r.applies_to.includes("shell"));
   for (const r of shellRules) {
     let found = null;
     if (r.on === "text") {
       for (const v of views) { const m = testPatterns(r, v); if (m) { found = m; break; } }
+    } else if (r.on === "glob") {
+      found = globHits(r, views);
     } else {
       outer: for (const v of views) for (const suffix of commandSuffixes(v)) { const m = testPatterns(r, suffix); if (m) { found = m; break outer; } }
     }
@@ -197,7 +256,7 @@ function writeMatches(ctx, rules, env) {
   const texts = writtenTexts(ctx.tool, ctx.ti).filter((t) => typeof t === "string" && t);
   const hits = [];
   for (const r of rules.rules.filter((x) => x.applies_to.includes("write"))) {
-    if (r.unless_env && env[r.unless_env] && env[r.unless_env] !== "0") continue;
+    if (r.unless_env && env[r.unless_env] === "1") continue;   // giro 1 (I8): solo il valore esatto "1"
     let found = null;
     if (r.on === "path") {
       for (const q of r.compiled) {
@@ -227,18 +286,29 @@ function selNames(ctx, code) {
   return [...text.matchAll(/^\s*(?:-\s+)?(?:name|label|text|aria_label|button_text):\s*(.+?)\s*$/gm)].map((x) => x[1].replace(/^(["'])(.*)\1$/, "$2"));
 }
 const isKeyPress = (a) => a.action === "key" || /(^|_)press_key$/.test(String(a.op ?? ""));
+// → [{ text, trusted }]: trusted = nome osservato nello snapshot o nome della voce dell'Atlas legata al ref; element,
+// selector e testo digitato vengono dal modello (mai affidabili: WP08 giro 1, I4). Stessa etichetta da più fonti ⇒ una
+// sola voce, affidabile se lo è almeno una fonte.
+const normLabel = (s) => skeleton(String(s)).toLowerCase().replace(/\s+/g, " ").trim();
 function labelTexts(ctx, a) {
-  const texts = [];
-  if (typeof a.text === "string") texts.push(...a.text.split("\n"));
-  for (const k of ["element", "selector"]) if (typeof a.target?.[k] === "string") texts.push(a.target[k]);
+  const list = [];
+  if (typeof a.text === "string") for (const x of a.text.split("\n")) list.push({ text: x, trusted: false });
+  for (const k of ["element", "selector"]) if (typeof a.target?.[k] === "string") list.push({ text: a.target[k], trusted: false });
   const snap = ctx.session?.browser?.snapshot;
   for (const ref of a.targets ?? []) {
     const n = snap?.names && Object.hasOwn(snap.names, ref) ? snap.names[ref] : null;
-    if (typeof n === "string") texts.push(n);
+    if (typeof n === "string") list.push({ text: n, trusted: true });
     const sel = snap?.refs && Object.hasOwn(snap.refs, ref) ? snap.refs[ref] : null;
-    if (sel) texts.push(...selNames(ctx, sel));
+    if (sel) for (const x of selNames(ctx, sel)) list.push({ text: x, trusted: true });
   }
-  return texts.filter((t) => typeof t === "string" && t.trim());
+  const by = new Map();
+  for (const l of list) {
+    if (typeof l.text !== "string" || !l.text.trim()) continue;
+    const k = normLabel(l.text);
+    const cur = by.get(k);
+    by.set(k, cur ? { ...cur, trusted: cur.trusted || l.trusted } : l);
+  }
+  return [...by.values()];
 }
 
 async function browserMatches(ctx, rules) {
@@ -258,19 +328,21 @@ async function browserMatches(ctx, rules) {
   for (const a of actions) {
     const key = isKeyPress(a);
     const labels = key ? [] : labelTexts(ctx, a);
-    const keys = key && typeof a.text === "string" ? [a.text] : [];
+    const keys = key && typeof a.text === "string" ? [{ text: a.text, trusted: false }] : [];
     let local = [];
     for (const r of browserRules) {
-      const src = r.on === "key" ? keys : labels;
-      let found = null;
-      for (const t of src) { found = testPatterns(r, t) ?? testPatterns(r, skeleton(t)); if (found) { found = t; break; } }
-      if (!found) continue;
-      if (r.when_step_class && !r.when_step_class.includes(await stepClass())) continue;
-      if (r.unless_step_class && r.unless_step_class.includes(await stepClass())) continue;
-      local.push(hitOf(r, found));
+      // una regola che declassa (supersedes) o che lo dichiara (trusted_labels_only) vede solo le etichette affidabili
+      const src = (r.on === "key" ? keys : labels).filter((l) => l.trusted || !(r.trusted_labels_only || r.supersedes));
+      for (const l of src) {
+        if (!(testPatterns(r, l.text) ?? testPatterns(r, skeleton(l.text)))) continue;
+        if (r.when_step_class && !r.when_step_class.includes(await stepClass())) continue;
+        if (r.unless_step_class && r.unless_step_class.includes(await stepClass())) continue;
+        local.push({ ...hitOf(r, l.text), label: normLabel(l.text) });
+      }
     }
-    const superseded = new Set(local.flatMap((h) => h.rule.supersedes ?? []));
-    local = local.filter((h) => !superseded.has(h.rule.id));
+    // declassamento per etichetta: una regola che ne sostituisce un'altra annulla solo i suoi match sulla STESSA etichetta
+    const superseded = new Set(local.flatMap((h) => (h.rule.supersedes ?? []).map((id) => `${id}\u0000${h.label}`)));
+    local = local.filter((h) => !superseded.has(`${h.rule.id}\u0000${h.label}`));
     hits.push(...local);
   }
   return { hits };

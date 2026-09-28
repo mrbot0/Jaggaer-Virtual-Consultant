@@ -12,6 +12,7 @@ import { readFileSync, realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { deny } from "./io.mjs";
 import { devMode } from "./integrity.mjs";
+import { simpleNodeCall, argsRefusal } from "./exact-argv.mjs";
 
 export const INTEGRITY_DENY = "Integrità del pacchetto fallita: reinstallare dalla release firmata (§58); non operare. Consentiti solo Read/Glob/Grep e `doctor` / `integrity verify`";
 const READ_ONLY = new Set(["Read", "Glob", "Grep"]);
@@ -31,16 +32,17 @@ export function recordedIntegrity(st, plugin) {
   return mine(w) ? w : null;
 }
 
-// `node <plugin>/scripts/admin/doctor.mjs …` o `node <plugin>/scripts/admin/integrity.mjs verify …`, senza metacaratteri.
+// `node <plugin>/scripts/admin/doctor.mjs [--network] [--json] [--session <id>]` o
+// `node <plugin>/scripts/admin/integrity.mjs verify [--json]`: UNA invocazione semplice (tokenizzatore condiviso,
+// hooks/lib/exact-argv.mjs — WP08 giro 1, C1), ogni argomento validato per forma.
+const SID = "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$";
 export function isRepairCall(command, cwd, plugin) {
-  if (typeof command !== "string") return false;
-  const c = command.trim().replace(/\$\{CLAUDE_PLUGIN_ROOT\}|\$env:CLAUDE_PLUGIN_ROOT\b|\$CLAUDE_PLUGIN_ROOT\b/g, plugin);
-  if (/[;&|`<>\r\n$\0]/.test(c)) return false;
-  const t = [...c.matchAll(/"([^"]*)"|'([^']*)'|(\S+)/g)].map((m) => m[1] ?? m[2] ?? m[3]);
-  if (!/^node(\.exe)?$/i.test(t[0] ?? "") || !t[1]) return false;
-  const script = canon(resolve(cwd, t[1]));
-  if (script === canon(resolve(plugin, "scripts/admin/doctor.mjs"))) return true;
-  return script === canon(resolve(plugin, "scripts/admin/integrity.mjs")) && t[2] === "verify";
+  const call = simpleNodeCall(command, cwd);
+  if (!call) return false;
+  const script = canon(call.script);
+  if (script === canon(resolve(plugin, "scripts/admin/doctor.mjs"))) return !argsRefusal(call.args, { positional: [], flags: { "--network": null, "--json": null, "--session": SID } });
+  if (script === canon(resolve(plugin, "scripts/admin/integrity.mjs"))) return !argsRefusal(call.args, { positional: ["^verify$"], flags: { "--json": null } });
+  return false;
 }
 
 // → output di deny | null

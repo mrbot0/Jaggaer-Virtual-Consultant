@@ -1,6 +1,6 @@
 // GENERATO da scripts/admin/build-deny-rules.mjs a partire da policy/deny-rules.yaml: non modificare.
 export default {
-  "sha256": "0bfb19be151eb6c201c6f8c61c6bef13a46f0ca77180f804efb4f6a453e48bde",
+  "sha256": "ed6b07af910c9a68cd3b4a1cfd236bb3ffaa9280c16816b40b10af09719d214d",
   "version": 1,
   "sanctioned": [
     {
@@ -10,6 +10,16 @@ export default {
         "--approval-1",
         "--approval-2"
       ],
+      "positional": [
+        "^[A-Z0-9]{4}$"
+      ],
+      "flags": {
+        "--execute": null,
+        "--json": null,
+        "--approval-1": "^[A-Za-z0-9][A-Za-z0-9._:-]{3,127}$",
+        "--approval-2": "^[A-Za-z0-9][A-Za-z0-9._:-]{3,127}$",
+        "--session": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+      },
       "reason": "customer purge è l'unica cancellazione del plugin (§54.4) e si esegue solo come `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`: le due approvazioni con frase le verifica lo script"
     }
   ],
@@ -32,7 +42,7 @@ export default {
           "flags": "iu"
         },
         {
-          "re": "^(rd|rmdir|del|erase)(\\s.*)?\\s/s(\\s|$)",
+          "re": "^(rd|rmdir|del|erase)(\\s.*)?\\s/([a-z]/)*s(\\s|/|$)",
           "flags": "iu"
         },
         {
@@ -68,7 +78,7 @@ export default {
     {
       "id": "DR-SHELL-002",
       "severity": "hard-deny",
-      "reason": "cancellazione ricorsiva da un interprete o da una pipeline (rmSync recursive, shutil.rmtree, rimraf, Get-ChildItem -Recurse | Remove-Item)",
+      "reason": "cancellazione ricorsiva o massiva da un interprete o da una pipeline (rmSync con opzioni, shutil.rmtree, FileUtils.rm_rf, File::Path remove_tree, rimraf, cancellazioni in un ciclo, elenco | Remove-Item)",
       "applies_to": [
         "shell"
       ],
@@ -87,6 +97,10 @@ export default {
           "flags": "iu"
         },
         {
+          "re": "\\b(fs\\.|fs\\.promises\\.|\\.)?(rm|rmdir)(sync)?\\s*\\([^)]*,",
+          "flags": "iu"
+        },
+        {
           "re": "\\[(system\\.)?io\\.directory\\]::delete\\s*\\(",
           "flags": "iu"
         },
@@ -95,7 +109,31 @@ export default {
           "flags": "iu"
         },
         {
-          "re": "\\b(get-childitem|gci|ls|dir)\\b[^|\\n]*\\s-r[a-z]*\\b[^|\\n]*\\|\\s*(remove-item|ri|rm|del|erase)\\b",
+          "re": "\\bfileutils\\s*\\.\\s*(rm_rf|rm_r|rm_f|rm|remove_dir|remove_entry(_secure)?|rmtree|rmdir|remove)\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\b(rm_rf|rm_r|remove_tree|remove_entry_secure|deltree)\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\bfile::path\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\b(get-childitem|gci|ls|dir|get-item|gi|resolve-path|select-string)\\b[^|\\n]*\\|\\s*(remove-item|ri|rm|del|erase|rd|rmdir)\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\|\\s*(%|foreach-object|foreach)\\s*\\{[^}]*\\b(remove-item|ri|rm|del|erase|rd|rmdir)\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\b(os\\.(remove|unlink|rmdir)|unlinksync|fs\\.unlink|file\\.delete|os\\.removedirs)\\b[\\s\\S]*\\b(for|foreach|map|listdir|scandir|readdir(sync)?|glob|walk|iterdir)\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\b(for|foreach|listdir|scandir|readdir(sync)?|glob|walk|iterdir)\\b[\\s\\S]*\\b(os\\.(remove|unlink|rmdir)|unlinksync|fs\\.unlink|file\\.delete|os\\.removedirs)\\b",
           "flags": "iu"
         }
       ]
@@ -110,7 +148,7 @@ export default {
       "on": "text",
       "patterns": [
         {
-          "re": "^(?=[\\s\\S]*\\bcustomers\\b)(?=[\\s\\S]*((^|[\\s;&|(){}`])(rm|del|erase|rd|rmdir|remove-item|ri|unlink|shred|rimraf|truncate)(\\.exe)?(\\s|$)|\\bgit\\s+rm\\b|\\s-delete\\b|\\b(unlinksync|rmsync|rmdirsync|rmtree|unlink|rmdir)\\s*\\(|\\bos\\.remove\\b|\\bfs\\.rm\\b|\\bfs\\.promises\\.rm\\b|\\bio\\.(file|directory)\\]::delete\\b))",
+          "re": "^(?=[\\s\\S]*\\bcustomers\\b)(?=[\\s\\S]*((^|[\\s;&|(){}`])(rm|del|erase|rd|rmdir|remove-item|ri|unlink|shred|rimraf|truncate)(\\.exe)?(\\s|$)|\\bgit\\s+rm\\b|\\s-delete\\b|\\b(unlinksync|rmsync|rmdirsync|rmtree|unlink|rmdir)\\s*\\(|\\bos\\.remove\\b|\\bfs\\.rm\\b|\\bfs\\.promises\\.rm\\b|\\bio\\.(file|directory)\\]::delete\\b|\\bfileutils\\b|\\b(rm_rf|rm_r|remove_tree|rmtree|deltree)\\b|\\bfile::path\\b|\\bshutil\\b|\\bfile\\.delete\\b))",
           "flags": "iu"
         }
       ]
@@ -126,6 +164,21 @@ export default {
       "patterns": [
         {
           "re": "(^|[;&|\\n({]\\s*)(\\$\\{?[\\w:!#%/-]+\\}?|\\$\\([^)]*\\)|`[^`]*`)+\\S*(\\s+\\S+)*\\s+(-[a-z]*r[a-z]*f[a-z]*|-f[a-z]*r[a-z]*|-r|--recursive|--force|--hard|/s|-recurse|-delete)(\\s|$)",
+          "flags": "iu"
+        }
+      ]
+    },
+    {
+      "id": "DR-SHELL-006",
+      "severity": "hard-deny",
+      "reason": "nome del comando dinamico (jolly nel nome, Get-Command/gcm/Get-Alias, & ( … ), & $var, iex/Invoke-Expression, Start-Process) con argomenti che toccano customers/ o percorsi protetti: il comando eseguito non è verificabile",
+      "applies_to": [
+        "shell"
+      ],
+      "on": "text",
+      "patterns": [
+        {
+          "re": "^(?=[\\s\\S]*(customers|\\.jvc|[\\\\/]audit([\\\\/]|\\b)|\\.claude|session\\.json|approvals|\\.env|\\.auth|claude_plugin_root|integrity\\.json|deny-rules))(?=[\\s\\S]*((^|[;&|\\n({]\\s*)[&.]\\s*[($]|\\b(iex|invoke-expression|invoke-command|icm|get-command|gcm|get-alias|gal|start-process|saps|invoke-item|ii)\\b|(^|[;&|\\n({]\\s*)((sudo|doas|env|command|exec|nohup)\\s+|[A-Za-z_]\\w*=\\S*\\s+)*[^\\s;&|()]*[*?\\[][^\\s;&|()]*(\\s|$)))",
           "flags": "iu"
         }
       ]
@@ -155,7 +208,7 @@ export default {
       "on": "command",
       "patterns": [
         {
-          "re": "^git(\\s.*)?\\spush(\\s.*)?\\s(-[a-z]*f[a-z]*|--force(-with-lease|-if-includes)?(=\\S*)?|\\+\\S+)(\\s|$)",
+          "re": "^git(\\s.*)?\\spush(\\s.*)?\\s(-[a-z]*f[a-z]*|--force(-with-lease|-if-includes)?(=\\S*)?|\\+\\S+|--mirror|--prune)(\\s|$)",
           "flags": "iu"
         }
       ]
@@ -191,6 +244,22 @@ export default {
         },
         {
           "re": "^git(\\s.*)?\\s(filter-branch|filter-repo)(\\s|$)",
+          "flags": "iu"
+        },
+        {
+          "re": "^git(\\s.*)?\\s(checkout|switch)(\\s.*)?\\s(-f|--force|--discard-changes)(\\s|$)",
+          "flags": "iu"
+        },
+        {
+          "re": "^git(\\s.*)?\\supdate-ref(\\s.*)?\\s(-d|--delete)(\\s|$)",
+          "flags": "iu"
+        },
+        {
+          "re": "^git(\\s.*)?\\sreflog\\s+(expire|delete)(\\s|$)",
+          "flags": "iu"
+        },
+        {
+          "re": "^git(\\s.*)?\\sgc(\\s.*)?\\s--prune(=\\S*)?(\\s|$)",
           "flags": "iu"
         },
         {
@@ -281,6 +350,14 @@ export default {
           "unless": "\\bwhere\\b"
         },
         {
+          "re": "\\bdelete\\s+from\\b[^;]*\\bwhere\\s+\\(?\\s*(1\\s*=\\s*1|0\\s*=\\s*0|true|1|not\\s+0|not\\s+false|'[^']*'\\s*=\\s*'[^']*')\\s*\\)?\\s*(;|$|\\)|\"|or\\b|and\\b)",
+          "flags": "iu"
+        },
+        {
+          "re": "\\bdelete\\s+from\\b[^;]*\\bor\\s+(1\\s*=\\s*1|true)\\b",
+          "flags": "iu"
+        },
+        {
           "re": "\\balter\\s+table\\b[^;]*\\bdrop\\b",
           "flags": "iu"
         }
@@ -337,6 +414,43 @@ export default {
       ]
     },
     {
+      "id": "DR-SHELL-051",
+      "severity": "hard-deny",
+      "reason": "un nome con caratteri jolly (* ? […]) che la shell può espandere in un file di segreti (.env*, .auth): non si leggono né si copiano (T7)",
+      "applies_to": [
+        "shell"
+      ],
+      "on": "glob",
+      "patterns": [
+        {
+          "sample": ".env"
+        },
+        {
+          "sample": ".env.local"
+        },
+        {
+          "sample": ".env.production"
+        },
+        {
+          "sample": ".env.development"
+        },
+        {
+          "sample": ".envrc"
+        },
+        {
+          "sample": ".auth"
+        }
+      ],
+      "samples": [
+        ".env",
+        ".env.local",
+        ".env.production",
+        ".env.development",
+        ".envrc",
+        ".auth"
+      ]
+    },
+    {
       "id": "DR-SHELL-060",
       "severity": "hard-deny",
       "reason": "pubblicazione di pacchetti (npm publish) e permessi ricorsivi aperti a tutti (chmod -R 777): fuori dal perimetro del plugin",
@@ -366,6 +480,56 @@ export default {
       "patterns": [
         {
           "re": "\\bJVC_DEV\\b",
+          "flags": "iu"
+        }
+      ]
+    },
+    {
+      "id": "DR-SHELL-071",
+      "severity": "hard-deny",
+      "reason": "variabili d'ambiente persistenti (setx, [Environment]::SetEnvironmentVariable, registro Environment, launchctl setenv): renderebbero stabile JVC_DEV o un'altra variabile che cambia i guard nei processi futuri",
+      "applies_to": [
+        "shell"
+      ],
+      "on": "text",
+      "patterns": [
+        {
+          "re": "(^|[\\s;&|(])setx(\\.exe)?(\\s|$)",
+          "flags": "iu"
+        },
+        {
+          "re": "\\[\\s*(system\\.)?environment\\s*\\]\\s*::\\s*setenvironmentvariable",
+          "flags": "iu"
+        },
+        {
+          "re": "\\bsetenvironmentvariable\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "(hkcu|hkey_current_user|hklm|hkey_local_machine)(:)?[\\\\/]+(system[\\\\/]+currentcontrolset[\\\\/]+control[\\\\/]+session manager[\\\\/]+)?environment\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\breg(\\.exe)?\\s+(add|import|load|restore|copy)\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\blaunchctl\\s+(setenv|config)\\b",
+          "flags": "iu"
+        }
+      ]
+    },
+    {
+      "id": "DR-SHELL-072",
+      "severity": "hard-deny",
+      "reason": "scrittura nei profili della shell (.bashrc, .zshrc, .profile, $PROFILE, …): impostano variabili per i processi futuri (JVC_*), anche con nomi costruiti a runtime",
+      "applies_to": [
+        "shell"
+      ],
+      "on": "text",
+      "patterns": [
+        {
+          "re": "^(?=[\\s\\S]*((^|[\\s'\"=>/\\\\~:])(\\.bashrc|\\.bash_profile|\\.bash_login|\\.profile|\\.zshrc|\\.zshenv|\\.zprofile|\\.zlogin|\\.cshrc|\\.tcshrc|config\\.fish|\\.pam_environment)\\b|/etc/(environment|profile)\\b|\\$profile\\b|[\\w.-]*profile\\.ps1\\b))(?=[\\s\\S]*(>|\\btee\\b|add-content|set-content|out-file|\\bac\\b|\\bsc\\b|\\bcp\\b|\\bmv\\b|copy-item|move-item|new-item|\\bni\\b|\\bsed\\s+-[a-z]*i|\\bln\\b|writefile|appendfile|\\bopen\\s*\\(|\\bdd\\b|\\binstall\\b))",
           "flags": "iu"
         }
       ]
@@ -468,9 +632,65 @@ export default {
       ]
     },
     {
+      "id": "DR-WRITE-005",
+      "severity": "hard-deny",
+      "reason": "profili della shell e file d'ambiente del sistema: impostano variabili (JVC_*) per i processi futuri; li modifica solo l'utente, fuori sessione",
+      "applies_to": [
+        "write"
+      ],
+      "on": "path",
+      "patterns": [
+        {
+          "glob": "**/.bashrc"
+        },
+        {
+          "glob": "**/.bash_profile"
+        },
+        {
+          "glob": "**/.bash_login"
+        },
+        {
+          "glob": "**/.profile"
+        },
+        {
+          "glob": "**/.zshrc"
+        },
+        {
+          "glob": "**/.zshenv"
+        },
+        {
+          "glob": "**/.zprofile"
+        },
+        {
+          "glob": "**/.zlogin"
+        },
+        {
+          "glob": "**/.cshrc"
+        },
+        {
+          "glob": "**/.tcshrc"
+        },
+        {
+          "glob": "**/config.fish"
+        },
+        {
+          "glob": "**/.pam_environment"
+        },
+        {
+          "glob": "**/*profile.ps1"
+        },
+        {
+          "glob": "**/etc/environment"
+        },
+        {
+          "glob": "**/etc/profile"
+        }
+      ]
+    },
+    {
       "id": "DR-BROWSER-001",
       "severity": "confirm",
-      "reason": "etichetta ambigua (rimozione di una riga o di un allegato di una bozza) dentro un passo ACT-UPDATE: conferma dell'utente prima di premere",
+      "reason": "etichetta ambigua (rimozione di una riga o di un allegato di una bozza) dentro un passo ACT-UPDATE, letta dall'Atlas o dallo snapshot osservato (mai da element/testo del modello): conferma dell'utente prima di premere",
       "applies_to": [
         "browser"
       ],
@@ -486,7 +706,8 @@ export default {
       ],
       "supersedes": [
         "DR-BROWSER-002"
-      ]
+      ],
+      "trusted_labels_only": true
     },
     {
       "id": "DR-BROWSER-002",
@@ -598,5 +819,66 @@ export default {
         }
       ]
     }
+  ],
+  "command_vocabulary": [
+    "rm",
+    "rmdir",
+    "rd",
+    "del",
+    "erase",
+    "remove-item",
+    "ri",
+    "unlink",
+    "shred",
+    "rimraf",
+    "trash",
+    "truncate",
+    "dd",
+    "mkfs",
+    "format",
+    "diskpart",
+    "find",
+    "xargs",
+    "mv",
+    "move",
+    "move-item",
+    "cp",
+    "copy",
+    "robocopy",
+    "rsync",
+    "git",
+    "chmod",
+    "npm",
+    "curl",
+    "wget",
+    "iwr",
+    "irm",
+    "iex",
+    "invoke-expression",
+    "invoke-webrequest",
+    "sh",
+    "bash",
+    "zsh",
+    "cmd",
+    "powershell",
+    "pwsh",
+    "node",
+    "python",
+    "perl",
+    "ruby",
+    "sqlite3",
+    "setx",
+    "reg",
+    "clear-content",
+    "set-content",
+    "add-content",
+    "out-file",
+    "tee",
+    "cat",
+    "type",
+    "get-content",
+    "gc",
+    "select-string",
+    "launchctl"
   ]
 };

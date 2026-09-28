@@ -1,0 +1,62 @@
+// Tokenizzatore UNICO delle eccezioni "a forma esatta" dei guard (WP08 giro 1, C1, decisione del controllore):
+// purge ammessa (guard-destructive), chiamata di riparazione del gate d'integrità (doctor / integrity verify), script del
+// plugin (guard-config-scope) e comando di sessione del plugin (common.mjs). Un'eccezione vale solo per UNA invocazione
+// semplice: nessuno di ( ) , @ { } $ ` ; & | < > né a capo o NUL in tutto il comando (PowerShell valuta `( … )`, `@( … )`,
+// `$( … )` e gli elenchi con la virgola PRIMA di avviare il programma; bash espande `$`, backtick e graffe), e ogni
+// token è una parola semplice o una stringa fra virgolette con lo stesso alfabeto (più lo spazio). Nessun jolly (* ? [).
+// Unico segnaposto ammesso: "${CLAUDE_SESSION_ID}" (sostituito da SID prima del controllo), come nei comandi del plugin.
+// Solo moduli built-in: è sul percorso caldo.
+import { resolve } from "node:path";
+
+export const FORBIDDEN = /[()@{}$`;&|<>,\r\n\0]/;
+const BARE = /^[\w%+=:./\\-]+$/;
+const QUOTED = /^[\w%+=:./\\ -]*$/;
+const TOKEN = /\s*(?:"([^"]*)"|'([^']*)'|([^\s"']+))(?=\s|$)/y;
+
+// → argv (array di stringhe) | null se il comando non è un'invocazione semplice.
+export function simpleArgv(command) {
+  if (typeof command !== "string") return null;
+  const s = command.trim().replace(/"\$\{CLAUDE_SESSION_ID\}"/g, "SID");
+  if (!s || FORBIDDEN.test(s)) return null;
+  const out = [];
+  TOKEN.lastIndex = 0;
+  while (TOKEN.lastIndex < s.length) {
+    const start = TOKEN.lastIndex;
+    const m = TOKEN.exec(s);
+    if (!m || TOKEN.lastIndex === start) return null;
+    if (m[3] !== undefined) { if (!BARE.test(m[3])) return null; out.push(m[3]); } else {
+      const body = m[1] ?? m[2];
+      if (!QUOTED.test(body)) return null;
+      out.push(body);
+    }
+    if (/^\s*$/.test(s.slice(TOKEN.lastIndex))) break;
+  }
+  return out.length ? out : null;
+}
+
+// `node <script> …` semplice → { script: percorso assoluto, args } | null
+export function simpleNodeCall(command, cwd) {
+  const argv = simpleArgv(command);
+  if (!argv || !/^node(\.exe)?$/i.test(argv[0]) || !argv[1]) return null;
+  return { script: resolve(cwd, argv[1]), scriptToken: argv[1], args: argv.slice(2) };
+}
+
+// Argomenti per forma: `positional` = regex per posizione; `flags` = { "--flag": null (booleano) | regex del valore }.
+// → null se tutti validi, altrimenti il motivo.
+export function argsRefusal(args, { positional = [], flags = {} }) {
+  const pos = [];
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (a.startsWith("--")) {
+      const [name, inline] = a.includes("=") ? [a.slice(0, a.indexOf("=")), a.slice(a.indexOf("=") + 1)] : [a, undefined];
+      if (!Object.hasOwn(flags, name)) return `opzione non ammessa: ${name}`;
+      const shape = flags[name];
+      if (shape == null) { if (inline !== undefined) return `l'opzione ${name} non prende valore`; continue; }
+      const v = inline ?? args[++i];
+      if (typeof v !== "string" || !new RegExp(shape).test(v)) return `valore non ammesso per ${name}`;
+    } else pos.push(a);
+  }
+  if (pos.length !== positional.length) return `argomenti posizionali attesi: ${positional.length}, ricevuti: ${pos.length}`;
+  for (let i = 0; i < pos.length; i++) if (!new RegExp(positional[i]).test(pos[i])) return `argomento ${i + 1} non ammesso`;
+  return null;
+}
