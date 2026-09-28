@@ -1,0 +1,102 @@
+# Intenti golden per scripts/decide/intent.mjs (K6.4, DT-026). Le righe 1–16 sono il catalogo di §61
+# (una per riga della tabella); 17–30 coprono i casi limite (ambiente o cliente mancanti, scope ambigui,
+# inglese, ogni classe d'azione). `session` = stato di sessione attivo (cliente, tipo di ambiente).
+# `expect` confronta solo le chiavi elencate; data: sottoinsieme; missing: sottoinsieme.
+customers: [ACME, BETA]
+cases:
+  - id: 61-01
+    text: "Su ACME sandbox apri l'ultima RdA e dimmi chi l'ha creata"
+    expect: { customer: ACME, env: sandbox, scopes: [P2P], mode: operativa, actions: [ACT-OBS], risk_max: R0, outcome: avvia }
+  - id: 61-02
+    text: "Su ACME sandbox crea una RdA di prova per 5 sedie da catalogo, CdC IT-0442, in bozza"
+    expect: { customer: ACME, env: sandbox, scopes: [P2P, CAT], mode: operativa, actions: [ACT-OBS, ACT-CREATE], risk_max: R1, stop_at: bozza, outcome: avvia,
+              data: { quantity: 5, item: sedie, cost_center: IT-0442 } }
+  - id: 61-03
+    text: "Su ACME sandbox crea una RdA per 5 sedie da catalogo, CdC IT-0442, e mandala in approvazione"
+    expect: { actions: [ACT-OBS, ACT-CREATE, ACT-SUBMIT], risk_max: R2, stop_at: PENDING_APPROVAL, outcome: mostra-piano }
+  - id: 61-04
+    text: "Su ACME sandbox approva come MANAGER la RdA NRT-20260923-B2C1-REQ-001"
+    expect: { scopes: [P2P], actions: [ACT-APPROVE], risk_max: R2, outcome: mostra-piano, data: { role: MANAGER, ref: NRT-20260923-B2C1-REQ-001 } }
+  - id: 61-05
+    text: "Su ACME sandbox esegui la regressione del catalogo per la release R25.3"
+    expect: { mode: nrt, scopes: [CAT], task: nrt-run, actions: [], risk_max: R2, outcome: mostra-piano, data: { release: R25.3 } }
+  - id: 61-06
+    text: "Genera un test che verifichi che un fornitore disattivato non sia invitabile a una gara"
+    session: { customer: ACME }
+    expect: { customer: ACME, mode: nrt, scopes: [SRC, VEN], task: nrt-author, actions: [], outcome: avvia }
+  - id: 61-07
+    text: "Perché la RdA 4500012345 su ACME produzione è ferma in approvazione?"
+    expect: { customer: ACME, env: prod, mode: diagnosi, scopes: [P2P], actions: [ACT-OBS, ACT-QRY], risk_max: R0, outcome: avvia, data: { document: "4500012345" } }
+  - id: 61-08
+    text: "Quali campi sono obbligatori per inviare una RdA in ACME, e perché?"
+    expect: { customer: ACME, mode: conoscenza, scopes: [P2P], task: kb-knowledge, actions: [], outcome: avvia }
+  - id: 61-09
+    text: "Su ACME pre-produzione rendi obbligatorio il Codice progetto sopra 10.000 €"
+    expect: { env: preprod, mode: configurazione, scopes: [ADM], actions: [ACT-CFG-CHANGE], risk_max: R2, outcome: mostra-piano, data: { amount: 10000 } }
+  - id: 61-10
+    text: "Su ACME produzione attiva la notifica di sollecito approvazioni"
+    expect: { env: prod, mode: configurazione, scopes: [ADM], actions: [ACT-CFG-CHANGE], outcome: approvazione-3A }
+  - id: 61-11
+    text: "Su ACME produzione crea un ordine di test"
+    expect: { env: prod, scopes: [P2P], actions: [ACT-CREATE], outcome: rifiuta, reason_match: "In produzione non si scrivono dati" }
+  - id: 61-12
+    text: "Quanti ordini sopra 50k€ ha fatto ACME negli ultimi 90 giorni?"
+    session: { customer: ACME, env: prod }
+    expect: { customer: ACME, env: prod, mode: analytics, scopes: [ANL, P2P], actions: [ACT-QRY], outcome: avvia, data: { amount: 50000, period_days: 90 } }
+  - id: 61-13
+    text: "Impara le tabelle di Analytics di ACME"
+    session: { customer: ACME, env: sandbox }
+    expect: { mode: apprendimento, scopes: [ANL], task: anl-learn, actions: [ACT-OBS], outcome: avvia }
+  - id: 61-14
+    text: "Cosa sappiamo poco dello scope Sourcing di ACME?"
+    expect: { customer: ACME, mode: conoscenza, scopes: [SRC], task: kb-epistemic, actions: [], outcome: avvia }
+  - id: 61-15
+    text: "Confronta la configurazione ADM di ACME con la baseline di giugno"
+    session: { customer: ACME, env: preprod }
+    expect: { mode: audit, scopes: [ADM], actions: [ACT-CFG-READ], risk_max: R0, outcome: avvia }
+  - id: 61-16
+    text: "Cancella la RdA NRT-20260923-B2C1-REQ-001"
+    expect: { actions: [ACT-DELETE], outcome: rifiuta, reason_match: "Non cancello: posso annullarla \\(compensazione cancel\\)" }
+  - id: x-17-senza-ambiente
+    text: "Su ACME crea una RdA per 3 monitor"
+    expect: { customer: ACME, env: null, actions: [ACT-CREATE], outcome: chiedi, missing: [env] }
+  - id: x-18-senza-cliente
+    text: "In sandbox crea una RdA per 3 monitor"
+    expect: { customer: null, env: sandbox, outcome: chiedi, missing: [customer] }
+  - id: x-19-scope-ambiguo
+    text: "Su ACME sandbox crea un contratto o un ordine"
+    expect: { outcome: chiedi, missing: [scope] }
+  - id: x-20-inglese
+    text: "On ACME sandbox create a requisition for 10 chairs and submit it for approval"
+    expect: { customer: ACME, env: sandbox, scopes: [P2P], actions: [ACT-CREATE, ACT-SUBMIT], risk_max: R2, outcome: mostra-piano, data: { quantity: 10, item: chairs } }
+  - id: x-21-pubblica
+    text: "Su BETA preprod pubblica il catalogo estivo"
+    expect: { customer: BETA, env: preprod, scopes: [CAT], actions: [ACT-PUBLISH], outcome: mostra-piano }
+  - id: x-22-carica
+    text: "Su ACME sandbox allega il preventivo alla RdA NRT-20260923-B2C1-REQ-001"
+    expect: { scopes: [P2P], actions: [ACT-UPLOAD], risk_max: R2, outcome: mostra-piano }
+  - id: x-23-annulla
+    text: "Su ACME sandbox annulla la RdA NRT-20260923-B2C1-REQ-001"
+    expect: { actions: [ACT-CLOSE], outcome: mostra-piano }
+  - id: x-24-trasmetti
+    text: "Su ACME sandbox trasmetti l'ordine 4500012345 all'ERP"
+    expect: { scopes: [P2P], actions: [ACT-TRANSMIT], outcome: mostra-piano, data: { document: "4500012345" } }
+  - id: x-25-modifica-preprod
+    text: "Su ACME preprod modifica la quantità della RdA NRT-20260923-B2C1-REQ-001 a 7"
+    expect: { env: preprod, actions: [ACT-UPDATE], risk_max: R1, outcome: mostra-piano }
+  - id: x-26-prod-lettura
+    text: "Su ACME produzione mostra lo stato dell'ordine 4500012345"
+    expect: { env: prod, scopes: [P2P], actions: [ACT-OBS], outcome: avvia }
+  - id: x-27-collaudo
+    text: "Su ACME sandbox esegui il collaudo del P2P"
+    expect: { mode: nrt, scopes: [P2P], task: nrt-run, outcome: mostra-piano }
+  - id: x-28-estrai
+    text: "Su ACME preprod estrai i fornitori qualificati"
+    expect: { env: preprod, scopes: [VEN], actions: [ACT-QRY], outcome: avvia }
+  - id: x-29-elimina-prod
+    text: "Su ACME prod elimina l'utente di test"
+    expect: { env: prod, actions: [ACT-DELETE], outcome: rifiuta }
+  - id: x-30-ambiente-di-sessione
+    text: "Crea una RdA per 2 sedie, CdC IT-0442, lasciala in bozza"
+    session: { customer: ACME, env: sandbox }
+    expect: { customer: ACME, env: sandbox, scopes: [P2P], actions: [ACT-CREATE], stop_at: bozza, outcome: avvia, data: { quantity: 2, cost_center: IT-0442 } }
