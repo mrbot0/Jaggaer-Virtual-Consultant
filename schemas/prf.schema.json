@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prf.schema.json",
+  "title": "Profilo del cliente (PRF, §19.2)",
+  "description": "C.<CUST>.XSC.PRF.0001: il primo passo dell'ordine obbligato (§19.1), prodotto da customer-profiler. documentation_inventory dice, prima di iniziare, dove il sistema sarà libresco e dove ignoto; epistemic_summary è la sintesi del report di copertura (§9.6); environments rimanda a customers/<C>/config/environments.yaml (o ai codici ENV). Attributi attesi e critici in schemas/expected-attributes.yaml (PRF).",
+  "type": "object",
+  "required": ["id", "customer", "sector", "procurement_model", "erp", "documentation_inventory", "environments"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^C\\.[A-Z0-9]{4}\\.XSC\\.PRF\\.\\d{4}(\\.v\\d+)?$" },
+    "customer": { "type": "string", "pattern": "^[A-Z0-9]{4}$" },
+    "sector": { "type": "string", "minLength": 1, "description": "CL-CUS" },
+    "size": { "type": "object", "properties": { "users": { "type": "integer", "minimum": 0 }, "suppliers_active": { "type": "integer", "minimum": 0 }, "orders_per_year": { "type": "integer", "minimum": 0 } } },
+    "legal": { "type": "object", "properties": { "public_procurement_law": { "type": "boolean" }, "country": { "type": "string", "pattern": "^[A-Z]{2}$" }, "group": { "type": "boolean" } } },
+    "procurement_model": {
+      "type": "object",
+      "description": "F6 ereditata da tutti gli item del cliente",
+      "properties": {
+        "direct_indirect": { "enum": ["direct", "indirect", "misto"] },
+        "centralization": { "enum": ["centralizzato", "decentralizzato", "misto"] },
+        "catalog_usage": { "enum": ["catalogo-centrico", "testo-libero", "misto"] },
+        "sourcing": { "enum": ["con-gare", "senza-gare"] },
+        "contracts": { "enum": ["con-contratti", "senza-contratti"] },
+        "companies": { "type": "integer", "minimum": 1 },
+        "currencies": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z]{3}$" } },
+        "languages": { "type": "array", "items": { "type": "string", "pattern": "^[a-z]{2}$" } }
+      }
+    },
+    "erp": { "type": "object", "required": ["system"], "properties": { "system": { "enum": ["sap-ecc", "sap-s4", "oracle", "dynamics", "altro", "nessuno"] }, "version": { "type": "string" }, "middleware": { "type": ["string", "null"] } } },
+    "modules_active": { "type": "array", "items": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC"] } },
+    "integrations": { "type": "array", "items": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.INT\\.\\d{4}(\\.v\\d+)?$" } },
+    "documentation_inventory": {
+      "type": "array",
+      "minItems": 1,
+      "description": "cosa esiste e di che genere; una voce { gap } dichiara dove non ci sono fonti",
+      "items": {
+        "oneOf": [
+          { "type": "object", "required": ["doc", "genre", "scopes"], "additionalProperties": false, "properties": {
+            "doc": { "type": "string", "minLength": 1 }, "code": { "type": "string", "pattern": "^[SC]\\.[A-Z0-9]{3,4}\\.XSC\\.DOC\\.\\d{4}(\\.v\\d+)?$" },
+            "genre": { "enum": ["tecnica", "d'uso", "empirica", "testimoniale"] }, "scopes": { "type": "array", "items": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC"] } },
+            "coverage_est": { "type": "number", "minimum": 0, "maximum": 1 }, "reliability": { "type": "number", "minimum": 0, "maximum": 1 } } },
+          { "type": "object", "required": ["gap"], "additionalProperties": false, "properties": { "gap": { "type": "string", "minLength": 1 }, "scopes": { "type": "array", "items": { "type": "string" } } } }
+        ]
+      }
+    },
+    "approval_culture": { "type": "string" },
+    "analytics": { "type": "object", "properties": { "model_learned": { "enum": ["none", "partial", "full"] }, "tables_known": { "type": "integer", "minimum": 0 }, "queries_validated": { "type": "integer", "minimum": 0 } } },
+    "epistemic_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "consolidato": { "$ref": "#/$defs/share" }, "libresco": { "$ref": "#/$defs/share" }, "empirico": { "$ref": "#/$defs/share" }, "ignoto": { "$ref": "#/$defs/share" }, "contraddittorio": { "$ref": "#/$defs/share" } }
+    },
+    "environments": {
+      "description": "riferimento a customers/<C>/config/environments.yaml o ai codici ENV",
+      "oneOf": [
+        { "type": "string", "pattern": "environments\\.ya?ml$" },
+        { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^C\\.[A-Z0-9]{4}\\.[A-Z0-9]{3}\\.ENV\\.\\d{4}$" } }
+      ]
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "open_questions": { "type": "array", "items": { "type": "string" } }
+  },
+  "$defs": { "share": { "oneOf": [ { "type": "number", "minimum": 0, "maximum": 1 }, { "type": "string", "pattern": "^\\d{1,3}(\\.\\d+)?%$" } ] } }
+}

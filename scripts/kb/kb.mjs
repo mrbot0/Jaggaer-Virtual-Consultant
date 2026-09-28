@@ -10,6 +10,7 @@ import { recordCall } from "../lib/call-ledger.mjs";
 import { units as searchUnits, questionFor, UnitsInputError } from "./units.mjs";
 import { readFileSync } from "node:fs";
 import { main as reviewMain } from "./review.mjs";
+import { main as coverageMain } from "./coverage-report.mjs";
 
 const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
 
@@ -57,6 +58,7 @@ export function run(argv) {
   }
   // WP09a: sotto-comandi con una CLI propria (radice del workspace, non il solo DB)
   if (cmd === "review") return { exitCode: reviewMain(rest) };
+  if (cmd === "epistemic") return { exitCode: coverageMain(rest) };
   const { opt, facet, positional } = parseArgs(rest);
   const dbPath = opt("db", "knowledge.db");
   if (!["find", "resolve", "summary", "get", "precedents", "fields", "impact", "identity", "units"].includes(cmd)) {

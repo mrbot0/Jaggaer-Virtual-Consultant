@@ -1,0 +1,29 @@
+# Esempio della spec (§19.2), cliente fittizio ACME; la notazione "a · b" della spec è resa in YAML valido.
+id: C.ACME.XSC.PRF.0001
+customer: ACME
+sector: manifatturiero
+size: { users: 1800, suppliers_active: 4200, orders_per_year: 95000 }
+legal: { public_procurement_law: false, country: IT, group: true }
+procurement_model:
+  direct_indirect: misto
+  centralization: centralizzato
+  catalog_usage: catalogo-centrico
+  sourcing: con-gare
+  contracts: con-contratti
+  companies: 4
+  currencies: [EUR, USD]
+  languages: [it, en]
+erp: { system: sap-ecc, version: "6.0 EHP8", middleware: "PI/PO" }
+modules_active: [CAT, SRC, VEN, CON, P2P, INV, ANL, ADM]
+integrations: [C.ACME.XSC.INT.0001, C.ACME.XSC.INT.0002, C.ACME.XSC.INT.0003]
+documentation_inventory:
+  - { doc: "ACME_Documento_di_Progetto_v3.docx", genre: tecnica, scopes: [ADM, P2P, CAT], coverage_est: 0.6 }
+  - { doc: "ACME_Manuale_Utente_Acquisti.pdf", genre: "d'uso", scopes: [P2P, CAT], coverage_est: 0.7 }
+  - { doc: "Spec_Integrazione_SAP_v4.docx", genre: tecnica, scopes: [XSC], coverage_est: 0.8 }
+  - { gap: "nessuna documentazione tecnica per SRC e VEN: livello C nascerà da osservazione e domande" }
+approval_culture: "4 livelli sopra 50k€; deleghe estive"
+analytics: { model_learned: partial, tables_known: 23, queries_validated: 6 }
+epistemic_summary: { consolidato: "12%", libresco: "41%", empirico: "9%", ignoto: "35%", contraddittorio: "3%" }
+environments: customers/ACME/config/environments.yaml
+confidence: 0.82
+open_questions: ["QLT pianificato?", "Le 4 società condividono le anagrafiche fornitori?"]

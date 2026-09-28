@@ -1,0 +1,19 @@
+# Esempio della spec (§19.3), cliente fittizio ACME, con le quote delle varianti (§20.5).
+id: C.ACME.XSC.PMP.0001
+title: "Procure-to-Pay indiretto da catalogo"
+variant_of: S.STD.XSC.PMP.0001
+applies_when: { catalog_usage: catalogo-centrico, direct_indirect: indirect }
+owner: "Ufficio acquisti centrale"
+stages:
+  - { n: 1, scope: CAT, name: "Ricerca articolo", flows: [S.STD.CAT.FLW.0002] }
+  - { n: 2, scope: P2P, name: "Creazione richiesta", flows: [C.ACME.P2P.FLW.0001], deviates: "Centro di costo obbligatorio anche in bozza (C.ACME.P2P.CFG.0011)" }
+  - { n: 3, scope: P2P, name: "Approvazione multilivello", flows: [C.ACME.P2P.FLW.0004], variants: [{ when: "importo > 50k", levels: 4, share: 0.04 }, { when: "importo <= 50k", levels: 2, share: 0.96 }] }
+  - { n: 4, scope: P2P, name: "Generazione ordine", flows: [S.STD.P2P.FLW.0009] }
+  - { n: 5, scope: XSC, name: "Trasmissione a SAP", integration: C.ACME.XSC.INT.0001, async: true }
+  - { n: 6, scope: P2P, name: "Ricezione merce", flows: [S.STD.P2P.FLW.0012] }
+  - { n: 7, scope: INV, name: "Fattura, abbinamento 3 vie", flows: [C.ACME.INV.FLW.0002], deviates: "tolleranza quantità 2% (C.ACME.INV.CFG.0004)" }
+variants: [{ name: rifiuto, when: "richiesta rifiutata", share: 0.09 }, { name: annullamento, when: "richiesta annullata", share: 0.05 }]
+handoffs: [C.ACME.XSC.HND.0001, C.ACME.XSC.HND.0003, S.STD.XSC.HND.0007]
+integrations: [C.ACME.XSC.INT.0001]
+epistemic_by_stage: { 1: consolidato, 2: libresco, 3: libresco, 4: consolidato, 5: empirico, 6: ignoto, 7: libresco }
+confirmed_by: [L.ACME.P2P.OBS.0012, "SES.ACME.20260916.002 con referente"]
