@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unit-extraction/procedura.schema.json",
+  "title": "Estrazione da unità procedura (§19.10)",
+  "description": "Interrogazione a schema fisso, non riassunto: attore, trigger, precondizioni citate, passi (verbo, oggetto, valore), risultato atteso, eccezioni, figure referenziate, documenti/oggetti toccati. Candidato FLW (o CFP se i verbi sono di configurazione).",
+  "type": "object",
+  "required": [
+    "passi",
+    "source_unit"
+  ],
+  "properties": {
+    "attore": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "trigger": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "precondizioni": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "passi": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 15,
+      "items": {
+        "type": "object",
+        "required": [
+          "verbo",
+          "oggetto"
+        ],
+        "properties": {
+          "n": {
+            "type": "integer"
+          },
+          "verbo": {
+            "type": "string"
+          },
+          "oggetto": {
+            "type": "string"
+          },
+          "valore": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "risultato_atteso": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "eccezioni": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "figure": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "oggetti_toccati": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_unit": {
+      "type": "string",
+      "pattern": "^U\\.[A-Z0-9]+\\.\\d{4,}$",
+      "description": "unità da cui viene l estrazione"
+    }
+  }
+}

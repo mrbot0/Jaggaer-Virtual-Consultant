@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unit-extraction/tracciato.schema.json",
+  "title": "Estrazione da unità tracciato (§19.10, §19.8)",
+  "description": "Elemento formale (XSD, WSDL, OpenAPI, JSON Schema): obbligatorietà TECNICA, tipo, occorrenze, lunghezze, pattern, valori. Peso 0.95. Candidato INT (operazioni, endpoint) o FLD di integrazione (elementi).",
+  "type": "object",
+  "required": [
+    "element",
+    "source_unit"
+  ],
+  "properties": {
+    "element": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string"
+    },
+    "path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "required": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "min_occurs": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "max_occurs": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "length": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "min_length": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "max_length": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "pattern": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "enumeration": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "operation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "documentation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_unit": {
+      "type": "string",
+      "pattern": "^U\\.[A-Z0-9]+\\.\\d{4,}$",
+      "description": "unità da cui viene l estrazione"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unit-extraction/decisione.schema.json",
+  "title": "Estrazione da unità decisione (§19.10)",
+  "description": "\"abbiamo deciso/concordato…\" con data e autore (e-mail, verbali): candidato L con origine dichiarazione-utente; se contraddice un item S o C, CTR.",
+  "type": "object",
+  "required": [
+    "decision",
+    "source_unit"
+  ],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "author": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "subject": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_unit": {
+      "type": "string",
+      "pattern": "^U\\.[A-Z0-9]+\\.\\d{4,}$",
+      "description": "unità da cui viene l estrazione"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unit-extraction/nota.schema.json",
+  "title": "Estrazione da unità nota (§19.10)",
+  "description": "Riquadri, Attenzione/Nota, commenti e revisioni: tipo di nota, soggetto se nominato, regole deontiche contenute (la miniera dei vincoli).",
+  "type": "object",
+  "required": [
+    "kind",
+    "text",
+    "source_unit"
+  ],
+  "properties": {
+    "kind": {
+      "enum": [
+        "nota",
+        "attenzione",
+        "importante",
+        "suggerimento",
+        "commento",
+        "revisione",
+        "tacita"
+      ]
+    },
+    "text": {
+      "type": "string"
+    },
+    "subject": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "author": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_unit": {
+      "type": "string",
+      "pattern": "^U\\.[A-Z0-9]+\\.\\d{4,}$",
+      "description": "unità da cui viene l estrazione"
+    }
+  }
+}

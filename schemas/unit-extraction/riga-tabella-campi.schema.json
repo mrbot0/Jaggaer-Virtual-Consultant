@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unit-extraction/riga-tabella-campi.schema.json",
+  "title": "Estrazione da unità riga-tabella-campi (§19.10)",
+  "description": "La riga grezza di scripts/ingest/field-table.mjs: label, nome tecnico, tipo, testo di obbligatorietà così com è, valori ammessi, note, sezione del form. Candidato FLD.",
+  "type": "object",
+  "required": [
+    "label",
+    "mandatory_text",
+    "source_unit"
+  ],
+  "properties": {
+    "label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "technical_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mandatory_text": {
+      "type": "string"
+    },
+    "allowed_values": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "section": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "row_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "document": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "genre": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_unit": {
+      "type": "string",
+      "pattern": "^U\\.[A-Z0-9]+\\.\\d{4,}$",
+      "description": "unità da cui viene l estrazione"
+    }
+  }
+}

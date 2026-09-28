@@ -44,8 +44,9 @@ const GENRE = {
 export const genreFor = (kind) => GENRE[kind] ?? "d'uso";
 
 // F1 (§6.2) dal genere e dall'origine del documento: il peso generico per origine, sostituito dal reliability.score.
-export function f1For(kind, origin) {
-  if (kind === "spec-integrazione") return origin === "vendor" ? "spec-integrazione-formale" : "spec-integrazione-prosa";
+export function f1For(kind, origin, format = null) {
+  // formale solo per le specifiche a schema (XSD, WSDL, OpenAPI/JSON Schema); i dev kit in prosa e tabelle sono prosa
+  if (kind === "spec-integrazione") return ["xsd", "wsdl", "openapi", "json", "yaml"].includes(format) ? "spec-integrazione-formale" : "spec-integrazione-prosa";
   if (kind === "config-export") return "esecuzione-config";
   if (kind === "release-notes") return "release-notes";
   if (kind === "tenant-survey" || kind === "set-screenshot") return "osservazione-chrome";
@@ -203,7 +204,7 @@ export function profileDoc(doc, units, opts = {}) {
   const profile = {
     id: code, type: "DOC", title: clip(String(doc.title || source), 20).slice(0, 140).padEnd(3, "."), summary,
     facets: {
-      F1: f1For(kind, origin), F4: "profilo", F5: "saas-core", F6: [], F7: "nessuno", F8: parsed.level === "S" ? "universale" : "specifica", F9: "una-tantum",
+      F1: f1For(kind, origin, doc.format), F4: "profilo", F5: "saas-core", F6: [], F7: "nessuno", F8: parsed.level === "S" ? "universale" : "specifica", F9: "una-tantum",
       F10: "R0", F11: "deterministico", F12: "grezzo", F13: { verified_at: doc.meta?.dated ?? today, release: coversRelease ?? "ignota" }, F15: genre,
     },
     sources: [{ file: source, sha256: doc.meta?.sha256 ?? null }],

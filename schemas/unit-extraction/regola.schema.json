@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unit-extraction/regola.schema.json",
+  "title": "Estrazione da unità regola (§19.10)",
+  "description": "Uscita del parser deontico (scripts/ingest/deontic.mjs) + soggetto: subject, modality, condition, scope_qualifiers, consequence, source_unit. Una modalità non determinata non produce mai un mandatory.kind: l unità va in residuo ambiguous.",
+  "type": "object",
+  "required": [
+    "modality",
+    "consequence",
+    "source_unit"
+  ],
+  "properties": {
+    "subject": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "modality": {
+      "enum": [
+        "obbligo",
+        "obbligo-condizionale",
+        "divieto",
+        "facolta",
+        "raccomandazione",
+        "comportamento-sistema",
+        "non-bloccante",
+        "immutabilita",
+        "vincolo-esterno",
+        "ambiguo"
+      ]
+    },
+    "condition": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "exception": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scope_qualifiers": {
+      "type": "object",
+      "properties": {
+        "companies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "consequence": {
+      "type": "string"
+    },
+    "mandatory": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "always",
+            "conditional",
+            "never"
+          ]
+        }
+      }
+    },
+    "validation": {
+      "type": "object"
+    },
+    "reason": {
+      "type": "object"
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "signals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_unit": {
+      "type": "string",
+      "pattern": "^U\\.[A-Z0-9]+\\.\\d{4,}$",
+      "description": "unità da cui viene l estrazione"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unit-extraction/definizione.schema.json",
+  "title": "Estrazione da unità definizione (§19.10)",
+  "description": "\"X è …\" e voci di glossario: termine, definizione, alias, lingua. Alimenta GLS e il registro degli alias (§19.12).",
+  "type": "object",
+  "required": [
+    "term",
+    "definition",
+    "source_unit"
+  ],
+  "properties": {
+    "term": {
+      "type": "string",
+      "minLength": 1
+    },
+    "definition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lang": {
+      "enum": [
+        "it",
+        "en"
+      ]
+    },
+    "source_unit": {
+      "type": "string",
+      "pattern": "^U\\.[A-Z0-9]+\\.\\d{4,}$",
+      "description": "unità da cui viene l estrazione"
+    }
+  }
+}
