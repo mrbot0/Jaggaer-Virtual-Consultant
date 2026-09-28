@@ -29,6 +29,12 @@ test("accettazione sul corpus reale: nessun crash, ogni file profilato o nel res
     else if (m.status === "residue") { residue++; assert.ok(m.residue?.class && m.residue?.reason, "residuo senza classe o motivo"); }
   }
   assert.equal(parsed + residue + r.files.sidecars, man.files.length);
+  // giro 1 (I4): nessun difetto del parser nascosto nel residuo, e ogni documento strutturato non duplicato è letto
+  assert.deepEqual(man.files.filter((m) => m.parser_error).map((m) => m.path.split(".").pop()), [], "eccezioni inattese dei parser");
+  assert.equal(r.files.parser_errors, 0);
+  const STRUCTURED = /\.(docx|pdf|xlsx|xml|pptx|xls|csv|htm|html)$/i;
+  const unread = man.files.filter((m) => STRUCTURED.test(m.path) && m.status !== "parsed" && !m.duplicate_of);
+  assert.deepEqual(unread.map((m) => `${m.path.split(".").pop()}: ${m.residue?.reason}`), [], "documenti strutturati non duplicati finiti nel residuo");
   assert.equal(profiled.size, parsed);
   for (const d of r.docs) {
     assert.ok(d.consistent, `${d.code}: unità ≠ fonti + residuo`);

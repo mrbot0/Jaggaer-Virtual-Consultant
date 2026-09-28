@@ -21,7 +21,8 @@ import { buildReport, writeReport, accountUnits } from "./ingestion-report.mjs";
 import { writeRawFields } from "./field-table.mjs";
 import { diffUnits, impact } from "./doc-diff.mjs";
 import { learn, loadRegistry, emptyRegistry } from "./aliases.mjs";
-import { workspacePaths, ensureWorkspace } from "./lib/paths.mjs";
+import { workspacePaths, ensureWorkspace, assertOutsidePlugin, PolicyError } from "./lib/paths.mjs";
+export { PolicyError };
 import { openDb } from "../kb/db.mjs";
 import { writeUnits, upsertUnits } from "../kb/units.mjs";
 import { plan as digestPlan, BudgetPolicyError, MAX_BATCH } from "../kb/digest-fields.mjs";
@@ -52,7 +53,10 @@ export function ingestDoc(ctx, doc, entry) {
   const acc = accountUnits(units, extraction.items);
   const residueEntries = acc.residue.map((r) => residueEntry({ class: r.class, reason: r.reason, unit: r.unit, doc: code }));
   for (const o of overflow) residueEntries.push(residueEntry({ class: "irrelevant", reason: o.reason, doc: code, detail: { section: o.section, rows: o.rows_total - o.rows_sampled, kind: "righe-dataset" } }));
-  if (doc.scanned) residueEntries.push(residueEntry({ class: "deferred", reason: "PDF scansionato: serve il sidecar OCR (<file>.ocr.txt) per le pagine senza testo", doc: code }));
+  // giro 1 (I2): ogni pagina di sole immagini ancora senza testo (nessun sidecar OCR per quella pagina) è un residuo deferred
+  for (const p of doc.meta?.image_only_pages ?? []) {
+    residueEntries.push(residueEntry({ class: "deferred", reason: `pagina ${p} di sole immagini: serve il sidecar OCR ${entry.path}.ocr.txt (marcatore "--- pagina ${p} ---")`, doc: code, detail: { page: p } }));
+  }
   writeUnits(paths.units, units);
   upsertUnits(db, units, { root: paths.root, unitsDir: paths.units });
   writeRaw(inbox, code, extraction, { scope });
@@ -102,6 +106,7 @@ export function ingestDoc(ctx, doc, entry) {
 
 export function ingestFolder(input, { root, scope = "XSC", customer = null, origin = null, genre = null, currentRelease = null, onDoc = null, today = new Date().toISOString().slice(0, 10) } = {}) {
   if (!root) throw new UsageError("richiesta la radice del workspace di conoscenza (--root)");
+  assertOutsidePlugin(root);   // giro 1 (M14): mai nel repository del plugin
   if (!SCOPES.has(scope)) throw new UsageError(`scope sconosciuto: ${scope}`);
   if (origin && !ORIGINS.includes(origin)) throw new UsageError(`origine non valida: ${origin}`);
   if (genre && !GENRES.includes(genre)) throw new UsageError(`genere non valido: ${genre}`);
@@ -163,7 +168,7 @@ export function corpusSummary(h, docs, errors, { aliasStats = null, ms = 0, scop
   const maxSession = Math.max(0, ...docs.flatMap((d) => d.llm.sessions), ...docs.map((d) => d.fields.tokens ?? 0));
   return {
     scope, root, ms,
-    files: { total: h.stats.files, parsed: h.stats.parsed, residue: h.stats.residue, sidecars: h.stats.sidecars, by_format: h.stats.by_format },
+    files: { total: h.stats.files, parsed: h.stats.parsed, residue: h.stats.residue, sidecars: h.stats.sidecars, parser_errors: h.manifest.filter((m) => m.parser_error).length, by_format: h.stats.by_format },
     documents: { profiled: docs.length, errors: errors.length, by_kind: docs.reduce((a, d) => { a[d.kind] = (a[d.kind] ?? 0) + 1; return a; }, {}), inconsistent: docs.filter((d) => !d.consistent).map((d) => d.code) },
     units: { total: docs.reduce((a, d) => a + d.units, 0), by_type: unitsByType },
     fields: { field_rows: fields, tracciato_elements: tracciati, max_batch_rows: maxBatch, batch_limit: MAX_BATCH },
@@ -185,7 +190,8 @@ residuo classificato, unità in <ws>/product|customers/<C>/sources/units/ e nel 
 di ingestion (_inbox/<scope>/reports/), diff di versione; proposte di alias, backlog DT-025 e riepilogo del corpus
 (_inbox/<scope>/ingest-summary.yaml). Il workspace nasce se assente. Mai scritture in kb/ (§29.6).
 
-Exit code: 0 ok · 1 errore utente (argomenti, cartella assente, scope/origine/genere non validi) · 2 errore di sistema.`;
+Exit code: 0 ok · 1 errore utente (argomenti, cartella assente, scope/origine/genere non validi) · 2 errore di sistema ·
+3 uscita dentro il repository del plugin (rifiutata).`;
 
 function main(argv) {
   const { opts } = parseArgs(argv);
@@ -198,6 +204,7 @@ function main(argv) {
     console.log(JSON.stringify(asJson ? { ok: true, ...summary, docs } : { ok: true, ...summary }, null, asJson ? 0 : 1));
     return 0;
   } catch (e) {
+    if (e instanceof PolicyError) return fail(asJson, 3, e.message);
     if (e instanceof UsageError || /cartella di input assente|scope sconosciuto|cliente non valido/.test(e.message)) return fail(asJson, 1, e.message);
     return fail(asJson, 2, `errore di sistema: ${e.message ?? e}`);
   }

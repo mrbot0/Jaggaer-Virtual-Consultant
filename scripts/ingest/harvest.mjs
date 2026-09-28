@@ -6,7 +6,8 @@
 //   detectFormat(path, head) → { parser, format } | { residue: { class, reason } } | { sidecar: true }
 //   parseFile(path, { id, relPath }) → { doc } | { residue }
 //   harvest(input, { root, scope = "XSC", customer?, write = true, onFile? }) → { manifest[], docs[], stats }
-//     manifest[i]: { path, doc_id, format, parser, status: parsed|residue|sidecar, sha256, size, residue?, duplicate_of?, ms }
+//     manifest[i]: { path, doc_id, format, parser, status: parsed|residue|sidecar, sha256, size, residue?, duplicate_of?, parser_error?, ms }
+//     parser_error: eccezione inattesa del parser (difetto, non formato): il test sul corpus ne esige zero
 //     i file con lo stesso sha256 di un file già visto → residuo duplicate (duplicate_of)
 // CLI: node scripts/ingest/harvest.mjs --input <cartella> --root <workspace> [--scope XSC] [--customer ACME] [--dry-run] [--json]
 import { readdirSync, readFileSync, statSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
@@ -16,7 +17,8 @@ import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { SCOPES } from "../kb/codes.mjs";
 import { docIdFor, ParseError } from "./lib/parsed.mjs";
-import { workspacePaths, ensureWorkspace } from "./lib/paths.mjs";
+import { workspacePaths, ensureWorkspace, assertOutsidePlugin, PolicyError } from "./lib/paths.mjs";
+export { PolicyError };
 import { residueEntry, writeResidue } from "./residue.mjs";
 import { isZip, ZipError } from "./lib/zip.mjs";
 import { parseDocx } from "./parse-docx.mjs";
@@ -34,7 +36,7 @@ import { parseText, parseCsv, parseHtml, decodeText } from "./parse-text.mjs";
 
 export class UsageError extends Error { constructor(m) { super(m); this.name = "UsageError"; } }
 
-const PARSERS = { docx: parseDocx, xlsx: parseXlsx, pptx: parsePptx, pdf: parsePdf, xls: parseXls, xsd: parseXsd, spec: parseSpec,
+export const PARSERS = { docx: parseDocx, xlsx: parseXlsx, pptx: parsePptx, pdf: parsePdf, xls: parseXls, xsd: parseXsd, spec: parseSpec,
   "config-export": parseConfigExport, image: parseScreenshot, transcript: parseTranscript, email: parseEmail, text: parseText, csv: parseCsv, html: parseHtml };
 
 const SYSTEM_FILES = /^(thumbs\.db|desktop\.ini|\.ds_store|ehthumbs\.db|~\$.*|\._.*)$/i;
@@ -100,14 +102,18 @@ export function parseFile(path, { id, relPath, buffer = null }) {
   const det = detectFormat(path, buf.subarray(0, 65536));
   if (det.sidecar) return { sidecar: true };
   if (det.residue) return { residue: det.residue, format: null };
+  // giro 1 (M9): data del file come ripiego dichiarato per la data di un export (meta.date_source = "mtime")
+  let mtime = null;
+  try { mtime = statSync(path).mtime; } catch { /* buffer senza file */ }
   try {
-    const doc = PARSERS[det.parser](buf, { id, source: relPath, path });
+    const doc = PARSERS[det.parser](buf, { id, source: relPath, path, mtime });
     doc.meta = { ...(doc.meta ?? {}), source: relPath, size: buf.length, sha256: doc.meta?.sha256 ?? `sha256:${createHash("sha256").update(buf).digest("hex")}` };
     return { doc, parser: det.parser, format: det.format };
   } catch (e) {
     if (e instanceof ParseError) return { residue: { class: e.residue ?? "unsupported", reason: e.reason ?? e.message }, parser: det.parser, format: det.format };
     if (e instanceof ZipError) return { residue: { class: "unsupported", reason: `archivio ZIP rifiutato: ${e.message}` }, parser: det.parser, format: det.format };
-    return { residue: { class: "unsupported", reason: `errore del parser ${det.parser}: ${e?.message ?? e}` }, parser: det.parser, format: det.format };
+    // giro 1 (I4): un'eccezione inattesa è un DIFETTO del parser, non un formato illeggibile: marcata parser_error
+    return { residue: { class: "unsupported", reason: `errore del parser ${det.parser}: ${e?.name ?? "Error"}: ${e?.message ?? e}` }, parser: det.parser, format: det.format, parser_error: true };
   }
 }
 
@@ -122,6 +128,7 @@ export function* walkFiles(dir) {
 export function harvest(input, { root, scope = "XSC", customer = null, write = true, onFile = null } = {}) {
   if (!existsSync(input) || !statSync(input).isDirectory()) throw new UsageError(`cartella di input assente: ${input}`);
   if (!SCOPES.has(scope)) throw new UsageError(`scope sconosciuto: ${scope}`);
+  if (root && write) assertOutsidePlugin(root);   // giro 1 (M14)
   const paths = root ? workspacePaths({ root, customer }) : null;
   const outDir = paths ? join(paths.inbox(scope), "parsed") : null;
   if (write && paths) { ensureWorkspace(paths); mkdirSync(outDir, { recursive: true }); }
@@ -141,7 +148,7 @@ export function harvest(input, { root, scope = "XSC", customer = null, write = t
     } else {
       const r = parseFile(file, { id, relPath: rel, buffer: buf });
       if (r.sidecar) Object.assign(entry, { status: "sidecar", format: null, parser: null });
-      else if (r.residue) Object.assign(entry, { status: "residue", format: r.format ?? null, parser: r.parser ?? null, residue: residueEntry({ ...r.residue, file: rel }) });
+      else if (r.residue) Object.assign(entry, { status: "residue", format: r.format ?? null, parser: r.parser ?? null, residue: residueEntry({ ...r.residue, file: rel }), ...(r.parser_error ? { parser_error: true } : {}) });
       else {
         seen.set(hash, rel);
         Object.assign(entry, { status: "parsed", format: r.format, parser: r.parser, sections: r.doc.sections.length, warnings: r.doc.warnings ?? [], scanned: r.doc.scanned ?? false });
@@ -179,7 +186,8 @@ Formati: docx xlsx pptx pdf xls(BIFF8) xsd wsdl openapi/json-schema export XML/J
 con motivo (_inbox/<scope>/residue/_harvest.yaml). File identici: residuo duplicate.
 --customer: livello C (customers/<C>/_inbox); senza: livello S (product/, _inbox/ nella radice).
 
-Exit code: 0 ok · 1 errore utente (cartella assente, scope sconosciuto) · 2 errore di sistema.`;
+Exit code: 0 ok · 1 errore utente (cartella assente, scope sconosciuto) · 2 errore di sistema · 3 uscita dentro il
+repository del plugin (rifiutata: il workspace di conoscenza è separato).`;
 
 function main(argv) {
   const { opts } = parseArgs(argv, { flags: ["dry-run"] });
@@ -191,6 +199,7 @@ function main(argv) {
     console.log(JSON.stringify(asJson ? { ok: true, stats: r.stats, out: r.outDir, files: r.manifest } : { ok: true, ...r.stats, out: r.outDir }));
     return 0;
   } catch (e) {
+    if (e instanceof PolicyError) return fail(asJson, 3, e.message);
     if (e instanceof UsageError || /cliente non valido/.test(e.message)) return fail(asJson, 1, e.message);
     return fail(asJson, 2, `errore di sistema: ${e.message ?? e}`);
   }

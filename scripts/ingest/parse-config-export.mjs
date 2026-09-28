@@ -225,14 +225,29 @@ export function detectExportKind(rootName) {
   return "config-export";
 }
 
-export function parseConfigExport(buffer, { id, title, source = null, exportedAt = null } = {}) {
+// Giro 1 (M9): la data dell'export (§19.8: "dopo un mese vale meno di un'osservazione") dall'XML/JSON se c'è
+// (ExportDate, exportedAt, GeneratedOn, CreationDate… con una data ISO), altrimenti quella dichiarata dal chiamante,
+// altrimenti la data del file (mtime) — la fonte è sempre dichiarata in meta.date_source.
+const EXPORT_DATE_RE = /(?:export|generat|creat)\w*["']?\s*(?:=\s*["']|>|:\s*["'])\s*(\d{4}-\d{2}-\d{2})/i;
+export function exportDate(text, { exportedAt = null, mtime = null } = {}) {
+  const m = EXPORT_DATE_RE.exec(String(text).slice(0, 200000));
+  if (m) return { date: m[1], source: "xml" };
+  if (exportedAt) return { date: String(exportedAt).slice(0, 10), source: "dichiarata" };
+  if (mtime) return { date: new Date(mtime).toISOString().slice(0, 10), source: "mtime" };
+  return { date: null, source: null };
+}
+
+export function parseConfigExport(buffer, { id, title, source = null, exportedAt = null, mtime = null } = {}) {
   const text = Buffer.isBuffer(buffer) ? buffer.toString("utf8") : String(buffer);
   const trimmed = text.replace(/^[^<{[]*/, "");
   const isJson = /^[{[]/.test(trimmed);
   const doc = newDoc({ id, title, format: isJson ? "json" : "xml", source, parser: "parse-config-export" });
   doc.meta.sha256 = sha256(Buffer.from(text));
   doc.meta.size = Buffer.byteLength(text);
-  doc.meta.exported_at = exportedAt;
+  const ed = exportDate(text, { exportedAt, mtime });
+  doc.meta.exported_at = ed.date;
+  doc.meta.dated = ed.date;
+  doc.meta.date_source = ed.source;
   let kind;
   if (isJson) {
     let obj;

@@ -96,7 +96,10 @@ test("export di configurazione → FLW (attività in ordine di transizione) e CF
   assert.deepEqual(flw.extraction.steps.map((s) => s.attivita), ["Start", "Approve Manager", "End"]);
   assert.equal(flw.extraction.steps[1].condizione, "[Document.Total] > 50000");
   const cfg = r.items.find((x) => x.candidates[0] === "CFG" && x.extraction.parameter === "Version");
-  assert.deepEqual(cfg.extraction.current_state, { value: "3", observed_at: null, source: "config-export" });
+  // giro 1 (M9): observed_at = data dell'export (qui la data del file, dichiarata in meta.date_source), non più null
+  assert.deepEqual({ ...cfg.extraction.current_state, observed_at: "<data>" }, { value: "3", observed_at: "<data>", source: "config-export" });
+  assert.match(cfg.extraction.current_state.observed_at, /^\d{4}-\d{2}-\d{2}$/);
+  assert.equal(wf.meta.date_source, "mtime");
   assert.equal(cfg.confidence, 0.95);
   const w = docs["sample.wsdl"];
   const units = segmentUnits(w).units;
