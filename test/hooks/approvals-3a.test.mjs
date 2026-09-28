@@ -42,7 +42,7 @@ function setup({ env = "prod", level = "giallo", step = 2, pending = [], plan } 
   patchSession(ws, (s) => {
     s.active_plan = { plan_id: PLAN, file, step };
     s.pending.approvals = pending;
-    s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0019", "C.ACME.ADM.CFG.0031"], ts: new Date().toISOString() }];
+    s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0019", "C.ACME.ADM.CFG.0031"], ts: new Date().toISOString(), source: "kb-snapshot", obs: ["L.ACME.ADM.OBS.0001", "L.ACME.ADM.OBS.0002"] }];
   });
   // WP07 giro 1: l'impronta del piano e l'ultimo snapshot (uid 1_7 = SEL del passo), come li scrivono step-check e observe-append
   sealActivePlan(ws, { refs: { "1_7": "C.ACME.ADM.SEL.0120" } });
@@ -242,7 +242,7 @@ test("guard-config-scope: compensazione mancante per un passo CREATE/UPDATE/SUBM
 test("guard-config-scope: snapshot oltre 60 s, rosso in prod fuori prod_allowed_red, fuori remediation-scope, piano cambiato dopo A1 ⇒ deny", () => {
   const a = setup({ env: "sandbox", level: "verde", plan: { ...cfgPlan("sandbox", "verde"), steps: [S(1, "NAVIGATE", "ACT-OBS"), S(2, "TOGGLE", "ACT-CFG-CHANGE", CFG("verde", undefined, "CL-CFG-006"))] } });
   say(a.ws, a.tr, "APPROVO PIANO PLAN.0042");
-  patchSession(a.ws, (s) => { s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0019"], ts: new Date(Date.now() - 90000).toISOString() }]; });
+  patchSession(a.ws, (s) => { s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0019"], ts: new Date(Date.now() - 90000).toISOString(), source: "observe-append", obs: "L.ACME.ADM.OBS.0001" }]; });
   const r = click(a.ws, a.tr);
   assert.ok(denied(r)); assert.match(reasonOf(r), /snapshot/);
   const red = setup({ env: "prod", plan: { ...cfgPlan("prod", "rosso"), steps: [S(1, "NAVIGATE", "ACT-OBS"), S(2, "TOGGLE", "ACT-CFG-CHANGE", CFG("rosso", "C.ACME.ADM.CFG.0031", "CL-CFG-001"))] } });

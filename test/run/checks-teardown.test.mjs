@@ -56,7 +56,7 @@ test("CL-CHK-002 prima di una CFP R2: snapshot mancante e rollback non provato â
   assert.equal(by["S.STD.ADM.CHK.0019"].via, "browser");
   assert.deepEqual(r.plan_steps.map((s) => [s.verb, s.target]), [["READ", "S.STD.ADM.SEL.0130"], ["READ", "S.STD.ADM.SEL.0131"]]);
   // snapshot degli oggetti governati e run verde della CFP di rollback negli ultimi 14 giorni
-  patchSession(w, (s) => { s.snapshots = [{ objects: ["S.STD.ADM.CFG.0031"], ts: new Date().toISOString(), source: "kb-snapshot" }]; });
+  patchSession(w, (s) => { s.snapshots = [{ objects: ["S.STD.ADM.CFG.0031"], ts: new Date().toISOString(), source: "kb-snapshot", obs: ["L.ACME.ADM.OBS.0001"] }]; });
   writeYaml(w, "customers/ACME/runs/RUN.ACME.20260925.0900.ADM/result.yaml", { plan_id: "PLAN.S.STD.ADM.CFP.0015", status: "green", completed_at: new Date(Date.now() - 3 * 86400e3).toISOString() });
   r = runChecks(ctx(), { cluster: "CL-CHK-002" });
   assert.equal(r.blocked, false, JSON.stringify(r.results.filter((x) => x.status === "fail")));

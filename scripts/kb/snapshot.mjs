@@ -2,6 +2,8 @@
 // di una modifica di configurazione, dalle ultime OBS (observe-append) della PAGINA di ciascun oggetto.
 //
 //   takeSnapshot({ ws, sid, objects[], areas?, run?, obs?, maxAgeS = 900, now }) → { file, entry, objects[] }
+//     (giro 1) almeno un CFG (--area annota soltanto); OBS SOLO dalle righe del DB scritte da observe-append (i file di
+//     observations/ non contano), età ≤ 900 s (tetto anche con --max-age-s maggiore), pagina confrontata esattamente;
 //     per ogni CFG: l'item (kb) con la sua location (page_sig · url_pattern · selectors) lega lo snapshot alla pagina;
 //     l'OBS più recente di quella pagina (o --obs, che deve comunque essere della pagina) entro maxAgeS; lo stato sono
 //     gli elementi osservati dei SEL della location (valori già redatti dall'OBS). Un oggetto senza location o senza
@@ -13,7 +15,7 @@
 // CLI: node scripts/kb/snapshot.mjs <CFG…> [--area CL-CFG-nnn] [--run <RUN>] [--obs <L.…OBS.nnnn>] [--max-age-s 900]
 //      [--session <id>] [--workspace <dir>] [--json]      (anche: node scripts/kb/kb.mjs snapshot …)
 // Exit: 0 ok · 1 errore utente · 2 errore di sistema · 3 rifiuto (oggetto non legato a una pagina osservata di recente).
-import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { join, resolve as resolvePath, relative } from "node:path";
 import YAML from "yaml";
 import { parseArgs, fail } from "../lib/args.mjs";
@@ -25,36 +27,55 @@ import { appendAudit } from "../../hooks/lib/audit.mjs";
 import { loadSession, resolveSessionId } from "../admin/session.mjs";
 import { runRefusal } from "../lib/run-code.mjs";
 import { loadItem } from "../lib/kb-items.mjs";
+import { openDb } from "./db.mjs";
+import { normalizePath } from "../chrome/snapshot-parse.mjs";
 
 export class SnapshotError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 const CFG_RE = /^[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.CFG\.\d{4}(\.v\d+)?$/;
 const OBS_RE = /^L\.[A-Z0-9]{4}\.[A-Z0-9]{3}\.OBS\.\d{4}$/;
-const MAX_OBS_FILES = 500;
+const MAX_OBS_ROWS = 500;
 
-// OBS del cliente, dalle più recenti (per codice decrescente: il SEQ cresce nel tempo), al più MAX_OBS_FILES.
-function recentObservations(ws, customer) {
-  const dir = join(ws, "customers", customer, "observations");
-  if (!existsSync(dir)) return [];
-  const files = readdirSync(dir).filter((f) => /^L\..+\.OBS\.\d{4}\.yaml$/.test(f)).sort((a, b) => b.localeCompare(a)).slice(0, MAX_OBS_FILES);
-  const out = [];
-  for (const f of files) { try { const o = YAML.parse(readFileSync(join(dir, f), "utf8")); if (o?.id) out.push(o); } catch { /* illeggibile: ignorata */ } }
-  return out.sort((a, b) => Date.parse(b.ts ?? 0) - Date.parse(a.ts ?? 0));
+// WP09b giro 1 (I2): l'AUTORITÀ sulle osservazioni è la riga che observe-append scrive nel DB del cliente (tabella
+// observations: codice, page_sig, payload), nella stessa transazione che assegna il codice; i file in observations/
+// sono una copia (protetta in scrittura da guard-config-scope) e non si leggono qui. DB assente ⇒ nessuna OBS.
+export const MAX_AGE_S = 900;
+function recentObservations(ws, customer, { code = null } = {}) {
+  const f = join(ws, "customers", customer, "knowledge.db");
+  if (!existsSync(f)) return [];
+  const db = openDb(f, { createIfMissing: false });
+  try {
+    const rows = code ? db.prepare("select code, page_sig, payload from observations where code = ?").all(code)
+      : db.prepare("select code, page_sig, payload from observations order by code desc limit ?").all(MAX_OBS_ROWS);
+    const out = [];
+    for (const r of rows) {
+      let p; try { p = JSON.parse(r.payload); } catch { continue; }
+      if (!p || typeof p !== "object") continue;
+      out.push({ ...p, id: r.code, page_signature: r.page_sig ?? p.page_signature ?? null });
+    }
+    return out.sort((x, y) => Date.parse(y.ts ?? 0) - Date.parse(x.ts ?? 0));
+  } finally { db.close(); }
 }
 
-// L'OBS è della pagina dell'oggetto? firma della pagina, URL o un elemento legato a un SEL della location.
+// L'OBS è della pagina dell'oggetto? Confronto ESATTO (giro 1, I2): la firma della pagina uguale a location.page_sig
+// (per intero o nella parte di percorso prima di #), il percorso normalizzato dell'URL uguale a quello di url_pattern,
+// oppure un elemento legato dall'Atlas a un SEL della location. Nessuna sottostringa.
+const pathOf = (u) => { if (typeof u !== "string" || !u) return null; return normalizePath(/^https?:\/\//i.test(u) ? u : `https://x.invalid/${u.replace(/^\/+/, "")}`); };
 export function obsMatchesLocation(o, loc) {
   if (!o || !loc) return false;
-  if (loc.page_sig && typeof o.page_signature === "string" && o.page_signature.includes(loc.page_sig)) return true;
-  if (loc.url_pattern && typeof o.url === "string" && o.url.includes(loc.url_pattern)) return true;
+  const sig = typeof o.page_signature === "string" ? o.page_signature : null;
+  if (loc.page_sig && sig && (sig === loc.page_sig || sig.split("#")[0] === loc.page_sig)) return true;
+  if (loc.url_pattern) { const a = pathOf(o.url); const b = pathOf(loc.url_pattern); if (a != null && b != null && a === b) return true; }
   const sels = Array.isArray(loc.selectors) ? loc.selectors : [];
   return sels.length > 0 && (o.elements_seen ?? []).some((e) => sels.includes(e?.atlas_match));
 }
 
-export function takeSnapshot({ ws, sid, objects = [], areas = [], run = null, obs = null, maxAgeS = 900, now = new Date() }) {
+export function takeSnapshot({ ws, sid, objects = [], areas = [], run = null, obs = null, maxAgeS = MAX_AGE_S, now = new Date() }) {
   const { session, pointer } = loadSession(ws, sid);
   if (!session) throw new SnapshotError(1, "nessuna sessione con cliente attivo: use customer <ID>");
   const customer = pointer.customer;
-  if (!objects.length && !areas.length) throw new SnapshotError(1, "nessun oggetto CFG da fotografare");
+  // giro 1 (C1): senza almeno un oggetto non c'è stato da ripristinare; --area annota soltanto
+  if (!objects.length) throw new SnapshotError(1, "serve almeno un oggetto CFG da fotografare: --area annota soltanto, uno snapshot di sola area non registra alcuno stato");
+  const maxAge = Math.min(Number.isFinite(Number(maxAgeS)) && Number(maxAgeS) > 0 ? Number(maxAgeS) : MAX_AGE_S, MAX_AGE_S);
   for (const c of objects) if (!CFG_RE.test(c)) throw new SnapshotError(1, `${c} non è un codice CFG`);
   for (const a of areas) if (!/^CL-CFG-\d{3}$/.test(a)) throw new SnapshotError(1, `${a} non è un'area CL-CFG`);
   if (obs && !OBS_RE.test(obs)) throw new SnapshotError(1, `${obs} non è un codice OBS`);
@@ -62,18 +83,17 @@ export function takeSnapshot({ ws, sid, objects = [], areas = [], run = null, ob
   if (!r) throw new SnapshotError(1, "run non determinato: --run <RUN> (o attiva il piano con step-check)");
   const bad = runRefusal(ws, customer, r);
   if (bad) throw new SnapshotError(1, bad);
-  const all = recentObservations(ws, customer);
+  const all = recentObservations(ws, customer, { code: obs });
   const recorded = [];
   for (const code of objects) {
     const cfg = loadItem(ws, code, customer);
     if (!cfg) throw new SnapshotError(3, `${code} non è nella knowledge base: lo snapshot non si lega a un oggetto sconosciuto`);
     const loc = cfg.location;
     if (!loc || !(loc.page_sig || loc.url_pattern || loc.selectors?.length)) throw new SnapshotError(3, `${code} senza location (page_sig, url_pattern o selectors): lo snapshot non si lega alla sua pagina`);
-    const cand = obs ? all.filter((o) => o.id === obs) : all;
-    const o = cand.find((x) => obsMatchesLocation(x, loc));
+    const o = all.find((x) => obsMatchesLocation(x, loc));
     if (!o) throw new SnapshotError(3, `${code}: nessuna osservazione della sua pagina${obs ? ` (${obs} non è della pagina dell'oggetto)` : ""}: leggi la pagina (READ/snapshot) e riprova`);
     const age = (now.getTime() - Date.parse(o.ts ?? 0)) / 1000;
-    if (!(age <= maxAgeS && age >= -5)) throw new SnapshotError(3, `${code}: l'ultima osservazione della pagina (${o.id}) ha ${Math.round(age)} s (massimo ${maxAgeS}): rileggi la pagina prima dello snapshot`);
+    if (!(age <= maxAge && age >= -5)) throw new SnapshotError(3, `${code}: l'ultima osservazione della pagina (${o.id}) ha ${Math.round(age)} s (massimo ${maxAge}): rileggi la pagina prima dello snapshot`);
     const sels = Array.isArray(loc.selectors) ? loc.selectors : [];
     const state = (o.elements_seen ?? []).filter((e) => !sels.length || sels.includes(e?.atlas_match)).map((e) => ({ label: e.label ?? null, role: e.role ?? null, ...(e.value !== undefined ? { value: e.value } : {}), ...(e.atlas_match ? { sel: e.atlas_match } : {}) }));
     recorded.push({ code, obs: o.id, obs_ts: o.ts, page_signature: o.page_signature ?? null, url: o.url ?? null, state });
@@ -93,9 +113,10 @@ export function takeSnapshot({ ws, sid, objects = [], areas = [], run = null, ob
 const HELP = `uso: node scripts/kb/snapshot.mjs <CFG…> [--area CL-CFG-nnn] [--run <RUN>] [--obs <OBS>] [--max-age-s 900]
        [--session <id>] [--workspace <dir>] [--json] [--help]
 
-Snapshot degli oggetti governati prima di una modifica (§28.1): lo stato dalle ultime OBS della pagina di ciascun
-oggetto (location del CFG), in runs/<RUN>/snapshots/ e in session.snapshots (guard-config-scope: ultimi 60 s, deve
-coprire tutti gli oggetti governati del passo).
+Snapshot degli oggetti governati prima di una modifica (§28.1): almeno un CFG (--area annota soltanto); lo stato
+dalle OBS registrate da observe-append nel DB per la pagina di ciascun oggetto (location del CFG, confronto esatto,
+al più 900 s), in runs/<RUN>/snapshots/ e in session.snapshots (guard-config-scope: ultimi 60 s, deve coprire tutti
+gli oggetti governati del passo).
 
 Exit code: 0 ok · 1 errore utente · 2 errore di sistema · 3 rifiuto (oggetto senza pagina osservata di recente).`;
 

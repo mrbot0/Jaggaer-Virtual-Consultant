@@ -14,6 +14,7 @@ import { runHook, decisionOf, reasonOf, ROOT } from "../helpers/hook-env.mjs";
 import { envWs, browserCall, patchSession, readSession, writePlan, sealActivePlan } from "../helpers/env-fixture.mjs";
 import { addCompensation, doneCompensation, listCompensations } from "../../scripts/kb/compensation.mjs";
 import { takeSnapshot } from "../../scripts/kb/snapshot.mjs";
+import { openDb } from "../../scripts/kb/db.mjs";
 import { gateStep } from "../../scripts/decide/step-check.mjs";
 import { registerCreated, createdEntities } from "../../scripts/run/fixtures.mjs";
 import { governedObjects, snapshotCovers } from "../../hooks/lib/guards/config-scope.mjs";
@@ -76,10 +77,14 @@ test("kb compensation: mai delete (tipo o azione), mai dopo il passo verificato;
 });
 
 // ——— snapshot ———
+// OBS come le registra observe-append (giro 1: la riga del DB è l'autorità, il file è una copia)
 function obs(ws, code, { page_signature, url, ts = new Date(), elements = [] }) {
+  const doc = { id: code, type: "OBS", page_signature, url, elements_seen: elements, ts: ts.toISOString() };
+  const db = openDb(join(ws, "customers/ACME/knowledge.db"));
+  try { db.prepare("insert into observations(code, session, scope, page_sig, payload, confirmed_count) values (?,?,?,?,?,1)").run(code, "SES.ACME.20260929.001", "ADM", page_signature ?? null, JSON.stringify(doc)); } finally { db.close(); }
   const dir = join(ws, "customers/ACME/observations");
   mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, `${code}.yaml`), YAML.stringify({ id: code, type: "OBS", page_signature, url, elements_seen: elements, ts: ts.toISOString() }));
+  writeFileSync(join(dir, `${code}.yaml`), YAML.stringify(doc));
 }
 const REM = { levels: { verde: { areas: ["CL-CFG-005"], objects: ["C.ACME.ADM.CFG.0031", "C.ACME.ADM.CFG.0032"] } } };
 function transcript(prompts) {
@@ -115,15 +120,18 @@ test("guard-config-scope (§28.1, CHK.0051): lo snapshot deve coprire TUTTI gli 
   const config = { object: "C.ACME.ADM.CFG.0031", governs: ["C.ACME.ADM.CFG.0031", "C.ACME.ADM.CFG.0032"], area: "CL-CFG-005", level: "verde" };
   const step = S(2, "TOGGLE", "ACT-CFG-CHANGE", { config });
   assert.deepEqual(governedObjects(step), ["C.ACME.ADM.CFG.0031", "C.ACME.ADM.CFG.0032"]);
-  assert.equal(snapshotCovers({ objects: ["C.ACME.ADM.CFG.0031"] }, step), false);
-  assert.equal(snapshotCovers({ objects: ["C.ACME.ADM.CFG.0032", "C.ACME.ADM.CFG.0031"] }, step), true);
-  assert.equal(snapshotCovers({ objects: [], areas: ["CL-CFG-005"] }, S(2, "TOGGLE", "ACT-CFG-CHANGE", { config: { area: "CL-CFG-005", level: "verde" } })), true);
-  assert.equal(snapshotCovers({ objects: ["C.ACME.ADM.CFG.0031"] }, S(2, "TOGGLE", "ACT-CFG-CHANGE", { config: { area: "CL-CFG-005", level: "verde" } })), false, "solo area: lo snapshot di un oggetto qualsiasi non basta");
+  // giro 1 (C1): ogni voce porta le sue osservazioni (observe-append: una; kb snapshot: una per oggetto)
+  assert.equal(snapshotCovers({ objects: ["C.ACME.ADM.CFG.0031"], source: "observe-append", obs: "L.ACME.ADM.OBS.0001" }, step), false);
+  assert.equal(snapshotCovers({ objects: ["C.ACME.ADM.CFG.0032", "C.ACME.ADM.CFG.0031"], source: "kb-snapshot", obs: ["L.ACME.ADM.OBS.0001", "L.ACME.ADM.OBS.0002"] }, step), true);
+  const areaStep = S(2, "TOGGLE", "ACT-CFG-CHANGE", { config: { area: "CL-CFG-005", level: "verde" } });
+  assert.equal(snapshotCovers({ objects: [], areas: ["CL-CFG-005"], source: "observe-append", obs: "L.ACME.ADM.OBS.0003" }, areaStep), true);
+  assert.equal(snapshotCovers({ objects: [], areas: ["CL-CFG-005"], source: "kb-snapshot", obs: [] }, areaStep), false, "sola area da kb snapshot: nessuno stato registrato");
+  assert.equal(snapshotCovers({ objects: ["C.ACME.ADM.CFG.0031"], source: "observe-append", obs: "L.ACME.ADM.OBS.0001" }, areaStep), false, "solo area: lo snapshot di un oggetto qualsiasi non basta");
   active(ws, [S(1, "NAVIGATE", "ACT-OBS"), step], 2);
   const tr = transcript([`APPROVO PIANO ${PLAN}`]);
   runHook("approval-capture", { session_id: "sess-1", cwd: ws, hook_event_name: "UserPromptSubmit", prompt: `APPROVO PIANO ${PLAN}`, transcript_path: tr }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
   // uno snapshot fresco di un solo oggetto (come quello che observe-append registra per config.object) non basta
-  patchSession(ws, (s) => { s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0031"], ts: new Date().toISOString(), source: "observe-append" }]; });
+  patchSession(ws, (s) => { s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0031"], ts: new Date().toISOString(), source: "observe-append", obs: "L.ACME.ADM.OBS.0009" }]; });
   const r1 = click(ws, tr);
   assert.ok(denied(r1)); assert.match(reasonOf(r1), /non copre C\.ACME\.ADM\.CFG\.0032/);
   // kb snapshot di entrambi (OBS della pagina di ciascuno) ⇒ consentito

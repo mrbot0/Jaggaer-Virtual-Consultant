@@ -63,12 +63,23 @@ export function governedObjects(step) {
   const c = step?.config ?? {};
   return [...new Set([c.object, ...(Array.isArray(c.governs) ? c.governs : [])].filter((x) => typeof x === "string" && x))];
 }
-// Una voce di session.snapshots copre il passo se elenca tutti i suoi oggetti governati (o, senza oggetti, la sua area).
+// Una voce di session.snapshots copre il passo se elenca tutti i suoi oggetti governati, ciascuno con un'osservazione
+// verificata (giro 1, C1): observe-append (un oggetto, l'OBS che ha legato la pagina al SEL del passo) o kb snapshot
+// (un'OBS verificata sul DB per ogni oggetto). Un passo di sola area vale solo con una voce di observe-append per l'area
+// (scritta sulla pagina che mostra l'elemento del passo): uno snapshot di sola area di kb snapshot non registra stato.
+const OBS_CODE = /^L\.[A-Z0-9]{4}\.[A-Z0-9]{3}\.OBS\.\d{4}$/;
+function observed(entry) {
+  const objs = Array.isArray(entry?.objects) ? entry.objects : [];
+  if (entry?.source === "observe-append") return typeof entry.obs === "string" && OBS_CODE.test(entry.obs) && objs.length <= 1;
+  if (entry?.source === "kb-snapshot") return objs.length >= 1 && Array.isArray(entry.obs) && entry.obs.length === objs.length && entry.obs.every((o) => OBS_CODE.test(String(o)));
+  return false;
+}
 export function snapshotCovers(entry, step) {
+  if (!observed(entry)) return false;
   const governed = governedObjects(step);
-  if (governed.length) return Array.isArray(entry?.objects) && governed.every((o) => entry.objects.includes(o));
+  if (governed.length) return governed.every((o) => entry.objects.includes(o));
   const area = step?.config?.area;
-  return !!area && Array.isArray(entry?.areas) && entry.areas.includes(area);
+  return !!area && entry.source === "observe-append" && Array.isArray(entry.areas) && entry.areas.includes(area);
 }
 
 // Nessun piano attivo (giro di correzione 1, I2): ogni azione con effetto è
@@ -250,6 +261,8 @@ const PROTECTED = [
   // WP08: storia dei ref e marcatore "inaffidabile" del cliente (li scrivono solo browser-origin e observe-append)
   ["customers/*/.sessions/ref-history.json*", "la storia dei ref del browser la scrivono solo gli hook browser-origin e observe-append: forgiarla legherebbe ref a SEL"],
   ["customers/*/.sessions/ref-pending.json*", "il marcatore delle osservazioni mancate lo scrivono solo gli hook browser-origin e observe-append"],
+  // WP09b giro 1 (I2): le OBS le scrive solo observe-append; kb snapshot si fonda su di esse (lo stato prima di una modifica)
+  ["customers/*/observations/**", "le osservazioni (OBS) le scrive solo l'hook observe-append: una OBS forgiata renderebbe valido uno snapshot di configurazione (§28.1)"],
   // WP08 giro 1 (I2): l'audit è append-only e lo scrive solo audit-append (T8): nemmeno >> o una troncatura dalla shell
   ["customers/*/audit/**", "l'audit è append-only e lo scrive solo l'hook audit-append (T8): niente append, troncature o copie dalla shell"],
   [".jvc/audit/**", "l'audit è append-only e lo scrive solo l'hook audit-append (T8): niente append, troncature o copie dalla shell"],

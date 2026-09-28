@@ -113,7 +113,7 @@
     },
     "snapshots": {
       "type": "array",
-      "description": "Snapshot degli oggetti governati prima di una modifica di configurazione (§28.1): guard-config-scope ne richiede uno degli ultimi 60 s che COPRA tutti gli oggetti governati del passo (config.object + config.governs; con la sola area: areas). Li scrivono kb snapshot (source kb-snapshot: stato dalle OBS della pagina di ciascun oggetto, file in runs/<RUN>/snapshots/) e observe-append (source observe-append: solo il config.object del passo, solo se la pagina mostra l'elemento del SEL del passo).",
+      "description": "Snapshot degli oggetti governati prima di una modifica di configurazione (§28.1): guard-config-scope ne richiede uno degli ultimi 60 s che COPRA tutti gli oggetti governati del passo (config.object + config.governs; con la sola area: areas). Li scrivono kb snapshot (source kb-snapshot: almeno un oggetto, un'OBS verificata sul DB per ciascuno in obs[], file in runs/<RUN>/snapshots/) e observe-append (source observe-append: il config.object del passo — o, per un passo di sola area, areas — con l'OBS in obs, solo se la pagina mostra l'elemento del SEL del passo). WP09b giro 1: una voce senza osservazioni non vale; una voce di sola area vale solo da observe-append.",
       "items": { "type": "object", "required": ["objects", "ts"], "properties": { "objects": { "type": "array", "items": { "type": "string" } }, "ts": { "type": "string" },
         "source": { "enum": ["kb-snapshot", "observe-append"] }, "run": { "type": "string" }, "file": { "type": "string" }, "obs": { "type": ["string", "array"] }, "areas": { "type": "array", "items": { "type": "string" } }, "page": { "type": "string" } } }
     },

@@ -75,7 +75,7 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
   };
   const allSilent = (res) => res.every(({ r }) => r.status === 0 && r.stdout.trim() === "");
   const denyOf = (res) => res.filter(({ r }) => decisionOf(r) === "deny").map(({ g, r }) => `${g}: ${reasonOf(r)}`);
-  const snapshot = () => patchSession(ws, (s) => { s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0019"], ts: new Date().toISOString() }]; });
+  const snapshot = () => patchSession(ws, (s) => { s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0019"], ts: new Date().toISOString(), source: "observe-append", obs: "L.ACME.ADM.OBS.0001" }]; });
 
   // passo 1: osservare (nessuna approvazione necessaria)
   assert.ok(allSilent(guards("mcp__chrome-devtools__navigate_page", { url: "https://acme.jaggaer.com/setup/import-profiles" })));
