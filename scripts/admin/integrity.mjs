@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { writeManifest, verifyPackage } from "../../hooks/lib/integrity.mjs";
+import { activeWorkspace, isPluginDir, insideWorkspace } from "../lib/dev-only.mjs";
 
 export const PLUGIN_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
@@ -35,7 +36,12 @@ export function run(argv) {
   const cmd = positional[0];
   const root = resolve(opts.root || PLUGIN_ROOT);
   try {
+    // WP08 giro 1 (I1): --root solo verso una radice del plugin fuori da ogni workspace JVC
+    if (opts.root !== undefined && (!isPluginDir(root) || insideWorkspace(root, root))) return fail(asJson, 1, `--root non è la radice di un plugin jaggaer-virtual-consultant fuori da un workspace: ${root}`);
     if (cmd === "build") {
+      // il manifesto si rigenera solo nel repository del plugin, mai da dentro un workspace JVC (T9)
+      const ws = activeWorkspace(root);
+      if (ws) return fail(asJson, 3, `integrity build rifiutato: esecuzione dentro il workspace JVC ${ws}; il manifesto si rigenera solo nel repository del plugin, per una release`);
       const r = writeManifest(root, { signKeyFile: opts["sign-key"] ? resolve(opts["sign-key"]) : null });
       const out = { ok: true, file: join(root, "integrity.json"), files: r.files, signed: r.signed, version: r.manifest.version };
       console.log(asJson ? JSON.stringify(out) : `integrity.json: ${r.files} file${r.signed ? ", firmato" : ""} (versione ${r.manifest.version})`);

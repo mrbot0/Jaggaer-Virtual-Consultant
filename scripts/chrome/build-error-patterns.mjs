@@ -6,6 +6,7 @@ import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import { isMain } from "../lib/is-main.mjs";
+import { activeWorkspace } from "../lib/dev-only.mjs";
 
 export const SOURCE = fileURLToPath(new URL("./error-patterns.yaml", import.meta.url));
 export const GENERATED = fileURLToPath(new URL("../../hooks/lib/generated/error-patterns.mjs", import.meta.url));
@@ -20,6 +21,11 @@ export function generate() {
 }
 
 if (isMain(import.meta.url)) {
+  // WP08 giro 1 (I1): i moduli generati del plugin si riscrivono solo nel repository del plugin, mai dentro un workspace JVC
+  if (!process.argv.includes("--check") && !process.argv.includes("--help")) {
+    const ws = activeWorkspace(fileURLToPath(new URL("../..", import.meta.url)));
+    if (ws) { console.error(`rifiutato: esecuzione dentro il workspace JVC ${ws}; si rigenera solo nel repository del plugin`); process.exit(3); }
+  }
   const code = generate();
   if (process.argv.includes("--check")) {
     let cur = "";

@@ -37,8 +37,7 @@ test("node: ≥ 22 verde, 20 rosso", async () => {
 test("deps: dipendenze installate e importabili verde; plugin senza node_modules rosso con fix 'npm install nel plugin'", async () => {
   const ws = demoWorkspace();
   assert.equal(await status(ws, "deps"), "green");
-  const p = copyPlugin();
-  rmSync(join(p, "node_modules"), { force: true, recursive: false });
+  const p = copyPlugin("jvc-plugin-", { modules: false });   // giro 1: nessuna cancellazione nei test
   const c = byId(await runChecks({ ws, plugin: p, env: DEMO_ENV }), "deps");
   assert.equal(c.status, "red");
   assert.match(c.fix, /npm install nel plugin/);

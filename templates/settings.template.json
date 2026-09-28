@@ -4,7 +4,7 @@
   },
   "permissions": {
     "allow": [
-      "Bash(node:*)",
+      "Bash(node *jaggaer-virtual-consultant*/scripts/*)",
       "Read(product/**)",
       "Read(customers/**)",
       "Edit(customers/**)"
@@ -17,6 +17,11 @@
       "Bash(rm:*)",
       "Bash(git push --force:*)",
       "Bash(git push -f:*)",
+      "PowerShell(rm:*)",
+      "PowerShell(Remove-Item:*)",
+      "PowerShell(del:*)",
+      "PowerShell(git push --force:*)",
+      "PowerShell(git push -f:*)",
       "WebFetch"
     ]
   }

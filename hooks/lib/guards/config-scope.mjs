@@ -35,6 +35,7 @@ import { approvalsFile, readApprovals, windowState, confirmInTranscript, consume
 import { appendAudit } from "../audit.mjs";
 import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
 import { pendingRefusal, mergedPending, loadPending, pendingFile } from "../ref-history.mjs";
+import { simpleNodeCall } from "../exact-argv.mjs";
 
 const G = "guard-config-scope";
 export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
@@ -233,20 +234,32 @@ const PROTECTED = [
   // WP08: storia dei ref e marcatore "inaffidabile" del cliente (li scrivono solo browser-origin e observe-append)
   ["customers/*/.sessions/ref-history.json*", "la storia dei ref del browser la scrivono solo gli hook browser-origin e observe-append: forgiarla legherebbe ref a SEL"],
   ["customers/*/.sessions/ref-pending.json*", "il marcatore delle osservazioni mancate lo scrivono solo gli hook browser-origin e observe-append"],
+  // WP08 giro 1 (I2): l'audit è append-only e lo scrive solo audit-append (T8): nemmeno >> o una troncatura dalla shell
+  ["customers/*/audit/**", "l'audit è append-only e lo scrive solo l'hook audit-append (T8): niente append, troncature o copie dalla shell"],
+  [".jvc/audit/**", "l'audit è append-only e lo scrive solo l'hook audit-append (T8): niente append, troncature o copie dalla shell"],
 ];
 const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
 const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);
 
-// `node <plugin>/scripts/…/*.mjs <argomenti>` senza metacaratteri né espansioni.
+// `node <plugin>/scripts/…/*.mjs <argomenti>`: UNA invocazione semplice (tokenizzatore condiviso hooks/lib/exact-argv.mjs,
+// WP08 giro 1 C1 — PowerShell valuta ( … ), @( … ), , prima di avviare node), argomenti di forma semplice.
 function pluginScript(cmd, ctx) {
-  const s = cmd.trim().replace(/"\$\{CLAUDE_SESSION_ID\}"/g, "SID");
-  if (/[;&|`<>\r\n$]/.test(s)) return false;
-  const t = [...s.matchAll(/"([^"]*)"|'([^']*)'|(\S+)/g)].map((m) => m[1] ?? m[2] ?? m[3]);
-  if (!/^node(\.exe)?$/i.test(t[0] ?? "") || !/\.mjs$/i.test(t[1] ?? "")) return false;
-  const abs = resolve(ctx.cwd, t[1]);
-  const inside = bases(join(ctx.plugin, "scripts")).some((b) => { const a = resolveTarget(abs, { cwd: ctx.cwd, ws: ctx.ws }).abs; return [...a].every((x) => x.startsWith(`${b}/`)); });
-  if (!inside || t.slice(2).some((a) => /^(-e|-p|--eval|--print|--import|-r|--require)$/.test(a))) return null;
-  return { script: t[1], rest: t.slice(2).join(" ") };   // K5 giro 3: gli argomenti si controllano a parte
+  const call = simpleNodeCall(cmd, ctx.cwd);
+  if (!call || !/\.mjs$/i.test(call.scriptToken)) return false;
+  const inside = bases(join(ctx.plugin, "scripts")).some((b) => { const a = resolveTarget(call.script, { cwd: ctx.cwd, ws: ctx.ws }).abs; return [...a].every((x) => x.startsWith(`${b}/`)); });
+  if (!inside || call.args.some((a) => /^(-e|-p|--eval|--print|--import|-r|--require)$/.test(a))) return null;
+  return { script: call.scriptToken, args: call.args, rest: call.args.join(" ") };   // K5 giro 3: gli argomenti si controllano a parte
+}
+
+// WP08 giro 1 (I1): i generatori del pacchetto (integrity build, build-deny-rules, build-session-validator,
+// build-error-patterns) riscrivono integrity.json o hooks/lib/generated/: mai da una sessione; restano ammessi
+// `integrity verify` e le verifiche --check / --help che non scrivono.
+function generatorRefusal(script) {
+  const name = basename(script.script).toLowerCase();
+  const a = script.args;
+  if (name === "integrity.mjs") return a[0] === "verify" && !a.includes("--root") ? null : a.length === 1 && a[0] === "--help" ? null : "integrity.mjs build (o --root) riscrive il manifesto d'integrità: si esegue solo nel repository del plugin, per una release (T9)";
+  if (/^build-[\w-]+\.mjs$/.test(name)) return a.every((x) => x === "--check" || x === "--help") && a.length ? null : `${name} riscrive i moduli generati del plugin: si esegue solo nel repository del plugin (T9)`;
+  return null;
 }
 
 function transcriptDirs(ctx) {
@@ -380,6 +393,8 @@ const protectWrites = guarded(G, (ctx) => {
     if (r) return no(r);
   }
   if (script) {
+    const gen = generatorRefusal(script);
+    if (gen) return no(gen);
     // anche uno script del plugin non riceve come argomento un percorso delle impostazioni
     if (CONFIG_TEXT.test(script.rest)) return no(`argomento verso le impostazioni di Claude Code — ${SETTINGS_WHY}`);
     return null;

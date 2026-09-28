@@ -7,9 +7,10 @@ import { ROOT } from "./hook-env.mjs";
 
 const PARTS = ["hooks", "scripts", "schemas", "decision-tables", "strategies", "policy", "clusters", "templates", ".claude-plugin", ".mcp.json", "package.json"];
 
-export function copyPlugin(prefix = "jvc-plugin-") {
+// modules: false ⇒ nessun node_modules (per il controllo deps di doctor), senza mai cancellare un collegamento.
+export function copyPlugin(prefix = "jvc-plugin-", { modules = true } = {}) {
   const dst = realpathSync.native(mkdtempSync(join(tmpdir(), prefix)));
   for (const p of PARTS) if (existsSync(join(ROOT, p))) cpSync(join(ROOT, p), join(dst, p), { recursive: true });
-  symlinkSync(join(ROOT, "node_modules"), join(dst, "node_modules"), "junction");
+  if (modules) symlinkSync(join(ROOT, "node_modules"), join(dst, "node_modules"), "junction");
   return dst;
 }

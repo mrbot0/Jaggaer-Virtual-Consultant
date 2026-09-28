@@ -9,8 +9,9 @@ test("template dei settings: JSON valido, plugin abilitato, permessi minimi e de
   const s = JSON.parse(readFileSync(join(ROOT, "templates/settings.template.json"), "utf8"));
   const enabled = Object.entries(s.enabledPlugins ?? {});
   assert.ok(enabled.some(([k, v]) => k.startsWith("jaggaer-virtual-consultant@") && v === true), "plugin abilitato");
-  assert.deepEqual([...s.permissions.allow].sort(), ["Bash(node:*)", "Edit(customers/**)", "Read(customers/**)", "Read(product/**)"].sort());
-  for (const d of ["Read(.env)", "Read(**/.env*)", "Read(.auth/**)", "Bash(rm:*)", "Bash(git push --force:*)", "Bash(git push -f:*)", "WebFetch"]) {
+  // WP08 giro 1 (M6): node solo sugli script del plugin (§53.3), non Bash(node:*)
+  assert.deepEqual([...s.permissions.allow].sort(), ["Bash(node *jaggaer-virtual-consultant*/scripts/*)", "Edit(customers/**)", "Read(customers/**)", "Read(product/**)"].sort());
+  for (const d of ["Read(.env)", "Read(**/.env*)", "Read(.auth/**)", "Bash(rm:*)", "Bash(git push --force:*)", "Bash(git push -f:*)", "WebFetch", "PowerShell(rm:*)", "PowerShell(Remove-Item:*)", "PowerShell(git push --force:*)", "PowerShell(git push -f:*)"]) {
     assert.ok(s.permissions.deny.includes(d), `deny ${d}`);
   }
   // nessun allargamento: niente jolly, niente bypass dei permessi, niente variabili d'ambiente che spengono i guard

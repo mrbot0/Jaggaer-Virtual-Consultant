@@ -7,6 +7,7 @@ import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import { isMain } from "../lib/is-main.mjs";
+import { activeWorkspace } from "../lib/dev-only.mjs";
 import { POLICY_FILE, policySha, normalizeDoc, compileRules } from "../../hooks/lib/deny-rules.mjs";
 
 export const GENERATED = fileURLToPath(new URL("../../hooks/lib/generated/deny-rules.mjs", import.meta.url));
@@ -20,6 +21,11 @@ export function generate() {
 }
 
 if (isMain(import.meta.url)) {
+  // WP08 giro 1 (I1): i moduli generati del plugin si riscrivono solo nel repository del plugin, mai dentro un workspace JVC
+  if (!process.argv.includes("--check") && !process.argv.includes("--help")) {
+    const ws = activeWorkspace(fileURLToPath(new URL("../..", import.meta.url)));
+    if (ws) { console.error(`rifiutato: esecuzione dentro il workspace JVC ${ws}; si rigenera solo nel repository del plugin`); process.exit(3); }
+  }
   if (process.argv.includes("--help")) {
     console.log("uso: node scripts/admin/build-deny-rules.mjs [--check]\nCompila policy/deny-rules.yaml in hooks/lib/generated/deny-rules.mjs. Exit: 0 ok · 1 non allineato (--check) · 2 errore.");
     process.exit(0);
