@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unit.schema.json",
+  "title": "Unità di significato (UNT, §19.9)",
+  "description": "La citazione minima: ciò che un item indica come fonte, ciò che il back-check rilegge, ciò che il diff di versione confronta. Prodotta da segmentUnits (scripts/ingest/segment.mjs); file canonico customers/<C>/sources/units/<DOCID>/<id>.yaml (livello S: product/sources/units/…), indicizzato da reindex nella tabella units (+ units_fts).",
+  "type": "object",
+  "required": ["id", "doc", "type", "text", "hash", "context"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^U\\.[A-Z0-9]+\\.\\d{4,}$", "description": "U.<DOCID>.<nnnn>: stabile fra versioni del documento se l'hash non cambia (§19.16)" },
+    "doc": { "type": "string", "minLength": 1, "description": "codice DOC del documento (o id del documento normalizzato prima del profilo)" },
+    "doc_id": { "type": "string" },
+    "type": { "enum": ["procedura", "passo", "riga-tabella-campi", "tabella", "nota", "regola", "definizione", "figura", "esempio", "riferimento", "tracciato", "decisione", "schermata", "testo"] },
+    "text": { "type": "string", "minLength": 1 },
+    "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "words": { "type": "integer", "minimum": 1, "maximum": 300 },
+    "lang": { "enum": ["it", "en"] },
+    "context": {
+      "type": "object",
+      "required": ["doc", "section_path", "lang", "prev", "next"],
+      "properties": {
+        "doc": { "type": "string" },
+        "chapter": { "type": ["string", "null"] },
+        "section": { "type": ["string", "null"] },
+        "section_path": { "type": "string" },
+        "page": { "type": ["integer", "null"] },
+        "lang": { "enum": ["it", "en"] },
+        "prev": { "type": ["string", "null"] },
+        "next": { "type": ["string", "null"] }
+      }
+    },
+    "refs_out": { "type": "array", "items": { "type": "string" } },
+    "part": { "type": "object", "required": ["n", "of"], "properties": { "n": { "type": "integer" }, "of": { "type": "integer" } } },
+    "steps": { "type": "array", "maxItems": 15, "items": { "type": "string" } },
+    "procedure": { "type": "object" },
+    "step": { "type": "object" },
+    "row": { "type": "object", "required": ["headers", "cells", "columns"] },
+    "table": { "type": "object", "properties": { "rows": { "type": "array", "maxItems": 40 } } },
+    "record": { "type": "object" },
+    "figure": { "type": "object" },
+    "decision": { "type": "object", "properties": { "author": { "type": ["string", "null"] }, "date": { "type": ["string", "null"] } } },
+    "term": { "type": "string" },
+    "tacit": { "type": "boolean" },
+    "timestamp": { "type": "string" },
+    "system_message": { "type": "boolean" },
+    "source_kind": { "enum": ["commento", "revisione"] },
+    "extraction": { "type": "object", "description": "pre-estrazione T0 (scripts/ingest/extract.mjs)" },
+    "residue": { "type": "object", "required": ["class", "reason"], "properties": { "class": { "enum": ["irrelevant", "duplicate", "ambiguous", "unsupported", "deferred", "tacit"] }, "reason": { "type": "string" } } }
+  },
+  "allOf": [
+    { "if": { "properties": { "type": { "const": "procedura" } } }, "then": { "required": ["steps"] } },
+    { "if": { "properties": { "type": { "const": "riga-tabella-campi" } } }, "then": { "required": ["row"] } },
+    { "if": { "properties": { "type": { "const": "decisione" } } }, "then": { "required": ["decision"] } }
+  ]
+}
