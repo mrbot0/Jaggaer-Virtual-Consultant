@@ -308,7 +308,7 @@ export function extractDocument(doc, units, { profile = null } = {}) {
   for (const c of docItems) c.tokens = Math.min(UNIT_BUDGET - LLM_OVERHEAD, Math.max(200, (c.missing?.length ?? 1) * 5 * 120));
   const all = [...items, ...docItems];
   const byCandidate = {};
-  for (const r of all) byCandidate[r.candidates?.[0] ?? "?"] = (byCandidate[r.candidates?.[0] ?? "?"] ?? 0) + 1;
+  for (const r of all) { const k = r.candidates?.[0] ?? "residuo"; byCandidate[k] = (byCandidate[k] ?? 0) + 1; }
   const stats = { units: units.length, extracted_units: items.length, document_candidates: docItems.length, needs_llm: all.filter((r) => r.needs_llm).length,
     t0_complete: all.filter((r) => !r.needs_llm).length, by_candidate: byCandidate, residue_marked: items.filter((r) => r.residue).length };
   return { items: all, stats, llm_plan: planLlm(all) };

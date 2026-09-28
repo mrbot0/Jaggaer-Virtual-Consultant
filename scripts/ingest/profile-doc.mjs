@@ -97,11 +97,15 @@ export function detectScopes(doc, units = [], { max = 4 } = {}) {
   return sorted.filter(([, v]) => v >= top * 0.15).slice(0, max).map(([k]) => k);
 }
 
+// La chiave comprende il formato: lo stesso documento in DOCX e in PDF è una SECONDA RAPPRESENTAZIONE, non una
+// versione (due DOC distinti, collegati dal nome); versioni = stesso nome senza marcatori e stesso formato.
 export function docKey(source) {
+  const ext = extname(String(source ?? "")).toLowerCase().replace(/^\./, "");
   const base = basename(String(source ?? "doc")).replace(extname(String(source ?? "")), "");
-  return base.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "")
+  const k = base.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "")
     .replace(/[\s_-]*(?:v(?:er(?:sion[e]?)?)?\.?\s*\d+(?:\.\d+)*|rev\.?\s*\d+|\(\d+\)|copy|copia)\s*$/i, "")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "doc";
+  return ext ? `${k}.${ext}` : k;
 }
 
 export function detectVersion(doc, source) {

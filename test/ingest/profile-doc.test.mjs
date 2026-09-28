@@ -92,6 +92,7 @@ test("codice DOC dal DB: stesso contenuto ⇒ stesso codice; stesso documento co
   assert.equal(v3.previous, "S.STD.XSC.DOC.0001");
   assert.equal(assignDocCode(db, { source: "altro.pdf", sha256: "sha256:cc" }).code, "S.STD.XSC.DOC.0002");
   assert.equal(docKey("ACME_Configurazione_v2.docx"), docKey("ACME_Configurazione_v3.docx"));
+  assert.notEqual(docKey("Handout.docx"), docKey("Handout.pdf"), "DOCX e PDF dello stesso documento: due rappresentazioni, non due versioni");
 });
 
 test("reindex: la fonte DOC profilata dà il peso di base (reliability.score) al posto del peso per origine F1", () => {
