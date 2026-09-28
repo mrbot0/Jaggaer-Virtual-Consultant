@@ -102,18 +102,24 @@ export function generateSpec(ws, customer, plan, { allowFragile = false } = {}) 
   }
   const text = [
     `// plan-hash: ${hash}`,
-    `// ${plan.plan_id} — ${plan.goal ?? ""}`,
+    `// ${oneLine(plan.plan_id)} — ${oneLine(plan.goal)}`,
+    "// ATTENZIONE: lo spec ripete i passi che creano o modificano dati senza compensazioni registrate (step-check non",
+    "// gira in CI): solo in sandbox, su dati di prova, con la pulizia a carico della pipeline (§27.4, §29.6).",
     "// Generato da scripts/chrome/compile-plan.mjs (corsia compilata, §27.4): non modificare. Un piano cambiato invalida",
     "// lo spec (compile-plan verify); l'Atlas resta la fonte dei target.",
     'import { test, expect } from "@playwright/test";',
     "",
-    `test(${q(`${plan.plan_id} — ${plan.goal ?? ""}`)}, async ({ page }) => {`,
+    `test(${q(`${oneLine(plan.plan_id)} — ${oneLine(plan.goal)}`)}, async ({ page }) => {`,
     ...body,
     "});",
     "",
   ].join("\n");
   return { hash, text };
 }
+
+// Testo del piano in un commento dello spec: niente fine riga (CR, LF, U+2028/2029, U+0085), niente chiusure di
+// commento — un goal scritto dall'agente non deve poter uscire dal commento in uno spec che la CI esegue fuori dai guard.
+export function oneLine(v) { return String(v ?? "").replace(/[\r\n\v\f\u0085\u2028\u2029]+/g, " ").replace(/\*\//g, "* /").slice(0, 200); }
 
 export function readSpecHash(text) { return /^\/\/ plan-hash: ([0-9a-f]{64})$/m.exec(String(text))?.[1] ?? null; }
 

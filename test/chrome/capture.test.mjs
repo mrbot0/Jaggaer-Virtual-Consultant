@@ -20,7 +20,7 @@ const PW = `### Page state
 - Page Snapshot:
 \`\`\`yaml
 - heading "Richiesta d'acquisto" [level=1] [ref=e2] [box=10,5,300,30]
-- generic [ref=e3] [box=0,40,400,200]:
+- form "Dati richiesta" [ref=e3] [box=0,40,400,200]:
   - textbox "Centro di costo" [ref=e4] [box=20,50,150,20]: IT-0442
   - textbox "Referente" [ref=e5] [box=20,80,150,20]: Mario Rossi
   - textbox "Contatto" [ref=e6] [box=20,110,150,20]: m.rossi@acme.it
@@ -36,26 +36,27 @@ function setup({ env = "sandbox" } = {}) {
   const selF = join(ws, "customers/ACME/kb/scopes/P2P/selectors/C.ACME.P2P.SEL.0060.yaml");
   writeFileSync(selF, `${readFileSync(selF, "utf8")}field: C.ACME.P2P.FLD.0077\n`);
   mkdirSync(join(ws, "customers/ACME/kb/scopes/P2P/fields"), { recursive: true });
+  writeSel(ws, "C.ACME.P2P.SEL.0070", { role: "form", label: "Dati richiesta", effect: "read" });
   writeFileSync(join(ws, "customers/ACME/kb/scopes/P2P/fields/C.ACME.P2P.FLD.0077.yaml"), "id: C.ACME.P2P.FLD.0077\ntype: FLD\nidentity:\n  sensitivity:\n    class: personale\n    pii: true\n    commercial: false\n");
-  const plan = demoPlan({ evidence: [{ at: 3, kind: "assertion", capture: "region", region: "C.ACME.P2P.SEL.0044", caption: "Bozza salvata con importo € 1.250,00", redact: "standard" }] });
+  const plan = demoPlan({ evidence: [{ at: 3, kind: "assertion", capture: "region", region: "C.ACME.P2P.SEL.0070", caption: "Bozza salvata con importo € 1.250,00", redact: "standard" }] });
   const file = writePlan(ws, plan, "RUN.ACME.K6");
   patchSession(ws, (s) => { s.active_plan = { plan_id: plan.plan_id, file, step: 3, run: "RUN.ACME.K6" }; });
   return { ws, file };
 }
-const white = (w = 400, h = 260) => encodePng({ width: w, height: h, channels: 3, data: Buffer.alloc(w * h * 3, 255) });
+const white = (w = 400, h = 200) => encodePng({ width: w, height: h, channels: 3, data: Buffer.alloc(w * h * 3, 255) });
 
 test("prepare strict: maschere per selettore (FLD pii) e per contenuto (e-mail, importo) con riquadro; nessuno script nella pagina", async () => {
   const { ws, file } = setup();
-  const s = await prepare({ ws, sid: "sess-1", planFile: file, step: 3, region: "C.ACME.P2P.SEL.0044", profile: "strict", snapshot: PW, env: {} });
+  const s = await prepare({ ws, sid: "sess-1", planFile: file, step: 3, region: "C.ACME.P2P.SEL.0070", profile: "strict", snapshot: PW, env: {} });
   assert.equal(s.profile, "strict");
   assert.equal(s.no_page_script, true);
   const by = Object.fromEntries(s.masks.map((m) => [m.label, m]));
   assert.equal(by.Referente.reason, "pii"); assert.equal(by.Referente.sel, "C.ACME.P2P.SEL.0060");
   assert.match(by.Contatto.reason, /email/);
   assert.match(by["Importo stimato"].reason, /importo/);
-  assert.deepEqual(by["Importo stimato"].rect, { x: 0, y: 90, w: 150, h: 20 }, "riquadro relativo alla regione (Centro di costo)");
+  assert.deepEqual(by["Importo stimato"].rect, { x: 20, y: 100, w: 150, h: 20 }, "riquadro relativo alla regione (il modulo)");
   assert.equal(by["Centro di costo"], undefined, "un codice di dominio non è un dato sensibile");
-  assert.equal(s.region.ref, "e4");
+  assert.equal(s.region.ref, "e3");
   // ogni istruzione di scatto è una lettura per i guard, con output nelle cartelle del run
   for (const [fam, tool] of [["chrome-devtools", "mcp__chrome-devtools__take_screenshot"], ["playwright", "mcp__playwright__browser_take_screenshot"], ["claude-browser", "mcp__claude-in-chrome__computer"]]) {
     const c = classify(tool, s.screenshot[fam].params);
@@ -80,14 +81,14 @@ test("prepare standard: gli importi non si mascherano; in pre-produzione il prof
 
 test("record: maschere applicate sui pixel, sha256 del file finale, metadati EVD, didascalia redatta; importi mascherati in strict", async () => {
   const { ws, file } = setup();
-  const s = await prepare({ ws, sid: "sess-1", planFile: file, step: 3, region: "C.ACME.P2P.SEL.0044", profile: "strict", snapshot: PW, env: {} });
+  const s = await prepare({ ws, sid: "sess-1", planFile: file, step: 3, region: "C.ACME.P2P.SEL.0070", profile: "strict", snapshot: PW, env: {} });
   const png = join(ws, s.file);
   writeFileSync(png, white());
   const ev = await record({ ws, sid: "sess-1", file: s.file, step: 3, kind: "assertion", caption: "Totale € 1.250,00 per m.rossi@acme.it", env: {} });
   const img = decodePng(readFileSync(png));
   const imp = s.masks.find((m) => m.label === "Importo stimato").rect;
   assert.deepEqual(pixel(img, imp.x + 5, imp.y + 5), [0, 0, 0], "importo mascherato");
-  assert.deepEqual(pixel(img, 390, 250), [255, 255, 255], "fuori dalle maschere invariato");
+  assert.deepEqual(pixel(img, 390, 190), [255, 255, 255], "fuori dalle maschere invariato");
   assert.equal(ev.sha256, createHash("sha256").update(readFileSync(png)).digest("hex"));
   assert.equal(ev.publishable, true);
   assert.ok(ev.masks.every((m) => m.applied));
@@ -106,7 +107,7 @@ test("record: una maschera richiesta senza riquadro ⇒ non pubblicabile; con --
   assert.equal(bad.publishable, false); assert.match(bad.not_publishable_reason, /senza riquadro/);
   const s2 = await prepare({ ws, sid: "sess-1", planFile: file, step: 3, profile: "strict", snapshot: noBox, env: {} });
   writeFileSync(join(ws, s2.file), white());
-  const ok = await record({ ws, sid: "sess-1", file: s2.file, kind: "result", masks: s2.masks.map((_, i) => ({ x: 10, y: 10 + i * 30, w: 50, h: 20 })), env: {} });
+  const ok = await record({ ws, sid: "sess-1", file: s2.file, kind: "result", masks: s2.masks.map((_, i) => ({ x: 10, y: 10 + i * 30, w: 50, h: 20 })), dpr: 1, env: {} });
   assert.equal(ok.publishable, true);
   await assert.rejects(record({ ws, sid: "sess-1", file: "customers/ACME/kb/x.png", kind: "result" }), /runs/);
   await assert.rejects(record({ ws, sid: "sess-1", file: s2.file, kind: "boh" }), /kind non valido/);
