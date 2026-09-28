@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 28/09/2026 19:20 — **punto corrente: WP08 (F0) avviato; WP07 (K6) chiuso**.
+Ultimo aggiornamento: 28/09/2026 21:40 — **punto corrente: WP09a (ingestion sul corpus JAGGAER reale) avviato; WP08 (F0) chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 46 % del progetto** (stima pesata sullo sforzo) · 7 pacchetti su 17 chiusi.
+**≈ 49 % del progetto** (stima pesata sullo sforzo) · 8 pacchetti su 17 chiusi.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 46 %** (51 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 7 / 17 = **41 %** | WP01–WP07 con review e tag |
-| Hook del catalogo §44.4 | 14 / 16 = **88 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
-| Test automatici | 578 / 578 verdi | `npm test` al tag `k6-done` (`ea67488`); intento 33/33; observe-append p50 125 ms |
+| Avanzamento pesato | **≈ 49 %** (54 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 8 / 17 = **47 %** | WP01–WP08 con review e tag |
+| Hook del catalogo §44.4 | 16 / 16 = **100 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
+| Test automatici | 652 / 652 verdi | `npm test` al tag `f0-done` (`9327fff`); guard ≤ 134 ms |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -36,6 +36,19 @@ Ultimo aggiornamento: 28/09/2026 19:20 — **punto corrente: WP08 (F0) avviato; 
 - Corretto dopo la review: nessuna formula di raccomandazione produce più un obbligo, e anche la validazione a valle lo impedisce. Il budget per documento non si può alzare, e il consumo resta legato alla sessione reale.
 - Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
 - Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
+
+### Chiusura di WP08 (F0, fondamenta e sicurezza)
+- Implementato in 8 commit, più 1 giro di correzione (`993a003..9327fff`). Tag `f0-done` → `9327fff`.
+- Consegnato:
+  - **guard-destructive**, con le regole in `policy/deny-rules.yaml`. L'unica cancellazione ammessa è la purge con doppia approvazione.
+  - **guard-alm-write:** mai cancellazioni, mai Incident, niente sovrascritture di contenuti umani su Jira/Xray.
+  - **Verifica d'integrità del pacchetto** all'avvio: con file alterati i guard negano tutto.
+  - **`doctor`**, che controlla anche che le dipendenze del plugin siano installate.
+  - **Template delle impostazioni** e la decisione di WP07 sul browser di Claude fuori dalla sandbox.
+- Corretto dopo la review: eccezioni a forma esatta non più falsificabili, e cancellazioni dei dati dei clienti bloccate anche con nomi di comando dinamici. Audit protetto, `.env` illeggibile anche con glob, modalità sviluppo non persistibile, chiavi Jira umane mai registrate come del plugin.
+- **Nota per l'uso:** dalla sessione gli script del plugin non accettano più argomenti con parentesi o graffe, come il JSON inline. I comandi e le skill useranno file di input.
+- **Incidente durante la review, già gestito:** una prova ha tentato di cancellare un file di sistema. Il sistema l'ha rifiutato e i file sono intatti. Da allora le prove distruttive si fanno solo come input agli hook.
+- **Verifica limitata:** anche qui un classificatore di sicurezza ha interrotto una re-review mentre scriveva varianti d'attacco. La verifica finale ha controllato le anomalie su codice e test. Le varianti non ancora note restano un rischio residuo dichiarato, come per WP06.
 
 ### Chiusura di WP07 (K6, esecuzione su Chrome)
 - Implementato in 10 commit, più 5 giri di correzione (`4380433..ea67488`). Tag `k6-done` → `ea67488`.
@@ -92,8 +105,8 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP05 | Modello dei campi FLD, carta d'identità, pipeline a lotti ≤ 50, parser deontico, catene, `kb fields/impact/identity` | K4 | 7 | 100 | ✅ | tag `k4-done` → `d985f8d`, 370 test, deontico 228/228, `docs/phase-reports/K4.md` |
 | WP06 | Ambienti, `env-check`, guard-environment/production/config-scope, catalogo azioni ACT, tripla approvazione 3A | K5 | 6 | 100 | ✅ | tag `k5-done` → `69cc6e7`, 466 test, 3 giri di correzione, `docs/phase-reports/K5.md` |
 | WP07 | `step-check`, `observe-append`, errori della piattaforma, evidenze, intento DT-026, workflow, report ed esiti, budget, `compile-plan` opzionale | K6 | 8 | 100 | ✅ | tag `k6-done` → `ea67488`, 578 test, 5 giri di correzione, `docs/phase-reports/K6.md` |
-| WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 0 | 🔄 | `wp08-f0.md` + decisione portata da WP07 |
-| WP09a | Pipeline di ingestion: parser DOCX/XLSX/PDF/XSD/export/screenshot/trascrizioni/e-mail, unità, profilo DOC, banche di domande, back-check, alias, versioni, residuo, revisione, survey del tenant, PRF/PMP | F1' (strumenti) | 10 | 0 | ⬜ Brief | `wp09a-ingest.md` |
+| WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 100 | ✅ | tag `f0-done` → `9327fff`, 652 test, 1 giro di correzione, `docs/phase-reports/F0.md` |
+| WP09a | Pipeline di ingestion: parser DOCX/XLSX/PDF/XSD/export/screenshot/trascrizioni/e-mail, unità, profilo DOC, banche di domande, back-check, alias, versioni, residuo, revisione, survey del tenant, PRF/PMP | F1' (strumenti) | 10 | 0 | 🔄 | `wp09a-ingest.md` |
 | WP09b | Schemi NRT/SEL/HND/CHK/CFP/FLW/KEY/LCY/INT/CFG, compile-case/cfp, lint, Atlas, corsie di esecuzione, compensazioni, snapshot, evidenze, negativi, promozione, copertura | F3–F7, C1 (strumenti) | 12 | 0 | ⬜ Brief | `wp09b-run.md` |
 | WP09c | AlmAdapter (Xray Cloud/Server/Mock), server MCP ALM, script xray, coda offline, Defect, `.mcp.json`, NETWORK.md | F5 | 6 | 0 | ⬜ Brief | `wp09c-alm.md` |
 | WP09d | Comandi `kb` restanti, digestione settimanale, Analytics (TBL/QRY/DIN/USR/PSP/ERR), dominio analitico, audit config, admin (status, lock, retention, purge) | F8–F12, G2–G3 (strumenti) | 8 | 0 | ⬜ Brief | `wp09d-ops.md` |
@@ -102,7 +115,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 0 | ⬜ Brief | `wp10d-orchestration.md` — da eseguire prima di WP10c |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **111** | **≈ 46** | | 51 unità completate |
+| **Totale** | | | **111** | **≈ 49** | | 54 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
@@ -112,7 +125,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 - [x] guard-budget · subagent-trace (WP03 ✅)
 - [x] guard-environment · guard-production · guard-config-scope · approval-capture (WP06 ✅) · in più browser-origin, guard-phrase
 - [x] observe-append (WP07 ✅)
-- [ ] guard-destructive · guard-alm-write (WP08)
+- [x] guard-destructive · guard-alm-write (WP08 ✅)
 
 ### Script (gruppi §44.5)
 - [x] `kb/`: codes, validate-codes/schema/boundary/scope, assign-seq, db + migrazioni, lock, reindex, weights, quality, epistemic, find, resolve, get, summary, cluster, cluster-rules
