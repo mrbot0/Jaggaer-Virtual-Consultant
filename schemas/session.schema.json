@@ -116,6 +116,11 @@
       "description": "Snapshot degli oggetti governati prima di una modifica di configurazione (§28.1): guard-config-scope ne richiede uno degli ultimi 60 s.",
       "items": { "type": "object", "required": ["objects", "ts"], "properties": { "objects": { "type": "array", "items": { "type": "string" } }, "ts": { "type": "string" } } }
     },
+    "alm": {
+      "type": "object",
+      "description": "F0.2: ciò che il plugin ha creato nell'ALM in questa sessione. created[] lo scrive solo alm-record (PostToolUse, risposta riuscita di una creazione): { key, kind: execution|defect|test|issue|page, tool, ts }. guard-alm-write consente update, transizioni e alm_import_results solo su questi bersagli (mai sovrascrivere contenuto umano).",
+      "properties": { "created": { "type": "array", "maxItems": 500, "items": { "type": "object", "required": ["key"], "properties": { "key": { "type": "string", "minLength": 1 }, "kind": { "type": "string" }, "tool": { "type": "string" }, "ts": { "type": "string" } } } } }
+    },
     "browser": {
       "type": "object",
       "description": "Origine del browser: guard-environment registra current_url a ogni navigate consentito e lo azzera ai cambi di scheda/pagina (giro di correzione 1); observe-append (K6.2) lo aggiorna dalla pagina osservata (marcatore positivo della famiglia; fail-closed). tab = scheda/pagina nominata dalla navigazione registrata.",

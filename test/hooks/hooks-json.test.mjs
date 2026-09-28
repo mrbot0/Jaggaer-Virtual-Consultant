@@ -4,6 +4,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT } from "../helpers/hook-env.mjs";
 import { BROWSER_MATCHER } from "../../hooks/lib/browser-tools.mjs";
+import { ALM_MATCHER } from "../../hooks/lib/alm.mjs";
 
 const HOOKS = JSON.parse(readFileSync(join(ROOT, "hooks/hooks.json"), "utf8"));
 
@@ -33,6 +34,9 @@ const EXPECTED = [
   ["PostToolUse", BROWSER_MATCHER, "observe-append"],
   // F0.1: deny-list (policy/deny-rules.yaml) su shell, scritture e browser.
   ["PreToolUse", `Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit|${BROWSER_MATCHER}`, "guard-destructive"],
+  // F0.2: scritture sull'ALM (server del plugin, Jira, Atlassian) e registro di ciò che il plugin crea.
+  ["PreToolUse", ALM_MATCHER, "guard-alm-write"],
+  ["PostToolUse", ALM_MATCHER, "alm-record"],
 ];
 
 const entries = () => Object.entries(HOOKS.hooks).flatMap(([event, groups]) => groups.flatMap((g) => g.hooks.map((h) => ({ event, matcher: g.matcher, ...h }))));
@@ -84,4 +88,14 @@ test("hooks.json F0.1: guard-destructive su Bash, PowerShell, scritture e tre fa
   for (const t of ["Bash", "PowerShell", "Write", "Edit", "MultiEdit", "NotebookEdit", "mcp__Claude_Browser__computer", "mcp__claude-in-chrome__form_input",
     "mcp__chrome-devtools__click", "mcp__plugin_playwright_playwright__browser_click"]) assert.ok(re.test(t), t);
   for (const t of ["Read", "Glob", "Grep", "Agent", "mcp__alm__alm_get_test"]) assert.equal(re.test(t), false, t);
+});
+
+test("hooks.json F0.2: guard-alm-write e alm-record sui server ALM, Jira e Atlassian (il guard ricontrolla il nome del server)", () => {
+  const re = new RegExp(`^(?:${ALM_MATCHER})$`);
+  for (const t of ["mcp__alm__alm_create_defect", "mcp__plugin_jaggaer-virtual-consultant_alm__alm_import_results", "mcp__claude_ai_Atlassian__createJiraIssue",
+    "mcp__jira__jira_delete_issue", "mcp__plugin_productivity_atlassian__editJiraIssue", "mcp__JIRA__x"]) assert.ok(re.test(t), t);
+  for (const t of ["Bash", "mcp__chrome-devtools__click", "mcp__Claude_Browser__computer"]) assert.equal(re.test(t), false, t);
+  const g = (ev) => HOOKS.hooks[ev].filter((x) => x.hooks.some((h) => /guard-alm-write|alm-record/.test(h.command)));
+  assert.deepEqual(g("PreToolUse").map((x) => x.matcher), [ALM_MATCHER]);
+  assert.deepEqual(g("PostToolUse").map((x) => x.matcher), [ALM_MATCHER]);
 });

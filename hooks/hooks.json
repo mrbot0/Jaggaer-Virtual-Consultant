@@ -127,6 +127,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "mcp__.*([Aa][Ll][Mm]|[Jj][Ii][Rr][Aa]|[Aa][Tt][Ll][Aa][Ss][Ss][Ii][Aa][Nn]).*__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/guard-alm-write.mjs\"",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -152,6 +162,16 @@
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/observe-append.mjs\"",
             "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__.*([Aa][Ll][Mm]|[Jj][Ii][Rr][Aa]|[Aa][Tt][Ll][Aa][Ss][Ss][Ii][Aa][Nn]).*__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/alm-record.mjs\"",
+            "timeout": 5
           }
         ]
       }
