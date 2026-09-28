@@ -17,7 +17,7 @@ const FORMATS = ["chrome-devtools", "claude-browser", "playwright"];
 function setup(plan = demoPlan(), opts = {}) {
   const ws = envWs({ env: "sandbox", scope: "P2P", ...opts });
   demoAtlas(ws);
-  const file = writePlan(ws, plan, "RUN.ACME.K6");
+  const file = writePlan(ws, plan, "RUN.ACME.20260922.1100.ADM");
   return { ws, file };
 }
 const ctx = (ws) => ({ ws, customer: "ACME", sid: "sess-1" });
@@ -87,7 +87,7 @@ for (const f of FORMATS) {
       if (want.kind) { assert.equal(r.kind, want.kind, `${f}/${name}`); assert.equal(r.compat, want.compat, `${f}/${name}`); assert.equal(r.proceed, want.compat === "compatibile"); }
       if (want.unverified) assert.deepEqual([...new Set(r.unverified.map((u) => u.attr))].sort(), [...want.unverified].sort(), `${f}/${name}: ${JSON.stringify(r.unverified)}`);
       if (name === "novelty") assert.deepEqual(r.novelties, [{ role: "textbox", label: "Codice progetto" }]);
-      assert.ok(existsSync(join(ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints/2.json")), "checkpoint");
+      assert.ok(existsSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints/2.json")), "checkpoint");
     }
   });
 }
@@ -108,13 +108,13 @@ test("attivazione: active_plan {plan_id, file, step, run}; passo ok ⇒ avanza e
   const g = await at(ws, file, 1, null);
   assert.equal(g.status, "ok");
   const ap = readSession(ws).active_plan;
-  assert.deepEqual({ ...ap, plan_sha256: undefined }, { plan_id: PLAN, file, step: 1, run: "RUN.ACME.K6", plan_sha256: undefined });
+  assert.deepEqual({ ...ap, plan_sha256: undefined }, { plan_id: PLAN, file, step: 1, run: "RUN.ACME.20260922.1100.ADM", plan_sha256: undefined });
   assert.match(ap.plan_sha256, /^[0-9a-f]{64}$/, "impronta del piano (WP07 giro 1)");
   await toStep2(ws, file);
   assert.equal(readSession(ws).active_plan.step, 2);
   const r = await at(ws, file, 2, snap("playwright", "ok"));
   assert.equal(r.status, "ok");
-  const cp = JSON.parse(readFileSync(join(ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints/2.json"), "utf8"));
+  const cp = JSON.parse(readFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints/2.json"), "utf8"));
   assert.equal(cp.step, 2); assert.equal(cp.status, "ok"); assert.equal(cp.plan_id, PLAN); assert.match(cp.plan_sha256, /^[0-9a-f]{64}$/);
   assert.equal(cp.page_signature, "p2p/requisition/edit#richiesta-d-acquisto");
   // il passo 3 (SAVE ACT-CREATE) è preparato: compensazione registrata PRIMA del passo (§29.6)
@@ -122,7 +122,7 @@ test("attivazione: active_plan {plan_id, file, step, run}; passo ok ⇒ avanza e
   const s = readSession(ws);
   assert.equal(s.active_plan.step, 3);
   assert.deepEqual(s.pending.compensations.map((c) => [c.plan, c.step, c.kind]), [[PLAN, 3, "cancel"]]);
-  assert.match(readFileSync(join(ws, "customers/ACME/runs/RUN.ACME.K6/compensations.yaml"), "utf8"), /requisition\.cancel/);
+  assert.match(readFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/compensations.yaml"), "utf8"), /requisition\.cancel/);
 });
 
 test("guard-config-scope consente il SAVE sullo stato scritto da step-check (compensazione registrata); senza compensazione nel piano step-check nega", async () => {
@@ -190,7 +190,7 @@ test("denied: piano non ammesso nell'ambiente, passo fuori sequenza, piano diver
   await at(b.ws, b.file, 1, null);
   const skip = await at(b.ws, b.file, 3, snap("chrome-devtools", "ok"));
   assert.equal(skip.status, "denied"); assert.match(skip.reason, /sequenza/);
-  const other = writePlan(b.ws, demoPlan({ plan_id: "PLAN.ACME.K6.0002" }), "RUN.ACME.K6B");
+  const other = writePlan(b.ws, demoPlan({ plan_id: "PLAN.ACME.K6.0002" }), "RUN.ACME.20260922.1101.ADM");
   const o = await at(b.ws, other, 1, null);
   assert.equal(o.status, "denied"); assert.match(o.reason, /PLAN\.ACME\.K6\.0001/);
 });

@@ -82,9 +82,9 @@ function readPlanWs(envId) {
   const plan = { plan_id: "PLAN.ACME.X.0002", customer: "ACME", env: envId, goal: "lettura elenco",
     steps: [{ n: 1, verb: "CLICK", action_class: "ACT-OBS", target: "C.ACME.P2P.SEL.0010", expect: { page_sig: "p2p/requisition/list" } }],
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } };
-  mkdirSync(join(ws, "customers/ACME/runs/RUN.Y"), { recursive: true });
-  writeFileSync(join(ws, "customers/ACME/runs/RUN.Y/plan.json"), JSON.stringify(plan));
-  return { ws, plan, file: "runs/RUN.Y/plan.json", url: URLS[envId] };
+  mkdirSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1106.ADM"), { recursive: true });
+  writeFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1106.ADM/plan.json"), JSON.stringify(plan));
+  return { ws, plan, file: "runs/RUN.ACME.20260922.1106.ADM/plan.json", url: URLS[envId] };
 }
 const tr0 = () => { const f = join(mkdtempSync(join(tmpdir(), "fr2-")), "t.jsonl"); writeFileSync(f, ""); return f; };
 const say = (ws, tr, prompt) => { appendFileSync(tr, `${JSON.stringify({ type: "user", isSidechain: false, userType: "external", message: { role: "user", content: prompt }, timestamp: new Date().toISOString() })}\n`); runHook("approval-capture", { session_id: "sess-1", cwd: ws, hook_event_name: "UserPromptSubmit", prompt, transcript_path: tr }, E(ws)); };
@@ -127,8 +127,8 @@ async function evidence(w, h, dpr, snapshot = FORM, region = "C.ACME.P2P.SEL.007
   demoAtlas(ws);
   writeSel(ws, "C.ACME.P2P.SEL.0070", { role: "form", label: "Dati richiesta", effect: "read" });
   const plan = demoPlan({ evidence: [{ at: 3, kind: "assertion", capture: "region", region, caption: "Bozza", redact: "standard" }] });
-  const file = writePlan(ws, plan, "RUN.ACME.K6");
-  patchSession(ws, (s) => { s.active_plan = { plan_id: plan.plan_id, file, step: 3, run: "RUN.ACME.K6" }; });
+  const file = writePlan(ws, plan, "RUN.ACME.20260922.1100.ADM");
+  patchSession(ws, (s) => { s.active_plan = { plan_id: plan.plan_id, file, step: 3, run: "RUN.ACME.20260922.1100.ADM" }; });
   const s = await prepare({ ws, sid: "sess-1", planFile: file, step: 3, profile: "standard", snapshot, env: {} });
   writeFileSync(join(ws, s.file), img(w, h));
   const r = await record({ ws, sid: "sess-1", file: s.file, kind: "assertion", dpr, env: {} });
@@ -169,15 +169,15 @@ test("N-1 (p7b): chiavi di expect ed elementi del piano compaiono solo in letter
 
 test("N-2 (p3): guard-budget non prende le classi da un piano attivo modificato dopo l'attivazione", () => {
   const ws = mkWs(); seedSession(ws);
-  mkdirSync(join(ws, "customers/ACME/runs/RUN.B"), { recursive: true });
+  mkdirSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1107.ADM"), { recursive: true });
   const plan = { plan_id: "PLAN.B.1", customer: "ACME", env: "sandbox", goal: "x", steps: [{ n: 1, verb: "NAVIGATE", action_class: "ACT-OBS", target: { url_pattern: "https://a/" }, expect: { page_sig: "a" } }], repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } };
-  writeFileSync(join(ws, "customers/ACME/runs/RUN.B/plan.json"), JSON.stringify(plan));
+  writeFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1107.ADM/plan.json"), JSON.stringify(plan));
   const sf = join(ws, "customers/ACME/.sessions/sess-1/session.json");
   const s = JSON.parse(readFileSync(sf, "utf8"));
-  s.active_plan = { plan_id: "PLAN.B.1", file: "runs/RUN.B/plan.json", step: 1, plan_sha256: "0".repeat(64) };
+  s.active_plan = { plan_id: "PLAN.B.1", file: "runs/RUN.ACME.20260922.1107.ADM/plan.json", step: 1, plan_sha256: "0".repeat(64) };
   writeFileSync(sf, JSON.stringify(s));
   plan.steps.push({ n: 2, verb: "TOGGLE", action_class: "ACT-CFG-CHANGE", target: "x", expect: {} }, { n: 3, verb: "TOGGLE", action_class: "ACT-BULK", target: "x", expect: {} });
-  writeFileSync(join(ws, "customers/ACME/runs/RUN.B/plan.json"), JSON.stringify(plan));
+  writeFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1107.ADM/plan.json"), JSON.stringify(plan));
   const hdr = `\`\`\`yaml\n${YAML.stringify({ task_id: "T-z", customer: "ACME", scope: "CAT", allowed_paths: ["customers/ACME/**"], budget: { tokens: 30000 } }).trim()}\n\`\`\`\n\nIstruzioni`;
   const r = runHook("guard-budget", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: "Agent", tool_input: { subagent_type: "scope-expert", prompt: hdr } }, E(ws));
   assert.equal(decisionOf(r), "deny"); assert.match(reasonOf(r), /modificato dopo l'attivazione|impronta/);
@@ -186,9 +186,9 @@ test("N-2 (p3): guard-budget non prende le classi da un piano attivo modificato 
 test("N-3 (p4): i checkpoint non si scrivono con gli strumenti né dalla shell; quelli forgiati (senza firma) non contano per --resume", async () => {
   const ws = envWs({ env: "sandbox", scope: "P2P" });
   demoAtlas(ws);
-  const file = writePlan(ws, demoPlan(), "RUN.ACME.K6");
+  const file = writePlan(ws, demoPlan(), "RUN.ACME.20260922.1100.ADM");
   await check({ ws, sid: "sess-1", planFile: file, step: 1 });
-  const cp = join(ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints/2.json");
+  const cp = join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints/2.json");
   const g = (tool, ti, extra = {}) => runHook("guard-config-scope", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input: ti, ...extra }, E(ws));
   for (const extra of [{}, { agent_id: "ag-1", agent_type: "jaggaer-virtual-consultant:p2p-expert" }]) {
     assert.equal(decisionOf(g("Write", { file_path: cp, content: "{}" }, extra)), "deny", "Write");
@@ -197,21 +197,21 @@ test("N-3 (p4): i checkpoint non si scrivono con gli strumenti né dalla shell; 
     assert.equal(decisionOf(g("PowerShell", { command: `Set-Content -Path "${cp}" -Value "{}"` }, extra)), "deny", "PowerShell");
   }
   // file scritti aggirando i guard: senza firma valida non contano
-  mkdirSync(join(ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints"), { recursive: true });
-  for (const n of [1, 2]) writeFileSync(join(ws, `customers/ACME/runs/RUN.ACME.K6/checkpoints/${n}.json`), JSON.stringify({ plan_id: PLAN, step: n, proceed: true }));
+  mkdirSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints"), { recursive: true });
+  for (const n of [1, 2]) writeFileSync(join(ws, `customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints/${n}.json`), JSON.stringify({ plan_id: PLAN, step: n, proceed: true }));
   const r = await check({ ws, sid: "sess-1", planFile: file, resume: 3 });
   assert.equal(r.status, "denied", JSON.stringify(r));
   // --run verso una cartella con checkpoint forgiati
   const ws2 = envWs({ env: "sandbox", scope: "P2P" });
   demoAtlas(ws2);
-  const f2 = writePlan(ws2, demoPlan(), "RUN.ACME.K6");
-  mkdirSync(join(ws2, "customers/ACME/runs/RUN.FAKE/checkpoints"), { recursive: true });
-  for (const n of [1, 2, 3]) writeFileSync(join(ws2, `customers/ACME/runs/RUN.FAKE/checkpoints/${n}.json`), JSON.stringify({ plan_id: PLAN, step: n, proceed: true }));
-  const r2 = await check({ ws: ws2, sid: "sess-1", planFile: f2, resume: 4, run: "RUN.FAKE" });
+  const f2 = writePlan(ws2, demoPlan(), "RUN.ACME.20260922.1100.ADM");
+  mkdirSync(join(ws2, "customers/ACME/runs/RUN.ACME.20260922.1119.ADM/checkpoints"), { recursive: true });
+  for (const n of [1, 2, 3]) writeFileSync(join(ws2, `customers/ACME/runs/RUN.ACME.20260922.1119.ADM/checkpoints/${n}.json`), JSON.stringify({ plan_id: PLAN, step: n, proceed: true }));
+  const r2 = await check({ ws: ws2, sid: "sess-1", planFile: f2, resume: 4, run: "RUN.ACME.20260922.1119.ADM" });
   assert.equal(r2.status, "denied");
   // un checkpoint firmato ma modificato (step cambiato) non vale più
   await check({ ws, sid: "sess-1", planFile: file, step: 1, snapshot: snap("chrome-devtools", "ok").replace("/edit/10045", "/new") });
-  const real = join(ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints/1.json");
+  const real = join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints/1.json");
   const cpj = JSON.parse(readFileSync(real, "utf8"));
   assert.match(cpj.hmac, /^[0-9a-f]{64}$/);
   writeFileSync(real, JSON.stringify({ ...cpj, step: 3 }));

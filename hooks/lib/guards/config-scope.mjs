@@ -58,6 +58,19 @@ export function requiredApprovals(cls, step, env, level) {
   return { a1: false, a2: false, a3: false, action: false };
 }
 
+// WP09b: oggetti governati di un passo di configurazione (config.object + config.governs, senza duplicati).
+export function governedObjects(step) {
+  const c = step?.config ?? {};
+  return [...new Set([c.object, ...(Array.isArray(c.governs) ? c.governs : [])].filter((x) => typeof x === "string" && x))];
+}
+// Una voce di session.snapshots copre il passo se elenca tutti i suoi oggetti governati (o, senza oggetti, la sua area).
+export function snapshotCovers(entry, step) {
+  const governed = governedObjects(step);
+  if (governed.length) return Array.isArray(entry?.objects) && governed.every((o) => entry.objects.includes(o));
+  const area = step?.config?.area;
+  return !!area && Array.isArray(entry?.areas) && entry.areas.includes(area);
+}
+
 // Nessun piano attivo (giro di correzione 1, I2): ogni azione con effetto è
 // negata in ogni ambiente. Unica eccezione la modalità `esplorazione` (use mode),
 // solo in sandbox: click e input consentiti e in audit; invio, salvataggio,
@@ -169,14 +182,17 @@ async function browserDecide(ctx, no) {
     }
   }
   const now = Date.now();
-  // (b) snapshot
+  // (b) snapshot — WP09b: UNO snapshot degli ultimi 60 s che copra TUTTI gli oggetti governati del passo (config.object
+  // + config.governs, S.STD.ADM.CHK.0051); un passo con la sola area vuole uno snapshot che dichiari l'area. Uno snapshot
+  // di un'altra pagina o di altri oggetti non basta (WP07 security minor 1).
   if (cls === "ACT-CFG-CHANGE") {
-    const obj = step.config?.object;
-    const fresh = (Array.isArray(s.snapshots) ? s.snapshots : []).some((x) => {
-      const age = now - Date.parse(x?.ts ?? "");
-      return age <= SNAPSHOT_MS && age >= -5000 && (!obj || (Array.isArray(x.objects) && x.objects.includes(obj)));
-    });
-    if (!fresh) return no(`${at}: serve uno snapshot degli oggetti governati${obj ? ` (${obj})` : ""} negli ultimi 60 s prima della modifica (§28.1)`);
+    const governed = governedObjects(step);
+    const fresh = (Array.isArray(s.snapshots) ? s.snapshots : []).filter((x) => { const age = now - Date.parse(x?.ts ?? ""); return age <= SNAPSHOT_MS && age >= -5000; });
+    if (!fresh.some((x) => snapshotCovers(x, step))) {
+      const best = fresh.map((x) => governed.filter((o) => !(Array.isArray(x.objects) && x.objects.includes(o)))).sort((a, b) => a.length - b.length)[0];
+      const what = governed.length ? governed.join(", ") : `area ${step.config?.area ?? "?"}`;
+      return no(`${at}: serve uno snapshot degli oggetti governati (${what}) negli ultimi 60 s prima della modifica (§28.1)${best?.length && fresh.length ? `; lo snapshot più recente non copre ${best.join(", ")} (kb snapshot ${governed.join(" ")})` : ""}`);
+    }
   }
   // (d) approvazioni
   const req = requiredApprovals(cls, step, env, level);

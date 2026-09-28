@@ -37,7 +37,7 @@ test("3A su stato K6: step-check attiva il piano e chiede A1/A3, observe-append 
     ],
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [2] },
   };
-  const file = writePlan(ws, plan, "RUN.ACME.3A");
+  const file = writePlan(ws, plan, "RUN.ACME.20260922.1104.ADM");
   const sc = (args) => { const r = node("scripts/decide/step-check.mjs", ["--plan", file, ...args, "--json"]); return JSON.parse(r.stdout); };
   const tr = join(mkdtempSync(join(tmpdir(), "k6-3a-")), "t.jsonl");
   writeFileSync(tr, "");
@@ -64,7 +64,7 @@ test("3A su stato K6: step-check attiva il piano e chiede A1/A3, observe-append 
   // ora step-check attiva il passo 1 (ACT-OBS), con l'impronta del piano
   assert.equal(sc(["--step", "1"]).status, "ok");
   const ap = readSession(ws).active_plan;
-  assert.deepEqual({ ...ap, plan_sha256: undefined }, { plan_id: PLAN, file, step: 1, run: "RUN.ACME.3A", plan_sha256: undefined });
+  assert.deepEqual({ ...ap, plan_sha256: undefined }, { plan_id: PLAN, file, step: 1, run: "RUN.ACME.20260922.1104.ADM", plan_sha256: undefined });
   assert.match(ap.plan_sha256, /^[0-9a-f]{64}$/);
   assert.deepEqual(call("navigate_page", { type: "url", url: `${P}/setup/import-profiles/7`, pageId: 1 }, `Successfully navigated to ${P}/setup/import-profiles/7.\n## Pages\n1: ACME Procurement (${P}/setup/import-profiles/7) [selected]`), []);
   call("take_snapshot", { pageId: 1 }, page(false));

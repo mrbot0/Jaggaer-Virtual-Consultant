@@ -45,9 +45,9 @@ async function readPlanWs(envId, tab = null) {
   const plan = { plan_id: "PLAN.ACME.X.0002", customer: "ACME", env: envId, goal: "lettura elenco",
     steps: [{ n: 1, verb: "CLICK", action_class: "ACT-OBS", target: "C.ACME.P2P.SEL.0010", expect: { page_sig: "p2p/requisition/list" } }],
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } };
-  mkdirSync(join(ws, "customers/ACME/runs/RUN.Y"), { recursive: true });
-  writeFileSync(join(ws, "customers/ACME/runs/RUN.Y/plan.json"), JSON.stringify(plan));
-  const file = "runs/RUN.Y/plan.json";
+  mkdirSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1106.ADM"), { recursive: true });
+  writeFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1106.ADM/plan.json"), JSON.stringify(plan));
+  const file = "runs/RUN.ACME.20260922.1106.ADM/plan.json";
   const tr = tr0();
   await check({ ws, sid: "sess-1", planFile: file, step: 1 });
   say(ws, tr, `APPROVO PIANO ${plan.plan_id} DA Mario Rossi`);
@@ -100,7 +100,7 @@ test("I-A: ogni risposta si legge col parser della famiglia; formato fiutato div
 function planWs() {
   const ws = envWs({ env: "sandbox", scope: "P2P" });
   demoAtlas(ws);
-  const file = writePlan(ws, demoPlan(), "RUN.ACME.K6");
+  const file = writePlan(ws, demoPlan(), "RUN.ACME.20260922.1100.ADM");
   const planSha = createHash("sha256").update(readFileSync(join(ws, "customers/ACME", file), "utf8")).digest("hex");
   return { ws, file, planSha };
 }
@@ -121,26 +121,26 @@ test("I-B (n3): --run annidato, con risalita, minuscolo o su una giunzione ⇒ n
   const up = "../../../../../../../../../.." + out.replace(/^[A-Za-z]:/, "").split("\\").join("/");
   const trav = await check({ ws, sid: "sess-1", planFile: file, resume: 4, run: up });
   assert.equal(trav.status, "denied"); assert.match(trav.reason, /nome di run non valido/);
-  for (const bad of ["run.acme.k6", "RUN.ACME/../RUN.X", "RUN..X", "RUN.ACME.K6/checkpoints", "RUN"]) {
+  for (const bad of ["run.acme.k6", "RUN.ACME/../RUN.ACME.20260922.1112.ADM", "RUN..X", "RUN.ACME.20260922.1100.ADM/checkpoints", "RUN"]) {
     const r = await check({ ws, sid: "sess-1", planFile: file, step: 1, run: bad });
     assert.equal(r.status, "denied", bad); assert.match(r.reason, /nome di run non valido/, bad);
   }
   // con il piano attivo: un --run diverso da quello del piano è negato
   await check({ ws, sid: "sess-1", planFile: file, step: 1 });
-  const other = await check({ ws, sid: "sess-1", planFile: file, resume: 4, run: "RUN.ACME.K6B" });
-  assert.equal(other.status, "denied"); assert.match(other.reason, /attivo nel run RUN\.ACME\.K6/);
+  const other = await check({ ws, sid: "sess-1", planFile: file, resume: 4, run: "RUN.ACME.20260922.1101.ADM" });
+  assert.equal(other.status, "denied"); assert.match(other.reason, /attivo nel run RUN\.ACME\.20260922\.1100\.ADM/);
   // giunzione (o link simbolico) sotto runs/ verso una cartella con checkpoint firmati
   const ws2 = planWs();
   const fake = mkdtempSync(join(tmpdir(), "fkj-"));
   forge(ws2.ws, join(fake, "checkpoints"), 3, ws2.planSha);
-  symlinkSync(fake, join(ws2.ws, "customers/ACME/runs/RUN.J"), "junction");
-  const j = await check({ ws: ws2.ws, sid: "sess-1", planFile: ws2.file, resume: 4, run: "RUN.J" });
+  symlinkSync(fake, join(ws2.ws, "customers/ACME/runs/RUN.ACME.20260922.1108.ADM"), "junction");
+  const j = await check({ ws: ws2.ws, sid: "sess-1", planFile: ws2.file, resume: 4, run: "RUN.ACME.20260922.1108.ADM" });
   assert.equal(j.status, "denied", JSON.stringify(j)); assert.match(j.reason, /collegamento/);
   // checkpoint firmati con la chiave vera, nella cartella vera del run, scritti aggirando i guard: la sessione non li
   // referenzia (nessun passo verificato) ⇒ la ripresa al passo 4 è negata
   const ws3 = planWs();
   await check({ ws: ws3.ws, sid: "sess-1", planFile: ws3.file, step: 1 });
-  forge(ws3.ws, join(ws3.ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints"), 3, ws3.planSha);
+  forge(ws3.ws, join(ws3.ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints"), 3, ws3.planSha);
   const r3 = await check({ ws: ws3.ws, sid: "sess-1", planFile: ws3.file, resume: 4 });
   assert.equal(r3.status, "denied", JSON.stringify(r3));
 });
@@ -156,14 +156,14 @@ test("I-B: l'ultimo passo verificato è in session.active_plan; il file del chec
   const r = await check({ ws, sid: "sess-1", planFile: file, resume: 3 });
   assert.equal(r.status, "ok", JSON.stringify(r)); assert.equal(r.last_checkpoint, 2);
   // il checkpoint 2 riscritto (firmato con la chiave vera, ts diverso): non è quello registrato ⇒ ripresa negata
-  const cpF = join(ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints/2.json");
+  const cpF = join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints/2.json");
   const cp = JSON.parse(readFileSync(cpF, "utf8"));
   const { hmac, ...rest } = cp;
   writeFileSync(cpF, JSON.stringify(signCheckpoint(checkpointKey(ws), { ...rest, ts: "2020-01-01T00:00:00.000Z" })));
   assert.equal((await check({ ws, sid: "sess-1", planFile: file, resume: 3 })).status, "denied");
   // --run diverso da quello del piano attivo ⇒ negato
   writeFileSync(cpF, JSON.stringify(cp));
-  assert.equal((await check({ ws, sid: "sess-1", planFile: file, resume: 3, run: "RUN.ACME.OTHER" })).status, "denied");
+  assert.equal((await check({ ws, sid: "sess-1", planFile: file, resume: 3, run: "RUN.ACME.20260922.1103.ADM" })).status, "denied");
   assert.equal((await check({ ws, sid: "sess-1", planFile: file, resume: 3 })).status, "ok");
 });
 
@@ -179,10 +179,10 @@ test("I-B (n3, n3b): checkpoint protetti a ogni profondità di runs/; niente lin
     assert.equal(decisionOf(g("PowerShell", { command: 'Set-Content -Path customers/ACME/runs/X/Y/checkpoints/3.json -Value "{}"' }, extra)), "deny", "PowerShell annidato");
     assert.equal(decisionOf(g("Bash", { command: `cmd /c mklink /J customers${BS}ACME${BS}runs${BS}RUNJ C:${BS}tmp${BS}fake` }, extra)), "deny", "mklink /J");
     assert.equal(decisionOf(g("PowerShell", { command: `New-Item -ItemType Junction -Path customers${BS}ACME${BS}runs${BS}RUNJ -Target C:${BS}tmp${BS}fake` }, extra)), "deny", "New-Item Junction");
-    assert.equal(decisionOf(g("PowerShell", { command: `New-Item -ItemType SymbolicLink -Path customers/ACME/runs/RUN.S -Target C:/tmp/fake` }, extra)), "deny", "New-Item SymbolicLink");
+    assert.equal(decisionOf(g("PowerShell", { command: `New-Item -ItemType SymbolicLink -Path customers/ACME/runs/RUN.ACME.20260922.1113.ADM -Target C:/tmp/fake` }, extra)), "deny", "New-Item SymbolicLink");
   }
   // controllo: un file del run fuori da checkpoints/ resta scrivibile
-  assert.notEqual(decisionOf(g("Write", { file_path: "customers/ACME/runs/RUN.ACME.K6/note.md", content: "x" })), "deny");
+  assert.notEqual(decisionOf(g("Write", { file_path: "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/note.md", content: "x" })), "deny");
 });
 
 // ---- N-A ----

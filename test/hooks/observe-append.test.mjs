@@ -29,8 +29,8 @@ function ws0({ env = "sandbox", plan = false } = {}) {
   const ws = envWs({ env, scope: "P2P" });
   demoAtlas(ws);
   if (plan) {
-    const file = writePlan(ws, demoPlan(), "RUN.ACME.K6");
-    patchSession(ws, (s) => { s.active_plan = { plan_id: PLAN, file, step: 2, run: "RUN.ACME.K6" }; });
+    const file = writePlan(ws, demoPlan(), "RUN.ACME.20260922.1100.ADM");
+    patchSession(ws, (s) => { s.active_plan = { plan_id: PLAN, file, step: 2, run: "RUN.ACME.20260922.1100.ADM" }; });
     sealActivePlan(ws);
   }
   patchSession(ws, (s) => { s.session_code = "SES.ACME.20260923.001"; s.browser = { current_url: "https://acme-sbx.jaggaer.com/home", tab: null, updated_by: "browser-origin" }; });
@@ -178,7 +178,7 @@ test("step-check e observe-append usano lo stesso confronto: surprise/novelty co
   assert.equal(o.surprise, sc.divergences.length);
   assert.equal(o.divergences[0].kind, sc.kind);
   assert.equal(sc.observation, o.id, "step-check cita l'OBS dell'ultimo risultato");
-  assert.ok(existsSync(join(ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints/2.json")));
+  assert.ok(existsSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints/2.json")));
 });
 
 test("redact: profili standard/strict, nessun falso positivo su codici di dominio (CdC, quantità, date)", async () => {

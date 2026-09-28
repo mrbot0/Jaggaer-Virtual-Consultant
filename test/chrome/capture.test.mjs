@@ -39,8 +39,8 @@ function setup({ env = "sandbox" } = {}) {
   writeSel(ws, "C.ACME.P2P.SEL.0070", { role: "form", label: "Dati richiesta", effect: "read" });
   writeFileSync(join(ws, "customers/ACME/kb/scopes/P2P/fields/C.ACME.P2P.FLD.0077.yaml"), "id: C.ACME.P2P.FLD.0077\ntype: FLD\nidentity:\n  sensitivity:\n    class: personale\n    pii: true\n    commercial: false\n");
   const plan = demoPlan({ evidence: [{ at: 3, kind: "assertion", capture: "region", region: "C.ACME.P2P.SEL.0070", caption: "Bozza salvata con importo € 1.250,00", redact: "standard" }] });
-  const file = writePlan(ws, plan, "RUN.ACME.K6");
-  patchSession(ws, (s) => { s.active_plan = { plan_id: plan.plan_id, file, step: 3, run: "RUN.ACME.K6" }; });
+  const file = writePlan(ws, plan, "RUN.ACME.20260922.1100.ADM");
+  patchSession(ws, (s) => { s.active_plan = { plan_id: plan.plan_id, file, step: 3, run: "RUN.ACME.20260922.1100.ADM" }; });
   return { ws, file };
 }
 const white = (w = 400, h = 200) => encodePng({ width: w, height: h, channels: 3, data: Buffer.alloc(w * h * 3, 255) });
@@ -64,7 +64,7 @@ test("prepare strict: maschere per selettore (FLD pii) e per contenuto (e-mail, 
   }
   const g = browserCall("guard-environment", ws, "mcp__playwright__browser_take_screenshot", s.screenshot.playwright.params);
   assert.equal(g.stdout.trim(), "", g.stdout);
-  assert.ok(existsSync(join(ws, "customers/ACME/runs/RUN.ACME.K6/cases/PLAN.ACME.K6.0001/evidence/01.capture.json")));
+  assert.ok(existsSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/cases/PLAN.ACME.K6.0001/evidence/01.capture.json")));
 });
 
 test("prepare standard: gli importi non si mascherano; in pre-produzione il profilo è sempre strict", async () => {
@@ -119,14 +119,14 @@ test("cleanup rimuove le catture non registrate; annotate scrive sidecar e indic
   const s = await prepare({ ws, sid: "sess-1", planFile: file, step: 3, profile: "strict", snapshot: PW, env: {} });
   writeFileSync(join(ws, s.file), white());
   const ev = await record({ ws, sid: "sess-1", file: s.file, kind: "transition", caption: "Bozza salvata", env: {} });
-  const stray = join(ws, "customers/ACME/runs/RUN.ACME.K6/cases/PLAN.ACME.K6.0001/evidence/02.png");
+  const stray = join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/cases/PLAN.ACME.K6.0001/evidence/02.png");
   writeFileSync(stray, white(10, 10));
   const c = cleanup({ ws, sid: "sess-1" });
-  assert.deepEqual(c.removed, ["customers/ACME/runs/RUN.ACME.K6/cases/PLAN.ACME.K6.0001/evidence/02.png"]);
+  assert.deepEqual(c.removed, ["customers/ACME/runs/RUN.ACME.20260922.1100.ADM/cases/PLAN.ACME.K6.0001/evidence/02.png"]);
   assert.ok(existsSync(join(ws, s.file)));
   const side = writeSidecar(join(ws, ev.metadata));
   assert.match(readFileSync(side, "utf8"), /Bozza salvata\nEV-01 · PLAN\.ACME\.K6\.0001 passo 3 · transition/);
-  const idx = buildIndex(ws, "ACME", "RUN.ACME.K6");
+  const idx = buildIndex(ws, "ACME", "RUN.ACME.20260922.1100.ADM");
   assert.equal(idx.index.evidence, 1);
   assert.equal(idx.index.scopes.P2P["PLAN.ACME.K6.0001"][0].id, "EV-01");
 });

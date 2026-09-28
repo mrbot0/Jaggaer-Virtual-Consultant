@@ -67,7 +67,7 @@ export function navResponse(tool, landed, { requested = landed, tab = 101 } = {}
 }
 
 // Piano (JSON) in customers/ACME/runs/<run>/plan.json → percorso relativo alla cartella del cliente.
-export function writePlan(ws, plan, run = "RUN.0001") {
+export function writePlan(ws, plan, run = "RUN.ACME.20260922.1116.ADM") {
   const dir = join(ws, "customers/ACME/runs", run);
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, "plan.json"), JSON.stringify(plan, null, 2));

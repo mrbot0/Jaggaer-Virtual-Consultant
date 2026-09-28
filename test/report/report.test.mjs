@@ -56,7 +56,7 @@ test("errori inattesi: capito e completato â‡’ ERROR-AS-LESSON (completamento sÃ
 
 function reportWs() {
   const ws = envWs({ env: "sandbox", scope: "P2P" });
-  const file = writePlan(ws, demoPlan(), "RUN.ACME.K6");
+  const file = writePlan(ws, demoPlan(), "RUN.ACME.20260922.1100.ADM");
   patchSession(ws, (s) => { s.session_code = "SES.ACME.20260923.001"; s.mode = "ops"; s.budget.used = 41200; s.pending.compensations = [{ plan: PLAN, step: 3, kind: "cancel", entity: "requisition", action: "requisition.cancel", status: "pending" }]; });
   const wf = join(ws, "customers/ACME/.sessions/sess-1/workflow.jsonl");
   const ev = [
@@ -94,7 +94,7 @@ test("build-report: RPT azione con codice RPT.<C>.<AAAAMMGG>.<SEQ> dal DB, markd
 
 test("build-report: RPT di test (NEG con errore atteso) e CLI", async () => {
   const { ws, file } = reportWs();
-  const r = await buildReport({ ws, sid: "sess-1", kind: "test", planFile: file, title: "NEG CdC non attivo", run: "RUN.ACME.K6", release: "R25.3",
+  const r = await buildReport({ ws, sid: "sess-1", kind: "test", planFile: file, title: "NEG CdC non attivo", run: "RUN.ACME.20260922.1100.ADM", release: "R25.3",
     expected: { error: { code: "REQ-VAL-014" } }, errors: [ERR], now: new Date("2026-09-23T11:00:00Z") });
   assert.equal(r.outcome, "EXPECTED-ERROR-AS-SUCCESS");
   const y = YAML.parse(readFileSync(join(ws, `customers/ACME/reports/${r.code}.yaml`), "utf8"));

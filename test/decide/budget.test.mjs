@@ -122,12 +122,12 @@ test("guard-budget senza budget.tokens: vale il limite della classe e si prenota
 
 test("guard-budget: con un piano attivo le classi vengono dal piano validato, non dall'header", () => {
   const ws = mkWs(); seedSession(ws);
-  mkdirSync(join(ws, "customers/ACME/runs/RUN.B"), { recursive: true });
-  writeFileSync(join(ws, "customers/ACME/runs/RUN.B/plan.json"), JSON.stringify({ plan_id: "PLAN.B.1", customer: "ACME", env: "sandbox", goal: "x", steps: [{ n: 1, verb: "NAVIGATE", action_class: "ACT-OBS", target: { url_pattern: "https://a/" }, expect: { page_sig: "a" } }], repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } }));
+  mkdirSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1107.ADM"), { recursive: true });
+  writeFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1107.ADM/plan.json"), JSON.stringify({ plan_id: "PLAN.B.1", customer: "ACME", env: "sandbox", goal: "x", steps: [{ n: 1, verb: "NAVIGATE", action_class: "ACT-OBS", target: { url_pattern: "https://a/" }, expect: { page_sig: "a" } }], repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } }));
   const s = JSON.parse(readFileSync(join(ws, "customers/ACME/.sessions/sess-1/session.json"), "utf8"));
   // impronta come la scrive step-check (giro 2, N-2: guard-budget la verifica prima di leggere le classi)
-  const planText = readFileSync(join(ws, "customers/ACME/runs/RUN.B/plan.json"), "utf8");
-  s.active_plan = { plan_id: "PLAN.B.1", file: "runs/RUN.B/plan.json", step: 1, plan_sha256: createHash("sha256").update(planText).digest("hex") };
+  const planText = readFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1107.ADM/plan.json"), "utf8");
+  s.active_plan = { plan_id: "PLAN.B.1", file: "runs/RUN.ACME.20260922.1107.ADM/plan.json", step: 1, plan_sha256: createHash("sha256").update(planText).digest("hex") };
   writeFileSync(join(ws, "customers/ACME/.sessions/sess-1/session.json"), JSON.stringify(s));
   const r = agent(ws, header(50000, { actions: ["ACT-CFG-CHANGE", "ACT-BULK"] }));
   assert.equal(decisionOf(r), "deny", "l'header non alza il limite: il piano ha solo ACT-OBS");

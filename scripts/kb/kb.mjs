@@ -11,6 +11,8 @@ import { units as searchUnits, questionFor, UnitsInputError } from "./units.mjs"
 import { readFileSync } from "node:fs";
 import { main as reviewMain } from "./review.mjs";
 import { main as coverageMain } from "./coverage-report.mjs";
+import { main as compensationMain } from "./compensation.mjs";
+import { main as snapshotMain } from "./snapshot.mjs";
 
 const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
 
@@ -35,6 +37,8 @@ Comandi:
             soggetto; --question prende la domanda dalla banca product/question-banks/<TIPO>.yaml
   review    → scripts/kb/review.mjs (coda stratificata e verbi accept/correct/reject, §19.19)
   epistemic --scope <S> [--plan] → scripts/kb/coverage-report.mjs (report di copertura §9.6, piano R0)
+  compensation add|list|done → scripts/kb/compensation.mjs (compensazione PRIMA del passo, §29.6)
+  snapshot <CFG…> → scripts/kb/snapshot.mjs (stato degli oggetti governati prima di una modifica, §28.1)
 
 Opzioni comuni: --db <file> (default knowledge.db) --json --help
 
@@ -59,6 +63,9 @@ export function run(argv) {
   // WP09a: sotto-comandi con una CLI propria (radice del workspace, non il solo DB)
   if (cmd === "review") return { exitCode: reviewMain(rest) };
   if (cmd === "epistemic") return { exitCode: coverageMain(rest) };
+  // WP09b: compensazioni e snapshot (stato della sessione e del run, non il solo DB)
+  if (cmd === "compensation") return { exitCode: compensationMain(rest) };
+  if (cmd === "snapshot") return { exitCode: snapshotMain(rest) };
   const { opt, facet, positional } = parseArgs(rest);
   const dbPath = opt("db", "knowledge.db");
   if (!["find", "resolve", "summary", "get", "precedents", "fields", "impact", "identity", "units"].includes(cmd)) {

@@ -45,9 +45,9 @@ async function planWs(envId, tab = "101") {
   const plan = { plan_id: "PLAN.ACME.X.0002", customer: "ACME", env: envId, goal: "lettura elenco",
     steps: [{ n: 1, verb: "CLICK", action_class: "ACT-OBS", target: SEL, expect: { page_sig: "p2p/requisition/list" } }],
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } };
-  mkdirSync(join(ws, "customers/ACME/runs/RUN.Y"), { recursive: true });
-  writeFileSync(join(ws, "customers/ACME/runs/RUN.Y/plan.json"), JSON.stringify(plan));
-  const file = "runs/RUN.Y/plan.json";
+  mkdirSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1106.ADM"), { recursive: true });
+  writeFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1106.ADM/plan.json"), JSON.stringify(plan));
+  const file = "runs/RUN.ACME.20260922.1106.ADM/plan.json";
   const tr = join(mkdtempSync(join(tmpdir(), "carry-")), "t.jsonl");
   writeFileSync(tr, "");
   await check({ ws, sid: "sess-1", planFile: file, step: 1 });

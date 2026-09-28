@@ -99,7 +99,7 @@ test("#7 scrittura in customers/*/kb/** negata a tutti (§29.6); _inbox, tests, 
     assert.ok(denied(call("guard-scope", ws, "Write", { file_path: join(ws, "customers/ACME/kb/scopes/CAT/flows/C.ACME.CAT.FLW.0002.yaml"), content: "id: x\n" }, extra)));
     assert.ok(denied(call("guard-scope", ws, "Edit", { file_path: join(ws, "customers/ACME/kb/handoffs/C.ACME.XSC.HND.0004.yaml"), old_string: "a", new_string: "b" }, extra)));
   }
-  for (const f of ["_inbox/CAT/x.md", "tests/cases/CAT/NRT.ACME.CAT.NEG.0031.yaml", "runs/RUN.1/x.json", "lessons/L.ACME.CAT.LSN.0090.md", "reports/r.md", "evidence/e.png", "observations/o.yaml"]) {
+  for (const f of ["_inbox/CAT/x.md", "tests/cases/CAT/NRT.ACME.CAT.NEG.0031.yaml", "runs/RUN.ACME.20260922.1115.ADM/x.json", "lessons/L.ACME.CAT.LSN.0090.md", "reports/r.md", "evidence/e.png", "observations/o.yaml"]) {
     assert.ok(silent(call("guard-scope", ws, "Write", { file_path: join(ws, "customers/ACME", f), content: "x" })), f);
   }
 });

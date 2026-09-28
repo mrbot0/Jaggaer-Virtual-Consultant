@@ -70,7 +70,7 @@ test("M7 — intento → ACT-OBS + ACT-CREATE sul tenant demo: guard, OBS, ERR r
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] },
   };
   assert.deepEqual(validatePlan(plan, { env: { id: "sandbox", type: "sandbox" } }).errors, []);
-  const planFile = writePlan(ws, plan, "RUN.ACME.M7");
+  const planFile = writePlan(ws, plan, "RUN.ACME.20260922.1105.ADM");
 
   // ---- 3. budget: stima del compito (somma delle classi + 20%) nel residuo; guard-budget consente il dispatch ----
   const est = estimateTask(plan, readSession(ws).env);
@@ -174,7 +174,7 @@ test("M7 — intento → ACT-OBS + ACT-CREATE sul tenant demo: guard, OBS, ERR r
   ok(r6);
   assert.equal(r6.plan_status, "completed");
   assert.equal(readSession(ws).active_plan, null, "piano completato: nessuna azione con effetto ulteriore");
-  assert.ok(existsSync(join(ws, "customers/ACME/runs/RUN.ACME.M7/result.yaml")));
+  assert.ok(existsSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1105.ADM/result.yaml")));
 
   // ---- evidenza del passo 6 (senza script nella pagina) ----
   const prep = JSON.parse(node("scripts/chrome/capture.mjs", ["prepare", "--plan", planFile, "--step", "6", "--snapshot", snapFile("saved"), "--json"]).stdout);

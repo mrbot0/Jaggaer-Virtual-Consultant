@@ -17,7 +17,7 @@
 //    (2ª ⇒ tier_up, 3ª ⇒ escalate, §13.3), DEC se il DB del cliente esiste, checkpoint atomico; se si
 //    procede, attivazione del passo successivo (o piano completato ⇒ active_plan = null);
 //  - --resume n: le letture (READ) da fare prima di ripetere i passi con effetto dopo l'ultimo checkpoint.
-import { readFileSync, readdirSync, existsSync, mkdirSync, realpathSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import YAML from "yaml";
 import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
@@ -38,6 +38,8 @@ import { parseSnapshot } from "../chrome/snapshot-parse.mjs";
 import { compareExpect } from "../chrome/expect-compare.mjs";
 import { resolveSel, atlasIndex } from "../chrome/atlas.mjs";
 import { profileFor, redact } from "../chrome/redact.mjs";
+import { RUN_RE, formatRunCode, runRefusal } from "../lib/run-code.mjs";
+import { writeCompensations } from "../lib/compensations-store.mjs";
 
 export const STATUSES = ["ok", "surprise", "novelty", "approval_required", "denied"];
 const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
@@ -46,27 +48,13 @@ const EFFECT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
 export class StepCheckError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 
 const runFromPath = (rel) => /(?:^|\/)runs\/([^/]+)\//.exec(String(rel ?? "").replace(/\\/g, "/"))?.[1] ?? null;
-const ymd = (d) => d.toISOString().slice(0, 10).replace(/-/g, "");
 
-// WP07 giro 3 (I-B): il run è UN nome di codice RUN (grammatica dei codici della spec, §3: "RUN." e segmenti
-// maiuscoli alfanumerici separati da punti, es. RUN.<CLIENTE>.<AAAAMMDD>.<HHMM>.<SCOPE>) la cui cartella, se esiste, è
-// figlia DIRETTA di customers/<C>/runs/ anche dopo realpath: niente sotto-cartelle, risalite, giunzioni, link o
-// percorsi esterni (lo stesso per runs/ e per checkpoints/).
-export const RUN_RE = /^RUN(\.[A-Z0-9]{1,32}){1,6}$/;
-function realOrNull(p) {
-  try { return realpathSync.native(p); } catch (err) { if (err?.code === "ENOENT") return null; throw err; }
-}
-export function runRefusal(ws, customer, run) {
-  if (typeof run !== "string" || !RUN_RE.test(run)) return `nome di run non valido: ${JSON.stringify(run)} (atteso un codice RUN.<CLIENTE>.… senza separatori di percorso)`;
-  const cust = realOrNull(join(ws, "customers", customer));
-  const root = realOrNull(join(ws, "customers", customer, "runs"));
-  if (cust && root && root !== join(cust, "runs")) return "la cartella runs/ del cliente è un collegamento (giunzione o link): i checkpoint non si leggono";
-  const dir = realOrNull(join(ws, "customers", customer, "runs", run));
-  if (dir && (!root || dir !== join(root, run))) return `la cartella del run ${run} è un collegamento (giunzione o link) o fuori da runs/: i checkpoint non si leggono`;
-  const cps = realOrNull(join(ws, "customers", customer, "runs", run, "checkpoints"));
-  if (cps && (!dir || cps !== join(dir, "checkpoints"))) return `la cartella checkpoints/ del run ${run} è un collegamento (giunzione o link): i checkpoint non si leggono`;
-  return null;
-}
+// WP07 giro 3 (I-B): il run è UN codice RUN la cui cartella, se esiste, è figlia DIRETTA di customers/<C>/runs/ anche
+// dopo realpath: niente sotto-cartelle, risalite, giunzioni, link o percorsi esterni (lo stesso per runs/ e checkpoints/).
+// WP09b (ruling WP07 "stringere quando WP09b genera run reali"): forma completa RUN.<CLIENTE>.<AAAAMMDD>.<HHMM>.<SCOPE>
+// (scripts/lib/run-code.mjs: data e ora valide, scope del registro) e cliente del codice = cliente della sessione.
+// runRefusal è in scripts/lib/run-code.mjs (lo usano anche kb compensation, kb snapshot e le corsie di run).
+export { RUN_RE, runRefusal };
 // impronta di un checkpoint (JSON canonico, firma compresa): la registra session.active_plan.checkpoint_sha256
 export const checkpointSha = (cp) => createHash("sha256").update(canonical(cp)).digest("hex");
 const stepsOf = (plan) => (Array.isArray(plan?.steps) ? [...plan.steps].sort((a, b) => a.n - b.n) : []);
@@ -124,17 +112,6 @@ function onDivergence(step, d) {
     }
   }
   return null;
-}
-
-function writeCompensations(runDir, entries) {
-  if (!entries.length) return;
-  mkdirSync(runDir, { recursive: true });
-  const f = join(runDir, "compensations.yaml");
-  let doc = { compensations: [] };
-  try { doc = YAML.parse(readFileSync(f, "utf8")) ?? doc; } catch { /* nuovo */ }
-  const list = Array.isArray(doc.compensations) ? doc.compensations : [];
-  for (const e of entries) if (!list.some((x) => x.plan === e.plan && x.step === e.step)) list.push(e);
-  writeFileAtomic(f, YAML.stringify({ compensations: list }));
 }
 
 const dedupePending = (cur, add) => {
@@ -218,7 +195,7 @@ export async function check(opts) {
   const active = session.active_plan ?? null;
   if (active && active.plan_id !== plan.plan_id) return deny(`un altro piano è attivo: ${active.plan_id} (passo ${active.step}); chiudilo con --close prima di attivarne uno nuovo`);
   if (active && opts.run != null && active.run != null && opts.run !== active.run) return deny(`il piano ${plan.plan_id} è attivo nel run ${active.run}, non in ${opts.run}`);
-  const run = opts.run ?? (active?.run ?? null) ?? runFromPath(planFile) ?? runFromPath(plan.checkpoint_dir) ?? `RUN.${customer}.${ymd(now)}.${String(plan.plan_id.split(".").pop()).toUpperCase().replace(/[^A-Z0-9]/g, "") || "0"}`;
+  const run = opts.run ?? (active?.run ?? null) ?? runFromPath(planFile) ?? runFromPath(plan.checkpoint_dir) ?? formatRunCode({ customer, scope: session.scope ?? "XSC", date: now });
   const badRun = runRefusal(ws, customer, run);
   if (badRun) return deny(badRun);
   const runDir = join(ws, "customers", customer, "runs", run);

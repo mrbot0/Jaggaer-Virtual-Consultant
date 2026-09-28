@@ -108,7 +108,11 @@ export async function buildObservation({ ws, customer, session, call, state, res
     const st = await activeStep(ws, customer, ap);
     if (st) cmp = compareExpect(st.step, page, { resolve: (c) => resolveSel(ws, c, customer), atlas, profile });
     // §28.1: lo snapshot della pagina durante un passo ACT-CFG-CHANGE è lo snapshot dell'oggetto governato
-    if (st?.step?.action_class === "ACT-CFG-CHANGE" && st.step.config?.object && state === "ok") cfgObject = st.step.config.object;
+    // WP09b (WP07 security minor 1): solo se la pagina mostra l'elemento del SEL del passo (legato dall'Atlas): uno
+    // snapshot di un'altra pagina non è lo snapshot dell'oggetto. Copre il solo config.object; con più oggetti
+    // governati (config.governs) serve kb snapshot (guard-config-scope vuole la copertura di tutti).
+    if (st?.step?.action_class === "ACT-CFG-CHANGE" && st.step.config?.object && state === "ok" && typeof st.step.target === "string"
+      && (cmp?.elements_seen ?? []).some((e) => e?.atlas_match === st.step.target)) cfgObject = st.step.config.object;
   }
   const sensitiveCache = new Map();
   const sensitive = (m) => {
@@ -375,7 +379,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       });
       return r.browser;
     });
-    if (cfgObject) s.snapshots = [...(Array.isArray(s.snapshots) ? s.snapshots : []), { objects: [cfgObject], ts: doc.ts, obs: code }].slice(-20);
+    if (cfgObject) s.snapshots = [...(Array.isArray(s.snapshots) ? s.snapshots : []), { objects: [cfgObject], ts: doc.ts, obs: code, source: "observe-append", ...(doc.url ? { page: doc.url } : {}) }].slice(-20);
     s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
     return s;
   });

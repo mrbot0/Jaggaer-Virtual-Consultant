@@ -26,11 +26,11 @@ function setup({ green = 3 } = {}) {
   sel(ws, "C.ACME.P2P.SEL.0130", { role: "button", stability: "fragile", strategies: [{ kind: "css", value: "#submit" }] });
   const plan = demoPlan();
   plan.steps = plan.steps.slice(0, 3);
-  const file = writePlan(ws, plan, "RUN.ACME.K6");
+  const file = writePlan(ws, plan, "RUN.ACME.20260922.1100.ADM");
   const hash = planHash(plan);
   for (let i = 0; i < green; i++) {
-    mkdirSync(join(ws, `customers/ACME/runs/RUN.G${i}`), { recursive: true });
-    writeFileSync(join(ws, `customers/ACME/runs/RUN.G${i}/result.yaml`), YAML.stringify({ plan_id: plan.plan_id, plan_hash: hash, status: "green" }));
+    mkdirSync(join(ws, `customers/ACME/runs/RUN.ACME.20260922.1109.ADM${i}`), { recursive: true });
+    writeFileSync(join(ws, `customers/ACME/runs/RUN.ACME.20260922.1109.ADM${i}/result.yaml`), YAML.stringify({ plan_id: plan.plan_id, plan_hash: hash, status: "green" }));
   }
   return { ws, file, plan, hash };
 }
@@ -71,9 +71,9 @@ test("piano cambiato ⇒ verify invalida lo spec (exit 3)", () => {
 test("css solo se la stabilità fragile è ammessa; lo script genera testo e non importa playwright", () => {
   const { ws } = setup();
   const plan = demoPlan();
-  const file = writePlan(ws, plan, "RUN.ACME.K6F");
+  const file = writePlan(ws, plan, "RUN.ACME.20260922.1102.ADM");
   const hash = planHash(plan);
-  for (let i = 0; i < 3; i++) { mkdirSync(join(ws, `customers/ACME/runs/RUN.F${i}`), { recursive: true }); writeFileSync(join(ws, `customers/ACME/runs/RUN.F${i}/result.yaml`), YAML.stringify({ plan_id: plan.plan_id, plan_hash: hash, status: "green" })); }
+  for (let i = 0; i < 3; i++) { mkdirSync(join(ws, `customers/ACME/runs/RUN.ACME.20260922.1110.ADM${i}`), { recursive: true }); writeFileSync(join(ws, `customers/ACME/runs/RUN.ACME.20260922.1110.ADM${i}/result.yaml`), YAML.stringify({ plan_id: plan.plan_id, plan_hash: hash, status: "green" })); }
   const no = cli(ws, ["--plan", file]);
   assert.equal(no.status, 3); assert.match(JSON.parse(no.stdout).error, /fragile/);
   const yes = cli(ws, ["--plan", file, "--allow-fragile"]);
@@ -91,11 +91,11 @@ test("step-check scrive runs/<RUN>/result.yaml a piano completato (verde senza s
   const ws = envWs({ env: "sandbox", scope: "P2P" });
   demoAtlas(ws);
   const plan = { ...demoPlan(), steps: [demoPlan().steps[0]] };
-  const file = writePlan(ws, plan, "RUN.ONE");
+  const file = writePlan(ws, plan, "RUN.ACME.20260922.1114.ADM");
   await check({ ws, sid: "sess-1", planFile: file, step: 1, snapshot: null });
   const page = readFileSync(join(ROOT, "test/golden/step-check/chrome-devtools/ok.txt"), "utf8").replace("/edit/10045", "/new");
   const r = await check({ ws, sid: "sess-1", planFile: file, step: 1, snapshot: page });
   assert.equal(r.plan_status, "completed");
-  const y = YAML.parse(readFileSync(join(ws, "customers/ACME/runs/RUN.ONE/result.yaml"), "utf8"));
+  const y = YAML.parse(readFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1114.ADM/result.yaml"), "utf8"));
   assert.equal(y.status, "green"); assert.equal(y.plan_hash, planHash(plan));
 });

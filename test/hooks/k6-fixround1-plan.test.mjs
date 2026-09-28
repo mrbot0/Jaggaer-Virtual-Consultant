@@ -38,9 +38,9 @@ function readPlanWs(envId) {
   const plan = { plan_id: "PLAN.ACME.X.0002", customer: "ACME", env: envId, goal: "lettura elenco",
     steps: [{ n: 1, verb: "CLICK", action_class: "ACT-OBS", target: "C.ACME.P2P.SEL.0010", expect: { page_sig: "p2p/requisition/list" } }],
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } };
-  mkdirSync(join(ws, "customers/ACME/runs/RUN.Y"), { recursive: true });
-  writeFileSync(join(ws, "customers/ACME/runs/RUN.Y/plan.json"), JSON.stringify(plan));
-  return { ws, plan, file: "runs/RUN.Y/plan.json" };
+  mkdirSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1106.ADM"), { recursive: true });
+  writeFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1106.ADM/plan.json"), JSON.stringify(plan));
+  return { ws, plan, file: "runs/RUN.ACME.20260922.1106.ADM/plan.json" };
 }
 
 test("p3/p4 (a): fuori sandbox step-check non attiva un piano senza APPROVO PIANO; le azioni restano negate", async () => {
@@ -98,7 +98,7 @@ test("p4 (a,b,c,d): con A1 il piano si attiva, ma ogni azione è legata al SEL d
 test("sandbox: fill legato al SEL del passo consentito; uid di un altro campo o fill_form con un elemento estraneo negati", async () => {
   const ws = envWs({ env: "sandbox", scope: "P2P" });
   demoAtlas(ws);
-  const file = writePlan(ws, demoPlan(), "RUN.ACME.K6");
+  const file = writePlan(ws, demoPlan(), "RUN.ACME.20260922.1100.ADM");
   await check({ ws, sid: "sess-1", planFile: file, step: 1 });
   const p1 = snap("chrome-devtools", "ok").replace("/edit/10045", "/new");
   await check({ ws, sid: "sess-1", planFile: file, step: 1, snapshot: p1 });
@@ -128,14 +128,14 @@ test("sub-agenti: step-check solo su un piano già attivo o approvato; la sessio
   await check({ ws, sid: "sess-1", planFile: file, step: 1 });
   assert.equal(bash({ agent_id: "ag-1", agent_type: "jaggaer-virtual-consultant:p2p-expert" }).stdout.trim(), "", "piano già attivo: il sub-agente può verificare");
   const other = runHook("guard-config-scope", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: "Bash", agent_id: "ag-1",
-    tool_input: { command: `node "${join(ROOT, "scripts/decide/step-check.mjs")}" --plan runs/RUN.Z/plan.json --step 1 --json` } }, E(ws));
+    tool_input: { command: `node "${join(ROOT, "scripts/decide/step-check.mjs")}" --plan runs/RUN.ACME.20260922.1111.ADM/plan.json --step 1 --json` } }, E(ws));
   assert.equal(decisionOf(other), "deny");
 });
 
 test("--resume (spec I1): niente salti di passi non verificati; il passo con effetto richiede la lettura di verifica; il gate negato non scrive active_plan", async () => {
   const ws = envWs({ env: "sandbox", scope: "P2P" });
   demoAtlas(ws);
-  const file = writePlan(ws, demoPlan(), "RUN.ACME.K6");
+  const file = writePlan(ws, demoPlan(), "RUN.ACME.20260922.1100.ADM");
   await check({ ws, sid: "sess-1", planFile: file, step: 1 });
   const jump = await check({ ws, sid: "sess-1", planFile: file, resume: 3 });
   assert.equal(jump.status, "denied", "sonda della revisione: --resume 3 senza checkpoint del passo 2");
@@ -155,13 +155,13 @@ test("--resume (spec I1): niente salti di passi non verificati; il passo con eff
   // il gate negato non scrive active_plan
   const ws2 = envWs({ env: "sandbox", scope: "P2P" });
   demoAtlas(ws2);
-  const bare = writePlan(ws2, demoPlan({ compensations: [] }), "RUN.ACME.K6");
+  const bare = writePlan(ws2, demoPlan({ compensations: [] }), "RUN.ACME.20260922.1100.ADM");
   await check({ ws: ws2, sid: "sess-1", planFile: bare, step: 1 });
   await check({ ws: ws2, sid: "sess-1", planFile: bare, step: 1, snapshot: snap("chrome-devtools", "ok").replace("/edit/10045", "/new") });
   const r2 = await check({ ws: ws2, sid: "sess-1", planFile: bare, step: 2, snapshot: snap("chrome-devtools", "ok") });
   assert.equal(r2.next.status, "denied");
   assert.equal(readSession(ws2).active_plan.step, 2, "resta al passo verificato: il passo negato non diventa attivo");
-  assert.ok(!existsSync(join(ws2, "customers/ACME/runs/RUN.ACME.K6/compensations.yaml")));
+  assert.ok(!existsSync(join(ws2, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/compensations.yaml")));
   assert.ok(readFileSync(join(ROOT, "scripts/decide/step-check.mjs"), "utf8").length > 0);
   assert.equal(stepCheckCli(ws2, ["--plan", bare, "--resume", "4"]).status, 3);
 });

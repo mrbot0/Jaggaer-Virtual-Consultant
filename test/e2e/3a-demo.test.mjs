@@ -47,7 +47,7 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [2, 3] },
   };
   assert.deepEqual(validatePlan(plan, { env: { id: "prod", type: "prod" } }).errors, []);
-  const file = writePlan(ws, plan, "RUN.DEMO.0001");
+  const file = writePlan(ws, plan, "RUN.ACME.20260922.1117.ADM");
   // step-check (K6) attiva il piano e chiede A1: qui lo si simula scrivendo lo stato
   patchSession(ws, (s) => { s.active_plan = { plan_id: PLAN, file, step: 1 }; s.pending.approvals = [{ kind: "A1", plan: PLAN, file }]; });
   // WP07 giro 1: impronta del piano e ultimo snapshot osservato (uid → SEL), come li scrivono step-check e observe-append
@@ -113,7 +113,7 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
   // una scrittura di dati in prod resta negata anche dentro la finestra 3A
   const createPlan = { ...plan, plan_id: "PLAN.DEMO.0002", steps: [{ n: 1, verb: "SAVE", action_class: "ACT-CREATE", target: "C.ACME.ADM.SEL.0120", expect: { x: 1 } }] };
   assert.equal(validatePlan(createPlan, { env: { id: "prod", type: "prod" } }).ok, false);
-  patchSession(ws, (s) => { s.active_plan = { plan_id: "PLAN.DEMO.0002", file: writePlan(ws, createPlan, "RUN.DEMO.0002"), step: 1 }; s.pending.compensations = [{ plan: "PLAN.DEMO.0002", step: 1, kind: "cancel" }]; });
+  patchSession(ws, (s) => { s.active_plan = { plan_id: "PLAN.DEMO.0002", file: writePlan(ws, createPlan, "RUN.ACME.20260922.1118.ADM"), step: 1 }; s.pending.compensations = [{ plan: "PLAN.DEMO.0002", step: 1, kind: "cancel" }]; });
   { const snapKeep = readSession(ws).browser.snapshot; sealActivePlan(ws); patchSession(ws, (s) => { s.browser.snapshot = snapKeep; }); }
   const w = guards("mcp__chrome-devtools__click", { uid: "9_1" });
   assert.ok(denyOf(w).some((d) => /In produzione non si scrivono dati/.test(d)));

@@ -32,12 +32,12 @@ test("I3: la firma della pagina non porta dati personali del titolo (sonda della
 test("I3: i valori delle divergenze nei checkpoint sono redatti", async () => {
   const ws = envWs({ env: "sandbox", scope: "P2P" });
   demoAtlas(ws);
-  const file = writePlan(ws, demoPlan(), "RUN.ACME.K6");
+  const file = writePlan(ws, demoPlan(), "RUN.ACME.20260922.1100.ADM");
   await check({ ws, sid: "sess-1", planFile: file, step: 1 });
   await check({ ws, sid: "sess-1", planFile: file, step: 1, snapshot: snap("chrome-devtools", "ok").replace("/edit/10045", "/new") });
   const r = await check({ ws, sid: "sess-1", planFile: file, step: 2, snapshot: snap("chrome-devtools", "ok").replace('value="IT-0442"', 'value="mario.rossi@acme.it"') });
   assert.equal(r.kind, "stato-diverso");
-  const cp = readFileSync(join(ws, "customers/ACME/runs/RUN.ACME.K6/checkpoints/2.json"), "utf8");
+  const cp = readFileSync(join(ws, "customers/ACME/runs/RUN.ACME.20260922.1100.ADM/checkpoints/2.json"), "utf8");
   assert.doesNotMatch(cp, PII, cp);
 });
 
@@ -60,8 +60,8 @@ function evWs(env = "sandbox") {
   demoAtlas(ws);
   writeSel(ws, "C.ACME.P2P.SEL.0070", { role: "form", label: "Dati richiesta", effect: "read" });
   const plan = demoPlan({ evidence: [{ at: 3, kind: "assertion", capture: "region", region: "C.ACME.P2P.SEL.0070", caption: "Bozza", redact: "standard" }] });
-  const file = writePlan(ws, plan, "RUN.ACME.K6");
-  patchSession(ws, (s) => { s.active_plan = { plan_id: plan.plan_id, file, step: 3, run: "RUN.ACME.K6" }; });
+  const file = writePlan(ws, plan, "RUN.ACME.20260922.1100.ADM");
+  patchSession(ws, (s) => { s.active_plan = { plan_id: plan.plan_id, file, step: 3, run: "RUN.ACME.20260922.1100.ADM" }; });
   return { ws, file };
 }
 const img = (w, h) => encodePng({ width: w, height: h, channels: 3, data: Buffer.alloc(w * h * 3, 255) });
