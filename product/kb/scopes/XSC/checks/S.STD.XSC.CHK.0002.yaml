@@ -1,0 +1,42 @@
+# S.STD.XSC.CHK.0002 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.XSC.CHK.0002
+type: CHK
+title: Coda di uscita senza messaggi in errore più vecchi di 24 ore
+summary: Coda di uscita senza messaggi in errore più vecchi di 24 ore. Un
+  messaggio in errore dimenticato è un documento che non è mai arrivato al
+  controparte.
+kind: health
+how:
+  verb: READ
+  target: S.STD.XSC.SEL.0001
+  expect: 0 messaggi
+cost: cheap
+deterministic: true
+frequency: session_start, pre_release
+when: inizio sessione, pre-release
+cluster:
+  - CL-CHK-004
+invariant: Un messaggio in errore dimenticato è un documento che non è mai
+  arrivato al controparte.
+classification:
+  check_area: salute-integrazioni
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

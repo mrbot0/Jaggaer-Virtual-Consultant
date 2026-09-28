@@ -1,0 +1,42 @@
+# S.STD.ADM.CHK.0051 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.ADM.CHK.0051
+type: CHK
+title: Lo snapshot copre tutti gli oggetti governati dalla CFP
+summary: "Lo snapshot copre tutti gli oggetti governati dalla CFP. Ogni oggetto
+  governato ha uno stato registrato prima della modifica: senza, il ripristino
+  non ha una base (§28.1)."
+kind: precondition
+how:
+  verb: SCRIPT
+  script: snapshot-coverage
+  expect: lista completa
+cost: cheap
+deterministic: true
+frequency: before_cfp
+when: ogni CFP
+cluster:
+  - CL-CHK-002
+invariant: "Ogni oggetto governato ha uno stato registrato prima della modifica:
+  senza, il ripristino non ha una base (§28.1)."
+classification:
+  check_area: pre-modifica-config
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

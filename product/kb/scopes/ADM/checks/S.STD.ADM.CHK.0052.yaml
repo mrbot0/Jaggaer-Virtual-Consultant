@@ -1,0 +1,42 @@
+# S.STD.ADM.CHK.0052 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.ADM.CHK.0052
+type: CHK
+title: Esiste una CFP di rollback provata negli ultimi 14 giorni
+summary: "Esiste una CFP di rollback provata negli ultimi 14 giorni. Un rollback
+  mai provato non è un rollback: la procedura inversa deve avere un run verde
+  recente."
+kind: precondition
+how:
+  verb: SCRIPT
+  script: rollback-proven
+  expect: codice RUN
+cost: cheap
+deterministic: true
+frequency: A1
+when: CFP con risk ≥ R2
+cluster:
+  - CL-CHK-002
+invariant: "Un rollback mai provato non è un rollback: la procedura inversa deve
+  avere un run verde recente."
+classification:
+  check_area: pre-modifica-config
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

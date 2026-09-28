@@ -1,0 +1,39 @@
+# S.STD.XSC.CHK.0009 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.XSC.CHK.0009
+type: CHK
+title: Tenant raggiungibile, nessun banner di manutenzione
+summary: Tenant raggiungibile, nessun banner di manutenzione. Un tenant in
+  manutenzione rende ogni esito un falso negativo ambientale (E2).
+kind: health
+how:
+  verb: ENV-CHECK
+  expect: ok
+cost: cheap
+deterministic: true
+frequency: session_start
+when: inizio sessione
+cluster:
+  - CL-CHK-011
+invariant: Un tenant in manutenzione rende ogni esito un falso negativo ambientale (E2).
+classification:
+  check_area: ambiente-pronto
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

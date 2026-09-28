@@ -1,0 +1,41 @@
+# S.STD.XSC.CHK.0004 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.XSC.CHK.0004
+type: CHK
+title: Stub inbound raggiungibile in sandbox
+summary: Stub inbound raggiungibile in sandbox. Il livello L3 della corsia
+  integration gira solo in sandbox e solo con lo stub dichiarato raggiungibile.
+kind: precondition
+how:
+  verb: SCRIPT
+  script: stub-reachable
+  expect: "200"
+cost: cheap
+deterministic: true
+frequency: before_integration_lane
+when: prima della integration lane
+cluster:
+  - CL-CHK-004
+invariant: Il livello L3 della corsia integration gira solo in sandbox e solo
+  con lo stub dichiarato raggiungibile.
+classification:
+  check_area: salute-integrazioni
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

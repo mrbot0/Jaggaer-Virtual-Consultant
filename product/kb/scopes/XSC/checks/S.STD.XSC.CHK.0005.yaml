@@ -1,0 +1,41 @@
+# S.STD.XSC.CHK.0005 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.XSC.CHK.0005
+type: CHK
+title: Fixture strutturali presenti (lookup_or_fail per ognuna)
+summary: "Fixture strutturali presenti (lookup_or_fail per ognuna). Un caso non
+  crea le fixture strutturali: le trova o fallisce prima di iniziare."
+kind: precondition
+how:
+  verb: SCRIPT
+  script: fixtures-present
+  expect: tutte trovate
+cost: cheap
+deterministic: true
+frequency: before_run
+when: prima di ogni run
+cluster:
+  - CL-CHK-005
+invariant: "Un caso non crea le fixture strutturali: le trova o fallisce prima
+  di iniziare."
+classification:
+  check_area: qualita-anagrafiche
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

@@ -1,0 +1,40 @@
+# S.STD.XSC.CHK.0008 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.XSC.CHK.0008
+type: CHK
+title: storageState valido per ogni persona
+summary: storageState valido per ogni persona. Una sessione di test scaduta
+  produce falsi fallimenti di login.
+kind: precondition
+how:
+  verb: SCRIPT
+  script: storage-state-valid
+  expect: ok
+cost: cheap
+deterministic: true
+frequency: session_start
+when: inizio sessione
+cluster:
+  - CL-CHK-010
+invariant: Una sessione di test scaduta produce falsi fallimenti di login.
+classification:
+  check_area: fixture-test
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

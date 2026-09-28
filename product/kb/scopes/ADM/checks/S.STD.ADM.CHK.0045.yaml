@@ -1,0 +1,41 @@
+# S.STD.ADM.CHK.0045 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.ADM.CHK.0045
+type: CHK
+title: Il verificatore NRT.*.CFG dell'oggetto è verde
+summary: Il verificatore NRT.*.CFG dell'oggetto è verde. La configurazione è
+  effettiva solo se il verificatore generato dalla CFP passa (§28.6).
+kind: postcondition
+how:
+  verb: SCRIPT
+  script: cfg-verifier-green
+  expect: pass
+cost: medium
+deterministic: true
+frequency: after_cfp
+when: dopo ogni CFP
+cluster:
+  - CL-CHK-003
+invariant: La configurazione è effettiva solo se il verificatore generato dalla
+  CFP passa (§28.6).
+classification:
+  check_area: post-modifica-config
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

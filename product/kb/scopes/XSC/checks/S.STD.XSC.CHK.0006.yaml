@@ -1,0 +1,42 @@
+# S.STD.XSC.CHK.0006 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.XSC.CHK.0006
+type: CHK
+title: "Entità NRT-* più vecchie di 30 giorni: elenco, non cancellazione"
+summary: "Entità NRT-* più vecchie di 30 giorni: elenco, non cancellazione. Le
+  entità di test vecchie si elencano per chiuderle o annullarle: mai
+  cancellarle."
+kind: data-quality
+how:
+  verb: QUERY
+  script: stale-test-entities
+  expect: report
+cost: cheap
+deterministic: true
+frequency: weekly
+when: settimanale
+cluster:
+  - CL-CHK-005
+invariant: "Le entità di test vecchie si elencano per chiuderle o annullarle:
+  mai cancellarle."
+classification:
+  check_area: qualita-anagrafiche
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

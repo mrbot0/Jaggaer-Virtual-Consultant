@@ -1,0 +1,42 @@
+# S.STD.XSC.CHK.0003 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.XSC.CHK.0003
+type: CHK
+title: Ultimo messaggio processato entro la latenza p95 dichiarata
+summary: Ultimo messaggio processato entro la latenza p95 dichiarata. Una coda
+  ferma oltre la latenza dichiarata falsa ogni verifica della corsia
+  integration.
+kind: health
+how:
+  verb: READ
+  target: S.STD.XSC.SEL.0002
+  expect: entro la p95 dell'INT
+cost: cheap
+deterministic: true
+frequency: pre_release
+when: pre-release
+cluster:
+  - CL-CHK-004
+invariant: Una coda ferma oltre la latenza dichiarata falsa ogni verifica della
+  corsia integration.
+classification:
+  check_area: salute-integrazioni
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

@@ -1,0 +1,40 @@
+# S.STD.ADM.CHK.0055 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.ADM.CHK.0055
+type: CHK
+title: Ogni livello di approvazione ha un approvatore attivo o una delega
+summary: Ogni livello di approvazione ha un approvatore attivo o una delega. Un
+  livello senza approvatori attivi blocca i documenti in approvazione.
+kind: health
+how:
+  verb: READ
+  target: S.STD.ADM.SEL.0135
+  expect: ok per ogni livello
+cost: medium
+deterministic: true
+frequency: pre_release, monthly
+when: pre-release, mensile
+cluster:
+  - CL-CHK-008
+invariant: Un livello senza approvatori attivi blocca i documenti in approvazione.
+classification:
+  check_area: coerenza-workflow
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

@@ -1,0 +1,41 @@
+# S.STD.ADM.CHK.0053 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.ADM.CHK.0053
+type: CHK
+title: Le persone di test hanno i ruoli attesi dal profilo
+summary: Le persone di test hanno i ruoli attesi dal profilo. Un test eseguito
+  con una persona dai ruoli sbagliati verifica altro da ciò che dichiara.
+kind: permission
+how:
+  verb: READ
+  target: S.STD.ADM.SEL.0133
+  expect: ruoli uguali al profilo
+cost: cheap
+deterministic: true
+frequency: session_start
+when: inizio sessione
+cluster:
+  - CL-CHK-006
+invariant: Un test eseguito con una persona dai ruoli sbagliati verifica altro
+  da ciò che dichiara.
+classification:
+  check_area: permessi
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

@@ -1,0 +1,41 @@
+# S.STD.XSC.CHK.0010 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.XSC.CHK.0010
+type: CHK
+title: Budget di sessione residuo ≥ costo stimato del compito
+summary: Budget di sessione residuo ≥ costo stimato del compito. Un compito che
+  non sta nel budget residuo si ferma prima di cominciare (§29.10).
+kind: precondition
+how:
+  verb: SCRIPT
+  script: budget-residual
+  expect: ok
+cost: cheap
+deterministic: true
+frequency: before_task
+when: prima di ogni compito
+cluster:
+  - CL-CHK-011
+invariant: Un compito che non sta nel budget residuo si ferma prima di
+  cominciare (§29.10).
+classification:
+  check_area: ambiente-pronto
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"

@@ -1,0 +1,41 @@
+# S.STD.XSC.CHK.0007 — check ripetitivo del catalogo iniziale (§62). Il codice è il nome del file.
+id: S.STD.XSC.CHK.0007
+type: CHK
+title: In produzione le persone sono solo amministrative
+summary: "In produzione le persone sono solo amministrative. In produzione non
+  esistono persone di business: non si creano documenti (§52.1)."
+kind: permission
+how:
+  verb: SCRIPT
+  script: prod-personas-admin
+  expect: ok
+cost: cheap
+deterministic: true
+frequency: use_env_prod
+when: use env prod
+cluster:
+  - CL-CHK-006
+invariant: "In produzione non esistono persone di business: non si creano
+  documenti (§52.1)."
+classification:
+  check_area: permessi
+facets:
+  F1: doc-standard
+  F4: check
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: ripetitiva
+  F10: R0
+  F11: deterministico
+  F12: validato
+  F13:
+    verified_at: 2026-09-29
+    release: spec-v8.0
+  F15: tecnica
+sources:
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "62"
+  - doc: jaggaer-virtual-consultant-architettura.md
+    section: "5.6"
