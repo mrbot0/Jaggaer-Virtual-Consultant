@@ -187,7 +187,8 @@ export function selfCheck({ report, session = {}, audit = [], plan = null, lesso
     11: () => {
       const hasAction = steps.length > 0 || taskEffects || asList(output.actions).length > 0;
       if (!hasAction) return;
-      const rpts = [...codesIn(rep)].filter((c) => parseCode(c)?.type === "RPT");
+      // K6.6: il codice del report è RPT.<CLIENTE>.<AAAAMMGG>.<SEQ> (§29.8, tabella reports); resta valido il formato item L.….RPT.nnnn
+      const rpts = [...codesIn(rep).filter((c) => parseCode(c)?.type === "RPT"), ...new Set(JSON.stringify(rep ?? null).match(/\bRPT\.[A-Z0-9]{4}\.\d{8}\.\d{4}\b/g) ?? [])];
       if (!rpts.length) fail1(11, "azione senza report RPT (§29.6)");
       else if (typeof kbExists !== "function") fail1(11, `esistenza di ${rpts.join(", ")} non eseguita: nessun accesso al DB (kbExists)`);
       else if (!rpts.some((c) => kbExists(c))) fail1(11, `report inesistente: ${rpts.join(", ")}`);
@@ -291,7 +292,7 @@ export function run(argv) {
   } catch (e) { return fail(asJson, 1, `input illeggibile: ${e.message ?? e}`); }
   try {
     {
-      const stmts = ["items", "decisions", "lessons", "observations", "contradictions"].map((t) => db.prepare(`select 1 from ${t} where code=?`));
+      const stmts = ["items", "decisions", "lessons", "observations", "contradictions", "reports"].map((t) => db.prepare(`select 1 from ${t} where code=?`));
       input.kbExists = (c) => stmts.some((s) => s.get(c));
       const dec = db.prepare(`select d.table_code, d.strategy, c.effects from decisions d left join decision_context c on c.decision_code=d.code where d.code=?`);
       input.getDecision = (c) => {

@@ -54,3 +54,11 @@ non registra nulla e il manager lo dice e attende. Il token di un passo vale una
 | `host non dichiarato` | Redirect SSO o CDN non dichiarati: l'host va aggiunto in environments.yaml fuori sessione |
 | `In produzione non si scrivono dati` | È corretto: si può fare in sandbox o pre-produzione |
 | `Approvazione non valida` / `finestra 3A scaduta` | Scrivere la frase esatta; se scaduta, ripartire da A1 |
+
+## Rendering (K6.5)
+
+Il blocco non si compone a mano: ogni evento si registra con
+`node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/workflow.mjs" event --kind <task_start|step_start|step_end|surprise|question|approval|outcome|report> --payload '<json>'`
+e il blocco si stampa con `workflow.mjs render` (deterministico: stessi eventi, stesso testo). `workflow.mjs watch <SES>`
+lo mostra in sola lettura da un'altra sessione (`/vc watch`). Al termine `scripts/report/build-report.mjs` scrive il RPT
+e aggiunge gli eventi `outcome` e `report`.

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rpt.schema.json",
+  "title": "RPT — report di azione o di test (§29.8, §29.9)",
+  "description": "Ogni azione produce un report (self-check #11). Codice RPT.<CLIENTE>.<AAAAMMGG>.<SEQ> assegnato dal DB (tabella reports). kind action: cosa è stato fatto, dove, con quali garanzie, cosa resta da fare; kind test: cosa è stato verificato, cosa è passato o fallito e perché, cosa non è coperto. L'esito viene dalla tassonomia chiusa di §29.9 (scripts/report/outcome.mjs).",
+  "type": "object",
+  "required": ["id", "kind", "title", "customer", "session", "env", "created_at", "outcome", "budget", "evidence"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^RPT\\.[A-Z0-9]{4}\\.\\d{8}\\.\\d{4}$" },
+    "kind": { "enum": ["action", "test"] },
+    "title": { "type": "string", "minLength": 1 },
+    "customer": { "type": "string", "pattern": "^[A-Z0-9]{4}$" },
+    "scope": { "type": ["string", "null"] },
+    "session": { "type": "string", "minLength": 1 },
+    "requested_by": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "env": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "enum": ["dev", "sandbox", "preprod", "prod"] },
+        "hosts": { "type": "array", "items": { "type": "string" } },
+        "verified_at": { "type": ["string", "null"] }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "required": ["status", "reason", "completion", "learning_event"],
+      "properties": {
+        "status": { "enum": ["SUCCESS", "SUCCESS-WITH-ASSUMPTION", "EXPECTED-ERROR-AS-SUCCESS", "ERROR-AS-LESSON", "ERROR-BLOCKING", "ERROR-ENVIRONMENT", "PARTIAL", "ABORTED-BY-POLICY", "ABORTED-BY-USER"] },
+        "reason": { "type": "string" },
+        "completion": { "type": "boolean", "description": "Metrica di completamento: ERROR-AS-LESSON conta come successo." },
+        "learning_event": { "type": "boolean", "description": "Metrica di apprendimento, separata dal completamento." },
+        "expected": {},
+        "defect": { "type": "boolean", "description": "Proposta di Defect: mai per ERROR-ENVIRONMENT." }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "required": ["used"],
+      "properties": { "used": { "type": "integer", "minimum": 0 }, "estimated": { "type": ["integer", "null"] }, "total": { "type": "integer" }, "by_model": { "type": "object" } }
+    },
+    "evidence": { "type": "array", "items": { "type": "string" } },
+    "lesson": { "type": ["string", "null"] },
+    "surprises": { "type": "integer", "minimum": 0 },
+    "novelties": { "type": "integer", "minimum": 0 },
+    "errors": {
+      "type": "array",
+      "items": { "type": "object", "required": ["category"], "properties": { "code": { "type": ["string", "null"] }, "category": { "type": "string" }, "message": { "type": "string" }, "expected": { "type": "boolean" } } }
+    },
+    "intent": { "type": ["string", "null"] },
+    "plan": {
+      "type": ["object", "null"],
+      "properties": { "plan_id": { "type": "string" }, "actions": { "type": "array", "items": { "type": "string", "pattern": "^ACT-[A-Z0-9-]+$" } }, "strategy": {} }
+    },
+    "approvals": { "type": "array", "items": { "type": "object", "required": ["kind", "ts"] } },
+    "execution": { "type": "array", "items": { "type": "object", "required": ["n", "status"], "properties": { "n": { "type": "integer" }, "status": { "type": "string" }, "text": { "type": "string" }, "evidence": { "type": "array" } } } },
+    "entities": { "type": "array", "items": { "type": "object", "required": ["ref"], "properties": { "ref": { "type": "string" }, "compensation": { "type": ["string", "null"] }, "status": { "type": "string" } } } },
+    "next": { "type": "array", "items": { "type": "string" } },
+    "run": { "type": ["string", "null"] },
+    "release": { "type": ["string", "null"] },
+    "verdict": { "type": ["object", "null"], "properties": { "scope": { "type": "string" }, "value": { "enum": ["GO", "GO CON RISERVE", "NO-GO"] } } },
+    "results": {
+      "type": "object",
+      "properties": { "pass": { "type": "integer" }, "fail": { "type": "integer" }, "flaky": { "type": "integer" }, "inconclusive": { "type": "integer" }, "expected_errors_received": { "type": "integer" }, "expected_errors_declared": { "type": "integer" } }
+    },
+    "failures": { "type": "array", "items": { "type": "object" } },
+    "coverage": { "type": ["object", "null"] },
+    "xray": { "type": ["object", "null"], "properties": { "status": { "enum": ["PASSED", "FAILED", "ABORTED", "TODO", "EXECUTING"] }, "defect": { "type": "boolean" } } }
+  },
+  "allOf": [
+    { "if": { "properties": { "kind": { "const": "action" } } }, "then": { "required": ["intent", "plan", "execution", "entities", "next"] } },
+    { "if": { "properties": { "kind": { "const": "test" } } }, "then": { "required": ["run", "results", "failures", "xray"] } }
+  ]
+}
