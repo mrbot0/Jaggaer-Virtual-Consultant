@@ -174,10 +174,16 @@ test("I-A: un ref già visto sulla stessa pagina con ruolo o nome diversi resta 
     assert.equal(refsOf(w2.ws).ref_7 ?? null, null, `${envId}: ${JSON.stringify(refsOf(w2.ws))}`);
     assert.ok(!allowed(clClick(w2.ws, w2.tr, "ref_7")));
   }
-  // su un'altra pagina la storia riparte
+  // su un'altra pagina la storia riparte — WP07 giro 5 (I-A', regola 1, più stretta): un URL diverso visto in una
+  // risposta NON la azzera (può essere lo stesso documento: pushState, #frammento, con la mappa dei ref dell'estensione
+  // intatta); riparte solo con un navigate della scheda a un nuovo documento
   const { ws, tr } = await readPlanWs("sandbox");
   const other = "https://acme-sbx.jaggaer.com/p2p/requisition/list";
   post(ws, CL + "read_page", { tabId: 101 }, claude(`button "Invia in approvazione" [ref_7]`, URLS.sandbox));
+  post(ws, CL + "read_page", { tabId: 101 }, claude(`link "Elenco richieste" [ref_7]`, other));
+  assert.equal(refsOf(ws).ref_7 ?? null, null, JSON.stringify(refsOf(ws)));
+  assert.ok(!allowed(clClick(ws, tr, "ref_7")), "URL cambiato senza navigate: click consentito");
+  post(ws, CL + "navigate", { url: other, tabId: 101 }, claude(`Navigated to ${other}`, other));
   post(ws, CL + "read_page", { tabId: 101 }, claude(`link "Elenco richieste" [ref_7]`, other));
   assert.equal(refsOf(ws).ref_7, SEL, JSON.stringify(refsOf(ws)));
   assert.equal(readSession(ws).browser.current_url, other);

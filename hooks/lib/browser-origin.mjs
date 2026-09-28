@@ -12,6 +12,7 @@ import { loadHookState } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
 import { updateSessionFile } from "./session-state.mjs";
 import { devtoolsPageUrl, claudeTabContext, playwrightPageUrl, hasDialog, hasModal, RECONNECT } from "./origin-markers.mjs";
+import { callKey, markPending } from "./ref-history.mjs";
 
 const ERROR_TEXT = /^\s*(error\b|errore\b|failed\b|timeout\b|timed out\b)|net::ERR_|navigation (failed|timeout)|timeout of \d+ ?ms exceeded|protocol error|target closed|no page selected|leave site\?/i;
 const textOf = (blocks) => blocks.filter((b) => b && typeof b === "object" && b.type === "text" && typeof b.text === "string").map((b) => b.text).join("\n");
@@ -90,6 +91,13 @@ export function nextOrigin(prev, call, state, resp) {
   return landed ? { url: landed, tab: navigated.tab ?? null } : reset;
 }
 
+// WP07 giro 5 (I-A', regola 5): scheda della voce obs_pending — quella nominata dalla chiamata; più schede o una
+// azione che non la nomina ⇒ ignota (blocca tutte le schede della famiglia, fail-closed).
+function pendingTab(call) {
+  const tabs = (call.actions ?? [call]).map((a) => (a.tab == null ? null : String(a.tab)));
+  return tabs.length && tabs.every((t) => t != null && t === tabs[0]) ? tabs[0] : null;
+}
+
 export function record(input, env = process.env) {
   const tool = String(input.tool_name ?? "");
   if (!isBrowserTool(tool)) return null;
@@ -97,19 +105,31 @@ export function record(input, env = process.env) {
   if (!st.jvc || !st.session?.env || !st.sessionFile) return null;
   const b = st.session.browser ?? {};
   const prev = { url: typeof b.current_url === "string" && b.current_url ? b.current_url : null, tab: b.tab ?? null };
+  let call = null;
   let next;
-  try { next = nextOrigin(prev, classify(tool, input.tool_input), responseState(input.tool_response), input.tool_response); } catch { next = { url: null, tab: null }; }
-  if (next.url === prev.url && (next.tab ?? null) === (prev.tab ?? null)) return null;
-  updateSessionFile(st.sessionFile, (s) => { s.browser = { ...(s.browser ?? {}), current_url: next.url, tab: next.tab, updated_by: "browser-origin" }; });
+  try { call = classify(tool, input.tool_input); next = nextOrigin(prev, call, responseState(input.tool_response), input.tool_response); } catch { next = { url: null, tab: null }; }
+  const moved = !(next.url === prev.url && (next.tab ?? null) === (prev.tab ?? null));
+  // ogni chiamata del browser resta "in attesa di observe-append" finché observe-append non la registra (regola 5)
+  const key = callKey(input);
+  updateSessionFile(st.sessionFile, (s) => {
+    let nb = markPending(s.browser ?? {}, key, call?.family ?? "unknown", call ? pendingTab(call) : null, new Date().toISOString());
+    if (moved) nb = { ...nb, current_url: next.url, tab: next.tab, updated_by: "browser-origin" };
+    s.browser = nb;
+  });
   return null;
 }
 
-// In caso di guasto: azzera (mai lasciare un'origine non confermata).
+// In caso di guasto: azzera (mai lasciare un'origine non confermata) e lascia la chiamata in attesa di observe-append.
 export function resetOnFailure(input, env = process.env) {
   try {
     const st = loadHookState(input, env);
-    if (st.jvc && st.sessionFile && st.session?.browser?.current_url != null) {
-      updateSessionFile(st.sessionFile, (s) => { s.browser = { ...(s.browser ?? {}), current_url: null, tab: null, updated_by: "browser-origin" }; });
+    if (st.jvc && st.sessionFile && st.session?.env) {
+      let call = null;
+      try { call = classify(String(input.tool_name ?? ""), input.tool_input); } catch { /* scheda ignota */ }
+      updateSessionFile(st.sessionFile, (s) => {
+        const nb = markPending(s.browser ?? {}, callKey(input), call?.family ?? "unknown", call ? pendingTab(call) : null, new Date().toISOString());
+        s.browser = { ...nb, current_url: null, tab: null, updated_by: "browser-origin" };
+      });
     }
   } catch { /* stato illeggibile: i guard negano comunque */ }
 }

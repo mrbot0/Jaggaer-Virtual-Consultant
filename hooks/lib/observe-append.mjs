@@ -12,11 +12,12 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { loadHookState, sessionDir } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
-import { responseState } from "./browser-origin.mjs";
+import { responseState, landedUrl } from "./browser-origin.mjs";
+import { tabKey, callKey, settlePending, historyFile, loadHistory, saveHistory, clearedBy, updateHistory, bindable } from "./ref-history.mjs";
 import { nextObserved, observedLocation } from "./observed-origin.mjs";
 import { isPageTextOp } from "./origin-markers.mjs";
 import { updateSessionFile } from "./session-state.mjs";
-import { writeFileAtomic } from "./fsx.mjs";
+import { writeFileAtomic, withFileLock } from "./fsx.mjs";
 import { parseSnapshot, responseText, responseHasImage, normLabel } from "../../scripts/chrome/snapshot-parse.mjs";
 import { compareExpect } from "../../scripts/chrome/expect-compare.mjs";
 import { resolveSel, atlasIndex, atlasMatch, fieldSensitivity } from "../../scripts/chrome/atlas.mjs";
@@ -89,7 +90,7 @@ export function readMode(call, ti, text = "") {
 // Etichetta di un ref per la storia della pagina (ruolo + nome normalizzato), compatta.
 const labelKey = (e) => sha(`${e.role ?? ""}\u0001${normLabel(e.name ?? "")}`).slice(0, 16);
 const ONE_READ_ENVS = new Set(["sandbox", "dev"]);
-const HISTORY_MAX = 2000;
+const LABELS_MAX = 2000;
 
 // Costruisce l'OBS (senza codice) dalla chiamata: pura rispetto al file system tranne Atlas e piano.
 export async function buildObservation({ ws, customer, session, call, state, resp, ti = null, env = process.env, now = new Date() }) {
@@ -156,13 +157,13 @@ export async function buildObservation({ ws, customer, session, call, state, res
   const mode = readMode(call, ti, text);
   const asked = (call.actions ?? [call]).map((a) => a.tab).filter((t) => t != null).at(-1) ?? null;
   const loc = hasPage && state === "ok" && !(call.actions ?? [call]).some(isPageTextOp) ? observedLocation(call.family, text, { asked, resp }) : null;
-  // WP07 giro 4 (I-A): etichette (ruolo + nome) dei ref che una risposta di Claude mostra — anche find e letture
-  // ristrette — per la storia della pagina: un ref visto con un'altra etichetta resta slegato. Registrare in più
-  // può solo slegare (fail-closed); la pagina della storia viene dal marcatore del server, se c'è.
-  let labels = null;
+  // WP07 giro 5 (I-A', regola 2): etichette (ruolo + nome) dei ref che OGNI risposta mostra — letture complete,
+  // ristrette, find, snapshot nelle risposte delle azioni, tre famiglie — per la storia della scheda
+  // (hooks/lib/ref-history.mjs). Registrare in più può solo slegare (fail-closed).
+  let labels = [];
   let labelLoc = null;
-  if (call.family === "claude-browser" && page && state === "ok") {
-    labels = (page.elements ?? []).filter((e) => e.ref).slice(0, HISTORY_MAX).map((e) => [String(e.ref), labelKey(e)]);
+  if (page && state === "ok") {
+    labels = (page.elements ?? []).filter((e) => e.ref != null && e.ref !== "").slice(0, LABELS_MAX).map((e) => [String(e.ref), labelKey(e)]);
     if (labels.length) labelLoc = loc ?? observedLocation(call.family, text, { asked, resp });
   }
   const binds = mode === "complete" || (mode === null && call.family !== "claude-browser");
@@ -192,48 +193,41 @@ export async function buildObservation({ ws, customer, session, call, state, res
       refs[String(e.ref)] = page.formatMismatch || unbound(String(e.ref)) ? null : atlasMatch(atlas, e)?.code ?? null;
     }
   }
-  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked };
+  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text };
 }
 
-// WP07 giro 4 (I-A): nuovo stato del legame ref ↔ SEL in session.browser dopo la chiamata (puro: restituisce una copia di `b`).
-//  - lettura parziale, find, batch di lettura, navigazione di Claude ⇒ mappa della pagina azzerata ({}), catena rotta;
-//  - storia delle etichette dei ref di Claude per pagina (scheda + URL): un ref rivisto con ruolo/nome diversi è
-//    "contaminato" per il resto della pagina; storia piena ⇒ nessun legame sulla pagina;
+// Nuovo stato del legame ref ↔ SEL in session.browser e della storia dei ref dopo la chiamata (puro: copie).
+// WP07 giro 4 (I-A):
+//  - lettura parziale, find, batch di lettura, navigazione o cambio di scheda di Claude ⇒ mappa della pagina azzerata
+//    ({}), catena rotta;
 //  - Claude in prod/preprod (e ambiente ignoto): un ref si lega solo se due letture complete CONSECUTIVE della stessa
 //    pagina e scheda lo associano allo stesso SEL (cand della lettura precedente); in sandbox/dev basta una lettura.
-export function nextBinding(b, { call, obs, ts, envType, mode, refs, pageUrl, labels, labelLoc, asked }) {
+// WP07 giro 5 (I-A'): la storia delle etichette è PER SCHEDA e persistente (hooks/lib/ref-history.mjs), in tutte e tre
+// le famiglie: si azzera solo con un navigate a un nuovo documento o la chiusura di quella scheda; un ref visto con
+// un'altra etichetta, o la prima volta fuori da una lettura completa, non si lega più; la voce obs_pending della
+// chiamata (scritta da browser-origin) si chiude qui, nella stessa scrittura.
+// Firma del giro 4 nextBinding(b, opts) → browser ancora accettata (storia vuota); altrimenti → { browser, hist }.
+export function nextBinding(b, hist, opts) {
+  if (opts === undefined && hist && typeof hist === "object" && "call" in hist) return nextBinding(b, null, hist).browser;
+  const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null } = opts;
   const out = { ...b };
+  delete out.ref_labels;   // storia del giro 4 (un solo posto in session.json): sostituita dal file per scheda
   const tab = asked != null ? String(asked) : null;
   const claudeNav = call.family === "claude-browser" && (call.actions ?? [call]).some((a) => a.kind === "navigate" || a.switches);
   if (mode === "partial" || claudeNav) {
     if (out.snapshot) out.snapshot = { obs: out.snapshot.obs, url: out.snapshot.url ?? null, tab: out.snapshot.tab ?? null, ts, refs: {}, cleared_by: String(call.op ?? call.tool ?? "") };
   }
-  if (claudeNav) delete out.ref_labels;
-  let taint = new Set();
-  if (labels?.length) {
-    const key = labelLoc?.url ? `${tab ?? ""}|${labelLoc.url}` : null;
-    let h = out.ref_labels && typeof out.ref_labels === "object" ? out.ref_labels : null;
-    // una pagina diversa (dal marcatore del server) ⇒ storia nuova; posizione ignota ⇒ si aggiunge a quella corrente
-    if (!h || (key && h.key && h.key !== key)) h = { key, labels: {}, full: false };
-    else h = { key: h.key ?? key, labels: { ...(h.labels ?? {}) }, full: !!h.full };
-    const now = new Map();
-    for (const [r, k] of labels) {
-      if (now.has(r) && now.get(r) !== k) now.set(r, "!"); else if (!now.has(r)) now.set(r, k);
-    }
-    for (const [r, k] of now) {
-      const old = h.labels[r];
-      if (old !== undefined && old !== k) { h.labels[r] = "!"; taint.add(r); } else if (old === undefined) {
-        if (Object.keys(h.labels).length >= HISTORY_MAX) h.full = true; else h.labels[r] = k;
-      }
-      if (h.labels[r] === "!" || k === "!") taint.add(r);
-    }
-    out.ref_labels = h;
-    if (h.full) taint = null;   // storia piena: nessun legame sulla pagina
-  }
+  // schede della storia: quella chiesta e quella del marcatore del server (se diverse, entrambe); nessuna ⇒ ignota
+  const tabs = [...new Set([tab, labelLoc?.tab != null ? String(labelLoc.tab) : null].filter((t) => t != null))];
+  const keys = tabs.length ? tabs.map((t) => tabKey(call.family, t)) : [tabKey(call.family, null)];
+  const complete = !!(refs && pageUrl);
+  const h = updateHistory(hist ?? { v: 1, tabs: {} }, { cleared: cleared.map((c) => c.key), keys, labels, complete, url: labelLoc?.url ?? null });
   if (refs && pageUrl) {
-    let bound = { ...refs };
+    const label = new Map();
+    for (const [r, k] of labels) label.set(r, label.has(r) && label.get(r) !== k ? "!" : k);
+    const bound = { ...refs };
+    for (const r of Object.keys(bound)) if (bound[r] != null && !keys.every((k) => bindable(h, k, r, label.get(r)))) bound[r] = null;
     if (call.family === "claude-browser") {
-      for (const r of Object.keys(bound)) if (taint === null || taint.has(r) || out.ref_labels?.labels?.[r] === "!") bound[r] = null;
       const cand = Object.fromEntries(Object.entries(bound).filter(([, v]) => v != null));
       if (!ONE_READ_ENVS.has(envType)) {
         const prev = out.snapshot;
@@ -245,7 +239,8 @@ export function nextBinding(b, { call, obs, ts, envType, mode, refs, pageUrl, la
       out.snapshot = { obs, url: pageUrl, tab, ts, refs: bound };
     }
   }
-  return out;
+  const browser = key ? settlePending(out, key, cleared.flatMap((c) => c.pend)) : out;
+  return { browser, hist: h };
 }
 
 function writeDb(ws, customer, scope, doc, errors, now) {
@@ -329,7 +324,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   }
 
   // 2. osservazione
-  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
+  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
   const { code, errs } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
   const dir = join(st.ws, "customers", st.customer, "observations");
   mkdirSync(dir, { recursive: true });
@@ -338,6 +333,12 @@ export async function record(input, env = process.env, { now = new Date() } = {}
 
   // 3. registro di sessione: ultima osservazione, spreco (snapshot ripetuti senza azione)
   let waste = false;
+  const key = callKey(input);
+  // storia del browser del cliente (sopravvive alla sessione: la mappa dei ref dell'estensione sopravvive a lei)
+  const histFile = historyFile(join(st.ws, "customers", st.customer, ".sessions"));
+  // schede azzerate: navigate riuscito (marcatore positivo di arrivo) a un nuovo documento, o chiusura della scheda
+  const cleared = clearedBy(call, { ok: state === "ok", landedTab: labelLoc?.tab ?? observedLocation(call.family, text, { asked, resp })?.tab ?? null,
+    landed: (a) => !!landedUrl(call.family, text, { asked: a.tab ?? null, resp }) });
   const obsKindForLedger = doc.kind === "navigate" || doc.kind === "action" ? "action" : doc.kind;
   updateSessionFile(st.sessionFile, (s) => {
     const o = s.ledger.observe ?? {};
@@ -349,10 +350,15 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       o.snapshot_sig = doc.page_signature;
     } else if (obsKindForLedger === "action" || doc.kind === "error") o.snapshot_sig = null;
     // ultimo snapshot osservato: vale solo per la pagina (URL) e la scheda su cui è stato preso (WP07 giro 4: letture
-    // parziali e find azzerano la mappa, storia delle etichette e due letture consecutive per Claude in prod/preprod)
-    if ((refs && pageUrl) || mode === "partial" || labels?.length || call.family === "claude-browser") {
-      s.browser = nextBinding(s.browser ?? {}, { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked });
-    }
+    // parziali e find azzerano la mappa, due letture consecutive per Claude in prod/preprod); WP07 giro 5: storia dei
+    // ref per scheda nel file della sessione, aggiornata sotto lo stesso lock di session.json, e chiusura della voce
+    // obs_pending di questa chiamata (se questa scrittura non avviene, la voce resta e i guard non legano)
+    // lock della storia dentro quello di session.json (stesso ordine per tutte le sessioni del cliente)
+    s.browser = withFileLock(`${histFile}.lock`, () => {
+      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key });
+      if (labels.length || cleared.length || labelLoc?.url) saveHistory(histFile, r.hist);
+      return r.browser;
+    });
     if (cfgObject) s.snapshots = [...(Array.isArray(s.snapshots) ? s.snapshots : []), { objects: [cfgObject], ts: doc.ts, obs: code }].slice(-20);
     s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
     return s;

@@ -62,10 +62,15 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
     return r.json?.hookSpecificOutput?.additionalContext ?? "";
   };
   // ciclo di vita completo di una chiamata: i tre guard PreToolUse; se nessuno nega, la chiamata
-  // "riesce" e il PostToolUse browser-origin registra l'origine (giro 2, N1)
+  // "riesce" e il PostToolUse browser-origin registra l'origine (giro 2, N1); WP07 giro 5: come in Claude Code, sulla
+  // stessa chiamata corre anche observe-append (senza, la chiamata resta "non osservata" e i guard non legano: regola 5)
   const guards = (tool, input, order = GUARDS) => {
     const res = order.map((g) => ({ g, r: browserCall(g, ws, tool, input, { transcript_path: tr }) }));
-    if (res.every(({ r }) => r.status === 0 && r.stdout.trim() === "")) runHook("browser-origin", { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: typeof input.url === "string" ? navResponse(tool, input.url) : [{ type: "text", text: "ok" }] }, E(ws));
+    if (res.every(({ r }) => r.status === 0 && r.stdout.trim() === "")) {
+      const post = { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: input, tool_response: typeof input.url === "string" ? navResponse(tool, input.url) : [{ type: "text", text: "ok" }] };
+      runHook("browser-origin", post, E(ws));
+      runHook("observe-append", post, E(ws));
+    }
     return res;
   };
   const allSilent = (res) => res.every(({ r }) => r.status === 0 && r.stdout.trim() === "");

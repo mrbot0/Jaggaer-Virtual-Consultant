@@ -34,6 +34,7 @@ import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
 import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf, exploreRecord, EXPLORE_PHRASE } from "../../../scripts/admin/approvals.mjs";
 import { appendAudit } from "../audit.mjs";
 import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
+import { pendingRefusal } from "../ref-history.mjs";
 
 const G = "guard-config-scope";
 export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
@@ -94,6 +95,10 @@ export function bindingRefusal(ctx, step) {
     if (typeof step.target !== "string" || !SEL_CODE.test(step.target)) return "il passo non ha come target un SEL dell'Atlas: input, click e upload non si possono legare al passo";
     const refs = Array.isArray(a.targets) ? a.targets : [];
     if (!refs.length || a.untargeted) return `azione senza uid/ref (${a.op ?? a.tool}): non si può legare al SEL del passo ${step.target}; usa l'uid o il ref dell'ultimo snapshot`;
+    // WP07 giro 5 (I-A', regola 5): una chiamata precedente su questa scheda che observe-append non ha registrato
+    // (fallito, scaduto) ⇒ la storia dei ref della scheda è inaffidabile: nessun legame finché la scheda non naviga
+    const pend = pendingRefusal(b, a.family ?? ctx.call?.family, a.tab);
+    if (pend) return pend;
     const snap = b.snapshot;
     if (!snap || !snap.refs || typeof snap.refs !== "object") return "nessuno snapshot osservato della pagina: esegui take_snapshot / read_page / browser_snapshot prima dell'azione";
     if (!b.current_url || snap.url !== b.current_url) return "l'ultimo snapshot osservato non è della pagina corrente: rifai lo snapshot";
