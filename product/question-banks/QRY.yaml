@@ -1,0 +1,35 @@
+type: QRY
+source: §64
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: purpose
+    question: A quale domanda risponde la query?
+    genre: testimoniale
+    critical_for_r2: false
+    always_critical: false
+  - attribute: pattern
+    question: Quale pattern di query usa?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: tables
+    question: Quali tabelle legge?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: query
+    question: Qual è il testo della query?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: true
+  - attribute: validation
+    question: È stata eseguita e validata (righe, coerenza)?
+    genre: empirica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: portability
+    question: Funziona per altri clienti o solo per questo?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false

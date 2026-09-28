@@ -1,0 +1,35 @@
+type: CHK
+source: §64
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: kind
+    question: Che tipo di controllo è (pre-azione, post-modifica, salute integrazioni…)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: how
+    question: "Come si esegue: verbo, bersaglio, esito atteso?"
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: true
+  - attribute: cost
+    question: Quanto costa eseguirlo (tempo, token, rischio)?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: deterministic
+    question: Il risultato è deterministico?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: frequency
+    question: Con che frequenza va eseguito?
+    genre: regola
+    critical_for_r2: false
+    always_critical: false
+  - attribute: cluster
+    question: A quale cluster di controlli appartiene?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false

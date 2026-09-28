@@ -1,0 +1,55 @@
+type: PRF
+source: §64, §19.2, §63
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: sector
+    question: In quale settore opera il cliente?
+    genre: testimoniale
+    critical_for_r2: false
+    always_critical: false
+  - attribute: size
+    question: Quanti utenti, fornitori attivi e ordini l'anno?
+    genre: testimoniale
+    critical_for_r2: false
+    always_critical: false
+  - attribute: legal
+    question: Quale contesto legale (appalti pubblici, paese, gruppo)?
+    genre: testimoniale
+    critical_for_r2: false
+    always_critical: false
+  - attribute: procurement_model
+    question: Qual è il modello di procurement (diretto/indiretto, centralizzazione, catalogo, gare, contratti)?
+    genre: testimoniale
+    critical_for_r2: true
+    always_critical: false
+  - attribute: erp
+    question: Quale ERP, versione e middleware?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: modules
+    question: Quali moduli JAGGAER sono attivi?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: integrations
+    question: Quali integrazioni esistono (INT)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: documentation_inventory
+    question: Quale documentazione esiste, di che genere e su quali scope?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: approval_culture
+    question: Come si approva (livelli, soglie, deleghe)?
+    genre: testimoniale
+    critical_for_r2: false
+    always_critical: false
+  - attribute: environments
+    question: Quali ambienti esistono (environments.yaml) e come si allineano?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false

@@ -239,12 +239,12 @@ export function assignDocCode(db, { level = "S", customer = "STD", source, sha25
 }
 
 export function recordProfile(db, p, { path = null } = {}) {
-  db.prepare(`insert into doc_profiles(code, doc_key, doc_id, source, sha256, kind, genre, origin, version, dated, covers_release, reliability, status, units, path, profiled_at)
-    values (@code,@doc_key,@doc_id,@source,@sha256,@kind,@genre,@origin,@version,@dated,@covers_release,@reliability,@status,@units,@path,@profiled_at)
+  db.prepare(`insert into doc_profiles(code, doc_key, doc_id, source, sha256, kind, genre, origin, scopes, version, dated, covers_release, reliability, status, units, path, profiled_at)
+    values (@code,@doc_key,@doc_id,@source,@sha256,@kind,@genre,@origin,@scopes,@version,@dated,@covers_release,@reliability,@status,@units,@path,@profiled_at)
     on conflict(code) do update set doc_id=excluded.doc_id, source=excluded.source, sha256=excluded.sha256, kind=excluded.kind, genre=excluded.genre,
-    origin=excluded.origin, version=excluded.version, dated=excluded.dated, covers_release=excluded.covers_release, reliability=excluded.reliability,
+    origin=excluded.origin, scopes=excluded.scopes, version=excluded.version, dated=excluded.dated, covers_release=excluded.covers_release, reliability=excluded.reliability,
     status=excluded.status, units=excluded.units, path=excluded.path, profiled_at=excluded.profiled_at`).run({
-    code: p.id, doc_key: p.source.doc_key, doc_id: p.source.doc_id, source: p.source.path, sha256: p.source.sha256, kind: p.kind, genre: p.genre, origin: p.origin,
+    code: p.id, doc_key: p.source.doc_key, doc_id: p.source.doc_id, source: p.source.path, sha256: p.source.sha256, kind: p.kind, genre: p.genre, origin: p.origin, scopes: JSON.stringify(p.scopes ?? []),
     version: p.version, dated: p.dated, covers_release: p.covers_release, reliability: p.reliability.score, status: p.ingestion.status, units: p.units.total, path,
     profiled_at: new Date().toISOString(),
   });

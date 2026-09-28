@@ -1,0 +1,50 @@
+type: DOC
+source: §64, §19.7
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: kind
+    question: Che tipo di documento è?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: true
+  - attribute: genre
+    question: Di quale genere di fonte (tecnica, d'uso, empirica, testimoniale)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: origin
+    question: Chi l'ha prodotto (vendor, cliente, partner, interno)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: version_date
+    question: Quale versione e quale data?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: covers_release
+    question: A quale release del prodotto si riferisce?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: reliability
+    question: Quanto è affidabile (base, freschezza, paternità, coerenza, corroborazione)?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: structure
+    question: Com'è fatto (pagine, capitoli, tabelle, figure, tabelle di campi)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: known_issues
+    question: Quali parti sono superate o contraddette dall'osservazione?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: ingestion
+    question: A che punto è l'ingestion (profilato, segmentato, estratto, digerito, rivisto)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false

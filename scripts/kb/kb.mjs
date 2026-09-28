@@ -7,6 +7,9 @@ import { impact } from "./impact.mjs";
 import { identityCard, identityMissing } from "./identity.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { recordCall } from "../lib/call-ledger.mjs";
+import { units as searchUnits, questionFor, UnitsInputError } from "./units.mjs";
+import { readFileSync } from "node:fs";
+import { main as reviewMain } from "./review.mjs";
 
 const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
 
@@ -25,6 +28,12 @@ Comandi:
             cosa si rompe a valle (mapping INT obbligatori, campi che lo richiedono, campi obbligatori a valle)
   identity  <codice FLD> | --doc <documento> --missing <blocco>
             carta d'identità compatta (§19.20) · i campi del documento senza il blocco
+  units     [--doc <DOC>] [--near <soggetto>] [--query "<domanda>" | --query-file <file> | --question CFG.impacts]
+            [--type <tipo di unità>] [--top 5]
+            unità di significato (§19.9) per la digestione guidata (§19.11): FTS + prossimità di sezione del
+            soggetto; --question prende la domanda dalla banca product/question-banks/<TIPO>.yaml
+  review    → scripts/kb/review.mjs (coda stratificata e verbi accept/correct/reject, §19.19)
+  epistemic --scope <S> [--plan] → scripts/kb/coverage-report.mjs (report di copertura §9.6, piano R0)
 
 Opzioni comuni: --db <file> (default knowledge.db) --json --help
 
@@ -46,9 +55,11 @@ export function run(argv) {
     if (!asJson) console.log(HELP);
     return { exitCode: cmd ? 0 : 1 };
   }
+  // WP09a: sotto-comandi con una CLI propria (radice del workspace, non il solo DB)
+  if (cmd === "review") return { exitCode: reviewMain(rest) };
   const { opt, facet, positional } = parseArgs(rest);
   const dbPath = opt("db", "knowledge.db");
-  if (!["find", "resolve", "summary", "get", "precedents", "fields", "impact", "identity"].includes(cmd)) {
+  if (!["find", "resolve", "summary", "get", "precedents", "fields", "impact", "identity", "units"].includes(cmd)) {
     const msg = `comando sconosciuto: ${cmd}`;
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}\n${HELP}`);
     return { exitCode: 1 };
@@ -97,6 +108,14 @@ export function run(argv) {
       return { exitCode: 0 };
     } else if (cmd === "identity") {
       items = opt("missing") !== undefined || !positional[0] ? identityMissing(db, { doc: opt("doc"), missing: opt("missing") }) : [identityCard(db, positional[0])];
+    } else if (cmd === "units") {
+      let query = opt("query");
+      if (opt("query-file")) query = readFileSync(opt("query-file"), "utf8");
+      let question = null;
+      if (opt("question")) { question = questionFor(opt("question")); query = question.question; }
+      const r = searchUnits(db, { doc: opt("doc"), near: opt("near"), query, type: opt("type"), top: Number(opt("top", 5)) });
+      console.log(JSON.stringify({ ok: true, question: question ? { type: question.type, attribute: question.attribute, question: question.question } : undefined, items: r, took_ms: Date.now() - t0 }));
+      return { exitCode: 0 };
     } else if (cmd === "precedents") {
       const releases = opt("releases") ? String(opt("releases")).split(",").map((x) => x.trim()).filter(Boolean) : undefined;
       const context = { shape: opt("shape"), release: opt("release"), releases, cluster: opt("cluster") };
@@ -104,7 +123,7 @@ export function run(argv) {
     }
   } catch (err) {
     const msg = String(err?.message ?? err);
-    if (err instanceof InvalidFacetError || err instanceof InvalidInputError || err instanceof NotFoundError) {
+    if (err instanceof InvalidFacetError || err instanceof InvalidInputError || err instanceof NotFoundError || err instanceof UnitsInputError) {
       console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
       return { exitCode: 1 };
     }

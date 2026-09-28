@@ -1,0 +1,73 @@
+source: §63 — Banca di domande per la profilazione del cliente (customer-profiler)
+note: Poste a lotti quando la documentazione non risponde (§19.2, §16); ogni risposta diventa un item L con origine dichiarazione-utente; le domande già coperte
+  dal DB non vengono poste.
+questions:
+  - area: Organizzazione
+    question: Quante società, e condividono le anagrafiche fornitori?
+    feeds: PRF.legal.group, CL-PRO-013, handoff VEN
+  - area: Organizzazione
+    question: "Chi possiede il processo acquisti: ufficio centrale, referenti di sede, entrambi?"
+    feeds: CL-PRO-006/007, proprietà degli scope
+  - area: Modello di procurement
+    question: Quota di acquisti da catalogo vs testo libero (stima)?
+    feeds: catalog_usage, priorità CAT
+  - area: Modello di procurement
+    question: Fate gare strutturate? Con che frequenza e per quali categorie?
+    feeds: CL-PRO-010/011, maturità SRC
+  - area: Modello di procurement
+    question: Esistono contratti quadro con call-off?
+    feeds: CL-PRO-012, handoff CON→P2P
+  - area: Modello di procurement
+    question: Siete soggetti a normativa sugli appalti pubblici?
+    feeds: CL-PRO-004, vincoli legali sulle FLD
+  - area: Approvazioni
+    question: Quanti livelli, con quali soglie? Esistono deleghe automatiche?
+    feeds: PMP varianti, PSP
+  - area: Approvazioni
+    question: "Cosa succede a una richiesta rifiutata: torna in bozza o si annulla?"
+    feeds: LCY percorsi, test negativi
+  - area: Integrazioni
+    question: Quale ERP e versione? Middleware? Chi lo gestisce?
+    feeds: F7, INT.counterpart
+  - area: Integrazioni
+    question: Quali oggetti viaggiano verso l'ERP (fornitori, ordini, ricezioni, fatture)? In che direzione?
+    feeds: Integration Map
+  - area: Integrazioni
+    question: "Cosa succede quando un messaggio va in errore: chi se ne accorge, come?"
+    feeds: silence_semantics, playbook
+  - area: Dati
+    question: Il centro di costo (e le altre anagrafiche contabili) nasce nell'ERP o in JAGGAER?
+    feeds: system_of_record (§19.20)
+  - area: Dati
+    question: Esistono campi aggiunti da voi ai documenti standard? Quali, e perché?
+    feeds: FLD.custom, reason
+  - area: Dati
+    question: Ci sono campi obbligatori "per policy interna" che il sistema non impone?
+    feeds: de_facto_mandatory, CTR
+  - area: Ambienti
+    question: Quali ambienti esistono e con che URL? La sandbox è una copia di produzione? Da quando?
+    feeds: environments.yaml, alignment
+  - area: Ambienti
+    question: Chi può approvare una modifica di configurazione in produzione? Servono due persone?
+    feeds: second_approver_required
+  - area: Utenti
+    question: Quali ruoli usano il sistema e quanti utenti per ruolo?
+    feeds: USR, persone di test
+  - area: Utenti
+    question: Dove gli utenti sbagliano più spesso, per esperienza vostra?
+    feeds: ERR prioritari, PSP
+  - area: Analytics
+    question: Usate Analytics? Chi costruisce i report? Esistono report "ufficiali"?
+    feeds: TBL inferenza dai report
+  - area: Collaudo
+    question: Come collaudate oggi una release? Chi decide il go? Dove stanno i test e le evidenze?
+    feeds: Style guide (F3), Xray, RPT di test
+  - area: Collaudo
+    question: Qual è il tipo issue Jira per un difetto di collaudo?
+    feeds: defects.issue_type
+  - area: Documentazione
+    question: Esiste un documento di progetto o di configurazione aggiornato? Di quale versione del prodotto?
+    feeds: documentation_inventory, affidabilità
+  - area: Documentazione
+    question: Dove sono i manuali utente locali, e chi li mantiene?
+    feeds: DOC.authorship

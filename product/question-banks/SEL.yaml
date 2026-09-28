@@ -1,0 +1,30 @@
+type: SEL
+source: §64
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: strategies
+    question: Con quali strategie si trova l'elemento (almeno due, una semantica)?
+    genre: empirica
+    critical_for_r2: true
+    always_critical: true
+  - attribute: stability
+    question: Quanto è stabile il selettore fra release e sessioni?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: frame_context
+    question: In quale frame, modale o griglia vive l'elemento?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: effect
+    question: L'azione sull'elemento legge o scrive?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: last_success
+    question: Quando ha funzionato l'ultima volta, e in quale ambiente?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false

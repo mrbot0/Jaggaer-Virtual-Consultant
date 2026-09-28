@@ -1,0 +1,40 @@
+type: ACT
+source: §64, §29.4
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: risk
+    question: Quale classe di rischio ha l'azione?
+    genre: regola
+    critical_for_r2: true
+    always_critical: true
+  - attribute: environments
+    question: In quali ambienti è ammessa?
+    genre: regola
+    critical_for_r2: true
+    always_critical: false
+  - attribute: approvals
+    question: Quali approvazioni richiede?
+    genre: regola
+    critical_for_r2: true
+    always_critical: false
+  - attribute: evidence_min
+    question: Quali evidenze minime deve produrre?
+    genre: regola
+    critical_for_r2: true
+    always_critical: false
+  - attribute: report_kind
+    question: Quale report produce?
+    genre: regola
+    critical_for_r2: true
+    always_critical: false
+  - attribute: db_writes
+    question: Cosa scrive nel DB di conoscenza?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: budget
+    question: Con quale budget?
+    genre: regola
+    critical_for_r2: true
+    always_critical: false

@@ -1,0 +1,45 @@
+type: FLW
+source: §19.11 (banca per FLW, 6 domande su 8 attributi), §64
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: actor
+    question: Chi lo esegue (ruolo)?
+    genre: d'uso
+    critical_for_r2: false
+    always_critical: false
+  - attribute: trigger
+    question: Cosa lo avvia?
+    genre: d'uso
+    critical_for_r2: false
+    always_critical: false
+  - attribute: preconditions
+    question: Cosa deve essere vero prima?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: steps
+    question: Quali passi, in che ordine, con quali dati?
+    genre: d'uso
+    critical_for_r2: false
+    always_critical: true
+  - attribute: postconditions
+    question: Cosa deve essere vero dopo?
+    genre: d'uso
+    critical_for_r2: true
+    always_critical: false
+  - attribute: compensation
+    question: Come si annulla o si chiude ciò che ha creato (close/cancel, mai delete)?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: evidence
+    question: Dove si vede che è andato bene?
+    genre: d'uso
+    critical_for_r2: false
+    always_critical: false
+  - attribute: invariants
+    question: Quali condizioni restano vere per tutto il flusso (vincoli che nessun passo può violare)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false

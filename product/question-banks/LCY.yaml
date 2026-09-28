@@ -1,0 +1,35 @@
+type: LCY
+source: §64
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: states
+    question: Quali stati attraversa il documento?
+    genre: d'uso
+    critical_for_r2: false
+    always_critical: true
+  - attribute: transitions
+    question: Quali transizioni sono ammesse fra gli stati, e chi le esegue?
+    genre: d'uso
+    critical_for_r2: false
+    always_critical: false
+  - attribute: mandatory_by_state
+    question: Quali campi diventano obbligatori in ciascuno stato?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: immutable_after
+    question: Dopo quale stato quali campi non sono più modificabili?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: validations
+    question: Quali convalide scattano a ogni transizione, e con quali messaggi?
+    genre: empirica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: integration_touchpoints
+    question: In quali stati il documento viene inviato o ricevuto da un'integrazione?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false

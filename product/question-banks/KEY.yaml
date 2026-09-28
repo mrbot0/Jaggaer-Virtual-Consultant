@@ -1,0 +1,35 @@
+type: KEY
+source: §64
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: uniqueness
+    question: In quale ambito il valore deve essere univoco (società, fornitore, sistema)?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: true
+  - attribute: mutability
+    question: Il valore può cambiare dopo la creazione, e fino a quando?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: format
+    question: Quale formato, lunghezza e pattern deve rispettare?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: cross_system
+    question: Deve corrispondere a un codice di un altro sistema (ERP, middleware)? Quale?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: document_impact
+    question: Quali documenti si bloccano o cambiano se la chiave è duplicata o errata?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: enforcement_channels
+    question: Dove viene fatto rispettare il vincolo (UI, import, integrazione) e con quale messaggio?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false

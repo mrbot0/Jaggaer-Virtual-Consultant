@@ -1,0 +1,45 @@
+type: HND
+source: §64
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: contract
+    question: Qual è il contratto fra i due scope (cosa passa, in che stato)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: true
+  - attribute: owner_of_test
+    question: Quale scope possiede il test del passaggio?
+    genre: regola
+    critical_for_r2: false
+    always_critical: false
+  - attribute: asserts
+    question: Cosa asserisce il test del passaggio?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: does_not_pass
+    question: Cosa NON passa dall'altra parte?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: does_not_assert
+    question: Cosa il test NON asserisce (responsabilità dell'altro scope)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: stop_at_step
+    question: A quale passo si ferma il test di questo scope?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: shared_fixtures
+    question: Quali dati di prova sono condivisi fra i due scope?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: reciprocal_test
+    question: Qual è il test reciproco dall'altro lato?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false

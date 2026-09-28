@@ -1,0 +1,35 @@
+type: DIN
+source: §64, §20.5
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: document
+    question: Di quale documento sono i dati?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: sample
+    question: Quale campione è stato analizzato (dimensione, periodo)?
+    genre: empirica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: fields
+    question: Quali tassi di compilazione hanno i campi?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: lifecycle
+    question: Quali tempi e percorsi mostrano i documenti?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: by_role
+    question: Come varia per ruolo?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: privacy
+    question: Il profilo rispetta il gruppo minimo di 20 e nessun valore identificativo?
+    genre: regola
+    critical_for_r2: true
+    always_critical: true

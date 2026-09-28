@@ -1,6 +1,344 @@
-CFG: [location, options, dependencies, impacts, current_state, risk, rollback]
-FLW: [preconditions, steps, postconditions, compensation, evidence]
-INT: [protocol, trigger, mappings, errors, latency, silence_semantics]
-KEY: [uniqueness, mutability, format, cross_system]
-FLD: [document, datatype, mandatory, mandatory_reason, editable_in_states, default, lineage, visibility, custom]
-CFP: [steps, preconditions, verification, rollback, risk]
+# Registro degli attributi attesi per tipo (§64, estende §9.2) — COMPLETO (WP09a).
+# Formato di K0 invariato: <TIPO>: [attributi] (scripts/kb/epistemic.mjs lo legge così). In più:
+#   critical         attributi critici per R ≥ R2 (§64, DT-022: senza, l'item non entra in uso per R ≥ R2)
+#   always_critical  attributi sempre critici (§19.13: senza, l'item va in quarantena; per CFG location e options)
+#   genres           genere di fonte che di norma copre l'attributo (tecnica, d'uso, empirica, testimoniale, regola)
+#   identity_blocks  FLD: i 12 blocchi della carta d'identità (§19.20, validate-fld.mjs IDENTITY_BLOCKS)
+# Le domande della digestione guidata sono in product/question-banks/<TIPO>.yaml (una per attributo).
+# Da confermare con un configuratore senior (§38.2).
+CFG: [ location, options, dependencies, impacts, current_state, risk, rollback ]
+CFP: [ steps, preconditions, verification, rollback, risk, approvals, evidence ]
+FLW: [ actor, trigger, preconditions, steps, postconditions, compensation, evidence, invariants ]
+KEY: [ uniqueness, mutability, format, cross_system, document_impact, enforcement_channels ]
+LCY: [ states, transitions, mandatory_by_state, immutable_after, validations, integration_touchpoints ]
+FLD:
+  [
+    document,
+    section,
+    datatype,
+    domain,
+    mandatory,
+    mandatory_reason,
+    editable_in_states,
+    default,
+    lineage,
+    visibility,
+    system_of_record,
+    sensitivity,
+    custom
+  ]
+INT: [ protocol, trigger, mode_latency, mappings, error_catalog, observability, silence_semantics, counterpart_owner, test_strategy ]
+SEL: [ strategies, stability, frame_context, effect, last_success ]
+HND: [ contract, owner_of_test, asserts, does_not_pass, does_not_assert, stop_at_step, shared_fixtures, reciprocal_test ]
+CHK: [ kind, how, cost, deterministic, frequency, cluster ]
+PMP: [ stages, variants, handoffs, integrations, owner, epistemic_by_stage ]
+PRF: [ sector, size, legal, procurement_model, erp, modules, integrations, documentation_inventory, approval_culture, environments ]
+TBL: [ subject_area, columns, joins_known, row_count_observed, validated ]
+QRY: [ purpose, pattern, tables, query, validation, portability ]
+ERR: [ message, trigger, category, blocking, meaning, resolution, related, observed ]
+DIN: [ document, sample, fields, lifecycle, by_role, privacy ]
+DOC: [ kind, genre, origin, version_date, covers_release, reliability, structure, known_issues, ingestion ]
+ENV: [ type, base_url, allowed_hosts, fingerprint, policy, alignment, personas ]
+ACT: [ risk, environments, approvals, evidence_min, report_kind, db_writes, budget ]
+STR: [ applies_when, plan, cost, success_criteria ]
+DT: [ inputs, scoring, thresholds, priors, null_policy, version ]
+critical:
+  CFG:
+    - impacts
+    - rollback
+    - current_state
+  CFP:
+    - rollback
+    - verification
+  FLW:
+    - compensation
+    - postconditions
+  KEY:
+    - uniqueness
+    - cross_system
+  LCY:
+    - mandatory_by_state
+    - validations
+  FLD:
+    - mandatory
+    - system_of_record
+    - lineage
+  INT:
+    - silence_semantics
+    - mappings
+    - error_catalog
+  SEL:
+    - effect
+    - strategies
+  HND:
+    - stop_at_step
+    - does_not_pass
+  CHK:
+    - how
+  PMP:
+    - stages
+    - handoffs
+  PRF:
+    - procurement_model
+    - erp
+    - environments
+  TBL:
+    - columns
+    - validated
+  QRY:
+    - validation
+  ERR:
+    - trigger
+    - category
+    - resolution
+  DIN:
+    - privacy
+    - sample
+  DOC:
+    - reliability
+    - covers_release
+  ENV:
+    - fingerprint
+    - policy
+  ACT:
+    - risk
+    - environments
+    - approvals
+    - evidence_min
+    - report_kind
+    - db_writes
+    - budget
+  STR:
+    - plan
+  DT:
+    - thresholds
+    - null_policy
+always_critical:
+  CFG:
+    - location
+    - options
+  CFP:
+    - steps
+  FLW:
+    - steps
+  KEY:
+    - uniqueness
+  LCY:
+    - states
+  FLD:
+    - document
+  INT:
+    - protocol
+  SEL:
+    - strategies
+  HND:
+    - contract
+  CHK:
+    - how
+  PMP:
+    - stages
+  PRF: []
+  TBL:
+    - columns
+  QRY:
+    - query
+  ERR:
+    - message
+  DIN:
+    - privacy
+  DOC:
+    - kind
+  ENV:
+    - type
+    - base_url
+  ACT:
+    - risk
+  STR:
+    - plan
+  DT:
+    - inputs
+genres:
+  CFG:
+    location: d'uso
+    options: tecnica
+    dependencies: tecnica
+    impacts: tecnica
+    current_state: empirica
+    risk: regola
+    rollback: tecnica
+  CFP:
+    steps: d'uso
+    preconditions: tecnica
+    verification: tecnica
+    rollback: tecnica
+    risk: regola
+    approvals: regola
+    evidence: d'uso
+  FLW:
+    actor: d'uso
+    trigger: d'uso
+    preconditions: tecnica
+    steps: d'uso
+    postconditions: d'uso
+    compensation: tecnica
+    evidence: d'uso
+    invariants: tecnica
+  KEY:
+    uniqueness: tecnica
+    mutability: tecnica
+    format: tecnica
+    cross_system: tecnica
+    document_impact: tecnica
+    enforcement_channels: empirica
+  LCY:
+    states: d'uso
+    transitions: d'uso
+    mandatory_by_state: tecnica
+    immutable_after: tecnica
+    validations: empirica
+    integration_touchpoints: tecnica
+  FLD:
+    document: tecnica
+    section: d'uso
+    datatype: tecnica
+    domain: tecnica
+    mandatory: regola
+    mandatory_reason: tecnica
+    editable_in_states: tecnica
+    default: tecnica
+    lineage: tecnica
+    visibility: d'uso
+    system_of_record: tecnica
+    sensitivity: regola
+    custom: tecnica
+  INT:
+    protocol: tecnica
+    trigger: tecnica
+    mode_latency: tecnica
+    mappings: tecnica
+    error_catalog: tecnica
+    observability: empirica
+    silence_semantics: tecnica
+    counterpart_owner: testimoniale
+    test_strategy: tecnica
+  SEL:
+    strategies: empirica
+    stability: empirica
+    frame_context: empirica
+    effect: tecnica
+    last_success: empirica
+  HND:
+    contract: tecnica
+    owner_of_test: regola
+    asserts: tecnica
+    does_not_pass: tecnica
+    does_not_assert: tecnica
+    stop_at_step: tecnica
+    shared_fixtures: tecnica
+    reciprocal_test: tecnica
+  CHK:
+    kind: tecnica
+    how: tecnica
+    cost: empirica
+    deterministic: tecnica
+    frequency: regola
+    cluster: tecnica
+  PMP:
+    stages: d'uso
+    variants: empirica
+    handoffs: tecnica
+    integrations: tecnica
+    owner: testimoniale
+    epistemic_by_stage: empirica
+  PRF:
+    sector: testimoniale
+    size: testimoniale
+    legal: testimoniale
+    procurement_model: testimoniale
+    erp: tecnica
+    modules: tecnica
+    integrations: tecnica
+    documentation_inventory: tecnica
+    approval_culture: testimoniale
+    environments: tecnica
+  TBL:
+    subject_area: tecnica
+    columns: tecnica
+    joins_known: tecnica
+    row_count_observed: empirica
+    validated: empirica
+  QRY:
+    purpose: testimoniale
+    pattern: tecnica
+    tables: tecnica
+    query: tecnica
+    validation: empirica
+    portability: tecnica
+  ERR:
+    message: empirica
+    trigger: empirica
+    category: tecnica
+    blocking: empirica
+    meaning: tecnica
+    resolution: d'uso
+    related: tecnica
+    observed: empirica
+  DIN:
+    document: tecnica
+    sample: empirica
+    fields: empirica
+    lifecycle: empirica
+    by_role: empirica
+    privacy: regola
+  DOC:
+    kind: tecnica
+    genre: tecnica
+    origin: tecnica
+    version_date: tecnica
+    covers_release: tecnica
+    reliability: tecnica
+    structure: tecnica
+    known_issues: empirica
+    ingestion: tecnica
+  ENV:
+    type: tecnica
+    base_url: tecnica
+    allowed_hosts: tecnica
+    fingerprint: empirica
+    policy: regola
+    alignment: testimoniale
+    personas: tecnica
+  ACT:
+    risk: regola
+    environments: regola
+    approvals: regola
+    evidence_min: regola
+    report_kind: regola
+    db_writes: tecnica
+    budget: regola
+  STR:
+    applies_when: regola
+    plan: tecnica
+    cost: empirica
+    success_criteria: regola
+  DT:
+    inputs: tecnica
+    scoring: tecnica
+    thresholds: tecnica
+    priors: empirica
+    null_policy: tecnica
+    version: tecnica
+identity_blocks:
+  FLD:
+    - names
+    - datatype
+    - domain
+    - constraints
+    - structure
+    - relations
+    - system_of_record
+    - ownership
+    - lifecycle
+    - sensitivity
+    - errors
+    - real_data

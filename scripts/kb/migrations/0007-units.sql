@@ -12,7 +12,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS units_fts USING fts5(code UNINDEXED, text, se
 -- DOC: codice assegnato dal DB (assign-seq), doc_key = identità del documento fra le versioni (nome senza marcatori
 -- di versione); reliability = reliability.score del profilo, peso di base delle affermazioni del documento.
 CREATE TABLE IF NOT EXISTS doc_profiles (code TEXT PRIMARY KEY, doc_key TEXT NOT NULL, doc_id TEXT NOT NULL, source TEXT, sha256 TEXT,
-  kind TEXT, genre TEXT, origin TEXT, version TEXT, dated TEXT, covers_release TEXT, reliability REAL, status TEXT, units INTEGER,
+  kind TEXT, genre TEXT, origin TEXT, scopes TEXT, version TEXT, dated TEXT, covers_release TEXT, reliability REAL, status TEXT, units INTEGER,
   path TEXT, profiled_at TEXT);
 CREATE INDEX IF NOT EXISTS idx_doc_profiles_key ON doc_profiles(doc_key);
 CREATE INDEX IF NOT EXISTS idx_doc_profiles_docid ON doc_profiles(doc_id);

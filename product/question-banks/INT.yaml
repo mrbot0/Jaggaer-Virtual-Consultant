@@ -1,0 +1,50 @@
+type: INT
+source: §19.11 (banca per INT, 8 domande), §64 (+ test_strategy)
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: protocol
+    question: Quale protocollo e tracciato usa?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: true
+  - attribute: trigger
+    question: Cosa lo scatena?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: mode_latency
+    question: È sincrono o asincrono, con quali tempi?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: mappings
+    question: Come si mappano i campi, con quali trasformazioni?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: error_catalog
+    question: Quali errori esistono e cosa significano?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: observability
+    question: Dove si osserva lo stato di un messaggio?
+    genre: empirica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: silence_semantics
+    question: Cosa significa il silenzio (nessuna risposta, nessun messaggio)?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: counterpart_owner
+    question: Chi possiede il sistema controparte?
+    genre: testimoniale
+    critical_for_r2: false
+    always_critical: false
+  - attribute: test_strategy
+    question: Come si collauda l'interfaccia (payload d'oro, checkpoint asincroni, stub)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false

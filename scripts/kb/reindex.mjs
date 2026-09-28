@@ -11,6 +11,12 @@ import { confidence, weight } from "./weights.mjs";
 import { quality } from "./quality.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { indexFieldModel, needsFieldIndex } from "./fields.mjs";
+import { indexUnits, linkSubjectUnits } from "./units.mjs";
+
+// WP09a: le unità citate come fonte di un item (sources[].unit o stringa "U.<DOCID>.<nnnn>") → subject_units,
+// la sezione nota del soggetto per la prossimità di `kb units --near`.
+const UNIT_CODE_RE = /^U\.[A-Z0-9]+\.\d{4,}$/;
+export const sourceUnits = (obj) => (obj?.sources ?? []).flatMap((s) => (typeof s === "string" ? [s] : [s?.unit, ...(Array.isArray(s?.units) ? s.units : [])])).filter((u) => UNIT_CODE_RE.test(String(u ?? "")));
 
 // Tipi che alimentano il modello dei campi (K4.5): FLD → fields; FLD, INT, LCY → archi lineage.
 const FIELD_MODEL_TYPES = new Set(["FLD", "INT", "LCY"]);
@@ -148,11 +154,15 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
         updated_at: new Date(statSync(file).mtimeMs).toISOString(), verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
       ftsDel.run(obj.id); ftsIns.run(obj.id, obj.title, obj.summary);
       if (FIELD_MODEL_TYPES.has(obj.type)) indexFieldModel(db, obj);
+      const su = sourceUnits(obj);
+      if (su.length) linkSubjectUnits(db, obj.id, su);
       stats.upserted++;
     }
     const dep = db.prepare("update items set status='deprecato' where code=?");
     for (const { code } of db.prepare("select code from items where status<>'deprecato'").all()) if (!seen.has(code)) { dep.run(code); stats.deprecated++; }
     Object.assign(stats, upsertClusters(db, clustersDir));
+    // WP09a: unità di significato (<root>/sources/units/<DOCID>/<codice>.yaml) → units + units_fts
+    Object.assign(stats, indexUnits(db, join(root, "sources", "units"), { root }));
   })();
   return stats;
 }

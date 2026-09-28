@@ -1,0 +1,95 @@
+type: FLD
+source: §19.11 (banca per FLD, 9 domande), §19.20 (12 blocchi della carta d'identità), §64
+note: Una domanda per attributo atteso (schemas/expected-attributes.yaml). La digestione guidata (scripts/kb/digest-plan.mjs) pone ogni domanda alle unità del
+  documento (kb units --near <soggetto> --query <domanda> --top 5); nessuna risposta = GAP.
+questions:
+  - attribute: document
+    question: A quale documento appartiene?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: true
+  - attribute: section
+    question: In quale sezione del documento o del form si trova?
+    genre: d'uso
+    critical_for_r2: false
+    always_critical: false
+  - attribute: datatype
+    question: Di che tipo è?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: domain
+    question: Quali valori ammette (lista chiusa, formato, intervallo)?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: mandatory
+    question: Quando è obbligatorio, e per chi (sempre, per società, per ruolo, in quali stati)?
+    genre: regola
+    critical_for_r2: true
+    always_critical: false
+  - attribute: mandatory_reason
+    question: "Perché è obbligatorio: cosa a valle lo richiede (integrazione, workflow, norma, policy)?"
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: editable_in_states
+    question: In quali stati è modificabile?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: default
+    question: Da dove prende il valore di default?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+  - attribute: lineage
+    question: Verso quali campi di altri documenti si propaga, e da quali deriva?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: visibility
+    question: Chi lo vede (ruoli, sezioni nascoste, condizioni)?
+    genre: d'uso
+    critical_for_r2: false
+    always_critical: false
+  - attribute: system_of_record
+    question: Il valore nasce in JAGGAER o in un altro sistema (ERP)? Chi ne è il sistema di riferimento?
+    genre: tecnica
+    critical_for_r2: true
+    always_critical: false
+  - attribute: sensitivity
+    question: Contiene dati personali o commerciali da mascherare?
+    genre: regola
+    critical_for_r2: false
+    always_critical: false
+  - attribute: custom
+    question: È un campo standard del prodotto o aggiunto dal cliente?
+    genre: tecnica
+    critical_for_r2: false
+    always_critical: false
+identity_blocks:
+  - block: names
+    question: Con quali nomi compare (label it/en, nome tecnico, alias nei documenti)?
+  - block: datatype
+    question: Tipo, lunghezza, precisione e formato del dato?
+  - block: domain
+    question: "Dominio dei valori: lista chiusa, intervallo, vocabolario, sorgente della lista?"
+  - block: constraints
+    question: "Vincoli: obbligatorietà, univocità, formato, dipendenze da altri campi?"
+  - block: structure
+    question: "Posizione nella struttura del documento: testata, riga, distribuzione, sezione?"
+  - block: relations
+    question: Relazioni con altri campi e documenti (propagazione, derivazione, chiavi)?
+  - block: system_of_record
+    question: Sistema di riferimento del valore e direzione della sincronizzazione?
+  - block: ownership
+    question: Chi possiede il dato e chi può modificarne la configurazione?
+  - block: lifecycle
+    question: Come cambia il dato nel ciclo di vita del documento (stati, immutabilità)?
+  - block: sensitivity
+    question: Classe di sensibilità (PII, commerciale) e regola di redazione?
+  - block: errors
+    question: Quali messaggi d'errore lo riguardano e cosa significano?
+  - block: real_data
+    question: Cosa mostrano i dati reali (tasso di compilazione, valori tipici, gruppo minimo 20)?
