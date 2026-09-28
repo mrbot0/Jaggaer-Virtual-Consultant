@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 28/09/2026 21:40 — **punto corrente: WP09a (ingestion sul corpus JAGGAER reale) avviato; WP08 (F0) chiuso**.
+Ultimo aggiornamento: 28/09/2026 23:50 — **punto corrente: WP09b (NRT, esecuzione, evidenze, promozione) avviato; WP09a (ingestion) chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 49 % del progetto** (stima pesata sullo sforzo) · 8 pacchetti su 17 chiusi.
+**≈ 58 % del progetto** (stima pesata sullo sforzo) · 9 pacchetti su 17 chiusi.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 49 %** (54 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 8 / 17 = **47 %** | WP01–WP08 con review e tag |
+| Avanzamento pesato | **≈ 58 %** (64 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 9 / 17 = **53 %** | WP01–WP09a con review e tag |
 | Hook del catalogo §44.4 | 16 / 16 = **100 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
-| Test automatici | 652 / 652 verdi | `npm test` al tag `f0-done` (`9327fff`); guard ≤ 134 ms |
+| Test automatici | 721 / 721 verdi | `npm test` al tag `ingest-tooling-done` (`6eff63e`), incluso il test sul corpus reale |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -36,6 +36,34 @@ Ultimo aggiornamento: 28/09/2026 21:40 — **punto corrente: WP09a (ingestion su
 - Corretto dopo la review: nessuna formula di raccomandazione produce più un obbligo, e anche la validazione a valle lo impedisce. Il budget per documento non si può alzare, e il consumo resta legato alla sessione reale.
 - Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
 - Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
+
+### Chiusura di WP09a (ingestion della documentazione JAGGAER) — tag `ingest-tooling-done` → `6eff63e`, 1 giro di correzione
+- La pipeline completa è eseguita sulla documentazione reale:
+  - parser di DOCX, XLSX, PDF, XSD/specifiche, export di configurazione, screenshot, trascrizioni ed e-mail;
+  - unità stabili tra versioni, profilo dei documenti, schemi di estrazione;
+  - banche di domande per ogni tipo della spec, verifica delle affermazioni sulle fonti, alias, differenze tra versioni, residuo, coda di revisione, rilievo del tenant e report di copertura.
+
+| Corpus JAGGAER | Valore |
+|---|---|
+| File totali | 385 |
+| File profilati, senza errori | 184 |
+| File nel residuo, ciascuno con motivo | 201 |
+| Unità estratte | 20.868 |
+| Righe di campi | 3.501 |
+| Lotto di campi più grande (limite 50) | 43 |
+| Sessione più grande (limite 80.000 token) | 79.640 token |
+
+- La conoscenza estratta è in `C:/Users/PC-Marco/Desktop/plugin/jvc-knowledge`, livello S. Nel repository del plugin non c'è materiale proprietario.
+- Sicurezza: la revisione automatica ha trovato un rischio "zip bomb" nel lettore ZIP, già corretto con limiti di dimensione e di rapporto di compressione.
+- **Da decidere con te:** tutto il corpus è stato trattato come documentazione del fornitore. Alcuni documenti dei corsi sono esempi di cliente e potrebbero meritare un'origine diversa, documento per documento.
+- Da misurare quando gli agenti avranno digerito gli item: la precisione delle catene tra campi, obiettivo ≥ 80 %.
+- Review: nessun materiale proprietario nel repository, e il residuo è legittimo (immagini senza OCR, archivi, file Snagit, duplicati). In correzione:
+  - la verifica delle affermazioni confrontava numeri e codici come sottostringhe;
+  - la mandatorietà degli XSD era sbagliata per `choice` e gruppi opzionali;
+  - l'OCR dei PDF scansionati non veniva letto;
+  - i parser diversi dallo ZIP non avevano limiti di memoria.
+
+  Tutto corretto nel giro 1, più le parole chiave inglesi nelle domande (il 96 % del corpus è in inglese). L'ingestion rieseguita ha 0 errori di parser. 6 pagine PDF contengono solo immagini e restano nel residuo in attesa di OCR.
 
 ### Chiusura di WP08 (F0, fondamenta e sicurezza)
 - Implementato in 8 commit, più 1 giro di correzione (`993a003..9327fff`). Tag `f0-done` → `9327fff`.
@@ -106,8 +134,8 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP06 | Ambienti, `env-check`, guard-environment/production/config-scope, catalogo azioni ACT, tripla approvazione 3A | K5 | 6 | 100 | ✅ | tag `k5-done` → `69cc6e7`, 466 test, 3 giri di correzione, `docs/phase-reports/K5.md` |
 | WP07 | `step-check`, `observe-append`, errori della piattaforma, evidenze, intento DT-026, workflow, report ed esiti, budget, `compile-plan` opzionale | K6 | 8 | 100 | ✅ | tag `k6-done` → `ea67488`, 578 test, 5 giri di correzione, `docs/phase-reports/K6.md` |
 | WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 100 | ✅ | tag `f0-done` → `9327fff`, 652 test, 1 giro di correzione, `docs/phase-reports/F0.md` |
-| WP09a | Pipeline di ingestion: parser DOCX/XLSX/PDF/XSD/export/screenshot/trascrizioni/e-mail, unità, profilo DOC, banche di domande, back-check, alias, versioni, residuo, revisione, survey del tenant, PRF/PMP | F1' (strumenti) | 10 | 0 | 🔄 | `wp09a-ingest.md` |
-| WP09b | Schemi NRT/SEL/HND/CHK/CFP/FLW/KEY/LCY/INT/CFG, compile-case/cfp, lint, Atlas, corsie di esecuzione, compensazioni, snapshot, evidenze, negativi, promozione, copertura | F3–F7, C1 (strumenti) | 12 | 0 | ⬜ Brief | `wp09b-run.md` |
+| WP09a | Pipeline di ingestion: parser DOCX/XLSX/PDF/XSD/export/screenshot/trascrizioni/e-mail, unità, profilo DOC, banche di domande, back-check, alias, versioni, residuo, revisione, survey del tenant, PRF/PMP | F1' (strumenti) | 10 | 100 | ✅ | tag `ingest-tooling-done` → `6eff63e`, 721 test, corpus reale elaborato in `jvc-knowledge`, `docs/phase-reports/F1-tooling.md` |
+| WP09b | Schemi NRT/SEL/HND/CHK/CFP/FLW/KEY/LCY/INT/CFG, compile-case/cfp, lint, Atlas, corsie di esecuzione, compensazioni, snapshot, evidenze, negativi, promozione, copertura | F3–F7, C1 (strumenti) | 12 | 0 | 🔄 | `wp09b-run.md` |
 | WP09c | AlmAdapter (Xray Cloud/Server/Mock), server MCP ALM, script xray, coda offline, Defect, `.mcp.json`, NETWORK.md | F5 | 6 | 0 | ⬜ Brief | `wp09c-alm.md` |
 | WP09d | Comandi `kb` restanti, digestione settimanale, Analytics (TBL/QRY/DIN/USR/PSP/ERR), dominio analitico, audit config, admin (status, lock, retention, purge) | F8–F12, G2–G3 (strumenti) | 8 | 0 | ⬜ Brief | `wp09d-ops.md` |
 | WP10a | Comandi `vc use kb nrt cfg ops learn admin`, template restanti, README, manuale integrato | §44.1, §55–58 | 4 | 0 | ⬜ Brief | `wp10a-commands.md` |
@@ -115,7 +143,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 0 | ⬜ Brief | `wp10d-orchestration.md` — da eseguire prima di WP10c |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **111** | **≈ 49** | | 54 unità completate |
+| **Totale** | | | **111** | **≈ 58** | | 64 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
