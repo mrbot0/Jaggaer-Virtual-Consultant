@@ -27,7 +27,19 @@ export const TYPE_SCHEMAS = Object.freeze({ SEL: "sel.schema.json", HND: "hnd.sc
   // WP09d: Analytics (§20.3, §20.5, §20.6)
   TBL: "tbl.schema.json", QRY: "qry.schema.json", DIN: "din.schema.json", USR: "usr.schema.json", PSP: "psp.schema.json", ERR: "err.schema.json",
   // WP09d: dominio analitico (§1.1, F8, F10)
-  PAT: "pat.schema.json", PBK: "pbk.schema.json", BRF: "brf.schema.json", RUL: "rul.schema.json" });
+  PAT: "pat.schema.json", PBK: "pbk.schema.json", BRF: "brf.schema.json", RUL: "rul.schema.json",
+  // Revisione finale (§44.7 "un JSON Schema per ogni tipo del registro"): profilo e mappa di processo (prodotti dagli
+  // agenti), strategia e ambiente come item, e gli schemi minimi dei tipi che non ne avevano uno.
+  PRF: "prf.schema.json", PMP: "pmp.schema.json", STR: "str.schema.json", ENV: "env.schema.json",
+  CAP: "cap.schema.json", INV: "inv.schema.json", GLS: "gls.schema.json", OBS: "obs.schema.json", CTR: "ctr.schema.json",
+  EVD: "evd.schema.json", DEC: "dec.schema.json", EPI: "epi.schema.json" });
+
+// Lo schema di OGNI tipo del registro (test "ogni tipo del registro ha uno schema"): i TYPE_SCHEMAS applicati qui sopra,
+// FLD/ACT/DOC applicati in validateItem con i loro validatori, e i tipi che non sono item di kb/ e che i loro script
+// validano alla scrittura: LSN (lesson), CLS (cluster-rules), DT (dt-eval), RPT (build-report); UNT (unit.schema.json,
+// la forma prodotta da segmentUnits, verificata dai test di ingestion).
+export const SCHEMA_FOR_TYPE = Object.freeze({ ...TYPE_SCHEMAS, FLD: "fld.schema.json", ACT: "act.schema.json", DOC: "doc.schema.json",
+  UNT: "unit.schema.json", LSN: "lesson.schema.json", CLS: "cluster.schema.json", DT: "dt.schema.json", RPT: "rpt.schema.json" });
 
 // WP09d (§20.5.5): DIN e USR non conservano valori che identificano qualcuno. Oltre allo schema (values_retained: none,
 // gruppo minimo 20): nessun indirizzo email in nessun valore; nessun campo chiamato come nomi/email/codici/utenti/valori

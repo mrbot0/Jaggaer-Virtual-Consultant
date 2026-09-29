@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dec.schema.json",
+  "title": "Decisione (DEC, §5.3, §15)",
+  "description": "Schema minimo (revisione finale) sulla forma che scrive scripts/decide/dt-eval.mjs (writeDecision): tabella e versione, input, priori, punteggio, esito, regola, componenti; l'esito verificato si aggiunge dopo (outcome_verified).",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/type"
+    }
+  ],
+  "$defs": {
+    "type": {
+      "type": "object",
+      "required": [
+        "type",
+        "table",
+        "outcome"
+      ],
+      "properties": {
+        "type": {
+          "const": "DEC"
+        },
+        "table": {
+          "type": "string",
+          "pattern": "^DT-\\d{3}$"
+        },
+        "table_version": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "at": {
+          "type": "string"
+        },
+        "agent": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "session": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subject": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subject_cluster": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "strategy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "inputs": {
+          "type": "object"
+        },
+        "priors": {
+          "type": [
+            "object",
+            "array",
+            "null"
+          ]
+        },
+        "score": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "outcome": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rule": {},
+        "combined": {},
+        "components": {
+          "type": [
+            "array",
+            "object",
+            "null"
+          ]
+        },
+        "outcome_verified": {}
+      }
+    }
+  }
+}

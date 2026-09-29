@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "epi.schema.json",
+  "title": "Profilo epistemico (EPI, §5.3, §9)",
+  "description": "Schema minimo (revisione finale): la copertura epistemica di un soggetto — le quattro conoscenze (tecnica, d'uso, osservata, eseguita) in [0,1] e la forma.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/type"
+    }
+  ],
+  "$defs": {
+    "type": {
+      "type": "object",
+      "required": [
+        "type",
+        "subject",
+        "shape"
+      ],
+      "properties": {
+        "type": {
+          "const": "EPI"
+        },
+        "subject": {
+          "$ref": "defs.schema.json#/$defs/code"
+        },
+        "shape": {
+          "$ref": "defs.schema.json#/$defs/shape"
+        },
+        "k_tech": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "k_use": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "k_obs": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "k_exec": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "open_contradictions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "computed_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

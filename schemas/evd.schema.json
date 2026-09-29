@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evd.schema.json",
+  "title": "Punto di evidenza (EVD, §5.3, §46.3)",
+  "description": "Schema minimo (revisione finale): il punto di evidenza dichiarato (tipo, cattura, regione, didascalia, redazione), stesso vocabolario delle evidenze dei piani (defs.schema.json#/$defs/evidence).",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/type"
+    }
+  ],
+  "$defs": {
+    "type": {
+      "type": "object",
+      "required": [
+        "type",
+        "kind"
+      ],
+      "properties": {
+        "type": {
+          "const": "EVD"
+        },
+        "kind": {
+          "enum": [
+            "entry",
+            "input",
+            "transition",
+            "assertion",
+            "integration",
+            "failure",
+            "result",
+            "snapshot"
+          ]
+        },
+        "at": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "capture": {
+          "enum": [
+            "page",
+            "region",
+            "element"
+          ]
+        },
+        "region": {
+          "$ref": "defs.schema.json#/$defs/sel"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "redact": {
+          "enum": [
+            "standard",
+            "strict"
+          ]
+        }
+      }
+    }
+  }
+}

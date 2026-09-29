@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ctr.schema.json",
+  "title": "Contraddizione (CTR, §5.3)",
+  "description": "Schema minimo (revisione finale): una contraddizione fra livelli o fonti — almeno due item in `between`, la faccetta, lo stato (aperto/risolto) e il vincitore quando risolta.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/type"
+    }
+  ],
+  "$defs": {
+    "type": {
+      "type": "object",
+      "required": [
+        "type",
+        "between"
+      ],
+      "properties": {
+        "type": {
+          "const": "CTR"
+        },
+        "between": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "facet": {
+          "type": "string",
+          "pattern": "^F\\d{1,2}$"
+        },
+        "status": {
+          "enum": [
+            "aperto",
+            "risolto"
+          ]
+        },
+        "winner": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "why": {
+          "type": "string"
+        },
+        "resolution": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

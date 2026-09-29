@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "inv.schema.json",
+  "title": "Invariante (INV, §5.3)",
+  "description": "Schema minimo (revisione finale): una proprietà sempre vera. `statement` la enuncia; `holds_for` gli item su cui vale, `checked_by` i CHK che la verificano.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/type"
+    }
+  ],
+  "$defs": {
+    "type": {
+      "type": "object",
+      "required": [
+        "type",
+        "statement"
+      ],
+      "properties": {
+        "type": {
+          "const": "INV"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 3
+        },
+        "holds_for": {
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/code"
+          }
+        },
+        "checked_by": {
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/chk"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "str.schema.json",
+  "title": "Strategia come item (STR, §14)",
+  "description": "Revisione finale: un item STR porta il nucleo della strategia (strategy.schema.json: code, name, applies_when, plan, cost, success_criteria). Le strategie del plugin vivono in strategies/ e si validano con strategy.schema.json.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/type"
+    }
+  ],
+  "$defs": {
+    "type": {
+      "type": "object",
+      "required": [
+        "type",
+        "code",
+        "plan"
+      ],
+      "properties": {
+        "type": {
+          "const": "STR"
+        },
+        "code": {
+          "$ref": "strategy.schema.json#/properties/code"
+        },
+        "name": {
+          "$ref": "strategy.schema.json#/properties/name"
+        },
+        "applies_when": {
+          "$ref": "strategy.schema.json#/properties/applies_when"
+        },
+        "plan": {
+          "$ref": "strategy.schema.json#/properties/plan"
+        },
+        "cost": {
+          "$ref": "strategy.schema.json#/properties/cost"
+        },
+        "success_criteria": {
+          "$ref": "strategy.schema.json#/properties/success_criteria"
+        },
+        "combines_with": {
+          "$ref": "strategy.schema.json#/properties/combines_with"
+        },
+        "cluster": {
+          "$ref": "strategy.schema.json#/properties/cluster"
+        }
+      }
+    }
+  }
+}

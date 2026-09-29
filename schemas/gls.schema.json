@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gls.schema.json",
+  "title": "Voce di glossario (GLS, §5.3)",
+  "description": "Schema minimo (revisione finale): termine, sinonimi, capability.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/type"
+    }
+  ],
+  "$defs": {
+    "type": {
+      "type": "object",
+      "required": [
+        "type",
+        "term"
+      ],
+      "properties": {
+        "type": {
+          "const": "GLS"
+        },
+        "term": {
+          "type": "string",
+          "minLength": 1
+        },
+        "synonyms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "capability": {
+          "$ref": "defs.schema.json#/$defs/code"
+        },
+        "lang": {
+          "enum": [
+            "it",
+            "en"
+          ]
+        }
+      }
+    }
+  }
+}

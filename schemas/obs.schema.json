@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "obs.schema.json",
+  "title": "Osservazione (OBS, §5.3, §20.2)",
+  "description": "Schema minimo (revisione finale) sulla forma che scrive hooks/lib/observe-append.mjs: sessione, strumento, tipo, URL, firma della pagina, elementi e messaggi visti (redatti), divergenze, sorpresa/novità, redazione, istante.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/type"
+    }
+  ],
+  "$defs": {
+    "type": {
+      "type": "object",
+      "required": [
+        "type",
+        "session",
+        "kind",
+        "ts"
+      ],
+      "properties": {
+        "type": {
+          "const": "OBS"
+        },
+        "session": {
+          "type": "string",
+          "minLength": 1
+        },
+        "session_id": {
+          "type": "string"
+        },
+        "at_step": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "tool": {
+          "type": "string"
+        },
+        "family": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "page_signature": {
+          "type": [
+            "string",
+            "object",
+            "null"
+          ]
+        },
+        "elements_seen": {
+          "type": "array"
+        },
+        "messages_seen": {
+          "type": "array"
+        },
+        "texts_seen": {
+          "type": "array"
+        },
+        "divergences": {
+          "type": "array"
+        },
+        "errors": {
+          "type": "array"
+        },
+        "surprise": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "novelty": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "image": {
+          "type": "boolean"
+        },
+        "redaction": {
+          "type": "object",
+          "properties": {
+            "profile": {
+              "enum": [
+                "standard",
+                "strict"
+              ]
+            },
+            "masks": {
+              "type": "array"
+            }
+          }
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

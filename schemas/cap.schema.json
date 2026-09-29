@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cap.schema.json",
+  "title": "Capability (CAP, §5.3)",
+  "description": "Schema minimo (revisione finale): una funzionalità nella tassonomia di copertura. `criticality` è ciò che la copertura NRT legge (scripts/kb/coverage.mjs: capability ad alta criticità).",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/type"
+    }
+  ],
+  "$defs": {
+    "type": {
+      "type": "object",
+      "required": [
+        "type",
+        "criticality"
+      ],
+      "properties": {
+        "type": {
+          "const": "CAP"
+        },
+        "criticality": {
+          "enum": [
+            "alta",
+            "media",
+            "bassa"
+          ]
+        },
+        "parent": {
+          "$ref": "defs.schema.json#/$defs/code"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/code"
+          }
+        },
+        "covered_by": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
