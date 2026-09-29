@@ -189,3 +189,26 @@ test("minore 3 doctor plugin-root: contano solo le invocazioni node \"${CLAUDE_P
   assert.equal(c.status, "yellow");
   assert.match(c.detail, /non sostituito/);
 });
+
+// ---------------- minore 7: /vc senza argomenti ⇒ azioni suggerite (§56.1) ----------------
+test("minore 7 status: azioni suggerite dallo stato (ambiente, scope, verifica, compensazioni, approvazioni, quarantene, coda Xray); /vc senza argomenti le mostra", async () => {
+  const { suggestedActions, status, render } = await import("../../scripts/admin/status.mjs");
+  const has = (list, re) => list.some((a) => re.test(`${a.action} ${a.why}`));
+  assert.ok(has(suggestedActions({ session: null }), /use customer/));
+  const base = { customer: "ACME", scope: null, mode: "ops", env: null, pending: { compensations: 0, approvals: 0, questions: 0, expected_outcomes: 0 }, kb: { quarantine_debt: { count: 0 } }, xray_queue: { pending: 0, failed: 0 } };
+  let s = suggestedActions({ session: base });
+  assert.ok(has(s, /use env/) && has(s, /use scope/));
+  s = suggestedActions({ session: { ...base, scope: "P2P", env: { id: "sandbox", type: "sandbox", verified: false } } });
+  assert.ok(has(s, /impronta|verific/i));
+  s = suggestedActions({ session: { ...base, scope: "P2P", env: { id: "sandbox", type: "sandbox", verified: true }, pending: { ...base.pending, compensations: 2, approvals: 1, questions: 1 }, kb: { quarantine_debt: { count: 3 } }, xray_queue: { pending: 4, failed: 0 } } });
+  for (const re of [/compensa tutto/, /approvazion/, /domand/, /kb review/, /push-xray --retry-queued/]) assert.ok(has(s, re), String(re));
+  s = suggestedActions({ session: { ...base, scope: "P2P", env: { id: "sandbox", type: "sandbox", verified: true } } });
+  assert.ok(has(s, /intento/), "tutto in ordine: scrivere un intento");
+  // CLI: il campo suggested è nell'esito e nel testo
+  const ws = envWs({ env: "sandbox", scope: "P2P" });
+  const out = await status({ ws, sid: "sess-1" });
+  assert.ok(Array.isArray(out.suggested) && out.suggested.length);
+  assert.match(render(out), /Azioni suggerite:/);
+  const { readFileSync } = await import("node:fs");
+  assert.match(readFileSync(join(ROOT, "commands/vc.md"), "utf8"), /azioni suggerite/i);
+});

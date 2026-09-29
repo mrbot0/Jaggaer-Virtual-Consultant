@@ -141,6 +141,27 @@ export async function status({ ws, sid = null, withMetrics = false, now = Date.n
     };
     if (withMetrics) out.metrics = metrics(ws, c);
   } else if (withMetrics) out.metrics = out.customers.map((c) => metrics(ws, c));
+  out.suggested = suggestedActions(out);
+  return out;
+}
+
+// WP10a giro 1 (minore 7, §56.1 "azioni suggerite"): dallo stato, in ordine di urgenza, cosa fare adesso.
+// → [{ action, why }] (action = il comando o la frase da usare)
+export function suggestedActions(s) {
+  const x = s?.session;
+  const out = [];
+  const add = (action, why) => out.push({ action, why });
+  if (!x) { add("/jaggaer-virtual-consultant:use customer <ID> [--new]", "nessun cliente attivo"); add("/jaggaer-virtual-consultant:vc doctor", "diagnosi dell'installazione prima di lavorare"); return out; }
+  if (x.pending?.compensations) add("compensa tutto · lascia <entità>", `${x.pending.compensations} compensazioni pendenti da chiudere (sessione interrotta o in corso)`);
+  if (x.pending?.approvals) add("la frase di approvazione richiesta (APPROVO PIANO / PROVA / PASSO, oppure sì)", `${x.pending.approvals} approvazioni in attesa`);
+  if (x.pending?.questions) add("rispondere alle domande aperte", `${x.pending.questions} domande in attesa della risposta dell'utente`);
+  if (!x.env) add("/jaggaer-virtual-consultant:use env <sandbox|preprod|prod>", "nessun ambiente dichiarato: senza non si agisce sul browser");
+  else if (!x.env.verified) add(`/jaggaer-virtual-consultant:use env ${x.env.id}`, "impronta dell'ambiente non verificata: solo navigazione e lettura finché env-check non la verifica");
+  if (!x.scope) add("/jaggaer-virtual-consultant:use scope <ID>", "nessuno scope attivo");
+  if (x.kb?.quarantine_debt?.count) add("/jaggaer-virtual-consultant:kb review --only quarantena", `${x.kb.quarantine_debt.count} item in quarantena da oltre ${x.kb.quarantine_debt.over_days ?? 14} giorni`);
+  if (x.xray_queue?.pending || x.xray_queue?.failed) add("/jaggaer-virtual-consultant:nrt push-xray --retry-queued", `coda Xray: ${x.xray_queue.pending ?? 0} in attesa, ${x.xray_queue.failed ?? 0} fallite`);
+  if (x.pending?.expected_outcomes) add("/jaggaer-virtual-consultant:learn outcomes --session", `${x.pending.expected_outcomes} esiti attesi da verificare`);
+  if (!out.length) add("scrivere un intento, es. \"Su <cliente> <ambiente>, apri la richiesta più recente e dimmi in che stato è\"", "sessione pronta");
   return out;
 }
 
@@ -159,13 +180,16 @@ export function render(s) {
     L.push(`Coda Xray: in attesa ${x.xray_queue.pending} · fallite ${x.xray_queue.failed} · inviate ${x.xray_queue.sent}`);
   }
   if (s.product) L.push(`Prodotto: ${s.product.items} item S`);
+  const sug = s.suggested ?? suggestedActions(s);
+  if (sug.length) { L.push("Azioni suggerite:"); for (const a of sug) L.push(`  ${a.action} — ${a.why}`); }
   return L.join("\n");
 }
 
 export const HELP = `uso: node scripts/admin/status.mjs [--session <id>] [--metrics] [--workspace <dir>] [--json]
 
 /vc status (§56.1, §48.2): stato della sessione, budget, pendenze, ultime 5 decisioni, ultime 3 sorprese, salute della
-conoscenza (item per stato, quarantene oltre 2 settimane), coda Xray. --metrics: metriche derivate di §35.
+conoscenza (item per stato, quarantene oltre 2 settimane), coda Xray, azioni suggerite (§56.1). --metrics: metriche
+derivate di §35.
 
 Exit code: 0 ok · 1 argomenti non validi · 2 errore di sistema.`;
 

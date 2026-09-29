@@ -12,7 +12,9 @@ argomenti, secondo la prima parola di `$ARGUMENTS`:
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/status.mjs" --json            (aggiungi --metrics solo se l'utente l'ha chiesto)
 
   Riporta cliente, ambiente, scope, modalità, budget, pendenze, piano attivo, ultime 5 decisioni, ultime 3 sorprese,
-  salute della conoscenza (quarantene oltre 2 settimane) e coda Xray; con --metrics le metriche di §35.
+  salute della conoscenza (quarantene oltre 2 settimane) e coda Xray; con --metrics le metriche di §35. **Senza
+  argomenti** (`/vc`, il punto di partenza, §56.1) riporta in breve lo stato di sessione e poi le **azioni suggerite**
+  (campo `suggested`: cosa fare adesso, in ordine, con il perché), così come le restituisce lo script.
 - `agents [show <task_id> | history [--scope <S>] [--last <N>]]` (WP10d, docs/orchestration.md) — la console degli
   agenti: cosa fa ogni sub-agente adesso e cosa ha fatto, ricavato solo dalle registrazioni degli hook (mai dal tuo
   testo né dai rapporti degli agenti):
