@@ -288,29 +288,36 @@ export function checkAudit(ws, custs, now = new Date()) {
 // correzione; nessun comando del plugin ancora in audit ⇒ giallo (si riesegue doctor dopo un comando del plugin).
 const SHELL_TOOLS = new Set(["Bash", "PowerShell"]);
 const PLACEHOLDER = "${CLAUDE_PLUGIN_ROOT}";
+const PLACEHOLDER_CALL = /\bnode(\.exe)?\s+["']?\$\{?CLAUDE_PLUGIN_ROOT\}?[\\/]+scripts[\\/]/i;
 const flatPath = (p) => String(p).replace(/\\+/g, "/").toLowerCase();
 export function checkPluginRoot(ws, custs, { plugin = PLUGIN_ROOT, now = new Date() } = {}) {
   const ym = monthOf(now);
   const files = [...custs.map((c) => join(ws, "customers", c, "audit", `${ym}.jsonl`)), join(ws, ".jvc", "audit", `${ym}.jsonl`)].filter((f) => existsSync(f));
   const root = `${flatPath(plugin)}/scripts/`;
+  // WP10a giro 1 (minore 3): contano solo le INVOCAZIONI di uno script del plugin (node "<radice>/scripts/…"), non una
+  // menzione qualsiasi (echo, la riga del manuale copiata); vale la prova più recente (un Claude Code aggiornato risolve).
   let literal = 0;
   let placeholder = 0;
+  let last = null;
   for (const f of files) {
     for (const line of readFileSync(f, "utf8").split("\n")) {
       if (!line.trim()) continue;
       let ev;
       try { ev = JSON.parse(line); } catch { continue; }
       if (!SHELL_TOOLS.has(ev?.payload?.tool) || typeof ev.payload.input_summary !== "string") continue;
-      const cmd = ev.payload.input_summary;
-      if (cmd.includes("CLAUDE_PLUGIN_ROOT")) placeholder++;
-      else if (flatPath(cmd).includes(root)) literal++;
+      let cmd = ev.payload.input_summary;
+      try { const o = JSON.parse(cmd); if (typeof o?.command === "string") cmd = o.command; } catch { /* riassunto troncato: il testo così com'è */ }
+      const kind = PLACEHOLDER_CALL.test(cmd) ? "placeholder" : (/\bnode(\.exe)?\b/i.test(cmd) && flatPath(cmd).includes(root)) ? "literal" : null;
+      if (!kind) continue;
+      if (kind === "placeholder") placeholder++; else literal++;
+      if (!last || String(ev.ts ?? "") >= last.ts) last = { kind, ts: String(ev.ts ?? "") };
     }
   }
-  if (placeholder) {
+  if (last?.kind === "placeholder") {
     return C("plugin-root", "yellow", `segnaposto ${PLACEHOLDER} non sostituito in ${placeholder} comandi di ${ym}${literal ? ` (percorso letterale in ${literal})` : ""}`,
       `docs/MANUAL.md §58 ("${PLACEHOLDER} non sostituito"): aggiornare Claude Code; finché resta, le operazioni a forma esatta (purge, retention, promozione) sono negate dai guard — blocco, non rischio`);
   }
-  if (literal) return C("plugin-root", "green", `${PLACEHOLDER} sostituito con il percorso del plugin (${literal} comandi in audit, ${ym})`);
+  if (last?.kind === "literal") return C("plugin-root", "green", `${PLACEHOLDER} sostituito con il percorso del plugin (ultima prova ${last.ts.slice(0, 16)}; ${literal} comandi con il percorso, ${placeholder} con il segnaposto in ${ym})`);
   return C("plugin-root", "yellow", `nessun comando del plugin in audit in ${ym}: la sostituzione di ${PLACEHOLDER} non è ancora verificabile`,
     "rieseguire /jaggaer-virtual-consultant:vc doctor dopo un altro comando del plugin (es. /jaggaer-virtual-consultant:vc status)");
 }

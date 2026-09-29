@@ -156,3 +156,36 @@ test("minore 1 kb find --cluster <CL>: solo i membri del cluster; ingest --kind 
   const cli = spawnSync(process.execPath, [join(ROOT, "scripts/ingest/ingest.mjs"), "--input", src, "--root", root, "--scope", "P2P", "--kind", "boh", "--json"], { encoding: "utf8", env: cleanEnv() });
   assert.equal(cli.status, 1);
 });
+
+// ---------------- minore 3: doctor plugin-root ----------------
+test("minore 3 doctor plugin-root: contano solo le invocazioni node \"${CLAUDE_PLUGIN_ROOT}/scripts/…\"; vale la prova più recente", async () => {
+  const { checkPluginRoot } = await import("../../scripts/admin/doctor.mjs");
+  const { appendAudit } = await import("../../hooks/lib/audit.mjs");
+  const B = String.fromCharCode(92);
+  const plugin = ["C:", "Users", "x", "plugins", "jaggaer-virtual-consultant"].join(B);
+  const script = (rel) => [plugin, ...rel.split("/")].join(B);
+  const mk = () => { const ws = mkdtempSync(join(tmpdir(), "jvc-pr-")); mkdirSync(join(ws, ".jvc"), { recursive: true }); return ws; };
+  const bash = (ws, command, date) => appendAudit(ws, { session: "s", customer: null, scope: null, kind: "tool", actor: "manager", payload: { tool: "Bash", input_summary: JSON.stringify({ command }), ok: true } }, { date });
+  const t = (m) => new Date(Date.UTC(2026, 8, 1, 10, m));
+  const now = new Date(Date.UTC(2026, 8, 1, 12));
+  // una menzione qualsiasi del segnaposto (echo, la riga del manuale copiata) non è una prova
+  let ws = mk();
+  bash(ws, 'echo "${CLAUDE_PLUGIN_ROOT}"', t(1));
+  bash(ws, `node "${script("scripts/admin/status.mjs")}" --json`, t(2));
+  assert.equal(checkPluginRoot(ws, [], { plugin, now }).status, "green");
+  ws = mk();
+  bash(ws, 'echo "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs watch"', t(1));
+  assert.equal(checkPluginRoot(ws, [], { plugin, now }).detail.includes("nessun comando del plugin"), true);
+  // prova più recente: segnaposto vecchio, poi percorso letterale ⇒ verde; e viceversa ⇒ giallo
+  ws = mk();
+  bash(ws, 'node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/status.mjs" --json', t(1));
+  bash(ws, `node "${script("scripts/admin/doctor.mjs")}" --json`, t(2));
+  let c = checkPluginRoot(ws, [], { plugin, now });
+  assert.equal(c.status, "green", c.detail);
+  ws = mk();
+  bash(ws, `node "${script("scripts/admin/doctor.mjs")}" --json`, t(1));
+  bash(ws, 'node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/status.mjs" --json', t(2));
+  c = checkPluginRoot(ws, [], { plugin, now });
+  assert.equal(c.status, "yellow");
+  assert.match(c.detail, /non sostituito/);
+});
