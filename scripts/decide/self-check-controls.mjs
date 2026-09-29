@@ -23,3 +23,7 @@ export const SELF_CHECK_CONTROLS = Object.freeze({
 });
 
 export const controlsFor = (depth) => [...(depth === "rapida" ? SELF_CHECK_CONTROLS.rapida : SELF_CHECK_CONTROLS.full)];
+
+// WP10b giro 1 (I3): i controlli che cognitive_trace.self_check.passed conta (lo schema lo limita a 10): rapida
+// 1, 3, 9, 11 (4); standard e profonda 1–10. validateReport giudica `passed` su questo insieme, self-check lo produce.
+export const reportedControlsFor = (depth) => controlsFor(depth).slice(0, 10);

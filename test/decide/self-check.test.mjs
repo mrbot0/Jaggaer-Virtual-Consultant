@@ -227,6 +227,8 @@ test("§10.4 profondità rapida: auto-verifica ridotta (1, 3, 9) più #11", () =
   const r = selfCheck(c);
   assert.deepEqual(r.controls_run, [1, 3, 9, 11]);
   assert.deepEqual(failed(r), []);
+  // WP10b giro 1 (I3): passed conta i quattro controlli della profondità rapida (#11 compreso)
+  assert.deepEqual(r.trace_self_check, { passed: 4, failed: [] });
 });
 
 test("CLI self-check --report --session --audit --plan --lesson --db: exit 0 se passa, 3 se blocca", () => {

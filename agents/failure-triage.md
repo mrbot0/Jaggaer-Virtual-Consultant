@@ -53,7 +53,8 @@ Tier (§26.3): T0→T1 · ciclo cognitivo: completo, con precedenti
    con l'output parziale (categorie candidate, punteggi, prove): il manager fa **un** dispatch del root-cause-analyst
    (`reply_to` di questo compito). Mai a metà, mai una categoria inventata per chiudere.
 5. **AGIRE** — nessuna azione sul tenant: la classificazione e il percorso di ogni fallimento sono l'output.
-6. **RIFLETTERE** — auto-verifica in forma ridotta sul tuo rapporto (codici esistenti, ogni DEC nella traccia, nessun
+6. **RIFLETTERE** — auto-verifica in forma ridotta, profondità `rapida`: i controlli 1, 3, 9 e 11 (§10.4);
+   `self_check.passed` conta quelli superati, al più 4 — mai controlli che non hai eseguito. Sul tuo rapporto (codici esistenti, ogni DEC nella traccia, nessun
    confine violato, esito atteso dichiarato per ogni DEC) — il manager ripassa il rapporto con lo script di
    auto-verifica — e la lezione come bozza a otto sezioni in `output.lesson_draft`, con il codice di
    `inputs.lesson_code` (skill `self-check-and-lesson`): la scrive il manager da `templates/lesson.md`.
@@ -95,14 +96,14 @@ output:
     non_generalizzerei: "Selettori css di CAT: fragilità specifica di questo tenant"
     domande_aperte: "nessuna"
 cognitive_trace:
-  depth: standard
+  depth: rapida
   recalled: { semantic: [C.ACME.CAT.KEY.0004], episodic: [L.ACME.CAT.DEC.0040], working: [] }
   epistemic: { subject: C.ACME.CAT.KEY.0004, shape_before: consolidato, shape_after: consolidato }
   strategy: STR-REPLAY
   hypotheses: null
   decisions: [L.ACME.CAT.DEC.0062, L.ACME.CAT.DEC.0063]
   surprises: []
-  self_check: { passed: 10, failed: [] }
+  self_check: { passed: 4, failed: [] }
 lesson: L.ACME.CAT.LSN.0098
 why: { decision: L.ACME.CAT.DEC.0062, table: DT-001, top_inputs: [precedent, evidence_consistency] }
 usage: { tokens_in: 7200, tokens_out: 1300, model: haiku }

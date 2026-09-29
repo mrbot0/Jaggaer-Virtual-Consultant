@@ -54,7 +54,8 @@ Tier (§26.3): T0 · ciclo cognitivo: ridotto
        node "${CLAUDE_PLUGIN_ROOT}/scripts/config/diff.mjs" --customer <C> --env-a <ambiente-a> --env-b <ambiente-b> --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/config/diff.mjs" --customer <C> --env-a <ambiente-a> --env-b <ambiente-b> --propose --json
 
-6. **RIFLETTERE** — auto-verifica in forma ridotta sul tuo rapporto (codici esistenti, nessun codice `RUL` fuori dal
+6. **RIFLETTERE** — auto-verifica in forma ridotta, profondità `rapida`: i controlli 1, 3, 9 e 11 (§10.4);
+   `self_check.passed` conta quelli superati, al più 4 — mai controlli che non hai eseguito. Sul tuo rapporto (codici esistenti, nessun codice `RUL` fuori dal
    dominio analitico, nessun confine violato) — il manager ripassa il rapporto con lo script di auto-verifica — e la
    lezione come bozza a otto sezioni in `output.lesson_draft`, con il codice di `inputs.lesson_code` (skill
    `self-check-and-lesson`).
@@ -96,14 +97,14 @@ output:
     non_generalizzerei: "Le derive di questo tenant dipendono dal rilascio di agosto"
     domande_aperte: "La deriva su strict_import è voluta?"
 cognitive_trace:
-  depth: standard
+  depth: rapida
   recalled: { semantic: [C.ACME.ADM.CFG.0019], episodic: [], working: [L.ACME.ADM.OBS.0077] }
   epistemic: { subject: C.ACME.ADM.CFG.0019, shape_before: consolidato, shape_after: contraddittorio }
   strategy: STR-VERIFY-FIRST
   hypotheses: null
   decisions: []
   surprises: []
-  self_check: { passed: 10, failed: [] }
+  self_check: { passed: 4, failed: [] }
 lesson: L.ACME.ADM.LSN.0099
 why: { basis: "config/lint.mjs e config/diff.mjs" }
 usage: { tokens_in: 5100, tokens_out: 900, model: haiku }

@@ -59,7 +59,8 @@ Tier (§26.3): T0 · ciclo cognitivo: ridotto, con precedenti
 
    Solo con `inputs.publish: true`: `alm_create_defect` con il Defect costruito (testo redatto, evidenze strict del
    dossier, etichetta `scope:<S>`, riferimento al precedente) e `alm_link` al test.
-6. **RIFLETTERE** — auto-verifica in forma ridotta sul tuo rapporto (codici esistenti, classe ammessa, precedente
+6. **RIFLETTERE** — auto-verifica in forma ridotta, profondità `rapida`: i controlli 1, 3, 9 e 11 (§10.4);
+   `self_check.passed` conta quelli superati, al più 4 — mai controlli che non hai eseguito. Sul tuo rapporto (codici esistenti, classe ammessa, precedente
    citato se regressione, nessun Incident) — il manager ripassa il rapporto con lo script di auto-verifica — e la
    lezione come bozza a otto sezioni in `output.lesson_draft`, con il codice di `inputs.lesson_code` (skill
    `self-check-and-lesson`).
@@ -103,14 +104,14 @@ output:
     non_generalizzerei: "Il sintomo dipende dalla configurazione strict_import di ACME"
     domande_aperte: "nessuna"
 cognitive_trace:
-  depth: standard
+  depth: rapida
   recalled: { semantic: [C.ACME.CAT.KEY.0004], episodic: [L.ACME.CAT.DEC.0058], working: [] }
   epistemic: { subject: C.ACME.CAT.KEY.0004, shape_before: contraddittorio, shape_after: contraddittorio }
   strategy: STR-REPLAY
   hypotheses: null
   decisions: []
   surprises: []
-  self_check: { passed: 10, failed: [] }
+  self_check: { passed: 4, failed: [] }
 lesson: L.ACME.CAT.LSN.0100
 why: { basis: "xray/defect.mjs", precedent: ACME-1234 }
 usage: { tokens_in: 4600, tokens_out: 1100, model: haiku }

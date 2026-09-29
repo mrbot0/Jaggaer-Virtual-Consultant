@@ -1,7 +1,7 @@
 // Rapporto del sub-agente (§46.2): estrazione dal messaggio finale e
 // validazione con status effettivo. Usato da subagent-trace (SubagentStop) e
 // dal manager. Regole di riclassificazione:
-//  - self_check.failed non vuoto (o passed < 10) con status ok ⇒ partial (Review Focus 4)
+//  - self_check.failed non vuoto (o passed sotto i controlli della profondità: rapida 4, altrimenti 10) con status ok ⇒ partial (Review Focus 4; WP10b giro 1)
 //  - open_questions non vuote con status ok ⇒ partial (§17.1 #10)
 //  - rapporto invalido ⇒ partial (il manager non lo tratta mai come ok)
 import { readFileSync } from "node:fs";
@@ -9,6 +9,7 @@ import YAML from "yaml";
 import { validateWith } from "../lib/schemas.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { reportedControlsFor } from "../decide/self-check-controls.mjs";
 
 const asObject = (text) => {
   try {
@@ -52,7 +53,10 @@ export function validateReport(obj) {
   const reclassified = [];
   if (status === "ok") {
     const sc = obj.cognitive_trace?.self_check;
-    if (sc && (sc.failed?.length > 0 || sc.passed < 10)) reclassified.push(`self_check ${sc.passed}/10, falliti: ${JSON.stringify(sc.failed ?? [])}`);
+    // giro 1 WP10b (I3): `passed` si giudica sull'insieme di controlli della profondità dichiarata (rapida 1, 3, 9, 11 = 4;
+    // standard e profonda 1–10), la stessa fonte di self-check.mjs; failed non vuoto ⇒ partial sempre.
+    const expected = reportedControlsFor(obj.cognitive_trace?.depth).length;
+    if (sc && (sc.failed?.length > 0 || sc.passed < expected)) reclassified.push(`self_check ${sc.passed}/${expected}, falliti: ${JSON.stringify(sc.failed ?? [])}`);
     if (Array.isArray(obj.open_questions) && obj.open_questions.length > 0) reclassified.push(`open_questions: ${obj.open_questions.length}`);
     if (reclassified.length) status = "partial";
   }
@@ -63,7 +67,8 @@ const HELP = `uso: node scripts/admin/agent-report.mjs <file> [--json] [--help]
 
 Estrae il rapporto finale di un sub-agente (ultimo blocco \`\`\`yaml, o YAML in coda)
 e lo valida contro schemas/agent-report.schema.json (§46.2). Riporta lo status
-effettivo: self_check.failed non vuoto o open_questions con status ok ⇒ partial.
+effettivo: self_check.failed non vuoto, passed sotto i controlli della profondità (rapida 4,
+altrimenti 10) o open_questions con status ok ⇒ partial.
 
 Exit code: 0 rapporto valido · 1 rapporto assente/invalido o file illeggibile · 2 errore di sistema.`;
 

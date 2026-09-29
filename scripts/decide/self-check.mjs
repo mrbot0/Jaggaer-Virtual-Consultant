@@ -25,7 +25,7 @@ import { matchGlob } from "../../hooks/lib/paths.mjs";
 import { openDb } from "../kb/db.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
-import { CONTROLS, controlsFor } from "./self-check-controls.mjs";
+import { CONTROLS, controlsFor, reportedControlsFor } from "./self-check-controls.mjs";
 
 export { CONTROLS, SELF_CHECK_CONTROLS } from "./self-check-controls.mjs";
 // §29.10: i due rilevatori di spreco sono "Controllo fallito" e §17.1 blocca l'invio se un controllo
@@ -233,7 +233,8 @@ export function selfCheck({ report, session = {}, audit = [], plan = null, lesso
   const reclassify = failed.some((f) => f.action === "reclassify");
   let status = rep?.status ?? "partial";
   if (status === "ok" && (blocked || reclassify)) status = "partial";
-  const base = run.filter((n) => n <= 10);
+  // giro 1 WP10b (I3): i controlli che `passed` conta per la profondità (rapida 1, 3, 9, 11; altrimenti 1–10)
+  const base = reportedControlsFor(depth);
   return {
     passed: run.filter((n) => !failedNs.has(n)).length,
     passed_controls: run.filter((n) => !failedNs.has(n)),
@@ -242,7 +243,7 @@ export function selfCheck({ report, session = {}, audit = [], plan = null, lesso
     status_effective: status,
     controls_run: run,
     signals,
-    // per cognitive_trace.self_check: `passed` sui controlli 1–10 (lo schema lo limita a 10), `failed` con
+    // per cognitive_trace.self_check: `passed` sui controlli della profondità (reportedControlsFor, ≤ 10), `failed` con
     // OGNI controllo fallito 1–13, perché il manager (Review Focus 4) veda anche #11–#13.
     trace_self_check: { passed: base.filter((n) => !failedNs.has(n)).length, failed: [...failedNs].sort((a, b) => a - b) },
   };

@@ -11,6 +11,7 @@ import YAML from "yaml";
 import { ROOT } from "../helpers/hook-env.mjs";
 import { extractReport, validateReport } from "../../scripts/admin/agent-report.mjs";
 import { validateWith } from "../../scripts/lib/schemas.mjs";
+import { reportedControlsFor } from "../../scripts/decide/self-check-controls.mjs";
 import { LEAF_AGENTS, READ_ONLY, agentFiles, parseAgent, lastYamlFence } from "../helpers/agents-md.mjs";
 
 const all = () => Object.entries(agentFiles()).map(([name, text]) => ({ name, ...parseAgent(text) }));
@@ -37,6 +38,10 @@ test("il rapporto d'esempio, estratto come fa subagent-trace, valida contro agen
     assert.equal(obj.usage?.model, fm.model, `${name}: usage.model = modello del frontmatter`);
     assert.equal(obj.needs_input, null, name);
     assert.deepEqual(obj.open_questions, [], name);
+    // giro 1 (I3): `passed` = numero di controlli della profondità dichiarata (rapida 4, standard/profonda 10); i ruoli
+    // T0 a ciclo ridotto (solo Read e Bash) dichiarano la profondità rapida che eseguono davvero.
+    assert.equal(obj.cognitive_trace.self_check.passed, reportedControlsFor(obj.cognitive_trace.depth).length, `${name}: passed per la profondità ${obj.cognitive_trace.depth}`);
+    if (READ_ONLY.includes(name)) assert.equal(obj.cognitive_trace.depth, "rapida", `${name}: ruolo T0 (solo Read e Bash)`);
     if (READ_ONLY.includes(name)) {
       const d = obj.output?.lesson_draft;
       assert.ok(d && typeof d === "object", `${name}: output.lesson_draft (il ruolo non ha Write)`);
