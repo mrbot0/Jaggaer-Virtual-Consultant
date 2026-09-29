@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 29/09/2026 08:15 — **punto corrente: WP10d (layer di orchestrazione e controllo degli agenti) avviato; WP09d chiuso — tutti gli strumenti della spec sono completi**.
+Ultimo aggiornamento: 29/09/2026 09:45 — **punto corrente: WP10a (comandi, README, manuale) avviato; WP10d (orchestrazione e controllo degli agenti) chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 81 % del progetto** (stima pesata sullo sforzo) · 12 pacchetti su 17 chiusi. Restano orchestrazione, comandi, agenti, skill e review finale.
+**≈ 86 % del progetto** (stima pesata sullo sforzo) · 13 pacchetti su 17 chiusi. Restano comandi e manuale, agenti, skill e review finale.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 81 %** (90 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 12 / 17 = **71 %** | WP01–WP09d con review e tag |
+| Avanzamento pesato | **≈ 86 %** (95 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 13 / 17 = **76 %** | WP01–WP09d e WP10d con review e tag |
 | Hook del catalogo §44.4 | 16 / 16 = **100 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
-| Test automatici | 906 / 906 verdi | `npm test` al tag `ops-tooling-done` (`1957e8b`) |
+| Test automatici | 944 / 944 verdi | `npm test` al tag `orchestration-done` (`0134d03`) |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -147,7 +147,13 @@ Ultimo aggiornamento: 29/09/2026 08:15 — **punto corrente: WP10d (layer di orc
   1. Il manager, un modello nella sessione principale, dialoga e instrada.
   2. Le regole di orchestrazione sono codice deterministico che il manager non può scavalcare.
   3. Il monitor è indipendente da agenti e manager. Ricava tutto dalle registrazioni degli hook, sorveglia anche il manager e si può seguire da un terminale separato.
-- **Controllo dell'utente:** pausa, ripresa e stop per agente o per tutti, modalità passo-passo con conferma di ogni azione con effetto, e limiti di chiamate e durata per ogni dispatch. Tutto è applicato dai guard, non dal modello. Pianificato in WP10d.
+- **Controllo dell'utente:** pausa, ripresa e stop per agente o per tutti, modalità passo-passo con conferma di ogni azione con effetto, e limiti di chiamate e durata per ogni dispatch. Tutto è applicato dai guard, non dal modello.
+- **Realizzato in WP10d**, tag `orchestration-done` → `0134d03`, 1 giro di correzione.
+  - `agents status`, `agents show <task_id>`, `agents history` e `agents watch` da un terminale separato: mostrano cosa fa ogni agente e come lo fa, ricavandolo dalle registrazioni degli hook.
+  - Il monitor segnala come `incoerente` un rapporto che non coincide con le registrazioni, e sorveglia anche il manager.
+  - `FERMA TUTTI` ferma solo gli agenti in corso in quel momento. Il livello di modello di ogni agente si ricava dal modello richiesto.
+  - I comandi che riducono la protezione (`RIPRENDI AGENTE`, `SBLOCCA SCOPE`, `PASSO PASSO OFF`) vengono verificati sulla trascrizione.
+  - Contratto per la skill agent-manager: `docs/orchestration.md`.
 
 ### Chiusura di WP06 (K5, cancello di sicurezza)
 - Implementato in 7 commit, più 3 giri di correzione (`8f2103d..69cc6e7`). Tag `k5-done` → `69cc6e7`.
@@ -181,12 +187,12 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP09b | Schemi NRT/SEL/HND/CHK/CFP/FLW/KEY/LCY/INT/CFG, compile-case/cfp, lint, Atlas, corsie di esecuzione, compensazioni, snapshot, evidenze, negativi, promozione, copertura | F3–F7, C1 (strumenti) | 12 | 100 | ✅ | tag `run-tooling-done` → `f95ad08`, 809 test, 3 giri di correzione, `docs/phase-reports/F4-C1-tooling.md` |
 | WP09c | AlmAdapter (Xray Cloud/Server/Mock), server MCP ALM, script xray, coda offline, Defect, `.mcp.json`, NETWORK.md | F5 | 6 | 100 | ✅ | tag `alm-done` → `a9b862f`, 847 test, 2 giri di correzione, `docs/phase-reports/F5-tooling.md` |
 | WP09d | Comandi `kb` restanti, digestione settimanale, Analytics (TBL/QRY/DIN/USR/PSP/ERR), dominio analitico, audit config, admin (status, lock, retention, purge) | F8–F12, G2–G3 (strumenti) | 8 | 100 | ✅ | tag `ops-tooling-done` → `1957e8b`, 906 test, 1 giro di correzione, `docs/phase-reports/F8-G3-tooling.md` |
-| WP10a | Comandi `vc use kb nrt cfg ops learn admin`, template restanti, README, manuale integrato | §44.1, §55–58 | 4 | 0 | ⬜ Brief | `wp10a-commands.md` |
+| WP10a | Comandi `vc use kb nrt cfg ops learn admin`, template restanti, README, manuale integrato | §44.1, §55–58 | 4 | 0 | 🔄 | `wp10a-commands.md` |
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 0 | ⬜ Brief | `wp10b-agents.md` |
-| WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 0 | 🔄 | `wp10d-orchestration.md` — da eseguire prima di WP10c |
+| WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 100 | ✅ | tag `orchestration-done` → `0134d03`, 944 test, 1 giro di correzione, `docs/orchestration.md`, `docs/phase-reports/WP10d.md` |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **111** | **≈ 81** | | 90 unità completate |
+| **Totale** | | | **111** | **≈ 86** | | 95 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
