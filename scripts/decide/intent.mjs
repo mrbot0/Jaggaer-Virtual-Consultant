@@ -11,6 +11,7 @@ import { ACT, envColumn } from "../../hooks/lib/act-classes.mjs";
 import { evaluate, loadTable } from "./dt-eval.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { readTextFile } from "../lib/text-file.mjs";
 
 const RISK_RANK = { R0: 0, R1: 1, R2: 2, R3: 3 };
 export const PROD_REFUSAL = "In produzione non si scrivono dati; posso farlo in sandbox o pre-produzione (§52.1)";
@@ -225,20 +226,24 @@ export function parseIntent(text, { customers = [], session = null } = {}) {
     dt: { table: dt.table, version: dt.table_version, outcome: dt.outcome, score: dt.score, rule: dt.rule } };
 }
 
-const HELP = `uso: node scripts/decide/intent.mjs --text "<intento>" [--customers ACME,BETA] [--session <id>] [--workspace <dir>] [--json]
+const HELP = `uso: node scripts/decide/intent.mjs (--text "<intento>" | --text-file <file>) [--customers ACME,BETA] [--session <id>] [--workspace <dir>] [--json]
 
 Estrae cliente, ambiente, scope, classi d'azione, dati e decide con DT-026: avvia · mostra-piano ·
 approvazione-3A · rifiuta · chiedi. I clienti noti: --customers, altrimenti le cartelle customers/ del
-workspace; cliente e ambiente attivi in sessione valgono se l'intento non li nomina.
+workspace; cliente e ambiente attivi in sessione valgono se l'intento non li nomina. --text-file: il testo dell'utente da
+un file (relativo al workspace, ≤ 64 KB) — la forma dei comandi del plugin (i guard negano virgole, accenti, ? in linea).
 Exit: 0 esito prodotto · 1 argomenti · 2 errore di sistema.`;
 
 export async function run(argv, env = process.env) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
-  if (!opts.text) return fail(asJson, 1, "richiesto --text");
+  if (!opts.text && !opts["text-file"]) return fail(asJson, 1, "richiesto --text o --text-file");
+  if (opts.text && opts["text-file"]) return fail(asJson, 1, "--text e --text-file sono alternativi");
   try {
     const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
+    let text = opts.text;
+    if (opts["text-file"]) { const t = readTextFile(ws, opts["text-file"]); if (t.error) return fail(asJson, 1, t.error); text = t.text; }
     let customers = opts.customers ? String(opts.customers).split(",").map((s) => s.trim()).filter(Boolean) : null;
     if (!customers) { try { customers = readdirSync(join(ws, "customers")).filter((d) => /^[A-Z0-9]{4}$/.test(d)); } catch { customers = []; } }
     let session = null;
@@ -247,7 +252,7 @@ export async function run(argv, env = process.env) {
       const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
       if (sid) session = loadSession(ws, sid).session;
     } catch { session = null; }
-    const r = parseIntent(opts.text, { customers, session });
+    const r = parseIntent(text, { customers, session });
     console.log(asJson ? JSON.stringify(r) : `${r.outcome} — ${r.reason}\n${r.customer ?? "?"} · ${r.env ?? "?"} · ${r.scopes.join("+") || "?"} · ${r.actions.join(" → ") || r.task || "—"}`);
     return 0;
   } catch (err) { return fail(asJson, 2, `errore di sistema: ${err?.message ?? err}`); }

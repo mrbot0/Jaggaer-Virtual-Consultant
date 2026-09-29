@@ -75,3 +75,29 @@ test("7 doctor: il controllo plugin-root compare nell'esito completo", async () 
   const checks = await runChecks({ ws, env: {}, network: false });
   assert.ok(checks.some((x) => x.id === "plugin-root"));
 });
+
+test("1b (estensione) testo libero da file: intent --text-file = --text; kb resolve --text-file; le righe di comando restano semplici", async () => {
+  const ws = envWs({ env: "sandbox", scope: "P2P" });
+  const dir = join(ws, "customers/ACME/.sessions/sess-1");
+  const text = "Su ACME sandbox crea una RdA di prova per 5 sedie da catalogo, CdC IT-0442, lasciala in bozza. Perché?";
+  writeFileSync(join(dir, "intento.txt"), `${text}\n`);
+  const intent = (args) => spawnSync(process.execPath, [join(ROOT, "scripts/decide/intent.mjs"), ...args, "--json"], { encoding: "utf8", cwd: ws, env: cleanEnv({ JVC_WORKSPACE: ws, JVC_SESSION_ID: "sess-1" }) });
+  const a = intent(["--text", text]);
+  const b = intent(["--text-file", "customers/ACME/.sessions/sess-1/intento.txt"]);
+  assert.equal(b.status, 0, b.stdout + b.stderr);
+  assert.deepEqual(JSON.parse(b.stdout), JSON.parse(a.stdout));
+  assert.equal(JSON.parse(b.stdout).customer, "ACME");
+  assert.equal(intent(["--text-file", "nessuno.txt"]).status, 1);
+  assert.equal(intent(["--text", "x", "--text-file", "customers/ACME/.sessions/sess-1/intento.txt"]).status, 1);
+  assert.ok(simpleArgv(`node "C:/p/scripts/decide/intent.mjs" --text-file customers/ACME/.sessions/sess-1/intento.txt --json`));
+  assert.equal(simpleArgv(`node "C:/p/scripts/decide/intent.mjs" --text "${text}" --json`), null, "il testo in linea non è semplice: i guard lo negano");
+  // kb resolve: stessa domanda da file sul DB del cliente
+  const { openDb } = await import("../../scripts/kb/db.mjs");
+  openDb(join(ws, "customers/ACME/knowledge.db")).close();
+  writeFileSync(join(dir, "domanda.txt"), "Quali campi sono obbligatori per inviare una RdA, e perché?");
+  const kb = (args) => spawnSync(process.execPath, [join(ROOT, "scripts/kb/kb.mjs"), "resolve", ...args, "--db", "customers/ACME/knowledge.db", "--json"], { encoding: "utf8", cwd: ws, env: cleanEnv({ JVC_WORKSPACE: ws }) });
+  const r = kb(["--text-file", "customers/ACME/.sessions/sess-1/domanda.txt"]);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.equal(JSON.parse(r.stdout).ok, true);
+  assert.equal(kb(["--text-file", "manca.txt"]).status, 1);
+});

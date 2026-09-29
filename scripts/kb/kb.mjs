@@ -6,6 +6,7 @@ import { fields, InvalidInputError, NotFoundError } from "./fields.mjs";
 import { impact } from "./impact.mjs";
 import { identityCard, identityMissing } from "./identity.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { readTextFile } from "../lib/text-file.mjs";
 import { recordCall } from "../lib/call-ledger.mjs";
 import { units as searchUnits, questionFor, UnitsInputError } from "./units.mjs";
 import { readFileSync } from "node:fs";
@@ -23,7 +24,7 @@ const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
 
 Comandi:
   find      --scope --type --status --level --customer --facet K=V --top N
-  resolve   "<testo libero>" --top N
+  resolve   "<testo libero>" | --text-file <file> --top N   (--text-file: la domanda da file, relativo alla cartella corrente)
   summary   <codice>
   get       <codice>
   precedents <soggetto> --top N [--customer ACME] [--shape <forma>] [--release R] [--releases R1,R2,…] [--cluster CL-…]
@@ -136,7 +137,9 @@ export function run(argv) {
     if (cmd === "find") {
       items = find(db, { scope: opt("scope"), type: opt("type"), status: opt("status"), level: opt("level"), customer: opt("customer"), facet, top });
     } else if (cmd === "resolve") {
-      const text = positional.join(" ");
+      // WP10a: --text-file (la domanda dell'utente da file: i guard negano ? , e lettere accentate in linea)
+      let text = positional.join(" ");
+      if (opt("text-file")) { const t = readTextFile(process.cwd(), opt("text-file")); if (t.error) throw new InvalidInputError(t.error); text = t.text; }
       items = resolve(db, text, { top });
     } else if (cmd === "summary") {
       items = db.prepare("select code,summary from items where code=?").all(positional[0]);
