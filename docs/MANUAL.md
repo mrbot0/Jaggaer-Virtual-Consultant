@@ -317,6 +317,30 @@ valgono subito; quelle che la **riducono** valgono dopo la conferma nel transcri
 - `LIMITI DISPATCH <chiamate> <minuti>` — cambia i limiti per dispatch (default 200 chiamate di strumento e 30 minuti;
   al più 5000 e 480). Vale dopo la conferma.
 
+### 57.6 Le skill: come ragionano il manager e gli agenti
+
+Le skill (`skills/`, §44.3) dicono **come** si lavora; la conoscenza (`kb/`, `product/`) dice **cosa**. Non contengono
+fatti di prodotto né dati di clienti, e non concedono strumenti: gli agenti le caricano quando il compito le richiede
+(la `description` di ciascuna dichiara quando usarla) e ogni definizione in `agents/` cita quelle che le servono.
+
+- **`agent-manager`** — la skill della sessione principale, caricata all'avvio (il contesto di SessionStart lo chiede).
+  Fa della sessione il manager: legge la console prima di instradare, dopo ogni ritorno e prima di rispondere;
+  compone i prompt da `templates/agent-prompt.md` con tier e modello concordi (DT-003) e profondità (DT-023); media gli
+  handoff; porta all'utente le domande e le frasi di approvazione esatte richieste dagli agenti; concede e toglie la
+  lettura trasversale a `process-mapper` e `weekly-digest`; scrive le lezioni dei ruoli senza scrittura; non fa lavoro
+  di dominio (≤ 15 % dei token). Contratto: [`docs/orchestration.md`](orchestration.md). Un sub-agente non la usa.
+- **Cognizione** (tutti gli agenti): `reasoning-cycle` (i sei passi e le tracce) · `epistemic-awareness` (forma e
+  precedenza fra fonti) · `precedents` · `belief-revision` (sorprese, conferme, ipotesi) · `strategies` (DT-017) ·
+  `decision-tables` (`dt-eval`) · `asking-the-user` · `self-check-and-lesson`.
+- **Struttura della conoscenza**: `field-modeling` · `coding-system` · `faceting-and-weights` · `clustering-rules` ·
+  `token-economy`.
+- **Dominio e collaudo**: `jaggaer-domain` · `identity-and-keys` · `integration-testing` · `nrt-authoring` ·
+  `selector-strategy` · `evidence-and-xray`.
+- **Sicurezza e confini**: `data-safety` · `doc-ingestion` · `failure-forensics` · `jaggaer-configuration` ·
+  `domain-boundary` · `scope-discipline` · `customer-isolation`.
+
+Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): modificarle richiede una nuova build.
+
 ---
 
 ## 58. Risoluzione dei problemi
