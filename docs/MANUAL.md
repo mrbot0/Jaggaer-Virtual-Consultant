@@ -10,6 +10,7 @@ Indice: [55 Installazione e primo avvio](#55-installazione-e-primo-avvio) ·
 [56 Riferimento dei comandi](#56-riferimento-dei-comandi) ·
 [57 Intenti, approvazioni, workflow, report, agenti](#57-scrivere-un-intento-seguire-il-workflow-leggere-i-report) ·
 [58 Risoluzione dei problemi](#58-risoluzione-dei-problemi) · [59 Sintesi](#59-sintesi-in-una-pagina) ·
+[60 Verifiche prima del rilascio e dal vivo](#60-verifiche-prima-del-rilascio-e-dal-vivo) ·
 [61 Catalogo degli intenti](#61-catalogo-degli-intenti-per-modalità) · [Appendici](#appendice-a--template-personalizzabili)
 
 ---
@@ -26,8 +27,13 @@ Indice: [55 Installazione e primo avvio](#55-installazione-e-primo-avvio) ·
   (credenziali `NRT_<ENV>_*`, `XRAY_*`, `JIRA_*`; per la digestione settimanale e i ticket anche `JVC_PSEUDO_SALT`).
 - **`npm install` nella cartella del plugin** (non nel workspace): i guard di sicurezza importano le dipendenze di
   runtime (`ajv`, `ajv-formats`, `better-sqlite3`, `yaml`) e senza di esse negano ogni chiamata (sono fail-closed).
-  `doctor` lo segnala con il controllo `deps` rosso e la correzione "npm install nel plugin".
+  `doctor` lo segnala con il controllo `deps` rosso e la correzione "npm install nel plugin". Da una release conviene
+  **`npm ci`**, che installa esattamente le versioni di `package-lock.json` (il lockfile è nel perimetro d'integrità;
+  `node_modules` no, vedi §55.1.2).
 - **Playwright non è richiesto**: si installa solo se si attiva la corsia compilata (`npx playwright install chromium`).
+  Il server MCP `playwright` dichiarato in `.mcp.json` è la **corsia opzionale di esplorazione** del manager (§44.6):
+  nessun agente lo usa (gli agenti agiscono su Chrome con Chrome DevTools MCP o con il browser di Claude) e i guard lo
+  trattano come ogni altro strumento del browser.
 
 ### 55.1.1 Sicurezza: cosa il plugin non può fare da solo
 
@@ -50,6 +56,60 @@ Chi installa il plugin deve sapere quattro cose.
    dei comandi. Le operazioni a forma esatta (purge, retention, promozione, `integrity verify`) contano su questa
    sostituzione: un `$` rimasto nel comando lo renderebbe "non semplice" e i guard lo negherebbero (blocco, non
    rischio). La verifica è nell'[Appendice B](#appendice-b--verificare-la-sostituzione-di-claude_plugin_root).
+
+### 55.1.2 Rischi residui dichiarati
+
+Oltre ai quattro punti sopra (difese testuali e credenziali nelle variabili d'ambiente comprese), il plugin **non**
+impone da solo quanto segue. Ogni voce dice cosa fare.
+
+1. **Canali che consegnano un vero prompt dell'utente.** Il `sendPrompt` di un widget e il `send_message` di una
+   sessione verso se stessa arrivano all'hook `approval-capture` come un prompt autentico dell'utente. Se la frase di
+   approvazione vi arriva offuscata, `guard-phrase` non la vede. Con un ambiente dichiarato, l'allow-list dei server MCP
+   nega questi strumenti; **senza ambiente dichiarato restano aperti**, e bastano per le approvazioni che non chiedono un
+   ambiente (purge, retention, promozione). Aggiungere questi strumenti a `permissions.deny` del `.claude/settings.json`
+   del workspace e non usare widget o sessioni che scrivono nella conversazione.
+2. **Il nome del secondo approvatore è dichiarato, non autenticato.** `DA <Nome Cognome>` è ciò che la persona scrive:
+   il plugin confronta i nomi (spazi e maiuscole normalizzati, nessun controllo di caratteri simili di altri alfabeti) e
+   non verifica chi sta scrivendo. La regola delle due persone (3A in produzione, purge) è una regola **organizzativa**:
+   il secondo approvatore scrive la frase lui stesso, dalla sua postazione o in presenza.
+3. **Il referente della pre-produzione è un avviso.** La colonna `referent` di un'azione in pre-produzione produce un
+   avviso in `validate-plan`, non un blocco: il plugin non contatta nessuno. Avvisare il referente prima di approvare.
+4. **Token salati di un cliente cancellato.** Dopo `admin customer purge` i token pseudonimi `CUST-`/`RIF-` di quel
+   cliente restano nei report di `product/digest/` e sono ricalcolabili da chi possiede `JVC_PSEUDO_SALT` (i codici
+   cliente hanno 4 caratteri). Il titolare dei dati decide se rigenerare quei report con un sale nuovo.
+5. **Ancora di fiducia della firma e dipendenze.** La chiave pubblica che verifica `integrity.json.sig` viaggia nel
+   pacchetto: chi può sostituire il pacchetto può sostituire anche la chiave (toglierla dà `signature: absent`).
+   `node_modules` è fuori dal perimetro d'integrità (che copre `hooks/`, `scripts/`, `commands/`, `agents/`, `skills/`,
+   `product/`, `clusters/`, `decision-tables/`, `strategies/`, `policy/`, `schemas/`, `mcp/`, `templates/`, `.mcp.json`,
+   il manifest, `NETWORK.md`, `package.json` e `package-lock.json`). Installare solo da una release, confrontarne
+   l'impronta con quella pubblicata fuori dal pacchetto, e usare `npm ci` con il lockfile.
+6. **Vocabolario del browser.** Le etichette distruttive riconosciute nel browser (elimina, cancella, delete, remove, …)
+   sono in italiano e in inglese; "cestino", "archivia", altre lingue, selettori camelCase e click a sole coordinate non
+   sono riconosciuti. Il rischio è solo in sandbox: fuori dalla sandbox ogni azione con effetto passa da un passo di
+   piano sul selettore dell'Atlas.
+7. **Allow-list dei server MCP.** Con un ambiente dichiarato ogni strumento MCP di un server non in allow-list è negato
+   ("server MCP … non ammesso con un ambiente dichiarato", §58): è voluto. Altri server si usano senza ambiente dichiarato, o si aggiungono con una
+   release del plugin.
+8. **Stato di sessione dopo un aggiornamento.** Una versione del plugin con uno schema di `session.json` più severo vede
+   le sessioni vive come non valide ("session.json non valido", "stato di sessione illeggibile") e i guard negano. Si ripara con
+   `/jaggaer-virtual-consultant:use customer <ID>` (copia di riserva `session.json.corrupt-<data>`); le compensazioni
+   pendenti restano in `customers/<C>/runs/<RUN>/compensations.yaml` e si ricontrollano con `vc status`.
+9. **`auth-setup` lascia il file di origine.** `run/auth-setup.mjs register --file <storageState>` copia lo stato di
+   autenticazione in `.auth/` e **non** cancella il file di partenza: cancellarlo a mano, e non tenerlo mai dentro il
+   repository di conoscenza (fuori da `.auth/` non è protetto e finirebbe in git).
+10. **Ritentativi verso Jira.** Il server ALM ritenta dopo un timeout o un 502/503/504 anche le richieste POST: una
+    creazione riuscita sul server ma scaduta sul client può creare un Defect o una Test Execution doppi. Dopo un
+    ritentativo controllare in Jira con `nrt push-xray --dry-run` / `xray verify` e chiudere il doppione.
+11. **Puntatore di sessione stantio e CI.** Gli script senza `--session` usano `.jvc/current-session`: un puntatore
+    lasciato da una sessione chiusa fa usare alle esecuzioni in CI una sessione che non è la loro (e le blocca). In CI passare sempre
+    `--session <id>` (o `JVC_SESSION_ID`), oppure lavorare su un checkout pulito senza `.jvc/`.
+12. **Jira Server/DC on-premise.** Il suo host va aggiunto alla categoria `alm` di `NETWORK.md`, che è sotto integrità:
+    serve una release del plugin; fino ad allora quel cliente non pubblica su Jira.
+13. **Scritture della conoscenza con un interprete in linea.** La sessione principale non scrive in `product/**` né in
+    `customers/*/kb/**` né con gli strumenti di file né con la shell (redirezioni, `tee`, `cp`/`mv`, `Set-Content`,
+    `sed -i`, …): lo fanno solo gli script del plugin dopo la validazione. Il codice in linea di un interprete
+    (`node -e`, `python -c`) che apre un file di quelle cartelle non è analizzato: è la classe delle difese testuali del
+    punto 1 di §55.1.1: rivedere `git diff` di `product/` e `kb/` prima di ogni commit della conoscenza.
 
 ### 55.2 Installazione
 
@@ -114,8 +174,31 @@ virgole, parentesi, `$`, `@`, graffe o testo libero con punteggiatura e accenti 
 negano). I comandi passano i dati strutturati e il testo dell'utente da un file della sessione
 (`customers/<C>/.sessions/<sessione>/…`: `--payload-file`, `--text-file`, `--finding`, `--sql-file`; per il report
 `--payload-file` con titolo, intento, prossimi passi, atteso/osservato/errori, oppure `--intent-file`,
-`--assumption-file`, `--next-file`) o come `chiave=valore`. I file d'ingresso stanno **dentro il workspace**: percorsi
-assoluti fuori, `..` che escono o collegamenti che portano fuori sono rifiutati.
+`--assumption-file`, `--next-file`) o come `chiave=valore`.
+
+**Confinamento dei file d'ingresso.** Ogni opzione-file degli script usati dalla sessione (`--case`, `--atlas`,
+`--snapshot`, `--params`, `--why`, `--sql-file`, `--text-file`, `--payload-file`, `--summary-file`, `--finding`,
+`--input`, `--inputs`, `--priors`, `--outcomes`, `--env-file`, `--spec`, `--baseline`, `--observed`, `--golden`,
+`--actual`, `--units`, `--doc`, `--parsed`, `--item`, `--digested`, `--answers-file`, `--query-file`, `--registry`,
+`--rows-file`, `--catalog`, `--probe`, i file posizionali di `lint-spec`, `lint-scope`, `validate-plan`,
+`validate-codes`, …) si risolve nel **workspace degli hook** — `JVC_WORKSPACE`, altrimenti la radice del progetto
+(`CLAUDE_PROJECT_DIR`), altrimenti la cartella di avvio — e **mai** nel `--workspace`/`--root` scelto da chi invoca lo
+script. Il percorso reale (collegamenti risolti, anche di una cartella intermedia) deve stare dentro quel workspace:
+percorsi assoluti fuori, `..` che escono o collegamenti che portano fuori sono rifiutati ("file fuori dal workspace").
+Tetti di dimensione: 64 KB per i testi (`--text-file`, `--summary-file`, `--query-file`), 256 KB per i payload
+(`--payload-file`) e per `--sql-file`, 16 MB per gli altri file d'ingresso. I piani (`--plan`) sono relativi alla cartella del cliente
+(`customers/<C>/`, niente assoluti né `..`). Eccezioni dichiarate: le **sorgenti da importare** — la cartella di
+`kb ingest <path>` (`ingest.mjs`/`harvest.mjs --input`), il file dei parser (`--in`) e lo storageState di
+`auth-setup register --file` — si leggono anche da fuori, perché il loro scopo è portare un documento nel workspace;
+`--db` e `--out` sono destinazioni, non file d'ingresso.
+
+**Script e moduli (§44.5).** La spec elenca gli script per nome ("tutti con `--json` e `--help`"). Molti sono **moduli di
+libreria dietro un dispatcher** e non hanno una CLI propria: `kb.mjs` (find, fields, epistemic, units, assign-seq…),
+`ingest.mjs` (parse-*, segment, dedupe, profile-doc), `digest/weekly.mjs` (collect, align, portability,
+promote-candidates, report), `chrome/capture.mjs` (con la redazione di `chrome/redact.mjs`). Il dispatcher ha `--help`
+e `--json`; il modulo si usa solo attraverso di lui. Hanno una CLI anche `kb/validate-codes.mjs` (codici validi, uguali
+al nome del file, nessun codice rivendicato da due file), `kb/lifecycle.mjs --help` (promote, deprecate) e
+`ingest/redact.mjs` (la redazione dell'ingestion su un testo).
 
 ### 56.1 `vc` — stato, diagnostica e console degli agenti (virtual consultant)
 
@@ -138,13 +221,13 @@ assoluti fuori, `..` che escono o collegamenti che portano fuori sono rifiutati.
 | `mode <nrt\|config\|ops\|diag\|esplorazione>` | Modalità | L'intento la deduce; il comando la forza. `esplorazione`: solo sandbox, click e input senza piano (mai invio o salvataggio), solo dopo la frase `ESPLORA SANDBOX` dell'utente |
 | `budget <n>` | Budget di sessione in token (es. `200k`) | Registrato in audit; l'unico modo per alzarlo, solo su richiesta dell'utente |
 | `show` | Stato corrente della sessione | Sola lettura |
-| `close-stale` | Chiude a mano i sotto-compiti rimasti aperti (dispatch mai chiusi) | Solo su richiesta; senza, scadono da soli dopo 2 ore |
+| `close-stale` | Chiude a mano i sotto-compiti rimasti aperti (dispatch mai chiusi) | Solo su richiesta; senza, scadono da soli dopo 2 ore, o dopo il limite di dispatch confermato (`LIMITI DISPATCH`) se è più lungo |
 
 ### 56.3 `kb` — conoscenza
 
 | Azione | Cosa fa | Chi |
 |--------|---------|-----|
-| `ingest <path> [--scope --genre tecnica\|d'uso\|empirica\|testimoniale --kind …]` | Profila e segmenta i documenti; estrae i grezzi in `_inbox`; report di ingestion | script `ingest/ingest.mjs`, poi `customer-profiler` (cartella di progetto) o `scope-extractor` → `scope-digester` → `cluster-validator` |
+| `ingest <path> [--scope --genre tecnica\|d'uso\|empirica\|testimoniale --kind …]` | Profila e segmenta i documenti; **redige le unità** prima di scriverle (dati personali, segreti, codici degli altri clienti; profilo strict — anche importi e autori — per il livello S senza cliente); estrae i grezzi in `_inbox`; report di ingestion | script `ingest/ingest.mjs`, poi `customer-profiler` (cartella di progetto) o `scope-extractor` → `scope-digester` → `cluster-validator` |
 | `digest [--scope] [--fields <documento>]` | Digestione guidata dagli attributi attesi; campi a lotti ≤ 50 | `scope-digester` (e `cluster-validator`); `--fields`: piano dei lotti con `kb/digest-fields.mjs` |
 | `review [--scope] [--only quarantena\|ambigui\|R3]` | Revisione umana stratificata: accetta, correggi, rifiuta | script `kb/review.mjs` (decide l'utente) |
 | `find --scope --type --status --cluster --facet --top` | Recupero per faccette, ordinato per W, con Q | script `kb/kb.mjs` |
@@ -179,7 +262,7 @@ assoluti fuori, `..` che escono o collegamenti che portano fuori sono rifiutati.
 |--------|---------|--------------------|
 | `design "<richiesta>"` | Piano: CFP composta, impatto, rischio, check, rollback, domande dai gap | — · `config-designer` |
 | `apply <PLAN> [--dry-run\|--resume <n>]` | Esecuzione su Chrome con checkpoint | verde 1 · giallo 2 · rosso 3 · **prod: sempre 3 (3A)** · `scope-expert` |
-| `verify <PLAN>` | Genera e riesegue il verificatore `NRT.*.CFG` | — (sola lettura, anche in prod) · script `compile/compile-cfp.mjs --verify`, poi `scope-expert` in lettura |
+| `verify <PLAN>` | Genera e riesegue il verificatore `NRT.*.CFG`; su una CFP del cliente verifica la configurazione **effettiva** (campi di S sostituiti o saltati dalle deviazioni, campi dichiarati dal cliente, passi deviati o inseriti); le deviazioni che non sono campi (un click, un salvataggio) sono dichiarate in `does_not_assert` | — (sola lettura, anche in prod) · script `compile/compile-cfp.mjs --verify`, poi `scope-expert` in lettura |
 | `audit [--scope]` · `coverage` · `impact <CFG>` | Lint e deriva; matrice; raggio | — · `config-auditor`; script |
 
 ### 56.6 `ops` — operatività e Analytics
@@ -187,7 +270,7 @@ assoluti fuori, `..` che escono o collegamenti che portano fuori sono rifiutati.
 | Azione | Cosa fa | Ambienti · Chi |
 |--------|---------|----------------|
 | `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza con compensazione | sandbox, preprod — **mai prod** (rifiutato prima di ogni dispatch) · `scope-expert` |
-| `approva · chiudi · pubblica …` | R2 con approvazione (`sì`) | sandbox, preprod con referente · `scope-expert` |
+| `approva · chiudi · pubblica …` | R2 con approvazione (`sì`) | sandbox, preprod (il referente è un avviso, non un blocco: §55.1.2) · `scope-expert` |
 | `query "<domanda>"` · `tables` · `learn-analytics` | Analytics | tutti (sola lettura) · `analytics-learner` |
 
 ### 56.7 `learn` — apprendimento
@@ -205,7 +288,7 @@ assoluti fuori, `..` che escono o collegamenti che portano fuori sono rifiutati.
 | Azione | Cosa fa | Approvazioni |
 |--------|---------|--------------|
 | `retention [--apply]` | Applica le retention (prima un elenco a secco) | 1: `APPROVO RETENTION <C>` |
-| `customer purge <ID>` | **L'unica cancellazione**: rimuove un cliente; certificato | 2 con frase, da due persone: `APPROVO PURGE <ID> DA <Nome Cognome>` |
+| `customer purge <ID>` | **L'unica cancellazione**: rimuove un cliente; certificato (i token salati nei report di `product/digest/` restano: §55.1.2) | 2 con frase, da due persone: `APPROVO PURGE <ID> DA <Nome Cognome>` |
 | `lock [--clear-expired] · session [close-stale] · integrity` | Lock, sessioni, verifica del pacchetto | — |
 
 Sempre script diretti, mai un sub-agente. Le righe di comando di purge, retention e promozione sono le sole forme
@@ -240,7 +323,7 @@ Esempi:
 ### 57.2 Le frasi di approvazione
 
 Le frasi si scrivono **come unico testo del messaggio**, con le parole chiave in maiuscolo (spazi e un punto finale
-tollerati). Le riconosce e le registra l'hook `approval-capture` nel registro della sessione (catena di hash), con
+tollerati, anche dopo uno spazio: `APPROVO PIANO <PLAN> .`). Le riconosce e le registra l'hook `approval-capture` nel registro della sessione (catena di hash), con
 l'orario; i guard le confermano nel transcript. Il modello **non** può scriverle al posto dell'utente: i guard negano
 queste frasi in ogni input di strumento. Una frase diversa, un piano sbagliato o una finestra scaduta danno
 "Approvazione non valida" con la frase attesa.
@@ -280,7 +363,8 @@ I report di azione (§29.8) si leggono dall'alto: **Esito** e **Entità** dicono
 **Verdetto** per scope e dai **Fallimenti**: ogni fallimento porta la classificazione e l'azione già intrapresa
 (Defect, PR, quarantena). Le evidenze sono nella cartella su disco indicata (release → scope → caso) e, per i test, su
 Xray. Gli esiti possibili: SUCCESS, EXPECTED-ERROR-AS-SUCCESS (l'errore atteso è un successo), ERROR-AS-LESSON,
-ERROR-BLOCKING, ERROR-ENVIRONMENT (mai un Defect), ABORTED-BY-USER.
+ERROR-BLOCKING, ERROR-ENVIRONMENT (mai un Defect), ABORTED-BY-USER. Un passo fermato da una sorpresa **incompatibile**
+(step-check, DT-016) è ERROR-BLOCKING (Xray FAILED), non PARTIAL: il compito non ha fatto ciò che doveva.
 
 ### 57.5 Seguire e controllare gli agenti
 
@@ -357,7 +441,7 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
 | "Budget esaurito" | Compito più costoso del previsto | `use budget` se giustificato; altrimenti ridisegnare il compito (meno passi, più replay) |
 | "Risultato respinto: traccia cognitiva mancante" | Il sub-agente ha saltato il ciclo | Automatico: il sub-agente completa; se persiste, `learn lessons --session` e segnalare |
 | "Compensazioni pendenti" all'avvio | Sessione precedente interrotta | `vc status` → `compensa tutto` o `lascia` |
-| "Integrità del pacchetto fallita" | Plugin modificato o manomesso | Reinstallare dalla release firmata; non operare |
+| "Integrità del pacchetto fallita" | Plugin modificato o manomesso (il perimetro comprende anche `commands/`, `product/`, `clusters/`, `package.json`, `package-lock.json`) | Reinstallare dalla release firmata (`npm ci`); non operare. La chiave della firma viaggia nel pacchetto: confrontare l'impronta della release con quella pubblicata (§55.1.2) |
 | "Knowledge version incompatibile" | Plugin aggiornato, conoscenza no | `kb migrate` |
 | "Jira irraggiungibile" | Rete o credenziali | La run non fallisce; `nrt push-xray --retry-queued` più tardi |
 | "DB bloccato" | Reindex o digest in corso | Attendere; `admin lock` per vedere chi lo tiene |
@@ -371,6 +455,13 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
 | "il modello di questo scope va rifatto prima di continuare" | Vigilanza: tre compiti consecutivi fermati per sorprese | Giro di osservazioni proposto dal manager, poi `SBLOCCA SCOPE <S>` |
 | "una sola escalation di tier per compito" | Seconda escalation dello stesso compito | Riformulare il compito o dividerlo; chiedere all'utente |
 | Purge, retention o promozione: "approvazione mancante" (exit 3) con la frase appena scritta, due sessioni aperte nello stesso workspace | L'approvazione vive nel registro della sessione in cui è stata scritta; un comando senza la sessione giusta cerca in quella corrente (`.jvc/current-session`) | Scrivere la frase e lanciare il comando **nella stessa sessione** (le righe dei comandi passano `--session "${CLAUDE_SESSION_ID}"`); chiudere o non usare in parallelo l'altra sessione sullo stesso workspace |
+| "server MCP … non ammesso con un ambiente dichiarato" | Strumento di un server MCP che non è né una famiglia del browser né nell'allow-list del plugin | È voluto (§55.1.2): usarlo senza ambiente dichiarato, o chiederne l'aggiunta con una release |
+| Dopo un aggiornamento del plugin ogni chiamata negata: "session.json non valido" o "stato di sessione illeggibile" | Schema della sessione più severo nella nuova versione | `/jaggaer-virtual-consultant:use customer <ID>` (ripara, con copia di riserva); le compensazioni pendenti restano in `runs/<RUN>/compensations.yaml`: `vc status` |
+| In CI uno script usa la sessione sbagliata o si ferma | Puntatore `.jvc/current-session` lasciato da una sessione chiusa | Passare `--session <id>` (o `JVC_SESSION_ID`); checkout pulito senza `.jvc/` |
+| "file fuori dal workspace" | Un file d'ingresso fuori dal workspace degli hook (anche se dentro il `--workspace` passato allo script) | Metterlo nella cartella della sessione (`customers/<C>/.sessions/<sessione>/`) e passarlo relativo (§56) |
+| "passo N del piano … completato; il passo M è stato negato" | Il gate del passo successivo è stato negato (compensazione mancante, classe fuori catalogo): il piano resta fermo sul passo verificato | Correggere il piano e riattivarlo con `step-check --resume`, oppure chiuderlo con `--close` |
+| Defect o Test Execution doppi in Jira | Ritentativo di un POST scaduto sul client ma riuscito sul server | Chiudere il doppione in Jira; `xray verify` sulla run (§55.1.2) |
+| Jira Server/DC del cliente irraggiungibile per policy | Host on-premise non nella categoria `alm` di `NETWORK.md` | Serve una release del plugin con l'host aggiunto |
 | Verificare gli agenti dopo un aggiornamento del plugin o del modello | Eval degli agenti di §49.1 (a ogni release) | `claude plugin eval .` con lo scaffold: [Appendice C](#appendice-c--verificare-gli-agenti-con-la-suite-evals) |
 
 ---
@@ -430,6 +521,71 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
  ECONOMIA             il costo del ragionamento è proporzionale a ciò che non si sa:
                       consolidato + precedente = T0 in poche centinaia di token
 ```
+
+---
+
+## 60. Verifiche prima del rilascio e dal vivo
+
+I test automatici (`npm test`, `npm run test:timing`, la validazione strutturale di `evals/`) provano il codice con
+input simulati. Le voci che seguono si possono provare **solo** in una sessione vera di Claude Code, su un tenant
+JAGGAER e su un Jira veri, o con dati reali di un cliente pilota. Vanno fatte prima del rilascio (o alla prima occasione
+dal vivo) e registrate con l'esito.
+
+**Installazione e piattaforma Claude Code**
+
+1. **Hook caricati una volta sola.** Dopo l'installazione, `claude plugin validate .` e poi `/hooks` in una sessione:
+   ogni registrazione di `hooks/hooks.json` compare **una sola volta** (il manifest non dichiara più `hooks` né
+   `mcpServers`: i file predefiniti si caricano comunque) e nessun avviso "Duplicate hooks file"; lo stesso per i server
+   di `.mcp.json` in `/mcp`.
+2. **`${CLAUDE_PLUGIN_ROOT}` nei corpi di skill e agenti** (non solo dei comandi, Appendice B): le righe di comando di
+   `skills/agent-manager/SKILL.md`, `skills/*/references/*.md` e `agents/*.md` devono arrivare a Bash con il percorso
+   letterale del plugin; altrimenti falliscono o i guard le negano.
+3. **`${CLAUDE_SESSION_ID}`** sostituito nei comandi e nelle skill (le righe di purge, retention e promozione passano
+   `--session "${CLAUDE_SESSION_ID}"`): controllare nel riquadro Bash che compaia l'id della sessione.
+4. **Semantica dei matcher degli hook e nomi degli strumenti MCP**: gli strumenti dei server del plugin si chiamano
+   `mcp__plugin_jaggaer-virtual-consultant_<server>__<strumento>` e i matcher di `hooks/hooks.json` li intercettano
+   (una chiamata di prova negata in audit per ciascuna famiglia: alm, chrome-devtools, playwright, browser di Claude).
+5. **Formato del transcript**: l'intestazione del dispatch nel transcript del sub-agente (F3), i campi di origine umana
+   dei prompt (N4) e le righe di sidechain che contano la quota del manager (`docs/orchestration.md` §7).
+6. **Legame sub-agente ↔ compito** (WP10d): con due agenti dello stesso tipo in parallelo `vc agents` li mostra ciascuno
+   sul suo `task_id`; le chiamate del manager dalla sessione principale passano dai guard veri (WP10c).
+7. **Scoperta dei casi eval annidati**: `claude plugin eval .` deve trovare i casi in `evals/<ruolo>/<caso>/` e ignorare
+   `evals/_support/` e `evals/mocks/` (Appendice C); contare i casi scoperti (300).
+
+**Browser e tenant**
+
+8. **Back con bfcache** in Chrome reale: dopo un "indietro" il plugin non lega più gli elementi della pagina precedente
+   (observe-append rilegge la pagina prima dell'azione successiva).
+9. **Marcatori di risposta per famiglia** del browser ("Successfully navigated", `Tab Context`/"Navigated to",
+   "Page URL") sulle versioni fissate dei server.
+10. **Versioni fissate dei server MCP**: `npm view chrome-devtools-mcp@1.9.0` e `npm view @playwright/mcp@0.0.41`
+    esistono e funzionano con il Claude Code installato.
+11. **Impronta dell'ambiente sul tenant reale** (≥ 2 segnali, §55.3) e primo **R2 CFP** sul tenant (criterio C1:
+    VERIFY-FIRST → DRY-RUN → esecuzione, prove M12–M16).
+12. **Casi eval con effetto sul browser sotto un piano approvato**: la suite `evals/` non li copre; provarli a mano in
+    sandbox.
+
+**Jira e Xray**
+
+13. **Formato Xray Server/DC (M13)**: stati PASS/FAIL, `evidences`, stati personalizzati del cliente; la Test Execution
+    è leggibile dal responsabile QA (`xray verify` dopo la prima `xray publish`).
+14. **Host Jira on-premise**: se il cliente ha Jira Server/DC, il suo host va in `NETWORK.md` con una release (§55.1.2).
+15. **Chiave del marketplace nel template delle impostazioni** (`jaggaer-vc` in `templates/settings.template.json`)
+    uguale a quella del marketplace privato reale.
+
+**Criteri misurati su dati reali** (pilota; per ciascuno il valore misurato e la data)
+
+16. **K4 — catene di campi corrette ≥ 80 %** dopo la prima digestione reale, con la revisione di un consulente.
+17. **F1′ — ≥ 60 % dei soggetti critici consolidati o libreschi** sul pilota, dopo digestione e revisione umana.
+18. **C1 — prima CFP R2 sul tenant**: vedi la voce 11.
+19. **G1 — secondo cliente**: ≥ 30 % di REPLAY e costo ≤ 30 % del primo.
+20. **G2 — DEC smentite ≤ 8 %** e prima calibrazione su ≥ 10 DEC.
+21. **Pass rate degli eval per ruolo** (Appendice C): `casesPassed / casesTotal` per ciascuno dei 15 ruoli, con la
+    soglia scelta per il rilascio.
+22. **Origine del corpus**: per ogni documento del corpus di partenza decidere se è del fornitore (livello S) o materiale
+    di un cliente (livello C), e reingerire di conseguenza.
+23. **Tempi sulla macchina di installazione**: `npm run test:timing` (guard: mediana del costo proprio < 150 ms e p95
+    < 250 ms oltre l'avvio di node; observe-append mediana < 150 ms; `kb fields` < 1 s; SessionStart < 2 s).
 
 ---
 
