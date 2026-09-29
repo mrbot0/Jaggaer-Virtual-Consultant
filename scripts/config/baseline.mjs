@@ -73,15 +73,24 @@ export function writeBaseline(ws, customer, env, captured, { now = new Date() } 
 export function loadBaseline(file) {
   const d = YAML.parse(readFileSync(file, "utf8"));
   if (!d?.objects || typeof d.objects !== "object") throw new Error(`baseline senza objects: ${file}`);
-  if (d.hash && hashObjects(d.objects) !== d.hash) throw new Error(`impronta della baseline non coincide (file modificato dopo la cattura): ${file}`);
+  // giro 1 (m6): l'impronta è obbligatoria (una baseline senza hash non è verificabile)
+  if (typeof d.hash !== "string" || !/^[0-9a-f]{64}$/.test(d.hash)) throw new Error(`baseline senza impronta (hash): ${file}`);
+  if (hashObjects(d.objects) !== d.hash) throw new Error(`impronta della baseline non coincide (file modificato dopo la cattura): ${file}`);
   return d;
 }
 
 export function latestBaseline(ws, customer, env) {
   const dir = baselinesDir(ws, customer, env);
   if (!existsSync(dir)) return null;
-  const f = readdirSync(dir).filter((x) => /^\d{4}-\d{2}-\d{2}.*\.yaml$/.test(x)).sort().at(-1);
-  return f ? join(dir, f) : null;
+  // giro 1 (m5): la più recente per orario di cattura (captured_at), non per nome ("2026-09-29.yaml" < "2026-09-29-101010.yaml")
+  let best = null;
+  for (const f of readdirSync(dir).filter((x) => /^\d{4}-\d{2}-\d{2}.*\.yaml$/.test(x))) {
+    let at = NaN;
+    try { at = Date.parse(YAML.parse(readFileSync(join(dir, f), "utf8"))?.captured_at ?? ""); } catch { at = NaN; }
+    if (!Number.isFinite(at)) continue;
+    if (!best || at > best.at || (at === best.at && f > best.f)) best = { f, at };
+  }
+  return best ? join(dir, best.f) : null;
 }
 
 export const HELP = `uso: node scripts/config/baseline.mjs --customer <C> --env <id> [--input <objects.yaml>] [--workspace <dir>] [--json]
