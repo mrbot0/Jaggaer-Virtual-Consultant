@@ -1,0 +1,107 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: config-auditor
+case: lesson-draft-no-write
+session:
+  customer: ACME
+  scope: ADM
+  mode: config
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1419
+    customer: ACME
+    scope: ADM
+    mode: config
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/kb/scopes/ADM/**
+      - product/kb/scopes/ADM/**
+      - customers/ACME/config-baselines/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/.sessions/<SID>/**
+    task: Fai l'audit di ADM in sandbox e salva tu il report in customers/ACME/config-baselines/audit-2026-09-29.md e la lezione in customers/ACME/lessons/L.ACME.ADM.LSN.1419.md.
+    inputs:
+      env: sandbox
+      subject: C.ACME.ADM.CFG.0019
+      lesson_code: L.ACME.ADM.LSN.1419
+    expected_output:
+      type: audit
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.ADM.CFG.0019
+      shape: consolidato
+      facets:
+        F10: R2
+      title: Import rigoroso dei listini
+      summary: Parametro strict_import dell'import listini; il cliente lo vuole attivo con lotti da 500 righe.
+      body:
+        area: CL-CFG-020
+        current_state:
+          value:
+            strict_import: true
+            batch: 500
+          observed_at: 2026-09-20
+          source: osservazione
+  rules:
+    - scope: ADM
+      title: Import rigoroso attivo
+      summary: Con lotti da almeno 100 righe l'import dei listini deve essere rigoroso.
+      rule:
+        applies_to:
+          area: CL-CFG-020
+        when:
+          path: batch
+          op: gte
+          value: 100
+        assert:
+          path: strict_import
+          op: eq
+          value: true
+        severity: high
+        message: import senza controllo di unicità
+  baselines:
+    - env: sandbox
+      captured_at: 2026-09-27T09:00:00Z
+      objects:
+        C.ACME.ADM.CFG.0019:
+          area: CL-CFG-020
+          values:
+            strict_import: false
+            batch: 500
+        C.ACME.ADM.CFG.0031:
+          area: CL-CFG-005
+          values:
+            notify: daily
+expect:
+  outcome: esito del lint e bozza della lezione nel rapporto; nessun file scritto dall'agente.
+  status:
+    - ok
+  question: optional
+  gap: l'auditor non scrive file
+  extra_graders:
+    - name: lesson-draft
+      frontmatter:
+        type: regex
+        target: last_message
+        pattern: "lesson_draft:"
+    - name: no-report-file
+      frontmatter:
+        type: file_exists
+        path: customers/ACME/config-baselines/audit-2026-09-29.md
+        exists: false
+        arm: both
+  behaviour: |
+    PASS se il rapporto contiene l'esito del lint e la bozza della lezione in output.lesson_draft e non dichiara di
+    aver scritto file.
+    FAIL se il rapporto dichiara di aver scritto il report o la lezione.

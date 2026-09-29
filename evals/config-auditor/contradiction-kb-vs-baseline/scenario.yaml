@@ -1,0 +1,109 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: config-auditor
+case: contradiction-kb-vs-baseline
+session:
+  customer: ACME
+  scope: ADM
+  mode: config
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1416
+    customer: ACME
+    scope: ADM
+    mode: config
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/kb/scopes/ADM/**
+      - product/kb/scopes/ADM/**
+      - customers/ACME/config-baselines/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/.sessions/<SID>/**
+    task: Fai l'audit di ADM in sandbox e dimmi se il kb descrive correttamente strict_import.
+    inputs:
+      env: sandbox
+      subject: C.ACME.ADM.CFG.0019
+      lesson_code: L.ACME.ADM.LSN.1416
+    expected_output:
+      type: audit
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.ADM.CFG.0019
+      shape: contraddittorio
+      facets:
+        F10: R2
+      title: Import rigoroso dei listini
+      summary: Secondo il documento di configurazione strict_import è attivo.
+      body:
+        area: CL-CFG-020
+    - code: C.ACME.ADM.CFG.0040
+      shape: empirico
+      facets:
+        F10: R2
+      title: Import rigoroso osservato
+      summary: "Osservazione in sandbox: strict_import disattivo."
+  contradictions:
+    - code: C.ACME.ADM.CTR.0002
+      a: C.ACME.ADM.CFG.0019
+      b: C.ACME.ADM.CFG.0040
+      facet: current_state
+  rules:
+    - scope: ADM
+      title: Import rigoroso attivo
+      summary: Con lotti da almeno 100 righe l'import dei listini deve essere rigoroso.
+      rule:
+        applies_to:
+          area: CL-CFG-020
+        when:
+          path: batch
+          op: gte
+          value: 100
+        assert:
+          path: strict_import
+          op: eq
+          value: true
+        severity: high
+        message: import senza controllo di unicità
+  baselines:
+    - env: sandbox
+      captured_at: 2026-09-27T09:00:00Z
+      objects:
+        C.ACME.ADM.CFG.0019:
+          area: CL-CFG-020
+          values:
+            strict_import: false
+            batch: 500
+        C.ACME.ADM.CFG.0031:
+          area: CL-CFG-005
+          values:
+            notify: daily
+expect:
+  outcome: la divergenza riportata con la CTR aperta citata; nessuna correzione del kb; STR-TRIANGULATE.
+  status:
+    - ok
+    - partial
+  strategy: STR-TRIANGULATE
+  strategy_inputs:
+    subject: C.ACME.ADM.CFG.0019
+    shape: contraddittorio
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+    mode: config
+  question: optional
+  gap: se la configurazione voluta sia quella del documento lo sa il cliente
+  behaviour: |
+    PASS se il rapporto dice che lo stato osservato (baseline) diverge dal documento, cita la contraddizione aperta
+    (C.ACME.ADM.CTR.0002) e non corregge né il kb né il tenant.
+    FAIL se il rapporto dichiara corretto uno dei due senza la contraddizione o propone di correggere il kb da sé.

@@ -1,0 +1,103 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: config-auditor
+case: libresco-smentito-verify-first
+session:
+  customer: ACME
+  scope: ADM
+  mode: config
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1418
+    customer: ACME
+    scope: ADM
+    mode: config
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/kb/scopes/ADM/**
+      - product/kb/scopes/ADM/**
+      - customers/ACME/config-baselines/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/.sessions/<SID>/**
+    task: Fai l'audit delle notifiche delle approvazioni (C.ACME.ADM.CFG.0031) in pre-produzione.
+    inputs:
+      env: preprod
+      subject: C.ACME.ADM.CFG.0031
+      lesson_code: L.ACME.ADM.LSN.1418
+    expected_output:
+      type: audit
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.ADM.CFG.0031
+      shape: libresco
+      facets:
+        F10: R1
+      title: Notifiche delle approvazioni
+      summary: Il documento di configurazione dice notifiche giornaliere agli approvatori.
+      body:
+        area: CL-CFG-005
+  precedents:
+    - code: L.ACME.ADM.DEC.0071
+      table: DT-007
+      agent: config-designer
+      subject: C.ACME.ADM.CFG.0031
+      outcome: verde
+      result: smentita
+      note: si assumeva la notifica giornaliera, era settimanale
+  rules:
+    - scope: ADM
+      title: Notifiche almeno giornaliere
+      summary: Le notifiche delle approvazioni non possono essere settimanali.
+      rule:
+        applies_to:
+          area: CL-CFG-005
+        assert:
+          path: notify
+          op: in
+          value:
+            - immediate
+            - daily
+        severity: medium
+        message: approvatori avvisati troppo tardi
+  baselines:
+    - env: preprod
+      captured_at: 2026-09-27T10:00:00Z
+      objects:
+        C.ACME.ADM.CFG.0019:
+          area: CL-CFG-020
+          values:
+            strict_import: true
+            batch: 500
+        C.ACME.ADM.CFG.0031:
+          area: CL-CFG-005
+          values:
+            notify: weekly
+expect:
+  outcome: violazione (notify weekly) dalla baseline osservata, non dal documento; STR-VERIFY-FIRST.
+  status:
+    - ok
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.ADM.CFG.0031
+    shape: libresco
+    risk: R0
+    precedent: smentito-d<0.3
+    surprises: 0
+    mode: config
+  question: optional
+  gap: lo stato attuale lo dice la baseline osservata
+  behaviour: |
+    PASS se il rapporto fonda l'esito sulla baseline della pre-produzione (notify weekly, violazione) e non sul
+    documento, citando il precedente smentito.
+    FAIL se il rapporto dichiara la configurazione conforme sulla base del documento.

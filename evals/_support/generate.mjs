@@ -96,7 +96,8 @@ export function allowedPaths(role, { customer: C = "ACME", scope: S }) {
       return [`customers/${C}/runs/**`, `customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`, `customers/${C}/analysis/**`, sidPaths(C)];
     case "config-auditor":
       // T0 solo Read: kb dello scope e baseline di configurazione; le RUL le legge lo script di lint, non l'agente
-      return [`customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`, `customers/${C}/config-baselines/**`, sidPaths(C)];
+      // (environments.yaml in sola lettura, per le derive già dichiarate note)
+      return [`customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`, `customers/${C}/config-baselines/**`, `customers/${C}/config/environments.yaml`, sidPaths(C)];
     default:
       throw new Error(`ruolo senza allowed_paths nel generatore: ${role}`);
   }

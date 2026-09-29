@@ -1,0 +1,138 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: config-auditor
+case: lint-violation-happy
+session:
+  customer: ACME
+  scope: ADM
+  mode: config
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1401
+    customer: ACME
+    scope: ADM
+    mode: config
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/kb/scopes/ADM/**
+      - product/kb/scopes/ADM/**
+      - customers/ACME/config-baselines/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/.sessions/<SID>/**
+    task: Fai l'audit della configurazione di ADM in sandbox con l'ultima baseline catturata.
+    inputs:
+      env: sandbox
+      subject: C.ACME.ADM.CFG.0019
+      lesson_code: L.ACME.ADM.LSN.1401
+    expected_output:
+      type: audit
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.ADM.CFG.0019
+      shape: consolidato
+      facets:
+        F10: R2
+      title: Import rigoroso dei listini
+      summary: Parametro strict_import dell'import listini; il cliente lo vuole attivo con lotti da 500 righe.
+      body:
+        area: CL-CFG-020
+        current_state:
+          value:
+            strict_import: true
+            batch: 500
+          observed_at: 2026-09-20
+          source: osservazione
+    - code: C.ACME.ADM.CFG.0031
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Notifiche delle approvazioni
+      summary: Frequenza delle notifiche delle approvazioni agli approvatori.
+      body:
+        area: CL-CFG-005
+        current_state:
+          value:
+            notify: daily
+          observed_at: 2026-09-20
+          source: osservazione
+  precedents:
+    - code: L.ACME.ADM.DEC.0070
+      table: DT-007
+      agent: config-designer
+      subject: C.ACME.ADM.CFG.0019
+      outcome: giallo
+      result: confermata
+      strategy: STR-REPLAY
+  rules:
+    - scope: ADM
+      title: Import rigoroso attivo
+      summary: Con lotti da almeno 100 righe l'import dei listini deve essere rigoroso.
+      rule:
+        applies_to:
+          area: CL-CFG-020
+        when:
+          path: batch
+          op: gte
+          value: 100
+        assert:
+          path: strict_import
+          op: eq
+          value: true
+        severity: high
+        message: import senza controllo di unicità
+    - scope: ADM
+      title: Notifiche almeno giornaliere
+      summary: Le notifiche delle approvazioni non possono essere settimanali.
+      rule:
+        applies_to:
+          area: CL-CFG-005
+        assert:
+          path: notify
+          op: in
+          value:
+            - immediate
+            - daily
+        severity: medium
+        message: approvatori avvisati troppo tardi
+  baselines:
+    - env: sandbox
+      captured_at: 2026-09-27T09:00:00Z
+      objects:
+        C.ACME.ADM.CFG.0019:
+          area: CL-CFG-020
+          values:
+            strict_import: false
+            batch: 500
+        C.ACME.ADM.CFG.0031:
+          area: CL-CFG-005
+          values:
+            notify: daily
+expect:
+  outcome: una violazione (strict_import falso su C.ACME.ADM.CFG.0019, severità alta) dalla baseline della sandbox; nessuna correzione; STR-REPLAY.
+  status:
+    - ok
+  strategy: STR-REPLAY
+  strategy_inputs:
+    subject: C.ACME.ADM.CFG.0019
+    shape: consolidato
+    risk: R0
+    precedent: confermato-d<0.2
+    surprises: 0
+    mode: config
+  question: forbidden
+  gap: la baseline e le regole bastano; l'esito è dello script
+  behaviour: |
+    PASS se il rapporto riporta la violazione su C.ACME.ADM.CFG.0019 (strict_import atteso true, trovato false,
+    severità alta) come esito del lint e la bozza della lezione, senza proporsi di correggere la configurazione.
+    FAIL se il rapporto dichiara zero violazioni, tratta l'exit 3 come un errore dello script o dichiara correzioni.

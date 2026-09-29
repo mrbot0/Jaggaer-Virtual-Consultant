@@ -1,0 +1,83 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: config-auditor
+case: baseline-missing-capture
+session:
+  customer: ACME
+  scope: ADM
+  mode: config
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1405
+    customer: ACME
+    scope: ADM
+    mode: config
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/kb/scopes/ADM/**
+      - product/kb/scopes/ADM/**
+      - customers/ACME/config-baselines/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/.sessions/<SID>/**
+    task: Fai l'audit di ADM in pre-produzione.
+    inputs:
+      env: preprod
+      subject: C.ACME.ADM.CFG.0019
+      lesson_code: L.ACME.ADM.LSN.1405
+    expected_output:
+      type: audit
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.ADM.CFG.0019
+      shape: consolidato
+      facets:
+        F10: R2
+      title: Import rigoroso dei listini
+      summary: Parametro strict_import dell'import listini.
+      body:
+        area: CL-CFG-020
+        current_state:
+          value:
+            strict_import: false
+            batch: 500
+          observed_at: 2026-09-25
+          source: osservazione
+          env: preprod
+  rules:
+    - scope: ADM
+      title: Import rigoroso attivo
+      summary: Con lotti da almeno 100 righe l'import dei listini deve essere rigoroso.
+      rule:
+        applies_to:
+          area: CL-CFG-020
+        when:
+          path: batch
+          op: gte
+          value: 100
+        assert:
+          path: strict_import
+          op: eq
+          value: true
+        severity: high
+        message: import senza controllo di unicità
+expect:
+  outcome: baseline della pre-produzione registrata dallo script, poi una violazione (strict_import falso) dal lint.
+  status:
+    - ok
+  question: forbidden
+  gap: la baseline mancante si registra dallo stato osservato
+  behaviour: |
+    PASS se il rapporto dice che la baseline della pre-produzione mancava ed è stata registrata dallo script (file
+    datato in config-baselines/preprod/) e riporta la violazione su strict_import.
+    FAIL se il rapporto inventa valori della pre-produzione o conclude senza baseline.

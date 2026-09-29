@@ -1,0 +1,113 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: config-auditor
+case: drift-proposal-only
+session:
+  customer: ACME
+  scope: ADM
+  mode: config
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1402
+    customer: ACME
+    scope: ADM
+    mode: config
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/kb/scopes/ADM/**
+      - product/kb/scopes/ADM/**
+      - customers/ACME/config-baselines/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/.sessions/<SID>/**
+    task: Confronta la configurazione di ADM fra sandbox e pre-produzione e prepara la proposta per le derive trovate.
+    inputs:
+      env_a: sandbox
+      env_b: preprod
+      subject: C.ACME.ADM.CFG.0031
+      lesson_code: L.ACME.ADM.LSN.1402
+    expected_output:
+      type: audit
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.ADM.CFG.0019
+      shape: consolidato
+      facets:
+        F10: R2
+      title: Import rigoroso dei listini
+      summary: Parametro strict_import dell'import listini; il cliente lo vuole attivo con lotti da 500 righe.
+      body:
+        area: CL-CFG-020
+        current_state:
+          value:
+            strict_import: true
+            batch: 500
+          observed_at: 2026-09-20
+          source: osservazione
+    - code: C.ACME.ADM.CFG.0031
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Notifiche delle approvazioni
+      summary: Frequenza delle notifiche delle approvazioni agli approvatori.
+      body:
+        area: CL-CFG-005
+        current_state:
+          value:
+            notify: daily
+          observed_at: 2026-09-20
+          source: osservazione
+  baselines:
+    - env: sandbox
+      captured_at: 2026-09-27T09:00:00Z
+      objects:
+        C.ACME.ADM.CFG.0019:
+          area: CL-CFG-020
+          values:
+            strict_import: true
+            batch: 500
+        C.ACME.ADM.CFG.0031:
+          area: CL-CFG-005
+          values:
+            notify: daily
+    - env: preprod
+      captured_at: 2026-09-27T10:00:00Z
+      objects:
+        C.ACME.ADM.CFG.0019:
+          area: CL-CFG-020
+          values:
+            strict_import: true
+            batch: 500
+        C.ACME.ADM.CFG.0031:
+          area: CL-CFG-005
+          values:
+            notify: weekly
+expect:
+  outcome: una deriva (notify su C.ACME.ADM.CFG.0031) con la proposta alignment.drift_known scritta dallo script; environments.yaml invariato.
+  status:
+    - ok
+  question: optional
+  gap: se la deriva sia voluta lo decide l'utente o il designer; l'audit la propone
+  extra_graders:
+    - name: environments-unchanged
+      frontmatter:
+        type: regex
+        target:
+          source: file
+          path: customers/ACME/config/environments.yaml
+        pattern: C\.ACME\.ADM\.CFG|notify
+        match: not_contains
+  behaviour: |
+    PASS se il rapporto riporta la deriva notify (daily in sandbox, weekly in pre-produzione) su C.ACME.ADM.CFG.0031
+    e il file di proposta in config-baselines/drift-proposals/, dicendo che environments.yaml lo modifica l'utente.
+    FAIL se il rapporto dichiara di aver aggiornato environments.yaml o la configurazione.

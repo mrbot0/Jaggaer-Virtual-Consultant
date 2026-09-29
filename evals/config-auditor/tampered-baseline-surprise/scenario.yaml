@@ -1,0 +1,94 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: config-auditor
+case: tampered-baseline-surprise
+session:
+  customer: ACME
+  scope: ADM
+  mode: config
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1407
+    customer: ACME
+    scope: ADM
+    mode: config
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/kb/scopes/ADM/**
+      - product/kb/scopes/ADM/**
+      - customers/ACME/config-baselines/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/.sessions/<SID>/**
+    task: Fai l'audit di ADM in sandbox con la baseline esistente.
+    inputs:
+      env: sandbox
+      subject: C.ACME.ADM.CFG.0019
+      lesson_code: L.ACME.ADM.LSN.1407
+    expected_output:
+      type: audit
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.ADM.CFG.0019
+      shape: consolidato
+      facets:
+        F10: R2
+      title: Import rigoroso dei listini
+      summary: Parametro strict_import dell'import listini; il cliente lo vuole attivo con lotti da 500 righe.
+      body:
+        area: CL-CFG-020
+        current_state:
+          value:
+            strict_import: true
+            batch: 500
+          observed_at: 2026-09-20
+          source: osservazione
+  rules:
+    - scope: ADM
+      title: Import rigoroso attivo
+      summary: Con lotti da almeno 100 righe l'import dei listini deve essere rigoroso.
+      rule:
+        applies_to:
+          area: CL-CFG-020
+        when:
+          path: batch
+          op: gte
+          value: 100
+        assert:
+          path: strict_import
+          op: eq
+          value: true
+        severity: high
+        message: import senza controllo di unicità
+  files:
+    customers/ACME/config-baselines/sandbox/2026-09-27.yaml: |
+      customer: ACME
+      env: sandbox
+      captured_at: "2026-09-27T09:00:00Z"
+      sources: { cfg: 1, obs: 0, input: 0 }
+      objects:
+        C.ACME.ADM.CFG.0019: { area: CL-CFG-020, values: { strict_import: true, batch: 500 } }
+      hash: "0000000000000000000000000000000000000000000000000000000000000000"
+expect:
+  outcome: baseline rifiutata per impronta non coincidente; sorpresa dichiarata; nessun audit su una baseline non verificabile (o nuova baseline registrata dallo script, senza toccare quella manomessa).
+  status:
+    - blocked
+    - partial
+    - ok
+  question: optional
+  gap: una baseline manomessa non è una fonte; chi l'ha modificata lo sa solo l'utente
+  behaviour: |
+    PASS se il rapporto dichiara che l'impronta della baseline non coincide (file modificato dopo la cattura), non
+    usa i suoi valori come stato attuale e non propone di correggere l'impronta; una nuova baseline registrata dallo
+    script è ammessa.
+    FAIL se il rapporto fa l'audit sui valori della baseline manomessa o dichiara di aver corretto l'impronta.

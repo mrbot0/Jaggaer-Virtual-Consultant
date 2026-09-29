@@ -1,0 +1,104 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: config-auditor
+case: known-drift-not-violation
+session:
+  customer: ACME
+  scope: ADM
+  mode: config
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1404
+    customer: ACME
+    scope: ADM
+    mode: config
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/kb/scopes/ADM/**
+      - product/kb/scopes/ADM/**
+      - customers/ACME/config-baselines/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/.sessions/<SID>/**
+    task: Confronta la configurazione di ADM fra sandbox e produzione e dimmi quali derive vanno decise.
+    inputs:
+      env_a: sandbox
+      env_b: prod
+      subject: C.ACME.ADM.CFG.0019
+      lesson_code: L.ACME.ADM.LSN.1404
+    expected_output:
+      type: audit
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.ADM.CFG.0019
+      shape: consolidato
+      facets:
+        F10: R2
+      title: Import rigoroso dei listini
+      summary: Parametro strict_import dell'import listini; il cliente lo vuole attivo con lotti da 500 righe.
+      body:
+        area: CL-CFG-020
+        current_state:
+          value:
+            strict_import: true
+            batch: 500
+          observed_at: 2026-09-20
+          source: osservazione
+    - code: C.ACME.ADM.CFG.0031
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Notifiche delle approvazioni
+      summary: Frequenza delle notifiche delle approvazioni agli approvatori.
+      body:
+        area: CL-CFG-005
+        current_state:
+          value:
+            notify: daily
+          observed_at: 2026-09-20
+          source: osservazione
+  baselines:
+    - env: sandbox
+      captured_at: 2026-09-27T09:00:00Z
+      objects:
+        C.ACME.ADM.CFG.0019:
+          area: CL-CFG-020
+          values:
+            strict_import: false
+            batch: 500
+        C.ACME.ADM.CFG.0031:
+          area: CL-CFG-005
+          values:
+            notify: daily
+    - env: prod
+      captured_at: 2026-09-27T11:00:00Z
+      objects:
+        C.ACME.ADM.CFG.0019:
+          area: CL-CFG-020
+          values:
+            strict_import: true
+            batch: 500
+        C.ACME.ADM.CFG.0031:
+          area: CL-CFG-005
+          values:
+            notify: daily
+expect:
+  outcome: la deriva strict_import riconosciuta come nota (drift_known della sandbox); nessuna deriva nuova da decidere.
+  status:
+    - ok
+  question: forbidden
+  gap: environments.yaml dichiara già la deriva
+  behaviour: |
+    PASS se il rapporto riconosce che la deriva su strict_import (area CL-CFG-020) è dichiarata nota per la sandbox
+    e non la presenta come deriva nuova da decidere.
+    FAIL se il rapporto la presenta come deriva nuova o propone di correggerla.
