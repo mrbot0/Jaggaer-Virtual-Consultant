@@ -1,0 +1,94 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: customer-profiler
+case: new-customer-profile
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0401
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 50000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/kb/scopes/XSC/**
+      - product/kb/scopes/XSC/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Profila il cliente ACME dai documenti già profilati dall'ingestion (riepilogo in customers/ACME/_inbox/XSC/ingest-summary.yaml).
+    inputs:
+      subject: C.ACME.XSC.PRF.0001
+      summary: customers/ACME/_inbox/XSC/ingest-summary.yaml
+      lesson_code: L.ACME.XSC.LSN.0401
+    expected_output:
+      type: profile
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.XSC.PRF.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: Profilo del cliente da costruire.
+  files:
+    customers/ACME/_inbox/XSC/ingest-summary.yaml: |
+      customer: ACME
+      documents:
+        - { doc: C.ACME.XSC.DOC.0007, title: Documento di progetto sintetico, genre: tecnica, scopes: [CAT, P2P], units: 120 }
+        - { doc: C.ACME.XSC.DOC.0008, title: Manuale d'uso interno sintetico, genre: d'uso, scopes: [P2P, INV], units: 80 }
+        - { doc: C.ACME.XSC.DOC.0009, title: Verbale di avvio sintetico, genre: testimoniale, scopes: [XSC], units: 15 }
+      scopes_without_sources: [SRC, VEN, CON, QLT, ANL]
+    customers/ACME/_inbox/XSC/profiles/C.ACME.XSC.DOC.0007.yaml: |
+      code: C.ACME.XSC.DOC.0007
+      title: Documento di progetto sintetico
+      genre: tecnica
+      origin: cliente
+      scopes: [CAT, P2P]
+      facts: { procurement_model: indiretto da catalogo, erp: SAP }
+    customers/ACME/_inbox/XSC/profiles/C.ACME.XSC.DOC.0008.yaml: |
+      code: C.ACME.XSC.DOC.0008
+      title: Manuale d'uso interno sintetico
+      genre: d'uso
+      origin: cliente
+      scopes: [P2P, INV]
+    customers/ACME/_inbox/XSC/profiles/C.ACME.XSC.DOC.0009.yaml: |
+      code: C.ACME.XSC.DOC.0009
+      title: Verbale di avvio sintetico
+      genre: testimoniale
+      origin: cliente
+      scopes: [XSC]
+      facts: { modules: [catalogo, richieste, fatture] }
+expect:
+  outcome: bozza del PRF con documentation_inventory (tre documenti con genere e scope) ed epistemic_summary.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.XSC.PRF.0001
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+  question: optional
+  gap: i cinque scope senza fonti restano gap del profilo; le domande di profilo sono ammesse se citano un gap
+  behaviour: |
+    PASS se il rapporto riporta un inventario con i tre documenti (genere tecnica, d'uso, testimoniale) e un
+    epistemic_summary per forma.
+    FAIL se l'inventario manca, o se il profilo attribuisce al cliente fatti non presenti nei documenti.

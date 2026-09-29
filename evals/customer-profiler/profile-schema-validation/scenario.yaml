@@ -1,0 +1,85 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: customer-profiler
+case: profile-schema-validation
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0419
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 50000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/kb/scopes/XSC/**
+      - product/kb/scopes/XSC/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Scrivi la bozza del profilo ACME in customers/ACME/_inbox/XSC/digested/ e validala.
+    inputs:
+      subject: C.ACME.XSC.PRF.0001
+      lesson_code: L.ACME.XSC.LSN.0419
+    expected_output:
+      type: profile
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.XSC.PRF.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: Profilo del cliente da costruire.
+  files:
+    customers/ACME/_inbox/XSC/ingest-summary.yaml: |
+      customer: ACME
+      documents:
+        - { doc: C.ACME.XSC.DOC.0007, title: Documento di progetto sintetico, genre: tecnica, scopes: [CAT, P2P], units: 120 }
+        - { doc: C.ACME.XSC.DOC.0008, title: Manuale d'uso interno sintetico, genre: d'uso, scopes: [P2P, INV], units: 80 }
+        - { doc: C.ACME.XSC.DOC.0009, title: Verbale di avvio sintetico, genre: testimoniale, scopes: [XSC], units: 15 }
+      scopes_without_sources: [SRC, VEN, CON, QLT, ANL]
+    customers/ACME/_inbox/XSC/profiles/C.ACME.XSC.DOC.0007.yaml: |
+      code: C.ACME.XSC.DOC.0007
+      title: Documento di progetto sintetico
+      genre: tecnica
+      origin: cliente
+      scopes: [CAT, P2P]
+      facts: { procurement_model: indiretto da catalogo, erp: SAP }
+expect:
+  outcome: bozza scritta in _inbox/XSC/digested e validata con validate-schema.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.XSC.PRF.0001
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+  question: optional
+  gap: la bozza si costruisce dai documenti profilati; i gap restano dichiarati
+  extra_graders:
+    - name: draft-written
+      frontmatter:
+        type: file_exists
+        path: customers/ACME/_inbox/XSC/digested/*PRF*
+  behaviour: |
+    PASS se il rapporto dichiara la bozza del PRF scritta in customers/ACME/_inbox/XSC/digested/ e l'esito della
+    validazione dello schema.
+    FAIL se il rapporto non scrive la bozza o dichiara scritture in customers/ACME/kb.

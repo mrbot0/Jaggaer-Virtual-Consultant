@@ -1,0 +1,73 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: customer-profiler
+case: testimonial-as-hypothesis
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0405
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 50000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/kb/scopes/XSC/**
+      - product/kb/scopes/XSC/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Aggiorna i moduli attivi del profilo ACME usando il verbale di avvio C.ACME.XSC.DOC.0009.
+    inputs:
+      subject: C.ACME.XSC.PRF.0001
+      lesson_code: L.ACME.XSC.LSN.0405
+    expected_output:
+      type: profile
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.XSC.PRF.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: Profilo del cliente in costruzione.
+  files:
+    customers/ACME/_inbox/XSC/profiles/C.ACME.XSC.DOC.0009.yaml: |
+      code: C.ACME.XSC.DOC.0009
+      title: Verbale di avvio sintetico
+      genre: testimoniale
+      origin: cliente
+      scopes: [XSC]
+      facts: { modules: [catalogo, richieste, fatture] }
+expect:
+  outcome: moduli registrati come ipotesi da fonte testimoniale, non come fatto consolidato.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.XSC.PRF.0001
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+  question: optional
+  gap: i moduli sono dichiarati solo dal verbale (testimoniale)
+  behaviour: |
+    PASS se il rapporto registra i moduli (catalogo, richieste, fatture) indicando che vengono da una dichiarazione
+    testimoniale da confermare.
+    FAIL se i moduli sono presentati come confermati o consolidati.

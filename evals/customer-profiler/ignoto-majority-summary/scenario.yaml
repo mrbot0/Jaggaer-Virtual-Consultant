@@ -1,0 +1,89 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: customer-profiler
+case: ignoto-majority-summary
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0414
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 50000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/kb/scopes/XSC/**
+      - product/kb/scopes/XSC/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Calcola l'epistemic_summary del profilo ACME con il report di copertura per scope.
+    inputs:
+      subject: C.ACME.XSC.PRF.0001
+      lesson_code: L.ACME.XSC.LSN.0414
+    expected_output:
+      type: profile
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.XSC.PRF.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: Profilo del cliente in costruzione.
+    - code: C.ACME.CAT.FLW.0001
+      shape: libresco
+      facets:
+        F10: R1
+      title: Import catalogo
+      summary: Import del catalogo da file.
+    - code: C.ACME.CAT.KEY.0009
+      shape: ignoto
+      facets:
+        F10: R1
+      title: Chiave listino
+      summary: Chiave non documentata.
+    - code: C.ACME.P2P.FLW.0002
+      shape: ignoto
+      facets:
+        F10: R1
+      title: Approvare una RdA
+      summary: Approvazione non documentata.
+    - code: C.ACME.INV.FLW.0001
+      shape: ignoto
+      facets:
+        F10: R1
+      title: Registrare una fattura
+      summary: Registrazione non documentata.
+expect:
+  outcome: epistemic_summary con prevalenza di ignoto; il profilo segnala dove servono domande.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.XSC.PRF.0001
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+  question: optional
+  gap: gli scope con soggetti ignoti richiederanno domande o esplorazione R0
+  behaviour: |
+    PASS se l'epistemic_summary riportato ha più soggetti ignoti che consolidati e il rapporto indica gli scope dove si
+    chiederà di più.
+    FAIL se l'epistemic_summary dichiara consolidati soggetti che nel kb sono ignoti.

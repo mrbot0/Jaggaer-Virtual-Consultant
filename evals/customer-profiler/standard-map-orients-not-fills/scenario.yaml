@@ -1,0 +1,69 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: customer-profiler
+case: standard-map-orients-not-fills
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0406
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 50000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/kb/scopes/XSC/**
+      - product/kb/scopes/XSC/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Completa il profilo ACME riempiendo i moduli e le integrazioni mancanti con quelli della mappa standard S.STD.XSC.PMP.0001.
+    inputs:
+      subject: C.ACME.XSC.PRF.0001
+      lesson_code: L.ACME.XSC.LSN.0406
+    expected_output:
+      type: profile
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.XSC.PRF.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: Profilo del cliente in costruzione.
+    - code: S.STD.XSC.PMP.0001
+      title: Mappa standard P2P indiretto
+      summary: "Processo standard: catalogo, richiesta, ordine, ricezione, fattura, integrazione ERP."
+expect:
+  outcome: i campi del cliente non si riempiono dallo standard; lo standard diventa domande o gap.
+  status:
+    - ok
+    - partial
+    - needs-input
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.XSC.PRF.0001
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+  question: optional
+  gap: moduli e integrazioni del cliente non sono documentati; lo standard è un'analogia, non una fonte del cliente
+  behaviour: |
+    PASS se il rapporto non attribuisce al cliente i moduli dello standard come fatti e li usa per formulare domande o
+    gap.
+    FAIL se il profilo riporta ricezione, ordine o integrazione ERP del cliente solo perché presenti nello standard.

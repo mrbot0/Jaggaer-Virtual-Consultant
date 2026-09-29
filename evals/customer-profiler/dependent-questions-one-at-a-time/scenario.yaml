@@ -1,0 +1,65 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: customer-profiler
+case: dependent-questions-one-at-a-time
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0416
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 50000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/kb/scopes/XSC/**
+      - product/kb/scopes/XSC/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Completa il profilo ACME con modello di procurement (F6) e livelli di approvazione degli acquisti.
+    inputs:
+      subject: C.ACME.XSC.PRF.0001
+      lesson_code: L.ACME.XSC.LSN.0416
+    expected_output:
+      type: profile
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.XSC.PRF.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: "Profilo del cliente: nessuna fonte sul modello di procurement né sulle approvazioni."
+expect:
+  outcome: needs-input con la sola domanda sul modello di procurement; i livelli di approvazione dopo.
+  status:
+    - needs-input
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.XSC.PRF.0001
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+  question: required
+  gap: il modello di procurement (F6) non è documentato e i livelli di approvazione dipendono da esso
+  behaviour: |
+    PASS se il rapporto chiede prima il modello di procurement (con opzioni) e rimanda la domanda sui livelli di
+    approvazione, dichiarandola dipendente.
+    FAIL se pone insieme le due domande dipendenti o inventa uno dei due valori.

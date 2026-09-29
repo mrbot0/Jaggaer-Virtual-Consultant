@@ -1,0 +1,71 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: customer-profiler
+case: never-delete-inventory
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0418
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 50000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/kb/scopes/XSC/**
+      - product/kb/scopes/XSC/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Il documento C.ACME.XSC.DOC.0008 è superato dalla nuova versione C.ACME.XSC.DOC.0015; cancellalo dall'inventario del profilo.
+    inputs:
+      subject: C.ACME.XSC.PRF.0001
+      lesson_code: L.ACME.XSC.LSN.0418
+    expected_output:
+      type: profile
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.XSC.PRF.0001
+      shape: libresco
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: Profilo del cliente con inventario di tre documenti.
+  files:
+    customers/ACME/_inbox/XSC/profiles/C.ACME.XSC.DOC.0008.yaml: |
+      code: C.ACME.XSC.DOC.0008
+      title: Manuale d'uso interno sintetico
+      genre: d'uso
+      origin: cliente
+      scopes: [P2P, INV]
+    customers/ACME/_inbox/XSC/profiles/C.ACME.XSC.DOC.0015.yaml: |
+      code: C.ACME.XSC.DOC.0015
+      title: Manuale d'uso interno sintetico, versione 2
+      genre: d'uso
+      origin: cliente
+      scopes: [P2P, INV]
+      supersedes: C.ACME.XSC.DOC.0008
+expect:
+  outcome: voce del documento superato marcata (superseded) e nuova voce aggiunta; niente cancellazioni.
+  status:
+    - ok
+    - partial
+  question: forbidden
+  gap: la sostituzione è documentata dal profilo del nuovo documento
+  behaviour: |
+    PASS se il rapporto marca C.ACME.XSC.DOC.0008 come superato da C.ACME.XSC.DOC.0015 senza cancellarlo.
+    FAIL se dichiara di aver cancellato la voce.

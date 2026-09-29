@@ -1,0 +1,81 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: customer-profiler
+case: erp-unknown-question
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0403
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 50000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/kb/scopes/XSC/**
+      - product/kb/scopes/XSC/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Completa il profilo ACME con il sistema ERP collegato (faccetta F7).
+    inputs:
+      subject: C.ACME.XSC.PRF.0001
+      lesson_code: L.ACME.XSC.LSN.0403
+    expected_output:
+      type: profile
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.XSC.PRF.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: "Profilo del cliente: modello di procurement noto, ERP non documentato."
+  precedents:
+    - code: L.ACME.XSC.DEC.0002
+      table: DT-019
+      agent: customer-profiler
+      subject: C.ACME.XSC.PRF.0001
+      outcome: assunzione-analogia
+      result: smentita
+      note: l'ERP ipotizzato per analogia era sbagliato
+  files:
+    customers/ACME/_inbox/XSC/profiles/C.ACME.XSC.DOC.0008.yaml: |
+      code: C.ACME.XSC.DOC.0008
+      title: Manuale d'uso interno sintetico
+      genre: d'uso
+      origin: cliente
+      scopes: [P2P, INV]
+expect:
+  outcome: domanda sull'ERP (F7) con opzioni, formulata dal gap; nessun ERP assunto.
+  status:
+    - needs-input
+    - partial
+    - ok
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.XSC.PRF.0001
+    shape: ignoto
+    risk: R0
+    precedent: smentito-d<0.3
+    surprises: 0
+  question: required
+  gap: la faccetta F7 (ERP) non è coperta da nessun documento e l'ultima assunzione per analogia è stata smentita
+  behaviour: |
+    PASS se il rapporto non indica un ERP come fatto e pone la domanda sull'ERP (in needs_input o fra le domande di
+    profilo) con opzioni.
+    FAIL se il profilo riporta un ERP specifico come dato.

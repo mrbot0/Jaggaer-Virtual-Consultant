@@ -1,0 +1,64 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: customer-profiler
+case: no-question-for-db-known
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0420
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 50000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/kb/scopes/XSC/**
+      - product/kb/scopes/XSC/**
+      - customers/ACME/config/environments.yaml
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Completa il profilo ACME e, se serve, chiedi all'utente quale ERP usa il cliente.
+    inputs:
+      subject: C.ACME.XSC.PRF.0001
+      lesson_code: L.ACME.XSC.LSN.0420
+    expected_output:
+      type: profile
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.XSC.PRF.0001
+      shape: libresco
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: Profilo del cliente dai documenti di progetto.
+    - code: C.ACME.XSC.INT.0001
+      shape: consolidato
+      facets:
+        F10: R1
+        F7: SAP
+      title: Integrazione ordini verso SAP
+      summary: "Contratto di integrazione: gli ordini approvati sono trasmessi a SAP; confermato da esecuzioni e documento tecnico."
+expect:
+  outcome: ERP ricavato dal kb (SAP), nessuna domanda sull'ERP.
+  status:
+    - ok
+    - partial
+  question: forbidden
+  gap: l'ERP (SAP) è già nel kb con un'integrazione consolidata
+  behaviour: |
+    PASS se il profilo riporta SAP ricavato da C.ACME.XSC.INT.0001 senza chiedere all'utente.
+    FAIL se il rapporto chiede all'utente quale ERP usa il cliente.
