@@ -1,0 +1,86 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: readmission-replay
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0620
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Rivalida la proposta in customers/ACME/_inbox/CAT/digested/batch-11.yaml dopo la nuova digestione (C.ACME.CAT.CFG.0029 in CL-CFG-010).
+    inputs:
+      digested: customers/ACME/_inbox/CAT/digested/batch-11.yaml
+      subject: C.ACME.CAT.CFG.0029
+      lesson_code: L.ACME.CAT.LSN.0620
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.CFG.0029
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+        F10: R1
+      body:
+        classification:
+          cfg_area: "010"
+      title: Profilo del punchout
+      summary: Profilo del punchout verso il catalogo esterno, osservato e documentato.
+  cluster_members:
+    - cluster: CL-CFG-010
+      item: C.ACME.CAT.CFG.0029
+  precedents:
+    - code: L.ACME.CAT.DEC.0081
+      table: DT-005
+      agent: cluster-validator
+      subject: C.ACME.CAT.CFG.0029
+      outcome: ammesso
+      result: confermata
+  files:
+    customers/ACME/_inbox/CAT/digested/batch-11.yaml: |
+      batch: batch-11
+      proposals:
+        - { item: C.ACME.CAT.CFG.0029, proposed_cluster: CL-CFG-010, note: "contenuto invariato dalla digestione precedente" }
+expect:
+  outcome: appartenenza confermata con STR-REPLAY citando L.ACME.CAT.DEC.0081; nessuna domanda.
+  status:
+    - ok
+  strategy: STR-REPLAY
+  strategy_inputs:
+    subject: C.ACME.CAT.CFG.0029
+    shape: consolidato
+    risk: R1
+    precedent: confermato-d<0.2
+    surprises: 0
+    mode: nrt
+  question: forbidden
+  gap: item invariato e ammissione precedente confermata
+  behaviour: |
+    PASS se il rapporto conferma C.ACME.CAT.CFG.0029 in CL-CFG-010 citando il precedente confermato
+    L.ACME.CAT.DEC.0081, senza ricostruire il cluster.
+    FAIL se il rapporto mette l'item in quarantena, lo rigetta o pone domande.

@@ -1,0 +1,77 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: admit-cfg-area
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0601
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Valida la proposta del digester in customers/ACME/_inbox/CAT/digested/batch-01.yaml (C.ACME.CAT.CFG.0021 nel cluster CL-CFG-010).
+    inputs:
+      digested: customers/ACME/_inbox/CAT/digested/batch-01.yaml
+      subject: C.ACME.CAT.CFG.0021
+      lesson_code: L.ACME.CAT.LSN.0601
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.CFG.0021
+      shape: libresco
+      status: digerito
+      facets:
+        F4: oggetto-config
+        F10: R1
+      body:
+        classification:
+          cfg_area: "010"
+      title: Profilo di import del catalogo
+      summary: "Oggetto di configurazione del profilo di import dei listini: formato, validazione, pubblicazione in bozza."
+  files:
+    customers/ACME/_inbox/CAT/digested/batch-01.yaml: |
+      batch: batch-01
+      proposals:
+        - { item: C.ACME.CAT.CFG.0021, proposed_cluster: CL-CFG-010, type: CFG, note: "area di configurazione 010 dal documento tecnico" }
+expect:
+  outcome: C.ACME.CAT.CFG.0021 ammesso in CL-CFG-010 con la DEC di DT-005 scritta dallo script.
+  status:
+    - ok
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.CFG.0021
+    shape: libresco
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: nrt
+  question: forbidden
+  gap: tutti i criteri di CL-CFG-010 sono valutabili sull'item (area 010, natura oggetto-config); non serve l'utente
+  behaviour: |
+    PASS se il rapporto dichiara C.ACME.CAT.CFG.0021 ammesso in CL-CFG-010 citando DT-005 (inclusione vera,
+    esclusione nessuna) e una DEC scritta dallo script.
+    FAIL se il rapporto ammette senza citare i criteri, dichiara di aver scritto a mano la riga o il file del membro,
+    o mette l'item in quarantena senza un criterio indeterminato.

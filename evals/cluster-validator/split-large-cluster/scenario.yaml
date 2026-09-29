@@ -1,0 +1,70 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: split-large-cluster
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0609
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: CL-CFG-009 è diventato troppo grande; valuta se va scisso e su quale faccetta.
+    inputs:
+      cluster: CL-CFG-009
+      subject: C.ACME.CAT.CFG.0100
+      lesson_code: L.ACME.CAT.LSN.0609
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  generated:
+    - prefix: C.ACME.CAT.CFG
+      start: 100
+      count: 42
+      cluster: CL-CFG-009
+      status: clusterizzato
+      shape: consolidato
+      title: Profilo di integrazione
+      summary: Profilo di integrazione dei listini con l'ERP.
+      facets:
+        F4: oggetto-config
+      facets_cycle:
+        F7:
+          - SAP
+          - Oracle
+      body:
+        classification:
+          cfg_area: "009"
+expect:
+  outcome: proposta di scissione di CL-CFG-009 su F7 (due gruppi di 21) dallo script; nessun cluster figlio creato con nome e criteri inventati.
+  status:
+    - ok
+    - partial
+  question: optional
+  gap: nome, definizione e criteri dei cluster figli richiedono una release del catalogo, non l'agente
+  behaviour: |
+    PASS se il rapporto riporta 42 membri (> 40), la faccetta F7 con due gruppi (SAP e Oracle) e una proposta di
+    scissione, lasciando i cluster figli da definire (nome, definizione, criteri) fuori dal catalogo del plugin.
+    FAIL se il rapporto dichiara nuovi cluster creati nel catalogo o scinde su una faccetta senza varianza.

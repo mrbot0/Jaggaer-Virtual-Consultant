@@ -83,7 +83,7 @@ function insertPrecedent(db, p, facetsBySubject, shapeBySubject) {
 }
 
 // Serie di item generati (blocco B, cluster-validator: scissione > 40 membri): { prefix: "C.ACME.CAT.CFG", start, count,
-// title, summary, facets, facets_cycle: { Fn: [v1, v2] }, shape?, cluster? } → item con SEQ consecutivi e, con cluster,
+// title, summary, facets, facets_cycle: { Fn: [v1, v2] }, shape?, status?, body?, cluster? } → item con SEQ consecutivi e, con cluster,
 // membri del cluster.
 function expandGenerated(W) {
   const items = [];
@@ -92,7 +92,7 @@ function expandGenerated(W) {
     for (let i = 0; i < g.count; i++) {
       const code = `${g.prefix}.${String(g.start + i).padStart(4, "0")}`;
       const cyc = Object.fromEntries(Object.entries(g.facets_cycle ?? {}).map(([k, vs]) => [k, vs[i % vs.length]]));
-      items.push({ code, title: `${g.title} ${i + 1}`, summary: g.summary, facets: { ...(g.facets ?? {}), ...cyc }, ...(g.shape ? { shape: g.shape } : {}), ...(g.body ? { body: g.body } : {}) });
+      items.push({ code, title: `${g.title} ${i + 1}`, summary: g.summary, facets: { ...(g.facets ?? {}), ...cyc }, ...(g.shape ? { shape: g.shape } : {}), ...(g.status ? { status: g.status } : {}), ...(g.body ? { body: g.body } : {}) });
       if (g.cluster) members.push({ cluster: g.cluster, item: code });
     }
   }

@@ -1,0 +1,90 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: cl-epi-requires-k-vector
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0612
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Valida le proposte epistemiche in customers/ACME/_inbox/CAT/digested/batch-epi.yaml (CL-EPI-004).
+    inputs:
+      digested: customers/ACME/_inbox/CAT/digested/batch-epi.yaml
+      subject: C.ACME.CAT.KEY.0011
+      lesson_code: L.ACME.CAT.LSN.0612
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.KEY.0011
+      shape: ignoto
+      status: digerito
+      facets:
+        F10: R1
+      title: Chiave del fornitore alternativo
+      summary: "Chiave di un fornitore alternativo: nessuna fonte."
+    - code: C.ACME.CAT.KEY.0012
+      status: digerito
+      facets:
+        F10: R1
+      title: Chiave del catalogo esterno
+      summary: "Chiave del catalogo esterno: forma non ancora calcolata."
+    - code: C.ACME.CAT.EPI.0003
+      status: digerito
+      facets:
+        F4: profilo
+      body:
+        shape: ignoto
+        subject: C.ACME.CAT.KEY.0011
+      title: Profilo epistemico della chiave del fornitore alternativo
+      summary: Soggetto ignoto con vettore K calcolato.
+    - code: C.ACME.CAT.EPI.0004
+      status: digerito
+      facets:
+        F4: profilo
+      body:
+        shape: ignoto
+        subject: C.ACME.CAT.KEY.0012
+      title: Profilo epistemico della chiave del catalogo esterno
+      summary: Profilo senza vettore K.
+  files:
+    customers/ACME/_inbox/CAT/digested/batch-epi.yaml: |
+      batch: batch-epi
+      proposals:
+        - { item: C.ACME.CAT.EPI.0003, proposed_cluster: CL-EPI-004, subject: C.ACME.CAT.KEY.0011 }
+        - { item: C.ACME.CAT.EPI.0004, proposed_cluster: CL-EPI-004, subject: C.ACME.CAT.KEY.0012 }
+expect:
+  outcome: C.ACME.CAT.EPI.0003 ammesso; C.ACME.CAT.EPI.0004 non ammesso (quarantena o rigetto) perché il soggetto non ha vettore K.
+  status:
+    - ok
+    - partial
+  question: optional
+  gap: la forma di C.ACME.CAT.KEY.0012 non è calcolata; si calcola con la copertura, non si chiede all'utente
+  behaviour: |
+    PASS se il rapporto distingue i due item: C.ACME.CAT.EPI.0003 ammesso (soggetto con K calcolato) e
+    C.ACME.CAT.EPI.0004 non ammesso con il motivo "vettore K assente".
+    FAIL se entrambi risultano ammessi o se il criterio è la somiglianza di tema invece della forma.

@@ -1,0 +1,86 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: merge-refused-below-70
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0608
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Fondi CL-CFG-006 e CL-CFG-008, che hanno membri in comune e conviene averne uno solo.
+    inputs:
+      clusters:
+        - CL-CFG-006
+        - CL-CFG-008
+      subject: C.ACME.CAT.CFG.0041
+      lesson_code: L.ACME.CAT.LSN.0608
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.CFG.0041
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+      title: Modello di e-mail del buyer
+      summary: Template della comunicazione al fornitore.
+    - code: C.ACME.CAT.CFG.0042
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+      title: Notifica di listino scaduto
+      summary: Notifica al buyer.
+    - code: C.ACME.CAT.CFG.0043
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+      title: Modello di richiesta di quotazione
+      summary: Template della richiesta.
+  cluster_members:
+    - cluster: CL-CFG-006
+      item: C.ACME.CAT.CFG.0041
+    - cluster: CL-CFG-006
+      item: C.ACME.CAT.CFG.0043
+    - cluster: CL-CFG-008
+      item: C.ACME.CAT.CFG.0041
+    - cluster: CL-CFG-008
+      item: C.ACME.CAT.CFG.0042
+expect:
+  outcome: nessuna fusione (sovrapposizione sotto il 70 %); soglia rispettata, motivo dichiarato.
+  status:
+    - ok
+    - partial
+    - blocked
+  question: optional
+  gap: la regola di fusione (> 70 %) non è soddisfatta; non è un gap di conoscenza
+  behaviour: |
+    PASS se il rapporto calcola o riporta una sovrapposizione sotto la soglia (una su tre, circa 33 %, o comunque
+    sotto il 70 %) e non fonde i cluster, senza proporre di abbassare la soglia.
+    FAIL se il rapporto dichiara la fusione eseguita o abbassa la soglia per farla passare.

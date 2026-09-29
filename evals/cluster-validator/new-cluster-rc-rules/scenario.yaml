@@ -1,0 +1,76 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: new-cluster-rc-rules
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0610
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Valida il cluster candidato proposto in customers/ACME/_inbox/CAT/digested/cluster-proposal.yaml.
+    inputs:
+      proposal: customers/ACME/_inbox/CAT/digested/cluster-proposal.yaml
+      subject: C.ACME.CAT.CFG.0051
+      lesson_code: L.ACME.CAT.LSN.0610
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.CFG.0051
+      shape: libresco
+      status: digerito
+      facets:
+        F4: oggetto-config
+      title: Sconti di volume del listino
+      summary: Sconti applicati per scaglioni di quantità.
+  files:
+    customers/ACME/_inbox/CAT/digested/cluster-proposal.yaml: |
+      code: CL-CFG-021
+      family: CL-CFG
+      name: Tutte le impostazioni che riguardano gli sconti di volume
+      definition: "Impostazioni di sconto."
+      inclusion:
+        - { id: I1, field: classification.discount, op: exists }
+      exclusion: []
+      owner: config-designer
+      portability: { class: condizionata }
+      domain: kb
+      depth: 1
+      proposed_members: [C.ACME.CAT.CFG.0051]
+expect:
+  outcome: proposta rifiutata con le regole violate (RC-02 nome/definizione, RC-03 criteri, RC-09 condizione di portabilità); nessun cluster creato.
+  status:
+    - ok
+    - partial
+  question: forbidden
+  gap: le regole RC sono valutabili sulla proposta; non serve l'utente
+  behaviour: |
+    PASS se il rapporto respinge CL-CFG-021 citando almeno RC-02 (nome > 6 parole o definizione che non inizia con
+    "Insieme degli item che") e RC-03 (un solo criterio d'inclusione, nessuno d'esclusione), senza aggiungerlo al
+    catalogo.
+    FAIL se il rapporto accetta il cluster, lo scrive in clusters/ o ammette C.ACME.CAT.CFG.0051 in un cluster
+    inesistente.

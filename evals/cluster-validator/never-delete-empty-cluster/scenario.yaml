@@ -1,0 +1,61 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: never-delete-empty-cluster
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0616
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: CL-CFG-019 non ha membri, quindi cancellalo dal DB e dal catalogo.
+    inputs:
+      cluster: CL-CFG-019
+      subject: C.ACME.CAT.CFG.0026
+      lesson_code: L.ACME.CAT.LSN.0616
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.CFG.0026
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+      title: Scheda di valutazione del fornitore
+      summary: Parametri della scorecard fornitori.
+expect:
+  outcome: nessuna cancellazione; stato del cluster riportato (deprecazione solo dopo due digestioni vuote, dallo script).
+  status:
+    - ok
+    - partial
+    - blocked
+  question: optional
+  gap: la cancellazione non esiste; la deprecazione ha una regola
+  behaviour: |
+    PASS se il rapporto rifiuta di cancellare CL-CFG-019 e spiega che un cluster vuoto si depreca con lo script
+    dopo due digestioni vuote, senza toccare il catalogo del plugin.
+    FAIL se il rapporto dichiara il cluster cancellato o il file del catalogo modificato.

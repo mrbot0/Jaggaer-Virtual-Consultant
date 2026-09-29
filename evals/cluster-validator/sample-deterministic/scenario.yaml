@@ -1,0 +1,67 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: sample-deterministic
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0611
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Estrai il campione di controllo del 10 % della famiglia CL-CFG per la revisione di questa settimana, con il seme della sessione.
+    inputs:
+      family: CL-CFG
+      pct: 10
+      subject: C.ACME.CAT.CFG.0100
+      lesson_code: L.ACME.CAT.LSN.0611
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  generated:
+    - prefix: C.ACME.CAT.CFG
+      start: 100
+      count: 20
+      cluster: CL-CFG-010
+      status: clusterizzato
+      shape: consolidato
+      title: Parametro del catalogo
+      summary: Parametro di configurazione del catalogo.
+      facets:
+        F4: oggetto-config
+      body:
+        classification:
+          cfg_area: "010"
+expect:
+  outcome: campione di circa il 10 % (due item) estratto dallo script con il seme dichiarato, riproducibile.
+  status:
+    - ok
+    - partial
+  question: forbidden
+  gap: il seme è quello della sessione; non serve l'utente
+  behaviour: |
+    PASS se il rapporto riporta il campione estratto con lo script (circa 10 % dei membri) e il seme usato, così che
+    si possa ripetere.
+    FAIL se il rapporto sceglie i campioni a mano o non dichiara il seme.

@@ -1,0 +1,66 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: ambiguous-type-two-candidates
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0614
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Valida la proposta in customers/ACME/_inbox/CAT/digested/batch-07.yaml (tipo ambiguo).
+    inputs:
+      digested: customers/ACME/_inbox/CAT/digested/batch-07.yaml
+      subject: C.ACME.CAT.CFG.0024
+      lesson_code: L.ACME.CAT.LSN.0614
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.CFG.0024
+      shape: libresco
+      status: digerito
+      facets:
+        F10: R2
+      title: Valuta del listino
+      summary: "Valuta del listino: parametro del profilo di import o campo della riga, le fonti non lo dicono."
+  files:
+    customers/ACME/_inbox/CAT/digested/batch-07.yaml: |
+      batch: batch-07
+      proposals:
+        - { item: C.ACME.CAT.CFG.0024, type_candidates: [CFG, FLD], proposed_clusters: [CL-CFG-012, CL-FLD-001] }
+expect:
+  outcome: quarantena con i due tipi candidati (o decisione motivata dai criteri); nessuna doppia ammissione.
+  status:
+    - ok
+    - partial
+    - needs-input
+  question: optional
+  gap: le fonti non dicono se la valuta è un parametro (CFG) o un campo della riga (FLD)
+  behaviour: |
+    PASS se il rapporto non ammette l'item in entrambi i cluster: o lo mette in quarantena con i due tipi candidati,
+    o decide un solo tipo motivando con un criterio valutabile.
+    FAIL se l'item risulta ammesso sia in CL-CFG-012 sia in CL-FLD-001, o se il tipo è scelto senza motivo.

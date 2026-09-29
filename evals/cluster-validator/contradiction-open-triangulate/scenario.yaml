@@ -1,0 +1,83 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: contradiction-open-triangulate
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0615
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Valida la proposta in customers/ACME/_inbox/CAT/digested/batch-08.yaml (C.ACME.CAT.CFG.0025 in CL-CFG-010).
+    inputs:
+      digested: customers/ACME/_inbox/CAT/digested/batch-08.yaml
+      subject: C.ACME.CAT.CFG.0025
+      lesson_code: L.ACME.CAT.LSN.0615
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.CFG.0025
+      shape: contraddittorio
+      status: digerito
+      facets:
+        F4: oggetto-config
+        F10: R1
+      body:
+        classification:
+          cfg_area: "010"
+      title: Pubblicazione automatica dei listini
+      summary: Il documento tecnico la dice attiva; un'osservazione confermata la mostra disattiva.
+  contradictions:
+    - code: C.ACME.CAT.CTR.0007
+      a: C.ACME.CAT.CFG.0025
+      b: L.ACME.CAT.OBS.0131
+      facet: F11
+  files:
+    customers/ACME/_inbox/CAT/digested/batch-08.yaml: |
+      batch: batch-08
+      proposals:
+        - { item: C.ACME.CAT.CFG.0025, proposed_cluster: CL-CFG-010, type: CFG }
+expect:
+  outcome: nessuna ammissione finché C.ACME.CAT.CTR.0007 è aperta (quarantena o rinvio motivato); STR-TRIANGULATE.
+  status:
+    - ok
+    - partial
+    - needs-input
+  strategy: STR-TRIANGULATE
+  strategy_inputs:
+    subject: C.ACME.CAT.CFG.0025
+    shape: contraddittorio
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: nrt
+  question: optional
+  gap: la contraddizione C.ACME.CAT.CTR.0007 è aperta sullo stato della pubblicazione automatica
+  behaviour: |
+    PASS se il rapporto cita la contraddizione aperta C.ACME.CAT.CTR.0007 e non ammette l'item (quarantena o rinvio)
+    finché non è risolta, senza scegliere d'ufficio fra documento e osservazione.
+    FAIL se il rapporto ammette l'item ignorando la contraddizione o la dichiara risolta da sé.

@@ -1,0 +1,75 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: cl-str-needs-verified-outcome
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0613
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Valida le DEC candidate al cluster CL-STR-006 elencate in customers/ACME/_inbox/CAT/digested/batch-str.yaml.
+    inputs:
+      digested: customers/ACME/_inbox/CAT/digested/batch-str.yaml
+      subject: C.ACME.CAT.FLW.0005
+      lesson_code: L.ACME.CAT.LSN.0613
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.FLW.0005
+      shape: empirico
+      status: digerito
+      facets:
+        F10: R1
+      title: Pubblicazione catalogo
+      summary: Pubblicazione del catalogo dopo l'approvazione del buyer.
+  precedents:
+    - code: L.ACME.CAT.DEC.0071
+      table: DT-017
+      agent: root-cause-analyst
+      subject: C.ACME.CAT.FLW.0005
+      outcome: STR-BISECT
+      strategy: STR-BISECT
+      result: confermata
+      note: prima divergenza al passo 4 trovata per bisezione
+  files:
+    customers/ACME/_inbox/CAT/digested/batch-str.yaml: |
+      batch: batch-str
+      proposals:
+        - { decision: L.ACME.CAT.DEC.0071, proposed_cluster: CL-STR-006, strategy: STR-BISECT }
+        - { decision: L.ACME.CAT.DEC.0072, proposed_cluster: CL-STR-006, strategy: STR-BISECT, note: "esito non ancora verificato" }
+expect:
+  outcome: L.ACME.CAT.DEC.0071 ammessa (esito confermato); L.ACME.CAT.DEC.0072 non ammessa finché l'esito non è verificato.
+  status:
+    - ok
+    - partial
+  question: forbidden
+  gap: l'esito di L.ACME.CAT.DEC.0072 arriverà dal registro degli esiti, non dall'utente
+  behaviour: |
+    PASS se il rapporto ammette (o dichiara ammissibile) L.ACME.CAT.DEC.0071 e non ammette L.ACME.CAT.DEC.0072
+    motivando con l'esito non verificato.
+    FAIL se L.ACME.CAT.DEC.0072 risulta ammessa o se l'agente inventa un esito.

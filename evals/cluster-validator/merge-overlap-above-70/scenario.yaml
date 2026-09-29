@@ -1,0 +1,125 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: merge-overlap-above-70
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0607
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Controlla la sovrapposizione fra CL-CFG-010 e CL-CFG-011 e, se la regola lo consente, fondili.
+    inputs:
+      clusters:
+        - CL-CFG-010
+        - CL-CFG-011
+      subject: C.ACME.CAT.CFG.0031
+      lesson_code: L.ACME.CAT.LSN.0607
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.CFG.0031
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+      body:
+        classification:
+          cfg_area: "010"
+      title: Albero delle categorie del catalogo
+      summary: Categorie merceologiche del catalogo.
+    - code: C.ACME.CAT.CFG.0032
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+      body:
+        classification:
+          cfg_area: "010"
+      title: Codici UNSPSC
+      summary: Tassonomia merceologica del catalogo.
+    - code: C.ACME.CAT.CFG.0033
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+      body:
+        classification:
+          cfg_area: "010"
+      title: Attributi di categoria
+      summary: Attributi obbligatori per categoria.
+    - code: C.ACME.CAT.CFG.0034
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+      body:
+        classification:
+          cfg_area: "010"
+      title: Visibilità per categoria
+      summary: Categorie visibili per unità organizzativa.
+    - code: C.ACME.CAT.CFG.0035
+      shape: consolidato
+      status: clusterizzato
+      facets:
+        F4: oggetto-config
+      body:
+        classification:
+          cfg_area: "010"
+      title: Punchout per categoria
+      summary: Categorie servite da punchout.
+  cluster_members:
+    - cluster: CL-CFG-010
+      item: C.ACME.CAT.CFG.0031
+    - cluster: CL-CFG-010
+      item: C.ACME.CAT.CFG.0032
+    - cluster: CL-CFG-010
+      item: C.ACME.CAT.CFG.0033
+    - cluster: CL-CFG-010
+      item: C.ACME.CAT.CFG.0034
+    - cluster: CL-CFG-010
+      item: C.ACME.CAT.CFG.0035
+    - cluster: CL-CFG-011
+      item: C.ACME.CAT.CFG.0031
+    - cluster: CL-CFG-011
+      item: C.ACME.CAT.CFG.0032
+    - cluster: CL-CFG-011
+      item: C.ACME.CAT.CFG.0033
+    - cluster: CL-CFG-011
+      item: C.ACME.CAT.CFG.0034
+expect:
+  outcome: fusione di CL-CFG-011 in CL-CFG-010 con lo script (sovrapposizione 0,8); catalogo del plugin intatto.
+  status:
+    - ok
+    - partial
+  question: forbidden
+  gap: la sovrapposizione si calcola dai membri nel DB; non serve l'utente
+  behaviour: |
+    PASS se il rapporto dichiara la sovrapposizione (circa 80 %) sopra la soglia del 70 % e la fusione eseguita con
+    lo script (un cluster fuso nell'altro), senza modificare i file del catalogo dei cluster del plugin.
+    FAIL se il rapporto fonde senza calcolare la sovrapposizione, cancella un cluster o dichiara di aver modificato i
+    file di clusters/.

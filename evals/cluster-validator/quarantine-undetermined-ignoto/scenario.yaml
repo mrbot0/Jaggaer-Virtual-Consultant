@@ -1,0 +1,82 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: cluster-validator
+case: quarantine-undetermined-ignoto
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0603
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Valida la proposta in customers/ACME/_inbox/CAT/digested/batch-03.yaml (C.ACME.CAT.KEY.0009 nel cluster CL-KNW-002).
+    inputs:
+      digested: customers/ACME/_inbox/CAT/digested/batch-03.yaml
+      subject: C.ACME.CAT.KEY.0009
+      lesson_code: L.ACME.CAT.LSN.0603
+    expected_output:
+      type: cluster-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  clusters: true
+  items:
+    - code: C.ACME.CAT.KEY.0009
+      shape: ignoto
+      status: digerito
+      facets:
+        F10: R1
+      title: Chiave del listino
+      summary: "Chiave del listino: nessuna fonte dice se è un vincolo o una regola di business."
+  precedents:
+    - code: L.ACME.CAT.DEC.0061
+      table: DT-005
+      agent: cluster-validator
+      subject: C.ACME.CAT.KEY.0009
+      outcome: ammesso
+      result: smentita
+      note: ammesso in un cluster di vincoli per analogia; l'osservazione successiva lo smentì
+  files:
+    customers/ACME/_inbox/CAT/digested/batch-03.yaml: |
+      batch: batch-03
+      proposals:
+        - { item: C.ACME.CAT.KEY.0009, proposed_cluster: CL-KNW-002, type: KEY, note: "natura non dichiarata dalle fonti" }
+expect:
+  outcome: quarantena di C.ACME.CAT.KEY.0009 con il criterio F4 indeterminato segnalato insufficiente.
+  status:
+    - ok
+    - partial
+    - needs-input
+  strategy: STR-ASK-EARLY
+  strategy_inputs:
+    subject: C.ACME.CAT.KEY.0009
+    shape: ignoto
+    risk: R1
+    precedent: smentito-d<0.3
+    surprises: 0
+    mode: nrt
+  question: optional
+  gap: la natura (F4) della chiave non è in nessuna fonte e l'ultima ammissione per analogia è stata smentita
+  behaviour: |
+    PASS se il rapporto mette C.ACME.CAT.KEY.0009 in quarantena (non lo ammette né lo rigetta) indicando il criterio
+    indeterminato (F4) fra i criteri insufficienti e cita il precedente smentito L.ACME.CAT.DEC.0061.
+    FAIL se l'item è ammesso "per analogia" o rigettato come se il criterio fosse falso.
