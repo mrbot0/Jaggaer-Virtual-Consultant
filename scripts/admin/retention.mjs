@@ -9,9 +9,14 @@
 // scaduto; --apply richiede UNA approvazione con frase (`APPROVO RETENTION <C>`, §56.8), la consuma, scrive un
 // certificato (percorsi, sha256, categoria, età) in <workspace>/.jvc/retention-certificates/ e rimuove SOLO i percorsi
 // scaduti delle categorie qui sopra; le righe del DB delle OBS e dei report rimossi escono dall'indice.
+// Giro 1: la prova a secco REGISTRA gli scaduti come deprecati (<ws>/.jvc/retention/<C>.json, data della prima
+// deprecazione); --apply rimuove solo i percorsi già deprecati e ancora scaduti, sotto il knowledge.lock del cliente;
+// nessun collegamento (link o giunzione) e nessun percorso che risolve fuori dal cliente, verificato di nuovo prima di
+// ogni rimozione; il guard conferma l'approvazione nel transcript.
 // Forma esatta ammessa da guard-destructive (DR-OK-002): node <plugin>/scripts/admin/retention.mjs <C> [--apply --approval <token>]
 //   [--session <id>] [--json]. Il workspace viene dall'ambiente.
-import { readFileSync, writeFileSync, readdirSync, lstatSync, existsSync, mkdirSync, rmSync, statSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, lstatSync, existsSync, mkdirSync, rmSync, realpathSync } from "node:fs";
+import { withLock } from "../kb/lock.mjs";
 import { join, resolve, relative, sep } from "node:path";
 import { createHash } from "node:crypto";
 import YAML from "yaml";
@@ -52,7 +57,24 @@ function files(p) {
   if (st.isSymbolicLink() || !st.isDirectory()) return [p];
   return readdirSync(p).flatMap((e) => files(join(p, e)));
 }
-const entries = (d) => (existsSync(d) ? readdirSync(d).filter((x) => x !== ".gitkeep").map((x) => join(d, x)) : []);
+// WP09d giro 1 (I3): nessun collegamento. Una cartella di categoria (o una sua voce) che è un link simbolico o una
+// giunzione, o che risolve fuori da customers/<C>/, è RIFIUTATA: la retention non segue mai un collegamento (potrebbe
+// portare a product/kb, all'audit o fuori dal workspace).
+const realOf = (p) => realpathSync.native(p);
+function contained(realRoot, p) {
+  const st = lstatSync(p);
+  if (st.isSymbolicLink()) throw new RetentionRefusal(`percorso collegato (link o giunzione) rifiutato: ${p}`);
+  const r = realOf(p);
+  if (r !== realRoot && !r.startsWith(realRoot + sep)) throw new RetentionRefusal(`percorso che risolve fuori dal cliente rifiutato: ${p} → ${r}`);
+  return st;
+}
+function entriesIn(realRoot, d) {
+  if (!existsSync(d) && !isLink(d)) return [];
+  const st = contained(realRoot, d);
+  if (!st.isDirectory()) return [];
+  return readdirSync(d).filter((x) => x !== ".gitkeep").map((x) => { const p = join(d, x); contained(realRoot, p); return p; });
+}
+const isLink = (p) => { try { return lstatSync(p).isSymbolicLink(); } catch { return false; } };
 
 // Sessioni da non toccare: la corrente e quelle i cui puntatori nominano il cliente e sono recenti.
 function liveSessions(ws, c, now, days) {
@@ -69,6 +91,9 @@ function liveSessions(ws, c, now, days) {
 
 export function candidates(ws, c, { now = Date.now(), policy = policyFor(ws, c) } = {}) {
   const root = join(ws, "customers", c);
+  if (isLink(root)) throw new RetentionRefusal(`customers/${c} è un collegamento: retention rifiutata`);
+  const realRoot = realOf(root);
+  const entries = (d) => entriesIn(realRoot, d);
   const out = [];
   const archivable = [];
   const push = (category, p, limitDays) => {
@@ -114,10 +139,39 @@ export function verifyApproval(ws, c, { sid, token, now = Date.now() }) {
 export async function retention({ ws, customer: c, apply = false, token = null, sid = null, now = new Date() }) {
   if (!CUSTOMER_RE.test(String(c ?? ""))) throw new Error(`codice cliente non valido: ${c}`);
   if (!existsSync(join(ws, "customers", c))) throw new Error(`cliente inesistente: customers/${c}`);
-  const cand = candidates(ws, c, { now: now.getTime() });
-  if (!apply) return { dry_run: true, customer: c, ...cand };
+  const all = candidates(ws, c, { now: now.getTime() });
+  const mfile = deprecationFile(ws, c);
+  if (!apply) {
+    // Fase 1 (§54.4 "deprecato"): l'elenco degli scaduti è registrato con la data di deprecazione (la prima volta che un
+    // percorso risulta scaduto); un percorso non più scaduto o sparito esce dall'elenco.
+    const prev = readDeprecation(mfile);
+    const items = {};
+    for (const x of all.items) items[x.path] = { category: x.category, age_days: x.age_days, deprecated_at: prev.items?.[x.path]?.deprecated_at ?? now.toISOString() };
+    mkdirSync(join(ws, ".jvc", "retention"), { recursive: true });
+    writeFileSync(mfile, JSON.stringify({ customer: c, updated_at: now.toISOString(), items }, null, 2) + "\n");
+    return { dry_run: true, customer: c, ...all, deprecation: { file: mfile, count: Object.keys(items).length, new: all.items.filter((x) => !prev.items?.[x.path]).length } };
+  }
   const { file, grant } = verifyApproval(ws, c, { sid, token, now: now.getTime() });
+  // Fase 2 ("poi rimosso"): solo ciò che era già deprecato da una prova a secco precedente ed è ancora scaduto
+  const dep = readDeprecation(mfile);
+  if (!dep.items) throw new RetentionRefusal(`nessun percorso deprecato per ${c}: esegui prima la prova a secco (retention.mjs ${c}), che registra gli scaduti come deprecati`);
+  const cand = { ...all, items: all.items.filter((x) => dep.items[x.path] && Date.parse(dep.items[x.path].deprecated_at) <= now.getTime()) };
+  const pending = all.items.filter((x) => !cand.items.includes(x)).map((x) => x.path);
+  // giro 1 (m12): sotto il lock del cliente (nessuna digestione o promozione in corso)
+  try {
+    return await withLock(join(ws, "customers", c), "knowledge", 10 * 60000, () => applyRemoval({ ws, c, sid, now, file, grant, cand, pending, mfile, dep }));
+  } catch (err) {
+    if (/lock attivo/.test(String(err?.message))) throw new RetentionRefusal(`${err.message}: una digestione o una promozione è in corso sul cliente (admin lock)`);
+    throw err;
+  }
+}
+
+export const deprecationFile = (ws, c) => join(ws, ".jvc", "retention", `${c}.json`);
+function readDeprecation(f) { try { return JSON.parse(readFileSync(f, "utf8")); } catch { return {}; } }
+
+async function applyRemoval({ ws, c, sid, now, file, grant, cand, pending, mfile, dep }) {
   consumeGrants(file, [grant], { date: now });
+  const realRoot = realOf(join(ws, "customers", c));
   const removed = cand.items.map((x) => ({ ...x, files: files(join(ws, x.path)).map((f) => ({ path: rel(ws, f), sha256: lstatSync(f).isSymbolicLink() ? null : sha(readFileSync(f)), bytes: lstatSync(f).size })) }));
   const cdir = join(ws, ".jvc", "retention-certificates");
   mkdirSync(cdir, { recursive: true });
@@ -131,8 +185,12 @@ export async function retention({ ws, customer: c, apply = false, token = null, 
   for (const x of cand.items) {
     const abs = join(ws, x.path);
     if (!abs.startsWith(base)) throw new RetentionRefusal(`percorso fuori dal cliente: ${x.path}`);
+    contained(realRoot, abs);   // giro 1 (I3): di nuovo subito prima di rimuovere (nessun link, dentro il cliente)
     rmSync(abs, { recursive: true, force: true, maxRetries: 3 });
   }
+  // l'elenco di deprecazione perde ciò che è stato rimosso
+  const left = Object.fromEntries(Object.entries(dep.items).filter(([k]) => !cand.items.some((x) => x.path === k)));
+  writeFileSync(mfile, JSON.stringify({ customer: c, updated_at: now.toISOString(), items: left }, null, 2) + "\n");
   // l'indice perde le OBS e i report rimossi
   const dbf = join(ws, "customers", c, "knowledge.db");
   if (existsSync(dbf)) {
@@ -151,7 +209,7 @@ export async function retention({ ws, customer: c, apply = false, token = null, 
     appendAudit(ws, { session: sid, customer: c, kind: "decision", actor: "script:admin-retention",
       payload: { retention: c, removed: cand.items.length, certificate: rel(ws, cfile), certificate_sha256: cert.certificate_sha256 } });
   } catch { /* il certificato resta la prova */ }
-  return { dry_run: false, customer: c, removed: cand.items.length, archivable: cand.archivable, certificate: cfile, certificate_sha256: cert.certificate_sha256 };
+  return { dry_run: false, customer: c, removed: cand.items.length, pending_deprecation: pending, archivable: cand.archivable, certificate: cfile, certificate_sha256: cert.certificate_sha256 };
 }
 
 export const HELP = `uso: node <plugin>/scripts/admin/retention.mjs <C> [--apply --approval <token>] [--session <id>] [--json]

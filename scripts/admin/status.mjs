@@ -78,6 +78,20 @@ export function metrics(ws, c) {
     const critical = epi.filter((e) => ["R2", "R3"].includes(e.risk));
     out.cognition.critical_subjects_ignoto_pct = pct(critical.filter((e) => e.shape === "ignoto").length, critical.length);
     out.cognition.subjects_ignoto_pct = pct(epi.filter((e) => e.shape === "ignoto").length, epi.length);
+    // giro 1 (m11): costo di un compito ripetuto rispetto alla prima volta (§35.1, target ≤ 0.3): sessioni con una DEC
+    // STR-REPLAY = ripetute, le altre = prima volta; costo = token usati dalla sessione (budget.used). Approssimazione per
+    // sessione (il costo per compito non è registrato).
+    const replaySessions = new Set(safe(() => db.prepare("select distinct session from decisions where strategy = 'STR-REPLAY' and session is not null").all(), []).map((r) => r.session));
+    const cost = (list) => (list.length ? list.reduce((a, s) => a + (s.budget?.used ?? 0), 0) / list.length : null);
+    const rep = cost(sessions.filter((s) => replaySessions.has(s.session_id)));
+    const first = cost(sessions.filter((s) => !replaySessions.has(s.session_id)));
+    out.cognition.repeated_vs_first_cost = rep != null && first ? Math.round((rep / first) * 100) / 100 : null;
+    // Osservazioni R0 suggerite eseguite nella settimana (§35.1, target ≥ 80%): suggerite = soggetti in forma ignoto (come
+    // il competence report, §22.1), eseguite = OBS degli ultimi 7 giorni (payload.ts), al massimo il 100%.
+    const ignoto = epi.filter((e) => e.shape === "ignoto").length;
+    const weekAgo = Date.now() - 7 * 86400000;
+    const obsWeek = safe(() => db.prepare("select payload from observations").all(), []).filter((r) => { try { return Date.parse(JSON.parse(r.payload)?.ts ?? "") >= weekAgo; } catch { return false; } }).length;
+    out.cognition.r0_suggested_executed_pct = ignoto ? Math.min(100, pct(obsWeek, ignoto)) : null;
     const calDir = join(ws, "customers", c, "digest");
     out.cognition.calibration_proposals = existsSync(calDir) ? readdirSync(calDir).reduce((a, w) => a + safe(() => readdirSync(join(calDir, w, "calibration")).length, 0), 0) : 0;
     const items = safe(() => db.prepare("select count(*) as n from items where status <> 'deprecato'").get().n, 0);

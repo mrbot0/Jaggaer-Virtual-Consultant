@@ -62,3 +62,27 @@ Copia di `jvc-knowledge/product/knowledge.db` in una cartella temporanea (l'orig
 0 item, 20 842 unità, 184 profili DOC, 0 cluster caricati. `kb scopes` 10 scope del registro; `facet-count`, `graph`,
 `handoffs --validate`, `clusters`, `contradictions` girano e restituiscono insiemi vuoti (la digestione in item non è
 ancora avvenuta sui dati reali).
+
+## Giro di correzione 1
+
+- **Approvazioni confermate nel transcript (I1)**: guard-destructive, nell'eccezione a forma esatta, risolve i token di
+  purge (`--execute`), retention (`--apply`) e promozione a S (`kb|lifecycle promote --to product`, `learn promote`) nel
+  registro della sessione e li conferma nel transcript come le 3A (riga umana, sha del prompt e orario, una riga per
+  record); un registro forgiato con la catena di hash corretta è negato. La policy dichiara `first_arg` e `approvals`
+  (`DR-OK-001..005`); `DR-SHELL-008` nega ogni forma non esatta di `promote`. La prova a secco della purge non agisce e
+  non richiede la conferma.
+- **Promozione a S (I2)**: solo un candidato della digestione (DT-010, `customers/<C>/digest/<settimana>/candidates.yaml`,
+  ultime 4 settimane) senza contraddizioni aperte (registro e item CTR); sotto il lock di `product/`; l'approvazione si
+  consuma prima di scrivere.
+- **Retention (I3, m1, m12)**: nessun collegamento (cartelle di categoria o voci link/giunzione, o che risolvono fuori da
+  `customers/<C>/`): rifiutato, e verificato di nuovo prima di ogni rimozione; fase "deprecato" persistente
+  (`.jvc/retention/<C>.json`, scritto dalla prova a secco) e rimozione solo di ciò che era già deprecato; knowledge.lock
+  del cliente.
+- **Purge (m9)**: si approva e si esegue solo nella sessione del cliente da cancellare (approval-capture e script).
+- **Analytics (m2-m4, m10)**: LIMIT registrato solo se presente nel testo eseguito; la conoscenza delle tabelle registrata
+  non si alza; `--max` limitato a 10 000; quote di istogramma su gruppi < 20 e chiavi identificative nelle mappe rifiutate.
+- **Config (m5, m6)**: baseline più recente per orario di cattura; impronta obbligatoria.
+- **Metriche (m11)**: costo compito ripetuto / prima volta e osservazioni R0 suggerite eseguite nella settimana
+  (approssimazioni per sessione e per settimana).
+- **Rischio residuo documentato**: i token salati `CUST-`/`RIF-` di un cliente cancellato restano nei report di
+  `product/digest/` e sono ricalcolabili da chi possiede `JVC_PSEUDO_SALT` (codici di 4 caratteri).

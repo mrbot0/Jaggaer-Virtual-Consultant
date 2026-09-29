@@ -370,6 +370,8 @@ export async function capture(input, env = process.env) {
     if (p.kind === "purge") {
       if (!p.approver) return reject([`APPROVO PURGE ${p.target} DA <Nome Cognome>`], "la purge richiede il nome di chi approva (DA <Nome Cognome>): servono due approvazioni da due persone diverse (§54.4)");
       if (!existsSync(join(st.ws, "customers", p.target))) return reject([], `il cliente ${p.target} non esiste nel workspace`);
+      // giro 1 (m9): solo nella sessione del cliente da cancellare
+      if (p.target !== st.customer) return reject([], `la purge di ${p.target} si approva in una sessione di ${p.target} (cliente della sessione: ${st.customer})`);
       const same = reg.records.find((r) => r.kind === "purge" && r.target === p.target && normName(r.approver_declared) === normName(p.approver)
         && !reg.records.some((c) => c.kind === "consume" && c.ref === r.hash) && now - Date.parse(r.ts) <= GRANT_WINDOW_MS.purge);
       if (same) return reject([`APPROVO PURGE ${p.target} DA <un'altra persona>`], `${p.approver} ha già approvato la purge di ${p.target}: la seconda approvazione deve venire da una persona diversa`);

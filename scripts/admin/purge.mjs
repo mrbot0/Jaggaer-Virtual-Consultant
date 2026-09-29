@@ -68,6 +68,9 @@ export function verifyApprovals(ws, id, { sid, a1, a2, now = Date.now() }) {
   if (!sid) throw new PurgeRefusal("nessuna sessione: le approvazioni vivono nel registro della sessione (--session o sessione corrente)");
   const ptr = readPointer(ws, sid);
   if (!ptr?.customer) throw new PurgeRefusal(`la sessione ${sid} non ha un cliente attivo: nessun registro delle approvazioni`);
+  // giro 1 (m9): la purge si approva e si esegue nella sessione del cliente da cancellare (il registro, le frasi e l'audit
+  // sono di quel cliente); una sessione di un altro cliente non purga
+  if (ptr.customer !== id) throw new PurgeRefusal(`il cliente della sessione (${ptr.customer}) non è ${id}: la purge si esegue in una sessione di ${id} (/use customer ${id})`);
   const file = approvalsFile(ws, ptr.customer, sid);
   const reg = readApprovals(file);
   if (!reg.ok) throw new PurgeRefusal(`registro delle approvazioni non valido: ${reg.reason}`);

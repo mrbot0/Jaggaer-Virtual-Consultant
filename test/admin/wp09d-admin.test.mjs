@@ -87,12 +87,13 @@ test("guard-destructive: purge e retention passano SOLO nella forma esatta del p
   const P = script(PURGE);
   const R = script(RET);
   const hex = "0123456789abcdef";
-  assert.ok(silent(guard(ws, `node "${P}" ACME --execute --approval-1 ${hex} --approval-2 fedcba9876543210`)), "purge esatta");
+  assert.ok(silent(guard(ws, `node "${P}" ACME --approval-1 ${hex} --approval-2 fedcba9876543210`)), "purge esatta (prova a secco; con --execute le approvazioni sono confermate nel transcript: wp09d-fixround1)");
+  assert.ok(denied(guard(ws, `node "${P}" ACME --execute --approval-1 ${hex} --approval-2 fedcba9876543210`)), "--execute con token che non sono approvazioni");
   assert.ok(denied(guard(ws, `node "${P}" ACME --execute`)), "purge senza approvazioni");
   assert.ok(denied(guard(ws, `node "${P}" ACME --execute --approval-1 ${hex} --approval-2 x; rm -rf customers/ACME`)), "catena");
   assert.ok(denied(guard(ws, `node "${P}" ACME --execute --approval-1 ${hex} --approval-2 ${hex} --workspace C:\\`)), "opzione non ammessa");
   assert.ok(silent(guard(ws, `node "${R}" ACME --json`)), "retention: prova a secco");
-  assert.ok(silent(guard(ws, `node "${R}" ACME --apply --approval ${hex} --json`)), "retention: --apply con --approval");
+  assert.ok(denied(guard(ws, `node "${R}" ACME --apply --approval ${hex} --json`)), "retention: --apply con un token che non è un'approvazione confermata");
   assert.ok(denied(guard(ws, `node "${R}" ACME --apply --json`)), "retention: --apply senza approvazione");
   assert.ok(denied(guard(ws, `node "${R}" ACME --apply --approval tok-a`)), "token di forma non ammessa");
   assert.ok(denied(guard(ws, `node "${R}" ACME ../BETA --apply --approval ${hex}`)), "un solo cliente");
@@ -142,6 +143,7 @@ test("retention: prova a secco elenca gli scaduti (90 giorni, 12 mesi); audit so
 test("retention --apply: senza approvazione exit 3; con `APPROVO RETENTION ACME` rimuove solo gli scaduti, certificato, indice aggiornato; approvazione monouso", () => {
   const ws = retentionWs();
   assert.equal(cli(RET, ["ACME", "--apply", "--json"], { ws }).status, 3);
+  assert.equal(cli(RET, ["ACME", "--json"], { ws }).status, 0, "giro 1 (m1): la prova a secco registra gli scaduti come deprecati");
   const tok = say(ws, "APPROVO RETENTION ACME").last.hash.slice(0, 16);
   const r = cli(RET, ["ACME", "--apply", "--approval", tok, "--json"], { ws });
   assert.equal(r.status, 0, r.stdout + r.stderr);
