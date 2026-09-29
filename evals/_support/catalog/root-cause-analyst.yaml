@@ -80,6 +80,9 @@ cases:
       strategy_inputs: { subject: C.ACME.CAT.FLW.0005, shape: empirico, risk: R1, precedent: nessuno, surprises: 0, mode: diag, divergence_unknown: true }
       question: optional
       gap: la prima divergenza è ignota; la cerca la bisezione sui checkpoint registrati
+      extra_graders:
+        - name: hypotheses-present
+          frontmatter: { type: regex, target: last_message, pattern: 'cognitive_trace:[\s\S]*?hypotheses:\s*(?:\[\s*[^\]\s]|-\s)' }
       behaviour: |
         PASS se il rapporto localizza la prima divergenza fra i checkpoint (unità organizzativa del richiedente diversa
         da quella del catalogo, fra cp-5 e cp-6) con un'ipotesi falsificabile (cosa la smentirebbe) e propone un CHK
@@ -106,6 +109,9 @@ cases:
       strategy_inputs: { subject: C.ACME.CAT.KEY.0004, shape: consolidato, risk: R2, precedent: nessuno, surprises: 0, mode: diag, divergence_unknown: true, preferred_prior: 0.7 }
       question: optional
       gap: l'ipotesi preferita non è ancora messa alla prova
+      extra_graders:
+        - name: hypotheses-present
+          frontmatter: { type: regex, target: last_message, pattern: 'cognitive_trace:[\s\S]*?hypotheses:\s*(?:\[\s*[^\]\s]|-\s)' }
       behaviour: |
         PASS se il rapporto elenca l'ipotesi preferita e almeno un'alternativa (per esempio il parametro strict_import
         della release 2026.09), dice per ciascuna quale osservazione la smentirebbe e ne riporta lo stato

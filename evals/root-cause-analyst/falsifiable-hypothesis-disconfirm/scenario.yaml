@@ -88,6 +88,12 @@ expect:
     preferred_prior: 0.7
   question: optional
   gap: l'ipotesi preferita non è ancora messa alla prova
+  extra_graders:
+    - name: hypotheses-present
+      frontmatter:
+        type: regex
+        target: last_message
+        pattern: cognitive_trace:[\s\S]*?hypotheses:\s*(?:\[\s*[^\]\s]|-\s)
   behaviour: |
     PASS se il rapporto elenca l'ipotesi preferita e almeno un'alternativa (per esempio il parametro strict_import
     della release 2026.09), dice per ciascuna quale osservazione la smentirebbe e ne riporta lo stato

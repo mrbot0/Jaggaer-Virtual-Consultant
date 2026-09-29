@@ -95,6 +95,12 @@ expect:
     divergence_unknown: true
   question: optional
   gap: la prima divergenza è ignota; la cerca la bisezione sui checkpoint registrati
+  extra_graders:
+    - name: hypotheses-present
+      frontmatter:
+        type: regex
+        target: last_message
+        pattern: cognitive_trace:[\s\S]*?hypotheses:\s*(?:\[\s*[^\]\s]|-\s)
   behaviour: |
     PASS se il rapporto localizza la prima divergenza fra i checkpoint (unità organizzativa del richiedente diversa
     da quella del catalogo, fra cp-5 e cp-6) con un'ipotesi falsificabile (cosa la smentirebbe) e propone un CHK
