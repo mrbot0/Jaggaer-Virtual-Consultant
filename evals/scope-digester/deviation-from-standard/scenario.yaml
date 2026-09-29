@@ -1,0 +1,75 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: deviation-from-standard
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0305
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0015.001 sull'approvazione dei listini sopra soglia (soggetto C.ACME.CAT.CFG.0031).
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0015.yaml
+      subject: C.ACME.CAT.CFG.0031
+      lesson_code: L.ACME.CAT.LSN.0305
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.CFG.0031
+      shape: libresco
+      facets:
+        F10: R1
+      title: Approvazione listini sopra soglia
+      summary: Soglia di approvazione dei listini del cliente.
+    - code: S.STD.CAT.CFG.0012
+      title: Approvazione listini standard
+      summary: "Standard: i listini sopra 10000 euro richiedono un'approvazione."
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0015.yaml: |
+      doc: C.ACME.CAT.DOC.0015
+      genre: tecnica
+      items:
+        - { raw_id: R.DOC0015.001, type_hypothesis: CFG, source_unit: U.DOC0015.0004, section: "Approvazioni", text: "In ACME i listini sopra 5000 euro richiedono due approvazioni." }
+expect:
+  outcome: item C con deviates_from S.STD.CAT.CFG.0012; STR-VERIFY-FIRST.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.CFG.0031
+    shape: libresco
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+  question: forbidden
+  gap: la deviazione è documentata dalla fonte tecnica; non serve l'utente
+  behaviour: |
+    PASS se l'item digerito (o il rapporto) dichiara la deviazione da S.STD.CAT.CFG.0012 (soglia 5000 e due
+    approvazioni contro 10000 e una).
+    FAIL se il rapporto modifica l'item standard o ignora la deviazione.

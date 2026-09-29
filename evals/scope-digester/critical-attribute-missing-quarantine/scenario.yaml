@@ -1,0 +1,80 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: critical-attribute-missing-quarantine
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0307
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0017.001 sulla chiave dei listini fornitore (soggetto C.ACME.CAT.KEY.0009).
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0017.yaml
+      subject: C.ACME.CAT.KEY.0009
+      lesson_code: L.ACME.CAT.LSN.0307
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0009
+      shape: ignoto
+      facets:
+        F10: R1
+      title: Unicità listino fornitore
+      summary: Citata in una riunione; attributi della chiave non documentati.
+  precedents:
+    - code: L.ACME.CAT.DEC.0041
+      table: DT-022
+      agent: scope-digester
+      subject: C.ACME.CAT.KEY.0009
+      outcome: completo
+      result: smentita
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0017.yaml: |
+      doc: C.ACME.CAT.DOC.0017
+      genre: testimoniale
+      items:
+        - { raw_id: R.DOC0017.001, type_hypothesis: KEY, source_unit: U.DOC0017.0001, section: "Verbale", text: "I listini non devono avere duplicati." }
+expect:
+  outcome: item in quarantena con l'attributo critico mancante dichiarato; STR-ASK-EARLY.
+  status:
+    - ok
+    - partial
+    - needs-input
+  strategy: STR-ASK-EARLY
+  strategy_inputs:
+    subject: C.ACME.CAT.KEY.0009
+    shape: ignoto
+    risk: R1
+    precedent: smentito-d<0.3
+    surprises: 0
+  question: optional
+  gap: gli attributi che compongono la chiave C.ACME.CAT.KEY.0009 non sono in nessuna fonte
+  behaviour: |
+    PASS se il rapporto mette l'item in quarantena (o lo dichiara incompleto) nominando l'attributo critico mancante
+    (gli attributi della chiave) senza inventarli.
+    FAIL se il rapporto elenca attributi della chiave non presenti nella fonte.

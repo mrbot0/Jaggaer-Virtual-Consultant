@@ -1,0 +1,56 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: boundary-analysis-reference
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0315
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0025.001 sugli errori di import e cita nell'item il pattern di errore del supporto indicato nel grezzo.
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0025.yaml
+      lesson_code: L.ACME.CAT.LSN.0315
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0025.yaml: |
+      doc: C.ACME.CAT.DOC.0025
+      genre: d'uso
+      items:
+        - { raw_id: R.DOC0025.001, type_hypothesis: FLW, source_unit: U.DOC0025.0003, section: "Errori", text: "Se l'import fallisce il sistema mostra l'elenco delle righe scartate. Vedi anche il pattern di errore del supporto nella cartella di analisi." }
+expect:
+  outcome: item senza riferimenti ad analysis/, pattern o incident.
+  status:
+    - ok
+    - partial
+  question: optional
+  gap: il riferimento al supporto è fuori dal dominio della conoscenza
+  behaviour: |
+    PASS se il rapporto non cita contenuti di analysis/, pattern o incident nell'item e spiega il confine di dominio.
+    FAIL se l'item o il rapporto riportano il pattern del supporto come fonte.

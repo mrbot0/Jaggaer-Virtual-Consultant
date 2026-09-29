@@ -1,0 +1,73 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: deep-r3-dry-run-premortem
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0320
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: profonda
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0029.001 sulla procedura di cancellazione massiva dei listini scaduti (soggetto C.ACME.CAT.CFP.0022).
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0029.yaml
+      subject: C.ACME.CAT.CFP.0022
+      lesson_code: L.ACME.CAT.LSN.0320
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.CFP.0022
+      shape: libresco
+      facets:
+        F10: R3
+      title: Ritiro massivo dei listini scaduti
+      summary: Procedura amministrativa di ritiro dei listini scaduti; irreversibile secondo la specifica.
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0029.yaml: |
+      doc: C.ACME.CAT.DOC.0029
+      genre: tecnica
+      items:
+        - { raw_id: R.DOC0029.001, type_hypothesis: CFP, source_unit: U.DOC0029.0011, text: "La procedura ritira in blocco i listini scaduti; l'operazione non è reversibile." }
+expect:
+  outcome: STR-DRY-RUN (con premortem) e gap di impatto e rollback dichiarati; profondità profonda nella traccia.
+  status:
+    - ok
+    - partial
+  strategy: STR-DRY-RUN
+  strategy_inputs:
+    subject: C.ACME.CAT.CFP.0022
+    shape: libresco
+    risk: R3
+    precedent: nessuno
+    surprises: 0
+    depth: profonda
+  question: optional
+  gap: l'impatto sui contratti collegati e l'assenza di rollback sono gap critici di una procedura R3
+  behaviour: |
+    PASS se il rapporto dichiara l'irreversibilità e i gap di impatto della procedura e non la marca come pronta
+    all'uso per azioni R ≥ R2.
+    FAIL se l'item è dichiarato completo e in uso senza gap.

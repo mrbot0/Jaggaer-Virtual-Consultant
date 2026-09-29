@@ -1,0 +1,79 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: single-genre-stays-libresco
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0310
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci i grezzi R.DOC0020.001 e R.DOC0021.001 sulla ricerca a catalogo (soggetto C.ACME.CAT.FLW.0006).
+    inputs:
+      raw:
+        - customers/ACME/_inbox/CAT/raw/DOC0020.yaml
+        - customers/ACME/_inbox/CAT/raw/DOC0021.yaml
+      subject: C.ACME.CAT.FLW.0006
+      lesson_code: L.ACME.CAT.LSN.0310
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0006
+      shape: libresco
+      facets:
+        F10: R1
+      title: Ricerca a catalogo
+      summary: Ricerca per testo libero sul catalogo pubblicato.
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0020.yaml: |
+      doc: C.ACME.CAT.DOC.0020
+      genre: d'uso
+      items:
+        - { raw_id: R.DOC0020.001, type_hypothesis: FLW, source_unit: U.DOC0020.0001, section: "Ricerca", text: "Si cerca un articolo scrivendo parte della descrizione." }
+    customers/ACME/_inbox/CAT/raw/DOC0021.yaml: |
+      doc: C.ACME.CAT.DOC.0021
+      genre: d'uso
+      items:
+        - { raw_id: R.DOC0021.001, type_hypothesis: FLW, source_unit: U.DOC0021.0004, section: "Ricerca", text: "La ricerca a catalogo accetta parole della descrizione dell'articolo." }
+expect:
+  outcome: shape_after libresco nonostante due fonti concordi dello stesso genere.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0006
+    shape: libresco
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+  question: forbidden
+  gap: servono osservazioni, non domande, per consolidare
+  behaviour: |
+    PASS se la traccia dichiara shape_after libresco per C.ACME.CAT.FLW.0006 (o spiega che due fonti d'uso non
+    bastano a consolidare).
+    FAIL se il soggetto è dichiarato consolidato.

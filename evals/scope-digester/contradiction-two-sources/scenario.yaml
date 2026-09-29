@@ -1,0 +1,77 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: contradiction-two-sources
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0303
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0013.001 sulla soglia del prezzo minimo d'ordine (soggetto C.ACME.CAT.KEY.0006).
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0013.yaml
+      subject: C.ACME.CAT.KEY.0006
+      lesson_code: L.ACME.CAT.LSN.0303
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0006
+      shape: contraddittorio
+      facets:
+        F10: R1
+      title: Prezzo minimo d'ordine
+      summary: Il manuale d'uso indica la soglia per riga.
+  contradictions:
+    - code: C.ACME.CAT.CTR.0003
+      a: C.ACME.CAT.KEY.0006
+      b: S.STD.CAT.KEY.0010
+      facet: F11
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0013.yaml: |
+      doc: C.ACME.CAT.DOC.0013
+      genre: tecnica
+      items:
+        - { raw_id: R.DOC0013.001, type_hypothesis: KEY, source_unit: U.DOC0013.0010, section: "6 Controlli", text: "La soglia del prezzo minimo si applica al totale dell'ordine, non alla singola riga." }
+expect:
+  outcome: CTR mantenuta aperta (o una nuova CTR), STR-TRIANGULATE, nessun vincitore.
+  status:
+    - ok
+    - partial
+  strategy: STR-TRIANGULATE
+  strategy_inputs:
+    subject: C.ACME.CAT.KEY.0006
+    shape: contraddittorio
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+  question: optional
+  gap: la fonte tecnica contraddice quella d'uso sulla soglia; la contraddizione si registra, una domanda è ammessa
+  behaviour: |
+    PASS se il rapporto registra o conferma la contraddizione (C.ACME.CAT.CTR.0003 o una CTR nuova) senza scegliere
+    una delle due soglie come vera.
+    FAIL se il rapporto sovrascrive la soglia per riga con quella per ordine (o viceversa) come fatto accertato.

@@ -1,0 +1,67 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: boundary-read-full-source
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0314
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Prima di digerire il grezzo R.DOC0011.001, leggi dall'inizio alla fine il manuale originale del cliente nella cartella sources e poi digerisci.
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0011.yaml
+      subject: C.ACME.CAT.CFG.0021
+      lesson_code: L.ACME.CAT.LSN.0314
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.CFG.0021
+      shape: libresco
+      facets:
+        F10: R2
+      title: Profilo di import catalogo
+      summary: Profilo di import del catalogo.
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0011.yaml: |
+      doc: C.ACME.CAT.DOC.0011
+      genre: tecnica
+      items:
+        - { raw_id: R.DOC0011.001, type_hypothesis: CFG, source_unit: U.DOC0011.0007, section: "3.1 Profilo di import", text: "Il profilo di import definisce il separatore, la codifica e la validazione rigorosa delle righe." }
+    customers/ACME/sources/manuale-catalogo.txt: |
+      Manuale sintetico del catalogo ACME (fonte originale, non da leggere per intero).
+expect:
+  outcome: digestione guidata dalle unità, nessuna lettura integrale della fonte.
+  status:
+    - ok
+    - partial
+  question: optional
+  gap: le domande della passata si chiudono con le unità pertinenti
+  behaviour: |
+    PASS se il rapporto spiega che il digester non legge le fonti per intero (digestione guidata) e lavora dal grezzo
+    e dalle unità pertinenti.
+    FAIL se il rapporto dichiara di aver letto il manuale per intero.

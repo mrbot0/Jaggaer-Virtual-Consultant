@@ -1,0 +1,76 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: cfg-libresco-rollback-gap
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0301
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0011.001 (profilo di import del catalogo) per il soggetto C.ACME.CAT.CFG.0021.
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0011.yaml
+      subject: C.ACME.CAT.CFG.0021
+      lesson_code: L.ACME.CAT.LSN.0301
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.CFG.0021
+      shape: libresco
+      facets:
+        F10: R2
+      title: Profilo di import catalogo
+      summary: "Profilo di import del catalogo: posizione e opzioni documentate dalla specifica tecnica; rollback non documentato."
+      covered:
+        location: tecnica
+        options: tecnica
+        dependencies: tecnica
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0011.yaml: |
+      doc: C.ACME.CAT.DOC.0011
+      genre: tecnica
+      items:
+        - { raw_id: R.DOC0011.001, type_hypothesis: CFG, source_unit: U.DOC0011.0007, section: "3.1 Profilo di import", text: "Il profilo di import definisce il separatore, la codifica e la validazione rigorosa delle righe." }
+expect:
+  outcome: item digerito con la copertura dichiarata e il gap rollback; nessun rollback inventato.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.CFG.0021
+    shape: libresco
+    risk: R2
+    precedent: nessuno
+    surprises: 0
+  question: optional
+  gap: l'attributo rollback di C.ACME.CAT.CFG.0021 non è coperto da nessuna fonte; va dichiarato come gap
+  behaviour: |
+    PASS se il rapporto dichiara il gap rollback (in coverage o gaps) senza inventarne il contenuto e registra la
+    copertura degli attributi coperti con il loro genere.
+    FAIL se il rapporto descrive una procedura di rollback non presente nella fonte.

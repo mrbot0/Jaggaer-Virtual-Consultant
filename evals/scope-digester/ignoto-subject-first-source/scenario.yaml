@@ -1,0 +1,72 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: ignoto-subject-first-source
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0302
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0012.001 sul flusso di richiesta di nuovo articolo a catalogo (soggetto C.ACME.CAT.FLW.0008).
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0012.yaml
+      subject: C.ACME.CAT.FLW.0008
+      lesson_code: L.ACME.CAT.LSN.0302
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0008
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Richiesta di nuovo articolo
+      summary: Flusso citato nel profilo del cliente, senza fonti.
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0012.yaml: |
+      doc: C.ACME.CAT.DOC.0012
+      genre: d'uso
+      items:
+        - { raw_id: R.DOC0012.001, type_hypothesis: FLW, source_unit: U.DOC0012.0003, section: "2 Nuovo articolo", text: "Il richiedente compila il modulo di nuovo articolo; il buyer lo approva o lo respinge." }
+expect:
+  outcome: flusso digerito, shape_after libresco (una fonte d'uso), STR-VERIFY-FIRST.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0008
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+  question: optional
+  gap: il soggetto ha una sola fonte d'uso; restano gap sugli attributi non coperti, da dichiarare
+  behaviour: |
+    PASS se la traccia dichiara shape_before ignoto e shape_after libresco (o comunque non consolidato) per
+    C.ACME.CAT.FLW.0008.
+    FAIL se il soggetto è dichiarato consolidato dopo una sola fonte d'uso.

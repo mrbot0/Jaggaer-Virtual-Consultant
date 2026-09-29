@@ -1,0 +1,65 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: saas-vs-integrated-split
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0308
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0018.001 sull'esportazione notturna del catalogo verso l'ERP (soggetto C.ACME.CAT.FLW.0004).
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0018.yaml
+      subject: C.ACME.CAT.FLW.0004
+      lesson_code: L.ACME.CAT.LSN.0308
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0004
+      shape: libresco
+      facets:
+        F10: R1
+      title: Pubblicazione ed esportazione catalogo
+      summary: Pubblicazione del catalogo e invio all'ERP.
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0018.yaml: |
+      doc: C.ACME.CAT.DOC.0018
+      genre: tecnica
+      items:
+        - { raw_id: R.DOC0018.001, type_hypothesis: FLW, source_unit: U.DOC0018.0005, section: "Esportazione", text: "Il buyer pubblica il catalogo dalla pagina di gestione; di notte un processo invia gli articoli all'ERP e, in caso di errore, la riga resta in coda senza avvisi." }
+expect:
+  outcome: due item collegati (comportamento UI e contratto di integrazione) secondo il criterio SaaS/integrato.
+  status:
+    - ok
+    - partial
+  question: optional
+  gap: il contratto con l'ERP (chi lo configura, come fallisce) è coperto solo in parte; va dichiarato
+  behaviour: |
+    PASS se il rapporto separa il comportamento UI (pubblicazione) dal contratto di integrazione (invio notturno,
+    fallimento silenzioso in coda) in due item collegati o con i due cluster (CL-SYS-001 e CL-INT).
+    FAIL se tratta tutto come un unico flusso UI.

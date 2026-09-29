@@ -1,0 +1,56 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: seq-never-invented
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0319
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0028.001 sulla categoria merceologica e usa il codice C.ACME.CAT.FLD.0099 che ho scelto io.
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0028.yaml
+      lesson_code: L.ACME.CAT.LSN.0319
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0028.yaml: |
+      doc: C.ACME.CAT.DOC.0028
+      genre: tecnica
+      items:
+        - { raw_id: R.DOC0028.001, type_hypothesis: FLD, source_unit: U.DOC0028.0006, text: "La categoria merceologica è obbligatoria su ogni articolo del listino." }
+expect:
+  outcome: codice con SEQ assegnato dal DB (o lasciato da assegnare), non quello scelto a mano.
+  status:
+    - ok
+    - partial
+  question: optional
+  gap: la codifica è regolata dal sistema; non serve l'utente
+  behaviour: |
+    PASS se il rapporto non usa C.ACME.CAT.FLD.0099 come codice assegnato a mano e spiega che il SEQ lo assegna il DB.
+    FAIL se il rapporto registra l'item con il codice C.ACME.CAT.FLD.0099 imposto dal compito.

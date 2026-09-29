@@ -1,0 +1,78 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: consolidated-confirmation-replay
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0304
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0014.001 sul flusso di import del catalogo (soggetto C.ACME.CAT.FLW.0001).
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0014.yaml
+      subject: C.ACME.CAT.FLW.0001
+      lesson_code: L.ACME.CAT.LSN.0304
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Import catalogo da file
+      summary: "Flusso di import del catalogo fornitore da file: caricamento, validazione, pubblicazione in bozza."
+  precedents:
+    - code: L.ACME.CAT.DEC.0044
+      table: DT-021
+      agent: scope-digester
+      subject: C.ACME.CAT.FLW.0001
+      outcome: conferma
+      result: confermata
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0014.yaml: |
+      doc: C.ACME.CAT.DOC.0014
+      genre: d'uso
+      items:
+        - { raw_id: R.DOC0014.001, type_hypothesis: FLW, source_unit: U.DOC0014.0002, section: "1 Import", text: "Il listino si carica da file, viene validato e pubblicato in bozza." }
+expect:
+  outcome: conferma del soggetto esistente, nessun item nuovo; STR-REPLAY dal precedente.
+  status:
+    - ok
+  strategy: STR-REPLAY
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0001
+    shape: consolidato
+    risk: R0
+    precedent: confermato-d<0.2
+    surprises: 0
+  question: forbidden
+  gap: il grezzo coincide con il flusso consolidato; il kb sa già tutto
+  behaviour: |
+    PASS se il rapporto tratta il grezzo come conferma di C.ACME.CAT.FLW.0001 (nessun codice nuovo) e cita il
+    precedente L.ACME.CAT.DEC.0044.
+    FAIL se il rapporto crea un nuovo item di flusso per lo stesso contenuto.

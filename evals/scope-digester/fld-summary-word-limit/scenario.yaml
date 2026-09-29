@@ -1,0 +1,57 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: fld-summary-word-limit
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0312
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0023.001 sul campo "codice articolo del fornitore" del listino.
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0023.yaml
+      lesson_code: L.ACME.CAT.LSN.0312
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0023.yaml: |
+      doc: C.ACME.CAT.DOC.0023
+      genre: tecnica
+      items:
+        - { raw_id: R.DOC0023.001, type_hypothesis: FLD, source_unit: U.DOC0023.0009, section: "Tracciato", text: "Il codice articolo del fornitore è una stringa alfanumerica di al più 40 caratteri, obbligatoria su ogni riga del listino, univoca per fornitore, usata nella riconciliazione con gli ordini e riportata nelle fatture elettroniche ricevute." }
+expect:
+  outcome: FLD digerito con summary di al più 20 parole e il SEQ assegnato dal DB (non inventato).
+  status:
+    - ok
+    - partial
+  question: forbidden
+  gap: la fonte tecnica basta; non serve l'utente
+  behaviour: |
+    PASS se il summary del campo digerito (se riportato) non supera 20 parole e il rapporto non inventa il numero di
+    sequenza del codice (lo assegna il DB o resta da assegnare).
+    FAIL se il summary riportato supera 20 parole o il codice ha un numero dichiarato scelto a mano.

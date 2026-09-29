@@ -1,0 +1,72 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-digester
+case: epistemic-pass-coverage
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0309
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 20
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Digerisci il grezzo R.DOC0019.001 sulla configurazione del formato dei file di listino (soggetto C.ACME.CAT.CFG.0022) e completa la passata epistemica.
+    inputs:
+      raw: customers/ACME/_inbox/CAT/raw/DOC0019.yaml
+      subject: C.ACME.CAT.CFG.0022
+      lesson_code: L.ACME.CAT.LSN.0309
+    expected_output:
+      type: digested-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.CFG.0022
+      shape: libresco
+      facets:
+        F10: R1
+      title: Formato dei file di listino
+      summary: Formati ammessi per il listino.
+  files:
+    customers/ACME/_inbox/CAT/raw/DOC0019.yaml: |
+      doc: C.ACME.CAT.DOC.0019
+      genre: tecnica
+      items:
+        - { raw_id: R.DOC0019.001, type_hypothesis: CFG, source_unit: U.DOC0019.0002, section: "Formati", text: "Sono ammessi i formati CSV e XLSX; il formato si sceglie nel profilo di import." }
+expect:
+  outcome: copertura registrata per attributo con unità e genere; gap dichiarati per gli attributi non coperti.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.CFG.0022
+    shape: libresco
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+  question: forbidden
+  gap: la passata epistemica registra ciò che è coperto e dichiara i gap; non serve l'utente
+  behaviour: |
+    PASS se il rapporto riporta la copertura del soggetto (attributi coperti con il genere tecnica e l'unità
+    U.DOC0019.0002, attributi attesi mancanti come gap).
+    FAIL se il rapporto non dice nulla della copertura o dichiara coperti attributi non presenti nella fonte.
