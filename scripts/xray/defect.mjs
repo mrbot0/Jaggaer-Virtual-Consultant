@@ -48,6 +48,10 @@ export function loadFinding(opts, positional, ws) {
   if (p.doc) p.doc = { doc: p.doc, section: p.section ?? null };
   if (p.evidence) p.evidence = p.evidence.split(",").map((x) => x.trim()).filter(Boolean);
   for (const k of ["precedent_status", "fixed_in", "section"]) delete p[k];
+  // WP10b giro 1 (minore 1): il summary da un file (testo non fidato fuori dalla riga di comando); vince su summary=
+  if (opts["summary-file"]) {
+    try { p.summary = readFileSync(resolvePath(ws, opts["summary-file"]), "utf8").trim(); } catch (err) { throw new XrayError(1, `summary illeggibile: ${opts["summary-file"]} (${String(err.code ?? err.message)})`); }
+  }
   return { ...f, ...p };
 }
 
@@ -133,11 +137,12 @@ export async function buildDefect(ws, { customer, config, finding }) {
 const HELP = `uso: node scripts/xray/defect.mjs (--finding <file.yaml> | case=<NRT…> run=<RUN> step=<n> summary=<testo> [expected=…]
        [observed=…] [classification=product-defect|regression|config-drift|baseline-change] [doc=… section=…]
        [precedent=<KEY> precedent_status=fixed fixed_in=<R>] [evidence=EV-04,EV-06] [id=F-003])
-       [--publish] [--customer C] [--workspace <dir>] [--json] [--help]
+       [--summary-file <file>] [--publish] [--customer C] [--workspace <dir>] [--json] [--help]
 
 Costruisce il Defect dal finding (mai un Incident): evidenze strict, passi minimi, riferimento documentale, "regression
 of <KEY> (fixed in <R>)" se il precedente è fixed, etichetta scope:<id>. Scrive runs/<RUN>/defects/<id>.json;
---publish lo apre (rete giù ⇒ coda offline).
+--publish lo apre (rete giù ⇒ coda offline). --summary-file: il summary da un file (vince su summary=), per non
+mettere testo non fidato nella riga di comando.
 
 Exit code: 0 ok · 1 argomenti · 2 errore di sistema · 3 rifiuto (classe, dominio, ALM).`;
 

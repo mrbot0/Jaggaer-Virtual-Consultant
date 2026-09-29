@@ -52,10 +52,12 @@ Tier (§26.3): T0 · ciclo cognitivo: ridotto, con precedenti
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R1 --precedent <classe> --mode diag --depth rapida --json
 
-5. **AGIRE** — costruisci il Defect con lo script (dal file del finding, o dai campi come argomenti):
+5. **AGIRE** — costruisci il Defect con lo script, dal file del finding (la forma di norma), o dai campi come argomenti.
+   Il summary è testo libero e non fidato: mai nella riga di comando — viene dal finding o da `--summary-file` con il
+   file che il manager ha scritto nella cartella di lavoro (`inputs.summary_file`; tu non scrivi file):
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/xray/defect.mjs" --finding customers/<C>/runs/<RUN>/findings/<id>.yaml --customer <C> --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/xray/defect.mjs" case=<NRT> run=<RUN> step=<n> "summary=<testo>" classification=regression precedent=<KEY> precedent_status=fixed fixed_in=<R> evidence=<EV> --customer <C> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/xray/defect.mjs" case=<NRT> run=<RUN> step=<n> --summary-file customers/<C>/.sessions/<sid>/work/<task>/summary.txt classification=regression precedent=<KEY> precedent_status=fixed fixed_in=<R> evidence=<EV> --customer <C> --json
 
    Solo con `inputs.publish: true`: `alm_create_defect` con il Defect costruito (testo redatto, evidenze strict del
    dossier, etichetta `scope:<S>`, riferimento al precedente) e `alm_link` al test.

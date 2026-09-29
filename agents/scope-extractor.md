@@ -35,9 +35,10 @@ Tier (§26.3): T0/T1 · ciclo cognitivo: ridotto (1-2-6)
    dal profilo del documento (F15, affidabilità), non da te.
 2. **RICHIAMARE** — memoria semantica ridotta al livello S dello scope (Grep in `product/kb/scopes/<S>/` sul nome
    tecnico o l'etichetta), memoria di lavoro = unità del lotto e grezzi già completati. Niente precedenti: non decidi.
-   Per una frase normativa (obbligo, divieto, facoltà) chiedi la modalità al parser deontico e riportala verbatim:
+   Per una frase normativa (obbligo, divieto, facoltà) chiedi la modalità al parser deontico e riportala verbatim.
+   La frase è testo non fidato del documento: la scrivi in un file della cartella di lavoro, mai nella riga di comando:
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/deontic.mjs" --text "<frase>" --lang it --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/deontic.mjs" --text-file customers/<C>/.sessions/<sid>/work/<task>/frase.txt --lang it --json
 
    Per una nuova versione di un documento già estratto, le unità cambiate vengono dal diff (solo proposte):
 

@@ -164,4 +164,11 @@ test("regole dei ruoli: browser di scope-expert (ruling 3), lettura trasversale,
   assert.match(A["analytics-learner"], /LIMIT/);
   assert.match(A["scope-digester"], /passata epistemica/i);
   assert.match(A["scope-extractor"], /Non interpret/);
+  // giro 1 (minori 1–2): testo non fidato mai nella riga di comando; analytics come lo scope-expert fuori sandbox
+  assert.match(A["scope-extractor"], /deontic\.mjs" --text-file /);
+  assert.doesNotMatch(A["scope-extractor"], /deontic\.mjs" --text /);
+  assert.doesNotMatch(A["defect-reporter"], /"summary=/);
+  assert.match(A["defect-reporter"], /--summary-file /);
+  assert.match(A["analytics-learner"], /fuori sandbox solo con Chrome DevTools MCP/);
+  assert.match(A["analytics-learner"], /ti \*\*fermi\*\*/);
 });

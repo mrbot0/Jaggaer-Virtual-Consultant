@@ -40,6 +40,7 @@
 // doppia negazione · obbligo possibile · raccomandazione · immutabilità ·
 // comportamento del sistema · non bloccante · vincolo esterno · divieto ·
 // obbligo negato (= facoltà) · obbligo · facoltà · nessun segnale.
+import { readFileSync } from "node:fs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
@@ -361,7 +362,7 @@ export function parseMandatoryText(text, { lang } = {}) {
   return parseRule(text, { lang });
 }
 
-const HELP = `uso: node scripts/ingest/deontic.mjs --text "<frase>" [--lang it|en] [--json] [--help]
+const HELP = `uso: node scripts/ingest/deontic.mjs (--text "<frase>" | --text-file <file>) [--lang it|en] [--json] [--help]
 
 Parser lessicale della modalità deontica (§19.10): obbligo, obbligo condizionale, divieto,
 facoltà, raccomandazione, comportamento del sistema, non bloccante, immutabilità, vincolo
@@ -374,7 +375,11 @@ function main(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
-  if (typeof opts.text !== "string" || !opts.text.trim()) return fail(asJson, 1, "richiesto --text \"<frase>\"");
+  // WP10b giro 1 (minore 1): --text-file per il testo non fidato dei documenti (fuori dalla riga di comando)
+  if (opts["text-file"] !== undefined) {
+    try { opts.text = readFileSync(String(opts["text-file"]), "utf8").trim(); } catch (err) { return fail(asJson, 1, `--text-file illeggibile: ${opts["text-file"]} (${err.code ?? err.message})`); }
+  }
+  if (typeof opts.text !== "string" || !opts.text.trim()) return fail(asJson, 1, "richiesto --text \"<frase>\" o --text-file <file>");
   if (opts.lang !== undefined && !["it", "en"].includes(opts.lang)) return fail(asJson, 1, "--lang: it oppure en");
   try {
     const r = parseRule(opts.text, { lang: opts.lang });
