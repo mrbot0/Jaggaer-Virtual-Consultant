@@ -100,7 +100,7 @@ cognitive_trace:
   depth: standard
   recalled: { semantic: [S.STD.XSC.PMP.0001, C.ACME.XSC.DOC.0007], episodic: [], working: [C.ACME.XSC.DOC.0008] }
   epistemic: { subject: C.ACME.XSC.PRF.0001, shape_before: ignoto, shape_after: libresco }
-  strategy: STR-ASK-EARLY
+  strategy: STR-VERIFY-FIRST
   hypotheses: null
   decisions: [L.ACME.XSC.DEC.0002]
   surprises: []

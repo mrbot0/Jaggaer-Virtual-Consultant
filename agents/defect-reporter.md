@@ -46,7 +46,10 @@ Tier (§26.3): T0 · ciclo cognitivo: ridotto, con precedenti
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" get <codice> --db customers/<C>/knowledge.db --json
 
 3. **VALUTARE** — ridotto: il precedente è `fixed` (⇒ regressione) o aperto (⇒ collegare, non duplicare)? Le
-   evidenze strict ci sono? (skill `epistemic-awareness`)
+   evidenze strict ci sono? (skill `epistemic-awareness`) Con un Defect **aperto** con lo stesso sintomo non si crea
+   un Defect nuovo, **nemmeno con `inputs.publish: true`**: il rapporto propone di aggiungere le evidenze del run al
+   Defect aperto (lo fa l'utente o il team: `alm_link` collega solo issue create in questa sessione, e le issue umane
+   non si modificano).
 4. **DECIDERE** — ridotto: la classe viene dal finding (DT-001 già decisa); qui la strategia registrata (skill
    `strategies`, `decision-tables`):
 
@@ -108,7 +111,7 @@ output:
 cognitive_trace:
   depth: rapida
   recalled: { semantic: [C.ACME.CAT.KEY.0004], episodic: [L.ACME.CAT.DEC.0058], working: [] }
-  epistemic: { subject: C.ACME.CAT.KEY.0004, shape_before: contraddittorio, shape_after: contraddittorio }
+  epistemic: { subject: C.ACME.CAT.KEY.0004, shape_before: consolidato, shape_after: consolidato }
   strategy: STR-REPLAY
   hypotheses: null
   decisions: []

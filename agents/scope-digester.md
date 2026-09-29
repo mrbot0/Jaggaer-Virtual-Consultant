@@ -122,7 +122,7 @@ cognitive_trace:
   depth: standard
   recalled: { semantic: [S.STD.CAT.CFG.0008, C.ACME.CAT.FLW.0001], episodic: [L.ACME.CAT.DEC.0033], working: [U.DOC0007.0041] }
   epistemic: { subject: C.ACME.CAT.CFG.0021, shape_before: ignoto, shape_after: libresco }
-  strategy: STR-TRIANGULATE
+  strategy: STR-VERIFY-FIRST
   hypotheses: null
   decisions: [L.ACME.CAT.DEC.0052, L.ACME.CAT.DEC.0053]
   surprises: []

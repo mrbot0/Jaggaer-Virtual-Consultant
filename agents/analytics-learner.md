@@ -56,7 +56,9 @@ Tier (§26.3): T1/T2 · ciclo cognitivo: completo
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" epistemic <TBL> --db customers/<C>/knowledge.db --json
 
-4. **DECIDERE** — la strategia (`ignoto` in R0 ⇒ `STR-EXPLORE-BUDGET`; `empirico` ⇒ `STR-GENERALIZE-CAUTIOUSLY`) e la
+4. **DECIDERE** — la strategia la dà `strategy-select`, non tu (di norma: `ignoto` in R0 ⇒ `STR-VERIFY-FIRST`,
+   `STR-EXPLORE-BUDGET` solo quando lo script lo restituisce; tabella consolidata con un precedente confermato ⇒
+   `STR-REPLAY`; `contraddittorio` ⇒ `STR-TRIANGULATE`; se lo script dà `nessuna`, nessuna strategia dedicata) e la
    consegnabilità con DT-015 (skill `strategies`, `decision-tables`):
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R0 --precedent <classe> --mode ops --depth <profondità> --json
@@ -109,8 +111,8 @@ output:
 cognitive_trace:
   depth: standard
   recalled: { semantic: [L.ACME.ANL.TBL.0007, L.ACME.ANL.TBL.0009], episodic: [L.ACME.ANL.DEC.0011], working: [L.ACME.ANL.OBS.0030] }
-  epistemic: { subject: L.ACME.ANL.TBL.0007, shape_before: empirico, shape_after: empirico }
-  strategy: STR-GENERALIZE-CAUTIOUSLY
+  epistemic: { subject: L.ACME.ANL.TBL.0007, shape_before: consolidato, shape_after: consolidato }
+  strategy: STR-REPLAY
   hypotheses: null
   decisions: [L.ACME.ANL.DEC.0012]
   surprises: []

@@ -1,6 +1,6 @@
 # Catalogo dei casi di test-mechanic (§49.1: 20 compiti). node evals/_support/generate.mjs test-mechanic
 # Riparazione dei test classificati test-defect (§30.4, §27.1, /nrt heal): localizzazione per intento semantico con la
-# catena DT-008 (testid → role → label → text → css; css solo se fragile) e i priori per strategia (dt-eval --priors
+# catena DT-008 (testid → role → label → css; css solo se fragile) e i priori per strategia (dt-eval --priors
 # auto --write-dec), linter anti-indebolimento (lint-spec --against: exit 3 = la proposta non esiste) e di confine
 # (lint-scope), PR preparata in customers/ACME/tests/proposals/<S>/<task>/ per la review umana: su /nrt heal --apply la
 # apre il manager, il merge è sempre umano. Senza browser: la verifica (passo rieseguito in shadow) la chiede al manager.

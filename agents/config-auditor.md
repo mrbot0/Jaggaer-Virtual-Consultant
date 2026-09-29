@@ -99,8 +99,8 @@ output:
 cognitive_trace:
   depth: rapida
   recalled: { semantic: [C.ACME.ADM.CFG.0019], episodic: [], working: [L.ACME.ADM.OBS.0077] }
-  epistemic: { subject: C.ACME.ADM.CFG.0019, shape_before: consolidato, shape_after: contraddittorio }
-  strategy: STR-VERIFY-FIRST
+  epistemic: { subject: C.ACME.ADM.CFG.0019, shape_before: contraddittorio, shape_after: contraddittorio }
+  strategy: STR-TRIANGULATE
   hypotheses: null
   decisions: []
   surprises: []

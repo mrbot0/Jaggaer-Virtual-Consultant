@@ -46,7 +46,7 @@ Tier (§26.3): T1 · ciclo cognitivo: completo
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" epistemic <SEL> --db customers/<C>/knowledge.db --json
 
-4. **DECIDERE** — la strategia di localizzazione con DT-008 e i priori per strategia (testid → role → label → text →
+4. **DECIDERE** — la strategia di localizzazione con DT-008 e i priori per strategia (testid → role → label →
    css; css solo se `fragile`) — skill `decision-tables`, `strategies`:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-008 first_available=<strategia> stability=<stabilità> dynamic_pattern=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent test-mechanic --subject <SEL> --write-dec --json
@@ -99,8 +99,8 @@ output:
 cognitive_trace:
   depth: standard
   recalled: { semantic: [C.ACME.CAT.SEL.0007, C.ACME.CAT.FLW.0001], episodic: [L.ACME.CAT.DEC.0044], working: [L.ACME.CAT.OBS.0121] }
-  epistemic: { subject: C.ACME.CAT.SEL.0007, shape_before: consolidato, shape_after: empirico }
-  strategy: STR-MIN-CHANGE
+  epistemic: { subject: C.ACME.CAT.SEL.0007, shape_before: consolidato, shape_after: consolidato }
+  strategy: STR-REPLAY
   hypotheses: null
   decisions: [L.ACME.CAT.DEC.0060]
   surprises: []
