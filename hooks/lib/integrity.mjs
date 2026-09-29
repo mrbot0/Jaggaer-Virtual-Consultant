@@ -7,7 +7,8 @@ import { createHash, createPublicKey, createPrivateKey, sign, verify as cryptoVe
 import { join } from "node:path";
 
 // WP10a giro 1 (I2): templates/ — spec Playwright e page object generati dai template girano in CI fuori dai guard
-export const SCOPE_DIRS = ["hooks", "scripts", "decision-tables", "strategies", "policy", "schemas", "mcp", "templates"];
+// WP10b (carry permanente): agents/ e skills/ — le definizioni orientano l'uso degli strumenti dei sub-agenti
+export const SCOPE_DIRS = ["hooks", "scripts", "decision-tables", "strategies", "policy", "schemas", "mcp", "templates", "agents", "skills"];
 // WP09c: NETWORK.md sotto integrità (doctor --network ne legge le categorie e gli host dell'allow-list)
 export const SCOPE_FILES = [".mcp.json", ".claude-plugin/plugin.json", "NETWORK.md"];
 export const MANIFEST = "integrity.json";

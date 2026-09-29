@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ROOT } from "./hook-env.mjs";
 
-const PARTS = ["hooks", "scripts", "schemas", "decision-tables", "strategies", "policy", "clusters", "templates", "mcp", ".claude-plugin", ".mcp.json", "NETWORK.md", "package.json"];
+const PARTS = ["hooks", "scripts", "schemas", "decision-tables", "strategies", "policy", "clusters", "templates", "agents", "skills", "mcp", ".claude-plugin", ".mcp.json", "NETWORK.md", "package.json"];
 
 // modules: false ⇒ nessun node_modules (per il controllo deps di doctor), senza mai cancellare un collegamento.
 export function copyPlugin(prefix = "jvc-plugin-", { modules = true } = {}) {
