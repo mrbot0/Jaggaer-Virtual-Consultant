@@ -35,7 +35,8 @@ function workspace() {
   writeFileSync(join(src, "Guida_fornitore.txt"), DOC);
   return { ws, src };
 }
-const allText = (dir) => readdirSync(dir, { recursive: true }).filter((f) => /\.ya?ml$/.test(f)).map((f) => readFileSync(join(dir, f), "utf8")).join("\n");
+// correzione mirata finale: anche i .json (il documento normalizzato in _inbox/<S>/parsed/ che legge scope-extractor)
+const allText = (dir) => readdirSync(dir, { recursive: true }).filter((f) => /\.(ya?ml|json)$/.test(f)).map((f) => readFileSync(join(dir, f), "utf8")).join("\n");
 
 test("ingest livello S (senza cliente): unità redatte con il profilo strict prima della scrittura — file, DB e grezzi senza dati personali", () => {
   const { ws, src } = workspace();
@@ -115,4 +116,21 @@ test("CLI redact: --text-file nel workspace, --json con le maschere; --help", ()
   assert.equal(j.text, "scrivere a [email], importo [importo]");
   assert.equal(run(["--help"]).status, 0);
   assert.equal(run(["--json"]).status, 1);
+});
+
+// Correzione mirata finale (minori della re-review): percorsi di sezione redatti; codici cliente senza distinzione di
+// maiuscole, salvo le parole comuni (elenco COMMON_WORD_CODES) che restano solo in maiuscolo esatto.
+test("redattore: section.path e context.section_path redatti; codici cliente case-insensitive; parole comuni solo in maiuscolo", async () => {
+  const { COMMON_WORD_CODES } = await import("../../scripts/ingest/redact.mjs");
+  const r = makeUnitRedactor({ profile: "strict", names: ["BETA", "DATA"] });
+  const raw = { type: "nota", text: "Il cliente Beta e beta usano la data di consegna; DATA è anche un cliente.", section: { path: "3.BETA.setup", title: "Setup Beta", page: 1 } };
+  const u = r(raw).unit;
+  assert.equal(u.section.path, "3.[cliente].setup");
+  assert.equal(u.section.title, "Setup [cliente]");
+  assert.equal(u.text, "Il cliente [cliente] e [cliente] usano la data di consegna; [cliente] è anche un cliente.");
+  assert.ok(COMMON_WORD_CODES.has("DATA"));
+  const fin = r({ id: "U.X.0001", doc: "S.STD.P2P.DOC.0001", type: "nota", text: "x", hash: "sha256:" + "0".repeat(64), context: { doc: "S.STD.P2P.DOC.0001", section_path: "BETA.1", section: "Beta", chapter: null, lang: "it", prev: null, next: null } }).unit;
+  assert.equal(fin.context.section_path, "[cliente].1");
+  assert.equal(fin.context.section, "[cliente]");
+  assert.equal(fin.context.doc, "S.STD.P2P.DOC.0001");
 });

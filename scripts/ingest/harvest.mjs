@@ -33,6 +33,7 @@ import { parseScreenshot, imageInfo } from "./parse-screenshots.mjs";
 import { parseTranscript, looksLikeTranscript } from "./parse-transcript.mjs";
 import { parseEmail, looksLikeEmail } from "./parse-email.mjs";
 import { parseText, parseCsv, parseHtml, decodeText } from "./parse-text.mjs";
+import { makeUnitRedactor, ingestionProfile, knownCustomers, redactDoc } from "./redact.mjs";
 
 export class UsageError extends Error { constructor(m) { super(m); this.name = "UsageError"; } }
 
@@ -132,6 +133,9 @@ export function harvest(input, { root, scope = "XSC", customer = null, write = t
   const paths = root ? workspacePaths({ root, customer }) : null;
   const outDir = paths ? join(paths.inbox(scope), "parsed") : null;
   if (write && paths) { ensureWorkspace(paths); mkdirSync(outDir, { recursive: true }); }
+  // correzione mirata finale (T3): il documento normalizzato su disco (ingresso di scope-extractor) solo redatto, con le
+  // regole delle unità (strict per il livello S); il documento restituito resta intero (la pipeline lo redige da sé)
+  const redactor = paths ? makeUnitRedactor({ profile: ingestionProfile({ level: paths.level, customer: paths.customer }), names: knownCustomers(paths.root).filter((c) => c !== paths.customer) }) : null;
   const manifest = [];
   const docs = [];
   const seen = new Map();
@@ -153,7 +157,7 @@ export function harvest(input, { root, scope = "XSC", customer = null, write = t
         seen.set(hash, rel);
         Object.assign(entry, { status: "parsed", format: r.format, parser: r.parser, sections: r.doc.sections.length, warnings: r.doc.warnings ?? [], scanned: r.doc.scanned ?? false });
         docs.push(r.doc);
-        if (write && outDir) writeFileSync(join(outDir, `${id}.json`), JSON.stringify(r.doc));
+        if (write && outDir) writeFileSync(join(outDir, `${id}.json`), JSON.stringify(redactDoc(r.doc, redactor)));
       }
       if (!seen.has(hash) && entry.status !== "sidecar") seen.set(hash, rel);
     }

@@ -14,7 +14,8 @@
 //   redactDoc(doc, redactor) → il documento normalizzato redatto (per la pre-estrazione e le righe grezze dei campi)
 //
 // La pipeline (ingest.mjs) lo applica DOPO la segmentazione e PRIMA che le unità siano scritte (segmentUnits riceve il
-// redattore e lo applica a ogni unità prima dell'hash: così i codici delle unità restano stabili fra versioni).
+// redattore e lo applica a ogni unità prima dell'hash: così i codici delle unità restano stabili fra versioni); harvest
+// scrive in _inbox/<S>/parsed/ solo il documento redatto (redactDoc).
 //
 // CLI: node scripts/ingest/redact.mjs --text-file <file> [--profile standard|strict] [--customer C] [--json] [--help]
 // Exit: 0 ok · 1 argomenti o file.
@@ -26,7 +27,16 @@ import { isMain } from "../lib/is-main.mjs";
 import { readTextFile, inputBase } from "../lib/text-file.mjs";
 
 export { PROFILES };
-const KEEP = new Set(["id", "doc", "doc_id", "type", "hash", "words", "lang", "context", "refs_out", "part"]);
+const KEEP = new Set(["id", "doc", "doc_id", "type", "hash", "words", "lang", "refs_out", "part"]);
+// Del contesto di un'unità si redigono le parti di testo (sezione, percorso, capitolo); codici e collegamenti restano.
+const CONTEXT_TEXT = new Set(["section", "section_path", "chapter"]);
+// Codici cliente che sono anche parole comuni (italiano/inglese, in maiuscolo nei documenti): per questi il confronto è
+// solo in maiuscolo esatto, per non redigere "data", "note", "test"… del testo; gli altri codici senza distinzione di
+// maiuscole (revisione finale, correzione mirata). Documentato in MANUAL §55.1.2.
+export const COMMON_WORD_CODES = new Set(["DATA", "NOTA", "NOTE", "TEST", "DEMO", "BASE", "USER", "LIST", "TIPO", "CODE", "INFO", "MAIN", "TEAM", "AREA",
+  "ITEM", "FORM", "DOCS", "HELP", "HOME", "PAGE", "LINK", "MENU", "ZONA", "RETE", "SEDE", "ANNO", "MESE", "CASO", "FASE", "NOME",
+  "VOCE", "SITO", "FILE", "LOGO", "MAIL", "TASK", "ROLE", "NAME", "TYPE", "DATE", "TIME", "YEAR", "SHOP", "BANK", "CASH", "FOOD",
+  "SALE", "PLUS", "OPEN", "DONE", "EDIT", "VIEW", "SAVE", "SEND", "STOP", "GOLD", "STAR"].filter((w) => w.length === 4));   // i codici cliente hanno 4 caratteri
 const AUTHORED = ["comment", "revision", "decision"];
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -41,7 +51,7 @@ export function knownCustomers(root) {
 export function makeUnitRedactor({ profile = "strict", names = [], env = process.env } = {}) {
   if (!PROFILES.includes(profile)) throw new Error(`profilo di redazione sconosciuto: ${profile} (${PROFILES.join(" · ")})`);
   const nameRes = [...new Set(names.filter((n) => typeof n === "string" && n.length >= 3))].sort((a, b) => b.length - a.length)
-    .map((n) => new RegExp(`(?<![A-Za-z0-9_])${esc(n)}(?![A-Za-z0-9_])`, "g"));
+    .map((n) => new RegExp(`(?<![A-Za-z0-9_])${esc(n)}(?![A-Za-z0-9_])`, COMMON_WORD_CODES.has(n.toUpperCase()) ? "g" : "gi"));
   return (unit) => {
     const masks = new Set();
     const authors = profile === "strict" ? AUTHORED.map((k) => unit?.[k]?.author).filter((a) => typeof a === "string" && a.trim().length >= 2) : [];
@@ -56,15 +66,23 @@ export function makeUnitRedactor({ profile = "strict", names = [], env = process
     };
     const deep = (v) => (typeof v === "string" ? str(v) : Array.isArray(v) ? v.map(deep) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deep(x)])) : v);
     const out = {};
-    for (const [k, v] of Object.entries(unit ?? {})) out[k] = KEEP.has(k) ? v : k === "section" && v && typeof v === "object" ? { ...deep(v), path: v.path } : deep(v);
+    for (const [k, v] of Object.entries(unit ?? {})) {
+      if (KEEP.has(k)) out[k] = v;
+      else if (k === "context" && v && typeof v === "object") out[k] = Object.fromEntries(Object.entries(v).map(([ck, cv]) => [ck, CONTEXT_TEXT.has(ck) ? deep(cv) : cv]));
+      else out[k] = deep(v);
+    }
     return { unit: out, masks: [...masks] };
   };
 }
 
-// Il documento normalizzato per gli usi a valle delle unità (pre-estrazione, righe grezze delle tabelle di campi):
-// stesse regole, sezione per sezione; path, kind e level restano.
+// Il documento normalizzato redatto: quello che harvest scrive in _inbox/<S>/parsed/<id>.json (l'ingresso di
+// scope-extractor) e quello che la pipeline usa a valle delle unità (profilo, pre-estrazione, righe grezze dei campi).
+// Stesse regole, sezione per sezione (percorso compreso: la stessa funzione sui due lati mantiene la coerenza); kind e
+// level restano; titolo e metadati redatti; l'id del documento resta (chiave del manifesto).
 export function redactDoc(doc, redactor) {
-  return { ...doc, sections: (doc.sections ?? []).map((s) => ({ ...redactor(s).unit, path: s.path, kind: s.kind, level: s.level })) };
+  const one = (v) => (v === undefined || v === null ? v : redactor({ v }).unit.v);
+  return { ...doc, ...(doc.title !== undefined ? { title: one(doc.title) } : {}), ...(doc.meta !== undefined ? { meta: one(doc.meta) } : {}),
+    sections: (doc.sections ?? []).map((s) => ({ ...redactor(s).unit, kind: s.kind, level: s.level })) };
 }
 
 export function redactUnits(units, opts = {}) {
