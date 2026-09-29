@@ -13,7 +13,7 @@ import { createInterface } from "node:readline";
 import { statSync } from "node:fs";
 import { AlmError, safeMessage, refusedIssueType, ISSUE_KEY } from "./adapter.mjs";
 import { almContext, currentSession, xrayConfigFile } from "./factory.mjs";
-import { OfflineQueue, withQueue, readPayload, recordPublished, executionFor, recordExecution } from "./queue.mjs";
+import { OfflineQueue, withQueue, readPayload, recordPublished, executionFor, recordExecution, sessionCodeOf } from "./queue.mjs";
 import { materializeResults, materializeAttachments } from "./payload.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
 
@@ -91,7 +91,7 @@ export function createServer({ env = process.env, cwd = process.cwd(), fetchImpl
       const r = await c.adapter.createExecution({ summary: a.summary, scope: a.scope, run: a.run ?? null, description: a.description, labels: a.labels,
         testPlanKey: a.testPlanKey ?? c.config.test_plan_by_scope?.[a.scope] ?? null });
       created.add(r.key);
-      if (a.run && c.customer) recordExecution(c.ws, c.customer, a.run, a.scope, r.key, "alm_create_execution");
+      if (a.run && c.customer) recordExecution(c.ws, c.customer, a.run, a.scope, r.key, "alm_create_execution", { session_code: sessionCodeOf(c.ws, c.customer, env) });
       return { key: r.key };
     },
     async alm_import_results(a, c) {

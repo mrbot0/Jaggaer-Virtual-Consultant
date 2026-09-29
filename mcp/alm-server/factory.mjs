@@ -2,24 +2,46 @@
 // validato con schemas/xray-config.schema.json. JVC_ALM_ADAPTER=mock (variabile d'ambiente del processo) forza il mock
 // (tenant demo, test del server MCP); nessun altro valore dall'ambiente cambia l'implementazione.
 // Contesto: workspace (JVC_WORKSPACE > CLAUDE_PROJECT_DIR > cwd) e cliente (JVC_CUSTOMER > sessione corrente).
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, realpathSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { AlmError, assertAdapter } from "./adapter.mjs";
 import { XrayCloudAdapter } from "./xray-cloud.mjs";
 import { XrayServerAdapter } from "./xray-server.mjs";
 import { MockAlmAdapter } from "./mock.mjs";
 import { xrayPinRefusal } from "../../hooks/lib/alm.mjs";
+import { workspaceRoot, readCurrentSession } from "../../hooks/lib/workspace.mjs";
 
 export const DEFAULTS = Object.freeze({ offline_queue: true, allow_test_issue_creation: false, attachments_cap: 5, statuses: { error_environment: "ABORTED" } });
 const CUSTOMER = /^[A-Z0-9]{4}$/;
 
 export const xrayConfigFile = (ws, customer) => join(ws, "customers", customer, "config", "xray.yaml");
 
+// WP09c giro 2 (Important 1): il workspace degli hook (stessa risoluzione: JVC_WORKSPACE > CLAUDE_PROJECT_DIR > cwd) e
+// la sua sessione JVC attiva. Con una sessione attiva: (2) il workspace di lavoro (--workspace) deve essere quello degli
+// hook; (3) mai la scorciatoia "senza sessione" (CI).
+const canonPath = (p) => { let r; try { r = realpathSync.native(p); } catch { r = resolve(p); } return process.platform === "win32" ? r.toLowerCase() : r; };
+export function hookWorkspace(env = process.env) { return workspaceRoot({}, env); }
+export function activeSessionId(ws, env = process.env) {
+  const envSid = env.JVC_SESSION_ID && /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/.test(env.JVC_SESSION_ID) ? env.JVC_SESSION_ID : null;
+  if (envSid && existsSync(join(ws, ".jvc", "sessions", `${envSid}.json`))) return envSid;
+  return readCurrentSession(ws) ?? (existsSync(join(ws, ".jvc", "current-session")) ? "?" : null);
+}
+export function assertHookWorkspace(ws, env = process.env) {
+  const real = hookWorkspace(env);
+  const sid = activeSessionId(real, env);
+  if (!sid) return null;
+  if (canonPath(ws) !== canonPath(real)) throw new AlmError("refused", `workspace ${ws} diverso da quello della sessione JVC attiva (${real}): gli script ALM lavorano solo nel workspace della sessione`);
+  return sid;
+}
+
 // session.json della sessione corrente PER QUESTO cliente (null: nessuna sessione JVC, es. CI senza Claude).
 export function customerSession(ws, customer, env = process.env) {
-  const sid = currentSession(ws, env).sid;
-  if (!sid) return null;
-  try { return JSON.parse(readFileSync(join(ws, "customers", customer, ".sessions", sid, "session.json"), "utf8")); } catch { return null; }
+  const realSid = assertHookWorkspace(ws, env);
+  const sid = realSid && realSid !== "?" ? realSid : currentSession(ws, env).sid;
+  let s = null;
+  if (sid) { try { s = JSON.parse(readFileSync(join(ws, "customers", customer, ".sessions", sid, "session.json"), "utf8")); } catch { s = null; } }
+  if (!s && realSid) throw new AlmError("refused", `sessione JVC attiva senza stato per il cliente ${customer}: \`use customer ${customer}\` prima (nessuna scorciatoia "senza sessione")`);
+  return s;
 }
 // WP09c giro 1 (I1): chiavi create dal plugin in questa sessione; null senza sessione (CI: nessun modello).
 export function sessionCreatedKeys(ws, customer, env = process.env) {
@@ -67,8 +89,9 @@ export function createAdapter(config, { env = process.env, fetchImpl, file, netw
   return assertAdapter(a);
 }
 
+// giro 2: la stessa risoluzione degli hook (hooks/lib/workspace.mjs workspaceRoot)
 export function resolveWorkspace(env = process.env, cwd = process.cwd()) {
-  return resolve(env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || cwd);
+  return workspaceRoot({ cwd }, env);
 }
 // Sessione corrente: .jvc/current-session → .jvc/sessions/<id>.json (cliente) → session.json (sola lettura).
 export function currentSession(ws, env = process.env) {

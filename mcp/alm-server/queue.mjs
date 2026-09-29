@@ -9,7 +9,7 @@ import { join } from "node:path";
 import { randomBytes } from "node:crypto";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { AlmError, safeMessage, strictText } from "./adapter.mjs";
-import { ownedExecution } from "./factory.mjs";
+import { ownedExecution, customerSession } from "./factory.mjs";
 import { materializeResults, materializeAttachments } from "./payload.mjs";
 
 const RUN = /^RUN\.([A-Z0-9]{4})\.\d{8}\.\d{4}\.[A-Z0-9]{3}$/;
@@ -35,17 +35,27 @@ export function writePayloadEntry(ws, customer, run, scope, entry) {
 export const executionsFile = (ws, customer, run) => join(ws, "customers", customer, "runs", run, "xray-executions.json");
 export function readExecutions(ws, customer, run) { return readJson(executionsFile(ws, customer, run)) ?? { run, scopes: {} }; }
 export const executionFor = (ws, customer, run, scope) => readExecutions(ws, customer, run).scopes?.[scope]?.key ?? null;
-export function recordExecution(ws, customer, run, scope, key, via) {
+// giro 2 (Minor 1): provenienza — creata dal plugin, in quale sessione — per completare in una sessione successiva un
+// import rimasto in coda (ADR-22)
+export const sessionCodeOf = (ws, customer, env = process.env) => { try { const s = customerSession(ws, customer, env); return s ? s.session_code ?? s.session_id ?? null : null; } catch { return null; } };
+export function recordExecution(ws, customer, run, scope, key, via, { session_code = null } = {}) {
   const cur = readExecutions(ws, customer, run);
-  cur.scopes = { ...(cur.scopes ?? {}), [scope]: { key, via, created_at: new Date().toISOString() } };
+  cur.scopes = { ...(cur.scopes ?? {}), [scope]: { key, via, created_at: new Date().toISOString(), created_by_plugin: true, session_code } };
   mkdirSync(join(executionsFile(ws, customer, run), ".."), { recursive: true });
   writeFileAtomic(executionsFile(ws, customer, run), `${JSON.stringify(cur, null, 2)}
 `);
 }
-// I1: un'esecuzione esistente si usa solo se creata dal plugin in questa sessione (session.alm.created); senza sessione
-// (CI) vale la mappa protetta.
-export function assertOwned(ws, customer, key, env = process.env) {
-  if (!ownedExecution(ws, customer, key, env)) throw new AlmError("refused", `esecuzione ${key} non creata dal plugin in questa sessione (session.alm.created): nessun import nei risultati altrui (§46.5)`);
+// I1: un'esecuzione esistente si usa solo se creata dal plugin: in questa sessione (session.alm.created), oppure — giro 2,
+// Minor 1 — in una sessione precedente secondo la provenienza registrata nei file protetti (mappa run+scope con
+// created_by_plugin, o voce di coda con provenance); senza sessione (CI) vale la mappa protetta.
+export function recordedByPlugin(ws, customer, key, { run = null, scope = null, entry = null } = {}) {
+  const K = String(key).toUpperCase();
+  const m = run && scope && RUN.test(run) ? readExecutions(ws, customer, run).scopes?.[scope] : null;
+  if (m && m.created_by_plugin === true && String(m.key).toUpperCase() === K) return true;
+  return entry?.provenance?.created_by_plugin === true && String(entry.provenance.key ?? "").toUpperCase() === K;
+}
+export function assertOwned(ws, customer, key, env = process.env, where = {}) {
+  if (!ownedExecution(ws, customer, key, env) && !recordedByPlugin(ws, customer, key, where)) throw new AlmError("refused", `esecuzione ${key} non creata dal plugin in questa sessione (session.alm.created): nessun import nei risultati altrui (§46.5)`);
   return key;
 }
 
@@ -71,10 +81,10 @@ export class OfflineQueue {
   save(entry) { mkdirSync(this.dir, { recursive: true }); writeFileAtomic(this.file(entry.id), `${JSON.stringify(entry, null, 2)}\n`); }
 
   // op: import { executionKey?, execution?, results } · defect { defect }. Con run+scope (import) il payload va nel dossier.
-  enqueue({ op, run = null, scope = null, payload, error = null, now = new Date() }) {
+  enqueue({ op, run = null, scope = null, payload, error = null, provenance = null, now = new Date() }) {
     if (!["import", "defect"].includes(op)) throw new AlmError("input", `operazione di coda non ammessa: ${op}`);
     const id = `Q.${stamp(now)}.${randomBytes(3).toString("hex")}`;
-    const entry = { id, op, customer: this.customer, run, scope, status: "pending", attempts: 0, created_at: now.toISOString(), last_error: error ? safeMessage(error, this.env) : null };
+    const entry = { id, op, customer: this.customer, run, scope, status: "pending", attempts: 0, created_at: now.toISOString(), last_error: error ? safeMessage(error, this.env) : null, ...(provenance ? { provenance } : {}) };
     // Defect: testo redatto (strict, valori delle variabili note) PRIMA di scriverlo su disco
     if (op === "defect" && payload?.defect) payload = { ...payload, defect: { ...payload.defect, summary: strictText(payload.defect.summary, this.env), description: strictText(payload.defect.description ?? "", this.env) } };
     if (op === "import" && run && scope) entry.payload_ref = { file: writePayloadEntry(this.ws, this.customer, this.checkRun(run), scope, payload), scope };
@@ -110,11 +120,11 @@ export class OfflineQueue {
       const results = await materializeResults(this.ws, this.customer, p.results, { allowInline: false });
       let key = p.execution_key ?? p.executionKey ?? (entry.run && entry.scope ? executionFor(this.ws, this.customer, this.checkRun(entry.run), entry.scope) : null);
       let created = false;
-      if (key) assertOwned(this.ws, this.customer, key, this.env);
+      if (key) assertOwned(this.ws, this.customer, key, this.env, { run: entry.run, scope: entry.scope, entry });
       else {
         key = (await adapter.createExecution(p.execution)).key;
         created = true;
-        if (entry.run && entry.scope) recordExecution(this.ws, this.customer, entry.run, entry.scope, key, entry.id);
+        if (entry.run && entry.scope) recordExecution(this.ws, this.customer, entry.run, entry.scope, key, entry.id, { session_code: sessionCodeOf(this.ws, this.customer, this.env) });
       }
       const report = await adapter.importResults(key, results);
       if (entry.run && entry.scope) recordPublished(this.ws, this.customer, entry.run, entry.scope, { execution_key: key, imported_at: new Date().toISOString(), tests: report.tests, evidence: report.evidence, via: entry.id });
