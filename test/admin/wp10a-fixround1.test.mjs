@@ -95,3 +95,64 @@ test("I3 /nrt report: la riga documentata porta i dati del report da file (--pay
   assert.match(lines[0], /--payload-file customers\/<C>\/\.sessions\/<sessione>\/report\.yaml/);
   assert.doesNotMatch(lines[0], /--(intent|next|assumption|expected|observed|errors|title) /);
 });
+
+// ---------------- I4: kb epistemic <soggetto> ----------------
+test("I4 kb epistemic <soggetto>: K, forma, gap e prossimo passo per un soggetto (EPI dal DB, dalla digestione, ignoto); CLI via kb.mjs", async () => {
+  const { openDb } = await import("../../scripts/kb/db.mjs");
+  const { subjectProfile } = await import("../../scripts/kb/coverage-report.mjs");
+  const ws = mkdtempSync(join(tmpdir(), "jvc-epi-"));
+  const file = join(ws, "knowledge.db");
+  const db = openDb(file);
+  const item = (code, type) => db.prepare("insert into items(code, level, customer, scope, type, title, summary, facets, status, path, hash, updated_at) values (?, ?, ?, ?, ?, 't', 's', '{}', 'digerito', 'p', 'h', 'now')").run(code, code[0], code.split(".")[1], code.split(".")[2], type);
+  item("C.ACME.ADM.CFG.0001", "CFG");
+  db.prepare("insert into epistemic(subject_code, k_tech, k_use, k_obs, k_exec, shape, open_contradictions) values (?,?,?,?,?,?,?)").run("C.ACME.ADM.CFG.0001", 0.8, 0.6, 0.1, 0, "libresco", 0);
+  item("C.ACME.ADM.CFG.0002", "CFG");
+  db.prepare("insert into attribute_coverage(subject_code, attribute, units, genre, answered, recorded_at) values ('C.ACME.ADM.CFG.0002', 'location', '[]', 'tecnica', 1, 'now')").run();
+  item("C.ACME.ADM.CFG.0003", "CFG");
+  const a = subjectProfile(db, "C.ACME.ADM.CFG.0001");
+  assert.deepEqual([a.shape, a.source, a.k_tech, a.k_obs], ["libresco", "epistemic", 0.8, 0.1]);
+  assert.match(a.next, /osservazion/i);
+  const b = subjectProfile(db, "C.ACME.ADM.CFG.0002");
+  assert.equal(b.source, "digestione");
+  assert.ok(b.gaps.includes("options") && !b.gaps.includes("location"));
+  const c = subjectProfile(db, "C.ACME.ADM.CFG.0003");
+  assert.equal(c.shape, "ignoto");
+  assert.equal(c.gaps.length, 7);
+  assert.throws(() => subjectProfile(db, "C.ACME.ADM.CFG.0099"), /non trovato/);
+  db.close();
+  const cli = (args) => spawnSync(process.execPath, [join(ROOT, "scripts/kb/kb.mjs"), "epistemic", ...args, "--db", file, "--json"], { encoding: "utf8", env: cleanEnv() });
+  const r = cli(["C.ACME.ADM.CFG.0001"]);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.equal(JSON.parse(r.stdout).subject.shape, "libresco");
+  assert.equal(cli(["C.ACME.ADM.CFG.0099"]).status, 1);
+  assert.equal(cli(["--scope", "ADM"]).status, 0, "la forma per scope resta");
+  assert.equal(cli([]).status, 1, "né soggetto né scope");
+});
+
+// ---------------- minore 1: opzioni di §56.3 che mancavano ----------------
+test("minore 1 kb find --cluster <CL>: solo i membri del cluster; ingest --kind forza il tipo di documento (validato)", async () => {
+  const { openDb } = await import("../../scripts/kb/db.mjs");
+  const { find } = await import("../../scripts/kb/find.mjs");
+  const ws = mkdtempSync(join(tmpdir(), "jvc-find-"));
+  const file = join(ws, "knowledge.db");
+  const db = openDb(file);
+  const item = (code, w) => db.prepare("insert into items(code, level, customer, scope, type, title, summary, facets, status, path, hash, updated_at, weight) values (?, 'C', 'ACME', 'CAT', 'FLW', 't', 's', '{}', 'validato', 'p', 'h', 'now', ?)").run(code, w);
+  item("C.ACME.CAT.FLW.0001", 0.9); item("C.ACME.CAT.FLW.0002", 0.5); item("C.ACME.CAT.FLW.0003", 0.7);
+  db.prepare("insert into cluster_members(cluster_code, item_code, admitted_at) values ('CL-FLW-001', 'C.ACME.CAT.FLW.0002', 'now'), ('CL-FLW-001', 'C.ACME.CAT.FLW.0003', 'now')").run();
+  assert.deepEqual(find(db, { scope: "CAT", cluster: "CL-FLW-001" }).map((r) => r.code), ["C.ACME.CAT.FLW.0003", "C.ACME.CAT.FLW.0002"]);
+  assert.equal(find(db, { scope: "CAT" }).length, 3);
+  db.close();
+  const r = spawnSync(process.execPath, [join(ROOT, "scripts/kb/kb.mjs"), "find", "--scope", "CAT", "--cluster", "CL-FLW-001", "--db", file, "--json"], { encoding: "utf8", env: cleanEnv() });
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.equal(JSON.parse(r.stdout).items.length, 2);
+  // ingest --kind
+  const { ingestFolder } = await import("../../scripts/ingest/ingest.mjs");
+  const src = mkdtempSync(join(tmpdir(), "jvc-kind-"));
+  writeFileSync(join(src, "note.txt"), "Il fornitore deve essere qualificato prima di un ordine. La richiesta passa in approvazione sopra 10.000 euro.\n");
+  const root = mkdtempSync(join(tmpdir(), "jvc-kind-ws-"));
+  const x = ingestFolder(src, { root, scope: "P2P", kind: "guida-admin", today: "2026-09-28" });
+  assert.equal(x.docs[0].kind, "guida-admin");
+  assert.throws(() => ingestFolder(src, { root, scope: "P2P", kind: "boh" }), /tipo di documento non valido/);
+  const cli = spawnSync(process.execPath, [join(ROOT, "scripts/ingest/ingest.mjs"), "--input", src, "--root", root, "--scope", "P2P", "--kind", "boh", "--json"], { encoding: "utf8", env: cleanEnv() });
+  assert.equal(cli.status, 1);
+});

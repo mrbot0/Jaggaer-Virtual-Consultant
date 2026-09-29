@@ -14,7 +14,7 @@ import { join } from "node:path";
 import YAML from "yaml";
 import { harvest } from "./harvest.mjs";
 import { segmentUnits, docIdToken } from "./segment.mjs";
-import { profileDoc, assignDocCode, recordProfile, writeProfile, validateProfile, ORIGINS } from "./profile-doc.mjs";
+import { profileDoc, assignDocCode, recordProfile, writeProfile, validateProfile, ORIGINS, KINDS } from "./profile-doc.mjs";
 import { extractDocument, writeRaw, DOC_BUDGET } from "./extract.mjs";
 import { residueEntry, writeResidue, summarize, RESIDUE_CLASSES } from "./residue.mjs";
 import { buildReport, writeReport, accountUnits } from "./ingestion-report.mjs";
@@ -40,7 +40,7 @@ function previousUnits(db, code) {
 }
 
 export function ingestDoc(ctx, doc, entry) {
-  const { db, paths, scope, origin, genre, currentRelease, today } = ctx;
+  const { db, paths, scope, origin, genre, kind, currentRelease, today } = ctx;
   const inbox = paths.inbox(scope);
   const assigned = assignDocCode(db, { level: paths.level, customer: paths.customer, source: entry.path, sha256: entry.sha256 });
   const code = assigned.code;
@@ -48,7 +48,7 @@ export function ingestDoc(ctx, doc, entry) {
   const prevCode = assigned.previous ?? (assigned.existing ? code : null);
   const prev = prevCode ? previousUnits(db, prevCode) : [];
   const { units, overflow } = segmentUnits(doc, { docCode: code, previous: prev });
-  const profile = profileDoc(doc, units, { code, origin, currentRelease, overflow, today, ...(genre ? { genre } : {}) });
+  const profile = profileDoc(doc, units, { code, origin, currentRelease, overflow, today, ...(genre ? { genre } : {}), ...(kind ? { kind } : {}) });
   const extraction = extractDocument(doc, units, { profile });
   const acc = accountUnits(units, extraction.items);
   const residueEntries = acc.residue.map((r) => residueEntry({ class: r.class, reason: r.reason, unit: r.unit, doc: code }));
@@ -104,12 +104,14 @@ export function ingestDoc(ctx, doc, entry) {
   };
 }
 
-export function ingestFolder(input, { root, scope = "XSC", customer = null, origin = null, genre = null, currentRelease = null, onDoc = null, today = new Date().toISOString().slice(0, 10) } = {}) {
+export function ingestFolder(input, { root, scope = "XSC", customer = null, origin = null, genre = null, kind = null, currentRelease = null, onDoc = null, today = new Date().toISOString().slice(0, 10) } = {}) {
   if (!root) throw new UsageError("richiesta la radice del workspace di conoscenza (--root)");
   assertOutsidePlugin(root);   // giro 1 (M14): mai nel repository del plugin
   if (!SCOPES.has(scope)) throw new UsageError(`scope sconosciuto: ${scope}`);
   if (origin && !ORIGINS.includes(origin)) throw new UsageError(`origine non valida: ${origin}`);
   if (genre && !GENRES.includes(genre)) throw new UsageError(`genere non valido: ${genre}`);
+  // WP10a giro 1 (minore 1, §56.3 --kind): il tipo di documento forzato per tutta la cartella, nel vocabolario di §19.7
+  if (kind && !KINDS.includes(kind)) throw new UsageError(`tipo di documento non valido: ${kind} (ammessi: ${KINDS.join(", ")})`);
   const t0 = Date.now();
   const paths = ensureWorkspace(workspacePaths({ root, customer }));
   const h = harvest(input, { root, scope, customer });
@@ -117,7 +119,7 @@ export function ingestFolder(input, { root, scope = "XSC", customer = null, orig
   const docs = [];
   const errors = [];
   try {
-    const ctx = { db, paths, scope, origin: origin ?? (paths.level === "S" ? "vendor" : "cliente"), genre, currentRelease, today };
+    const ctx = { db, paths, scope, origin: origin ?? (paths.level === "S" ? "vendor" : "cliente"), genre, kind, currentRelease, today };
     const byId = new Map(h.manifest.filter((m) => m.status === "parsed").map((m) => [m.doc_id, m]));
     for (const doc of h.docs) {
       try {
@@ -182,7 +184,7 @@ export function corpusSummary(h, docs, errors, { aliasStats = null, ms = 0, scop
 }
 
 const HELP = `uso: node scripts/ingest/ingest.mjs --input <cartella> --root <workspace di conoscenza> [--scope XSC] [--customer ACME]
-       [--origin vendor|cliente|partner|interno] [--genre tecnica|d'uso|empirica|testimoniale] [--current-release R] [--json] [--help]
+       [--origin vendor|cliente|partner|interno] [--genre tecnica|d'uso|empirica|testimoniale] [--kind <tipo di documento>] [--current-release R] [--json] [--help]
 
 /kb ingest (§34.2): harvest della cartella, poi per ogni documento codice DOC (versioni comprese), unità con codici
 stabili, profilo DOC con affidabilità, pre-estrazione T0 con il piano per lo scope-extractor (≤ 80k token per sessione),
@@ -199,7 +201,7 @@ function main(argv) {
   if (opts.help) { console.log(HELP); return 0; }
   if (!opts.input || !opts.root) return fail(asJson, 1, "richiesti --input <cartella> e --root <workspace>");
   try {
-    const r = ingestFolder(opts.input, { root: opts.root, scope: opts.scope ?? "XSC", customer: opts.customer ?? null, origin: opts.origin ?? null, genre: opts.genre ?? null, currentRelease: opts["current-release"] ?? null });
+    const r = ingestFolder(opts.input, { root: opts.root, scope: opts.scope ?? "XSC", customer: opts.customer ?? null, origin: opts.origin ?? null, genre: opts.genre ?? null, kind: opts.kind ?? null, currentRelease: opts["current-release"] ?? null });
     const { docs, ...summary } = r;
     console.log(JSON.stringify(asJson ? { ok: true, ...summary, docs } : { ok: true, ...summary }, null, asJson ? 0 : 1));
     return 0;

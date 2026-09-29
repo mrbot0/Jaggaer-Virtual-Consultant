@@ -41,6 +41,35 @@ export function subjectsOf(db, scope, { customer = null } = {}) {
   });
 }
 
+// WP10a giro 1 (I4, §56.3 `kb epistemic <soggetto>`): il profilo epistemico di UN soggetto — K per genere di fonte,
+// forma, CTR aperte, attributi attesi mancanti (gap) e il prossimo passo (osservazione R0, domande, CTR da risolvere).
+// Stessa fonte del report per scope: EPI dal DB (tabella epistemic), altrimenti la copertura della digestione guidata,
+// altrimenti ignoto con tutti i gap. Codice inesistente ⇒ Error "non trovato".
+export function subjectProfile(db, code) {
+  const it = db.prepare("select code, type, scope, customer, status from items where code=?").get(code);
+  if (!it) throw new Error(`soggetto non trovato: ${code}`);
+  const expected = EXPECTED[it.type];
+  if (!expected) throw new Error(`il tipo ${it.type} non ha attributi attesi: nessuna copertura epistemica per ${code}`);
+  const e = db.prepare("select * from epistemic where subject_code=?").get(code);
+  const rows = db.prepare("select attribute, genre, answered, contradiction from attribute_coverage where subject_code=?").all(code);
+  const answered = new Set(rows.filter((r) => r.answered).map((r) => r.attribute));
+  let p;
+  if (e?.shape) {
+    p = { k_tech: e.k_tech ?? 0, k_use: e.k_use ?? 0, k_obs: e.k_obs ?? 0, k_exec: e.k_exec ?? 0, k_user: e.k_user ?? null, k_level: e.k_level ?? null, shape: e.shape,
+      open_contradictions: e.open_contradictions ?? 0, gaps: rows.length ? expected.filter((a) => !answered.has(a)) : [], source: "epistemic", computed_at: e.computed_at ?? null };
+  } else {
+    const s = subjectsOf(db, it.scope).find((x) => x.code === code) ?? { k_tech: 0, k_use: 0, k_obs: 0, k_exec: 0, shape: "ignoto", gaps: [...expected], source: "nessuna" };
+    p = { k_tech: s.k_tech, k_use: s.k_use, k_obs: s.k_obs, k_exec: s.k_exec, shape: s.shape, open_contradictions: rows.filter((x) => x.contradiction).length,
+      gaps: s.gaps.length || s.source !== "nessuna" ? s.gaps : [...expected], source: s.source };
+  }
+  const next = p.shape === "consolidato" ? "nessuna azione: si agisce con la precedenza del modo (progettare: tecnica; eseguire: scoperto)"
+    : p.shape === "libresco" ? `osservazioni mirate R0 (~${OBS_MINUTES} minuti ciascuna) per passare da libresco a consolidato${p.gaps.length ? `; gap: ${p.gaps.join(", ")}` : ""}`
+      : p.shape === "empirico" ? "cercare la fonte tecnica o d'uso che conferma ciò che si è visto (digestione mirata)"
+        : p.shape === "contraddittorio" ? "risolvere le contraddizioni aperte prima di agire (DT-011)"
+          : `chiedere all'utente gli attributi mancanti (${p.gaps.join(", ")}) o osservare il soggetto`;
+  return { code, type: it.type, scope: it.scope, customer: it.customer, status: it.status, ...p, next };
+}
+
 export function report(db, { scope, customer = null, date = new Date().toISOString().slice(0, 10) } = {}) {
   if (!SCOPES.has(scope)) throw new Error(`scope sconosciuto: ${scope}`);
   const subjects = subjectsOf(db, scope, { customer });
@@ -95,8 +124,20 @@ export function formatReport(r, p = null) {
   return out.join("\n");
 }
 
+export function formatSubject(s) {
+  const k = (v) => (v == null ? "—" : Number(v).toFixed(2));
+  return [`COPERTURA EPISTEMICA — ${s.code} (${s.type}, scope ${s.scope})`,
+    `Forma      ${s.shape} (fonte: ${s.source})${s.open_contradictions ? ` · CTR aperte ${s.open_contradictions}` : ""}`,
+    `K          tecnica ${k(s.k_tech)} · d'uso ${k(s.k_use)} · osservata ${k(s.k_obs)} · esercitata ${k(s.k_exec)}${s.k_user != null ? ` · utente ${k(s.k_user)}` : ""}`,
+    `Gap        ${s.gaps.length ? s.gaps.join(", ") : "nessuno"}`,
+    `Prossimo   ${s.next}`].join("\n");
+}
+
 const HELP = `uso: node scripts/kb/coverage-report.mjs --db <knowledge.db> --scope <SCOPE> [--customer ACME] [--plan] [--json] [--help]
-     (node scripts/kb/kb.mjs epistemic --scope <SCOPE> [--plan] --db <knowledge.db>)
+     node scripts/kb/coverage-report.mjs --db <knowledge.db> <codice del soggetto> [--json]
+     (node scripts/kb/kb.mjs epistemic --scope <SCOPE> [--plan] --db <knowledge.db> · kb.mjs epistemic <codice> --db <knowledge.db>)
+
+Per soggetto (§56.3): K per genere di fonte, forma, CTR aperte, attributi attesi mancanti e il prossimo passo.
 
 Report di copertura epistemica per scope (§9.6): per tipo, soggetti per forma e K medi; riga "identità dei dati"
 (carta d'identità dei FLD); --plan: osservazioni R0 per i soggetti libreschi e domande per gli ignoti (§34.2).
@@ -104,10 +145,22 @@ Report di copertura epistemica per scope (§9.6): per tipo, soggetti per forma e
 Exit code: 0 ok · 1 errore utente (argomenti, scope sconosciuto, DB assente) · 2 errore di sistema.`;
 
 export function main(argv) {
-  const { opts } = parseArgs(argv, { flags: ["plan"] });
+  const { opts, positional } = parseArgs(argv, { flags: ["plan"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
-  if (!opts.scope) return fail(asJson, 1, "richiesto --scope <SCOPE>");
+  // WP10a giro 1 (I4): per soggetto — `epistemic <codice>` (o --subject <codice>)
+  const subject = opts.subject ?? positional[0];
+  if (subject && !opts.scope) {
+    let db;
+    try { db = openDb(opts.db ?? "knowledge.db", { createIfMissing: false }); } catch (e) { return fail(asJson, 1, e.message); }
+    try {
+      const s = subjectProfile(db, subject);
+      console.log(asJson ? JSON.stringify({ ok: true, subject: s }) : formatSubject(s));
+      return 0;
+    } catch (e) { return fail(asJson, 1, e.message ?? String(e)); }
+    finally { db.close(); }
+  }
+  if (!opts.scope) return fail(asJson, 1, "richiesto --scope <SCOPE> o il codice del soggetto");
   if (!SCOPES.has(opts.scope)) return fail(asJson, 1, `scope sconosciuto: ${opts.scope}`);
   let db;
   try { db = openDb(opts.db ?? "knowledge.db", { createIfMissing: false }); } catch (e) { return fail(asJson, 1, e.message); }

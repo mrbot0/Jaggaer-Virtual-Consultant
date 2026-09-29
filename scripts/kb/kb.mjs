@@ -23,7 +23,7 @@ import { existsSync } from "node:fs";
 const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
 
 Comandi:
-  find      --scope --type --status --level --customer --facet K=V --top N
+  find      --scope --type --status --level --customer --cluster CL-… --facet K=V --top N
   resolve   "<testo libero>" | --text-file <file> --top N   (--text-file: la domanda da un file del workspace)
   summary   <codice>
   get       <codice>
@@ -42,7 +42,7 @@ Comandi:
             unità di significato (§19.9) per la digestione guidata (§19.11): FTS + prossimità di sezione del
             soggetto; --question prende la domanda dalla banca product/question-banks/<TIPO>.yaml
   review    → scripts/kb/review.mjs (coda stratificata e verbi accept/correct/reject, §19.19)
-  epistemic --scope <S> [--plan] → scripts/kb/coverage-report.mjs (report di copertura §9.6, piano R0)
+  epistemic --scope <S> [--plan] | epistemic <codice> → scripts/kb/coverage-report.mjs (report di copertura §9.6, piano R0; per soggetto)
   compensation add|list|done → scripts/kb/compensation.mjs (compensazione PRIMA del passo, §29.6)
   snapshot <CFG…> → scripts/kb/snapshot.mjs (stato degli oggetti governati prima di una modifica, §28.1)
   coverage [--scope S] → scripts/kb/coverage.mjs (matrice CL-CFG × scope con forma epistemica, §28.2; copertura NRT: coverage.mjs nrt)
@@ -135,7 +135,7 @@ export function run(argv) {
   let items;
   try {
     if (cmd === "find") {
-      items = find(db, { scope: opt("scope"), type: opt("type"), status: opt("status"), level: opt("level"), customer: opt("customer"), facet, top });
+      items = find(db, { scope: opt("scope"), type: opt("type"), status: opt("status"), level: opt("level"), customer: opt("customer"), cluster: opt("cluster"), facet, top });
     } else if (cmd === "resolve") {
       // WP10a: --text-file (la domanda dell'utente da file: i guard negano ? , e lettere accentate in linea)
       let text = positional.join(" ");
