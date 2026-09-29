@@ -50,10 +50,13 @@ alternatives, open_files, premortem, hypotheses_register, self_check_controls, t
 --precedent: confermato-d-lt-0.2 · confermato-d-lt-0.5 · nessuno · smentito-d-lt-0.3 (forma ASCII delle classi di
              DT-023 confermato-d<0.2 …: < e > negli argomenti sono negati dai guard; regola < → -lt-)
 --precedents: l'output di 'kb precedents --json' salvato in un file (vale il più vicino).
---input: tutti gli input in un file JSON o YAML (risk, shape, surprises, precedent, graph_radius, never_executed_here);
-         le opzioni della riga di comando prevalgono sul file.
+--input: tutti gli input in un file JSON o YAML (risk, shape, surprises, precedent, graph_radius, graph_radius_gt5,
+         never_executed_here; altre chiavi = errore);
+         le opzioni della riga di comando prevalgono sul file; --precedents con --precedent (o precedent nel file) = errore.
 
 Exit code: 0 ok · 1 errore utente (input fuori dominio o mancante, file illeggibile) · 2 errore di sistema.`;
+
+const INPUT_KEYS = ["risk", "shape", "surprises", "precedent", "graph_radius", "graph_radius_gt5", "never_executed_here"];
 
 export function run(argv) {
   const { opts } = parseArgs(argv);
@@ -65,6 +68,10 @@ export function run(argv) {
     const readFile = (p) => YAML.parse(readFileSync(p, "utf8"));
     input = opts.input ? readFile(opts.input) ?? {} : {};
     if (typeof input !== "object" || Array.isArray(input)) throw new Error("--input: atteso un oggetto");
+    // WP10c giro 2: niente sovrascritture silenziose — chiavi sconosciute nel file e due fonti del precedente sono errori
+    const unknown = Object.keys(input).filter((k) => !INPUT_KEYS.includes(k));
+    if (unknown.length) throw new Error(`--input: chiavi sconosciute ${unknown.join(", ")} (ammesse: ${INPUT_KEYS.join(", ")})`);
+    if (opts.precedents && (opts.precedent !== undefined || input.precedent !== undefined)) throw new Error("--precedents insieme a --precedent (o a precedent nel file di --input): una sola fonte del precedente");
     const precedents = opts.precedents ? readFile(opts.precedents) : undefined;
     const set = (k, v) => { if (v !== undefined) input[k] = v; };
     set("risk", opts.risk);

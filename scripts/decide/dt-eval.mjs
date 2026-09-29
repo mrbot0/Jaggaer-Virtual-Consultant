@@ -59,6 +59,15 @@ export function canonicalValue(domain, v) {
   const k = Object.keys(domain.enum).find((key) => ALIAS_UNSAFE.test(key) && asciiAlias(key) === v);
   return k ?? v;
 }
+// Punto unico di canonicalizzazione (WP10c giro 2): ogni via d'ingresso (evaluate, autoPriors, main) riporta gli alias
+// al canonico con questa funzione, così DEC, priori (che filtrano le DEC per valore) e uscita parlano lo stesso valore.
+// Le chiavi non dichiarate passano intatte: le rifiuta evaluate.
+export function canonicalInputs(table, inputs = {}) {
+  const byName = Object.fromEntries((table?.inputs ?? []).map((i) => [i.name, i]));
+  const out = {};
+  for (const [k, v] of Object.entries(inputs ?? {})) out[k] = byName[k] ? canonicalValue(byName[k].domain, v) : v;
+  return out;
+}
 const aliasNote = (domain) => {
   const a = domainKeys(domain)?.filter((k) => ALIAS_UNSAFE.test(k)).map((k) => `${k} = ${asciiAlias(k)}`) ?? [];
   return a.length ? `; alias ASCII: ${a.join(" · ")}` : "";
@@ -187,8 +196,9 @@ export function loadTable(ref) {
 }
 
 // ——— valutazione (pura) ———
-export function evaluate(table, inputs = {}, { priors = {} } = {}) {
+export function evaluate(table, rawInputs = {}, { priors = {} } = {}) {
   ensureValid(table);
+  const inputs = canonicalInputs(table, rawInputs);
   // Un refuso non deve cadere nella null_policy: le chiavi non dichiarate sono un errore.
   const declared = new Set(table.inputs.map((i) => i.name));
   const undeclared = Object.keys(inputs ?? {}).filter((k) => !declared.has(k));
@@ -199,7 +209,7 @@ export function evaluate(table, inputs = {}, { priors = {} } = {}) {
   const values = {};
   const components = [];
   for (const inp of table.inputs) {
-    let v = canonicalValue(inp.domain, inputs[inp.name]);
+    let v = inputs[inp.name];
     let applied = null;
     if (v === undefined || v === null) {
       const policy = table.null_policy[inp.name];
@@ -262,7 +272,8 @@ export function evaluate(table, inputs = {}, { priors = {} } = {}) {
 }
 
 // ——— priori dal registro (§12.2) ———
-export function autoPriors(db, table, inputs, { customer, cluster, strategy } = {}) {
+export function autoPriors(db, table, rawInputs, { customer, cluster, strategy } = {}) {
+  const inputs = canonicalInputs(table, rawInputs);
   const out = {};
   for (const p of table.priors) {
     if (p.source.metric !== "rate_disproved") { out[p.name] = null; continue; }
@@ -364,7 +375,7 @@ function main(argv) {
   let table, inputs, filePriors = null, db = null;
   try {
     table = loadTable(opts.table);
-    inputs = { ...(opts.inputs ? readJsonArg(opts.inputs) : {}), ...parseKeyValues(positional) };
+    inputs = canonicalInputs(table, { ...(opts.inputs ? readJsonArg(opts.inputs) : {}), ...parseKeyValues(positional) });
     // file dei priori letto qui: un file mancante o malformato è un errore utente (exit 1)
     if (opts.priors && opts.priors !== "auto") filePriors = readJsonArg(opts.priors);
   } catch (e) { return fail(asJson, 1, String(e.message ?? e)); }

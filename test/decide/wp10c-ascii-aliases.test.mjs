@@ -113,3 +113,63 @@ test("gli help documentano le forme ASCII (mai < o > da passare sulla riga di co
     assert.match(r.stdout, /-lt-/, s);
   }
 });
+
+// WP10c giro 2 (Importante 1): i priori automatici filtrano le DEC sul valore di un input (DT-019 preferred_genre, DT-011
+// winner_genre); le DEC sono registrate con il valore canonico ("d'uso"), quindi l'alias va riportato al canonico PRIMA
+// del calcolo dei priori, in un solo punto condiviso (canonicalInputs), anche da riga di comando.
+test("priori automatici: alias e valore canonico danno lo stesso prior e lo stesso punteggio (≥ 30 DEC verificate)", async () => {
+  const { openDb } = await import("../../scripts/kb/db.mjs");
+  const { autoPriors, canonicalInputs } = await import("../../scripts/decide/dt-eval.mjs");
+  const dir = mkdtempSync(join(tmpdir(), "jvc-prior-"));
+  const file = join(dir, "knowledge.db");
+  const db = openDb(file);
+  const dec = db.prepare("insert into decisions(code,table_code,subject_cluster,inputs,outcome) values (?,?,?,?,?)");
+  const res = db.prepare("insert into outcomes(decision_code,result) values (?,?)");
+  for (let i = 1; i <= 40; i++) {
+    const c19 = `L.XXXX.XSC.DEC.${String(i).padStart(4, "0")}`;
+    dec.run(c19, "DT-019", "CL-CFG-005", JSON.stringify({ preferred_genre: "d'uso", preferred_available: true, observable_r0: true }), "d'uso");
+    res.run(c19, i <= 20 ? "smentita" : "confermata");
+    const c11 = `L.XXXX.XSC.DEC.${String(100 + i).padStart(4, "0")}`;
+    dec.run(c11, "DT-011", "CL-CFG-005", JSON.stringify({ winner_genre: "d'uso", candidate_winner: "vince-L" }), "vince-L");
+    res.run(c11, i <= 10 ? "smentita" : "confermata");
+  }
+  const t19 = loadTable("DT-019");
+  const base19 = { preferred_available: true, observable_r0: true };
+  const canon = autoPriors(db, t19, { ...base19, preferred_genre: "d'uso" }, { cluster: "CL-CFG-005" });
+  const alias = autoPriors(db, t19, { ...base19, preferred_genre: "d-uso" }, { cluster: "CL-CFG-005" });
+  assert.equal(canon.gap_unresolved_rate.n, 40);
+  assert.equal(canon.gap_unresolved_rate.value, 0.5);
+  assert.deepEqual(alias, canon);
+  assert.deepEqual(canonicalInputs(t19, { ...base19, preferred_genre: "d-uso" }), { ...base19, preferred_genre: "d'uso" });
+  const t11 = loadTable("DT-011");
+  const in11 = { candidate_winner: "vince-L", winner_evidence: "dichiarazione", genre_fit: true, confidence_gap: 0.2, user_answer: "nessuna" };
+  const p11 = autoPriors(db, t11, { ...in11, winner_genre: "d'uso" }, { cluster: "CL-CFG-005" });
+  assert.equal(p11.winner_genre_disproved.n, 40);
+  assert.deepEqual(autoPriors(db, t11, { ...in11, winner_genre: "d-uso" }, { cluster: "CL-CFG-005" }), p11);
+  db.close();
+  const cli = (g) => out(run("dt-eval.mjs", ["--table", "DT-019", `preferred_genre=${g}`, "preferred_available=true", "observable_r0=true", "--priors", "auto", "--cluster", "CL-CFG-005", "--db", file]));
+  const a = cli("d-uso");
+  const b = cli("d'uso");
+  assert.equal(b.prior_used[0].n, 40);
+  assert.equal(b.prior_used[0].applied, "auto");
+  assert.deepEqual(a.prior_used, b.prior_used);
+  assert.equal(a.score, b.score);
+  assert.equal(a.outcome, b.outcome);
+});
+
+test("depth: --precedents e --precedent insieme sono un errore; chiavi sconosciute nel file di --input sono un errore", () => {
+  const dir = mkdtempSync(join(tmpdir(), "jvc-depth2-"));
+  const p = join(dir, "prec.json");
+  writeFileSync(p, JSON.stringify({ items: [{ code: "L.XXXX.CAT.DEC.0001", d: 0.1, result: "confermata" }] }));
+  const both = run("depth.mjs", ["--risk", "R0", "--shape", "consolidato", "--precedents", p, "--precedent", "nessuno"]);
+  assert.equal(both.status, 1, both.stdout);
+  assert.match(both.stdout, /--precedent/);
+  const f = join(dir, "in.json");
+  writeFileSync(f, JSON.stringify({ risk: "R0", shape: "consolidato", precedente: "nessuno" }));
+  const bad = run("depth.mjs", ["--input", f]);
+  assert.equal(bad.status, 1, bad.stdout);
+  assert.match(bad.stdout, /precedente/);
+  const withPrec = join(dir, "in2.json");
+  writeFileSync(withPrec, JSON.stringify({ risk: "R0", shape: "consolidato", precedent: "nessuno" }));
+  assert.equal(run("depth.mjs", ["--input", withPrec, "--precedents", p]).status, 1, "precedente nel file e --precedents insieme");
+});
