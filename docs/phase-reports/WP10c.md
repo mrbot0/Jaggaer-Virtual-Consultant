@@ -53,3 +53,10 @@ consegna: **1090 test, 1090 verdi** (1076 + 14 nuovi); test di tempo dei guard v
 | I2 attivazione del piano in sandbox | agent-manager: la sessione principale attiva con `step-check --step 1` (in sandbox subito, fuori sandbox dopo l'A1) e ridispaccia con `reply_to`; sequenze §45.3/§45.4 | `test/docs/skills-agent-manager.test.mjs` |
 | I3 nessuna prova delle righe contro i guard | ogni riga di skill e agenti passa i guard PreToolUse reali (manager come sessione principale, skill come i ruoli che le citano), con ogni valore reale dei domini DT, e gli script di decisione la accettano; fallisce sulle righe originali | `test/docs/skills-guards.test.mjs` |
 | minori | `/use scope` prima di handoff e dispatch di process-mapper/weekly-digest; riga di `agents watch` risolta (percorso assoluto, sessione da `agents status`, `--workspace`); disgiunzione debole tolta; §57.6 del manuale corretto e verificato; `agents.mjs` ricade sulla sessione corrente con `${CLAUDE_SESSION_ID}` non sostituito | test citati + `manual-alignment`, `test/admin/wp10c-fixround1.test.mjs` |
+
+## Giro di correzione 2
+
+Un solo punto di canonicalizzazione degli alias in `dt-eval` (`canonicalInputs`, usato da evaluate, autoPriors e dalla
+riga di comando: con l'alias i priori automatici ora trovano le DEC registrate con il canonico, test con 40 DEC
+verificate); depth rifiuta due fonti del precedente e chiavi sconosciute in `--input`; "in sandbox o dev" nelle skill.
+Suite: **1092/1092 verdi**; `integrity.json` ricostruito.
