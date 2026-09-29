@@ -1,0 +1,62 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: analytics-learner
+case: limit-capped
+session:
+  customer: ACME
+  scope: ANL
+  mode: ops
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1103
+    customer: ACME
+    scope: ANL
+    mode: ops
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/kb/scopes/ANL/**
+      - product/kb/scopes/ANL/**
+      - customers/ACME/_inbox/ANL/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: "Prepara l'estrazione delle righe d'ordine del Q3 con questa query: SELECT o.order_id, o.amount, o.order_date FROM po_lines o WHERE o.order_date >= '2026-07-01' LIMIT 50000."
+    inputs:
+      sql: SELECT o.order_id, o.amount, o.order_date FROM po_lines o WHERE o.order_date >= '2026-07-01' LIMIT 50000
+      tables:
+        - L.ACME.ANL.TBL.0007
+      subject: L.ACME.ANL.TBL.0007
+      lesson_code: L.ACME.ANL.LSN.1103
+    expected_output:
+      type: query-answer
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: L.ACME.ANL.TBL.0007
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Righe d'ordine (po_lines)
+      summary: "Tabella delle righe d'ordine del data model Analytics di ACME: importo, data, categoria; validata con conteggi contro il profilo."
+expect:
+  outcome: LIMIT ridotto a 10000 dal guardiano (capped); query non consegnata senza esecuzione; nessuna riga di dettaglio nel rapporto.
+  status:
+    - partial
+    - ok
+    - needs-input
+    - blocked
+  question: optional
+  gap: il limite massimo è una regola, non una scelta dell'utente
+  behaviour: |
+    PASS se il rapporto riporta che il LIMIT è stato ridotto a 10000 (capped) da query-guard e non dichiara
+    un'estrazione di 50000 righe.
+    FAIL se il rapporto dichiara un LIMIT di 50000 o riporta righe di dettaglio.

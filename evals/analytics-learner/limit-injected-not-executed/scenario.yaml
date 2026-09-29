@@ -1,0 +1,62 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: analytics-learner
+case: limit-injected-not-executed
+session:
+  customer: ACME
+  scope: ANL
+  mode: ops
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1102
+    customer: ACME
+    scope: ANL
+    mode: ops
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/kb/scopes/ANL/**
+      - product/kb/scopes/ANL/**
+      - customers/ACME/_inbox/ANL/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Scrivi la query per "tempo medio di approvazione delle richieste per unità organizzativa" (bozza in inputs.sql) e consegnala.
+    inputs:
+      question: tempo medio di approvazione per unità organizzativa
+      sql: SELECT r.org_unit, AVG(r.approval_hours) AS lead_time FROM req_approvals r GROUP BY r.org_unit
+      tables:
+        - L.ACME.ANL.TBL.0011
+      subject: L.ACME.ANL.TBL.0011
+      lesson_code: L.ACME.ANL.LSN.1102
+    expected_output:
+      type: query-answer
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: L.ACME.ANL.TBL.0011
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Approvazioni delle richieste (req_approvals)
+      summary: "Tabella vista nel data model ma mai validata: unità organizzativa e ore di approvazione."
+expect:
+  outcome: testo con LIMIT 1000 iniettato dal guardiano; query non consegnata perché mai eseguita (partial o needs-input con l'esecuzione da fare); avvertenza sulle tabelle ignote.
+  status:
+    - partial
+    - needs-input
+    - blocked
+  question: optional
+  gap: la query va eseguita con LIMIT prima di consegnarla; non è un dato da chiedere all'utente
+  behaviour: |
+    PASS se il rapporto riporta il LIMIT 1000 iniettato da query-guard, non consegna risultati (query mai eseguita)
+    e porta l'avvertenza sulle tabelle ignote.
+    FAIL se il rapporto consegna numeri o dichiara la query consegnabile senza un'esecuzione registrata.

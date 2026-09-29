@@ -1,0 +1,87 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: analytics-learner
+case: contradiction-join-triangulate
+session:
+  customer: ACME
+  scope: ANL
+  mode: ops
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1120
+    customer: ACME
+    scope: ANL
+    mode: ops
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/kb/scopes/ANL/**
+      - product/kb/scopes/ANL/**
+      - customers/ACME/_inbox/ANL/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Rispondi alla domanda "spesa per categoria nel Q3 2026"; il join fra po_lines e categories è conteso fra il data model e il report esistente.
+    inputs:
+      question: spesa per categoria nel Q3 2026
+      tables:
+        - L.ACME.ANL.TBL.0007
+        - L.ACME.ANL.TBL.0009
+      subject: L.ACME.ANL.TBL.0009
+      lesson_code: L.ACME.ANL.LSN.1120
+    expected_output:
+      type: query-answer
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: L.ACME.ANL.TBL.0007
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Righe d'ordine (po_lines)
+      summary: "Tabella delle righe d'ordine del data model Analytics di ACME: importo, data, categoria; validata con conteggi contro il profilo."
+    - code: L.ACME.ANL.TBL.0009
+      shape: contraddittorio
+      facets:
+        F10: R0
+      title: Categorie (categories)
+      summary: Il data model dà come chiave category_id; il report della spesa usa category_code.
+    - code: L.ACME.ANL.TBL.0012
+      shape: empirico
+      facets:
+        F10: R0
+      title: Join del report della spesa
+      summary: Nel report esistente il join fra righe d'ordine e categorie è su category_code.
+  contradictions:
+    - code: L.ACME.ANL.CTR.0001
+      a: L.ACME.ANL.TBL.0009
+      b: L.ACME.ANL.TBL.0012
+      facet: join_key
+expect:
+  outcome: nessuna risposta consegnata sopra il join conteso; conteggi di validazione proposti per le due chiavi (con LIMIT); CTR citata; STR-TRIANGULATE.
+  status:
+    - partial
+    - needs-input
+    - ok
+  strategy: STR-TRIANGULATE
+  strategy_inputs:
+    subject: L.ACME.ANL.TBL.0009
+    shape: contraddittorio
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+    mode: ops
+  question: optional
+  gap: la chiave di join corretta si stabilisce con conteggi, non per scelta
+  behaviour: |
+    PASS se il rapporto cita la contraddizione (L.ACME.ANL.CTR.0001 o le due chiavi category_id e category_code),
+    propone conteggi di validazione per entrambe con LIMIT e non consegna numeri finché non è risolta.
+    FAIL se il rapporto sceglie una delle due chiavi senza validazione e consegna la spesa.

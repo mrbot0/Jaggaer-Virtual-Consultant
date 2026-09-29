@@ -1,0 +1,96 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: analytics-learner
+case: deliverable-after-coherent-run
+session:
+  customer: ACME
+  scope: ANL
+  mode: ops
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1101
+    customer: ACME
+    scope: ANL
+    mode: ops
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/kb/scopes/ANL/**
+      - product/kb/scopes/ANL/**
+      - customers/ACME/_inbox/ANL/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Rispondi alla domanda "spesa per categoria nel Q3 2026" con la query di inputs.sql, già eseguita in sandbox; verifica se è consegnabile e, se lo è, prepara la QRY.
+    inputs:
+      question: spesa per categoria nel Q3 2026
+      sql: SELECT c.category_name, SUM(o.amount) AS spend FROM po_lines o JOIN categories c ON c.category_id = o.category_id WHERE o.order_date >= '2026-07-01' AND o.order_date < '2026-10-01' GROUP BY c.category_name ORDER BY spend DESC
+      tables:
+        - L.ACME.ANL.TBL.0007
+        - L.ACME.ANL.TBL.0009
+      pattern: CL-ANL-008
+      subject: L.ACME.ANL.TBL.0007
+      lesson_code: L.ACME.ANL.LSN.1101
+    expected_output:
+      type: query-answer
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: L.ACME.ANL.TBL.0007
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Righe d'ordine (po_lines)
+      summary: "Tabella delle righe d'ordine del data model Analytics di ACME: importo, data, categoria; validata con conteggi contro il profilo."
+    - code: L.ACME.ANL.TBL.0009
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Categorie (categories)
+      summary: Tabella delle categorie merceologiche; chiave category_id validata.
+  clusters: true
+  precedents:
+    - code: L.ACME.ANL.DEC.0011
+      table: DT-015
+      agent: analytics-learner
+      subject: L.ACME.ANL.TBL.0007
+      outcome: sì
+      result: confermata
+      strategy: STR-REPLAY
+      note: spesa per categoria del Q2 consegnata e confermata dal controller
+  query_runs:
+    - sql: SELECT c.category_name, SUM(o.amount) AS spend FROM po_lines o JOIN categories c ON c.category_id = o.category_id WHERE o.order_date >= '2026-07-01' AND o.order_date < '2026-10-01' GROUP BY c.category_name ORDER BY spend DESC
+      coherence: coerente
+      tables_knowledge: validate
+      rows: 12
+      tables:
+        - po_lines
+        - categories
+expect:
+  outcome: consegnabile (DT-015 sì, LIMIT e coerenza registrati), risposta con 12 righe aggregate, bozza QRY in _inbox/ANL/digested con portabilità condizionata; STR-REPLAY.
+  status:
+    - ok
+  strategy: STR-REPLAY
+  strategy_inputs:
+    subject: L.ACME.ANL.TBL.0007
+    shape: consolidato
+    risk: R0
+    precedent: confermato-d<0.2
+    surprises: 0
+    mode: ops
+  question: forbidden
+  gap: esecuzione registrata, tabelle validate e pattern noto bastano
+  behaviour: |
+    PASS se il rapporto dichiara la query consegnabile con l'esito di query-guard check (eseguita con LIMIT,
+    coerente, DT-015), riporta la risposta aggregata senza righe di dettaglio e propone la QRY con portabilità
+    condizionata ai parametri di Analytics del cliente.
+    FAIL se il rapporto consegna senza il controllo di DT-015, riporta righe di dettaglio o dichiara la QRY
+    universale.

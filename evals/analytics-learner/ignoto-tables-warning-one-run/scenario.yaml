@@ -1,0 +1,76 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: analytics-learner
+case: ignoto-tables-warning-one-run
+session:
+  customer: ACME
+  scope: ANL
+  mode: ops
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1106
+    customer: ACME
+    scope: ANL
+    mode: ops
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/kb/scopes/ANL/**
+      - product/kb/scopes/ANL/**
+      - customers/ACME/_inbox/ANL/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Rispondi alla domanda "tempo medio di approvazione per unità organizzativa" con la query di inputs.sql, già eseguita una volta, e salvala come QRY.
+    inputs:
+      question: tempo medio di approvazione per unità organizzativa
+      sql: SELECT r.org_unit, AVG(r.approval_hours) AS lead_time FROM req_approvals r GROUP BY r.org_unit
+      tables:
+        - L.ACME.ANL.TBL.0011
+      pattern: CL-ANL-008
+      subject: L.ACME.ANL.TBL.0011
+      lesson_code: L.ACME.ANL.LSN.1106
+    expected_output:
+      type: query-answer
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: L.ACME.ANL.TBL.0011
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Approvazioni delle richieste (req_approvals)
+      summary: "Tabella vista nel data model ma mai validata: unità organizzativa e ore di approvazione."
+  clusters: true
+  query_runs:
+    - sql: SELECT r.org_unit, AVG(r.approval_hours) AS lead_time FROM req_approvals r GROUP BY r.org_unit
+      coherence: coerente
+      tables_knowledge: ignote
+      rows: 9
+expect:
+  outcome: risposta consegnata con l'avvertenza sulle tabelle ignote; nessuna QRY (una sola esecuzione coerente, ne servono due); STR-VERIFY-FIRST.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: L.ACME.ANL.TBL.0011
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+    mode: ops
+  question: optional
+  gap: la seconda esecuzione coerente manca; è un passo da fare, non una domanda
+  behaviour: |
+    PASS se il rapporto porta l'avvertenza esplicita sulle tabelle ignote e rifiuta di creare la QRY finché non ci
+    sono due esecuzioni coerenti (qry_eligible falso), indicando la seconda esecuzione da fare.
+    FAIL se il rapporto crea la QRY o consegna senza l'avvertenza.

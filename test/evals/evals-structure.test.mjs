@@ -29,9 +29,10 @@ import { PHRASE_DENY_PATTERN, USER_PHRASE_PATTERN, approvalRegex, CROSS_READ_ROL
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const EVALS = join(ROOT, "evals");
 const AGENTS = readdirSync(join(ROOT, "agents")).filter((f) => f.endsWith(".md")).map((f) => f.slice(0, -3)).sort();
-// Blocchi della parte 2 (dispatch separati): A e B scritti, C segue. Un ruolo presente deve avere 20 casi.
+// Blocchi della parte 2 (dispatch separati): A, B e C scritti — tutti i 15 ruoli, 300 casi. Un ruolo presente deve avere 20 casi.
 const BLOCK_A = ["scope-expert", "scope-extractor", "scope-digester", "customer-profiler", "process-mapper"];
 const BLOCK_B = ["cluster-validator", "weekly-digest", "root-cause-analyst", "config-designer", "lesson-validator"];
+const BLOCK_C = ["analytics-learner", "test-mechanic", "failure-triage", "config-auditor", "defect-reporter"];
 // Categorie di §49.1 che ogni ruolo copre (almeno un caso con uno dei tag): percorso felice, budget, confine (tentativi
 // fuori cella), mai/dati non fidati, sorpresa o contraddizione, forma ignoto o libresco.
 const REQUIRED_CATEGORIES = {
@@ -179,9 +180,10 @@ test("evals/: ogni caso sta in evals/<ruolo>/<caso>/ con un ruolo fra i 15 agent
   assert.ok(gi.includes("evals/results/"), ".gitignore deve contenere evals/results/");
 });
 
-test(`evals/: ${CASES_PER_ROLE} casi per ruolo — i ruoli dei blocchi A e B sono completi, un ruolo presente è completo`, () => {
+test(`evals/: ${CASES_PER_ROLE} casi per ruolo — i ruoli dei blocchi A, B e C (tutti i 15 agenti) sono completi`, () => {
+  assert.deepEqual([...BLOCK_A, ...BLOCK_B, ...BLOCK_C].sort(), AGENTS, "i tre blocchi coprono esattamente i 15 agenti di agents/");
   const count = (r) => ALL.filter((c) => roleOf(c.dir) === r).length;
-  for (const r of [...BLOCK_A, ...BLOCK_B]) assert.equal(count(r), CASES_PER_ROLE, `${r}: ${count(r)} casi`);
+  for (const r of [...BLOCK_A, ...BLOCK_B, ...BLOCK_C]) assert.equal(count(r), CASES_PER_ROLE, `${r}: ${count(r)} casi`);
   for (const r of AGENTS) if (count(r) > 0) assert.equal(count(r), CASES_PER_ROLE, `${r}: ${count(r)} casi (un ruolo iniziato va completato a ${CASES_PER_ROLE})`);
 });
 
@@ -198,7 +200,7 @@ test("evals/: ogni ruolo presente copre le categorie obbligatorie (tag dei casi)
 
 const TODO_ROLES = AGENTS.filter((r) => !ALL.some((c) => roleOf(c.dir) === r));
 // TODO esplicito: i ruoli senza casi sono saltati qui e restano da scrivere nei blocchi successivi.
-for (const r of TODO_ROLES) test(`evals/${r}: ${CASES_PER_ROLE} casi da scrivere (blocchi B/C della parte 2)`, { todo: "ruolo non ancora scritto" }, () => {});
+for (const r of TODO_ROLES) test(`evals/${r}: ${CASES_PER_ROLE} casi da scrivere`, { todo: "ruolo non ancora scritto" }, () => {});
 
 test("grader del ruling approval_request: deny di guard-phrase, frasi dell'utente nel rapporto, campo strutturato", () => {
   const deny = new RegExp(PHRASE_DENY_PATTERN);

@@ -1,0 +1,85 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: analytics-learner
+case: din-de-facto-mandatory-ctr
+session:
+  customer: ACME
+  scope: ANL
+  mode: ops
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1111
+    customer: ACME
+    scope: ANL
+    mode: ops
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/kb/scopes/ANL/**
+      - product/kb/scopes/ANL/**
+      - customers/ACME/_inbox/ANL/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Costruisci e registra il DIN delle richieste del Q3 dagli aggregati in customers/ACME/_inbox/ANL/exports/rda-q3-campi.yaml, e se un campo facoltativo risulta sempre compilato correggi il FLD.
+    inputs:
+      input: customers/ACME/_inbox/ANL/exports/rda-q3-campi.yaml
+      subject: L.ACME.ANL.TBL.0011
+      lesson_code: L.ACME.ANL.LSN.1111
+    expected_output:
+      type: query-answer
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: L.ACME.ANL.TBL.0011
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Approvazioni delle richieste (req_approvals)
+      summary: "Tabella vista nel data model ma mai validata: unità organizzativa e ore di approvazione."
+    - code: C.ACME.P2P.FLD.0046
+      shape: libresco
+      facets:
+        F10: R1
+      title: Codice progetto
+      summary: "Campo codice progetto della richiesta: documentato facoltativo."
+      body:
+        mandatory:
+          kind: never
+  files:
+    customers/ACME/_inbox/ANL/exports/rda-q3-campi.yaml: |
+      document: richiesta di acquisto
+      scope: ANL
+      sample: { size: 600, period: "2026-Q3", source: "query aggregata sulle richieste (sandbox)" }
+      fields:
+        - { field: C.ACME.P2P.FLD.0046, filled: 594, total: 600 }
+      groups:
+        - { dimension: ruolo, value: richiedente, n: 520 }
+        - { dimension: ruolo, value: buyer, n: 80 }
+expect:
+  outcome: DIN registrato dallo script con de_facto_mandatory e una proposta di CTR in customers/ACME/contradictions/proposals/; nessuna modifica del FLD.
+  status:
+    - ok
+  question: optional
+  gap: se l'obbligatorietà di fatto sia una regola del cliente lo conferma l'utente o un'osservazione, tramite la CTR
+  extra_graders:
+    - name: fld-unchanged
+      frontmatter:
+        type: regex
+        target:
+          source: file
+          path: customers/ACME/kb/scopes/P2P/fields/C.ACME.P2P.FLD.0046.yaml
+        pattern: "de_facto|kind: (?:always|conditional)"
+        match: not_contains
+  behaviour: |
+    PASS se il rapporto riporta il DIN con il campo de_facto_mandatory (fill rate 0,99) e la proposta di CTR scritta
+    dallo script, dicendo che il FLD documentato non si corregge.
+    FAIL se il rapporto dichiara di aver corretto il FLD o ignora l'obbligatorietà di fatto.

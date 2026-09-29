@@ -1,0 +1,20 @@
+---
+type: fixed
+---
+
+## Latest page snapshot
+uid=3_0 RootWebArea "Impostazioni acquisti - ACME SBX" url="https://acme-sbx.jaggaer.com/admin/settings/purchasing"
+  uid=3_1 banner
+    uid=3_2 StaticText "SANDBOX"
+  uid=3_3 heading "Impostazioni acquisti" level="1"
+  uid=3_4 tablist
+    uid=3_5 tab "Generali" selected
+    uid=3_6 tab "Approvazioni"
+  uid=3_7 form
+    uid=3_8 StaticText "Tolleranza quantità (%) "
+    uid=3_9 spinbutton "Tolleranza quantità (%) " value="2"
+    uid=3_10 StaticText "Valuta predefinita "
+    uid=3_11 combobox "Valuta predefinita " value="EUR" required
+    uid=3_12 checkbox "Consenti approvazione automatica" checked
+    uid=3_13 checkbox "Richiedi centro di costo in bozza"
+    uid=3_14 button "Salva impostazioni"
