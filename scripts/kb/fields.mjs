@@ -5,7 +5,8 @@
 //                   reason_kind, custom, transform? }], truncated, total }
 //     doc          "requisition" o "document.requisition"
 //     mandatoryIn  stato: kind always, oppure conditional/undocumented senza stati o con quello stato (never esclusi)
-//     company      FLD il cui `when` cita la società, o senza condizione di società
+//     company      FLD il cui `when` cita la società in parte positiva, o senza condizione di società;
+//                  esclusi quelli che la escludono (NOT (…), NOT IN, !=)
 //     chain        membri di un CL-FLD-CHAIN (cluster_members o cluster[] del file), in ordine di processo
 //     custom       solo campi aggiunti dal cliente
 //     reason       reason.kind; `ui` = obbligatori solo per la UI e SENZA ragione a valle (ADR-77: le domande)
@@ -23,6 +24,44 @@ const CODE_RE = /^[A-Za-z0-9_.-]{1,80}$/;
 const COMPANY_COND = /\bcompany\b|societ/i;
 const json = (v) => (v === undefined || v === null ? null : JSON.stringify(v));
 const parse = (s) => (s === null || s === undefined ? null : JSON.parse(s));
+
+// Polarità di ogni carattere della condizione: le parentesi aperte da `NOT (`
+// invertono la polarità (annidamenti: parità). `<x>company NOT IN (…)` e
+// `<x>company != X` / `<> X` sono prima riscritti come `NOT (<x>company IN (…))`.
+function splitPolarity(raw) {
+  const cond = raw
+    .replace(/([\w.]*company)\s+NOT\s+IN\s*\(([^()]*)\)/gi, "NOT ($1 IN ($2))")
+    .replace(/([\w.]*company)\s*(?:!=|<>)\s*([A-Za-z0-9_-]+)/gi, "NOT ($1 IN ($2))");
+  const pos = [], neg = [];
+  const stack = []; // true = parentesi aperta da NOT
+  let negDepth = 0;
+  for (let i = 0; i < cond.length; i++) {
+    const m = /^NOT\s*\(/i.exec(cond.slice(i, i + 16));
+    if (m && (i === 0 || !/[A-Za-z0-9_]/.test(cond[i - 1]))) {
+      stack.push(true); negDepth++;
+      pos.push(" "); neg.push(" ");
+      i += m[0].length - 1;
+      continue;
+    }
+    const c = cond[i];
+    if (c === "(") stack.push(false);
+    else if (c === ")" && stack.length && stack.pop()) { negDepth--; pos.push(" "); neg.push(" "); continue; }
+    (negDepth % 2 ? neg : pos).push(c);
+    (negDepth % 2 ? pos : neg).push(" ");
+  }
+  return { pos: pos.join(""), neg: neg.join("") };
+}
+
+// `--company X`: il campo vale per X se la condizione non esclude X (menzione in
+// una parte negata) e, quando la parte positiva ha una condizione di società, la cita.
+export function companyApplies(cond, company) {
+  if (!cond || !COMPANY_COND.test(cond)) return true;
+  const re = new RegExp(`(^|[^A-Za-z0-9_])${String(company).replace(/[-]/g, "\\-")}([^A-Za-z0-9_]|$)`);
+  const { pos, neg } = splitPolarity(String(cond));
+  if (COMPANY_COND.test(neg) && re.test(neg)) return false;
+  if (COMPANY_COND.test(pos)) return re.test(pos);
+  return true;
+}
 
 // ——— indicizzazione (reindex) ———
 export function indexFieldModel(db, obj) {
@@ -123,10 +162,7 @@ export function fields(db, { doc, mandatoryIn, company, chain, custom, reason, s
   }
   let rows = db.prepare(`select f.code, i.summary, f.document, f.section, f.technical_name, f.mandatory_kind, f.in_states, f.when_cond, f.by_role, f.unless_cond,
     f.reason_kind, f.custom from fields f join items i on i.code = f.code where ${where.join(" and ")} order by f.document, f.section, f.code`).all(...args);
-  if (company) {
-    const re = new RegExp(`(^|[^A-Za-z0-9_])${company.replace(/[-]/g, "\\-")}([^A-Za-z0-9_]|$)`);
-    rows = rows.filter((r) => !r.when_cond || !COMPANY_COND.test(r.when_cond) || re.test(r.when_cond));
-  }
+  if (company) rows = rows.filter((r) => companyApplies(r.when_cond, company));
   let transform = new Map();
   if (chain) {
     const po = processOrder(db, rows.map((r) => r.code));

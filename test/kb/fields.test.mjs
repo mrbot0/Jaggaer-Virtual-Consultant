@@ -109,6 +109,21 @@ test("fields --company IT01: FLD il cui when cita la società, o senza condizion
   assert.ok(de.includes("S.STD.P2P.FLD.0202") && !de.includes("S.STD.P2P.FLD.0117"));
 });
 
+test("fields --company: una società esclusa dalla condizione (NOT (…), NOT IN, !=) non riceve il campo", () => {
+  const extra = [
+    fld("S.STD.P2P.FLD.0300", { mandatory: { kind: "always", when: "NOT (document.company IN (DE01))" } }),
+    fld("S.STD.P2P.FLD.0301", { mandatory: { kind: "always", when: "document.company IN (IT01, DE01) AND NOT (document.company IN (DE01))" } }),
+    fld("S.STD.P2P.FLD.0302", { mandatory: { kind: "always", when: "document.company NOT IN (DE01, FR01)" } }),
+    fld("S.STD.P2P.FLD.0303", { mandatory: { kind: "always", when: "document.company != DE01" } }),
+    fld("S.STD.P2P.FLD.0304", { mandatory: { kind: "always", when: "document.category IN (IT) AND NOT (document.amount > 5000)" } }),
+    fld("S.STD.P2P.FLD.0305", { mandatory: { kind: "always", when: "NOT (NOT (document.company IN (DE01)))" } }),
+  ];
+  const { db } = workspace(extra);
+  const pick = (c) => fields(db, { company: c }).items.map((x) => x.code).sort();
+  assert.deepEqual(pick("DE01"), ["S.STD.P2P.FLD.0304", "S.STD.P2P.FLD.0305"]);
+  assert.deepEqual(pick("IT01"), ["S.STD.P2P.FLD.0300", "S.STD.P2P.FLD.0301", "S.STD.P2P.FLD.0302", "S.STD.P2P.FLD.0303", "S.STD.P2P.FLD.0304"]);
+});
+
 test("fields --custom --reason ui: i campi custom obbligatori senza ragione a valle (le domande da fare)", () => {
   const { db } = workspace(sample());
   assert.deepEqual(fields(db, { doc: "requisition", custom: true, reason: "ui" }).items.map((x) => x.code), ["S.STD.P2P.FLD.0204"]);
