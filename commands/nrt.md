@@ -71,9 +71,11 @@ effetto si eseguono con Chrome DevTools MCP (il browser di Claude lì legge e na
   fallisce; più tardi `--retry-queued` (la terza). Le credenziali restano nelle variabili d'ambiente: mai stamparle.
 - `report [<RUN>]` — report di test (RPT, §29.8): verdetto per scope, fallimenti con classificazione e azione:
 
-      node "${CLAUDE_PLUGIN_ROOT}/scripts/report/build-report.mjs" --kind test --title <titolo semplice> --run <RUN> --json
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/report/build-report.mjs" --kind test --run <RUN> --payload-file customers/<C>/.sessions/<sessione>/report.yaml --json
 
-  Il titolo è fatto solo di lettere senza accenti, cifre, spazi e `- . _` (es. `Regressione R25.3 CAT`).
+  Prima scrivi `report.yaml` nella cartella della sessione con le voci del report: `title`, `release`, e se servono
+  `intent`, `assumption`, `next` (elenco), `expected`, `observed`, `errors` (testo libero e dati strutturati stanno solo
+  nel file: in linea i guard li negano). Una voce sta nel file **o** in linea, mai in entrambi (exit 1).
 - `release-check <release>` — orchestrazione completa della release: `plan` → approvazione del piano → `run --suite
   full` per ogni scope → `triage` dei fallimenti → `evidence --desk` → `push-xray` → `report`; il verdetto finale è
   per scope (pass/fail/blocked) con i Defect proposti. Ogni passo come descritto sopra, nello stesso ordine.

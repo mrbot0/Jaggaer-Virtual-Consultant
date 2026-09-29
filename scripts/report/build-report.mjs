@@ -16,6 +16,7 @@ import { loadPlanFile, approvalsFile, readApprovals } from "../admin/approvals.m
 import { readEvents, reduce, workflowFile, appendEvent } from "../admin/workflow.mjs";
 import { classifyOutcome, matchesExpected } from "./outcome.mjs";
 import { openDb } from "../kb/db.mjs";
+import { readDataFile, readTextFile } from "../lib/text-file.mjs";
 
 export class ReportError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 const TEMPLATES = new URL("../../templates/", import.meta.url);
@@ -156,8 +157,37 @@ const HELP = `uso: node scripts/report/build-report.mjs --kind action|test --tit
        [--run <RUN>] [--release <R>] [--expected <json>] [--observed <json>] [--errors <json>] [--understood] [--assumption <testo>]
        [--user-abort] [--policy-abort] [--lesson <LSN>] [--next <testo>] [--estimated <token>] [--session <id>] [--workspace <dir>] [--json]
 
+       [--payload-file <file>] [--intent-file <file>] [--assumption-file <file>] [--next-file <file>]
+
 Compila il report (RPT) dalla sessione, dal workflow e dal run; esito da scripts/report/outcome.mjs (§29.9).
+Dati da file (WP10a giro 1: i guard negano JSON e testo libero in linea negli script del plugin), file del workspace:
+  --payload-file <file>   JSON o YAML con uno o più di: title, intent, assumption, next (testo o elenco), expected,
+                          observed, errors, lesson, release, run
+  --intent-file · --assumption-file · --next-file <file>   testo semplice (UTF-8)
+Una voce data sia in linea sia da file è ambigua (exit 1).
 Exit: 0 report scritto · 1 argomenti · 2 errore di sistema.`;
+
+// WP10a giro 1 (I3): le voci del report da file (payload JSON/YAML e testi), confinati al workspace. Ogni voce una volta.
+const PAYLOAD_KEYS = ["title", "intent", "assumption", "next", "expected", "observed", "errors", "lesson", "release", "run"];
+async function fileInputs(ws, opts) {
+  const vals = {};
+  const set = (k, v, from) => { if (Object.hasOwn(vals, k) || opts[k] !== undefined) throw new ReportError(1, `${k} data due volte (${from} e un'altra fonte): una sola`); vals[k] = v; };
+  if (opts["payload-file"] !== undefined) {
+    const d = await readDataFile(ws, opts["payload-file"]);
+    if (d.error) throw new ReportError(1, `--payload-file: ${d.error}`);
+    const extra = Object.keys(d.data).filter((k) => !PAYLOAD_KEYS.includes(k));
+    if (extra.length) throw new ReportError(1, `--payload-file: voci sconosciute ${extra.join(", ")} (ammesse: ${PAYLOAD_KEYS.join(", ")})`);
+    for (const k of PAYLOAD_KEYS) if (Object.hasOwn(d.data, k)) set(k, d.data[k], "--payload-file");
+  }
+  for (const k of ["intent", "assumption", "next"]) {
+    const f = opts[`${k}-file`];
+    if (f === undefined) continue;
+    const t = readTextFile(ws, f);
+    if (t.error) throw new ReportError(1, `--${k}-file: ${t.error}`);
+    set(k, t.text, `--${k}-file`);
+  }
+  return vals;
+}
 
 export async function run(argv, env = process.env) {
   const { opts } = parseArgs(argv, { flags: ["understood", "user-abort", "policy-abort"] });
@@ -169,10 +199,16 @@ export async function run(argv, env = process.env) {
     if (!["action", "test"].includes(opts.kind)) return fail(asJson, 1, "richiesto --kind action|test");
     const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
     if (!sid) return fail(asJson, 1, "nessuna sessione risolvibile");
-    const r = await buildReport({ ws, sid, kind: opts.kind, planFile: opts.plan ?? null, title: opts.title ?? "Report", intent: opts.intent ?? null, run: opts.run ?? null,
-      release: opts.release ?? null, expected: j(opts.expected, {}), observed: j(opts.observed, {}), errors: j(opts.errors, null), understoodError: !!opts.understood,
-      assumption: opts.assumption ?? null, userAbort: !!opts["user-abort"], policyAbort: !!opts["policy-abort"], lesson: opts.lesson ?? null,
-      next: opts.next ? [opts.next] : [], estimated: opts.estimated ? Number(opts.estimated) : null });
+    const f = await fileInputs(ws, opts);
+    const obj = (k, v, d) => { if (v === undefined) return d; if (v === null || typeof v !== "object") throw new ReportError(1, `${k}: serve un oggetto o un elenco`); return v; };
+    const str = (v) => (v == null ? null : String(v));
+    const next = f.next !== undefined ? [].concat(f.next).map(String).filter(Boolean) : opts.next ? [opts.next] : [];
+    const r = await buildReport({ ws, sid, kind: opts.kind, planFile: opts.plan ?? null, title: str(f.title) ?? opts.title ?? "Report", intent: str(f.intent) ?? opts.intent ?? null,
+      run: str(f.run) ?? opts.run ?? null, release: str(f.release) ?? opts.release ?? null,
+      expected: f.expected !== undefined ? obj("expected", f.expected) : j(opts.expected, {}), observed: f.observed !== undefined ? obj("observed", f.observed) : j(opts.observed, {}),
+      errors: f.errors !== undefined ? obj("errors", f.errors) : j(opts.errors, null), understoodError: !!opts.understood,
+      assumption: str(f.assumption) ?? opts.assumption ?? null, userAbort: !!opts["user-abort"], policyAbort: !!opts["policy-abort"], lesson: str(f.lesson) ?? opts.lesson ?? null,
+      next, estimated: opts.estimated ? Number(opts.estimated) : null });
     console.log(asJson ? JSON.stringify({ ok: true, code: r.code, outcome: r.outcome, xray: r.xray, files: r.files }) : `${r.code} · ${r.outcome}`);
     return 0;
   } catch (err) {
