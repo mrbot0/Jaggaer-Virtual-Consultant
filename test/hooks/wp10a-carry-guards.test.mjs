@@ -54,6 +54,22 @@ test("guard-config-scope: build-report e build-payload non sono generatori del p
     assert.ok(silent(cfgGuard(ws, `node "${script(g)}" --check`)), `${g} --check`);
   }
   assert.ok(denied(cfgGuard(ws, `node "${script("scripts/admin/integrity.mjs")}" build`)), "integrity build");
+  // giro 1 (minore 4): un build-*.mjs nuovo non classificato è un generatore finché non è dichiarato altro (deny di default)
+  assert.ok(denied(cfgGuard(ws, `node "${script("scripts/kb/build-indice-nuovo.mjs")}" --json`)), "build-*.mjs non classificato");
+  assert.ok(silent(cfgGuard(ws, `node "${script("scripts/kb/build-indice-nuovo.mjs")}" --check`)), "--check resta ammesso");
+});
+
+test("minore 4: ogni script che scrive hooks/lib/generated/ o integrity.json è un generatore riconosciuto dal guard", async () => {
+  const { readdirSync, readFileSync } = await import("node:fs");
+  const { join: j } = await import("node:path");
+  const { GENERATOR_NAMES, NON_GENERATORS, isGenerator } = await import("../../hooks/lib/guards/config-scope.mjs");
+  const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(j(d, e.name)) : e.name.endsWith(".mjs") ? [j(d, e.name)] : []));
+  const writers = walk(j(ROOT, "scripts")).filter((f) => { const t = readFileSync(f, "utf8"); return /writeFileSync|writeFileAtomic/.test(t) && /["'`/]generated\/|["']generated["']|integrity\.json/.test(t) && !/is-main|dev-only/.test(f); });
+  const names = writers.map((f) => f.split(/[\\/]/).pop());
+  for (const n of names) assert.ok(isGenerator(n) || n === "integrity.mjs", `generatore non riconosciuto dal guard: ${n}`);
+  for (const n of GENERATOR_NAMES) assert.ok(isGenerator(n), n);
+  for (const n of NON_GENERATORS) assert.ok(!isGenerator(n), n);
+  assert.ok(isGenerator("build-qualcosa.mjs"));
 });
 
 // Giro di correzione 1 (I1): il primo argomento dopo kb|lifecycle|learn.mjs si decide DOPO lo scioglimento della shell

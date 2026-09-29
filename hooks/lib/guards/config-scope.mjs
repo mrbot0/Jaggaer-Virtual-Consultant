@@ -304,7 +304,12 @@ function pluginScript(cmd, ctx) {
 // WP08 giro 1 (I1): i generatori del pacchetto (integrity build, build-deny-rules, build-session-validator,
 // build-error-patterns) riscrivono integrity.json o hooks/lib/generated/: mai da una sessione; restano ammessi
 // `integrity verify` e le verifiche --check / --help che non scrivono.
-const GENERATORS = new Set(["build-deny-rules.mjs", "build-session-validator.mjs", "build-error-patterns.mjs"]);
+// WP10a giro 1 (minore 4): per nome — ogni build-*.mjs è un generatore del pacchetto (deny di default, anche uno nuovo non
+// ancora classificato) salvo quelli dichiarati NON generatori (producono report e payload del workspace).
+export const GENERATOR_NAMES = Object.freeze(["build-deny-rules.mjs", "build-session-validator.mjs", "build-error-patterns.mjs"]);
+export const NON_GENERATORS = Object.freeze(["build-report.mjs", "build-payload.mjs"]);
+export const isGenerator = (name) => GENERATOR_NAMES.includes(name) || (/^build-[\w-]+\.mjs$/.test(name) && !NON_GENERATORS.includes(name));
+const GENERATORS = { has: isGenerator };
 function generatorRefusal(script) {
   const name = basename(script.script).toLowerCase();
   const a = script.args;
