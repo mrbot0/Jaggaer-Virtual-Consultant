@@ -386,7 +386,7 @@ function checkTarget(ctx, T, tree, tr) {
 //     passerebbe da approval-capture e finirebbe nel transcript come dell'utente;
 // (c) nomi costruiti a runtime: il registro citato insieme a una primitiva di
 //     scrittura, o uno script non del plugin i cui argomenti citano lo stato.
-const PHRASE = /APPROVO\s+(PIANO|PROVA|PASSO)/i;
+const PHRASE = /APPROVO\s+(PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)/i;
 const CLAUDE_BIN = /(^|[\s;&|(`'"=\\/])(claude(\.exe|\.cmd|\.ps1)?|@anthropic-ai[\\/]claude-code(@[\w.-]+)?|claude-code[\\/](dist[\\/])?cli\.m?js)(?=$|[\s;&|)`'"])/i;
 const CLAUDE_FLAGS = /(^|[\s'"])(-p|--print|-r|--resume|-c|--continue)(?=$|[\s=;'"])|(^|\s)-[a-z]*[prc][a-z]*(?=[\s'"]|$)/i;
 // WP09b giro 2: esiti dei run (testo in minuscolo con le barre normalizzate)
@@ -429,7 +429,7 @@ const protectWrites = guarded(G, (ctx) => {
   const tr = transcriptDirs(ctx);
   const no = (why) => denyAudited(ctx, G, `scrittura negata — ${why}`);
   const texts = strings(ctx.ti);
-  if (texts.some((t) => PHRASE.test(t))) return no("l'input contiene una frase di approvazione (APPROVO PIANO/PROVA/PASSO): le approvazioni le scrive solo l'utente nel prompt, mai uno strumento");
+  if (texts.some((t) => PHRASE.test(t))) return no("l'input contiene una frase di approvazione (APPROVO PIANO/PROVA/PASSO/PURGE/PROMOZIONE/RETENTION): le approvazioni le scrive solo l'utente nel prompt, mai uno strumento");
   if (WRITE_FILE_TOOLS.has(ctx.tool)) {
     if (texts.some((t) => STATE.test(t) && CODE_WRITE.test(t))) return no("il contenuto scrive su file e cita il registro delle approvazioni o lo stato di sessione: codice che può falsificare i token");
     if (texts.some((t) => ALM_TEXT.test(t.replace(/\\/g, "/").toLowerCase()) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive la configurazione del cliente, la coda o i file Xray del run — ${ALM_FILES_WHY}`);

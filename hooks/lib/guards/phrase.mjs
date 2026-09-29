@@ -6,7 +6,8 @@
 // in ogni workspace JVC, con o senza ambiente dichiarato.
 // Percorso veloce: si cercano le frasi negli input PRIMA di leggere lo stato;
 // solo se ce n'è una si carica il contesto (workspace, audit).
-export const PHRASES = /APPROVO\s+(PIANO|PROVA|PASSO)|ESPLORA\s+SANDBOX/i;
+// WP09d: anche le frasi amministrative (APPROVO PURGE <ID> DA <Nome>, APPROVO PROMOZIONE <codice>, APPROVO RETENTION <ID>).
+export const PHRASES = /APPROVO\s+(PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)|ESPLORA\s+SANDBOX/i;
 const MAX_NODES = 20000;
 
 export function strings(v) {
@@ -28,5 +29,5 @@ export async function decide(input, env = process.env) {
   const { guardContext, denyAudited } = await import("./common.mjs");
   const ctx = guardContext(input, env);
   if (!ctx.jvc) return null;
-  return denyAudited(ctx, "guard-phrase", "l'input dello strumento contiene una frase di approvazione o di esplorazione (APPROVO PIANO/PROVA/PASSO, ESPLORA SANDBOX): la scrive solo l'utente, nel suo prompt, mai uno strumento");
+  return denyAudited(ctx, "guard-phrase", "l'input dello strumento contiene una frase di approvazione o di esplorazione (APPROVO PIANO/PROVA/PASSO/PURGE/PROMOZIONE/RETENTION, ESPLORA SANDBOX): la scrive solo l'utente, nel suo prompt, mai uno strumento");
 }

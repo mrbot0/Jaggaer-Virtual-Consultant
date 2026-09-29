@@ -41,6 +41,16 @@ const RE_A1 = new RegExp(`^APPROVO PIANO (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_A2 = new RegExp(`^APPROVO PROVA (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_A3 = new RegExp(`^APPROVO PASSO ([1-9]\\d{0,3}) (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_YES = /^(sì|si|yes)$/iu;
+// WP09d: approvazioni amministrative (non legate a un piano). Il bersaglio è nel record (target); purge richiede il
+// nome dichiarato (due approvazioni con frase, da due nomi diversi: §54.4, §56.8); promozione a product/ (§22.2, §29.6)
+// e retention (§54.4, 1 approvazione) lo accettano facoltativo.
+const ITEM_CODE = "[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.[A-Z]{3}\\.\\d{4}(?:\\.v\\d+)?";
+const RE_PURGE = new RegExp(`^APPROVO PURGE ([A-Z0-9]{4})(?: DA (${NAME}))?$`, "u");
+const RE_PROMO = new RegExp(`^APPROVO PROMOZIONE (${ITEM_CODE})(?: DA (${NAME}))?$`, "u");
+const RE_RETENTION = new RegExp(`^APPROVO RETENTION ([A-Z0-9]{4})(?: DA (${NAME}))?$`, "u");
+export const GRANT_KINDS = Object.freeze(["purge", "promote", "retention"]);
+// Validità di un'approvazione amministrativa non consumata (dall'orario del record).
+export const GRANT_WINDOW_MS = Object.freeze({ purge: 60 * 60000, retention: 60 * 60000, promote: 24 * 3600000 });
 // K5 giro 2 (N2): la spec non nomina una frase per l'esplorazione; frase scelta dal
 // controller. Vale per un solo `use mode esplorazione` entro EXPLORE_WINDOW_MS.
 export const EXPLORE_PHRASE = "ESPLORA SANDBOX";
@@ -59,6 +69,9 @@ export function parseApprovalPrompt(prompt) {
   if ((m = RE_A1.exec(bare))) return { kind: "A1", plan: m[1], approver: m[2] ? normSpaces(m[2]) : null };
   if ((m = RE_A2.exec(bare))) return { kind: "A2", plan: m[1], approver: m[2] ? normSpaces(m[2]) : null };
   if ((m = RE_A3.exec(bare))) return { kind: "A3", plan: m[2], step: Number(m[1]), approver: m[3] ? normSpaces(m[3]) : null };
+  if ((m = RE_PURGE.exec(bare))) return { kind: "purge", target: m[1], approver: m[2] ? normSpaces(m[2]) : null };
+  if ((m = RE_PROMO.exec(bare))) return { kind: "promote", target: m[1], approver: m[2] ? normSpaces(m[2]) : null };
+  if ((m = RE_RETENTION.exec(bare))) return { kind: "retention", target: m[1], approver: m[2] ? normSpaces(m[2]) : null };
   if (RE_YES.test(bare)) return { kind: "yes" };
   if (bare === EXPLORE_PHRASE) return { kind: "explore" };
   if (/\bESPLORA\b/iu.test(s)) return { kind: "attempt" };
@@ -66,7 +79,38 @@ export function parseApprovalPrompt(prompt) {
   return null;
 }
 
-export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : r.kind === "explore" ? EXPLORE_PHRASE : "");
+export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : r.kind === "explore" ? EXPLORE_PHRASE
+  : r.kind === "purge" ? `APPROVO PURGE ${r.target} DA <Nome Cognome>` : r.kind === "promote" ? `APPROVO PROMOZIONE ${r.target}` : r.kind === "retention" ? `APPROVO RETENTION ${r.target}` : "");
+
+// ---- approvazioni amministrative (WP09d: purge, promozione, retention) ----
+// Un token passato a una CLI (--approval, --approval-1/-2) è l'hash del record o un suo prefisso esadecimale di almeno
+// 12 caratteri, univoco nel registro. Il record deve essere del tipo e del bersaglio attesi, scritto da approval-capture
+// (prompt_sha256 presente, catena integra), non consumato e nella finestra di validità.
+export const TOKEN_RE = /^[0-9a-f]{12,64}$/;
+export function findGrant(records, { kind, target, token, now = Date.now(), windowMs = GRANT_WINDOW_MS[kind] }) {
+  if (typeof token !== "string" || !TOKEN_RE.test(token)) return { ok: false, reason: `token non valido: atteso l'hash (o un prefisso di almeno 12 cifre esadecimali) del record di approvazione` };
+  const hits = records.filter((r) => typeof r.hash === "string" && r.hash.startsWith(token) && r.kind !== "consume");
+  if (!hits.length) return { ok: false, reason: `nessuna approvazione con token ${token} nel registro della sessione` };
+  if (hits.length > 1) return { ok: false, reason: `token ${token} ambiguo: usa più cifre dell'hash` };
+  const rec = hits[0];
+  if (rec.kind !== kind) return { ok: false, reason: `il token ${token} è un'approvazione ${rec.kind}, non ${kind}` };
+  if (rec.target !== target) return { ok: false, reason: `il token ${token} approva ${rec.target}, non ${target}` };
+  if (typeof rec.prompt_sha256 !== "string") return { ok: false, reason: `il record ${token} non viene da una frase dell'utente` };
+  if (records.some((r) => r.kind === "consume" && r.ref === rec.hash)) return { ok: false, reason: `l'approvazione ${token} è già stata usata (monouso)` };
+  const age = now - Date.parse(rec.ts);
+  if (!(age >= -5000 && age <= windowMs)) return { ok: false, reason: `l'approvazione ${token} è scaduta (validità ${Math.round(windowMs / 60000)} minuti): ripeti la frase` };
+  return { ok: true, record: rec };
+}
+
+// Consuma (monouso) le approvazioni amministrative, sotto lock, ricontrollando che nessuna sia già consumata.
+export function consumeGrants(file, grants, { date = new Date() } = {}) {
+  return withFileLock(`${file}.lock`, () => {
+    const cur = readApprovals(file);
+    if (!cur.ok) throw new Error(`registro delle approvazioni corrotto: ${cur.reason}`);
+    for (const g of grants) if (cur.records.some((r) => r.kind === "consume" && r.ref === g.hash)) throw new Error(`approvazione già usata: ${g.hash.slice(0, 12)}`);
+    return grants.map((g) => appendLocked(file, { kind: "consume", ref: g.hash, consumed_kind: g.kind, target: g.target }, date));
+  });
+}
 
 // ---- registro ----
 // → { ok: true, records } | { ok: false, reason, records: [] }
@@ -320,6 +364,24 @@ export async function capture(input, env = process.env) {
     if (!reg.ok) return reject([EXPLORE_PHRASE], `registro delle approvazioni corrotto (${reg.reason})`);
     rec = { kind: "explore", env: s.env.id };
     removeMatch = () => false;
+  } else if (GRANT_KINDS.includes(p.kind)) {
+    // WP09d: approvazioni amministrative, fuori dai piani. Il record nasce solo qui, dal prompt dell'utente.
+    if (!reg.ok) return reject([phraseOf({ kind: p.kind, target: p.target })], `registro delle approvazioni corrotto (${reg.reason})`);
+    if (p.kind === "purge") {
+      if (!p.approver) return reject([`APPROVO PURGE ${p.target} DA <Nome Cognome>`], "la purge richiede il nome di chi approva (DA <Nome Cognome>): servono due approvazioni da due persone diverse (§54.4)");
+      if (!existsSync(join(st.ws, "customers", p.target))) return reject([], `il cliente ${p.target} non esiste nel workspace`);
+      const same = reg.records.find((r) => r.kind === "purge" && r.target === p.target && normName(r.approver_declared) === normName(p.approver)
+        && !reg.records.some((c) => c.kind === "consume" && c.ref === r.hash) && now - Date.parse(r.ts) <= GRANT_WINDOW_MS.purge);
+      if (same) return reject([`APPROVO PURGE ${p.target} DA <un'altra persona>`], `${p.approver} ha già approvato la purge di ${p.target}: la seconda approvazione deve venire da una persona diversa`);
+    } else if (p.kind === "retention") {
+      if (!existsSync(join(st.ws, "customers", p.target))) return reject([], `il cliente ${p.target} non esiste nel workspace`);
+    } else if (p.kind === "promote") {
+      const c = /^[CL]\.([A-Z0-9]{4})\./.exec(p.target);
+      if (!c) return reject([], `solo un item C o L si promuove a product/ (${p.target})`);
+      if (c[1] !== st.customer) return reject([], `l'item ${p.target} non è del cliente della sessione (${st.customer}): la promozione si approva nella sessione del suo cliente`);
+    }
+    rec = { kind: p.kind, target: p.target, approver_declared: p.approver ?? null };
+    removeMatch = () => false;
   } else if (p.kind === "yes") {
     const acts = pending.filter((r) => r.kind === "action");
     if (!pending.length) return null;
@@ -362,19 +424,20 @@ export async function capture(input, env = process.env) {
   // Prima il registro (la fonte dei guard); poi lo specchio e l'audit.
   const ev = appendApproval(file, rec);
   const label = ev.kind === "explore" ? `esplorazione ${ev.env} (vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
+    : GRANT_KINDS.includes(ev.kind) ? `${ev.kind} ${ev.target}${ev.approver_declared ? ` (${ev.approver_declared})` : ""} — token ${ev.hash.slice(0, 16)} (monouso, valido ${Math.round(GRANT_WINDOW_MS[ev.kind] / 60000)} minuti)`
     : `${ev.kind} ${ev.plan}${ev.step ? ` passo ${ev.step}` : ""}${ev.approver_declared ? ` (${ev.approver_declared})` : ""}`;
   let warn = "";
   try {
     const { updateSession } = await import("./session.mjs");
     updateSession(st.sessionFile, (x) => {
-      x.approvals = [...(Array.isArray(x.approvals) ? x.approvals : []), { ts: ev.ts, kind: ev.kind, ...(ev.plan ? { plan: ev.plan } : {}), ...(ev.step ? { step: ev.step } : {}), approver_declared: ev.approver_declared ?? null, prompt_sha256: ev.prompt_sha256, hash: ev.hash }];
+      x.approvals = [...(Array.isArray(x.approvals) ? x.approvals : []), { ts: ev.ts, kind: ev.kind, ...(ev.plan ? { plan: ev.plan } : {}), ...(ev.step ? { step: ev.step } : {}), ...(ev.target ? { target: ev.target } : {}), approver_declared: ev.approver_declared ?? null, prompt_sha256: ev.prompt_sha256, hash: ev.hash }];
       const i = (x.pending?.approvals ?? []).findIndex(removeMatch);
       if (i >= 0) x.pending.approvals.splice(i, 1);
     });
   } catch (err) { warn = ` (specchio in session.json non aggiornato: ${String(err.message).slice(0, 120)})`; }
   try {
     appendAudit(st.ws, { session: st.sid, customer: st.customer, scope: s.scope ?? null, kind: "decision", actor: "hook:approval-capture", correlation: { task: null, dec: null, run: null },
-      payload: { approval: ev.kind, plan: ev.plan ?? null, env: ev.env ?? null, step: ev.step ?? null, approver_declared: ev.approver_declared ?? null, hash: ev.hash } });
+      payload: { approval: ev.kind, plan: ev.plan ?? null, target: ev.target ?? null, env: ev.env ?? null, step: ev.step ?? null, approver_declared: ev.approver_declared ?? null, hash: ev.hash } });
   } catch { /* l'audit non annulla un'approvazione già registrata */ }
   return ctxOut(`Approvazione registrata: ${label} alle ${ev.ts}${warn}. Vale solo per ciò che nomina${ev.kind === "A3" || ev.kind === "action" ? ", una sola volta" : ""}.`, `✓ Approvazione registrata: ${label}`);
 }

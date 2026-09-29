@@ -83,7 +83,8 @@
         "required": ["ts", "kind"],
         "properties": {
           "ts": { "type": "string" },
-          "kind": { "enum": ["A1", "A2", "A3", "action", "consume", "explore"] },
+          "kind": { "enum": ["A1", "A2", "A3", "action", "consume", "explore", "purge", "promote", "retention"] },
+          "target": { "type": "string" },
           "plan": { "type": "string", "pattern": "^PLAN\\.[A-Za-z0-9._-]+$" },
           "step": { "type": "integer", "minimum": 1 },
           "approver_declared": { "type": ["string", "null"] },
