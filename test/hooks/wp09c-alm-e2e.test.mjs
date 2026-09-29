@@ -8,7 +8,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { mkWs, seedSession, runHook, decisionOf, reasonOf, ROOT } from "../helpers/hook-env.mjs";
+import { mkWs, seedSession, runHook, decisionOf, reasonOf, pinXray, ROOT } from "../helpers/hook-env.mjs";
 import { startMcp, initialized } from "../helpers/mcp-client.mjs";
 import { classifyAlm } from "../../hooks/lib/alm.mjs";
 
@@ -67,6 +67,8 @@ test("server MCP ALM (mock) + guard-alm-write + alm-record sui nomi mcp__ reali 
     // deroga ADR-21 del cliente: Test issue ammessa dal guard (il server comunque non le crea da createDefect)
     mkdirSync(join(ws, "customers/ACME/config"), { recursive: true });
     writeFileSync(join(ws, "customers/ACME/config/xray.yaml"), "deployment: mock\nallow_test_issue_creation: true\n");
+    assert.equal(decisionOf(guard(P + "alm_create_defect", { summary: "x", scope: "P2P", issue_type: "Test" })), "deny", "file comparso dopo use customer: non fissato");
+    pinXray(ws);   // giro 1 di WP09c: l'utente riesegue use customer
     assert.ok(allowed(guard(P + "alm_create_defect", { summary: "x", scope: "P2P", issue_type: "Test" })));
     assert.equal((await c.call("alm_create_defect", { summary: "x", scope: "P2P", issue_type: "Test" })).isError, true, "il server non crea Test da createDefect");
   } finally { await c.close(); }

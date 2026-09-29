@@ -22,6 +22,8 @@ import { startAlmMock, closedUrl, CREDS } from "../helpers/alm-http-mock.mjs";
 const RUN = "RUN.ACME.20260929.1000.P2P";
 const TESTS = [{ key: "PROJ-1", summary: "RdA con CdC non attivo", labels: ["scope:P2P", "nrt"], plans: ["PROJ-50"] }, { key: "PROJ-2", summary: "Catalogo pubblicato", labels: ["scope:CAT"], plans: [] }];
 const NET = { retries: 1, backoff_ms: 0, timeout_ms: 3000 };
+// WP09c giro 1: il loopback dei mock locali non è nella categoria alm di NETWORK.md; lo si ammette solo da codice
+const LOOP = ["127.0.0.1"];
 const PNG = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 1, 2, 3, 4]);
 const results = () => ({
   info: { project: "PROJ", summary: `${RUN} — scope P2P`, testPlanKey: "PROJ-50", labels: ["scope:P2P"] },
@@ -39,8 +41,8 @@ const cloudCfg = (extra = {}) => ({ deployment: "cloud", base_url: http.url, xra
 const serverCfg = (extra = {}) => ({ deployment: "server", base_url: http.url, project: "PROJ", network: NET, defects: { issue_type: "Defect", assignee_by_scope: { P2P: "mrossi" } }, ...extra });
 const IMPLS = {
   mock: () => new MockAlmAdapter({ deployment: "mock", project: "PROJ", mock: { tests: TESTS }, defects: { issue_type: "Bug" } }, { env: {} }),
-  cloud: () => new XrayCloudAdapter(cloudCfg(), { env: { ...CREDS } }),
-  server: () => new XrayServerAdapter(serverCfg(), { env: { ...CREDS } }),
+  cloud: () => new XrayCloudAdapter(cloudCfg(), { env: { ...CREDS }, networkHosts: LOOP }),
+  server: () => new XrayServerAdapter(serverCfg(), { env: { ...CREDS }, networkHosts: LOOP }),
 };
 
 for (const [name, make] of Object.entries(IMPLS)) {
@@ -100,7 +102,7 @@ test("factory: deployment cloud|server|mock da xray.yaml validato; JVC_ALM_ADAPT
 
 test("Xray Cloud: autenticazione con client_id/secret dall'ambiente, Bearer sugli import; payload nativo con evidenze sul passo; etichette alla creazione", async () => {
   const start = http.state.requests.length;
-  const a = new XrayCloudAdapter(cloudCfg(), { env: { ...CREDS } });
+  const a = new XrayCloudAdapter(cloudCfg(), { env: { ...CREDS }, networkHosts: LOOP });
   await a.authenticate();
   const auth = http.state.requests.slice(start).find((r) => r.path === "/api/v2/authenticate");
   assert.deepEqual(auth.json, { client_id: CREDS.XRAY_CLIENT_ID, client_secret: CREDS.XRAY_CLIENT_SECRET });
@@ -123,7 +125,7 @@ test("Xray Cloud: autenticazione con client_id/secret dall'ambiente, Bearer sugl
 });
 
 test("Defect (cloud e server): tipo da config, etichetta scope, assegnatario dal registro, testo strict, allegati, precedente di regressione collegato", async () => {
-  for (const [a, assignee] of [[new XrayCloudAdapter(cloudCfg(), { env: { ...CREDS } }), { accountId: "acc-557058:p2p-owner" }], [new XrayServerAdapter(serverCfg(), { env: { ...CREDS } }), { name: "mrossi" }]]) {
+  for (const [a, assignee] of [[new XrayCloudAdapter(cloudCfg(), { env: { ...CREDS }, networkHosts: LOOP }), { accountId: "acc-557058:p2p-owner" }], [new XrayServerAdapter(serverCfg(), { env: { ...CREDS }, networkHosts: LOOP }), { name: "mrossi" }]]) {
     const start = http.state.requests.length;
     const d = await a.createDefect({ summary: "Ordine SENT per mario.rossi@acme.it", scope: "P2P", description: "Importo € 1.250,00 atteso rifiutato", labels: ["nrt"],
       precedent: { key: "PROJ-7", fixed_in: "R25.2" }, attachments: [{ data: PNG.toString("base64"), filename: "EV-06.png", contentType: "image/png" }] });
@@ -146,17 +148,17 @@ test("host non dichiarato in xray.yaml (JIRA_BASE_URL altrove) o http non loopba
   const start = http.state.requests.length;
   const a = new XrayCloudAdapter(cloudCfg(), { env: { ...CREDS, JIRA_BASE_URL: "https://jira.evil-example.com" } });
   await assert.rejects(a.createDefect({ summary: "x", scope: "P2P" }), (e) => e.code === "refused" && /non dichiarato/.test(e.message));
-  const s = new XrayServerAdapter({ deployment: "server", base_url: "http://jira.acme.it", project: "PROJ", network: NET }, { env: { ...CREDS } });
+  const s = new XrayServerAdapter({ deployment: "server", base_url: "http://jira.acme.it", project: "PROJ", network: NET }, { env: { ...CREDS }, networkHosts: ["jira.acme.it"] });
   await assert.rejects(s.authenticate(), (e) => e.code === "refused" && /https/.test(e.message));
   assert.equal(http.state.requests.length, start, "nessuna richiesta partita");
   http.setFail({ path: /^\/rest\/api\/2\/myself$/, status: 302, body: {} });
-  try { await assert.rejects(new XrayServerAdapter(serverCfg(), { env: { ...CREDS } }).authenticate(), (e) => e.code === "http" && /redirect/.test(e.message)); } finally { http.setFail(null); }
+  try { await assert.rejects(new XrayServerAdapter(serverCfg(), { env: { ...CREDS }, networkHosts: LOOP }).authenticate(), (e) => e.code === "http" && /redirect/.test(e.message)); } finally { http.setFail(null); }
 });
 
 test("segreti mai nei messaggi d'errore: una risposta che li riecheggia è redatta", async () => {
   http.setFail({ path: /^\/rest\/api\/2\/issue$/, status: 400, body: { errorMessages: [`bad token ${CREDS.XRAY_TOKEN} and ${CREDS.JIRA_API_TOKEN} Bearer abcdefghijkl`] } });
   try {
-    for (const a of [new XrayServerAdapter(serverCfg(), { env: { ...CREDS } }), new XrayCloudAdapter(cloudCfg(), { env: { ...CREDS } })]) {
+    for (const a of [new XrayServerAdapter(serverCfg(), { env: { ...CREDS }, networkHosts: LOOP }), new XrayCloudAdapter(cloudCfg(), { env: { ...CREDS }, networkHosts: LOOP })]) {
       const err = await a.createDefect({ summary: "x", scope: "P2P" }).catch((e) => e);
       assert.ok(err instanceof AlmError);
       for (const v of Object.values(CREDS)) assert.ok(!err.message.includes(v), `${v} in ${err.message}`);
@@ -196,7 +198,7 @@ test("evidenze dal dossier: solo EVD strict e pubblicabili, sotto runs/ del clie
 test("rete giù (Jira/Xray irraggiungibili) ⇒ importResults e createDefect in coda offline { queued: true }: payload nel dossier + indice; retry con la rete tornata ⇒ inviati", async () => {
   const d = dossier();
   const down = await closedUrl();
-  const offline = new XrayServerAdapter({ deployment: "server", base_url: down, project: "PROJ", network: NET }, { env: { ...CREDS } });
+  const offline = new XrayServerAdapter({ deployment: "server", base_url: down, project: "PROJ", network: NET }, { env: { ...CREDS }, networkHosts: LOOP });
   const q = new OfflineQueue(d.ws, "ACME", { env: CREDS });
   const payload = { execution: { summary: `${RUN} — scope P2P`, scope: "P2P", run: RUN, testPlanKey: "PROJ-50" }, results: fileResults(d.file) };
   const err = await offline.importResults("PROJ-77", await materializeResults(d.ws, "ACME", payload.results)).catch((e) => e);
@@ -217,7 +219,7 @@ test("rete giù (Jira/Xray irraggiungibili) ⇒ importResults e createDefect in 
   const still = await q.retryQueued(offline);
   assert.equal(still.still_queued.length, 2);
   // rete tornata
-  const online = new XrayServerAdapter(serverCfg(), { env: { ...CREDS } });
+  const online = new XrayServerAdapter(serverCfg(), { env: { ...CREDS }, networkHosts: LOOP });
   const sent = await q.retryQueued(online);
   assert.equal(sent.sent.length, 2, JSON.stringify(sent));
   assert.equal(q.status().pending, 0);
@@ -226,6 +228,8 @@ test("rete giù (Jira/Xray irraggiungibili) ⇒ importResults e createDefect in 
   assert.match(pub.scopes.P2P.execution_key, /^PROJ-\d+$/);
   const imp = http.state.imports.at(-1);
   assert.equal(imp.key, pub.scopes.P2P.execution_key);
-  assert.equal(Buffer.from(imp.body.tests[0].steps[1].evidence[0].data, "base64").equals(PNG), true, "evidenza sul passo 2 dopo il retry");
+  // Server/DC (giro 1, I3): campo "evidences" e stato FAIL
+  assert.equal(imp.body.tests[0].steps[1].status, "FAIL");
+  assert.equal(Buffer.from(imp.body.tests[0].steps[1].evidences[0].data, "base64").equals(PNG), true, "evidenza sul passo 2 dopo il retry");
   assert.ok(existsSync(join(d.ws, "customers/ACME/runs", RUN, "xray-payload.json")));
 });

@@ -2,17 +2,49 @@
 // adattatori ALM: registra ogni richiesta (metodo, percorso, intestazioni, corpo) e simula il minimo di stato che il
 // contratto osserva. MAI Jira/Xray reali. Credenziali di prova fisse (CREDS), non segreti veri.
 import { createServer } from "node:http";
+import { readFileSync, writeFileSync, cpSync } from "node:fs";
+import { join } from "node:path";
+import { copyPlugin } from "./plugin-copy.mjs";
+import { ROOT } from "./hook-env.mjs";
 
 export const CREDS = Object.freeze({
   XRAY_CLIENT_ID: "cid-test-0001", XRAY_CLIENT_SECRET: "csecret-test-7f3a9", JIRA_USER: "bot-user", JIRA_API_TOKEN: "jira-token-test-4b2c", XRAY_TOKEN: "pat-test-9d1e",
 });
 const XRAY_TOKEN_ISSUED = "xray-bearer-test-51c0";
 
+// WP09c giro 1 (I3): forma del JSON nativo per piattaforma — Cloud: PASSED/FAILED/…, "evidence"; Server/DC: PASS/FAIL/…,
+// "evidences". Il mock rifiuta (400) la forma dell'altra piattaforma.
+const CLOUD_ST = new Set(["PASSED", "FAILED", "TODO", "EXECUTING", "ABORTED"]);
+const DC_ST = new Set(["PASS", "FAIL", "TODO", "EXECUTING", "ABORTED"]);
+export function shapeError(body, dc) {
+  const ok = dc ? DC_ST : CLOUD_ST; const good = dc ? "evidences" : "evidence"; const bad = dc ? "evidence" : "evidences";
+  for (const t of body?.tests ?? []) {
+    if (!ok.has(t.status)) return `stato ${t.status} non valido per ${dc ? "Xray Server/DC" : "Xray Cloud"}`;
+    if (bad in t) return `campo ${bad} non valido (atteso ${good})`;
+    for (const s of t.steps ?? []) { if (!ok.has(s.status)) return `stato di passo ${s.status} non valido`; if (bad in s) return `campo ${bad} nel passo (atteso ${good})`; }
+  }
+  return null;
+}
+
+// Copia del plugin il cui NETWORK.md ammette anche il loopback nella categoria alm (solo per i mock locali dei test):
+// il NETWORK.md del pacchetto non lo ammette e l'adattatore rifiuta ogni host fuori da quella categoria.
+export function almPlugin() {
+  const p = copyPlugin("jvc-plugin-alm-");
+  cpSync(join(ROOT, "product"), join(p, "product"), { recursive: true });   // catalogo delle azioni (evidence select)
+  const f = join(p, "NETWORK.md");
+  const text = readFileSync(f, "utf8");
+  const next = text.replace("| alm | `*.atlassian.net`, `*.getxray.app` |", "| alm | `*.atlassian.net`, `*.getxray.app`, `127.0.0.1` |");
+  if (next === text) throw new Error("riga alm di NETWORK.md non trovata");
+  writeFileSync(f, next);
+  return p;
+}
+
 export async function startAlmMock({ tests = [], project = "PROJ", fail = null } = {}) {
-  const state = { seq: 100, tests: new Map(tests.map((t) => [t.key, { labels: [], plans: [], summary: "", ...t }])), issues: new Map(), imports: [], links: [], attachments: [], requests: [] };
+  const state = { tokenVersion: 0, seq: 100, tests: new Map(tests.map((t) => [t.key, { labels: [], plans: [], summary: "", ...t }])), issues: new Map(), imports: [], links: [], attachments: [], requests: [] };
   const basic = `Basic ${Buffer.from(`${CREDS.JIRA_USER}:${CREDS.JIRA_API_TOKEN}`).toString("base64")}`;
   const jiraOk = (h) => h.authorization === basic || h.authorization === `Bearer ${CREDS.XRAY_TOKEN}`;
-  const xrayOk = (h) => h.authorization === `Bearer ${XRAY_TOKEN_ISSUED}`;
+  const token = () => `${XRAY_TOKEN_ISSUED}${state.tokenVersion ? `-v${state.tokenVersion}` : ""}`;
+  const xrayOk = (h) => h.authorization === `Bearer ${token()}`;
   const filter = (jql = "") => {
     let list = [...state.tests.values()];
     const key = /key = "([^"]+)"/.exec(jql)?.[1];
@@ -41,7 +73,7 @@ export async function startAlmMock({ tests = [], project = "PROJ", fail = null }
       const send = (status, obj) => { res.writeHead(status, { "Content-Type": "application/json" }); res.end(obj === undefined ? "" : JSON.stringify(obj)); };
       if (fail && (fail.path == null || fail.path.test(path))) return send(fail.status, fail.body ?? { error: "failure" });
       if (req.method === "POST" && path === "/api/v2/authenticate") {
-        return json?.client_id === CREDS.XRAY_CLIENT_ID && json?.client_secret === CREDS.XRAY_CLIENT_SECRET ? send(200, XRAY_TOKEN_ISSUED) : send(401, { error: "Authentication failed. Invalid client credentials!" });
+        return json?.client_id === CREDS.XRAY_CLIENT_ID && json?.client_secret === CREDS.XRAY_CLIENT_SECRET ? send(200, token()) : send(401, { error: "Authentication failed. Invalid client credentials!" });
       }
       if (path.startsWith("/api/v2/")) {
         if (!xrayOk(req.headers)) return send(401, { error: "Unauthorized" });
@@ -59,6 +91,8 @@ export async function startAlmMock({ tests = [], project = "PROJ", fail = null }
           return send(400, { errors: [{ message: "query non supportata dal mock" }] });
         }
         if (req.method === "POST" && path === "/api/v2/import/execution") {
+          const bad = shapeError(json, false);
+          if (bad) return send(400, { error: bad });
           const key = json?.testExecutionKey ?? `${project}-${++state.seq}`;
           state.imports.push({ key, body: json, via: "cloud" });
           return send(200, { id: "20001", key, self: `http://x/rest/api/2/issue/${key}` });
@@ -67,6 +101,8 @@ export async function startAlmMock({ tests = [], project = "PROJ", fail = null }
       }
       if (!jiraOk(req.headers)) return send(401, { errorMessages: ["Unauthorized"] });
       if (req.method === "POST" && path === "/rest/raven/1.0/import/execution") {
+        const bad = shapeError(json, true);
+        if (bad) return send(400, { error: bad });
         const key = json?.testExecutionKey ?? `${project}-${++state.seq}`;
         state.imports.push({ key, body: json, via: "server" });
         return send(200, { testExecIssue: { id: "20001", key, self: `http://x/rest/api/2/issue/${key}` } });
@@ -81,7 +117,7 @@ export async function startAlmMock({ tests = [], project = "PROJ", fail = null }
         const id = Number(m[1]);
         const all = [...state.issues.keys()].flatMap((k, ex) => runsOf(k).map((t, i) => ({ id: ex * 1000 + i, t })));
         const hit = all.find((x) => x.id === id);
-        return hit ? send(200, { status: hit.t.status, steps: (hit.t.steps ?? []).map((s) => ({ status: { name: s.status }, evidences: (s.evidence ?? []).map((e) => ({ fileName: e.filename })) })) }) : send(404, { error: "run" });
+        return hit ? send(200, { status: hit.t.status, steps: (hit.t.steps ?? []).map((s) => ({ status: { name: s.status }, evidences: (s.evidences ?? s.evidence ?? []).map((e) => ({ fileName: e.filename })) })) }) : send(404, { error: "run" });
       }
       if (req.method === "GET" && path === "/rest/api/2/myself") return send(200, { name: "svc" });
       if (req.method === "POST" && path === "/rest/api/2/issue") {
@@ -112,7 +148,7 @@ export async function startAlmMock({ tests = [], project = "PROJ", fail = null }
   });
   await new Promise((r) => server.listen(0, "127.0.0.1", r));
   const url = `http://127.0.0.1:${server.address().port}`;
-  return { url, state, close: () => new Promise((r) => server.close(r)), setFail: (f) => { fail = f; } };
+  return { url, state, close: () => new Promise((r) => server.close(r)), setFail: (f) => { fail = f; }, expireToken: () => { state.tokenVersion += 1; } };
 }
 
 // Porta chiusa: un URL loopback a cui non risponde nessuno (rete giù).

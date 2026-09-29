@@ -2,8 +2,9 @@
 
 Il plugin parla **solo** con le categorie di host elencate qui. **Nessuna telemetria, nessun endpoint proprio.**
 Un host che non rientra in una categoria è negato: nel browser da `guard-environment` (default deny, §53.5),
-verso Jira/Xray dall'`AlmAdapter` (`mcp/alm-server/http.mjs`: host non dichiarato in `config/xray.yaml` ⇒ rifiuto,
-nessuna richiesta parte, redirect mai seguiti, https obbligatorio salvo loopback).
+verso Jira/Xray dall'`AlmAdapter` (`mcp/alm-server/http.mjs`): l'host deve stare SIA in `config/xray.yaml` (fissato con
+sha256 a `use customer`, non modificabile in sessione) SIA nella categoria `alm` qui sotto; altrimenti rifiuto prima di
+ogni credenziale (nessuna richiesta parte), redirect mai seguiti, https obbligatorio.
 
 `doctor --network` legge questa tabella: verifica che le cinque categorie siano dichiarate (`telemetry` con host
 `none`) e che ogni host configurato dal cliente (environments.yaml, xray.yaml) rientri nella sua categoria e
@@ -13,7 +14,7 @@ nell'allow-list. La tabella è sotto integrità del pacchetto (`integrity.json`)
 | categoria | host | quando | dichiarato in |
 |-----------|------|--------|---------------|
 | jaggaer | dichiarati dal cliente | esecuzione e osservazione nel browser (Chrome DevTools MCP, browser integrato di Claude, Playwright facoltativo) | customers/C/config/environments.yaml (base_url, allowed_hosts) |
-| alm | `*.atlassian.net`, `*.getxray.app` | Test Execution, import dei risultati, Defect (server MCP alm, scripts/xray) | customers/C/config/xray.yaml (base_url, jira_url, xray_url): solo quell'host; Server/DC on-premise: l'host dichiarato dal cliente |
+| alm | `*.atlassian.net`, `*.getxray.app` | Test Execution, import dei risultati, Defect (server MCP alm, scripts/xray) | customers/C/config/xray.yaml (base_url, jira_url, xray_url) E questa riga; un Jira Server/DC on-premise si aggiunge a questa riga con una release del plugin |
 | npm | `registry.npmjs.org` | installazione del plugin (npm ci) e primo avvio dei server MCP facoltativi pinnati (npx chrome-devtools-mcp@1.9.0, npx @playwright/mcp@0.0.41) | package-lock.json, .mcp.json |
 | claude | `api.anthropic.com` | il modello, tramite Claude Code (non dal plugin) | Claude Code |
 | telemetry | none | mai | — |

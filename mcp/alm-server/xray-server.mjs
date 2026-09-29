@@ -8,6 +8,20 @@
 import { AlmError, checkKey, checkLabels, checkResults, countEvidence, jqlString } from "./adapter.mjs";
 import { JiraBase } from "./xray-cloud.mjs";
 
+// WP09c giro 1 (I3): il JSON nativo di Xray Server/DC usa gli stati predefiniti PASS/FAIL/TODO/EXECUTING/ABORTED e il
+// campo "evidences" (Cloud: PASSED/FAILED/… ed "evidence"). Stati personalizzati dell'istanza: config statuses.dc
+// (nome Cloud → nome DC). Il formato va confermato sulla versione DC del cliente (M13).
+export const DC_STATUS = Object.freeze({ PASSED: "PASS", FAILED: "FAIL", TODO: "TODO", EXECUTING: "EXECUTING", ABORTED: "ABORTED" });
+export function toDcResults(results, map = {}) {
+  const st = (x) => map[x] ?? DC_STATUS[x] ?? x;
+  const conv = (o) => { const { evidence, ...rest } = o; return { ...rest, status: st(o.status), ...(evidence ? { evidences: evidence } : {}) }; };
+  return { ...results, tests: results.tests.map((t) => ({ ...conv(t), ...(t.steps ? { steps: t.steps.map(conv) } : {}) })) };
+}
+export function fromDcStatus(x, map = {}) {
+  const back = Object.fromEntries([...Object.entries(DC_STATUS), ...Object.entries(map)].map(([k, v]) => [v, k]));
+  return back[x] ?? x;
+}
+
 export class XrayServerAdapter extends JiraBase {
   jiraHeaders() {
     const tok = this.env.XRAY_TOKEN;
@@ -41,7 +55,7 @@ export class XrayServerAdapter extends JiraBase {
     checkKey(executionKey, "executionKey");
     checkResults(results, { allowTestCreation: this.config.allow_test_issue_creation === true });
     const { labels, ...info } = results.info ?? {};
-    const payload = { testExecutionKey: executionKey, ...(Object.keys(info).length ? { info } : {}), tests: results.tests };
+    const payload = { testExecutionKey: executionKey, ...(Object.keys(info).length ? { info } : {}), tests: toDcResults(results, this.config.statuses?.dc ?? {}).tests };
     const r = await this.jira("POST", "/rest/raven/1.0/import/execution", payload);
     return { key: r.json?.testExecIssue?.key ?? executionKey, tests: results.tests.length, evidence: countEvidence(results) };
   }
@@ -53,7 +67,8 @@ export class XrayServerAdapter extends JiraBase {
     const tests = [];
     for (const run of Array.isArray(runs) ? runs : []) {
       const d = Number.isInteger(run?.id) ? (await this.jira("GET", `/rest/raven/1.0/api/testrun/${run.id}`)).json ?? {} : {};
-      tests.push({ testKey: run?.key, status: run?.status ?? d.status ?? null, steps: (d.steps ?? []).map((s) => ({ status: s.status?.name ?? s.status ?? null, evidence: (s.evidences ?? s.evidence ?? []).length })) });
+      const map = this.config.statuses?.dc ?? {};
+      tests.push({ testKey: run?.key, status: fromDcStatus(run?.status ?? d.status ?? null, map), steps: (d.steps ?? []).map((s) => ({ status: fromDcStatus(s.status?.name ?? s.status ?? null, map), evidence: (s.evidences ?? s.evidence ?? []).length })) });
     }
     return { key, tests };
   }

@@ -8,7 +8,8 @@ import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { randomBytes } from "node:crypto";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
-import { AlmError, safeMessage } from "./adapter.mjs";
+import { AlmError, safeMessage, strictText } from "./adapter.mjs";
+import { ownedExecution } from "./factory.mjs";
 import { materializeResults, materializeAttachments } from "./payload.mjs";
 
 const RUN = /^RUN\.([A-Z0-9]{4})\.\d{8}\.\d{4}\.[A-Z0-9]{3}$/;
@@ -29,6 +30,25 @@ export function writePayloadEntry(ws, customer, run, scope, entry) {
   writeFileAtomic(f, `${JSON.stringify(cur, null, 2)}\n`);
   return `runs/${run}/xray-payload.json`;
 }
+// WP09c giro 1 (I2): UNA Test Execution per run e scope — mappa condivisa da alm_create_execution e xray publish
+// (runs/<RUN>/xray-executions.json, protetta: la scrivono solo gli script e il server del plugin).
+export const executionsFile = (ws, customer, run) => join(ws, "customers", customer, "runs", run, "xray-executions.json");
+export function readExecutions(ws, customer, run) { return readJson(executionsFile(ws, customer, run)) ?? { run, scopes: {} }; }
+export const executionFor = (ws, customer, run, scope) => readExecutions(ws, customer, run).scopes?.[scope]?.key ?? null;
+export function recordExecution(ws, customer, run, scope, key, via) {
+  const cur = readExecutions(ws, customer, run);
+  cur.scopes = { ...(cur.scopes ?? {}), [scope]: { key, via, created_at: new Date().toISOString() } };
+  mkdirSync(join(executionsFile(ws, customer, run), ".."), { recursive: true });
+  writeFileAtomic(executionsFile(ws, customer, run), `${JSON.stringify(cur, null, 2)}
+`);
+}
+// I1: un'esecuzione esistente si usa solo se creata dal plugin in questa sessione (session.alm.created); senza sessione
+// (CI) vale la mappa protetta.
+export function assertOwned(ws, customer, key, env = process.env) {
+  if (!ownedExecution(ws, customer, key, env)) throw new AlmError("refused", `esecuzione ${key} non creata dal plugin in questa sessione (session.alm.created): nessun import nei risultati altrui (§46.5)`);
+  return key;
+}
+
 export function readPublished(ws, customer, run) { return readJson(publishedFile(ws, customer, run)) ?? { run, scopes: {} }; }
 export function recordPublished(ws, customer, run, scope, rec) {
   const cur = readPublished(ws, customer, run);
@@ -55,6 +75,8 @@ export class OfflineQueue {
     if (!["import", "defect"].includes(op)) throw new AlmError("input", `operazione di coda non ammessa: ${op}`);
     const id = `Q.${stamp(now)}.${randomBytes(3).toString("hex")}`;
     const entry = { id, op, customer: this.customer, run, scope, status: "pending", attempts: 0, created_at: now.toISOString(), last_error: error ? safeMessage(error, this.env) : null };
+    // Defect: testo redatto (strict, valori delle variabili note) PRIMA di scriverlo su disco
+    if (op === "defect" && payload?.defect) payload = { ...payload, defect: { ...payload.defect, summary: strictText(payload.defect.summary, this.env), description: strictText(payload.defect.description ?? "", this.env) } };
     if (op === "import" && run && scope) entry.payload_ref = { file: writePayloadEntry(this.ws, this.customer, this.checkRun(run), scope, payload), scope };
     else { if (run) this.checkRun(run); entry.payload = payload; }
     this.save(entry);
@@ -79,24 +101,28 @@ export class OfflineQueue {
     return p;
   }
 
-  // Esegue una voce; → { key, report }. Gli errori propagano (il chiamante decide pending/failed).
+  // Esegue una voce; → { key, report, created }. Gli errori propagano (il chiamante decide pending/failed).
+  // WP09c giro 1 (I1): chiave esistente solo se creata dal plugin in questa sessione; evidenze solo per file del dossier
+  // (profilo strict verificato: niente base64 in linea); created = la chiave è nata ORA (solo allora si registra).
   async send(adapter, entry) {
     const p = this.payloadOf(entry);
     if (entry.op === "import") {
-      let key = p.execution_key ?? p.executionKey ?? null;
-      if (!key) {
-        const published = entry.run ? readPublished(this.ws, this.customer, entry.run).scopes?.[entry.scope]?.execution_key : null;
-        key = published ?? (await adapter.createExecution(p.execution)).key;
-        if (entry.run && entry.scope) recordPublished(this.ws, this.customer, entry.run, entry.scope, { execution_key: key, created_at: new Date().toISOString() });
+      const results = await materializeResults(this.ws, this.customer, p.results, { allowInline: false });
+      let key = p.execution_key ?? p.executionKey ?? (entry.run && entry.scope ? executionFor(this.ws, this.customer, this.checkRun(entry.run), entry.scope) : null);
+      let created = false;
+      if (key) assertOwned(this.ws, this.customer, key, this.env);
+      else {
+        key = (await adapter.createExecution(p.execution)).key;
+        created = true;
+        if (entry.run && entry.scope) recordExecution(this.ws, this.customer, entry.run, entry.scope, key, entry.id);
       }
-      const results = await materializeResults(this.ws, this.customer, p.results, { allowInline: true });
       const report = await adapter.importResults(key, results);
       if (entry.run && entry.scope) recordPublished(this.ws, this.customer, entry.run, entry.scope, { execution_key: key, imported_at: new Date().toISOString(), tests: report.tests, evidence: report.evidence, via: entry.id });
-      return { key, report };
+      return { key, report, created };
     }
-    const d = { ...p.defect, attachments: await materializeAttachments(this.ws, this.customer, p.defect?.attachments ?? [], { allowInline: true }) };
+    const d = { ...p.defect, attachments: await materializeAttachments(this.ws, this.customer, p.defect?.attachments ?? [], { allowInline: false }) };
     const r = await adapter.createDefect(d);
-    return { key: r.key, report: null };
+    return { key: r.key, report: null, created: true };
   }
 
   async retryQueued(adapter, { now = () => new Date() } = {}) {
@@ -109,7 +135,7 @@ export class OfflineQueue {
         if (!authed) { await adapter.authenticate(); authed = true; }
         const r = await this.send(adapter, e);
         Object.assign(e, { status: "sent", key: r.key, sent_at: now().toISOString(), last_error: null });
-        out.sent.push({ id: e.id, op: e.op, key: r.key });
+        out.sent.push({ id: e.id, op: e.op, key: r.key, created: r.created });
       } catch (err) {
         const msg = safeMessage(err?.message ?? err, this.env);
         e.last_error = msg;

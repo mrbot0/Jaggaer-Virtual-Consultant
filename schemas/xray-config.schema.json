@@ -45,7 +45,8 @@
     "statuses": {
       "type": "object",
       "additionalProperties": false,
-      "properties": { "error_environment": { "enum": ["ABORTED", "TODO"], "default": "ABORTED", "description": "Stato Xray di un ERROR-ENVIRONMENT: mai FAILED, mai un Defect (§29.9)." } }
+      "properties": { "error_environment": { "enum": ["ABORTED", "TODO"], "default": "ABORTED", "description": "Stato Xray di un ERROR-ENVIRONMENT: mai FAILED, mai un Defect (§29.9)." },
+        "dc": { "type": "object", "description": "Solo Server/DC: stati personalizzati dell'istanza (nome Cloud → nome DC); default PASSED→PASS, FAILED→FAIL, TODO, EXECUTING, ABORTED.", "propertyNames": { "enum": ["PASSED", "FAILED", "TODO", "EXECUTING", "ABORTED"] }, "additionalProperties": { "type": "string", "pattern": "^[A-Z][A-Z_ -]{1,30}$" } } }
     },
     "issuetype_ids": {
       "type": "object",

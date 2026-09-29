@@ -14,6 +14,7 @@ import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { verifyPackage, devMode } from "../../hooks/lib/integrity.mjs";
 import { verifyChain } from "../../hooks/lib/audit.mjs";
+import { NETWORK_CATEGORIES, parseNetworkMd } from "../lib/network-md.mjs";
 
 export const PLUGIN_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const CUSTOMER_RE = /^[A-Z0-9]{4}$/;
@@ -282,19 +283,8 @@ export function checkAudit(ws, custs, now = new Date()) {
 
 // WP09c: NETWORK.md (§53.2) — tabella "categoria | host | quando | dichiarato in"; host fra backtick, "none" per nessuno.
 // → { ok, categories: { <id>: { hosts[], none } }, error? }. Solo le righe della tabella contano (mai il testo libero).
-export const NETWORK_CATEGORIES = ["jaggaer", "alm", "npm", "claude", "telemetry"];
-export function parseNetworkMd(plugin) {
-  let text;
-  try { text = readFileSync(join(plugin, "NETWORK.md"), "utf8"); } catch { return { ok: false, categories: {}, error: "NETWORK.md assente nel pacchetto" }; }
-  const categories = {};
-  for (const line of text.split(/\r?\n/)) {
-    const cells = /^\s*\|(.+)\|\s*$/.exec(line)?.[1].split("|").map((c) => c.trim());
-    if (!cells || cells.length < 2 || !/^[a-z][a-z0-9-]*$/.test(cells[0]) || cells[0] === "categoria") continue;
-    const hosts = [...cells[1].matchAll(/`(\*?\.?[a-z0-9-]+(?:\.[a-z0-9-]+)+)`/gi)].map((m) => m[1].toLowerCase());
-    categories[cells[0]] = { hosts, none: /^none$/i.test(cells[1]) };
-  }
-  return Object.keys(categories).length ? { ok: true, categories } : { ok: false, categories, error: "NETWORK.md senza la tabella delle categorie" };
-}
+// WP09c giro 1: il parser è condiviso con l'AlmAdapter (scripts/lib/network-md.mjs)
+export { NETWORK_CATEGORIES, parseNetworkMd };
 
 export function checkNetworkCategories(plugin) {
   const n = parseNetworkMd(plugin);
@@ -318,7 +308,7 @@ const allowed = (host, list) => list.some((p) => (p.startsWith("*.") ? host.ends
 export async function checkNetwork(plugin, envDocs, xrays, { resolver }) {
   const declared = new Set();
   for (const d of Object.values(envDocs)) for (const e of d.doc?.environments ?? []) { for (const h of e.allowed_hosts ?? []) declared.add(String(h).toLowerCase().replace(/:\d+$/, "")); const b = hostOf(e.base_url); if (b) declared.add(b); }
-  const configured = Object.entries(xrays).filter(([, x]) => x).flatMap(([c, x]) => [x.base_url, x.jira_url].filter(Boolean).map((u) => ({ c, host: hostOf(u), url: u }))).filter((x) => x.host);
+  const configured = Object.entries(xrays).filter(([, x]) => x).flatMap(([c, x]) => [x.base_url, x.jira_url, x.xray_url].filter(Boolean).map((u) => ({ c, host: hostOf(u), url: u }))).filter((x) => x.host);
   for (const x of configured) declared.add(x.host);
   const out = [];
   let online = true;

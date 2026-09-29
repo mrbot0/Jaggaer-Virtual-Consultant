@@ -13,7 +13,7 @@ import { createInterface } from "node:readline";
 import { statSync } from "node:fs";
 import { AlmError, safeMessage, refusedIssueType, ISSUE_KEY } from "./adapter.mjs";
 import { almContext, currentSession, xrayConfigFile } from "./factory.mjs";
-import { OfflineQueue, withQueue, readPayload, recordPublished } from "./queue.mjs";
+import { OfflineQueue, withQueue, readPayload, recordPublished, executionFor, recordExecution } from "./queue.mjs";
 import { materializeResults, materializeAttachments } from "./payload.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
 
@@ -79,9 +79,19 @@ export function createServer({ env = process.env, cwd = process.cwd(), fetchImpl
     async alm_find_tests(a, c) { return { tests: await c.adapter.findTests({ plan: a.plan, labels: a.labels, text: a.text }) }; },
     async alm_queue_status(a, c) { return c.queue ? c.queue.status() : { customer: null, pending: 0, sent: 0, failed: 0, items: [] }; },
     async alm_create_execution(a, c) {
+      // WP09c giro 1 (I2): UNA Test Execution per run e scope (ADR-20/34), mappa condivisa con scripts/xray/publish
+      if (a.run && c.customer) {
+        c.queue.checkRun(a.run);
+        const existing = executionFor(c.ws, c.customer, a.run, a.scope);
+        if (existing) {
+          if (!mine(c, existing)) throw new AlmError("refused", `${a.run} (scope ${a.scope}) ha già la Test Execution ${existing}, creata dal plugin in un'altra sessione: nessuna seconda esecuzione per run e scope (ADR-20)`);
+          return { key: existing, existing: true };
+        }
+      }
       const r = await c.adapter.createExecution({ summary: a.summary, scope: a.scope, run: a.run ?? null, description: a.description, labels: a.labels,
         testPlanKey: a.testPlanKey ?? c.config.test_plan_by_scope?.[a.scope] ?? null });
       created.add(r.key);
+      if (a.run && c.customer) recordExecution(c.ws, c.customer, a.run, a.scope, r.key, "alm_create_execution");
       return { key: r.key };
     },
     async alm_import_results(a, c) {

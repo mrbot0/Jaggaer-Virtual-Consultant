@@ -8,14 +8,41 @@ import { AlmError, assertAdapter } from "./adapter.mjs";
 import { XrayCloudAdapter } from "./xray-cloud.mjs";
 import { XrayServerAdapter } from "./xray-server.mjs";
 import { MockAlmAdapter } from "./mock.mjs";
+import { xrayPinRefusal } from "../../hooks/lib/alm.mjs";
 
 export const DEFAULTS = Object.freeze({ offline_queue: true, allow_test_issue_creation: false, attachments_cap: 5, statuses: { error_environment: "ABORTED" } });
 const CUSTOMER = /^[A-Z0-9]{4}$/;
 
 export const xrayConfigFile = (ws, customer) => join(ws, "customers", customer, "config", "xray.yaml");
 
-export async function loadXrayConfig(ws, customer, { required = true } = {}) {
+// session.json della sessione corrente PER QUESTO cliente (null: nessuna sessione JVC, es. CI senza Claude).
+export function customerSession(ws, customer, env = process.env) {
+  const sid = currentSession(ws, env).sid;
+  if (!sid) return null;
+  try { return JSON.parse(readFileSync(join(ws, "customers", customer, ".sessions", sid, "session.json"), "utf8")); } catch { return null; }
+}
+// WP09c giro 1 (I1): chiavi create dal plugin in questa sessione; null senza sessione (CI: nessun modello).
+export function sessionCreatedKeys(ws, customer, env = process.env) {
+  const s = customerSession(ws, customer, env);
+  if (!s) return null;
+  return new Set((Array.isArray(s.alm?.created) ? s.alm.created : []).map((x) => String(typeof x === "string" ? x : x?.key ?? "").toUpperCase()).filter(Boolean));
+}
+export function ownedExecution(ws, customer, key, env = process.env) {
+  const keys = sessionCreatedKeys(ws, customer, env);
+  return keys === null || keys.has(String(key).toUpperCase());
+}
+
+// WP09c giro 1 (C1 b): con una sessione JVC su questo cliente, xray.yaml deve essere quello fissato a use customer.
+export function assertPinned(ws, customer, env = process.env) {
+  const session = customerSession(ws, customer, env);
+  if (!session) return;
+  const why = xrayPinRefusal(ws, customer, session);
+  if (why) throw new AlmError("refused", why);
+}
+
+export async function loadXrayConfig(ws, customer, { required = true, env = process.env } = {}) {
   if (!CUSTOMER.test(String(customer ?? ""))) throw new AlmError("config", `cliente non valido: ${JSON.stringify(customer)}`);
+  assertPinned(ws, customer, env);
   const f = xrayConfigFile(ws, customer);
   if (!existsSync(f)) {
     if (required) throw new AlmError("config", `config/xray.yaml assente per ${customer}: l'ALM non è configurato (schemas/xray-config.schema.json)`);
@@ -30,11 +57,11 @@ export async function loadXrayConfig(ws, customer, { required = true } = {}) {
   return { ...DEFAULTS, ...doc, statuses: { ...DEFAULTS.statuses, ...(doc.statuses ?? {}) } };
 }
 
-export function createAdapter(config, { env = process.env, fetchImpl, file } = {}) {
+export function createAdapter(config, { env = process.env, fetchImpl, file, networkHosts = null } = {}) {
   const kind = env.JVC_ALM_ADAPTER === "mock" ? "mock" : config?.deployment;
   let a;
-  if (kind === "cloud") a = new XrayCloudAdapter(config, { env, fetchImpl });
-  else if (kind === "server") a = new XrayServerAdapter(config, { env, fetchImpl });
+  if (kind === "cloud") a = new XrayCloudAdapter(config, { env, fetchImpl, networkHosts });
+  else if (kind === "server") a = new XrayServerAdapter(config, { env, fetchImpl, networkHosts });
   else if (kind === "mock") a = new MockAlmAdapter(config ?? {}, { env, file });
   else throw new AlmError("config", `deployment non valido in config/xray.yaml: ${JSON.stringify(config?.deployment)} (cloud | server | mock)`);
   return assertAdapter(a);
@@ -61,14 +88,14 @@ export function resolveCustomer(ws, env = process.env, explicit = null) {
 }
 
 // Contesto completo per il server MCP e gli script: { ws, customer, config, adapter }.
-export async function almContext({ env = process.env, cwd = process.cwd(), customer = null, ws = null, fetchImpl, file } = {}) {
+export async function almContext({ env = process.env, cwd = process.cwd(), customer = null, ws = null, fetchImpl, file, networkHosts = null } = {}) {
   const w = ws ?? resolveWorkspace(env, cwd);
   const c = resolveCustomer(w, env, customer);
   if (!c) {
     if (env.JVC_ALM_ADAPTER === "mock") return { ws: w, customer: null, config: { ...DEFAULTS, deployment: "mock" }, adapter: createAdapter({ ...DEFAULTS, deployment: "mock" }, { env, file }) };
     throw new AlmError("config", "nessun cliente attivo: use customer <ID> (o --customer)");
   }
-  let config = await loadXrayConfig(w, c, { required: env.JVC_ALM_ADAPTER !== "mock" });
+  let config = await loadXrayConfig(w, c, { required: env.JVC_ALM_ADAPTER !== "mock", env });
   if (!config) config = { ...DEFAULTS, deployment: "mock" };
-  return { ws: w, customer: c, config, adapter: createAdapter(config, { env, fetchImpl, file }) };
+  return { ws: w, customer: c, config, adapter: createAdapter(config, { env, fetchImpl, file, networkHosts }) };
 }

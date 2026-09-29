@@ -17,10 +17,11 @@ import { AlmError, checkKey, checkLabels, checkResults, countEvidence, execution
 import { request, declaredUrl, basicAuth, attachmentForm, XRAY_CLOUD_DEFAULT } from "./http.mjs";
 
 export class JiraBase {
-  constructor(config = {}, { env = process.env, fetchImpl = globalThis.fetch } = {}) {
+  constructor(config = {}, { env = process.env, fetchImpl = globalThis.fetch, networkHosts = null } = {}) {
     this.config = config;
     this.env = env;
     this.fetchImpl = fetchImpl;
+    this.networkHosts = networkHosts;
   }
   project(p) {
     const k = p ?? this.config.project;
@@ -30,13 +31,13 @@ export class JiraBase {
   jiraBase() {
     const u = this.env.JIRA_BASE_URL || this.config.jira_url || this.config.base_url;
     if (!u) throw new AlmError("config", "URL di Jira assente: base_url in config/xray.yaml (o JIRA_BASE_URL)");
-    return declaredUrl(u, this.config, "URL di Jira");
+    return declaredUrl(u, this.config, "URL di Jira", this.networkHosts);
   }
   jiraHeaders() { throw new AlmError("config", "autenticazione Jira non definita"); }
   async jira(method, path, body, extraHeaders = {}) {
     const isForm = body instanceof FormData;
     const headers = { Accept: "application/json", ...this.jiraHeaders(), ...(body !== undefined && !isForm ? { "Content-Type": "application/json" } : {}), ...extraHeaders };
-    return request(this.config, { method, url: `${this.jiraBase()}${path}`, headers, body: body === undefined ? undefined : isForm ? body : JSON.stringify(body), env: this.env, fetchImpl: this.fetchImpl });
+    return request(this.config, { method, url: `${this.jiraBase()}${path}`, headers, body: body === undefined ? undefined : isForm ? body : JSON.stringify(body), env: this.env, fetchImpl: this.fetchImpl, networkHosts: this.networkHosts });
   }
   userField(name) { return { name }; }
 
@@ -96,7 +97,7 @@ export class XrayCloudAdapter extends JiraBase {
     super(config, opts);
     this.token = null;
   }
-  xrayBase() { return declaredUrl(this.config.xray_url ?? XRAY_CLOUD_DEFAULT, this.config, "URL di Xray Cloud"); }
+  xrayBase() { return declaredUrl(this.config.xray_url ?? XRAY_CLOUD_DEFAULT, this.config, "URL di Xray Cloud", this.networkHosts); }
   jiraHeaders() {
     const user = this.env.JIRA_USER; const tok = this.env.JIRA_API_TOKEN;
     if (!user || !tok) throw new AlmError("auth", "credenziali Jira assenti: JIRA_USER e JIRA_API_TOKEN nell'ambiente (§48.1)");
@@ -108,15 +109,22 @@ export class XrayCloudAdapter extends JiraBase {
     const id = this.env.XRAY_CLIENT_ID; const secret = this.env.XRAY_CLIENT_SECRET;
     if (!id || !secret) throw new AlmError("auth", "credenziali Xray Cloud assenti: XRAY_CLIENT_ID e XRAY_CLIENT_SECRET nell'ambiente (§48.1)");
     const r = await request(this.config, { method: "POST", url: `${this.xrayBase()}/api/v2/authenticate`, headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ client_id: id, client_secret: secret }), env: this.env, fetchImpl: this.fetchImpl });
+      body: JSON.stringify({ client_id: id, client_secret: secret }), env: this.env, fetchImpl: this.fetchImpl, networkHosts: this.networkHosts });
     const tok = typeof r.json === "string" ? r.json : r.text.replace(/^"|"$/g, "");
     if (!tok) throw new AlmError("auth", "Xray Cloud: autenticazione senza token");
     this.token = tok;
   }
-  async xray(method, path, body) {
+  // WP09c giro 1: token scaduto (401) ⇒ una sola nuova autenticazione e un solo nuovo tentativo
+  async xray(method, path, body, retried = false) {
     if (!this.token) await this.authenticate();
-    return request(this.config, { method, url: `${this.xrayBase()}${path}`, headers: { Authorization: `Bearer ${this.token}`, "Content-Type": "application/json", Accept: "application/json" },
-      body: body === undefined ? undefined : JSON.stringify(body), env: this.env, fetchImpl: this.fetchImpl });
+    try {
+      return await request(this.config, { method, url: `${this.xrayBase()}${path}`, headers: { Authorization: `Bearer ${this.token}`, "Content-Type": "application/json", Accept: "application/json" },
+        body: body === undefined ? undefined : JSON.stringify(body), env: this.env, fetchImpl: this.fetchImpl, networkHosts: this.networkHosts });
+    } catch (err) {
+      if (retried || !(err instanceof AlmError) || err.status !== 401) throw err;
+      this.token = null;
+      return this.xray(method, path, body, true);
+    }
   }
   async graphql(query, variables) {
     const r = await this.xray("POST", "/api/v2/graphql", { query, variables });
