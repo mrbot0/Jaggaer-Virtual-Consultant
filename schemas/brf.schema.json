@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brf.schema.json",
+  "title": "Briefing per scope e livello (BRF)",
+  "description": "§1.1, F8, M18: il briefing che il digester dà a un configuratore: pattern più frequenti dello scope, playbook, testo breve. Livello C (un cliente) o S (prodotto, da pattern pseudonimizzati). Dominio analitico (§1.1): vive in analysis/, non cita mai un test (NRT.*) e kb/ non lo cita.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/brf"
+    }
+  ],
+  "$defs": {
+    "brf": {
+      "type": "object",
+      "required": [
+        "type",
+        "scope_ref",
+        "level",
+        "top_patterns",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "BRF"
+        },
+        "scope_ref": {
+          "enum": [
+            "CAT",
+            "SRC",
+            "VEN",
+            "CON",
+            "P2P",
+            "INV",
+            "QLT",
+            "ANL",
+            "ADM",
+            "XSC"
+          ]
+        },
+        "level": {
+          "enum": [
+            "S",
+            "C"
+          ]
+        },
+        "audience": {
+          "enum": [
+            "configuratore",
+            "consulente",
+            "supporto"
+          ]
+        },
+        "top_patterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "pattern",
+              "occurrences"
+            ],
+            "properties": {
+              "pattern": {
+                "type": "string",
+                "pattern": "^[SC]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.PAT\\.\\d{4}(\\.v\\d+)?$"
+              },
+              "occurrences": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "share": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "symptom": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "playbooks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[SC]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.PBK\\.\\d{4}(\\.v\\d+)?$"
+          }
+        },
+        "text": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 4000
+        },
+        "tickets_total": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

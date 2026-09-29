@@ -1,0 +1,7 @@
+Numero;Oggetto;Descrizione;Modulo;Codice errore;Causa;Causa radice;Risoluzione;Stato;Segnalante;Assegnatario;Scope
+INC-1001;Errore al salvataggio della RdA 4500012345;"Il salvataggio fallisce; vedi test NRT.ACME.P2P.NEG.0036";Requisition;REQ-VAL-014;Centro di costo di altra società;Lookup CdC non filtrato per società;Scegliere un CdC della società;Chiuso;Mario Rossi;Anna Bianchi;P2P
+INC-1002;Errore al salvataggio della RdA 4500099999;Scrivere a mario.rossi@acme.it per dettagli;Requisition;REQ-VAL-014;Centro di costo di altra società;Lookup CdC non filtrato per società;Scegliere un CdC della società;Chiuso;Luca Verdi;Anna Bianchi;P2P
+INC-1003;Errore al salvataggio della RdA 4500011111;;Requisition;REQ-VAL-014;;Lookup CdC non filtrato per società;Filtro del lookup per società;Chiuso;Mario Rossi;Anna Bianchi;P2P
+INC-1004;Timeout invio ordine a SAP;Acme Industrie SpA segnala ritardi;Order;INT-TO-02;Coda IDoc piena;Job di svuotamento fermo;Riavviare il job;Chiuso;Luca Verdi;Paolo Neri;P2P
+INC-1005;Timeout invio ordine a SAP;;Order;INT-TO-02;Coda IDoc piena;;Riavviare il job;Aperto;Mario Rossi;Paolo Neri;P2P
+INC-1006;Catalogo non visibile;;Catalog;;;;;Aperto;Anna Bianchi;;CAT

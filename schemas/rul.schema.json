@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rul.schema.json",
+  "title": "Regola di configurazione (RUL)",
+  "description": "F10 (config auditor): una condizione verificabile su una baseline di configurazione (scripts/config/lint.mjs): a quali oggetti si applica (codice CFG, area CL-CFG, chiave) e cosa deve valere (percorso, operatore, valore), con severità e messaggio. Dominio analitico (§1.1): vive in analysis/, non cita mai un test (NRT.*) e kb/ non lo cita.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/rul"
+    }
+  ],
+  "$defs": {
+    "rul": {
+      "type": "object",
+      "required": [
+        "type",
+        "rule"
+      ],
+      "properties": {
+        "type": {
+          "const": "RUL"
+        },
+        "rule": {
+          "type": "object",
+          "required": [
+            "applies_to",
+            "assert",
+            "severity"
+          ],
+          "properties": {
+            "applies_to": {
+              "type": "object",
+              "minProperties": 1,
+              "properties": {
+                "object": {
+                  "type": "string",
+                  "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CFG\\.\\d{4}(\\.v\\d+)?$"
+                },
+                "area": {
+                  "type": "string",
+                  "pattern": "^CL-CFG-\\d{3}$"
+                },
+                "key": {
+                  "type": "string"
+                }
+              }
+            },
+            "when": {
+              "type": "object",
+              "required": [
+                "path",
+                "op"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "op": {
+                  "enum": [
+                    "eq",
+                    "ne",
+                    "in",
+                    "nin",
+                    "gte",
+                    "lte",
+                    "gt",
+                    "lt",
+                    "exists",
+                    "absent",
+                    "regex"
+                  ]
+                },
+                "value": {}
+              }
+            },
+            "assert": {
+              "type": "object",
+              "required": [
+                "path",
+                "op"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "op": {
+                  "enum": [
+                    "eq",
+                    "ne",
+                    "in",
+                    "nin",
+                    "gte",
+                    "lte",
+                    "gt",
+                    "lt",
+                    "exists",
+                    "absent",
+                    "regex"
+                  ]
+                },
+                "value": {}
+              }
+            },
+            "severity": {
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "critical"
+              ]
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "rationale": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

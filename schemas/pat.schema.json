@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pat.schema.json",
+  "title": "Pattern di guasto (PAT)",
+  "description": "§1.1, F8: gruppo di ticket con la stessa firma del sintomo (messaggio normalizzato + modulo + codice d'errore) e la catena causale a 4 livelli (sintomo → causa immediata → causa radice → risoluzione) con la quota di ticket che la sostiene. Ticket pseudonimizzati all'importazione. Dominio analitico (§1.1): vive in analysis/, non cita mai un test (NRT.*) e kb/ non lo cita.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/pat"
+    }
+  ],
+  "$defs": {
+    "pat": {
+      "type": "object",
+      "required": [
+        "type",
+        "signature",
+        "symptom",
+        "occurrences",
+        "chain"
+      ],
+      "properties": {
+        "type": {
+          "const": "PAT"
+        },
+        "signature": {
+          "type": "object",
+          "required": [
+            "hash"
+          ],
+          "properties": {
+            "hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{12}$"
+            },
+            "module": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "error_code": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "symptom": {
+          "type": "string",
+          "minLength": 3
+        },
+        "occurrences": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "chain": {
+          "type": "object",
+          "required": [
+            "symptom",
+            "immediate_cause",
+            "root_cause",
+            "resolution"
+          ],
+          "properties": {
+            "symptom": {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "share": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "missing": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "immediate_cause": {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "share": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "missing": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "root_cause": {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "share": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "missing": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "resolution": {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "share": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "missing": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "tickets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^TKT-[0-9a-f]{10}$"
+          }
+        },
+        "period": {
+          "type": "string"
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

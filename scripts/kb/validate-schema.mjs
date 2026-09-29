@@ -25,7 +25,9 @@ const words = (s) => (s || "").trim().split(/\s+/).filter(Boolean).length;
 export const TYPE_SCHEMAS = Object.freeze({ SEL: "sel.schema.json", HND: "hnd.schema.json", CHK: "chk.schema.json", CFP: "cfp.schema.json",
   FLW: "flw.schema.json", KEY: "key.schema.json", LCY: "lcy.schema.json", INT: "int.schema.json", CFG: "cfg.schema.json",
   // WP09d: Analytics (§20.3, §20.5, §20.6)
-  TBL: "tbl.schema.json", QRY: "qry.schema.json", DIN: "din.schema.json", USR: "usr.schema.json", PSP: "psp.schema.json", ERR: "err.schema.json" });
+  TBL: "tbl.schema.json", QRY: "qry.schema.json", DIN: "din.schema.json", USR: "usr.schema.json", PSP: "psp.schema.json", ERR: "err.schema.json",
+  // WP09d: dominio analitico (§1.1, F8, F10)
+  PAT: "pat.schema.json", PBK: "pbk.schema.json", BRF: "brf.schema.json", RUL: "rul.schema.json" });
 
 // WP09d (§20.5.5): DIN e USR non conservano valori che identificano qualcuno. Oltre allo schema (values_retained: none,
 // gruppo minimo 20): nessun indirizzo email in nessun valore; nessun campo chiamato come nomi/email/codici/utenti/valori
