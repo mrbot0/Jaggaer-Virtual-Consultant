@@ -106,3 +106,16 @@ test("CLI why <codice> --json (exit 0) e codice ignoto (exit 1)", () => {
   const nf = spawnSync(process.execPath, [CLI, "L.ACME.ADM.DEC.9999", "--db", dbFile, "--root", root, "--json"], { encoding: "utf8" });
   assert.equal(nf.status, 1);
 });
+
+// Revisione finale (minore B#3): DEC con il solo YAML senza `components` e nessuna riga nel DB ⇒ niente TypeError,
+// l'esito si ricalcola dalla DT e vale quello del file.
+test("why su un DEC con il solo YAML (senza components) e senza riga nel DB: nessun TypeError, esito del file", () => {
+  const root = mkdtempSync(join(tmpdir(), "why-yaml-"));
+  const db = openDb(join(root, "knowledge.db"));
+  mkdirSync(join(root, "decisions"), { recursive: true });
+  const code = "L.ACME.ADM.DEC.0042";
+  writeFileSync(join(root, "decisions", `${code}.yaml`), `id: ${code}\ntype: DEC\ntable: DT-002\ninputs: ${JSON.stringify(DT002_181)}\npriors: []\noutcome: chiedi\n`);
+  const w = explain(db, code, { root });
+  assert.equal(w.kind, "DEC");
+  assert.equal(w.outcome, "chiedi");
+});

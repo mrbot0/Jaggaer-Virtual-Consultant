@@ -93,7 +93,7 @@ export function explain(db, code, { root } = {}) {
     } else {
       const priors = Object.fromEntries(priorsUsed.map((x) => [x.name, x.value]));
       result = evaluate(table, inputs, { priors });
-      result.outcome = row.outcome ?? result.outcome;
+      result.outcome = doc?.outcome ?? row?.outcome ?? result.outcome;   // revisione finale: il DEC può esistere solo come YAML
     }
     const verified = db.prepare("select result, verified_at, verified_by, evidence_code as evidence, note from outcomes where decision_code=?").get(code) ?? null;
     const expected = db.prepare("select expect from expected_outcomes where decision_code=?").get(code)?.expect ?? null;
