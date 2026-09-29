@@ -15,7 +15,7 @@ import { DOC_BUDGET } from "../../scripts/ingest/extract.mjs";
 const CORPUS = new URL("../../JAGGAER DOC/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1").replace(/%20/g, " ");
 const skip = !existsSync(CORPUS) ? "corpus JAGGAER DOC assente" : process.env.JVC_SKIP_CORPUS === "1" ? "JVC_SKIP_CORPUS=1" : false;
 
-test("accettazione sul corpus reale: nessun crash, ogni file profilato o nel residuo con motivo, lotti ≤ 50, budget per documento", { skip, timeout: 600000 }, () => {
+test("accettazione sul corpus reale: nessun crash, ogni file profilato o nel residuo con motivo, lotti ≤ 50, budget per documento", { skip, timeout: 1800000 }, () => {   // misurato ~772 s con la redazione anche della copia su disco: margine ampio
   const ws = mkdtempSync(join(tmpdir(), "jvc-corpus-"));
   const r = ingestFolder(CORPUS, { root: ws, scope: "XSC" });
   assert.deepEqual(r.errors, [], "nessun documento in errore");
