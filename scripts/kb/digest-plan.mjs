@@ -24,6 +24,7 @@ import { evaluate, loadTable } from "../decide/dt-eval.mjs";
 import { parseCode } from "./codes.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export class DigestInputError extends Error { constructor(m) { super(m); this.name = "DigestInputError"; } }
 export const EXPECTED = YAML.parse(readFileSync(new URL("../../schemas/expected-attributes.yaml", import.meta.url), "utf8"));
@@ -132,6 +133,7 @@ function main(argv) {
   const asJson = !!opts.json;
   if (!cmd || cmd === "--help" || opts.help) { console.log(HELP); return cmd ? 0 : 1; }
   if (!["plan", "record-answers"].includes(cmd)) return fail(asJson, 1, `comando sconosciuto: ${cmd}`);
+  { const bad = confineInputs(opts, ["answers-file"], {}); if (bad) return fail(asJson, 1, bad); }
   if (!opts.db) return fail(asJson, 1, "richiesto --db <file>");
   let db;
   try { db = openDb(opts.db, { createIfMissing: false }); } catch (e) { return fail(asJson, 1, e.message); }

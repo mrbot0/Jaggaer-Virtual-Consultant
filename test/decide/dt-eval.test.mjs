@@ -8,11 +8,13 @@ import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import { evaluate, loadTable, validateTable, DtDomainError, DtNullError } from "../../scripts/decide/dt-eval.mjs";
 import { openDb } from "../../scripts/kb/db.mjs";
+import { cleanEnv } from "../helpers/hook-env.mjs";
 
 const CLI = fileURLToPath(new URL("../../scripts/decide/dt-eval.mjs", import.meta.url));
 const approx = (a, b, eps = 1e-6) => assert.ok(Math.abs(a - b) < eps, `${a} ≉ ${b}`);
 const tmp = () => mkdtempSync(join(tmpdir(), "dt-"));
-const run = (args) => spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8" });
+// revisione finale: i file d'ingresso degli script stanno nel workspace degli hook (JVC_WORKSPACE): qui la cartella temporanea del sistema, dove i test scrivono gli input
+const run = (args) => spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: tmpdir() }) });
 
 const DT002_181 = { risk: "R2", shape: "libresco", mandatory_missing: true, open_contradiction: false, novelty: false };
 

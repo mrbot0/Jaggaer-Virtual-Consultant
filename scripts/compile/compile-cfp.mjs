@@ -35,10 +35,12 @@ import { validatePlan } from "../decide/validate-plan.mjs";
 import { loadItem, analyticCodes, typeOf } from "../lib/kb-items.mjs";
 import { RISK_LEVEL } from "../../hooks/lib/act-classes.mjs";
 import { kvArgs, workspaceCustomer } from "../run/fixtures.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export class CfpError extends Error { constructor(code, msg, extra = {}) { super(msg); this.code = code; Object.assign(this, extra); } }
 export const CHANGE_VERBS = new Set(["CHOOSE", "TOGGLE", "SAVE", "SUBMIT", "UPLOAD"]);
 const SAVE_VERBS = new Set(["SAVE", "SUBMIT"]);
+const CFP_CODE = /^[SC]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.CFP\.\d{4}$/;
 
 export function composeCfp(S, C = null) {
   const base = [...(S.steps ?? [])].sort((a, b) => a.n - b.n);
@@ -284,6 +286,7 @@ export function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv, { flags: ["dry-run", "verify"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["cfp","client","params"], { env, skip: (n, v) => n !== "params" && CFP_CODE.test(v) }); if (bad) return fail(asJson, 1, bad); }
   if (!opts.cfp) return fail(asJson, 1, "richiesto --cfp <file|codice>");
   const { ws, customer } = workspaceCustomer(opts, env);
   try {

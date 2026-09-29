@@ -23,7 +23,8 @@ function angled() {
 }
 // Un valore valido per ogni input (il primo del dominio), per valutare la tabella intera.
 const baseOf = (t) => Object.fromEntries(t.inputs.map((i) => [i.name, i.domain.enum ? Object.keys(i.domain.enum)[0] : i.domain.boolean ? false : i.domain.range[0]]));
-const run = (script, args) => spawnSync(process.execPath, [join(ROOT, "scripts/decide", script), ...args, "--json"], { env: cleanEnv(), encoding: "utf8" });
+// revisione finale: i file d'ingresso degli script stanno nel workspace degli hook (JVC_WORKSPACE): qui la cartella temporanea del sistema
+const run = (script, args) => spawnSync(process.execPath, [join(ROOT, "scripts/decide", script), ...args, "--json"], { env: cleanEnv({ JVC_WORKSPACE: tmpdir() }), encoding: "utf8" });
 const out = (r) => { assert.equal(r.status, 0, r.stdout + r.stderr); return JSON.parse(r.stdout); };
 
 test("la regola degli alias: < → -lt-, > → -gt-, senza trattini doppi o ai bordi; solo ASCII sicuro per i guard", () => {

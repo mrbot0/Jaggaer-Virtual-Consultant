@@ -8,6 +8,7 @@ import { loadAnalysis } from "../analysis/common.mjs";
 import { canonical } from "../digest/align.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 const get = (values, path) => { const f = flatten(values ?? {}); return Object.hasOwn(f, path) ? f[path] : undefined; };
 const eq = (a, b) => canonical(a) === canonical(b);
@@ -70,6 +71,7 @@ export function run(argv, env = process.env) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["baseline"], { env }); if (bad) return fail(asJson, 1, bad); }
   if (!/^[A-Z0-9]{4}$/.test(opts.customer ?? "")) return fail(asJson, 1, "richiesto --customer <C>");
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   const file = opts.baseline ?? (ENV_ID.test(opts.env ?? "") ? latestBaseline(ws, opts.customer, opts.env) : null);

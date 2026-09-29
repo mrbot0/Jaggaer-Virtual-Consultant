@@ -26,6 +26,7 @@ import { openDb } from "../kb/db.mjs";
 import { SCOPES } from "../kb/codes.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const SETUP_RE = /admin|setup|settings|configur|impostazion|parametri|preferen/i;
 const TYPE_OF_ROLE = { textbox: "text", searchbox: "text", textarea: "text", spinbutton: "number", combobox: "list", listbox: "list", checkbox: "flag", switch: "flag", radio: "list", slider: "number" };
@@ -125,6 +126,7 @@ function main(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["snapshots"], { dirs: ["snapshots"] }); if (bad) return fail(asJson, 1, bad); }
   if (!opts.snapshots || !opts.root || !opts.customer) return fail(asJson, 1, "richiesti --snapshots, --root e --customer");
   if (!existsSync(opts.snapshots)) return fail(asJson, 1, `cartella assente: ${opts.snapshots}`);
   try {

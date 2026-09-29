@@ -4,7 +4,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { mkdtempSync, existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, realpathSync } from "node:fs";
-import { runSessionCli } from "../helpers/hook-env.mjs";
+import { runSessionCli, cleanEnv } from "../helpers/hook-env.mjs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -97,10 +97,10 @@ test("field-table CLI: --doc --scope --root scrive i grezzi; scope sconosciuto â
   const root = mkdtempSync(join(tmpdir(), "ftc-"));
   const docFile = join(root, "doc.json");
   writeFileSync(docFile, JSON.stringify(synthDoc()));
-  const ok = spawnSync(process.execPath, [FT_CLI, "--doc", docFile, "--scope", "P2P", "--root", root, "--json"], { encoding: "utf8" });
+  const ok = spawnSync(process.execPath, [FT_CLI, "--doc", docFile, "--scope", "P2P", "--root", root, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: root }) });
   assert.equal(ok.status, 0, ok.stderr + ok.stdout);
   assert.equal(JSON.parse(ok.stdout).rows, 300);
-  const bad = spawnSync(process.execPath, [FT_CLI, "--doc", docFile, "--scope", "ZZZ", "--root", root, "--json"], { encoding: "utf8" });
+  const bad = spawnSync(process.execPath, [FT_CLI, "--doc", docFile, "--scope", "ZZZ", "--root", root, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: root }) });
   assert.equal(bad.status, 1);
 });
 
@@ -292,7 +292,7 @@ test("digest-fields CLI: plan (exit 0; budget superato â†’ exit 3 con cursore) e
   const batchFile = join(root, "_inbox", "P2P", "fields", "DOC-REQ-SPEC", "batch-01.yaml");
   const digested = join(root, "digested.yaml");
   writeFileSync(digested, YAML.stringify([{ id: "C.ACME.P2P.FLD.0009", type: "FLD" }]));
-  const acc = spawnSync(process.execPath, [DIGEST_CLI, "accept", batchFile, "--digested", digested, "--root", root, "--json"], { encoding: "utf8" });
+  const acc = spawnSync(process.execPath, [DIGEST_CLI, "accept", batchFile, "--digested", digested, "--root", root, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: root }) });
   assert.equal(acc.status, 1);
   assert.equal(JSON.parse(acc.stdout).rejected.length, 1);
 });

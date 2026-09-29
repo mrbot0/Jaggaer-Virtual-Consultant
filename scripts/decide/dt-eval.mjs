@@ -20,6 +20,7 @@ import { rates } from "../digest/outcomes-rates.mjs";
 import { rootFromDb } from "../lib/root-from-db.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 const PLUGIN_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const TABLES_DIR = join(PLUGIN_ROOT, "decision-tables");
@@ -371,6 +372,7 @@ function main(argv) {
   const { opts, positional } = parseArgs(argv, { flags: ["write-dec", "effects", "no-effects"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["inputs","priors"], { skip: (n, v) => v.trim().startsWith("{") || (n === "priors" && v === "auto") }); if (bad) return fail(asJson, 1, bad); }
   if (!opts.table || (!opts.inputs && !positional.length)) return fail(asJson, 1, "richiesti --table e gli input (--inputs <file.json> e/o nome=valore)");
   let table, inputs, filePriors = null, db = null;
   try {

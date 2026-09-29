@@ -6,7 +6,7 @@ import { fields, InvalidInputError, NotFoundError } from "./fields.mjs";
 import { impact } from "./impact.mjs";
 import { identityCard, identityMissing } from "./identity.mjs";
 import { isMain } from "../lib/is-main.mjs";
-import { readTextFile } from "../lib/text-file.mjs";
+import { readTextFile, inputBase, inputFile } from "../lib/text-file.mjs";
 import { recordCall } from "../lib/call-ledger.mjs";
 import { units as searchUnits, questionFor, UnitsInputError } from "./units.mjs";
 import { readFileSync } from "node:fs";
@@ -118,6 +118,13 @@ export function run(argv) {
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
     return { exitCode: 1 };
   }
+  // revisione finale: i file d'ingresso nel workspace degli hook, controllati prima di ogni altra cosa
+  for (const k of ["text-file", "query-file"]) {
+    const v = opt(k);
+    if (v === undefined) continue;
+    const c = inputFile(String(v));
+    if (c.error) { console.log(asJson ? JSON.stringify({ ok: false, error: `--${k}: ${c.error}` }) : `errore: --${k}: ${c.error}`); return { exitCode: 1 }; }
+  }
   // K6.7: ledger delle chiamate (spreco: la stessa query ripetuta nel compito ⇒ self-check #12)
   recordCall(`kb ${cmd}`, rest);
   let db;
@@ -139,7 +146,7 @@ export function run(argv) {
     } else if (cmd === "resolve") {
       // WP10a: --text-file (la domanda dell'utente da file: i guard negano ? , e lettere accentate in linea)
       let text = positional.join(" ");
-      if (opt("text-file")) { const t = readTextFile(process.env.JVC_WORKSPACE || process.env.CLAUDE_PROJECT_DIR || process.cwd(), opt("text-file")); if (t.error) throw new InvalidInputError(t.error); text = t.text; }
+      if (opt("text-file")) { const t = readTextFile(inputBase(), opt("text-file")); if (t.error) throw new InvalidInputError(t.error); text = t.text; }
       items = resolve(db, text, { top });
     } else if (cmd === "summary") {
       items = db.prepare("select code,summary from items where code=?").all(positional[0]);
@@ -158,7 +165,7 @@ export function run(argv) {
       items = opt("missing") !== undefined || !positional[0] ? identityMissing(db, { doc: opt("doc"), missing: opt("missing") }) : [identityCard(db, positional[0])];
     } else if (cmd === "units") {
       let query = opt("query");
-      if (opt("query-file")) query = readFileSync(opt("query-file"), "utf8");
+      if (opt("query-file")) { const t = readTextFile(inputBase(), opt("query-file")); if (t.error) throw new InvalidInputError(t.error); query = t.text; }
       let question = null;
       if (opt("question")) { question = questionFor(opt("question")); query = [...(question.keywords?.en ?? []), ...(question.keywords?.it ?? []), question.question].join(" "); }
       const r = searchUnits(db, { doc: opt("doc"), near: opt("near"), query, type: opt("type"), top: Number(opt("top", 5)) });

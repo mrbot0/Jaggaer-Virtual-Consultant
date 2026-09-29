@@ -22,6 +22,7 @@ import { buildQueue, record, stats, parseVerb, ReviewError } from "../../scripts
 import { backlog } from "../../scripts/kb/ingest-backlog.mjs";
 import { recordProfile } from "../../scripts/ingest/profile-doc.mjs";
 import { reindex } from "../../scripts/kb/reindex.mjs";
+import { cleanEnv } from "../helpers/hook-env.mjs";
 
 const ROOT = new URL("../../", import.meta.url);
 const EXPECTED = YAML.parse(readFileSync(new URL("schemas/expected-attributes.yaml", ROOT), "utf8"));
@@ -127,10 +128,10 @@ test("back-check T0: supportata / parziale / non-supportata / derived; numeri e 
   const dir = mkdtempSync(join(tmpdir(), "bc-"));
   const dbFile = join(dir, "k.db"); const d2 = openDb(dbFile); upsertUnits(d2, us); d2.close();
   writeFileSync(join(dir, "item.yaml"), YAML.stringify(item));
-  const cli = spawnSync(process.execPath, [new URL("scripts/kb/backcheck.mjs", ROOT).pathname.replace(/^\/([A-Za-z]:)/, "$1"), "--item", join(dir, "item.yaml"), "--db", dbFile, "--json"], { encoding: "utf8" });
+  const cli = spawnSync(process.execPath, [new URL("scripts/kb/backcheck.mjs", ROOT).pathname.replace(/^\/([A-Za-z]:)/, "$1"), "--item", join(dir, "item.yaml"), "--db", dbFile, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: dir }) });
   assert.equal(cli.status, 3);
   writeFileSync(join(dir, "ok.yaml"), YAML.stringify({ ...item, location: undefined, attribute_sources: {} }));
-  assert.equal(spawnSync(process.execPath, [new URL("scripts/kb/backcheck.mjs", ROOT).pathname.replace(/^\/([A-Za-z]:)/, "$1"), "--item", join(dir, "ok.yaml"), "--db", dbFile], { encoding: "utf8" }).status, 0);
+  assert.equal(spawnSync(process.execPath, [new URL("scripts/kb/backcheck.mjs", ROOT).pathname.replace(/^\/([A-Za-z]:)/, "$1"), "--item", join(dir, "ok.yaml"), "--db", dbFile], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: dir }) }).status, 0);
 });
 
 test("alias: nome tecnico chiave forte, alias verificato, alias unverified solo candidato, merge-candidate < 0.15 nella stessa sezione, registro validato prima di scrivere", () => {

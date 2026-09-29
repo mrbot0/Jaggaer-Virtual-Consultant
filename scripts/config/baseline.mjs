@@ -14,6 +14,7 @@ import { openReadonly } from "../digest/collect.mjs";
 import { canonical } from "../digest/align.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const ENV_ID = /^[a-z0-9][a-z0-9_-]{0,39}$/i;
 export const baselinesDir = (ws, c, env) => join(ws, "customers", c, "config-baselines", env);
@@ -104,6 +105,7 @@ export function run(argv, env = process.env) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["input"], { env }); if (bad) return fail(asJson, 1, bad); }
   if (!/^[A-Z0-9]{4}$/.test(opts.customer ?? "") || !ENV_ID.test(opts.env ?? "")) return fail(asJson, 1, "richiesti --customer <C> e --env <id>");
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {

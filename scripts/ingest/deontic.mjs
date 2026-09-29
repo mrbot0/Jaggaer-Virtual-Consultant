@@ -41,7 +41,7 @@
 // comportamento del sistema · non bloccante · vincolo esterno · divieto ·
 // obbligo negato (= facoltà) · obbligo · facoltà · nessun segnale.
 import { resolve } from "node:path";
-import { readTextFile } from "../lib/text-file.mjs";
+import { readTextFile, inputBase } from "../lib/text-file.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
@@ -382,7 +382,7 @@ function main(argv, env = process.env) {
   if (opts["text-file"] !== undefined) {
     // WP10b parte 2 (carry): letto come gli altri --text-file (realpath confinato al workspace, ≤ 64 KB)
     const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
-    const t = readTextFile(ws, String(opts["text-file"]));
+    const t = readTextFile(inputBase(env), String(opts["text-file"]));
     if (t.error) return fail(asJson, 1, `--text-file: ${t.error}`);
     opts.text = t.text;
   }

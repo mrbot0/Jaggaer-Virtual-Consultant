@@ -16,6 +16,7 @@ import { indexItemFile } from "../kb/reindex.mjs";
 import { itemFile, loadItem } from "../lib/kb-items.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const DE_FACTO_THRESHOLD = 0.98;
 export class PrivacyError extends Error { constructor(m, extra = {}) { super(m); this.name = "PrivacyError"; this.extra = extra; } }
@@ -81,6 +82,7 @@ export function run(argv, env = process.env) {
   const { opts } = parseArgs(argv, { flags: ["write"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["input"], { env }); if (bad) return fail(asJson, 1, bad); }
   if (!opts.input || !opts.customer) return fail(asJson, 1, "richiesti --input <file> e --customer <C>");
   if (!/^[A-Z0-9]{4}$/.test(opts.customer)) return fail(asJson, 1, `cliente non valido: ${opts.customer}`);
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());

@@ -30,6 +30,7 @@ import { lintCase } from "../compile/lint-spec.mjs";
 import { lintScope } from "../compile/lint-scope.mjs";
 import { workspaceCustomer } from "./fixtures.mjs";
 import { caseFingerprint } from "../lib/fingerprint.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 export { caseFingerprint };
 
 export const PROMOTE_AFTER = 3;
@@ -128,6 +129,7 @@ export function run(argv, env = process.env) {
   const [cmd] = positional;
   if (opts.help || !cmd) { console.log(HELP); return opts.help ? 0 : 1; }
   if (!opts.case) return fail(asJson, 1, "richiesto --case <file>");
+  { const bad = confineInputs(opts, ["case"], { env }); if (bad) return fail(asJson, 1, bad); }
   const { ws, customer } = workspaceCustomer(opts, env);
   const file = resolvePath(opts.case);
   try {

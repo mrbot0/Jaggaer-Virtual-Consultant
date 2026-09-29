@@ -19,6 +19,7 @@ import YAML from "yaml";
 import { validateWith } from "../lib/schemas.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { confineInputs, inputFile } from "../lib/text-file.mjs";
 
 export const DEFAULT_CATALOG_DIR = fileURLToPath(new URL("../../product/kb/actions", import.meta.url));
 const READ_VERBS = new Set(["NAVIGATE", "READ", "CAPTURE", "WAIT", "VERIFY", "ASK"]);
@@ -83,8 +84,11 @@ export async function run(argv, envv = process.env) {
   const { opts, positional } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
-  const file = positional[0];
-  if (!file) { console.log(HELP); return 1; }
+  { const bad = confineInputs(opts, ["catalog"], { env: envv }); if (bad) return fail(asJson, 1, bad); }
+  if (!positional[0]) { console.log(HELP); return 1; }
+  const conf = inputFile(positional[0], { env: envv });
+  if (conf.error) return fail(asJson, 1, conf.error);
+  const file = conf.abs;
   try {
     let plan;
     try { plan = YAML.parse(readFileSync(file, "utf8")); } catch (err) { return fail(asJson, 1, `piano illeggibile: ${err.message.split("\n")[0]}`); }

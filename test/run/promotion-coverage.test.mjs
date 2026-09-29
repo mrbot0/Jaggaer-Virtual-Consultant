@@ -16,6 +16,7 @@ import { greenRuns, planHash } from "../../scripts/chrome/compile-plan.mjs";
 import { cfgMatrix, renderMatrix, nrtCoverage } from "../../scripts/kb/coverage.mjs";
 import { envWs, readSession } from "../helpers/env-fixture.mjs";
 import { kbWs, writeItem, writeCase, writeYaml, sel, cfp, cfpClient, cfg, hnd, nrtCase, FACETS } from "../helpers/wp09b-items.mjs";
+import { cleanEnv } from "../helpers/hook-env.mjs";
 
 const PROMO = fileURLToPath(new URL("../../scripts/run/promotion.mjs", import.meta.url));
 const R = (status, i) => ({ run: `RUN.ACME.20260929.${String(1000 + i)}.P2P`, plan_id: "PLAN.X", status, plan_hash: "h" });
@@ -77,7 +78,7 @@ test("corsia guidata end-to-end: il caso compilato gira 3 volte (step-check, un 
   assert.equal(greenRuns(ws, "ACME", planHash(compileCase(ws, caso).plan)).length, 3, "stesso piano in ogni run: compile-plan conta 3 verdi");
   const d = evaluateCase(ws, "ACME", YAML.parse(readFileSync(caseFile, "utf8")));
   assert.equal(d.to, "promoted", d.reason);
-  const cli = spawnSync(process.execPath, [PROMO, "evaluate", "--case", caseFile, "--apply", "--workspace", ws, "--json"], { encoding: "utf8" });
+  const cli = spawnSync(process.execPath, [PROMO, "evaluate", "--case", caseFile, "--apply", "--workspace", ws, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: ws }) });
   assert.equal(cli.status, 0, cli.stdout + cli.stderr);
   assert.equal(YAML.parse(readFileSync(caseFile, "utf8")).state, "promoted");
   assert.ok(existsSync(join(ws, "customers/ACME/tests/promotion-log.jsonl")));

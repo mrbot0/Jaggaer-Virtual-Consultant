@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { compileCase, CompileError } from "../../scripts/compile/compile-case.mjs";
 import { validatePlan } from "../../scripts/decide/validate-plan.mjs";
 import { kbWs, writeItem, writeCase, writeYaml, sel, flw, nrtCase } from "../helpers/wp09b-items.mjs";
+import { cleanEnv } from "../helpers/hook-env.mjs";
 
 const CLI = fileURLToPath(new URL("../../scripts/compile/compile-case.mjs", import.meta.url));
 function ws() {
@@ -46,7 +47,7 @@ test("F4.1: un caso il cui passo che crea non ha compensazione è rifiutato (anc
   assert.equal(code(() => compileCase(w, c)), 3);
   assert.throws(() => compileCase(w, c), /passo 3 .*senza compensazione/);
   const f = writeCase(w, c);
-  const cli = spawnSync(process.execPath, [CLI, "--case", f, "--workspace", w, "--json"], { encoding: "utf8" });
+  const cli = spawnSync(process.execPath, [CLI, "--case", f, "--workspace", w, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: w }) });
   assert.equal(cli.status, 3, cli.stdout + cli.stderr);
   // la compensazione della FLW (cancel requisition.cancel-draft) vale per il passo che eredita dalla FLW
   const c2 = nrtCase(); c2.compensations = [c2.compensations[1]]; c2.composition.steps[2] = { n: 3, verb: "SAVE", from_flow: { flow: "C.ACME.P2P.FLW.0001", step: 3 } };
@@ -77,7 +78,7 @@ test("confine: i passi oltre boundary.stop_at_step restano fuori dal piano (avvi
   assert.match(r.warnings[0], /oltre il confine/);
   assert.deepEqual(r.plan.evidence, [{ at: 3, kind: "after", caption: "result al passo 3" }]);
   const f = writeCase(w, nrtCase());
-  const cli = spawnSync(process.execPath, [CLI, "--case", f, "--workspace", w, "--run", "RUN.ACME.20260929.1000.P2P", "--json"], { encoding: "utf8" });
+  const cli = spawnSync(process.execPath, [CLI, "--case", f, "--workspace", w, "--run", "RUN.ACME.20260929.1000.P2P", "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: w }) });
   assert.equal(cli.status, 0, cli.stdout + cli.stderr);
   const out = join(w, "customers/ACME/runs/RUN.ACME.20260929.1000.P2P/cases/NRT.ACME.P2P.NEG.0001/plan.json");
   assert.ok(existsSync(out));

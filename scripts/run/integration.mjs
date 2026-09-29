@@ -23,6 +23,7 @@ import { isMain } from "../lib/is-main.mjs";
 import { evaluate, loadTable } from "../decide/dt-eval.mjs";
 import { loadItem } from "../lib/kb-items.mjs";
 import { workspaceCustomer } from "./fixtures.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export class IntegrationError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 export const STAGES = ["queued_accepted", "processed", "acknowledged"];
@@ -145,6 +146,7 @@ export function run(argv, env = process.env) {
   const asJson = !!opts.json;
   const [cmd] = positional;
   if (opts.help || !cmd) { console.log(HELP); return opts.help ? 0 : 1; }
+  { const bad = confineInputs(opts, ["golden","actual","int"], { env, skip: (n, v) => n === "int" && /^[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.INT\.\d{4}$/.test(v) }); if (bad) return fail(asJson, 1, bad); }
   const { ws, customer } = workspaceCustomer(opts, env);
   try {
     if (cmd === "diff") {

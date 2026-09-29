@@ -3,6 +3,7 @@
 // observe-append, origine del browser dagli hook PostToolUse; A1 → A2 → A3 dalle frasi dell'utente;
 // guard-config-scope (e gli altri guard) consentono il passo approvato una volta sola.
 import { test } from "node:test";
+import { copyFileSync as copyPage } from "node:fs";
 import assert from "node:assert/strict";
 import { join } from "node:path";
 import { copyFileSync, mkdirSync, writeFileSync, mkdtempSync, appendFileSync } from "node:fs";
@@ -17,6 +18,9 @@ const PLAN = "PLAN.ACME.K6.3A";
 const P = "https://acme.jaggaer.com";
 const DT = "mcp__chrome-devtools__";
 
+// revisione finale: i file d'ingresso degli script stanno nel workspace degli hook (JVC_WORKSPACE): la pagina osservata dall'agente è salvata nel workspace
+const pageIn = (ws, env) => { const rel = `customers/ACME/config/${env}.page.json`; copyPage(join(ROOT, `test/fixtures/env/pages/${env}.json`), join(ws, rel)); return rel; };
+
 test("3A su stato K6: step-check attiva il piano e chiede A1/A3, observe-append registra lo snapshot, A1 → A2 → A3, passo consentito una volta", () => {
   const ws = mkWs(); seedSession(ws, { scope: "ADM" });
   mkdirSync(join(ws, "customers/ACME/config"), { recursive: true });
@@ -25,7 +29,7 @@ test("3A su stato K6: step-check attiva il piano e chiede A1/A3, observe-append 
   const E = { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT, JVC_SESSION_ID: "sess-1" };
   assert.equal(runSessionCli(["use", "env", "prod", "--session", "sess-1"], E).status, 0);
   const node = (script, args) => spawnSync(process.execPath, [join(ROOT, script), ...args], { encoding: "utf8", env: cleanEnv(E) });
-  assert.equal(node("scripts/chrome/env-check.mjs", ["--customer", "ACME", "--env", "prod", "--snapshot", join(ROOT, "test/fixtures/env/pages/prod.json"), "--write-session", "--session", "sess-1", "--json"]).status, 0);
+  assert.equal(node("scripts/chrome/env-check.mjs", ["--customer", "ACME", "--env", "prod", "--snapshot", pageIn(ws, "prod"), "--write-session", "--session", "sess-1", "--json"]).status, 0);
   writeSel(ws, "C.ACME.ADM.SEL.0140", { role: "checkbox", effect: "write", label: "strict_import" });
   writeSel(ws, "C.ACME.ADM.SEL.0102", { role: "link", effect: "read", label: "Profili di import" });
   const cfg = { object: "C.ACME.ADM.CFG.0019", area: "CL-CFG-020", level: "giallo" };

@@ -16,7 +16,7 @@ import { loadPlanFile, approvalsFile, readApprovals } from "../admin/approvals.m
 import { readEvents, reduce, workflowFile, appendEvent } from "../admin/workflow.mjs";
 import { classifyOutcome, matchesExpected } from "./outcome.mjs";
 import { openDb } from "../kb/db.mjs";
-import { readDataFile, readTextFile } from "../lib/text-file.mjs";
+import { readDataFile, readTextFile, inputBase } from "../lib/text-file.mjs";
 
 export class ReportError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 const TEMPLATES = new URL("../../templates/", import.meta.url);
@@ -169,11 +169,12 @@ Exit: 0 report scritto · 1 argomenti · 2 errore di sistema.`;
 
 // WP10a giro 1 (I3): le voci del report da file (payload JSON/YAML e testi), confinati al workspace. Ogni voce una volta.
 const PAYLOAD_KEYS = ["title", "intent", "assumption", "next", "expected", "observed", "errors", "lesson", "release", "run"];
-async function fileInputs(ws, opts) {
+// revisione finale: base = workspace degli hook (inputBase), mai --workspace
+async function fileInputs(base, opts) {
   const vals = {};
   const set = (k, v, from) => { if (Object.hasOwn(vals, k) || opts[k] !== undefined) throw new ReportError(1, `${k} data due volte (${from} e un'altra fonte): una sola`); vals[k] = v; };
   if (opts["payload-file"] !== undefined) {
-    const d = await readDataFile(ws, opts["payload-file"]);
+    const d = await readDataFile(base, opts["payload-file"]);
     if (d.error) throw new ReportError(1, `--payload-file: ${d.error}`);
     const extra = Object.keys(d.data).filter((k) => !PAYLOAD_KEYS.includes(k));
     if (extra.length) throw new ReportError(1, `--payload-file: voci sconosciute ${extra.join(", ")} (ammesse: ${PAYLOAD_KEYS.join(", ")})`);
@@ -182,7 +183,7 @@ async function fileInputs(ws, opts) {
   for (const k of ["intent", "assumption", "next"]) {
     const f = opts[`${k}-file`];
     if (f === undefined) continue;
-    const t = readTextFile(ws, f);
+    const t = readTextFile(base, f);
     if (t.error) throw new ReportError(1, `--${k}-file: ${t.error}`);
     set(k, t.text, `--${k}-file`);
   }
@@ -199,7 +200,7 @@ export async function run(argv, env = process.env) {
     if (!["action", "test"].includes(opts.kind)) return fail(asJson, 1, "richiesto --kind action|test");
     const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
     if (!sid) return fail(asJson, 1, "nessuna sessione risolvibile");
-    const f = await fileInputs(ws, opts);
+    const f = await fileInputs(inputBase(env), opts);
     const obj = (k, v, d) => { if (v === undefined) return d; if (v === null || typeof v !== "object") throw new ReportError(1, `${k}: serve un oggetto o un elenco`); return v; };
     const str = (v) => (v == null ? null : String(v));
     const next = f.next !== undefined ? [].concat(f.next).map(String).filter(Boolean) : opts.next ? [opts.next] : [];

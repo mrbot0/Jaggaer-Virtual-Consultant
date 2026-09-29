@@ -35,6 +35,7 @@ import { resolveSessionId } from "../admin/session.mjs";
 import { readPointer, sessionFile } from "../../hooks/lib/workspace.mjs";
 import { checkSessionText } from "../../hooks/lib/session-state.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs, inputFile } from "../lib/text-file.mjs";
 
 export const MAX_BATCH = 50;
 export const DOC_BUDGET = 80000;
@@ -352,7 +353,9 @@ function main(argv) {
       return r.status === "complete" ? 0 : 3;
     }
     if (cmd === "accept") {
+      { const bad = confineInputs(opts, ["digested"], {}); if (bad) return fail(asJson, 1, bad); }
       if (!positional[0] || !opts.digested) return fail(asJson, 1, "accept richiede <batch-nn.yaml> e --digested <file>");
+      const bf = inputFile(positional[0]); if (bf.error) return fail(asJson, 1, bf.error); positional[0] = bf.abs;
       let digested;
       try { digested = YAML.parse(readFileSync(opts.digested, "utf8")); } catch (e) { return fail(asJson, 1, `file digerito illeggibile: ${e.message}`); }
       const r = accept(positional[0], digested, { root: opts.root });

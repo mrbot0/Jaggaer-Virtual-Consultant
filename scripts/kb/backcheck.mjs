@@ -20,6 +20,7 @@ import YAML from "yaml";
 import { openDb } from "./db.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 const EXPECTED = YAML.parse(readFileSync(new URL("../../schemas/expected-attributes.yaml", import.meta.url), "utf8"));
 const STOP = new Set(["della", "delle", "dello", "degli", "nella", "nelle", "sono", "viene", "vengono", "questo", "questa", "quando", "anche", "dopo", "prima", "ogni",
@@ -154,6 +155,7 @@ function main(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["item"], {}); if (bad) return fail(asJson, 1, bad); }
   if (!opts.item || (!opts.db && !opts["units-dir"])) return fail(asJson, 1, "richiesti --item e --db oppure --units-dir");
   let item;
   try { item = YAML.parse(readFileSync(opts.item, "utf8")); } catch (e) { return fail(asJson, 1, `item illeggibile: ${e.message}`); }

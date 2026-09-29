@@ -13,10 +13,12 @@ const { selfCheck } = SC;
 import { deliberationDepth } from "../../scripts/decide/depth.mjs";
 import { applyObservation, newBeliefState, isBlocked } from "../../scripts/kb/belief-update.mjs";
 import { validateWith } from "../../scripts/lib/schemas.mjs";
+import { cleanEnv } from "../helpers/hook-env.mjs";
 
 const DT_EVAL = fileURLToPath(new URL("../../scripts/decide/dt-eval.mjs", import.meta.url));
 const SELF_CHECK = fileURLToPath(new URL("../../scripts/decide/self-check.mjs", import.meta.url));
-const node = (args) => spawnSync(process.execPath, args, { encoding: "utf8" });
+// revisione finale: i file d'ingresso degli script stanno nel workspace degli hook (JVC_WORKSPACE): qui la cartella temporanea del sistema
+const node = (args) => spawnSync(process.execPath, args, { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: tmpdir() }) });
 const INPUTS = JSON.stringify({ risk: "R2", shape: "libresco", mandatory_missing: false, open_contradiction: false, novelty: false });
 
 function writeDec(dir, dbFile, extra = []) {

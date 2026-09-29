@@ -31,6 +31,7 @@ import { loadItem, analyticCodes, typeOf } from "../lib/kb-items.mjs";
 import { loadRegistry, resolveCaseFixtures, entityPrefix } from "../run/fixtures.mjs";
 import { COMMIT_VERBS } from "../../hooks/lib/guards/config-scope.mjs";
 import { caseFingerprint } from "../lib/fingerprint.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export class CompileError extends Error { constructor(code, msg, extra = {}) { super(msg); this.code = code; Object.assign(this, extra); } }
 export const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
@@ -178,6 +179,7 @@ export function run(argv, env = process.env) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["case"], { env }); if (bad) return fail(asJson, 1, bad); }
   if (!opts.case) return fail(asJson, 1, "richiesto --case <file.yaml>");
   const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   let caso;

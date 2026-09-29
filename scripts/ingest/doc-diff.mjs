@@ -21,6 +21,7 @@ import { parseRule } from "./deontic.mjs";
 import { normalizeLabel } from "./dedupe.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export function diffUnits(oldUnits, newUnits) {
   const oldByHash = new Map();
@@ -135,6 +136,7 @@ function main(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["old","new","release-notes"], {}); if (bad) return fail(asJson, 1, bad); }
   if (!opts.old || !opts.new) return fail(asJson, 1, "richiesti --old e --new");
   const read = (f) => { const t = readFileSync(f, "utf8"); const v = /^\s*[{[]/.test(t) ? JSON.parse(t) : YAML.parse(t); return Array.isArray(v) ? v : v?.units ?? v?.items ?? []; };
   let a, b, notes = [];

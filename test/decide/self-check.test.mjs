@@ -9,6 +9,7 @@ import YAML from "yaml";
 import { selfCheck } from "../../scripts/decide/self-check.mjs";
 import { validateWith } from "../../scripts/lib/schemas.mjs";
 import { openDb } from "../../scripts/kb/db.mjs";
+import { cleanEnv } from "../helpers/hook-env.mjs";
 
 const CLI = fileURLToPath(new URL("../../scripts/decide/self-check.mjs", import.meta.url));
 
@@ -254,12 +255,12 @@ test("CLI self-check --report --session --audit --plan --lesson --db: exit 0 se 
   writeFileSync(join(dir, "lesson.md"), LESSON);
   const args = ["--report", join(dir, "report.md"), "--session", join(dir, "session.json"), "--audit", join(dir, "audit.jsonl"),
     "--plan", join(dir, "plan.yaml"), "--lesson", join(dir, "lesson.md"), "--db", dbFile, "--agent-id", "a1", "--json"];
-  const ok = spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8" });
+  const ok = spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: dir }) });
   assert.equal(ok.status, 0, ok.stdout + ok.stderr);
   assert.deepEqual(JSON.parse(ok.stdout).failed, []);
   const bad = structuredClone(c.plan); delete bad.steps[0].expect;
   writeFileSync(join(dir, "plan.yaml"), YAML.stringify(bad));
-  const blocked = spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8" });
+  const blocked = spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: dir }) });
   assert.equal(blocked.status, 3);
   assert.deepEqual(JSON.parse(blocked.stdout).failed.map((f) => f.n), [4]);
 });

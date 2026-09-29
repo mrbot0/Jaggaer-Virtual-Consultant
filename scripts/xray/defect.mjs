@@ -29,7 +29,7 @@ import { contentTypeOf } from "../../mcp/alm-server/payload.mjs";
 import { withQueue } from "../../mcp/alm-server/queue.mjs";
 import { XrayError, xrayContext, recordCreated, audit, failWith, kv } from "./common.mjs";
 import { loadTemplate, fillOrWarn } from "../lib/templates.mjs";
-import { readTextFile } from "../lib/text-file.mjs";
+import { readTextFile, confineInputs, inputBase } from "../lib/text-file.mjs";
 
 export const DEFECT_CLASSES = ["product-defect", "regression", "config-drift", "baseline-change"];
 const NOT_DEFECT = { "environment": "un errore d'ambiente (ERROR-ENVIRONMENT) non è mai un Defect (§29.9): retry, poi blocked", "test-defect": "un difetto del test si ripara (test-mechanic, PR di healing), non è un Defect del prodotto (§30.4)", "expected-change": "un cambiamento atteso aggiorna il test, non apre un Defect (§30.1)" };
@@ -155,9 +155,11 @@ export async function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv, { flags: ["publish"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["finding"], { env }); if (bad) return failWith(asJson, new XrayError(1, bad)); }
   try {
     const c = await xrayContext(opts, env);
-    const finding = loadFinding(opts, positional, c.ws);
+    // revisione finale: i file d'ingresso (--finding, --summary-file) nel workspace degli hook, mai --workspace
+    const finding = loadFinding(opts, positional, inputBase(env));
     const d = await buildDefect(c.ws, { customer: c.customer, config: c.config, finding });
     const abs = join(c.ws, "customers", c.customer, d.file);
     mkdirSync(join(abs, ".."), { recursive: true });

@@ -22,6 +22,9 @@ const envCheck = (args, env = {}) => {
   return { ...r, json };
 };
 
+// revisione finale: lo snapshot (file d'ingresso) sta nel workspace degli hook — copiato dalla fixture
+const snapIn = (ws, f) => { const rel = `customers/ACME/.sessions/sess-1/${f.split("/").join("-")}`; mkdirSync(join(ws, "customers/ACME/.sessions/sess-1"), { recursive: true }); copyFileSync(join(FIX, f), join(ws, rel)); return rel; };
+
 function wsWithEnv() {
   const ws = mkWs(); seedSession(ws);
   mkdirSync(join(ws, "customers/ACME/config"), { recursive: true });
@@ -103,7 +106,7 @@ test("use env: environments.yaml con RF2 → exit 3, nessun ambiente dichiarato"
 test("env-check --write-session: verifica l'ambiente dichiarato; cambiare ambiente invalida la verifica", () => {
   const ws = wsWithEnv();
   assert.equal(runSessionCli(["use", "env", "sandbox", "--session", "sess-1"], E(ws)).status, 0);
-  const snap = join(FIX, "pages/sandbox.json");
+  const snap = snapIn(ws, "pages/sandbox.json");
   const r = envCheck(["--customer", "ACME", "--env", "sandbox", "--snapshot", snap, "--write-session", "--session", "sess-1", "--json"], E(ws));
   assert.equal(r.status, 0, r.stdout + r.stderr);
   assert.equal(r.json.env, "sandbox");
@@ -122,11 +125,11 @@ test("env-check --write-session: verifica l'ambiente dichiarato; cambiare ambien
 test("env-check --write-session: pagina ambigua → exit 3, verified:false; env diverso dal dichiarato → exit 3", () => {
   const ws = wsWithEnv();
   runSessionCli(["use", "env", "sandbox", "--session", "sess-1"], E(ws));
-  const r = envCheck(["--customer", "ACME", "--env", "sandbox", "--snapshot", join(FIX, "pages/ambiguous.json"), "--write-session", "--session", "sess-1", "--json"], E(ws));
+  const r = envCheck(["--customer", "ACME", "--env", "sandbox", "--snapshot", snapIn(ws, "pages/ambiguous.json"), "--write-session", "--session", "sess-1", "--json"], E(ws));
   assert.equal(r.status, 3);
   assert.equal(r.json.env, "unknown");
   assert.equal(sessionOf(ws).env.verified, false);
-  const r2 = envCheck(["--customer", "ACME", "--env", "prod", "--snapshot", join(FIX, "pages/prod.json"), "--write-session", "--session", "sess-1", "--json"], E(ws));
+  const r2 = envCheck(["--customer", "ACME", "--env", "prod", "--snapshot", snapIn(ws, "pages/prod.json"), "--write-session", "--session", "sess-1", "--json"], E(ws));
   assert.equal(r2.status, 3, "si verifica solo l'ambiente dichiarato con /use env");
   assert.equal(sessionOf(ws).env.id, "sandbox");
   assert.equal(sessionOf(ws).env.verified, false);
@@ -137,7 +140,7 @@ test("env-check: environments.yaml cambiato dopo use env → exit 3 (riesegui /u
   runSessionCli(["use", "env", "sandbox", "--session", "sess-1"], E(ws));
   const f = join(ws, "customers/ACME/config/environments.yaml");
   writeFileSync(f, readFileSync(f, "utf8").replace('"cdn.jaggaer.com"', '"cdn.jaggaer.com", "evil.io"'));
-  const r = envCheck(["--customer", "ACME", "--env", "sandbox", "--snapshot", join(FIX, "pages/sandbox.json"), "--write-session", "--session", "sess-1", "--json"], E(ws));
+  const r = envCheck(["--customer", "ACME", "--env", "sandbox", "--snapshot", snapIn(ws, "pages/sandbox.json"), "--write-session", "--session", "sess-1", "--json"], E(ws));
   assert.equal(r.status, 3, r.stdout);
   assert.equal(sessionOf(ws).env.verified, false);
 });

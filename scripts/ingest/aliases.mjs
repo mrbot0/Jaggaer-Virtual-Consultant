@@ -24,6 +24,7 @@ import YAML from "yaml";
 import { normalizeLabel, normalizeTechnicalName, labelDistance } from "./dedupe.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const MERGE_THRESHOLD = 0.15;
 export class AliasError extends Error { constructor(m) { super(m); this.name = "AliasError"; } }
@@ -146,6 +147,7 @@ function main(argv) {
   const { opts } = parseArgs(rest);
   const asJson = !!opts.json;
   if (!cmd || cmd === "--help" || opts.help) { console.log(HELP); return cmd ? 0 : 1; }
+  { const bad = confineInputs(opts, ["registry","rows-file","doc-lang-file","payload-file"], {}); if (bad) return fail(asJson, 1, bad); }
   if (!["resolve", "learn", "add"].includes(cmd)) return fail(asJson, 1, `comando sconosciuto: ${cmd}`);
   if (!opts.registry) return fail(asJson, 1, "richiesto --registry <file>");
   const read = (f) => { const t = readFileSync(f, "utf8"); return /^\s*[{[]/.test(t) ? JSON.parse(t) : YAML.parse(t); };

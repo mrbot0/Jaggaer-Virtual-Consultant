@@ -11,7 +11,7 @@ import { record, compare } from "../../scripts/run/baseline.mjs";
 import { register, status, personasOf, AuthError } from "../../scripts/run/auth-setup.mjs";
 import { diffPayload, expectedStage, classifyCheckpoint, stubDescriptor, IntegrationError } from "../../scripts/run/integration.mjs";
 import { kbWs, writeYaml, writeItem, int } from "../helpers/wp09b-items.mjs";
-import { ROOT } from "../helpers/hook-env.mjs";
+import { ROOT, cleanEnv } from "../helpers/hook-env.mjs";
 
 const AUTH = fileURLToPath(new URL("../../scripts/run/auth-setup.mjs", import.meta.url));
 const INTEG = fileURLToPath(new URL("../../scripts/run/integration.mjs", import.meta.url));
@@ -89,5 +89,5 @@ test("L3: descrittore dello stub inbound solo in sandbox e solo per interfacce i
   assert.throws(() => stubDescriptor(int("S.STD.P2P.INT.0001"), { envType: "sandbox" }), /ingresso/);
   const w = kbWs();
   const g = writeYaml(w, "tmp/g.yaml", { a: 1 }); const a = writeYaml(w, "tmp/a.yaml", { a: 2 });
-  assert.equal(spawnSync(process.execPath, [INTEG, "diff", "--golden", g, "--actual", a, "--json"], { encoding: "utf8" }).status, 3);
+  assert.equal(spawnSync(process.execPath, [INTEG, "diff", "--golden", g, "--actual", a, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: w }) }).status, 3);
 });

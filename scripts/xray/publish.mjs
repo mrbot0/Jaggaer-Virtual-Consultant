@@ -16,6 +16,7 @@ import { materializeResults } from "../../mcp/alm-server/payload.mjs";
 import { AlmError } from "../../mcp/alm-server/adapter.mjs";
 import { buildPayload, parseOutcomes, summary } from "./build-payload.mjs";
 import { XrayError, xrayContext, recordCreated, audit, failWith, kv } from "./common.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export async function publish(c, { run, scope = null, dryRun = false, rebuild = false, outcomes = {}, env = process.env }) {
   let doc = rebuild ? null : readPayload(c.ws, c.customer, run);
@@ -72,6 +73,7 @@ export async function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv, { flags: ["dry-run", "rebuild"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["outcomes"], { env }); if (bad) return failWith(asJson, new XrayError(1, bad)); }
   try {
     if (!opts.run) throw new XrayError(1, "richiesto --run <RUN>");
     const c = await xrayContext(opts, env);

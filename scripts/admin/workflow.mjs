@@ -16,7 +16,7 @@ import { readFileSync, readdirSync, appendFileSync, mkdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
-import { readDataFile, DATA_FILE_MAX } from "../lib/text-file.mjs";
+import { readDataFile, DATA_FILE_MAX, inputBase } from "../lib/text-file.mjs";
 import { withFileLock } from "../../hooks/lib/fsx.mjs";
 import { sessionDir } from "../../hooks/lib/workspace.mjs";
 
@@ -190,7 +190,7 @@ export async function run(argv, env = process.env) {
       let payload;
       if (opts["payload-file"] !== undefined) {
         if (opts.payload !== undefined) return fail(asJson, 1, "--payload e --payload-file sono alternativi");
-        const r = await readPayloadFile(ws, opts["payload-file"]);
+        const r = await readPayloadFile(inputBase(env), opts["payload-file"]);
         if (r.error) return fail(asJson, 1, r.error);
         payload = r.payload;
       } else {

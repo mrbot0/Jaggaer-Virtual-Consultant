@@ -18,6 +18,7 @@ import { segmentFieldTables, InvalidDocError } from "./segment.mjs";
 import { SCOPES } from "../kb/codes.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export class UsageError extends Error { constructor(m) { super(m); this.name = "UsageError"; } }
 
@@ -88,6 +89,7 @@ function main(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["doc"], {}); if (bad) return fail(asJson, 1, bad); }
   if (!opts.doc || !opts.scope || !opts.root) return fail(asJson, 1, "richiesti --doc, --scope, --root");
   let doc;
   try { doc = JSON.parse(readFileSync(opts.doc, "utf8")); } catch (e) { return fail(asJson, 1, `documento illeggibile: ${e.message}`); }

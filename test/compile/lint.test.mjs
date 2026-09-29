@@ -8,6 +8,7 @@ import { lintCase, lintPlan, weakening } from "../../scripts/compile/lint-spec.m
 import { lintScope } from "../../scripts/compile/lint-scope.mjs";
 import { compileCase } from "../../scripts/compile/compile-case.mjs";
 import { kbWs, writeItem, writeCase, writeYaml, sel, flw, hnd, nrtCase } from "../helpers/wp09b-items.mjs";
+import { cleanEnv } from "../helpers/hook-env.mjs";
 
 const LINT = fileURLToPath(new URL("../../scripts/compile/lint-spec.mjs", import.meta.url));
 const SCOPE = fileURLToPath(new URL("../../scripts/compile/lint-scope.mjs", import.meta.url));
@@ -58,8 +59,8 @@ test("lint-spec CLI: exit 3 su violazione con --against, 0 sul pulito; lintPlan 
   const oldF = writeYaml(w, "tmp/old.yaml", nrtCase());
   const weak = nrtCase(); weak.composition.steps[3].expect = { page_sig: "requisition" };
   const newF = writeYaml(w, "tmp/new.yaml", weak);
-  assert.equal(spawnSync(process.execPath, [LINT, oldF, "--json"], { encoding: "utf8" }).status, 0);
-  const r = spawnSync(process.execPath, [LINT, newF, "--against", oldF, "--json"], { encoding: "utf8" });
+  assert.equal(spawnSync(process.execPath, [LINT, oldF, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: w }) }).status, 0);
+  const r = spawnSync(process.execPath, [LINT, newF, "--against", oldF, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: w }) });
   assert.equal(r.status, 3, r.stdout);
   assert.ok(JSON.parse(r.stdout).results[0].violations.some((x) => x.rule === "L-WEAKEN"));
   const plan = compileCase(w, nrtCase()).plan;
@@ -85,6 +86,6 @@ test("lint-scope (ADR-32): SEL/FLW di un altro scope, creazione di un'entità di
   const wrong = nrtCase(); wrong.fixtures.push({ name: "contract", kind: "contract", scope: "CON", from_handoff: "C.ACME.P2P.HND.0001", lookup_or_fail: { kind: "contract" } });
   assert.match(lintScope(wrong, { ws: w, customer: "ACME" })[0].message, /non lega CON e P2P/);
   const f = writeCase(w, c);
-  assert.equal(spawnSync(process.execPath, [SCOPE, f, "--workspace", w, "--json"], { encoding: "utf8" }).status, 3);
-  assert.equal(spawnSync(process.execPath, [SCOPE, writeCase(w, nrtCase("NRT.ACME.P2P.NEG.0002")), "--workspace", w, "--json"], { encoding: "utf8" }).status, 0);
+  assert.equal(spawnSync(process.execPath, [SCOPE, f, "--workspace", w, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: w }) }).status, 3);
+  assert.equal(spawnSync(process.execPath, [SCOPE, writeCase(w, nrtCase("NRT.ACME.P2P.NEG.0002")), "--workspace", w, "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: w }) }).status, 0);
 });

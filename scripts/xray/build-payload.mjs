@@ -34,6 +34,7 @@ import { strictText, ISSUE_KEY } from "../../mcp/alm-server/adapter.mjs";
 import { loadXrayConfig } from "../../mcp/alm-server/factory.mjs";
 import { XrayError, failWith, kv } from "./common.mjs";
 import { workspaceCustomer } from "../run/fixtures.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 const CASE_RE = /^NRT\.([A-Z0-9]{3,4})\.([A-Z0-9]{3})\.[A-Z]{3}\.\d{4}$/;
 const readYaml = (f) => { try { return YAML.parse(readFileSync(f, "utf8")); } catch { return null; } };
@@ -179,6 +180,7 @@ export async function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["outcomes"], { env }); if (bad) return failWith(asJson, new XrayError(1, bad)); }
   try {
     if (!opts.run) throw new XrayError(1, "richiesto --run <RUN>");
     const { ws, customer } = workspaceCustomer(opts, env);

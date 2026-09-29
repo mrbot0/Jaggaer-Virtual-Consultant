@@ -5,13 +5,31 @@
 //                              assoluti fuori, `..` che escono e collegamenti che portano fuori sono rifiutati (WP10a giro 1)
 //   readTextFile(base, file, { max }) → { text } | { error }   UTF-8, al più `max` byte, non vuoto
 //   readDataFile(base, file, { max }) → { data } | { error }   JSON o YAML (YAML caricato solo qui), un oggetto
+//
+// Revisione finale (confinamento reale): la base dei file d'ingresso è il workspace DEGLI HOOK
+// (JVC_WORKSPACE > CLAUDE_PROJECT_DIR > cwd, come hooks/lib/workspace.mjs), mai un --workspace/--root scelto da chi
+// invoca lo script: così un file d'ingresso sta sempre dove i guard vedono e proteggono.
+//   inputBase(env) → la radice del workspace degli hook
+//   inputFile(file, { env, max, dir }) → { abs } | { error }   contenimento (realpath) nel workspace degli hook e tetto
+//                              di dimensione (file) o cartella (dir: true); un file inesistente passa (errore del lettore)
+//   confineInputs(opts, names, { env, max, dirs, skip }) → null | "messaggio"   le opzioni-file nominate diventano
+//                              percorsi assoluti confinati; skip(v) ⇒ il valore non è un file (un codice, JSON in linea)
+//   confineList(files, { env, max }) → { files } | { error }   percorsi posizionali
 import { readFileSync, statSync, realpathSync } from "node:fs";
-import { resolve, relative, isAbsolute } from "node:path";
+import { resolve, relative, isAbsolute, dirname, basename, join } from "node:path";
+import { workspaceRoot } from "../../hooks/lib/workspace.mjs";
 
 export const TEXT_FILE_MAX = 64 * 1024;
 export const DATA_FILE_MAX = 256 * 1024;
+export const INPUT_FILE_MAX = 16 * 1024 * 1024;
 
-const real = (p) => { try { return realpathSync.native(p); } catch { return p; } };
+// realpath del percorso o, se non esiste ancora, del suo antenato esistente più vicino (una cartella-collegamento
+// intermedia che porta fuori è vista anche per un file non ancora creato).
+const real = (p) => {
+  try { return realpathSync.native(p); } catch { /* non esiste */ }
+  const parent = dirname(p);
+  return parent === p ? p : join(real(parent), basename(p));
+};
 const inside = (root, p) => { const r = relative(root, p); return r === "" || (!!r && !r.startsWith("..") && !isAbsolute(r)); };
 
 export function confinedPath(base, file) {
@@ -60,4 +78,39 @@ export function readDataFileSync(base, file, parse, { max = DATA_FILE_MAX } = {}
     text = readFileSync(c.abs, "utf8").replace(/^\uFEFF/, "");
   } catch (err) { return { error: `file di dati illeggibile: ${file} (${err.code ?? err.message})` }; }
   try { return { data: /^\s*[{[]/.test(text) ? JSON.parse(text) : parse(text) }; } catch (err) { return { error: `file di dati non valido: ${file} (${String(err.message).slice(0, 80)})` }; }
+}
+
+export const inputBase = (env = process.env) => workspaceRoot({}, env);
+
+export function inputFile(file, { env = process.env, max = INPUT_FILE_MAX, dir = false } = {}) {
+  const c = confinedPath(inputBase(env), file);
+  if (c.error) return c;
+  let st;
+  try { st = statSync(c.abs); } catch { return c; }
+  if (dir) return st.isDirectory() ? c : { error: `non è una cartella: ${file}` };
+  if (!st.isFile()) return { error: `non è un file: ${file}` };
+  if (st.size > max) return { error: `file d'ingresso oltre ${Math.round(max / 1024)} KB: ${file}` };
+  return c;
+}
+
+export function confineInputs(opts, names, { env = process.env, max = INPUT_FILE_MAX, dirs = [], skip = null } = {}) {
+  for (const n of names) {
+    const v = opts[n];
+    if (v === undefined || v === null || v === true) continue;
+    if (skip && skip(n, String(v))) continue;
+    const r = inputFile(String(v), { env, max, dir: dirs.includes(n) });
+    if (r.error) return `--${n}: ${r.error}`;
+    opts[n] = r.abs;
+  }
+  return null;
+}
+
+export function confineList(files, { env = process.env, max = INPUT_FILE_MAX } = {}) {
+  const out = [];
+  for (const f of files) {
+    const r = inputFile(String(f), { env, max });
+    if (r.error) return { error: r.error };
+    out.push(r.abs);
+  }
+  return { files: out };
 }

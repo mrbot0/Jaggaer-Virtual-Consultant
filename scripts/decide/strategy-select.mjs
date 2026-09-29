@@ -14,6 +14,7 @@ import YAML from "yaml";
 import { evaluate, loadTable, canonicalValue, asciiAlias, DtDomainError, DtTableError } from "./dt-eval.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const STRATEGIES_DIR = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "strategies");
 export const MODES = ["nrt", "config", "ops", "diag"];
@@ -107,6 +108,7 @@ export function run(argv) {
   const { opts } = parseArgs(argv, { flags: ["divergence-unknown", "has-hypotheses", "plan"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["input","precedents"], {}); if (bad) return fail(asJson, 1, bad); }
   let input;
   try {
     input = opts.input ? readJson(opts.input) : {};

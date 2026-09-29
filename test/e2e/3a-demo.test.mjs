@@ -5,6 +5,7 @@
 // negato; una scrittura di dati in prod è negata; catena delle approvazioni e
 // audit verificati.
 import { test } from "node:test";
+import { copyFileSync as copyPage } from "node:fs";
 import assert from "node:assert/strict";
 import { join } from "node:path";
 import { copyFileSync, mkdirSync, writeFileSync, mkdtempSync, appendFileSync, readFileSync } from "node:fs";
@@ -22,6 +23,9 @@ const GUARDS = ["guard-environment", "guard-production", "guard-config-scope"];
 const E = (ws) => ({ JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
 const node = (script, args, ws) => spawnSync(process.execPath, [join(ROOT, script), ...args], { encoding: "utf8", env: cleanEnv(E(ws)) });
 
+// revisione finale: i file d'ingresso degli script stanno nel workspace degli hook (JVC_WORKSPACE): la pagina osservata dall'agente è salvata nel workspace
+const pageIn = (ws, env) => { const rel = `customers/ACME/config/${env}.page.json`; copyPage(join(ROOT, `test/fixtures/env/pages/${env}.json`), join(ws, rel)); return rel; };
+
 test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi consentiti una volta; catena delle approvazioni verificata", () => {
   // tenant demo: cliente ACME, ambiente prod dichiarato e verificato dall'impronta
   const ws = mkWs(); seedSession(ws, { scope: "ADM" });
@@ -29,7 +33,7 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
   copyFileSync(join(ROOT, "test/fixtures/env/environments.yaml"), join(ws, "customers/ACME/config/environments.yaml"));
   writeFileSync(join(ws, "customers/ACME/config/remediation-scope.yaml"), YAML.stringify({ levels: { giallo: { areas: ["CL-CFG-020"], objects: ["C.ACME.ADM.CFG.0019"] } } }));
   assert.equal(runSessionCli(["use", "env", "prod", "--session", "sess-1"], E(ws)).status, 0);
-  const chk = node("scripts/chrome/env-check.mjs", ["--customer", "ACME", "--env", "prod", "--snapshot", join(ROOT, "test/fixtures/env/pages/prod.json"), "--write-session", "--session", "sess-1", "--json"], ws);
+  const chk = node("scripts/chrome/env-check.mjs", ["--customer", "ACME", "--env", "prod", "--snapshot", pageIn(ws, "prod"), "--write-session", "--session", "sess-1", "--json"], ws);
   assert.equal(chk.status, 0, chk.stdout + chk.stderr);
   assert.equal(readSession(ws).env.verified, true);
 

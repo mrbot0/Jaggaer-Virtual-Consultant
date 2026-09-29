@@ -17,6 +17,7 @@ import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { scopeOf, loadItem } from "../lib/kb-items.mjs";
 import { classOf, isCreating } from "./compile-case.mjs";
+import { confineList } from "../lib/text-file.mjs";
 
 const v = (rule, at, message) => ({ rule, at, message });
 
@@ -66,12 +67,15 @@ export function run(argv, env = process.env) {
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
   if (!positional.length) return fail(asJson, 1, "nessun caso da controllare");
+  const conf = confineList(positional, { env });   // revisione finale: i casi nel workspace degli hook
+  if (conf.error) return fail(asJson, 1, conf.error);
+  const at = new Map(positional.map((f, i) => [f, conf.files[i]]));
   const ws = opts.workspace ? resolvePath(opts.workspace) : env.JVC_WORKSPACE ? resolvePath(env.JVC_WORKSPACE) : null;
   const results = [];
   try {
     for (const f of positional) {
       let c;
-      try { c = YAML.parse(readFileSync(resolvePath(f), "utf8")); } catch (err) { return fail(asJson, 1, `${f} illeggibile: ${err.message}`); }
+      try { c = YAML.parse(readFileSync(at.get(f), "utf8")); } catch (err) { return fail(asJson, 1, `${f} illeggibile: ${err.message}`); }
       results.push({ file: f, violations: lintScope(c, { ws, customer: opts.customer ?? (c?.id?.split(".")[1] !== "STD" ? c?.id?.split(".")[1] : null) }) });
     }
   } catch (err) { return fail(asJson, 2, `errore di sistema: ${err?.message ?? err}`); }

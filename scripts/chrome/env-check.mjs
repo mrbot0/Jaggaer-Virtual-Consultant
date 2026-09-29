@@ -18,6 +18,7 @@ import { isMain } from "../lib/is-main.mjs";
 import { loadEnvironmentsFile, environmentsFile, normalizeHost, EnvFileError } from "../kb/validate-env.mjs";
 import { resolveSessionId, loadSession, updateSession, actorOf } from "../admin/session.mjs";
 import { appendAudit } from "../../hooks/lib/audit.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 const reEsc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 // Parola intera: niente lettere, cifre, '_' o '-' ai lati ("acme" non è in "acme-sbx").
@@ -118,6 +119,7 @@ export async function run(argv, env = process.env) {
   const { opts } = parseArgs(argv, { flags: ["write-session"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["snapshot","env-file"], { env }); if (bad) return fail(asJson, 1, bad); }
   if (!opts.env || !opts.snapshot) { console.log(HELP); return 1; }
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {

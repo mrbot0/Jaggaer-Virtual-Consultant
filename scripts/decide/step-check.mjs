@@ -40,6 +40,7 @@ import { resolveSel, atlasIndex } from "../chrome/atlas.mjs";
 import { profileFor, redact } from "../chrome/redact.mjs";
 import { RUN_RE, formatRunCode, runRefusal } from "../lib/run-code.mjs";
 import { writeCompensations } from "../lib/compensations-store.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const STATUSES = ["ok", "surprise", "novelty", "approval_required", "denied"];
 const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
@@ -403,6 +404,7 @@ export async function run(argv, env = process.env) {
   const { opts } = parseArgs(argv, { flags: ["close"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["snapshot","why"], { env }); if (bad) return fail(asJson, 1, bad); }
   const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {
     if (!opts.close && (!opts.plan || (opts.step == null && opts.resume == null))) return fail(asJson, 1, "richiesti --plan e --step (o --resume), oppure --close");

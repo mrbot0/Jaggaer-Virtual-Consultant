@@ -23,6 +23,7 @@ import { isMain } from "../lib/is-main.mjs";
 import { analyticCodes } from "../lib/kb-items.mjs";
 import { classOf, isCreating, flowCompensationFor, mergedStep } from "./compile-case.mjs";
 import { loadItem } from "../lib/kb-items.mjs";
+import { confineList, confineInputs } from "../lib/text-file.mjs";
 
 const DELETE_ACTION = /\b(delete|deletion|remove|purge|elimina\w*|cancella\w*|rimuov\w*)\b/i;
 const v = (rule, at, message) => ({ rule, at, message });
@@ -153,13 +154,17 @@ export function run(argv) {
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
   if (!positional.length) return fail(asJson, 1, "nessun file da controllare");
+  { const bad = confineInputs(opts, ["against"]); if (bad) return fail(asJson, 1, bad); }
+  const conf = confineList(positional);   // revisione finale: i file nel workspace degli hook
+  if (conf.error) return fail(asJson, 1, conf.error);
+  const at = new Map(positional.map((f, i) => [f, conf.files[i]]));
   let previous = null;
   try { if (opts.against) previous = read(opts.against); } catch (err) { return fail(asJson, 1, `--against illeggibile: ${err.message}`); }
   const results = [];
   try {
     for (const f of positional) {
       let doc;
-      try { doc = read(f); } catch (err) { return fail(asJson, 1, `${f} illeggibile: ${err.message}`); }
+      try { doc = read(at.get(f)); } catch (err) { return fail(asJson, 1, `${f} illeggibile: ${err.message}`); }
       results.push({ file: f, violations: lintAny(doc, { previous, ws: opts.workspace ? resolvePath(opts.workspace) : null, customer: opts.customer ?? null }) });
     }
   } catch (err) { return fail(asJson, 2, `errore di sistema: ${err?.message ?? err}`); }

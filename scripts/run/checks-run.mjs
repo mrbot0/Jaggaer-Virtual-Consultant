@@ -13,7 +13,7 @@
 //      con --run i passi browser vanno in runs/<RUN>/checks/<cluster>.plan.json
 // Exit: 0 tutti superati (o da eseguire sul browser) · 1 argomenti · 2 errore di sistema · 3 un check fallito blocca.
 import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
-import { join, resolve as resolvePath } from "node:path";
+import { join, isAbsolute, resolve as resolvePath } from "node:path";
 import YAML from "yaml";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
@@ -26,6 +26,7 @@ import { governedObjects, snapshotCovers } from "../../hooks/lib/guards/config-s
 import { obsMatchesLocation } from "../kb/snapshot.mjs";
 import { loadRegistry, resolveCaseFixtures, createdEntities } from "./fixtures.mjs";
 import { status as authStatus, personasOf, AuthError } from "./auth-setup.mjs";
+import { confineInputs, inputFile } from "../lib/text-file.mjs";
 
 export class ChecksError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 const SNAPSHOT_MS = 60000;
@@ -193,6 +194,8 @@ export function run(argv, env = process.env) {
   if (opts.help) { console.log(HELP); return 0; }
   const codes = [...(opts.check ? [opts.check] : []), ...positional.filter((p) => /\.CHK\.\d{4}$/.test(p))];
   if (!opts.cluster && !codes.length) return fail(asJson, 1, "richiesto --cluster CL-CHK-nnn o --check <CHK>");
+  { const bad = confineInputs(opts, ["cfp"], { env, skip: (_n, v) => /^[SC]\..*\.CFP\.\d{4}$/.test(v) }); if (bad) return fail(asJson, 1, bad); }
+  if (typeof opts.plan === "string" && isAbsolute(opts.plan)) { const p = inputFile(opts.plan, { env }); if (p.error) return fail(asJson, 1, `--plan: ${p.error}`); }
   const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {
     const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
@@ -202,7 +205,8 @@ export function run(argv, env = process.env) {
     const runCode = opts.run ?? session?.active_plan?.run ?? null;
     if (runCode) { const bad = runRefusal(ws, customer, runCode); if (bad) return fail(asJson, 1, bad); }
     const readYaml = (f) => YAML.parse(readFileSync(resolvePath(ws, f), "utf8"));
-    const plan = opts.plan ? (() => { const p = join(ws, "customers", customer, opts.plan); return JSON.parse(readFileSync(existsSync(p) ? p : resolvePath(opts.plan), "utf8")); })() : null;
+    // revisione finale: il piano (relativo alla cartella del cliente, o al workspace) sta nel workspace degli hook
+    const plan = opts.plan ? (() => { const p = join(ws, "customers", customer, opts.plan); const c = inputFile(existsSync(p) ? p : opts.plan, { env }); if (c.error) throw new Error(`--plan: ${c.error}`); return JSON.parse(readFileSync(c.abs, "utf8")); })() : null;
     const cfp = opts.cfp ? (/^[SC]\..*\.CFP\.\d{4}$/.test(opts.cfp) ? loadItem(ws, opts.cfp, customer) : readYaml(opts.cfp)) : null;
     if (opts.cfp && !cfp) return fail(asJson, 1, `${opts.cfp} non trovata`);
     let cases = null;

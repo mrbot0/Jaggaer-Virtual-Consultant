@@ -123,7 +123,8 @@ test("CLI validate-plan: 0 valido · 3 policy (prod + scrittura) · 1 malformato
   const dir = mkdtempSync(join(tmpdir(), "vp-"));
   const w = (name, obj) => { const f = join(dir, name); writeFileSync(f, YAML.stringify(obj)); return f; };
   const CLI = join(ROOT, "scripts/decide/validate-plan.mjs");
-  const run = (args) => spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8", env: cleanEnv() });
+  // revisione finale: i file d'ingresso degli script stanno nel workspace degli hook (JVC_WORKSPACE)
+  const run = (args) => spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: dir }) });
   assert.equal(run([w("ok.yaml", plan("sandbox", [step(1, "READ", "ACT-OBS")])), "--env-type", "sandbox", "--json"]).status, 0);
   const bad = run([w("prod.yaml", plan("prod", [step(1, "SAVE", "ACT-CREATE")])), "--env-type", "prod", "--json"]);
   assert.equal(bad.status, 3, bad.stdout + bad.stderr);

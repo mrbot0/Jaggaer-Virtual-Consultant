@@ -21,6 +21,7 @@ import { formatRunCode, runRefusal } from "../lib/run-code.mjs";
 import { evaluate, loadTable } from "../decide/dt-eval.mjs";
 import { typeOf } from "../lib/kb-items.mjs";
 import { workspaceCustomer } from "./fixtures.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export class SuiteError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 export const SUITES = ["smoke", "full", "delta"];
@@ -104,6 +105,7 @@ export function run(argv, env = process.env) {
   const { opts } = parseArgs(argv, { flags: ["shadow", "dry-run"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["changed"], { env }); if (bad) return fail(asJson, 1, bad); }
   if (!opts.suite || !opts.scope) return fail(asJson, 1, "richiesti --suite e --scope");
   const { ws, customer } = workspaceCustomer(opts, env);
   if (!customer) return fail(asJson, 1, "cliente non determinato: --customer <C>");

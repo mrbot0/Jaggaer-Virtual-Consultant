@@ -18,6 +18,7 @@ import { selFile } from "./atlas.mjs";
 import { locatorExpr } from "../compile/generate-atlas-po.mjs";
 import { runResults } from "../lib/run-results.mjs";
 import { loadTemplate, fillOrWarn } from "../lib/templates.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const MIN_GREEN = 3;
 const GREEN = new Set(["green", "pass", "passed", "success"]);
@@ -165,6 +166,7 @@ export async function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv, { flags: ["allow-fragile"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["atlas","spec"], { env }); if (bad) return fail(asJson, 1, bad); }
   const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {
     if (!opts.plan) return fail(asJson, 1, "richiesto --plan");

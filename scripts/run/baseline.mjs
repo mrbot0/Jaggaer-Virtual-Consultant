@@ -18,6 +18,7 @@ import { isMain } from "../lib/is-main.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { diffPayload } from "./integration.mjs";
 import { workspaceCustomer } from "./fixtures.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export class BaselineError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 const NRT_RE = /^NRT\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}$/;
@@ -63,6 +64,7 @@ export function run(argv, env = process.env) {
   const asJson = !!opts.json;
   const [cmd] = positional;
   if (opts.help || !cmd) { console.log(HELP); return opts.help ? 0 : 1; }
+  { const bad = confineInputs(opts, ["observed"], { env }); if (bad) return fail(asJson, 1, bad); }
   const { ws, customer } = workspaceCustomer(opts, env);
   if (!customer) return fail(asJson, 1, "cliente non determinato: --customer <C>");
   try {

@@ -59,7 +59,8 @@ function setup(base = http.url) {
 }
 // processo asincrono: il mock HTTP gira nello stesso processo dei test (spawnSync lo bloccherebbe)
 const cli = (name, args, ws, env = {}) => new Promise((resolve) => {
-  const ch = spawn(process.execPath, [join(PLUGIN, "scripts/xray", `${name}.mjs`), ...args, "--workspace", ws, "--json"], { env: cleanEnv({ ...CREDS, ...env }) });
+  // revisione finale: i file d'ingresso (--outcomes, --finding) nel workspace degli hook (JVC_WORKSPACE)
+  const ch = spawn(process.execPath, [join(PLUGIN, "scripts/xray", `${name}.mjs`), ...args, "--workspace", ws, "--json"], { env: cleanEnv({ JVC_WORKSPACE: ws, ...CREDS, ...env }) });
   let stdout = ""; let stderr = "";
   ch.stdout.on("data", (d) => { stdout += d; });
   ch.stderr.on("data", (d) => { stderr += d; });

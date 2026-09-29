@@ -37,6 +37,7 @@ import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { SCOPES } from "../kb/codes.mjs";
 import { workspacePaths } from "./lib/paths.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const EXTRACTABLE = new Set(["procedura", "riga-tabella-campi", "regola", "nota", "definizione", "tracciato", "decisione", "schermata"]);
 export const CONTEXT_TYPES = new Set(["testo", "esempio", "riferimento", "figura", "passo", "tabella"]);
@@ -340,6 +341,7 @@ function main(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["units","doc","profile"], {}); if (bad) return fail(asJson, 1, bad); }
   if (!opts.units || !opts.doc || !opts.root) return fail(asJson, 1, "richiesti --units, --doc e --root");
   const scope = opts.scope ?? "XSC";
   if (!SCOPES.has(scope)) return fail(asJson, 1, `scope sconosciuto: ${scope}`);

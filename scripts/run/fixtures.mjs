@@ -21,7 +21,7 @@ import { readFileSync, existsSync, readdirSync, mkdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { createHash } from "node:crypto";
 import YAML from "yaml";
-import { readDataFileSync } from "../lib/text-file.mjs";
+import { readDataFileSync, inputBase, confineInputs } from "../lib/text-file.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { writeFileAtomic, withFileLock } from "../../hooks/lib/fsx.mjs";
@@ -151,6 +151,7 @@ export function run(argv, env = process.env) {
   const asJson = !!opts.json;
   const [cmd, ...rest] = positional;
   if (opts.help || !cmd) { console.log(HELP); return opts.help ? 0 : 1; }
+  { const bad = confineInputs(opts, ["case"], { env }); if (bad) return fail(asJson, 1, bad); }
   const { ws, customer } = workspaceCustomer(opts, env);
   const out = (o) => { console.log(asJson ? JSON.stringify({ ok: true, ...o }) : YAML.stringify(o).trim()); };
   try {
@@ -167,7 +168,7 @@ export function run(argv, env = process.env) {
       if (!opts.run) return fail(asJson, 1, "richiesto --run");
       // WP10a giro 1 (minore 2): payload confinato al workspace
       let fromFile = {};
-      if (opts["payload-file"]) { const d = readDataFileSync(ws, opts["payload-file"], YAML.parse); if (d.error) return fail(asJson, 1, d.error); fromFile = d.data ?? {}; }
+      if (opts["payload-file"]) { const d = readDataFileSync(inputBase(env), opts["payload-file"], YAML.parse); if (d.error) return fail(asJson, 1, d.error); fromFile = d.data ?? {}; }
       const p = { ...fromFile, ...kvArgs(rest) };
       out({ created: registerCreated(ws, customer, opts.run, { entity: p.entity, case: p.case ?? null, step: p.step != null ? Number(p.step) : null, ref: p.ref ?? null, attrs: p.attrs ?? null, compensation: p.compensation ?? null }) });
       return 0;

@@ -26,6 +26,7 @@ import { openDb } from "../kb/db.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { CONTROLS, controlsFor, reportedControlsFor } from "./self-check-controls.mjs";
+import { confineInputs, confineList } from "../lib/text-file.mjs";
 
 export { CONTROLS, SELF_CHECK_CONTROLS } from "./self-check-controls.mjs";
 // §29.10: i due rilevatori di spreco sono "Controllo fallito" e §17.1 blocca l'invio se un controllo
@@ -276,6 +277,8 @@ export function run(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["report","session","plan","lesson","observations"], {}); if (bad) return fail(asJson, 1, bad); }
+  if (typeof opts.audit === "string") { const a = confineList(opts.audit.split(",").filter(Boolean)); if (a.error) return fail(asJson, 1, `--audit: ${a.error}`); opts.audit = a.files.join(","); }
   if (!opts.report || !opts.session || !opts.audit || !opts.db) return fail(asJson, 1, "richiesti --report, --session, --audit, --db");
   let input;
   let db = null;

@@ -28,6 +28,7 @@ import { findElement, targetOf } from "./expect-compare.mjs";
 import { resolveSel, atlasIndex, atlasMatch, fieldSensitivity } from "./atlas.mjs";
 import { profileFor, redactText, redact } from "./redact.mjs";
 import { applyOverlay } from "./annotate.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const KINDS = ["entry", "input", "transition", "assertion", "integration", "failure", "result"];
 const IMG = new Set([".png", ".jpg", ".jpeg", ".webp"]);
@@ -229,6 +230,7 @@ export async function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["snapshot","spec"], { env }); if (bad) return fail(asJson, 1, bad); }
   const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   const masks = [];
   for (let i = 0; i < argv.length; i++) if (argv[i] === "--mask" && argv[i + 1]) masks.push(argv[i + 1]);

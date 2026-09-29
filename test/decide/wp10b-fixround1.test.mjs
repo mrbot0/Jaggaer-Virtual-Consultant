@@ -14,7 +14,7 @@ import { openDb } from "../../scripts/kb/db.mjs";
 import { validateReport } from "../../scripts/admin/agent-report.mjs";
 import { controlsFor, reportedControlsFor } from "../../scripts/decide/self-check-controls.mjs";
 import { validateSession } from "../../scripts/admin/session.mjs";
-import { mkWs, seedSession, runHook, runSessionCli, decisionOf, ROOT } from "../helpers/hook-env.mjs";
+import { mkWs, seedSession, runHook, runSessionCli, decisionOf, ROOT, cleanEnv } from "../helpers/hook-env.mjs";
 
 const node = (script, args, opts = {}) => spawnSync(process.execPath, [join(ROOT, script), ...args], { encoding: "utf8", timeout: 30000, ...opts });
 const tmp = () => realpathSync.native(mkdtempSync(join(tmpdir(), "jvc-fr1-")));
@@ -37,7 +37,7 @@ test("I1 CLI: una tabella con input a intervallo (DT-022, DT-010) dà lo stesso 
     const f = join(d, `${table}.json`);
     writeFileSync(f, JSON.stringify(inputs));
     const a = node("scripts/decide/dt-eval.mjs", ["--table", table, ...Object.entries(inputs).map(([k, v]) => `${k}=${v}`), "--json"]);
-    const b = node("scripts/decide/dt-eval.mjs", ["--table", table, "--inputs", f, "--json"]);
+    const b = node("scripts/decide/dt-eval.mjs", ["--table", table, "--inputs", f, "--json"], { env: cleanEnv({ JVC_WORKSPACE: d }) });
     assert.equal(a.status, 0, `${table}: ${a.stdout}${a.stderr}`);
     assert.equal(b.status, 0, `${table}: ${b.stdout}${b.stderr}`);
     const ja = JSON.parse(a.stdout); const jb = JSON.parse(b.stdout);
@@ -101,10 +101,10 @@ test("minore 1: deontic --text-file legge la frase da un file (testo non fidato 
   const f = join(d, "frase.txt");
   writeFileSync(f, 'Il campo "Centro di costo" è obbligatorio $HOME `x` salvo per il buyer.\n');
   // WP10b parte 2: il file sta nel workspace (--workspace), come per gli altri --text-file
-  const a = node("scripts/ingest/deontic.mjs", ["--text-file", f, "--workspace", d, "--lang", "it", "--json"]);
+  const a = node("scripts/ingest/deontic.mjs", ["--text-file", f, "--workspace", d, "--lang", "it", "--json"], { env: cleanEnv({ JVC_WORKSPACE: d }) });
   assert.equal(a.status, 0, a.stdout + a.stderr);
   assert.equal(JSON.parse(a.stdout).ok, true);
-  assert.equal(node("scripts/ingest/deontic.mjs", ["--text-file", join(d, "manca.txt"), "--workspace", d, "--json"]).status, 1);
+  assert.equal(node("scripts/ingest/deontic.mjs", ["--text-file", join(d, "manca.txt"), "--workspace", d, "--json"], { env: cleanEnv({ JVC_WORKSPACE: d }) }).status, 1);
 });
 
 test("minore 1: defect --summary-file prende il summary da un file (vince su summary=), file illeggibile ⇒ errore", async () => {

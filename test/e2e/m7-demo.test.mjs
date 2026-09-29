@@ -5,6 +5,7 @@
 // guard-config-scope; PostToolUse browser-origin · observe-append · audit-append. Gli script (step-check,
 // capture, workflow, build-report) girano come CLI, come li chiama l'agente.
 import { test } from "node:test";
+import { copyFileSync as copyPage } from "node:fs";
 import assert from "node:assert/strict";
 import { join } from "node:path";
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
@@ -25,6 +26,9 @@ const DT = "mcp__chrome-devtools__";
 const PRE = ["guard-environment", "guard-production", "guard-config-scope"];
 const POST = ["browser-origin", "observe-append", "audit-append"];
 
+// revisione finale: i file d'ingresso degli script stanno nel workspace degli hook (JVC_WORKSPACE): la pagina osservata dall'agente è salvata nel workspace
+const pageIn = (ws, env) => { const rel = `customers/ACME/config/${env}.page.json`; copyPage(join(ROOT, `test/fixtures/env/pages/${env}.json`), join(ws, rel)); return rel; };
+
 test("M7 — intento → ACT-OBS + ACT-CREATE sul tenant demo: guard, OBS, ERR riconosciuto, step-check, workflow, evidenza, RPT classificato, budget", () => {
   // ---- tenant demo: cliente ACME, sandbox dichiarata (use env) e verificata (env-check) ----
   const ws = mkWs();
@@ -37,7 +41,7 @@ test("M7 — intento → ACT-OBS + ACT-CREATE sul tenant demo: guard, OBS, ERR r
     assert.equal(r.status, 0, `${args.join(" ")}: ${r.stdout}${r.stderr}`);
   }
   const node = (script, args) => spawnSync(process.execPath, [join(ROOT, script), ...args], { encoding: "utf8", env: cleanEnv(E) });
-  const chk = node("scripts/chrome/env-check.mjs", ["--customer", "ACME", "--env", "sandbox", "--snapshot", join(ROOT, "test/fixtures/env/pages/sandbox.json"), "--write-session", "--session", "sess-1", "--json"]);
+  const chk = node("scripts/chrome/env-check.mjs", ["--customer", "ACME", "--env", "sandbox", "--snapshot", pageIn(ws, "sandbox"), "--write-session", "--session", "sess-1", "--json"]);
   assert.equal(chk.status, 0, chk.stdout + chk.stderr);
   const code = readSession(ws).session_code;
   assert.match(code, /^SES\.ACME\.\d{8}\.001$/);

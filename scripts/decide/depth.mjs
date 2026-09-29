@@ -10,6 +10,7 @@ import { readFileSync } from "node:fs";
 import YAML from "yaml";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 const RISK_RANK = { R0: 0, R1: 1, R2: 2, R3: 3 };
 
@@ -62,6 +63,7 @@ export function run(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["input","precedents"], {}); if (bad) return fail(asJson, 1, bad); }
   // WP10c giro 1 (I1): input anche da file, come strategy-select (--input, --precedents); le opzioni prevalgono.
   let input;
   try {

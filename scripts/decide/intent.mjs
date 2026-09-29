@@ -11,7 +11,7 @@ import { ACT, envColumn } from "../../hooks/lib/act-classes.mjs";
 import { evaluate, loadTable } from "./dt-eval.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
-import { readTextFile } from "../lib/text-file.mjs";
+import { readTextFile, inputBase } from "../lib/text-file.mjs";
 
 const RISK_RANK = { R0: 0, R1: 1, R2: 2, R3: 3 };
 export const PROD_REFUSAL = "In produzione non si scrivono dati; posso farlo in sandbox o pre-produzione (§52.1)";
@@ -243,7 +243,7 @@ export async function run(argv, env = process.env) {
   try {
     const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
     let text = opts.text;
-    if (opts["text-file"]) { const t = readTextFile(ws, opts["text-file"]); if (t.error) return fail(asJson, 1, t.error); text = t.text; }
+    if (opts["text-file"]) { const t = readTextFile(inputBase(env), opts["text-file"]); if (t.error) return fail(asJson, 1, t.error); text = t.text; }
     let customers = opts.customers ? String(opts.customers).split(",").map((s) => s.trim()).filter(Boolean) : null;
     if (!customers) { try { customers = readdirSync(join(ws, "customers")).filter((d) => /^[A-Z0-9]{4}$/.test(d)); } catch { customers = []; } }
     let session = null;

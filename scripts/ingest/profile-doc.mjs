@@ -30,6 +30,7 @@ import { parseMandatoryText } from "./deontic.mjs";
 import { normalizeLabel } from "./dedupe.mjs";
 import { workspacePaths, ensureWorkspace } from "./lib/paths.mjs";
 import { safeName } from "./field-table.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const RELIABILITY = YAML.parse(readFileSync(new URL("../../schemas/doc-reliability.yaml", import.meta.url), "utf8"));
 export const KINDS = Object.keys(RELIABILITY.base_by_kind);
@@ -276,6 +277,7 @@ function main(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["parsed"], {}); if (bad) return fail(asJson, 1, bad); }
   if (!opts.parsed || !opts.root) return fail(asJson, 1, "richiesti --parsed <doc.json> e --root <workspace>");
   const scope = opts.scope ?? "XSC";
   if (!SCOPES.has(scope)) return fail(asJson, 1, `scope sconosciuto: ${scope}`);
