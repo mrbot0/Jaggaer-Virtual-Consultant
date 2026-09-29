@@ -76,7 +76,9 @@ test("CLI: event appende a workflow.jsonl (kind validato), render stampa il bloc
   const sBefore = readFileSync(join(ws, "customers/ACME/.sessions/sess-1/session.json"), "utf8");
   const w = spawnSync(process.execPath, [join(ROOT, "scripts/admin/workflow.mjs"), "watch", "SES.ACME.20260923.004"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: ws }) });
   assert.equal(w.status, 0, w.stderr);
-  assert.equal(w.stdout, r.stdout);
+  // WP10d (D3): watch = il blocco del workflow (identico a render) seguito dalla sezione agenti della console
+  assert.ok(w.stdout.startsWith(r.stdout), w.stdout);
+  assert.match(w.stdout.slice(r.stdout.length), /^\nAGENTI {2}SES\.ACME\.20260923\.004/);
   assert.equal(statSync(f).mtimeMs, before);
   assert.equal(readFileSync(join(ws, "customers/ACME/.sessions/sess-1/session.json"), "utf8"), sBefore);
   assert.equal(spawnSync(process.execPath, [join(ROOT, "scripts/admin/workflow.mjs"), "watch", "SES.ACME.20260923.999"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: ws }) }).status, 1);

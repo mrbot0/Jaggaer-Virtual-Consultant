@@ -3,7 +3,7 @@
 // (guard-control), control.jsonl (approval-capture) — mai dal testo del manager o dall'autodichiarazione degli agenti.
 // Leggero (solo built-in e librerie degli hook): lo usano session-context, precompact-save e approval-capture
 // (UserPromptSubmit, < 100 ms) oltre alla console scripts/admin/agents.mjs.
-import { readdirSync, readFileSync, existsSync } from "node:fs";
+import { readdirSync, readFileSync, existsSync, openSync, readSync, fstatSync, closeSync } from "node:fs";
 import { join } from "node:path";
 import { invocationsFile, sessionDir } from "./workspace.mjs";
 import { readJsonl } from "./state-summary.mjs";
@@ -115,4 +115,50 @@ export function briefLines(m, { onlyIfActive = false, managerWarnings = [] } = {
   if (ctl.length) lines.push(ctl.join(" · "));
   if (managerWarnings.length) lines.push(`Monitor del manager: ${managerWarnings.join(" · ")}`);
   return lines.slice(0, 5);
+}
+
+// ---- sorveglianza del manager (D6): R5 ≤ 15 % dei token, nessun lavoro di dominio ----
+// Token del manager: manager-usage.json (scritto da stop-integrity dal transcript della sessione principale); token
+// degli agenti: session.budget.used (subagent-trace). Comandi di dominio: eventi di audit della sessione principale
+// (actor manager, senza agent_id) con kb find/get/… non seguiti da un Agent()/Task() entro le 20 chiamate successive.
+export const R5_LIMIT = 0.15;
+export const R5_MIN_TOTAL = 20000;
+const DOMAIN_CMD = /\bkb(?:\.mjs)?["']?\s+(find|get|resolve|precedents|epistemic|fields|graph|coverage)\b/i;
+export function managerWatch(m, events, { redactFn = (s) => s } = {}) {
+  let usage = null;
+  try { usage = JSON.parse(readFileSync(join(m.dir, "manager-usage.json"), "utf8")); } catch { usage = null; }
+  const agentsTok = m.session?.budget?.used ?? 0;
+  const mgr = Number.isInteger(usage?.tokens) ? usage.tokens : null;
+  const total = mgr != null ? mgr + agentsTok : null;
+  const share = total ? mgr / total : null;
+  const warnings = [];
+  if (share != null && total >= R5_MIN_TOTAL && share > R5_LIMIT) warnings.push(`quota di token del manager ${Math.round(share * 100)}% > ${R5_LIMIT * 100}% (R5): il manager instrada, non fa lavoro di dominio`);
+  const mine = events.filter((e) => e?.kind === "tool" && (e.actor === "manager" || !e.actor) && !e.payload?.agent_id);
+  const domain = [];
+  mine.forEach((e, i) => {
+    if (!/^(Bash|PowerShell)$/.test(e.payload?.tool ?? "") || !DOMAIN_CMD.test(e.payload?.input_summary ?? "")) return;
+    if (!mine.slice(i + 1, i + 21).some((x) => /^(Agent|Task)$/.test(x.payload?.tool ?? ""))) domain.push({ ts: e.ts, cmd: redactFn(String(e.payload.input_summary)).slice(0, 160) });
+  });
+  if (domain.length) warnings.push(`${domain.length} comandi di dominio (kb find/get/…) eseguiti dal manager senza un dispatch successivo: risponde nel merito invece di instradare`);
+  return { tokens_manager: mgr, tokens_agents: agentsTok, share, r5_limit: R5_LIMIT, domain_commands: domain.slice(-5), domain_count: domain.length, warnings, usage_source: usage ? "stop-integrity" : "assente" };
+}
+
+// Coda dell'audit del mese (ultimi `bytes`), eventi della sessione: per la sintesi veloce nel contesto.
+export function auditTail(ws, customer, sid, { bytes = 128 * 1024, date = new Date() } = {}) {
+  const f = join(ws, "customers", customer, "audit", `${date.toISOString().slice(0, 7)}.jsonl`);
+  let text = "";
+  let partial = false;
+  try {
+    const fd = openSync(f, "r");
+    try { const size = fstatSync(fd).size; const len = Math.min(size, bytes); partial = len < size; const buf = Buffer.alloc(len); readSync(fd, buf, 0, len, size - len); text = buf.toString("utf8"); } finally { closeSync(fd); }
+  } catch { return []; }
+  return text.split("\n").slice(partial ? 1 : 0).flatMap((l) => { try { const e = JSON.parse(l); return e?.session === sid ? [e] : []; } catch { return []; } });
+}
+
+// Sintesi per il contesto dagli hook (session-context, precompact-save, approval-capture): ≤ 5 righe.
+export function contextBrief(ws, customer, sid, session, { onlyIfActive = false, now = Date.now() } = {}) {
+  const m = readMonitor(ws, customer, sid, session, { now });
+  let managerWarnings = [];
+  try { managerWarnings = managerWatch(m, auditTail(ws, customer, sid)).warnings; } catch { managerWarnings = []; }
+  return briefLines(m, { onlyIfActive, managerWarnings });
 }

@@ -17,6 +17,7 @@ import { appendAudit } from "../lib/audit.mjs";
 import { stateLine, pendingLine, surprisesLine } from "../lib/state-summary.mjs";
 import { checkSessionText } from "../lib/session-state.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
+import { contextBrief } from "../lib/agents-model.mjs";
 
 const PLUGIN = "jaggaer-virtual-consultant";
 
@@ -105,6 +106,8 @@ export function handle(input, env = process.env) {
       } else {
         const s = chk.session;
         lines.push(stateLine(s), pendingLine(s.pending), surprisesLine(s.surprises));
+        // WP10d (D3): sintesi della console degli agenti (≤ 5 righe), dalle sole registrazioni degli hook
+        try { lines.push(...contextBrief(ws, pointer.customer, sid, s)); } catch (err) { lines.push(`Agenti: sintesi non disponibile (${String(err?.message ?? err).slice(0, 120)})`); }
         if (s.budget.used >= 0.8 * s.budget.tokens) lines.push("Budget ≥ 80%: le nuove invocazioni vanno su haiku; chiedi all'utente se continuare (§29.10).");
       }
     }

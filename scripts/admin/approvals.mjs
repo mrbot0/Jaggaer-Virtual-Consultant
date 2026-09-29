@@ -320,6 +320,16 @@ function invalid(expected, why) {
   return ctxOut(`Approvazione non valida: scrivi esattamente ${say} — motivo: ${why}. Nessun token registrato (§57.2: un "ok" o un "va bene" non valgono; il manager lo dice all'utente e attende).`, `⚠ Approvazione non valida: ${why}`);
 }
 
+// WP10d (D3): con agenti in corso o in attesa dell'utente, una riga di stato per il manager a ogni prompt (dalla
+// console: sole registrazioni degli hook). Fail-open: un errore non produce nulla.
+async function agentsContext(st) {
+  try {
+    const { contextBrief } = await import("../../hooks/lib/agents-model.mjs");
+    const lines = contextBrief(st.ws, st.customer, st.sid, st.session, { onlyIfActive: true });
+    return lines.length ? ctxOut(`[monitor degli agenti] ${lines.join(" | ")}`) : null;
+  } catch { return null; }
+}
+
 export async function capture(input, env = process.env) {
   const st = loadHookState(input, env);
   if (!st.jvc || !st.session) return null;
@@ -334,7 +344,7 @@ export async function capture(input, env = process.env) {
   const cp = ctl.parseControlPrompt(input.prompt);
   if (cp) return (await import("./control.mjs")).captureControl(st, input, cp);
   const p = parseApprovalPrompt(input.prompt);
-  if (!p) return null;
+  if (!p) return agentsContext(st);
   const s = st.session;
   // Anche i tentativi respinti vanno in audit (§52.2: "tutte registrate in audit"), senza il testo del prompt.
   const reject = (expected, why) => {

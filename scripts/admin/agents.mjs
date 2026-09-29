@@ -21,13 +21,12 @@ import { checkSessionText } from "../../hooks/lib/session-state.mjs";
 import { verifyChain } from "../../hooks/lib/audit.mjs";
 import { redact, truncate } from "../../hooks/lib/redact.mjs";
 import { readJsonl } from "../../hooks/lib/state-summary.mjs";
-import { readMonitor, agentRows, summarize, summaryLine, blockedScopes, STATES } from "../../hooks/lib/agents-model.mjs";
+import { readMonitor, agentRows, summarize, summaryLine, blockedScopes, STATES, managerWatch as watchManager, R5_LIMIT, R5_MIN_TOTAL } from "../../hooks/lib/agents-model.mjs";
 import { reduce as reduceWorkflow, readEvents, workflowFile } from "./workflow.mjs";
 
-export const R5_LIMIT = 0.15;
-// Sotto questa soglia di token totali la quota del manager non si giudica (inizio sessione: solo il saluto).
-export const R5_MIN_TOTAL = 20000;
-const DOMAIN_CMD = /\bkb(?:\.mjs)?["']?\s+(find|get|resolve|precedents|epistemic|fields|graph|coverage)\b/i;
+export { R5_LIMIT, R5_MIN_TOTAL };
+// Sorveglianza del manager (D6): logica condivisa con gli hook (hooks/lib/agents-model.mjs), su tutto l'audit della sessione.
+export const managerWatch = (m, events) => watchManager(m, events, { redactFn: (s) => truncate(redact(s), 160) });
 const CODE = /\b[SCLN][A-Z]*\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(?:\.v\d+)?\b/g;
 
 // ---- sessione ----
@@ -161,28 +160,6 @@ export function coherence(row, rep, act) {
   if (row.usage_source === "self-declared") notes.push("token autodichiarati dal rapporto (transcript assente): non verificabili");
   if (row.trace_incomplete) notes.push("traccia incompleta (subagent-trace)");
   return { incoerente: flags.length > 0, flags, notes };
-}
-
-// ---- sorveglianza del manager (D6: R5 ≤ 15 %, lavoro di dominio) ----
-export function managerWatch(m, events) {
-  let usage = null;
-  try { usage = JSON.parse(readFileSync(join(m.dir, "manager-usage.json"), "utf8")); } catch { usage = null; }
-  const agentsTok = m.session?.budget?.used ?? 0;
-  const mgr = Number.isInteger(usage?.tokens) ? usage.tokens : null;
-  const total = mgr != null ? mgr + agentsTok : null;
-  const share = total ? mgr / total : null;
-  const warnings = [];
-  if (share != null && total >= R5_MIN_TOTAL && share > R5_LIMIT) warnings.push(`quota di token del manager ${Math.round(share * 100)}% > ${R5_LIMIT * 100}% (R5): il manager non fa lavoro di dominio, instrada`);
-  // comandi di dominio del manager non seguiti da un Agent() entro le 20 chiamate successive del manager
-  const mine = events.filter((e) => e.kind === "tool" && (e.actor === "manager" || !e.actor) && !e.payload?.agent_id);
-  const domain = [];
-  mine.forEach((e, i) => {
-    if (!/^(Bash|PowerShell)$/.test(e.payload?.tool ?? "") || !DOMAIN_CMD.test(e.payload?.input_summary ?? "")) return;
-    const next = mine.slice(i + 1, i + 21);
-    if (!next.some((x) => /^(Agent|Task)$/.test(x.payload?.tool ?? ""))) domain.push({ ts: e.ts, cmd: truncate(redact(e.payload.input_summary), 160) });
-  });
-  if (domain.length) warnings.push(`${domain.length} comandi di dominio (kb find/get/…) eseguiti dal manager senza un dispatch successivo: risponde nel merito invece di instradare`);
-  return { tokens_manager: mgr, tokens_agents: agentsTok, share, r5_limit: R5_LIMIT, domain_commands: domain.slice(-5), domain_count: domain.length, warnings, usage_source: usage ? "stop-integrity" : "assente" };
 }
 
 // ---- vista completa ----

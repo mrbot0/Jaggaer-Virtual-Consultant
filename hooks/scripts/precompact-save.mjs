@@ -9,6 +9,7 @@ import { loadHookState, sessionDir, invocationsFile, compactSummaryFile } from "
 import { stateLine, pendingLine, surprisesLine, lastReports, openInvocations, lastUserPrompt } from "../lib/state-summary.mjs";
 import { updateSession } from "../../scripts/admin/session.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
+import { contextBrief } from "../lib/agents-model.mjs";
 
 export const MAX_LINES = 20;
 
@@ -29,6 +30,8 @@ export function buildSummary(st, input) {
     const reps = lastReports(bb, 3);
     lines.push(`Ultimi rapporti: ${reps.length ? reps.map((r) => `${r.task_id} ${r.status ?? "?"}${r.lesson ? ` ${r.lesson}` : ""}`).join(" · ") : "nessuno"}`);
     lines.push(pendingLine(s.pending), surprisesLine(s.surprises));
+    // WP10d (D3): sintesi della console degli agenti (≤ 5 righe)
+    try { lines.push(...contextBrief(st.ws, st.customer, st.sid, s)); } catch { lines.push("Agenti: sintesi non disponibile"); }
     lines.push(`Blackboard: ${s.customer ? `customers/${s.customer}/` : ""}${s.blackboard_dir}`);
   }
   return lines.slice(0, MAX_LINES).join("\n") + "\n";

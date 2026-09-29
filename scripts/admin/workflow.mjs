@@ -158,7 +158,12 @@ export async function run(argv, env = process.env) {
       if (!arg) return fail(asJson, 1, "watch richiede il codice di sessione (SES.…)");
       const s = findByCode(ws, arg);
       if (!s) return fail(asJson, 1, `sessione ${arg} non trovata`);
-      const text = render(readEvents(workflowFile(ws, s.customer, s.session_id)), s, { threeA: await threeAFor(ws, s) });
+      let text = render(readEvents(workflowFile(ws, s.customer, s.session_id)), s, { threeA: await threeAFor(ws, s) });
+      // WP10d (D3): anche la sezione agenti della console (monitor indipendente, sola lettura)
+      try {
+        const { buildConsole, renderStatus } = await import("./agents.mjs");
+        text += `\n${renderStatus(buildConsole(ws, s.customer, s.session_id, s))}`;
+      } catch (err) { text += `\nAGENTI: console non disponibile (${String(err?.message ?? err).slice(0, 160)})\n`; }
       if (asJson) console.log(JSON.stringify({ ok: true, text })); else process.stdout.write(text);
       return 0;
     }
