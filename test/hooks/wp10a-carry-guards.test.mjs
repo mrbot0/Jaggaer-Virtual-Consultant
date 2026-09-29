@@ -41,3 +41,17 @@ test("DR-SHELL-008: la promozione resta a forma esatta — catene, opzioni estra
   assert.ok(denied(guard(ws, `node --input-type=module -e "const m = await import('./scripts/kb/lifecycle.mjs'); await m.main('promote', [])"`)), "lifecycle via import");
   assert.ok(denied(guard(ws, `node "${KB}" promote L.ACME.CAT.FLW.0001 --customer ACME --workspace C:\\`)), "opzione non ammessa");
 });
+
+// WP10a — difetto trovato rendendo i comandi contro i guard veri: guard-config-scope trattava ogni build-*.mjs come un
+// generatore del pacchetto e negava build-report.mjs (/nrt report, RPT degli agenti) e build-payload.mjs (Xray).
+const cfgGuard = (ws, command) => runHook("guard-config-scope", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: "Bash", tool_input: { command } }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
+test("guard-config-scope: build-report e build-payload non sono generatori del pacchetto; i generatori restano negati (salvo --check/--help)", () => {
+  const ws = ws09d(); withSession(ws);
+  assert.ok(silent(cfgGuard(ws, `node "${script("scripts/report/build-report.mjs")}" --kind test --title Regressione --run RUN.ACME.20260923.1000.CAT --json`)), "build-report");
+  assert.ok(silent(cfgGuard(ws, `node "${script("scripts/xray/build-payload.mjs")}" --run RUN.ACME.20260923.1000.CAT --json`)), "build-payload");
+  for (const g of ["scripts/admin/build-deny-rules.mjs", "scripts/lib/build-session-validator.mjs", "scripts/chrome/build-error-patterns.mjs"]) {
+    assert.ok(denied(cfgGuard(ws, `node "${script(g)}"`)), g);
+    assert.ok(silent(cfgGuard(ws, `node "${script(g)}" --check`)), `${g} --check`);
+  }
+  assert.ok(denied(cfgGuard(ws, `node "${script("scripts/admin/integrity.mjs")}" build`)), "integrity build");
+});

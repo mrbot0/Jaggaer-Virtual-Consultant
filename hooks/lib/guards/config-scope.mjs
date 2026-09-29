@@ -304,11 +304,14 @@ function pluginScript(cmd, ctx) {
 // WP08 giro 1 (I1): i generatori del pacchetto (integrity build, build-deny-rules, build-session-validator,
 // build-error-patterns) riscrivono integrity.json o hooks/lib/generated/: mai da una sessione; restano ammessi
 // `integrity verify` e le verifiche --check / --help che non scrivono.
+const GENERATORS = new Set(["build-deny-rules.mjs", "build-session-validator.mjs", "build-error-patterns.mjs"]);
 function generatorRefusal(script) {
   const name = basename(script.script).toLowerCase();
   const a = script.args;
   if (name === "integrity.mjs") return a[0] === "verify" && !a.includes("--root") ? null : a.length === 1 && a[0] === "--help" ? null : "integrity.mjs build (o --root) riscrive il manifesto d'integrità: si esegue solo nel repository del plugin, per una release (T9)";
-  if (/^build-[\w-]+\.mjs$/.test(name)) return a.every((x) => x === "--check" || x === "--help") && a.length ? null : `${name} riscrive i moduli generati del plugin: si esegue solo nel repository del plugin (T9)`;
+  // WP10a: solo i generatori del pacchetto (build-report.mjs e build-payload.mjs producono report e payload del
+  // workspace, non moduli del plugin: /nrt report e gli RPT degli agenti li usano)
+  if (GENERATORS.has(name)) return a.every((x) => x === "--check" || x === "--help") && a.length ? null : `${name} riscrive i moduli generati del plugin: si esegue solo nel repository del plugin (T9)`;
   return null;
 }
 
