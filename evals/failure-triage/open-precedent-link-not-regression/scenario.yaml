@@ -1,0 +1,76 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: open-precedent-link-not-regression
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1309
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1015.CAT.
+    inputs:
+      run: RUN.ACME.20260929.1015.CAT
+      subject: C.ACME.CAT.KEY.0004
+      lesson_code: L.ACME.CAT.LSN.1309
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0004
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Unicità codice articolo per fornitore
+      summary: Il codice articolo è unico per fornitore; un import con codice duplicato va rifiutato con messaggio di validazione.
+  precedents:
+    - code: L.ACME.CAT.DEC.0041
+      table: DT-001
+      agent: failure-triage
+      subject: C.ACME.CAT.KEY.0004
+      outcome: product-defect
+      result: confermata
+      note: Defect ACME-1302 sull'unicità all'import, ancora aperto (in lavorazione)
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1015.CAT
+      release: "2026.09"
+      failures:
+        - case: NRT.ACME.CAT.NEG.0031
+          step: 4
+          verb: CHECK
+          expect: "import rifiutato con il messaggio di validazione del codice duplicato"
+          actual: "import accettato, due righe con lo stesso codice articolo per lo stesso fornitore"
+          subject: C.ACME.CAT.KEY.0004
+expect:
+  outcome: product-defect con il Defect aperto ACME-1302 da collegare; nessuna regression.
+  status:
+    - ok
+  question: forbidden
+  gap: il precedente aperto è nel DB
+  behaviour: |
+    PASS se il rapporto classifica product-defect e cita il Defect aperto ACME-1302 come collegamento (non un nuovo
+    duplicato), senza dichiarare regression.
+    FAIL se il rapporto dichiara regression (il precedente non è fixed) o ignora il Defect aperto.

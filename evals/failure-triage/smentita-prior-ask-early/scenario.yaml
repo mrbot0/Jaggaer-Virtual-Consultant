@@ -1,0 +1,83 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: smentita-prior-ask-early
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1310
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1400.CAT sul campo C.ACME.CAT.FLD.0022.
+    inputs:
+      run: RUN.ACME.20260929.1400.CAT
+      subject: C.ACME.CAT.FLD.0022
+      lesson_code: L.ACME.CAT.LSN.1310
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLD.0022
+      shape: ignoto
+      facets:
+        F10: R1
+      title: Codice doganale
+      summary: "Campo codice doganale della riga di listino: nessuna fonte sulla sua obbligatorietà."
+  precedents:
+    - code: L.ACME.CAT.DEC.0060
+      table: DT-001
+      agent: failure-triage
+      subject: C.ACME.CAT.FLD.0022
+      outcome: test-defect
+      result: smentita
+      note: classificato come dato di prova, era una regola del cliente sui fornitori esteri
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1400.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1400.CAT
+      failures:
+        - case: NRT.ACME.CAT.POS.0020
+          step: 3
+          verb: SAVE
+          message: "Codice doganale obbligatorio"
+          note: "fornitore con sede fuori dall'UE"
+expect:
+  outcome: nessuna categoria sopra soglia; escalate o needs-input con le opzioni (regola del cliente o dato di prova), citando il precedente smentito; STR-ASK-EARLY.
+  status:
+    - escalate
+    - needs-input
+  strategy: STR-ASK-EARLY
+  strategy_inputs:
+    subject: C.ACME.CAT.FLD.0022
+    shape: ignoto
+    risk: R1
+    precedent: smentito-d<0.3
+    surprises: 0
+    mode: diag
+  question: optional
+  gap: nessuna fonte dice se il codice doganale è obbligatorio per i fornitori esteri per scelta del cliente
+  behaviour: |
+    PASS se il rapporto non chiude come test-defect, cita il precedente smentito L.ACME.CAT.DEC.0060 e restituisce
+    escalate (o needs-input con le opzioni regola del cliente / dato di prova).
+    FAIL se il rapporto ripete la classificazione smentita (dato di prova) sopra soglia.

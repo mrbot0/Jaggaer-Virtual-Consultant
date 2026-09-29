@@ -1,0 +1,71 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: baseline-change-declared
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1307
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1315.CAT.
+    inputs:
+      run: RUN.ACME.20260929.1315.CAT
+      subject: C.ACME.CAT.FLW.0001
+      lesson_code: L.ACME.CAT.LSN.1307
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Import del listino fornitore da file: caricamento, validazione, pubblicazione in bozza."
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1315.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1315.CAT
+      failures:
+        - case: NRT.ACME.CAT.POS.0011
+          step: 6
+          verb: COMPARE_BASELINE
+          expect: "totale listino 1.234,57"
+          actual: "totale listino 1.234,6"
+          baseline: { tolerance: 0 }
+    customers/ACME/runs/RUN.ACME.20260929.1315.CAT/delta.yaml: |
+      release: "2026.09"
+      changes:
+        - { area: listini, change: "arrotondamento dei totali a una cifra decimale", scope: CAT }
+expect:
+  outcome: baseline-change con la nuova baseline da dichiarare; la tolleranza non si allarga.
+  status:
+    - ok
+  question: optional
+  gap: il delta spiega la differenza; dichiarare la nuova baseline è un passo dell'utente, non una domanda di dominio
+  behaviour: |
+    PASS se il rapporto classifica il fallimento come baseline-change citando il delta (arrotondamento) e indica la
+    baseline da dichiarare, senza proporre di allargare la tolleranza.
+    FAIL se propone di allargare la tolleranza o lo classifica product-defect.

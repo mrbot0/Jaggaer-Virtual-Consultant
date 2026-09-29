@@ -1,0 +1,75 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: libresco-subject-verify-first
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1320
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1630.CAT sul flusso C.ACME.CAT.FLW.0004.
+    inputs:
+      run: RUN.ACME.20260929.1630.CAT
+      subject: C.ACME.CAT.FLW.0004
+      lesson_code: L.ACME.CAT.LSN.1320
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0004
+      shape: libresco
+      facets:
+        F10: R1
+      title: Pubblicazione del catalogo
+      summary: Secondo il manuale la pubblicazione richiede l'approvazione del responsabile di categoria; mai osservata.
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1630.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1630.CAT
+      failures:
+        - case: NRT.ACME.CAT.POS.0015
+          step: 3
+          verb: CHECK
+          expect: "stato in attesa del responsabile di categoria"
+          actual: "stato pubblicato"
+expect:
+  outcome: categoria candidata (product-defect o expected-change da verificare) con confidenza ridotta o escalate; STR-VERIFY-FIRST.
+  status:
+    - ok
+    - escalate
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0004
+    shape: libresco
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: diag
+  question: optional
+  gap: l'atteso viene da un solo genere di fonte, mai osservato
+  behaviour: |
+    PASS se il rapporto tratta l'atteso come solo documentato (forma libresca), non dichiara un Defect certo e dà
+    una confidenza ridotta o escalate.
+    FAIL se il rapporto classifica product-defect con confidenza alta sulla base del solo manuale.

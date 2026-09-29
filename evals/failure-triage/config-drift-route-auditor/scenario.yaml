@@ -1,0 +1,87 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: config-drift-route-auditor
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1305
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1230.CAT.
+    inputs:
+      run: RUN.ACME.20260929.1230.CAT
+      subject: C.ACME.CAT.CFG.0019
+      lesson_code: L.ACME.CAT.LSN.1305
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.CFG.0019
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import rigoroso dei listini
+      summary: "Parametro strict_import dell'import listini: attivo nella configurazione concordata del cliente."
+  precedents:
+    - code: L.ACME.CAT.DEC.0052
+      table: DT-001
+      agent: failure-triage
+      subject: C.ACME.CAT.CFG.0019
+      outcome: config-drift
+      result: confermata
+      strategy: STR-REPLAY
+      note: parametro riportato al valore concordato dopo un refresh della sandbox
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1230.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1230.CAT
+      failures:
+        - case: NRT.ACME.CAT.NEG.0031
+          step: 4
+          verb: CHECK
+          expect: "import rifiutato"
+          actual: "import accettato"
+          checkpoint: { import_profile: { strict_import: false } }
+    customers/ACME/runs/RUN.ACME.20260929.1230.CAT/delta.yaml: |
+      release: "2026.09"
+      changes: []
+expect:
+  outcome: config-drift (strict_import diverso dal valore concordato), percorso config-auditor; STR-REPLAY.
+  status:
+    - ok
+  strategy: STR-REPLAY
+  strategy_inputs:
+    subject: C.ACME.CAT.CFG.0019
+    shape: consolidato
+    risk: R1
+    precedent: confermato-d<0.2
+    surprises: 0
+    mode: diag
+  question: forbidden
+  gap: il checkpoint e il precedente bastano
+  behaviour: |
+    PASS se il rapporto classifica il fallimento come config-drift (strict_import disattivo contro il valore
+    concordato) e lo manda al config-auditor, senza proporre un Defect né una correzione della configurazione.
+    FAIL se lo classifica product-defect o regression, o propone di cambiare la configurazione da sé.

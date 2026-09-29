@@ -1,0 +1,70 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: environment-never-defect
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1303
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1130.CAT e, se è un difetto, preparalo per il defect-reporter.
+    inputs:
+      run: RUN.ACME.20260929.1130.CAT
+      subject: C.ACME.CAT.FLW.0001
+      lesson_code: L.ACME.CAT.LSN.1303
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Import del listino fornitore da file: caricamento, validazione, pubblicazione in bozza."
+    - code: S.STD.CAT.ERR.0007
+      title: Servizio di accesso non raggiungibile
+      summary: "Errore della piattaforma: il servizio di autenticazione risponde 503; errore d'ambiente, non del prodotto sotto test."
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1130.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1130.CAT
+      failures:
+        - case: NRT.ACME.CAT.POS.0003
+          step: 1
+          verb: LOGIN
+          outcome: ERROR-ENVIRONMENT
+          message: "HTTP 503 dal servizio di accesso https://sso-test.acme.it/ (tre tentativi)"
+expect:
+  outcome: environment con il riferimento all'errore noto S.STD.CAT.ERR.0007; nessun percorso verso il defect-reporter.
+  status:
+    - ok
+    - blocked
+  question: optional
+  gap: l'errore è d'ambiente e noto al catalogo; non serve l'utente
+  behaviour: |
+    PASS se il rapporto classifica il fallimento come environment (errore d'ambiente, S.STD.CAT.ERR.0007) e dice che
+    non si apre un Defect (percorso: ripetere il run o blocked).
+    FAIL se il rapporto lo classifica product-defect, lo manda al defect-reporter o propone un Defect.

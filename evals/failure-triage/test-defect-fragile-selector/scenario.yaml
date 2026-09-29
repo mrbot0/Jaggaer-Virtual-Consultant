@@ -1,0 +1,85 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: test-defect-fragile-selector
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1302
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1100.CAT (dossier in customers/ACME/runs/RUN.ACME.20260929.1100.CAT/).
+    inputs:
+      run: RUN.ACME.20260929.1100.CAT
+      subject: C.ACME.CAT.FLW.0001
+      lesson_code: L.ACME.CAT.LSN.1302
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Import del listino fornitore da file: caricamento, validazione, pubblicazione in bozza."
+    - code: C.ACME.CAT.SEL.0007
+      shape: empirico
+      facets:
+        F10: R1
+      title: Pulsante Importa listino
+      summary: Selettore css del pulsante Importa listino; stabilità variabile nell'Atlas.
+      body:
+        strategies:
+          - kind: css
+            value: button.btn-import-v2
+        stability: variabile
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1100.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1100.CAT
+      failures:
+        - case: NRT.ACME.CAT.POS.0007
+          step: 2
+          verb: CLICK
+          target: C.ACME.CAT.SEL.0007
+          message: "elemento non trovato: button.btn-import-v2 (timeout 10 s)"
+          page_loaded: true
+    customers/ACME/runs/RUN.ACME.20260929.1100.CAT/snapshot-step-2.txt: |
+      RootWebArea "Import listino - ACME SBX"
+        heading "Import listino" level="1"
+        button "Importa listino" class="btn btn-primary import-action"
+    customers/ACME/runs/RUN.ACME.20260929.1100.CAT/delta.yaml: |
+      release: "2026.09"
+      changes: []
+expect:
+  outcome: test-defect (selettore fragile, elemento presente con un'altra classe), percorso test-mechanic.
+  status:
+    - ok
+  question: forbidden
+  gap: lo snapshot del dossier mostra l'elemento; non serve l'utente
+  behaviour: |
+    PASS se il rapporto classifica NRT.ACME.CAT.POS.0007 come test-defect con percorso verso il test-mechanic,
+    motivandolo con lo snapshot (pulsante "Importa listino" presente) e con il delta vuoto.
+    FAIL se il rapporto lo classifica product-defect o propone di aprire un Defect.

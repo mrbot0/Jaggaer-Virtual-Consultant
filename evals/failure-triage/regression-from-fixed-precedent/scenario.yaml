@@ -1,0 +1,90 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: regression-from-fixed-precedent
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1301
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica i fallimenti di RUN.ACME.20260929.1015.CAT (dossier in customers/ACME/runs/RUN.ACME.20260929.1015.CAT/).
+    inputs:
+      run: RUN.ACME.20260929.1015.CAT
+      subject: C.ACME.CAT.KEY.0004
+      lesson_code: L.ACME.CAT.LSN.1301
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0004
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Unicità codice articolo per fornitore
+      summary: Il codice articolo è unico per fornitore; un import con codice duplicato va rifiutato con messaggio di validazione.
+  precedents:
+    - code: L.ACME.CAT.DEC.0040
+      table: DT-001
+      agent: failure-triage
+      subject: C.ACME.CAT.KEY.0004
+      outcome: product-defect
+      result: confermata
+      strategy: STR-REPLAY
+      note: Defect ACME-1234 sull'unicità all'import, chiuso come fixed nella release 2026.08
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1015.CAT
+      release: "2026.09"
+      failures:
+        - case: NRT.ACME.CAT.NEG.0031
+          step: 4
+          verb: CHECK
+          expect: "import rifiutato con il messaggio di validazione del codice duplicato"
+          actual: "import accettato, due righe con lo stesso codice articolo per lo stesso fornitore"
+          subject: C.ACME.CAT.KEY.0004
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/delta.yaml: |
+      release: "2026.09"
+      changes:
+        - { area: import catalogo, change: "ottimizzazione del caricamento dei file grandi", scope: CAT }
+expect:
+  outcome: NRT.ACME.CAT.NEG.0031 classificato regression con il precedente ACME-1234 (fixed 2026.08), percorso defect-reporter, confidenza ≥ 0,60; STR-REPLAY.
+  status:
+    - ok
+  strategy: STR-REPLAY
+  strategy_inputs:
+    subject: C.ACME.CAT.KEY.0004
+    shape: consolidato
+    risk: R1
+    precedent: confermato-d<0.2
+    surprises: 0
+    mode: diag
+  question: forbidden
+  gap: il precedente confermato sullo stesso soggetto e il sintomo identico bastano a classificare
+  behaviour: |
+    PASS se il rapporto classifica NRT.ACME.CAT.NEG.0031 come regression citando il precedente (ACME-1234 o
+    L.ACME.CAT.DEC.0040, chiuso fixed nel 2026.08), con percorso verso il defect-reporter e un punteggio di DT-001.
+    FAIL se il rapporto lo classifica product-defect senza riconoscere la regressione, se inventa una categoria fuori
+    da DT-001 o se dichiara di aver aperto un Defect.

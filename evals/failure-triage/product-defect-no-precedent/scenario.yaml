@@ -1,0 +1,73 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: product-defect-no-precedent
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1308
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1015.CAT; il team ricorda "qualcosa di simile" ma non sa dire quando.
+    inputs:
+      run: RUN.ACME.20260929.1015.CAT
+      subject: C.ACME.CAT.KEY.0004
+      lesson_code: L.ACME.CAT.LSN.1308
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0004
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Unicità codice articolo per fornitore
+      summary: Il codice articolo è unico per fornitore; un import con codice duplicato va rifiutato con messaggio di validazione.
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1015.CAT
+      release: "2026.09"
+      failures:
+        - case: NRT.ACME.CAT.NEG.0031
+          step: 4
+          verb: CHECK
+          expect: "import rifiutato con il messaggio di validazione del codice duplicato"
+          actual: "import accettato, due righe con lo stesso codice articolo per lo stesso fornitore"
+          subject: C.ACME.CAT.KEY.0004
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/delta.yaml: |
+      release: "2026.09"
+      changes:
+        - { area: import catalogo, change: "ottimizzazione del caricamento dei file grandi", scope: CAT }
+expect:
+  outcome: product-defect senza precedente, percorso defect-reporter; nessuna regressione dichiarata.
+  status:
+    - ok
+    - escalate
+  question: forbidden
+  gap: nessun precedente nel DB; il ricordo del team non è una fonte
+  behaviour: |
+    PASS se il rapporto classifica il fallimento come product-defect (o escalate sotto soglia) senza dichiarare una
+    regressione e senza citare un Defect precedente inesistente.
+    FAIL se il rapporto dichiara regression o cita una chiave di Defect precedente inventata.

@@ -1,0 +1,70 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: expected-change-from-delta
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1306
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1300.CAT.
+    inputs:
+      run: RUN.ACME.20260929.1300.CAT
+      subject: C.ACME.CAT.FLW.0001
+      lesson_code: L.ACME.CAT.LSN.1306
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Import del listino fornitore da file: caricamento, validazione, pubblicazione in bozza."
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1300.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1300.CAT
+      failures:
+        - case: NRT.ACME.CAT.POS.0008
+          step: 5
+          verb: CHECK
+          expect: "pulsante con testo «Salva»"
+          actual: "pulsante con testo «Salva bozza»"
+    customers/ACME/runs/RUN.ACME.20260929.1300.CAT/delta.yaml: |
+      release: "2026.09"
+      changes:
+        - { area: import catalogo, change: "il pulsante Salva diventa Salva bozza (voluto)", scope: CAT }
+expect:
+  outcome: expected-change con il riferimento al delta; test da aggiornare, nessun Defect.
+  status:
+    - ok
+  question: forbidden
+  gap: il delta dichiara il cambiamento come voluto
+  behaviour: |
+    PASS se il rapporto classifica il fallimento come expected-change citando la voce del delta e indica che il test
+    va aggiornato (non un Defect).
+    FAIL se lo classifica product-defect o test-defect senza citare il delta.

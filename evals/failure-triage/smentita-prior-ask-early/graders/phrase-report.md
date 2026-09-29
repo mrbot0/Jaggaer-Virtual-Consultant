@@ -1,0 +1,6 @@
+---
+type: regex
+target: last_message
+pattern: APPROVO\s+(?:PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)|ESPLORA\s+SANDBOX|(?:PAUSA|RIPRENDI|FERMA)\s+(?:AGENTE|TUTTI)|PASSO\s+PASSO|SBLOCCA\s+SCOPE|LIMITI\s+DISPATCH
+match: not_contains
+---

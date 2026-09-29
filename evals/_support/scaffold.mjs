@@ -18,6 +18,9 @@ import { openDb } from "../../scripts/kb/db.mjs";
 import { itemFile, CODE_RE } from "../../scripts/lib/kb-items.mjs";
 import { upsertClusters, DEFAULT_CLUSTERS_DIR } from "../../scripts/kb/reindex.mjs";
 import { newSession } from "../../scripts/admin/session.mjs";
+import { ensureLimit, recordRun } from "../../scripts/analytics/query-guard.mjs";
+import { writeAnalysisItem, facetsFor } from "../../scripts/analysis/common.mjs";
+import { hashObjects } from "../../scripts/config/baseline.mjs";
 
 export const PLUGIN_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const FICTIONAL_CUSTOMERS = ["ACME", "BETA"];
@@ -162,7 +165,36 @@ export function buildWorkspace(ws, scenario) {
     if (s.hypotheses) writeRel(ws, `customers/ACME/.sessions/${s.sid}/hypotheses.yaml`, { hypotheses: s.hypotheses });
   }
   for (const [rel, content] of Object.entries(W.files ?? {})) writeRel(ws, rel, content);
+  buildBlockC(ws, W);
   return ws;
+}
+
+// Blocco C (analytics-learner, config-auditor): esecuzioni di query già registrate (query_runs, come le scrive
+// `query-guard record`), regole RUL del dominio analitico (codice assegnato dal DB con writeAnalysisItem: nessun codice
+// analitico nei file di evals/) e baseline di configurazione con l'impronta (come le scrive `config baseline`).
+//   query_runs: [{ sql, coherence, tables_knowledge, rows?, limit?: false = eseguita senza LIMIT, session? }]
+//   rules:      [{ scope, title, summary, rule: { applies_to, when?, assert, severity, message } }]  (livello C, ACME)
+//   baselines:  [{ env, captured_at, objects: { <CFG>: { area?, values } }, file? }]
+function buildBlockC(ws, W) {
+  if (W.query_runs?.length) {
+    const db = openDb(join(ws, "customers", "ACME", "knowledge.db"));
+    try {
+      for (const [i, q] of W.query_runs.entries()) {
+        const sql = q.limit === false ? q.sql : ensureLimit(q.sql).sql;
+        recordRun(db, { sql, rowCount: q.rows ?? null, coherence: q.coherence, tablesKnowledge: q.tables_knowledge ?? "ignote", tables: q.tables ?? [],
+          customer: "ACME", session: q.session ?? "SES.ACME.20260928.001", at: new Date(Date.parse("2026-09-28T10:00:00Z") + i * 60000) });
+      }
+    } finally { db.close(); }
+  }
+  for (const r of W.rules ?? []) {
+    writeAnalysisItem(ws, { customer: "ACME", scope: r.scope, type: "RUL" }, (code) => ({ id: code, type: "RUL", title: r.title, summary: r.summary,
+      facets: facetsFor("RUL", { date: "2026-09-20" }), sources: [{ note: r.source ?? "politica del cliente (sintetica)" }], rule: r.rule }));
+  }
+  for (const b of W.baselines ?? []) {
+    const doc = { customer: "ACME", env: b.env, captured_at: b.captured_at, sources: b.sources ?? { cfg: 0, obs: 0, input: Object.keys(b.objects).length },
+      objects: b.objects, hash: hashObjects(b.objects) };
+    writeRel(ws, `customers/ACME/config-baselines/${b.env}/${b.file ?? `${b.captured_at.slice(0, 10)}.yaml`}`, YAML.stringify(doc));
+  }
 }
 
 // scaffold.sh → node scaffold.mjs <scenario.yaml> (cartella corrente = workspace vuoto della run)

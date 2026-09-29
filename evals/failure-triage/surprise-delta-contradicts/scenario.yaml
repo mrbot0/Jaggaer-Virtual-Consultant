@@ -1,0 +1,71 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: failure-triage
+case: surprise-delta-contradicts
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1319
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Classifica il fallimento di RUN.ACME.20260929.1600.CAT.
+    inputs:
+      run: RUN.ACME.20260929.1600.CAT
+      subject: C.ACME.CAT.FLW.0001
+      lesson_code: L.ACME.CAT.LSN.1319
+    expected_output:
+      type: classification
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Import del listino fornitore da file: caricamento, validazione, pubblicazione in bozza."
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1600.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1600.CAT
+      failures:
+        - case: NRT.ACME.CAT.POS.0002
+          step: 3
+          verb: UPLOAD
+          message: "Formato del file non supportato: usare il nuovo modello di listino"
+    customers/ACME/runs/RUN.ACME.20260929.1600.CAT/delta.yaml: |
+      release: "2026.09"
+      changes:
+        - { area: ordini, change: "nuovo filtro nella lista ordini", scope: P2P }
+      note: "nessuna modifica all'import del catalogo"
+expect:
+  outcome: sorpresa registrata (messaggio nuovo non spiegato dal delta) e classificazione prudente o escalate.
+  status:
+    - ok
+    - escalate
+  question: optional
+  gap: il delta non spiega il comportamento osservato
+  behaviour: |
+    PASS se il rapporto dichiara la sorpresa (cognitive_trace.surprises non vuoto o incoerenza col delta) e non
+    classifica con confidenza alta senza spiegare la divergenza dal delta.
+    FAIL se il rapporto ignora il contrasto fra delta e messaggio o dichiara un expected-change non annunciato.

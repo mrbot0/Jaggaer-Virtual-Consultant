@@ -82,6 +82,21 @@ export function allowedPaths(role, { customer: C = "ACME", scope: S }) {
     case "lesson-validator":
       return [`customers/${C}/lessons/**`, `customers/${C}/decisions/**`, `customers/${C}/outcomes/**`, `customers/${C}/observations/**`,
         `customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`, sidPaths(C)];
+    // blocco C: i cinque trasversali di esecuzione e di dati (§44.2)
+    case "analytics-learner":
+      // kb di Analytics (TBL, QRY, DIN), le esportazioni aggregate e le bozze in _inbox/ANL; mai altri scope o analysis/
+      return [`customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`, `customers/${C}/_inbox/${S}/**`, `customers/${C}/lessons/**`, sidPaths(C)];
+    case "test-mechanic":
+      // casi e proposte dello scope (tests/**/<S>/**), dossier dei run, SEL e FLW dello scope, bozze di SEL in _inbox
+      return [`customers/${C}/tests/**/${S}/**`, `customers/${C}/runs/**`, `customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`,
+        `customers/${C}/_inbox/${S}/digested/**`, `customers/${C}/lessons/**`, sidPaths(C)];
+    case "failure-triage":
+    case "defect-reporter":
+      // T0 solo Read: dossier del run, kb dello scope e, come contesto, i PBK dello scope in analysis/ (ruolo analitico)
+      return [`customers/${C}/runs/**`, `customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`, `customers/${C}/analysis/**`, sidPaths(C)];
+    case "config-auditor":
+      // T0 solo Read: kb dello scope e baseline di configurazione; le RUL le legge lo script di lint, non l'agente
+      return [`customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`, `customers/${C}/config-baselines/**`, sidPaths(C)];
     default:
       throw new Error(`ruolo senza allowed_paths nel generatore: ${role}`);
   }
@@ -107,7 +122,7 @@ export function caseSpec(cat, c, index) {
   return {
     role: cat.role, id: c.id, name: `${cat.role}--${c.id}`, description: c.description.trim(), tags: [cat.role, ...(c.tags ?? [])],
     model: c.model ?? d.model, session, header, workspace: flatItems(c.workspace), expect: c.expect ?? {}, grant: !!(c.cross_read ?? d.cross_read),
-    extra_setup: c.extra_setup ?? [], mocks: c.mocks ?? null,
+    extra_setup: c.extra_setup ?? [], mocks: c.mocks ?? null, alm_mocks: c.alm_mocks ?? null,
   };
 }
 
@@ -188,10 +203,11 @@ export function graders(spec) {
   if (e.status?.length) g.status = fm({ type: "regex", target: "last_message", pattern: String.raw`(^|\n)status:\s*(?:` + e.status.join("|") + String.raw`)\b` });
   if (e.strategy) g.strategy = fm({ type: "regex", target: "last_message", pattern: String.raw`strategy:\s*` + e.strategy + String.raw`\b` });
   if (e.behaviour) g.behaviour = fm({ type: "llm", focus: "last_message" }, e.behaviour);
-  for (const tool of e.browser?.forbid ?? []) {
+  // browser (chrome-devtools) e, dal blocco C, ALM (server alm simulato): stessi grader sulle chiamate registrate
+  for (const tool of [...(e.browser?.forbid ?? []), ...(e.alm?.forbid ?? [])]) {
     g[`no-${tool.replaceAll("_", "-")}`] = fm({ type: "regex", target: "mock_calls", pattern: mockToolRegex(tool), match: "not_contains", arm: "both" });
   }
-  for (const tool of e.browser?.require ?? []) {
+  for (const tool of [...(e.browser?.require ?? []), ...(e.alm?.require ?? [])]) {
     g[`uses-${tool.replaceAll("_", "-")}`] = fm({ type: "regex", target: "mock_calls", pattern: mockToolRegex(tool), arm: "both" });
   }
   for (const [i, x] of (e.extra_graders ?? []).entries()) g[x.name ?? `extra-${i + 1}`] = fm(x.frontmatter, x.body ?? "");
@@ -207,6 +223,12 @@ export function caseMocks(spec) {
     else out[tool] = fm({ type: "fixed", ...(v.error ? { error: true } : {}) }, v.body);
   }
   return out;
+}
+
+// Blocco C (defect-reporter): risposte di caso del server alm simulato (mocks/alm/<tool>.md), che prevalgono su quelle
+// della suite (evals/mocks/alm/). Mai un Jira reale: il server del plugin in modalità mock o queste risposte fisse.
+export function caseAlmMocks(spec) {
+  return Object.fromEntries(Object.entries(spec.alm_mocks ?? {}).map(([tool, v]) => [tool, fm({ type: "fixed", ...(v.error ? { error: true } : {}) }, v.body)]));
 }
 
 export function scenarioOf(spec) {
@@ -228,6 +250,11 @@ export function writeCase(spec) {
   if (Object.keys(mocks).length) {
     mkdirSync(join(dir, "mocks", "chrome-devtools"), { recursive: true });
     for (const [tool, text] of Object.entries(mocks)) writeFileSync(join(dir, "mocks", "chrome-devtools", `${tool}.md`), text);
+  }
+  const alm = caseAlmMocks(spec);
+  if (Object.keys(alm).length) {
+    mkdirSync(join(dir, "mocks", "alm"), { recursive: true });
+    for (const [tool, text] of Object.entries(alm)) writeFileSync(join(dir, "mocks", "alm", `${tool}.md`), text);
   }
   return dir;
 }
