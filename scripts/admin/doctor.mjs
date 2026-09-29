@@ -280,10 +280,37 @@ export function checkAudit(ws, custs, now = new Date()) {
     : C("audit", "green", files.length ? `catena di ${ym} valida (${files.length} file, ${lines} eventi)` : `nessun evento di audit in ${ym}`);
 }
 
+// WP09c: NETWORK.md (§53.2) — tabella "categoria | host | quando | dichiarato in"; host fra backtick, "none" per nessuno.
+// → { ok, categories: { <id>: { hosts[], none } }, error? }. Solo le righe della tabella contano (mai il testo libero).
+export const NETWORK_CATEGORIES = ["jaggaer", "alm", "npm", "claude", "telemetry"];
+export function parseNetworkMd(plugin) {
+  let text;
+  try { text = readFileSync(join(plugin, "NETWORK.md"), "utf8"); } catch { return { ok: false, categories: {}, error: "NETWORK.md assente nel pacchetto" }; }
+  const categories = {};
+  for (const line of text.split(/\r?\n/)) {
+    const cells = /^\s*\|(.+)\|\s*$/.exec(line)?.[1].split("|").map((c) => c.trim());
+    if (!cells || cells.length < 2 || !/^[a-z][a-z0-9-]*$/.test(cells[0]) || cells[0] === "categoria") continue;
+    const hosts = [...cells[1].matchAll(/`(\*?\.?[a-z0-9-]+(?:\.[a-z0-9-]+)+)`/gi)].map((m) => m[1].toLowerCase());
+    categories[cells[0]] = { hosts, none: /^none$/i.test(cells[1]) };
+  }
+  return Object.keys(categories).length ? { ok: true, categories } : { ok: false, categories, error: "NETWORK.md senza la tabella delle categorie" };
+}
+
+export function checkNetworkCategories(plugin) {
+  const n = parseNetworkMd(plugin);
+  if (!n.ok) return C("network-categories", "red", n.error, "reinstallare il plugin dalla release (NETWORK.md è sotto integrità)");
+  const missing = NETWORK_CATEGORIES.filter((c) => !n.categories[c]);
+  const telemetry = n.categories.telemetry;
+  const problems = [missing.length ? `categorie mancanti: ${missing.join(", ")}` : null, telemetry && (!telemetry.none || telemetry.hosts.length) ? "telemetry deve essere none (§53.2)" : null,
+    Object.keys(n.categories).filter((c) => !NETWORK_CATEGORIES.includes(c)).map((c) => `categoria non prevista: ${c}`).join(", ") || null].filter(Boolean);
+  if (problems.length) return C("network-categories", "red", `NETWORK.md: ${problems.join("; ")}`, "reinstallare il plugin dalla release (NETWORK.md è sotto integrità)");
+  return C("network-categories", "green", `NETWORK.md: ${NETWORK_CATEGORIES.map((c) => `${c} (${n.categories[c].none ? "nessun host" : n.categories[c].hosts.join(", ") || "dichiarati dal cliente"})`).join(" · ")}`);
+}
+
 function networkAllowList(plugin, envDocs) {
   const list = new Set(DEFAULT_ALLOW);
   for (const d of Object.values(envDocs)) for (const e of d.doc?.environments ?? []) { for (const h of e.allowed_hosts ?? []) list.add(String(h).toLowerCase().replace(/:\d+$/, "")); const b = hostOf(e.base_url); if (b) list.add(b); }
-  try { for (const m of readFileSync(join(plugin, "NETWORK.md"), "utf8").matchAll(/`(\*?\.?[a-z0-9-]+(?:\.[a-z0-9-]+)+)`/gi)) list.add(m[1].toLowerCase()); } catch { /* NETWORK.md assente (WP09c) */ }
+  for (const c of Object.values(parseNetworkMd(plugin).categories)) for (const h of c.hosts) list.add(h);
   return [...list];
 }
 const allowed = (host, list) => list.some((p) => (p.startsWith("*.") ? host.endsWith(p.slice(1)) : host === p));
@@ -309,6 +336,7 @@ export async function checkNetwork(plugin, envDocs, xrays, { resolver }) {
   out.push(outside.length
     ? C("network-allowlist", "red", `host configurati fuori allow-list: ${outside.map((x) => `${x.c}: ${x.host}`).join(", ")}`, "il plugin parla solo con gli host dichiarati e quelli di NETWORK.md (§53.2): correggere la configurazione")
     : C("network-allowlist", "green", `host configurati tutti in allow-list (${configured.length})`));
+  out.push(checkNetworkCategories(plugin));
   return out;
 }
 
@@ -370,7 +398,8 @@ integrity, db:<C>, environments:<C>, credentials (solo i nomi delle variabili NR
 browser (non sondabile: giallo, da verificare in sessione), alm:<C> (coda offline o Jira raggiungibile),
 compensations (pendenze di sessioni precedenti), prod_allowed_red, hardening (checklist §54.7: voci automatiche e
 manuali), audit (catena del mese corrente). --network: DNS degli host dichiarati (offline ⇒ saltato) e host
-configurati fuori allow-list (environments.yaml, NETWORK.md).
+configurati fuori allow-list (environments.yaml, NETWORK.md); network-categories: le categorie di NETWORK.md
+(jaggaer, alm, npm, claude, telemetry = none).
 
 Exit code: 0 nessun rosso · 1 argomenti non validi · 2 errore di sistema · 3 almeno un controllo rosso.`;
 

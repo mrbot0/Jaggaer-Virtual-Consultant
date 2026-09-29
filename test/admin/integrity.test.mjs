@@ -25,7 +25,7 @@ const hook = (plugin, name, input, env = {}) => {
 };
 const pre = (ws, tool, tool_input) => ({ session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input });
 
-test("build: sha256 di hooks/ scripts/ decision-tables/ strategies/ policy/ schemas/ + .mcp.json e plugin.json, ordinati, a capo LF; verify ok", () => {
+test("build: sha256 di hooks/ scripts/ decision-tables/ strategies/ policy/ schemas/ mcp/ + .mcp.json, plugin.json e NETWORK.md, ordinati, a capo LF; verify ok", () => {
   const p = copyPlugin();
   const b = cli(p, ["build", "--json"]);
   assert.equal(b.status, 0, b.stderr + b.stdout);
@@ -35,7 +35,8 @@ test("build: sha256 di hooks/ scripts/ decision-tables/ strategies/ policy/ sche
   assert.ok(!Number.isNaN(Date.parse(m.generated_at)));
   const files = Object.keys(m.files);
   assert.deepEqual(files, [...files].sort());
-  for (const f of ["hooks/hooks.json", "hooks/lib/io.mjs", "scripts/admin/integrity.mjs", "policy/deny-rules.yaml", "schemas/session.schema.json", ".mcp.json", ".claude-plugin/plugin.json"]) assert.ok(files.includes(f), f);
+  for (const f of ["hooks/hooks.json", "hooks/lib/io.mjs", "scripts/admin/integrity.mjs", "policy/deny-rules.yaml", "schemas/session.schema.json", ".mcp.json", ".claude-plugin/plugin.json",
+    "mcp/alm-server/server.mjs", "mcp/alm-server/adapter.mjs", "mcp/alm-server/xray-cloud.mjs", "mcp/alm-server/xray-server.mjs", "mcp/alm-server/mock.mjs", "mcp/alm-server/queue.mjs", "NETWORK.md"]) assert.ok(files.includes(f), f);
   assert.ok(files.some((f) => f.startsWith("decision-tables/")) && files.some((f) => f.startsWith("strategies/")));
   assert.ok(!files.some((f) => f.includes("node_modules") || f === "integrity.json" || f.startsWith("templates/")));
   for (const h of Object.values(m.files)) assert.match(h, /^[0-9a-f]{64}$/);

@@ -7,7 +7,8 @@ import { createHash, createPublicKey, createPrivateKey, sign, verify as cryptoVe
 import { join } from "node:path";
 
 export const SCOPE_DIRS = ["hooks", "scripts", "decision-tables", "strategies", "policy", "schemas", "mcp"];
-export const SCOPE_FILES = [".mcp.json", ".claude-plugin/plugin.json"];
+// WP09c: NETWORK.md sotto integrità (doctor --network ne legge le categorie e gli host dell'allow-list)
+export const SCOPE_FILES = [".mcp.json", ".claude-plugin/plugin.json", "NETWORK.md"];
 export const MANIFEST = "integrity.json";
 export const SIGNATURE = "integrity.json.sig";
 export const PUBLIC_KEY = ".claude-plugin/signing-key.pem";
