@@ -28,6 +28,7 @@ import { refusedIssueType, strictText, ISSUE_KEY } from "../../mcp/alm-server/ad
 import { contentTypeOf } from "../../mcp/alm-server/payload.mjs";
 import { withQueue } from "../../mcp/alm-server/queue.mjs";
 import { XrayError, xrayContext, recordCreated, audit, failWith, kv } from "./common.mjs";
+import { loadTemplate, fillParagraphs } from "../lib/templates.mjs";
 
 export const DEFECT_CLASSES = ["product-defect", "regression", "config-drift", "baseline-change"];
 const NOT_DEFECT = { "environment": "un errore d'ambiente (ERROR-ENVIRONMENT) non è mai un Defect (§29.9): retry, poi blocked", "test-defect": "un difetto del test si ripara (test-mechanic, PR di healing), non è un Defect del prodotto (§30.4)", "expected-change": "un cambiamento atteso aggiorna il test, non apre un Defect (§30.1)" };
@@ -59,6 +60,19 @@ function boundary(text) {
 function minimalSteps(plan, step) {
   const steps = (plan?.steps ?? []).filter((s) => Number.isInteger(s.n) && (!step || s.n <= step));
   return steps.slice(-MAX_STEPS).map((s) => `${s.n}. ${[s.verb, s.note ?? s.target ?? "", s.data != null && !/^\{\{.*\}\}$/.test(String(s.data)) ? `«${s.data}»` : ""].filter(Boolean).join(" ")}`);
+}
+
+// Descrizione del Defect dalle sue parti (una per paragrafo, null = assente). WP10a: templates/defect.md (§31.2) se
+// presente e con {{header_line}} e {{dossier_line}} (ordine e testo fisso dei paragrafi; un paragrafo vuoto sparisce);
+// altrimenti dal codice, stesso testo. template: undefined = il file di templates/, null = dal codice, stringa = quel
+// template (test). Il chiamante applica poi la redazione strict e il controllo di confine.
+export const DEFECT_TEMPLATE = "defect.md";
+export const DEFECT_PARTS = ["header_line", "expected_line", "observed_line", "steps_block", "doc_line", "precedent_line", "evidence_line", "dossier_line"];
+export function defectDescription(parts, { template } = {}) {
+  const tpl = template === undefined ? loadTemplate(DEFECT_TEMPLATE) : template;
+  const fromTpl = tpl == null ? null : fillParagraphs(tpl, parts, { required: ["header_line", "dossier_line"] });
+  if (fromTpl != null) return fromTpl;
+  return DEFECT_PARTS.map((k) => parts[k]).filter(Boolean).join("\n\n");
 }
 
 export async function buildDefect(ws, { customer, config, finding }) {
@@ -96,17 +110,18 @@ export async function buildDefect(ws, { customer, config, finding }) {
   const attachments = chosen.map((e) => ({ file: e.file, filename: `${e.id}${extname(e.file)}`, contentType: contentTypeOf(e.file) }));
   const docRef = finding.doc ? (typeof finding.doc === "string" ? finding.doc : `${finding.doc.doc}${finding.doc.section ? ` §${finding.doc.section}` : ""}`) : null;
   if (!docRef) warnings.push("finding senza riferimento documentale (§30.4)");
-  const lines = [
-    `Caso: ${caseId} · Run: ${run}${step ? ` · Passo: ${step}` : ""}${cls ? ` · Classe: ${cls}` : ""}`,
-    finding.expected ? `Atteso: ${finding.expected}` : null,
-    finding.observed ? `Osservato: ${finding.observed}` : null,
-    plan ? `Passi per riprodurre (minimi):\n${minimalSteps(plan, step).join("\n")}` : null,
-    docRef ? `Riferimento documentale: ${docRef}` : null,
-    prec ? `Precedente: ${prec.key}${prec.status ? ` (${prec.status}${prec.fixed_in ? `, fixed in ${prec.fixed_in}` : ""})` : ""}${fixed ? " — regressione" : ""}` : null,
-    attachments.length ? `Evidenze (profilo strict): ${attachments.map((a) => a.filename).join(", ")}` : "Evidenze: nessuna pubblicabile con profilo strict (restano nel dossier)",
-    `Dossier: customers/${customer}/runs/${run}/cases/${caseId}/`,
-  ].filter(Boolean);
-  const description = strictText(lines.join("\n\n"));
+  const parts = {
+    header_line: `Caso: ${caseId} · Run: ${run}${step ? ` · Passo: ${step}` : ""}${cls ? ` · Classe: ${cls}` : ""}`,
+    expected_line: finding.expected ? `Atteso: ${finding.expected}` : null,
+    observed_line: finding.observed ? `Osservato: ${finding.observed}` : null,
+    steps_block: plan ? `Passi per riprodurre (minimi):\n${minimalSteps(plan, step).join("\n")}` : null,
+    doc_line: docRef ? `Riferimento documentale: ${docRef}` : null,
+    precedent_line: prec ? `Precedente: ${prec.key}${prec.status ? ` (${prec.status}${prec.fixed_in ? `, fixed in ${prec.fixed_in}` : ""})` : ""}${fixed ? " — regressione" : ""}` : null,
+    evidence_line: attachments.length ? `Evidenze (profilo strict): ${attachments.map((a) => a.filename).join(", ")}` : "Evidenze: nessuna pubblicabile con profilo strict (restano nel dossier)",
+    dossier_line: `Dossier: customers/${customer}/runs/${run}/cases/${caseId}/`,
+  };
+  // la redazione strict e il controllo di confine valgono sul testo finale, anche da template
+  const description = strictText(defectDescription(parts));
   const hit = boundary(`${title}\n${description}`);
   if (hit) throw new XrayError(3, `confine di dominio: il Defect non cita il dominio analitico (§1.1): "${hit}"`);
   const id = String(finding.id ?? `${caseId}.${step ?? "x"}`).replace(/[^A-Za-z0-9._-]/g, "_");

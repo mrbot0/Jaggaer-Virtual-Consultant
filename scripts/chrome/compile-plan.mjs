@@ -17,6 +17,7 @@ import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { selFile } from "./atlas.mjs";
 import { locatorExpr } from "../compile/generate-atlas-po.mjs";
 import { runResults } from "../lib/run-results.mjs";
+import { loadTemplate, fillTemplate } from "../lib/templates.mjs";
 
 export const MIN_GREEN = 3;
 const GREEN = new Set(["green", "pass", "passed", "success"]);
@@ -90,7 +91,10 @@ function expectLines(ws, customer, step, target, opts) {
   return L;
 }
 
-export function generateSpec(ws, customer, plan, { allowFragile = false, atlas = null } = {}) {
+// WP10a: templates/playwright-spec.ts.tpl (§31.2) se presente e con {{hash}} e {{body}}; altrimenti lo stesso testo dal
+// codice. template: undefined = il file di templates/, null = dal codice, stringa = quel template (test).
+export const SPEC_TEMPLATE = "playwright-spec.ts.tpl";
+export function generateSpec(ws, customer, plan, { allowFragile = false, atlas = null, template } = {}) {
   const hash = planHash(plan);
   const body = [];
   for (const s of [...(plan.steps ?? [])].sort((a, b) => a.n - b.n)) {
@@ -114,6 +118,10 @@ export function generateSpec(ws, customer, plan, { allowFragile = false, atlas =
     body.push(`  ${act()}`);
     for (const l of expectLines(ws, customer, s, target, { allowFragile, atlas })) body.push(`  ${l}`);
   }
+  const tpl = template === undefined ? loadTemplate(SPEC_TEMPLATE) : template;
+  const title = `${oneLine(plan.plan_id)} — ${oneLine(plan.goal)}`;
+  const fromTpl = tpl == null ? null : fillTemplate(tpl, { hash, plan_id: oneLine(plan.plan_id), goal: oneLine(plan.goal), test_title: q(title), body: body.join("\n") }, { required: ["hash", "body"] });
+  if (fromTpl != null) return { hash, text: fromTpl };
   const text = [
     `// plan-hash: ${hash}`,
     `// ${oneLine(plan.plan_id)} — ${oneLine(plan.goal)}`,

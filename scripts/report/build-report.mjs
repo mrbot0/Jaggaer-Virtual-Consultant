@@ -23,7 +23,20 @@ const ymd = (d) => d.toISOString().slice(0, 10).replace(/-/g, "");
 const thousands = (n) => String(Math.round(n ?? 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const hhmm = (ts) => (typeof ts === "string" ? ts.slice(11, 16) : "--:--");
 
-function fill(tpl, values) {
+// WP10a: il template del report è templates/report-<kind>.md (§31.2) se presente; altrimenti lo stesso testo dal codice.
+// template: undefined = il file di templates/, null = il testo di riserva del codice, stringa = quel template (test).
+const REPORT_FALLBACK = Object.freeze({
+  action: "{{id}} — {{title}}\nAmbiente   {{env_line}}\nIntento    {{intent}}\nPiano      {{plan_line}}\nApprovazioni  {{approvals_line}}\nEsecuzione\n{{execution_lines}}\nSorprese   {{surprises}} · Novità: {{novelties}} · Errori: {{errors_line}}\nEsito      {{outcome}} (§29.9) — {{outcome_reason}}\nEntità     {{entities_line}}\nBudget     {{budget_line}}\nLezione    {{lesson}}\nProssimi   {{next_line}}\nEvidenze   {{evidence_line}}\n",
+  test: "{{id}} (test) — {{title}} — {{run}} — release {{release}}\nVerdetto   {{verdict_line}}\nEsiti      {{results_line}}\nFallimenti\n{{failures_lines}}\nErrori della piattaforma  {{errors_line}}\nEsito      {{outcome}} (§29.9) — {{outcome_reason}} · Xray {{xray}}\nCopertura  {{coverage_line}}\nEvidenze   {{evidence_line}}\nBudget     {{budget_line}}\nLezioni    {{lesson}}\n",
+});
+export function reportTemplate(kind, { template } = {}) {
+  if (typeof template === "string") return template;
+  const k = kind === "action" ? "action" : "test";
+  if (template === undefined) { try { return readFileSync(new URL(`report-${k}.md`, TEMPLATES), "utf8"); } catch (err) { if (err.code !== "ENOENT") throw err; } }
+  return REPORT_FALLBACK[k];
+}
+
+export function fill(tpl, values) {
   const body = tpl.replace(/^<!--[\s\S]*?-->\s*/, "");
   return body.replace(/\{\{(\w+)\}\}/g, (_, k) => (values[k] == null || values[k] === "" ? "—" : String(values[k])));
 }
@@ -125,7 +138,7 @@ export async function buildReport(opts) {
         failures_lines: doc.failures?.length ? doc.failures.map((f) => `  ${f.case}  passo ${f.step ?? "—"}  ${f.class}${f.defect ? " → Defect proposto" : ""}`).join("\n") : "  nessuno",
         xray: doc.xray?.status, coverage_line: null,
       };
-      const md = fill(readFileSync(new URL(kind === "action" ? "report-action.md" : "report-test.md", TEMPLATES), "utf8"), values);
+      const md = fill(reportTemplate(kind), values);
       writeFileAtomic(join(dir, `${c}.yaml`), yaml);
       writeFileAtomic(join(dir, `${c}.md`), md);
       db.prepare(`insert into reports(code,kind,customer,session,scope,plan,run,outcome,xray,completion,learning_event,path,hash,created_at) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)

@@ -18,10 +18,39 @@ import { isMain } from "../lib/is-main.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { selectEvidence, EvidenceError } from "./select.mjs";
 import { workspaceCustomer } from "../run/fixtures.mjs";
+import { loadTemplate, fillTemplate } from "../lib/templates.mjs";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const safe = (s) => String(s ?? "").replace(/[^A-Za-z0-9._-]/g, "_").slice(0, 80) || "x";
 const RELEASE_RE = /^[A-Za-z0-9._-]{1,40}$/;
+
+// Il foglio HTML. WP10a: templates/contact-sheet.html (§31.2) se presente e con {{sections}}; altrimenti lo stesso testo
+// dal codice. Ogni valore passa dall'escape HTML prima del template. template: undefined = il file di templates/, null =
+// dal codice, stringa = quel template (test).
+export const SHEET_TEMPLATE = "contact-sheet.html";
+export function renderContactSheet({ release, customer, runs, tree }, { template } = {}) {
+  const S = [];
+  for (const scope of Object.keys(tree).sort()) {
+    S.push(`<h2>Scope ${esc(scope)}</h2>`);
+    for (const caseId of Object.keys(tree[scope]).sort()) {
+      S.push(`<h3>${esc(caseId)}</h3>`);
+      const items = tree[scope][caseId];
+      if (!items.length) { S.push("<p>(nessuna evidenza pubblicabile)</p>"); continue; }
+      for (const it of items.sort((a, b) => (a.step ?? 0) - (b.step ?? 0))) {
+        S.push(`<figure class="k-${esc(it.kind)}"><a href="${esc(it.href)}"><img src="${esc(it.href)}" alt="${esc(`${it.kind} passo ${it.step ?? "?"}`)}"></a><figcaption>passo ${esc(it.step ?? "?")} · ${esc(it.kind)} · ${esc(it.run)}<br>${esc(it.caption)}</figcaption></figure>`);
+      }
+    }
+  }
+  const tpl = template === undefined ? loadTemplate(SHEET_TEMPLATE) : template;
+  const fromTpl = tpl == null ? null : fillTemplate(tpl, { release: esc(release), customer: esc(customer), runs: runs.map(esc).join(", "), sections: S.join("\n") }, { required: ["sections"] });
+  if (fromTpl != null) return fromTpl;
+  const L = ["<!doctype html>", '<html lang="it"><head><meta charset="utf-8">', `<title>Evidenze ${esc(release)} — ${esc(customer)}</title>`,
+    "<style>body{font-family:sans-serif;margin:1.5rem}h2{border-bottom:1px solid #ccc}figure{display:inline-block;margin:.5rem;width:260px;vertical-align:top}img{max-width:100%;border:1px solid #999}figcaption{font-size:.8rem}.k-failure{outline:3px solid #c00}</style>",
+    "</head><body>", `<h1>Evidenze — release ${esc(release)} · ${esc(customer)}</h1>`, `<p>Run: ${runs.map(esc).join(", ")}. Solo evidenze pubblicabili (mascherate); gli originali restano nel dossier del run.</p>`];
+  L.push(...S);
+  L.push("</body></html>", "");
+  return L.join("\n");
+}
 
 export function buildDesk(ws, { customer, release, runs, desk = null }) {
   if (!RELEASE_RE.test(String(release ?? ""))) throw new EvidenceError(1, `release non valida: ${release}`);
@@ -45,24 +74,9 @@ export function buildDesk(ws, { customer, release, runs, desk = null }) {
       }
     }
   }
-  const L = ["<!doctype html>", '<html lang="it"><head><meta charset="utf-8">', `<title>Evidenze ${esc(release)} — ${esc(customer)}</title>`,
-    "<style>body{font-family:sans-serif;margin:1.5rem}h2{border-bottom:1px solid #ccc}figure{display:inline-block;margin:.5rem;width:260px;vertical-align:top}img{max-width:100%;border:1px solid #999}figcaption{font-size:.8rem}.k-failure{outline:3px solid #c00}</style>",
-    "</head><body>", `<h1>Evidenze — release ${esc(release)} · ${esc(customer)}</h1>`, `<p>Run: ${runs.map(esc).join(", ")}. Solo evidenze pubblicabili (mascherate); gli originali restano nel dossier del run.</p>`];
-  for (const scope of Object.keys(tree).sort()) {
-    L.push(`<h2>Scope ${esc(scope)}</h2>`);
-    for (const caseId of Object.keys(tree[scope]).sort()) {
-      L.push(`<h3>${esc(caseId)}</h3>`);
-      const items = tree[scope][caseId];
-      if (!items.length) { L.push("<p>(nessuna evidenza pubblicabile)</p>"); continue; }
-      for (const it of items.sort((a, b) => (a.step ?? 0) - (b.step ?? 0))) {
-        L.push(`<figure class="k-${esc(it.kind)}"><a href="${esc(it.href)}"><img src="${esc(it.href)}" alt="${esc(`${it.kind} passo ${it.step ?? "?"}`)}"></a><figcaption>passo ${esc(it.step ?? "?")} · ${esc(it.kind)} · ${esc(it.run)}<br>${esc(it.caption)}</figcaption></figure>`);
-      }
-    }
-  }
-  L.push("</body></html>", "");
   const index = join(relDir, "index.html");
   mkdirSync(relDir, { recursive: true });
-  writeFileAtomic(index, L.join("\n"));
+  writeFileAtomic(index, renderContactSheet({ release, customer, runs, tree }));
   writeFileAtomic(join(relDir, "index.yaml"), YAML.stringify({ release, customer, runs, tree }));
   return { index, cases: Object.values(tree).reduce((a, s) => a + Object.keys(s).length, 0), images };
 }

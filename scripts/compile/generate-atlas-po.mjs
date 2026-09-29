@@ -22,6 +22,7 @@ import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { loadItems } from "../lib/kb-items.mjs";
 import { evaluate, loadTable } from "../decide/dt-eval.mjs";
 import { workspaceCustomer } from "../run/fixtures.mjs";
+import { loadTemplate, fillTemplate } from "../lib/templates.mjs";
 
 export const DT008_ORDER = ["testid", "role", "label", "text", "css"];
 const STABILITY = { stable: "stabile", medium: "variabile", fragile: "instabile" };
@@ -69,14 +70,23 @@ export function locatorExpr(c, page = "page") {
   return `${page}.locator(${q(c.value)})`;
 }
 const ident = (code) => `sel_${code.replace(/[^A-Za-z0-9]/g, "_")}`;
-export function toPlaywright(atlas) {
-  const L = [`// Page object generati da generate-atlas-po (scope ${atlas.scope}, DT-008): non modificare a mano.`, `import type { Page, Locator } from "@playwright/test";`, ""];
+// WP10a: templates/page-object.ts.tpl (§31.2) se presente e con {{selectors}} e {{atlas_entries}}; altrimenti lo stesso
+// testo dal codice. template: undefined = il file di templates/, null = dal codice, stringa = quel template (test).
+export const PO_TEMPLATE = "page-object.ts.tpl";
+export function toPlaywright(atlas, { template } = {}) {
+  const sels = [];
   for (const [code, s] of Object.entries(atlas.selectors)) {
     const [first, ...others] = s.chain.map((c) => locatorExpr(c));
-    L.push(`/** ${code} — ${String(s.concept ?? "").replace(/\*\//g, "* /").replace(/[\r\n]+/g, " ").slice(0, 120)} (stability: ${s.stability}) */`);
-    L.push(`export const ${ident(code)} = (page: Page): Locator => ${[first, ...others.map((o) => `.or(${o})`)].join("")};`);
+    sels.push(`/** ${code} — ${String(s.concept ?? "").replace(/\*\//g, "* /").replace(/[\r\n]+/g, " ").slice(0, 120)} (stability: ${s.stability}) */`);
+    sels.push(`export const ${ident(code)} = (page: Page): Locator => ${[first, ...others.map((o) => `.or(${o})`)].join("")};`);
   }
-  L.push("", `export const ATLAS: Record<string, (page: Page) => Locator> = {`, ...Object.keys(atlas.selectors).map((c) => `  ${q(c)}: ${ident(c)},`), "};", "");
+  const entries = Object.keys(atlas.selectors).map((c) => `  ${q(c)}: ${ident(c)},`);
+  const tpl = template === undefined ? loadTemplate(PO_TEMPLATE) : template;
+  const fromTpl = tpl == null ? null : fillTemplate(tpl, { scope: String(atlas.scope ?? ""), selectors: sels.join("\n"), atlas_entries: entries.join("\n") }, { required: ["selectors", "atlas_entries"] });
+  if (fromTpl != null) return fromTpl;
+  const L = [`// Page object generati da generate-atlas-po (scope ${atlas.scope}, DT-008): non modificare a mano.`, `import type { Page, Locator } from "@playwright/test";`, ""];
+  L.push(...sels);
+  L.push("", `export const ATLAS: Record<string, (page: Page) => Locator> = {`, ...entries, "};", "");
   return L.join("\n");
 }
 

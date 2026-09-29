@@ -1,0 +1,13 @@
+{{!-- Foglio dei provini (sink desk, §27.5; §31.2 templates/): lo usa scripts/evidence/contact-sheet.mjs. Segnaposto, tutti
+già con l'escape HTML: {{release}}, {{customer}}, {{runs}}, {{sections}} (obbligatorio: scope → caso → figure, un elemento
+per riga). Solo evidenze pubblicabili; file offline: nessuna risorsa esterna né script (non aggiungerne). Senza
+{{sections}} il file è ignorato; senza questo file il foglio si genera dal codice con lo stesso testo. --}}
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<title>Evidenze {{release}} — {{customer}}</title>
+<style>body{font-family:sans-serif;margin:1.5rem}h2{border-bottom:1px solid #ccc}figure{display:inline-block;margin:.5rem;width:260px;vertical-align:top}img{max-width:100%;border:1px solid #999}figcaption{font-size:.8rem}.k-failure{outline:3px solid #c00}</style>
+</head><body>
+<h1>Evidenze — release {{release}} · {{customer}}</h1>
+<p>Run: {{runs}}. Solo evidenze pubblicabili (mascherate); gli originali restano nel dossier del run.</p>
+{{sections}}
+</body></html>
