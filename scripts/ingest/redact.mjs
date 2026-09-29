@@ -54,7 +54,14 @@ export function makeUnitRedactor({ profile = "strict", names = [], env = process
     .map((n) => new RegExp(`(?<![A-Za-z0-9_])${esc(n)}(?![A-Za-z0-9_])`, COMMON_WORD_CODES.has(n.toUpperCase()) ? "g" : "gi"));
   return (unit) => {
     const masks = new Set();
-    const authors = profile === "strict" ? AUTHORED.map((k) => unit?.[k]?.author).filter((a) => typeof a === "string" && a.trim().length >= 2) : [];
+    // strict: autori dell'unità (comment/revision/decision) e, a livello di sezione (redactDoc), di commenti e revisioni
+    // (parse-docx), dei record di decisione e il mittente e-mail (meta.from, anche "Nome <mail>")
+    const fromName = (f) => (typeof f === "string" ? f.replace(/<[^>]*>/g, "").replace(/["']/g, "").trim() : null);
+    const authors = profile === "strict" ? [
+      ...AUTHORED.map((k) => unit?.[k]?.author),
+      ...["comments", "revisions", "records"].flatMap((k) => (Array.isArray(unit?.[k]) ? unit[k].map((x) => x?.author) : [])),
+      fromName(unit?.meta?.from),
+    ].filter((a) => typeof a === "string" && a.trim().length >= 2) : [];
     const authorRes = [...new Set(authors)].sort((a, b) => b.length - a.length).map((a) => new RegExp(esc(a), "g"));
     const str = (s) => {
       let out = s;
@@ -79,9 +86,12 @@ export function makeUnitRedactor({ profile = "strict", names = [], env = process
 // scope-extractor) e quello che la pipeline usa a valle delle unità (profilo, pre-estrazione, righe grezze dei campi).
 // Stesse regole, sezione per sezione (percorso compreso: la stessa funzione sui due lati mantiene la coerenza); kind e
 // level restano; titolo e metadati redatti; l'id del documento resta (chiave del manifesto).
+// Chiavi tecniche dei metadati del documento: identità (§19.16: doc_key dal percorso), impronta, parser — mai redatte.
+export const META_TECH = new Set(["source", "sha256", "size", "parser", "parser_version", "kind_hint", "dated", "exported_at"]);
 export function redactDoc(doc, redactor) {
   const one = (v) => (v === undefined || v === null ? v : redactor({ v }).unit.v);
-  return { ...doc, ...(doc.title !== undefined ? { title: one(doc.title) } : {}), ...(doc.meta !== undefined ? { meta: one(doc.meta) } : {}),
+  const meta = (m) => (m && typeof m === "object" ? { ...one(Object.fromEntries(Object.entries(m).filter(([k]) => !META_TECH.has(k)))), ...Object.fromEntries(Object.entries(m).filter(([k]) => META_TECH.has(k))) } : one(m));
+  return { ...doc, ...(doc.title !== undefined ? { title: one(doc.title) } : {}), ...(doc.meta !== undefined ? { meta: meta(doc.meta) } : {}),
     sections: (doc.sections ?? []).map((s) => ({ ...redactor(s).unit, kind: s.kind, level: s.level })) };
 }
 

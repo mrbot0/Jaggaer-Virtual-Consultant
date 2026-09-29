@@ -54,7 +54,7 @@ export function ingestDoc(ctx, doc, entry) {
   const redact = (u) => { const x = redactor(u); if (x.masks.length) red.units_redacted++; for (const m of x.masks) red.masks[m] = (red.masks[m] ?? 0) + 1; return x.unit; };
   const { units, overflow } = segmentUnits(doc, { docCode: code, previous: prev, redact });
   const docR = redactDoc(doc, redactor);   // a valle delle unità (profilo, pre-estrazione, righe grezze dei campi) solo redatto
-  const profile = profileDoc(docR, units, { code, origin, currentRelease, overflow, today, ...(genre ? { genre } : {}), ...(kind ? { kind } : {}) });
+  const profile = profileDoc(docR, units, { keySource: entry.path, code, origin, currentRelease, overflow, today, ...(genre ? { genre } : {}), ...(kind ? { kind } : {}) });
   const extraction = extractDocument(docR, units, { profile });
   const acc = accountUnits(units, extraction.items);
   const residueEntries = acc.residue.map((r) => residueEntry({ class: r.class, reason: r.reason, unit: r.unit, doc: code }));

@@ -134,3 +134,48 @@ test("redattore: section.path e context.section_path redatti; codici cliente cas
   assert.equal(fin.context.section, "[cliente]");
   assert.equal(fin.context.doc, "S.STD.P2P.DOC.0001");
 });
+
+// Correzione mirata finale 2 — autori a livello di sezione (commenti e revisioni DOCX, mittente e-mail) redatti nello
+// strict anche nel documento normalizzato; identità del documento (§19.16) sul percorso grezzo.
+import { copyFileSync as copyFx, existsSync as existsFx } from "node:fs";
+
+test("livello S: autori di commenti e revisioni (DOCX) e mittente e-mail non sopravvivono in _inbox (parsed/*.json compreso) né nelle unità", () => {
+  const { ws, src } = workspace();
+  copyFx(join(ROOT, "test/fixtures/docs/sample.docx"), join(src, "Specifica_campi.docx"));
+  copyFx(join(ROOT, "test/fixtures/docs/thread.eml"), join(src, "Discussione_CdC.eml"));
+  const r = ingestFolder(src, { root: ws, scope: "P2P", today: "2026-09-29" });
+  assert.equal(r.documents.errors, 0, JSON.stringify(r.errors));
+  const files = allText(join(ws, "_inbox", "P2P")) + allText(join(ws, "product", "sources", "units"));
+  const db = openDb(join(ws, "product", "knowledge.db"));
+  const texts = db.prepare("select text from units").all().map((x) => x.text).join("\n");
+  db.close();
+  for (const who of ["Laura Bianchi", "Mario Rossi", "laura@example.invalid", "mario@example.invalid"]) {
+    assert.ok(!files.includes(who), `file: ${who}`);
+    assert.ok(!texts.includes(who), `DB: ${who}`);
+  }
+  assert.match(files, /\[autore\]/);
+});
+
+test("re-ingestion di un file il cui nome contiene un codice cliente: stesso DOC, unità non duplicate, una versione cambiata diventa .v2 con doc-diff", () => {
+  const { ws, src } = workspace();
+  const f = join(src, "Release notes beta.txt");
+  writeFileSync(f, "Note di rilascio\n\nIl campo Centro di costo diventa obbligatorio in bozza.\n");
+  const a = ingestFolder(src, { root: ws, scope: "P2P", today: "2026-09-29" });
+  const b = ingestFolder(src, { root: ws, scope: "P2P", today: "2026-09-29" });
+  const code = (r) => r.docs.find((d) => /Release notes/.test(d.source)).code;
+  assert.equal(code(b), code(a), "stesso codice DOC alla re-ingestion");
+  const db = openDb(join(ws, "product", "knowledge.db"));
+
+  assert.equal(db.prepare("select count(*) n from doc_profiles where doc_key=(select doc_key from doc_profiles where code=?)").get(code(a)).n, 1, "nessun DOC duplicato");
+  assert.equal(b.units.total, a.units.total, "unità non duplicate");
+  db.close();
+  writeFileSync(f, "Note di rilascio\n\nIl campo Centro di costo diventa obbligatorio in bozza.\n\nNuovo paragrafo della versione due.\n");
+  const c = ingestFolder(src, { root: ws, scope: "P2P", today: "2026-09-30" });
+  assert.equal(code(c), `${code(a)}.v2`);
+  const d = c.docs.find((x) => /Release notes/.test(x.source));
+  assert.equal(d.diff.nuove, 1);
+  assert.ok(existsFx(join(ws, "_inbox", "P2P", "doc-diff")));
+  const db2 = openDb(join(ws, "product", "knowledge.db"));
+  assert.equal(db2.prepare("select count(*) n from doc_profiles where doc_key=(select doc_key from doc_profiles where code=?)").get(code(a)).n, 2, "due versioni dello stesso documento");
+  db2.close();
+});

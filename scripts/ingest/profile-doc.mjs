@@ -215,7 +215,8 @@ export function profileDoc(doc, units, opts = {}) {
     sources: [{ file: source, sha256: doc.meta?.sha256 ?? null }],
     kind, genre, origin, version: detectVersion(doc, source), dated: doc.meta?.dated ?? null, covers_release: coversRelease,
     languages: langs.length ? langs : [doc.lang ?? "it"], scopes,
-    source: { path: source, sha256: doc.meta?.sha256 ?? "", size: doc.meta?.size ?? 0, format: doc.format, doc_id: doc.id, doc_key: docKey(source) },
+    // doc_key dal percorso GREZZO del file (opts.keySource: quello che assignDocCode cerca), mai da un testo redatto (§19.16)
+    source: { path: source, sha256: doc.meta?.sha256 ?? "", size: doc.meta?.size ?? 0, format: doc.format, doc_id: doc.id, doc_key: docKey(opts.keySource ?? source) },
     structure, units: { total: units.length, by_type: byType }, reliability: rel, known_issues: known,
     ingestion: { status: "segmented", units_processed: units.length, items_produced: 0, residue: residue ?? {}, coverage_ratio: null, last_run: today },
   };
