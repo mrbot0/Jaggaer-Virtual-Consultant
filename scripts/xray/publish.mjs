@@ -11,7 +11,7 @@
 import { resolve as resolvePath } from "node:path";
 import { parseArgs } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
-import { readPayload, recordPublished, executionFor, recordExecution, assertOwned } from "../../mcp/alm-server/queue.mjs";
+import { readPayload, recordPublished, executionFor, recordExecution, assertOwned, readExecutions, sessionCodeOf } from "../../mcp/alm-server/queue.mjs";
 import { materializeResults } from "../../mcp/alm-server/payload.mjs";
 import { AlmError } from "../../mcp/alm-server/adapter.mjs";
 import { buildPayload, parseOutcomes, summary } from "./build-payload.mjs";
@@ -32,13 +32,13 @@ export async function publish(c, { run, scope = null, dryRun = false, rebuild = 
     // creata dal plugin in questa sessione (mai import nei risultati altrui); altrimenti si crea (e si registra) ora
     let key = executionFor(c.ws, c.customer, run, S);
     if (key) {
-      try { assertOwned(c.ws, c.customer, key, env); } catch (err) { throw new XrayError(3, `scope ${S}: ${err.message}`); }
+      try { assertOwned(c.ws, c.customer, key, env, { run, scope: S }); } catch (err) { throw new XrayError(3, `scope ${S}: ${err.message}`); }
     }
     try {
       if (!authed) { await c.adapter.authenticate(); authed = true; }
       if (!key) {
         key = (await c.adapter.createExecution(entry.execution)).key;
-        recordExecution(c.ws, c.customer, run, S, key, "xray-publish");
+        recordExecution(c.ws, c.customer, run, S, key, "xray-publish", { session_code: sessionCodeOf(c.ws, c.customer, env) });
         recordPublished(c.ws, c.customer, run, S, { execution_key: key, created_at: new Date().toISOString() });
         await recordCreated(c.ws, env, key, "execution", "xray-publish");
       }
@@ -48,7 +48,10 @@ export async function publish(c, { run, scope = null, dryRun = false, rebuild = 
       out.push({ scope: S, status: "pubblicato", execution_key: key, tests: rep.tests, evidence: rep.evidence });
     } catch (err) {
       if (!(err instanceof AlmError && err.network) || c.config.offline_queue === false) throw err;
-      const q = c.queue.enqueue({ op: "import", run, scope: S, payload: { ...entry, execution_key: key }, error: err.message });
+      // giro 2 (Minor 1): la voce protetta porta la provenienza dell'esecuzione del plugin (completabile in una sessione successiva)
+      const m = key ? readExecutions(c.ws, c.customer, run).scopes?.[S] : null;
+      const provenance = key && m?.created_by_plugin === true && m.key === key ? { created_by_plugin: true, key, session_code: m.session_code ?? null } : null;
+      const q = c.queue.enqueue({ op: "import", run, scope: S, payload: { ...entry, execution_key: key }, error: err.message, provenance });
       out.push({ scope: S, status: "in coda", queued: true, id: q.id, execution_key: key, error: err.message });
     }
   }
