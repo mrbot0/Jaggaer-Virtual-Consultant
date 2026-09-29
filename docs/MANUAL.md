@@ -112,14 +112,16 @@ azioni che ragionano sul dominio invocano un sub-agente foglia (`Agent(<agente>,
 **Regola dei dati in ingresso.** Gli script del plugin si invocano solo in forma semplice: niente JSON in linea, niente
 virgole, parentesi, `$`, `@`, graffe o testo libero con punteggiatura e accenti sulla riga di comando (i guard la
 negano). I comandi passano i dati strutturati e il testo dell'utente da un file della sessione
-(`customers/<C>/.sessions/<sessione>/…`: `--payload-file`, `--text-file`, `--finding`, `--sql-file`) o come
-`chiave=valore`.
+(`customers/<C>/.sessions/<sessione>/…`: `--payload-file`, `--text-file`, `--finding`, `--sql-file`; per il report
+`--payload-file` con titolo, intento, prossimi passi, atteso/osservato/errori, oppure `--intent-file`,
+`--assumption-file`, `--next-file`) o come `chiave=valore`. I file d'ingresso stanno **dentro il workspace**: percorsi
+assoluti fuori, `..` che escono o collegamenti che portano fuori sono rifiutati.
 
 ### 56.1 `vc` — stato, diagnostica e console degli agenti (virtual consultant)
 
 | Azione | Cosa fa | Chi · Note |
 |--------|---------|------------|
-| *(nessuna)* | Come `status` | Il punto di partenza |
+| *(nessuna)* | Stato di sessione (cliente, ambiente, scope, modalità, budget, pendenze) e **azioni suggerite**: cosa fare adesso, in ordine, con il perché (dichiarare l'ambiente, verificarne l'impronta, chiudere le compensazioni, dare l'approvazione attesa, rivedere le quarantene, ripubblicare la coda Xray, oppure scrivere un intento) | Il punto di partenza · script `admin/status.mjs` |
 | `status [--metrics]` | Stato di sessione: cliente, ambiente, scope, modalità, budget, pendenze, piano attivo, ultime decisioni e sorprese, salute della conoscenza, coda Xray; con `--metrics` le metriche di §35 | script `admin/status.mjs` |
 | `agents [show <task_id> \| history [--scope <S>] [--last <N>]]` | Console degli agenti: cosa fa ogni sub-agente adesso e cosa ha fatto, dalle sole registrazioni degli hook (vedi §57.5) | script `admin/agents.mjs` · sola lettura |
 | `doctor [--network]` | Diagnostica completa dell'installazione e dell'ambiente (§55.2) | script `admin/doctor.mjs` · verde obbligatorio prima di operare |
@@ -439,7 +441,10 @@ da sole solo se ≤ R1 in sandbox; la produzione è sola lettura sui dati; il ve
 
 La cartella `templates/` del plugin (§31.2, §43.3) contiene i modelli dei documenti prodotti. Gli script li usano se ci
 sono; senza il file (o se un template perde un segnaposto obbligatorio) generano dal codice lo stesso testo. Si
-personalizzano con una release del plugin (la cartella del plugin è in sola lettura durante le sessioni).
+personalizzano con una release del plugin (la cartella del plugin è in sola lettura durante le sessioni). `templates/` è
+nel manifesto d'integrità: dopo una personalizzazione si rigenera `integrity.json` (nel repository del plugin), altrimenti
+il pacchetto risulta manomesso e i guard negano tutto. Un template che perde un segnaposto obbligatorio è ignorato con un
+avviso (campo `warnings` e messaggio su stderr) e il documento si genera dal codice.
 
 | File | Documento | Script | Segnaposto obbligatori |
 |------|-----------|--------|------------------------|
