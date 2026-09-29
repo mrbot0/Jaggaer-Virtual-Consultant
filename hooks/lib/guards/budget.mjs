@@ -28,6 +28,8 @@ import YAML from "yaml";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { redact } from "../redact.mjs";
+import { dispatchRefusal, tierRefusal, tierOf, taskKeyOf } from "./orchestration.mjs";
+import { readJsonl } from "../state-summary.mjs";
 
 // Il file del piano attivo (relativo alla cartella del cliente) → oggetto | null.
 function readPlan(ctx, rel) {
@@ -40,12 +42,8 @@ function readPlan(ctx, rel) {
 const G = "guard-budget";
 const AGENT_TOOLS = new Set(["Agent", "Task"]);
 
-// WP10d: tier del dispatch (header `tier`, altrimenti dal modello richiesto) e rango per l'escalation (DT-002).
-export const TIER_RANK = { T0: 0, T1: 1, T2: 2 };
-const MODEL_TIER = (m) => (/haiku/i.test(m ?? "") ? "T0" : /sonnet/i.test(m ?? "") ? "T1" : /opus/i.test(m ?? "") ? "T2" : null);
-export const tierOf = (h, ti) => (typeof h?.tier === "string" && h.tier in TIER_RANK ? h.tier : MODEL_TIER(ti?.model));
-// Compito a cui appartiene il dispatch: `reply_to` (un nuovo Agent per lo stesso compito, es. dopo escalate) o task_id.
-export const taskKeyOf = (h) => String(h?.reply_to ?? h?.task_id ?? "");
+// WP10d: tier e compito del dispatch, regole di orchestrazione (hooks/lib/guards/orchestration.mjs).
+export { TIER_RANK, tierOf, taskKeyOf } from "./orchestration.mjs";
 const cut = (s, n) => (typeof s === "string" && s.length > n ? `${s.slice(0, n - 1)}…` : s);
 export function headerSummary(h, ti) {
   const red = (s) => redact(String(s));
@@ -166,6 +164,10 @@ export const decide = guarded(G, (ctx) => {
   if (missing.length) return denyAudited(ctx, G, `header agent-prompt incompleto: mancano ${missing.join(", ")}`);
   if (String(h.customer) !== session.customer) return denyAudited(ctx, G, `il prompt è per il cliente ${h.customer} ma la sessione è sul cliente ${session.customer}`);
   if (String(h.scope) !== session.scope) return denyAudited(ctx, G, `scope del prompt ${h.scope} ≠ scope di sessione ${session.scope ?? "—"}: esegui use scope ${h.scope} prima del dispatch (i guard leggono session.json)`);
+  // WP10d (D2, D8): regole di orchestrazione applicate dal codice — sub-agente che invoca Agent, controllo
+  // dell'utente (pausa/stop), vigilanza cognitiva per scope, handoff via agent-manager con contratto HND
+  const orch = dispatchRefusal(ctx, h);
+  if (orch) return denyAudited(ctx, G, orch);
   const { tokens, used } = session.budget;
   if (used >= tokens) return denyAudited(ctx, G, `budget di sessione esaurito (${used}/${tokens}): nessuna nuova invocazione; chiudi con report e pendenze. Solo l'utente può alzarlo con /jaggaer-virtual-consultant:use budget <n>`);
   const taskBudget = h.budget?.tokens;
@@ -202,6 +204,9 @@ export const decide = guarded(G, (ctx) => {
   const file = invocationsFile(ctx.ws, session.customer, session.session_id);
   mkdirSync(dirname(file), { recursive: true });
   const refused = withFileLock(`${file}.lock`, () => {
+    // WP10d (D2): una sola escalation di tier per compito, sotto lo stesso lock della registrazione
+    const esc = tierRefusal(readJsonl(file), h, ti);
+    if (esc) return { raw: esc };
     const open = openInvocations(file, session.ledger);
     const rem = checkRemaining(session, effective, { open });
     if (!rem.ok) return rem.reason;
@@ -213,6 +218,7 @@ export const decide = guarded(G, (ctx) => {
     })}\n`);
     return null;
   }, { timeoutMs: 4000 });
+  if (refused?.raw) return denyAudited(ctx, G, refused.raw);
   if (refused) return denyAudited(ctx, G, `${refused}: ridisegna il compito (meno passi, più STR-REPLAY) o chiedi all'utente di alzare il budget`);
   if (downgrade) {
     return allowWithInput(`[${G}] budget di sessione ≥ 80% (${used}/${tokens}): tier forzato a haiku; chiedi all'utente se continuare (§29.10)`, { ...ti, model: "haiku" });

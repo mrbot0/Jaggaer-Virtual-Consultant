@@ -323,6 +323,16 @@ function invalid(expected, why) {
 export async function capture(input, env = process.env) {
   const st = loadHookState(input, env);
   if (!st.jvc || !st.session) return null;
+  // WP10d (D8, D2): frasi di controllo dell'utente sugli agenti (PAUSA/RIPRENDI/FERMA, PASSO PASSO, SBLOCCA SCOPE,
+  // LIMITI DISPATCH) — nascono solo qui, dal prompt; i record che riducono la protezione ancora da confermare si
+  // confermano nel transcript a ogni prompt (il prompt precedente ormai c'è).
+  const ctl = await import("../../hooks/lib/control.mjs");
+  try {
+    const cf = ctl.controlFile(st.ws, st.customer, st.sid);
+    if (existsSync(cf)) { const c = ctl.readControl(cf); if (c.ok) ctl.confirmPending(cf, c.records, ctl.transcriptCandidates(input)); }
+  } catch { /* si conferma alla prossima occasione */ }
+  const cp = ctl.parseControlPrompt(input.prompt);
+  if (cp) return (await import("./control.mjs")).captureControl(st, input, cp);
   const p = parseApprovalPrompt(input.prompt);
   if (!p) return null;
   const s = st.session;

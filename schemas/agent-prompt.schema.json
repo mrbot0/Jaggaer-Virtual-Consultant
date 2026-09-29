@@ -25,6 +25,11 @@
     "inputs": { "type": ["object", "null"] },
     "expected_output": { "type": ["object", "null"] },
     "constraints": { "type": "array", "items": { "type": "string" } },
+    "kind": { "enum": ["task", "handoff"], "description": "WP10d: handoff ⇒ via: agent-manager e un contract HND esistente che dichiara lo scope (guard-budget, §24.2)." },
+    "reply_to": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$", "description": "WP10d: il compito originale di un nuovo dispatch (es. dopo escalate): una sola escalation di tier per compito (guard-budget, DT-002)." },
+    "via": { "const": "agent-manager" },
+    "contract": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.HND\\.\\d{4}(\\.v\\d+)?$" },
+    "from": { "type": "string" },
     "resume": {
       "type": ["object", "null"],
       "properties": { "checkpoint": { "type": "integer", "minimum": 0 }, "blackboard": { "type": "string" } }

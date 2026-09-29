@@ -19,6 +19,20 @@ import { join, dirname } from "node:path";
 import { GENESIS, hashEvent } from "./audit.mjs";
 import { withFileLock } from "./fsx.mjs";
 import { sessionDir } from "./workspace.mjs";
+import { confirmInTranscript } from "../../scripts/admin/approvals.mjs";
+
+// Transcript in cui cercare il prompt dell'utente: quello dell'input e, se è il transcript di un sub-agente
+// (<dir>/<session_id>/subagents/agent-<id>.jsonl), quello della sessione principale (<dir>/<session_id>.jsonl).
+export function transcriptCandidates(input = {}) {
+  const out = [];
+  const tp = typeof input.transcript_path === "string" ? input.transcript_path : null;
+  if (tp) {
+    out.push(tp);
+    const m = /^(.*)[\\/]([^\\/]+)[\\/]subagents[\\/][^\\/]+\.jsonl$/.exec(tp);
+    if (m) out.push(join(m[1], `${m[2]}.jsonl`));
+  }
+  return out;
+}
 
 export const ALL = "*";
 export const DEFAULT_LIMITS = Object.freeze({ calls: 200, minutes: 30 });
@@ -44,9 +58,7 @@ const RE_LIMITS = /^LIMITI DISPATCH ([1-9]\d{0,4}) ([1-9]\d{0,3})$/;
 const RE_ATTEMPT = /^(PAUSA|RIPRENDI|FERMA|PASSO PASSO|SBLOCCA|LIMITI)(?=$|[\s,.;:!?])/;
 export const CONTROL_SYNTAX = ["PAUSA AGENTE <task_id>", "PAUSA TUTTI", "RIPRENDI AGENTE <task_id>", "RIPRENDI TUTTI", "FERMA AGENTE <task_id>", "FERMA TUTTI",
   "PASSO PASSO <task_id|TUTTI>", "PASSO PASSO OFF", "SBLOCCA SCOPE <S>", "LIMITI DISPATCH <chiamate> <minuti>"];
-// Nei guard: frasi di controllo negli input degli strumenti (maiuscole, come le cattura approval-capture: il testo
-// minuscolo "passo passo" in un documento non è una frase).
-export const CONTROL_PHRASES = /(^|[^A-Z])(PAUSA\s+(AGENTE|TUTTI)|RIPRENDI\s+(AGENTE|TUTTI)|FERMA\s+(AGENTE|TUTTI)|PASSO\s+PASSO|SBLOCCA\s+SCOPE|LIMITI\s+DISPATCH)(?![A-Z])/;
+// Nei guard le frasi sono cercate da hooks/lib/guards/phrase.mjs (CONTROL_PHRASES).
 
 // → { kind, target?, scope?, calls?, minutes? } | { kind: "attempt" } | null
 export function parseControlPrompt(prompt) {
@@ -112,12 +124,11 @@ export function unconfirmed(records, now = Date.now()) {
 
 // Conferma nel transcript dell'utente i record che riducono la protezione e non sono ancora confermati; per ognuno
 // confermato appende un record `confirm` (una lettura del transcript per tutti). → records aggiornati.
-export async function confirmPending(file, records, transcriptPaths, { now = Date.now() } = {}) {
+export function confirmPending(file, records, transcriptPaths, { now = Date.now() } = {}) {
   const todo = unconfirmed(records, now);
   if (!todo.length) return records;
   const paths = [...new Set((Array.isArray(transcriptPaths) ? transcriptPaths : [transcriptPaths]).filter((p) => typeof p === "string" && p && existsSync(p)))];
   if (!paths.length) return records;
-  const { confirmInTranscript } = await import("../../scripts/admin/approvals.mjs");
   const ok = [];
   for (const r of todo) if (paths.some((p) => confirmInTranscript(p, [r]).ok)) ok.push(r);
   if (!ok.length) return records;
