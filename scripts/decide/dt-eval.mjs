@@ -319,7 +319,7 @@ export function parseKeyValues(args) {
     const m = /^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/s.exec(a);
     if (!m) throw new Error(`argomento non riconosciuto: ${a} (atteso nome=valore)`);
     const v = m[2];
-    out[m[1]] = v === "true" ? true : v === "false" ? false : v === "null" ? null : /^-?d+(.d+)?$/.test(v) ? Number(v) : v;
+    out[m[1]] = v === "true" ? true : v === "false" ? false : v === "null" ? null : /^-?\d+(\.\d+)?$/.test(v) ? Number(v) : v;
   }
   return out;
 }
