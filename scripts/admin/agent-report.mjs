@@ -10,6 +10,7 @@ import { validateWith } from "../lib/schemas.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { reportedControlsFor } from "../decide/self-check-controls.mjs";
+import { inputFile } from "../lib/text-file.mjs";
 
 const asObject = (text) => {
   try {
@@ -76,8 +77,10 @@ if (isMain(import.meta.url)) {
   const { opts, positional } = parseArgs(process.argv.slice(2));
   if (opts.help) { console.log(HELP); process.exit(0); }
   if (!positional[0]) process.exit(fail(!!opts.json, 1, "file del rapporto mancante"));
+  const conf = inputFile(positional[0]);   // revisione finale: il file nel workspace degli hook
+  if (conf.error) process.exit(fail(!!opts.json, 1, conf.error));
   let text;
-  try { text = readFileSync(positional[0], "utf8"); } catch (err) { process.exit(fail(!!opts.json, 1, `file illeggibile: ${err.code ?? err.message}`)); }
+  try { text = readFileSync(conf.abs, "utf8"); } catch (err) { process.exit(fail(!!opts.json, 1, `file illeggibile: ${err.code ?? err.message}`)); }
   try {
     const report = extractReport(text);
     const r = validateReport(report);

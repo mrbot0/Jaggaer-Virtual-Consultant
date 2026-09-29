@@ -62,7 +62,7 @@ export function checkDeps(plugin) {
     } catch (err) { missing.push(`${d} (${String(err.code ?? err.message).slice(0, 60)})`); }
   }
   return missing.length
-    ? C("deps", "red", `dipendenze non installate o non importabili: ${missing.join(", ")} — senza di esse ogni guard nega (fail-closed)`, `npm install nel plugin (cd "${plugin}" && npm ci)`)
+    ? C("deps", "red", `dipendenze non installate o non importabili: ${missing.join(", ")} — senza di esse ogni guard nega (fail-closed)`, `npm ci nel plugin (cd "${plugin}" && npm ci): installa esattamente le versioni di package-lock.json, che è sotto integrità — npm install può riscriverlo e far fallire il controllo d'integrità`)
     : C("deps", "green", `dipendenze importabili: ${DEPS.join(", ")}`);
 }
 

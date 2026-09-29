@@ -71,6 +71,11 @@ const CASES = [
   ["scripts/xray/build-payload.mjs", ["--run", "RUN.ACME.20260929.1000.P2P", "--outcomes", "F.yaml"]],
   ["scripts/xray/publish.mjs", ["--run", "RUN.ACME.20260929.1000.P2P", "--dry-run", "--outcomes", "F.yaml"]],
   ["scripts/xray/defect.mjs", ["--finding", "F.yaml"]],
+  // correzione mirata finale: gli ingressi rimasti
+  ["scripts/admin/agent-report.mjs", ["F.txt"]],
+  ["scripts/kb/validate-env.mjs", ["F.yaml"]],
+  ["scripts/analysis/cluster.mjs", ["--customer", "ACME", "--input", "F.json"]],
+  ["scripts/chrome/annotate.mjs", ["sidecar", "--evidence", "F.yaml"]],
 ];
 
 test("ogni opzione-file degli script: un file fuori dal workspace degli hook è rifiutato (exit ≠ 0, «fuori dal workspace»), anche con --workspace/--root che lo contengono", () => {

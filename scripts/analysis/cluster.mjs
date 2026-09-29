@@ -10,6 +10,7 @@ import { writeAnalysisItem, facetsFor, AnalysisError } from "./common.mjs";
 import { REGISTRY } from "../kb/codes.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export const MIN_SIZE = 2;
 
@@ -90,6 +91,7 @@ export function run(argv, env = process.env) {
   const { opts } = parseArgs(argv, { flags: ["write"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["input"], { env }); if (bad) return fail(asJson, 1, bad); }
   if (!opts.customer || !/^[A-Z0-9]{4}$/.test(opts.customer)) return fail(asJson, 1, "richiesto --customer <C>");
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   const file = opts.input ?? latestImport(ws, opts.customer);

@@ -106,10 +106,11 @@ test("agent-report CLI: exit 0 su rapporto valido, 1 su invalido, --json con sta
   writeFileSync(ok, "```yaml\n" + yamlOf(REPORT) + "\n```\n");
   const noTrace = clone(REPORT); delete noTrace.cognitive_trace;
   writeFileSync(bad, "```yaml\n" + yamlOf(noTrace) + "\n```\n");
-  const r1 = spawnSync(process.execPath, [REPORT_CLI, ok, "--json"], { encoding: "utf8" });
+  // correzione mirata finale: il rapporto è un ingresso confinato nel workspace degli hook
+  const r1 = spawnSync(process.execPath, [REPORT_CLI, ok, "--json"], { encoding: "utf8", env: { ...process.env, JVC_WORKSPACE: ws } });
   assert.equal(r1.status, 0, r1.stdout + r1.stderr);
   assert.equal(JSON.parse(r1.stdout).status_effective, "ok");
-  const r2 = spawnSync(process.execPath, [REPORT_CLI, bad, "--json"], { encoding: "utf8" });
+  const r2 = spawnSync(process.execPath, [REPORT_CLI, bad, "--json"], { encoding: "utf8", env: { ...process.env, JVC_WORKSPACE: ws } });
   assert.equal(r2.status, 1);
   assert.equal(spawnSync(process.execPath, [REPORT_CLI, "--help"]).status, 0);
 });

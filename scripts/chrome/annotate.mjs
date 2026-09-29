@@ -12,6 +12,7 @@ import { decodePng, encodePng, fillRect, strokeRect, PngError } from "./png.mjs"
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { confineInputs } from "../lib/text-file.mjs";
 
 export function applyOverlay(file, { masks = [], outline = null } = {}) {
   const rects = masks.map((m) => m?.rect ?? null);
@@ -72,6 +73,7 @@ export async function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  { const bad = confineInputs(opts, ["evidence"], { env }); if (bad) return fail(asJson, 1, bad); }
   const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {
     if (positional[0] === "sidecar") {

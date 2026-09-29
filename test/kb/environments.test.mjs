@@ -14,7 +14,8 @@ const FIXTURE = join(ROOT, "test/fixtures/env/environments.yaml");
 const load = () => YAML.parse(readFileSync(FIXTURE, "utf8"));
 const env = (doc, id) => doc.environments.find((e) => e.id === id);
 const CLI = join(ROOT, "scripts/kb/validate-env.mjs");
-const cli = (args) => spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8", env: cleanEnv() });
+// correzione mirata finale: il file è un ingresso confinato nel workspace degli hook (qui la cartella temporanea)
+const cli = (args) => spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: tmpdir() }) });
 const tmpYaml = (doc) => { const f = join(mkdtempSync(join(tmpdir(), "env-")), "environments.yaml"); writeFileSync(f, YAML.stringify(doc)); return f; };
 
 test("l'esempio di §51.1 è valido", () => {
@@ -90,7 +91,7 @@ test("normalizeEnvironment: prod_allowed_red default [], finestra 60, secondo ap
 });
 
 test("CLI validate-env: 0 valido · 3 violazione di policy (RF2) · 1 malformato · --help", () => {
-  assert.equal(cli([FIXTURE, "--json"]).status, 0);
+  assert.equal(cli([tmpYaml(load()), "--json"]).status, 0);
   const rf2 = load(); env(rf2, "prod").policy.write_data = true;
   const r3 = cli([tmpYaml(rf2), "--json"]);
   assert.equal(r3.status, 3, r3.stdout + r3.stderr);

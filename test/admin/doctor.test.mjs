@@ -34,13 +34,13 @@ test("node: ≥ 22 verde, 20 rosso", async () => {
   assert.equal(await status(ws, "node", { nodeVersion: "20.11.1" }), "red");
 });
 
-test("deps: dipendenze installate e importabili verde; plugin senza node_modules rosso con fix 'npm install nel plugin'", async () => {
+test("deps: dipendenze installate e importabili verde; plugin senza node_modules rosso con fix 'npm ci nel plugin' (il lockfile è sotto integrità)", async () => {
   const ws = demoWorkspace();
   assert.equal(await status(ws, "deps"), "green");
   const p = copyPlugin("jvc-plugin-", { modules: false });   // giro 1: nessuna cancellazione nei test
   const c = byId(await runChecks({ ws, plugin: p, env: DEMO_ENV }), "deps");
   assert.equal(c.status, "red");
-  assert.match(c.fix, /npm install nel plugin/);
+  assert.match(c.fix, /npm ci nel plugin/); assert.match(c.fix, /package-lock.json/);
 });
 
 test("version: knowledge_version del DB nell'intervallo di plugin.json verde; fuori intervallo o metadati assenti rosso", async () => {

@@ -11,6 +11,7 @@ import { validateWith } from "../lib/schemas.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { normalizeHost } from "../../hooks/lib/browser-tools.mjs";
+import { inputFile } from "../lib/text-file.mjs";
 
 const POLICY_PATH = /prodPolicy/;
 const fmt = (e) => `${e.instancePath || "/"} ${e.message}${e.params?.missingProperty ? ` (${e.params.missingProperty})` : ""}${e.params?.allowedValue !== undefined ? ` (atteso ${JSON.stringify(e.params.allowedValue)})` : ""}`;
@@ -112,6 +113,7 @@ export function run(argv, env = process.env) {
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
   let file = positional[0];
+  if (file) { const c = inputFile(file, { env }); if (c.error) return fail(asJson, 1, c.error); file = c.abs; }   // revisione finale: confinato
   if (!file && opts.customer) file = environmentsFile(resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd()), opts.customer);
   if (!file) { console.log(HELP); return 1; }
   try {
