@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 29/09/2026 03:30 — **punto corrente: WP09c (adattatore ALM, server MCP, Xray) avviato; WP09b chiuso**.
+Ultimo aggiornamento: 29/09/2026 05:20 — **punto corrente: WP09d (apprendimento, analytics, dominio analitico, audit, admin) avviato; WP09c chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 68 % del progetto** (stima pesata sullo sforzo) · 10 pacchetti su 17 chiusi.
+**≈ 74 % del progetto** (stima pesata sullo sforzo) · 11 pacchetti su 17 chiusi.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 68 %** (76 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 10 / 17 = **59 %** | WP01–WP09b con review e tag |
+| Avanzamento pesato | **≈ 74 %** (82 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 11 / 17 = **65 %** | WP01–WP09c con review e tag |
 | Hook del catalogo §44.4 | 16 / 16 = **100 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
-| Test automatici | 809 / 809 verdi | `npm test` al tag `run-tooling-done` (`f95ad08`), corpus reale incluso |
+| Test automatici | 847 / 847 verdi | `npm test` al tag `alm-done` (`a9b862f`) |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -36,6 +36,21 @@ Ultimo aggiornamento: 29/09/2026 03:30 — **punto corrente: WP09c (adattatore A
 - Corretto dopo la review: nessuna formula di raccomandazione produce più un obbligo, e anche la validazione a valle lo impedisce. Il budget per documento non si può alzare, e il consumo resta legato alla sessione reale.
 - Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
 - Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
+
+### Chiusura di WP09c (Jira/Xray e server MCP) — tag `alm-done` → `a9b862f`, 2 giri di correzione
+- Review, 1 problema critico: l'host di Jira/Xray veniva letto solo da `xray.yaml`, che la sessione poteva riscrivere. Si potevano quindi mandare le credenziali a un host qualunque.
+- Correzione decisa:
+  - la configurazione del cliente diventa scrivibile solo a mano;
+  - `xray.yaml` viene fissato con un hash all'avvio della sessione;
+  - le credenziali partono solo verso host dichiarati sia in `xray.yaml` sia in `NETWORK.md`.
+- Problemi importanti in correzione:
+  - gli script potevano scrivere su esecuzioni di test create da persone;
+  - le esecuzioni si potevano duplicare;
+  - il formato per Xray Server/DC era quello di Cloud.
+- Tutto corretto in 2 giri. Una sessione non può più scegliere la modalità "senza sessione" pensata per la CI. Le importazioni rimaste in coda si possono completare in una sessione successiva.
+- Da verificare sul Jira reale del cliente: il formato di Xray Server/DC e i pin delle versioni dei server MCP del browser.
+- **Da decidere con te:** un Jira/Xray installato presso il cliente va aggiunto a `NETWORK.md` con un rilascio del plugin.
+- **Rischio residuo preesistente, da valutare nella review finale:** le credenziali nelle variabili d'ambiente sono leggibili da qualunque processo shell avviato dal modello.
 
 ### Chiusura di WP09b (test NRT, esecuzione, evidenze, promozione)
 - Implementato in 7 commit, più 3 giri di correzione (`5db1e49..f95ad08`). Tag `run-tooling-done` → `f95ad08`.
@@ -151,14 +166,14 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 100 | ✅ | tag `f0-done` → `9327fff`, 652 test, 1 giro di correzione, `docs/phase-reports/F0.md` |
 | WP09a | Pipeline di ingestion: parser DOCX/XLSX/PDF/XSD/export/screenshot/trascrizioni/e-mail, unità, profilo DOC, banche di domande, back-check, alias, versioni, residuo, revisione, survey del tenant, PRF/PMP | F1' (strumenti) | 10 | 100 | ✅ | tag `ingest-tooling-done` → `6eff63e`, 721 test, corpus reale elaborato in `jvc-knowledge`, `docs/phase-reports/F1-tooling.md` |
 | WP09b | Schemi NRT/SEL/HND/CHK/CFP/FLW/KEY/LCY/INT/CFG, compile-case/cfp, lint, Atlas, corsie di esecuzione, compensazioni, snapshot, evidenze, negativi, promozione, copertura | F3–F7, C1 (strumenti) | 12 | 100 | ✅ | tag `run-tooling-done` → `f95ad08`, 809 test, 3 giri di correzione, `docs/phase-reports/F4-C1-tooling.md` |
-| WP09c | AlmAdapter (Xray Cloud/Server/Mock), server MCP ALM, script xray, coda offline, Defect, `.mcp.json`, NETWORK.md | F5 | 6 | 0 | 🔄 | `wp09c-alm.md` |
-| WP09d | Comandi `kb` restanti, digestione settimanale, Analytics (TBL/QRY/DIN/USR/PSP/ERR), dominio analitico, audit config, admin (status, lock, retention, purge) | F8–F12, G2–G3 (strumenti) | 8 | 0 | ⬜ Brief | `wp09d-ops.md` |
+| WP09c | AlmAdapter (Xray Cloud/Server/Mock), server MCP ALM, script xray, coda offline, Defect, `.mcp.json`, NETWORK.md | F5 | 6 | 100 | ✅ | tag `alm-done` → `a9b862f`, 847 test, 2 giri di correzione, `docs/phase-reports/F5-tooling.md` |
+| WP09d | Comandi `kb` restanti, digestione settimanale, Analytics (TBL/QRY/DIN/USR/PSP/ERR), dominio analitico, audit config, admin (status, lock, retention, purge) | F8–F12, G2–G3 (strumenti) | 8 | 0 | 🔄 | `wp09d-ops.md` |
 | WP10a | Comandi `vc use kb nrt cfg ops learn admin`, template restanti, README, manuale integrato | §44.1, §55–58 | 4 | 0 | ⬜ Brief | `wp10a-commands.md` |
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 0 | ⬜ Brief | `wp10b-agents.md` |
 | WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 0 | ⬜ Brief | `wp10d-orchestration.md` — da eseguire prima di WP10c |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **111** | **≈ 68** | | 76 unità completate |
+| **Totale** | | | **111** | **≈ 74** | | 82 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
@@ -187,7 +202,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 - [ ] strategy, hypotheses, execution-plan, why, lesson, fld, parsed-doc, environments, act, approval, remediation-scope, rpt, nrt-case, sel, hnd, chk, cfp, flw, key, lcy, int, cfg, unit, doc, prf, pmp, tbl, qry, din, usr, psp, err, pat, pbk, brf, rul, xray-config
 
 ### Agenti, skill, comandi, MCP
-- [ ] 15 agenti · [ ] 27 skill · [ ] 8 comandi (esiste solo `commands/use.md` minimale) · [ ] server MCP ALM + `.mcp.json` completo
+- [ ] 15 agenti · [ ] 27 skill · [ ] 8 comandi (esistono `commands/use.md` e un `commands/vc.md` minimo) · [x] server MCP ALM + `.mcp.json` (WP09c ✅)
 
 ## Punti aperti da decidere con il committente
 - **Documentazione JAGGAER di partenza caricata** (28/09/2026) in `JAGGAER DOC/`: 385 file tra corsi (guide, workbook, XML di workflow e configurazione, form) e kit di sviluppo dei web service. È esclusa da git perché materiale proprietario. WP09a la userà come corpus reale: la pipeline di ingestion la elaborerà per intero e scriverà la conoscenza di livello S in un workspace separato, `jvc-knowledge`, non nel repo del plugin. Fino ad allora il livello S contiene solo il bootstrap (DT, cluster, strategie, azioni, check).
