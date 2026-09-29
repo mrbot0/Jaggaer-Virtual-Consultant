@@ -215,8 +215,9 @@ dell'utente (`docs/MANUAL.md`, Appendice C). Per `weekly-digest` esportare `JVC_
 Stato: **pronta** (blocco C di 3: la suite `evals/` è completa, 15 ruoli × 20 = **300 casi**). Il tag `agents-done`
 lo mette il controller dopo la revisione. Dettaglio di consegna: `.superpowers/sdd/wp10b-report.md`.
 
-Suite alla consegna: vedi il report SDD (`npm test`, 0 TODO: il validatore non ha più ruoli da scrivere e verifica
-che i tre blocchi coprano esattamente i 15 agenti di `agents/`).
+Suite alla consegna del blocco C: **1047 test, 1047 verdi, 0 rossi, 0 TODO** (`npm test`; il validatore non ha più
+ruoli da scrivere e verifica che i tre blocchi coprano esattamente i 15 agenti di `agents/`). Dopo i correttivi del
+blocco B (sotto): **1048 test, 1048 verdi, 0 TODO**.
 
 ### Cosa c'è
 
@@ -302,3 +303,24 @@ poi `--runs 3` quando la calibrazione è fatta (`docs/MANUAL.md`, Appendice C). 
   lettura e azioni vietate.
 - Le RUL degli scenari non hanno codice nei file di `evals/` (regola degli identificatori analitici): lo scaffold le
   crea con `writeAnalysisItem`.
+
+## PARTE 2 — correttivi del blocco B (revisione 2B)
+
+Dopo il blocco C, in commit separati (revisione della parte 2B: approvata con un rilievo importante):
+
+- **Strategia con strategy-select** (importante): `cluster-validator`, `weekly-digest` e `lesson-validator` chiamano
+  `scripts/decide/strategy-select.mjs` nel passo DECIDERE (forma letta con `kb epistemic`, rischio F10, precedente più
+  vicino, sorprese, modalità della sessione) come gli altri ruoli; gli esempi dei corpi sono coerenti con i grader,
+  che il validatore già confronta con `selectStrategy()` sul workspace dello scaffold (i grader restano: sono l'uscita
+  dello script; cambiano gli esempi — `cluster-validator` STR-VERIFY-FIRST su un item libresco, non STR-STOP-RECORD per
+  una quarantena; `lesson-validator` sul soggetto della lezione e non sulla lezione, senza il salto libresco →
+  consolidato). Test nuovo: ogni ruolo con un grader `strategy` cita strategy-select nel corpo (eccezione dichiarata:
+  `scope-extractor`, strategie per regola). MANUAL, Appendice C, punto 4 aggiornato (anche `weekly-digest`).
+- **phrase-report come guard-phrase**: le frasi di approvazione ed esplorazione valgono in ogni maiuscolo/minuscolo
+  (come `PHRASES`, /i), quelle di controllo solo maiuscole (come `CONTROL_PHRASES`); una sola regex senza flag in linea
+  (classi `[Aa]`); 300 grader rigenerati; auto-test del validatore.
+- **approval_request da step-check**: `scope-expert` e `config-designer` dicono come compilarlo — `pending[0]` dell'uscita
+  (`kind`, `plan`, `step` se c'è) **senza** `file`, mai il testo di `ask` (contiene la frase letterale).
+- **root-cause-analyst**: i casi `bisect-unknown-divergence` e `falsifiable-hypothesis-disconfirm` richiedono un
+  registro delle ipotesi non vuoto nella traccia (grader regex `hypotheses-present`).
+- `integrity.mjs build` rifatto (agents/ cambiati).
