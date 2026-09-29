@@ -66,7 +66,7 @@ Tier (§26.3): per compito (haiku T0 · sonnet T1 · opus T2) · ciclo cognitivo
 4. **DECIDERE** — strategia con DT-017 (skill `strategies`), poi la DT del caso con i priori (skill `decision-tables`):
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --surprises <n> --mode <modalità> --depth <profondità> --plan --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-002 risk=<R> shape=<forma> mandatory_missing=<sì-no> open_contradiction=<sì-no> novelty=<sì-no> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent scope-expert --subject <codice> --strategy <STR> --write-dec --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-002 risk=<R> shape=<forma> mandatory_missing=<true-false> open_contradiction=<true-false> novelty=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent scope-expert --subject <codice> --strategy <STR> --write-dec --json
 
    `chiedi` → `needs-input` con la domanda già formulata dai gaps (skill `asking-the-user`). `escala` → `escalate`
    subito, con l'output parziale. Mai a metà. Per un'azione di più passi il piano è una **traccia attesa**: ogni

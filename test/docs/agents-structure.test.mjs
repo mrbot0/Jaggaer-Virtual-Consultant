@@ -18,6 +18,8 @@ import { LEAF_AGENTS, AGENTS_DIR, EXPECT, KB_READERS, ALM_PATTERN, WP10C_SKILLS,
 
 const FORBIDDEN = ["Agent", "Task", "AskUserQuestion", "WebFetch", "WebSearch"];
 const agents = () => Object.entries(agentFiles()).map(([name, text]) => ({ name, text, ...parseAgent(text) }));
+// Il markdown va a capo dove capita: i controlli di contenuto si fanno sul testo con gli spazi normalizzati.
+const flat = (s) => (s == null ? s : s.replace(/\s+/g, " "));
 
 test("agents/: esattamente le 15 definizioni foglia, nessun agents/agent-manager.md (il manager è la skill agent-manager, M1)", () => {
   assert.ok(existsSync(AGENTS_DIR), "manca agents/");
@@ -60,7 +62,7 @@ test("strumenti MCP: browser (Chrome DevTools e Claude browser, mai Playwright) 
 
 test("corpo: Cella con «L'hook nega: non provare», Il ciclo a sei passi con tier e forma di §26.3, Precedenza fra fonti, Cosa non fai mai, Rapporto finale", () => {
   for (const { name, body } of agents()) {
-    const cella = section(body, "Cella");
+    const cella = flat(section(body, "Cella"));
     assert.ok(cella, `${name}: sezione Cella`);
     assert.match(cella, /L'hook nega: non provare\./, `${name}: la cella la applicano gli hook`);
     const ciclo = section(body, "Il ciclo");
@@ -76,7 +78,7 @@ test("corpo: Cella con «L'hook nega: non provare», Il ciclo a sei passi con ti
       assert.ok(p, `${name}: Precedenza fra fonti`);
       assert.match(p, /skill `epistemic-awareness`/, name);
     }
-    const mai = section(body, "Cosa non fai mai");
+    const mai = flat(section(body, "Cosa non fai mai"));
     assert.ok(mai, `${name}: Cosa non fai mai`);
     for (const re of [/[Cc]ancell/, /fuori confine/, /altri scope/, /analysis\//, /[Ii]ndebolire/, /R3/, /traccia cognitiva/]) assert.match(mai, re, `${name}: ${re}`);
     const rap = section(body, "Rapporto finale");
@@ -127,7 +129,7 @@ test("ogni script citato dagli agenti risponde a --help (exit 0)", () => {
 });
 
 test("regole dei ruoli: browser di scope-expert (ruling 3), lettura trasversale, escalation, Defect mai Incident, libresco→R0, PR del test-mechanic", () => {
-  const A = Object.fromEntries(agents().map((a) => [a.name, a.body]));
+  const A = Object.fromEntries(agents().map((a) => [a.name, flat(a.body)]));
   const se = A["scope-expert"];
   assert.match(se, /Chrome DevTools/);
   assert.match(se, /sola lettura e navigazione/, "fuori sandbox il Claude browser solo legge e naviga");

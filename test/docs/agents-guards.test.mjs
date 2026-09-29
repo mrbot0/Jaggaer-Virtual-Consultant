@@ -12,26 +12,34 @@ const GUARDS = ["scope", "customer", "budget", "destructive", "config-scope", "p
 // <piano>: il piano ATTIVO (session.active_plan.file, relativo alla cartella del cliente): un sub-agente esegue step-check
 // solo su quello o su un piano approvato dall'utente (guard-config-scope, WP07 giro 1).
 const PLAN_FILE = "runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/plan.json";
-const VALUES = { C: "ACME", S: "CAT", sid: "sess-1", SES: "SES.ACME.20260929.001", task: "MSG.SES.ACME.20260929.001.0012", mese: "2026-09", piano: PLAN_FILE };
+// Scope di sessione del dispatch: i trasversali di onboarding lavorano su XSC (profilo e mappe dei processi).
+const SCOPE_OF = { "customer-profiler": "XSC", "process-mapper": "XSC" };
+const VALUES = { C: "ACME", sid: "sess-1", SES: "SES.ACME.20260929.001", task: "MSG.SES.ACME.20260929.001.0012", mese: "2026-09", piano: PLAN_FILE };
 
-export function renderForGuards(line) {
+function renderForGuards(line, scope) {
   return line.replaceAll("${CLAUDE_PLUGIN_ROOT}", ROOT.replace(/\\/g, "/"))
-    .replace(/<([^<>]*)>/g, (_m, k) => VALUES[k] ?? "X1");
+    .replace(/<([^<>]*)>/g, (_m, k) => (k === "S" ? scope : VALUES[k] ?? "X1"));
 }
 
 test("ogni riga di comando degli agenti passa i guard della shell come quel sub-agente (nessun deny)", async () => {
-  const ws = mkWs();
-  seedSession(ws, { extra: { active_plan: { plan_id: "PLAN.ACME.0001", file: PLAN_FILE, step: 1 } } });
-  const env = { ...process.env, JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT };
-  delete env.JVC_SESSION_ID;
+  const wsOf = {};
+  for (const scope of ["CAT", "XSC"]) {
+    const ws = mkWs();
+    seedSession(ws, { scope, extra: { active_plan: { plan_id: "PLAN.ACME.0001", file: PLAN_FILE, step: 1 } } });
+    const env = { ...process.env, JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT };
+    delete env.JVC_SESSION_ID;
+    wsOf[scope] = { ws, env };
+  }
   const mods = await Promise.all(GUARDS.map(async (g) => [g, (await import(`../../hooks/lib/guards/${g}.mjs`)).decide]));
   const denied = [];
   let n = 0;
   for (const [name, text] of Object.entries(agentFiles())) {
     const { body } = parseAgent(text);
+    const scope = SCOPE_OF[name] ?? "CAT";
+    const { ws, env } = wsOf[scope];
     for (const line of commandLines(body)) {
       n++;
-      const command = renderForGuards(line);
+      const command = renderForGuards(line, scope);
       const input = { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: "Bash", tool_input: { command }, agent_type: `jaggaer-virtual-consultant:${name}`, agent_id: `a-${name}` };
       for (const [g, decide] of mods) {
         let r;

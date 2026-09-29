@@ -48,8 +48,8 @@ Tier (§26.3): T2 · ciclo cognitivo: completo + passata epistemica
    la strategia da DT-017 (skill `strategies`; su `contraddittorio` `STR-TRIANGULATE`):
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --depth <profondità> --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-020 candidate_type=<TIPO> position=<posizione> unit_form=<forma-unità> lexicon=<lessico> technical_name=<sì-no> external_ref=<sì-no> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent scope-digester --subject <codice> --write-dec --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-022 coverage_deficit=<deficit> critical_missing=<sì-no> r2_critical_missing=<sì-no> below_type_threshold=<sì-no> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent scope-digester --subject <codice> --write-dec --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-020 candidate_type=<TIPO> position=<true-false> unit_form=<true-false> lexicon=<true-false> technical_name=<true-false> external_ref=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent scope-digester --subject <codice> --write-dec --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-022 coverage_deficit=<deficit> critical_missing=<true-false> r2_critical_missing=<true-false> below_type_threshold=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent scope-digester --subject <codice> --write-dec --json
 
    Tipo ambiguo → al validatore con i due tipi candidati. Attributo critico mancante → `quarantena`, mai inventato.
 5. **AGIRE** — scrivi l'item digerito in `customers/<C>/_inbox/<S>/digested/<codice>.yaml` (codice §5, skill
