@@ -57,6 +57,14 @@ function lessons(dir, window) {
   return out;
 }
 
+// Sorprese per compito (§13.2-13.3): il compito è il piano (plan) a cui step-check le attribuisce; la 3ª sorpresa di un
+// compito lo ferma (escalate). Sorprese senza piano contano come un compito della sessione.
+export function surprisesByTask(surprises) {
+  const by = new Map();
+  for (const x of surprises) { const k = x?.plan ?? x?.task ?? "_sessione"; by.set(k, (by.get(k) ?? 0) + 1); }
+  return { tasks: Math.max(1, by.size), stopped: [...by.values()].filter((n) => n >= 3).length };
+}
+
 function sessions(dir, window) {
   if (!existsSync(dir)) return [];
   const out = [];
@@ -69,8 +77,8 @@ function sessions(dir, window) {
     const at = s.updated_at ?? new Date(statSync(f).mtimeMs).toISOString();
     if (window.from && !inWindow(at, window)) continue;
     const surprises = Array.isArray(s.surprises) ? s.surprises : [];
-    const tasks = new Set(surprises.map((x) => x?.task).filter(Boolean));
-    out.push({ id: e.name, at, surprises: surprises.length, tasks: Math.max(1, tasks.size), stopped: surprises.filter((x) => x?.stop || x?.stopped).length || (surprises.length >= 3 ? 1 : 0),
+    const t = surprisesByTask(surprises);
+    out.push({ id: e.name, at, surprises: surprises.length, tasks: t.tasks, stopped: t.stopped,
       tokens: s.budget?.used ?? 0, by_model: s.budget?.by_model ?? {} });
   }
   return out;

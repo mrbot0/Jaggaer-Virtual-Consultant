@@ -409,4 +409,6 @@ export async function run(argv, env = process.env) {
   } catch (err) { return fail(asJson, 2, `errore di sistema: ${err?.message ?? err}`); }
 }
 
-if (isMain(import.meta.url)) run(process.argv.slice(2)).then((c) => process.exit(c), (e) => { console.error(e); process.exit(2); });
+// WP09d (riporto WP09c): su Windows/Node 24 process.exit dopo più fetch (doctor --network) termina il processo con
+// 0xC0000409; si imposta process.exitCode e il processo esce da solo a coda vuota (fetch con AbortSignal.timeout).
+if (isMain(import.meta.url)) run(process.argv.slice(2)).then((c) => { process.exitCode = c; }, (e) => { console.error(e); process.exitCode = 2; });
