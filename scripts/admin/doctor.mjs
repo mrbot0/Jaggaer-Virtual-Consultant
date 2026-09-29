@@ -281,6 +281,40 @@ export function checkAudit(ws, custs, now = new Date()) {
     : C("audit", "green", files.length ? `catena di ${ym} valida (${files.length} file, ${lines} eventi)` : `nessun evento di audit in ${ym}`);
 }
 
+// WP10a (ruling 7): Claude Code sostituisce ${CLAUDE_PLUGIN_ROOT} con il percorso letterale nei corpi dei comandi del plugin;
+// le eccezioni a forma esatta dei guard (purge, retention, promozione, integrity verify) ci contano (un $ rende il comando
+// non semplice ⇒ deny). La prova sta nell'audit del mese (riassunto dell'input di Bash/PowerShell, com'era prima della
+// shell): un comando con il percorso letterale del plugin ⇒ verde; un comando con il segnaposto rimasto ⇒ giallo con la
+// correzione; nessun comando del plugin ancora in audit ⇒ giallo (si riesegue doctor dopo un comando del plugin).
+const SHELL_TOOLS = new Set(["Bash", "PowerShell"]);
+const PLACEHOLDER = "${CLAUDE_PLUGIN_ROOT}";
+const flatPath = (p) => String(p).replace(/\\+/g, "/").toLowerCase();
+export function checkPluginRoot(ws, custs, { plugin = PLUGIN_ROOT, now = new Date() } = {}) {
+  const ym = monthOf(now);
+  const files = [...custs.map((c) => join(ws, "customers", c, "audit", `${ym}.jsonl`)), join(ws, ".jvc", "audit", `${ym}.jsonl`)].filter((f) => existsSync(f));
+  const root = `${flatPath(plugin)}/scripts/`;
+  let literal = 0;
+  let placeholder = 0;
+  for (const f of files) {
+    for (const line of readFileSync(f, "utf8").split("\n")) {
+      if (!line.trim()) continue;
+      let ev;
+      try { ev = JSON.parse(line); } catch { continue; }
+      if (!SHELL_TOOLS.has(ev?.payload?.tool) || typeof ev.payload.input_summary !== "string") continue;
+      const cmd = ev.payload.input_summary;
+      if (cmd.includes("CLAUDE_PLUGIN_ROOT")) placeholder++;
+      else if (flatPath(cmd).includes(root)) literal++;
+    }
+  }
+  if (placeholder) {
+    return C("plugin-root", "yellow", `segnaposto ${PLACEHOLDER} non sostituito in ${placeholder} comandi di ${ym}${literal ? ` (percorso letterale in ${literal})` : ""}`,
+      `docs/MANUAL.md §58 ("${PLACEHOLDER} non sostituito"): aggiornare Claude Code; finché resta, le operazioni a forma esatta (purge, retention, promozione) sono negate dai guard — blocco, non rischio`);
+  }
+  if (literal) return C("plugin-root", "green", `${PLACEHOLDER} sostituito con il percorso del plugin (${literal} comandi in audit, ${ym})`);
+  return C("plugin-root", "yellow", `nessun comando del plugin in audit in ${ym}: la sostituzione di ${PLACEHOLDER} non è ancora verificabile`,
+    "rieseguire /jaggaer-virtual-consultant:vc doctor dopo un altro comando del plugin (es. /jaggaer-virtual-consultant:vc status)");
+}
+
 // WP09c: NETWORK.md (§53.2) — tabella "categoria | host | quando | dichiarato in"; host fra backtick, "none" per nessuno.
 // → { ok, categories: { <id>: { hosts[], none } }, error? }. Solo le righe della tabella contano (mai il testo libero).
 // WP09c giro 1: il parser è condiviso con l'AlmAdapter (scripts/lib/network-md.mjs)
@@ -364,6 +398,7 @@ export async function runChecks({ ws, plugin = PLUGIN_ROOT, env = process.env, n
   const netList = Array.isArray(networkChecks) ? networkChecks : [networkChecks];
   checks.push(await safe("hardening", () => checkHardening(ws, plugin, envDocs, custs, { integrity, network, networkChecks: netList })));
   checks.push(await safe("audit", () => checkAudit(ws, custs, now)));
+  checks.push(await safe("plugin-root", () => checkPluginRoot(ws, custs, { plugin, now })));
   checks.push(...netList);
   return checks;
 }
@@ -387,7 +422,8 @@ Controlli (§55.2, §48.1, §54.7): node, deps, version (plugin.json metadata.kn
 integrity, db:<C>, environments:<C>, credentials (solo i nomi delle variabili NRT_<ENV>_*, XRAY_*, JIRA_*),
 browser (non sondabile: giallo, da verificare in sessione), alm:<C> (coda offline o Jira raggiungibile),
 compensations (pendenze di sessioni precedenti), prod_allowed_red, hardening (checklist §54.7: voci automatiche e
-manuali), audit (catena del mese corrente). --network: DNS degli host dichiarati (offline ⇒ saltato) e host
+manuali), audit (catena del mese corrente), plugin-root (\${CLAUDE_PLUGIN_ROOT} sostituito dal percorso letterale nei
+comandi eseguiti, prova nell'audit). --network: DNS degli host dichiarati (offline ⇒ saltato) e host
 configurati fuori allow-list (environments.yaml, NETWORK.md); network-categories: le categorie di NETWORK.md
 (jaggaer, alm, npm, claude, telemetry = none).
 

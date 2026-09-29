@@ -9,6 +9,7 @@ import { spawnSync } from "node:child_process";
 import { mkWs, seedSession, runHook, decisionOf, reasonOf, cleanEnv, ROOT } from "../helpers/hook-env.mjs";
 import { envWs, patchSession } from "../helpers/env-fixture.mjs";
 import { demoWorkspace, DEMO_ENV } from "../helpers/demo-workspace.mjs";
+import { appendAudit } from "../../hooks/lib/audit.mjs";
 
 const E = (ws) => ({ JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
 const pre = (ws, tool, tool_input, extra = {}) => ({ session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input, ...extra });
@@ -80,6 +81,10 @@ test("F0 — lettura di un altro scope o di un altro cliente ⇒ bloccato", () =
 
 test("F0 — doctor verde (nessun rosso, exit 0) su un workspace dimostrativo preparato", () => {
   const ws = demoWorkspace();
+  // WP10a (ruling 7): nel workspace preparato l'utente ha già eseguito un comando del plugin (/use show): l'audit porta la
+  // riga di comando con il percorso letterale del plugin, come la scrive Claude Code dopo la sostituzione di ${CLAUDE_PLUGIN_ROOT}
+  appendAudit(ws, { session: "sess-demo", customer: null, scope: null, kind: "tool", actor: "manager",
+    payload: { tool: "Bash", input_summary: JSON.stringify({ command: `node "${join(ROOT, "scripts/admin/session.mjs")}" use show --json` }), ok: true } });
   const r = spawnSync(process.execPath, [join(ROOT, "scripts/admin/doctor.mjs"), "--json"], { env: cleanEnv({ ...DEMO_ENV, JVC_WORKSPACE: ws }), encoding: "utf8", timeout: 60000 });
   assert.equal(r.status, 0, r.stdout + r.stderr);
   const out = JSON.parse(r.stdout);

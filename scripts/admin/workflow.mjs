@@ -9,9 +9,10 @@
 // Stati per riga: ▶ in corso · ✓ fatto · ⏸ attende · ✗ fermato · · pianificato. Una riga ⏸ è sempre seguita
 // dalla domanda (sotto il blocco); una riga ✗ dal motivo e da cosa serve per riprendere.
 //
-// CLI: workflow event --kind <k> --payload <json> · workflow render [--session <id>] · workflow watch <SES>
+// CLI: workflow event --kind <k> (--payload <json> | --payload-file <file>) · workflow render [--session <id>] · workflow watch <SES>
+// (WP10a: --payload-file, JSON o YAML: i guard negano JSON in linea nelle invocazioni degli script del plugin)
 // (sola lettura, anche da un'altra sessione: per /vc watch).
-import { readFileSync, readdirSync, appendFileSync, mkdirSync } from "node:fs";
+import { readFileSync, readdirSync, appendFileSync, mkdirSync, statSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
@@ -139,13 +140,32 @@ function findByCode(ws, code) {
   return null;
 }
 
-const HELP = `uso: node scripts/admin/workflow.mjs event --kind <${EVENT_KINDS.join("|")}> --payload <json> [--session <id>]
+const HELP = `uso: node scripts/admin/workflow.mjs event --kind <${EVENT_KINDS.join("|")}> (--payload <json> | --payload-file <file>) [--session <id>]
        node scripts/admin/workflow.mjs render [--session <id>]
        node scripts/admin/workflow.mjs watch <SES.C.AAAAMMGG.NNN>        (sola lettura, anche da un'altra sessione)
        Opzioni: [--workspace <dir>] [--json] [--help]
 
 Il blocco del workflow (§29.5) dagli eventi della sessione: banner di ambiente (§51.3), budget, una riga
-per passo (▶ ✓ ⏸ ✗ ·), totali; ⏸ seguito dalla domanda, ✗ dal motivo. Exit: 0 · 1 argomenti · 2 sistema.`;
+per passo (▶ ✓ ⏸ ✗ ·), totali; ⏸ seguito dalla domanda, ✗ dal motivo. --payload-file <file>: il payload da un file
+JSON o YAML (relativo al workspace, ≤ 256 KB) — la forma da usare nei comandi del plugin (niente JSON in linea).
+Exit: 0 · 1 argomenti · 2 sistema.`;
+
+// WP10a (ruling 1b): payload da file JSON o YAML (YAML caricato solo qui), relativo al workspace, al più 256 KB.
+export const PAYLOAD_FILE_MAX = 256 * 1024;
+async function readPayloadFile(ws, file) {
+  if (typeof file !== "string" || !file) return { error: "--payload-file richiede il percorso del file" };
+  const abs = resolvePath(ws, file);
+  let text;
+  try {
+    if (statSync(abs).size > PAYLOAD_FILE_MAX) return { error: `payload-file oltre ${PAYLOAD_FILE_MAX / 1024} KB: ${file}` };
+    text = readFileSync(abs, "utf8");
+  } catch (err) { return { error: `payload-file illeggibile: ${file} (${err.code ?? err.message})` }; }
+  let payload;
+  try { payload = JSON.parse(text); } catch {
+    try { payload = (await import("yaml")).default.parse(text); } catch (err) { return { error: `payload-file né JSON né YAML: ${file} (${String(err.message).slice(0, 80)})` }; }
+  }
+  return { payload };
+}
 
 export async function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv);
@@ -176,7 +196,14 @@ export async function run(argv, env = process.env) {
     const file = workflowFile(ws, session.customer, sid);
     if (cmd === "event") {
       let payload;
-      try { payload = JSON.parse(opts.payload ?? "{}"); } catch { return fail(asJson, 1, "payload non JSON"); }
+      if (opts["payload-file"] !== undefined) {
+        if (opts.payload !== undefined) return fail(asJson, 1, "--payload e --payload-file sono alternativi");
+        const r = await readPayloadFile(ws, opts["payload-file"]);
+        if (r.error) return fail(asJson, 1, r.error);
+        payload = r.payload;
+      } else {
+        try { payload = JSON.parse(opts.payload ?? "{}"); } catch { return fail(asJson, 1, "payload non JSON"); }
+      }
       if (!payload || typeof payload !== "object" || Array.isArray(payload)) return fail(asJson, 1, "payload: oggetto JSON");
       let ev;
       try { ev = appendEvent(file, opts.kind, payload); } catch (err) { if (err.code === 1) return fail(asJson, 1, err.message); throw err; }
