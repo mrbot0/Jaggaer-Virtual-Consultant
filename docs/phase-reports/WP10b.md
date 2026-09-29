@@ -65,3 +65,21 @@ massimo 156 ms per chiamata, soglia 300 ms).
   `passed < 10` come `partial`: un compito a profondità rapida torna sempre `partial`. Segnalato, non corretto qui.
 - La verifica di un selettore riparato e la micro-esplorazione della diagnosi richiedono un dispatch dello
   scope-expert (test-mechanic e root-cause-analyst non hanno il browser).
+
+### PARTE 1 — Giro di correzione 1
+
+Revisione `.superpowers/sdd/wp10b-review-part1.md` (0 critici, 3 importanti, 5 minori), tutti corretti con test scritti
+prima (rossi) e poi verdi. Suite **1027/1027**; test dei tempi dei guard verde (guard p95 ≤ 144 ms, massimo 149 ms).
+
+- **I1** `dt-eval`: l'espressione dei numeri negli input `nome=valore` aveva perso le barre inverse; le righe documentate
+  DT-010 (weekly-digest) e DT-022 (scope-digester) ora si **eseguono** davvero in un test (`test/docs/agents-dt-eval.test.mjs`).
+- **I2** La cartella di scrittura si deduce da `--db` solo per `customers/<C>/knowledge.db` del `--customer` dichiarato;
+  `product/`, `kb/` o un altro cliente richiedono `--root` (che i guard vedono): nessuna DEC di un sub-agente in `product/`.
+- **I3** `validateReport` giudica `self_check.passed` sull'insieme di controlli della profondità dichiarata (rapida
+  1, 3, 9, 11 = 4; standard e profonda 1–10, `reportedControlsFor`), la stessa fonte di `self-check.mjs`; i tre ruoli T0
+  dichiarano la profondità rapida con 4 controlli; il test di contratto lo verifica per ogni agente.
+- Minori: `deontic --text-file` e `defect --summary-file` (testo non fidato fuori dalla riga di comando);
+  analytics-learner allineato al ruling WP07/WP08 (SELECT fuori sandbox solo con Chrome DevTools, stop al deny);
+  `cross_read` solo per il tipo del plugin (non un omonimo di un altro plugin); schema di `cross_read` più stretto
+  (nessuna chiave in più, date-time, `analysis` in qualunque maiuscolo); in `docs/orchestration.md` nessun dispatch
+  parallelo con lettura trasversale dello stesso tipo.
