@@ -49,3 +49,24 @@ correzione), descritta nel manuale (§58 e Appendice B). Da eseguire alla prima 
 
 Le definizioni degli agenti (WP10b) e le skill, compresa `agent-manager` (WP10c): i comandi le nominano; finché non
 esistono i dispatch non partono. La prova in Claude Code reale (sostituzione dei segnaposto, sessione completa).
+
+
+## Giro di correzione 1
+
+Revisione "Needs fixes" (0 critici, 4 importanti, 7 minori), tutti chiusi secondo i ruling del controller.
+
+| Rilievo | Correzione | Prova |
+|---------|------------|-------|
+| I1 `\promote`, `pro\mote` saltavano la forma esatta della promozione | Nuovo tipo di regola `on: first_arg`: DR-SHELL-008 decide sul primo argomento dopo kb/lifecycle/learn.mjs letto dopo lo scioglimento della shell (backslash, virgolette, `^`, backtick, `bash -c "…"`, jolly nel nome), con `shellCommands` di `hooks/lib/exact-argv.mjs`; l'uso programmatico passa in DR-SHELL-009 | `test/hooks/wp10a-carry-guards.test.mjs` (14 sonde negate, forme benigne ammesse) |
+| I2 `templates/` fuori dal manifesto | `templates` in `SCOPE_DIRS`; `integrity.json` rigenerato | `test/admin/integrity.test.mjs`: template alterato ⇒ verify fallisce e i guard negano |
+| I3 `build-report` solo con testo e JSON in linea | `--payload-file` (titolo, intento, prossimi, atteso/osservato/errori…) e `--intent-file`/`--assumption-file`/`--next-file`; `/nrt report` li usa | `test/admin/wp10a-fixround1.test.mjs` |
+| I4 `kb epistemic <soggetto>` assente | Profilo per soggetto (K, forma, CTR, gap, prossimo passo) in `coverage-report.mjs`; argument-hint e §56.3 | idem |
+| Minore 1 `find --cluster`, `ingest --kind` | Implementati; il test G3 confronta anche le opzioni (spec ⊆ argument-hint = manuale) | `test/docs/manual-alignment.test.mjs` |
+| Minore 2 file d'ingresso fuori dal workspace | `scripts/lib/text-file.mjs` rifiuta percorsi fuori, `..` e collegamenti (text-file, payload-file, sql-file, report) | `wp10a-fixround1` |
+| Minore 3 `plugin-root` troppo sensibile | Contano solo le invocazioni; decide la prova più recente | `wp10a-fixround1` |
+| Minore 4 generatori per elenco | Ogni `build-*.mjs` è un generatore salvo i non generatori dichiarati (deny di default) | `wp10a-carry-guards` |
+| Minore 5 template non valido ignorato in silenzio | Avviso (`warnings` nel JSON, stderr) con file e segnaposto mancanti | `test/compile/wp10a-templates.test.mjs` |
+| Minore 6 righe a forma esatta senza sessione | `--session "${CLAUDE_SESSION_ID}"` su retention, purge e promote; il guard risolve il segnaposto nella sessione della chiamata; riga §58 per due sessioni nello stesso workspace | `wp10a-carry-guards`, `commands-structure` |
+| Minore 7 `/vc` senza argomenti = solo `status` | Azioni suggerite dallo stato (`suggested`) in `status.mjs`, `vc.md` e §56.1 | `wp10a-fixround1` |
+
+Suite completa verde, test di tempo dei guard verde, `integrity.json` rigenerato (369 file, con `templates/`).
