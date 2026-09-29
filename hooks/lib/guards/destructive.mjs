@@ -5,7 +5,9 @@
 //    eseguiti) è spezzata in sotto-comandi (; && || | & a capo ( ) { } $( ) backtick) e ogni sotto-comando è valutato
 //    da OGNI sua parola in poi (prefissi come sudo, env, FOO=1, xargs, bash -c, cmd /c, powershell -Command, eval non
 //    nascondono il comando); le regole `text` vedono il comando intero. Unica eccezione: le operazioni `sanctioned`
-//    (node <plugin>/scripts/admin/purge.mjs con le due approvazioni; WP09d: retention.mjs, --apply solo con --approval),
+//    (node <plugin>/scripts/admin/purge.mjs con le due approvazioni; WP09d: retention.mjs, --apply solo con --approval;
+//    kb/lifecycle/learn promote; giro 1: con --execute / --apply / --to i token sono approvazioni del registro confermate
+//    nel transcript),
 //    riconosciute solo nella forma esatta;
 //  - scrittura: percorso (audit, .env*, .auth/**, codice del plugin senza JVC_DEV) e contenuto (JVC_DEV);
 //  - browser: click e input il cui bersaglio (element, selettore, testo digitato, nome dell'elemento nell'ultimo
@@ -22,7 +24,9 @@ import { ask } from "../io.mjs";
 import { appendAudit } from "../audit.mjs";
 import { summarizeInput } from "../tool-summary.mjs";
 import { loadRules } from "../deny-rules.mjs";
-import { simpleNodeCall, argsRefusal } from "../exact-argv.mjs";
+import { simpleNodeCall, argsRefusal, splitArgs } from "../exact-argv.mjs";
+import { approvalsFile, readApprovals, findGrant, confirmInTranscript } from "../../../scripts/admin/approvals.mjs";
+import { readPointer } from "../workspace.mjs";
 
 const G = "guard-destructive";
 export const SHELL_TOOLS = new Set(["Bash", "PowerShell"]);
@@ -190,15 +194,45 @@ function sanctionedDecision(ctx, cmd, list) {
   if (!call) return null;
   for (const s of list) {
     if (!sameFile(call.script, join(ctx.plugin, ...s.script.split("/")))) continue;
+    if (s.first_arg && call.args[0] !== s.first_arg) continue;   // WP09d giro 1: la regola è di un solo sotto-comando
     const bad = argsRefusal(call.args, s);
     const has = (flag) => call.args.some((a) => a === flag || a.startsWith(`${flag}=`));
     // WP09d: requires_if — un'opzione che ne richiede altre (retention --apply ⇒ --approval)
     const conditional = Object.entries(s.requires_if ?? {}).filter(([flag]) => has(flag)).flatMap(([, need]) => need);
     const missing = [...new Set([...s.require_args, ...conditional])].filter((flag) => !has(flag));
     if (bad || missing.length) return { deny: s, why: bad ?? `mancano ${missing.join(" e ")}` };
+    if (s.approvals && (!s.approvals.when || has(s.approvals.when))) {
+      const why = approvalRefusal(ctx, s, call.args);
+      if (why) return { deny: s, why };
+    }
     return { allow: s, args: call.args };
   }
   return null;
+}
+
+// WP09d giro 1 (I1): le approvazioni amministrative (purge, retention, promozione a S) valgono solo se sono record del
+// registro della sessione (kind e bersaglio attesi, non consumati, nella finestra: findGrant) E se ciascuna è sostenuta da
+// un prompt vero dell'utente nel transcript (confirmInTranscript: riga umana, sha del prompt e orario; una riga per
+// record) — la stessa difesa in profondità delle 3A contro un registro forgiato con la catena di hash corretta.
+function approvalRefusal(ctx, s, args) {
+  const a = s.approvals;
+  const { positional, values } = splitArgs(args, s.flags);
+  const target = positional[a.target_arg];
+  const sid = typeof values["--session"] === "string" ? values["--session"] : ctx.sid;
+  let ptr = null;
+  try { ptr = readPointer(ctx.ws, sid); } catch { ptr = null; }
+  if (!ptr?.customer) return `nessuna sessione con cliente attivo (${sid ?? "—"}): le approvazioni vivono nel registro della sessione`;
+  const reg = readApprovals(approvalsFile(ctx.ws, ptr.customer, sid));
+  if (!reg.ok) return `registro delle approvazioni non valido: ${reg.reason}`;
+  const grants = [];
+  for (const flag of a.tokens) {
+    const g = findGrant(reg.records, { kind: a.kind, target, token: values[flag] });
+    if (!g.ok) return `${flag}: ${g.reason}`;
+    grants.push(g.record);
+  }
+  if (new Set(grants.map((g) => g.hash)).size !== grants.length) return "la stessa approvazione passata due volte";
+  const c = confirmInTranscript(ctx.input?.transcript_path, grants);
+  return c.ok ? null : `approvazione non confermata nel transcript — ${c.reason}`;
 }
 
 // Token con jolly che la shell può espandere in un nome di file segreto (on: glob): ogni segmento di percorso di ogni

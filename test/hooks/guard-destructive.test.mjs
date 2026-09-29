@@ -9,6 +9,7 @@ import { join } from "node:path";
 import YAML from "yaml";
 import { mkWs, seedSession, runHook, decisionOf, reasonOf, ROOT } from "../helpers/hook-env.mjs";
 import { envWs, patchSession, writeSel, writePlan, sealActivePlan } from "../helpers/env-fixture.mjs";
+import { say } from "../helpers/wp09d.mjs";
 
 const G = "guard-destructive";
 const E = (ws, extra = {}) => ({ JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT, ...extra });
@@ -140,7 +141,12 @@ test("Bash legittimo ⇒ nessun output (nessuna opinione)", () => {
 test("purge: l'unica cancellazione passa solo come node <plugin>/scripts/admin/purge.mjs con --approval-1 e --approval-2", () => {
   const ws = setup();
   const purge = join(ROOT, "scripts/admin/purge.mjs");
-  assert.ok(silent(bash(ws, `node "${purge}" ACME --execute --approval-1 tok-a --approval-2 tok-b`)));
+  // WP09d giro 1 (I1): con --execute le due approvazioni devono essere record veri, confermati nel transcript
+  const a1 = say(ws, "APPROVO PURGE ACME DA Mario Rossi");
+  const a2 = say(ws, "APPROVO PURGE ACME DA Anna Bianchi", { transcript: a1.transcript });
+  assert.ok(silent(call(ws, "Bash", { command: `node "${purge}" ACME --execute --approval-1 ${a1.last.hash.slice(0, 16)} --approval-2 ${a2.last.hash.slice(0, 16)}` }, { transcript_path: a1.transcript })));
+  assert.ok(denied(bash(ws, `node "${purge}" ACME --execute --approval-1 tok-a --approval-2 tok-b`)), "token che non sono approvazioni del registro");
+  assert.ok(silent(bash(ws, `node "${purge}" ACME --approval-1 tok-a --approval-2 tok-b`)), "prova a secco nella forma esatta");
   assert.ok(denied(bash(ws, `node "${purge}" ACME --execute --approval-1 tok-a`)), "una sola approvazione");
   assert.ok(denied(bash(ws, `node "${purge}" ACME --execute`)), "senza approvazioni");
   assert.ok(denied(bash(ws, `node "${purge}" ACME --approval-1 a --approval-2 b; rm -rf customers/ACME`)), "catena dopo la purge");

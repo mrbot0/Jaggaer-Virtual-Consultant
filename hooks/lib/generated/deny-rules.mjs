@@ -1,6 +1,6 @@
 // GENERATO da scripts/admin/build-deny-rules.mjs a partire da policy/deny-rules.yaml: non modificare.
 export default {
-  "sha256": "7cc144696482408b3a4b5f839468b23fbebea7fc5ab0a5e0b3a2eb9e4119d997",
+  "sha256": "60e09963d5961e35982b47acec596b55aaf59c53dc9216e2765a0b495066942a",
   "version": 1,
   "sanctioned": [
     {
@@ -21,7 +21,16 @@ export default {
         "--approval-2": "^[A-Za-z0-9][A-Za-z0-9._:-]{3,127}$",
         "--session": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
       },
-      "reason": "customer purge è l'unica cancellazione del plugin (§54.4) e si esegue solo come `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`: le due approvazioni con frase le verifica lo script"
+      "approvals": {
+        "kind": "purge",
+        "tokens": [
+          "--approval-1",
+          "--approval-2"
+        ],
+        "target_arg": 0,
+        "when": "--execute"
+      },
+      "reason": "customer purge è l'unica cancellazione del plugin (§54.4) e si esegue solo come `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`: le due approvazioni con frase le verifica lo script e le conferma il guard nel transcript"
     },
     {
       "id": "DR-OK-002",
@@ -41,7 +50,113 @@ export default {
         "--approval": "^[0-9a-f]{12,64}$",
         "--session": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
       },
-      "reason": "la retention si applica solo come `node <plugin>/scripts/admin/retention.mjs <C> --apply --approval <token>` (una approvazione con frase, verificata dallo script); senza --apply è una prova a secco"
+      "approvals": {
+        "kind": "retention",
+        "tokens": [
+          "--approval"
+        ],
+        "target_arg": 0,
+        "when": "--apply"
+      },
+      "reason": "la retention si applica solo come `node <plugin>/scripts/admin/retention.mjs <C> --apply --approval <token>` (una approvazione con frase, verificata dallo script e confermata dal guard nel transcript); senza --apply è una prova a secco"
+    },
+    {
+      "id": "DR-OK-003",
+      "script": "scripts/kb/kb.mjs",
+      "first_arg": "promote",
+      "require_args": [
+        "--customer"
+      ],
+      "requires_if": {
+        "--to": [
+          "--approval"
+        ]
+      },
+      "positional": [
+        "^promote$",
+        "^[CL]\\.[A-Z0-9]{4}\\.[A-Z0-9]{3}\\.[A-Z]{3}\\.\\d{4}(\\.v\\d+)?$"
+      ],
+      "flags": {
+        "--customer": "^[A-Z0-9]{4}$",
+        "--to": "^product$",
+        "--approval": "^[0-9a-f]{12,64}$",
+        "--session": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+        "--json": null,
+        "--help": null
+      },
+      "approvals": {
+        "kind": "promote",
+        "tokens": [
+          "--approval"
+        ],
+        "target_arg": 1,
+        "when": "--to"
+      },
+      "reason": "kb promote si invoca solo come `node <plugin>/scripts/kb/kb.mjs promote <codice> --customer <C> [--to product --approval <token>]`; l'approvazione della promozione a S la conferma il guard nel transcript"
+    },
+    {
+      "id": "DR-OK-004",
+      "script": "scripts/kb/lifecycle.mjs",
+      "first_arg": "promote",
+      "require_args": [
+        "--customer"
+      ],
+      "requires_if": {
+        "--to": [
+          "--approval"
+        ]
+      },
+      "positional": [
+        "^promote$",
+        "^[CL]\\.[A-Z0-9]{4}\\.[A-Z0-9]{3}\\.[A-Z]{3}\\.\\d{4}(\\.v\\d+)?$"
+      ],
+      "flags": {
+        "--customer": "^[A-Z0-9]{4}$",
+        "--to": "^product$",
+        "--approval": "^[0-9a-f]{12,64}$",
+        "--session": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+        "--json": null,
+        "--help": null
+      },
+      "approvals": {
+        "kind": "promote",
+        "tokens": [
+          "--approval"
+        ],
+        "target_arg": 1,
+        "when": "--to"
+      },
+      "reason": "lifecycle.mjs promote si invoca solo nella forma esatta (come kb promote); l'approvazione della promozione a S la conferma il guard nel transcript"
+    },
+    {
+      "id": "DR-OK-005",
+      "script": "scripts/digest/learn.mjs",
+      "first_arg": "promote",
+      "require_args": [
+        "--customer",
+        "--approval"
+      ],
+      "requires_if": {},
+      "positional": [
+        "^promote$",
+        "^[CL]\\.[A-Z0-9]{4}\\.[A-Z0-9]{3}\\.[A-Z]{3}\\.\\d{4}(\\.v\\d+)?$"
+      ],
+      "flags": {
+        "--customer": "^[A-Z0-9]{4}$",
+        "--to": "^product$",
+        "--approval": "^[0-9a-f]{12,64}$",
+        "--session": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+        "--json": null,
+        "--help": null
+      },
+      "approvals": {
+        "kind": "promote",
+        "tokens": [
+          "--approval"
+        ],
+        "target_arg": 1
+      },
+      "reason": "learn promote (sempre verso product/) si invoca solo come `node <plugin>/scripts/digest/learn.mjs promote <codice> --customer <C> --approval <token>`; l'approvazione la conferma il guard nel transcript"
     }
   ],
   "rules": [
@@ -230,6 +345,21 @@ export default {
       "patterns": [
         {
           "re": "\\bretention\\.mjs\\b",
+          "flags": "iu"
+        }
+      ]
+    },
+    {
+      "id": "DR-SHELL-008",
+      "severity": "hard-deny",
+      "reason": "la promozione (kb.mjs / lifecycle.mjs / learn.mjs promote) si invoca solo nella forma esatta del plugin, senza catene né espansioni: la promozione a S richiede un'approvazione confermata nel transcript",
+      "applies_to": [
+        "shell"
+      ],
+      "on": "text",
+      "patterns": [
+        {
+          "re": "\\bnode(\\.exe)?\\b[\\s\\S]*\\b(kb|lifecycle|learn)\\.mjs\\b[\\s\\S]*\\bpromote\\b",
           "flags": "iu"
         }
       ]

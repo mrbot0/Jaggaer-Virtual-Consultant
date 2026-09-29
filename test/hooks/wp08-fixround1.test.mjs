@@ -40,7 +40,10 @@ test("C1 — PowerShell ( … ) nelle eccezioni a forma esatta: purge, doctor, i
     assert.ok(chainDenies(ws, "PowerShell", c), `PowerShell: ${c}`);
     assert.equal(decisionOf(one("guard-destructive", ws, "PowerShell", { command: c })), "deny", `guard-destructive: ${c}`);
   }
-  assert.ok(silent(one("guard-destructive", ws, "PowerShell", { command: `node "${purge}" ACME --execute --approval-1 tok-aaaa --approval-2 tok-bbbb` })), "forma esatta");
+  // WP09d giro 1: con --execute i token devono essere approvazioni confermate nel transcript (test in wp09d-fixround1);
+  // qui la forma esatta pulita della prova a secco resta ammessa, quella con --execute e token finti è negata
+  assert.ok(silent(one("guard-destructive", ws, "PowerShell", { command: `node "${purge}" ACME --approval-1 tok-aaaa --approval-2 tok-bbbb` })), "forma esatta");
+  assert.equal(decisionOf(one("guard-destructive", ws, "PowerShell", { command: `node "${purge}" ACME --execute --approval-1 tok-aaaa --approval-2 tok-bbbb` })), "deny", "--execute con token che non sono approvazioni");
   // stato d'integrità registrato non ok: il gate deve negare le forme con sotto-espressioni
   writeFileSync(join(ws, ".jvc/integrity.json"), JSON.stringify({ ok: false, status: "fail", checked_at: new Date().toISOString(), plugin_root: ROOT }));
   for (const c of [

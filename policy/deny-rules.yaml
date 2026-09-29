@@ -31,6 +31,9 @@
 # sanctioned — l'unica eccezione: UNA invocazione semplice `node <plugin>/<script> …` (nessuno di ( ) , @ { } $ ` ; & | < >
 # né a capo), ogni argomento validato per forma (positional, flags); le regole valgono comunque sugli argomenti;
 # require_args: opzioni sempre obbligatorie; requires_if { "--x": ["--y"] }: con --x serve anche --y (WP09d).
+# first_arg: la regola vale solo se il primo argomento è quel sotto-comando; approvals { kind, tokens, target_arg, when? }
+# (WP09d giro 1): i token delle opzioni elencate sono approvazioni del registro della sessione (kind, bersaglio = il
+# posizionale target_arg) confermate nel transcript come le 3A; when: solo se c'è quell'opzione.
 # Le regole cardine DR-SHELL-001, DR-SHELL-003, DR-WRITE-001, DR-WRITE-003, DR-BROWSER-002 sono obbligatorie: una policy
 # senza di esse (o svuotata) non si carica e il guard nega.
 version: 1
@@ -47,7 +50,10 @@ sanctioned:
     require_args: ["--approval-1", "--approval-2"]
     positional: ['^[A-Z0-9]{4}$']
     flags: { "--execute": null, "--json": null, "--approval-1": '^[A-Za-z0-9][A-Za-z0-9._:-]{3,127}$', "--approval-2": '^[A-Za-z0-9][A-Za-z0-9._:-]{3,127}$', "--session": '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$' }
-    reason: "customer purge è l'unica cancellazione del plugin (§54.4) e si esegue solo come `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`: le due approvazioni con frase le verifica lo script"
+    # WP09d giro 1 (I1): con --execute il guard risolve i due token nel registro della sessione (kind purge, bersaglio =
+    # l'ID) e li conferma nel transcript (prompt vero dell'utente, sha e orario), come le approvazioni 3A.
+    approvals: { kind: purge, tokens: ["--approval-1", "--approval-2"], target_arg: 0, when: "--execute" }
+    reason: "customer purge è l'unica cancellazione del plugin (§54.4) e si esegue solo come `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`: le due approvazioni con frase le verifica lo script e le conferma il guard nel transcript"
   # WP09d: la retention (§54.4 righe 1-2, §56.8) è la scadenza dichiarata dalla spec, non una cancellazione a richiesta:
   # la prova a secco (senza --apply) elenca; --apply richiede --approval (requires_if) e lo script verifica l'approvazione
   # con frase `APPROVO RETENTION <C>` (registrata da approval-capture) e rimuove solo i percorsi scaduti del cliente.
@@ -58,7 +64,40 @@ sanctioned:
     requires_if: { "--apply": ["--approval"] }
     positional: ['^[A-Z0-9]{4}$']
     flags: { "--apply": null, "--json": null, "--approval": '^[0-9a-f]{12,64}$', "--session": '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$' }
-    reason: "la retention si applica solo come `node <plugin>/scripts/admin/retention.mjs <C> --apply --approval <token>` (una approvazione con frase, verificata dallo script); senza --apply è una prova a secco"
+    approvals: { kind: retention, tokens: ["--approval"], target_arg: 0, when: "--apply" }
+    reason: "la retention si applica solo come `node <plugin>/scripts/admin/retention.mjs <C> --apply --approval <token>` (una approvazione con frase, verificata dallo script e confermata dal guard nel transcript); senza --apply è una prova a secco"
+  # WP09d giro 1 (I1): la promozione a product/ (kb promote --to product, learn promote) nella sola forma esatta; il token
+  # è risolto nel registro (kind promote, bersaglio = il codice) e confermato nel transcript. first_arg: la regola vale
+  # solo per quel sotto-comando (gli altri comandi di kb.mjs non cambiano).
+  - id: DR-OK-003
+    applies_to: [shell]
+    script: scripts/kb/kb.mjs
+    first_arg: promote
+    require_args: ["--customer"]
+    requires_if: { "--to": ["--approval"] }
+    positional: ['^promote$', '^[CL]\.[A-Z0-9]{4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(\.v\d+)?$']
+    flags: { "--customer": '^[A-Z0-9]{4}$', "--to": '^product$', "--approval": '^[0-9a-f]{12,64}$', "--session": '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$', "--json": null, "--help": null }
+    approvals: { kind: promote, tokens: ["--approval"], target_arg: 1, when: "--to" }
+    reason: "kb promote si invoca solo come `node <plugin>/scripts/kb/kb.mjs promote <codice> --customer <C> [--to product --approval <token>]`; l'approvazione della promozione a S la conferma il guard nel transcript"
+  - id: DR-OK-004
+    applies_to: [shell]
+    script: scripts/kb/lifecycle.mjs
+    first_arg: promote
+    require_args: ["--customer"]
+    requires_if: { "--to": ["--approval"] }
+    positional: ['^promote$', '^[CL]\.[A-Z0-9]{4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(\.v\d+)?$']
+    flags: { "--customer": '^[A-Z0-9]{4}$', "--to": '^product$', "--approval": '^[0-9a-f]{12,64}$', "--session": '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$', "--json": null, "--help": null }
+    approvals: { kind: promote, tokens: ["--approval"], target_arg: 1, when: "--to" }
+    reason: "lifecycle.mjs promote si invoca solo nella forma esatta (come kb promote); l'approvazione della promozione a S la conferma il guard nel transcript"
+  - id: DR-OK-005
+    applies_to: [shell]
+    script: scripts/digest/learn.mjs
+    first_arg: promote
+    require_args: ["--customer", "--approval"]
+    positional: ['^promote$', '^[CL]\.[A-Z0-9]{4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(\.v\d+)?$']
+    flags: { "--customer": '^[A-Z0-9]{4}$', "--to": '^product$', "--approval": '^[0-9a-f]{12,64}$', "--session": '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$', "--json": null, "--help": null }
+    approvals: { kind: promote, tokens: ["--approval"], target_arg: 1 }
+    reason: "learn promote (sempre verso product/) si invoca solo come `node <plugin>/scripts/digest/learn.mjs promote <codice> --customer <C> --approval <token>`; l'approvazione la conferma il guard nel transcript"
 
 rules:
   # ---------------- shell: cancellazioni ----------------
@@ -132,6 +171,13 @@ rules:
     reason: "retention.mjs si invoca solo nella forma esatta `node <plugin>/scripts/admin/retention.mjs <C> [--apply --approval <token>]`, senza catene né espansioni (§54.4)"
     patterns:
       - '\bretention\.mjs\b'
+  - id: DR-SHELL-008
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "la promozione (kb.mjs / lifecycle.mjs / learn.mjs promote) si invoca solo nella forma esatta del plugin, senza catene né espansioni: la promozione a S richiede un'approvazione confermata nel transcript"
+    patterns:
+      - '\bnode(\.exe)?\b[\s\S]*\b(kb|lifecycle|learn)\.mjs\b[\s\S]*\bpromote\b'
   # ---------------- shell: git ----------------
   - id: DR-SHELL-010
     severity: hard-deny

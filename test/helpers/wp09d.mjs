@@ -21,13 +21,14 @@ export function ws09d(prefix = "jvc-wp09d-") {
 export function withSession(ws, opts = {}) { return seedSession(ws, { sid: "sess-1", customer: "ACME", scope: "CAT", ...opts }); }
 
 // Frase dell'utente → approval-capture (processo separato, come UserPromptSubmit) → record nel registro.
-export function say(ws, prompt, { sid = "sess-1", customer = "ACME" } = {}) {
-  const tr = join(mkdtempSync(join(tmpdir(), "tr-")), `${sid}.jsonl`);
-  writeFileSync(tr, "");
+// transcript: un transcript esistente a cui aggiungere il prompt (fix round 1: i guard confermano le approvazioni lì).
+export function say(ws, prompt, { sid = "sess-1", customer = "ACME", transcript = null } = {}) {
+  const tr = transcript ?? join(mkdtempSync(join(tmpdir(), "tr-")), `${sid}.jsonl`);
+  if (!transcript) writeFileSync(tr, "");
   appendFileSync(tr, JSON.stringify({ type: "user", isSidechain: false, userType: "external", message: { role: "user", content: prompt }, timestamp: new Date().toISOString() }) + "\n");
   const r = runHook("approval-capture", { session_id: sid, cwd: ws, hook_event_name: "UserPromptSubmit", prompt, transcript_path: tr }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
   const reg = readApprovals(approvalsFile(ws, customer, sid));
-  return { hook: r, context: r.json?.hookSpecificOutput?.additionalContext ?? "", records: reg.records, last: reg.records.at(-1) ?? null };
+  return { hook: r, context: r.json?.hookSpecificOutput?.additionalContext ?? "", records: reg.records, last: reg.records.at(-1) ?? null, transcript: tr };
 }
 
 // CLI del plugin: node <script> …args, con l'ambiente pulito del test.

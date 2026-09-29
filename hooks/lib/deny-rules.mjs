@@ -59,7 +59,19 @@ export function normalizeDoc(doc) {
     // WP09d: requires_if { "--flag": ["--altra", …] } — se c'è --flag servono anche le altre (retention: --apply ⇒ --approval)
     const requiresIf = s.requires_if === undefined ? {} : s.requires_if;
     if (!requiresIf || typeof requiresIf !== "object" || Array.isArray(requiresIf) || !Object.entries(requiresIf).every(([k, v]) => Object.hasOwn(flags, k) && Array.isArray(v) && v.every((x) => typeof x === "string" && Object.hasOwn(flags, x)))) throw new Error(`deny-rules: sanctioned ${s.id}: requires_if non valido`);
-    return { id: s.id, script: s.script, require_args: s.require_args, requires_if: requiresIf, positional, flags, reason: String(s.reason ?? "") };
+    // WP09d giro 1: first_arg (sotto-comando a cui la regola si applica) e approvals { kind, tokens, target_arg, when? }
+    if (s.first_arg !== undefined && (typeof s.first_arg !== "string" || !/^[a-z][a-z0-9-]*$/.test(s.first_arg))) throw new Error(`deny-rules: sanctioned ${s.id}: first_arg non valido`);
+    let approvals = null;
+    if (s.approvals !== undefined) {
+      const a = s.approvals;
+      const ok = a && typeof a === "object" && ["purge", "retention", "promote"].includes(a.kind) && Array.isArray(a.tokens) && a.tokens.length
+        && a.tokens.every((t) => typeof t === "string" && Object.hasOwn(flags, t)) && Number.isInteger(a.target_arg) && a.target_arg >= 0 && a.target_arg < positional.length
+        && (a.when === undefined || (typeof a.when === "string" && Object.hasOwn(flags, a.when)));
+      if (!ok) throw new Error(`deny-rules: sanctioned ${s.id}: approvals non valido`);
+      approvals = { kind: a.kind, tokens: [...a.tokens], target_arg: a.target_arg, ...(a.when ? { when: a.when } : {}) };
+    }
+    return { id: s.id, script: s.script, ...(s.first_arg ? { first_arg: s.first_arg } : {}), require_args: s.require_args, requires_if: requiresIf, positional, flags,
+      ...(approvals ? { approvals } : {}), reason: String(s.reason ?? "") };
   });
   // giro 1 (M5): una policy svuotata o senza le regole cardine non è valida (il guard nega)
   for (const area of ["shell", "write", "browser"]) if (!rules.some((r) => r.applies_to.includes(area))) throw new Error(`deny-rules: nessuna regola per ${area}`);

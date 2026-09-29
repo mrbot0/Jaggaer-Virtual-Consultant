@@ -41,6 +41,21 @@ export function simpleNodeCall(command, cwd) {
   return { script: resolve(cwd, argv[1]), scriptToken: argv[1], args: argv.slice(2) };
 }
 
+// WP09d giro 1: posizionali e valori delle opzioni secondo la stessa grammatica di argsRefusal (flags: null = booleana).
+export function splitArgs(args, flags = {}) {
+  const pos = [];
+  const values = {};
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (!a.startsWith("--")) { pos.push(a); continue; }
+    const eq = a.indexOf("=");
+    const name = eq >= 0 ? a.slice(0, eq) : a;
+    if (flags[name] === null) { values[name] = true; continue; }
+    values[name] = eq >= 0 ? a.slice(eq + 1) : args[++i];
+  }
+  return { positional: pos, values };
+}
+
 // Argomenti per forma: `positional` = regex per posizione; `flags` = { "--flag": null (booleano) | regex del valore }.
 // → null se tutti validi, altrimenti il motivo.
 export function argsRefusal(args, { positional = [], flags = {} }) {
