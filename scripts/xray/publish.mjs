@@ -11,7 +11,7 @@
 import { resolve as resolvePath } from "node:path";
 import { parseArgs } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
-import { readPayload, readPublished, recordPublished } from "../../mcp/alm-server/queue.mjs";
+import { readPayload, recordPublished, executionFor, recordExecution, assertOwned } from "../../mcp/alm-server/queue.mjs";
 import { materializeResults } from "../../mcp/alm-server/payload.mjs";
 import { AlmError } from "../../mcp/alm-server/adapter.mjs";
 import { buildPayload, parseOutcomes, summary } from "./build-payload.mjs";
@@ -28,11 +28,17 @@ export async function publish(c, { run, scope = null, dryRun = false, rebuild = 
   for (const S of scopes) {
     const entry = doc.executions[S];
     if (!entry.results?.tests?.length) { out.push({ scope: S, status: "vuoto" }); continue; }
-    let key = readPublished(c.ws, c.customer, run).scopes?.[S]?.execution_key ?? null;
+    // WP09c giro 1 (I1/I2): la Test Execution del run e dello scope dalla mappa condivisa col server MCP; se esiste, solo se
+    // creata dal plugin in questa sessione (mai import nei risultati altrui); altrimenti si crea (e si registra) ora
+    let key = executionFor(c.ws, c.customer, run, S);
+    if (key) {
+      try { assertOwned(c.ws, c.customer, key, env); } catch (err) { throw new XrayError(3, `scope ${S}: ${err.message}`); }
+    }
     try {
       if (!authed) { await c.adapter.authenticate(); authed = true; }
       if (!key) {
         key = (await c.adapter.createExecution(entry.execution)).key;
+        recordExecution(c.ws, c.customer, run, S, key, "xray-publish");
         recordPublished(c.ws, c.customer, run, S, { execution_key: key, created_at: new Date().toISOString() });
         await recordCreated(c.ws, env, key, "execution", "xray-publish");
       }

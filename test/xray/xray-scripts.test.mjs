@@ -9,8 +9,8 @@ import { join } from "node:path";
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import YAML from "yaml";
-import { mkWs, seedSession, cleanEnv, ROOT } from "../helpers/hook-env.mjs";
-import { startAlmMock, closedUrl, CREDS } from "../helpers/alm-http-mock.mjs";
+import { mkWs, seedSession, cleanEnv, pinXray } from "../helpers/hook-env.mjs";
+import { startAlmMock, closedUrl, almPlugin, CREDS } from "../helpers/alm-http-mock.mjs";
 import { buildPayload, parseOutcomes } from "../../scripts/xray/build-payload.mjs";
 
 const RUN = "RUN.ACME.20260929.1000.P2P";
@@ -18,12 +18,15 @@ const NEG = "NRT.ACME.P2P.NEG.0031"; const POS = "NRT.ACME.P2P.POS.0012"; const 
 const KEYS = { [NEG]: "PROJ-31", [POS]: "PROJ-12", [ENV]: "PROJ-13", [CAT]: "PROJ-41" };
 const png = (tag) => Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.from(tag)]);
 let http;
-before(async () => { http = await startAlmMock({ tests: Object.values(KEYS).map((key) => ({ key, summary: key, labels: [] })) }); });
+// WP09c giro 1: script eseguiti da una copia del plugin il cui NETWORK.md ammette il loopback dei mock locali
+let PLUGIN;
+before(async () => { PLUGIN = almPlugin(); http = await startAlmMock({ tests: Object.values(KEYS).map((key) => ({ key, summary: key, labels: [] })) }); });
 after(async () => { await http.close(); });
 
 function xrayYaml(ws, base, extra = "") {
   writeFileSync(join(ws, "customers/ACME/config/xray.yaml"), `deployment: server\nbase_url: ${base}\nproject: PROJ\ntest_plan_by_scope: { P2P: PROJ-50, CAT: PROJ-60 }\n` +
     `defects: { issue_type: Defect, assignee_by_scope: { P2P: mrossi } }\nnetwork: { retries: 1, backoff_ms: 0, timeout_ms: 3000 }\nattachments_cap: 5\n${extra}`);
+  pinXray(ws);   // WP09c giro 1: vale come fissata da use customer (l'utente modifica il file a mano, poi use customer)
 }
 function addCase(ws, id, { steps = 4, evidence = [], result = null } = {}) {
   const scope = id.split(".")[2];
@@ -56,7 +59,7 @@ function setup(base = http.url) {
 }
 // processo asincrono: il mock HTTP gira nello stesso processo dei test (spawnSync lo bloccherebbe)
 const cli = (name, args, ws, env = {}) => new Promise((resolve) => {
-  const ch = spawn(process.execPath, [join(ROOT, "scripts/xray", `${name}.mjs`), ...args, "--workspace", ws, "--json"], { env: cleanEnv({ ...CREDS, ...env }) });
+  const ch = spawn(process.execPath, [join(PLUGIN, "scripts/xray", `${name}.mjs`), ...args, "--workspace", ws, "--json"], { env: cleanEnv({ ...CREDS, ...env }) });
   let stdout = ""; let stderr = "";
   ch.stdout.on("data", (d) => { stdout += d; });
   ch.stderr.on("data", (d) => { stderr += d; });
@@ -128,9 +131,10 @@ test("publish → verify: esecuzione per scope con etichette, import nativo con 
   const imp = http.state.imports.find((i) => i.key === ex.P2P.execution_key);
   assert.equal(imp.body.info.testPlanKey, "PROJ-50");
   const t12 = imp.body.tests.find((t) => t.testKey === "PROJ-12");
-  assert.equal(t12.status, "FAILED");
-  assert.equal(t12.steps[2].evidence[0].filename, "EV-01.png");
-  assert.equal(Buffer.from(t12.steps[2].evidence[0].data, "base64").toString("latin1").endsWith(`${POS}-01`), true, "il file giusto sul passo giusto");
+  // deployment server (Xray Server/DC, giro 1 I3): stati PASS/FAIL e campo "evidences"
+  assert.equal(t12.status, "FAIL");
+  assert.equal(t12.steps[2].evidences[0].filename, "EV-01.png");
+  assert.equal(Buffer.from(t12.steps[2].evidences[0].data, "base64").toString("latin1").endsWith(`${POS}-01`), true, "il file giusto sul passo giusto");
   assert.equal(imp.body.tests.find((t) => t.testKey === "PROJ-13").status, "ABORTED");
   const pub = JSON.parse(readFileSync(join(ws, "customers/ACME/runs", RUN, "xray-published.json"), "utf8"));
   assert.equal(pub.scopes.P2P.execution_key, ex.P2P.execution_key);
@@ -184,6 +188,7 @@ test("authenticate: ok senza token nell'output; credenziali errate o host non di
   seedSession(cloud, { scope: "P2P" });
   mkdirSync(join(cloud, "customers/ACME/config"), { recursive: true });
   writeFileSync(join(cloud, "customers/ACME/config/xray.yaml"), `deployment: cloud\nbase_url: ${http.url}\nxray_url: ${http.url}\nproject: PROJ\nnetwork: { retries: 1, backoff_ms: 0 }\n`);
+  pinXray(cloud);
   assert.equal((await cli("authenticate", [], cloud)).status, 0);
   const wrong = await cli("authenticate", [], cloud, { XRAY_CLIENT_SECRET: "csecret-wrong-1111" });
   assert.equal(wrong.status, 3);
@@ -233,5 +238,6 @@ test("defect: regressione con precedente fixed nel titolo, passi minimi, evidenz
   // Incident dalla configurazione: rifiutato dallo schema
   xrayYaml(ws, http.url, "");
   writeFileSync(join(ws, "customers/ACME/config/xray.yaml"), readFileSync(join(ws, "customers/ACME/config/xray.yaml"), "utf8").replace("issue_type: Defect", "issue_type: Incident"));
+  pinXray(ws);
   assert.equal((await cli("defect", [`case=${POS}`, `run=${RUN}`, "summary=x"], ws)).status, 1);
 });

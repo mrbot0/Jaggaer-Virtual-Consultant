@@ -2,7 +2,7 @@
 // offline), registrazione in session.alm.created delle issue create dagli script (come alm-record per il server MCP),
 // audit, uscita coerente (--json). Codici d'uscita comuni: 0 ok (anche "in coda": ADR-22) · 1 argomenti o
 // configurazione · 2 errore di sistema · 3 rifiuto, autenticazione o verifica non riuscita.
-import { AlmError } from "../../mcp/alm-server/adapter.mjs";
+import { AlmError, safeMessage } from "../../mcp/alm-server/adapter.mjs";
 import { almContext } from "../../mcp/alm-server/factory.mjs";
 import { OfflineQueue } from "../../mcp/alm-server/queue.mjs";
 import { workspaceCustomer } from "../run/fixtures.mjs";
@@ -47,7 +47,7 @@ export async function audit(ws, env, customer, payload, actor) {
 export function failWith(asJson, err) {
   if (err instanceof XrayError) return fail(asJson, err.code, err.message);
   if (err instanceof AlmError) return fail(asJson, err.code === "config" || err.code === "input" ? 1 : 3, err.message, { alm_error: err.code, network: err.network });
-  return fail(asJson, 2, `errore di sistema: ${err?.message ?? err}`);
+  return fail(asJson, 2, `errore di sistema: ${safeMessage(err?.message ?? err)}`);
 }
 
 // key=value posizionali (le CLI non ricevono JSON inline: i guard lo negano)

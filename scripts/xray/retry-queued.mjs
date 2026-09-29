@@ -23,7 +23,8 @@ export async function run(argv, env = process.env) {
     const c = await xrayContext(opts, env);
     if (opts.status) { const s = c.queue.status(); console.log(asJson ? JSON.stringify({ ok: true, ...s }) : `coda ${c.customer}: ${s.pending} pendenti · ${s.failed} fallite · ${s.sent} inviate`); return 0; }
     const r = await c.queue.retryQueued(c.adapter);
-    for (const s of r.sent) await recordCreated(c.ws, env, s.key, s.op === "defect" ? "defect" : "execution", "xray-retry-queued");
+    // WP09c giro 1 (I1): in session.alm.created solo ciò che il plugin ha CREATO ora, mai chiavi lette dalla coda
+    for (const s of r.sent.filter((x) => x.created)) await recordCreated(c.ws, env, s.key, s.op === "defect" ? "defect" : "execution", "xray-retry-queued");
     if (r.sent.length || r.failed.length) await audit(c.ws, env, c.customer, { action: "xray-retry-queued", sent: r.sent, failed: r.failed.map((f) => f.id), still_queued: r.still_queued.length }, "xray-retry-queued");
     console.log(asJson ? JSON.stringify({ ok: r.failed.length === 0, ...r }) : `inviate ${r.sent.length} · ancora in coda ${r.still_queued.length} · fallite ${r.failed.length}${r.failed.length ? ` (${r.failed.map((f) => `${f.id}: ${f.error}`).join("; ")})` : ""}`);
     return r.failed.length ? 3 : 0;
