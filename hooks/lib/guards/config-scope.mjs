@@ -340,6 +340,8 @@ function scriptContentRefusal(ctx, cmd) {
     } catch { continue; }
     if (!CODE_WRITE.test(text) && !WRITE_ANY.test(text)) continue;
     if (STATE.test(text)) return `lo script ${m[1]} scrive file e cita il registro delle approvazioni o lo stato di sessione`;
+    // WP09b giro 3: gli esiti dei run hanno la stessa protezione dello stato di sessione
+    if (RESULTS.test(text.split(String.fromCharCode(92)).join("/").toLowerCase())) return `lo script ${m[1]} scrive file e cita gli esiti dei run — ${PROTECTED[4][1]}`;
     if (CONFIG_TEXT.test(text)) return `lo script ${m[1]} scrive file e cita le impostazioni di Claude Code — ${SETTINGS_WHY}`;
     if (mentionsPlugin(ctx, text)) return `lo script ${m[1]} scrive file e cita il plugin — ${PLUGIN_WHY}`;
   }
@@ -445,9 +447,9 @@ const protectWrites = guarded(G, (ctx) => {
   if (LINK_CMD.test(flat) && RUNS_SEG.test(flat)) return no("il comando crea un collegamento (link simbolico, giunzione, hard link) e cita runs/: le cartelle dei run e i loro checkpoint non si ridirigono");
   if (/approvals\.json/.test(flat)) return no("il comando cita approvals.json(l): il registro delle approvazioni si legge con Read o con `approvals.mjs status`, non si tocca dalla shell");
   if (/approvals/.test(flat) && WRITE_PRIM.test(flat)) return no("il comando cita 'approvals' insieme a una primitiva di scrittura: nome del registro costruito a runtime");
-  // WP09b giro 2: gli esiti dei run (results/, result.yaml) li scrive solo step-check: un interprete non del plugin che li
-  // cita insieme a una primitiva di scrittura è negato (il nome dentro il codice non lo vede l'analisi dei bersagli)
-  if (INTERP.test(cmd) && RESULTS.test(flat) && WRITE_PRIM.test(flat)) return no(`${PROTECTED[4][1]}: uno script non del plugin li cita insieme a una scrittura`);
+  // WP09b giri 2-3: gli esiti dei run (results/, result.yaml) li scrive solo step-check: come per lo stato di sessione,
+  // un interprete non del plugin che li CITA è negato (write_text, open(…, "w"), nomi costruiti: nessuna primitiva richiesta)
+  if (INTERP.test(cmd) && RESULTS.test(flat)) return no(`${PROTECTED[4][1]}: uno script non del plugin con argomenti o codice che li citano`);
   if (INTERP.test(cmd) && STATE.test(cmd)) return no("uno script non del plugin con argomenti o codice che citano il registro delle approvazioni o lo stato di sessione: solo gli script del plugin toccano lo stato");
   if (tr.name && (flat.includes(tr.name) || tr.dirs.some((d) => flat.includes(d)))) return no("il comando cita il transcript della sessione");
   for (const { tok, cwds, tree, soft } of shellWriteTargets(ctx, cmd)) {
