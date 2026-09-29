@@ -341,7 +341,8 @@ function scriptContentRefusal(ctx, cmd) {
     if (!CODE_WRITE.test(text) && !WRITE_ANY.test(text)) continue;
     if (STATE.test(text)) return `lo script ${m[1]} scrive file e cita il registro delle approvazioni o lo stato di sessione`;
     // WP09b giro 3: gli esiti dei run hanno la stessa protezione dello stato di sessione
-    if (RESULTS.test(text.split(String.fromCharCode(92)).join("/").toLowerCase())) return `lo script ${m[1]} scrive file e cita gli esiti dei run — ${PROTECTED[4][1]}`;
+    const flatText = text.split(String.fromCharCode(92)).join("/").toLowerCase();
+    if (RESULTS.test(flatText) || RESULTS_SEG.test(flatText)) return `lo script ${m[1]} scrive file e cita gli esiti dei run — ${PROTECTED[4][1]}`;
     if (CONFIG_TEXT.test(text)) return `lo script ${m[1]} scrive file e cita le impostazioni di Claude Code — ${SETTINGS_WHY}`;
     if (mentionsPlugin(ctx, text)) return `lo script ${m[1]} scrive file e cita il plugin — ${PLUGIN_WHY}`;
   }
@@ -381,7 +382,12 @@ const CLAUDE_FLAGS = /(^|[\s'"])(-p|--print|-r|--resume|-c|--continue)(?=$|[\s=;
 const RESULTS = /result\.ya?ml|runs\/[^\s'"`]*\/results(\/|['"`\s]|$)/;
 const STATE = /approvals|session\.json|\.sessions[\\/]|\.jvc|current-session|invocations\.jsonl|compact-summary/i;
 const WRITE_PRIM = /appendfile|writefile|createwritestream|opensync|\bfs\.|add-content|set-content|out-file|\btee\b|>|\bopen\s*\(|\bcp\b|\bmv\b|copy-item|move-item|\.write\s*\(|\bac\b|\bsc\b/i;
-const CODE_WRITE = /appendfile|writefile|createwritestream|opensync|add-content|set-content|out-file|\bopen\s*\(|\.write\s*\(|copyfile|renamesync|\brename\s*\(/i;
+// WP09c (riporto WP09b): pathlib write_text/write_bytes sono primitive di scrittura (uno script che scrive solo così
+// era escluso dall'analisi del contenuto)
+const CODE_WRITE = /appendfile|writefile|createwritestream|opensync|add-content|set-content|out-file|\bopen\s*\(|\.write\s*\(|\.write_(text|bytes)\s*\(|copyfile|renamesync|\brename\s*\(/i;
+// WP09c (riporto WP09b): /results/ nudo — il percorso costruito da una variabile di cartella (d + "/results/P.yaml");
+// vale solo insieme a un interprete e a una primitiva di scrittura
+const RESULTS_SEG = /\/results\//;
 const INTERP = /(^|[\s;&|(`'"\\/])(node|nodejs|deno|bun|python3?|py|perl|ruby|pwsh|powershell|php)(\.exe)?(?=$|[\s;&|)`'"])/i;
 function strings(v, out = []) {
   if (typeof v === "string") out.push(v);
@@ -450,6 +456,7 @@ const protectWrites = guarded(G, (ctx) => {
   // WP09b giri 2-3: gli esiti dei run (results/, result.yaml) li scrive solo step-check: come per lo stato di sessione,
   // un interprete non del plugin che li CITA è negato (write_text, open(…, "w"), nomi costruiti: nessuna primitiva richiesta)
   if (INTERP.test(cmd) && RESULTS.test(flat)) return no(`${PROTECTED[4][1]}: uno script non del plugin con argomenti o codice che li citano`);
+  if (INTERP.test(cmd) && RESULTS_SEG.test(flat) && (CODE_WRITE.test(cmd) || WRITE_PRIM.test(cmd))) return no(`${PROTECTED[4][1]}: codice d'interprete che scrive e cita /results/`);
   if (INTERP.test(cmd) && STATE.test(cmd)) return no("uno script non del plugin con argomenti o codice che citano il registro delle approvazioni o lo stato di sessione: solo gli script del plugin toccano lo stato");
   if (tr.name && (flat.includes(tr.name) || tr.dirs.some((d) => flat.includes(d)))) return no("il comando cita il transcript della sessione");
   for (const { tok, cwds, tree, soft } of shellWriteTargets(ctx, cmd)) {

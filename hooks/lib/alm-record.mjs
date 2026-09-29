@@ -17,7 +17,7 @@ export function createdFrom(c, text, structured = null) {
   if (!obj) { try { obj = JSON.parse(String(text).trim()); } catch { return []; } }
   if (!obj || typeof obj !== "object" || Array.isArray(obj)) return [];
   if (typeof obj.key === "string" && ISSUE_KEY.test(obj.key)) return [obj.key];
-  if (c.object === "page" && (typeof obj.id === "string" || typeof obj.id === "number") && /^d{1,20}$/.test(String(obj.id))) return [String(obj.id)];
+  if (c.object === "page" && (typeof obj.id === "string" || typeof obj.id === "number") && /^\d{1,20}$/.test(String(obj.id))) return [String(obj.id)];
   return [];
 }
 
