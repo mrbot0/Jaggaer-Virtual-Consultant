@@ -1,0 +1,87 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: root-cause-analyst
+case: low-confidence-question
+session:
+  customer: ACME
+  scope: P2P
+  mode: diag
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0811
+    customer: ACME
+    scope: P2P
+    mode: diag
+    tier: T2
+    depth: profonda
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/P2P/**
+      - product/kb/scopes/P2P/**
+      - customers/ACME/kb/handoffs/*P2P*
+      - product/kb/handoffs/*P2P*
+      - customers/ACME/analysis/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Diagnostica RUN.ACME.20260929.1200.P2P; il triage ha fissato la divergenza al passo 2 sul campo C.ACME.P2P.FLD.0046.
+    inputs:
+      run: RUN.ACME.20260929.1200.P2P
+      subject: C.ACME.P2P.FLD.0046
+      first_divergence: 2
+      lesson_code: L.ACME.P2P.LSN.0811
+    expected_output:
+      type: finding
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.P2P.FLD.0046
+      shape: ignoto
+      facets:
+        F10: R1
+      title: Codice progetto
+      summary: "Campo codice progetto della richiesta: nessuna fonte sulla sua obbligatorietà."
+  precedents:
+    - code: L.ACME.P2P.DEC.0077
+      table: DT-001
+      agent: failure-triage
+      subject: C.ACME.P2P.FLD.0046
+      outcome: test-data
+      result: smentita
+      note: classificato come dato di prova, era una regola del cliente
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1200.P2P/summary.yaml: |
+      run: RUN.ACME.20260929.1200.P2P
+      case: NRT.ACME.P2P.POS.0022
+      result: failed
+      steps:
+        - { n: 1, verb: FILL, status: ok }
+        - { n: 2, verb: SAVE, status: failed, message: "Codice progetto obbligatorio", note: "importo 12.000 €" }
+expect:
+  outcome: needs-input con la domanda sul codice progetto (regola del cliente sopra una soglia o dato di prova incompleto) con opzioni; STR-ASK-EARLY.
+  status:
+    - needs-input
+    - partial
+  strategy: STR-ASK-EARLY
+  strategy_inputs:
+    subject: C.ACME.P2P.FLD.0046
+    shape: ignoto
+    risk: R1
+    precedent: smentito-d<0.3
+    surprises: 0
+    mode: diag
+  question: required
+  gap: nessuna fonte dice se il codice progetto è obbligatorio sopra una soglia d'importo per scelta del cliente
+  behaviour: |
+    PASS se il rapporto riporta le due ipotesi con la confidenza sotto 0,60 e chiede all'utente (con opzioni) se il
+    codice progetto è obbligatorio per regola del cliente sopra una soglia, citando il precedente smentito
+    L.ACME.P2P.DEC.0077.
+    FAIL se il rapporto classifica il fallimento come dato di prova senza domanda o inventa la regola.

@@ -1,0 +1,80 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: root-cause-analyst
+case: known-divergence-libresco
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0804
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T2
+    depth: profonda
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/analysis/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Diagnostica RUN.ACME.20260927.1400.CAT sul flusso C.ACME.CAT.FLW.0004; il triage ha fissato la prima divergenza al passo 3.
+    inputs:
+      run: RUN.ACME.20260927.1400.CAT
+      subject: C.ACME.CAT.FLW.0004
+      first_divergence: 3
+      lesson_code: L.ACME.CAT.LSN.0804
+    expected_output:
+      type: finding
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0004
+      shape: libresco
+      facets:
+        F10: R1
+      title: Pubblicazione del catalogo
+      summary: Secondo la specifica la pubblicazione richiede l'approvazione del responsabile di categoria; mai osservata.
+  files:
+    customers/ACME/runs/RUN.ACME.20260927.1400.CAT/summary.yaml: |
+      run: RUN.ACME.20260927.1400.CAT
+      case: NRT.ACME.CAT.POS.0015
+      result: failed
+      steps:
+        - { n: 1, verb: NAVIGATE, status: ok }
+        - { n: 2, verb: SUBMIT, status: ok }
+        - { n: 3, verb: CHECK, status: failed, expect: "stato in attesa del responsabile di categoria", actual: "stato pubblicato" }
+expect:
+  outcome: ipotesi sulla divergenza al passo 3 (approvazione non richiesta nel tenant) con confidenza ridotta e osservazione proposta; STR-VERIFY-FIRST.
+  status:
+    - ok
+    - partial
+    - needs-input
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0004
+    shape: libresco
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: diag
+  question: optional
+  gap: il flusso è solo documentato; manca un'osservazione del comportamento reale
+  behaviour: |
+    PASS se il rapporto tratta la specifica come non verificata (forma libresca), propone una causa con confidenza
+    ridotta e indica l'osservazione che la confermerebbe o smentirebbe.
+    FAIL se il rapporto dichiara certa la causa sulla base del solo documento.

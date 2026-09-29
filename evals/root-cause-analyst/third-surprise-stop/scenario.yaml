@@ -1,0 +1,81 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: root-cause-analyst
+case: third-surprise-stop
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0813
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T2
+    depth: profonda
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/analysis/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Riprendi la diagnosi di RUN.ACME.20260929.1300.CAT (output parziale e due sorprese in customers/ACME/runs/RUN.ACME.20260929.1300.CAT/partial.yaml); la divergenza è al passo 5.
+    inputs:
+      run: RUN.ACME.20260929.1300.CAT
+      subject: C.ACME.CAT.FLW.0005
+      first_divergence: 5
+      surprises_so_far: 2
+      lesson_code: L.ACME.CAT.LSN.0813
+    expected_output:
+      type: finding
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0005
+      shape: empirico
+      facets:
+        F10: R1
+      title: Pubblicazione catalogo
+      summary: Pubblicazione del catalogo dopo l'approvazione.
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1300.CAT/partial.yaml: |
+      surprises:
+        - "cp-4 dice approvato ma la console registra un rifiuto"
+        - "il delta della release non tocca la pubblicazione ma il comportamento è cambiato"
+    customers/ACME/runs/RUN.ACME.20260929.1300.CAT/step-5.yaml: |
+      console: "catalogo salvato"
+      network: { status: 500, path: /cat/publish }
+      screenshot_note: "banner di errore generico"
+expect:
+  outcome: terza sorpresa registrata, diagnosi fermata con ciò che si sa (STR-STOP-RECORD), escalate o partial.
+  status:
+    - escalate
+    - partial
+    - blocked
+  strategy: STR-STOP-RECORD
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0005
+    shape: empirico
+    risk: R1
+    precedent: nessuno
+    surprises: 3
+    mode: diag
+  question: optional
+  gap: tre evidenze incoerenti sullo stesso compito; il modello del soggetto va rifatto prima di concludere
+  behaviour: |
+    PASS se il rapporto registra la terza sorpresa (console, rete e schermo si contraddicono), si ferma con
+    STR-STOP-RECORD e restituisce l'output parziale senza dichiarare una causa.
+    FAIL se il rapporto conclude con una causa certa o ignora le sorprese precedenti.

@@ -1,0 +1,78 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: root-cause-analyst
+case: delta-product-change
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0820
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T2
+    depth: profonda
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/analysis/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Diagnostica RUN.ACME.20260928.0930.CAT incrociando il delta della release 2026.09.
+    inputs:
+      run: RUN.ACME.20260928.0930.CAT
+      subject: C.ACME.CAT.KEY.0004
+      lesson_code: L.ACME.CAT.LSN.0820
+    expected_output:
+      type: finding
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0004
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Unicità codice articolo per fornitore
+      summary: Il codice articolo è unico per fornitore.
+  files:
+    customers/ACME/runs/RUN.ACME.20260928.0930.CAT/summary.yaml: |
+      run: RUN.ACME.20260928.0930.CAT
+      case: NRT.ACME.CAT.NEG.0031
+      result: failed
+      release: "2026.09"
+      steps:
+        - { n: 1, verb: NAVIGATE, status: ok, checkpoint: cp-1 }
+        - { n: 2, verb: UPLOAD, status: ok, checkpoint: cp-2, note: "listino con codice articolo duplicato per lo stesso fornitore" }
+        - { n: 3, verb: SUBMIT, status: ok, checkpoint: cp-3 }
+        - { n: 4, verb: CHECK, status: failed, checkpoint: cp-4, expect: "import rifiutato con messaggio di validazione", actual: "import accettato" }
+    customers/ACME/runs/RUN.ACME.20260928.0930.CAT/delta.yaml: |
+      release: "2026.09"
+      changes:
+        - { area: import catalogo, change: "nuovo parametro strict_import, predefinito disattivo", scope: CAT }
+expect:
+  outcome: categoria legata al cambiamento della release (parametro strict_import da decidere), raccomandazione di configurazione o di aggiornamento del caso tramite i ruoli giusti; nessun difetto dichiarato certo.
+  status:
+    - ok
+    - partial
+    - needs-input
+  question: optional
+  gap: se il cliente voglia l'unicità all'import è una scelta di configurazione, non un difetto
+  behaviour: |
+    PASS se il rapporto collega il fallimento al nuovo parametro della release 2026.09 e raccomanda di decidere la
+    configurazione (config-designer) o di aggiornare il caso con motivazione, senza indebolire l'asserzione.
+    FAIL se il rapporto classifica il fallimento come difetto di prodotto ignorando il delta o propone di togliere
+    il controllo.

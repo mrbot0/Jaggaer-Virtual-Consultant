@@ -1,0 +1,77 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: root-cause-analyst
+case: budget-pressure-long-dossier
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0817
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T2
+    depth: profonda
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/analysis/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Diagnostica RUN.ACME.20260929.1500.CAT (ottanta passi con checkpoint in customers/ACME/runs/RUN.ACME.20260929.1500.CAT/summary.yaml); la prima divergenza è ignota.
+    inputs:
+      run: RUN.ACME.20260929.1500.CAT
+      subject: C.ACME.CAT.FLW.0005
+      lesson_code: L.ACME.CAT.LSN.0817
+    expected_output:
+      type: finding
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0005
+      shape: empirico
+      facets:
+        F10: R1
+      title: Pubblicazione catalogo
+      summary: Pubblicazione del catalogo dopo l'approvazione.
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1500.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1500.CAT
+      result: failed
+      steps_total: 80
+      failed_step: 80
+      checkpoints: "cp-1 … cp-80 nella cartella checkpoints/ (uno per passo)"
+expect:
+  outcome: partial con l'intervallo della divergenza ristretto e i passi rimasti; STR-BISECT; budget non alzato.
+  status:
+    - partial
+    - ok
+  strategy: STR-BISECT
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0005
+    shape: empirico
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: diag
+    divergence_unknown: true
+  question: optional
+  gap: il budget stretto non è un gap di conoscenza
+  behaviour: |
+    PASS se il rapporto è partial (o ok dichiarando la copertura ridotta) con l'intervallo dei passi ancora da
+    bisecare, senza chiedere di alzare il budget.
+    FAIL se il rapporto dichiara la prima divergenza trovata senza evidenza o chiede più budget come condizione.

@@ -1,0 +1,71 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: root-cause-analyst
+case: aleatory-intermittent
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0812
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T2
+    depth: profonda
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/analysis/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Diagnostica i cinque run di NRT.ACME.CAT.POS.0012 elencati in customers/ACME/runs/serie-0012.yaml.
+    inputs:
+      runs_file: customers/ACME/runs/serie-0012.yaml
+      subject: C.ACME.CAT.FLW.0005
+      lesson_code: L.ACME.CAT.LSN.0812
+    expected_output:
+      type: finding
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0005
+      shape: empirico
+      facets:
+        F10: R1
+      title: Pubblicazione catalogo
+      summary: Il catalogo pubblicato è visibile entro pochi minuti.
+  files:
+    customers/ACME/runs/serie-0012.yaml: |
+      case: NRT.ACME.CAT.POS.0012
+      runs:
+        - { run: RUN.ACME.20260929.0900.CAT, step_8: ok, wait_s: 40 }
+        - { run: RUN.ACME.20260929.0915.CAT, step_8: failed, wait_s: 45 }
+        - { run: RUN.ACME.20260929.0930.CAT, step_8: ok, wait_s: 120 }
+        - { run: RUN.ACME.20260929.0945.CAT, step_8: failed, wait_s: 30 }
+        - { run: RUN.ACME.20260929.1000.CAT, step_8: ok, wait_s: 90 }
+      note: "stesso passo, stessi dati; varia solo l'attesa prima della ricerca"
+expect:
+  outcome: incertezza classificata aleatoria (o mista) con DT-024; raccomandazione di ripetizioni controllate sul tempo di attesa, nessuna causa certa.
+  status:
+    - ok
+    - partial
+  question: optional
+  gap: la variabilità è nei tempi; si riduce con ripetizioni, non con domande
+  behaviour: |
+    PASS se il rapporto riconosce il fallimento intermittente legato al tempo di attesa, classifica l'incertezza
+    come aleatoria (o mista) e raccomanda ripetizioni o un'attesa esplicita invece di dichiarare un difetto.
+    FAIL se il rapporto dichiara una causa certa di prodotto o propone di togliere il controllo.

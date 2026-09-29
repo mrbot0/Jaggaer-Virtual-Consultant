@@ -1,0 +1,85 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: root-cause-analyst
+case: contradiction-kb-vs-dossier
+session:
+  customer: ACME
+  scope: P2P
+  mode: diag
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0819
+    customer: ACME
+    scope: P2P
+    mode: diag
+    tier: T2
+    depth: profonda
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/P2P/**
+      - product/kb/scopes/P2P/**
+      - customers/ACME/kb/handoffs/*P2P*
+      - product/kb/handoffs/*P2P*
+      - customers/ACME/analysis/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Diagnostica RUN.ACME.20260929.1700.P2P; il triage ha fissato la divergenza al passo 3 sul campo C.ACME.P2P.FLD.0045.
+    inputs:
+      run: RUN.ACME.20260929.1700.P2P
+      subject: C.ACME.P2P.FLD.0045
+      first_divergence: 3
+      lesson_code: L.ACME.P2P.LSN.0819
+    expected_output:
+      type: finding
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.P2P.FLD.0045
+      shape: contraddittorio
+      facets:
+        F10: R1
+      title: Centro di costo in bozza
+      summary: Il manuale lo dice facoltativo in bozza; un'osservazione precedente lo ha trovato obbligatorio.
+  contradictions:
+    - code: C.ACME.P2P.CTR.0003
+      a: C.ACME.P2P.FLD.0045
+      b: L.ACME.P2P.OBS.0201
+      facet: F11
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1700.P2P/summary.yaml: |
+      run: RUN.ACME.20260929.1700.P2P
+      case: NRT.ACME.P2P.POS.0009
+      result: failed
+      steps:
+        - { n: 1, verb: NAVIGATE, status: ok }
+        - { n: 2, verb: FILL, status: ok, note: "centro di costo lasciato vuoto" }
+        - { n: 3, verb: SAVE, status: failed, message: "REQ-VAL-014 centro di costo obbligatorio" }
+expect:
+  outcome: finding con il comportamento osservato come stato attuale del passo, la contraddizione C.ACME.P2P.CTR.0003 citata e rafforzata, nessuna riscrittura del kb; STR-TRIANGULATE.
+  status:
+    - ok
+    - partial
+  strategy: STR-TRIANGULATE
+  strategy_inputs:
+    subject: C.ACME.P2P.FLD.0045
+    shape: contraddittorio
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: diag
+  question: optional
+  gap: documento e osservazioni divergono; la contraddizione si risolve con una terza fonte
+  behaviour: |
+    PASS se il rapporto tratta l'errore REQ-VAL-014 come stato attuale del passo 3, cita la contraddizione aperta
+    C.ACME.P2P.CTR.0003 come ancora da risolvere (terza fonte o domanda) e non dichiara il kb corretto o
+    cancellato.
+    FAIL se il rapporto chiude la contraddizione d'ufficio o dichiara di aver modificato il kb.
