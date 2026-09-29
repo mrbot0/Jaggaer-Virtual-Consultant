@@ -107,6 +107,32 @@ test("C1.4 verify: NRT.ACME.ADM.CFG.0014 dalla CFP — il campo compare, accetta
   assert.ok(existsSync(f)); assert.equal(YAML.parse(readFileSync(f, "utf8")).genre, "CFG");
 });
 
+test("verify su una CFP cliente: il verificatore include le deviazioni (campo sostituito, inserito, deviato, verification del cliente; passo saltato escluso)", () => {
+  const w = ws();
+  const S = cfp("S.STD.ADM.CFP.0014", { verification: { fields: [
+    { sel: "S.STD.ADM.SEL.0111", label: "Centro di costo", mandatory: true, form: { url_pattern: "/requisition/new" }, save: "S.STD.ADM.SEL.0120", error_text: "Centro di costo obbligatorio" },
+    { sel: "S.STD.ADM.SEL.0113", label: "Obbligatorio", form: { url_pattern: "/requisition/new" } },
+  ] } });
+  const src = { doc: "ACME_Configurazione_v2.docx", kind: "doc-cliente-tecnica" };
+  const C = cfpClient("C.ACME.ADM.CFP.0002", {
+    deviations: [
+      { step: 4, reason: "campo proprio del cliente", replace: { target: "C.ACME.ADM.SEL.0009" }, source: src },
+      { step: 5, reason: "tipi campo aggiuntivi da plugin", data_options_from: "C.ACME.ADM.CFG.0019", source: src },
+      { step: 6, reason: "obbligatorietà gestita dal workflow", skip: true, source: src },
+      { after: 4, insert: { verb: "FILL", target: "C.ACME.ADM.SEL.0010", data: "{{field.code}}" }, reason: "codice del campo richiesto dall'ERP", source: src },
+      { after: 7, insert: { verb: "CLICK", target: "C.ACME.ADM.SEL.0007", note: "'Pubblica' esplicito" }, source: { obs: "L.ACME.ADM.OBS.0231", kind: "osservazione-chrome" } },
+    ],
+    verification: { fields: [{ sel: "C.ACME.ADM.SEL.0010", label: "Codice ERP", mandatory: true, form: { url_pattern: "/requisition/new" }, save: "S.STD.ADM.SEL.0120", error_text: "Codice ERP obbligatorio" }] },
+  });
+  const c = verifierCase(C, { customer: "ACME", S });
+  const reads = c.composition.steps.filter((s) => s.verb === "READ").map((s) => s.target);
+  assert.deepEqual(reads, ["C.ACME.ADM.SEL.0009", "C.ACME.ADM.SEL.0010", "S.STD.ADM.SEL.0112"]);
+  assert.deepEqual(c.composition.steps.filter((s) => s.verb === "SAVE").map((s) => s.expect.messages[0]), ["Centro di costo obbligatorio", "Codice ERP obbligatorio"]);
+  assert.ok(c.composition.steps.some((s) => s.verb === "READ" && s.target === "S.STD.ADM.SEL.0112" && /deviazione/.test(s.note)));
+  assert.ok(c.boundary.does_not_assert.some((x) => /C\.ACME\.ADM\.SEL\.0007/.test(x)), "una deviazione non verificabile come campo è dichiarata");
+  assert.deepEqual(c.derivation.from, ["C.ACME.ADM.CFP.0002", "S.STD.ADM.CFP.0014", "S.STD.ADM.CFG.0031"]);
+});
+
 test("CLI: piano con parametri chiave=valore e --out (piano + sidecar)", () => {
   const w = ws();
   const out = join(w, "customers/ACME/runs/RUN.ACME.20260929.1100.ADM/plan.json");

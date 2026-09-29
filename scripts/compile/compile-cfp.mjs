@@ -16,7 +16,9 @@
 //     - sidecar: check pre/post (preconditions/postconditions), snapshot_before (default: governs), origine dei passi.
 //   verifierCase(cfp, { customer, S?, shape?, persona? }) → caso NRT.<C>.<SCOPE>.CFG.<SEQ> (§28.6): il campo compare, è
 //     obbligatorio quando dichiarato (un salvataggio a campo vuoto per OGNI campo obbligatorio: verifica campo per campo),
-//     accetta i valori dichiarati, compare nel payload se rilevante (altrimenti does_not_assert).
+//     accetta i valori dichiarati, compare nel payload se rilevante (altrimenti does_not_assert). Su una CFP cliente
+//     verifica la configurazione EFFETTIVA: campi di S rimappati/saltati dalle deviazioni, campi di C.verification, passi
+//     deviati o inseriti sui campi; le deviazioni non verificabili come campo finiscono in does_not_assert.
 //
 // CLI: node scripts/compile/compile-cfp.mjs --cfp <file|codice> [--client <file|codice>] [--params <file.yaml>] [chiave=valore…]
 //      [--dry-run] [--verify] [--customer C] [--env <id>] [--env-type sandbox|preprod|prod] [--shape libresco] [--out <file>]
@@ -169,13 +171,54 @@ export function cfpPlan(ws, cfp, { customer = null, env = "sandbox", envType = n
   return { plan, sidecar, warnings };
 }
 
+const FIELD_VERBS = new Set(["FILL", "CHOOSE", "TOGGLE"]);
+
+// Campi da verificare per una CFP cliente (§28.6: la configurazione EFFETTIVA = S + deviazioni C):
+//  - i campi di S.verification, col SEL rimappato se una deviazione `replace` cambia il target del passo;
+//    tolti quelli il cui unico passo è saltato (skip) dal cliente;
+//  - i campi di C.verification (sostituiscono per SEL quelli di S);
+//  - ogni passo deviato o inserito FILL/CHOOSE/TOGGLE su un SEL non ancora coperto (il campo compare);
+//  - gli altri passi deviati o inseriti (CLICK, SAVE…) non sono verificabili come campo: dichiarati in does_not_assert.
+function clientFields(S, C, stdFields) {
+  const sBy = new Map((S.steps ?? []).map((s) => [s.n, s]));
+  const remap = new Map();
+  const skippedTargets = new Set();
+  for (const d of C.deviations ?? []) {
+    const s = d.step != null ? sBy.get(d.step) : null;
+    if (!s || typeof s.target !== "string") continue;
+    if (d.replace?.target && d.replace.target !== s.target && typeof d.replace.target === "string") remap.set(s.target, d.replace.target);
+    if (d.skip) skippedTargets.add(s.target);
+  }
+  const { steps: composed } = composeCfp(S, C);   // i passi saltati non ci sono
+  const liveTargets = new Set(composed.filter((s) => typeof s.target === "string").map((s) => s.target));
+  const out = new Map();
+  for (const f of stdFields) {
+    const sel = remap.get(f.sel) ?? f.sel;
+    if (skippedTargets.has(f.sel) && !liveTargets.has(sel)) continue;
+    out.set(sel, { ...f, sel });
+  }
+  for (const f of C.verification?.fields ?? []) out.set(f.sel, { ...f });
+  const unverifiable = [];
+  for (const s of composed) {
+    if (!s.deviation) continue;
+    if (FIELD_VERBS.has(s.verb) && typeof s.target === "string") {
+      if (!out.has(s.target)) out.set(s.target, { sel: s.target, label: `${s.target} (deviazione: ${s.deviation})` });
+    } else if (s.target || s.check) {
+      unverifiable.push(`la deviazione del cliente ${C.id} ${s.verb} ${typeof s.target === "string" ? s.target : s.check ?? JSON.stringify(s.target)} (${s.deviation}): non verificabile come campo`);
+    }
+  }
+  return { fields: [...out.values()], unverifiable };
+}
+
 export function verifierCase(cfp, { customer, S = null, shape = "libresco", persona = null } = {}) {
   const std = S ?? cfp;
   if (!customer || customer === "STD") throw new CfpError(1, "serve --customer per il verificatore");
   const scope = std.id.split(".")[2];
   const seq = (std.verification_test ?? `NRT.STD.${scope}.CFG.${std.id.split(".")[4]}`).split(".")[4];
   const id = `NRT.${customer}.${scope}.CFG.${seq}`;
-  const fields = std.verification?.fields ?? (std.steps ?? []).filter((s) => ["FILL", "CHOOSE", "TOGGLE"].includes(s.verb) && typeof s.target === "string").map((s) => ({ sel: s.target }));
+  const stdFields = std.verification?.fields ?? (std.steps ?? []).filter((s) => FIELD_VERBS.has(s.verb) && typeof s.target === "string").map((s) => ({ sel: s.target }));
+  const client = cfp !== std && cfp.derives_from ? cfp : null;
+  const { fields, unverifiable } = client ? clientFields(std, client, stdFields) : { fields: stdFields, unverifiable: [] };
   if (!fields.length) throw new CfpError(1, `${std.id}: nessun campo da verificare (verification.fields o passi FILL/CHOOSE/TOGGLE)`);
   const nav = (std.steps ?? []).find((s) => s.verb === "NAVIGATE");
   const steps = [];
@@ -209,8 +252,8 @@ export function verifierCase(cfp, { customer, S = null, shape = "libresco", pers
   const c = {
     id, type: "NRT", title: `Verifica della configurazione ${std.title}`.slice(0, 140), scope, genre: "CFG", state: "candidate", ...(persona ? { persona } : {}),
     composition: { steps },
-    derivation: { from: [...new Set([(cfp.derives_from ? cfp.id : std.id), ...(std.governs ?? [])])].filter((x) => /^[SCL]\..*\.(CFP|CFG)\.\d{4}$/.test(x)), risk_mode: "configurazione effettiva", rule: "§28.6: il campo compare, è obbligatorio quando dichiarato, accetta i valori dichiarati", strategy: "cfp" },
-    boundary: { stop_at_step: steps.length, does_not_assert: inPayload.length ? [] : ["la presenza del campo nel payload verso i sistemi esterni"] },
+    derivation: { from: [...new Set([...(cfp.derives_from ? [cfp.id] : []), std.id, ...(std.governs ?? [])])].filter((x) => /^[SCL]\..*\.(CFP|CFG)\.\d{4}$/.test(x)), risk_mode: "configurazione effettiva", rule: "§28.6: il campo compare, è obbligatorio quando dichiarato, accetta i valori dichiarati", strategy: "cfp" },
+    boundary: { stop_at_step: steps.length, does_not_assert: [...(inPayload.length ? [] : ["la presenza del campo nel payload verso i sistemi esterni"]), ...unverifiable] },
     evidence: steps.filter((s) => s.verb === "SAVE" || s.verb === "READ").map((s) => ({ at: s.n, kind: "assertion" })),
     epistemic_at_generation: { shape, subject: std.governs?.[0] ?? std.id },
     compensations, ...(expected.length ? { expected_errors: [...new Set(expected)] } : {}),
