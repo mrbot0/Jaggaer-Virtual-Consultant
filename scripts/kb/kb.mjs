@@ -14,6 +14,10 @@ import { main as coverageMain } from "./coverage-report.mjs";
 import { main as compensationMain } from "./compensation.mjs";
 import { main as snapshotMain } from "./snapshot.mjs";
 import { main as kbCoverageMain } from "./coverage.mjs";
+import { related, facetCount, clusters, contradictions, scopes, handoffs, validateHandoffs, graph } from "./registries.mjs";
+import { rates } from "../digest/outcomes-rates.mjs";
+import { join, dirname } from "node:path";
+import { existsSync } from "node:fs";
 
 const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
 
@@ -41,18 +45,39 @@ Comandi:
   compensation add|list|done → scripts/kb/compensation.mjs (compensazione PRIMA del passo, §29.6)
   snapshot <CFG…> → scripts/kb/snapshot.mjs (stato degli oggetti governati prima di una modifica, §28.1)
   coverage [--scope S] → scripts/kb/coverage.mjs (matrice CL-CFG × scope con forma epistemica, §28.2; copertura NRT: coverage.mjs nrt)
+  related   <codice> [--kind K] [--top N]          relazioni (relations) in entrambe le direzioni, ordinate per W
+  facet-count --facet Fn [--scope --type --level --customer --status]   conteggi per valore (matrice §28.2)
+  graph     [--scope S] [--root <cartella con kb/>] [--product-db <file>]  coerenza: riferimenti pendenti, handoff
+            mancanti per riferimenti fra scope (exit 3 se incoerente)
+  scopes    [--root <dir>]…                        registro + estensione kb/scopes.yaml (§49.3)
+  handoffs  [--scope S] [--root <dir>] [--validate]  HND con i due lati e il test reciproco (exit 3 se --validate fallisce)
+  clusters  [--family CL-XXX] [--status S]          registro dei cluster con membri e digestioni vuote
+  contradictions [--open]                          CTR del registro
+  outcomes  [--table DT-0nn] [--cluster CL-…] [--customer C] [--window 30]   tassi di esito (outcomes-rates)
+  promote   <codice> --customer C [--to product --approval <token>] → scripts/kb/lifecycle.mjs
+  deprecate <codice> --superseded-by <codice> [--customer C] → scripts/kb/lifecycle.mjs
+  migrate   --db <file> [--root <dir>] [--dry-run] → scripts/kb/migrate.mjs (migrazioni + knowledge_version, §49.4)
 
 Opzioni comuni: --db <file> (default knowledge.db) --json --help
 
-Exit code: 0 ok · 1 errore utente (comando/argomenti non validi, DB assente) · 2 errore di sistema.`;
+Exit code: 0 ok · 1 errore utente (comando/argomenti non validi, DB assente) · 2 errore di sistema ·
+3 incoerenza o rifiuto per policy (graph, handoffs --validate, promote).`;
 
 // Opzioni booleane: non prendono valore (un posizionale dopo --json resta un posizionale).
-const BOOL_FLAGS = new Set(["--json", "--help", "--custom"]);
+const BOOL_FLAGS = new Set(["--json", "--help", "--custom", "--validate", "--open", "--dry-run"]);
 function parseArgs(rest) {
   const opt = (k, d) => { const i = rest.indexOf(`--${k}`); return i >= 0 && !BOOL_FLAGS.has(`--${k}`) ? rest[i + 1] : d; };
   const facet = rest.filter((x, i) => rest[i - 1] === "--facet").reduce((a, kv) => { const [k, v] = kv.split("="); a[k] = v; return a; }, {});
   const positional = rest.filter((x, i) => !x.startsWith("--") && !(rest[i - 1]?.startsWith("--") && !BOOL_FLAGS.has(rest[i - 1])));
   return { opt, facet, positional };
+}
+
+// Sotto-comandi con CLI propria e asincrona (scrivono file del workspace o il DB): promote, deprecate, migrate.
+export async function runAsync(argv) {
+  const [cmd, ...rest] = argv;
+  if (cmd === "promote" || cmd === "deprecate") return { exitCode: await (await import("./lifecycle.mjs")).main(cmd, rest) };
+  if (cmd === "migrate") return { exitCode: (await import("./migrate.mjs")).main(rest) };
+  return run(argv);
 }
 
 export function run(argv) {
@@ -71,13 +96,19 @@ export function run(argv) {
   if (cmd === "coverage") return { exitCode: kbCoverageMain(rest) };
   const { opt, facet, positional } = parseArgs(rest);
   const dbPath = opt("db", "knowledge.db");
-  if (!["find", "resolve", "summary", "get", "precedents", "fields", "impact", "identity", "units"].includes(cmd)) {
+  if (!["find", "resolve", "summary", "get", "precedents", "fields", "impact", "identity", "units",
+    "related", "facet-count", "graph", "scopes", "handoffs", "clusters", "contradictions", "outcomes"].includes(cmd)) {
     const msg = `comando sconosciuto: ${cmd}`;
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}\n${HELP}`);
     return { exitCode: 1 };
   }
   if (cmd === "impact" && !positional[0]) {
     const msg = "impact richiede il codice del campo";
+    console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
+    return { exitCode: 1 };
+  }
+  if (cmd === "related" && !positional[0]) {
+    const msg = "related richiede il codice dell'item";
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
     return { exitCode: 1 };
   }
@@ -96,7 +127,9 @@ export function run(argv) {
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}`);
     return { exitCode: 1 };
   }
-  const top = Number(opt("top", cmd === "precedents" ? 5 : cmd === "fields" ? 50 : 10));
+  const top = Number(opt("top", cmd === "precedents" ? 5 : cmd === "fields" ? 50 : cmd === "related" ? 20 : 10));
+  const roots = rest.filter((x, i) => rest[i - 1] === "--root");
+  const out = (obj, code = 0) => { console.log(JSON.stringify({ ok: code === 0, ...obj, took_ms: Date.now() - t0 })); return { exitCode: code }; };
   const t0 = Date.now();
   let items;
   try {
@@ -128,6 +161,41 @@ export function run(argv) {
       const r = searchUnits(db, { doc: opt("doc"), near: opt("near"), query, type: opt("type"), top: Number(opt("top", 5)) });
       console.log(JSON.stringify({ ok: true, question: question ? { type: question.type, attribute: question.attribute, question: question.question } : undefined, items: r, took_ms: Date.now() - t0 }));
       return { exitCode: 0 };
+    } else if (cmd === "related") {
+      const r = related(db, positional[0], { kind: opt("kind"), top });
+      return out({ items: r.items, truncated: r.truncated });
+    } else if (cmd === "facet-count") {
+      const r = facetCount(db, { facet: opt("facet"), scope: opt("scope"), type: opt("type"), level: opt("level"), customer: opt("customer"), status: opt("status") });
+      return out(r);
+    } else if (cmd === "clusters") {
+      const r = clusters(db, { family: opt("family"), status: opt("status"), top: Number(opt("top", 200)) });
+      return out(r);
+    } else if (cmd === "contradictions") {
+      const r = contradictions(db, { open: rest.includes("--open"), top: Number(opt("top", 100)) });
+      return out(r);
+    } else if (cmd === "scopes") {
+      const r = scopes(db, { roots: roots.length ? roots : [dirname(dbPath)] });
+      return out(r);
+    } else if (cmd === "handoffs") {
+      const root = roots[0] ?? dirname(dbPath);
+      const r = handoffs(db, { root, scope: opt("scope") });
+      if (!rest.includes("--validate")) return out(r);
+      const v = validateHandoffs(r.items);
+      return out({ items: r.items, problems: v.problems }, v.ok ? 0 : 3);
+    } else if (cmd === "graph") {
+      const root = roots[0] ?? dirname(dbPath);
+      let known = null;
+      const pdb = opt("product-db");
+      if (pdb) {
+        if (!existsSync(pdb)) throw new InvalidInputError(`--product-db non trovato: ${pdb}`);
+        const p = openDb(pdb, { createIfMissing: false });
+        try { known = new Set(p.prepare("select code from items").all().map((r) => r.code)); } finally { p.close(); }
+      }
+      const r = graph(db, { root, scope: opt("scope"), known, top: Number(opt("top", 50)) });
+      return out(r, r.ok ? 0 : 3);
+    } else if (cmd === "outcomes") {
+      const r = rates(db, { table: opt("table"), cluster: opt("cluster"), customer: opt("customer"), windowMin: Number(opt("window", 30)) });
+      return out({ table: opt("table") ?? null, cluster: opt("cluster") ?? null, customer: opt("customer") ?? null, ...r });
     } else if (cmd === "precedents") {
       const releases = opt("releases") ? String(opt("releases")).split(",").map((x) => x.trim()).filter(Boolean) : undefined;
       const context = { shape: opt("shape"), release: opt("release"), releases, cluster: opt("cluster") };
@@ -147,6 +215,5 @@ export function run(argv) {
 }
 
 if (isMain(import.meta.url)) {
-  const { exitCode } = run(process.argv.slice(2));
-  process.exit(exitCode);
+  runAsync(process.argv.slice(2)).then(({ exitCode }) => { process.exitCode = exitCode; }, (e) => { console.error(e); process.exitCode = 2; });
 }

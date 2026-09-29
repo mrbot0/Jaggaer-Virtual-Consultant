@@ -173,6 +173,29 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
   return stats;
 }
 
+// WP09d: indicizza UN file di item (promote, deprecate): stessa validazione e stesso punteggio di reindex, riga
+// items + FTS aggiornate. Lancia se il file non valida (lo script chiamante lo ha già validato prima di scriverlo).
+// text: il contenuto che si sta per scrivere (promote/deprecate indicizzano PRIMA di scrivere il file, nella stessa
+// transazione: se la scrittura fallisce la riga si annulla e non resta nulla da togliere).
+export function indexItemFile(db, root, file, text = readFileSync(file, "utf8")) {
+  const obj = YAML.parse(text);
+  const v = validateItem(obj);
+  if (!v.ok) throw new Error(`item non valido ${obj?.id ?? file}: ${v.errors.join("; ")}`);
+  const c = parseCode(obj.id);
+  db.prepare(`insert into items(code,level,customer,scope,type,version,title,summary,facets,confidence,quality,weight,status,path,hash,updated_at,verified_at,release_ref)
+    values (@code,@level,@customer,@scope,@type,@version,@title,@summary,@facets,@confidence,@quality,@weight,@status,@path,@hash,@updated_at,@verified_at,@release_ref)
+    on conflict(code) do update set title=excluded.title, summary=excluded.summary, facets=excluded.facets, status=excluded.status,
+    confidence=excluded.confidence, quality=excluded.quality, weight=excluded.weight, path=excluded.path, hash=excluded.hash,
+    updated_at=excluded.updated_at, verified_at=excluded.verified_at, release_ref=excluded.release_ref, version=excluded.version`).run({
+    code: obj.id, level: c.level, customer: c.customer, scope: c.scope, type: c.type, version: c.version, title: obj.title, summary: obj.summary,
+    facets: JSON.stringify(obj.facets), ...scoreItem(obj), status: obj.facets.F12, path: relative(root, file),
+    hash: createHash("sha256").update(text).digest("hex"), updated_at: (existsSync(file) ? new Date(statSync(file).mtimeMs) : new Date()).toISOString(),
+    verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
+  db.prepare("delete from items_fts where code=?").run(obj.id);
+  db.prepare("insert into items_fts(code,title,summary) values (?,?,?)").run(obj.id, obj.title, obj.summary);
+  return obj;
+}
+
 function printHelp() {
   console.log(`uso: node scripts/kb/reindex.mjs --root <dir> --db <file> [--clusters <dir>] [--recompute] [--json] [--help]
 
