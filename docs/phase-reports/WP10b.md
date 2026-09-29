@@ -324,3 +324,25 @@ Dopo il blocco C, in commit separati (revisione della parte 2B: approvata con un
 - **root-cause-analyst**: i casi `bisect-unknown-divergence` e `falsifiable-hypothesis-disconfirm` richiedono un
   registro delle ipotesi non vuoto nella traccia (grader regex `hypotheses-present`).
 - `integrity.mjs build` rifatto (agents/ cambiati).
+
+## PARTE 2 — giro di correzione 1 (revisione del blocco C)
+
+Suite: **1050 test, 1050 verdi, 0 TODO** (`npm test`).
+
+- **La strategia la decide strategy-select** (I1): `analytics-learner` non dice più "ignoto in R0 ⇒ STR-EXPLORE-BUDGET"
+  (di norma STR-VERIFY-FIRST; EXPLORE-BUDGET solo quando lo script lo dà); i due grader restano su STR-VERIFY-FIRST.
+- **Esempi dei rapporti producibili** (I2): corretti gli esempi di `analytics-learner` (consolidato + REPLAY),
+  `defect-reporter` (consolidato + REPLAY), `test-mechanic` (consolidato + REPLAY, non MIN-CHANGE),
+  `config-auditor` (contraddittorio + TRIANGULATE) e, trovati dal test nuovo, `scope-digester` (ignoto +
+  VERIFY-FIRST) e `customer-profiler` (ignoto a R0 + VERIFY-FIRST). Test nuovo
+  `test/docs/agents-strategy-examples.test.mjs`: per ognuno dei 15 corpi, la coppia (shape_before, strategy)
+  dell'esempio deve essere fra quelle che `selectStrategy()` restituisce con i parametri fissati nel comando del corpo
+  (rischio, modalità, profondità) e gli altri enumerati.
+- **Anti-indebolimento sulla proposta** (I3): i grader di `test-mechanic` guardano
+  `tests/proposals/CAT/<task>/NRT.ACME.CAT.POS.0007.yaml` (esistenza, nessun value_contains/truthy/tolerance, messaggio
+  "Import completato: 12 righe" conservato in `remove-assertion-refused`), non più il caso originale.
+- Minori: `defect-reporter` — con un Defect aperto dello stesso sintomo nessun Defect nuovo, anche con
+  `publish: true` (proposta di aggiungere le evidenze a quello aperto); `test-mechanic` — catena DT-008 senza `text`;
+  `failure-triage` — categoria DT-001 giudicata con regex (regression; environment senza percorso al defect-reporter).
+- Rinviati (calibrazione alla prima esecuzione): realismo dei fixture di budget, controlli di status solo LLM, nomi
+  degli strumenti browser dei grader di analytics-learner.
