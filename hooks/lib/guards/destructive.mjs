@@ -5,7 +5,8 @@
 //    eseguiti) è spezzata in sotto-comandi (; && || | & a capo ( ) { } $( ) backtick) e ogni sotto-comando è valutato
 //    da OGNI sua parola in poi (prefissi come sudo, env, FOO=1, xargs, bash -c, cmd /c, powershell -Command, eval non
 //    nascondono il comando); le regole `text` vedono il comando intero. Unica eccezione: le operazioni `sanctioned`
-//    (node <plugin>/scripts/admin/purge.mjs con le due approvazioni), riconosciute solo nella forma esatta;
+//    (node <plugin>/scripts/admin/purge.mjs con le due approvazioni; WP09d: retention.mjs, --apply solo con --approval),
+//    riconosciute solo nella forma esatta;
 //  - scrittura: percorso (audit, .env*, .auth/**, codice del plugin senza JVC_DEV) e contenuto (JVC_DEV);
 //  - browser: click e input il cui bersaglio (element, selettore, testo digitato, nome dell'elemento nell'ultimo
 //    snapshot osservato, nomi della voce dell'Atlas legata al ref) corrisponde a un verbo di cancellazione ⇒ deny che
@@ -190,7 +191,10 @@ function sanctionedDecision(ctx, cmd, list) {
   for (const s of list) {
     if (!sameFile(call.script, join(ctx.plugin, ...s.script.split("/")))) continue;
     const bad = argsRefusal(call.args, s);
-    const missing = s.require_args.filter((flag) => !call.args.some((a) => a === flag || a.startsWith(`${flag}=`)));
+    const has = (flag) => call.args.some((a) => a === flag || a.startsWith(`${flag}=`));
+    // WP09d: requires_if — un'opzione che ne richiede altre (retention --apply ⇒ --approval)
+    const conditional = Object.entries(s.requires_if ?? {}).filter(([flag]) => has(flag)).flatMap(([, need]) => need);
+    const missing = [...new Set([...s.require_args, ...conditional])].filter((flag) => !has(flag));
     if (bad || missing.length) return { deny: s, why: bad ?? `mancano ${missing.join(" e ")}` };
     return { allow: s, args: call.args };
   }

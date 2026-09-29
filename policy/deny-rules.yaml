@@ -29,7 +29,8 @@
 # trusted_labels_only (browser) — la regola vede solo le etichette affidabili (Atlas, snapshot osservato), mai
 # element/selector/testo forniti dal modello; ogni regola con supersedes è implicitamente trusted_labels_only.
 # sanctioned — l'unica eccezione: UNA invocazione semplice `node <plugin>/<script> …` (nessuno di ( ) , @ { } $ ` ; & | < >
-# né a capo), ogni argomento validato per forma (positional, flags); le regole valgono comunque sugli argomenti.
+# né a capo), ogni argomento validato per forma (positional, flags); le regole valgono comunque sugli argomenti;
+# require_args: opzioni sempre obbligatorie; requires_if { "--x": ["--y"] }: con --x serve anche --y (WP09d).
 # Le regole cardine DR-SHELL-001, DR-SHELL-003, DR-WRITE-001, DR-WRITE-003, DR-BROWSER-002 sono obbligatorie: una policy
 # senza di esse (o svuotata) non si carica e il guard nega.
 version: 1
@@ -47,6 +48,17 @@ sanctioned:
     positional: ['^[A-Z0-9]{4}$']
     flags: { "--execute": null, "--json": null, "--approval-1": '^[A-Za-z0-9][A-Za-z0-9._:-]{3,127}$', "--approval-2": '^[A-Za-z0-9][A-Za-z0-9._:-]{3,127}$', "--session": '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$' }
     reason: "customer purge è l'unica cancellazione del plugin (§54.4) e si esegue solo come `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`: le due approvazioni con frase le verifica lo script"
+  # WP09d: la retention (§54.4 righe 1-2, §56.8) è la scadenza dichiarata dalla spec, non una cancellazione a richiesta:
+  # la prova a secco (senza --apply) elenca; --apply richiede --approval (requires_if) e lo script verifica l'approvazione
+  # con frase `APPROVO RETENTION <C>` (registrata da approval-capture) e rimuove solo i percorsi scaduti del cliente.
+  - id: DR-OK-002
+    applies_to: [shell]
+    script: scripts/admin/retention.mjs
+    require_args: []
+    requires_if: { "--apply": ["--approval"] }
+    positional: ['^[A-Z0-9]{4}$']
+    flags: { "--apply": null, "--json": null, "--approval": '^[0-9a-f]{12,64}$', "--session": '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$' }
+    reason: "la retention si applica solo come `node <plugin>/scripts/admin/retention.mjs <C> --apply --approval <token>` (una approvazione con frase, verificata dallo script); senza --apply è una prova a secco"
 
 rules:
   # ---------------- shell: cancellazioni ----------------
@@ -113,6 +125,13 @@ rules:
     reason: "purge.mjs si invoca solo nella forma esatta `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`, senza catene né espansioni"
     patterns:
       - '\bpurge\.mjs\b'
+  - id: DR-SHELL-007
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "retention.mjs si invoca solo nella forma esatta `node <plugin>/scripts/admin/retention.mjs <C> [--apply --approval <token>]`, senza catene né espansioni (§54.4)"
+    patterns:
+      - '\bretention\.mjs\b'
   # ---------------- shell: git ----------------
   - id: DR-SHELL-010
     severity: hard-deny

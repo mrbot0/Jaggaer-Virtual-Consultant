@@ -56,7 +56,10 @@ export function normalizeDoc(doc) {
     if (!positional || !positional.every((x) => typeof x === "string") || !flags || !Object.entries(flags).every(([k, v]) => /^--[\w-]+$/.test(k) && (v === null || typeof v === "string"))) throw new Error(`deny-rules: sanctioned ${s.id}: positional/flags mancanti o non validi`);
     for (const re of [...positional, ...Object.values(flags).filter(Boolean)]) new RegExp(re);
     if (!s.require_args.every((a) => Object.hasOwn(flags, a))) throw new Error(`deny-rules: sanctioned ${s.id}: require_args fuori da flags`);
-    return { id: s.id, script: s.script, require_args: s.require_args, positional, flags, reason: String(s.reason ?? "") };
+    // WP09d: requires_if { "--flag": ["--altra", …] } — se c'è --flag servono anche le altre (retention: --apply ⇒ --approval)
+    const requiresIf = s.requires_if === undefined ? {} : s.requires_if;
+    if (!requiresIf || typeof requiresIf !== "object" || Array.isArray(requiresIf) || !Object.entries(requiresIf).every(([k, v]) => Object.hasOwn(flags, k) && Array.isArray(v) && v.every((x) => typeof x === "string" && Object.hasOwn(flags, x)))) throw new Error(`deny-rules: sanctioned ${s.id}: requires_if non valido`);
+    return { id: s.id, script: s.script, require_args: s.require_args, requires_if: requiresIf, positional, flags, reason: String(s.reason ?? "") };
   });
   // giro 1 (M5): una policy svuotata o senza le regole cardine non è valida (il guard nega)
   for (const area of ["shell", "write", "browser"]) if (!rules.some((r) => r.applies_to.includes(area))) throw new Error(`deny-rules: nessuna regola per ${area}`);

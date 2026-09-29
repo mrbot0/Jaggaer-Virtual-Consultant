@@ -1,6 +1,6 @@
 // GENERATO da scripts/admin/build-deny-rules.mjs a partire da policy/deny-rules.yaml: non modificare.
 export default {
-  "sha256": "ed6b07af910c9a68cd3b4a1cfd236bb3ffaa9280c16816b40b10af09719d214d",
+  "sha256": "7cc144696482408b3a4b5f839468b23fbebea7fc5ab0a5e0b3a2eb9e4119d997",
   "version": 1,
   "sanctioned": [
     {
@@ -10,6 +10,7 @@ export default {
         "--approval-1",
         "--approval-2"
       ],
+      "requires_if": {},
       "positional": [
         "^[A-Z0-9]{4}$"
       ],
@@ -21,6 +22,26 @@ export default {
         "--session": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
       },
       "reason": "customer purge è l'unica cancellazione del plugin (§54.4) e si esegue solo come `node <plugin>/scripts/admin/purge.mjs <ID> --execute --approval-1 <token> --approval-2 <token>`: le due approvazioni con frase le verifica lo script"
+    },
+    {
+      "id": "DR-OK-002",
+      "script": "scripts/admin/retention.mjs",
+      "require_args": [],
+      "requires_if": {
+        "--apply": [
+          "--approval"
+        ]
+      },
+      "positional": [
+        "^[A-Z0-9]{4}$"
+      ],
+      "flags": {
+        "--apply": null,
+        "--json": null,
+        "--approval": "^[0-9a-f]{12,64}$",
+        "--session": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+      },
+      "reason": "la retention si applica solo come `node <plugin>/scripts/admin/retention.mjs <C> --apply --approval <token>` (una approvazione con frase, verificata dallo script); senza --apply è una prova a secco"
     }
   ],
   "rules": [
@@ -194,6 +215,21 @@ export default {
       "patterns": [
         {
           "re": "\\bpurge\\.mjs\\b",
+          "flags": "iu"
+        }
+      ]
+    },
+    {
+      "id": "DR-SHELL-007",
+      "severity": "hard-deny",
+      "reason": "retention.mjs si invoca solo nella forma esatta `node <plugin>/scripts/admin/retention.mjs <C> [--apply --approval <token>]`, senza catene né espansioni (§54.4)",
+      "applies_to": [
+        "shell"
+      ],
+      "on": "text",
+      "patterns": [
+        {
+          "re": "\\bretention\\.mjs\\b",
           "flags": "iu"
         }
       ]
