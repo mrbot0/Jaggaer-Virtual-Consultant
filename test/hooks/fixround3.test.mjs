@@ -108,8 +108,11 @@ test("F5 sessione principale: la stessa logica degli antenati vale per session.j
   for (const c of ["rm -rf customers/ACME/.sessions/sess-1", "rm -rf .jvc", "mv customers/ACME/.sessions /tmp/s", "echo x >| .jvc/current-session", "cp /tmp/invocations.jsonl customers/ACME/.sessions/sess-1/"]) {
     assert.ok(denied(pre("guard-scope", ws, "Bash", { command: c })), c);
   }
+  // WP10d (D6): il blackboard è un file del monitor (lo scrive solo subagent-trace): nemmeno la sessione principale lo
+  // altera dalla shell
+  assert.ok(denied(pre("guard-scope", ws, "Bash", { command: "rm -rf customers/ACME/.sessions/sess-1/blackboard/old.yaml" })));
   mkdirSync(join(ws, "customers/ACME/runs/tmp"), { recursive: true });
-  for (const c of ["rm -rf customers/ACME/runs/tmp", "rm -rf customers/ACME/.sessions/sess-1/blackboard/old.yaml", "cp /tmp/x customers/ACME/lessons/", "sed -n 1p .jvc/current-session", "ls customers | tee listing.txt"]) {
+  for (const c of ["rm -rf customers/ACME/runs/tmp", "cp /tmp/x customers/ACME/lessons/", "sed -n 1p .jvc/current-session", "ls customers | tee listing.txt"]) {
     assert.ok(silent(pre("guard-scope", ws, "Bash", { command: c })), c);
   }
   assert.ok(allSilent(ws, "node scripts/kb/kb.mjs find --scope CAT > out.txt 2>&1"));
