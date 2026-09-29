@@ -21,6 +21,7 @@ import { buildReport, writeReport, accountUnits } from "./ingestion-report.mjs";
 import { writeRawFields } from "./field-table.mjs";
 import { diffUnits, impact } from "./doc-diff.mjs";
 import { learn, loadRegistry, emptyRegistry } from "./aliases.mjs";
+import { makeUnitRedactor, ingestionProfile, knownCustomers, redactDoc } from "./redact.mjs";
 import { workspacePaths, ensureWorkspace, assertOutsidePlugin, PolicyError } from "./lib/paths.mjs";
 export { PolicyError };
 import { openDb } from "../kb/db.mjs";
@@ -40,16 +41,21 @@ function previousUnits(db, code) {
 }
 
 export function ingestDoc(ctx, doc, entry) {
-  const { db, paths, scope, origin, genre, kind, currentRelease, today } = ctx;
+  const { db, paths, scope, origin, genre, kind, currentRelease, today, redaction } = ctx;
   const inbox = paths.inbox(scope);
   const assigned = assignDocCode(db, { level: paths.level, customer: paths.customer, source: entry.path, sha256: entry.sha256 });
   const code = assigned.code;
   // nuova versione dello stesso documento: le unità con hash invariato conservano il codice (§19.16)
   const prevCode = assigned.previous ?? (assigned.existing ? code : null);
   const prev = prevCode ? previousUnits(db, prevCode) : [];
-  const { units, overflow } = segmentUnits(doc, { docCode: code, previous: prev });
-  const profile = profileDoc(doc, units, { code, origin, currentRelease, overflow, today, ...(genre ? { genre } : {}), ...(kind ? { kind } : {}) });
-  const extraction = extractDocument(doc, units, { profile });
+  // T3 (§31.2, §44.5): unità redatte dopo la segmentazione e prima di essere scritte (strict per il livello S)
+  const red = { profile: redaction?.profile ?? "strict", units_redacted: 0, masks: {} };
+  const redactor = makeUnitRedactor({ profile: red.profile, names: redaction?.names ?? [] });
+  const redact = (u) => { const x = redactor(u); if (x.masks.length) red.units_redacted++; for (const m of x.masks) red.masks[m] = (red.masks[m] ?? 0) + 1; return x.unit; };
+  const { units, overflow } = segmentUnits(doc, { docCode: code, previous: prev, redact });
+  const docR = redactDoc(doc, redactor);   // a valle delle unità (profilo, pre-estrazione, righe grezze dei campi) solo redatto
+  const profile = profileDoc(docR, units, { code, origin, currentRelease, overflow, today, ...(genre ? { genre } : {}), ...(kind ? { kind } : {}) });
+  const extraction = extractDocument(docR, units, { profile });
   const acc = accountUnits(units, extraction.items);
   const residueEntries = acc.residue.map((r) => residueEntry({ class: r.class, reason: r.reason, unit: r.unit, doc: code }));
   for (const o of overflow) residueEntries.push(residueEntry({ class: "irrelevant", reason: o.reason, doc: code, detail: { section: o.section, rows: o.rows_total - o.rows_sampled, kind: "righe-dataset" } }));
@@ -63,7 +69,7 @@ export function ingestDoc(ctx, doc, entry) {
   // campi: righe grezze e lotti ≤ 50 per la digestione (digest-fields, budget per documento §29.10)
   let fields = { rows: 0, batches: [], cursor: null, tokens: 0, status: "nessuna tabella di campi" };
   if (units.some((u) => u.type === "riga-tabella-campi")) {
-    const w = writeRawFields(paths.inboxRoot, scope, doc, { genre: profile.genre });
+    const w = writeRawFields(paths.inboxRoot, scope, docR, { genre: profile.genre });
     fields.rows = w.rows;
     if (w.rows) {
       try {
@@ -96,7 +102,7 @@ export function ingestDoc(ctx, doc, entry) {
     writeFileSync(join(inbox, "doc-diff", `${docIdToken(code)}.yaml`), YAML.stringify({ doc: code, previous: assigned.previous, ...impact(d, []) }, { lineWidth: 0 }));
   }
   return {
-    code, doc_id: doc.id, source: entry.path, format: entry.format, kind: profile.kind, genre: profile.genre, reliability: profile.reliability.score,
+    code, doc_id: doc.id, source: entry.path, format: entry.format, redaction: red, kind: profile.kind, genre: profile.genre, reliability: profile.reliability.score,
     units: units.length, units_by_type: profile.units.by_type, items: profile.ingestion.items_produced, residue: profile.ingestion.residue,
     llm: { estimated_tokens: llm.estimated_tokens, sessions: llm.sessions.map((s) => s.tokens), over_unit_budget: llm.over_unit_budget.length },
     fields, overflow_rows: report.overflow_rows, diff, consistent: report.units === report.sourced + report.residue_total,
@@ -119,7 +125,9 @@ export function ingestFolder(input, { root, scope = "XSC", customer = null, orig
   const docs = [];
   const errors = [];
   try {
-    const ctx = { db, paths, scope, origin: origin ?? (paths.level === "S" ? "vendor" : "cliente"), genre, kind, currentRelease, today };
+    // T3: profilo per livello; nel livello S tutti i codici dei clienti del workspace, nel livello C quelli degli altri
+    const redaction = { profile: ingestionProfile({ level: paths.level, customer: paths.customer }), names: knownCustomers(paths.root ?? root).filter((c) => c !== paths.customer) };
+    const ctx = { db, paths, scope, origin: origin ?? (paths.level === "S" ? "vendor" : "cliente"), genre, kind, currentRelease, today, redaction };
     const byId = new Map(h.manifest.filter((m) => m.status === "parsed").map((m) => [m.doc_id, m]));
     for (const doc of h.docs) {
       try {

@@ -186,7 +186,7 @@ export function deonticRule(sentence, lang) {
   return r;
 }
 
-export function segmentUnits(doc, { docCode = null, previous = [], maxWords = MAX_UNIT_WORDS } = {}) {
+export function segmentUnits(doc, { docCode = null, previous = [], maxWords = MAX_UNIT_WORDS, redact = null } = {}) {
   assertParsedDoc(doc);
   const docRef = docCode ?? doc.id;
   const token = docIdToken(docCode ?? doc.id);
@@ -229,6 +229,9 @@ export function segmentUnits(doc, { docCode = null, previous = [], maxWords = MA
     const parts = splitByWords(u.text, maxWords);
     parts.forEach((t, i) => sized.push({ ...u, text: t, part: { n: i + 1, of: parts.length } }));
   }
+  // revisione finale (T3, scripts/ingest/redact.mjs): la redazione dopo la segmentazione e PRIMA dell'hash e della
+  // scrittura, così i codici restano stabili fra versioni (l'hash è quello del testo redatto)
+  if (redact) for (let i = 0; i < sized.length; i++) sized[i] = redact(sized[i]);
   // codici stabili fra versioni (§19.16): stesso hash ⇒ stesso codice
   const prevByHash = new Map();
   let maxSeq = 0;
