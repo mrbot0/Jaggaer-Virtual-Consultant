@@ -11,6 +11,7 @@ import { openDb } from "../kb/db.mjs";
 import { evaluate, loadTable } from "../decide/dt-eval.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { readTextFile } from "../lib/text-file.mjs";
 
 export const DEFAULT_LIMIT = 1000;
 export const MAX_LIMIT = 10000;
@@ -107,7 +108,11 @@ export function run(argv) {
   const [cmd] = positional;
   if (!["limit", "record", "check"].includes(cmd)) return fail(asJson, 1, `comando sconosciuto: ${cmd ?? "(nessuno)"} (limit | record | check)`);
   let sql;
-  try { sql = readFileSync(opts["sql-file"] ?? positional[1] ?? "", "utf8"); } catch { return fail(asJson, 1, "richiesto --sql-file <file.sql> leggibile"); }
+  // WP10a giro 1 (minore 2): il file SQL sta nel workspace (percorsi fuori o .. che escono sono rifiutati)
+  const wsq = opts.workspace || process.env.JVC_WORKSPACE || process.env.CLAUDE_PROJECT_DIR || process.cwd();
+  const t = readTextFile(wsq, opts["sql-file"] ?? positional[1] ?? "", { max: 256 * 1024 });
+  if (t.error) return fail(asJson, 1, `richiesto --sql-file <file.sql> leggibile nel workspace: ${t.error}`);
+  sql = t.text;
   try {
     if (cmd === "limit") {
       const r = ensureLimit(sql, { max: opts.max ? Number(opts.max) : MAX_LIMIT });

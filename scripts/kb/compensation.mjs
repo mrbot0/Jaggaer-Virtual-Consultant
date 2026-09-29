@@ -20,6 +20,7 @@ import { join, resolve as resolvePath } from "node:path";
 import YAML from "yaml";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { readDataFileSync } from "../lib/text-file.mjs";
 import { loadSession, resolveSessionId } from "../admin/session.mjs";
 import { sessionFile } from "../../hooks/lib/workspace.mjs";
 import { appendAudit } from "../../hooks/lib/audit.mjs";
@@ -107,7 +108,10 @@ export function main(argv, env = process.env) {
   const out = (o) => console.log(asJson ? JSON.stringify({ ok: true, ...o }) : YAML.stringify(o).trim());
   try {
     if (cmd === "add") {
-      const p = { ...(opts["payload-file"] ? YAML.parse(readFileSync(resolvePath(opts["payload-file"]), "utf8")) : {}), ...kvArgs(rest) };
+      // WP10a giro 1 (minore 2): payload confinato al workspace
+      let fromFile = {};
+      if (opts["payload-file"]) { const d = readDataFileSync(ws, opts["payload-file"], YAML.parse); if (d.error) return fail(asJson, 1, d.error); fromFile = d.data ?? {}; }
+      const p = { ...fromFile, ...kvArgs(rest) };
       out({ compensation: addCompensation({ ws, sid, plan: opts.plan ?? p.plan ?? null, step: opts.step ?? p.step, kind: p.kind, entity: p.entity, action: p.action, ref: p.ref, run: opts.run ?? p.run ?? null }) });
       return 0;
     }

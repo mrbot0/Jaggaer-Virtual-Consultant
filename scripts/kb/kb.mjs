@@ -24,7 +24,7 @@ const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
 
 Comandi:
   find      --scope --type --status --level --customer --facet K=V --top N
-  resolve   "<testo libero>" | --text-file <file> --top N   (--text-file: la domanda da file, relativo alla cartella corrente)
+  resolve   "<testo libero>" | --text-file <file> --top N   (--text-file: la domanda da un file del workspace)
   summary   <codice>
   get       <codice>
   precedents <soggetto> --top N [--customer ACME] [--shape <forma>] [--release R] [--releases R1,R2,…] [--cluster CL-…]
@@ -139,7 +139,7 @@ export function run(argv) {
     } else if (cmd === "resolve") {
       // WP10a: --text-file (la domanda dell'utente da file: i guard negano ? , e lettere accentate in linea)
       let text = positional.join(" ");
-      if (opt("text-file")) { const t = readTextFile(process.cwd(), opt("text-file")); if (t.error) throw new InvalidInputError(t.error); text = t.text; }
+      if (opt("text-file")) { const t = readTextFile(process.env.JVC_WORKSPACE || process.env.CLAUDE_PROJECT_DIR || process.cwd(), opt("text-file")); if (t.error) throw new InvalidInputError(t.error); text = t.text; }
       items = resolve(db, text, { top });
     } else if (cmd === "summary") {
       items = db.prepare("select code,summary from items where code=?").all(positional[0]);

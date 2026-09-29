@@ -21,6 +21,7 @@ import { readFileSync, existsSync, readdirSync, mkdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { createHash } from "node:crypto";
 import YAML from "yaml";
+import { readDataFileSync } from "../lib/text-file.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { writeFileAtomic, withFileLock } from "../../hooks/lib/fsx.mjs";
@@ -164,7 +165,10 @@ export function run(argv, env = process.env) {
     }
     if (cmd === "register") {
       if (!opts.run) return fail(asJson, 1, "richiesto --run");
-      const p = { ...(opts["payload-file"] ? YAML.parse(readFileSync(resolvePath(opts["payload-file"]), "utf8")) : {}), ...kvArgs(rest) };
+      // WP10a giro 1 (minore 2): payload confinato al workspace
+      let fromFile = {};
+      if (opts["payload-file"]) { const d = readDataFileSync(ws, opts["payload-file"], YAML.parse); if (d.error) return fail(asJson, 1, d.error); fromFile = d.data ?? {}; }
+      const p = { ...fromFile, ...kvArgs(rest) };
       out({ created: registerCreated(ws, customer, opts.run, { entity: p.entity, case: p.case ?? null, step: p.step != null ? Number(p.step) : null, ref: p.ref ?? null, attrs: p.attrs ?? null, compensation: p.compensation ?? null }) });
       return 0;
     }

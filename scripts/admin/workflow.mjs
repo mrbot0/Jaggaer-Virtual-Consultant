@@ -12,10 +12,11 @@
 // CLI: workflow event --kind <k> (--payload <json> | --payload-file <file>) · workflow render [--session <id>] · workflow watch <SES>
 // (WP10a: --payload-file, JSON o YAML: i guard negano JSON in linea nelle invocazioni degli script del plugin)
 // (sola lettura, anche da un'altra sessione: per /vc watch).
-import { readFileSync, readdirSync, appendFileSync, mkdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, appendFileSync, mkdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
+import { readDataFile, DATA_FILE_MAX } from "../lib/text-file.mjs";
 import { withFileLock } from "../../hooks/lib/fsx.mjs";
 import { sessionDir } from "../../hooks/lib/workspace.mjs";
 
@@ -150,21 +151,12 @@ per passo (▶ ✓ ⏸ ✗ ·), totali; ⏸ seguito dalla domanda, ✗ dal motiv
 JSON o YAML (relativo al workspace, ≤ 256 KB) — la forma da usare nei comandi del plugin (niente JSON in linea).
 Exit: 0 · 1 argomenti · 2 sistema.`;
 
-// WP10a (ruling 1b): payload da file JSON o YAML (YAML caricato solo qui), relativo al workspace, al più 256 KB.
-export const PAYLOAD_FILE_MAX = 256 * 1024;
+// WP10a (ruling 1b): payload da file JSON o YAML, al più 256 KB; giro 1 (minore 2): confinato al workspace
+// (scripts/lib/text-file.mjs, la stessa lettura di build-report e degli altri file d'ingresso).
+export const PAYLOAD_FILE_MAX = DATA_FILE_MAX;
 async function readPayloadFile(ws, file) {
-  if (typeof file !== "string" || !file) return { error: "--payload-file richiede il percorso del file" };
-  const abs = resolvePath(ws, file);
-  let text;
-  try {
-    if (statSync(abs).size > PAYLOAD_FILE_MAX) return { error: `payload-file oltre ${PAYLOAD_FILE_MAX / 1024} KB: ${file}` };
-    text = readFileSync(abs, "utf8");
-  } catch (err) { return { error: `payload-file illeggibile: ${file} (${err.code ?? err.message})` }; }
-  let payload;
-  try { payload = JSON.parse(text); } catch {
-    try { payload = (await import("yaml")).default.parse(text); } catch (err) { return { error: `payload-file né JSON né YAML: ${file} (${String(err.message).slice(0, 80)})` }; }
-  }
-  return { payload };
+  const r = await readDataFile(ws, file, { max: PAYLOAD_FILE_MAX });
+  return r.error ? { error: `payload-file: ${r.error}` } : { payload: r.data };
 }
 
 export async function run(argv, env = process.env) {

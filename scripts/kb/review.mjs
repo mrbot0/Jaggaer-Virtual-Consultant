@@ -27,6 +27,7 @@ import { parseCode, isValidCode } from "./codes.mjs";
 import { workspacePaths } from "../ingest/lib/paths.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
+import { readDataFileSync } from "../lib/text-file.mjs";
 
 export const VERBS = ["accept", "correct", "reject"];
 export const DEONTIC_BATCH = 10;
@@ -168,7 +169,9 @@ export function main(argv) {
       return 0;
     }
     if (cmd === "stats") { console.log(JSON.stringify({ ok: true, ...stats(paths.reviews) })); return 0; }
-    const payload = opts["payload-file"] ? YAML.parse(readFileSync(opts["payload-file"], "utf8")) : null;
+    // WP10a giro 1 (minore 2): payload confinato al workspace (--root)
+    let payload = null;
+    if (opts["payload-file"]) { const d = readDataFileSync(opts.root, opts["payload-file"], YAML.parse); if (d.error) return fail(asJson, 1, d.error); payload = d.data; }
     const v = parseVerb([cmd, ...positional], payload);
     const r = record(paths.reviews, { ...v, reviewer: opts.reviewer ?? null });
     console.log(JSON.stringify({ ok: true, ...r }));
