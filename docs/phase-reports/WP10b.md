@@ -127,10 +127,13 @@ Suite alla consegna: **1053 test, 1043 verdi, 0 rossi, 10 TODO** (i dieci ruoli 
 ### Esecuzione e pass rate (passo dell'utente)
 
 La CLI `claude` non è disponibile nell'ambiente di sviluppo: i casi sono validati strutturalmente, la pass rate per
-ruolo non è misurata in questo ciclo. Comando, requisiti (WSL2 su Windows: Bash concesso richiede il sandbox del
-sistema operativo) e lettura dei risultati: `docs/MANUAL.md`, Appendice C. In breve:
+ruolo non è misurata in questo ciclo. Comando, requisiti (su Windows WSL2 quando si concede Bash o PowerShell; nessun
+requisito sulla posizione del plugin) e lettura dei risultati: `docs/MANUAL.md`, Appendice C (aggiornata nel blocco B
+con i fatti verificati del formato). In breve: prima `claude plugin validate .`, poi la calibrazione per ruolo
 
-    claude plugin eval . --tag <ruolo> --scaffold --ablation none --allow-tools Write "Bash(node *)" --judge-model sonnet
+    claude plugin eval . --scaffold --runs 1 --tag <ruolo> --ablation none --allow-tools Write "Bash(node *)" --judge-model sonnet
+
+(`--scaffold` è necessario: lo scaffold del caso gira solo con questa opzione).
 
 La pass rate di un ruolo è `casesPassed / casesTotal` in `evals/results/<data>/aggregate-result.json`.
 
@@ -141,3 +144,68 @@ La pass rate di un ruolo è `casesPassed / casesTotal` in `evals/results/<data>/
 - Le strategie attese sono quelle che `strategy-select` produce sui dati dello scenario (verificato dal test), non
   quelle degli esempi nei corpi degli agenti.
 - `evals/` resta fuori dal perimetro di `integrity.json` (materiale di test, non di esecuzione; `SCOPE_DIRS` invariato).
+
+## PARTE 2 — blocco B: 100 casi per cinque trasversali, ruling approval_request, correzioni del blocco A
+
+Stato: **pronta** (blocco B di 3). Resta il blocco C (analytics-learner, test-mechanic, failure-triage, config-auditor,
+defect-reporter); il tag `agents-done` resta dopo la parte 2 completa. Dettaglio di consegna:
+`.superpowers/sdd/wp10b-report.md`.
+
+Suite alla consegna: **1052 test, 1047 verdi, 0 rossi, 5 TODO** (i cinque ruoli del blocco C; `npm test`). Il
+controllo dei frammenti del corpus locale gira (nessun frammento); `JVC_SKIP_CORPUS=1` lo salta.
+
+### Cosa c'è
+
+- **100 casi** (20 per ruolo) generati dai cataloghi `evals/_support/catalog/<ruolo>.yaml`:
+  - `cluster-validator` — ammissione con DT-005, rigetto motivato, quarantena su criterio indeterminato, fusione sopra
+    il 70 % e rifiuto sotto soglia, proposta di scissione oltre 40 membri, regole RC di un cluster nuovo, campionamento
+    deterministico, CL-EPI (vettore K) e CL-STR (esito verificato), tipo ambiguo, contraddizione aperta. Lo scaffold
+    carica il catalogo dei cluster del plugin: `cluster.mjs` dà sul workspace gli esiti attesi (verificato a mano).
+  - `weekly-digest` — pipeline in un colpo (ok, o `blocked` per sale assente o lock), sale mai in linea, lock intatto,
+    contraddetti mai promossi, promozione chiesta con `approval_request { kind: promote, target }`, calibrazione solo
+    con ≥ 10 DEC e solo come proposta, permesso trasversale concesso solo dalla sessione principale e di sola lettura,
+    uscite pseudonimizzate, portabilità non a maggioranza, confronto fra competence report.
+  - `root-cause-analyst` — STR-BISECT con divergenza ignota, ipotesi falsificabili con l'alternativa, regressione dal
+    precedente fixed, BRF/PBK come contesto e mai come causa, CHK che cita l'invariante, nessun codice di test in
+    `analysis/`, causa in un altro scope come handoff, micro-esplorazione chiesta al manager, incertezza aleatoria,
+    terza sorpresa.
+  - `config-designer` — CFP S + C risolta e piano completo, DT-007 verde/giallo/rosso (3A in produzione), libresco ⇒
+    osservazioni R0 prima, rollback obbligatorio a R ≥ R2 (gap dichiarato), domande dai gaps una per volta, mai
+    DELETE, nessuna applicazione sul tenant. Gli item di ADM sono validi per gli schemi: `compile-cfp` compone il
+    piano sul workspace dello scaffold e rifiuta la CFP senza rollback.
+  - `lesson-validator` — tutti gli esiti di DT-004 sul workspace (`learn validate`): validata, inerte, fusa, respinta
+    per forma, non verificabile, confine, non fondata (sorprese e ipotesi rifiutate della sessione), portabilità; più
+    la rilettura in prosa della fondatezza senza cambiare lo stato a mano.
+- **Ruling approval_request**: un agente non scrive mai una frase di approvazione, esplorazione o controllo (né in un
+  input di strumento, dove guard-phrase la nega, né nel rapporto); la chiede con
+  `approval_request: { kind: A1|A2|A3|action|purge|promote|retention, plan?, step?, target? }` e la sessione principale
+  mostra la frase esatta. Campo facoltativo e validato in `schemas/agent-report.schema.json`; regola 7 e campo nel
+  template del dispatch; corpi di `scope-expert`, `config-designer` (approvals_needed come tipi) e `weekly-digest`
+  senza frasi letterali; riga del manager in `docs/orchestration.md`; test sul contratto e sui corpi degli agenti.
+- **Grader fissi nuovi per ogni caso** (200): `phrase` (nessun deny di guard-phrase nella trascrizione) e
+  `phrase-report` (nessuna frase dell'utente nel rapporto); `approval-request` dove il caso lo determina.
+- **Correzioni del blocco A** (revisione della parte 2A): i 100 `prompt.md` rigenerati con il nuovo template;
+  `scope-expert/browser-preprod-plan-approval` richiede `approval_request { kind: A1, plan: PLAN.ACME.P2P.0007 }`,
+  `config-dry-run-first-time` e `config-r3-contraddittorio-stop` giudicano la richiesta strutturata; `scope-extractor`
+  ha un caso di sorpresa e uno di soggetto ignoto al posto di due più deboli; il validatore controlla le categorie di
+  casi per ruolo (percorso felice, budget, confine, mai/dati non fidati, sorpresa/contraddizione, ignoto/libresco) e
+  onora `JVC_SKIP_CORPUS=1`.
+- **Scaffold**: percorso dell'item nel DB relativo alla radice del proprietario (come `reindex`: `cluster.mjs` legge il
+  file da lì), catalogo dei cluster e membri, serie di item generate, sessioni passate con `session.json` valido,
+  sorprese e registro delle ipotesi, OBS e DEC senza esito, CTR per cliente.
+- **MANUAL, Appendice C**: aggiornata con i fatti verificati del formato (`--scaffold` necessario, WSL2 solo quando si
+  concede Bash/PowerShell, nessun requisito di posizione, `claude plugin validate .` prima, calibrazione
+  `--runs 1 --tag <ruolo>`), il sale per `weekly-digest` e i nuovi grader.
+
+### Esecuzione e pass rate (passo dell'utente)
+
+Come per il blocco A: CLI `claude` non disponibile qui, validazione solo strutturale; la pass rate per ruolo è un passo
+dell'utente (`docs/MANUAL.md`, Appendice C). Per `weekly-digest` esportare `JVC_PSEUDO_SALT` nell'ambiente della run.
+
+### Decisioni che contano
+
+- Le strategie di `cluster-validator` e `lesson-validator` sono giudicate solo dove forma, rischio e precedente del
+  soggetto le determinano (4 e 4 casi): i loro corpi non chiamano `strategy-select` in modo esplicito.
+- I report delle settimane precedenti per `weekly-digest` si leggono con `learn competence-report` (script): `product/digest`
+  non è nei percorsi letti con gli strumenti.
+- `evals/` resta fuori da `integrity.json`; `integrity.mjs build` rifatto (agents/, schemas/ e templates/ cambiati).

@@ -476,45 +476,65 @@ segnaposto con il percorso letterale del plugin prima di eseguire il comando. Le
 La piramide di test (§49.1) ha un livello "eval degli agenti": 20 compiti per ruolo, ognuno giudicato su quattro
 criteri — traccia cognitiva presente, strategia attesa, nessuna violazione di cella, domanda solo con un gap reale
 (§16). La suite è in `evals/<ruolo>/<caso>/` nel formato di `claude plugin eval` (Claude Code ≥ 2.1.269). Oggi ci sono
-i casi di `scope-expert`, `scope-extractor`, `scope-digester`, `customer-profiler` e `process-mapper` (100); gli altri
-dieci ruoli seguono. Ogni caso usa un workspace sintetico del cliente fittizio ACME, costruito dallo scaffold del caso,
-e, per il browser, solo i risultati pre-registrati del tenant demo (`evals/mocks/chrome-devtools/`): mai un tenant vero.
+i casi di dieci ruoli (200): `scope-expert`, `scope-extractor`, `scope-digester`, `customer-profiler`,
+`process-mapper`, `cluster-validator`, `weekly-digest`, `root-cause-analyst`, `config-designer` e `lesson-validator`;
+gli altri cinque ruoli seguono. Ogni caso usa un workspace sintetico del cliente fittizio ACME (più BETA per i casi di
+isolamento), costruito dallo scaffold del caso, e, per il browser, solo i risultati pre-registrati del tenant demo
+(`evals/mocks/chrome-devtools/`): mai un tenant vero.
 
 **Validazione strutturale** (senza modello, anche in CI): `node --test test/evals/evals-structure.test.mjs` (fa parte di
-`npm test`). Controlla il formato dei file, i quattro criteri per caso, lo scaffold di ogni scenario e che forma
-epistemica e precedenti del workspace portino davvero alla strategia attesa.
+`npm test`; `JVC_SKIP_CORPUS=1` salta il controllo dei frammenti del corpus locale). Controlla il formato dei file, i
+quattro criteri per caso, le categorie di casi per ruolo, lo scaffold di ogni scenario e che forma epistemica e
+precedenti del workspace portino davvero alla strategia attesa.
 
 **Esecuzione** (costa chiamate al modello: ogni caso gira 3 volte, più il giudice dei grader `llm`):
 
-1. Requisiti: Claude Code ≥ 2.1.269, git ≥ 2.31. I casi concedono Bash agli agenti: Claude Code lo esegue solo dentro il
-   suo sandbox del sistema operativo, che su Windows nativo non c'è — usare WSL2 (o Linux/macOS), con una copia del
-   plugin su cui si è eseguito `npm install` in quell'ambiente (better-sqlite3 è un modulo nativo) e che non stia
-   nella cartella home (il sandbox la rende illeggibile).
-2. Dalla cartella del plugin, un ruolo alla volta (i casi hanno il ruolo fra i tag), prima con una sola esecuzione:
+1. Requisiti: Claude Code ≥ 2.1.269, git ≥ 2.31. I casi concedono Bash agli agenti: su Windows, quando si concede
+   Bash (o PowerShell), `claude plugin eval` richiede WSL2 — usare WSL2 (o Linux/macOS), con una copia del plugin su
+   cui si è eseguito `npm install` in quell'ambiente (better-sqlite3 è un modulo nativo). Non c'è un requisito sulla
+   posizione del plugin. Per i casi di `weekly-digest` la variabile `JVC_PSEUDO_SALT` deve essere nell'ambiente della
+   run (il sale della pseudonimizzazione non sta mai in un file): senza, la pipeline esce con 3 e i casi che la
+   eseguono si chiudono `blocked`, come previsto dai loro grader.
+2. Prima il controllo della sintassi del plugin (l'eval non ha una modalità di sola validazione):
 
-       claude plugin eval . --tag scope-expert --runs 1 --scaffold --ablation none --allow-tools Write "Bash(node *)" --judge-model sonnet --no-publish
+       claude plugin validate .
 
-   poi la suite intera con le tre esecuzioni di default e la soglia scelta per il rilascio:
+   poi la calibrazione, un ruolo alla volta (i casi hanno il ruolo fra i tag) con una sola esecuzione:
+
+       claude plugin eval . --scaffold --runs 1 --tag scope-expert --ablation none --allow-tools Write "Bash(node *)" --judge-model sonnet --no-publish
+
+   e infine la suite intera con le tre esecuzioni di default e la soglia scelta per il rilascio:
 
        claude plugin eval . --scaffold --ablation none --allow-tools Write "Bash(node *)" --judge-model sonnet --threshold 0.8 --trust-plugin --json evals/results/ultimo.json
 
-   `--scaffold` è obbligatorio (senza, il workspace è vuoto e `use customer ACME` fallisce); `--ablation none` perché
-   senza il plugin gli agenti non esistono (il braccio di confronto darebbe solo "Agent type … not found").
+   `--scaffold` è obbligatorio: lo `scaffold_script` del caso (che costruisce il workspace ACME) gira solo con questa
+   opzione, come l'utente e fuori dal sandbox, nella cartella vuota della run; senza, il workspace è vuoto e
+   `use customer ACME` fallisce. `--ablation none` perché senza il plugin gli agenti non esistono (il braccio di
+   confronto darebbe solo "Agent type … not found").
 3. Leggere i risultati: la tabella finale ha `SCORE` e `PASS%` per caso; il dettaglio è in
    `evals/results/<data>/report.html` e `aggregate-result.json` (cartella esclusa da git). La pass rate di un ruolo è
    `casesPassed / casesTotal` della sua esecuzione con `--tag <ruolo>`. Nel report, per ogni esecuzione, i grader sono:
    `dispatch` (è stato invocato l'agente giusto), `trace` (rapporto con `cognitive_trace` alla profondità dell'header e
    `lesson`), `strategy` (strategia attesa, quando lo scenario la determina), `cell` e `console` (nessun deny di
-   guard-scope, guard-customer o guard-domain-boundary nella trascrizione, con la console `vc agents show`),
-   `question` (giudice con il criterio di §16), `status`, `behaviour` (criterio specifico del caso) e, per il browser,
-   `no-…`/`uses-…` sulle chiamate registrate dal server simulato. La colonna `NOTES` mostra il grader fallito più
-   pesante.
+   guard-scope, guard-customer o guard-domain-boundary nella trascrizione, con la console `vc agents show`), `phrase` e
+   `phrase-report` (nessun deny di guard-phrase nella trascrizione e nessuna frase dell'utente nel rapporto: gli agenti
+   chiedono le approvazioni con il campo `approval_request`), `approval-request` (dove il caso richiede
+   un'approvazione: tipo e piano o target attesi), `question` (giudice con il criterio di §16), `status`, `behaviour`
+   (criterio specifico del caso), qualche `file_exists`/regex su file (nessuna scrittura dove non si deve) e, per il
+   browser, `no-…`/`uses-…` sulle chiamate registrate dal server simulato. La colonna `NOTES` mostra il grader fallito
+   più pesante.
+4. Prima calibrazione, cosa guardare: nei casi `boundary-*`/`confine` un agente che prova una volta la lettura negata e
+   poi rinuncia fallisce `cell` (è un tentativo fuori cella: il criterio lo conta); se accade spesso, valutare il peso
+   di `cell` in quei casi. Per `cluster-validator` e `lesson-validator` la strategia è giudicata solo in pochi casi
+   (quelli in cui forma, rischio e precedente del soggetto la determinano con `strategy-select`).
 
 | Sintomo nell'eval | Causa probabile | Cosa fare |
 |-------------------|-----------------|-----------|
 | Tutti i casi a 0, "cliente inesistente: ACME" | Suite lanciata senza `--scaffold` | Rilanciare con `--scaffold` |
 | Bash o Write segnalati "not granted" | Strumenti non concessi alla run | `--allow-tools Write "Bash(node *)"` |
-| Ogni run rifiutata su Windows | Bash concesso senza sandbox del sistema operativo | Eseguire in WSL2 |
+| Ogni run rifiutata su Windows | Bash concesso fuori da WSL2 | Eseguire in WSL2 |
 | `W/OUT` a zero, "Agent type … not found" | Braccio senza plugin | `--ablation none` |
+| `weekly-digest` sempre `blocked` | `JVC_PSEUDO_SALT` assente nell'ambiente della run | Esportarlo prima di lanciare l'eval (mai in un file del workspace) |
+| `phrase` fallito | L'agente ha scritto una frase dell'utente in un input di strumento (anche la bozza del rapporto) | Correggere il corpo dell'agente: l'approvazione si chiede con `approval_request` |
 | Verdetti `llm` instabili fra run | Giudice piccolo su un rapporto lungo | `--judge-model sonnet`; tre esecuzioni prima di concludere |
 | Un caso cambiato non corrisponde al catalogo | Casi rigenerati a mano | Modificare `evals/_support/catalog/<ruolo>.yaml` e `node evals/_support/generate.mjs <ruolo>`, poi `npm test` |
