@@ -25,11 +25,12 @@ Indice: [55 Installazione e primo avvio](#55-installazione-e-primo-avvio) ·
   va quindi installato per configurare o operare in pre-produzione. In sandbox vanno bene entrambi.
 - **Node 22** o successivo, **git**, accesso al repository di conoscenza, le variabili d'ambiente del cliente dal vault
   (credenziali `NRT_<ENV>_*`, `XRAY_*`, `JIRA_*`; per la digestione settimanale e i ticket anche `JVC_PSEUDO_SALT`).
-- **`npm install` nella cartella del plugin** (non nel workspace): i guard di sicurezza importano le dipendenze di
-  runtime (`ajv`, `ajv-formats`, `better-sqlite3`, `yaml`) e senza di esse negano ogni chiamata (sono fail-closed).
-  `doctor` lo segnala con il controllo `deps` rosso e la correzione "npm install nel plugin". Da una release conviene
-  **`npm ci`**, che installa esattamente le versioni di `package-lock.json` (il lockfile è nel perimetro d'integrità;
-  `node_modules` no, vedi §55.1.2).
+- **`npm ci` nella cartella del plugin** (non nel workspace; non `npm install`): i guard di sicurezza importano le
+  dipendenze di runtime (`ajv`, `ajv-formats`, `better-sqlite3`, `yaml`) e senza di esse negano ogni chiamata (sono
+  fail-closed). `npm ci` installa esattamente le versioni di `package-lock.json`, che è nel perimetro d'integrità:
+  `npm install` può riscrivere il lockfile e allora il controllo d'integrità fallisce e i guard negano tutto
+  (`node_modules` resta fuori dal perimetro, §55.1.2). `doctor` segnala le dipendenze mancanti con il controllo `deps`
+  rosso e la correzione "npm ci nel plugin".
 - **Playwright non è richiesto**: si installa solo se si attiva la corsia compilata (`npx playwright install chromium`).
   Il server MCP `playwright` dichiarato in `.mcp.json` è la **corsia opzionale di esplorazione** del manager (§44.6):
   nessun agente lo usa (gli agenti agiscono su Chrome con Chrome DevTools MCP o con il browser di Claude) e i guard lo
@@ -105,16 +106,27 @@ impone da solo quanto segue. Ogni voce dice cosa fare.
     `--session <id>` (o `JVC_SESSION_ID`), oppure lavorare su un checkout pulito senza `.jvc/`.
 12. **Jira Server/DC on-premise.** Il suo host va aggiunto alla categoria `alm` di `NETWORK.md`, che è sotto integrità:
     serve una release del plugin; fino ad allora quel cliente non pubblica su Jira.
-13. **Scritture della conoscenza con un interprete in linea.** La sessione principale non scrive in `product/**` né in
+13. **Redazione all'ingestion: limiti.** `kb ingest` redige le unità, il documento normalizzato
+    (`_inbox/<S>/parsed/`, l'ingresso di scope-extractor) e i grezzi: dati personali e segreti riconosciuti dagli schemi,
+    codici degli altri clienti del workspace (senza distinzione di maiuscole, salvo i codici che sono anche parole comuni
+    — `DATA`, `NOTE`, `TEST`, `DEMO`, … elenco `COMMON_WORD_CODES` di `scripts/ingest/redact.mjs` — riconosciuti solo
+    in maiuscolo esatto), autori e importi nel livello S. Nomi di persona nel testo libero e nomi di campi custom che non
+    contengono il codice del cliente non sono riconosciuti (revisione a campione). L'hash di un'unità è calcolato sul
+    testo **redatto**: aggiungere al workspace un cliente il cui codice compare in un documento già ingerito cambia
+    l'hash, e quindi il codice, delle unità che lo citano alla successiva ingestion (§19.16: diventano unità nuove).
+14. **Scritture della conoscenza con un interprete in linea.** La sessione principale non scrive in `product/**` né in
     `customers/*/kb/**` né con gli strumenti di file né con la shell (redirezioni, `tee`, `cp`/`mv`, `Set-Content`,
-    `sed -i`, …): lo fanno solo gli script del plugin dopo la validazione. Il codice in linea di un interprete
-    (`node -e`, `python -c`) che apre un file di quelle cartelle non è analizzato: è la classe delle difese testuali del
-    punto 1 di §55.1.1: rivedere `git diff` di `product/` e `kb/` prima di ogni commit della conoscenza.
+    `sed -i`, …), né con il codice in linea di un interprete che cita quelle cartelle insieme a una primitiva di
+    scrittura (`node -e "…writeFileSync('product/…')"`, `python -c "open('customers/…/kb/…','w')…"`: negati da
+    guard-config-scope; le letture restano). Lo fanno solo gli script del plugin dopo la validazione. Resta fuori ciò
+    che le difese testuali non vedono (punto 1 di §55.1.1: nomi costruiti a runtime, moduli importati; un
+    `python -c "open('product/…')"` di sola lettura è negato per eccesso di prudenza — si legge con Read): rivedere
+    `git diff` di `product/` e `kb/` prima di ogni commit della conoscenza.
 
 ### 55.2 Installazione
 
 ```
-1  Installare il plugin dal marketplace privato (o da cartella locale); nella cartella del plugin: npm install
+1  Installare il plugin dal marketplace privato (o da cartella locale); nella cartella del plugin: npm ci
 2  Clonare il repository di conoscenza e aprirlo come workspace di Claude Code
 3  Copiare templates/settings.template.json del plugin in .claude/settings.json del workspace (plugin abilitato, permessi minimi)
 4  Esportare le variabili d'ambiente del cliente (NRT_<ENV>_*, XRAY_*, JIRA_*)
@@ -176,21 +188,36 @@ negano). I comandi passano i dati strutturati e il testo dell'utente da un file 
 `--payload-file` con titolo, intento, prossimi passi, atteso/osservato/errori, oppure `--intent-file`,
 `--assumption-file`, `--next-file`) o come `chiave=valore`.
 
-**Confinamento dei file d'ingresso.** Ogni opzione-file degli script usati dalla sessione (`--case`, `--atlas`,
-`--snapshot`, `--params`, `--why`, `--sql-file`, `--text-file`, `--payload-file`, `--summary-file`, `--finding`,
-`--input`, `--inputs`, `--priors`, `--outcomes`, `--env-file`, `--spec`, `--baseline`, `--observed`, `--golden`,
-`--actual`, `--units`, `--doc`, `--parsed`, `--item`, `--digested`, `--answers-file`, `--query-file`, `--registry`,
-`--rows-file`, `--catalog`, `--probe`, i file posizionali di `lint-spec`, `lint-scope`, `validate-plan`,
-`validate-codes`, …) si risolve nel **workspace degli hook** — `JVC_WORKSPACE`, altrimenti la radice del progetto
-(`CLAUDE_PROJECT_DIR`), altrimenti la cartella di avvio — e **mai** nel `--workspace`/`--root` scelto da chi invoca lo
-script. Il percorso reale (collegamenti risolti, anche di una cartella intermedia) deve stare dentro quel workspace:
-percorsi assoluti fuori, `..` che escono o collegamenti che portano fuori sono rifiutati ("file fuori dal workspace").
-Tetti di dimensione: 64 KB per i testi (`--text-file`, `--summary-file`, `--query-file`), 256 KB per i payload
-(`--payload-file`) e per `--sql-file`, 16 MB per gli altri file d'ingresso. I piani (`--plan`) sono relativi alla cartella del cliente
-(`customers/<C>/`, niente assoluti né `..`). Eccezioni dichiarate: le **sorgenti da importare** — la cartella di
-`kb ingest <path>` (`ingest.mjs`/`harvest.mjs --input`), il file dei parser (`--in`) e lo storageState di
-`auth-setup register --file` — si leggono anche da fuori, perché il loro scopo è portare un documento nel workspace;
-`--db` e `--out` sono destinazioni, non file d'ingresso.
+**Confinamento dei file d'ingresso.** I file d'ingresso degli script si risolvono nel **workspace degli hook** —
+`JVC_WORKSPACE`, altrimenti la radice del progetto (`CLAUDE_PROJECT_DIR`), altrimenti la cartella di avvio — e **mai** nel
+`--workspace`/`--root` scelto da chi invoca lo script. Il percorso reale (collegamenti risolti, anche di una cartella
+intermedia) deve stare dentro quel workspace: percorsi assoluti fuori, `..` che escono o collegamenti che portano fuori
+sono rifiutati ("file fuori dal workspace"). Tetti: 64 KB per i testi (`--text-file`, `--summary-file`,
+`--query-file`), 256 KB per i payload (`--payload-file`) e per `--sql-file`, 16 MB per gli altri. Confinati, per script:
+
+| Script | File d'ingresso confinati |
+|---|---|
+| `admin/workflow` · `report/build-report` | `--payload-file` · `--payload-file`, `--intent-file`, `--assumption-file`, `--next-file` |
+| `admin/agent-report` | il rapporto (posizionale) |
+| `analytics/query-guard` · `analytics/din-build` | `--sql-file` (o posizionale) · `--input` |
+| `analysis/cluster` | `--input` |
+| `chrome/capture` · `chrome/compile-plan` · `chrome/env-check` · `chrome/survey` · `chrome/annotate` | `--snapshot`, `--spec` · `--atlas`, `--spec` · `--snapshot`, `--env-file` · `--snapshots` (cartella) · `--evidence` |
+| `compile/compile-case` · `compile/compile-cfp` · `compile/lint-spec` · `compile/lint-scope` | `--case` · `--cfp`, `--client` (se non sono codici), `--params` · i file posizionali, `--against` · i file posizionali |
+| `config/baseline` · `config/lint` | `--input` · `--baseline` |
+| `decide/depth` · `decide/strategy-select` · `decide/dt-eval` | `--input`, `--precedents` · `--input`, `--precedents` · `--inputs`, `--priors` (se non sono JSON in linea o `auto`) |
+| `decide/intent` · `decide/self-check` · `decide/step-check` · `decide/validate-plan` | `--text-file` · `--report`, `--session`, `--audit`, `--plan`, `--lesson`, `--observations` · `--snapshot`, `--why` · il piano (posizionale), `--catalog` |
+| `ingest/aliases` · `ingest/deontic` · `ingest/doc-diff` · `ingest/extract` · `ingest/field-table` · `ingest/profile-doc` · `ingest/redact` | `--registry`, `--rows-file`, `--doc-lang-file`, `--payload-file` · `--text-file` · `--old`, `--new`, `--release-notes` · `--units`, `--doc`, `--profile` · `--doc` · `--parsed` · `--text-file` |
+| `kb/kb` · `kb/backcheck` · `kb/compensation` · `kb/digest-fields` · `kb/digest-plan` · `kb/review` · `kb/validate-codes` · `kb/validate-env` | `--text-file`, `--query-file` · `--item` · `--payload-file` · il lotto (posizionale), `--digested` · `--answers-file` · `--payload-file` · i percorsi posizionali · il file (posizionale) |
+| `run/baseline` · `run/checks-run` · `run/fixtures` · `run/integration` · `run/promotion` · `run/select-suite` | `--observed` · `--cfp` (se non è un codice), `--probe`, `--plan` · `--case`, `--payload-file` · `--golden`, `--actual`, `--int` (se non è un codice) · `--case` · `--changed` |
+| `xray/build-payload` · `xray/publish` · `xray/defect` | `--outcomes` · `--outcomes` · `--finding`, `--summary-file` |
+
+I piani passati come `--plan` a capture, compile-plan, step-check e build-report sono relativi alla cartella del
+cliente (`customers/<C>/`, niente assoluti né `..`). **Eccezioni dichiarate** — le **sorgenti da importare**, lette anche
+da fuori perché il loro scopo è portare un documento nel workspace: la cartella di `kb ingest <path>`
+(`ingest/ingest.mjs` e `ingest/harvest.mjs --input`), il file dei parser (`--in`), il file dei ticket di
+`learn tickets <xlsx>` (`analysis/ticket-import.mjs`) e lo storageState di `run/auth-setup.mjs register --file`. `--db`
+sono database e `--out`/`--out-dir` destinazioni, non file d'ingresso: un `--out` dentro `product/` o
+`customers/<C>/kb/` è negato da guard-scope (la conoscenza la scrivono solo gli script che validano, nelle loro cartelle).
 
 **Script e moduli (§44.5).** La spec elenca gli script per nome ("tutti con `--json` e `--help`"). Molti sono **moduli di
 libreria dietro un dispatcher** e non hanno una CLI propria: `kb.mjs` (find, fields, epistemic, units, assign-seq…),
@@ -447,7 +474,7 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
 | "DB bloccato" | Reindex o digest in corso | Attendere; `admin lock` per vedere chi lo tiene |
 | Troppe domande | Copertura epistemica bassa sullo scope | `kb epistemic --scope --plan` ed eseguire le osservazioni R0 suggerite |
 | Troppe sorprese | Modello del cliente disallineato (sandbox non aggiornata, doc vecchia) | Ricognizione del tenant; verificare `alignment`; ri-digerire le fonti aggiornate |
-| Ogni chiamata negata, `doctor` con `deps` rosso | Dipendenze del plugin non installate (i guard sono fail-closed) | `npm install` nella cartella del plugin, poi `vc doctor` |
+| Ogni chiamata negata, `doctor` con `deps` rosso | Dipendenze del plugin non installate (i guard sono fail-closed) | `npm ci` nella cartella del plugin (non `npm install`: può riscrivere `package-lock.json`, sotto integrità), poi `vc doctor` |
 | Purge, retention o promozione negate "forma esatta"; nella riga di comando si vede `${CLAUDE_PLUGIN_ROOT}` | Claude Code non ha sostituito il segnaposto con il percorso del plugin | `vc doctor`: controllo `plugin-root` (Appendice B); aggiornare Claude Code. Nessun rischio: l'operazione è solo bloccata |
 | "azione con effetto del browser di Claude … negata" fuori dalla sandbox | Il browser di Claude fuori sandbox legge e naviga soltanto | Installare e usare Chrome DevTools MCP per i passi con effetto |
 | "comando non semplice" / "cita il plugin insieme a un interprete" | Testo libero o JSON in linea nella riga di comando di uno script del plugin | I dati vanno in un file della sessione (`--payload-file`, `--text-file`, `--finding`) |
@@ -672,7 +699,7 @@ precedenti del workspace portino davvero alla strategia attesa.
 
 1. Requisiti: Claude Code ≥ 2.1.269, git ≥ 2.31. I casi concedono Bash agli agenti: su Windows, quando si concede
    Bash (o PowerShell), `claude plugin eval` richiede WSL2 — usare WSL2 (o Linux/macOS), con una copia del plugin su
-   cui si è eseguito `npm install` in quell'ambiente (better-sqlite3 è un modulo nativo). Non c'è un requisito sulla
+   cui si è eseguito `npm ci` in quell'ambiente (better-sqlite3 è un modulo nativo). Non c'è un requisito sulla
    posizione del plugin. Per i casi di `weekly-digest` la variabile `JVC_PSEUDO_SALT` deve essere nell'ambiente della
    run (il sale della pseudonimizzazione non sta mai in un file): senza, la pipeline esce con 3 e i casi che la
    eseguono si chiudono `blocked`, come previsto dai loro grader.

@@ -17,9 +17,9 @@ Tutto il resto è nel manuale integrato: [docs/MANUAL.md](docs/MANUAL.md).
   DevTools MCP.
 - Node 22 o successivo, git, accesso al repository di conoscenza, variabili d'ambiente del cliente dal vault
   (`NRT_<ENV>_*`, `XRAY_*`, `JIRA_*`; `JVC_PSEUDO_SALT` per la digestione settimanale e i ticket).
-- **`npm install` nella cartella del plugin** (da una release meglio `npm ci`, con il lockfile): i guard di sicurezza
-  importano le dipendenze di runtime e senza di esse negano ogni chiamata; `/jaggaer-virtual-consultant:vc doctor` lo
-  segnala (controllo `deps`).
+- **`npm ci` nella cartella del plugin** (non `npm install`: `package-lock.json` è sotto integrità e `npm install` può
+  riscriverlo, e allora i guard negano tutto): i guard di sicurezza importano le dipendenze di runtime e senza di esse
+  negano ogni chiamata; `/jaggaer-virtual-consultant:vc doctor` lo segnala (controllo `deps`).
 - Playwright non serve, salvo la corsia compilata opzionale (`npx playwright install chromium`).
 
 Da sapere prima di installare:
@@ -49,7 +49,7 @@ Da sapere prima di installare:
 ## Installazione
 
 ```
-1  Installare il plugin (marketplace privato o cartella locale); nella cartella del plugin: npm ci (o npm install)
+1  Installare il plugin (marketplace privato o cartella locale); nella cartella del plugin: npm ci
 2  Clonare il repository di conoscenza e aprirlo come workspace di Claude Code
 3  Copiare templates/settings.template.json del plugin in .claude/settings.json del workspace
 4  Esportare le variabili d'ambiente del cliente (NRT_<ENV>_*, XRAY_*, JIRA_*)
