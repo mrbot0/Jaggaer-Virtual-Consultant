@@ -24,6 +24,8 @@ provare. Valgono le skill `scope-discipline` e `domain-boundary`.
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), con gli input come argomenti
 `nome=valore` (non scrivi file), mai JSON in linea, mai `--root customers/<C>`.
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -47,7 +49,7 @@ Tier (§26.3): T0→T1 · ciclo cognitivo: completo, con precedenti
    la DEC:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-001 candidate_category=<categoria> evidence_consistency=<consistenza> delta_crosscheck=<incrocio> err_catalog=<catalogo> precedent=<precedente> precedent_fixed_defect=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent failure-triage --subject <caso> --write-dec --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --mode diag --depth <profondità> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe-ascii> --mode diag --depth <profondità> --json
 
    `product-defect` con precedente Defect `fixed` ⇒ **`regression`** (§30.1). Punteggio < 0.60 ⇒ **`status: escalate`**
    con l'output parziale (categorie candidate, punteggi, prove): il manager fa **un** dispatch del root-cause-analyst

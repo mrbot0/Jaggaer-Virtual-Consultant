@@ -34,6 +34,8 @@ negati: i dati fra clienti li raccoglie lo script. L'hook nega: non provare. Val
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), mai JSON in linea, mai
 percorsi di altri clienti in un comando.
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -63,7 +65,7 @@ Tier (§26.3): T2 · ciclo cognitivo: completo
    per un item S, `customers/<C>/knowledge.db` per un item del cliente):
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" epistemic <soggetto> --db product/knowledge.db --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --surprises <n> --mode <modalità> --depth <profondità> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe-ascii> --surprises <n> --mode <modalità> --depth <profondità> --json
 
 5. **AGIRE** — la pipeline, in un colpo: prende `knowledge.lock` su `product/` e su ogni cliente (non prenderlo prima:
    lo script rifiuterebbe), raccoglie in sola lettura, pseudonimizza, allinea, calcola portabilità e tassi, scrive

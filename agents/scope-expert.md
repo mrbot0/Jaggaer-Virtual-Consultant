@@ -27,6 +27,8 @@ richiesta di handoff, che media il manager (§24).
 
 Shell: solo `node` sugli script del plugin (`${CLAUDE_PLUGIN_ROOT}/scripts/`, sempre `--json`), con input da file o `nome=valore`, mai JSON in linea e
 mai `--root customers/<C>` (una cartella antenata della cella è negata: gli script la ricavano da `--db`).
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Browser (§23.5, ruling WP07/WP08)
 
@@ -70,7 +72,7 @@ Tier (§26.3): per compito (haiku T0 · sonnet T1 · opus T2) · ciclo cognitivo
 
 4. **DECIDERE** — strategia con DT-017 (skill `strategies`), poi la DT del caso con i priori (skill `decision-tables`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --surprises <n> --mode <modalità> --depth <profondità> --plan --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe-ascii> --surprises <n> --mode <modalità> --depth <profondità> --plan --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-002 risk=<R> shape=<forma> mandatory_missing=<true-false> open_contradiction=<true-false> novelty=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent scope-expert --subject <codice> --strategy <STR> --write-dec --json
 
    `chiedi` → `needs-input` con la domanda già formulata dai gaps (skill `asking-the-user`). `escala` → `escalate`

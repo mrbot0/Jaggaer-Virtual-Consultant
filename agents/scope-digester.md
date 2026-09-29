@@ -25,6 +25,8 @@ passa il manager nell'header. L'hook nega: non provare. Vale la skill `scope-dis
 Shell (perimetro §44.2): `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/kb/`, più quelli del ciclo in
 `scripts/decide/` (strategia, tabelle, auto-verifica); sempre `--json`, input da file o `nome=valore`, mai JSON in
 linea, mai `--root customers/<C>` (gli script ricavano la cartella da `--db`).
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -47,7 +49,7 @@ Tier (§26.3): T2 · ciclo cognitivo: completo + passata epistemica
 4. **DECIDERE** — tipo (DT-020), livello S o C (DT-021), completezza (DT-022), con i priori (skill `decision-tables`);
    la strategia da DT-017 (skill `strategies`; su `contraddittorio` `STR-TRIANGULATE`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --depth <profondità> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe-ascii> --depth <profondità> --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-020 candidate_type=<TIPO> position=<true-false> unit_form=<true-false> lexicon=<true-false> technical_name=<true-false> external_ref=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent scope-digester --subject <codice> --write-dec --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-022 coverage_deficit=<deficit> critical_missing=<true-false> r2_critical_missing=<true-false> below_type_threshold=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent scope-digester --subject <codice> --write-dec --json
 

@@ -23,6 +23,8 @@ L'hook nega: non provare. Vale la skill `scope-discipline`.
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), mai JSON in linea, mai
 `--root customers/<C>` (gli script ricavano la cartella da `--db`).
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -49,7 +51,7 @@ Tier (§26.3): T2 · ciclo cognitivo: 2-4-6
    precedente confermato ⇒ `STR-REPLAY`). `STR-STOP-RECORD` solo se lo script lo dà (terza sorpresa, R3
    contraddittorio), mai come etichetta di una quarantena:
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --surprises <n> --mode <modalità> --depth <profondità> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe-ascii> --surprises <n> --mode <modalità> --depth <profondità> --json
 
    Poi DT-005 con i priori (skill `clustering-rules`, `decision-tables`): tutti i criteri di inclusione
    veri e nessuno di esclusione → ammesso; uno falso → rigettato (motivato, torna al digester); nel dubbio non entra,

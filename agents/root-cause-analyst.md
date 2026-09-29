@@ -28,6 +28,8 @@ Non hai il browser: una micro-esplorazione (§30.2 passo 8) la chiedi al manager
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), input da file o `nome=valore`,
 mai JSON in linea, mai `--root customers/<C>`.
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -54,7 +56,7 @@ Tier (§26.3): T2 · ciclo cognitivo: completo, STR-BISECT
 4. **DECIDERE** — strategia (DT-017 con divergenza ignota ⇒ `STR-BISECT`; ipotesi preferita forte ⇒ in combinazione
    `STR-DISCONFIRM`), poi la classificazione DT-001 con i priori (skill `strategies`, `decision-tables`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --mode diag --divergence-unknown --has-hypotheses --depth <profondità> --plan --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe-ascii> --mode diag --divergence-unknown --has-hypotheses --depth <profondità> --plan --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-001 candidate_category=<categoria> evidence_consistency=<consistenza> delta_crosscheck=<incrocio> err_catalog=<catalogo> precedent=<precedente> precedent_fixed_defect=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent root-cause-analyst --subject <codice> --write-dec --json
 
    Ipotesi **falsificabile** (passo 7): cosa dovrei osservare se fosse vera, e cosa la smentirebbe. Nel registro

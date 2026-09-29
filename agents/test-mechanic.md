@@ -28,6 +28,8 @@ manager come compito dello scope-expert in shadow.
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), input da file o `nome=valore`,
 mai JSON in linea, mai `--root customers/<C>`.
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -50,7 +52,7 @@ Tier (§26.3): T1 · ciclo cognitivo: completo
    css; css solo se `fragile`) — skill `decision-tables`, `strategies`:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-008 first_available=<strategia> stability=<stabilità> dynamic_pattern=<true-false> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent test-mechanic --subject <SEL> --write-dec --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R1 --precedent <classe> --mode nrt --depth <profondità> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R1 --precedent <classe-ascii> --mode nrt --depth <profondità> --json
 
 5. **AGIRE** — scrivi la riparazione nella cartella della proposta, poi i linter: il linter **anti-indebolimento**
    confronta con la versione precedente (uguaglianza → contenimento, asserzioni rimosse, tolleranze allargate,

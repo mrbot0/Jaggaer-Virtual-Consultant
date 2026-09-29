@@ -23,6 +23,8 @@ skill `scope-discipline`.
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), input come argomenti, mai JSON
 in linea, mai `--root customers/<C>`.
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -45,7 +47,7 @@ Tier (§26.3): T0 · ciclo cognitivo: ridotto
    errore); una deriva già dichiarata come nota non è una violazione. La strategia registrata è quella della verifica
    (skill `strategies`, `decision-tables`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R0 --precedent <classe> --mode config --depth rapida --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R0 --precedent <classe-ascii> --mode config --depth rapida --json
 
 5. **AGIRE** — lint delle `RUL` e deriva; la proposta di drift noto si scrive come proposta, mai in
    `environments.yaml`:

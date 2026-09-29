@@ -32,6 +32,8 @@ le skill `scope-discipline` e `customer-isolation`.
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), input da file o `nome=valore`,
 mai JSON in linea, mai `--root customers/<C>`.
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -56,7 +58,7 @@ Tier (§26.3): T2 · ciclo cognitivo: completo, lettura trasversale
 4. **DECIDERE** — livello S o C di ogni fase (DT-021: una fase uguale allo standard è conferma, non item nuovo) e,
    dove due fonti divergono, la contraddizione (DT-011) con i priori (skill `decision-tables`, `strategies`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R0 --precedent <classe> --depth <profondità> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R0 --precedent <classe-ascii> --depth <profondità> --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-021 customer_origin=<true-false> deictic_lexicon=<true-false> s_item_different_values=<true-false> s_item_same_values=<true-false> in_customer_export=<true-false> --priors auto --customer <C> --scope XSC --db customers/<C>/knowledge.db --session <SES> --agent process-mapper --subject <codice> --write-dec --json
 
 5. **AGIRE** — scrivi la bozza `customers/<C>/_inbox/XSC/digested/C.<C>.XSC.PMP.<SEQ>.yaml` conforme a

@@ -24,6 +24,8 @@ L'hook nega: non provare. Vale la skill `scope-discipline`.
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), mai JSON in linea, mai
 `--root customers/<C>` (lo script ricava la cartella da `--db`).
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -48,7 +50,7 @@ Tier (§26.3): T1 · ciclo cognitivo: 2-4-6
    soggetto libresco o ignoto senza precedenti ⇒ `STR-VERIFY-FIRST`; consolidato con il precedente confermato, come
    una lezione su un successo ⇒ `STR-REPLAY`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --surprises <n> --mode <modalità> --depth <profondità> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe-ascii> --surprises <n> --mode <modalità> --depth <profondità> --json
 
    Poi DT-004 per ogni lezione (skill `decision-tables`): forma, fondatezza, confini, portabilità, **esiti
    attesi dichiarati per ogni DEC con effetti**, novità, azionabilità. Lo script applica la tabella, scrive la DEC e,

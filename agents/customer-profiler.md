@@ -25,6 +25,9 @@ L'hook nega: non provare. Valgono le skill `scope-discipline` e `customer-isolat
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), input da file o `nome=valore`,
 mai JSON in linea, mai `--root customers/<C>` (gli script ricavano la cartella da `--db`).
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
+Il genere `d'uso` si passa come `d-uso` (forma ASCII, skill `decision-tables`): l'apostrofo negli argomenti è negato.
 
 ## Il ciclo
 
@@ -48,8 +51,8 @@ Tier (§26.3): T2 · ciclo cognitivo: completo
 4. **DECIDERE** — per ogni gap del profilo, quale genere di fonte lo chiude (DT-019) e se chiedere o procedere con
    un'assunzione dichiarata (DT-002), con i priori (skill `decision-tables`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-019 preferred_genre=<genere> preferred_available=<true-false> observable_r0=<true-false> --priors auto --customer <C> --scope XSC --db customers/<C>/knowledge.db --session <SES> --agent customer-profiler --subject C.<C>.XSC.PRF.0001 --write-dec --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R0 --precedent <classe> --depth <profondità> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-019 preferred_genre=<genere-ascii> preferred_available=<true-false> observable_r0=<true-false> --priors auto --customer <C> --scope XSC --db customers/<C>/knowledge.db --session <SES> --agent customer-profiler --subject C.<C>.XSC.PRF.0001 --write-dec --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R0 --precedent <classe-ascii> --depth <profondità> --json
 
    `utente` → la domanda di profilo, formulata dal gap (skill `asking-the-user`: una per volta se dipendenti, con le
    opzioni) in `open_questions` del profilo; se blocca il profilo, `needs-input`.

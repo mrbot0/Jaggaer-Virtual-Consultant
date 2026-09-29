@@ -36,6 +36,8 @@ nel rapporto: solo aggregati, gruppi < 20 rifiutati (skill `data-safety`).
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`); il testo SQL si passa sempre da
 file, mai in linea.
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -61,7 +63,7 @@ Tier (§26.3): T1/T2 · ciclo cognitivo: completo
    `STR-REPLAY`; `contraddittorio` ⇒ `STR-TRIANGULATE`; se lo script dà `nessuna`, nessuna strategia dedicata) e la
    consegnabilità con DT-015 (skill `strategies`, `decision-tables`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R0 --precedent <classe> --mode ops --depth <profondità> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R0 --precedent <classe-ascii> --mode ops --depth <profondità> --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/analytics/query-guard.mjs" check --db customers/<C>/knowledge.db --sql-file customers/<C>/.sessions/<sid>/work/<task>/query.sql --tables-knowledge <conoscenza> --json
 
 5. **AGIRE** — le quattro fasi su Chrome: **enumerazione** (data model browser → bozze `TBL`), **inferenza** (report

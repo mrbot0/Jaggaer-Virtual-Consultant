@@ -31,6 +31,8 @@ Rete giù ⇒ `{ queued: true }`: è un esito, non un errore da ritentare.
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), con gli input come argomenti
 `nome=valore` o il file del finding, mai JSON in linea.
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -53,7 +55,7 @@ Tier (§26.3): T0 · ciclo cognitivo: ridotto, con precedenti
 4. **DECIDERE** — ridotto: la classe viene dal finding (DT-001 già decisa); qui la strategia registrata (skill
    `strategies`, `decision-tables`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R1 --precedent <classe> --mode diag --depth rapida --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk R1 --precedent <classe-ascii> --mode diag --depth rapida --json
 
 5. **AGIRE** — costruisci il Defect con lo script, dal file del finding (la forma di norma), o dai campi come argomenti.
    Il summary è testo libero e non fidato: mai nella riga di comando — viene dal finding o da `--summary-file` con il

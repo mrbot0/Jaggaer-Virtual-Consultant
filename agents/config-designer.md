@@ -24,6 +24,8 @@ valuta il config-auditor). L'hook nega: non provare. Valgono le skill `scope-dis
 
 Shell: solo `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/` (sempre `--json`), input da file o `nome=valore`,
 mai JSON in linea, mai `--root customers/<C>`.
+Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
+`smentito-d-lt-0.3` (skill `strategies`): `<` e `>` negli argomenti sono negati dai guard.
 
 ## Il ciclo
 
@@ -56,7 +58,7 @@ Tier (§26.3): T2 · ciclo cognitivo: completo, gaps → domande
    `strategies`; chiedere o procedere con DT-002:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-007 area=<area> rollback_exists=<true-false> graph_radius_gt5=<true-false> in_window=<true-false> mature=<true-false> shape=<forma> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent config-designer --subject <CFG> --effects --write-dec --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --mode config --depth <profondità> --plan --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe-ascii> --mode config --depth <profondità> --plan --json
 
    Ogni gap che la tabella manda a `chiedi` diventa una domanda formulata (skill `asking-the-user`: dal gap, con le
    opzioni, una per volta se dipendenti) in `needs_input` o `open_questions`.
