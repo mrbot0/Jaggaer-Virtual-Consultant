@@ -5,11 +5,12 @@
 // (virgolette, escape, backtick, URL-encoding, sosia unicode, percorsi
 // relativi alla cwd). Eccezione: weekly-digest legge
 // customers/*/{lessons,decisions,outcomes,observations,kb}. Nessun cliente
-// attivo ⇒ customers/** negato, salvo `node …session.mjs use customer …`.
+// attivo ⇒ customers/** negato, salvo `node …session.mjs use customer …`. WP10b: in più il permesso
+// session.cross_read del tipo di agente (sola lettura; per process-mapper solo il cliente attivo).
 import { posix } from "node:path";
 import { intersects, subset, segs, bases, skeleton, PathPolicyError } from "../paths.mjs";
 import { guarded, denyAudited, targetsOf, shellPaths, pluginSessionCommand, PATH_TOOLS, SHELL_TOOLS, READ_TOOLS } from "./common.mjs";
-import { WEEKLY_READ } from "./scope.mjs";
+import { WEEKLY_READ, crossReadPaths } from "./scope.mjs";
 
 const G = "guard-customer";
 const NO_CUSTOMER = "nessun cliente attivo: customers/** è negato finché non esegui /jaggaer-virtual-consultant:use customer <ID>";
@@ -20,6 +21,8 @@ function checkRel(ctx, p) {
   if (!ctx.customerLc) return NO_CUSTOMER;
   if (s[0] === "customers" && s.length >= 2 && s[1] === ctx.customerLc) return null;
   if (ctx.agentType === "weekly-digest" && READ_TOOLS.has(ctx.tool) && WEEKLY_READ.some((q) => subset(p, q))) return null;
+  // WP10b: permesso di lettura trasversale della sessione principale (per process-mapper mai altri clienti: crossReadPaths)
+  if (crossReadPaths(ctx).some((q) => subset(p, q))) return null;
   const other = s[0] === "customers" && s[1] ? s[1].toUpperCase() : "*";
   return `accesso a un altro cliente (${other}) negato: il cliente attivo è ${ctx.customer}; la conoscenza fra clienti passa solo dal livello prodotto (§1.3). Percorso: ${p}`;
 }

@@ -356,6 +356,34 @@ function useCloseStale(ws, sid, { actor }) {
   return { session, closed };
 }
 
+// WP10b (ruling del controller 2, §44.2 "percorsi speciali in session.json", §46.1, R4): lettura trasversale per
+// process-mapper (tutti gli scope del cliente attivo + prodotto) e weekly-digest (kb di tutti i clienti + prodotto),
+// sempre in sola lettura e mai analysis/. La scrive la sessione principale (skill agent-manager) PRIMA del dispatch
+// e la toglie DOPO il ritorno; i sub-agenti non invocano session.mjs (guard-budget). Non tocca allowed_paths: la
+// cella degli altri agenti resta quella dello scope. Scade da sola dopo CROSS_READ_TTL_MS (il limite massimo di
+// durata di un dispatch, LIMITI DISPATCH ≤ 480 minuti) se il manager dimentica --restore.
+export const CROSS_READ_TTL_MS = 8 * 60 * 60 * 1000;
+export function crossReadGrant(agent, customer) {
+  const C = customer;
+  if (agent === "process-mapper") return ["product/kb/scopes/**", "product/kb/handoffs/**", `customers/${C}/kb/scopes/**`, `customers/${C}/kb/handoffs/**`];
+  if (agent === "weekly-digest") return ["product/kb/scopes/**", "product/kb/handoffs/**", "customers/*/kb/scopes/**", "customers/*/kb/handoffs/**"];
+  return null;
+}
+function usePaths(ws, sid, { agent, grant, restore }, { actor }) {
+  if (typeof agent !== "string" || !crossReadGrant(agent, "X")) throw new CliError(1, "use paths: --agent process-mapper | weekly-digest (gli unici con lettura trasversale, §44.2)");
+  if (!!grant === !!restore) throw new CliError(1, "use paths: serve esattamente uno fra --grant e --restore");
+  const { session: before, file } = requireActive(ws, sid);
+  const now = new Date();
+  const entry = grant ? { mode: "read", allowed_paths: crossReadGrant(agent, before.customer), granted_at: now.toISOString(), expires_at: new Date(+now + CROSS_READ_TTL_MS).toISOString(), granted_by: actor } : null;
+  const session = updateSession(file, (s) => {
+    const cr = { ...(s.cross_read && typeof s.cross_read === "object" ? s.cross_read : {}) };
+    if (entry) cr[agent] = entry; else delete cr[agent];
+    if (Object.keys(cr).length) s.cross_read = cr; else delete s.cross_read;
+  });
+  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "session", actor, payload: { action: grant ? "cross-read-grant" : "cross-read-restore", agent, ...(entry ? { allowed_paths: entry.allowed_paths, expires_at: entry.expires_at } : { had_grant: !!before.cross_read?.[agent] }) } });
+  return { session, cross_read: session.cross_read ?? null };
+}
+
 // Dichiarazione dell'ambiente (§51.2): copia in session.env la voce di
 // environments.yaml (validata: RF2 e le altre regole di prod ⇒ exit 3) con
 // l'hash del file; verified:false finché env-check non verifica l'impronta.
@@ -405,6 +433,12 @@ Azioni (§56.2):
   use close-stale             chiude a mano i sotto-compiti rimasti aperti (dispatch
                               mai arrivati a SubagentStop); in audit. Senza, un
                               dispatch aperto scade dopo ${OPEN_TTL_MS / 3600000} h.
+  use paths --agent <tipo> --grant | --restore
+                              solo sessione principale (skill agent-manager, in audit): lettura
+                              trasversale per process-mapper (tutti gli scope del cliente attivo e
+                              del prodotto) o weekly-digest (kb di tutti i clienti e del prodotto),
+                              sola lettura, mai analysis/; --grant prima del dispatch, --restore
+                              dopo il ritorno (scade comunque dopo ${CROSS_READ_TTL_MS / 3600000} h)
   show | use show             stato corrente
 
 Opzioni: --session <id> (default: $JVC_SESSION_ID, poi .jvc/current-session)
@@ -419,7 +453,7 @@ function summary(session) {
 }
 
 export async function run(argv, env = process.env) {
-  const { opts, positional } = parseArgs(argv, { flags: ["new"] });
+  const { opts, positional } = parseArgs(argv, { flags: ["new", "grant", "restore"] });
   const asJson = !!opts.json;
   if (opts.help || positional.length === 0) { console.log(HELP); return positional.length === 0 && !opts.help ? 1 : 0; }
   // Come gli hook (workspaceRoot): JVC_WORKSPACE > CLAUDE_PROJECT_DIR > cwd (#15).
@@ -440,6 +474,7 @@ export async function run(argv, env = process.env) {
     else if (action === "use" && what === "budget") result = useBudget(ws, sid, value, { actor });
     else if (action === "use" && what === "env") result = await useEnv(ws, sid, value, { actor });
     else if (action === "use" && what === "close-stale") result = useCloseStale(ws, sid, { actor });
+    else if (action === "use" && what === "paths") result = usePaths(ws, sid, { agent: opts.agent, grant: !!opts.grant, restore: !!opts.restore }, { actor });
     else throw new CliError(1, `azione sconosciuta: ${positional.join(" ")}`);
     if (asJson) console.log(JSON.stringify({ ok: true, ...result }));
     else console.log(summary(result.session));

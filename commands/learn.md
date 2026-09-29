@@ -37,8 +37,13 @@ script T0.
 
 ## Digestione settimanale e competenza
 
-- `digest-weekly` — la sequenza §45.6: `Agent(weekly-digest, opus)` con allowed_paths `customers/*/lessons`,
-  `decisions`, `outcomes`, `kb` (lettura) e `product/` (scrittura dei soli candidati); l'agente esegue
+- `digest-weekly` — la sequenza §45.6: prima del dispatch concedi la lettura trasversale (sola lettura, in audit)
+
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/session.mjs" use paths --agent weekly-digest --grant --session "${CLAUDE_SESSION_ID}" --json
+
+  poi `Agent(weekly-digest, opus)` con allowed_paths `customers/*/lessons`,
+  `decisions`, `outcomes`, `kb` (lettura) e `product/` (scrittura dei soli candidati); al ritorno toglila con
+  `use paths --agent weekly-digest --restore` (stessa riga, `--restore` al posto di `--grant`). L'agente esegue
 
       node "${CLAUDE_PLUGIN_ROOT}/scripts/digest/learn.mjs" digest-weekly --json
 

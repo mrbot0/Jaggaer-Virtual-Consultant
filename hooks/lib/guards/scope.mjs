@@ -7,6 +7,8 @@
 //    script scrivono la conoscenza), audit, blackboard, stato di sessione,
 //    session.json ovunque, e su decision-tables/ strategies/ clusters/ del plugin (T9);
 //  - weekly-digest: lettura di customers/*/{lessons,decisions,outcomes,observations,kb};
+//  - WP10b: lettura trasversale di session.cross_read[<tipo>] (process-mapper, weekly-digest) solo per
+//    quel tipo, solo Read/Glob/Grep, fino alla scadenza (crossReadPaths);
 //  - Bash/PowerShell dei sub-agenti: ogni token-percorso (anche senza '/', anche
 //    dopo un cd) il cui sottoalbero tocca una cella governata deve stare dentro
 //    allowed_paths (niente `grep -r` su un antenato della cella);
@@ -26,6 +28,23 @@ export const GOVERNED = [
   "customers/*/kb/handoffs/**", "product/kb/handoffs/**",
 ];
 export const WEEKLY_READ = ["lessons", "decisions", "outcomes", "observations", "kb"].map((d) => `customers/*/${d}/**`);
+
+// WP10b (ruling del controller 2): lettura trasversale concessa dalla sessione principale in session.cross_read
+// (`session.mjs use paths --agent <tipo> --grant`, tolta con --restore). Vale solo per il tipo di agente nominato,
+// solo per Read/Glob/Grep, fino a expires_at; mai analysis/; per process-mapper mai altri clienti (anche se il
+// file dicesse altro: difesa in profondità, session.json è comunque protetto in scrittura).
+export const CROSS_READ_AGENTS = ["process-mapper", "weekly-digest"];
+const ANALYSIS_SEG = /(^|\/)analysis(\/|$)/i;
+export function crossReadPaths(ctx) {
+  const t = ctx.agentType;
+  if (!t || !CROSS_READ_AGENTS.includes(t) || !READ_TOOLS.has(ctx.tool)) return [];
+  const g = ctx.session?.cross_read?.[t];
+  if (!g || typeof g !== "object" || g.mode !== "read" || !Array.isArray(g.allowed_paths)) return [];
+  if (!(Date.parse(g.expires_at) > Date.now())) return [];
+  const own = ctx.customerLc ? `customers/${ctx.customerLc}/**` : null;
+  return g.allowed_paths.filter((q) => typeof q === "string" && q && !ANALYSIS_SEG.test(q)
+    && (t === "weekly-digest" || !intersects(q, "customers/**") || (own && subset(q, own))));
+}
 const SETTINGS_WHY = "le impostazioni di Claude Code (.claude/**, .mcp.json) le modifica solo l'utente, a mano, fuori sessione: possono spegnere i guard del plugin";
 const WRITE_DENY = [
   ["product/**", "product/ è in sola lettura: si scrive solo con gli script dopo validazione (§29.6)"],
@@ -143,12 +162,14 @@ export const decide = guarded(G, (ctx) => {
   }
   const allowed = Array.isArray(session?.allowed_paths) ? session.allowed_paths : [];
   const weekly = ctx.agentType === "weekly-digest" && READ_TOOLS.has(tool);
+  const cross = crossReadPaths(ctx);
   const handoffAreas = ctx.customerLc ? [`customers/${ctx.customerLc}/kb/handoffs/**`, "product/kb/handoffs/**"] : ["product/kb/handoffs/**"];
   let handoff;
   for (const p of rels) {
     if (!GOVERNED.some((a) => intersects(p, a))) continue;
     if (weekly && WEEKLY_READ.some((q) => subset(p, q))) continue;
     if (allowed.some((q) => subset(p, q))) continue;
+    if (cross.some((q) => subset(p, q))) continue;
     if (tool === "Read" && handoffAreas.some((q) => subset(p, q))) {
       handoff ??= { why: handoffRefusal(ctx) };
       if (!handoff.why) continue;
