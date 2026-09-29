@@ -103,3 +103,23 @@ test("I1 DR-SHELL-008: promote mascherato da backslash, virgolette, ^ o backtick
     const r = guard(ws, cmd); assert.ok(silent(r), `${cmd}: ${reasonOf(r)}`);
   }
 });
+
+// Giro di correzione 1 (minore 6): le righe a forma esatta dei comandi portano --session "${CLAUDE_SESSION_ID}"; il guard
+// risolve il segnaposto nella sessione della chiamata (session_id dell'hook), così con due sessioni nello stesso
+// workspace l'approvazione si cerca nel registro giusto, non in .jvc/current-session.
+test("minore 6: retention, purge e promote con --session \"${CLAUDE_SESSION_ID}\" (o l'id reale) passano dal guard con le approvazioni della sessione", () => {
+  const ws = ws09d(); withSession(ws);
+  const RET = script("scripts/admin/retention.mjs");
+  const PURGE = script("scripts/admin/purge.mjs");
+  const SES = '--session "${CLAUDE_SESSION_ID}"';
+  const r = say(ws, "APPROVO RETENTION ACME");
+  const t = r.last.hash.slice(0, 16);
+  assert.ok(silent(guard(ws, `node "${RET}" ACME --apply --approval ${t} ${SES} --json`, r.transcript)), "retention con il segnaposto");
+  assert.ok(silent(guard(ws, `node "${RET}" ACME --apply --approval ${t} --session sess-1 --json`, r.transcript)), "retention con l'id reale");
+  assert.ok(denied(guard(ws, `node "${RET}" ACME --apply --approval ${t} --session altra-sessione --json`, r.transcript)), "un'altra sessione: nessun registro");
+  const a = say(ws, "APPROVO PURGE ACME DA Mario Rossi", { transcript: r.transcript });
+  const b = say(ws, "APPROVO PURGE ACME DA Anna Bianchi", { transcript: r.transcript });
+  assert.ok(silent(guard(ws, `node "${PURGE}" ACME --execute --approval-1 ${a.last.hash.slice(0, 16)} --approval-2 ${b.last.hash.slice(0, 16)} ${SES} --json`, r.transcript)), "purge con il segnaposto");
+  const p = say(ws, "APPROVO PROMOZIONE L.ACME.CAT.FLW.0001", { transcript: r.transcript });
+  assert.ok(silent(guard(ws, `node "${LEARN}" promote L.ACME.CAT.FLW.0001 --customer ACME --approval ${p.last.hash.slice(0, 16)} ${SES} --json`, r.transcript)), "learn promote con il segnaposto");
+});

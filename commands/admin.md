@@ -16,11 +16,11 @@ confermano ogni approvazione nel transcript.
 Prova a secco (elenco degli scaduti: osservazioni, evidenze e sessioni oltre 90 giorni; run e report oltre 12 mesi;
 l'audit e la conoscenza mai):
 
-    node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/retention.mjs" <C> --json
+    node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/retention.mjs" <C> --session "${CLAUDE_SESSION_ID}" --json
 
 Mostra l'elenco. Per applicare, l'utente scrive `APPROVO RETENTION <C>` (vale 60 minuti); poi, con il token restituito:
 
-    node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/retention.mjs" <C> --apply --approval <token> --json
+    node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/retention.mjs" <C> --apply --approval <token> --session "${CLAUDE_SESSION_ID}" --json
 
 Riporta il certificato (`.jvc/retention-certificates/`) e i percorsi rimossi. Exit 3 = approvazione mancante, scaduta,
 già usata o non confermata: si ripete la frase.
@@ -35,11 +35,11 @@ messaggio:
 (la seconda con un altro nome: lo stesso nome due volte è respinto; ciascuna vale 60 minuti). Con i due token,
 prima l'inventario senza scritture (file, byte, item promossi in `product/`, verifica delle approvazioni):
 
-    node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/purge.mjs" <ID> --approval-1 <token1> --approval-2 <token2> --json
+    node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/purge.mjs" <ID> --approval-1 <token1> --approval-2 <token2> --session "${CLAUDE_SESSION_ID}" --json
 
 Mostra l'inventario e chiedi conferma esplicita all'utente; solo dopo il suo sì:
 
-    node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/purge.mjs" <ID> --execute --approval-1 <token1> --approval-2 <token2> --json
+    node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/purge.mjs" <ID> --execute --approval-1 <token1> --approval-2 <token2> --session "${CLAUDE_SESSION_ID}" --json
 
 Riporta il certificato (`.jvc/purge-certificates/`), i `promoted_from` sostituiti in `product/` e i puntatori di sessione
 azzerati. Non esistono altre cancellazioni: file, righe o record si compensano (`close`/`cancel`), non si cancellano.

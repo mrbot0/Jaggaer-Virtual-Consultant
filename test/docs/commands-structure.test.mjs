@@ -117,3 +117,11 @@ test("le righe di comando rese passano dai guard veri senza deny (config-scope, 
   }
   assert.deepEqual(bad, []);
 });
+
+// Giro di correzione 1 (minore 6): le righe a forma esatta (retention, purge, promote) portano la sessione della chiamata.
+test("le righe a forma esatta di admin e learn portano --session \"${CLAUDE_SESSION_ID}\"", () => {
+  const c = commandFiles();
+  const exact = [...commandLines(c.admin), ...commandLines(c.learn)].filter((l) => /(retention|purge)\.mjs"|learn\.mjs" promote/.test(l));
+  assert.equal(exact.length, 5);
+  for (const l of exact) assert.match(l, /--session "\$\{CLAUDE_SESSION_ID\}"/, l);
+});

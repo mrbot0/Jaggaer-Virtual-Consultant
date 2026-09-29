@@ -4,10 +4,12 @@
 // semplice: nessuno di ( ) , @ { } $ ` ; & | < > né a capo o NUL in tutto il comando (PowerShell valuta `( … )`, `@( … )`,
 // `$( … )` e gli elenchi con la virgola PRIMA di avviare il programma; bash espande `$`, backtick e graffe), e ogni
 // token è una parola semplice o una stringa fra virgolette con lo stesso alfabeto (più lo spazio). Nessun jolly (* ? [).
-// Unico segnaposto ammesso: "${CLAUDE_SESSION_ID}" (sostituito da SID prima del controllo), come nei comandi del plugin.
+// Unico segnaposto ammesso: "${CLAUDE_SESSION_ID}" (sostituito da SESSION_TOKEN prima del controllo), come nei comandi del
+// plugin; WP10a giro 1 (minore 6): chi valuta --session risolve SESSION_TOKEN nella sessione della chiamata.
 // Solo moduli built-in: è sul percorso caldo.
 import { resolve } from "node:path";
 
+export const SESSION_TOKEN = "SID";
 export const FORBIDDEN = /[()@{}$`;&|<>,\r\n\0]/;
 const BARE = /^[\w%+=:./\\-]+$/;
 const QUOTED = /^[\w%+=:./\\ -]*$/;
@@ -16,7 +18,7 @@ const TOKEN = /\s*(?:"([^"]*)"|'([^']*)'|([^\s"']+))(?=\s|$)/y;
 // → argv (array di stringhe) | null se il comando non è un'invocazione semplice.
 export function simpleArgv(command) {
   if (typeof command !== "string") return null;
-  const s = command.trim().replace(/"\$\{CLAUDE_SESSION_ID\}"/g, "SID");
+  const s = command.trim().replace(/"\$\{CLAUDE_SESSION_ID\}"/g, SESSION_TOKEN);
   if (!s || FORBIDDEN.test(s)) return null;
   const out = [];
   TOKEN.lastIndex = 0;

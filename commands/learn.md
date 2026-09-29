@@ -54,7 +54,7 @@ script T0.
   testo del suo messaggio, `APPROVO PROMOZIONE <codice>`; l'hook approval-capture la registra e risponde con il token
   (16 cifre esadecimali, monouso, valido 24 ore). Solo allora, nella forma esatta (i guard la confermano nel transcript):
 
-      node "${CLAUDE_PLUGIN_ROOT}/scripts/digest/learn.mjs" promote <codice> --customer <C> --approval <token> --json
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/digest/learn.mjs" promote <codice> --customer <C> --approval <token> --session "${CLAUDE_SESSION_ID}" --json
 
   Non scrivere tu la frase e non inventare il token. Solo candidati della digestione (DT-010) senza CTR aperte.
 

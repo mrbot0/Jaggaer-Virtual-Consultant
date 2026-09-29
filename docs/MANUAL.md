@@ -342,6 +342,7 @@ valgono subito; quelle che la **riducono** valgono dopo la conferma nel transcri
 | Un agente non risponde più / tutto negato a un agente | Pausa, stop o limiti per dispatch attivi | `vc agents`; `RIPRENDI AGENTE <task_id>` o `LIMITI DISPATCH <chiamate> <minuti>` |
 | "il modello di questo scope va rifatto prima di continuare" | Vigilanza: tre compiti consecutivi fermati per sorprese | Giro di osservazioni proposto dal manager, poi `SBLOCCA SCOPE <S>` |
 | "una sola escalation di tier per compito" | Seconda escalation dello stesso compito | Riformulare il compito o dividerlo; chiedere all'utente |
+| Purge, retention o promozione: "approvazione mancante" (exit 3) con la frase appena scritta, due sessioni aperte nello stesso workspace | L'approvazione vive nel registro della sessione in cui è stata scritta; un comando senza la sessione giusta cerca in quella corrente (`.jvc/current-session`) | Scrivere la frase e lanciare il comando **nella stessa sessione** (le righe dei comandi passano `--session "${CLAUDE_SESSION_ID}"`); chiudere o non usare in parallelo l'altra sessione sullo stesso workspace |
 
 ---
 

@@ -24,7 +24,7 @@ import { ask } from "../io.mjs";
 import { appendAudit } from "../audit.mjs";
 import { summarizeInput } from "../tool-summary.mjs";
 import { loadRules } from "../deny-rules.mjs";
-import { simpleNodeCall, argsRefusal, splitArgs, shellCommands } from "../exact-argv.mjs";
+import { simpleNodeCall, argsRefusal, splitArgs, shellCommands, SESSION_TOKEN } from "../exact-argv.mjs";
 import { approvalsFile, readApprovals, findGrant, confirmInTranscript } from "../../../scripts/admin/approvals.mjs";
 import { readPointer } from "../workspace.mjs";
 
@@ -220,7 +220,8 @@ function approvalRefusal(ctx, s, args) {
   const a = s.approvals;
   const { positional, values } = splitArgs(args, s.flags);
   const target = positional[a.target_arg];
-  const sid = typeof values["--session"] === "string" ? values["--session"] : ctx.sid;
+  // WP10a giro 1 (minore 6): --session "${CLAUDE_SESSION_ID}" non sostituito = la sessione della chiamata
+  const sid = typeof values["--session"] === "string" && values["--session"] !== SESSION_TOKEN ? values["--session"] : ctx.sid;
   let ptr = null;
   try { ptr = readPointer(ctx.ws, sid); } catch { ptr = null; }
   if (!ptr?.customer) return `nessuna sessione con cliente attivo (${sid ?? "—"}): le approvazioni vivono nel registro della sessione`;
