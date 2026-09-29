@@ -7,7 +7,7 @@ import { readdirSync, readFileSync, existsSync, openSync, readSync, fstatSync, c
 import { join } from "node:path";
 import { invocationsFile, sessionDir } from "./workspace.mjs";
 import { readJsonl } from "./state-summary.mjs";
-import { claimedSeqs, invocationType, OPEN_TTL_MS, vigilanceStreak, VIGILANCE_LIMIT } from "./invocations.mjs";
+import { claimedSeqs, invocationType, ttlFor, vigilanceStreak, VIGILANCE_LIMIT } from "./invocations.mjs";
 import { controlFile, agentsDir, readControl, controlState, ALL } from "./control.mjs";
 
 // "ripreso" (giro 1): compito tornato needs-input per cui il manager ha già fatto un nuovo dispatch (reply_to o stesso task_id).
@@ -61,7 +61,7 @@ export function agentRows(m) {
       else state = CLOSED_STATE[entry.status_effective] ?? (entry.status_effective ? String(entry.status_effective) : "partial");
       // giro 1 (minore 1): chi è tornato needs-input resta in attesa dell'utente finché non c'è un dispatch di seguito
       if (state === "in-attesa-utente" && m.invs.some((j) => j.seq > inv.seq && (String(j.task_key ?? j.task_id) === String(inv.task_id) || String(j.reply_to ?? "") === String(inv.task_id)))) { state = "ripreso"; why = "nuovo dispatch dopo needs-input"; }
-    } else if (Number.isFinite(t0) && m.now - t0 > OPEN_TTL_MS) { state = "scaduto"; why = `nessun rapporto dopo ${OPEN_TTL_MS / 3600000} h`; }
+    } else if (Number.isFinite(t0) && m.now - t0 > ttlFor(m.control.limits?.minutes)) { state = "scaduto"; why = `nessun rapporto dopo ${Math.round(ttlFor(m.control.limits?.minutes) / 60000)} minuti`; }
     else if (ctl.stopped) { state = "fermato"; why = "FERMA AGENTE: in chiusura"; }
     else if (ctl.paused) { state = "in-pausa"; why = ctl.paused.target === ALL ? "PAUSA TUTTI" : "PAUSA AGENTE"; }
     else if (m.pendingSteps.some((p) => p.task_id === String(inv.task_id) || (ag && p.agent_id === ag.agent_id))) { state = "in-attesa-utente"; why = "passo-passo: attende il sì dell'utente"; }

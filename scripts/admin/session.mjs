@@ -15,7 +15,7 @@ import {
 import { appendAudit } from "../../hooks/lib/audit.mjs";
 import { xrayPin } from "../../hooks/lib/alm.mjs";
 import { readJsonl } from "../../hooks/lib/state-summary.mjs";
-import { openFrom, closeOpen, OPEN_TTL_MS } from "../../hooks/lib/invocations.mjs";
+import { openFrom, closeOpen, OPEN_TTL_MS, sessionTtlMs } from "../../hooks/lib/invocations.mjs";
 import { checkSessionText, parseSessionText } from "../../hooks/lib/session-state.mjs";
 
 const REGISTRY = JSON.parse(readFileSync(new URL("../../schemas/registry.json", import.meta.url), "utf8"));
@@ -197,7 +197,7 @@ function sessionsOf(ws, sid) {
 
 // Sotto-compiti dispatchati da guard-budget e non ancora chiusi da subagent-trace (#8).
 function openTasks(ws, customer, sid, session) {
-  return openFrom(readJsonl(invocationsFile(ws, customer, sid)), session?.ledger?.invocations ?? []).map((i) => i.task_id ?? `#${i.seq}`);
+  return openFrom(readJsonl(invocationsFile(ws, customer, sid)), session?.ledger?.invocations ?? [], { ttlMs: sessionTtlMs(sessionDir(ws, customer, sid)) }).map((i) => i.task_id ?? `#${i.seq}`);
 }
 function refuseOpenTasks(open, what) {
   if (open.length) throw new CliError(3, `${open.length} sotto-compiti aperti (${open.join(", ")}): attendi la chiusura dei sotto-compiti aperti prima di cambiare ${what}`, { open_tasks: open });
@@ -432,7 +432,7 @@ Azioni (§56.2):
   use budget <n>              budget di sessione in token (es. 200000 o 200k); in audit
   use close-stale             chiude a mano i sotto-compiti rimasti aperti (dispatch
                               mai arrivati a SubagentStop); in audit. Senza, un
-                              dispatch aperto scade dopo ${OPEN_TTL_MS / 3600000} h.
+                              dispatch aperto scade dopo ${OPEN_TTL_MS / 3600000} h (o dopo il limite di dispatch confermato, se più lungo).
   use paths --agent <tipo> --grant | --restore
                               solo sessione principale (skill agent-manager, in audit): lettura
                               trasversale per process-mapper (tutti gli scope del cliente attivo e

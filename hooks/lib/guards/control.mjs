@@ -20,11 +20,11 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, openSy
 import { join, dirname, resolve } from "node:path";
 import { createHash } from "node:crypto";
 import { deny } from "../io.mjs";
-import { loadHookState, invocationsFile, baseAgentType, pluginRoot } from "../workspace.mjs";
+import { loadHookState, invocationsFile, sessionDir, baseAgentType, pluginRoot } from "../workspace.mjs";
 import { appendAudit } from "../audit.mjs";
 import { summarizeInput } from "../tool-summary.mjs";
 import { readJsonl } from "../state-summary.mjs";
-import { invocationType, OPEN_TTL_MS } from "../invocations.mjs";
+import { invocationType, sessionTtlMs } from "../invocations.mjs";
 import { withFileLock, writeFileAtomic } from "../fsx.mjs";
 import { controlFile, agentsDir, agentStateFile, readControl, confirmPending, controlState, transcriptCandidates, ALL, safeName } from "../control.mjs";
 
@@ -89,7 +89,8 @@ function bind(st, input, now) {
   const bound = new Set();
   if (existsSync(dir)) for (const n of readdirSync(dir)) { const s = n.endsWith(".json") ? readJson(join(dir, n)) : null; if (Number.isInteger(s?.inv_seq) && s.agent_id !== String(input.agent_id)) bound.add(s.inv_seq); }
   for (const e of st.session.ledger?.invocations ?? []) if (Number.isInteger(e?.inv_seq) && (e.agent_id || (e.completed_at && e.closed_by !== "user-stop"))) bound.add(e.inv_seq);
-  const waiting = invs.filter((x) => !bound.has(x.seq) && !(now - Date.parse(x.ts) > OPEN_TTL_MS));
+  const ttl = sessionTtlMs(sessionDir(st.ws, st.customer, st.sid));
+  const waiting = invs.filter((x) => !bound.has(x.seq) && !(now - Date.parse(x.ts) > ttl));
   const type = baseAgentType(input.agent_type) ?? "general-purpose";
   let task = null;
   let inv = null;
@@ -110,7 +111,7 @@ function bind(st, input, now) {
       // nessun candidato del suo tipo: vale per ogni dispatch aperto della sessione (anche già legato ad altri agenti)
       const closed = new Set((st.session.ledger?.invocations ?? []).filter((e) => Number.isInteger(e?.inv_seq) && e.completed_at && e.closed_by !== "user-stop").map((e) => e.inv_seq));
       source = "none";
-      candidates = [...new Set(invs.filter((x) => !closed.has(x.seq) && !(now - Date.parse(x.ts) > OPEN_TTL_MS)).map((x) => String(x.task_id)))];
+      candidates = [...new Set(invs.filter((x) => !closed.has(x.seq) && !(now - Date.parse(x.ts) > ttl)).map((x) => String(x.task_id)))];
     }
   }
   if (mine) {

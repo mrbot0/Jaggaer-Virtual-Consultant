@@ -4,6 +4,8 @@
 // L'abbinamento stop → dispatch avviene per tipo di agente e ordine di dispatch,
 // MAI per il task_id dichiarato nel rapporto (fix round 1 #14): il rapporto è
 // testo del sub-agente, non un'identità.
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { baseAgentType } from "./workspace.mjs";
 
 // Tipo base di un'invocazione registrata (Task senza subagent_type = general-purpose).
@@ -37,6 +39,20 @@ export function matchInvocation(invs, ledgerInvocations, agentType) {
 // di tempo del compito, `budget.minutes`, es. 15): 2 ore per decisione del
 // controller. Prima del TTL, `session.mjs use close-stale` li chiude a mano.
 export const OPEN_TTL_MS = 2 * 60 * 60 * 1000;
+
+// Revisione finale (minore B#8): con un limite di dispatch confermato dall'utente (LIMITI DISPATCH, WP10d) oltre 120
+// minuti il TTL è quel limite: un sotto-compito ancora nel suo tempo non "scade" e non riapre il cambio di scope o di
+// cliente (#8). TTL = max(2 h, limite). Lettura semplice di control.jsonl (l'ultimo record limits confermato): un errore
+// di lettura lascia le 2 h; un TTL più lungo è la direzione prudente (più sotto-compiti restano aperti).
+export const ttlFor = (minutes) => Math.max(OPEN_TTL_MS, Number.isFinite(Number(minutes)) && Number(minutes) > 0 ? Number(minutes) * 60000 : 0);
+export function sessionTtlMs(sessionDirPath) {
+  let text;
+  try { text = readFileSync(join(sessionDirPath, "control.jsonl"), "utf8"); } catch { return OPEN_TTL_MS; }
+  const recs = text.split("\n").filter((l) => l.trim()).flatMap((l) => { try { return [JSON.parse(l)]; } catch { return []; } });
+  const conf = new Set(recs.filter((r) => r?.kind === "confirm").map((r) => r.ref));
+  const lim = recs.filter((r) => r?.kind === "limits" && conf.has(r.hash)).at(-1);
+  return ttlFor(lim?.minutes);
+}
 
 const expired = (inv, now, ttlMs) => {
   const t = Date.parse(inv?.ts ?? "");

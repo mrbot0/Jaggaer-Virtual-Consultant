@@ -9,6 +9,8 @@ import { loadPlanFile } from "../../../scripts/admin/approvals.mjs";
 export async function activeStep(ctx) {
   const ap = ctx.session?.active_plan;
   if (!ap) return { none: true };
+  // revisione finale (minore B#7): passo verificato, gate del successivo negato ⇒ nessuna azione legata al piano
+  if (ap.gate_denied && typeof ap.gate_denied === "object") return { reason: `passo ${ap.step} del piano ${ap.plan_id} completato; il passo ${ap.gate_denied.step} è stato negato (${String(ap.gate_denied.reason ?? "gate").slice(0, 160)}): nessuna azione legata al piano finché step-check non riattiva un passo (--resume) o il piano si chiude (--close)` };
   let info;
   try { info = await loadPlanFile(ctx.ws, ctx.customer, ap.file); } catch (err) { return { reason: `piano attivo illeggibile (${String(err.message).split("\n")[0]})` }; }
   if (!info) return { reason: `piano attivo non trovato o fuori dalla cartella del cliente: ${ap.file}` };

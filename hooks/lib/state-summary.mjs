@@ -1,9 +1,9 @@
 // Righe compatte dello stato di sessione, condivise da session-context,
 // precompact-save e stop-integrity.
 import { readdirSync, readFileSync, statSync, existsSync, openSync, readSync, fstatSync, closeSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
 import { redact, truncate } from "./redact.mjs";
-import { openFrom } from "./invocations.mjs";
+import { openFrom, sessionTtlMs } from "./invocations.mjs";
 
 const list = (a, n = 5) => (Array.isArray(a) && a.length ? `${a.length} [${a.slice(0, n).map((x) => (typeof x === "string" ? x : x?.code ?? x?.id ?? JSON.stringify(x))).join(", ")}${a.length > n ? ", …" : ""}]` : "0");
 
@@ -44,7 +44,7 @@ export function readJsonl(file) {
 // Invocazioni registrate da guard-budget non ancora chiuse da subagent-trace
 // (abbinamento per ordine di dispatch: vedi invocations.mjs).
 export function openInvocations(invocationsFile, ledger = {}) {
-  return openFrom(readJsonl(invocationsFile), ledger?.invocations ?? []);
+  return openFrom(readJsonl(invocationsFile), ledger?.invocations ?? [], { ttlMs: sessionTtlMs(dirname(invocationsFile)) });
 }
 
 // Ultimo prompt dell'utente nel transcript (lettura della sola coda).

@@ -226,9 +226,17 @@ export async function check(opts) {
 
   // attiva il passo s: scrive active_plan (con l'impronta), compensazione, richieste di approvazione.
   // Un gate negato non scrive nulla (WP07 giro 1, spec I1): il piano resta dov'era.
-  const activate = (s, extraMutate) => {
+  // revisione finale (minore B#7): markDenied — il gate del passo SUCCESSIVO a uno appena verificato è negato: il piano
+  // resta sul passo verificato ma marcato gate_denied, così i guard non concedono più azioni legate a quel passo.
+  const activate = (s, extraMutate, { markDenied = false } = {}) => {
     const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile });
-    if (g.status === "denied") { if (extraMutate) updateSessionFile(sFile, (x) => { extraMutate(x); }); return g; }
+    if (g.status === "denied") {
+      if (extraMutate || markDenied) updateSessionFile(sFile, (x) => {
+        extraMutate?.(x);
+        if (markDenied && x.active_plan && x.active_plan.plan_id === plan.plan_id) x.active_plan.gate_denied = { step: s.n, reason: g.reason, at: now.toISOString() };
+      });
+      return g;
+    }
     if (g.compensation) g.compensation.registered_at = now.toISOString();
     if (g.compensation) writeCompensations(runDir, [g.compensation]);   // prima su disco nel run (§47.2 #1)
     updateSessionFile(sFile, (x) => {
@@ -360,7 +368,7 @@ export async function check(opts) {
     if (verified && x.active_plan && x.active_plan.plan_id === plan.plan_id) Object.assign(x.active_plan, verified);
   };
   if (nextStep) {
-    const g = activate(nextStep, mutate);
+    const g = activate(nextStep, mutate, { markDenied: true });
     res.next = { step: nextStep.n, status: g.status, ...(g.reason ? { reason: g.reason } : {}), ...(g.ask ? { ask: g.ask } : {}), ...(g.compensation ? { compensation: g.compensation } : {}) };
   } else if ((res.proceed && idx === steps.length - 1) || finish) {
     updateSessionFile(sFile, (x) => { mutate(x); x.active_plan = null; });
