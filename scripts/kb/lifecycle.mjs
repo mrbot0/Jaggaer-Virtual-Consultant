@@ -284,4 +284,13 @@ export async function main(cmd, argv, env = process.env) {
   }
 }
 
-if (isMain(import.meta.url)) { const [cmd, ...rest] = process.argv.slice(2); main(cmd, rest).then((c) => { process.exitCode = c; }); }
+// Revisione finale (minore A#3): --help (o nessun sottocomando) mostra l'uso di promote e deprecate
+if (isMain(import.meta.url)) {
+  const [cmd, ...rest] = process.argv.slice(2);
+  if (!cmd || cmd === "--help" || !["promote", "deprecate"].includes(cmd)) {
+    console.log(`${HELP_PROMOTE}
+
+${HELP_DEPRECATE}`);
+    process.exitCode = cmd === "--help" ? 0 : 1;
+  } else main(cmd, rest).then((c) => { process.exitCode = c; });
+}

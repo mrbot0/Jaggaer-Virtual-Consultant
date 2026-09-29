@@ -1,4 +1,5 @@
 ---
+name: kb
 description: Conoscenza JAGGAER — ingestione e digestione dei documenti (sub-agenti di contesto), revisione umana, ricerca, campi, impatto, registri, indice e migrazioni (kb)
 argument-hint: ingest <path> [--scope <S>] [--genre <genere>] [--kind <tipo>] | digest [--scope <S>] [--fields <documento>] | review [--scope <S>] [--only <strato>] | find [--scope <S>] [--type <T>] [--status <s>] [--cluster <CL>] [--facet <K=V>] [--top <n>] | fields [--doc <documento>] [--mandatory-in <stato>] [--chain <CL>] [--custom] [--reason <r>] | identity <FLD> | identity --doc <documento> --missing <blocco> | resolve "<domanda>" | precedents <soggetto> [--top <n>] | epistemic <soggetto> | epistemic --scope <S> [--plan] | impact <codice> [--if "<modifica>"] | graph [--scope <S>] | scopes | handoffs [--validate] | clusters | contradictions [--open] | coverage [--scope <S>] | reindex [--all] | migrate
 allowed-tools: Bash(node *), Read

@@ -1,4 +1,5 @@
 ---
+name: learn
 description: Apprendimento JAGGAER — lezioni e validazione, registro degli esiti, calibrazione, digestione settimanale, competence report, promozione a S e dominio analitico dei ticket (learn)
 argument-hint: lessons [--session <SES>] | validate [--session <SES>] | outcomes [--week|--session <SES>] [--confirm <DEC>] | calibrate --propose | digest-weekly | competence-report [--week <AAAA-Www>] | promote <codice> | tickets <xlsx> | patterns | brief --scope <S>
 allowed-tools: Bash(node *), Read

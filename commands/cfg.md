@@ -1,4 +1,5 @@
 ---
+name: cfg
 description: Configurazione JAGGAER — progetto della modifica (CFP), applicazione su Chrome con checkpoint e approvazioni 3A, verifica, audit di deriva, copertura e impatto (cfg)
 argument-hint: design "<richiesta>" | apply <PLAN> [--dry-run|--resume <n>] | verify <PLAN> | audit [--scope <S>] | coverage | impact <CFG>
 allowed-tools: Bash(node *), Read

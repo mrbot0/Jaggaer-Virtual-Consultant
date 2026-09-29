@@ -1,4 +1,5 @@
 ---
+name: admin
 description: Operazioni amministrative JAGGAER fuori dal lavoro quotidiano — retention, cancellazione di un cliente (purge con due approvazioni), lock, sessioni, integrità del pacchetto (admin)
 argument-hint: retention [--apply] | customer purge <ID> | lock [--clear-expired] | session [close-stale] | integrity
 allowed-tools: Bash(node *)

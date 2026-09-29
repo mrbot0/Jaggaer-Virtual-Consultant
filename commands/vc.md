@@ -1,4 +1,5 @@
 ---
+name: vc
 description: Consulente virtuale JAGGAER — stato della sessione (status), console degli agenti (agents), diagnosi dell'installazione (doctor), workflow di una sessione (watch), perché di una decisione (why)
 argument-hint: status [--metrics] | agents [show <task_id> | history [--scope <S>] [--last <N>]] | doctor [--network] | watch <SES.C.AAAAMMGG.NNN> | why <codice>
 allowed-tools: Bash(node *)

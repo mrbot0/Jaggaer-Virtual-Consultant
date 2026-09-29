@@ -1,4 +1,5 @@
 ---
+name: ops
 description: Operatività JAGGAER — creare in bozza con compensazione, approvare, chiudere, pubblicare (mai in produzione) e interrogare Analytics in sola lettura (ops)
 argument-hint: crea <richiesta|ordine|fornitore|evento|contratto> <dettagli> | approva <riferimento> | chiudi <riferimento> | pubblica <riferimento> | query "<domanda>" | tables | learn-analytics
 allowed-tools: Bash(node *), Read

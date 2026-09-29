@@ -1,4 +1,5 @@
 ---
+name: nrt
 description: Collaudo NRT su JAGGAER — piano e run per scope sulla corsia guidata via Chrome, integrazioni, esplorazione, triage, healing, evidenze, Xray, report, release-check, casi a richiesta (nrt)
 argument-hint: plan <release> [--scope <S>] | run [--suite smoke|full|delta] [--scope <S>] [--dry-run] | compile --scope <S> | integration [--suite <s>] | explore <capability> | triage [<RUN>] | heal [--apply] | evidence --list|--desk|--redact-check [<RUN>] | push-xray [<RUN>] [--dry-run|--retry-queued] | report [<RUN>] | release-check <release> | author "<descrizione>"
 allowed-tools: Bash(node *), Read

@@ -1,4 +1,5 @@
 ---
+name: use
 description: Imposta il contesto di sessione JAGGAER — cliente, ambiente, scope, modalità, budget (scrive session.json; i guard lo leggono)
 argument-hint: customer <ID> [--new] | env <id> | scope <ID> | mode <nrt|config|ops|diag|esplorazione> | budget <n> | close-stale | show
 allowed-tools: Bash(node *)
