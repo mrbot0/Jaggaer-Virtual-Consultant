@@ -220,6 +220,13 @@ export function renderStatus(c) {
 }
 
 // ---- show (D7) ----
+// Redazione e troncatura di ogni stringa di una struttura (profondità e ampiezza limitate).
+export function deepRedact(v, depth = 0) {
+  if (typeof v === "string") return truncate(redact(v), 300);
+  if (depth > 6 || v == null || typeof v !== "object") return v;
+  if (Array.isArray(v)) return v.slice(0, 50).map((x) => deepRedact(x, depth + 1));
+  return Object.fromEntries(Object.entries(v).slice(0, 50).map(([k, x]) => [truncate(redact(k), 80), deepRedact(x, depth + 1)]));
+}
 export function showTask(c, taskId) {
   const rows = c.rows.filter((r) => r.task_id === taskId || r.task_key === taskId);
   if (!rows.length) return null;
@@ -237,9 +244,10 @@ export function showTask(c, taskId) {
       timeline: (a?.actions ?? []).map((x) => ({ ts: x.ts, kind: x.kind, text: x.text })),
       denies: a?.denies ?? [], tools: a?.tools ?? {}, calls: a?.calls ?? 0,
       chrome: { steps: a?.steps ?? [], observations: a?.obs ?? [] },
-      trace: rep ? { status: rep.status ?? null, status_effective: rep.status_effective ?? null, recalled: ct?.recalled ?? null, epistemic: ct?.epistemic ?? null, strategy: ct?.strategy ?? null,
+      // giro 1 (minore 6): ogni campo di testo libero del rapporto passa da redazione e troncatura (deepRedact)
+      trace: rep ? deepRedact({ status: rep.status ?? null, status_effective: rep.status_effective ?? null, recalled: ct?.recalled ?? null, epistemic: ct?.epistemic ?? null, strategy: ct?.strategy ?? null,
         hypotheses: ct?.hypotheses ?? null, decisions: ct?.decisions ?? [], why: rep.why ?? null, surprises: ct?.surprises ?? null, surprise_items: ct?.surprise_items ?? [], self_check: ct?.self_check ?? null,
-        lesson: rep.lesson ?? null, output_codes: codesIn(rep.output), open_questions: rep.open_questions ?? [], needs_input: rep.needs_input ? { question: truncate(redact(String(rep.needs_input.question ?? "")), 200) } : null } : null,
+        lesson: rep.lesson ?? null, output_codes: codesIn(rep.output), open_questions: rep.open_questions ?? [], needs_input: rep.needs_input ? { question: String(rep.needs_input.question ?? "") } : null }) : null,
       usage: { tokens: r.used, by_model: r.tokens_by_model, source: r.usage_source, duration_ms: r.duration_ms, completed_at: r.completed_at },
       coherence: r.coherence,
     };

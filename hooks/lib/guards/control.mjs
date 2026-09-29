@@ -24,7 +24,7 @@ import { loadHookState, invocationsFile, baseAgentType, pluginRoot } from "../wo
 import { appendAudit } from "../audit.mjs";
 import { summarizeInput } from "../tool-summary.mjs";
 import { readJsonl } from "../state-summary.mjs";
-import { openFrom, invocationType } from "../invocations.mjs";
+import { invocationType, OPEN_TTL_MS } from "../invocations.mjs";
 import { withFileLock, writeFileAtomic } from "../fsx.mjs";
 import { controlFile, agentsDir, agentStateFile, readControl, confirmPending, controlState, transcriptCandidates, ALL, safeName } from "../control.mjs";
 
@@ -74,15 +74,22 @@ export function headerTaskId(file) {
   return null;
 }
 
+// giro 1 (minore 2): un legame non risolto (ambiguo o senza candidati) si ricalcola a ogni chiamata finché non si
+// risolve; senza candidati del suo tipo l'agente vale per OGNI dispatch ancora in attesa di un agente (il più
+// restrittivo, come l'ambiguità: ogni dispatch aperto). "In attesa di un agente": non reclamato da una voce del ledger con agent_id, non
+// chiuso a mano né scaduto (una voce user-stop senza agent_id resta: l'agente fermato non è ancora tornato).
+const UNRESOLVED = new Set(["none", "ambiguous"]);
 function bind(st, input, now) {
   const f = agentStateFile(st.ws, st.customer, st.sid, input.agent_id);
   const cur = readJson(f);
-  if (cur && cur.agent_id === String(input.agent_id)) return { f, a: cur };
+  const mine = cur && cur.agent_id === String(input.agent_id) ? cur : null;
+  if (mine && !UNRESOLVED.has(mine.source)) return { f, a: mine };
   const invs = readJsonl(invocationsFile(st.ws, st.customer, st.sid)).map((x, seq) => ({ ...x, seq }));
   const dir = agentsDir(st.ws, st.customer, st.sid);
   const bound = new Set();
-  if (existsSync(dir)) for (const n of readdirSync(dir)) { const s = n.endsWith(".json") ? readJson(join(dir, n)) : null; if (Number.isInteger(s?.inv_seq)) bound.add(s.inv_seq); }
-  for (const e of st.session.ledger?.invocations ?? []) if (e?.agent_id && Number.isInteger(e.inv_seq)) bound.add(e.inv_seq);
+  if (existsSync(dir)) for (const n of readdirSync(dir)) { const s = n.endsWith(".json") ? readJson(join(dir, n)) : null; if (Number.isInteger(s?.inv_seq) && s.agent_id !== String(input.agent_id)) bound.add(s.inv_seq); }
+  for (const e of st.session.ledger?.invocations ?? []) if (Number.isInteger(e?.inv_seq) && (e.agent_id || (e.completed_at && e.closed_by !== "user-stop"))) bound.add(e.inv_seq);
+  const waiting = invs.filter((x) => !bound.has(x.seq) && !(now - Date.parse(x.ts) > OPEN_TTL_MS));
   const type = baseAgentType(input.agent_type) ?? "general-purpose";
   let task = null;
   let inv = null;
@@ -95,9 +102,23 @@ function bind(st, input, now) {
     task = hdr;
     source = inv ? "header" : "header-unregistered";
   } else {
-    const open = openFrom(invs, st.session.ledger?.invocations ?? []).filter((x) => invocationType(x) === type && !bound.has(x.seq));
+    const open = waiting.filter((x) => invocationType(x) === type);
     candidates = [...new Set(open.map((x) => String(x.task_id)))];
-    if (candidates.length === 1) { inv = open[0]; task = candidates[0]; candidates = []; source = "dispatch-order"; } else source = candidates.length ? "ambiguous" : "none";
+    if (candidates.length === 1) { inv = open[0]; task = candidates[0]; candidates = []; source = "dispatch-order"; }
+    else if (candidates.length) source = "ambiguous";
+    else {
+      // nessun candidato del suo tipo: vale per ogni dispatch aperto della sessione (anche già legato ad altri agenti)
+      const closed = new Set((st.session.ledger?.invocations ?? []).filter((e) => Number.isInteger(e?.inv_seq) && e.completed_at && e.closed_by !== "user-stop").map((e) => e.inv_seq));
+      source = "none";
+      candidates = [...new Set(invs.filter((x) => !closed.has(x.seq) && !(now - Date.parse(x.ts) > OPEN_TTL_MS)).map((x) => String(x.task_id)))];
+    }
+  }
+  if (mine) {
+    // ancora non risolto: candidati aggiornati, nessuna scrittura; risolto: si registra conservando chiamate e inizio
+    if (UNRESOLVED.has(source)) return { f, a: { ...mine, candidates, source } };
+    const a = { ...mine, task_id: task, candidates: [], inv_seq: inv?.seq ?? null, source, rebound_at: new Date(now).toISOString() };
+    withFileLock(`${f}.lock`, () => { const s = readJson(f) ?? {}; writeFileAtomic(f, JSON.stringify({ ...a, calls: s.calls ?? mine.calls ?? 0, last_ts: s.last_ts ?? null })); });
+    return { f, a };
   }
   const a = { agent_id: String(input.agent_id), agent_type: type, task_id: task, candidates, inv_seq: inv?.seq ?? null, source, first_ts: new Date(now).toISOString(), last_ts: null, calls: 0 };
   mkdirSync(dirname(f), { recursive: true });
@@ -216,7 +237,7 @@ export async function decide(input, env = process.env) {
   const { f, a } = bind(st, input, now);
   const tasks = a.task_id ? [a.task_id] : a.candidates ?? [];
   const t = state.forTasks(tasks);
-  const amb = t.ambiguous ? ` (identità ambigua fra ${tasks.join(", ")}: transcript del sub-agente assente, vale il più restrittivo)` : "";
+  const amb = UNRESOLVED.has(a.source) && tasks.length ? ` (identità ${a.source === "none" ? "sconosciuta: nessun dispatch del suo tipo, vale per ogni dispatch in attesa" : "ambigua"} fra ${tasks.join(", ")}: transcript del sub-agente assente, vale il più restrittivo)` : "";
   const label = a.task_id ?? (tasks.length ? tasks.join("|") : a.agent_id);
   if (t.stopped) return denyA(st, input, `sub-agente ${label} fermato dall'utente (FERMA ${t.stopped.target === ALL ? "TUTTI" : `AGENTE ${t.stopped.target}`} alle ${t.stopped.ts})${amb}: non eseguire altro; restituisci subito il rapporto con status blocked e l'output parziale`, { task: a.task_id });
   if (t.paused) return denyA(st, input, `sub-agente ${label} in pausa per volontà dell'utente (PAUSA ${t.paused.target === ALL ? "TUTTI" : `AGENTE ${t.paused.target}`} alle ${t.paused.ts})${amb}: nessuno strumento finché l'utente non scrive ${t.paused.target === ALL ? "RIPRENDI TUTTI" : `RIPRENDI AGENTE ${t.paused.target}`}; se non puoi attendere, restituisci il rapporto needs-input con l'output parziale`, { task: a.task_id });

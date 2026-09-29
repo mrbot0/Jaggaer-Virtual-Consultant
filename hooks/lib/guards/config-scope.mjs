@@ -285,6 +285,8 @@ const PROTECTED = [
   // PROTECTED[3] e [4] sono citati nei messaggi)
   ["customers/*/.sessions/*/control.jsonl", "il registro di controllo degli agenti lo scrive solo approval-capture, dalle frasi dell'utente (PAUSA/RIPRENDI/FERMA, PASSO PASSO, SBLOCCA SCOPE, LIMITI DISPATCH)"],
   ["customers/*/.sessions/*/agents/**", "lo stato degli agenti (legame al compito, chiamate) lo scrive solo guard-control"],
+  // giro 1: offset della scansione incrementale del transcript (spostarlo avanti impedirebbe una conferma dell'utente)
+  ["customers/*/.sessions/*/control-scan.json", "l'offset di scansione del transcript lo scrivono solo gli hook del plugin (conferma dei controlli dell'utente)"],
 ];
 const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
 const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);

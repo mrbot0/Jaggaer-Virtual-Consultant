@@ -28,7 +28,7 @@ import YAML from "yaml";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { redact } from "../redact.mjs";
-import { dispatchRefusal, tierRefusal, tierOf, taskKeyOf } from "./orchestration.mjs";
+import { dispatchRefusal, tierRefusal, tierOf, tierInfo, taskKeyOf } from "./orchestration.mjs";
 import { readJsonl } from "../state-summary.mjs";
 
 // Il file del piano attivo (relativo alla cartella del cliente) → oggetto | null.
@@ -48,7 +48,8 @@ const cut = (s, n) => (typeof s === "string" && s.length > n ? `${s.slice(0, n -
 export function headerSummary(h, ti) {
   const red = (s) => redact(String(s));
   return {
-    tier: tierOf(h, ti), task_key: taskKeyOf(h), kind: typeof h.kind === "string" ? h.kind : "task", reply_to: h.reply_to != null ? String(h.reply_to) : null,
+    // WP10d giro 1 (I2): tier effettivo (modello che gira), più l'etichetta dell'header e il tier del modello richiesto
+    tier: tierOf(h, ti), tier_declared: tierInfo(h, ti).declared, model_tier: tierInfo(h, ti).model, task_key: taskKeyOf(h), kind: typeof h.kind === "string" ? h.kind : "task", reply_to: h.reply_to != null ? String(h.reply_to) : null,
     mode: h.mode ?? null, depth: h.depth ?? null, minutes: typeof h.budget?.minutes === "number" ? h.budget.minutes : null,
     task: h.task != null ? cut(red(h.task), 200) : null, allowed_paths: (Array.isArray(h.allowed_paths) ? h.allowed_paths : []).slice(0, 30).map((p) => cut(String(p), 160)),
     expected_output: h.expected_output != null ? cut(red(JSON.stringify(h.expected_output)), 300) : null,

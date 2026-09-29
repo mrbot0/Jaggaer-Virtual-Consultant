@@ -54,7 +54,8 @@ test("guard-budget: budget del compito oltre il residuo → deny", () => {
 
 test("guard-budget: all'80% → allow con updatedInput = input originale + model: haiku", () => {
   const ws = mkWs(); seedSession(ws, { budget: budget(165000) });
-  const prompt = header({ budget: { tokens: 20000 } });
+  // WP10d giro 1 (I2): header concorde con il modello richiesto (opus = T2), altrimenti il dispatch è negato
+  const prompt = header({ budget: { tokens: 20000 }, tier: "T2" });
   const r = agentCall(ws, prompt, {}, { model: "opus", run_in_background: false });
   assert.equal(decisionOf(r), "allow");
   const u = r.json.hookSpecificOutput.updatedInput;

@@ -25,6 +25,7 @@ import { parsePromptHeader } from "../../scripts/admin/agent-prompt.mjs";
 import { updateSession } from "../../scripts/admin/session.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
 import { agentStateFile } from "../lib/control.mjs";
+import { auditTail, stepCheckSurprises } from "../lib/agents-model.mjs";
 
 export const MAX_BLOCKS = 2;
 // Le quindici definizioni foglia di §44.2.
@@ -106,6 +107,8 @@ export function handle(input, env = process.env) {
   const hdrTask = hdr?.task_id != null ? String(hdr.task_id) : null;
 
   const invs = readJsonl(invocationsFile(st.ws, st.customer, st.sid));
+  let recordedSurprises = 0;
+  try { recordedSurprises = stepCheckSurprises(auditTail(st.ws, st.customer, st.sid, { bytes: 4 * 1024 * 1024 })).get(agentId) ?? 0; } catch { recordedSurprises = 0; }
   let bound = null;
   try { bound = JSON.parse(readFileSync(agentStateFile(st.ws, st.customer, st.sid, agentId), "utf8")); } catch { bound = null; }
   let outcome = null;
@@ -197,8 +200,11 @@ export function handle(input, env = process.env) {
     // WP10d (D2 vigilanza, D1 console): scope e tier del dispatch (registrati da guard-budget, non dal rapporto) e numero
     // di sorprese dichiarate nella traccia
     const surprisesN = Array.isArray(report?.cognitive_trace?.surprises) ? report.cognitive_trace.surprises.length : 0;
+    // giro 1 (minore 5): la vigilanza non si fida della sola autodichiarazione — vale il maggiore fra le sorprese
+    // dichiarate e quelle registrate da step-check per questo agente (audit)
+    const recordedN = recordedSurprises;
     Object.assign(entry, {
-      task_id: entry.task_id ?? null, scope: match?.scope ?? entry.scope ?? null, tier: match?.tier ?? entry.tier ?? null, surprises: surprisesN,
+      task_id: entry.task_id ?? null, scope: match?.scope ?? entry.scope ?? null, tier: match?.tier ?? entry.tier ?? null, surprises: Math.max(surprisesN, recordedN), surprises_declared: surprisesN, surprises_recorded: recordedN,
       status: report?.status ?? null, status_effective: effective, error_class: report?.error_class ?? null,
       trace_incomplete: enforce && !v.ok, reclassified, lesson: report?.lesson ?? null, model: match?.model ?? null,
       completed_at: new Date().toISOString(),

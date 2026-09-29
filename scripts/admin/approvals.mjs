@@ -277,8 +277,14 @@ export function confirmInTranscript(transcriptPath, recs) {
   if (typeof transcriptPath !== "string" || !transcriptPath) return { ok: false, missing: recs.map(phraseOf), reason: "transcript assente" };
   let text;
   try { text = readFileSync(transcriptPath, "utf8"); } catch { return { ok: false, missing: recs.map(phraseOf), reason: "transcript illeggibile" }; }
+  return confirmInText(text, recs);
+}
+
+// WP10d giro 1: la stessa verifica su un pezzo di transcript (righe complete), per la scansione incrementale del
+// registro di controllo (hooks/lib/control.mjs): stesse regole, nessuna copia.
+export function confirmInText(text, recs) {
   const prompts = [];
-  for (const l of text.split("\n")) if (l.includes('"user"')) { const p = userPrompt(l); if (p) prompts.push(p); }
+  for (const l of String(text).split("\n")) if (l.includes('"user"')) { const p = userPrompt(l); if (p) prompts.push(p); }
   const used = new Set();
   const missing = [];
   for (const r of recs) {

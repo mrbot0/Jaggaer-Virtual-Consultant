@@ -10,7 +10,8 @@ import { readJsonl } from "./state-summary.mjs";
 import { claimedSeqs, invocationType, OPEN_TTL_MS, vigilanceStreak, VIGILANCE_LIMIT } from "./invocations.mjs";
 import { controlFile, agentsDir, readControl, controlState, ALL } from "./control.mjs";
 
-export const STATES = ["in-corso", "in-attesa-utente", "in-pausa", "ok", "partial", "escalate", "bloccato", "fermato", "scaduto"];
+// "ripreso" (giro 1): compito tornato needs-input per cui il manager ha già fatto un nuovo dispatch (reply_to o stesso task_id).
+export const STATES = ["in-corso", "in-attesa-utente", "in-pausa", "ok", "partial", "escalate", "bloccato", "fermato", "scaduto", "ripreso"];
 const CLOSED_STATE = { ok: "ok", partial: "partial", escalate: "escalate", blocked: "bloccato", "needs-input": "in-attesa-utente", "aborted-by-user": "fermato" };
 
 function readAgentStates(dir) {
@@ -58,6 +59,8 @@ export function agentRows(m) {
       if (entry.status_effective === "aborted-by-user" || entry.closed_by === "user-stop") state = "fermato";
       else if (entry.closed_by) { state = "scaduto"; why = `chiuso a mano (${entry.closed_by})`; }
       else state = CLOSED_STATE[entry.status_effective] ?? (entry.status_effective ? String(entry.status_effective) : "partial");
+      // giro 1 (minore 1): chi è tornato needs-input resta in attesa dell'utente finché non c'è un dispatch di seguito
+      if (state === "in-attesa-utente" && m.invs.some((j) => j.seq > inv.seq && (String(j.task_key ?? j.task_id) === String(inv.task_id) || String(j.reply_to ?? "") === String(inv.task_id)))) { state = "ripreso"; why = "nuovo dispatch dopo needs-input"; }
     } else if (Number.isFinite(t0) && m.now - t0 > OPEN_TTL_MS) { state = "scaduto"; why = `nessun rapporto dopo ${OPEN_TTL_MS / 3600000} h`; }
     else if (ctl.stopped) { state = "fermato"; why = "FERMA AGENTE: in chiusura"; }
     else if (ctl.paused) { state = "in-pausa"; why = ctl.paused.target === ALL ? "PAUSA TUTTI" : "PAUSA AGENTE"; }
@@ -99,7 +102,8 @@ export const rowBrief = (r) => `${r.task_id} (${r.type}, ${r.scope ?? "—"}${r.
 export function briefLines(m, { onlyIfActive = false, managerWarnings = [] } = {}) {
   const rows = agentRows(m);
   const sum = summarize(rows, m.session);
-  const active = rows.filter((r) => r.open);
+  // giro 1 (minore 1): anche chi è tornato needs-input (in attesa dell'utente, non ancora ripreso)
+  const active = rows.filter((r) => r.open || r.state === "in-attesa-utente");
   const blocked = blockedScopes(m);
   const comps = m.session?.pending?.compensations ?? [];
   if (onlyIfActive && !active.length && !blocked.length && !managerWarnings.length && m.controlOk) return [];
@@ -161,4 +165,20 @@ export function contextBrief(ws, customer, sid, session, { onlyIfActive = false,
   let managerWarnings = [];
   try { managerWarnings = managerWatch(m, auditTail(ws, customer, sid)).warnings; } catch { managerWarnings = []; }
   return briefLines(m, { onlyIfActive, managerWarnings });
+}
+
+// Giro 1 (minore 5): sorprese registrate da step-check per agente, dalle registrazioni (non dal rapporto): l'evento
+// dello script (kind run, actor step-check) precede l'evento di audit-append della Bash che l'ha eseguito, con agent_id.
+export function stepCheckSurprises(events) {
+  const by = new Map();
+  let pending = 0;
+  for (const e of events) {
+    const p = e?.payload ?? {};
+    if (e?.kind === "run" && e.actor === "step-check") { if (p.status === "surprise") pending++; continue; }
+    if (e?.kind === "tool" && /^(Bash|PowerShell)$/.test(p.tool ?? "") && /step-check/.test(p.input_summary ?? "")) {
+      if (p.agent_id && pending) by.set(String(p.agent_id), (by.get(String(p.agent_id)) ?? 0) + pending);
+      pending = 0;
+    }
+  }
+  return by;
 }

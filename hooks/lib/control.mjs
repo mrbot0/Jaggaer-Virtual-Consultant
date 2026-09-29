@@ -5,7 +5,8 @@
 //
 // Frasi (parole chiave maiuscole, l'intero prompt, spazi tolleranti):
 //   PAUSA AGENTE <task_id> · PAUSA TUTTI              → pause   (aumenta la protezione: vale dal prompt catturato)
-//   FERMA AGENTE <task_id> · FERMA TUTTI              → stop    (aumenta; terminale per quel task_id)
+//   FERMA AGENTE <task_id> · FERMA TUTTI              → stop    (aumenta; terminale per quel task_id; TUTTI = i compiti
+//                                                               dei dispatch aperti alla cattura, registrati in `tasks`)
 //   PASSO PASSO <task_id> · PASSO PASSO TUTTI         → step    (aumenta)
 //   RIPRENDI AGENTE <task_id> · RIPRENDI TUTTI        → resume  (RIDUCE: vale solo confermata nel transcript)
 //   PASSO PASSO OFF                                   → step-off (RIDUCE)
@@ -14,12 +15,12 @@
 // Un record che riduce la protezione vale solo con un record `confirm` (ref = il suo hash), che un hook appende dopo
 // confirmInTranscript (stesse regole della 3A, scripts/admin/approvals.mjs) entro CONFIRM_WINDOW_MS dal record.
 // Solo moduli built-in e librerie leggere: lo importa il guard che gira su ogni chiamata dei sub-agenti.
-import { readFileSync, appendFileSync, mkdirSync, existsSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { readFileSync, appendFileSync, mkdirSync, existsSync, openSync, readSync, fstatSync, closeSync } from "node:fs";
+import { join, dirname, resolve } from "node:path";
 import { GENESIS, hashEvent } from "./audit.mjs";
-import { withFileLock } from "./fsx.mjs";
+import { withFileLock, writeFileAtomic } from "./fsx.mjs";
 import { sessionDir } from "./workspace.mjs";
-import { confirmInTranscript } from "../../scripts/admin/approvals.mjs";
+import { confirmInText } from "../../scripts/admin/approvals.mjs";
 
 // Transcript in cui cercare il prompt dell'utente: quello dell'input e, se è il transcript di un sub-agente
 // (<dir>/<session_id>/subagents/agent-<id>.jsonl), quello della sessione principale (<dir>/<session_id>.jsonl).
@@ -124,14 +125,53 @@ export function unconfirmed(records, now = Date.now()) {
 
 // Conferma nel transcript dell'utente i record che riducono la protezione e non sono ancora confermati; per ognuno
 // confermato appende un record `confirm` (una lettura del transcript per tutti). → records aggiornati.
+// WP10d giro 1 (minore 4): scansione INCREMENTALE del transcript — si leggono solo le righe nuove. Ogni record che
+// riduce la protezione porta tx_offset (dimensione del transcript alla cattura meno TX_MARGIN); control-scan.json
+// (protetto, accanto al registro) tiene per ogni transcript l'offset già letto e l'ora della lettura: una lettura
+// fatta dopo la cattura del record copre le righe fino a quell'offset. Al più MAX_SCAN byte per chiamata (righe
+// complete); le regole di conferma sono quelle di confirmInText (approvals.mjs).
+export const TX_MARGIN = 64 * 1024;
+export const MAX_SCAN = 16 * 1024 * 1024;
+export const scanFile = (file) => join(dirname(file), "control-scan.json");
+function readSlice(p, start) {
+  let fd;
+  try { fd = openSync(p, "r"); } catch { return null; }
+  try {
+    const size = fstatSync(fd).size;
+    const from = start > size ? 0 : start;
+    const len = Math.min(size - from, MAX_SCAN);
+    if (len <= 0) return { text: "", end: from };
+    const buf = Buffer.alloc(len);
+    readSync(fd, buf, 0, len, from);
+    const last = buf.lastIndexOf(0x0a);
+    if (last < 0) return { text: "", end: from };
+    return { text: buf.subarray(0, last + 1).toString("utf8"), end: from + last + 1 };
+  } finally { closeSync(fd); }
+}
 export function confirmPending(file, records, transcriptPaths, { now = Date.now() } = {}) {
   const todo = unconfirmed(records, now);
   if (!todo.length) return records;
   const paths = [...new Set((Array.isArray(transcriptPaths) ? transcriptPaths : [transcriptPaths]).filter((p) => typeof p === "string" && p && existsSync(p)))];
   if (!paths.length) return records;
-  const ok = [];
-  for (const r of todo) if (paths.some((p) => confirmInTranscript(p, [r]).ok)) ok.push(r);
-  if (!ok.length) return records;
+  const sf = scanFile(file);
+  let cache;
+  try { cache = JSON.parse(readFileSync(sf, "utf8")); } catch { cache = {}; }
+  if (!cache || typeof cache !== "object" || Array.isArray(cache)) cache = {};
+  const ok = new Set();
+  for (const p of paths) {
+    const key = resolve(p);
+    const c = cache[key];
+    const startOf = (r) => (c && Number.isInteger(c.offset) && Date.parse(c.at) >= Date.parse(r.ts) ? c.offset : Number.isInteger(r.tx_offset) ? r.tx_offset : 0);
+    const pending = todo.filter((r) => !ok.has(r));
+    if (!pending.length) break;
+    const start = Math.min(...pending.map(startOf));
+    const slice = readSlice(p, start);
+    if (!slice) continue;
+    for (const r of pending) if (confirmInText(slice.text, [r]).ok) ok.add(r);
+    cache[key] = { offset: slice.end, at: new Date(now).toISOString() };
+  }
+  try { writeFileAtomic(sf, JSON.stringify(cache)); } catch { /* la cache è un'ottimizzazione */ }
+  if (!ok.size) return records;
   withFileLock(`${file}.lock`, () => {
     const cur = readControl(file);
     if (!cur.ok) return;
@@ -154,7 +194,8 @@ export function controlState(records) {
     let stopped = null;
     let step = null;
     for (const r of valid) {
-      const hit = r.target === ALL || (task != null && r.target === task);
+      // WP10d giro 1 (I1): FERMA TUTTI vale per i dispatch esistenti alla cattura (r.tasks), non per quelli successivi
+      const hit = r.target === ALL ? !(r.kind === "stop" && Array.isArray(r.tasks)) || (task != null && r.tasks.includes(task)) : task != null && r.target === task;
       if (r.kind === "pause" && hit) paused = r;
       else if (r.kind === "resume" && hit) paused = null;
       else if (r.kind === "stop" && hit) stopped ??= r;

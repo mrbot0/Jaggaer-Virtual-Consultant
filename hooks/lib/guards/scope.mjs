@@ -38,6 +38,7 @@ const WRITE_DENY = [
   // WP10d: registro di controllo dell'utente e file del monitor degli agenti (li scrivono solo hook e script del plugin)
   ["customers/*/.sessions/*/control.jsonl", "il registro di controllo degli agenti lo scrive solo approval-capture, dalle frasi dell'utente"],
   ["customers/*/.sessions/*/agents/**", "lo stato degli agenti (legame, chiamate) lo scrive solo guard-control"],
+  ["customers/*/.sessions/*/control-scan.json", "l'offset di scansione del transcript lo scrivono solo gli hook del plugin (conferma dei controlli dell'utente)"],
   ["customers/*/.sessions/*/workflow.jsonl", "il workflow lo scrive solo workflow.mjs (script del plugin)"],
   ["customers/*/.sessions/*/observations.jsonl", "le osservazioni le registra solo l'hook observe-append"],
   ["customers/*/.sessions/*/manager-usage.json", "l'uso di token del manager lo registra solo l'hook stop-integrity"],
@@ -73,7 +74,7 @@ function handoffRefusal(ctx) {
 // di WRITE_DENY; per la sessione principale lo stato di sessione (la CLI lo
 // scrive con node, mai con una redirezione della shell).
 const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl", "customers/*/.sessions/*/approvals.jsonl", ".claude/**", ".mcp.json",
-  "customers/*/.sessions/*/control.jsonl", "customers/*/.sessions/*/agents/**", "customers/*/.sessions/*/workflow.jsonl", "customers/*/.sessions/*/observations.jsonl", "customers/*/.sessions/*/manager-usage.json", "customers/*/audit/**", "customers/*/.sessions/**/blackboard/**"].includes(a));
+  "customers/*/.sessions/*/control.jsonl", "customers/*/.sessions/*/control-scan.json", "customers/*/.sessions/*/agents/**", "customers/*/.sessions/*/workflow.jsonl", "customers/*/.sessions/*/observations.jsonl", "customers/*/.sessions/*/manager-usage.json", "customers/*/audit/**", "customers/*/.sessions/**/blackboard/**"].includes(a));
 // Bersagli-cartella (rm/mv di una cartella, cp/mv dentro una cartella — fix
 // round 3): conta tutto ciò che la cartella contiene, cioè ogni antenato di un
 // file protetto è protetto. `**/session.json` qui diventa il session.json reale

@@ -86,9 +86,10 @@ test("vigilanza: SBLOCCA SCOPE <S> dell'utente (approval-capture, actor user, co
 
 test("una sola escalation di tier per compito: T0 → T1 (reply_to) consentito, poi T2 negato; stesso tier ripetuto consentito", () => {
   const ws = mkWs(); seedSession(ws);
-  assert.equal(decisionOf(dispatch(ws, { task_id: "X-1", tier: "T0" })), null);
+  // giro 1 (I2): header e modello concordi (il tier effettivo è quello del modello; in disaccordo il dispatch è negato)
+  assert.equal(decisionOf(dispatch(ws, { task_id: "X-1", tier: "T0" }, {}, { model: "haiku" })), null);
   assert.equal(decisionOf(dispatch(ws, { task_id: "X-1b", reply_to: "X-1", tier: "T1" })), null, "prima escalation");
-  const r = dispatch(ws, { task_id: "X-1c", reply_to: "X-1", tier: "T2" });
+  const r = dispatch(ws, { task_id: "X-1c", reply_to: "X-1", tier: "T2" }, {}, { model: "opus" });
   assert.ok(denied(r)); assert.match(reasonOf(r), /una sola escalation di tier per compito/);
   assert.equal(decisionOf(dispatch(ws, { task_id: "X-1", tier: "T1" })), null, "ripresa allo stesso tier già raggiunto");
   // tier dal modello quando l'header non lo dichiara

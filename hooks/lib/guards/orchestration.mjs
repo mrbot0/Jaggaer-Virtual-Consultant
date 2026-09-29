@@ -19,9 +19,21 @@ import { invocationsFile } from "../workspace.mjs";
 import { itemFile, CODE_RE } from "../../../scripts/lib/kb-items.mjs";
 
 export const TIER_RANK = { T0: 0, T1: 1, T2: 2 };
+export const TOP_TIER = "T2";
 const MODEL_TIER = (m) => (/haiku/i.test(m ?? "") ? "T0" : /sonnet/i.test(m ?? "") ? "T1" : /opus/i.test(m ?? "") ? "T2" : null);
-// Tier del dispatch: header `tier`, altrimenti dal modello richiesto.
-export const tierOf = (h, ti) => (typeof h?.tier === "string" && h.tier in TIER_RANK ? h.tier : MODEL_TIER(ti?.model));
+// WP10d giro 1 (I2): il tier EFFETTIVO è quello del modello che gira, non l'etichetta dell'header.
+//  - declared: `tier` dell'header (T0|T1|T2) o null; model: tier del modello richiesto (un modello non riconosciuto
+//    vale il tier massimo) o null se il modello non è indicato;
+//  - effective: il maggiore fra i due; modello assente ⇒ tier massimo (il sub-agente eredita il modello della
+//    sessione principale, sconosciuto al guard); header e modello in disaccordo ⇒ conflict (dispatch negato).
+export function tierInfo(h, ti) {
+  const declared = typeof h?.tier === "string" && h.tier in TIER_RANK ? h.tier : null;
+  const m = typeof ti?.model === "string" && ti.model.trim() ? ti.model : null;
+  const model = m ? MODEL_TIER(m) ?? TOP_TIER : null;
+  const effective = model == null ? TOP_TIER : declared && TIER_RANK[declared] > TIER_RANK[model] ? declared : model;
+  return { declared, model, effective, conflict: !!(declared && model && declared !== model), model_name: m };
+}
+export const tierOf = (h, ti) => tierInfo(h, ti).effective;
 // Compito a cui appartiene il dispatch: `reply_to` (un nuovo Agent per lo stesso compito, es. dopo escalate) o task_id.
 export const taskKeyOf = (h) => String(h?.reply_to ?? h?.task_id ?? "");
 export const ESCALATION_MESSAGE = "una sola escalation di tier per compito";
@@ -55,6 +67,8 @@ function handoffRefusal(ctx, h) {
 // Regole valutate prima del budget. → motivo del deny | null
 export function dispatchRefusal(ctx, h) {
   if (ctx.agentId) return "un sub-agente non invoca altri agenti (§42 M1): se serve un altro scope o un altro ruolo, restituisce il rapporto con la richiesta di handoff e il manager la media (§24.2)";
+  const ti = tierInfo(h, ctx.ti);
+  if (ti.conflict) return `tier dell'header ${ti.declared} ≠ tier del modello ${ti.model_name} (${ti.model}): il tier effettivo è quello del modello che gira — allinea header e modello (una sola escalation di tier per compito, DT-002)`;
   const ctl = controlFor(ctx);
   if (ctl.refusal) return ctl.refusal;
   const t = ctl.state.forTasks([String(h.task_id), taskKeyOf(h)]);

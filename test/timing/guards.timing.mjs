@@ -19,7 +19,7 @@ const SUITES = ["test/hooks/guards-adversarial.test.mjs", "test/hooks/guards-adv
   // F0: guard-destructive (deny-list), guard-alm-write, gate di integrità.
   "test/hooks/guard-destructive.test.mjs", "test/hooks/guard-alm-write.test.mjs", "test/hooks/wp07-carry-claude-effects.test.mjs", "test/hooks/wp08-fixround1.test.mjs",
   // WP10d: guard-control (ogni strumento) e le regole di orchestrazione di guard-budget.
-  "test/hooks/wp10d-control.test.mjs", "test/hooks/wp10d-vigilance.test.mjs"];
+  "test/hooks/wp10d-control.test.mjs", "test/hooks/wp10d-vigilance.test.mjs", "test/hooks/wp10d-fixround1.test.mjs"];
 const GUARDS = /^guard-/;
 
 test("ogni chiamata di guard delle suite avverse < 300 ms (processo completo, avvio di node incluso)", { concurrency: false }, () => {
