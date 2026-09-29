@@ -93,10 +93,14 @@ export const scopeLabel = (scope) => {
 export const jqlString = (s) => `"${String(s).replace(/["\\]/g, "\\$&")}"`;
 
 // Validazione dei risultati in formato nativo: stati noti, evidenze con data/filename/contentType.
-export function checkResults(results) {
+export function checkResults(results, { allowTestCreation = false } = {}) {
   if (!results || typeof results !== "object" || !Array.isArray(results.tests)) throw new AlmError("input", "risultati senza tests[] (formato nativo di Xray, ADR-19)");
   for (const t of results.tests) {
-    checkKey(t?.testKey, "testKey");
+    // testInfo senza testKey crea il Test in Xray: solo con la deroga ADR-21 (build-payload lo emette solo allora)
+    if (t?.testKey === undefined && t?.testInfo) {
+      if (!allowTestCreation) throw new AlmError("refused", "testInfo senza testKey creerebbe una Test issue: serve allow_test_issue_creation: true in config/xray.yaml (ADR-21)");
+      if (typeof t.testInfo.summary !== "string") throw new AlmError("input", "testInfo senza summary");
+    } else checkKey(t?.testKey, "testKey");
     if (!XRAY_STATUSES.includes(t.status)) throw new AlmError("input", `stato non valido per ${t.testKey}: ${t.status}`);
     for (const s of t.steps ?? []) {
       if (!XRAY_STATUSES.includes(s?.status)) throw new AlmError("input", `stato di passo non valido per ${t.testKey}: ${s?.status}`);

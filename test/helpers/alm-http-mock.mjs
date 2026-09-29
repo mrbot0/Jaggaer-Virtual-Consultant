@@ -74,11 +74,12 @@ export async function startAlmMock({ tests = [], project = "PROJ", fail = null }
       let m;
       if (req.method === "GET" && (m = /^\/rest\/raven\/1\.0\/api\/testexec\/([^/]+)\/test$/.exec(path))) {
         if (!state.issues.has(m[1])) return send(404, { error: "Test Execution not found" });
-        return send(200, runsOf(m[1]).map((t, i) => ({ id: state.imports.length * 100 + i, key: t.testKey, status: t.status, _exec: m[1] })));
+        const ex = [...state.issues.keys()].indexOf(m[1]);
+        return send(200, runsOf(m[1]).map((t, i) => ({ id: ex * 1000 + i, key: t.testKey, status: t.status })));
       }
       if (req.method === "GET" && (m = /^\/rest\/raven\/1\.0\/api\/testrun\/(\d+)$/.exec(path))) {
         const id = Number(m[1]);
-        const all = [...state.issues.keys()].flatMap((k) => runsOf(k).map((t, i) => ({ id: state.imports.length * 100 + i, t })));
+        const all = [...state.issues.keys()].flatMap((k, ex) => runsOf(k).map((t, i) => ({ id: ex * 1000 + i, t })));
         const hit = all.find((x) => x.id === id);
         return hit ? send(200, { status: hit.t.status, steps: (hit.t.steps ?? []).map((s) => ({ status: { name: s.status }, evidences: (s.evidence ?? []).map((e) => ({ fileName: e.filename })) })) }) : send(404, { error: "run" });
       }

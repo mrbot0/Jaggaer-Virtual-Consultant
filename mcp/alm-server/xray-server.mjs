@@ -39,7 +39,7 @@ export class XrayServerAdapter extends JiraBase {
 
   async importResults(executionKey, results) {
     checkKey(executionKey, "executionKey");
-    checkResults(results);
+    checkResults(results, { allowTestCreation: this.config.allow_test_issue_creation === true });
     const { labels, ...info } = results.info ?? {};
     const payload = { testExecutionKey: executionKey, ...(Object.keys(info).length ? { info } : {}), tests: results.tests };
     const r = await this.jira("POST", "/rest/raven/1.0/import/execution", payload);

@@ -67,7 +67,7 @@ export class MockAlmAdapter {
   }
   async importResults(executionKey, results) {
     checkKey(executionKey, "executionKey");
-    checkResults(results);
+    checkResults(results, { allowTestCreation: this.config.allow_test_issue_creation === true });
     this.record("importResults", { executionKey, tests: results.tests.length, evidence: countEvidence(results) });
     this.down("importResults");
     const ex = this.state.executions[executionKey];

@@ -148,7 +148,7 @@ export class XrayCloudAdapter extends JiraBase {
 
   async importResults(executionKey, results) {
     checkKey(executionKey, "executionKey");
-    checkResults(results);
+    checkResults(results, { allowTestCreation: this.config.allow_test_issue_creation === true });
     const { labels, ...info } = results.info ?? {};   // le etichette si mettono alla creazione (createExecution)
     const payload = { testExecutionKey: executionKey, ...(Object.keys(info).length ? { info } : {}), tests: results.tests };
     const r = await this.xray("POST", "/api/v2/import/execution", payload);

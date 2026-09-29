@@ -169,7 +169,8 @@ export function serveStdio({ input = process.stdin, output = process.stdout, env
       write(await server.handle(msg));
     }).catch((err) => process.stderr.write(`jvc-alm: ${safeMessage(err?.message ?? err, env)}\n`));
   });
-  rl.on("close", () => { chain.finally(() => process.exit(0)); });
+  // fine di stdin: uscita naturale (process.exit dopo fetch su Windows/Node 24 termina con 0xC0000409); rete di sicurezza
+  rl.on("close", () => { chain.finally(() => { process.exitCode = 0; setTimeout(() => process.exit(0), 3000).unref(); }); });
   return server;
 }
 
