@@ -15,7 +15,8 @@
 //  - percorsi assoluti fuori dal workspace: valutati sui suffissi customers/… product/…;
 //  - scritture via shell (redirezioni, tee, Out-File/Set-Content, cp/mv, rm…):
 //    sub-agenti ⇒ tutte le aree di WRITE_DENY; sessione principale ⇒ stato di
-//    sessione (session.json, invocations.jsonl, .jvc/**) — fix round 2 F5.
+//    sessione (session.json, invocations.jsonl, .jvc/**) — fix round 2 F5 — e
+//    product/**, customers/*/kb/** come per Write (revisione finale).
 import { statSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { createRequire } from "node:module";
@@ -93,8 +94,12 @@ function handoffRefusal(ctx) {
 
 // Scritture via shell (fix round 2 F5): per i sub-agenti valgono tutte le aree
 // di WRITE_DENY; per la sessione principale lo stato di sessione (la CLI lo
-// scrive con node, mai con una redirezione della shell).
-const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl", "customers/*/.sessions/*/approvals.jsonl", ".claude/**", ".mcp.json",
+// scrive con node, mai con una redirezione della shell) e — revisione finale —
+// anche product/** e customers/*/kb/**, come per lo strumento Write: la
+// conoscenza la scrivono solo gli script del plugin dopo validazione (§29.6) e
+// la promozione a S vuole APPROVO PROMOZIONE (T9, §22.2). Gli script del plugin
+// (node <plugin>/scripts/…) non sono bersagli di scrittura della shell.
+const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => ["product/**", "customers/*/kb/**", ".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl", "customers/*/.sessions/*/approvals.jsonl", ".claude/**", ".mcp.json",
   "customers/*/.sessions/*/control.jsonl", "customers/*/.sessions/*/control-scan.json", "customers/*/.sessions/*/agents/**", "customers/*/.sessions/*/workflow.jsonl", "customers/*/.sessions/*/observations.jsonl", "customers/*/.sessions/*/manager-usage.json", "customers/*/audit/**", "customers/*/.sessions/**/blackboard/**"].includes(a));
 // Bersagli-cartella (rm/mv di una cartella, cp/mv dentro una cartella — fix
 // round 3): conta tutto ciò che la cartella contiene, cioè ogni antenato di un
