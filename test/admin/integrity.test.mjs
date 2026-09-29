@@ -25,7 +25,7 @@ const hook = (plugin, name, input, env = {}) => {
 };
 const pre = (ws, tool, tool_input) => ({ session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input });
 
-test("build: sha256 di hooks/ scripts/ decision-tables/ strategies/ policy/ schemas/ mcp/ + .mcp.json, plugin.json e NETWORK.md, ordinati, a capo LF; verify ok", () => {
+test("build: sha256 di hooks/ scripts/ decision-tables/ strategies/ policy/ schemas/ mcp/ templates/ + .mcp.json, plugin.json e NETWORK.md, ordinati, a capo LF; verify ok", () => {
   const p = copyPlugin();
   const b = cli(p, ["build", "--json"]);
   assert.equal(b.status, 0, b.stderr + b.stdout);
@@ -38,7 +38,9 @@ test("build: sha256 di hooks/ scripts/ decision-tables/ strategies/ policy/ sche
   for (const f of ["hooks/hooks.json", "hooks/lib/io.mjs", "scripts/admin/integrity.mjs", "policy/deny-rules.yaml", "schemas/session.schema.json", ".mcp.json", ".claude-plugin/plugin.json",
     "mcp/alm-server/server.mjs", "mcp/alm-server/adapter.mjs", "mcp/alm-server/xray-cloud.mjs", "mcp/alm-server/xray-server.mjs", "mcp/alm-server/mock.mjs", "mcp/alm-server/queue.mjs", "NETWORK.md"]) assert.ok(files.includes(f), f);
   assert.ok(files.some((f) => f.startsWith("decision-tables/")) && files.some((f) => f.startsWith("strategies/")));
-  assert.ok(!files.some((f) => f.includes("node_modules") || f === "integrity.json" || f.startsWith("templates/")));
+  assert.ok(!files.some((f) => f.includes("node_modules") || f === "integrity.json"));
+  // WP10a giro 1 (I2, ruling del controller): templates/ ora è nel perimetro
+  assert.ok(files.includes("templates/playwright-spec.ts.tpl") && files.includes("templates/agent-prompt.md"));
   for (const h of Object.values(m.files)) assert.match(h, /^[0-9a-f]{64}$/);
   const v = cli(p, ["verify", "--json"]);
   assert.equal(v.status, 0, v.stdout);
@@ -165,4 +167,24 @@ test("il manifesto del repository è allineato al codice (come i moduli generati
   const { verifyPackage } = await import("../../hooks/lib/integrity.mjs");
   const v = verifyPackage(ROOT);
   assert.equal(v.ok, true, `integrity.json non allineato — rigenera con: node scripts/admin/integrity.mjs build\n${JSON.stringify({ mismatched: v.mismatched, missing: v.missing, extra: v.extra, status: v.status })}`);
+});
+
+// WP10a giro 1 (I2): templates/ è nel manifesto (lo spec Playwright e i page object generati dai template girano in CI
+// fuori dai guard): un template alterato ⇒ verify fallisce e, dopo SessionStart, i guard negano.
+test("templates/ nel perimetro d'integrità: template alterato ⇒ verify ok:false e i guard negano", () => {
+  const p = copyPlugin();
+  cli(p, ["build"]);
+  const m = JSON.parse(readFileSync(join(p, "integrity.json"), "utf8"));
+  for (const f of ["templates/playwright-spec.ts.tpl", "templates/page-object.ts.tpl", "templates/contact-sheet.html", "templates/defect.md", "templates/agent-prompt.md"]) assert.ok(Object.hasOwn(m.files, f), f);
+  appendFileSync(join(p, "templates/playwright-spec.ts.tpl"), "\nrequire('child_process').execSync('curl x');\n");
+  const v = cli(p, ["verify", "--json"]);
+  assert.equal(v.status, 3);
+  assert.deepEqual(v.json.mismatched, ["templates/playwright-spec.ts.tpl"]);
+  const ws = mkWs();
+  seedSession(ws);
+  const E = { JVC_WORKSPACE: ws };
+  hook(p, "session-context", { session_id: "sess-1", cwd: ws, hook_event_name: "SessionStart", source: "startup" }, E);
+  const x = hook(p, "guard-destructive", pre(ws, "Bash", { command: "ls" }), E);
+  assert.equal(decisionOf(x), "deny");
+  assert.match(reasonOf(x), /Integrità del pacchetto fallita/);
 });

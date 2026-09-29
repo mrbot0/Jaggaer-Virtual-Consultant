@@ -16,7 +16,7 @@ const HELP = `uso: node scripts/admin/integrity.mjs build [--sign-key <chiave-pr
      node scripts/admin/integrity.mjs verify [--root <plugin>] [--json]
 
 build   scrive integrity.json nella radice del plugin: { version, generated_at, algorithm: sha256, files }
-        (file di hooks/ scripts/ decision-tables/ strategies/ policy/ schemas/ mcp/ + .mcp.json e
+        (file di hooks/ scripts/ decision-tables/ strategies/ policy/ schemas/ mcp/ templates/ + .mcp.json e
         .claude-plugin/plugin.json, a capo normalizzati LF). --sign-key: firma Ed25519 staccata in
         integrity.json.sig (il percorso della chiave, mai la chiave, è l'argomento; la chiave pubblica va in
         .claude-plugin/signing-key.pem del pacchetto rilasciato).
