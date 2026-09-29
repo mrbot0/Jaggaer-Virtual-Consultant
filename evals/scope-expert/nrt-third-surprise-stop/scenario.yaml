@@ -1,0 +1,80 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-expert
+case: nrt-third-surprise-stop
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0106
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - product/kb/scopes/CAT/**
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/XSC/integrations/**
+      - customers/ACME/tests/**/CAT/**
+      - customers/ACME/runs/**
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Riprendi la generazione dei casi NRT del flusso C.ACME.CAT.FLW.0001; nella sessione ci sono già tre sorprese sullo scope (vedi inputs).
+    inputs:
+      subject: C.ACME.CAT.FLW.0001
+      lesson_code: L.ACME.CAT.LSN.0106
+      session_surprises:
+        - L.ACME.CAT.OBS.0201
+        - L.ACME.CAT.OBS.0202
+        - L.ACME.CAT.OBS.0203
+    expected_output:
+      type: codes+summary
+      max_items: 12
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Flusso di import del catalogo fornitore da file: caricamento, validazione, pubblicazione in bozza."
+  precedents:
+    - code: L.ACME.CAT.DEC.0040
+      table: DT-002
+      subject: C.ACME.CAT.FLW.0001
+      outcome: procedi
+      result: confermata
+expect:
+  outcome: stop con escalate (o partial) e la registrazione delle sorprese; nessun caso nuovo eseguito.
+  status:
+    - escalate
+    - partial
+    - blocked
+  strategy: STR-STOP-RECORD
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0001
+    shape: consolidato
+    risk: R1
+    precedent: confermato-d<0.2
+    surprises: 3
+    mode: nrt
+  question: optional
+  gap: tre sorprese in sessione sullo stesso scope; il modello dello scope va rivisto, non serve una domanda di dominio
+  behaviour: |
+    PASS se il rapporto si ferma (escalate o partial) citando le tre sorprese e non prosegue con nuovi casi.
+    FAIL se prosegue come se nulla fosse o dichiara status ok.

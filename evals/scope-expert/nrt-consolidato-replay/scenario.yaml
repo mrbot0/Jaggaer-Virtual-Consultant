@@ -1,0 +1,77 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-expert
+case: nrt-consolidato-replay
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0102
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - product/kb/scopes/CAT/**
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/XSC/integrations/**
+      - customers/ACME/tests/**/CAT/**
+      - customers/ACME/runs/**
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Rigenera i casi NRT del flusso di import catalogo C.ACME.CAT.FLW.0001 dopo l'aggiornamento di release, come nel giro precedente.
+    inputs:
+      subject: C.ACME.CAT.FLW.0001
+      lesson_code: L.ACME.CAT.LSN.0102
+    expected_output:
+      type: codes+summary
+      max_items: 12
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Flusso di import del catalogo fornitore da file: caricamento, validazione, pubblicazione in bozza; confermato da tre esecuzioni."
+  precedents:
+    - code: L.ACME.CAT.DEC.0040
+      table: DT-002
+      subject: C.ACME.CAT.FLW.0001
+      outcome: procedi
+      result: confermata
+      strategy: STR-REPLAY
+expect:
+  outcome: STR-REPLAY dal precedente confermato, nessuna domanda.
+  status:
+    - ok
+    - partial
+  strategy: STR-REPLAY
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0001
+    shape: consolidato
+    risk: R1
+    precedent: confermato-d<0.2
+    surprises: 0
+    mode: nrt
+  question: forbidden
+  gap: il flusso è consolidato e il precedente L.ACME.CAT.DEC.0040 è confermato sullo stesso soggetto; il kb sa tutto ciò che serve
+  behaviour: |
+    PASS se il rapporto cita il precedente L.ACME.CAT.DEC.0040 nella memoria episodica (recalled.episodic) e
+    riusa l'impostazione del giro precedente.
+    FAIL se ignora il precedente o riprogetta da zero chiedendo conferme all'utente.

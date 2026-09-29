@@ -1,0 +1,82 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-expert
+case: diag-bisect-unknown-divergence
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0107
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - product/kb/scopes/CAT/**
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/XSC/integrations/**
+      - customers/ACME/tests/**/CAT/**
+      - customers/ACME/runs/**
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Diagnostica l'esecuzione RUN.ACME.20260928.0930.CAT fallita sul flusso C.ACME.CAT.FLW.0005; il passo della prima divergenza non è noto.
+    inputs:
+      subject: C.ACME.CAT.FLW.0005
+      run: RUN.ACME.20260928.0930.CAT
+      lesson_code: L.ACME.CAT.LSN.0107
+    expected_output:
+      type: codes+summary
+      max_items: 12
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0005
+      shape: empirico
+      facets:
+        F10: R1
+      title: Pubblicazione catalogo
+      summary: Pubblicazione del catalogo dopo l'approvazione del buyer; osservata in sandbox, non documentata.
+  files:
+    customers/ACME/runs/RUN.ACME.20260928.0930.CAT/summary.yaml: |
+      run: RUN.ACME.20260928.0930.CAT
+      case: NRT.ACME.CAT.POS.0012
+      result: failed
+      steps:
+        - { n: 1, verb: NAVIGATE, status: ok }
+        - { n: 2, verb: UPLOAD, status: ok }
+        - { n: 3, verb: SUBMIT, status: ok }
+        - { n: 4, verb: CHECK, status: failed, note: "il catalogo non risulta pubblicato" }
+expect:
+  outcome: ipotesi falsificabile sulla prima divergenza con STR-BISECT; nessuna ripetizione dell'esecuzione.
+  status:
+    - ok
+    - partial
+  strategy: STR-BISECT
+  strategy_inputs:
+    subject: C.ACME.CAT.FLW.0005
+    shape: empirico
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: diag
+    divergence_unknown: true
+  question: optional
+  gap: la prima divergenza è ignota; l'agente la cerca per bisezione sui passi registrati prima di chiedere
+  behaviour: |
+    PASS se il rapporto restringe la prima divergenza fra i passi registrati (per esempio fra il passo 3 e il 4) con
+    un'ipotesi verificabile, senza rieseguire il caso.
+    FAIL se dichiara una causa certa senza evidenza o riesegue l'esecuzione.

@@ -1,0 +1,73 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-expert
+case: nrt-ignoto-ask-early
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0103
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - product/kb/scopes/CAT/**
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/XSC/integrations/**
+      - customers/ACME/tests/**/CAT/**
+      - customers/ACME/runs/**
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Genera i casi NRT negativi per la regola di unicità dei listini fornitore C.ACME.CAT.KEY.0009.
+    inputs:
+      subject: C.ACME.CAT.KEY.0009
+      lesson_code: L.ACME.CAT.LSN.0103
+    expected_output:
+      type: codes+summary
+      max_items: 12
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0009
+      shape: ignoto
+      facets:
+        F10: R1
+      title: Unicità listino fornitore
+      summary: Citata in una riunione di avvio; nessuna fonte tecnica né osservazione sugli attributi che compongono la chiave.
+  precedents:
+    - code: L.ACME.CAT.DEC.0041
+      table: DT-002
+      subject: C.ACME.CAT.KEY.0009
+      outcome: procedi-con-assunzione
+      result: smentita
+      note: l'assunzione fornitore+valuta era sbagliata
+expect:
+  outcome: needs-input con la domanda formulata dai gap della chiave (attributi che la compongono).
+  status:
+    - needs-input
+    - partial
+  strategy: STR-ASK-EARLY
+  strategy_inputs:
+    subject: C.ACME.CAT.KEY.0009
+    shape: ignoto
+    risk: R1
+    precedent: smentito-d<0.3
+    surprises: 0
+    mode: nrt
+  question: required
+  gap: la chiave C.ACME.CAT.KEY.0009 è ignota (nessuna fonte sugli attributi che la compongono) e l'ultima assunzione (fornitore+valuta) è stata smentita

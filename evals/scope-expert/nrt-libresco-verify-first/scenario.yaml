@@ -1,0 +1,80 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-expert
+case: nrt-libresco-verify-first
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0101
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - product/kb/scopes/CAT/**
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/XSC/integrations/**
+      - customers/ACME/tests/**/CAT/**
+      - customers/ACME/runs/**
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Genera i casi NRT negativi dell'import catalogo dalla chiave C.ACME.CAT.KEY.0004 (unicità del codice articolo per fornitore).
+    inputs:
+      subject: C.ACME.CAT.KEY.0004
+      lesson_code: L.ACME.CAT.LSN.0101
+    expected_output:
+      type: nrt-cases
+      max_items: 6
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0004
+      shape: libresco
+      facets:
+        F10: R1
+      title: Unicità codice articolo per fornitore
+      summary: Nel catalogo ACME il codice articolo è unico per fornitore; un import con codice duplicato va rifiutato con messaggio di validazione.
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Flusso di import del catalogo fornitore da file: caricamento, validazione, pubblicazione in bozza."
+    - code: S.STD.CAT.KEY.0002
+      title: Chiave articolo standard
+      summary: "Standard: l'articolo è identificato da fornitore e codice articolo."
+expect:
+  outcome: Casi negativi composti dalla chiave, traccia con STR-VERIFY-FIRST e forma libresco.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.KEY.0004
+    shape: libresco
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: nrt
+  question: optional
+  gap: la chiave è documentata solo da fonti tecniche e d'uso (libresco), nessuna osservazione; il compito è eseguibile senza l'utente
+  behaviour: |
+    PASS se il rapporto propone casi NRT negativi derivati da C.ACME.CAT.KEY.0004 (codici NRT.ACME.CAT.* o bozze nella
+    cartella dei test) e la traccia dichiara la forma libresca del soggetto (shape_before libresco).
+    FAIL se il rapporto dichiara il soggetto consolidato senza osservazioni, o inventa chiavi non presenti nel kb.

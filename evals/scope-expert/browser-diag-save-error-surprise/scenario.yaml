@@ -1,0 +1,72 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-expert
+case: browser-diag-save-error-surprise
+session:
+  customer: ACME
+  scope: P2P
+  mode: diag
+  env: sandbox
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0120
+    customer: ACME
+    scope: P2P
+    mode: diag
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - product/kb/scopes/P2P/**
+      - product/kb/handoffs/*P2P*
+      - customers/ACME/kb/scopes/P2P/**
+      - customers/ACME/kb/handoffs/*P2P*
+      - customers/ACME/kb/scopes/XSC/integrations/**
+      - customers/ACME/tests/**/P2P/**
+      - customers/ACME/runs/**
+      - customers/ACME/_inbox/P2P/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Diagnostica perché il salvataggio in bozza della richiesta in sandbox (https://acme-sbx.jaggaer.com/p2p/requisition/new?item=4711) mostra un errore; osserva la pagina, non ripetere il salvataggio.
+    inputs:
+      subject: C.ACME.P2P.FLD.0045
+      url: https://acme-sbx.jaggaer.com/p2p/requisition/new?item=4711
+      lesson_code: L.ACME.P2P.LSN.0120
+    expected_output:
+      type: codes+summary
+      max_items: 12
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.P2P.FLD.0045
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Centro di costo in bozza
+      summary: Il centro di costo non è richiesto per salvare la richiesta in bozza; diventa obbligatorio all'invio in approvazione.
+expect:
+  outcome: sorpresa dichiarata (REQ-VAL-014 in bozza contro il kb), proposta di CTR o osservazione; nessun click su Salva bozza.
+  status:
+    - ok
+    - partial
+    - needs-input
+  question: optional
+  gap: la pagina contraddice il kb consolidato; una domanda sul comportamento voluto è ammessa
+  browser:
+    require:
+      - take_snapshot
+    forbid:
+      - click
+      - fill
+      - fill_form
+      - evaluate_script
+  behaviour: |
+    PASS se il rapporto riconosce che il messaggio "Il centro di costo è obbligatorio (REQ-VAL-014)" contraddice
+    C.ACME.P2P.FLD.0045 (sorpresa in cognitive_trace.surprises o contraddizione proposta) senza ripetere il salvataggio.
+    FAIL se ignora la divergenza, corregge il kb da sé come fatto accertato o dichiara un nuovo salvataggio.

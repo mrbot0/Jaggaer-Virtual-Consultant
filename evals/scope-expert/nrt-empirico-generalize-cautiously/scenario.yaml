@@ -1,0 +1,77 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-expert
+case: nrt-empirico-generalize-cautiously
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0104
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - product/kb/scopes/CAT/**
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/XSC/integrations/**
+      - customers/ACME/tests/**/CAT/**
+      - customers/ACME/runs/**
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Componi i casi NRT sul ciclo di vita dell'articolo di catalogo C.ACME.CAT.LCY.0002 (bozza, pubblicato, ritirato).
+    inputs:
+      subject: C.ACME.CAT.LCY.0002
+      lesson_code: L.ACME.CAT.LSN.0104
+    expected_output:
+      type: codes+summary
+      max_items: 12
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.LCY.0002
+      shape: empirico
+      facets:
+        F10: R2
+      title: Ciclo di vita articolo
+      summary: "Stati osservati in sandbox: bozza, pubblicato, ritirato; nessun documento descrive le transizioni."
+  precedents:
+    - code: L.ACME.CAT.DEC.0043
+      table: DT-002
+      subject: C.ACME.CAT.LCY.0002
+      outcome: procedi
+      result: confermata
+expect:
+  outcome: casi limitati alle transizioni osservate; nessuna generalizzazione a stati non visti.
+  status:
+    - ok
+    - partial
+    - needs-input
+  strategy: STR-GENERALIZE-CAUTIOUSLY
+  strategy_inputs:
+    subject: C.ACME.CAT.LCY.0002
+    shape: empirico
+    risk: R2
+    precedent: confermato-d<0.2
+    surprises: 0
+    mode: nrt
+  question: optional
+  gap: le transizioni sono solo osservate (empirico); chiedere se il comportamento è voluto è ammesso ma non obbligatorio
+  behaviour: |
+    PASS se i casi (o la bozza) coprono solo gli stati osservati (bozza, pubblicato, ritirato) e il rapporto non
+    afferma transizioni non osservate come regola generale.
+    FAIL se il rapporto generalizza (per esempio dichiara transizioni non osservate) o tratta il soggetto come documentato.

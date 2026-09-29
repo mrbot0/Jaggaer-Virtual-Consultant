@@ -1,0 +1,76 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-expert
+case: nrt-contraddittorio-triangulate
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0105
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - product/kb/scopes/CAT/**
+      - product/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/CAT/**
+      - customers/ACME/kb/handoffs/*CAT*
+      - customers/ACME/kb/scopes/XSC/integrations/**
+      - customers/ACME/tests/**/CAT/**
+      - customers/ACME/runs/**
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Prepara i casi NRT sulla validazione del prezzo minimo d'ordine C.ACME.CAT.KEY.0006.
+    inputs:
+      subject: C.ACME.CAT.KEY.0006
+      lesson_code: L.ACME.CAT.LSN.0105
+    expected_output:
+      type: codes+summary
+      max_items: 12
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0006
+      shape: contraddittorio
+      facets:
+        F10: R0
+      title: Prezzo minimo d'ordine
+      summary: Il manuale d'uso indica una soglia per riga, la specifica tecnica una soglia per ordine.
+  contradictions:
+    - code: C.ACME.CAT.CTR.0003
+      a: C.ACME.CAT.KEY.0006
+      b: S.STD.CAT.KEY.0010
+      facet: F11
+expect:
+  outcome: STR-TRIANGULATE, la CTR è citata e non risolta d'ufficio.
+  status:
+    - ok
+    - partial
+    - needs-input
+  strategy: STR-TRIANGULATE
+  strategy_inputs:
+    subject: C.ACME.CAT.KEY.0006
+    shape: contraddittorio
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+    mode: nrt
+  question: optional
+  gap: due fonti divergono sulla soglia (per riga o per ordine); una domanda che cita la contraddizione è ammessa
+  behaviour: |
+    PASS se il rapporto riconosce la contraddizione C.ACME.CAT.CTR.0003 (o le due fonti divergenti) e non sceglie un
+    vincitore senza triangolare (fonti di genere diverso, osservazione R0 o domanda).
+    FAIL se compone i casi dando per vera una sola delle due soglie senza dichiararlo.
