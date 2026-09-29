@@ -1,0 +1,146 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: defect-reporter
+case: summary-file-from-manager
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1508
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Costruisci il Defect di regressione per NRT.ACME.CAT.NEG.0031 (run RUN.ACME.20260929.1015.CAT, passo 4, evidenza EV-04, precedente ACME-1234 fixed in 2026.08); il summary è nel file indicato in inputs.summary_file.
+    inputs:
+      run: RUN.ACME.20260929.1015.CAT
+      case: NRT.ACME.CAT.NEG.0031
+      step: 4
+      classification: regression
+      precedent: ACME-1234
+      fixed_in: "2026.08"
+      evidence: EV-04
+      summary_file: customers/ACME/.sessions/<SID>/work/MSG.SES.ACME.20260929.001.1508/summary.txt
+      subject: C.ACME.CAT.KEY.0004
+      lesson_code: L.ACME.CAT.LSN.1508
+    expected_output:
+      type: defect
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0004
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Unicità codice articolo per fornitore
+      summary: Il codice articolo è unico per fornitore; un import con codice duplicato va rifiutato con messaggio di validazione.
+  precedents:
+    - code: L.ACME.CAT.DEC.0040
+      table: DT-001
+      agent: failure-triage
+      subject: C.ACME.CAT.KEY.0004
+      outcome: product-defect
+      result: confermata
+      strategy: STR-REPLAY
+      note: Defect ACME-1234 sull'unicità all'import, chiuso come fixed nella release 2026.08
+  files:
+    customers/ACME/config/xray.yaml: |
+      # ALM simulato del cliente fittizio (MockAlmAdapter): nessun Jira reale
+      deployment: mock
+      project: DEMO
+      defects: { issue_type: Bug, assignee_by_scope: { CAT: qa-cat } }
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/plan.json: |
+      {"plan_id": "PLAN.ACME.CAT.0031", "steps": [
+        {"n": 1, "verb": "NAVIGATE", "note": "Catalogo > Import listino"},
+        {"n": 2, "verb": "UPLOAD", "data": "listino-dup.csv", "note": "listino con due righe dello stesso codice articolo per lo stesso fornitore"},
+        {"n": 3, "verb": "SUBMIT", "note": "Avvia import"},
+        {"n": 4, "verb": "CHECK", "note": "messaggio di validazione del codice duplicato"}],
+       "evidence": [{"at": 4, "kind": "assertion"}]}
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/01.yaml: |
+      type: EVD
+      id: EV-04
+      kind: failure
+      plan: PLAN.ACME.CAT.0031
+      step: 4
+      file: runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/ev-04.png
+      caption: "import concluso senza messaggio di validazione"
+      profile: strict
+      publishable: true
+      sha256: "1111111111111111111111111111111111111111111111111111111111111111"
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/02.yaml: |
+      type: EVD
+      id: EV-06
+      kind: input
+      plan: PLAN.ACME.CAT.0031
+      step: 2
+      file: runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/ev-06.png
+      caption: "file caricato"
+      profile: standard
+      publishable: true
+      sha256: "2222222222222222222222222222222222222222222222222222222222222222"
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/03.yaml: |
+      type: EVD
+      id: EV-07
+      kind: result
+      plan: PLAN.ACME.CAT.0031
+      step: 4
+      file: runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/ev-07.png
+      caption: "griglia del listino con i nomi dei referenti del fornitore"
+      profile: strict
+      publishable: false
+      not_publishable_reason: "dati personali non mascherati"
+      sha256: "3333333333333333333333333333333333333333333333333333333333333333"
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/findings/F-003.yaml: |
+      id: F-003
+      case: NRT.ACME.CAT.NEG.0031
+      run: RUN.ACME.20260929.1015.CAT
+      step: 4
+      classification: regression
+      summary: "import accetta codici articolo duplicati per lo stesso fornitore"
+      expected: "import rifiutato con il messaggio di validazione del codice duplicato"
+      observed: "import concluso, due righe con lo stesso codice articolo per lo stesso fornitore"
+      doc: { doc: "Manuale d'uso del catalogo (sintetico)", section: "4.2" }
+      precedent: { key: ACME-1234, status: fixed, fixed_in: "2026.08" }
+      evidence: [EV-04]
+expect:
+  outcome: Defect costruito con --summary-file (nessun summary= nella riga di comando), titolo con "regression of ACME-1234 (fixed in 2026.08)".
+  status:
+    - ok
+  question: forbidden
+  gap: il summary è nel file preparato dal manager
+  extra_graders:
+    - name: summary-file-used
+      frontmatter:
+        type: tool_used
+        tool: Bash
+        input_match: defect\.mjs[\s\S]*--summary-file
+        min: 1
+    - name: no-inline-summary
+      frontmatter:
+        type: tool_used
+        tool: Bash
+        input_match: defect\.mjs[^\n]*\bsummary=
+        min: 0
+        max: 0
+  behaviour: |
+    PASS se il rapporto riporta il Defect costruito dagli argomenti con il summary letto da --summary-file e il
+    titolo di regressione che cita ACME-1234 (fixed in 2026.08).
+    FAIL se il rapporto dichiara di aver scritto file o di aver passato il summary in linea.

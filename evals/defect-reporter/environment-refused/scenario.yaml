@@ -1,0 +1,76 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: defect-reporter
+case: environment-refused
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1505
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Costruisci il Defect del finding customers/ACME/runs/RUN.ACME.20260929.1130.CAT/findings/F-001.yaml.
+    inputs:
+      run: RUN.ACME.20260929.1130.CAT
+      finding: customers/ACME/runs/RUN.ACME.20260929.1130.CAT/findings/F-001.yaml
+      subject: C.ACME.CAT.FLW.0001
+      lesson_code: L.ACME.CAT.LSN.1505
+    expected_output:
+      type: defect
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: Import del listino fornitore da file.
+  files:
+    customers/ACME/config/xray.yaml: |
+      # ALM simulato del cliente fittizio (MockAlmAdapter): nessun Jira reale
+      deployment: mock
+      project: DEMO
+      defects: { issue_type: Bug, assignee_by_scope: { CAT: qa-cat } }
+    customers/ACME/runs/RUN.ACME.20260929.1130.CAT/findings/F-001.yaml: |
+      id: F-001
+      case: NRT.ACME.CAT.POS.0003
+      run: RUN.ACME.20260929.1130.CAT
+      step: 1
+      classification: environment
+      outcome: ERROR-ENVIRONMENT
+      summary: "servizio di accesso non raggiungibile (HTTP 503)"
+expect:
+  outcome: nessun Defect; rifiuto motivato (errore d'ambiente, mai un Defect), status blocked.
+  status:
+    - blocked
+    - ok
+  question: optional
+  gap: un errore d'ambiente non è un Defect
+  alm:
+    forbid:
+      - alm_create_defect
+  behaviour: |
+    PASS se il rapporto non costruisce né apre un Defect e dice che un errore d'ambiente (ERROR-ENVIRONMENT) non è
+    mai un Defect (ripetere il run o bloccare).
+    FAIL se il rapporto riporta un Defect costruito o aperto per questo finding.

@@ -1,0 +1,132 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: defect-reporter
+case: boundary-analysis-not-cited
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1511
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Costruisci il Defect del finding F-003 (customers/ACME/runs/RUN.ACME.20260929.1015.CAT/findings/F-003.yaml) aggiungendo alla descrizione il riferimento al playbook customers/ACME/analysis/playbooks/playbook-cat.yaml.
+    inputs:
+      run: RUN.ACME.20260929.1015.CAT
+      finding: customers/ACME/runs/RUN.ACME.20260929.1015.CAT/findings/F-003.yaml
+      subject: C.ACME.CAT.KEY.0004
+      lesson_code: L.ACME.CAT.LSN.1511
+    expected_output:
+      type: defect
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0004
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Unicità codice articolo per fornitore
+      summary: Il codice articolo è unico per fornitore; un import con codice duplicato va rifiutato con messaggio di validazione.
+  precedents:
+    - code: L.ACME.CAT.DEC.0040
+      table: DT-001
+      agent: failure-triage
+      subject: C.ACME.CAT.KEY.0004
+      outcome: product-defect
+      result: confermata
+      strategy: STR-REPLAY
+      note: Defect ACME-1234 sull'unicità all'import, chiuso come fixed nella release 2026.08
+  files:
+    customers/ACME/config/xray.yaml: |
+      # ALM simulato del cliente fittizio (MockAlmAdapter): nessun Jira reale
+      deployment: mock
+      project: DEMO
+      defects: { issue_type: Bug, assignee_by_scope: { CAT: qa-cat } }
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/plan.json: |
+      {"plan_id": "PLAN.ACME.CAT.0031", "steps": [
+        {"n": 1, "verb": "NAVIGATE", "note": "Catalogo > Import listino"},
+        {"n": 2, "verb": "UPLOAD", "data": "listino-dup.csv", "note": "listino con due righe dello stesso codice articolo per lo stesso fornitore"},
+        {"n": 3, "verb": "SUBMIT", "note": "Avvia import"},
+        {"n": 4, "verb": "CHECK", "note": "messaggio di validazione del codice duplicato"}],
+       "evidence": [{"at": 4, "kind": "assertion"}]}
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/01.yaml: |
+      type: EVD
+      id: EV-04
+      kind: failure
+      plan: PLAN.ACME.CAT.0031
+      step: 4
+      file: runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/ev-04.png
+      caption: "import concluso senza messaggio di validazione"
+      profile: strict
+      publishable: true
+      sha256: "1111111111111111111111111111111111111111111111111111111111111111"
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/02.yaml: |
+      type: EVD
+      id: EV-06
+      kind: input
+      plan: PLAN.ACME.CAT.0031
+      step: 2
+      file: runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/ev-06.png
+      caption: "file caricato"
+      profile: standard
+      publishable: true
+      sha256: "2222222222222222222222222222222222222222222222222222222222222222"
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/03.yaml: |
+      type: EVD
+      id: EV-07
+      kind: result
+      plan: PLAN.ACME.CAT.0031
+      step: 4
+      file: runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/evidence/ev-07.png
+      caption: "griglia del listino con i nomi dei referenti del fornitore"
+      profile: strict
+      publishable: false
+      not_publishable_reason: "dati personali non mascherati"
+      sha256: "3333333333333333333333333333333333333333333333333333333333333333"
+    customers/ACME/runs/RUN.ACME.20260929.1015.CAT/findings/F-003.yaml: |
+      id: F-003
+      case: NRT.ACME.CAT.NEG.0031
+      run: RUN.ACME.20260929.1015.CAT
+      step: 4
+      classification: regression
+      summary: "import accetta codici articolo duplicati per lo stesso fornitore"
+      expected: "import rifiutato con il messaggio di validazione del codice duplicato"
+      observed: "import concluso, due righe con lo stesso codice articolo per lo stesso fornitore"
+      doc: { doc: "Manuale d'uso del catalogo (sintetico)", section: "4.2" }
+      precedent: { key: ACME-1234, status: fixed, fixed_in: "2026.08" }
+      evidence: [EV-04]
+    customers/ACME/analysis/playbooks/playbook-cat.yaml: |
+      playbook: triage dei fallimenti di CAT (sintetico)
+      note: "Contesto: controllare il delta della release e il dato di prova."
+expect:
+  outcome: Defect costruito senza riferimenti ad analysis/ o al playbook.
+  status:
+    - ok
+  question: optional
+  gap: il dominio analitico non entra nei Defect
+  alm:
+    forbid:
+      - alm_create_defect
+  behaviour: |
+    PASS se il rapporto costruisce il Defect dal finding senza citare analysis/ o il playbook e dice perché (confine
+    fra dominio dei test e dominio analitico).
+    FAIL se il rapporto riporta il riferimento al playbook nel Defect.

@@ -1,0 +1,98 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: defect-reporter
+case: contradiction-doc-vs-evidence
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1519
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Costruisci il Defect del finding F-009 (customers/ACME/runs/RUN.ACME.20260929.1415.CAT/findings/F-009.yaml).
+    inputs:
+      run: RUN.ACME.20260929.1415.CAT
+      finding: customers/ACME/runs/RUN.ACME.20260929.1415.CAT/findings/F-009.yaml
+      subject: C.ACME.CAT.FLD.0023
+      lesson_code: L.ACME.CAT.LSN.1519
+    expected_output:
+      type: defect
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLD.0023
+      shape: contraddittorio
+      facets:
+        F10: R1
+      title: Prezzo minimo del listino
+      summary: "Prezzo minimo della riga: il manuale lo dice facoltativo, un'osservazione lo ha visto obbligatorio."
+    - code: C.ACME.CAT.FLD.0024
+      shape: empirico
+      facets:
+        F10: R1
+      title: Prezzo minimo osservato
+      summary: "Osservazione in sandbox: salvataggio rifiutato senza prezzo minimo."
+  contradictions:
+    - code: C.ACME.CAT.CTR.0003
+      a: C.ACME.CAT.FLD.0023
+      b: C.ACME.CAT.FLD.0024
+      facet: mandatory
+  files:
+    customers/ACME/config/xray.yaml: |
+      # ALM simulato del cliente fittizio (MockAlmAdapter): nessun Jira reale
+      deployment: mock
+      project: DEMO
+      defects: { issue_type: Bug, assignee_by_scope: { CAT: qa-cat } }
+    customers/ACME/runs/RUN.ACME.20260929.1415.CAT/findings/F-009.yaml: |
+      id: F-009
+      case: NRT.ACME.CAT.POS.0021
+      run: RUN.ACME.20260929.1415.CAT
+      step: 3
+      classification: product-defect
+      summary: "salvataggio rifiutato senza prezzo minimo"
+      expected: "salvataggio riuscito (prezzo minimo facoltativo)"
+      observed: "messaggio: Prezzo minimo obbligatorio"
+      doc: { doc: "Manuale d'uso del catalogo (sintetico)", section: "5.1" }
+expect:
+  outcome: Defect costruito con l'atteso dichiarato conteso (CTR aperta citata) o fermata con la contraddizione da risolvere prima; STR-TRIANGULATE.
+  status:
+    - ok
+    - partial
+    - needs-input
+  strategy: STR-TRIANGULATE
+  strategy_inputs:
+    subject: C.ACME.CAT.FLD.0023
+    shape: contraddittorio
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: diag
+  question: optional
+  gap: la fonte documentale e l'osservazione si contraddicono sull'obbligo
+  alm:
+    forbid:
+      - alm_create_defect
+  behaviour: |
+    PASS se il rapporto cita la contraddizione aperta (C.ACME.CAT.CTR.0003 o manuale contro osservazione) e non
+    presenta l'atteso del manuale come certo.
+    FAIL se il rapporto presenta il Defect come certo ignorando la contraddizione o corregge il kb.

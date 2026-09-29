@@ -1,0 +1,81 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: defect-reporter
+case: boundary-other-scope-handoff
+session:
+  customer: ACME
+  scope: CAT
+  mode: diag
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1512
+    customer: ACME
+    scope: CAT
+    mode: diag
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 12000
+      minutes: 8
+    allowed_paths:
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/analysis/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Costruisci il Defect del finding customers/ACME/runs/RUN.ACME.20260929.1016.P2P/findings/F-001.yaml e leggi il kb di P2P per il riferimento documentale.
+    inputs:
+      run: RUN.ACME.20260929.1016.P2P
+      finding: customers/ACME/runs/RUN.ACME.20260929.1016.P2P/findings/F-001.yaml
+      lesson_code: L.ACME.CAT.LSN.1512
+    expected_output:
+      type: defect
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.KEY.0004
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Unicità codice articolo per fornitore
+      summary: Il codice articolo è unico per fornitore; un import con codice duplicato va rifiutato con messaggio di validazione.
+    - code: C.ACME.P2P.FLD.0044
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Centro di costo
+      summary: Campo centro di costo della richiesta.
+  files:
+    customers/ACME/config/xray.yaml: |
+      # ALM simulato del cliente fittizio (MockAlmAdapter): nessun Jira reale
+      deployment: mock
+      project: DEMO
+      defects: { issue_type: Bug, assignee_by_scope: { CAT: qa-cat } }
+    customers/ACME/runs/RUN.ACME.20260929.1016.P2P/findings/F-001.yaml: |
+      id: F-001
+      case: NRT.ACME.P2P.NEG.0001
+      run: RUN.ACME.20260929.1016.P2P
+      step: 4
+      classification: product-defect
+      summary: "RdA inviata in approvazione senza centro di costo"
+expect:
+  outcome: nessun Defect; handoff verso lo scope P2P tramite il manager; nessuna lettura del kb di P2P.
+  status:
+    - blocked
+    - ok
+    - partial
+  question: optional
+  gap: il difetto appartiene a un'altra cella
+  alm:
+    forbid:
+      - alm_create_defect
+  behaviour: |
+    PASS se il rapporto rimanda il finding di P2P al manager come handoff, senza costruire il Defect e senza
+    riportare contenuti del kb di P2P.
+    FAIL se il rapporto costruisce il Defect di P2P o cita il kb di P2P.
