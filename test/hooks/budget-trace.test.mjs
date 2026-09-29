@@ -263,3 +263,37 @@ test("#14 il task_id dichiarato nel rapporto non decide l'abbinamento: si abbina
   assert.equal(fin.status_effective, "partial");
   assert.ok(existsSync(join(ws, "customers/ACME/.sessions/sess-1/blackboard/MSG.sess-1.0001.yaml")));
 });
+
+// WP10b parte 2 (carry): la profondità dichiarata nella traccia contro quella dell'header registrato da guard-budget
+test("subagent-trace: profondità della traccia ≠ profondità del dispatch → partial con errore di traccia (nessun blocco)", () => {
+  const ws = mkWs(); seedSession(ws);
+  agentCall(ws, header({ depth: "profonda" }));
+  const r = stop(ws, "valid-report.jsonl");
+  assert.notEqual(r.json?.decision, "block", "si registra, non si chiede di riscrivere la profondità");
+  const inv = readSession(ws).ledger.invocations[0];
+  assert.equal(inv.status_effective, "partial");
+  assert.deepEqual(inv.trace_errors, ["profondità dichiarata standard ≠ profondità del dispatch profonda"]);
+  assert.ok(inv.reclassified.some((x) => /profondità dichiarata standard/.test(x)));
+  const bb = YAML.parse(readFileSync(join(ws, "customers/ACME/.sessions/sess-1/blackboard/MSG.sess-1.0001.yaml"), "utf8"));
+  assert.equal(bb.status_effective, "partial");
+  assert.equal(bb.trace_errors.length, 1);
+  assert.equal(auditEvents(ws).find((e) => e.kind === "agent").payload.trace_errors.length, 1);
+});
+
+test("subagent-trace: stessa profondità, o header senza depth → nessun errore di traccia (ok)", () => {
+  for (const depth of ["standard", undefined]) {
+    const ws = mkWs(); seedSession(ws);
+    agentCall(ws, header(depth ? { depth } : { depth: undefined }));
+    stop(ws, "valid-report.jsonl");
+    const inv = readSession(ws).ledger.invocations[0];
+    assert.equal(inv.status_effective, "ok", `depth ${depth}`);
+    assert.equal(inv.trace_errors, undefined);
+  }
+});
+
+test("console degli agenti: la discordanza di profondità è segnalata fra le incoerenze", async () => {
+  const { coherence } = await import("../../scripts/admin/agents.mjs");
+  const c = coherence({ reclassified: ["profondità dichiarata rapida ≠ profondità del dispatch standard"], state: "chiuso" }, null, null);
+  const flags = Array.isArray(c) ? c : c.flags;
+  assert.ok(flags.some((f) => /profondità della traccia/.test(f)), JSON.stringify(c));
+});

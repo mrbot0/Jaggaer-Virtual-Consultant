@@ -155,6 +155,7 @@ export function coherence(row, rep, act) {
   const declared = rep?.cognitive_trace?.surprises;
   if (Number.isInteger(declared) && hookSurprises > declared) flags.push(`il rapporto dichiara ${declared} sorprese, step-check ne registra ${hookSurprises}`);
   if ((row.reclassified ?? []).some((x) => /task_id dichiarato/.test(String(x)))) flags.push("il task_id del rapporto è diverso da quello del dispatch");
+  if ((row.reclassified ?? []).some((x) => /profondità dichiarata/.test(String(x)))) flags.push("la profondità della traccia è diversa da quella del dispatch");
   if (row.state !== "in-corso" && row.completed_at && act && act.calls === 0 && rep?.status === "ok" && (rep?.cognitive_trace?.recalled || codesIn(rep?.output).length)) flags.push("il rapporto dichiara lavoro svolto ma l'audit non registra nessuna chiamata di strumento");
   const notes = [];
   if (row.usage_source === "self-declared") notes.push("token autodichiarati dal rapporto (transcript assente): non verificabili");

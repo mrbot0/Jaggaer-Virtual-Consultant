@@ -34,6 +34,8 @@ export const PLUGIN_AGENTS = new Set([
   "root-cause-analyst", "config-designer", "lesson-validator", "analytics-learner", "test-mechanic", "failure-triage", "config-auditor", "defect-reporter",
 ]);
 const SAFE_NAME = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/;
+// WP10b parte 2: le profondità di DT-023 (cognitive-trace.schema.json)
+const DEPTHS = new Set(["rapida", "standard", "profonda"]);
 
 export const modelKey = (m) => (/haiku/i.test(m ?? "") ? "haiku" : /sonnet/i.test(m ?? "") ? "sonnet" : /opus/i.test(m ?? "") ? "opus" : "other");
 
@@ -193,6 +195,19 @@ export function handle(input, env = process.env) {
     if (v !== v0 && declared !== expected) reclassified.push(`task_id dichiarato ${declared} ≠ task_id del dispatch ${expected}`);
     let effective = v.ok ? v.status_effective : "partial";
     if (entry.closed_by === "user-stop") effective = "aborted-by-user";
+    // WP10b parte 2 (carry): la profondità dichiarata nella traccia deve essere quella dell'header del dispatch
+    // (registrata da guard-budget in invocations.jsonl, non autodichiarata). Discordanza ⇒ partial con errore di
+    // traccia: il self_check si giudica sui controlli della profondità dichiarata, e una profondità più bassa di
+    // quella chiesta ne salterebbe alcuni. Nessun blocco: si registra, non si chiede all'agente di riscriverla.
+    const traceErrors = [];
+    const hdrDepth = DEPTHS.has(match?.depth) ? match.depth : null;
+    const declDepth = report?.cognitive_trace?.depth ?? null;
+    if (hdrDepth && declDepth != null && declDepth !== hdrDepth) {
+      const e = `profondità dichiarata ${declDepth} ≠ profondità del dispatch ${hdrDepth}`;
+      traceErrors.push(e);
+      reclassified.push(e);
+      if (effective === "ok") effective = "partial";
+    }
     if (match?.budget_tokens && entry.tokens > match.budget_tokens) {
       reclassified.push(`budget del compito superato (${entry.tokens}/${match.budget_tokens})`);
       if (effective === "ok") effective = "partial";
@@ -206,7 +221,7 @@ export function handle(input, env = process.env) {
     Object.assign(entry, {
       task_id: entry.task_id ?? null, scope: match?.scope ?? entry.scope ?? null, tier: match?.tier ?? entry.tier ?? null, surprises: Math.max(surprisesN, recordedN), surprises_declared: surprisesN, surprises_recorded: recordedN,
       status: report?.status ?? null, status_effective: effective, error_class: report?.error_class ?? null,
-      trace_incomplete: enforce && !v.ok, reclassified, lesson: report?.lesson ?? null, model: match?.model ?? null,
+      trace_incomplete: enforce && !v.ok, reclassified, ...(traceErrors.length ? { trace_errors: traceErrors } : {}), lesson: report?.lesson ?? null, model: match?.model ?? null,
       completed_at: new Date().toISOString(),
     });
     for (const x of report?.cognitive_trace?.surprises ?? []) {
@@ -224,7 +239,7 @@ export function handle(input, env = process.env) {
     const ct = report?.cognitive_trace;
     writeFileSync(join(bbDir, `${name}.yaml`), YAML.stringify({
       task_id: taskId, agent_type: agentType, agent_id: agentId, status: entry.status, status_effective: entry.status_effective,
-      trace_incomplete: entry.trace_incomplete, reclassified: entry.reclassified, output: report?.output ?? null, lesson: entry.lesson,
+      trace_incomplete: entry.trace_incomplete, reclassified: entry.reclassified, trace_errors: entry.trace_errors ?? [], output: report?.output ?? null, lesson: entry.lesson,
       // WP10d (D7): anche richiamo, forma epistemica prima/dopo, ipotesi e i `why` delle DEC (solo codici e riassunti)
       cognitive_trace: ct ? { depth: ct.depth, recalled: ct.recalled ?? null, epistemic: ct.epistemic ?? null, strategy: ct.strategy, hypotheses: ct.hypotheses ?? null, decisions: ct.decisions,
         surprises: Array.isArray(ct.surprises) ? ct.surprises.length : 0, surprise_items: Array.isArray(ct.surprises) ? ct.surprises.slice(0, 10) : [], self_check: ct.self_check } : null,
@@ -239,7 +254,7 @@ export function handle(input, env = process.env) {
     payload: {
       decision: outcome.decision, agent_type: agentType, agent_id: agentId, blocks: session.ledger.trace_blocks[agentId] ?? 0,
       status: entry?.status ?? report?.status ?? null, status_effective: entry?.status_effective ?? null, trace_incomplete: entry?.trace_incomplete ?? null,
-      tokens: entry?.tokens ?? 0, usage_source: entry?.usage_source ?? null, missing: v.ok ? [] : v.missing, stop_hook_active: !!input.stop_hook_active,
+      tokens: entry?.tokens ?? 0, usage_source: entry?.usage_source ?? null, missing: v.ok ? [] : v.missing, trace_errors: entry?.trace_errors ?? [], stop_hook_active: !!input.stop_hook_active,
     },
   });
   return outcome.decision === "block" ? block(outcome.reason) : null;
