@@ -126,8 +126,9 @@ test("I2 (giro 1): attivazione del piano dalla sessione principale — in sandbo
   assert.ok(commandLines(skill.text).some((l) => act.test(l)), "riga di attivazione nel corpo");
   const a = section("6\\. Le richieste di approvazione");
   assert.match(a, /Attivare un piano/);
-  assert.match(a, /in sandbox/i);
-  assert.match(a, /fuori sandbox/i);
+  // giro 2: step-check tratta l'ambiente dev come la sandbox (nessuna A1)
+  assert.match(a, /in sandbox o dev\*\*/i);
+  assert.match(a, /fuori da sandbox e dev/i);
   assert.match(a, /reply_to/);
   assert.match(a, /guard-config-scope/);
   assert.match(section("5\\. Il ritorno"), /richiesta di attivazione/);
@@ -135,7 +136,9 @@ test("I2 (giro 1): attivazione del piano dalla sessione principale — in sandbo
   for (const h of ["## §45.3", "## §45.4"]) {
     const from = seq.indexOf(h);
     const to = seq.indexOf("\n## ", from + 3);
-    assert.ok(commandLines(seq.slice(from, to < 0 ? undefined : to)).some((l) => act.test(l)), `${h}: attivazione dalla sessione principale`);
+    const part = seq.slice(from, to < 0 ? undefined : to);
+    assert.ok(commandLines(part).some((l) => act.test(l)), `${h}: attivazione dalla sessione principale`);
+    assert.match(part, /in sandbox o dev/, `${h}: sandbox o dev`);
   }
 });
 

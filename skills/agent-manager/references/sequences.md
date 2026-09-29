@@ -42,7 +42,7 @@ dalla memoria della conversazione.
 6 rapporto: salvi e validi (agent-report.mjs); agents status; agents show <task> se non ok
      needs-input → formuli la domanda (asking-the-user) → risposta dell'utente → nuovo Agent con reply_to: <task>
      needs-input con il piano compilato e la richiesta di attivazione → lo attivi tu (sessione principale:
-       guard-config-scope nega l'attivazione ai sub-agenti); in sandbox subito, fuori sandbox dopo l'A1 dell'utente
+       guard-config-scope nega l'attivazione ai sub-agenti); in sandbox o dev subito, altrove dopo l'A1 dell'utente
       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/step-check.mjs" --plan <piano> --step 1 --run <RUN> --session "${CLAUDE_SESSION_ID}" --json
        → nuovo Agent con reply_to: <task>, che esegue il piano attivo
      escalate    → un nuovo Agent con model superiore (e tier coerente), output parziale, reply_to: <task>
@@ -56,8 +56,8 @@ dalla memoria della conversazione.
 2 Agent(scope-expert, sonnet, mode: config, inputs: { plan: <PLAN> })
      l'agente: piano con traccia attesa → prova a vuoto (SAVE/SUBMIT → CAPTURE) con step-check per passo
 3 il rapporto torna needs-input con il piano e la richiesta di attivazione (o approval_request { kind: A1, plan }):
-     in sandbox: attivi subito il piano dalla sessione principale (nessuna A1)
-     fuori sandbox: mostri rischi e assunzioni, poi i passi, poi la frase che l'utente deve scrivere (A1) — e attendi;
+     in sandbox o dev: attivi subito il piano dalla sessione principale (nessuna A1)
+     fuori da sandbox e dev: mostri rischi e assunzioni, poi i passi, poi la frase che l'utente deve scrivere (A1) — e attendi;
      dopo la frase, la stessa attivazione:
       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/step-check.mjs" --plan <piano> --step 1 --run <RUN> --session "${CLAUDE_SESSION_ID}" --json
 4 nuovo Agent(scope-expert, reply_to: <task>) sul piano attivo

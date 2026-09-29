@@ -75,7 +75,7 @@ la sessione principale; poi ti ridispaccia con `reply_to` e riprendi dal checkpo
 | rosso | A1, A2 della prova, A3 per passo |
 | **produzione, sempre (3A)** | A1 (piano, con rischi e assunzioni mostrati prima dei passi), A2 (prova: esecuzione verde in pre-produzione allineata **e** prova a vuoto in produzione senza sorprese incompatibili; se richiesto da una persona diversa), A3 per ogni passo con effetto; tutto entro la finestra dall'A1 (di default 60 minuti), scaduta si ricomincia |
 
-In sandbox un piano si attiva senza A1; fuori sandbox l'attivazione del piano richiede l'A1 dell'utente.
+In sandbox o dev un piano si attiva senza A1; negli altri ambienti l'attivazione del piano richiede l'A1 dell'utente.
 
 ## Il custom del cliente (§28.4)
 

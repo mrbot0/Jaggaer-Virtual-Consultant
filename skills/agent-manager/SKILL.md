@@ -158,8 +158,8 @@ riparte dall'A1.
 l'attivazione di un piano che non è attivo né approvato. Quando lo scope-expert torna `needs-input` con il piano
 compilato e la richiesta di attivazione:
 
-- **in sandbox** lo attivi subito (nessuna A1), poi ridispacci lo scope-expert con `reply_to: <task_id>`;
-- **fuori sandbox** l'attivazione richiede che l'utente abbia scritto `APPROVO PIANO <id>` **prima** che lo
+- **in sandbox o dev** (step-check tratta i due ambienti allo stesso modo) lo attivi subito (nessuna A1), poi ridispacci lo scope-expert con `reply_to: <task_id>`;
+- **fuori da sandbox e dev** l'attivazione richiede che l'utente abbia scritto `APPROVO PIANO <id>` **prima** che lo
   scope-expert esegua: mostri rischi, assunzioni e passi, attendi la frase, poi la stessa riga e il nuovo dispatch
   (senza la frase, step-check risponde `approval_required` e il piano resta inattivo).
 
