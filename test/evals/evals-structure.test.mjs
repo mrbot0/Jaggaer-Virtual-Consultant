@@ -340,6 +340,22 @@ test("criteri §49.1 per caso: dispatch del ruolo, traccia presente, nessun deny
   assert.deepEqual(errs, []);
 });
 
+// Correttivo del blocco B (revisione 2B): chi è giudicato sulla strategia la sceglie con strategy-select (§14, §49.1).
+// Eccezione dichiarata: scope-extractor (ciclo ridotto 1-2-6), le cui strategie sono per regola nel corpo
+// (STR-VERIFY-FIRST, STR-STOP-RECORD a budget esaurito) e non per scenario.
+const STRATEGY_BY_RULE = new Set(["scope-extractor"]);
+test("strategia: ogni ruolo con un grader strategy cita strategy-select nel corpo dell'agente (DECIDERE)", () => {
+  const errs = [];
+  const roles = [...new Set(ALL.filter((c) => c.graders.strategy).map((c) => roleOf(c.dir)))].sort();
+  assert.ok(roles.length >= 10, `ruoli con strategia giudicata: ${roles.join(", ")}`);
+  for (const r of roles) {
+    if (STRATEGY_BY_RULE.has(r)) continue;
+    const body = readFileSync(join(ROOT, "agents", `${r}.md`), "utf8");
+    if (!/scripts\/decide\/strategy-select\.mjs"? --shape/.test(body)) errs.push(`agents/${r}.md: nessuna chiamata a strategy-select, ma ${r} ha casi con il grader strategy`);
+  }
+  assert.deepEqual(errs, []);
+});
+
 // ---------- mock ----------
 
 function mockDirs() {

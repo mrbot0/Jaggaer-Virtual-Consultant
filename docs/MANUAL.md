@@ -475,12 +475,11 @@ segnaposto con il percorso letterale del plugin prima di eseguire il comando. Le
 
 La piramide di test (§49.1) ha un livello "eval degli agenti": 20 compiti per ruolo, ognuno giudicato su quattro
 criteri — traccia cognitiva presente, strategia attesa, nessuna violazione di cella, domanda solo con un gap reale
-(§16). La suite è in `evals/<ruolo>/<caso>/` nel formato di `claude plugin eval` (Claude Code ≥ 2.1.269). Oggi ci sono
-i casi di dieci ruoli (200): `scope-expert`, `scope-extractor`, `scope-digester`, `customer-profiler`,
-`process-mapper`, `cluster-validator`, `weekly-digest`, `root-cause-analyst`, `config-designer` e `lesson-validator`;
-gli altri cinque ruoli seguono. Ogni caso usa un workspace sintetico del cliente fittizio ACME (più BETA per i casi di
-isolamento), costruito dallo scaffold del caso, e, per il browser, solo i risultati pre-registrati del tenant demo
-(`evals/mocks/chrome-devtools/`): mai un tenant vero.
+(§16). La suite è in `evals/<ruolo>/<caso>/` nel formato di `claude plugin eval` (Claude Code ≥ 2.1.269): tutti i
+15 ruoli, 20 casi ciascuno (300). Ogni caso usa un workspace sintetico del cliente fittizio ACME (più BETA per i casi
+di isolamento), costruito dallo scaffold del caso; per il browser solo i risultati pre-registrati del tenant demo
+(`evals/mocks/chrome-devtools/`), per l'ALM solo il server `alm` del plugin simulato (`evals/mocks/alm/`, e
+`config/xray.yaml` con `deployment: mock` per gli script): mai un tenant o un Jira veri.
 
 **Validazione strutturale** (senza modello, anche in CI): `node --test test/evals/evals-structure.test.mjs` (fa parte di
 `npm test`; `JVC_SKIP_CORPUS=1` salta il controllo dei frammenti del corpus locale). Controlla il formato dei file, i
@@ -521,12 +520,17 @@ precedenti del workspace portino davvero alla strategia attesa.
    chiedono le approvazioni con il campo `approval_request`), `approval-request` (dove il caso richiede
    un'approvazione: tipo e piano o target attesi), `question` (giudice con il criterio di §16), `status`, `behaviour`
    (criterio specifico del caso), qualche `file_exists`/regex su file (nessuna scrittura dove non si deve) e, per il
-   browser, `no-…`/`uses-…` sulle chiamate registrate dal server simulato. La colonna `NOTES` mostra il grader fallito
+   browser e per l'ALM, `no-…`/`uses-…` sulle chiamate registrate dai server simulati. La colonna `NOTES` mostra il grader fallito
    più pesante.
 4. Prima calibrazione, cosa guardare: nei casi `boundary-*`/`confine` un agente che prova una volta la lettura negata e
    poi rinuncia fallisce `cell` (è un tentativo fuori cella: il criterio lo conta); se accade spesso, valutare il peso
-   di `cell` in quei casi. Per `cluster-validator` e `lesson-validator` la strategia è giudicata solo in pochi casi
-   (quelli in cui forma, rischio e precedente del soggetto la determinano con `strategy-select`).
+   di `cell` in quei casi. La strategia è giudicata solo dove forma, rischio e precedente del soggetto la determinano
+   con `strategy-select` sul workspace dello scaffold (110 casi su 300); ogni agente giudicato sulla strategia chiama
+   `strategy-select` nel passo DECIDERE — anche `cluster-validator`, `weekly-digest` e `lesson-validator`, dove i casi
+   giudicati sono pochi (4, 3 e 4) — e il validatore lo verifica. Se in calibrazione un agente registra
+   sistematicamente un'altra strategia, prima si controlla l'uscita dello script nella trascrizione, poi il corpo.
+   `scope-extractor` fa eccezione: le sue strategie sono per regola (STR-VERIFY-FIRST, STR-STOP-RECORD a budget
+   esaurito).
 
 | Sintomo nell'eval | Causa probabile | Cosa fare |
 |-------------------|-----------------|-----------|

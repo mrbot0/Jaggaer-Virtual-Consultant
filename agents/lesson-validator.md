@@ -37,8 +37,20 @@ Tier (§26.3): T1 · ciclo cognitivo: 2-4-6
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/why.mjs" <DEC> --db customers/<C>/knowledge.db --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" precedents <codice> --top 3 --customer <C> --db customers/<C>/knowledge.db --json
 
-3. **VALUTARE** — ridotto: la §6 dice cose sostenute da OBS, DEC o esecuzione? (skill `epistemic-awareness`)
-4. **DECIDERE** — DT-004 per ogni lezione (skill `decision-tables`): forma, fondatezza, confini, portabilità, **esiti
+3. **VALUTARE** — ridotto: la §6 dice cose sostenute da OBS, DEC o esecuzione? La forma epistemica del soggetto della
+   lezione (il `subject` del frontmatter), letta dal DB e non da ciò che la lezione dichiara (skill
+   `epistemic-awareness`):
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" epistemic <soggetto> --db customers/<C>/knowledge.db --json
+
+4. **DECIDERE** — prima la strategia registrata nella traccia: la sceglie lo script da forma del soggetto, rischio (F10
+   del soggetto), precedente più vicino e sorprese, nella modalità della sessione (skill `strategies`; per esempio:
+   soggetto libresco o ignoto senza precedenti ⇒ `STR-VERIFY-FIRST`; consolidato con il precedente confermato, come
+   una lezione su un successo ⇒ `STR-REPLAY`):
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --surprises <n> --mode <modalità> --depth <profondità> --json
+
+   Poi DT-004 per ogni lezione (skill `decision-tables`): forma, fondatezza, confini, portabilità, **esiti
    attesi dichiarati per ogni DEC con effetti**, novità, azionabilità. Lo script applica la tabella, scrive la DEC e,
    per le validate, registra gli esiti attesi che `learn outcomes` verificherà:
 
@@ -94,7 +106,7 @@ output:
 cognitive_trace:
   depth: standard
   recalled: { semantic: [L.ACME.CAT.LSN.0090, L.ACME.CAT.LSN.0089], episodic: [L.ACME.CAT.DEC.0051], working: [] }
-  epistemic: { subject: L.ACME.CAT.LSN.0090, shape_before: libresco, shape_after: consolidato }
+  epistemic: { subject: C.ACME.CAT.KEY.0004, shape_before: libresco, shape_after: libresco }
   strategy: STR-VERIFY-FIRST
   hypotheses: null
   decisions: [L.ACME.CAT.DEC.0056, L.ACME.CAT.DEC.0057]

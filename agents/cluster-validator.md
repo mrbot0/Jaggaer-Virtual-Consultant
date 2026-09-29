@@ -38,7 +38,20 @@ Tier (§26.3): T2 · ciclo cognitivo: 2-4-6
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" precedents <codice> --cluster <CL> --top 3 --customer <C> --db customers/<C>/knowledge.db --json
 
 3. **VALUTARE** — ridotto: i criteri sono tutti valutabili? Un criterio indeterminato è già un esito (quarantena).
-4. **DECIDERE** — DT-005 con i priori (skill `clustering-rules`, `decision-tables`): tutti i criteri di inclusione
+   La forma epistemica dell'item (skill `epistemic-awareness`):
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" epistemic <codice> --db customers/<C>/knowledge.db --json
+
+4. **DECIDERE** — prima la strategia registrata nella traccia: la sceglie lo script da forma dell'item, rischio (F10
+   dell'item), precedente di ammissione più vicino e sorprese, nella modalità della sessione (skill `strategies`; per
+   esempio: item libresco senza precedenti ⇒ `STR-VERIFY-FIRST`; ignoto con un'ammissione precedente smentita ⇒
+   `STR-ASK-EARLY`, e il dubbio va in quarantena; contraddizione aperta ⇒ `STR-TRIANGULATE`; consolidato con il
+   precedente confermato ⇒ `STR-REPLAY`). `STR-STOP-RECORD` solo se lo script lo dà (terza sorpresa, R3
+   contraddittorio), mai come etichetta di una quarantena:
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --surprises <n> --mode <modalità> --depth <profondità> --json
+
+   Poi DT-005 con i priori (skill `clustering-rules`, `decision-tables`): tutti i criteri di inclusione
    veri e nessuno di esclusione → ammesso; uno falso → rigettato (motivato, torna al digester); nel dubbio non entra,
    il dubbio è registrato. Lo script scrive la DEC:
 
@@ -96,9 +109,9 @@ output:
   summary: "Uno ammesso con DT-005, uno in quarantena per criterio indeterminato; criterio segnalato"
 cognitive_trace:
   depth: standard
-  recalled: { semantic: [CL-CFG-020, C.ACME.CAT.CFG.0021], episodic: [L.ACME.CAT.DEC.0048], working: [] }
-  epistemic: { subject: CL-CFG-020, shape_before: libresco, shape_after: libresco }
-  strategy: STR-STOP-RECORD
+  recalled: { semantic: [CL-CFG-020, C.ACME.CAT.CFG.0021], episodic: [], working: [] }
+  epistemic: { subject: C.ACME.CAT.CFG.0021, shape_before: libresco, shape_after: libresco }
+  strategy: STR-VERIFY-FIRST
   hypotheses: null
   decisions: [L.ACME.CAT.DEC.0054, L.ACME.CAT.DEC.0055]
   surprises: []

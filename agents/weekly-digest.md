@@ -56,6 +56,15 @@ Tier (§26.3): T2 · ciclo cognitivo: completo
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-010 portability_class=<classe> p_value=<P> quality_class=<classe-qualità> p_ge_08=<true-false> open_product_ctr=<true-false> --json
 
+   La strategia registrata nella traccia la sceglie lo script sul soggetto su cui ragioni (il candidato dubbio, o lo
+   scope della copertura da pianificare): forma (`kb epistemic`), rischio (F10), precedente più vicino e sorprese,
+   nella modalità della sessione (per esempio: candidato empirico a R2 senza precedenti ⇒ `STR-GENERALIZE-CAUTIOUSLY`;
+   soggetto ignoto o libresco ⇒ `STR-VERIFY-FIRST`; la forma si legge nel DB del proprietario: `product/knowledge.db`
+   per un item S, `customers/<C>/knowledge.db` per un item del cliente):
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" epistemic <soggetto> --db product/knowledge.db --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --surprises <n> --mode <modalità> --depth <profondità> --json
+
 5. **AGIRE** — la pipeline, in un colpo: prende `knowledge.lock` su `product/` e su ogni cliente (non prenderlo prima:
    lo script rifiuterebbe), raccoglie in sola lettura, pseudonimizza, allinea, calcola portabilità e tassi, scrive
    candidati e proposte, decadimenti, competence report, reindex, rilascia il lock:
@@ -102,7 +111,7 @@ output:
 cognitive_trace:
   depth: standard
   recalled: { semantic: [S.STD.ADM.CHK.0051], episodic: [L.ACME.ADM.DEC.0040], working: [] }
-  epistemic: { subject: S.STD.ADM.CHK.0051, shape_before: empirico, shape_after: consolidato }
+  epistemic: { subject: S.STD.ADM.CHK.0051, shape_before: empirico, shape_after: empirico }
   strategy: STR-GENERALIZE-CAUTIOUSLY
   hypotheses: null
   decisions: [L.ACME.ADM.DEC.0061]
