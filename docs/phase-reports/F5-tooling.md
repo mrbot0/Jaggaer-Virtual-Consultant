@@ -50,3 +50,23 @@ linea). Le credenziali solo dall'ambiente (`XRAY_CLIENT_ID`/`XRAY_CLIENT_SECRET`
   `guard-alm-write`; prefissi `chrome-devtools` e `playwright` (diretti e del plugin) già riconosciuti da `browser-tools`.
 - `integrity.mjs` include `mcp/` (ora provato) e `NETWORK.md`.
 - `guard-config-scope`: `write_text`/`write_bytes` in `CODE_WRITE`; `/results/` con interprete e primitiva di scrittura.
+
+## Giro di correzione 1
+
+Revisione "Needs fixes" (1 critico, 3 importanti), decisioni vincolanti del controllore applicate:
+
+| Rilievo | Correzione | Prova |
+|---------|-----------|-------|
+| C1 credenziali verso qualunque host | (a) `customers/*/config/**` protetto dalle scritture di sessione e sub-agenti (Write/Edit/NotebookEdit, shell, interpreti, script eseguiti: `guard-config-scope`); (b) `use customer` fissa sha256 di `config/xray.yaml` in `session.alm.config`: file cambiato ⇒ `guard-alm-write` nega le scritture ALM e ogni chiamata dell'`AlmAdapter` (server MCP, `scripts/xray/*`) è rifiutata; (c) host ammesso solo se SIA in `xray.yaml` SIA nella categoria `alm` di `NETWORK.md` (rifiuto prima di ogni credenziale); (d) `doctor --network` controlla anche `xray_url` | `test/hooks/wp09c-fixround1.test.mjs`, `test/xray/wp09c-fixround1.test.mjs` (base_url riscritto ⇒ nessuna richiesta all'altro host, nessuna credenziale; deroga ADR-21 attivata dopo `use customer` ⇒ negata) |
+| I1 import in esecuzioni nominate da file non protetti | `runs/**/xray-*.json` e `customers/*/queue/**` protetti come gli esiti dei run; `publish` e `retry-queued` rifiutano chiavi non in `session.alm.created` e registrano solo ciò che creano; la coda rifiuta le evidenze base64 in linea (profilo strict sempre verificato) | `test/xray/wp09c-fixround1.test.mjs` (mappa e coda forgiate) |
+| I2 `alm_create_execution` non idempotente | mappa condivisa `runs/<RUN>/xray-executions.json` (server MCP e `publish`): una Test Execution per run e scope | MCP due volte + `publish` ⇒ una sola esecuzione |
+| I3 formato Cloud inviato a Server/DC | `XrayServerAdapter`: stati `PASS`/`FAIL`/`TODO`/`EXECUTING`/`ABORTED` (personalizzabili in `statuses.dc`) e campo `evidences`; rilettura riportata a `PASSED`/`FAILED`; il mock HTTP rifiuta la forma dell'altra piattaforma | test I3 e contratto |
+| minori | testo dei Defect in coda redatto prima della scrittura; errore di sistema delle CLI redatto; Xray Cloud si riautentica una volta su 401 | test "minori" |
+
+**Formato Server/DC da confermare sul tenant (M13):** la forma usata (stati predefiniti `PASS`/`FAIL`/… e `evidences`
+sul passo e sul test) è quella del JSON nativo documentato per Xray Server/DC; stati personalizzati e versione dell'istanza
+del cliente vanno verificati alla prima pubblicazione reale (`xray verify` dopo `xray publish`), eventualmente con
+`statuses.dc` in `config/xray.yaml`.
+
+Un Jira Server/DC on-premise richiede che il suo host sia aggiunto alla categoria `alm` di `NETWORK.md` con una release
+del plugin (il file è sotto integrità).
