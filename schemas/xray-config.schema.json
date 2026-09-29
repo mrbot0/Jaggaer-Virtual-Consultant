@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "xray-config.schema.json",
+  "title": "customers/<C>/config/xray.yaml — ALM/Xray del cliente (§27.5, §46.5, §48.1, §53.2)",
+  "description": "Configurazione dell'ALM del cliente, letta dal server MCP ALM (mcp/alm-server/factory.mjs), da scripts/xray/* e da doctor. NESSUN segreto nel file: le credenziali solo da variabili d'ambiente (XRAY_CLIENT_ID/XRAY_CLIENT_SECRET per Xray Cloud, XRAY_TOKEN per Server/DC, JIRA_BASE_URL/JIRA_USER/JIRA_API_TOKEN per Jira Cloud). Gli host di base_url, jira_url e xray_url sono gli UNICI host Jira/Xray che il plugin contatta (NETWORK.md): ogni altro host è rifiutato. ADR-20/34: una Test Execution per run e per scope (test_plan_by_scope); ADR-21: nessuna Test issue creata salvo allow_test_issue_creation: true; ADR-22: coda offline; ADR-27: Defect, mai Incident.",
+  "type": "object",
+  "required": ["deployment"],
+  "additionalProperties": false,
+  "properties": {
+    "deployment": { "enum": ["cloud", "server", "mock"], "description": "Implementazione dell'AlmAdapter: XrayCloudAdapter, XrayServerAdapter, MockAlmAdapter." },
+    "base_url": { "type": "string", "format": "uri", "pattern": "^https?://", "description": "URL di Jira (es. https://acme.atlassian.net o https://jira.acme.it). https obbligatorio salvo loopback." },
+    "jira_url": { "type": "string", "format": "uri", "pattern": "^https?://", "description": "URL di Jira se diverso da base_url." },
+    "xray_url": { "type": "string", "format": "uri", "pattern": "^https?://", "description": "Solo cloud: API di Xray Cloud (default https://xray.cloud.getxray.app; le istanze regionali es. https://eu.xray.cloud.getxray.app)." },
+    "project": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{0,30}$", "description": "Progetto Jira delle Test Execution." },
+    "execution_issue_type": { "type": "string", "minLength": 1, "default": "Test Execution" },
+    "test_plan_by_scope": {
+      "type": "object",
+      "description": "Test Plan per scope (ADR-34): la Test Execution di ogni run e scope si aggancia al piano dello scope.",
+      "propertyNames": { "pattern": "^[A-Z0-9]{3}$" },
+      "additionalProperties": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{0,30}-\\d{1,9}$" }
+    },
+    "defects": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "issue_type": { "type": "string", "minLength": 1, "not": { "pattern": "[Ii][Nn][Cc][Ii][Dd][Ee][Nn][Tt]" }, "default": "Bug", "description": "Tipo di issue dei Defect (Bug, Defect…). Mai Incident (ADR-27)." },
+        "project": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{0,30}$", "description": "Progetto dei Defect se diverso da project." },
+        "assignee_by_scope": {
+          "type": "object",
+          "description": "Registro degli assegnatari per scope (§27.5): accountId (cloud) o nome utente (server).",
+          "propertyNames": { "pattern": "^[A-Z0-9]{3}$" },
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Nomi dei tipi di collegamento Jira usati da alm_link e dal riferimento al precedente di regressione.",
+      "properties": { "tests": { "type": "string" }, "defect": { "type": "string" }, "regression": { "type": "string" } }
+    },
+    "attachments_cap": { "type": "integer", "minimum": 0, "maximum": 50, "default": 5, "description": "Tetto di evidenze Xray per caso (evidence select --xray-cap)." },
+    "allow_test_issue_creation": { "type": "boolean", "default": false, "description": "ADR-21: deroga esplicita del cliente alla non-creazione di Test issue (letta anche da guard-alm-write)." },
+    "offline_queue": { "type": "boolean", "default": true, "description": "ADR-22: con Jira/Xray irraggiungibili il payload resta nel dossier e in customers/<C>/queue/." },
+    "statuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "error_environment": { "enum": ["ABORTED", "TODO"], "default": "ABORTED", "description": "Stato Xray di un ERROR-ENVIRONMENT: mai FAILED, mai un Defect (§29.9)." } }
+    },
+    "issuetype_ids": {
+      "type": "object",
+      "description": "Mappa id → nome dei tipi di issue (guard-alm-write risolve i tipi dati per id).",
+      "additionalProperties": { "type": "string" }
+    },
+    "network": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "timeout_ms": { "type": "integer", "minimum": 100, "maximum": 120000 },
+        "retries": { "type": "integer", "minimum": 1, "maximum": 5, "description": "Tentativi sugli errori di rete (§47 E2: 3 di default)." },
+        "backoff_ms": { "type": "integer", "minimum": 0, "maximum": 60000 }
+      }
+    },
+    "mock": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Solo deployment mock (tenant demo): test noti, file di stato, rete simulata giù.",
+      "properties": {
+        "file": { "type": "string" },
+        "offline": { "type": "boolean" },
+        "tests": { "type": "array", "items": { "type": "object", "required": ["key"], "properties": { "key": { "type": "string" }, "summary": { "type": "string" }, "labels": { "type": "array", "items": { "type": "string" } }, "plans": { "type": "array", "items": { "type": "string" } } } } }
+      }
+    }
+  },
+  "allOf": [
+    { "if": { "properties": { "deployment": { "enum": ["cloud", "server"] } } }, "then": { "required": ["base_url", "project"] } }
+  ]
+}
