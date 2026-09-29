@@ -190,6 +190,27 @@ test("templates/ nel perimetro d'integrità: template alterato ⇒ verify ok:fal
   assert.match(reasonOf(x), /Integrità del pacchetto fallita/);
 });
 
+// Revisione finale (Important A#5): commands/ (dicono al manager quali script e agenti chiamare), product/ (bootstrap S
+// letto dagli script), clusters/ e le dipendenze fissate (package.json, package-lock.json) nel perimetro d'integrità.
+test("commands/, product/, clusters/, package.json e package-lock.json nel perimetro: file alterato ⇒ verify ok:false", async () => {
+  const { SCOPE_DIRS, SCOPE_FILES } = await import("../../hooks/lib/integrity.mjs");
+  for (const d of ["commands", "product", "clusters"]) assert.ok(SCOPE_DIRS.includes(d), d);
+  for (const f of ["package.json", "package-lock.json"]) assert.ok(SCOPE_FILES.includes(f), f);
+  const p = copyPlugin();
+  cli(p, ["build"]);
+  const m = JSON.parse(readFileSync(join(p, "integrity.json"), "utf8"));
+  for (const f of ["commands/kb.md", "product/question-banks/profile.yaml", "package.json", "package-lock.json"]) assert.ok(Object.hasOwn(m.files, f), f);
+  assert.ok(Object.keys(m.files).some((f) => f.startsWith("clusters/")));
+  for (const f of ["commands/kb.md", "package-lock.json"]) {
+    const q = copyPlugin();
+    cli(q, ["build"]);
+    appendFileSync(join(q, f), "\n");
+    const v = cli(q, ["verify", "--json"]);
+    assert.equal(v.status, 3, f);
+    assert.deepEqual(v.json.mismatched, [f]);
+  }
+});
+
 // WP10b (carry permanente, ruling 7): le definizioni degli agenti (agents/) e le skill (skills/) orientano l'uso degli
 // strumenti dei sub-agenti: sono nel perimetro d'integrità. Un agente o una skill alterati ⇒ verify ok:false.
 test("agents/ e skills/ nel perimetro d'integrità: definizione alterata ⇒ verify ok:false", async () => {
