@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 29/09/2026 13:45 — **punto corrente: WP10b parte 2, blocco A (validatore e 100 casi di valutazione per 5 agenti); parte 1 (15 agenti) chiusa**.
+Ultimo aggiornamento: 29/09/2026 17:00 — **punto corrente: WP10c (skill agent-manager e 26 skill) avviato; WP10b (15 agenti e 300 casi di valutazione) chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 92 % del progetto** (stima pesata sullo sforzo) · 14 pacchetti su 17 chiusi, WP10b a metà (parte 1 chiusa, contata al 50 %).
+**≈ 94 % del progetto** (stima pesata sullo sforzo) · 15 pacchetti su 17 chiusi. Restano le skill (WP10c) e la review finale.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 92 %** (101,5 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 14 / 17 = **82 %** | WP01–WP09d, WP10a e WP10d con review e tag |
+| Avanzamento pesato | **≈ 94 %** (104 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 15 / 17 = **88 %** | WP01–WP10b e WP10d con review e tag |
 | Hook del catalogo §44.4 | 16 / 16 = **100 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
-| Test automatici | 1027 / 1027 verdi | `npm test` dopo la parte 1 di WP10b (`2cd61bf`) |
+| Test automatici | 1050 / 1050 verdi | `npm test` al tag `agents-done` (`04dc65a`) |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -36,6 +36,12 @@ Ultimo aggiornamento: 29/09/2026 13:45 — **punto corrente: WP10b parte 2, bloc
 - Corretto dopo la review: nessuna formula di raccomandazione produce più un obbligo, e anche la validazione a valle lo impedisce. Il budget per documento non si può alzare, e il consumo resta legato alla sessione reale.
 - Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
 - Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
+
+### Chiusura di WP10b (15 agenti e valutazioni)
+- **I 15 agenti.** Hanno modelli e strumenti come da spec, e nessuno può lanciare altri agenti, fare domande dirette all'utente o scaricare pagine web. Ognuno descrive la propria cella, il ciclo di ragionamento, cosa non fa mai e il rapporto da restituire, e un test verifica quel rapporto. `process-mapper` e `weekly-digest` ricevono una lettura trasversale temporanea e di sola lettura, che il manager concede e revoca.
+- **Richieste di approvazione.** Gli agenti non scrivono mai le frasi di approvazione. Le chiedono con un campo strutturato, e sarà il manager a mostrarti la frase esatta da scrivere.
+- **I 300 casi di valutazione, 20 per agente.** Coprono percorsi normali, casi limite, tentativi fuori confine, pressione sul budget, sorprese e conoscenza ignota. Un validatore ne controlla la struttura rispetto alla documentazione ufficiale, verificata. Un test controlla che ogni esempio di strategia degli agenti sia coerente con la tabella di decisione.
+- **Da fare tu dopo l'installazione:** le valutazioni vanno eseguite con `claude plugin validate`, poi `claude plugin eval . --scaffold --runs 1 --tag <agente>` per calibrare. Su Windows serve WSL2. La CLI non era disponibile nell'ambiente di sviluppo, quindi i tassi di successo non sono ancora misurati. I passi sono nel manuale, Appendice C.
 
 ### Chiusura di WP10a (comandi, README, manuale)
 - Implementato in 14 commit, più 1 giro di correzione (`2d76838..a5bab9b`). Tag `commands-done` → `a5bab9b`.
@@ -198,11 +204,11 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP09c | AlmAdapter (Xray Cloud/Server/Mock), server MCP ALM, script xray, coda offline, Defect, `.mcp.json`, NETWORK.md | F5 | 6 | 100 | ✅ | tag `alm-done` → `a9b862f`, 847 test, 2 giri di correzione, `docs/phase-reports/F5-tooling.md` |
 | WP09d | Comandi `kb` restanti, digestione settimanale, Analytics (TBL/QRY/DIN/USR/PSP/ERR), dominio analitico, audit config, admin (status, lock, retention, purge) | F8–F12, G2–G3 (strumenti) | 8 | 100 | ✅ | tag `ops-tooling-done` → `1957e8b`, 906 test, 1 giro di correzione, `docs/phase-reports/F8-G3-tooling.md` |
 | WP10a | Comandi `vc use kb nrt cfg ops learn admin`, template restanti, README, manuale integrato | §44.1, §55–58 | 4 | 100 | ✅ | tag `commands-done` → `a5bab9b`, 993 test, 1 giro di correzione; 8 comandi, template, `README.md`, `docs/MANUAL.md` |
-| WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 50 | 🔄 | parte 1 chiusa (`578849e..2cd61bf`, 1 giro di correzione): 15 agenti, test di struttura e contratto, lettura trasversale temporanea per process-mapper/weekly-digest. Parte 2 in corso: 300 casi di valutazione in 3 blocchi (A: validatore + 5 agenti) |
+| WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 100 | ✅ | tag `agents-done` → `04dc65a`: 15 agenti e 300 casi di valutazione (20 per agente) validati strutturalmente. L'esecuzione reale con `claude plugin eval . --scaffold` spetta all'utente dopo l'installazione |
 | WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 100 | ✅ | tag `orchestration-done` → `0134d03`, 944 test, 1 giro di correzione, `docs/orchestration.md`, `docs/phase-reports/WP10d.md` |
-| WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
+| WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | 🔄 | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **111** | **≈ 92** | | 101,5 unità completate |
+| **Totale** | | | **111** | **≈ 94** | | 104 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
@@ -231,7 +237,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 - [ ] strategy, hypotheses, execution-plan, why, lesson, fld, parsed-doc, environments, act, approval, remediation-scope, rpt, nrt-case, sel, hnd, chk, cfp, flw, key, lcy, int, cfg, unit, doc, prf, pmp, tbl, qry, din, usr, psp, err, pat, pbk, brf, rul, xray-config
 
 ### Agenti, skill, comandi, MCP
-- [x] 15 agenti (WP10b parte 1 ✅; valutazioni in corso) · [ ] 27 skill · [x] 8 comandi (WP10a ✅) · [x] server MCP ALM + `.mcp.json` (WP09c ✅)
+- [x] 15 agenti e 300 casi di valutazione (WP10b ✅) · [ ] 27 skill · [x] 8 comandi (WP10a ✅) · [x] server MCP ALM + `.mcp.json` (WP09c ✅)
 
 ## Punti aperti da decidere con il committente
 - **Documentazione JAGGAER di partenza caricata** (28/09/2026) in `JAGGAER DOC/`: 385 file tra corsi (guide, workbook, XML di workflow e configurazione, form) e kit di sviluppo dei web service. È esclusa da git perché materiale proprietario. WP09a la userà come corpus reale: la pipeline di ingestion la elaborerà per intero e scriverà la conoscenza di livello S in un workspace separato, `jvc-knowledge`, non nel repo del plugin. Fino ad allora il livello S contiene solo il bootstrap (DT, cluster, strategie, azioni, check).
