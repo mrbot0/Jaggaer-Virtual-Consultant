@@ -89,3 +89,25 @@ test("report (build-report): template di templates/ = testo di riserva nel codic
     assert.equal(fillReport(file, values), fillReport(code, values), kind);
   }
 });
+
+// Giro di correzione 1 (minore 5): un template personalizzato senza i segnaposto obbligatori è ignorato CON un avviso
+// (campo warnings nell'esito e nell'output JSON della CLI), non in silenzio.
+test("minore 5: template non valido ⇒ testo dal codice e avviso che nomina il file e il segnaposto mancante", () => {
+  const ws = mkdtempSync(join(tmpdir(), "jvc-tpl-w-"));
+  const spec = generateSpec(ws, "ACME", PLAN, { template: "// senza hash\n{{body}}" });
+  assert.equal(spec.text, generateSpec(ws, "ACME", PLAN, { template: null }).text);
+  assert.match(spec.warnings.join(" "), /playwright-spec\.ts\.tpl.*ignorato.*\{\{hash\}\}/);
+  assert.deepEqual(generateSpec(ws, "ACME", PLAN).warnings, []);
+  const w1 = [];
+  toPlaywright({ scope: "P2P", selectors: {} }, { template: "{{selectors}}", warnings: w1 });
+  assert.match(w1.join(" "), /page-object\.ts\.tpl.*\{\{atlas_entries\}\}/);
+  const w2 = [];
+  renderContactSheet({ release: "R", customer: "ACME", runs: [], tree: {} }, { template: "<html></html>", warnings: w2 });
+  assert.match(w2.join(" "), /contact-sheet\.html.*\{\{sections\}\}/);
+  const w3 = [];
+  defectDescription({ header_line: "h", dossier_line: "d" }, { template: "{{header_line}}", warnings: w3 });
+  assert.match(w3.join(" "), /defect\.md.*\{\{dossier_line\}\}/);
+  const w4 = [];
+  toPlaywright({ scope: "P2P", selectors: {} }, { warnings: w4 });
+  assert.deepEqual(w4, [], "il template distribuito è valido");
+});

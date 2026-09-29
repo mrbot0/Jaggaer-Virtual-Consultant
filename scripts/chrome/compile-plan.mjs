@@ -17,7 +17,7 @@ import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { selFile } from "./atlas.mjs";
 import { locatorExpr } from "../compile/generate-atlas-po.mjs";
 import { runResults } from "../lib/run-results.mjs";
-import { loadTemplate, fillTemplate } from "../lib/templates.mjs";
+import { loadTemplate, fillOrWarn } from "../lib/templates.mjs";
 
 export const MIN_GREEN = 3;
 const GREEN = new Set(["green", "pass", "passed", "success"]);
@@ -95,6 +95,7 @@ function expectLines(ws, customer, step, target, opts) {
 // codice. template: undefined = il file di templates/, null = dal codice, stringa = quel template (test).
 export const SPEC_TEMPLATE = "playwright-spec.ts.tpl";
 export function generateSpec(ws, customer, plan, { allowFragile = false, atlas = null, template } = {}) {
+  const warnings = [];
   const hash = planHash(plan);
   const body = [];
   for (const s of [...(plan.steps ?? [])].sort((a, b) => a.n - b.n)) {
@@ -120,8 +121,8 @@ export function generateSpec(ws, customer, plan, { allowFragile = false, atlas =
   }
   const tpl = template === undefined ? loadTemplate(SPEC_TEMPLATE) : template;
   const title = `${oneLine(plan.plan_id)} — ${oneLine(plan.goal)}`;
-  const fromTpl = tpl == null ? null : fillTemplate(tpl, { hash, plan_id: oneLine(plan.plan_id), goal: oneLine(plan.goal), test_title: q(title), body: body.join("\n") }, { required: ["hash", "body"] });
-  if (fromTpl != null) return { hash, text: fromTpl };
+  const fromTpl = fillOrWarn(SPEC_TEMPLATE, tpl, { hash, plan_id: oneLine(plan.plan_id), goal: oneLine(plan.goal), test_title: q(title), body: body.join("\n") }, ["hash", "body"], warnings);
+  if (fromTpl != null) return { hash, text: fromTpl, warnings };
   const text = [
     `// plan-hash: ${hash}`,
     `// ${oneLine(plan.plan_id)} — ${oneLine(plan.goal)}`,
@@ -136,7 +137,7 @@ export function generateSpec(ws, customer, plan, { allowFragile = false, atlas =
     "});",
     "",
   ].join("\n");
-  return { hash, text };
+  return { hash, text, warnings };
 }
 
 // Testo del piano in un commento dello spec: niente fine riga (CR, LF, U+2028/2029, U+0085), niente chiusure di
@@ -192,11 +193,12 @@ export async function run(argv, env = process.env) {
     const { green, bound } = compileEligibility(ws, customer, plan);
     if (green.length < min) return fail(asJson, 3, `${green.length} esecuzioni verdi con questa impronta: ne servono almeno ${min} per compilare (§27.4)`, { green });
     if (!bound) return fail(asJson, 3, `nessuna delle esecuzioni verdi è di questo piano (plan_hash ${hash.slice(0, 12)}…): il piano è cambiato dopo l'esecuzione, rieseguilo`, { green });
-    const { text } = generateSpec(ws, customer, plan, { allowFragile: !!opts["allow-fragile"], atlas: opts.atlas ? JSON.parse(readFileSync(resolvePath(ws, opts.atlas), "utf8")) : null });
+    const { text, warnings } = generateSpec(ws, customer, plan, { allowFragile: !!opts["allow-fragile"], atlas: opts.atlas ? JSON.parse(readFileSync(resolvePath(ws, opts.atlas), "utf8")) : null });
     const rel = `customers/${customer}/tests/specs/${scope}/${plan.plan_id}.spec.ts`;
     mkdirSync(join(ws, "customers", customer, "tests", "specs", scope), { recursive: true });
     writeFileAtomic(join(ws, rel), text);
-    console.log(asJson ? JSON.stringify({ ok: true, spec: rel, hash, green }) : rel);
+    for (const w of warnings) console.error(`avviso: ${w}`);
+    console.log(asJson ? JSON.stringify({ ok: true, spec: rel, hash, green, warnings }) : rel);
     return 0;
   } catch (err) {
     if (err instanceof CompileError) return fail(asJson, err.code, err.message);

@@ -37,6 +37,20 @@ export function fillTemplate(tpl, values, { required = [] } = {}) {
   });
 }
 
+// WP10a giro 1 (minore 5): l'avviso per un template presente ma senza segnaposto obbligatori (ignorato, testo dal codice).
+export function templateWarning(name, tpl, required) {
+  if (typeof tpl !== "string") return null;
+  const missing = required.filter((k) => !tpl.includes(`{{${k}}}`));
+  return missing.length ? `template templates/${name} ignorato: mancano ${missing.map((k) => `{{${k}}}`).join(", ")} — testo generato dal codice` : null;
+}
+// Riempie o, se il template non è valido, registra l'avviso in `warnings` e restituisce null (il chiamante usa il codice).
+export function fillOrWarn(name, tpl, values, required, warnings, { paragraphs = false } = {}) {
+  if (tpl == null) return null;
+  const w = templateWarning(name, tpl, required);
+  if (w) { if (Array.isArray(warnings)) warnings.push(w); return null; }
+  return paragraphs ? fillParagraphs(tpl, values, { required }) : fillTemplate(tpl, values, { required });
+}
+
 export function fillParagraphs(tpl, values, { required = [] } = {}) {
   if (typeof tpl !== "string" || !hasAll(tpl, required)) return null;
   const body = tpl.replace(/\n+$/, "");

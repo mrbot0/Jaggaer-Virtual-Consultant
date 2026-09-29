@@ -18,7 +18,7 @@ import { isMain } from "../lib/is-main.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { selectEvidence, EvidenceError } from "./select.mjs";
 import { workspaceCustomer } from "../run/fixtures.mjs";
-import { loadTemplate, fillTemplate } from "../lib/templates.mjs";
+import { loadTemplate, fillOrWarn } from "../lib/templates.mjs";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const safe = (s) => String(s ?? "").replace(/[^A-Za-z0-9._-]/g, "_").slice(0, 80) || "x";
@@ -28,7 +28,7 @@ const RELEASE_RE = /^[A-Za-z0-9._-]{1,40}$/;
 // dal codice. Ogni valore passa dall'escape HTML prima del template. template: undefined = il file di templates/, null =
 // dal codice, stringa = quel template (test).
 export const SHEET_TEMPLATE = "contact-sheet.html";
-export function renderContactSheet({ release, customer, runs, tree }, { template } = {}) {
+export function renderContactSheet({ release, customer, runs, tree }, { template, warnings = null } = {}) {
   const S = [];
   for (const scope of Object.keys(tree).sort()) {
     S.push(`<h2>Scope ${esc(scope)}</h2>`);
@@ -42,7 +42,7 @@ export function renderContactSheet({ release, customer, runs, tree }, { template
     }
   }
   const tpl = template === undefined ? loadTemplate(SHEET_TEMPLATE) : template;
-  const fromTpl = tpl == null ? null : fillTemplate(tpl, { release: esc(release), customer: esc(customer), runs: runs.map(esc).join(", "), sections: S.join("\n") }, { required: ["sections"] });
+  const fromTpl = fillOrWarn(SHEET_TEMPLATE, tpl, { release: esc(release), customer: esc(customer), runs: runs.map(esc).join(", "), sections: S.join("\n") }, ["sections"], warnings);
   if (fromTpl != null) return fromTpl;
   const L = ["<!doctype html>", '<html lang="it"><head><meta charset="utf-8">', `<title>Evidenze ${esc(release)} — ${esc(customer)}</title>`,
     "<style>body{font-family:sans-serif;margin:1.5rem}h2{border-bottom:1px solid #ccc}figure{display:inline-block;margin:.5rem;width:260px;vertical-align:top}img{max-width:100%;border:1px solid #999}figcaption{font-size:.8rem}.k-failure{outline:3px solid #c00}</style>",
@@ -76,9 +76,10 @@ export function buildDesk(ws, { customer, release, runs, desk = null }) {
   }
   const index = join(relDir, "index.html");
   mkdirSync(relDir, { recursive: true });
-  writeFileAtomic(index, renderContactSheet({ release, customer, runs, tree }));
+  const warnings = [];
+  writeFileAtomic(index, renderContactSheet({ release, customer, runs, tree }, { warnings }));
   writeFileAtomic(join(relDir, "index.yaml"), YAML.stringify({ release, customer, runs, tree }));
-  return { index, cases: Object.values(tree).reduce((a, s) => a + Object.keys(s).length, 0), images };
+  return { index, cases: Object.values(tree).reduce((a, s) => a + Object.keys(s).length, 0), images, warnings };
 }
 
 const HELP = `uso: node scripts/evidence/contact-sheet.mjs --release <R> --run <RUN> [--run <RUN>…] [--desk <dir>] [--customer C]
@@ -101,6 +102,7 @@ export function run(argv, env = process.env) {
   if (!customer) return fail(asJson, 1, "cliente non determinato: --customer <C>");
   try {
     const r = buildDesk(ws, { customer, release: opts.release, runs, desk: opts.desk ?? null });
+    for (const w of r.warnings) console.error(`avviso: ${w}`);
     console.log(asJson ? JSON.stringify({ ok: true, ...r }) : `${r.images} evidenze di ${r.cases} casi → ${r.index}`);
     return 0;
   } catch (err) {

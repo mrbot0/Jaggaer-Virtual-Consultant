@@ -28,7 +28,7 @@ import { refusedIssueType, strictText, ISSUE_KEY } from "../../mcp/alm-server/ad
 import { contentTypeOf } from "../../mcp/alm-server/payload.mjs";
 import { withQueue } from "../../mcp/alm-server/queue.mjs";
 import { XrayError, xrayContext, recordCreated, audit, failWith, kv } from "./common.mjs";
-import { loadTemplate, fillParagraphs } from "../lib/templates.mjs";
+import { loadTemplate, fillOrWarn } from "../lib/templates.mjs";
 
 export const DEFECT_CLASSES = ["product-defect", "regression", "config-drift", "baseline-change"];
 const NOT_DEFECT = { "environment": "un errore d'ambiente (ERROR-ENVIRONMENT) non è mai un Defect (§29.9): retry, poi blocked", "test-defect": "un difetto del test si ripara (test-mechanic, PR di healing), non è un Defect del prodotto (§30.4)", "expected-change": "un cambiamento atteso aggiorna il test, non apre un Defect (§30.1)" };
@@ -68,9 +68,9 @@ function minimalSteps(plan, step) {
 // template (test). Il chiamante applica poi la redazione strict e il controllo di confine.
 export const DEFECT_TEMPLATE = "defect.md";
 export const DEFECT_PARTS = ["header_line", "expected_line", "observed_line", "steps_block", "doc_line", "precedent_line", "evidence_line", "dossier_line"];
-export function defectDescription(parts, { template } = {}) {
+export function defectDescription(parts, { template, warnings = null } = {}) {
   const tpl = template === undefined ? loadTemplate(DEFECT_TEMPLATE) : template;
-  const fromTpl = tpl == null ? null : fillParagraphs(tpl, parts, { required: ["header_line", "dossier_line"] });
+  const fromTpl = fillOrWarn(DEFECT_TEMPLATE, tpl, parts, ["header_line", "dossier_line"], warnings, { paragraphs: true });
   if (fromTpl != null) return fromTpl;
   return DEFECT_PARTS.map((k) => parts[k]).filter(Boolean).join("\n\n");
 }
@@ -121,7 +121,7 @@ export async function buildDefect(ws, { customer, config, finding }) {
     dossier_line: `Dossier: customers/${customer}/runs/${run}/cases/${caseId}/`,
   };
   // la redazione strict e il controllo di confine valgono sul testo finale, anche da template
-  const description = strictText(defectDescription(parts));
+  const description = strictText(defectDescription(parts, { warnings }));
   const hit = boundary(`${title}\n${description}`);
   if (hit) throw new XrayError(3, `confine di dominio: il Defect non cita il dominio analitico (§1.1): "${hit}"`);
   const id = String(finding.id ?? `${caseId}.${step ?? "x"}`).replace(/[^A-Za-z0-9._-]/g, "_");

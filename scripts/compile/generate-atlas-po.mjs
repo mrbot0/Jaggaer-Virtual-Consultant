@@ -22,7 +22,7 @@ import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { loadItems } from "../lib/kb-items.mjs";
 import { evaluate, loadTable } from "../decide/dt-eval.mjs";
 import { workspaceCustomer } from "../run/fixtures.mjs";
-import { loadTemplate, fillTemplate } from "../lib/templates.mjs";
+import { loadTemplate, fillOrWarn } from "../lib/templates.mjs";
 
 export const DT008_ORDER = ["testid", "role", "label", "text", "css"];
 const STABILITY = { stable: "stabile", medium: "variabile", fragile: "instabile" };
@@ -73,7 +73,7 @@ const ident = (code) => `sel_${code.replace(/[^A-Za-z0-9]/g, "_")}`;
 // WP10a: templates/page-object.ts.tpl (§31.2) se presente e con {{selectors}} e {{atlas_entries}}; altrimenti lo stesso
 // testo dal codice. template: undefined = il file di templates/, null = dal codice, stringa = quel template (test).
 export const PO_TEMPLATE = "page-object.ts.tpl";
-export function toPlaywright(atlas, { template } = {}) {
+export function toPlaywright(atlas, { template, warnings = null } = {}) {
   const sels = [];
   for (const [code, s] of Object.entries(atlas.selectors)) {
     const [first, ...others] = s.chain.map((c) => locatorExpr(c));
@@ -82,7 +82,7 @@ export function toPlaywright(atlas, { template } = {}) {
   }
   const entries = Object.keys(atlas.selectors).map((c) => `  ${q(c)}: ${ident(c)},`);
   const tpl = template === undefined ? loadTemplate(PO_TEMPLATE) : template;
-  const fromTpl = tpl == null ? null : fillTemplate(tpl, { scope: String(atlas.scope ?? ""), selectors: sels.join("\n"), atlas_entries: entries.join("\n") }, { required: ["selectors", "atlas_entries"] });
+  const fromTpl = fillOrWarn(PO_TEMPLATE, tpl, { scope: String(atlas.scope ?? ""), selectors: sels.join("\n"), atlas_entries: entries.join("\n") }, ["selectors", "atlas_entries"], warnings);
   if (fromTpl != null) return fromTpl;
   const L = [`// Page object generati da generate-atlas-po (scope ${atlas.scope}, DT-008): non modificare a mano.`, `import type { Page, Locator } from "@playwright/test";`, ""];
   L.push(...sels);
@@ -110,8 +110,10 @@ export function run(argv, env = process.env) {
     const json = join(dir, `${opts.scope}.po.json`);
     writeFileAtomic(json, `${JSON.stringify(atlas, null, 2)}\n`);
     const files = [json];
-    if (opts.ts) { const ts = join(dir, `${opts.scope}.po.ts`); writeFileAtomic(ts, toPlaywright(atlas)); files.push(ts); }
-    console.log(asJson ? JSON.stringify({ ok: true, files, selectors: Object.keys(atlas.selectors).length, skipped: atlas.skipped }) : `${Object.keys(atlas.selectors).length} SEL → ${files.join(", ")}${atlas.skipped.length ? ` (esclusi: ${atlas.skipped.map((s) => s.code).join(", ")})` : ""}`);
+    const warnings = [];
+    if (opts.ts) { const ts = join(dir, `${opts.scope}.po.ts`); writeFileAtomic(ts, toPlaywright(atlas, { warnings })); files.push(ts); }
+    for (const w of warnings) console.error(`avviso: ${w}`);
+    console.log(asJson ? JSON.stringify({ ok: true, files, selectors: Object.keys(atlas.selectors).length, skipped: atlas.skipped, warnings }) : `${Object.keys(atlas.selectors).length} SEL → ${files.join(", ")}${atlas.skipped.length ? ` (esclusi: ${atlas.skipped.map((s) => s.code).join(", ")})` : ""}`);
     return 0;
   } catch (err) {
     return fail(asJson, 2, `errore di sistema: ${err?.message ?? err}`);
