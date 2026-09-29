@@ -43,7 +43,9 @@ function result(outcome, reason, extra = {}) {
   };
 }
 
-export function classifyOutcome({ expected = {}, observed = {}, errors = [], policyAbort = false, userAbort = false, completed = false, understoodError = false, assumption = null } = {}) {
+// blockingSurprise (revisione finale, minore B#6): { step, kind } — un passo fermato da una sorpresa INCOMPATIBILE
+// (DT-016, step-check) non è un esito parziale: il compito non ha fatto ciò che doveva ⇒ ERROR-BLOCKING (Xray FAILED).
+export function classifyOutcome({ expected = {}, observed = {}, errors = [], policyAbort = false, userAbort = false, completed = false, understoodError = false, assumption = null, blockingSurprise = null } = {}) {
   const errs = Array.isArray(errors) ? errors.filter(Boolean) : [];
   if (policyAbort) return result("ABORTED-BY-POLICY", "un guard ha fermato l'azione: la policy ha funzionato (nessuna lezione)");
   if (userAbort) return result("ABORTED-BY-USER", "l'utente ha detto no");
@@ -59,6 +61,7 @@ export function classifyOutcome({ expected = {}, observed = {}, errors = [], pol
     return result("ERROR-BLOCKING", `errore inatteso ${understoodError ? "che ha fermato il compito" : "non capito"} (${unexpected.map((e) => e.code ?? e.category).join(", ")})`);
   }
   if (expErr) return result("ERROR-BLOCKING", "errore atteso non ricevuto: l'atteso dichiarato non è verificato");
+  if (!completed && blockingSurprise) return result("ERROR-BLOCKING", `passo ${blockingSurprise.step} fermato da una sorpresa incompatibile (${blockingSurprise.kind ?? "divergenza"})`);
   if (!completed) return result("PARTIAL", "parte del piano eseguita, parte no, senza errori");
   if (expected?.state != null && low(expected.state) !== low(observed?.state)) return result("ERROR-BLOCKING", `atteso ${expected.state}, osservato ${observed?.state ?? "nulla"}`);
   if (assumption) return result("SUCCESS-WITH-ASSUMPTION", `verificato su un'assunzione dichiarata: ${assumption}`);

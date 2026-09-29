@@ -64,7 +64,8 @@ export function parseApprovalPrompt(prompt) {
   if (typeof prompt !== "string") return null;
   let s = normSpaces(prompt);
   if (s.length > 200) return /APPROV/i.test(s) ? { kind: "attempt" } : null;
-  const bare = s.replace(/[.!]$/u, "");
+  // revisione finale (minore B#4): un solo punto (o !) finale, anche preceduto da uno spazio ("APPROVO PIANO X .")
+  const bare = s.replace(/ ?[.!]$/u, "");
   let m;
   if ((m = RE_A1.exec(bare))) return { kind: "A1", plan: m[1], approver: m[2] ? normSpaces(m[2]) : null };
   if ((m = RE_A2.exec(bare))) return { kind: "A2", plan: m[1], approver: m[2] ? normSpaces(m[2]) : null };

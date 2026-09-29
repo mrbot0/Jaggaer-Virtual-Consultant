@@ -71,7 +71,11 @@ export async function buildReport(opts) {
   const db = openDb(join(ws, "customers", C, "knowledge.db"));
   try {
     const errors = opts.errors ?? sessionErrors(db, sesCode);
-    const cls = classifyOutcome({ expected, observed, errors, policyAbort, userAbort, completed, understoodError, assumption });
+    // revisione finale (minore B#6): un passo fermato (✗) da una sorpresa incompatibile registrata da step-check
+    const stopped = new Set(steps.filter((s) => s.state === "✗").map((s) => s.n));
+    const bs = (Array.isArray(session.surprises) ? session.surprises : []).find((x) => x && x.compat === "incompatibile" && stopped.has(x.step) && (!plan || x.plan === plan.plan_id));
+    const blockingSurprise = bs ? { step: bs.step, kind: bs.kind ?? null } : null;
+    const cls = classifyOutcome({ expected, observed, errors, policyAbort, userAbort, completed, understoodError, assumption, blockingSurprise });
     const reg = readApprovals(approvalsFile(ws, C, sid));
     const approvals = (reg.records ?? []).filter((r) => r.kind !== "consume" && (!plan || r.plan === plan.plan_id)).map((r) => ({ kind: r.kind, ts: r.ts, ...(r.step ? { step: r.step } : {}), ...(r.approver_declared ? { approver: r.approver_declared } : {}) }));
     const comps = (session.pending?.compensations ?? []).filter((c) => c && typeof c === "object" && (!plan || c.plan === plan.plan_id));
