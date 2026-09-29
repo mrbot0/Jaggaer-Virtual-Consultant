@@ -179,3 +179,30 @@ test("re-ingestion di un file il cui nome contiene un codice cliente: stesso DOC
   assert.equal(db2.prepare("select count(*) n from doc_profiles where doc_key=(select doc_key from doc_profiles where code=?)").get(code(a)).n, 2, "due versioni dello stesso documento");
   db2.close();
 });
+
+// Residuo della review finale chiuso su richiesta dell'utente (30/09/2026): il percorso del file di origine è redatto come
+// il resto (manifesto, documento normalizzato, profilo DOC, doc_profiles, residuo, identificativo del documento); il
+// percorso grezzo resta solo in memoria per l'identità del documento (doc_key, §19.16).
+test("livello S: codici cliente e dati personali nel NOME del file non sopravvivono in _inbox, nelle unità né nel DB; la re-ingestion resta lo stesso DOC", () => {
+  const { ws, src } = workspace();
+  const name = `Verbale BETA ${PII.email}.txt`;
+  writeFileSync(join(src, name), "Verbale\n\nIl campo Centro di costo diventa obbligatorio in bozza.\n");
+  writeFileSync(join(src, `Copia ACME ${PII.email}.txt`), "Verbale\n\nIl campo Centro di costo diventa obbligatorio in bozza.\n");   // duplicato: residuo col nome
+  const a = ingestFolder(src, { root: ws, scope: "P2P", today: "2026-09-30" });
+  assert.equal(a.documents.errors, 0, JSON.stringify(a.errors));
+  const inbox = join(ws, "_inbox", "P2P");
+  const files = allText(inbox) + allText(join(ws, "product", "sources", "units"));
+  const names = readdirSync(inbox, { recursive: true }).join("\n");
+  const db = openDb(join(ws, "product", "knowledge.db"));
+  const rows = JSON.stringify(db.prepare("select * from doc_profiles").all());
+  db.close();
+  for (const leak of [PII.email, "BETA", "ACME"]) {
+    assert.ok(!files.toUpperCase().includes(leak.toUpperCase()), `file: ${leak}`);
+    assert.ok(!names.toUpperCase().includes(leak.toUpperCase()), `nomi dei file: ${leak}`);
+    assert.ok(!rows.toUpperCase().includes(leak.toUpperCase()), `doc_profiles: ${leak}`);
+    assert.ok(!JSON.stringify(a.docs.map(({ source, doc_id }) => ({ source, doc_id }))).toUpperCase().includes(leak.toUpperCase()), `esito: ${leak}`);
+  }
+  assert.match(files, /Verbale \[cliente\]/);
+  const b = ingestFolder(src, { root: ws, scope: "P2P", today: "2026-09-30" });
+  assert.deepEqual(b.docs.map((d) => d.code), a.docs.map((d) => d.code), "stesso codice DOC alla re-ingestion");
+});

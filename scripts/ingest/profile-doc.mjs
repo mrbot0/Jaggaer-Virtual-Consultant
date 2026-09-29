@@ -6,6 +6,7 @@
 //   genreFor(kind) → F15
 //   detectScopes(doc, units) → scope ordinati per punteggio lessicale
 //   docKey(source) → identità del documento fra le versioni (nome senza marcatori di versione)
+//   safeDocKey(source, redact) → la chiave da conservare: redatta + impronta della grezza se il nome contiene dati da redigere
 //   reliability({ kind, origin, title, coversRelease, currentRelease, releases, units, formal, corroboration }) → { …, score }
 //   internalConsistency(units) → { value, contradictions, rules }
 //   profileDoc(doc, units, { code, origin, level, currentRelease?, releases?, corroboration?, kind?, genre?, scope?, residue?, overflow? })
@@ -17,6 +18,7 @@
 //        [--scope XSC] [--kind K] [--current-release R] [--json]
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, basename, extname } from "node:path";
+import { createHash } from "node:crypto";
 import YAML from "yaml";
 import { openDb } from "../kb/db.mjs";
 import { assignSeq, formatCode } from "../kb/assign-seq.mjs";
@@ -107,6 +109,15 @@ export function docKey(source) {
     .replace(/[\s_-]*(?:v(?:er(?:sion[e]?)?)?\.?\s*\d+(?:\.\d+)*|rev\.?\s*\d+|\(\d+\)|copy|copia)\s*$/i, "")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "doc";
   return ext ? `${k}.${ext}` : k;
+}
+
+// Chiave da conservare (profilo, doc_profiles): se il nome contiene qualcosa da redigere (codici cliente, dati personali)
+// si conserva la chiave redatta con l'impronta di quella grezza (identità stabile, nessun nome in chiaro); altrimenti la
+// chiave resta quella di docKey, così i documenti già ingeriti mantengono la loro identità.
+export function safeDocKey(source, redact = null) {
+  const k = docKey(source);
+  const rs = redact && typeof source === "string" ? redact(source) : source;   // redatto PRIMA della normalizzazione (e-mail intere)
+  return rs === source ? k : `${docKey(rs)}#${createHash("sha256").update(k).digest("hex").slice(0, 12)}`;
 }
 
 export function detectVersion(doc, source) {
@@ -216,7 +227,7 @@ export function profileDoc(doc, units, opts = {}) {
     kind, genre, origin, version: detectVersion(doc, source), dated: doc.meta?.dated ?? null, covers_release: coversRelease,
     languages: langs.length ? langs : [doc.lang ?? "it"], scopes,
     // doc_key dal percorso GREZZO del file (opts.keySource: quello che assignDocCode cerca), mai da un testo redatto (§19.16)
-    source: { path: source, sha256: doc.meta?.sha256 ?? "", size: doc.meta?.size ?? 0, format: doc.format, doc_id: doc.id, doc_key: docKey(opts.keySource ?? source) },
+    source: { path: source, sha256: doc.meta?.sha256 ?? "", size: doc.meta?.size ?? 0, format: doc.format, doc_id: doc.id, doc_key: opts.docKey ?? docKey(opts.keySource ?? source) },
     structure, units: { total: units.length, by_type: byType }, reliability: rel, known_issues: known,
     ingestion: { status: "segmented", units_processed: units.length, items_produced: 0, residue: residue ?? {}, coverage_ratio: null, last_run: today },
   };
@@ -229,8 +240,8 @@ export function validateProfile(p) {
   return { ok: base.ok && spec.ok, errors: [...base.errors, ...spec.errors] };
 }
 
-export function assignDocCode(db, { level = "S", customer = "STD", source, sha256 }) {
-  const key = docKey(source);
+export function assignDocCode(db, { level = "S", customer = "STD", source, sha256, key: givenKey = null }) {
+  const key = givenKey ?? docKey(source);
   const rows = db.prepare("select code, sha256 from doc_profiles where doc_key=? order by profiled_at").all(key);
   const same = rows.find((r) => r.sha256 === sha256);
   if (same) return { code: same.code, existing: true, version: parseCode(same.code)?.version ?? 1 };

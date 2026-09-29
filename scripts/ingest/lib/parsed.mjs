@@ -1,6 +1,6 @@
 // Costruzione del documento normalizzato (schemas/parsed-doc.schema.json) comune a tutti i parser.
 //
-//   docIdFor(relPath)          identificativo stabile dal percorso relativo: slug + 8 cifre esadecimali dello sha256
+//   docIdFor(relPath, {redact}) identificativo stabile dal percorso relativo: slug (del nome redatto) + 8 cifre esadecimali dello sha256
 //   sha256(buf)                "sha256:<hex>"
 //   newDoc({ id, title, format, source }) → documento vuoto con meta { source, parser }
 //   newSection({ path, title, level, page }) → sezione vuota
@@ -23,10 +23,11 @@ export function slugify(s, max = 48) {
   return String(s ?? "").normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, max).replace(/-+$/g, "") || "doc";
 }
 
-export function docIdFor(relPath) {
+export function docIdFor(relPath, { redact = null } = {}) {
   const p = String(relPath).replace(/\\/g, "/");
   const h = createHash("sha256").update(p.toLowerCase()).digest("hex").slice(0, 8);
-  return `${slugify(basename(p))}-${h}`;
+  // slug dal nome redatto (niente codici cliente o dati personali nell'identificativo), hash dal percorso grezzo (unicità)
+  return `${slugify(basename(redact ? redact(p) : p))}-${h}`;
 }
 
 // eslint-disable-next-line no-control-regex

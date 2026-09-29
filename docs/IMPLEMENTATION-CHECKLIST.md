@@ -219,7 +219,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 100 | ✅ | tag `agents-done` → `04dc65a`: 15 agenti e 300 casi di valutazione (20 per agente) validati strutturalmente. L'esecuzione reale con `claude plugin eval . --scaffold` spetta all'utente dopo l'installazione |
 | WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 100 | ✅ | tag `orchestration-done` → `0134d03`, 944 test, 1 giro di correzione, `docs/orchestration.md`, `docs/phase-reports/WP10d.md` |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 100 | ✅ | tag `skills-done` → `8801bd7`, 1092 test, 2 giri di correzione: skill agent-manager e 26 skill; ogni riga di comando di skill e agenti verificata contro i guard reali |
-| FINAL | Review dell'intero branch | — | 2 | 100 | ✅ | tag `final-fixes` → `e8a8d40`, 1126 test: review in due parti, un'ondata di correzioni (16 commit) e due correzioni mirate, 3 re-review; ultimo punto minore dichiarato come residuo (MANUAL §55.1.2 punto 13) |
+| FINAL | Review dell'intero branch | — | 2 | 100 | ✅ | tag `final-fixes` → `e8a8d40`, 1126 test: review in due parti, un'ondata di correzioni (16 commit) e due correzioni mirate, 3 re-review; ultimo punto minore (nomi dei file) corretto il 30/09 |
 | **Totale** | | | **111** | **100** | | 111 unità completate |
 
 ## Catalogo dei componenti (spec §44)
@@ -254,7 +254,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 - **Documentazione JAGGAER di partenza** (`JAGGAER DOC/`, 385 file, esclusa da git perché proprietaria): elaborata per intero da WP09a nel workspace separato `jvc-knowledge` (livello S). **Da decidere:** per ogni documento, se è del fornitore (livello S) o materiale di un cliente (livello C); poi reingerire (MANUAL §60 punto 22).
 - 18 tabelle di decisione hanno pesi `bootstrap` progettati: vanno calibrate sui DEC reali (≥ 10 per tabella).
 - La latenza dei guard (~110–150 ms per processo, di cui ~74 ms di avvio di Node) supera l'obiettivo di 100 ms della spec: limite accettato.
-- **Nomi dei file di origine non redatti** (ultimo punto minore della review finale, dichiarato come residuo): rinominare i file con nomi neutri prima di `kb ingest`, oppure chiedere la correzione di una riga descritta in MANUAL §55.1.2 punto 13.
+- **Nomi dei file di origine**: dal 30/09/2026 redatti come il testo (ultimo punto minore della review finale, corretto su richiesta). I nomi di persona senza e-mail o altro schema riconoscibile non sono riconosciuti: dare ai file nomi neutri (MANUAL §55.1.2 punto 13).
 - **Host Jira on-premise**: se un cliente usa Jira Server/DC, il suo host va in `NETWORK.md` con una release.
 - **Protezione a livello di sistema operativo**: rendere di sola lettura la cartella del plugin e `~/.claude`, oppure usare impostazioni gestite. Le difese dei guard sono testuali (MANUAL §55.1.1).
 - **Verifiche dal vivo** (MANUAL §60, 23 punti): `claude plugin validate`, installazione, versioni fissate dei server MCP, primo accesso al tenant e prima CFP R2, formato Xray Server/DC, criteri misurati sul pilota.

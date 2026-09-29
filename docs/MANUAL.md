@@ -114,11 +114,12 @@ impone da solo quanto segue. Ogni voce dice cosa fare.
     contengono il codice del cliente non sono riconosciuti (revisione a campione). L'hash di un'unità è calcolato sul
     testo **redatto**: aggiungere al workspace un cliente il cui codice compare in un documento già ingerito cambia
     l'hash, e quindi il codice, delle unità che lo citano alla successiva ingestion (§19.16: diventano unità nuove).
-    **Il percorso del file di origine non è redatto**: il nome del file (per esempio `Note riunione Mario Rossi.docx`
-    o un nome che contiene un codice cliente) resta in `_manifest.json`, nel `meta.source` del documento normalizzato,
-    nel profilo DOC (`sources[].file`) e nella tabella `doc_profiles`. Rinominare i file con nomi neutri prima di
-    `kb ingest`. (Correzione prevista: redigere `meta.source` e tenere il percorso grezzo solo per l'identità del
-    documento.)
+    Anche il **nome del file di origine** è redatto con le stesse regole: manifesto `_manifest.json`, `meta.source` del
+    documento normalizzato, identificativo del documento, profilo DOC, tabella `doc_profiles`, residuo ed esito di
+    `kb ingest`. Il percorso grezzo resta solo in memoria per l'identità fra versioni: quando il nome contiene dati da
+    redigere si conserva la chiave redatta con un'impronta di quella grezza. Come nel testo, un nome di persona senza
+    e-mail o altro schema riconoscibile (per esempio `Note riunione Mario Rossi.docx`) non è riconosciuto: dare ai file
+    nomi neutri. Il comando `profile-doc` usato da solo su un documento già normalizzato vede solo il nome redatto.
 14. **Scritture della conoscenza con un interprete in linea.** La sessione principale non scrive in `product/**` né in
     `customers/*/kb/**` né con gli strumenti di file né con la shell (redirezioni, `tee`, `cp`/`mv`, `Set-Content`,
     `sed -i`, …), né con il codice in linea di un interprete che cita quelle cartelle insieme a una primitiva di

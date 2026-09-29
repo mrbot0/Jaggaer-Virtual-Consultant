@@ -33,7 +33,7 @@ import { parseScreenshot, imageInfo } from "./parse-screenshots.mjs";
 import { parseTranscript, looksLikeTranscript } from "./parse-transcript.mjs";
 import { parseEmail, looksLikeEmail } from "./parse-email.mjs";
 import { parseText, parseCsv, parseHtml, decodeText } from "./parse-text.mjs";
-import { makeUnitRedactor, ingestionProfile, knownCustomers, redactDoc } from "./redact.mjs";
+import { makeUnitRedactor, ingestionProfile, knownCustomers, redactDoc, redactPath } from "./redact.mjs";
 
 export class UsageError extends Error { constructor(m) { super(m); this.name = "UsageError"; } }
 
@@ -145,7 +145,7 @@ export function harvest(input, { root, scope = "XSC", customer = null, write = t
     const t0 = Date.now();
     const buf = readFileSync(file);
     const hash = `sha256:${createHash("sha256").update(buf).digest("hex")}`;
-    const id = docIdFor(rel);
+    const id = docIdFor(rel, redactor ? { redact: (s) => redactPath(redactor, s) } : {});
     const entry = { path: rel, doc_id: id, sha256: hash, size: buf.length };
     if (seen.has(hash) && !/\.(ocr\.txt|layout\.json)$/i.test(file)) {
       Object.assign(entry, { status: "residue", format: null, parser: null, duplicate_of: seen.get(hash), residue: residueEntry({ class: "duplicate", reason: `stesso contenuto di ${seen.get(hash)}`, file: rel }) });
@@ -174,8 +174,13 @@ export function harvest(input, { root, scope = "XSC", customer = null, write = t
     by_format: manifest.reduce((a, m) => { const k = m.format ?? (extname(m.path).toLowerCase() || "(senza estensione)"); a[k] = (a[k] ?? 0) + 1; return a; }, {}),
   };
   if (write && outDir) {
-    writeFileSync(join(outDir, "_manifest.json"), JSON.stringify({ input: basename(input), scope, customer: customer ?? "STD", harvested_at: new Date().toISOString(), stats, files: manifest }, null, 1));
-    if (residue.length) writeResidue(paths.inboxRoot, scope, "_harvest", residue);
+    // su disco solo i nomi di file redatti (manifesto e residuo); il manifesto in memoria resta grezzo: ingest.mjs ne
+    // ricava l'identità del documento (doc_key, §19.16)
+    const rp = (s) => redactPath(redactor, s);
+    const rr = (x) => (x ? { ...x, reason: rp(x.reason), ...(x.file ? { file: rp(x.file) } : {}) } : x);
+    const files = manifest.map((m) => ({ ...m, path: rp(m.path), ...(m.duplicate_of ? { duplicate_of: rp(m.duplicate_of) } : {}), ...(m.residue ? { residue: rr(m.residue) } : {}) }));
+    writeFileSync(join(outDir, "_manifest.json"), JSON.stringify({ input: rp(basename(input)), scope, customer: customer ?? "STD", harvested_at: new Date().toISOString(), stats, files }, null, 1));
+    if (residue.length) writeResidue(paths.inboxRoot, scope, "_harvest", residue.map(rr));
   }
   return { manifest, docs, stats, outDir };
 }

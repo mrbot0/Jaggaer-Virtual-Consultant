@@ -12,6 +12,7 @@
 //       decisioni ("[autore]"), sia nei campi sia nel testo
 //   redactUnits(units, opts) → { units, stats: { profile, units_redacted, masks: { tipo: n } } }
 //   redactDoc(doc, redactor) → il documento normalizzato redatto (per la pre-estrazione e le righe grezze dei campi)
+//   redactPath(redactor, s) → un percorso o un testo breve redatto (nomi di file nel manifesto, nel residuo, nell'esito)
 //
 // La pipeline (ingest.mjs) lo applica DOPO la segmentazione e PRIMA che le unità siano scritte (segmentUnits riceve il
 // redattore e lo applica a ogni unità prima dell'hash: così i codici delle unità restano stabili fra versioni); harvest
@@ -87,7 +88,14 @@ export function makeUnitRedactor({ profile = "strict", names = [], env = process
 // Stesse regole, sezione per sezione (percorso compreso: la stessa funzione sui due lati mantiene la coerenza); kind e
 // level restano; titolo e metadati redatti; l'id del documento resta (chiave del manifesto).
 // Chiavi tecniche dei metadati del documento: identità (§19.16: doc_key dal percorso), impronta, parser — mai redatte.
-export const META_TECH = new Set(["source", "sha256", "size", "parser", "parser_version", "kind_hint", "dated", "exported_at"]);
+// meta.source (il percorso del file) NON è tecnico: il nome di un file può contenere codici cliente o dati personali e si
+// redige come il resto (residuo della review finale chiuso il 30/09/2026); l'identità del documento usa il percorso grezzo
+// (keySource di profileDoc, assignDocCode in ingest.mjs), che resta solo in memoria.
+export const META_TECH = new Set(["sha256", "size", "parser", "parser_version", "kind_hint", "dated", "exported_at"]);
+// Un percorso o un testo breve (nome di file, motivo di un residuo) redatto con lo stesso redattore delle unità.
+export function redactPath(redactor, s) {
+  return redactor && typeof s === "string" ? redactor({ v: s }).unit.v : s;
+}
 export function redactDoc(doc, redactor) {
   const one = (v) => (v === undefined || v === null ? v : redactor({ v }).unit.v);
   const meta = (m) => (m && typeof m === "object" ? { ...one(Object.fromEntries(Object.entries(m).filter(([k]) => !META_TECH.has(k)))), ...Object.fromEntries(Object.entries(m).filter(([k]) => META_TECH.has(k))) } : one(m));
