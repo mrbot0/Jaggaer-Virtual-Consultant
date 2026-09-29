@@ -181,8 +181,11 @@ export function handle(input, env = process.env) {
       reclassified.push(`budget del compito superato (${entry.tokens}/${match.budget_tokens})`);
       if (effective === "ok") effective = "partial";
     }
+    // WP10d (D2 vigilanza, D1 console): scope e tier del dispatch (registrati da guard-budget, non dal rapporto) e numero
+    // di sorprese dichiarate nella traccia
+    const surprisesN = Array.isArray(report?.cognitive_trace?.surprises) ? report.cognitive_trace.surprises.length : 0;
     Object.assign(entry, {
-      task_id: entry.task_id ?? null,
+      task_id: entry.task_id ?? null, scope: match?.scope ?? entry.scope ?? null, tier: match?.tier ?? entry.tier ?? null, surprises: surprisesN,
       status: report?.status ?? null, status_effective: effective, error_class: report?.error_class ?? null,
       trace_incomplete: enforce && !v.ok, reclassified, lesson: report?.lesson ?? null, model: match?.model ?? null,
       completed_at: new Date().toISOString(),
@@ -203,7 +206,10 @@ export function handle(input, env = process.env) {
     writeFileSync(join(bbDir, `${name}.yaml`), YAML.stringify({
       task_id: taskId, agent_type: agentType, agent_id: agentId, status: entry.status, status_effective: entry.status_effective,
       trace_incomplete: entry.trace_incomplete, reclassified: entry.reclassified, output: report?.output ?? null, lesson: entry.lesson,
-      cognitive_trace: ct ? { depth: ct.depth, strategy: ct.strategy, decisions: ct.decisions, surprises: Array.isArray(ct.surprises) ? ct.surprises.length : 0, self_check: ct.self_check } : null,
+      // WP10d (D7): anche richiamo, forma epistemica prima/dopo, ipotesi e i `why` delle DEC (solo codici e riassunti)
+      cognitive_trace: ct ? { depth: ct.depth, recalled: ct.recalled ?? null, epistemic: ct.epistemic ?? null, strategy: ct.strategy, hypotheses: ct.hypotheses ?? null, decisions: ct.decisions,
+        surprises: Array.isArray(ct.surprises) ? ct.surprises.length : 0, surprise_items: Array.isArray(ct.surprises) ? ct.surprises.slice(0, 10) : [], self_check: ct.self_check } : null,
+      why: report?.why ?? null, declared_tools: Number.isInteger(report?.output?.tool_calls) ? report.output.tool_calls : null,
       needs_input: report?.needs_input ?? null, open_questions: report?.open_questions ?? [],
       usage: { tokens: entry.tokens, by_model: entry.tokens_by_model, source: entry.usage_source }, at: new Date().toISOString(),
     }));

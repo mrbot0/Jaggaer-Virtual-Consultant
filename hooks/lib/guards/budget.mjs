@@ -27,6 +27,7 @@ import { planFilePath } from "../../../scripts/admin/approvals.mjs";
 import YAML from "yaml";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
+import { redact } from "../redact.mjs";
 
 // Il file del piano attivo (relativo alla cartella del cliente) → oggetto | null.
 function readPlan(ctx, rel) {
@@ -38,6 +39,24 @@ function readPlan(ctx, rel) {
 
 const G = "guard-budget";
 const AGENT_TOOLS = new Set(["Agent", "Task"]);
+
+// WP10d: tier del dispatch (header `tier`, altrimenti dal modello richiesto) e rango per l'escalation (DT-002).
+export const TIER_RANK = { T0: 0, T1: 1, T2: 2 };
+const MODEL_TIER = (m) => (/haiku/i.test(m ?? "") ? "T0" : /sonnet/i.test(m ?? "") ? "T1" : /opus/i.test(m ?? "") ? "T2" : null);
+export const tierOf = (h, ti) => (typeof h?.tier === "string" && h.tier in TIER_RANK ? h.tier : MODEL_TIER(ti?.model));
+// Compito a cui appartiene il dispatch: `reply_to` (un nuovo Agent per lo stesso compito, es. dopo escalate) o task_id.
+export const taskKeyOf = (h) => String(h?.reply_to ?? h?.task_id ?? "");
+const cut = (s, n) => (typeof s === "string" && s.length > n ? `${s.slice(0, n - 1)}…` : s);
+export function headerSummary(h, ti) {
+  const red = (s) => redact(String(s));
+  return {
+    tier: tierOf(h, ti), task_key: taskKeyOf(h), kind: typeof h.kind === "string" ? h.kind : "task", reply_to: h.reply_to != null ? String(h.reply_to) : null,
+    mode: h.mode ?? null, depth: h.depth ?? null, minutes: typeof h.budget?.minutes === "number" ? h.budget.minutes : null,
+    task: h.task != null ? cut(red(h.task), 200) : null, allowed_paths: (Array.isArray(h.allowed_paths) ? h.allowed_paths : []).slice(0, 30).map((p) => cut(String(p), 160)),
+    expected_output: h.expected_output != null ? cut(red(JSON.stringify(h.expected_output)), 300) : null,
+    contract: h.contract != null ? String(h.contract) : null,
+  };
+}
 export const HAIKU_THRESHOLD = 0.8;
 const REQUIRED = ["task_id", "customer", "scope", "allowed_paths"];
 const TARGET = "session.mjs";
@@ -189,6 +208,8 @@ export const decide = guarded(G, (ctx) => {
     appendFileSync(file, `${JSON.stringify({
       ts: new Date().toISOString(), task_id: String(h.task_id), subagent_type: ti.subagent_type ?? null,
       model_requested: ti.model ?? null, model, budget_tokens: effective, budget_source: taskBudget != null ? "header" : source, classes, scope: h.scope, parent_agent_id: ctx.agentId,
+      // WP10d (D1, D7): l'header del dispatch, riassunto e redatto, per la console degli agenti (mai contenuti di file)
+      ...headerSummary(h, ti),
     })}\n`);
     return null;
   }, { timeoutMs: 4000 });

@@ -56,6 +56,29 @@ export function openFrom(invs, ledgerInvocations = [], { now = Date.now(), ttlMs
     .filter((x) => !expired(x, now, ttlMs));
 }
 
+// ---- vigilanza cognitiva (§23.2, WP10d D2) ----
+// Un compito chiuso è "fermato per sorprese" se il rapporto dichiara almeno una sorpresa e lo status effettivo non è
+// ok (partial, blocked, needs-input, escalate: §13.2 ferma il passo con needs-input o escalate; §13.3 alla terza
+// escalate). Un compito ok sullo scope azzera il contatore; gli altri esiti (senza sorprese, fermati dall'utente,
+// chiusi a mano o scaduti) non contano e non azzerano. Si contano solo le chiusure successive allo sblocco
+// dell'utente (`since`, SBLOCCA SCOPE <S> confermato). → numero di compiti consecutivi fermati per sorprese.
+export const VIGILANCE_LIMIT = 3;
+export const VIGILANCE_MESSAGE = "il modello di questo scope va rifatto prima di continuare";
+export const stoppedForSurprises = (e) => (e?.surprises ?? 0) >= 1 && !!e.status_effective && e.status_effective !== "ok" && e.status_effective !== "aborted-by-user" && !e.closed_by;
+export function vigilanceStreak(ledgerInvocations = [], invs = [], scope, { since = null } = {}) {
+  const t0 = since ? Date.parse(since) : -Infinity;
+  const closed = ledgerInvocations
+    .filter((e) => e && e.completed_at && Date.parse(e.completed_at) > t0)
+    .filter((e) => (e.scope ?? (Number.isInteger(e.inv_seq) ? invs[e.inv_seq]?.scope : null)) === scope)
+    .sort((a, b) => Date.parse(a.completed_at) - Date.parse(b.completed_at));
+  let n = 0;
+  for (const e of closed) {
+    if (e.status_effective === "ok" && !e.closed_by) n = 0;
+    else if (stoppedForSurprises(e)) n++;
+  }
+  return n;
+}
+
 // Chiusura manuale (use close-stale): voci di ledger per gli aperti non
 // reclamati; le voci bloccate e in corso vengono concluse. Muta il ledger.
 // → task_id chiusi.
