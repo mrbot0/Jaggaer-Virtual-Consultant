@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import YAML from "yaml";
 import { openDb } from "./db.mjs";
+import { rootFromDb } from "../lib/root-from-db.mjs";
 import { evaluateCriterion, matchesSignature, jaccard, checkCluster, validateCluster } from "./cluster-rules.mjs";
 import { evaluate, loadTable, writeDecision } from "../decide/dt-eval.mjs";
 import { parseCode } from "./codes.mjs";
@@ -257,11 +258,12 @@ export function deprecate(db, code, { now } = {}) {
 const HELP = `uso: node scripts/kb/cluster.mjs <comando> [argomenti] --db <file> [--json] [--help]
 
 Comandi (§7.3):
-  admit <CL-…> <codice-item> --root <dir cliente> [--customer ACME]       ammissione con DT-005 (scrive la DEC)
+  admit <CL-…> <codice-item> [--root <dir cliente>] [--customer ACME]     ammissione con DT-005 (scrive la DEC)
   reject <CL-…> <codice-item> --reason "<motivo>"                        rigetto motivato
   merge <CL-a> <CL-b>                                                    fusione se sovrapposizione > 70%
   split <CL-…> --facet Fn                                                proposta di scissione (> 40 membri, varianza alta)
-  quarantine <codice-item> --reason "<motivo>" --root <dir cliente>      item in quarantena (anche nel file)
+  quarantine <codice-item> --reason "<motivo>" [--root <dir cliente>]    item in quarantena (anche nel file)
+            (--root: default la cartella di --db se è <cartella>/knowledge.db)
   sample <famiglia> --seed <seme> [--pct 10]                             campione deterministico
   digest-tick                                                            conta le digestioni a vuoto
   deprecate <CL-…>                                                       deprecazione (vuoto per 2 digestioni)
@@ -308,11 +310,11 @@ function main(argv) {
   try {
     const [a, b] = positional;
     switch (cmd) {
-      case "admit": return out(admit(db, a, b, { root: opts.root, customer: opts.customer, agent: opts.agent ?? "cluster-validator", session: opts.session ?? null }));
+      case "admit": return out(admit(db, a, b, { root: rootFromDb(opts), customer: opts.customer, agent: opts.agent ?? "cluster-validator", session: opts.session ?? null }));
       case "reject": return out(reject(db, a, b, { reason: opts.reason }));
       case "merge": return out(merge(db, a, b));
       case "split": return out(split(db, a, { facet: opts.facet }));
-      case "quarantine": return out(quarantine(db, a, opts.reason, { root: opts.root }));
+      case "quarantine": return out(quarantine(db, a, opts.reason, { root: rootFromDb(opts) }));
       case "sample": return out(sample(db, a, { pct: opts.pct ? Number(opts.pct) : 10, seed: opts.seed }));
       case "digest-tick": return out(recordDigest(db));
       case "deprecate": return out(deprecate(db, a));

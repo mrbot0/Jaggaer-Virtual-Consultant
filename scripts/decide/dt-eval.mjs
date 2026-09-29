@@ -17,6 +17,7 @@ import { openDb } from "../kb/db.mjs";
 import { assignSeq, formatCode } from "../kb/assign-seq.mjs";
 import { isValidCode } from "../kb/codes.mjs";
 import { rates } from "../digest/outcomes-rates.mjs";
+import { rootFromDb } from "../lib/root-from-db.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
@@ -297,7 +298,8 @@ nome=valore (posizionali, ripetibili): gli input senza file (true/false/null/num
 --effects / --no-effects: la decisione ha / non ha effetti; senza nessuno dei due gli effetti sono
 ignoti (NULL) e il self-check li deduce dal compito.
 --write-dec: scrive la DEC (riga in decisions + <root>/decisions/<codice>.yaml) PRIMA di stampare
-l'esito (§29.6); richiede --db, --root, --customer (4 caratteri), --scope. --release, --confidence
+l'esito (§29.6); richiede --db, --customer (4 caratteri), --scope e --root (default: la cartella di
+--db se è <cartella>/knowledge.db). --release, --confidence
 e --effects registrano il contesto della DEC (età in release per i precedenti §12.3, confidenza
 dichiarata per la calibrazione §17.4, decisione con effetti per il self-check §17.1).
 
@@ -337,7 +339,8 @@ function main(argv) {
   const needDb = opts.priors === "auto" || opts["write-dec"];
   if (needDb && !opts.db) return fail(asJson, 1, "--priors auto e --write-dec richiedono --db");
   if (opts["write-dec"]) {
-    if (!opts.root || !opts.customer || !opts.scope) return fail(asJson, 1, "--write-dec richiede --root, --customer, --scope");
+    opts.root = rootFromDb(opts);
+    if (!opts.root || !opts.customer || !opts.scope) return fail(asJson, 1, "--write-dec richiede --root (o --db <cartella>/knowledge.db), --customer, --scope");
   }
   try {
     if (needDb) db = openDb(opts.db, { createIfMissing: false });
