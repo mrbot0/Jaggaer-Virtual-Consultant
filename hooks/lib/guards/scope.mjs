@@ -20,6 +20,7 @@ import { statSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { createRequire } from "node:module";
 import { intersects, subset, resolveTarget, PathPolicyError } from "../paths.mjs";
+import { pluginAgentType } from "../workspace.mjs";
 import { guarded, denyAudited, targetsOf, allRels, shellPaths, shellWriteTargets, subtree, PATH_TOOLS, WRITE_TOOLS, READ_TOOLS, SHELL_TOOLS } from "./common.mjs";
 
 const G = "guard-scope";
@@ -36,8 +37,9 @@ export const WEEKLY_READ = ["lessons", "decisions", "outcomes", "observations", 
 export const CROSS_READ_AGENTS = ["process-mapper", "weekly-digest"];
 const ANALYSIS_SEG = /(^|\/)analysis(\/|$)/i;
 export function crossReadPaths(ctx) {
-  const t = ctx.agentType;
-  if (!t || !CROSS_READ_AGENTS.includes(t) || !READ_TOOLS.has(ctx.tool)) return [];
+  // giro 1 (minore 3): solo il tipo del plugin (senza prefisso o "jaggaer-virtual-consultant:"), non un omonimo
+  const t = pluginAgentType(ctx.input?.agent_type);
+  if (!t || t !== ctx.agentType || !CROSS_READ_AGENTS.includes(t) || !READ_TOOLS.has(ctx.tool)) return [];
   const g = ctx.session?.cross_read?.[t];
   if (!g || typeof g !== "object" || g.mode !== "read" || !Array.isArray(g.allowed_paths)) return [];
   if (!(Date.parse(g.expires_at) > Date.now())) return [];

@@ -115,3 +115,14 @@ export function loadHookState(input = {}, env = process.env) {
 // Il nome base di un agent_type: i sub-agenti di plugin possono arrivare come
 // "jaggaer-virtual-consultant:scope-expert".
 export const baseAgentType = (t) => (typeof t === "string" && t ? t.slice(t.lastIndexOf(":") + 1) : null);
+
+// WP10b giro 1 (minore 3): il tipo di agente solo se è del plugin — senza prefisso o con il prefisso
+// "jaggaer-virtual-consultant:" —, altrimenti null. Per i permessi che allargano la lettura (session.cross_read):
+// un agente omonimo di un altro plugin non li eredita.
+export const PLUGIN_NAME = "jaggaer-virtual-consultant";
+export function pluginAgentType(t) {
+  if (typeof t !== "string" || !t) return null;
+  const i = t.lastIndexOf(":");
+  if (i < 0) return t;
+  return t.slice(0, i) === PLUGIN_NAME ? t.slice(i + 1) : null;
+}

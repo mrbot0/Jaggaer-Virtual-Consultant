@@ -49,16 +49,17 @@
     "allowed_paths": { "type": "array", "items": { "type": "string", "minLength": 1 } },
     "cross_read": {
       "type": "object",
-      "description": "WP10b (§44.2, §46.1, R4): permessi di lettura trasversale per tipo di agente, scritti SOLO dalla sessione principale con `session.mjs use paths --agent <tipo> --grant` prima del dispatch e tolti con `--restore` dopo il ritorno (in audit). guard-scope e guard-customer li onorano solo per quel tipo di agente, solo per Read/Glob/Grep e fino a expires_at; mai analysis/, mai altri clienti per process-mapper. allowed_paths della sessione (la cella degli altri agenti) non cambia.",
+      "description": "WP10b (§44.2, §46.1, R4): permessi di lettura trasversale per tipo di agente, scritti SOLO dalla sessione principale con `session.mjs use paths --agent <tipo> --grant` prima del dispatch e tolti con `--restore` dopo il ritorno (in audit). guard-scope e guard-customer li onorano solo per quel tipo di agente, solo per Read/Glob/Grep e fino a expires_at; mai analysis/ (in qualunque maiuscolo, come il guard), mai altri clienti per process-mapper; giro 1: nessuna chiave in più, date ISO. allowed_paths della sessione (la cella degli altri agenti) non cambia.",
       "propertyNames": { "enum": ["process-mapper", "weekly-digest"] },
       "additionalProperties": {
         "type": "object",
         "required": ["mode", "allowed_paths", "granted_at", "expires_at"],
+        "additionalProperties": false,
         "properties": {
           "mode": { "const": "read" },
-          "allowed_paths": { "type": "array", "minItems": 1, "maxItems": 16, "items": { "type": "string", "minLength": 1, "not": { "pattern": "(^|/)analysis(/|$)" } } },
-          "granted_at": { "type": "string" },
-          "expires_at": { "type": "string" },
+          "allowed_paths": { "type": "array", "minItems": 1, "maxItems": 16, "items": { "type": "string", "minLength": 1, "not": { "pattern": "(^|[/\\\\])[Aa][Nn][Aa][Ll][Yy][Ss][Ii][Ss]([/\\\\]|$)" } } },
+          "granted_at": { "type": "string", "format": "date-time" },
+          "expires_at": { "type": "string", "format": "date-time" },
           "granted_by": { "type": "string" }
         }
       }
