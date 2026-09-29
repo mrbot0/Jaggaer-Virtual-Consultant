@@ -1,0 +1,121 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: process-mapper
+case: deviation-cites-customer-item
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0505
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/kb/scopes/*/**
+      - product/kb/scopes/*/**
+      - customers/ACME/kb/handoffs/**
+      - product/kb/handoffs/**
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Mappa la fase di approvazione del processo di ACME confrontandola con lo standard.
+    inputs:
+      subject: C.ACME.XSC.PMP.0001
+      stage: approvazione
+      lesson_code: L.ACME.XSC.LSN.0505
+    expected_output:
+      type: process-map
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: true
+workspace:
+  items:
+    - code: C.ACME.XSC.PMP.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Mappa del processo ACME
+      summary: Mappa in costruzione.
+    - code: C.ACME.P2P.CFG.0010
+      shape: libresco
+      facets:
+        F10: R1
+      title: Doppia approvazione sopra soglia
+      summary: In ACME le richieste sopra 5000 euro richiedono due approvazioni, lo standard una.
+    - code: C.ACME.XSC.PRF.0001
+      shape: libresco
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: Procurement indiretto da catalogo, ERP SAP, moduli catalogo, richieste, ordini, fatture.
+    - code: S.STD.XSC.PMP.0001
+      title: Mappa standard P2P indiretto
+      summary: "Standard in sette fasi: catalogo, richiesta, approvazione, ordine, ricezione, fattura, trasmissione all'ERP."
+    - code: C.ACME.CAT.FLW.0003
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Ricerca a catalogo
+      summary: Ricerca per testo libero e aggiunta a una nuova richiesta.
+    - code: C.ACME.P2P.FLW.0001
+      shape: libresco
+      facets:
+        F10: R2
+      title: Creare una RdA in bozza
+      summary: Creazione della richiesta di acquisto con centro di costo e salvataggio in bozza.
+    - code: C.ACME.P2P.FLW.0002
+      shape: libresco
+      facets:
+        F10: R1
+      title: Approvare una RdA
+      summary: Approvazione della richiesta secondo le soglie del cliente.
+    - code: C.ACME.P2P.FLW.0003
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Emettere l'ordine
+      summary: La richiesta approvata genera l'ordine al fornitore.
+    - code: C.ACME.INV.FLW.0001
+      shape: libresco
+      facets:
+        F10: R1
+      title: Registrare una fattura
+      summary: Registrazione della fattura passiva e abbinamento all'ordine.
+    - code: C.ACME.XSC.INT.0001
+      shape: empirico
+      facets:
+        F10: R1
+        F7: SAP
+      title: Trasmissione degli ordini a SAP
+      summary: "Osservata: gli ordini approvati arrivano in SAP in pochi minuti; nessun documento del contratto."
+    - code: C.ACME.CAT.HND.0001
+      title: Handoff catalogo verso richieste
+      summary: "Contratto CAT→P2P: l'articolo scelto a catalogo entra nella richiesta con codice e prezzo."
+expect:
+  outcome: fase di approvazione con deviates che cita C.ACME.P2P.CFG.0010.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.XSC.PMP.0001
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+  question: forbidden
+  gap: la deviazione è documentata da C.ACME.P2P.CFG.0010
+  behaviour: |
+    PASS se la fase di approvazione della mappa dichiara la deviazione citando C.ACME.P2P.CFG.0010.
+    FAIL se la mappa riporta l'approvazione standard a un livello per ACME.

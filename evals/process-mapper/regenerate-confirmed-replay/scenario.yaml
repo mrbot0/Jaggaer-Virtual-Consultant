@@ -1,0 +1,121 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: process-mapper
+case: regenerate-confirmed-replay
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0504
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/kb/scopes/*/**
+      - product/kb/scopes/*/**
+      - customers/ACME/kb/handoffs/**
+      - product/kb/handoffs/**
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Rigenera la mappa del processo di ACME dopo l'ultima ingestion (nessun flusso nuovo).
+    inputs:
+      subject: C.ACME.XSC.PMP.0001
+      lesson_code: L.ACME.XSC.LSN.0504
+    expected_output:
+      type: process-map
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: true
+workspace:
+  items:
+    - code: C.ACME.XSC.PMP.0001
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Mappa del processo ACME
+      summary: Mappa in sette fasi, confermata.
+    - code: C.ACME.XSC.PRF.0001
+      shape: libresco
+      facets:
+        F10: R0
+      title: Profilo ACME
+      summary: Procurement indiretto da catalogo, ERP SAP, moduli catalogo, richieste, ordini, fatture.
+    - code: S.STD.XSC.PMP.0001
+      title: Mappa standard P2P indiretto
+      summary: "Standard in sette fasi: catalogo, richiesta, approvazione, ordine, ricezione, fattura, trasmissione all'ERP."
+    - code: C.ACME.CAT.FLW.0003
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Ricerca a catalogo
+      summary: Ricerca per testo libero e aggiunta a una nuova richiesta.
+    - code: C.ACME.P2P.FLW.0001
+      shape: libresco
+      facets:
+        F10: R2
+      title: Creare una RdA in bozza
+      summary: Creazione della richiesta di acquisto con centro di costo e salvataggio in bozza.
+    - code: C.ACME.P2P.FLW.0002
+      shape: libresco
+      facets:
+        F10: R1
+      title: Approvare una RdA
+      summary: Approvazione della richiesta secondo le soglie del cliente.
+    - code: C.ACME.P2P.FLW.0003
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Emettere l'ordine
+      summary: La richiesta approvata genera l'ordine al fornitore.
+    - code: C.ACME.INV.FLW.0001
+      shape: libresco
+      facets:
+        F10: R1
+      title: Registrare una fattura
+      summary: Registrazione della fattura passiva e abbinamento all'ordine.
+    - code: C.ACME.XSC.INT.0001
+      shape: empirico
+      facets:
+        F10: R1
+        F7: SAP
+      title: Trasmissione degli ordini a SAP
+      summary: "Osservata: gli ordini approvati arrivano in SAP in pochi minuti; nessun documento del contratto."
+    - code: C.ACME.CAT.HND.0001
+      title: Handoff catalogo verso richieste
+      summary: "Contratto CAT→P2P: l'articolo scelto a catalogo entra nella richiesta con codice e prezzo."
+  precedents:
+    - code: L.ACME.XSC.DEC.0003
+      table: DT-021
+      agent: process-mapper
+      subject: C.ACME.XSC.PMP.0001
+      outcome: conferma
+      result: confermata
+expect:
+  outcome: mappa confermata con STR-REPLAY; nessun item nuovo per le fasi standard; nessuna domanda.
+  status:
+    - ok
+  strategy: STR-REPLAY
+  strategy_inputs:
+    subject: C.ACME.XSC.PMP.0001
+    shape: consolidato
+    risk: R0
+    precedent: confermato-d<0.2
+    surprises: 0
+  question: forbidden
+  gap: nessun flusso è cambiato; il kb sa già tutto
+  behaviour: |
+    PASS se il rapporto conferma la mappa citando il precedente L.ACME.XSC.DEC.0003 e non crea item nuovi per fasi
+    uguali allo standard.
+    FAIL se crea nuove mappe o fasi senza novità nel kb.

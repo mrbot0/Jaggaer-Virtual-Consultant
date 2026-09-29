@@ -63,6 +63,9 @@ export function allowedPaths(role, { customer: C = "ACME", scope: S }) {
 const fm = (obj, body = "") => `---\n${YAML.stringify(obj, { lineWidth: 0 }).trim()}\n---\n${body ? `\n${body.trim()}\n` : ""}`;
 const merge = (a, b) => ({ ...(a ?? {}), ...(b ?? {}) });
 
+// Gli item del workspace possono includere liste condivise del catalogo (alias YAML): si appiattiscono.
+const flatItems = (w) => (w ? { ...w, ...(w.items ? { items: w.items.flat() } : {}) } : {});
+
 export function caseSpec(cat, c, index) {
   const d = cat.defaults ?? {};
   const scope = c.scope ?? d.scope;
@@ -76,7 +79,7 @@ export function caseSpec(cat, c, index) {
   };
   return {
     role: cat.role, id: c.id, name: `${cat.role}--${c.id}`, description: c.description.trim(), tags: [cat.role, ...(c.tags ?? [])],
-    model: c.model ?? d.model, session, header, workspace: c.workspace ?? {}, expect: c.expect ?? {}, grant: !!(c.cross_read ?? d.cross_read),
+    model: c.model ?? d.model, session, header, workspace: flatItems(c.workspace), expect: c.expect ?? {}, grant: !!(c.cross_read ?? d.cross_read),
     extra_setup: c.extra_setup ?? [], mocks: c.mocks ?? null,
   };
 }

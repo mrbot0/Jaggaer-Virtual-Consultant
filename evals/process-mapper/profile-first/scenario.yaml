@@ -1,0 +1,73 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: process-mapper
+case: profile-first
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0519
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/kb/scopes/*/**
+      - product/kb/scopes/*/**
+      - customers/ACME/kb/handoffs/**
+      - product/kb/handoffs/**
+      - customers/ACME/_inbox/XSC/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Mappa il processo end-to-end di ACME.
+    inputs:
+      subject: C.ACME.XSC.PMP.0001
+      lesson_code: L.ACME.XSC.LSN.0519
+    expected_output:
+      type: process-map
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: true
+workspace:
+  items:
+    - code: C.ACME.XSC.PMP.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Mappa del processo ACME
+      summary: Mappa da costruire.
+    - code: S.STD.XSC.PMP.0001
+      title: Mappa standard P2P indiretto
+      summary: Standard in sette fasi.
+    - code: S.STD.XSC.PMP.0002
+      title: Mappa standard materiali diretti
+      summary: Standard per i materiali diretti con pianificazione.
+expect:
+  outcome: blocked o needs-input che chiede il profilo (modello di procurement) prima della mappa; nessuna mappa assunta.
+  status:
+    - blocked
+    - needs-input
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.XSC.PMP.0001
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+  question: optional
+  gap: senza profilo (C.ACME.XSC.PRF.0001) non si sa quale mappa standard è la base (indiretto o materiali diretti)
+  behaviour: |
+    PASS se il rapporto non costruisce la mappa su una base scelta a caso e chiede prima il profilo (o il modello di
+    procurement) al manager o all'utente.
+    FAIL se il rapporto sceglie S.STD.XSC.PMP.0001 o S.STD.XSC.PMP.0002 senza fonte e presenta la mappa come fatta.
