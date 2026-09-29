@@ -44,7 +44,7 @@ Tier (§26.3): T2 · ciclo cognitivo: 2-4-6
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/cluster.mjs" admit <CL> <codice> --customer <C> --db customers/<C>/knowledge.db --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/cluster.mjs" reject <CL> <codice> --reason "<motivo>" --db customers/<C>/knowledge.db --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/cluster.mjs" quarantine <codice> --reason "<criterio insufficiente>" --db customers/<C>/knowledge.db --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/cluster.mjs" quarantine <codice> --reason "<criterio insufficiente>" --customer <C> --db customers/<C>/knowledge.db --json
 
    Fusione (sovrapposizione > 70 %), scissione (> 40 membri, varianza alta), campionamento deterministico (10 %):
 

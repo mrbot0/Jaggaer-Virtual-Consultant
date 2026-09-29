@@ -262,8 +262,8 @@ Comandi (§7.3):
   reject <CL-…> <codice-item> --reason "<motivo>"                        rigetto motivato
   merge <CL-a> <CL-b>                                                    fusione se sovrapposizione > 70%
   split <CL-…> --facet Fn                                                proposta di scissione (> 40 membri, varianza alta)
-  quarantine <codice-item> --reason "<motivo>" [--root <dir cliente>]    item in quarantena (anche nel file)
-            (--root: default la cartella di --db se è <cartella>/knowledge.db)
+  quarantine <codice-item> --reason "<motivo>" [--root <dir cliente>] [--customer C]  item in quarantena (anche nel file)
+            (--root: default customers/<C> se --db è customers/<C>/knowledge.db del --customer dichiarato)
   sample <famiglia> --seed <seme> [--pct 10]                             campione deterministico
   digest-tick                                                            conta le digestioni a vuoto
   deprecate <CL-…>                                                       deprecazione (vuoto per 2 digestioni)

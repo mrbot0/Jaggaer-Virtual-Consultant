@@ -271,7 +271,7 @@ export function validateLessons(db, root, { session, at = new Date().toISOString
   return results;
 }
 
-export const HELP = `uso: learn validate [--session SES…] [--root <cartella del cliente>] --db <knowledge.db> [--json] [--help]
+export const HELP = `uso: learn validate [--session SES…] [--root <cartella del cliente> | --customer <C>] --db <knowledge.db> [--json] [--help]
 
 Valida le lezioni 'proposed' di <root>/lessons/ con DT-004 (§21.2): forma, §7, esiti attesi, confini,
 fondatezza (sorprese e ipotesi rifiutate della sessione: <root>/.sessions/<sid>/ il cui session.json ha
@@ -286,7 +286,7 @@ export function run(argv) {
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
   opts.root = rootFromDb(opts);
-  if (!opts.root || !opts.db) return fail(asJson, 1, "richiesti --db e --root (default: la cartella di --db se è <cartella>/knowledge.db)");
+  if (!opts.root || !opts.db) return fail(asJson, 1, "richiesti --db e --root (default: customers/<C> se --db è customers/<C>/knowledge.db e --customer <C>)");
   let db;
   try { db = openDb(opts.db, { createIfMissing: false }); } catch (e) { return fail(asJson, 1, String(e.message ?? e)); }
   try {

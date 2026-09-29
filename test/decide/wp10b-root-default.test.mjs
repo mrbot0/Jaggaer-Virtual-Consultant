@@ -14,9 +14,15 @@ import { mkWs, seedSession, runHook, decisionOf, ROOT } from "../helpers/hook-en
 
 const node = (script, args) => spawnSync(process.execPath, [join(ROOT, script), ...args], { encoding: "utf8", timeout: 30000 });
 
-test("rootFromDb: --root esplicito vince; altrimenti la cartella di knowledge.db; un DB con altro nome non basta", () => {
+test("rootFromDb: --root esplicito vince; altrimenti customers/<C>/knowledge.db del --customer dichiarato; un DB con altro nome non basta", () => {
   assert.equal(rootFromDb({ root: "x", db: "customers/ACME/knowledge.db" }), "x");
-  assert.equal(rootFromDb({ db: join("customers", "ACME", "knowledge.db") }).replace(/\\/g, "/").endsWith("customers/ACME"), true);
+  // giro 1 (I2): solo customers/<C>/knowledge.db del --customer dichiarato
+  assert.equal(rootFromDb({ db: join("customers", "ACME", "knowledge.db"), customer: "ACME" }).replace(/\\/g, "/").endsWith("customers/ACME"), true);
+  assert.equal(rootFromDb({ db: join("customers", "ACME", "knowledge.db"), customer: "acme" }).replace(/\\/g, "/").endsWith("customers/ACME"), true);
+  assert.equal(rootFromDb({ db: join("customers", "ACME", "knowledge.db") }), null, "senza --customer");
+  assert.equal(rootFromDb({ db: join("customers", "BETA", "knowledge.db"), customer: "ACME" }), null, "altro cliente");
+  assert.equal(rootFromDb({ db: join("product", "knowledge.db"), customer: "ACME" }), null, "prodotto");
+  assert.equal(rootFromDb({ db: join("customers", "ACME", "kb", "knowledge.db"), customer: "ACME" }), null, "kb/");
   assert.equal(rootFromDb({ db: "k.db" }), null);
   assert.equal(rootFromDb({}), null);
 });
@@ -33,7 +39,7 @@ test("dt-eval --write-dec senza --root scrive la DEC nella cartella del DB; lear
   const code = JSON.parse(r.stdout).dec_code;
   assert.match(code, /^L\.ACME\.CAT\.DEC\.0001$/);
   assert.ok(existsSync(join(cust, "decisions", `${code}.yaml`)));
-  const v = node("scripts/digest/learn.mjs", ["validate", "--db", db, "--json"]);
+  const v = node("scripts/digest/learn.mjs", ["validate", "--db", db, "--customer", "ACME", "--json"]);
   assert.equal(v.status, 0, v.stderr + v.stdout);
   assert.equal(JSON.parse(v.stdout).ok, true);
   const bad = node("scripts/decide/dt-eval.mjs", ["--table", "DT-002", "risk=R1", "--customer", "ACME", "--scope", "CAT", "--db", join(d, "k.db"), "--write-dec", "--json"]);

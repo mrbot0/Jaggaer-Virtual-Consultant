@@ -42,7 +42,7 @@ Tier (§26.3): T1 · ciclo cognitivo: 2-4-6
    attesi dichiarati per ogni DEC con effetti**, novità, azionabilità. Lo script applica la tabella, scrive la DEC e,
    per le validate, registra gli esiti attesi che `learn outcomes` verificherà:
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/digest/learn.mjs" validate --session <SES> --db customers/<C>/knowledge.db --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/digest/learn.mjs" validate --session <SES> --customer <C> --db customers/<C>/knowledge.db --json
 
    Dove lo script non può giudicare da solo (fondatezza di un'affermazione in prosa), la rileggi tu contro le OBS e
    le DEC citate e lo segnali nel rapporto; non cambi lo stato a mano.
