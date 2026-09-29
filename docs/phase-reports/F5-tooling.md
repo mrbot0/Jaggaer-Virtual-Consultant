@@ -70,3 +70,16 @@ del cliente vanno verificati alla prima pubblicazione reale (`xray verify` dopo 
 
 Un Jira Server/DC on-premise richiede che il suo host sia aggiunto alla categoria `alm` di `NETWORK.md` con una release
 del plugin (il file è sotto integrità).
+
+## Giro di correzione 2
+
+| Rilievo | Correzione | Prova |
+|---------|-----------|-------|
+| Important 1: la scorciatoia "senza sessione" (CI) sceglibile in sessione con `--workspace <ws>/tmp` | (1) `**/customers/*/config/**` e `**/customers/*/queue/**` protetti a ogni profondità (strumenti di file, shell, interpreti, script eseguiti; sessione e sub-agenti); (2) con una sessione JVC attiva, gli script `scripts/xray/*` rifiutano un `--workspace` diverso dal workspace degli hook (stessa risoluzione: `JVC_WORKSPACE` > `CLAUDE_PROJECT_DIR` > cwd); il server MCP non ha `--workspace` e risolve il workspace come gli hook; (3) con una sessione attiva nel workspace reale la scorciatoia CI non vale mai: senza stato di sessione per il cliente ⇒ rifiuto | `test/xray/wp09c-fixround2.test.mjs` (sonde degli hook e CLI contro il mock locale: nessun import nell'esecuzione umana) |
+| Minor 1: import in coda non completabile in una sessione successiva | provenienza nei file protetti: `runs/<RUN>/xray-executions.json` (`created_by_plugin: true`, `session_code`) e voce di coda (`provenance`); `retry-queued` e `publish` accettano un'esecuzione creata dal plugin in una sessione precedente, senza registrarla come creata nella nuova | stesso file, "Minor 1" |
+
+**Ripresa dopo Jira giù (ADR-22).** Se la rete cade dopo la creazione della Test Execution, la voce in coda porta la
+chiave e la provenienza del plugin. In qualunque sessione successiva sullo stesso workspace, dopo `use customer <C>`:
+`node scripts/xray/retry-queued.mjs` completa l'import nella stessa esecuzione, e `node scripts/xray/publish.mjs --run
+<RUN>` la riusa (una sola Test Execution per run e scope). Un'esecuzione non creata dal plugin non si completa mai da
+qui. Fuori da una sessione (CI) valgono i file protetti.
