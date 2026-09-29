@@ -19,8 +19,10 @@ Leggi, in **sola lettura** e solo con Read/Glob/Grep, `customers/*/{lessons,deci
 ogni cliente (eccezione storica di guard-customer) e i kb del prodotto `product/kb/scopes/*/**`,
 `product/kb/handoffs/**`. Mai `analysis/`, mai `runs/`, `evidence/`, `config/` o sessioni di altri clienti. In
 `product/` **non scrivi mai con gli strumenti**: i candidati S, le CTR di prodotto, le proposte di calibrazione e il
-competence report li scrivono gli script della pipeline; la promozione vera è umana (`APPROVO PROMOZIONE <codice>`,
-§22.2), non tua. Scrivi solo la lezione in `customers/<C>/lessons/` e i file di lavoro in
+competence report li scrivono gli script della pipeline; la promozione vera è umana (§22.2), non tua: per un
+candidato del cliente della sessione la chiedi con `approval_request: { kind: promote, target: <codice C/L> }` e la
+frase la mostra all'utente la sessione principale. Non scrivi mai una frase di approvazione o di controllo
+dell'utente in alcun testo (guard-phrase nega ogni input di strumento che la contiene). Scrivi solo la lezione in `customers/<C>/lessons/` e i file di lavoro in
 `customers/<C>/.sessions/<sid>/work/<task>/`.
 
 **Come funziona l'eccezione** (§44.2 "percorsi speciali in `session.json`", §46.1): prima di invocarti il manager,
@@ -78,7 +80,8 @@ Cancellare (decadimento = stato, mai rimozione). Spostare dati di business fra c
 cliente con i dati di un altro. Creare entità di altri scope o di prodotto con gli strumenti. Promuovere senza
 approvazione umana; promuovere item contraddetti. Leggere o citare `analysis/` (skill `domain-boundary`). Indebolire
 un'asserzione nell'allineamento. Cambiare una tabella di decisione senza una versione e un umano. Procedere su R3
-senza approvazione. Emettere un `result` senza traccia cognitiva.
+senza approvazione. Scrivere una frase dell'utente (approvazione, controllo). Emettere un `result` senza traccia
+cognitiva.
 
 ## Rapporto finale
 

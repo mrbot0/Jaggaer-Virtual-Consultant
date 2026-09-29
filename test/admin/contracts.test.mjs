@@ -138,6 +138,9 @@ test("agent-prompt: il template reso con i valori ha un header §46.1 valido; he
   assert.match(TEMPLATE, /budget/i);
   assert.match(TEMPLATE, /```yaml/);
   assert.match(TEMPLATE, /cognitive_trace/);
+  // ruling WP10b parte 2 (blocco B): l'approvazione si chiede con il campo strutturato, mai con la frase dell'utente
+  assert.match(TEMPLATE, /approval_request: null/);
+  assert.match(TEMPLATE, /non scrivi mai una frase dell'utente/);
 });
 
 test("message: i sette tipi di §24.3; task richiede budget e tier, handoff contratto e via manager, result la traccia", () => {

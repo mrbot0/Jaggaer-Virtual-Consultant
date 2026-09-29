@@ -13,6 +13,7 @@ import { extractReport, validateReport } from "../../scripts/admin/agent-report.
 import { validateWith } from "../../scripts/lib/schemas.mjs";
 import { reportedControlsFor } from "../../scripts/decide/self-check-controls.mjs";
 import { LEAF_AGENTS, READ_ONLY, agentFiles, parseAgent, lastYamlFence } from "../helpers/agents-md.mjs";
+import { PHRASES, CONTROL_PHRASES } from "../../hooks/lib/guards/phrase.mjs";
 
 const all = () => Object.entries(agentFiles()).map(([name, text]) => ({ name, ...parseAgent(text) }));
 
@@ -60,4 +61,37 @@ test("il rapporto d'esempio non è un modello vuoto: memorie richiamate, forma e
     assert.ok(t.epistemic.subject.includes(`.${scope}.`) || /^(CL-|S\.STD\.XSC|C\.[A-Z0-9]{4}\.XSC)/.test(t.epistemic.subject) || scope === "XSC", `${name}: lezione ${r.lesson} e soggetto ${t.epistemic.subject}`);
     assert.ok(r.why && typeof r.why === "object", `${name}: why`);
   }
+});
+
+// Ruling WP10b parte 2 (blocco B): un agente chiede un'approvazione con il campo strutturato approval_request
+// (kind A1|A2|A3|action|purge|promote|retention, plan?, step?, target?) e non scrive mai la frase dell'utente: la
+// mostra la sessione principale. guard-phrase nega ogni input di strumento che la contiene, anche la bozza del rapporto.
+test("approval_request: campo facoltativo del rapporto con forma validata (piano per A1-A3/action, passo per A3/action, target per purge/promote/retention)", () => {
+  const base = YAML.parse(lastYamlFence(parseAgent(agentFiles()["scope-expert"]).body));
+  const ok = (ar, status = "needs-input") => validateWith("agent-report.schema.json", { ...base, status, needs_input: { question: "serve l'approvazione del piano" }, approval_request: ar }).ok;
+  assert.equal(validateWith("agent-report.schema.json", base).ok, true, "senza approval_request il rapporto resta valido");
+  assert.equal(validateWith("agent-report.schema.json", { ...base, approval_request: null }).ok, true);
+  assert.equal(ok({ kind: "A1", plan: "PLAN.ACME.P2P.0007" }), true);
+  assert.equal(ok({ kind: "A2", plan: "PLAN.ACME.P2P.0007" }), true);
+  assert.equal(ok({ kind: "A3", plan: "PLAN.ACME.P2P.0007", step: 3 }), true);
+  assert.equal(ok({ kind: "action", plan: "PLAN.ACME.P2P.0007", step: 2 }), true);
+  assert.equal(ok({ kind: "promote", target: "C.ACME.ADM.CHK.0051" }), true);
+  assert.equal(ok({ kind: "purge", target: "ACME" }), true);
+  assert.equal(ok({ kind: "retention", target: "ACME" }), true);
+  assert.equal(ok({ kind: "A1" }), false, "A1 senza piano");
+  assert.equal(ok({ kind: "A3", plan: "PLAN.ACME.P2P.0007" }), false, "A3 senza passo");
+  assert.equal(ok({ kind: "A3", plan: "PLAN.ACME.P2P.0007", step: 0 }), false, "passo < 1");
+  assert.equal(ok({ kind: "promote" }), false, "promote senza target");
+  assert.equal(ok({ kind: "promote", target: "qualunque" }), false, "target non valido");
+  assert.equal(ok({ kind: "explore", plan: "PLAN.ACME.P2P.0007" }), false, "l'esplorazione la apre solo l'utente: non si chiede");
+  assert.equal(ok({ kind: "A1", plan: "PLAN.ACME.P2P.0007", phrase: "x" }), false, "nessun campo per la frase");
+  assert.equal(ok({ kind: "A1", plan: "piano 7" }), false, "codice del piano");
+});
+
+test("nessun corpo di agente contiene una frase dell'utente (approvazione, esplorazione, controllo): non la può copiare in un input", () => {
+  for (const [name, text] of Object.entries(agentFiles())) {
+    assert.doesNotMatch(text, PHRASES, `${name}: frase di approvazione o di esplorazione`);
+    assert.doesNotMatch(text, CONTROL_PHRASES, `${name}: frase di controllo`);
+  }
+  for (const name of ["scope-expert", "config-designer", "weekly-digest"]) assert.match(agentFiles()[name], /approval_request/, `${name}: chiede con approval_request`);
 });

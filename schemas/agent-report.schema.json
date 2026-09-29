@@ -29,7 +29,24 @@
         "gap": { "type": "string" }
       }
     },
-    "open_questions": { "type": "array" }
+    "open_questions": { "type": "array" },
+    "approval_request": {
+      "type": ["object", "null"],
+      "description": "Ruling WP10b parte 2 (blocco B): l'agente non scrive mai una frase di approvazione o di controllo dell'utente in un input di strumento (guard-phrase la nega) né nel rapporto; la chiede con questo campo e la sessione principale mostra all'utente la frase esatta (phraseOf di scripts/admin/approvals.mjs). A1 = piano, A2 = prova, A3 = passo, action = il sì di un passo, purge/promote/retention = approvazioni amministrative (target: cliente di 4 caratteri o codice dell'item).",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["A1", "A2", "A3", "action", "purge", "promote", "retention"] },
+        "plan": { "type": "string", "pattern": "^PLAN\\.[A-Za-z0-9._-]+$" },
+        "step": { "type": "integer", "minimum": 1 },
+        "target": { "type": "string", "pattern": "^([A-Z0-9]{4}|[SCL][.][A-Z0-9]{3,4}[.][A-Z0-9]{3}[.][A-Z]{3}[.][0-9]{4}([.]v[0-9]+)?)$" }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "enum": ["A1", "A2", "A3", "action"] } }, "required": ["kind"] }, "then": { "required": ["plan"] } },
+        { "if": { "properties": { "kind": { "enum": ["A3", "action"] } }, "required": ["kind"] }, "then": { "required": ["step"] } },
+        { "if": { "properties": { "kind": { "enum": ["purge", "promote", "retention"] } }, "required": ["kind"] }, "then": { "required": ["target"] } }
+      ]
+    }
   },
   "allOf": [
     {

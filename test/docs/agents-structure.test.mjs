@@ -134,8 +134,9 @@ test("regole dei ruoli: browser di scope-expert (ruling 3), lettura trasversale,
   assert.match(se, /Chrome DevTools/);
   assert.match(se, /sola lettura e navigazione/, "fuori sandbox il Claude browser solo legge e naviga");
   assert.match(se, /script nella pagina[^.]*negat/i, "script nella pagina negati ovunque");
-  assert.match(se, /ESPLORA SANDBOX/);
-  assert.match(se, /APPROVO PIANO/);
+  // ruling WP10b parte 2 (blocco B): niente frasi dell'utente nel corpo; l'approvazione si chiede con approval_request
+  assert.match(se, /solo l'utente\*\* con la sua frase di esplorazione/);
+  assert.match(se, /approval_request: \{ kind: A1 \| A2 \| A3, plan: <PLAN>, step: <n> \}/);
   assert.match(se, /step-check\.mjs/);
   for (const a of ["process-mapper", "weekly-digest"]) {
     assert.match(A[a], new RegExp(`use paths --agent ${a} --grant`), `${a}: il manager concede`);

@@ -70,8 +70,11 @@ Tier (§26.3): T2 · ciclo cognitivo: completo, gaps → domande
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/validate-plan.mjs" customers/<C>/runs/<RUN>/plan.json --customer <C> --env <ambiente> --json
 
    Il piano porta: `CHK` pre e post (§62), snapshot richiesto prima del primo `SAVE`, compensazione di rollback per
-   ogni passo che modifica, il verificatore, le approvazioni che serviranno (verde `APPROVO PIANO`, giallo + `APPROVO
-   PASSO`, rosso + `APPROVO PROVA`, produzione sempre 3A): le scriverà l'utente, non tu.
+   ogni passo che modifica, il verificatore, le approvazioni che serviranno come **tipi** in `output.approvals_needed`
+   (verde A1 del piano; giallo A1 + A3 per i passi che modificano; rosso A1 + A2 della prova + A3; produzione sempre
+   3A). Le frasi le mostra all'utente la sessione principale e le scrive solo l'utente: tu non ne scrivi mai una, né
+   in un input di strumento (guard-phrase lo nega, anche nella bozza del rapporto o nel piano) né nel rapporto; se ti
+   serve un'approvazione per procedere la chiedi con `approval_request: { kind, plan, step? }`.
 6. **RIFLETTERE** — auto-verifica (ogni passo ha un `expect`) e lezione a otto sezioni con l'esito atteso di ogni DEC
    con effetti (skill `self-check-and-lesson`):
 
@@ -89,8 +92,8 @@ concordi o domanda.
 Cancellare o progettare un `DELETE` (compensazioni `restore`/`deactivate`). Asserire fuori confine: un oggetto di un
 altro scope entra solo con un handoff. Creare entità di altri scope. Leggere o citare `analysis/`, `RUL` o incident
 (skill `domain-boundary`). Indebolire un'asserzione del verificatore per far passare il piano. Procedere su R3 senza
-approvazione, o progettare su `libresco` senza le osservazioni R0. Scrivere una frase di approvazione. Emettere un
-`result` senza traccia cognitiva.
+approvazione, o progettare su `libresco` senza le osservazioni R0. Scrivere una frase di approvazione o di controllo
+dell'utente in qualunque testo (si chiede con `approval_request`). Emettere un `result` senza traccia cognitiva.
 
 ## Rapporto finale
 
@@ -107,7 +110,7 @@ output:
   risk: giallo
   strategy_plan: [STR-DRY-RUN, STR-VERIFY-FIRST]
   verifier: NRT.ACME.ADM.CFG.0031
-  approvals_needed: ["APPROVO PIANO", "APPROVO PASSO 4"]
+  approvals_needed: [{ kind: A1 }, { kind: A3, step: 4 }]
   r0_observations: []
   summary: "strict_import su C.ACME.ADM.CFG.0019: 6 passi, prova a vuoto, CHK pre/post, rollback restore"
 cognitive_trace:
