@@ -321,7 +321,8 @@ valgono subito; quelle che la **riducono** valgono dopo la conferma nel transcri
 
 Le skill (`skills/`, §44.3) dicono **come** si lavora; la conoscenza (`kb/`, `product/`) dice **cosa**. Non contengono
 fatti di prodotto né dati di clienti, e non concedono strumenti: gli agenti le caricano quando il compito le richiede
-(la `description` di ciascuna dichiara quando usarla) e ogni definizione in `agents/` cita quelle che le servono.
+(la `description` di ciascuna dichiara quando usarla) e le definizioni in `agents/` citano quelle del loro lavoro — tutte
+tranne `jaggaer-domain`, che nessun agente cita: la attiva solo la sua description, come mappa per orientarsi.
 
 - **`agent-manager`** — la skill della sessione principale, caricata all'avvio (il contesto di SessionStart lo chiede).
   Fa della sessione il manager: legge la console prima di instradare, dopo ogni ritorno e prima di rispondere;
@@ -329,9 +330,10 @@ fatti di prodotto né dati di clienti, e non concedono strumenti: gli agenti le 
   handoff; porta all'utente le domande e le frasi di approvazione esatte richieste dagli agenti; concede e toglie la
   lettura trasversale a `process-mapper` e `weekly-digest`; scrive le lezioni dei ruoli senza scrittura; non fa lavoro
   di dominio (≤ 15 % dei token). Contratto: [`docs/orchestration.md`](orchestration.md). Un sub-agente non la usa.
-- **Cognizione** (tutti gli agenti): `reasoning-cycle` (i sei passi e le tracce) · `epistemic-awareness` (forma e
-  precedenza fra fonti) · `precedents` · `belief-revision` (sorprese, conferme, ipotesi) · `strategies` (DT-017) ·
-  `decision-tables` (`dt-eval`) · `asking-the-user` · `self-check-and-lesson`.
+- **Cognizione**: `reasoning-cycle` (i sei passi e le tracce, citata da ogni agente) · `epistemic-awareness` (forma e
+  precedenza fra fonti) · `strategies` (DT-017) · `self-check-and-lesson` (dalla quasi totalità) · `precedents` ·
+  `decision-tables` (`dt-eval`) · `asking-the-user` (dai ruoli che formulano domande) · `belief-revision` (sorprese,
+  conferme, ipotesi: dai ruoli che eseguono, digeriscono o diagnosticano).
 - **Struttura della conoscenza**: `field-modeling` · `coding-system` · `faceting-and-weights` · `clustering-rules` ·
   `token-economy`.
 - **Dominio e collaudo**: `jaggaer-domain` · `identity-and-keys` · `integration-testing` · `nrt-authoring` ·

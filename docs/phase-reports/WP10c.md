@@ -41,3 +41,15 @@ manager usa il layer di orchestrazione di WP10d, `docs/orchestration.md`). Suite
 - **Confine applicato a tutte le 27 skill**, anche a `jaggaer-domain` (il brief lo esentava): nessuna skill ne ha
   avuto bisogno.
 - **Manuale**: nuova sezione 57.6 con l'elenco delle skill e come il manager le usa.
+
+## Giro di correzione 1
+
+Revisione "Needs fixes" (3 importanti, 5 minori, prove sui guard in `.superpowers/sdd/wp10c-review.md`). Suite alla
+consegna: **1090 test, 1090 verdi** (1076 + 14 nuovi); test di tempo dei guard verde; `integrity.json` ricostruito.
+
+| Rilievo | Correzione | Test |
+|---------|------------|------|
+| I1 valori con `<` `>` negati dai guard (DT-003 volume, classi di precedente di DT-017/DT-023) | regola unica di alias ASCII in `dt-eval` (`<` → `-lt-`, `>` → `-gt-`, e l'apostrofo `'` → `-`, emerso dalla prova: il genere d'uso di DT-011/DT-019), ricavata dai file delle DT e riportata al valore canonico prima della valutazione; chiavi numeriche con zeri (DT-007 area) accettate anche come numero; strategy-select con le classi dal dominio di DT-017; depth con `--input` e `--precedents`; righe di skill e agenti con `<classe-ascii>`, `<volume-ascii>`, `<genere-ascii>` | `test/decide/wp10c-ascii-aliases.test.mjs` |
+| I2 attivazione del piano in sandbox | agent-manager: la sessione principale attiva con `step-check --step 1` (in sandbox subito, fuori sandbox dopo l'A1) e ridispaccia con `reply_to`; sequenze §45.3/§45.4 | `test/docs/skills-agent-manager.test.mjs` |
+| I3 nessuna prova delle righe contro i guard | ogni riga di skill e agenti passa i guard PreToolUse reali (manager come sessione principale, skill come i ruoli che le citano), con ogni valore reale dei domini DT, e gli script di decisione la accettano; fallisce sulle righe originali | `test/docs/skills-guards.test.mjs` |
+| minori | `/use scope` prima di handoff e dispatch di process-mapper/weekly-digest; riga di `agents watch` risolta (percorso assoluto, sessione da `agents status`, `--workspace`); disgiunzione debole tolta; §57.6 del manuale corretto e verificato; `agents.mjs` ricade sulla sessione corrente con `${CLAUDE_SESSION_ID}` non sostituito | test citati + `manual-alignment`, `test/admin/wp10c-fixround1.test.mjs` |

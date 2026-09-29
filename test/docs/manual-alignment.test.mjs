@@ -80,3 +80,16 @@ test("opzioni: quelle di §56.x sono nell'argument-hint; argument-hint e tabella
     assert.deepEqual([...optionsOf(manualFirstColumn(manual, fam))].sort(), [...hint].sort(), `${fam}: opzioni del manuale ≠ argument-hint`);
   }
 });
+
+// WP10c giro 1 (minore 4): §57.6 del manuale nomina esattamente le 27 skill di skills/ (agent-manager + le 26 di §44.3),
+// senza dire che tutte sono citate da tutti gli agenti (jaggaer-domain non è citata da nessuno: la attiva la description).
+test("§57.6: le skill del manuale = le cartelle di skills/ (uguaglianza di insiemi) e la copertura dichiarata è esatta", async () => {
+  const { skillDirs } = await import("../helpers/skills-md.mjs");
+  const i = manual.indexOf("### 57.6");
+  assert.ok(i > 0, "manca §57.6");
+  const sec = manual.slice(i, manual.indexOf("\n## ", i));
+  const named = new Set([...sec.matchAll(/`([a-z][a-z-]+)`/g)].map((m) => m[1]).filter((n) => skillDirs().includes(n)));
+  assert.deepEqual([...named].sort(), skillDirs());
+  assert.doesNotMatch(sec, /tutti gli agenti/);
+  assert.match(sec, /jaggaer-domain[^\n]*(nessun agente|description)/);
+});
