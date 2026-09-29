@@ -55,3 +55,22 @@ Suite completa alla consegna e tempi: `.superpowers/sdd/wp10d-report.md`.
 
 La skill `agent-manager` (WP10c) che istruisce la sessione a usare la console; le prove con sub-agenti reali in Claude
 Code (formato reale dei transcript dei sub-agenti per il legame agente → compito e per i token del manager).
+
+## Giro di correzione 1
+
+Revisione: "Needs fixes" (0 Critical, 2 Important). Risolti con i test del revisore (`test/hooks/wp10d-fixround1.test.mjs`).
+
+| # | Problema | Correzione |
+|---|----------|------------|
+| I1 | `FERMA TUTTI` colpiva anche i dispatch successivi ed era irreversibile: nessun nuovo agente per il resto della sessione | il record registra i task_id dei dispatch aperti alla cattura (`tasks`) e vale solo per loro; i dispatch successivi non sono toccati; i fermati restano fermati (anche dopo `RIPRENDI TUTTI`); messaggio di cattura e `docs/orchestration.md` lo dicono |
+| I2 | escalation aggirabile: il `tier` dell'header vinceva sul modello che gira; senza tier né modello nessun controllo | tier effettivo = il maggiore fra header e modello richiesto; disaccordo ⇒ deny; modello assente ⇒ T2; registrati `tier` (effettivo), `tier_declared`, `model_tier`; la console mostra l'effettivo |
+| m1 | la riga per prompt ignorava gli agenti tornati `needs-input` | contano come "in attesa dell'utente" finché non c'è un dispatch di seguito (`reply_to` o stesso task_id ⇒ stato `ripreso`) |
+| m2 | un agente senza candidati sfuggiva a pausa/stop/passo-passo; legame mai ricalcolato | identità sconosciuta ⇒ vale per ogni dispatch aperto (il più restrittivo); il legame non risolto si ricalcola a ogni chiamata |
+| m4 | transcript riletto per intero a ogni chiamata con una frase da confermare | scansione incrementale: `tx_offset` nel record, offset per transcript in `control-scan.json` (protetto), `confirmInText` di approvals.mjs (nessuna copia); 40 MB: ~92 ms per chiamata (prima ~140) |
+| m5 | la vigilanza contava solo le sorprese dichiarate | vale il maggiore fra dichiarate e registrate da step-check per l'agente (`surprises_declared`, `surprises_recorded`) |
+| m6 | testo libero del rapporto non redatto in `show --json` | `deepRedact` su tutta la traccia |
+| m7 | dipendenza da `reply_to` non dichiarata | fra i rischi residui di `docs/orchestration.md` |
+
+Rinviato (ruling): il conteggio delle chiamate e il consumo del `sì` quando un altro guard in parallelo nega la stessa
+chiamata — dichiarato fra i rischi residui. Due test preesistenti allineati alla regola I2 (header concorde con il
+modello): `budget-trace` 80 % (tier T2 con opus) e l'escalation di `wp10d-vigilance` (haiku con T0, opus con T2).

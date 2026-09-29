@@ -58,16 +58,22 @@ di PreCompact e, a ogni prompt dell'utente con agenti in corso o in attesa, una 
 
 ## 4. Definizioni applicate
 
-- **Compito fermato per sorprese**: rapporto chiuso con almeno una sorpresa nella traccia (`cognitive_trace.surprises`)
-  e status effettivo diverso da `ok` (`partial`, `blocked`, `needs-input`, `escalate`). Un compito `ok` sullo scope
+- **Compito fermato per sorprese**: rapporto chiuso con almeno una sorpresa — il maggiore fra quelle dichiarate nella
+  traccia (`cognitive_trace.surprises`) e quelle registrate da `step-check` per quell'agente (audit) — e status effettivo diverso da `ok` (`partial`, `blocked`, `needs-input`, `escalate`). Un compito `ok` sullo scope
   azzera il contatore; gli altri esiti (senza sorprese, fermati dall'utente, chiusi a mano o scaduti) **non contano e
   non azzerano**. Si contano solo le chiusure successive all'ultimo `SBLOCCA SCOPE <S>` confermato.
-- **Stesso compito** per l'escalation: `reply_to` dell'header, altrimenti `task_id`. Tier: `tier` dell'header (T0 <
-  T1 < T2), altrimenti dal modello (haiku < sonnet < opus). Consentito un salto sopra il tier del primo dispatch (anche
+- **Stesso compito** per l'escalation: `reply_to` dell'header, altrimenti `task_id`. **Tier effettivo** = quello del
+  modello che gira: il maggiore fra il `tier` dell'header (T0 < T1 < T2) e il tier del modello richiesto (haiku <
+  sonnet < opus; un modello non riconosciuto vale T2); header e modello in disaccordo ⇒ dispatch negato; modello non
+  indicato (il sub-agente eredita quello della sessione) ⇒ T2. La console mostra il tier effettivo. Consentito un salto sopra il tier del primo dispatch (anche
   T0 → T2); negato un secondo salto; lo stesso tier già raggiunto resta consentito (ripresa).
 - **Legame agente → compito** (guard-control): alla prima chiamata dell'`agent_id`, dal `task_id` dell'header del primo
   prompt nel transcript del sub-agente; senza transcript, l'unico dispatch aperto dello stesso tipo non ancora legato;
-  più candidati ⇒ identità ambigua, vale il più restrittivo.
+  più candidati ⇒ identità ambigua, vale il più restrittivo; nessun candidato del suo tipo ⇒ identità sconosciuta, vale
+  per ogni dispatch ancora in attesa di un agente (il più restrittivo). Un legame non risolto si ricalcola a ogni
+  chiamata finché non si risolve.
+- **In attesa dell'utente**: agenti in passo-passo che attendono il `sì` e compiti tornati `needs-input` finché il
+  manager non fa un nuovo dispatch dello stesso compito (`reply_to` o stesso `task_id`: stato `ripreso`).
 - **Azione con effetto** (passo-passo): strumenti del browser con input, click, upload, invio, script; strumenti MCP
   non di sola lettura (ALM create/update/…, server sconosciuti); Write/Edit/MultiEdit/NotebookEdit e scritture via
   shell (redirezioni, cp/mv/rm, tee, …) fuori dagli `allowed_paths` del dispatch.
@@ -83,7 +89,7 @@ nel registro `customers/<C>/.sessions/<sid>/control.jsonl` (catena di hash), con
 | Frase | Effetto | Protezione | Quando vale |
 |-------|---------|-----------|-------------|
 | `PAUSA AGENTE <task_id>` · `PAUSA TUTTI` | ogni chiamata dell'agente (o di tutti) negata; nessun nuovo dispatch del compito (o di nessun compito) | aumenta | subito |
-| `FERMA AGENTE <task_id>` · `FERMA TUTTI` | chiamate negate, invocazione chiusa subito (`aborted-by-user`, esito ABORTED-BY-USER di K6.6), il compito non si ridispaccia | aumenta | subito |
+| `FERMA AGENTE <task_id>` · `FERMA TUTTI` | chiamate negate, invocazione chiusa subito (`aborted-by-user`, esito ABORTED-BY-USER di K6.6), il compito non si ridispaccia. `FERMA TUTTI` vale solo per i dispatch esistenti (aperti) quando l'utente scrive la frase — i loro task_id sono registrati nel record —; i dispatch successivi non sono toccati | aumenta | subito |
 | `PASSO PASSO <task_id>` · `PASSO PASSO TUTTI` | ogni azione con effetto attende il `sì` dell'utente (una azione, monouso, la stessa chiamata) | aumenta | subito |
 | `RIPRENDI AGENTE <task_id>` · `RIPRENDI TUTTI` | riprende l'agente (o tutti) | riduce | dopo la conferma nel transcript |
 | `PASSO PASSO OFF` | spegne il passo-passo per tutti | riduce | dopo la conferma nel transcript |
@@ -93,6 +99,8 @@ nel registro `customers/<C>/.sessions/<sid>/control.jsonl` (catena di hash), con
 La conferma nel transcript usa `confirmInTranscript` di `scripts/admin/approvals.mjs` (stesse regole della 3A: riga
 utente genuina, sha del prompt, orario entro 30 s dal record); la scrive come record `confirm` il primo hook che ci
 riesce (approval-capture, guard-budget, guard-control), entro un'ora dal record. Un record non confermato non vale.
+La ricerca è incrementale: il record porta `tx_offset` (dimensione del transcript alla cattura meno 64 KB) e
+`control-scan.json` (protetto) tiene per ogni transcript l'offset già letto: ogni chiamata legge solo le righe nuove.
 
 ## 6. Header del dispatch (agent-prompt, §46.1) — campi usati dalle regole
 
@@ -114,3 +122,8 @@ riesce (approval-capture, guard-budget, guard-control), entro un'ora dal record.
 - I token del manager si misurano dal transcript della sessione principale (righe non sidechain); un formato diverso
   del transcript renderebbe la quota "n/d", non sbagliata.
 - La sorveglianza del manager avvisa, non blocca (scelta della spec: R5 è un obiettivo, non un guard).
+- L'escalation di tier si lega al compito tramite `reply_to` (o lo stesso `task_id`): un nuovo dispatch con un `task_id`
+  nuovo e senza `reply_to` è per il codice un compito nuovo e sfugge alla regola "una sola escalation". La skill impone
+  `reply_to` dopo `escalate`/`needs-input`; la console mostra header e tier effettivo di ogni dispatch.
+- guard-control conta la chiamata e consuma il `sì` del passo-passo quando consente, anche se un altro guard in
+  parallelo nega la stessa chiamata (una chiamata negata altrove conta nel limite; il `sì` va ripetuto) — rinviato.
