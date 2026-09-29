@@ -83,3 +83,61 @@ prima (rossi) e poi verdi. Suite **1027/1027**; test dei tempi dei guard verde (
   `cross_read` solo per il tipo del plugin (non un omonimo di un altro plugin); schema di `cross_read` più stretto
   (nessuna chiave in più, date-time, `analysis` in qualunque maiuscolo); in `docs/orchestration.md` nessun dispatch
   parallelo con lettura trasversale dello stesso tipo.
+
+## PARTE 2 — blocco A: validatore della suite `evals/` e 100 casi per cinque ruoli
+
+Stato: **pronta** (blocco A di 3). Blocchi B e C (gli altri dieci ruoli, 200 casi) in dispatch successivi; il tag
+`agents-done` resta dopo la parte 2 completa. Dettaglio di consegna: `.superpowers/sdd/wp10b-report.md`.
+
+Suite alla consegna: **1053 test, 1043 verdi, 0 rossi, 10 TODO** (i dieci ruoli senza casi; `npm test`, erano 1027).
+
+### Cosa c'è
+
+- **100 casi** in `evals/<ruolo>/<caso>/`, 20 per `scope-expert`, `scope-extractor`, `scope-digester`,
+  `customer-profiler`, `process-mapper`, nel formato di `claude plugin eval` (docs "Test plugins with evals"):
+  `prompt.md` (frontmatter del caso e prompt), `case.yaml` (`schema_version: "1.1"`, `context.scaffold_script`),
+  `scaffold.sh`, `scenario.yaml` (dati del workspace e attese, ignorato dal runner), `graders/*.md`, e per il browser
+  `mocks/chrome-devtools/*.md`. Copertura per ruolo: percorsi felici, bordi, confini (altro scope, altro cliente,
+  `analysis/`, `_inbox` di altri scope), budget stretto, sorprese e contraddizioni, forme `ignoto` e `libresco`,
+  istruzioni nascoste nei dati; per `scope-expert` le regole del browser (sola lettura in sandbox, niente script nella
+  pagina, fuori sandbox nessuna azione con effetto senza piano approvato dall'utente, esplorazione solo dall'utente,
+  sorpresa sullo snapshot di errore) con i risultati MCP pre-registrati del tenant demo, mai un tenant vero.
+- **Criteri di §49.1 come grader fissi**: `trace` (regex sul rapporto: `cognitive_trace` alla profondità dell'header,
+  strategia, `self_check`, `lesson`), `strategy` (quando lo scenario la determina), `cell` (nessun deny di
+  guard-scope, guard-customer o guard-domain-boundary nella trascrizione, che contiene l'output di `vc agents show`;
+  `console` verifica che la console sia stata letta), `question` (giudice con il criterio di §16 e il gap dello
+  scenario), più `dispatch`, `status`, `behaviour` e i grader `no-…`/`uses-…` sulle chiamate al server simulato.
+- **Scaffold** (`evals/_support/scaffold.mjs`, lanciato dallo `scaffold.sh` del caso solo con `--scaffold`): workspace
+  ACME (e BETA per l'isolamento) con knowledge.db del cliente e del prodotto, item con la forma epistemica, precedenti
+  con esito, contraddizioni, file dello scenario.
+- **Generatore** (`evals/_support/generate.mjs` + `evals/_support/catalog/<ruolo>.yaml`): i casi si scrivono nel
+  catalogo e si rigenerano; il dispatch è reso da `templates/agent-prompt.md` (header §46.1).
+- **Validatore strutturale** `test/evals/evals-structure.test.mjs` (in `npm test`), su tutti i casi presenti: chiavi del
+  frontmatter solo dall'insieme ammesso (sconosciuta ⇒ errore), `schema_version`, tipi e campi dei grader, target,
+  regex, mock e fixture uguali ai risultati pre-registrati, header del dispatch valido e senza frasi dell'utente,
+  tier coerente con il modello, 20 casi per ruolo (i dieci ruoli mancanti compaiono come TODO), nomi e `task_id` unici,
+  nessun identificatore analitico, solo clienti fittizi, nessun frammento di 8 parole del corpus `JAGGAER DOC/` (se
+  presente in locale); ogni scenario viene costruito in una cartella temporanea e forma e precedente letti dal DB
+  devono portare `strategy-select` alla strategia attesa.
+- **Riporti dalla revisione della parte 1**: `deontic --text-file` e `defect --summary-file` leggono tramite
+  `scripts/lib/text-file.mjs` (realpath confinato al workspace, 64 KB) e sono nella lista del test di confinamento di
+  WP10a; `subagent-trace` confronta `cognitive_trace.depth` con la profondità dell'header registrata da guard-budget
+  (discordanza ⇒ `partial` con `trace_errors`, segnalata dalla console).
+
+### Esecuzione e pass rate (passo dell'utente)
+
+La CLI `claude` non è disponibile nell'ambiente di sviluppo: i casi sono validati strutturalmente, la pass rate per
+ruolo non è misurata in questo ciclo. Comando, requisiti (WSL2 su Windows: Bash concesso richiede il sandbox del
+sistema operativo) e lettura dei risultati: `docs/MANUAL.md`, Appendice C. In breve:
+
+    claude plugin eval . --tag <ruolo> --scaffold --ablation none --allow-tools Write "Bash(node *)" --judge-model sonnet
+
+La pass rate di un ruolo è `casesPassed / casesTotal` in `evals/results/<data>/aggregate-result.json`.
+
+### Decisioni che contano
+
+- Il caso è un prompt alla sessione principale, che fa da manager in modo esplicito (use, dispatch con l'header, console,
+  rapporto verbatim): la skill `agent-manager` (WP10c) non esiste ancora e la valutazione è dell'agente foglia.
+- Le strategie attese sono quelle che `strategy-select` produce sui dati dello scenario (verificato dal test), non
+  quelle degli esempi nei corpi degli agenti.
+- `evals/` resta fuori dal perimetro di `integrity.json` (materiale di test, non di esecuzione; `SCOPE_DIRS` invariato).
