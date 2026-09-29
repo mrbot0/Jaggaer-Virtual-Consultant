@@ -49,7 +49,8 @@ test("UserPromptSubmit: una riga di stato degli agenti quando ce ne sono in cors
   const out = await capture(input, E(ws));
   const ms = performance.now() - t0;
   console.log(`approval-capture (sintesi agenti): ${ms.toFixed(1)} ms`);
-  assert.ok(ms < 100, `${ms} ms`);
+  // revisione finale (in:52/in:54): nella suite parallela solo un tetto generoso; la soglia stretta, con riscaldamento e mediana, è in test/timing (npm run test:timing)
+  assert.ok(ms < 1000, `${ms} ms`);
   assert.match(out.hookSpecificOutput.additionalContext, /Agenti:/);
   // R5: il manager ha usato più del 15 % dei token della sessione
   writeFileSync(join(sdir, "manager-usage.json"), JSON.stringify({ tokens: 10000, offset: 0 }));

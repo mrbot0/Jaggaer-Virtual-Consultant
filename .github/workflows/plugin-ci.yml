@@ -18,3 +18,7 @@ jobs:
       # riabiliterebbe gli script di ogni dipendenza, non solo di questa).
       - run: npm rebuild better-sqlite3
       - run: npm test
+      # Revisione finale: le soglie di tempo (guard, observe-append, kb fields, SessionStart, audit-append) girano da
+      # sole, dopo la suite e senza concorrenza (--test-concurrency=1), con riscaldamento, baseline node -e 0 e
+      # mediana/p95 su fino a 3 tentativi: la suite principale ha solo tetti generosi.
+      - run: npm run test:timing

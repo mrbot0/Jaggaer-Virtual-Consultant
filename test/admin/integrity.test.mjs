@@ -107,7 +107,8 @@ test("SessionStart: session-context verifica (< 2 s), scrive session.integrity e
   let r = hook(p, "session-context", start, E);
   const ms = performance.now() - t0;
   assert.equal(r.status, 0, r.stderr);
-  assert.ok(ms < 2000, `session-context ${ms.toFixed(0)} ms`);
+  // revisione finale (in:52/in:54): nella suite parallela solo un tetto generoso; la soglia stretta, con riscaldamento e mediana, è in test/timing (npm run test:timing)
+  assert.ok(ms < 5000, `session-context ${ms.toFixed(0)} ms`);
   const sess = () => JSON.parse(readFileSync(join(ws, "customers/ACME/.sessions/sess-1/session.json"), "utf8"));
   assert.equal(sess().integrity.ok, true);
   assert.equal(JSON.parse(readFileSync(join(ws, ".jvc/integrity.json"), "utf8")).ok, true);

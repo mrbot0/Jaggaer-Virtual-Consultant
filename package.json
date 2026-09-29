@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "engines": { "node": ">=22" },
-  "scripts": { "test": "node --test \"test/**/*.test.mjs\"" },
+  "scripts": { "test": "node --test \"test/**/*.test.mjs\"", "test:timing": "node --test --test-concurrency=1 \"test/timing/*.timing.mjs\"" },
   "dependencies": { "ajv": "^8.17.1", "ajv-formats": "^3.0.1", "better-sqlite3": "^12.4.1", "yaml": "^2.5.1" },
   "optionalDependencies": { "playwright": "^1.47.0" }
 }

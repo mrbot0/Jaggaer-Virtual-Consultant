@@ -33,7 +33,8 @@ test("session-context: senza cliente scrive puntatore + current-session + CLAUDE
   assert.equal(readFileSync(join(ws, ".jvc/current-session"), "utf8").trim(), "abc-123");
   assert.equal(JSON.parse(readFileSync(join(ws, ".jvc/sessions/abc-123.json"), "utf8")).customer, null);
   assert.match(readFileSync(envFile, "utf8"), /^export JVC_SESSION_ID=abc-123$/m);
-  assert.ok(r.ms < 2000, `SessionStart ${r.ms.toFixed(0)} ms ≥ 2 s`);
+  // revisione finale (in:52/in:54): nella suite parallela solo un tetto generoso; la soglia stretta, con riscaldamento e mediana, è in test/timing (npm run test:timing)
+  assert.ok(r.ms < 5000, `SessionStart ${r.ms.toFixed(0)} ms ≥ 5 s`);
   console.log(`session-context (senza cliente): ${r.ms.toFixed(0)} ms`);
 });
 
@@ -206,7 +207,8 @@ test("audit-append: summarizeInput per Agent riporta subagent_type, model e task
   assert.match(s, /scope-expert/); assert.match(s, /MSG\.x\.0001/); assert.doesNotMatch(s, /TESTO LUNGHISSIMO/);
 });
 
-test("audit-append: < 100 ms in-process per evento; processo completo misurato; eccezione → avviso, exit 0 (fail-open)", () => {
+// revisione finale (in:52/in:54): nella suite parallela solo un tetto generoso; la soglia stretta, con riscaldamento e mediana, è in test/timing (npm run test:timing)
+test("audit-append: in-process misurato (< 1 s nella suite; p95 < 100 ms in test/timing); processo completo misurato; eccezione → avviso, exit 0 (fail-open)", () => {
   const ws = mkWs();
   seedSession(ws, { sid: "s9" });
   const input = { session_id: "s9", cwd: ws, tool_name: "Read", tool_input: { file_path: "x" } };
@@ -215,7 +217,7 @@ test("audit-append: < 100 ms in-process per evento; processo completo misurato; 
   for (let i = 0; i < 20; i++) { const t0 = performance.now(); auditHandle(input, { JVC_WORKSPACE: ws }); times.push(performance.now() - t0); }
   const max = Math.max(...times);
   console.log(`audit-append in-process: max ${max.toFixed(2)} ms, media ${(times.reduce((a, b) => a + b) / times.length).toFixed(2)} ms`);
-  assert.ok(max < 100, `in-process ${max} ms`);
+  assert.ok(max < 1000, `in-process ${max} ms`);
   const r = runHook("audit-append", input, { JVC_WORKSPACE: ws });
   console.log(`audit-append processo completo (avvio di node incluso): ${r.ms.toFixed(0)} ms`);
   const t = runHook("audit-append", input, { JVC_WORKSPACE: ws, JVC_TEST_THROW: "1" });

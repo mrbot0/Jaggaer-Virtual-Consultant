@@ -216,7 +216,8 @@ test("kb CLI: fields, impact, identity (--json); input non valido → exit 1", (
   assert.equal(run("impact", "S.STD.P2P.FLD.0117", "--if", "boh").status, 1);
 });
 
-test("prestazioni: kb fields --mandatory-in PENDING_APPROVAL su 1000 FLD sintetici < 1 s", () => {
+// revisione finale (in:52/in:54): nella suite parallela solo un tetto generoso; la soglia stretta, con riscaldamento e mediana, è in test/timing (npm run test:timing)
+test("prestazioni: kb fields --mandatory-in PENDING_APPROVAL su 1000 FLD sintetici (funzione < 1 s; CLI misurata, < 1 s in test/timing)", () => {
   const states = ["DRAFT", "PENDING_APPROVAL", "APPROVED", "ORDERED"];
   const kinds = ["always", "conditional", "never", "undocumented"];
   const items = Array.from({ length: 1000 }, (_, i) => {
@@ -239,5 +240,5 @@ test("prestazioni: kb fields --mandatory-in PENDING_APPROVAL su 1000 FLD sinteti
   assert.equal(cli.status, 0, cli.stderr);
   console.log(`perf kb fields --mandatory-in su 1000 FLD: funzione ${fnMs.toFixed(1)} ms · CLI (processo completo) ${cliMs.toFixed(0)} ms · query ${JSON.parse(cli.stdout).took_ms} ms`);
   assert.ok(fnMs < 1000, `${fnMs} ms`);
-  assert.ok(cliMs < 1000, `${cliMs} ms`);
+  assert.ok(cliMs < 5000, `${cliMs} ms (tetto della suite parallela)`);
 });

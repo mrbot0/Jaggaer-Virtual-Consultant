@@ -110,7 +110,8 @@ test("minore 2: un agente senza candidati è trattato come il più restrittivo (
   assert.equal(JSON.parse(readFileSync(join(sdir, "agents", "yy.json"), "utf8")).task_id, "T-7");
 });
 
-test("minore 4: con una frase che riduce la protezione non confermata, transcript grande letto in modo incrementale (< 300 ms per chiamata)", () => {
+// revisione finale (in:52/in:54): nella suite parallela solo un tetto generoso; la soglia stretta, con riscaldamento e mediana, è in test/timing (npm run test:timing)
+test("minore 4: con una frase che riduce la protezione non confermata, transcript grande letto in modo incrementale (< 1 s nella suite; 300 ms in test/timing)", () => {
   const ws = mkWs(); seedSession(ws);
   const { dir, tr } = newTranscript();
   writeFileSync(join(ws, "customers/ACME/.sessions", SID, "invocations.jsonl"), `${JSON.stringify({ ts: new Date().toISOString(), task_id: "T-1", subagent_type: "scope-expert", scope: "CAT", tier: "T1" })}\n`);
@@ -126,7 +127,7 @@ test("minore 4: con una frase che riduce la protezione non confermata, transcrip
   const ok = ctl(ws, tr, "a1");
   assert.ok(allowed(ok)); times.push(ok.ms);
   console.log(`guard-control con transcript di 40 MB: ${times.map((t) => t.toFixed(0)).join(" · ")} ms`);
-  assert.ok(times.every((t) => t < 300), times.join(","));
+  assert.ok(times.every((t) => t < 1000), times.join(","));
   // incrementale: il record parte dalla dimensione del transcript alla cattura (meno un margine), la scansione ha
   // un offset in cache per percorso (file protetto) e arriva alla fine del transcript
   const size = readFileSync(tr).length;

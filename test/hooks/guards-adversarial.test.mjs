@@ -198,7 +198,8 @@ test("session.json corrotto → deny (fail-closed), non allow", () => {
   for (const g of GUARDS) assert.ok(denied(call(g, ws, "Read", { file_path: join(ws, "customers/ACME/lessons/x.md") })), g);
 });
 
-test("tempi: ogni chiamata < 300 ms (processo completo, avvio di node incluso); distribuzione registrata", () => {
+// revisione finale (in:52/in:54): nella suite parallela solo un tetto generoso; la soglia stretta, con riscaldamento e mediana, è in test/timing (npm run test:timing)
+test("tempi: distribuzione registrata; p95 < 1 s nella suite parallela (le soglie di 300 ms sono in test/timing)", () => {
   assert.ok(timings.length > 50, `${timings.length} chiamate misurate`);
   const by = {};
   for (const { guard, ms } of timings) (by[guard] ??= []).push(ms);
@@ -206,9 +207,11 @@ test("tempi: ogni chiamata < 300 ms (processo completo, avvio di node incluso); 
     const sorted = [...arr].sort((a, b) => a - b);
     console.log(`suite ${g}: n=${arr.length} media ${(arr.reduce((a, b) => a + b) / arr.length).toFixed(0)} ms · p50 ${sorted[Math.floor(arr.length / 2)].toFixed(0)} · max ${sorted[arr.length - 1].toFixed(0)} ms`);
   }
-  // Chiamate rappresentative misurate una per una. Gli altri file di test girano
-  // in parallelo e contendono la CPU: una chiamata ≥ 300 ms viene rimisurata
-  // (fino a 3 volte) e vale il minimo, cioè il costo proprio del guard.
+  const all = timings.map((t) => t.ms).sort((a, b) => a - b);
+  const p95 = all[Math.min(all.length - 1, Math.floor(all.length * 0.95))];
+  console.log(`suite: p95 ${p95.toFixed(0)} ms su ${all.length} chiamate`);
+  assert.ok(p95 < 1000, `p95 ${p95.toFixed(0)} ms ≥ 1 s`);
+  // Chiamate rappresentative misurate una per una (tetto generoso: gli altri file di test girano in parallelo).
   const ws = setup();
   const reps = [
     ["guard-scope", "Read", { file_path: join(ws, "customers/ACME/kb/scopes/CAT/flows/C.ACME.CAT.FLW.0001.yaml") }],
@@ -220,9 +223,9 @@ test("tempi: ogni chiamata < 300 ms (processo completo, avvio di node incluso); 
   ];
   const results = reps.map(([g, tool, ti]) => {
     let best = Infinity;
-    for (let i = 0; i < 3 && best >= 300; i++) best = Math.min(best, call(g, ws, tool, ti).ms);
+    for (let i = 0; i < 3 && best >= 1000; i++) best = Math.min(best, call(g, ws, tool, ti).ms);
     return { g, tool, ms: Math.round(best) };
   });
   console.log(`rappresentative: ${results.map((r) => `${r.g}/${r.tool} ${r.ms} ms`).join(" · ")}`);
-  assert.deepEqual(results.filter((r) => r.ms >= 300), []);
+  assert.deepEqual(results.filter((r) => r.ms >= 1000), []);
 });
