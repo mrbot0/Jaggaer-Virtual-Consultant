@@ -7,6 +7,7 @@ import { loadHookState, invocationsFile } from "../lib/workspace.mjs";
 import { appendAudit } from "../lib/audit.mjs";
 import { openInvocations } from "../lib/state-summary.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
+import { updateManagerUsage } from "../lib/manager-usage.mjs";
 
 export function handle(input, env = process.env) {
   const st = loadHookState(input, env);
@@ -21,6 +22,8 @@ export function handle(input, env = process.env) {
     session: st.sid, customer: st.customer, scope: s?.scope ?? null, kind: "session", actor: "hook:stop-integrity",
     payload: { action: "stop", pending_compensations: comps, tasks_without_lesson: noLesson, tasks_without_report: open, expected_outcomes_pending: outcomes, browser: "unknown", stop_hook_active: !!input.stop_hook_active },
   });
+  // WP10d (D6): token della sessione principale dal suo transcript (R5 ≤ 15 %: il monitor sorveglia anche il manager)
+  if (s && input.transcript_path) { try { updateManagerUsage(st.ws, st.customer, st.sid, input.transcript_path, { scope: s.scope ?? null }); } catch { /* misura non riuscita: la console la mostra assente */ } }
   const notes = [];
   if (comps.length) notes.push(`compensazioni pendenti: ${comps.map(String).join(", ")}`);
   if (noLesson.length) notes.push(`compiti senza lezione: ${noLesson.join(", ")}`);

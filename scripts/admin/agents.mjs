@@ -82,7 +82,7 @@ export function readAudit(ws, customer, sid) {
   const events = [];
   for (const f of auditFiles(ws, customer)) {
     const v = verifyChain(f);
-    chain.push({ file: f.replace(/\\/g, "/").split("/").slice(-3).join("/"), ok: v.ok, lines: v.lines, ...(v.ok ? {} : { broken_at: v.broken_at, reason: v.reason }) });
+    chain.push({ file: f.replace(/\\/g, "/").split("/").slice(-4).join("/"), ok: v.ok, lines: v.lines, ...(v.ok ? {} : { broken_at: v.broken_at, reason: v.reason }) });
     for (const e of readJsonl(f)) if (e?.session === sid) events.push(e);
   }
   return { events, chain, chain_ok: chain.every((c) => c.ok) };

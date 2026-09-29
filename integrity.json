@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "generated_at": "2026-09-29T06:47:36.748Z",
+  "generated_at": "2026-09-29T06:49:32.800Z",
   "algorithm": "sha256",
   "files": {
     ".claude-plugin/plugin.json": "f16b5f1a0f4ceed7608aa650cddbf48bd95483525294d76f4b7b1d500dd7e2d7",
@@ -70,6 +70,7 @@
     "hooks/lib/integrity.mjs": "5bd892486150c9984931786c7a737fa26e26e76bddaa2042037daf447a051ee7",
     "hooks/lib/invocations.mjs": "0f1b581769a8f5731d9b749caacf30453080962b99bc6afb6ae9d2098eab5777",
     "hooks/lib/io.mjs": "f24c9cde1d74f275695eb502408ad5b75d867d46643127d660a863bce527233c",
+    "hooks/lib/manager-usage.mjs": "0a8cd21cf2bad30ad5fd6f118d9ffd8f647803a61cad65f52bff6bdbb4014876",
     "hooks/lib/mcp-allowlist.json": "5065e3b0fb88e9d8ba114987a1f0fa23d6d882e121602f755a13d5cedb83bcd7",
     "hooks/lib/observe-append.mjs": "ece5b8918ab2d9d7cb27960094ac487915ecbc8ce888d99e8b233fb7c0eeabd4",
     "hooks/lib/observed-origin.mjs": "74685da08a227e680543fd0c7c90062b2f1c1d1db6084b12e440334ce1203185",
@@ -99,7 +100,7 @@
     "hooks/scripts/observe-append.mjs": "880dd40a396d0eadeb1c5b68ab9bf7b51eb57024a1abe2806616e6e030dd523f",
     "hooks/scripts/precompact-save.mjs": "b7062344bacd6f2ae8046c21163efa46e165f32ef06c1dc1aedb9e27e6c3ad6e",
     "hooks/scripts/session-context.mjs": "ba67ad9df3f8a6f30fe0563b37a79b16d96e038969302344e3c76245def19ebb",
-    "hooks/scripts/stop-integrity.mjs": "8261c7e40ace3c40a26d06921bfeac8e06037127669df147ab0d1eed6e0a86b1",
+    "hooks/scripts/stop-integrity.mjs": "d99816ed252e7084c41021b3fe7cb30dc9fba8b0d6272466d7ee76e8283f9a57",
     "hooks/scripts/subagent-trace.mjs": "8b2696348c4cd7c126b35414c6dadb427a217d47f40f37e1a473dcf334504c16",
     "mcp/alm-server/adapter.mjs": "c61484a6063ca55fb77057feb75b8d6777e0022aa8db2387d47de0a38f742972",
     "mcp/alm-server/factory.mjs": "3ad2df44afc10e9151f30272881b35f6093fcf8dddba8509a6db6dcbb40f64df",
@@ -173,7 +174,7 @@
     "schemas/xray-config.schema.json": "3a1d34109b2cbeb6692598168a2eb684fcab31796bc4a408c3862c36fec18802",
     "scripts/admin/agent-prompt.mjs": "284e5457f1d7f4ac4dad4bfea64626660e009322ff10628cbb192cecef802bf3",
     "scripts/admin/agent-report.mjs": "025cc09905a3ed15f8d26ef073014781dabc8fa1cd5ccba128bcb38737a9c56d",
-    "scripts/admin/agents.mjs": "8007f2cbf50facf0666b1e6ea96015e7ceb108096796bc3de9249bf59a058dee",
+    "scripts/admin/agents.mjs": "d2d88e003377c1d0333f6cb49c0f3aaa960da57594f2af6f0f8c5aa84251d494",
     "scripts/admin/approvals.mjs": "bbb105fb38dac219f6b21d1cfa3c4c30299fd17ff2796853182fd4c1108ffa4c",
     "scripts/admin/build-deny-rules.mjs": "bdc76ae06271065636b63dbf6b300a14ca4fe21902740452cdcdd1c8490c50fb",
     "scripts/admin/control.mjs": "9473602e3779239c4b9da706258d90f9a54b76cd0babf10ed6356acd335435bb",
