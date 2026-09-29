@@ -43,7 +43,11 @@ argomenti, secondo la prima parola di `$ARGUMENTS`:
   rosso: **non si continua** finché non è corretto (deve essere tutto verde prima di lavorare). Il controllo `browser`
   è sempre giallo (il plugin non può sondare il browser): si verifica in sessione con `/use env <id>` ed env-check.
   `integrity` rosso = pacchetto manomesso: i guard negano tutto, si reinstalla dalla release firmata e non si opera.
-  Le credenziali compaiono solo per NOME: non chiedere né mostrare mai i valori.
+  Le credenziali compaiono solo per NOME: non chiedere né mostrare mai i valori. `deps` rosso = dipendenze non
+  installate: l'utente esegue `npm install` nella cartella del plugin (i guard le importano e senza negano ogni
+  chiamata). `plugin-root` giallo = la sostituzione di `${CLAUDE_PLUGIN_ROOT}` con il percorso letterale nei comandi non
+  è ancora provata (nessun comando del plugin in audit: si riesegue dopo un altro comando) o non avviene (segnaposto
+  rimasto nei comandi eseguiti: le operazioni a forma esatta — purge, retention, promozione — sono negate; manuale §58).
 - `watch <SES.C.AAAAMMGG.NNN>` (sola lettura, anche da un'altra sessione):
 
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/workflow.mjs" watch <codice> --json
