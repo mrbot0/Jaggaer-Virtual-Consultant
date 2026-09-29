@@ -194,7 +194,7 @@ export function run(argv, env = process.env) {
   if (opts.help) { console.log(HELP); return 0; }
   const codes = [...(opts.check ? [opts.check] : []), ...positional.filter((p) => /\.CHK\.\d{4}$/.test(p))];
   if (!opts.cluster && !codes.length) return fail(asJson, 1, "richiesto --cluster CL-CHK-nnn o --check <CHK>");
-  { const bad = confineInputs(opts, ["cfp"], { env, skip: (_n, v) => /^[SC]\..*\.CFP\.\d{4}$/.test(v) }); if (bad) return fail(asJson, 1, bad); }
+  { const bad = confineInputs(opts, ["cfp", "probe"], { env, skip: (n, v) => n === "cfp" && /^[SC]\..*\.CFP\.\d{4}$/.test(v) }); if (bad) return fail(asJson, 1, bad); }
   if (typeof opts.plan === "string" && isAbsolute(opts.plan)) { const p = inputFile(opts.plan, { env }); if (p.error) return fail(asJson, 1, `--plan: ${p.error}`); }
   const ws = resolvePath(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {

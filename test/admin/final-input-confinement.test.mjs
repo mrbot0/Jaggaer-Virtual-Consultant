@@ -62,6 +62,7 @@ const CASES = [
   ["scripts/run/baseline.mjs", ["compare", "--case", "NRT.ACME.P2P.NEG.0001", "--observed", "F.yaml"]],
   ["scripts/run/checks-run.mjs", ["--cluster", "CL-CHK-002", "--customer", "ACME", "--cfp", "F.yaml"]],
   ["scripts/run/checks-run.mjs", ["--cluster", "CL-CHK-002", "--customer", "ACME", "--plan", "F.json"]],
+  ["scripts/run/checks-run.mjs", ["--cluster", "CL-CHK-002", "--customer", "ACME", "--probe", "F.yaml"]],
   ["scripts/run/fixtures.mjs", ["resolve", "--case", "F.yaml", "--customer", "ACME"]],
   ["scripts/run/integration.mjs", ["diff", "--golden", "F.json", "--actual", "F.json"]],
   ["scripts/run/integration.mjs", ["stub", "--int", "F.yaml"]],
