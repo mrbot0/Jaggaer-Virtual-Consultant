@@ -27,7 +27,9 @@ export function scrub(sql) {
 }
 
 // → { sql, limit, injected, capped }
-export function ensureLimit(sql, { max = MAX_LIMIT, dflt = DEFAULT_LIMIT } = {}) {
+export function ensureLimit(sql, { max: maxAsked = MAX_LIMIT, dflt = DEFAULT_LIMIT } = {}) {
+  // giro 1 (m4): il massimo chiesto non supera mai MAX_LIMIT
+  const max = Math.min(Number.isFinite(Number(maxAsked)) && Number(maxAsked) > 0 ? Number(maxAsked) : MAX_LIMIT, MAX_LIMIT);
   if (typeof sql !== "string" || !sql.trim()) throw new QueryError("testo SQL vuoto");
   let text = sql.trim().replace(/;\s*$/, "");
   const bare = scrub(text);
@@ -56,7 +58,10 @@ export function queryHash(sql) {
 export function recordRun(db, { sql, rowCount = null, coherence, tablesKnowledge = "ignote", tables = [], customer = null, session = null, note = null, at = new Date() }) {
   if (!COHERENCE.includes(coherence)) throw new QueryError(`coerenza non valida: ${coherence} (${COHERENCE.join(" | ")})`);
   if (!KNOWLEDGE.includes(tablesKnowledge)) throw new QueryError(`conoscenza delle tabelle non valida: ${tablesKnowledge} (${KNOWLEDGE.join(" | ")})`);
-  const { limit } = ensureLimit(sql);
+  // giro 1 (m2): il LIMIT registrato è quello del testo ESEGUITO (il file SQL è il testo che è girato): se il limite
+  // mancava ed è solo stato calcolato, l'esecuzione è registrata senza limite (row_limit 0) e DT-015 dice no.
+  const { limit: computed, injected } = ensureLimit(sql);
+  const limit = injected ? 0 : computed;
   const hash = queryHash(sql);
   db.prepare(`insert into query_runs(query_hash, customer, executed_at, row_limit, row_count, coherence, tables, tables_knowledge, session, note)
     values (?,?,?,?,?,?,?,?,?,?)`).run(hash, customer, at.toISOString(), limit, rowCount, coherence, JSON.stringify(tables), tablesKnowledge, session, note);
@@ -69,7 +74,11 @@ export function deliverable(db, { sql, tablesKnowledge = null, patternKnown = fa
   const hash = queryHash(sql);
   const runs = db.prepare("select executed_at, row_limit, row_count, coherence, tables_knowledge from query_runs where query_hash = ? order by id").all(hash);
   const last = runs.at(-1) ?? null;
-  const knowledge = tablesKnowledge ?? last?.tables_knowledge ?? "ignote";
+  // giro 1 (m3): la conoscenza delle tabelle è quella REGISTRATA nelle esecuzioni (la peggiore); il chiamante può solo
+  // abbassarla (più prudenza), mai alzarla (ignote → validate saltarebbe la regola delle due esecuzioni coerenti).
+  const RANK = { validate: 0, empiriche: 1, ignote: 2 };
+  const recorded = runs.reduce((w, r) => (RANK[r.tables_knowledge] > RANK[w] ? r.tables_knowledge : w), runs.length ? "validate" : "ignote");
+  const knowledge = tablesKnowledge && RANK[tablesKnowledge] > RANK[recorded] ? tablesKnowledge : recorded;
   const coherentRuns = runs.filter((r) => r.coherence === "coerente" && r.row_limit > 0).length;
   if (!last) return { query_hash: hash, deliverable: false, reason: "query non eseguita: si consegna solo dopo un'esecuzione con LIMIT giudicata coerente (§20.3)", runs: 0, coherent_runs: 0, qry_eligible: false };
   const dt = evaluate(DT015, { coherence: last.coherence, tables_knowledge: knowledge, pattern_known: !!patternKnown, executed_with_limit: last.row_limit > 0 });

@@ -64,7 +64,8 @@ test("LIMIT: iniettato se manca, ridotto al massimo, mantenuto se valido; DML, p
 
 test("DT-015: non eseguita ⇒ non consegnabile; coerente con LIMIT ⇒ consegnabile; incoerente ⇒ no; tabelle ignote ⇒ avvertenza e QRY solo dopo 2 esecuzioni coerenti", () => {
   const db = openDb(join(mkdtempSync(join(tmpdir(), "qg-")), "k.db"));
-  const sql = "select status, count(*) from PO_HEADER group by status";
+  // giro 1 (m2): si registra il testo ESEGUITO, con il suo LIMIT
+  const sql = "select status, count(*) from PO_HEADER group by status limit 100";
   let d = deliverable(db, { sql });
   assert.equal(d.deliverable, false); assert.match(d.reason, /non eseguita/);
   recordRun(db, { sql, rowCount: 5, coherence: "coerente", tablesKnowledge: "ignote" });
@@ -73,11 +74,11 @@ test("DT-015: non eseguita ⇒ non consegnabile; coerente con LIMIT ⇒ consegna
   assert.equal(d.deliverable, true); assert.equal(d.warning, WARNING_UNKNOWN); assert.equal(d.qry_eligible, false, "una sola esecuzione su tabelle ignote");
   recordRun(db, { sql, rowCount: 5, coherence: "coerente", tablesKnowledge: "ignote" });
   assert.equal(deliverable(db, { sql, patternKnown: true }).qry_eligible, true);
-  const other = "select count(*) from PO_LINE";
+  const other = "select count(*) from PO_LINE limit 10";
   recordRun(db, { sql: other, rowCount: 1, coherence: "incoerente", tablesKnowledge: "validate" });
   assert.equal(deliverable(db, { sql: other }).deliverable, false);
-  recordRun(db, { sql: "select 1 from TBL_OK", rowCount: 1, coherence: "coerente", tablesKnowledge: "validate" });
-  const ok = deliverable(db, { sql: "select 1 from TBL_OK", patternKnown: true });
+  recordRun(db, { sql: "select 1 from TBL_OK limit 1", rowCount: 1, coherence: "coerente", tablesKnowledge: "validate" });
+  const ok = deliverable(db, { sql: "select 1 from TBL_OK limit 1", patternKnown: true });
   assert.equal(ok.deliverable, true); assert.equal(ok.warning, null); assert.equal(ok.qry_eligible, true);
   db.close();
 });
@@ -89,6 +90,9 @@ test("query-guard CLI: SQL da file, check exit 3 finché non eseguita, 0 dopo un
   assert.equal(cli("scripts/analytics/query-guard.mjs", ["check", "--db", db, "--sql-file", f, "--json"], { ws }).status, 3);
   const l = cli("scripts/analytics/query-guard.mjs", ["limit", "--sql-file", f, "--json"], { ws });
   assert.equal(l.status, 0); assert.equal(l.json.injected, true);
+  const unlimited = cli("scripts/analytics/query-guard.mjs", ["record", "--db", db, "--sql-file", f, "--coherence", "coerente", "--tables-knowledge", "validate", "--rows", "5", "--json"], { ws });
+  assert.equal(unlimited.json.deliverable, false, "giro 1 (m2): eseguita senza LIMIT ⇒ non consegnabile");
+  writeFileSync(f, l.json.sql);   // si esegue il testo con il LIMIT iniettato, e quello si registra
   const r = cli("scripts/analytics/query-guard.mjs", ["record", "--db", db, "--sql-file", f, "--coherence", "coerente", "--tables-knowledge", "validate", "--rows", "5", "--json"], { ws });
   assert.equal(r.status, 0, r.stdout + r.stderr);
   assert.equal(cli("scripts/analytics/query-guard.mjs", ["check", "--db", db, "--sql-file", f, "--json"], { ws }).status, 0);

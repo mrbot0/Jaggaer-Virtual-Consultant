@@ -35,8 +35,35 @@ export const TYPE_SCHEMAS = Object.freeze({ SEL: "sel.schema.json", HND: "hnd.sc
 export const MIN_GROUP = 20;
 const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/;
 const IDENTIFYING_KEY = /(^|_)(names?|full_?names?|emails?|e_?mails?|mails?|users?|user_?names?|usernames?|user_?ids?|persons?|people|suppliers?|supplier_?names?|vendors?|codes?|ids|values|top_values|sample_values|samples|examples|document_?numbers?|doc_?numbers?|phones?|telefon[oi])$/i;
-export function privacyErrors(obj) {
+// giro 1 (m10): mappe indicizzate per valore (istogrammi, quote per ruolo o motivo): nessuna chiave identificativa (email,
+// numeri di ≥ 5 cifre, mappe chiamate come persone/fornitori/documenti) e, nei DIN, nessun secchio con quota × popolazione
+// sotto 20 (la popolazione di un values_histogram è la parte compilata del campione).
+const PERSON_MAP_KEY = /(^|_)(names?|full_?names?|emails?|e_?mails?|mails?|users?|user_?names?|usernames?|user_?ids?|persons?|people|suppliers?|supplier_?names?|vendors?|document_?numbers?|doc_?numbers?|phones?)$/i;
+const IDENTIFYING_BUCKET = /@|\d{5,}/;
+const isShareMap = (v) => v && typeof v === "object" && !Array.isArray(v) && Object.keys(v).length >= 2 && Object.values(v).every((x) => typeof x === "number" && x >= 0 && x <= 1);
+function mapErrors(obj) {
   const out = [];
+  const size = obj?.type === "DIN" && Number.isFinite(Number(obj?.sample?.size)) ? Number(obj.sample.size) : null;
+  const walk = (v, path, base) => {
+    if (Array.isArray(v)) { v.forEach((x, i) => walk(x, `${path}/${i}`, x && typeof x === "object" && typeof x.fill_rate === "number" && base != null ? base * x.fill_rate : base)); return; }
+    if (!v || typeof v !== "object") return;
+    for (const [k, x] of Object.entries(v)) {
+      if (x && typeof x === "object" && !Array.isArray(x)) {
+        if (PERSON_MAP_KEY.test(k) && Object.keys(x).length) out.push(`${path}/${k}: mappa indicizzata da valori identificativi (persone, fornitori, documenti)`);
+        if (isShareMap(x)) for (const [bucket, share] of Object.entries(x)) {
+          if (IDENTIFYING_BUCKET.test(bucket)) out.push(`${path}/${k}: chiave identificativa "${bucket.slice(0, 40)}" (valori identificativi mai conservati)`);
+          if (base != null && share > 0 && share * base < MIN_GROUP) out.push(`${path}/${k}/${bucket}: gruppo di circa ${Math.round(share * base)} < ${MIN_GROUP} (nessun aggregato su gruppi piccoli)`);
+        }
+      }
+      walk(x, `${path}/${k}`, base);
+    }
+  };
+  walk(obj, "", size);
+  return out;
+}
+
+export function privacyErrors(obj) {
+  const out = mapErrors(obj);
   const walk = (v, path) => {
     if (typeof v === "string") { if (EMAIL.test(v)) out.push(`${path}: indirizzo email (valore identificativo, §20.5.5)`); return; }
     if (Array.isArray(v)) {
