@@ -37,6 +37,8 @@ const EXPECTED = [
   // F0.2: scritture sull'ALM (server del plugin, Jira, Atlassian) e registro di ciò che il plugin crea.
   ["PreToolUse", ALM_MATCHER, "guard-alm-write"],
   ["PostToolUse", ALM_MATCHER, "alm-record"],
+  // WP10d D8: controllo dell'utente sugli agenti (pausa, stop, passo-passo, limiti) su ogni strumento.
+  ["PreToolUse", ".*", "guard-control"],
 ];
 
 const entries = () => Object.entries(HOOKS.hooks).flatMap(([event, groups]) => groups.flatMap((g) => g.hooks.map((h) => ({ event, matcher: g.matcher, ...h }))));

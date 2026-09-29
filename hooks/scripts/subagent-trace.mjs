@@ -24,6 +24,7 @@ import { extractReport, validateReport } from "../../scripts/admin/agent-report.
 import { parsePromptHeader } from "../../scripts/admin/agent-prompt.mjs";
 import { updateSession } from "../../scripts/admin/session.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
+import { agentStateFile } from "../lib/control.mjs";
 
 export const MAX_BLOCKS = 2;
 // Le quindici definizioni foglia di §44.2.
@@ -105,6 +106,8 @@ export function handle(input, env = process.env) {
   const hdrTask = hdr?.task_id != null ? String(hdr.task_id) : null;
 
   const invs = readJsonl(invocationsFile(st.ws, st.customer, st.sid));
+  let bound = null;
+  try { bound = JSON.parse(readFileSync(agentStateFile(st.ws, st.customer, st.sid, agentId), "utf8")); } catch { bound = null; }
   let outcome = null;
   let v = v0;
   const session = updateSession(st.sessionFile, (s) => {
@@ -126,9 +129,17 @@ export function handle(input, env = process.env) {
         if (k >= 0) { seq = k; source = "header"; }
       }
     }
-    if (!entry && source !== "header") {
+    // WP10d: senza header, il legame registrato da guard-control alla prima chiamata dell'agente (agents/<id>.json,
+    // protetto) precede l'ordine di dispatch
+    if (!entry && source !== "header" && Number.isInteger(bound?.inv_seq) && invs[bound.inv_seq]) { seq = bound.inv_seq; source = "guard-control"; }
+    if (!entry && source !== "header" && source !== "guard-control") {
       seq = matchInvocation(invs, s.ledger.invocations, agentType);
       source = seq != null ? "dispatch-order" : "declared";
+    }
+    // WP10d (D8): FERMA AGENTE ha già chiuso l'invocazione (voce senza agent_id, closed_by user-stop): la si adotta
+    if (!entry && seq != null) {
+      const stopped = s.ledger.invocations.find((e) => e?.inv_seq === seq && e.closed_by === "user-stop" && !e.agent_id);
+      if (stopped) Object.assign(stopped, { agent_id: agentId, agent_type: agentType, task_id_source: source, tokens: stopped.tokens ?? 0, tokens_by_model: stopped.tokens_by_model ?? {}, blocks: stopped.blocks ?? 0 }), entry = stopped;
     }
     const match = seq != null ? invs[seq] ?? null : null;
     const enforce = entry ? !!entry.enforced : !!match || PLUGIN_AGENTS.has(agentType);
@@ -168,7 +179,8 @@ export function handle(input, env = process.env) {
     entry.usage_source = measured.source;
     const blocks = s.ledger.trace_blocks[agentId] ?? 0;
     const continuationOfOurs = !input.stop_hook_active || blocks >= 1;
-    if (enforce && !v.ok && blocks < MAX_BLOCKS && continuationOfOurs) {
+    // WP10d (D8): un agente fermato dall'utente non si blocca per completare la traccia
+    if (enforce && !v.ok && blocks < MAX_BLOCKS && continuationOfOurs && entry.closed_by !== "user-stop") {
       s.ledger.trace_blocks[agentId] = blocks + 1;
       entry.blocks = blocks + 1;
       outcome = { decision: "block", reason: `completa la traccia: mancano ${missingList(v)}. Il tuo ultimo messaggio deve essere solo il rapporto YAML (§46.2) con cognitive_trace e lesson. Blocco ${blocks + 1}/${MAX_BLOCKS}.`, blocks: blocks + 1, match };
@@ -177,6 +189,7 @@ export function handle(input, env = process.env) {
     const reclassified = [...(v.reclassified ?? [])];
     if (v !== v0 && declared !== expected) reclassified.push(`task_id dichiarato ${declared} ≠ task_id del dispatch ${expected}`);
     let effective = v.ok ? v.status_effective : "partial";
+    if (entry.closed_by === "user-stop") effective = "aborted-by-user";
     if (match?.budget_tokens && entry.tokens > match.budget_tokens) {
       reclassified.push(`budget del compito superato (${entry.tokens}/${match.budget_tokens})`);
       if (effective === "ok") effective = "partial";

@@ -397,9 +397,11 @@ export async function capture(input, env = process.env) {
   } else if (p.kind === "yes") {
     const acts = pending.filter((r) => r.kind === "action");
     if (!pending.length) return null;
-    if (s.env?.type === "prod") return reject(expectedFor(null), "in produzione non si approvano azioni sui dati: non si scrivono dati, mai (§52.1)");
+    // WP10d (D8): la conferma passo-passo di un'azione di un sub-agente non approva dati in produzione (guard-production
+    // e gli altri guard valutano comunque l'azione): vale in ogni ambiente
+    if (s.env?.type === "prod" && !(acts.length === 1 && acts[0].step_mode)) return reject(expectedFor(null), "in produzione non si approvano azioni sui dati: non si scrivono dati, mai (§52.1)");
     if (acts.length !== 1) return reject(expectedFor(null), acts.length ? `un sì vale solo con UNA richiesta aperta (ce ne sono ${acts.length})` : "nessuna azione in attesa di un sì");
-    rec = { kind: "action", plan: acts[0].plan, step: acts[0].step, approver_declared: null };
+    rec = { kind: "action", plan: acts[0].plan, step: acts[0].step, approver_declared: null, ...(acts[0].step_mode ? { step_mode: true, action_sha: acts[0].action_sha ?? null, task_id: acts[0].task_id ?? null } : {}) };
     removeMatch = (r) => r.kind === "action" && r.plan === rec.plan && r.step === rec.step;
   } else {
     if (!known.has(p.plan)) return reject(expectedFor(null), `nessun piano ${p.plan} in attesa di approvazione`);

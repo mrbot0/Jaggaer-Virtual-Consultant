@@ -35,6 +35,12 @@ const WRITE_DENY = [
   ["customers/*/.sessions/*/invocations.jsonl", "le invocazioni le registra solo guard-budget"],
   ["customers/*/.sessions/*/approvals.jsonl", "il registro delle approvazioni lo scrive solo l'hook approval-capture (K5, §52.2)"],
   ["customers/*/.sessions/*/compact-summary.md", "il riassunto lo scrive solo precompact-save"],
+  // WP10d: registro di controllo dell'utente e file del monitor degli agenti (li scrivono solo hook e script del plugin)
+  ["customers/*/.sessions/*/control.jsonl", "il registro di controllo degli agenti lo scrive solo approval-capture, dalle frasi dell'utente"],
+  ["customers/*/.sessions/*/agents/**", "lo stato degli agenti (legame, chiamate) lo scrive solo guard-control"],
+  ["customers/*/.sessions/*/workflow.jsonl", "il workflow lo scrive solo workflow.mjs (script del plugin)"],
+  ["customers/*/.sessions/*/observations.jsonl", "le osservazioni le registra solo l'hook observe-append"],
+  ["customers/*/.sessions/*/manager-usage.json", "l'uso di token del manager lo registra solo l'hook stop-integrity"],
   [".jvc/**", "lo stato di sessione si modifica solo con /use e con gli hook del plugin"],
   ["**/session.json", "session.json si modifica solo con /use e con gli hook del plugin"],
   // K5 giro 2: le impostazioni di progetto possono spegnere i guard (env JVC_WORKSPACE, hook, agenti, server MCP)
@@ -66,7 +72,8 @@ function handoffRefusal(ctx) {
 // Scritture via shell (fix round 2 F5): per i sub-agenti valgono tutte le aree
 // di WRITE_DENY; per la sessione principale lo stato di sessione (la CLI lo
 // scrive con node, mai con una redirezione della shell).
-const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl", "customers/*/.sessions/*/approvals.jsonl", ".claude/**", ".mcp.json"].includes(a));
+const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => [".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl", "customers/*/.sessions/*/approvals.jsonl", ".claude/**", ".mcp.json",
+  "customers/*/.sessions/*/control.jsonl", "customers/*/.sessions/*/agents/**", "customers/*/.sessions/*/workflow.jsonl", "customers/*/.sessions/*/observations.jsonl", "customers/*/.sessions/*/manager-usage.json", "customers/*/audit/**", "customers/*/.sessions/**/blackboard/**"].includes(a));
 // Bersagli-cartella (rm/mv di una cartella, cp/mv dentro una cartella — fix
 // round 3): conta tutto ciò che la cartella contiene, cioè ogni antenato di un
 // file protetto è protetto. `**/session.json` qui diventa il session.json reale

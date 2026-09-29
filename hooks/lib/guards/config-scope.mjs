@@ -280,6 +280,11 @@ const PROTECTED = [
   ["**/customers/*/config/**", ALM_CONFIG_WHY],
   ["**/runs/**/xray-*.json", ALM_FILES_WHY],
   ["**/customers/*/queue/**", ALM_FILES_WHY],
+  // WP10d: il registro di controllo dell'utente sugli agenti e lo stato degli agenti (guard-control) — sessione
+  // principale e sub-agenti, strumenti di file, comandi di shell e script che li scrivono (in coda: gli indici
+  // PROTECTED[3] e [4] sono citati nei messaggi)
+  ["customers/*/.sessions/*/control.jsonl", "il registro di controllo degli agenti lo scrive solo approval-capture, dalle frasi dell'utente (PAUSA/RIPRENDI/FERMA, PASSO PASSO, SBLOCCA SCOPE, LIMITI DISPATCH)"],
+  ["customers/*/.sessions/*/agents/**", "lo stato degli agenti (legame al compito, chiamate) lo scrive solo guard-control"],
 ];
 const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
 const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);
