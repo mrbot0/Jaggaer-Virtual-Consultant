@@ -3,18 +3,19 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 29/09/2026 19:30 — **punto corrente: review finale dell'intero lavoro; tutti i pacchetti di sviluppo sono chiusi**.
+Ultimo aggiornamento: 29/09/2026 22:45 — **sviluppo completato: tutti i 17 pacchetti chiusi, review finale conclusa**. Restano le verifiche dal vivo e le decisioni del committente (sezione in fondo).
 
 ## Avanzamento complessivo
 
-**≈ 98 % del progetto** (stima pesata sullo sforzo) · 16 pacchetti su 17 chiusi. Resta la review finale.
+**100 % dello sviluppo** (stima pesata sullo sforzo) · 17 pacchetti su 17 chiusi, review finale inclusa.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 98 %** (109 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 16 / 17 = **94 %** | WP01–WP10d con review e tag |
+| Avanzamento pesato | **100 %** (111 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 17 / 17 = **100 %** | WP01–WP10d e review finale, con review e tag |
 | Hook del catalogo §44.4 | 16 / 16 = **100 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
-| Test automatici | 1092 / 1092 verdi | `npm test` al tag `skills-done` (`8801bd7`) |
+| Test automatici | 1126 / 1126 verdi | `npm test` al tag `final-fixes` (`e8a8d40`) con il corpus reale; `npm run test:timing` 5/5 |
+| Decisioni prese | 94 | elenco completo in [`docs/DECISIONI.md`](DECISIONI.md) |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -218,39 +219,43 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 100 | ✅ | tag `agents-done` → `04dc65a`: 15 agenti e 300 casi di valutazione (20 per agente) validati strutturalmente. L'esecuzione reale con `claude plugin eval . --scaffold` spetta all'utente dopo l'installazione |
 | WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 100 | ✅ | tag `orchestration-done` → `0134d03`, 944 test, 1 giro di correzione, `docs/orchestration.md`, `docs/phase-reports/WP10d.md` |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 100 | ✅ | tag `skills-done` → `8801bd7`, 1092 test, 2 giri di correzione: skill agent-manager e 26 skill; ogni riga di comando di skill e agenti verificata contro i guard reali |
-| FINAL | Review dell'intero branch | — | 2 | 0 | 🔄 | in corso: copertura del catalogo e coerenza; sicurezza e smistamento dei punti rinviati |
-| **Totale** | | | **111** | **≈ 98** | | 109 unità completate |
+| FINAL | Review dell'intero branch | — | 2 | 100 | ✅ | tag `final-fixes` → `e8a8d40`, 1126 test: review in due parti, un'ondata di correzioni (16 commit) e due correzioni mirate, 3 re-review; ultimo punto minore dichiarato come residuo (MANUAL §55.1.2 punto 13) |
+| **Totale** | | | **111** | **100** | | 111 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
-### Hook (15 + approval-capture)
-- [x] session-context · precompact-save · stop-integrity · audit-append (WP03 ✅)
-- [x] guard-domain-boundary · guard-scope · guard-customer (WP03 ✅)
-- [x] guard-budget · subagent-trace (WP03 ✅)
-- [x] guard-environment · guard-production · guard-config-scope · approval-capture (WP06 ✅) · in più browser-origin, guard-phrase
-- [x] observe-append (WP07 ✅)
-- [x] guard-destructive · guard-alm-write (WP08 ✅)
+### Hook (15 della spec + 5 nati dalle review)
+- [x] session-context · precompact-save · stop-integrity · audit-append (WP03)
+- [x] guard-domain-boundary · guard-scope · guard-customer · guard-budget · subagent-trace (WP03)
+- [x] guard-environment · guard-production · guard-config-scope · approval-capture (WP06)
+- [x] observe-append (WP07) · guard-destructive · guard-alm-write (WP08)
+- [x] In più: browser-origin, guard-phrase (WP06), alm-record (WP08), guard-control (WP10d)
 
 ### Script (gruppi §44.5)
-- [x] `kb/`: codes, validate-codes/schema/boundary/scope, assign-seq, db + migrazioni, lock, reindex, weights, quality, epistemic, find, resolve, get, summary, cluster, cluster-rules
-- [ ] `kb/`: precedents, outcomes, fields, impact, identity, units, related, facet-count, promote, deprecate, migrate, compensation, snapshot, coverage, review, lesson, belief-update, chains
-- [x] `decide/`: dt-eval, ingestion-gain · [ ] strategy-select, self-check, depth, why, validate-plan, step-check, intent, budget
-- [x] `digest/`: outcomes-rates · [ ] collect, align, portability, calibrate, promote-candidates, report, decay, weekly, pseudonymize
-- [x] `admin/`: session, agent-report · [ ] approvals, workflow, integrity, doctor, status, lock, retention, purge
-- [ ] `ingest/` · `chrome/` · `compile/` · `run/` · `evidence/` · `xray/` · `analysis/` · `analytics/` · `config/` · `report/`
+- [x] `kb/`: codes, validate-schema/boundary/scope, assign-seq, db con migrazioni, lock, reindex, weights, quality, epistemic, find, resolve, get, summary, cluster, cluster-rules (WP01–WP02); precedents, lesson, belief-update (WP04); fields, impact, identity, chains (WP05); units, review, digest-plan, backcheck (WP09a); compensation, snapshot, coverage (WP09b); related, facet-count, graph, scopes, handoffs, contradictions, promote, deprecate, migrate, outcomes (WP09d), validate-codes come CLI (FINAL)
+- [x] `decide/`: dt-eval, ingestion-gain (WP02); strategy-select, self-check, depth, why (WP04); validate-plan (WP06); step-check, intent, budget (WP07)
+- [x] `digest/`: outcomes-rates, outcomes, calibrate (WP02–WP04); collect, pseudonymize, align, portability, promote-candidates, report, decay, weekly (WP09d)
+- [x] `admin/`: session, agent-report (WP03); approvals (WP06); workflow (WP07); integrity, doctor (WP08); status, lock, retention, purge (WP09d); agents (WP10d)
+- [x] `ingest/` (WP05, WP09a; `redact` nella FINAL) · `chrome/` (WP06–WP07) · `compile/`, `run/`, `evidence/` (WP09b) · `xray/` (WP09c) · `analysis/`, `analytics/`, `config/` (WP09d) · `report/` (WP07)
 
 ### Dati di bootstrap del livello S
-- [x] 26 tabelle di decisione (`decision-tables/`) · 195 cluster (`clusters/`) · pesi della qualità, decadimento, pesi della fonte
-- [ ] 12 strategie (`strategies/`) · 15 classi di azione (`product/kb/actions/`) · check iniziali §62 · banche di domande §63–64
+- [x] 26 tabelle di decisione · 195 cluster · pesi della qualità, decadimento e pesi della fonte (WP01–WP02)
+- [x] 12 strategie (WP04) · 15 classi di azione (WP06) · 21 check iniziali §62 (WP09b) · banche di domande §63–64 per tutti i 21 tipi (WP09a)
 
 ### Schemi
-- [x] registry, facets, item.base (+ classification), dt, cluster, session, agent-prompt, agent-report, cognitive-trace, message, audit-event
-- [ ] strategy, hypotheses, execution-plan, why, lesson, fld, parsed-doc, environments, act, approval, remediation-scope, rpt, nrt-case, sel, hnd, chk, cfp, flw, key, lcy, int, cfg, unit, doc, prf, pmp, tbl, qry, din, usr, psp, err, pat, pbk, brf, rul, xray-config
+- [x] registry, facets, item.base, dt, cluster, session, agent-prompt, agent-report, cognitive-trace, message, audit-event (WP01–WP03)
+- [x] strategy, hypotheses, execution-plan, why, lesson (WP04) · fld, parsed-doc (WP05) · environments, act, approval, remediation-scope (WP06) · rpt (WP07) · unit, doc, prf, pmp (WP09a) · nrt-case, sel, hnd, chk, cfp, flw, key, lcy, int, cfg (WP09b) · xray-config (WP09c) · tbl, qry, din, usr, psp, err, pat, pbk, brf, rul (WP09d)
+- [x] Schemi minimi per CAP, INV, GLS, OBS, CTR, EVD, DEC, EPI e applicazione di PRF/PMP/STR/ENV: uno schema per ogni tipo del registro (FINAL)
 
 ### Agenti, skill, comandi, MCP
-- [x] 15 agenti e 300 casi di valutazione (WP10b ✅) · [x] 27 skill (WP10c ✅) · [x] 8 comandi (WP10a ✅) · [x] server MCP ALM + `.mcp.json` (WP09c ✅)
+- [x] 15 agenti e 300 casi di valutazione (WP10b) · 27 skill (WP10c) · 8 comandi (WP10a) · server MCP ALM e `.mcp.json` (WP09c) · layer di orchestrazione (WP10d)
 
 ## Punti aperti da decidere con il committente
-- **Documentazione JAGGAER di partenza caricata** (28/09/2026) in `JAGGAER DOC/`: 385 file tra corsi (guide, workbook, XML di workflow e configurazione, form) e kit di sviluppo dei web service. È esclusa da git perché materiale proprietario. WP09a la userà come corpus reale: la pipeline di ingestion la elaborerà per intero e scriverà la conoscenza di livello S in un workspace separato, `jvc-knowledge`, non nel repo del plugin. Fino ad allora il livello S contiene solo il bootstrap (DT, cluster, strategie, azioni, check).
+- **Documentazione JAGGAER di partenza** (`JAGGAER DOC/`, 385 file, esclusa da git perché proprietaria): elaborata per intero da WP09a nel workspace separato `jvc-knowledge` (livello S). **Da decidere:** per ogni documento, se è del fornitore (livello S) o materiale di un cliente (livello C); poi reingerire (MANUAL §60 punto 22).
 - 18 tabelle di decisione hanno pesi `bootstrap` progettati: vanno calibrate sui DEC reali (≥ 10 per tabella).
 - La latenza dei guard (~110–150 ms per processo, di cui ~74 ms di avvio di Node) supera l'obiettivo di 100 ms della spec: limite accettato.
+- **Nomi dei file di origine non redatti** (ultimo punto minore della review finale, dichiarato come residuo): rinominare i file con nomi neutri prima di `kb ingest`, oppure chiedere la correzione di una riga descritta in MANUAL §55.1.2 punto 13.
+- **Host Jira on-premise**: se un cliente usa Jira Server/DC, il suo host va in `NETWORK.md` con una release.
+- **Protezione a livello di sistema operativo**: rendere di sola lettura la cartella del plugin e `~/.claude`, oppure usare impostazioni gestite. Le difese dei guard sono testuali (MANUAL §55.1.1).
+- **Verifiche dal vivo** (MANUAL §60, 23 punti): `claude plugin validate`, installazione, versioni fissate dei server MCP, primo accesso al tenant e prima CFP R2, formato Xray Server/DC, criteri misurati sul pilota.
+- **Esecuzione degli eval**: `claude plugin eval . --scaffold --runs 1 --tag <ruolo>` per ciascuno dei 15 ruoli (su Windows, in WSL2), con la soglia di rilascio scelta dal committente.
