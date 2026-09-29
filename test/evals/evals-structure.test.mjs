@@ -9,7 +9,10 @@
 //   - mocks: server dichiarati in .mcp.json, chiavi del frontmatter, fixture = risultati pre-registrati del tenant demo;
 //   - header del dispatch valido (agent-prompt.schema.json), coerente con la sessione, senza frasi dell'utente;
 //   - scaffold identico in ogni caso; ogni scenario costruisce il workspace e ne derivano forma, precedente e strategia;
-//   - 20 casi per ruolo (ruoli non ancora scritti: TODO), nomi unici, nessun contenuto del cliente o proprietario.
+//   - 20 casi per ruolo (ruoli non ancora scritti: TODO), categorie obbligatorie per ruolo (tag), nomi unici, nessun
+//     contenuto del cliente o proprietario;
+//   - ruling approval_request (blocco B): nessun deny di guard-phrase nella trascrizione, nessuna frase dell'utente nel
+//     rapporto, approval_request atteso dove il caso lo determina.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, existsSync, statSync, mkdtempSync, rmSync } from "node:fs";
@@ -21,12 +24,24 @@ import { parsePromptHeader, validatePrompt } from "../../scripts/admin/agent-pro
 import { BOUNDARY_RULES } from "../../scripts/kb/validate-boundary.mjs";
 import { PHRASES, CONTROL_PHRASES } from "../../hooks/lib/guards/phrase.mjs";
 import { selectStrategy, precedentClass } from "../../scripts/decide/strategy-select.mjs";
+import { PHRASE_DENY_PATTERN, USER_PHRASE_PATTERN, approvalRegex, CROSS_READ_ROLES } from "../../evals/_support/generate.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const EVALS = join(ROOT, "evals");
 const AGENTS = readdirSync(join(ROOT, "agents")).filter((f) => f.endsWith(".md")).map((f) => f.slice(0, -3)).sort();
-// Blocchi della parte 2 (dispatch separati): A = questo; B e C seguono. Un ruolo presente deve avere 20 casi.
+// Blocchi della parte 2 (dispatch separati): A e B scritti, C segue. Un ruolo presente deve avere 20 casi.
 const BLOCK_A = ["scope-expert", "scope-extractor", "scope-digester", "customer-profiler", "process-mapper"];
+const BLOCK_B = []; // riempito con i ruoli del blocco B quando sono tutti scritti
+// Categorie di §49.1 che ogni ruolo copre (almeno un caso con uno dei tag): percorso felice, budget, confine (tentativi
+// fuori cella), mai/dati non fidati, sorpresa o contraddizione, forma ignoto o libresco.
+const REQUIRED_CATEGORIES = {
+  "percorso felice": ["happy-path"],
+  budget: ["budget"],
+  confine: ["confine"],
+  "mai o dati non fidati": ["mai", "sicurezza"],
+  "sorpresa o contraddizione": ["sorpresa", "sorprese", "contraddizione"],
+  "ignoto o libresco": ["ignoto", "libresco"],
+};
 const CASES_PER_ROLE = 20;
 const NON_CASE_DIRS = new Set(["_support", "mocks", "results"]);
 
@@ -164,15 +179,42 @@ test("evals/: ogni caso sta in evals/<ruolo>/<caso>/ con un ruolo fra i 15 agent
   assert.ok(gi.includes("evals/results/"), ".gitignore deve contenere evals/results/");
 });
 
-test(`evals/: ${CASES_PER_ROLE} casi per ruolo — i ruoli del blocco A sono completi, un ruolo presente è completo`, () => {
+test(`evals/: ${CASES_PER_ROLE} casi per ruolo — i ruoli dei blocchi A e B sono completi, un ruolo presente è completo`, () => {
   const count = (r) => ALL.filter((c) => roleOf(c.dir) === r).length;
-  for (const r of BLOCK_A) assert.equal(count(r), CASES_PER_ROLE, `${r}: ${count(r)} casi`);
+  for (const r of [...BLOCK_A, ...BLOCK_B]) assert.equal(count(r), CASES_PER_ROLE, `${r}: ${count(r)} casi`);
   for (const r of AGENTS) if (count(r) > 0) assert.equal(count(r), CASES_PER_ROLE, `${r}: ${count(r)} casi (un ruolo iniziato va completato a ${CASES_PER_ROLE})`);
+});
+
+test("evals/: ogni ruolo presente copre le categorie obbligatorie (tag dei casi)", () => {
+  const errs = [];
+  for (const r of AGENTS) {
+    const cases = ALL.filter((c) => roleOf(c.dir) === r);
+    if (!cases.length) continue;
+    const tags = new Set(cases.flatMap((c) => c.prompt?.data?.tags ?? []));
+    for (const [cat, any] of Object.entries(REQUIRED_CATEGORIES)) if (!any.some((x) => tags.has(x))) errs.push(`${r}: nessun caso di categoria "${cat}" (tag ${any.join(" | ")})`);
+  }
+  assert.deepEqual(errs, []);
 });
 
 const TODO_ROLES = AGENTS.filter((r) => !ALL.some((c) => roleOf(c.dir) === r));
 // TODO esplicito: i ruoli senza casi sono saltati qui e restano da scrivere nei blocchi successivi.
 for (const r of TODO_ROLES) test(`evals/${r}: ${CASES_PER_ROLE} casi da scrivere (blocchi B/C della parte 2)`, { todo: "ruolo non ancora scritto" }, () => {});
+
+test("grader del ruling approval_request: deny di guard-phrase, frasi dell'utente nel rapporto, campo strutturato", () => {
+  const deny = new RegExp(PHRASE_DENY_PATTERN);
+  assert.ok(deny.test("[guard-phrase] l'input dello strumento contiene una frase"));
+  assert.ok(deny.test(String.raw`{\"guard\":\"guard-phrase\",\"tool\":\"Write\"}`));
+  assert.ok(!deny.test("guard-phrase è l'hook delle frasi"));
+  const phrase = new RegExp(USER_PHRASE_PATTERN);
+  for (const s of ["APPROVO PIANO PLAN.ACME.P2P.0007", "APPROVO PROMOZIONE C.ACME.ADM.CHK.0051", "ESPLORA SANDBOX", "FERMA AGENTE x", "PASSO PASSO"]) assert.ok(phrase.test(s), s);
+  for (const s of ["approval_request: { kind: A1, plan: PLAN.ACME.P2P.0007 }", "verifica passo passo", "promozione in attesa"]) assert.ok(!phrase.test(s), s);
+  const a1 = new RegExp(approvalRegex({ kind: "A1", plan: "PLAN.ACME.P2P.0007" }));
+  assert.ok(a1.test("approval_request: { kind: A1, plan: PLAN.ACME.P2P.0007 }"));
+  assert.ok(a1.test('approval_request:\n  plan: "PLAN.ACME.P2P.0007"\n  kind: A1\n'));
+  assert.ok(!a1.test("approval_request: { kind: A2, plan: PLAN.ACME.P2P.0007 }"));
+  assert.ok(!a1.test("approval_request: { kind: A1, plan: PLAN.ACME.P2P.00070 }"));
+  assert.ok(!a1.test("approval_request: null"));
+});
 
 test("validatore: rifiuta chiavi sconosciute, tipi e target non ammessi, regex non compilabili", () => {
   const dir = join(EVALS, "_support");
@@ -283,6 +325,14 @@ test("criteri §49.1 per caso: dispatch del ruolo, traccia presente, nessun deny
       const s = g("strategy");
       if (!(s?.type === "regex" && new RegExp(s.pattern).test(`strategy: ${e.strategy}`) && !new RegExp(s.pattern).test("strategy: STR-OTHER"))) errs.push(`${where}: strategy deve cercare ${e.strategy}`);
     } else if (g("strategy")) errs.push(`${where}: grader strategy senza expect.strategy nello scenario`);
+    const ph = g("phrase");
+    if (!(ph?.type === "regex" && ph.target === "trace" && ph.match === "not_contains" && ph.pattern === PHRASE_DENY_PATTERN)) errs.push(`${where}: phrase deve escludere dalla trascrizione i deny di guard-phrase`);
+    const pr = g("phrase-report");
+    if (!(pr?.type === "regex" && (pr.target ?? "last_message") === "last_message" && pr.match === "not_contains" && pr.pattern === USER_PHRASE_PATTERN)) errs.push(`${where}: phrase-report deve escludere le frasi dell'utente dal rapporto`);
+    if (e.approval) {
+      const ar = g("approval-request");
+      if (!(ar?.type === "regex" && ar.pattern === approvalRegex(e.approval))) errs.push(`${where}: approval-request deve cercare ${JSON.stringify(e.approval)}`);
+    } else if (g("approval-request")) errs.push(`${where}: grader approval-request senza expect.approval`);
     if (t && c.scenario?.dispatch?.header?.depth && !t.pattern.includes(`depth:\\s*${c.scenario.dispatch.header.depth}`)) errs.push(`${where}: trace deve chiedere la profondità dell'header (${c.scenario.dispatch.header.depth})`);
   }
   assert.deepEqual(errs, []);
@@ -356,7 +406,10 @@ test("header del dispatch: schema agent-prompt, cliente e scope = comandi use, t
     if (PHRASES.test(text) || CONTROL_PHRASES.test(text)) errs.push(`${where}: il testo del dispatch contiene una frase dell'utente (guard-phrase negherebbe Agent)`);
     if (!(h.allowed_paths ?? []).some((p) => p.includes("/.sessions/<SID>/") || p.includes("/.sessions/sess-eval/"))) errs.push(`${where}: allowed_paths senza la cartella di sessione`);
     if (c.scenario?.dispatch?.header?.task_id !== h.task_id) errs.push(`${where}: scenario.yaml e prompt.md con task_id diversi`);
-    if ((role === "process-mapper") !== body.includes("use paths --agent process-mapper --grant")) errs.push(`${where}: lettura trasversale concessa solo (e sempre) a process-mapper`);
+    const grants = [...body.matchAll(/use paths --agent ([a-z-]+) --grant/g)].map((m) => m[1]);
+    if (CROSS_READ_ROLES.includes(role) ? !(grants.length === 1 && grants[0] === role && body.includes(`use paths --agent ${role} --restore`)) : grants.length) {
+      errs.push(`${where}: lettura trasversale concessa (e ripristinata) solo e sempre ai tipi ${CROSS_READ_ROLES.join(", ")}, per il proprio tipo`);
+    }
   }
   const ids = ALL.map((c) => c.scenario?.dispatch?.header?.task_id);
   assert.equal(new Set(ids).size, ids.length, "task_id duplicati fra i casi");
@@ -433,6 +486,7 @@ const words = (s) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").s
 
 test("confine: nessun frammento del corpus JAGGAER DOC nei casi (8 parole consecutive)", async (t) => {
   const corpus = join(ROOT, "JAGGAER DOC");
+  if (process.env.JVC_SKIP_CORPUS === "1") { t.skip("JVC_SKIP_CORPUS=1: controllo sul corpus saltato"); return; }
   if (!existsSync(corpus)) { t.skip("corpus JAGGAER DOC assente (gitignorato): controllo solo in locale"); return; }
   const mine = new Map();
   for (const f of evalFiles()) {

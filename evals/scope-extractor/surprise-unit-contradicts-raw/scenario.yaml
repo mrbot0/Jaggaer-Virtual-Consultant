@@ -1,0 +1,91 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-extractor
+case: surprise-unit-contradicts-raw
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0206
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 20000
+      minutes: 10
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/sources/units/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Completa il grezzo R.DOC0008.003 del documento C.ACME.CAT.DOC.0008 (formati ammessi per il listino).
+    inputs:
+      doc: C.ACME.CAT.DOC.0008
+      raw_file: customers/ACME/_inbox/CAT/raw/DOC0008.yaml
+      lesson_code: L.ACME.CAT.LSN.0206
+    expected_output:
+      type: raw-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  files:
+    customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0007.yaml: |
+      code: C.ACME.CAT.DOC.0007
+      doc_id: DOC0007
+      title: Manuale d'uso del catalogo fornitori ACME (sintetico, versione 3)
+      genre: d'uso
+      origin: cliente
+      scopes: [CAT]
+      reliability: { score: 0.7 }
+    customers/ACME/_inbox/CAT/parsed/DOC0007.units.yaml: |
+      doc: C.ACME.CAT.DOC.0007
+      units:
+        - { id: U.DOC0007.0041, section: "4.2 Import del listino", text: "Il file del listino deve contenere il codice articolo del fornitore per ogni riga." }
+        - { id: U.DOC0007.0042, section: "4.2 Import del listino", text: "Il buyer può caricare un listino in formato CSV o XLSX." }
+        - { id: U.DOC0007.0043, section: "4.3 Validazione", text: "Non è escluso che il sistema non accetti righe senza prezzo, salvo diversa impostazione." }
+        - { id: U.DOC0007.0044, section: "4.4 Pubblicazione", text: "Il catalogo pubblicato è visibile ai richiedenti entro pochi minuti." }
+        - { id: U.DOC0007.0045, section: "5.1 Eventi di gara", text: "Per creare un evento di gara il buyer indica categoria e scadenza." }
+    customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0008.yaml: |
+      code: C.ACME.CAT.DOC.0008
+      doc_id: DOC0008
+      title: Nota tecnica sul listino (sintetica)
+      genre: tecnica
+      origin: cliente
+      scopes: [CAT]
+    customers/ACME/_inbox/CAT/parsed/DOC0008.units.yaml: |
+      doc: C.ACME.CAT.DOC.0008
+      units:
+        - { id: U.DOC0008.0012, section: "2.1 Formati", text: "Il listino si carica esclusivamente in formato CSV; il formato XLSX non è più accettato." }
+    customers/ACME/_inbox/CAT/raw/DOC0007.yaml: |
+      doc: C.ACME.CAT.DOC.0007
+      scope: CAT
+      items:
+        - { raw_id: R.DOC0007.002, type_hypothesis: FLW, source_unit: U.DOC0007.0042, verbatim: "Il buyer può caricare un listino in formato CSV o XLSX.", genre: "d'uso", needs_llm: false }
+    customers/ACME/_inbox/CAT/raw/DOC0008.yaml: |
+      doc: C.ACME.CAT.DOC.0008
+      scope: CAT
+      items:
+        - { raw_id: R.DOC0008.003, candidates: [FLW, KEY], type_hint: FLW, section: "2.1 Formati", source_unit: U.DOC0008.0012, needs_llm: true, missing: [subject, verbatim] }
+expect:
+  outcome: grezzo completato con il testo verbatim di U.DOC0008.0012 e la divergenza dal grezzo R.DOC0007.002 dichiarata (sorpresa), senza scegliere quale fonte vale.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  question: forbidden
+  gap: la divergenza fra le due fonti la risolve il digester (contraddizione), non l'utente né l'extractor
+  behaviour: |
+    PASS se il rapporto completa R.DOC0008.003 citando U.DOC0008.0012 verbatim e segnala che contraddice
+    R.DOC0007.002 (CSV o XLSX contro solo CSV) come sorpresa o nota per il digester, lasciando intatto il grezzo
+    precedente.
+    FAIL se il rapporto modifica o scarta R.DOC0007.002, decide quale fonte è corretta, o tace la divergenza.

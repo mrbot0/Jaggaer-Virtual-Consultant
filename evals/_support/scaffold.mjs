@@ -16,6 +16,7 @@ import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import { openDb } from "../../scripts/kb/db.mjs";
 import { itemFile, CODE_RE } from "../../scripts/lib/kb-items.mjs";
+import { upsertClusters, DEFAULT_CLUSTERS_DIR } from "../../scripts/kb/reindex.mjs";
 
 export const PLUGIN_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const FICTIONAL_CUSTOMERS = ["ACME", "BETA"];
@@ -81,7 +82,27 @@ function insertPrecedent(db, p, facetsBySubject, shapeBySubject) {
     .run(p.code, p.shape ?? shapeBySubject.get(p.subject) ?? null, JSON.stringify(facetsBySubject.get(p.subject) ?? DEFAULT_FACETS));
 }
 
-// scenario.workspace: { items[], precedents[], contradictions[], files{} } (tutti facoltativi).
+// Serie di item generati (blocco B, cluster-validator: scissione > 40 membri): { prefix: "C.ACME.CAT.CFG", start, count,
+// title, summary, facets, facets_cycle: { Fn: [v1, v2] }, shape?, cluster? } → item con SEQ consecutivi e, con cluster,
+// membri del cluster.
+function expandGenerated(W) {
+  const items = [];
+  const members = [];
+  for (const g of W.generated ?? []) {
+    for (let i = 0; i < g.count; i++) {
+      const code = `${g.prefix}.${String(g.start + i).padStart(4, "0")}`;
+      const cyc = Object.fromEntries(Object.entries(g.facets_cycle ?? {}).map(([k, vs]) => [k, vs[i % vs.length]]));
+      items.push({ code, title: `${g.title} ${i + 1}`, summary: g.summary, facets: { ...(g.facets ?? {}), ...cyc }, ...(g.shape ? { shape: g.shape } : {}), ...(g.body ? { body: g.body } : {}) });
+      if (g.cluster) members.push({ cluster: g.cluster, item: code });
+    }
+  }
+  return { items, members };
+}
+
+// scenario.workspace: { items[], generated[], precedents[], contradictions[], clusters, cluster_members[], files{} }
+// (tutti facoltativi). clusters: true carica nel DB di ACME il catalogo dei cluster del plugin (come reindex --clusters);
+// cluster_members: [{ cluster, item }] ne registra i membri. Il percorso dell'item nel DB è relativo alla radice del
+// proprietario (customers/<C>/ o product/), come lo scrive reindex.
 export function buildWorkspace(ws, scenario) {
   const W = scenario?.workspace ?? {};
   mkdirSync(join(ws, "product", "kb", "scopes"), { recursive: true });
@@ -90,9 +111,11 @@ export function buildWorkspace(ws, scenario) {
   const product = openDb(join(ws, "product", "knowledge.db"));
   const dbs = Object.fromEntries(FICTIONAL_CUSTOMERS.map((c) => [c, openDb(join(ws, "customers", c, "knowledge.db"))]));
   const facetsBySubject = new Map();
-  const shapeBySubject = new Map((W.items ?? []).filter((x) => x.shape).map((x) => [x.code, x.shape]));
+  const gen = expandGenerated(W);
+  const allItems = [...(W.items ?? []), ...gen.items];
+  const shapeBySubject = new Map(allItems.filter((x) => x.shape).map((x) => [x.code, x.shape]));
   try {
-    for (const it of W.items ?? []) {
+    for (const it of allItems) {
       const m = CODE_RE.exec(it.code);
       if (!m) throw new Error(`codice di item non valido nello scenario: ${it.code}`);
       const [, level, cust] = m;
@@ -103,11 +126,16 @@ export function buildWorkspace(ws, scenario) {
       writeRel(ws, rel, { id: it.code, type: m[4], title: it.title, summary: it.summary, facets: { ...DEFAULT_FACETS, ...(it.facets ?? {}) }, ...(it.body ?? {}) });
       // Gli item S stanno nel DB del prodotto e (come dopo reindex) in quello di ogni cliente; gli item C/L nel DB del loro cliente.
       const targets = level === "S" ? [product, ...Object.values(dbs)] : [dbs[owner]];
-      for (const db of targets) facetsBySubject.set(it.code, insertItem(db, it, rel));
+      const dbPath = level === "S" ? rel.replace(/^product\//, "") : rel.replace(`customers/${owner}/`, "");
+      for (const db of targets) facetsBySubject.set(it.code, insertItem(db, it, dbPath));
     }
     for (const p of W.precedents ?? []) insertPrecedent(dbs[CODE_RE.exec(p.code)?.[2] ?? "ACME"] ?? dbs.ACME, p, facetsBySubject, shapeBySubject);
+    if (W.clusters) upsertClusters(dbs.ACME, DEFAULT_CLUSTERS_DIR);
+    for (const x of [...(W.cluster_members ?? []), ...gen.members]) {
+      dbs.ACME.prepare("insert or replace into cluster_members (cluster_code, item_code, admitted_at, decision_code) values (?, ?, ?, null)").run(x.cluster, x.item, "2026-09-20T10:00:00Z");
+    }
     for (const x of W.contradictions ?? []) {
-      dbs.ACME.prepare("insert or replace into contradictions (code, a_code, b_code, facet, resolution, status) values (?, ?, ?, ?, null, ?)")
+      (dbs[x.customer ?? "ACME"] ?? dbs.ACME).prepare("insert or replace into contradictions (code, a_code, b_code, facet, resolution, status) values (?, ?, ?, ?, null, ?)")
         .run(x.code, x.a, x.b, x.facet ?? null, x.status ?? "aperta");
     }
   } finally {

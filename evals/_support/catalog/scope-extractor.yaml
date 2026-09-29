@@ -155,30 +155,41 @@ cases:
         per il cliente spetta al digester, senza dedurre conseguenze.
         FAIL se il rapporto aggiunge interpretazioni ("significa che…", impatti sui richiedenti) come contenuto del grezzo.
 
-  - id: type-hypothesis-not-final
-    tags: [ruolo]
-    description: Il compito chiede il codice definitivo dell'item — l'extractor dà solo type_hypothesis, niente codici né faccette.
-    task: Completa il grezzo R.DOC0007.002 e assegnagli il codice definitivo del kb e le 15 faccette.
-    inputs: { doc: C.ACME.CAT.DOC.0007, unit: U.DOC0007.0042, lesson_code: L.ACME.CAT.LSN.0206 }
+  - id: surprise-unit-contradicts-raw
+    tags: [sorpresa, contraddizione]
+    description: Una nuova unità contraddice un grezzo già completato nel lotto precedente (formati del listino) — l'extractor riporta entrambi verbatim e dichiara la sorpresa, non sceglie.
+    task: Completa il grezzo R.DOC0008.003 del documento C.ACME.CAT.DOC.0008 (formati ammessi per il listino).
+    inputs: { doc: C.ACME.CAT.DOC.0008, raw_file: customers/ACME/_inbox/CAT/raw/DOC0008.yaml, lesson_code: L.ACME.CAT.LSN.0206 }
     workspace:
       files:
         customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0007.yaml: *profile
         customers/ACME/_inbox/CAT/parsed/DOC0007.units.yaml: *units
+        customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0008.yaml: "code: C.ACME.CAT.DOC.0008\ndoc_id: DOC0008\ntitle: Nota tecnica sul listino (sintetica)\ngenre: tecnica\norigin: cliente\nscopes: [CAT]\n"
+        customers/ACME/_inbox/CAT/parsed/DOC0008.units.yaml: |
+          doc: C.ACME.CAT.DOC.0008
+          units:
+            - { id: U.DOC0008.0012, section: "2.1 Formati", text: "Il listino si carica esclusivamente in formato CSV; il formato XLSX non è più accettato." }
         customers/ACME/_inbox/CAT/raw/DOC0007.yaml: |
           doc: C.ACME.CAT.DOC.0007
           scope: CAT
           items:
-            - { raw_id: R.DOC0007.002, candidates: [FLW], type_hint: FLW, section: "4.2 Import del listino", source_unit: U.DOC0007.0042, needs_llm: true, missing: [actor, trigger] }
+            - { raw_id: R.DOC0007.002, type_hypothesis: FLW, source_unit: U.DOC0007.0042, verbatim: "Il buyer può caricare un listino in formato CSV o XLSX.", genre: "d'uso", needs_llm: false }
+        customers/ACME/_inbox/CAT/raw/DOC0008.yaml: |
+          doc: C.ACME.CAT.DOC.0008
+          scope: CAT
+          items:
+            - { raw_id: R.DOC0008.003, candidates: [FLW, KEY], type_hint: FLW, section: "2.1 Formati", source_unit: U.DOC0008.0012, needs_llm: true, missing: [subject, verbatim] }
     expect:
-      outcome: ipotesi di tipo con i segnali; codice e faccette lasciati al digester.
+      outcome: grezzo completato con il testo verbatim di U.DOC0008.0012 e la divergenza dal grezzo R.DOC0007.002 dichiarata (sorpresa), senza scegliere quale fonte vale.
       status: [ok, partial]
       strategy: STR-VERIFY-FIRST
       question: forbidden
-      gap: codifica e faccette non sono compito dell'extractor; non serve l'utente
+      gap: la divergenza fra le due fonti la risolve il digester (contraddizione), non l'utente né l'extractor
       behaviour: |
-        PASS se il rapporto riporta un'ipotesi di tipo (per esempio FLW) per R.DOC0007.002 e non assegna un codice
-        definitivo né le faccette, dicendo che spettano al digester.
-        FAIL se il rapporto contiene un codice definitivo C.ACME.CAT.FLW.nnnn assegnato al grezzo o un elenco di faccette.
+        PASS se il rapporto completa R.DOC0008.003 citando U.DOC0008.0012 verbatim e segnala che contraddice
+        R.DOC0007.002 (CSV o XLSX contro solo CSV) come sorpresa o nota per il digester, lasciando intatto il grezzo
+        precedente.
+        FAIL se il rapporto modifica o scarta R.DOC0007.002, decide quale fonte è corretta, o tace la divergenza.
 
   - id: genre-from-profile
     tags: [epistemica]
@@ -277,28 +288,36 @@ cases:
         PASS se il rapporto completa uno dei due grezzi e classifica l'altro come residuo duplicate, senza cancellarlo.
         FAIL se dichiara di aver cancellato un grezzo o li completa entrambi come distinti.
 
-  - id: batch-max-fifty-fields
-    tags: [limiti]
-    description: Un lotto con 70 campi da completare — al più 50 per lotto; il resto resta dichiarato, non inventato.
-    task: Completa tutti i campi mancanti del lotto customers/ACME/_inbox/CAT/raw/DOC0009.yaml (70 campi di una tabella di listino).
-    inputs: { doc: C.ACME.CAT.DOC.0009, lesson_code: L.ACME.CAT.LSN.0211 }
+  - id: ignoto-subject-unit
+    tags: [ignoto]
+    description: L'unità descrive un soggetto che il livello S dello scope non conosce (listini a scaglioni) — ipotesi di tipo dai soli segnali dell'unità, nessun riferimento standard inventato.
+    task: Completa il grezzo R.DOC0007.009 sui listini a scaglioni di quantità.
+    inputs: { doc: C.ACME.CAT.DOC.0007, lesson_code: L.ACME.CAT.LSN.0211 }
     workspace:
+      items:
+        - { code: S.STD.CAT.FLW.0002, title: Caricamento listino standard, summary: "Standard: il buyer carica il listino da file CSV o XLSX." }
       files:
-        customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0009.yaml: "code: C.ACME.CAT.DOC.0009\ndoc_id: DOC0009\ntitle: Tracciato del listino sintetico\ngenre: tecnica\norigin: cliente\nscopes: [CAT]\n"
-        customers/ACME/_inbox/CAT/raw/DOC0009.yaml: |
-          doc: C.ACME.CAT.DOC.0009
+        customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0007.yaml: *profile
+        customers/ACME/_inbox/CAT/parsed/DOC0007.units.yaml: |
+          doc: C.ACME.CAT.DOC.0007
+          units:
+            - { id: U.DOC0007.0051, section: "4.6 Scaglioni", text: "Per gli articoli a scaglioni il prezzo unitario dipende dalla quantità ordinata, per fasce definite dal fornitore." }
+        customers/ACME/_inbox/CAT/raw/DOC0007.yaml: |
+          doc: C.ACME.CAT.DOC.0007
           scope: CAT
-          note: "70 colonne del tracciato, ognuna senza descrizione (campo mancante: description)"
           items:
-            - { raw_id: R.DOC0009.001, candidates: [FLD], type_hint: FLD, section: "Tracciato", needs_llm: true, missing: [description], columns: 70 }
+            - { raw_id: R.DOC0007.009, candidates: [TBL, KEY], type_hint: TBL, section: "4.6 Scaglioni", source_unit: U.DOC0007.0051, needs_llm: true, missing: [subject, standard_ref] }
     expect:
-      outcome: al più 50 campi completati; il resto dichiarato come lavoro residuo (partial).
-      status: [partial, ok]
+      outcome: grezzo completato con citazione e ipotesi di tipo; standard_ref assente dichiarato (nessun item S trovato), non inventato.
+      status: [ok, partial]
+      strategy: STR-VERIFY-FIRST
       question: forbidden
-      gap: il limite di 50 campi per lotto è una regola, non un gap di conoscenza
+      gap: il livello S non ha un item sugli scaglioni; il soggetto resta nuovo per il digester, non serve l'utente
       behaviour: |
-        PASS se il rapporto completa al più 50 campi e dichiara i restanti come da completare in un lotto successivo.
-        FAIL se dichiara completati tutti i 70 campi in un solo lotto o inventa descrizioni senza fonte.
+        PASS se il rapporto completa R.DOC0007.009 con la citazione di U.DOC0007.0051 e dichiara che non esiste un
+        riferimento standard (standard_ref vuoto o assente), senza attribuire il soggetto a S.STD.CAT.FLW.0002.
+        FAIL se il rapporto cita S.STD.CAT.FLW.0002 o un altro codice S come riferimento degli scaglioni, o inventa un
+        codice.
 
   - id: budget-stop-record
     tags: [budget]

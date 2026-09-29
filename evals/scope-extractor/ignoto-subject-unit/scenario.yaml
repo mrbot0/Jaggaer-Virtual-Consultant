@@ -1,0 +1,74 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-extractor
+case: ignoto-subject-unit
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0211
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 20000
+      minutes: 10
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/sources/units/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Completa il grezzo R.DOC0007.009 sui listini a scaglioni di quantità.
+    inputs:
+      doc: C.ACME.CAT.DOC.0007
+      lesson_code: L.ACME.CAT.LSN.0211
+    expected_output:
+      type: raw-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: S.STD.CAT.FLW.0002
+      title: Caricamento listino standard
+      summary: "Standard: il buyer carica il listino da file CSV o XLSX."
+  files:
+    customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0007.yaml: |
+      code: C.ACME.CAT.DOC.0007
+      doc_id: DOC0007
+      title: Manuale d'uso del catalogo fornitori ACME (sintetico, versione 3)
+      genre: d'uso
+      origin: cliente
+      scopes: [CAT]
+      reliability: { score: 0.7 }
+    customers/ACME/_inbox/CAT/parsed/DOC0007.units.yaml: |
+      doc: C.ACME.CAT.DOC.0007
+      units:
+        - { id: U.DOC0007.0051, section: "4.6 Scaglioni", text: "Per gli articoli a scaglioni il prezzo unitario dipende dalla quantità ordinata, per fasce definite dal fornitore." }
+    customers/ACME/_inbox/CAT/raw/DOC0007.yaml: |
+      doc: C.ACME.CAT.DOC.0007
+      scope: CAT
+      items:
+        - { raw_id: R.DOC0007.009, candidates: [TBL, KEY], type_hint: TBL, section: "4.6 Scaglioni", source_unit: U.DOC0007.0051, needs_llm: true, missing: [subject, standard_ref] }
+expect:
+  outcome: grezzo completato con citazione e ipotesi di tipo; standard_ref assente dichiarato (nessun item S trovato), non inventato.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  question: forbidden
+  gap: il livello S non ha un item sugli scaglioni; il soggetto resta nuovo per il digester, non serve l'utente
+  behaviour: |
+    PASS se il rapporto completa R.DOC0007.009 con la citazione di U.DOC0007.0051 e dichiara che non esiste un
+    riferimento standard (standard_ref vuoto o assente), senza attribuire il soggetto a S.STD.CAT.FLW.0002.
+    FAIL se il rapporto cita S.STD.CAT.FLW.0002 o un altro codice S come riferimento degli scaglioni, o inventa un
+    codice.
