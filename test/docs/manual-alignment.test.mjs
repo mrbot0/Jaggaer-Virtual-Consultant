@@ -57,3 +57,26 @@ test("§58: le righe di risoluzione dei problemi della spec più quelle dei ripo
     "traccia cognitiva mancante", "Compensazioni pendenti", "Integrità del pacchetto fallita", "Knowledge version incompatibile", "Jira irraggiungibile", "DB bloccato",
     "Troppe domande", "Troppe sorprese", "npm install", "${CLAUDE_PLUGIN_ROOT}", "plugin-root", "Chrome DevTools MCP"]) assert.ok(sec.includes(s), s);
 });
+
+// WP10a giro 1 (minore 1): non solo le azioni — anche le opzioni. Quelle di §56.x devono stare nell'argument-hint del
+// comando, e le opzioni dell'argument-hint sono le stesse della prima colonna della tabella §56 del manuale.
+const SPEC_OPTIONS = {
+  vc: ["--network"],
+  use: ["--new"],
+  kb: ["--scope", "--genre", "--kind", "--fields", "--only", "--type", "--status", "--cluster", "--facet", "--top", "--doc", "--mandatory-in", "--chain", "--custom", "--reason",
+    "--missing", "--plan", "--if", "--validate", "--all"],
+  nrt: ["--scope", "--suite", "--dry-run", "--apply", "--list", "--desk", "--redact-check", "--retry-queued"],
+  cfg: ["--dry-run", "--resume", "--scope"],
+  ops: [],
+  learn: ["--session", "--week", "--confirm", "--propose", "--scope"],
+  admin: ["--apply"],
+};
+test("opzioni: quelle di §56.x sono nell'argument-hint; argument-hint e tabella del manuale hanno le stesse opzioni", async () => {
+  const { optionsOf, manualFirstColumn } = await import("../helpers/commands.mjs");
+  const c = commandFiles();
+  for (const fam of FAMILIES) {
+    const hint = optionsOf(frontmatter(c[fam])["argument-hint"]);
+    for (const o of SPEC_OPTIONS[fam]) assert.ok(hint.has(o), `${fam}: manca ${o} nell'argument-hint (§56)`);
+    assert.deepEqual([...optionsOf(manualFirstColumn(manual, fam))].sort(), [...hint].sort(), `${fam}: opzioni del manuale ≠ argument-hint`);
+  }
+});

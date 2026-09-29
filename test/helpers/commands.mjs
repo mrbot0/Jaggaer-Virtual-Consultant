@@ -51,6 +51,19 @@ export function hintActions(hint) {
   return new Set(parts.map((p) => p.trim().split(/\s+/)[0]).filter(Boolean));
 }
 
+// WP10a giro 1 (minore 1): opzioni (--nome) di un testo; del manuale, quelle della prima colonna della tabella §56.
+export const optionsOf = (text) => new Set([...String(text).matchAll(/--[a-z][a-z-]*/g)].map((m) => m[0]));
+export function manualFirstColumn(manual, family) {
+  const text = lf(manual);
+  const h = new RegExp(`^### 56\\.\\d+ \`${family}\``, "m").exec(text);
+  if (!h) return null;
+  const rest = text.slice(h.index);
+  const next = rest.slice(4).search(/^#{2,3} /m);
+  const section = next >= 0 ? rest.slice(0, next + 4) : rest;
+  return section.split("\n").filter((l) => /^\|/.test(l)).slice(2).map((r) => r.split(/(?<!\\)\|/)[1] ?? "")
+    .map((c) => [...c.matchAll(/`([^`]+)`/g)].map((m) => m[1]).join(" · ")).join(" · ");
+}
+
 // Azioni della tabella del manuale per una famiglia: la prima tabella dopo il titolo "### 56.n `<famiglia>`"; nella prima
 // colonna ogni tratto fra backtick, separato da " · ", dà un'azione (prima parola); "*(nessuna)*" non è un'azione.
 export function manualActions(manual, family) {

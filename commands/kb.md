@@ -1,6 +1,6 @@
 ---
 description: Conoscenza JAGGAER — ingestione e digestione dei documenti (sub-agenti di contesto), revisione umana, ricerca, campi, impatto, registri, indice e migrazioni (kb)
-argument-hint: ingest <path> [--scope <S>] [--genre <genere>] | digest [--scope <S>] [--fields <documento>] | review [--scope <S>] [--only <strato>] | find [--scope <S>] [--type <T>] [--status <s>] [--facet <K=V>] [--top <n>] | fields [--doc <documento>] [--mandatory-in <stato>] [--chain <CL>] [--custom] [--reason <r>] | identity <FLD> | resolve "<domanda>" | precedents <soggetto> [--top <n>] | epistemic --scope <S> [--plan] | impact <codice> [--if "<modifica>"] | graph [--scope <S>] | scopes | handoffs [--validate] | clusters | contradictions [--open] | coverage [--scope <S>] | reindex [--all] | migrate
+argument-hint: ingest <path> [--scope <S>] [--genre <genere>] [--kind <tipo>] | digest [--scope <S>] [--fields <documento>] | review [--scope <S>] [--only <strato>] | find [--scope <S>] [--type <T>] [--status <s>] [--cluster <CL>] [--facet <K=V>] [--top <n>] | fields [--doc <documento>] [--mandatory-in <stato>] [--chain <CL>] [--custom] [--reason <r>] | identity <FLD> | identity --doc <documento> --missing <blocco> | resolve "<domanda>" | precedents <soggetto> [--top <n>] | epistemic <soggetto> | epistemic --scope <S> [--plan] | impact <codice> [--if "<modifica>"] | graph [--scope <S>] | scopes | handoffs [--validate] | clusters | contradictions [--open] | coverage [--scope <S>] | reindex [--all] | migrate
 allowed-tools: Bash(node *), Read
 ---
 
@@ -20,6 +20,8 @@ di contesto; `review` è la coda umana (script diretto: decide l'utente, non un 
 - `resolve "<domanda>"`: scrivi la domanda dell'utente in `customers/<C>/.sessions/<sessione>/domanda.txt` e passa
   `resolve --text-file customers/<C>/.sessions/<sessione>/domanda.txt` al posto del testo (punteggiatura e accenti in linea
   rendono il comando non semplice: i guard lo negano). Gli altri argomenti sono codici e opzioni: passali come sono.
+- `epistemic <soggetto>`: profilo epistemico di un soggetto (K per genere di fonte, forma, CTR aperte, attributi mancanti,
+  prossimo passo: osservazione R0, domanda o CTR da risolvere).
 - `epistemic --scope <S> [--plan]`: copertura epistemica per scope (forma, K medi, identità dei dati); con `--plan` le
   osservazioni R0 per i soggetti libreschi e le domande per gli ignoti (§34.2). Proponi le osservazioni all'utente.
 - `impact <codice> [--if "mandatory.kind = never" | --if removed]`: cosa si rompe a valle. `graph` e
@@ -44,13 +46,14 @@ Per `reject` (e per un valore con spazi o simboli in `correct`) scrivi prima il 
 e `value: …`) nella cartella della sessione `customers/<C>/.sessions/<sessione>/`: mai testo strutturato in linea.
 Non accettare né rifiutare nulla di tua iniziativa. `stats` dà il tasso di accettazione al primo passaggio per tipo.
 
-## `ingest <path> [--scope <S>] [--genre tecnica|d'uso|empirica|testimoniale]` — ingestione (§19, §34.2)
+## `ingest <path> [--scope <S>] [--genre tecnica|d'uso|empirica|testimoniale] [--kind <tipo>]` — ingestione (§19, §34.2)
 
 1. T0, script diretto (harvest, profilo DOC, unità, pre-estrazione, piano per l'estrattore, report di ingestion):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/ingest.mjs" --input <path> --root . --customer <C> --scope <S> --genre <genere> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/ingest.mjs" --input <path> --root . --customer <C> --scope <S> --genre <genere> --kind <tipo> --json
 
-   Ometti `--scope`/`--genre` se l'utente non li ha dati. Exit 3 = uscita dentro il repository del plugin: rifiutata.
+   Ometti `--scope`/`--genre`/`--kind` se l'utente non li ha dati (`--kind` forza il tipo di documento di §19.7:
+   manuale-utente, guida-admin, spec-integrazione, doc-progetto, release-notes, …; altrimenti lo riconosce lo script). Exit 3 = uscita dentro il repository del plugin: rifiutata.
 2. Senza `--scope` (cartella di progetto del cliente): `Agent(customer-profiler, opus)` produce il profilo
    (`documentation_inventory`, `epistemic_summary`) e le domande di apertura; formulale all'utente (skill asking-the-user).
 3. Con `--scope`: `Agent(scope-extractor, haiku)` — "cosa dice la fonte" sul piano in `_inbox/<S>/` (≤ 80k token per

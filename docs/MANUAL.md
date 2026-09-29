@@ -142,15 +142,15 @@ negano). I comandi passano i dati strutturati e il testo dell'utente da un file 
 
 | Azione | Cosa fa | Chi |
 |--------|---------|-----|
-| `ingest <path> [--scope --genre tecnica\|d'uso\|empirica\|testimoniale]` | Profila e segmenta i documenti; estrae i grezzi in `_inbox`; report di ingestion | script `ingest/ingest.mjs`, poi `customer-profiler` (cartella di progetto) o `scope-extractor` → `scope-digester` → `cluster-validator` |
+| `ingest <path> [--scope --genre tecnica\|d'uso\|empirica\|testimoniale --kind …]` | Profila e segmenta i documenti; estrae i grezzi in `_inbox`; report di ingestion | script `ingest/ingest.mjs`, poi `customer-profiler` (cartella di progetto) o `scope-extractor` → `scope-digester` → `cluster-validator` |
 | `digest [--scope] [--fields <documento>]` | Digestione guidata dagli attributi attesi; campi a lotti ≤ 50 | `scope-digester` (e `cluster-validator`); `--fields`: piano dei lotti con `kb/digest-fields.mjs` |
 | `review [--scope] [--only quarantena\|ambigui\|R3]` | Revisione umana stratificata: accetta, correggi, rifiuta | script `kb/review.mjs` (decide l'utente) |
-| `find --scope --type --status --facet --top` | Recupero per faccette, ordinato per W, con Q | script `kb/kb.mjs` |
+| `find --scope --type --status --cluster --facet --top` | Recupero per faccette, ordinato per W, con Q | script `kb/kb.mjs` |
 | `fields --doc <documento> [--mandatory-in <stato>] [--chain <CL>] [--custom] [--reason ui]` | Il modello dei campi | script |
 | `identity <FLD> · identity --doc <documento> --missing <blocco>` | Carta d'identità del dato | script |
 | `resolve "<domanda>"` | Codici pertinenti, senza LLM (la domanda passa da file) | script |
 | `precedents <soggetto> [--top]` | Decisioni passate con esito e distanza | script |
-| `epistemic --scope <id> [--plan]` | Copertura epistemica dello scope; piano di osservazioni R0 e domande | script `kb/coverage-report.mjs` |
+| `epistemic <soggetto> · epistemic --scope <id> [--plan]` | Copertura epistemica di un soggetto (K, forma, gap, prossimo passo) o dello scope; piano di osservazioni R0 e domande | script `kb/coverage-report.mjs` |
 | `impact <codice> [--if "<modifica>"]` | Raggio d'azione sul grafo | script |
 | `graph [--scope]` | Coerenza, handoff mancanti | script |
 | `scopes · handoffs [--validate] · clusters · contradictions [--open]` | Registri | script |
