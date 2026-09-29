@@ -370,6 +370,7 @@ function scriptContentRefusal(ctx, cmd) {
     if (ALM_TEXT.test(flatText)) return `lo script ${m[1]} scrive file e cita la configurazione del cliente, la coda o i file Xray del run — ${ALM_FILES_WHY}`;
     if (RESULTS.test(flatText) || RESULTS_SEG.test(flatText)) return `lo script ${m[1]} scrive file e cita gli esiti dei run — ${PROTECTED[4][1]}`;
     if (CONFIG_TEXT.test(text)) return `lo script ${m[1]} scrive file e cita le impostazioni di Claude Code — ${SETTINGS_WHY}`;
+    if (KB_TEXT.test(flatText) && CODE_WRITE.test(text)) return `lo script ${m[1]} scrive file e cita la conoscenza — ${KB_WHY}`;
     if (mentionsPlugin(ctx, text)) return `lo script ${m[1]} scrive file e cita il plugin — ${PLUGIN_WHY}`;
   }
   return null;
@@ -414,6 +415,11 @@ const CODE_WRITE = /appendfile|writefile|createwritestream|opensync|add-content|
 // WP09c (riporto WP09b): /results/ nudo — il percorso costruito da una variabile di cartella (d + "/results/P.yaml");
 // vale solo insieme a un interprete e a una primitiva di scrittura
 const RESULTS_SEG = /\/results\//;
+// Correzione mirata finale (§29.6, T9): la conoscenza (product/**, customers/*/kb/**) la scrivono solo gli script del
+// plugin dopo validazione. Un interprete non del plugin che la CITA insieme a una primitiva di scrittura nel codice è
+// negato (le letture, es. readFileSync, restano: CODE_WRITE non le riconosce).
+const KB_TEXT = /(^|[\s'"`=(\/,:])(product\/|customers\/[^\/\s'"`]+\/kb\/)/;
+const KB_WHY = "la conoscenza (product/, customers/<C>/kb/) la scrivono solo gli script del plugin dopo la validazione (§29.6); la promozione a S vuole APPROVO PROMOZIONE";
 const INTERP = /(^|[\s;&|(`'"\\/])(node|nodejs|deno|bun|python3?|py|perl|ruby|pwsh|powershell|php)(\.exe)?(?=$|[\s;&|)`'"])/i;
 function strings(v, out = []) {
   if (typeof v === "string") out.push(v);
@@ -486,6 +492,7 @@ const protectWrites = guarded(G, (ctx) => {
   if (INTERP.test(cmd) && ALM_TEXT.test(flat)) return no(`uno script non del plugin con argomenti o codice che citano la configurazione del cliente, la coda o i file Xray del run — ${ALM_FILES_WHY}`);
   if (INTERP.test(cmd) && RESULTS_SEG.test(flat) &&(CODE_WRITE.test(cmd) || WRITE_PRIM.test(cmd))) return no(`${PROTECTED[4][1]}: codice d'interprete che scrive e cita /results/`);
   if (INTERP.test(cmd) && STATE.test(cmd)) return no("uno script non del plugin con argomenti o codice che citano il registro delle approvazioni o lo stato di sessione: solo gli script del plugin toccano lo stato");
+  if (INTERP.test(cmd) && KB_TEXT.test(flat) && CODE_WRITE.test(cmd)) return no(`codice d'interprete che scrive e cita la conoscenza — ${KB_WHY}`);
   if (tr.name && (flat.includes(tr.name) || tr.dirs.some((d) => flat.includes(d)))) return no("il comando cita il transcript della sessione");
   for (const { tok, cwds, tree, soft } of shellWriteTargets(ctx, cmd)) {
     for (const cwd of cwds) {

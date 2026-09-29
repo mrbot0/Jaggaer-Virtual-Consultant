@@ -79,3 +79,26 @@ test("guard in eccezione fuori da un workspace JVC: deny (come prima), nessun fi
   assert.equal(exists(join(dir, ".jvc")), false);
   assert.equal(exists(join(dir, "customers")), false);
 });
+
+// ---------- Correzione mirata finale: interpreti in linea e --out verso product/ e kb/ ----------
+test("interprete in linea che SCRIVE in product/ o customers/*/kb/ ⇒ deny (sessione principale e sub-agente); le letture restano", () => {
+  const ws = mkWs(); seedSession(ws);
+  for (const extra of [{}, { agent_id: "a1", agent_type: "scope-expert" }]) {
+    for (const c of [
+      "node -e \"require('fs').writeFileSync('product/kb/scopes/CAT/x.yaml','x')\"",
+      "python -c \"open('customers/ACME/kb/scopes/CAT/x.yaml','w').write('x')\"",
+      "node -e \"require('fs').appendFileSync('customers/ACME/kb/scopes/CAT/flows/C.ACME.CAT.FLW.0001.yaml','x')\"",
+      "pwsh -c \"Set-Content -Path product/kb/x.yaml -Value x\"",
+    ]) assert.ok(denied(pre("guard-config-scope", ws, "Bash", { command: c }, extra)), `${extra.agent_id ?? "main"}: ${c}`);
+  }
+  for (const c of ["node -e \"console.log(require('fs').readFileSync('product/kb/scopes/CAT/x.yaml','utf8'))\"",
+    "node -e \"require('fs').writeFileSync('customers/ACME/reports/r.txt','x')\""]) assert.ok(silent(pre("guard-config-scope", ws, "Bash", { command: c })), c);
+});
+
+test("script del plugin con --out verso product/ o customers/*/kb/ ⇒ deny; --out nella sessione o nei run resta consentito", () => {
+  const ws = mkWs(); seedSession(ws);
+  const parse = join(ROOT, "scripts/ingest/parse-docx.mjs").split("\\").join("/");
+  for (const c of [`node "${parse}" --in doc.docx --out product/kb/scopes/CAT/x.json`, `node "${parse}" --in doc.docx --out=customers/ACME/kb/scopes/CAT/x.json`])
+    assert.ok(denied(pre("guard-scope", ws, "Bash", { command: c })), c);
+  assert.ok(silent(pre("guard-scope", ws, "Bash", { command: `node "${parse}" --in doc.docx --out customers/ACME/.sessions/sess-1/work/x.json` })));
+});

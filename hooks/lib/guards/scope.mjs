@@ -129,10 +129,27 @@ function checkShellWrites(ctx, cmd) {
   return null;
 }
 
+// Correzione mirata finale: le opzioni di uscita (--out, --out-dir, --output) di qualunque comando, script del plugin
+// compresi (i parser scrivono il documento normalizzato dove dice --out), non puntano nella conoscenza: product/** e
+// customers/*/kb/** si scrivono solo con gli script che validano (ingest, promote, reindex) nelle loro cartelle.
+const OUT_OPT = /(?:^|\s)--(?:out|out-dir|output)(?:=|\s+)("[^"]*"|'[^']*'|[^\s;&|]+)/g;
+const KB_AREAS = ["product/**", "customers/*/kb/**"];
+function outRefusal(ctx, cmd) {
+  for (const m of cmd.matchAll(OUT_OPT)) {
+    const tok = m[1].replace(/^["']|["']$/g, "");
+    let T;
+    try { T = resolveTarget(tok, { cwd: ctx.cwd, ws: ctx.ws }); } catch (err) { if (err instanceof PathPolicyError) continue; throw err; }
+    for (const p of allRels(T)) for (const a of KB_AREAS) if (intersects(p, a)) return denyAudited(ctx, G, `uscita di uno script (${m[0].trim().split(/[=\s]/)[0]}) nella conoscenza — la scrivono solo gli script del plugin dopo validazione, nelle loro cartelle (§29.6): ${p}`);
+  }
+  return null;
+}
+
 function checkShell(ctx) {
   const cmd = ctx.ti.command;
   if (typeof cmd !== "string" || !cmd.trim()) return null;
   if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
+  const o = outRefusal(ctx, cmd);
+  if (o) return o;
   const w = checkShellWrites(ctx, cmd);
   if (w || !ctx.agentId) return w;
   const allowed = Array.isArray(ctx.session?.allowed_paths) ? ctx.session.allowed_paths : [];
