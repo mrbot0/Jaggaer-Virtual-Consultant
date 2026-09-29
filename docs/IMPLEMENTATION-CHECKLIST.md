@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 29/09/2026 17:00 — **punto corrente: WP10c (skill agent-manager e 26 skill) avviato; WP10b (15 agenti e 300 casi di valutazione) chiuso**.
+Ultimo aggiornamento: 29/09/2026 19:30 — **punto corrente: review finale dell'intero lavoro; tutti i pacchetti di sviluppo sono chiusi**.
 
 ## Avanzamento complessivo
 
-**≈ 94 % del progetto** (stima pesata sullo sforzo) · 15 pacchetti su 17 chiusi. Restano le skill (WP10c) e la review finale.
+**≈ 98 % del progetto** (stima pesata sullo sforzo) · 16 pacchetti su 17 chiusi. Resta la review finale.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 94 %** (104 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 15 / 17 = **88 %** | WP01–WP10b e WP10d con review e tag |
+| Avanzamento pesato | **≈ 98 %** (109 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 16 / 17 = **94 %** | WP01–WP10d con review e tag |
 | Hook del catalogo §44.4 | 16 / 16 = **100 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
-| Test automatici | 1050 / 1050 verdi | `npm test` al tag `agents-done` (`04dc65a`) |
+| Test automatici | 1092 / 1092 verdi | `npm test` al tag `skills-done` (`8801bd7`) |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -36,6 +36,17 @@ Ultimo aggiornamento: 29/09/2026 17:00 — **punto corrente: WP10c (skill agent-
 - Corretto dopo la review: nessuna formula di raccomandazione produce più un obbligo, e anche la validazione a valle lo impedisce. Il budget per documento non si può alzare, e il consumo resta legato alla sessione reale.
 - Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
 - Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
+
+### Chiusura di WP10c (skill)
+- Consegnati la skill `agent-manager`, che fa della sessione principale l'orchestratore, e le 26 skill di metodo. Implementazione più 2 giri di correzione (`f33bf9a..8801bd7`), tag `skills-done` → `8801bd7`.
+- Cosa fa il manager:
+  - consulta la console degli agenti prima di instradare, dopo ogni ritorno e prima di risponderti;
+  - ti mostra la frase esatta quando un agente chiede un'approvazione;
+  - attiva i piani: in sandbox da solo, fuori dalla sandbox dopo il tuo `APPROVO PIANO`;
+  - concede e revoca la lettura trasversale;
+  - scrive i file per gli agenti che non possono farlo;
+  - non fa mai lavoro di dominio.
+- Corretto dopo la review: le tabelle di decisione accettano sinonimi ASCII per i valori con `<`, `>` e apostrofo (per esempio `lt-5k`, `confermato-d-lt-0.2`, `d-uso`), perché i guard negano quei caratteri. Un test fa passare dai guard reali ogni riga di comando di skill e agenti, con i valori reali.
 
 ### Chiusura di WP10b (15 agenti e valutazioni)
 - **I 15 agenti.** Hanno modelli e strumenti come da spec, e nessuno può lanciare altri agenti, fare domande dirette all'utente o scaricare pagine web. Ognuno descrive la propria cella, il ciclo di ragionamento, cosa non fa mai e il rapporto da restituire, e un test verifica quel rapporto. `process-mapper` e `weekly-digest` ricevono una lettura trasversale temporanea e di sola lettura, che il manager concede e revoca.
@@ -206,9 +217,9 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP10a | Comandi `vc use kb nrt cfg ops learn admin`, template restanti, README, manuale integrato | §44.1, §55–58 | 4 | 100 | ✅ | tag `commands-done` → `a5bab9b`, 993 test, 1 giro di correzione; 8 comandi, template, `README.md`, `docs/MANUAL.md` |
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 100 | ✅ | tag `agents-done` → `04dc65a`: 15 agenti e 300 casi di valutazione (20 per agente) validati strutturalmente. L'esecuzione reale con `claude plugin eval . --scaffold` spetta all'utente dopo l'installazione |
 | WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 100 | ✅ | tag `orchestration-done` → `0134d03`, 944 test, 1 giro di correzione, `docs/orchestration.md`, `docs/phase-reports/WP10d.md` |
-| WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | 🔄 | `wp10c-skills.md` |
-| FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **111** | **≈ 94** | | 104 unità completate |
+| WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 100 | ✅ | tag `skills-done` → `8801bd7`, 1092 test, 2 giri di correzione: skill agent-manager e 26 skill; ogni riga di comando di skill e agenti verificata contro i guard reali |
+| FINAL | Review dell'intero branch | — | 2 | 0 | 🔄 | in corso: copertura del catalogo e coerenza; sicurezza e smistamento dei punti rinviati |
+| **Totale** | | | **111** | **≈ 98** | | 109 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
@@ -237,7 +248,7 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 - [ ] strategy, hypotheses, execution-plan, why, lesson, fld, parsed-doc, environments, act, approval, remediation-scope, rpt, nrt-case, sel, hnd, chk, cfp, flw, key, lcy, int, cfg, unit, doc, prf, pmp, tbl, qry, din, usr, psp, err, pat, pbk, brf, rul, xray-config
 
 ### Agenti, skill, comandi, MCP
-- [x] 15 agenti e 300 casi di valutazione (WP10b ✅) · [ ] 27 skill · [x] 8 comandi (WP10a ✅) · [x] server MCP ALM + `.mcp.json` (WP09c ✅)
+- [x] 15 agenti e 300 casi di valutazione (WP10b ✅) · [x] 27 skill (WP10c ✅) · [x] 8 comandi (WP10a ✅) · [x] server MCP ALM + `.mcp.json` (WP09c ✅)
 
 ## Punti aperti da decidere con il committente
 - **Documentazione JAGGAER di partenza caricata** (28/09/2026) in `JAGGAER DOC/`: 385 file tra corsi (guide, workbook, XML di workflow e configurazione, form) e kit di sviluppo dei web service. È esclusa da git perché materiale proprietario. WP09a la userà come corpus reale: la pipeline di ingestion la elaborerà per intero e scriverà la conoscenza di livello S in un workspace separato, `jvc-knowledge`, non nel repo del plugin. Fino ad allora il livello S contiene solo il bootstrap (DT, cluster, strategie, azioni, check).
