@@ -116,3 +116,15 @@ dei guard verde (guard-config-scope p95 89 ms, observe-append p95 145 ms). Test 
 | 4 minori | messaggio di rollback-proven "non a vuoto"; `url_pattern` ancorato (* un segmento, ** più segmenti); percorsi di soli ID mai uguali | test (4) |
 
 Residuo accettato dal controllore: `.jvc/checkpoint.key` leggibile.
+
+## Giro di correzione 3
+
+Esito della ri-revisione: rilievi 1, 2, 4 risolti; il 3 parziale (esiti dei run protetti meno di `session.json`). Suite
+alla chiusura: **809 test, 809 pass, 0 fail, 0 skipped** (`npm test` con il corpus); test di tempo dei guard verde
+(guard-config-scope p95 102 ms, observe-append p95 153 ms). Test nuovi: `test/kb/wp09b-fixround3.test.mjs` (3).
+
+| Rilievo | Correzione | Prova |
+|---------|------------|-------|
+| Esiti dei run protetti meno di session.json | come per lo stato di sessione: un comando d'interprete non del plugin che cita `runs/**/results/**` o `result.yaml` è negato (senza richiedere una primitiva di scrittura); `scriptContentRefusal` nega uno script eseguito che scrive file e li cita | `python w.py` (open in scrittura) e one-liner `pathlib…write_text` negati su result.yaml, results/** e session.json, per sessione e sub-agente; uno script innocuo resta ammesso |
+| OBS spinte fuori da righe forgiate | kb snapshot interroga il DB per i codici dell'anello (non più le ultime 500 righe per codice) | 520 righe forgiate con codici alti: l'OBS vera resta valida |
+| url_pattern e segmenti ID | stessa normalizzazione di URL e pattern, segmenti ID ⇒ `:id` (`ID_SEG` esportato da snapshot-parse); senza segmenti letterali nessun legame | `/setup/import-profiles/*` ≙ `…/import-profiles/7`; `/123` ≠ `/456`; `/*/*` non lega |
