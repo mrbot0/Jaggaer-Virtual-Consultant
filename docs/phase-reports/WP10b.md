@@ -209,3 +209,96 @@ dell'utente (`docs/MANUAL.md`, Appendice C). Per `weekly-digest` esportare `JVC_
 - I report delle settimane precedenti per `weekly-digest` si leggono con `learn competence-report` (script): `product/digest`
   non è nei percorsi letti con gli strumenti.
 - `evals/` resta fuori da `integrity.json`; `integrity.mjs build` rifatto (agents/, schemas/ e templates/ cambiati).
+
+## PARTE 2 — blocco C: 100 casi per i cinque trasversali di esecuzione e di dati; suite completa
+
+Stato: **pronta** (blocco C di 3: la suite `evals/` è completa, 15 ruoli × 20 = **300 casi**). Il tag `agents-done`
+lo mette il controller dopo la revisione. Dettaglio di consegna: `.superpowers/sdd/wp10b-report.md`.
+
+Suite alla consegna: vedi il report SDD (`npm test`, 0 TODO: il validatore non ha più ruoli da scrivere e verifica
+che i tre blocchi coprano esattamente i 15 agenti di `agents/`).
+
+### Cosa c'è
+
+- **100 casi** (20 per ruolo), cataloghi `evals/_support/catalog/<ruolo>.yaml`:
+  - `analytics-learner` — `query-guard` (LIMIT iniettato o ridotto a 10000, DML e più istruzioni rifiutati), DT-015
+    (consegnabile solo se eseguita con LIMIT e coerente; incoerente o senza LIMIT ⇒ no; mai registrare la coerenza a
+    comando), tabelle ignote ⇒ avvertenza e QRY solo dopo due esecuzioni coerenti, DIN solo da aggregati (gruppo < 20
+    rifiutato, obbligatorietà di fatto ⇒ proposta di CTR, FLD mai corretto), niente righe di dettaglio né dati personali;
+    browser con gli snapshot pre-registrati: in sandbox solo navigate e snapshot (la pagina inattesa è una sorpresa), in
+    produzione nessun input né click nell'editor, mai script nella pagina.
+  - `test-mechanic` — catena DT-008 (testid → role → label → css; testid instabile in griglia dinamica ⇒ role; css solo
+    come ultimo gradino e dichiarato fragile), linter anti-indebolimento (value_contains e asserzioni rimosse rifiutate:
+    `lint-spec --against` dà L-WEAKEN), `lint-scope` (SEL di un altro scope), PR preparata in
+    `tests/proposals/<S>/<task>/` per la review umana — su `--apply` la apre il manager, **mai** merge; cambio di
+    prodotto rimandato al triage; SEL nuovo come bozza in `_inbox`, mai nel kb.
+  - `failure-triage` — T0 (haiku), DT-001 con priori: regressione dal precedente Defect fixed, Defect aperto da
+    collegare (non regressione), test-defect, config-drift, expected-change e baseline-change dal delta,
+    ERROR-ENVIRONMENT mai un Defect, sotto 0,60 `escalate` per il root-cause-analyst, lezione come bozza (nessun Write),
+    playbook come contesto e mai citato.
+  - `config-auditor` — T0, `baseline` (mai sovrascritta, impronta verificata: la baseline manomessa è una sorpresa),
+    `lint` delle RUL (exit 3 = violazioni, non errore), `diff --propose` (proposta di deriva nota), `environments.yaml`
+    **mai** modificato, deriva già dichiarata nota non è nuova, nessuna correzione, codici RUL mai nel kb.
+  - `defect-reporter` — T0, `xray/defect.mjs`: Defect **mai** Incident, evidenze strict (le altre restano nel dossier),
+    titolo "regression of ACME-1234 (fixed in 2026.08)" dal precedente fixed, etichetta `scope:CAT`, summary con
+    `--summary-file` scritto dalla sessione principale (che fa il manager: l'agente non ha Write), pubblicazione solo con
+    `publish: true`, ALM simulato (mai un Jira reale), rete giù ⇒ coda offline come esito, issue umane mai modificate.
+- **Generatore**: `allowed_paths` dei cinque ruoli; grader `no-<tool>`/`uses-<tool>` anche per gli strumenti ALM
+  (`expect.alm`); risposte ALM di caso in `mocks/alm/`.
+- **Mock della suite** `evals/mocks/alm/`: risposte fisse dei sette strumenti del server `alm` del plugin (chiavi
+  `DEMO-…`); per gli script, `config/xray.yaml` del caso con `deployment: mock` (MockAlmAdapter).
+- **Scaffold**: esecuzioni di query già registrate (`query_runs`, come `query-guard record`), regole RUL con il codice
+  assegnato dal DB (`writeAnalysisItem`: nessun codice analitico nei file di `evals/`), baseline con l'impronta.
+- **Verifiche di realismo** (a mano, sul workspace degli scaffold): DT-001 dà `regression` 0,72 dal precedente fixed;
+  `defect.mjs` costruisce il titolo di regressione, rifiuta environment e test-defect, allega solo EV-04 e redige
+  l'e-mail; `lint`/`diff`/`baseline` danno violazioni, derive, proposta, rifiuto dell'impronta; `lint-spec --against`
+  L-WEAKEN e `lint-scope` S-SEL; `query-guard check` dà consegnabile, avvertenza, qry_eligible, no per incoerenza e per
+  LIMIT mancante; `din-build` rifiuta il gruppo di 12 e scrive DIN + proposta di CTR.
+
+### Riepilogo della suite (15 ruoli)
+
+| Ruolo | Casi | Strategia giudicata | Categorie §49.1 (felice · budget · confine · mai/sicurezza · sorpresa/contraddizione · ignoto/libresco) | Mock |
+|-------|-----:|-----:|------|------|
+| scope-expert | 20 | 10 | 6/6 | chrome-devtools (8 casi) |
+| scope-extractor | 20 | 17 | 6/6 | — |
+| scope-digester | 20 | 10 | 6/6 | — |
+| customer-profiler | 20 | 10 | 6/6 | — |
+| process-mapper | 20 | 13 | 6/6 | — |
+| cluster-validator | 20 | 4 | 6/6 | — |
+| weekly-digest | 20 | 3 | 6/6 | — |
+| root-cause-analyst | 20 | 8 | 6/6 | — |
+| config-designer | 20 | 9 | 6/6 | — |
+| lesson-validator | 20 | 4 | 6/6 | — |
+| analytics-learner | 20 | 4 | 6/6 | chrome-devtools (3 casi) |
+| test-mechanic | 20 | 5 | 6/6 | — |
+| failure-triage | 20 | 6 | 6/6 | — |
+| config-auditor | 20 | 4 | 6/6 | — |
+| defect-reporter | 20 | 3 | 6/6 | alm (14 casi con grader sulle chiamate) |
+| **Totale** | **300** | **110** | | |
+
+Ogni caso ha i grader fissi `dispatch`, `trace` (profondità dell'header), `cell`, `question` (§16), `console`,
+`phrase`, `phrase-report`; `strategy` dove forma, rischio e precedente del soggetto la determinano (strategy-select sul
+workspace dello scaffold); `approval-request` dove il caso la determina; `behaviour` e grader di caso.
+
+### Esecuzione (passo dell'utente)
+
+CLI `claude` non disponibile qui: validazione solo strutturale. Per ruolo, dalla radice del plugin:
+
+```
+claude plugin validate .
+claude plugin eval . --scaffold --runs 1 --tag <ruolo>
+```
+
+poi `--runs 3` quando la calibrazione è fatta (`docs/MANUAL.md`, Appendice C). Per `weekly-digest` esportare
+`JVC_PSEUDO_SALT`.
+
+### Decisioni che contano
+
+- Le strategie giudicate sono l'uscita di `strategy-select` sul workspace dello scaffold: dove il corpo dell'agente
+  dice altro (analytics-learner: ignoto in R0 ⇒ STR-EXPLORE-BUDGET) vale lo script (STR-VERIFY-FIRST); dove la tabella
+  dà `nessuna` il caso non giudica la strategia.
+- L'esecuzione reale in Analytics non è simulabile con gli snapshot pre-registrati (nessuno mostra l'editor o il data
+  model): le esecuzioni già fatte sono righe di `query_runs` dello scaffold; i casi browser giudicano navigazione,
+  lettura e azioni vietate.
+- Le RUL degli scenari non hanno codice nei file di `evals/` (regola degli identificatori analitici): lo scaffold le
+  crea con `writeAnalysisItem`.
