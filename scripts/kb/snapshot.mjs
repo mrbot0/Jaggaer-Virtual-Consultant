@@ -29,7 +29,7 @@ import { loadSession, resolveSessionId } from "../admin/session.mjs";
 import { runRefusal } from "../lib/run-code.mjs";
 import { loadItem } from "../lib/kb-items.mjs";
 import { openDb } from "./db.mjs";
-import { normalizePath } from "../chrome/snapshot-parse.mjs";
+import { ID_SEG } from "../chrome/snapshot-parse.mjs";
 
 export class SnapshotError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 const CFG_RE = /^[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.CFG\.\d{4}(\.v\d+)?$/;
@@ -52,8 +52,10 @@ function recentObservations(ws, customer, { code = null, ring = [] } = {}) {
   if (!byCode.size) return [];
   const db = openDb(f, { createIfMissing: false });
   try {
-    const rows = code ? db.prepare("select code, page_sig, payload from observations where code = ?").all(code)
-      : db.prepare("select code, page_sig, payload from observations order by code desc limit ?").all(MAX_OBS_ROWS);
+    // giro 3: si interroga il DB per i codici dell'anello (righe forgiate con codici più alti non spingono fuori le vere)
+    const codes = code ? (byCode.has(code) ? [code] : []) : [...byCode.keys()].slice(-MAX_OBS_ROWS);
+    const one = db.prepare("select code, page_sig, payload from observations where code = ?");
+    const rows = codes.flatMap((c) => one.all(c));
     const out = [];
     for (const r of rows) {
       const e = byCode.get(r.code);
@@ -69,14 +71,23 @@ function recentObservations(ws, customer, { code = null, ring = [] } = {}) {
 // L'OBS è della pagina dell'oggetto? Confronto ESATTO (giro 1, I2): la firma della pagina uguale a location.page_sig
 // (per intero o nella parte di percorso prima di #), il percorso normalizzato dell'URL uguale a quello di url_pattern,
 // oppure un elemento legato dall'Atlas a un SEL della location. Nessuna sottostringa.
-const pathOf = (u) => { if (typeof u !== "string" || !u) return null; return normalizePath(/^https?:\/\//i.test(u) ? u : `https://x.invalid/${u.replace(/^\/+/, "")}`); };
-// giro 2 (minore 4): url_pattern è un pattern ANCORATO sul percorso normalizzato (* = un segmento, ** = uno o più
-// segmenti); un percorso vuoto (solo segmenti ID) non corrisponde mai.
+// giri 2-3 (minore 4): url_pattern è un pattern ANCORATO sul percorso (* = un segmento, ** = uno o più segmenti). URL e
+// pattern hanno la stessa normalizzazione dei segmenti (minuscolo, estensioni tolte come normalizePath) e i segmenti
+// ID (ID_SEG di snapshot-parse) diventano ":id", così /setup/import-profiles/* coincide con …/import-profiles/7 e un
+// ID vale l'altro; un percorso o un pattern senza alcun segmento letterale non corrisponde mai.
+function idSegments(u) {
+  if (typeof u !== "string" || !u) return null;
+  let x;
+  try { x = new URL(/^https?:\/\//i.test(u) ? u : `https://x.invalid/${u.replace(/^\/+/, "")}`); } catch { return null; }
+  return x.pathname.split("/").filter(Boolean).map((s) => { try { return decodeURIComponent(s); } catch { return s; } })
+    .map((s) => s.toLowerCase().replace(/\.(html?|do|aspx?|jsp|php)$/, "")).filter(Boolean).map((s) => (s.includes("*") ? s : ID_SEG.test(s) ? ":id" : s));
+}
+const literal = (segs) => segs.some((s) => s !== ":id" && !s.includes("*"));
 export function urlPatternMatches(url, pattern) {
-  const a = pathOf(url); const b = pathOf(pattern);
-  if (!a || !b) return false;
-  const re = b.split("/").map((seg) => (seg === "**" ? ".+" : seg.split("*").map((x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("[^/]+"))).join("/");
-  return new RegExp(`^${re}$`).test(a);
+  const a = idSegments(url); const b = idSegments(pattern);
+  if (!a?.length || !b?.length || !literal(a) || !literal(b)) return false;
+  const re = b.map((seg) => (seg === "**" ? ".+" : seg.split("*").map((x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("[^/]+"))).join("/");
+  return new RegExp(`^${re}$`).test(a.join("/"));
 }
 export function obsMatchesLocation(o, loc) {
   if (!o || !loc) return false;

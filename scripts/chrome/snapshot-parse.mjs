@@ -253,7 +253,7 @@ export function responseHasImage(resp) {
 }
 
 // ---- firma della pagina (§20.1): percorso normalizzato (senza id, numeri, query) + titolo principale ----
-const ID_SEG = /^(\d+|[0-9a-f]{8,}|[0-9a-f-]{16,}|.*\d{3,}.*)$/i;
+export const ID_SEG = /^(\d+|[0-9a-f]{8,}|[0-9a-f-]{16,}|.*\d{3,}.*)$/i;
 export const slug = (s) => String(s ?? "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 export function normalizePath(url) {
   let u;
