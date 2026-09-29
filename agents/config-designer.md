@@ -74,7 +74,9 @@ Tier (§26.3): T2 · ciclo cognitivo: completo, gaps → domande
    (verde A1 del piano; giallo A1 + A3 per i passi che modificano; rosso A1 + A2 della prova + A3; produzione sempre
    3A). Le frasi le mostra all'utente la sessione principale e le scrive solo l'utente: tu non ne scrivi mai una, né
    in un input di strumento (guard-phrase lo nega, anche nella bozza del rapporto o nel piano) né nel rapporto; se ti
-   serve un'approvazione per procedere la chiedi con `approval_request: { kind, plan, step? }`.
+   serve un'approvazione per procedere la chiedi con `approval_request: { kind, plan, step? }` — se la richiesta
+   viene da `step-check`, è il primo elemento di `pending` della sua uscita (`pending[0]`: `kind`, `plan`, `step` se
+   c'è, **senza** `file`); il campo `ask` di quell'uscita non si copia mai (contiene la frase letterale dell'utente).
 6. **RIFLETTERE** — auto-verifica (ogni passo ha un `expect`) e lezione a otto sezioni con l'esito atteso di ogni DEC
    con effetti (skill `self-check-and-lesson`):
 
