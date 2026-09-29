@@ -1,6 +1,6 @@
 // GENERATO da scripts/admin/build-deny-rules.mjs a partire da policy/deny-rules.yaml: non modificare.
 export default {
-  "sha256": "60e09963d5961e35982b47acec596b55aaf59c53dc9216e2765a0b495066942a",
+  "sha256": "7247f1dfb7d2818429c0b296de6e1c5480145b518c184650a635016ce6727c52",
   "version": 1,
   "sanctioned": [
     {
@@ -64,6 +64,7 @@ export default {
       "id": "DR-OK-003",
       "script": "scripts/kb/kb.mjs",
       "first_arg": "promote",
+      "allow_help": true,
       "require_args": [
         "--customer"
       ],
@@ -98,6 +99,7 @@ export default {
       "id": "DR-OK-004",
       "script": "scripts/kb/lifecycle.mjs",
       "first_arg": "promote",
+      "allow_help": true,
       "require_args": [
         "--customer"
       ],
@@ -132,6 +134,7 @@ export default {
       "id": "DR-OK-005",
       "script": "scripts/digest/learn.mjs",
       "first_arg": "promote",
+      "allow_help": true,
       "require_args": [
         "--customer",
         "--approval"
@@ -359,7 +362,11 @@ export default {
       "on": "text",
       "patterns": [
         {
-          "re": "\\bnode(\\.exe)?\\b[\\s\\S]*\\b(kb|lifecycle|learn)\\.mjs\\b[\\s\\S]*\\bpromote\\b",
+          "re": "\\b(kb|lifecycle|learn)\\.mjs[\"']?\\s+[\"']?promote(?=$|[\\s\"';&|)<>])",
+          "flags": "iu"
+        },
+        {
+          "re": "^(?=[\\s\\S]*\\b(kb|lifecycle|learn)\\.mjs\\b)(?=[\\s\\S]*\\b(import|require)\\b)(?=[\\s\\S]*\\bpromote\\b)",
           "flags": "iu"
         }
       ]

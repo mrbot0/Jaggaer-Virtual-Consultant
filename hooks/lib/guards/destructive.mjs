@@ -195,6 +195,8 @@ function sanctionedDecision(ctx, cmd, list) {
   for (const s of list) {
     if (!sameFile(call.script, join(ctx.plugin, ...s.script.split("/")))) continue;
     if (s.first_arg && call.args[0] !== s.first_arg) continue;   // WP09d giro 1: la regola è di un solo sotto-comando
+    // WP10a (ruling 1a): `<sotto-comando> --help` da solo (sola lettura) è ammesso senza gli argomenti obbligatori
+    if (s.allow_help && call.args.length === 2 && call.args[1] === "--help") return { allow: s, args: call.args };
     const bad = argsRefusal(call.args, s);
     const has = (flag) => call.args.some((a) => a === flag || a.startsWith(`${flag}=`));
     // WP09d: requires_if — un'opzione che ne richiede altre (retention --apply ⇒ --approval)

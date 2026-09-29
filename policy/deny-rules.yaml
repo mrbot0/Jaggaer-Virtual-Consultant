@@ -33,7 +33,8 @@
 # require_args: opzioni sempre obbligatorie; requires_if { "--x": ["--y"] }: con --x serve anche --y (WP09d).
 # first_arg: la regola vale solo se il primo argomento è quel sotto-comando; approvals { kind, tokens, target_arg, when? }
 # (WP09d giro 1): i token delle opzioni elencate sono approvazioni del registro della sessione (kind, bersaglio = il
-# posizionale target_arg) confermate nel transcript come le 3A; when: solo se c'è quell'opzione.
+# posizionale target_arg) confermate nel transcript come le 3A; when: solo se c'è quell'opzione. allow_help: true (WP10a):
+# con first_arg, `<first_arg> --help` e nient'altro (sola lettura) è ammesso senza require_args né approvazioni.
 # Le regole cardine DR-SHELL-001, DR-SHELL-003, DR-WRITE-001, DR-WRITE-003, DR-BROWSER-002 sono obbligatorie: una policy
 # senza di esse (o svuotata) non si carica e il guard nega.
 version: 1
@@ -73,6 +74,7 @@ sanctioned:
     applies_to: [shell]
     script: scripts/kb/kb.mjs
     first_arg: promote
+    allow_help: true
     require_args: ["--customer"]
     requires_if: { "--to": ["--approval"] }
     positional: ['^promote$', '^[CL]\.[A-Z0-9]{4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(\.v\d+)?$']
@@ -83,6 +85,7 @@ sanctioned:
     applies_to: [shell]
     script: scripts/kb/lifecycle.mjs
     first_arg: promote
+    allow_help: true
     require_args: ["--customer"]
     requires_if: { "--to": ["--approval"] }
     positional: ['^promote$', '^[CL]\.[A-Z0-9]{4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(\.v\d+)?$']
@@ -93,6 +96,7 @@ sanctioned:
     applies_to: [shell]
     script: scripts/digest/learn.mjs
     first_arg: promote
+    allow_help: true
     require_args: ["--customer", "--approval"]
     positional: ['^promote$', '^[CL]\.[A-Z0-9]{4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(\.v\d+)?$']
     flags: { "--customer": '^[A-Z0-9]{4}$', "--to": '^product$', "--approval": '^[0-9a-f]{12,64}$', "--session": '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$', "--json": null, "--help": null }
@@ -176,8 +180,13 @@ rules:
     applies_to: [shell]
     on: text
     reason: "la promozione (kb.mjs / lifecycle.mjs / learn.mjs promote) si invoca solo nella forma esatta del plugin, senza catene né espansioni: la promozione a S richiede un'approvazione confermata nel transcript"
+    # WP10a (ruling 1a): ancorata a `promote` come PRIMO argomento dopo lo script (i tre script leggono il sotto-comando da
+    # argv[2]): `kb.mjs find --text promote` non è una promozione. Le viste del guard tolgono le virgolette. Resta negato
+    # l'uso programmatico dei moduli (import/require di kb|lifecycle|learn .mjs con la parola promote nello stesso comando).
+    # La forma esatta ammessa (DR-OK-003..005, anche `promote --help`) è valutata sui soli argomenti: questa regola non la tocca.
     patterns:
-      - '\bnode(\.exe)?\b[\s\S]*\b(kb|lifecycle|learn)\.mjs\b[\s\S]*\bpromote\b'
+      - '\b(kb|lifecycle|learn)\.mjs["'']?\s+["'']?promote(?=$|[\s"'';&|)<>])'
+      - '^(?=[\s\S]*\b(kb|lifecycle|learn)\.mjs\b)(?=[\s\S]*\b(import|require)\b)(?=[\s\S]*\bpromote\b)'
   # ---------------- shell: git ----------------
   - id: DR-SHELL-010
     severity: hard-deny
