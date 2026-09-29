@@ -251,6 +251,10 @@ async function browserDecide(ctx, no) {
 }
 
 // ---- scritture protette (Bash|PowerShell|Write|Edit|MultiEdit|NotebookEdit) ----
+const ALM_CONFIG_WHY = "la configurazione del cliente (customers/<C>/config/**: environments, xray, remediation-scope…) la modifica solo l'utente, a mano, fuori sessione: decide host, credenziali e deroghe";
+const ALM_FILES_WHY = "la configurazione del cliente la modifica solo l'utente; payload, esecuzioni e pubblicazioni Xray (runs/**/xray-*.json) e la coda offline (customers/<C>/queue/**) li scrivono solo gli script del plugin";
+// WP09c giro 1: testo in minuscolo con le barre normalizzate (interpreti, script eseguiti, codice scritto)
+const ALM_TEXT = /customers\/[^\s'"`]*\/(config|queue)(\/|['"`\s]|$)|\/queue\/q\.|xray-(payload|published|executions)\.json|(^|[/'"`\s])(xray|environments|remediation-scope)\.ya?ml/;
 const PROTECTED = [
   ["**/approvals.jsonl", "il registro delle approvazioni lo scrive solo l'hook approval-capture (dalle frasi dell'utente)"],
   ["**/session.json", "session.json si modifica solo con /use, env-check e gli hook del plugin"],
@@ -270,6 +274,11 @@ const PROTECTED = [
   // WP08 giro 1 (I2): l'audit è append-only e lo scrive solo audit-append (T8): nemmeno >> o una troncatura dalla shell
   ["customers/*/audit/**", "l'audit è append-only e lo scrive solo l'hook audit-append (T8): niente append, troncature o copie dalla shell"],
   [".jvc/audit/**", "l'audit è append-only e lo scrive solo l'hook audit-append (T8): niente append, troncature o copie dalla shell"],
+  // WP09c giro 1 (C1 a): la configurazione del cliente (environments, xray, remediation-scope…) decide host, credenziali
+  // e deroghe; (I1) payload, mappa delle esecuzioni, pubblicazioni Xray e coda offline li scrivono solo gli script
+  ["customers/*/config/**", ALM_CONFIG_WHY],
+  ["**/runs/**/xray-*.json", ALM_FILES_WHY],
+  ["customers/*/queue/**", ALM_FILES_WHY],
 ];
 const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
 const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);
@@ -342,6 +351,7 @@ function scriptContentRefusal(ctx, cmd) {
     if (STATE.test(text)) return `lo script ${m[1]} scrive file e cita il registro delle approvazioni o lo stato di sessione`;
     // WP09b giro 3: gli esiti dei run hanno la stessa protezione dello stato di sessione
     const flatText = text.split(String.fromCharCode(92)).join("/").toLowerCase();
+    if (ALM_TEXT.test(flatText)) return `lo script ${m[1]} scrive file e cita la configurazione del cliente, la coda o i file Xray del run — ${ALM_FILES_WHY}`;
     if (RESULTS.test(flatText) || RESULTS_SEG.test(flatText)) return `lo script ${m[1]} scrive file e cita gli esiti dei run — ${PROTECTED[4][1]}`;
     if (CONFIG_TEXT.test(text)) return `lo script ${m[1]} scrive file e cita le impostazioni di Claude Code — ${SETTINGS_WHY}`;
     if (mentionsPlugin(ctx, text)) return `lo script ${m[1]} scrive file e cita il plugin — ${PLUGIN_WHY}`;
@@ -421,6 +431,7 @@ const protectWrites = guarded(G, (ctx) => {
   if (texts.some((t) => PHRASE.test(t))) return no("l'input contiene una frase di approvazione (APPROVO PIANO/PROVA/PASSO): le approvazioni le scrive solo l'utente nel prompt, mai uno strumento");
   if (WRITE_FILE_TOOLS.has(ctx.tool)) {
     if (texts.some((t) => STATE.test(t) && CODE_WRITE.test(t))) return no("il contenuto scrive su file e cita il registro delle approvazioni o lo stato di sessione: codice che può falsificare i token");
+    if (texts.some((t) => ALM_TEXT.test(t.replace(/\\/g, "/").toLowerCase()) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive la configurazione del cliente, la coda o i file Xray del run — ${ALM_FILES_WHY}`);
     if (texts.some((t) => RESULTS.test(t.replace(/\\/g, "/").toLowerCase()) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive gli esiti dei run — ${PROTECTED[4][1]}`);
     if (texts.some((t) => CONFIG_TEXT.test(t) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive le impostazioni di Claude Code — ${SETTINGS_WHY}`);
     if (texts.some((t) => mentionsPlugin(ctx, t) && CODE_WRITE.test(t))) return no(`il contenuto è codice che scrive nel plugin — ${PLUGIN_WHY}`);
@@ -456,7 +467,8 @@ const protectWrites = guarded(G, (ctx) => {
   // WP09b giri 2-3: gli esiti dei run (results/, result.yaml) li scrive solo step-check: come per lo stato di sessione,
   // un interprete non del plugin che li CITA è negato (write_text, open(…, "w"), nomi costruiti: nessuna primitiva richiesta)
   if (INTERP.test(cmd) && RESULTS.test(flat)) return no(`${PROTECTED[4][1]}: uno script non del plugin con argomenti o codice che li citano`);
-  if (INTERP.test(cmd) && RESULTS_SEG.test(flat) && (CODE_WRITE.test(cmd) || WRITE_PRIM.test(cmd))) return no(`${PROTECTED[4][1]}: codice d'interprete che scrive e cita /results/`);
+  if (INTERP.test(cmd) && ALM_TEXT.test(flat)) return no(`uno script non del plugin con argomenti o codice che citano la configurazione del cliente, la coda o i file Xray del run — ${ALM_FILES_WHY}`);
+  if (INTERP.test(cmd) && RESULTS_SEG.test(flat) &&(CODE_WRITE.test(cmd) || WRITE_PRIM.test(cmd))) return no(`${PROTECTED[4][1]}: codice d'interprete che scrive e cita /results/`);
   if (INTERP.test(cmd) && STATE.test(cmd)) return no("uno script non del plugin con argomenti o codice che citano il registro delle approvazioni o lo stato di sessione: solo gli script del plugin toccano lo stato");
   if (tr.name && (flat.includes(tr.name) || tr.dirs.some((d) => flat.includes(d)))) return no("il comando cita il transcript della sessione");
   for (const { tok, cwds, tree, soft } of shellWriteTargets(ctx, cmd)) {

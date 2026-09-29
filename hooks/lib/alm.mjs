@@ -10,6 +10,8 @@
 // ovunque ⇒ delete; poi creazione, poi aggiornamento (resolve, deactivate, upsert, bulk, lock… compresi); nessuna parola
 // d'azione nota ⇒ unknown (negato). M3: anche i server Xray.
 import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 export const ALM_MATCHER = "mcp__.*([Aa][Ll][Mm]|[Jj][Ii][Rr][Aa]|[Aa][Tt][Ll][Aa][Ss][Ss][Ii][Aa][Nn]|[Xx][Rr][Aa][Yy]).*__.*";
 const SERVER_RE = /(^|[_-])alm($|[_-])|jira|atlassian|xray/i;
@@ -102,4 +104,25 @@ export function issueTypeIds(ti) {
 export function createdKeys(session) {
   const list = Array.isArray(session?.alm?.created) ? session.alm.created : [];
   return new Set(list.map((c) => String(typeof c === "string" ? c : c?.key ?? "").toUpperCase()).filter(Boolean));
+}
+
+// WP09c giro 1 (C1 b): config/xray.yaml fissato nella sessione con sha256 a `use customer` (session.alm.config), come
+// environments.yaml a `use env`. Il file decide host, credenziali usate, deroga ADR-21 e mappa dei tipi: se cambia
+// dopo, le scritture ALM (guard-alm-write) e ogni chiamata dell'AlmAdapter (server MCP, scripts/xray) si rifiutano
+// finché l'utente non riesegue `use customer`. File assente ⇒ sha256 null.
+export const xrayConfigRel = (customer) => `customers/${customer}/config/xray.yaml`;
+export function xrayConfigSha(ws, customer) {
+  try { return createHash("sha256").update(readFileSync(join(ws, "customers", customer, "config", "xray.yaml"))).digest("hex"); } catch (err) {
+    if (err?.code === "ENOENT") return null;
+    throw err;
+  }
+}
+export function xrayPin(ws, customer, now = new Date()) { return { file: xrayConfigRel(customer), sha256: xrayConfigSha(ws, customer), pinned_at: now.toISOString() }; }
+// → motivo del rifiuto | null
+export function xrayPinRefusal(ws, customer, session) {
+  const sha = xrayConfigSha(ws, customer);
+  const pin = session?.alm?.config;
+  if (!pin || typeof pin !== "object" || !("sha256" in pin)) return sha == null ? null : `config/xray.yaml non fissato nella sessione: riesegui \`use customer ${customer}\` (l'impronta del file si fissa all'avvio del cliente)`;
+  if ((pin.sha256 ?? null) !== sha) return `config/xray.yaml è cambiato dopo \`use customer ${customer}\` (impronta diversa): nessuna chiamata né scrittura ALM finché l'utente non riesegue \`use customer ${customer}\``;
+  return null;
 }

@@ -13,6 +13,7 @@ import {
   sessionDir, sessionFile, pointerFile, invocationsFile, CUSTOMER_RE,
 } from "../../hooks/lib/workspace.mjs";
 import { appendAudit } from "../../hooks/lib/audit.mjs";
+import { xrayPin } from "../../hooks/lib/alm.mjs";
 import { readJsonl } from "../../hooks/lib/state-summary.mjs";
 import { openFrom, closeOpen, OPEN_TTL_MS } from "../../hooks/lib/invocations.mjs";
 import { checkSessionText, parseSessionText } from "../../hooks/lib/session-state.mjs";
@@ -286,6 +287,7 @@ async function useCustomer(ws, sid, id, { create, actor }) {
     if (target && !target.corrupt) {
       const code = keepCode(target.session.session_code) ?? nextSessionCode(ws, id);
       return updateSession(file, (s) => {
+        s.alm = { ...(s.alm && typeof s.alm === "object" ? s.alm : {}), config: xrayPin(ws, id) };
         s.knowledge_version = knowledgeVersion ?? s.knowledge_version;
         s.plugin_version = pluginVersion();
         if (budget) s.budget = budget;
@@ -293,7 +295,7 @@ async function useCustomer(ws, sid, id, { create, actor }) {
       });
     }
     const code = keepCode(target?.parsed?.session_code) ?? nextSessionCode(ws, id);
-    return saveSession(file, { ...newSession({ sid, customer: id, knowledgeVersion, budget: budget ?? undefined }), session_code: code });
+    return saveSession(file, { ...newSession({ sid, customer: id, knowledgeVersion, budget: budget ?? undefined }), session_code: code, alm: { config: xrayPin(ws, id) } });
   });
   writePointer(ws, sid, id, { budget: session.budget });
   writeCurrentSession(ws, sid);

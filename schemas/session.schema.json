@@ -132,7 +132,9 @@
     "alm": {
       "type": "object",
       "description": "F0.2: ciò che il plugin ha creato nell'ALM in questa sessione. created[] lo scrive solo alm-record (PostToolUse, risposta riuscita di una creazione): { key, kind: execution|defect|test|issue|page, tool, ts }. guard-alm-write consente update, transizioni e alm_import_results solo su questi bersagli (mai sovrascrivere contenuto umano).",
-      "properties": { "created": { "type": "array", "maxItems": 500, "items": { "type": "object", "required": ["key"], "properties": { "key": { "type": "string", "minLength": 1 }, "kind": { "type": "string" }, "tool": { "type": "string" }, "ts": { "type": "string" } } } } }
+      "properties": {
+        "config": { "type": "object", "description": "WP09c giro 1 (C1 b): impronta di customers/<C>/config/xray.yaml fissata da use customer (sha256 null = file assente); cambiata ⇒ guard-alm-write e l'AlmAdapter rifiutano.", "required": ["sha256"], "properties": { "file": { "type": "string" }, "sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" }, "pinned_at": { "type": "string" } } },
+        "created": { "type": "array", "maxItems": 500, "items": { "type": "object", "required": ["key"], "properties": { "key": { "type": "string", "minLength": 1 }, "kind": { "type": "string" }, "tool": { "type": "string" }, "ts": { "type": "string" } } } } }
     },
     "browser": {
       "type": "object",

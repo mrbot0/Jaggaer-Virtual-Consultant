@@ -7,7 +7,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { mkWs, seedSession, runHook, decisionOf, reasonOf, ROOT } from "../helpers/hook-env.mjs";
+import { mkWs, seedSession, runHook, decisionOf, reasonOf, pinXray, ROOT } from "../helpers/hook-env.mjs";
 
 const G = "guard-alm-write";
 const ALM = "mcp__plugin_jaggaer-virtual-consultant_alm__";
@@ -89,8 +89,11 @@ test("divieto 4 — issue di tipo Test solo con allow_test_issue_creation: true 
   assert.match(reasonOf(call(ws, ...t2)), /ADR-21/);
   mkdirSync(join(ws, "customers/ACME/config"), { recursive: true });
   writeFileSync(join(ws, "customers/ACME/config/xray.yaml"), "deployment: cloud\nallow_test_issue_creation: false\n");
+  pinXray(ws);   // WP09c giro 1: use customer fissa l'impronta del file
   assert.ok(denied(call(ws, ...t1)));
   writeFileSync(join(ws, "customers/ACME/config/xray.yaml"), "deployment: cloud\nallow_test_issue_creation: true   # deroga concordata\n");
+  assert.ok(denied(call(ws, ...t1)), "deroga comparsa dopo use customer: non vale finché non si riesegue use customer");
+  pinXray(ws);
   assert.ok(silent(call(ws, ...t1)));
   assert.ok(silent(call(ws, ...t2)));
 });

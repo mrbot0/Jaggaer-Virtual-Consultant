@@ -1,7 +1,8 @@
 // Helper condivisi dai test degli hook e degli script di sessione: workspace
 // temporaneo, ambiente pulito (niente variabili della sessione Claude Code
 // che esegue i test), esecuzione di un hook come processo con stdin simulato.
-import { mkdtempSync, mkdirSync, writeFileSync, realpathSync, appendFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, realpathSync, appendFileSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -91,4 +92,16 @@ export function runSessionCli(args, env = {}) {
   let json = null;
   try { json = JSON.parse(r.stdout.trim().split("\n").pop()); } catch { /* output non JSON */ }
   return { status: r.status, stdout: r.stdout, stderr: r.stderr, json };
+}
+
+// WP09c giro 1 (C1 b): config/xray.yaml fissato nella sessione con sha256, come fa `use customer` (assente ⇒ sha256 null).
+export function pinXray(ws, { sid = "sess-1", customer = "ACME" } = {}) {
+  const f = join(ws, "customers", customer, "config", "xray.yaml");
+  let sha = null;
+  try { sha = createHash("sha256").update(readFileSync(f)).digest("hex"); } catch { sha = null; }
+  const sf = join(ws, "customers", customer, ".sessions", sid, "session.json");
+  const s = JSON.parse(readFileSync(sf, "utf8"));
+  s.alm = { ...(s.alm ?? {}), config: { file: `customers/${customer}/config/xray.yaml`, sha256: sha, pinned_at: new Date().toISOString() } };
+  writeFileSync(sf, JSON.stringify(s, null, 2));
+  return sha;
 }

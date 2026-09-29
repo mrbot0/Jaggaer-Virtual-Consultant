@@ -14,7 +14,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { guardContext, denyAudited } from "./common.mjs";
 import { skeleton } from "../paths.mjs";
-import { classifyAlm, leaves, targetKeys, issueTypes, issueTypeIds, createdKeys } from "../alm.mjs";
+import { classifyAlm, leaves, targetKeys, issueTypes, issueTypeIds, createdKeys, xrayPinRefusal } from "../alm.mjs";
 import { BOUNDARY_RULES } from "../../../scripts/kb/validate-boundary.mjs";
 
 const G = "guard-alm-write";
@@ -58,6 +58,9 @@ export async function decide(input, env = process.env) {
   if (c.category === "delete") return no(`${at}: l'ALM non si cancella mai (delete/remove/archive): la compensazione è chiudere o annullare, e solo su issue create dal plugin (§46.5)`);
   if (c.category === "unknown") return no(`${at}: operazione ALM non classificata (né lettura, né creazione, né aggiornamento riconosciuti): negata per default`);
   if (!ctx.customer) return no(`${at}: nessun cliente attivo: le scritture sull'ALM richiedono una sessione con cliente (use customer <ID>)`);
+  // WP09c giro 1 (C1 b): config/xray.yaml (host, deroga ADR-21, mappa dei tipi) com'era a use customer
+  const pin = xrayPinRefusal(ctx.ws, ctx.customer, ctx.session);
+  if (pin) return no(`${at}: ${pin}`);
   const values = leaves(ti);
   // 1. transizione o stato verso "cancellato"
   if (c.category === "update" || c.category === "import") {

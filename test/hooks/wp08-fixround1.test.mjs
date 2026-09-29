@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
-import { mkWs, seedSession, runHook, decisionOf, reasonOf, cleanEnv, ROOT } from "../helpers/hook-env.mjs";
+import { mkWs, seedSession, runHook, decisionOf, reasonOf, cleanEnv, pinXray, ROOT } from "../helpers/hook-env.mjs";
 import { envWs, patchSession, writeSel, writePlan, sealActivePlan } from "../helpers/env-fixture.mjs";
 import { copyPlugin } from "../helpers/plugin-copy.mjs";
 
@@ -186,6 +186,7 @@ test("I6 — Incident per id del tipo: id sconosciuto ⇒ deny; mappa id→nome 
   assert.equal(g(`${ATL}createJiraIssue`, { projectKey: "P", issueTypeId: "10004", summary: "x" }), "deny", "id senza mappa");
   mkdirSync(join(ws, "customers/ACME/config"), { recursive: true });
   writeFileSync(join(ws, "customers/ACME/config/xray.yaml"), "deployment: cloud\nissuetype_ids:\n  \"10004\": Bug\n  \"10010\": Incident\n");
+  pinXray(ws);   // WP09c giro 1: la mappa vale come fissata da use customer
   assert.equal(g(`${ATL}createJiraIssue`, { projectKey: "P", issueTypeId: "10004", summary: "x" }), null);
   assert.equal(g(`${ATL}createJiraIssue`, { projectKey: "P", fields: { issuetype: { id: "10010" } }, summary: "x" }), "deny");
   assert.equal(g(`${ATL}createJiraIssue`, { projectKey: "P", fields: { issuetype: { id: "10099" } }, summary: "x" }), "deny", "id fuori mappa");
