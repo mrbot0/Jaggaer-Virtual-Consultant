@@ -75,3 +75,44 @@ export function argsRefusal(args, { positional = [], flags = {} }) {
   for (let i = 0; i < pos.length; i++) if (!new RegExp(positional[i]).test(pos[i])) return `argomento ${i + 1} non ammesso`;
   return null;
 }
+
+// WP10a giro 1 (I1): parole di un comando di shell come le vede il programma, per le regole `first_arg` di
+// guard-destructive. Stessa grammatica del tokenizzatore sopra (parole semplici e stringhe fra virgolette, separate da
+// spazi), senza rifiutare nulla: ogni parola in due letture, perché il guard non sa quale shell eseguirà il comando —
+//   raw   virgolette tolte, backslash lasciati (cmd e PowerShell: C:\percorso\kb.mjs)
+//   shell la lettura POSIX: \x fuori dalle virgolette ⇒ x, '…' letterale, "…" con \ $ ` " e a capo scappati; \+a capo
+//         unisce le righe
+// e `bare`: la parola senza \ " ' ^ ` (escape di bash, cmd e PowerShell), per confrontare i sotto-comandi.
+// Separatori di comando (; & | a capo non scappato, ( ) fuori dalle virgolette) chiudono il sotto-comando.
+export function shellCommands(text) {
+  const cmds = [];
+  let words = [];
+  let raw = null;
+  let sh = null;
+  let q = null;
+  const flush = () => { if (raw !== null) words.push({ raw, shell: sh, bare: raw.replace(/[\\"'^`]/g, "") }); raw = null; sh = null; };
+  const end = () => { flush(); if (words.length) cmds.push(words); words = []; };
+  const s = String(text ?? "");
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (q === "'") { if (c === "'") q = null; else { raw += c; sh += c; } continue; }
+    if (q === '"') {
+      if (c === '"') { q = null; continue; }
+      if (c === "\\" && i + 1 < s.length && '\$`"\n'.includes(s[i + 1])) { raw += c + s[i + 1]; if (s[i + 1] !== "\n") sh += s[i + 1]; i++; continue; }
+      raw += c; sh += c; continue;
+    }
+    if (c === "\\" && i + 1 < s.length) {
+      const n = s[i + 1];
+      if (n === "\n" || (n === "\r" && s[i + 2] === "\n")) { i += n === "\r" ? 2 : 1; continue; }
+      raw ??= ""; sh ??= "";
+      raw += c + n; sh += n; i++; continue;
+    }
+    if (c === "'" || c === '"') { raw ??= ""; sh ??= ""; q = c; continue; }
+    if (/\s/.test(c)) { if (c === "\n") end(); else flush(); continue; }
+    if (";&|()".includes(c)) { end(); continue; }
+    raw ??= ""; sh ??= "";
+    raw += c; sh += c;
+  }
+  end();
+  return cmds;
+}

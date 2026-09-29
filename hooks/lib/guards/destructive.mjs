@@ -24,7 +24,7 @@ import { ask } from "../io.mjs";
 import { appendAudit } from "../audit.mjs";
 import { summarizeInput } from "../tool-summary.mjs";
 import { loadRules } from "../deny-rules.mjs";
-import { simpleNodeCall, argsRefusal, splitArgs } from "../exact-argv.mjs";
+import { simpleNodeCall, argsRefusal, splitArgs, shellCommands } from "../exact-argv.mjs";
 import { approvalsFile, readApprovals, findGrant, confirmInTranscript } from "../../../scripts/admin/approvals.mjs";
 import { readPointer } from "../workspace.mjs";
 
@@ -253,6 +253,40 @@ function globHits(rule, views) {
   return null;
 }
 
+// WP10a giro 1 (I1): on: first_arg — il primo argomento dopo uno degli script della regola (kb.mjs, learn.mjs, …),
+// letto come lo legge il programma dopo lo scioglimento della shell (hooks/lib/exact-argv.mjs shellCommands: backslash,
+// virgolette, ^ di cmd, backtick di PowerShell), in ogni vista del comando e dentro le stringhe che contengono a loro
+// volta un comando (bash -c "…", powershell -Command "…"). Un nome di script con jolly vale per ogni script che produce.
+const baseOf = (v) => String(v).split(/[\\/]/).pop().toLowerCase();
+function scriptMatch(word, scripts) {
+  for (const v of [word.raw, word.shell, word.bare]) {
+    const b = baseOf(v);
+    if (scripts.includes(b)) return true;
+    if (GLOB.test(b)) { const re = globRegex(b); if (re && scripts.some((x) => re.test(x))) return true; }
+  }
+  return false;
+}
+function firstArgHit(rule, texts) {
+  const seen = new Set();
+  const scan = (text, depth) => {
+    if (seen.has(text) || seen.size > MAX_VIEWS) return null;
+    seen.add(text);
+    for (const words of shellCommands(text)) {
+      for (let i = 0; i < words.length; i++) {
+        const w = words[i];
+        if (i + 1 < words.length && scriptMatch(w, rule.scripts)) {
+          const a = words[i + 1];
+          for (const v of [a.shell, a.bare]) if (testPatterns(rule, v)) return `${baseOf(w.raw)} ${a.raw}`;
+        }
+        if (depth < 2 && /\s/.test(w.shell)) { const h = scan(w.shell, depth + 1); if (h) return h; }
+      }
+    }
+    return null;
+  };
+  for (const t of texts) { const h = scan(t, 0); if (h) return h; }
+  return null;
+}
+
 function shellMatches(ctx, rules) {
   const cmd = ctx.ti.command;
   if (typeof cmd !== "string" || !cmd.trim()) return { hits: [] };
@@ -270,6 +304,9 @@ function shellMatches(ctx, rules) {
       for (const v of views) { const m = testPatterns(r, v); if (m) { found = m; break; } }
     } else if (r.on === "glob") {
       found = globHits(r, views);
+    } else if (r.on === "first_arg") {
+      // la forma esatta ammessa (sanctioned) è proprio l'invocazione permessa: la regola vale per tutte le altre
+      if (!s?.allow) found = firstArgHit(r, [cmd, ...views]);
     } else {
       outer: for (const v of views) for (const suffix of commandSuffixes(v)) { const m = testPatterns(r, suffix); if (m) { found = m; break outer; } }
     }

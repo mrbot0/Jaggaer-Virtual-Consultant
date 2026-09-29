@@ -178,14 +178,22 @@ rules:
   - id: DR-SHELL-008
     severity: hard-deny
     applies_to: [shell]
-    on: text
+    on: first_arg
     reason: "la promozione (kb.mjs / lifecycle.mjs / learn.mjs promote) si invoca solo nella forma esatta del plugin, senza catene né espansioni: la promozione a S richiede un'approvazione confermata nel transcript"
-    # WP10a (ruling 1a): ancorata a `promote` come PRIMO argomento dopo lo script (i tre script leggono il sotto-comando da
-    # argv[2]): `kb.mjs find --text promote` non è una promozione. Le viste del guard tolgono le virgolette. Resta negato
-    # l'uso programmatico dei moduli (import/require di kb|lifecycle|learn .mjs con la parola promote nello stesso comando).
-    # La forma esatta ammessa (DR-OK-003..005, anche `promote --help`) è valutata sui soli argomenti: questa regola non la tocca.
+    # WP10a (ruling 1a, giro 1 I1): vale sul PRIMO argomento dopo lo script (i tre script leggono il sotto-comando da
+    # argv[2]), letto dopo lo scioglimento della shell — backslash (\promote, pro\mote), virgolette ("pro"mote), ^ di cmd,
+    # backtick di PowerShell — con il tokenizzatore di hooks/lib/exact-argv.mjs, anche dentro bash -c "…" e con un jolly
+    # nel nome dello script: `kb.mjs find --text promote` non è una promozione. La forma esatta ammessa (DR-OK-003..005,
+    # anche `promote --help`) è l'unica invocazione permessa e non passa da questa regola.
+    scripts: [kb.mjs, lifecycle.mjs, learn.mjs]
     patterns:
-      - '\b(kb|lifecycle|learn)\.mjs["'']?\s+["'']?promote(?=$|[\s"'';&|)<>])'
+      - '^promote$'
+  - id: DR-SHELL-009
+    severity: hard-deny
+    applies_to: [shell]
+    on: text
+    reason: "uso programmatico dei moduli della promozione (import/require di kb.mjs, lifecycle.mjs o learn.mjs con promote): la promozione si invoca solo nella forma esatta del plugin"
+    patterns:
       - '^(?=[\s\S]*\b(kb|lifecycle|learn)\.mjs\b)(?=[\s\S]*\b(import|require)\b)(?=[\s\S]*\bpromote\b)'
   # ---------------- shell: git ----------------
   - id: DR-SHELL-010

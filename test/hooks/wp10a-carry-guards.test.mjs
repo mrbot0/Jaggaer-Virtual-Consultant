@@ -55,3 +55,35 @@ test("guard-config-scope: build-report e build-payload non sono generatori del p
   }
   assert.ok(denied(cfgGuard(ws, `node "${script("scripts/admin/integrity.mjs")}" build`)), "integrity build");
 });
+
+// Giro di correzione 1 (I1): il primo argomento dopo kb|lifecycle|learn.mjs si decide DOPO lo scioglimento della shell
+// (backslash, virgolette, ^ di cmd, backtick di PowerShell), con lo stesso tokenizzatore di hooks/lib/exact-argv.mjs:
+// un `promote` mascherato non salta più la forma esatta (DR-OK-003..005: conferma nel transcript, argomenti validati).
+test("I1 DR-SHELL-008: promote mascherato da backslash, virgolette, ^ o backtick ⇒ deny; dentro bash -c e con jolly nel nome dello script", () => {
+  const ws = ws09d(); withSession(ws);
+  const B = String.fromCharCode(92); // backslash
+  const T = String.fromCharCode(96); // backtick
+  const kbDir = KB.slice(0, -"kb.mjs".length - 1);
+  const C = "L.ACME.CAT.FLW.0001 --customer ACME";
+  const probes = [
+    `node "${KB}" ${B}promote ${C} --to product`,
+    `node "${LEARN}" pro${B}mote ${C}`,
+    `node "${KB}" p${B}romote ${C}`,
+    `node "${KB}" promot${B}e ${C}`,
+    `node "${KB}" "pro"mote ${C}`,
+    `node "${KB}" pro'mo'te ${C}`,
+    `node "${KB}" ${B}"promote${B}" ${C}`,
+    `node "${KB}" "${B}promote" ${C}`,
+    `node "${LIFE}" pro^mote ${C}`,
+    `node "${KB}" pro${T}mote ${C}`,
+    `node "${KB}" ${B}\npromote ${C}`,
+    `bash -c "node '${KB.split(B).join("/")}' pro${B}${B}mote ${C}"`,
+    `node "${kbDir}/k?.mjs" promote ${C}`,
+    `node --no-warnings "${KB}" ${B}promote ${C}`,
+  ];
+  for (const cmd of probes) { const r = guard(ws, cmd); assert.ok(denied(r), `non negato: ${cmd}`); assert.match(reasonOf(r), /DR-SHELL-008|DR-OK-00[345]/, cmd); }
+  // restano ammessi: promote come valore di un'opzione (anche mascherato) e la forma esatta L → C
+  for (const cmd of [`node "${KB}" find --text ${B}promote --json`, `node "${KB}" resolve pro${B}mote --json`, `node "${KB}" promote L.ACME.CAT.FLW.0001 --customer ACME --json`]) {
+    const r = guard(ws, cmd); assert.ok(silent(r), `${cmd}: ${reasonOf(r)}`);
+  }
+});

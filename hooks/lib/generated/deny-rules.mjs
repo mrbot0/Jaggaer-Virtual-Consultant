@@ -1,6 +1,6 @@
 // GENERATO da scripts/admin/build-deny-rules.mjs a partire da policy/deny-rules.yaml: non modificare.
 export default {
-  "sha256": "7247f1dfb7d2818429c0b296de6e1c5480145b518c184650a635016ce6727c52",
+  "sha256": "085192c865492818cbf17d0f8381eab47adfd3666dbfe3a93ef16ea8365543c2",
   "version": 1,
   "sanctioned": [
     {
@@ -359,12 +359,28 @@ export default {
       "applies_to": [
         "shell"
       ],
-      "on": "text",
+      "on": "first_arg",
       "patterns": [
         {
-          "re": "\\b(kb|lifecycle|learn)\\.mjs[\"']?\\s+[\"']?promote(?=$|[\\s\"';&|)<>])",
+          "re": "^promote$",
           "flags": "iu"
-        },
+        }
+      ],
+      "scripts": [
+        "kb.mjs",
+        "lifecycle.mjs",
+        "learn.mjs"
+      ]
+    },
+    {
+      "id": "DR-SHELL-009",
+      "severity": "hard-deny",
+      "reason": "uso programmatico dei moduli della promozione (import/require di kb.mjs, lifecycle.mjs o learn.mjs con promote): la promozione si invoca solo nella forma esatta del plugin",
+      "applies_to": [
+        "shell"
+      ],
+      "on": "text",
+      "patterns": [
         {
           "re": "^(?=[\\s\\S]*\\b(kb|lifecycle|learn)\\.mjs\\b)(?=[\\s\\S]*\\b(import|require)\\b)(?=[\\s\\S]*\\bpromote\\b)",
           "flags": "iu"

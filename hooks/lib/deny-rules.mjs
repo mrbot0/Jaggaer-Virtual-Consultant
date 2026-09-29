@@ -14,7 +14,7 @@ const SEVERITIES = new Set(["hard-deny", "confirm"]);
 // regole cardine: senza di esse la policy è considerata manomessa
 export const REQUIRED = ["DR-SHELL-001", "DR-SHELL-003", "DR-WRITE-001", "DR-WRITE-003", "DR-BROWSER-002"];
 const APPLIES = new Set(["shell", "write", "browser"]);
-const ON = { shell: new Set(["command", "text", "glob"]), write: new Set(["path", "content"]), browser: new Set(["label", "key"]) };
+const ON = { shell: new Set(["command", "text", "glob", "first_arg"]), write: new Set(["path", "content"]), browser: new Set(["label", "key"]) };
 
 // Documento YAML → forma normalizzata (solo dati JSON): lancia su ogni campo non valido.
 export function normalizeDoc(doc) {
@@ -43,6 +43,13 @@ export function normalizeDoc(doc) {
     for (const k of ["when_step_class", "unless_step_class", "supersedes"]) { const v = list(k); if (v) out[k] = v; }
     if (r.trusted_labels_only === true) out.trusted_labels_only = true;
     if (r.on === "glob") out.samples = patterns.map((p) => p.sample);
+    // WP10a giro 1 (I1): on: first_arg — patterns sul primo argomento dopo uno degli script (nomi di file) in `scripts`,
+    // letto dopo lo scioglimento della shell (hooks/lib/exact-argv.mjs shellCommands)
+    if (r.on === "first_arg") {
+      const sc = list("scripts");
+      if (!sc || !sc.length || !sc.every((x) => /^[\w.-]+\.m?js$/.test(x))) throw new Error(`${at}: first_arg richiede scripts (nomi di file .mjs)`);
+      out.scripts = sc.map((x) => x.toLowerCase());
+    }
     if (r.unless_env !== undefined) { if (typeof r.unless_env !== "string" || !/^[A-Z_][A-Z0-9_]*$/.test(r.unless_env)) throw new Error(`${at}: unless_env non valido`); out.unless_env = r.unless_env; }
     return out;
   });
