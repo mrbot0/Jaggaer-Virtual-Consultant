@@ -49,3 +49,33 @@ test("sessione principale: gli script del plugin, le letture e le scritture fuor
     "ls product/kb > customers/ACME/reports/ls.txt",
   ]) assert.ok(silent(pre("guard-scope", ws, "Bash", { command: c })), c);
 });
+
+// ---------- Minor B#2 — deny da eccezione (fail-closed) auditati, best-effort, senza bloccare il deny ----------
+import { existsSync as exists, readFileSync as readF, mkdtempSync as mkd } from "node:fs";
+import { tmpdir as tmp } from "node:os";
+import { auditFile, verifyChain } from "../../hooks/lib/audit.mjs";
+
+test("guard in eccezione (JVC_TEST_THROW): deny e riga di audit kind guard con error:true, catena valida", () => {
+  const ws = mkWs(); seedSession(ws);
+  const f = auditFile(ws, "ACME");
+  const before = exists(f) ? readF(f, "utf8").trim().split("\n").filter(Boolean).length : 0;
+  for (const g of ["guard-scope", "guard-customer", "guard-destructive"]) {
+    const r = pre(g, ws, "Read", { file_path: join(ws, "customers/ACME/lessons/x.md") }, {}, { JVC_TEST_THROW: "1" });
+    assert.ok(denied(r), g);
+    assert.match(reasonOf(r), /fail-closed/);
+  }
+  const lines = readF(f, "utf8").trim().split("\n").filter(Boolean).map((l) => JSON.parse(l));
+  const added = lines.slice(before);
+  assert.equal(added.length, 3);
+  for (const e of added) { assert.equal(e.kind, "guard"); assert.equal(e.payload.decision, "deny"); assert.equal(e.payload.error, true); assert.match(e.payload.reason, /fail-closed/); }
+  assert.deepEqual(added.map((e) => e.actor), ["hook:guard-scope", "hook:guard-customer", "hook:guard-destructive"]);
+  assert.equal(verifyChain(f).ok, true);
+});
+
+test("guard in eccezione fuori da un workspace JVC: deny (come prima), nessun file di audit creato", () => {
+  const dir = mkd(join(tmp(), "jvc-nows-"));
+  const r = runHook("guard-scope", { session_id: "s", cwd: dir, hook_event_name: "PreToolUse", tool_name: "Read", tool_input: { file_path: join(dir, "x") } }, { CLAUDE_PROJECT_DIR: dir, CLAUDE_PLUGIN_ROOT: ROOT, JVC_TEST_THROW: "1" });
+  assert.ok(denied(r));
+  assert.equal(exists(join(dir, ".jvc")), false);
+  assert.equal(exists(join(dir, "customers")), false);
+});

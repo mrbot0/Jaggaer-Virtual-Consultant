@@ -36,15 +36,44 @@ function write(out, code = 0) {
 // Esegue `fn(input)` e scrive il suo output. `fn` restituisce null (nessuna
 // opinione) o un oggetto di output. JVC_TEST_THROW=1 simula un guasto interno
 // dopo la lettura dello stdin (per i test di fail-closed / fail-open).
+// Revisione finale (minore B#2, T8): anche il deny di un guard in eccezione va in audit, come ogni deny della via
+// decisionale. Best-effort: i moduli si caricano solo qui (questo file deve restare caricabile da solo), un errore
+// dell'audit non cambia nulla e il deny parte comunque entro AUDIT_WAIT_MS. Fuori da un workspace JVC (o nella radice
+// del plugin) nessuna riga: i guard lì non hanno opinioni.
+const AUDIT_WAIT_MS = 1000;
+async function auditErrorDeny(input, name, reason) {
+  if (!input) return;
+  const w = await import("./workspace.mjs");
+  const ws = w.workspaceRoot(input, process.env);
+  if (!w.isJvcWorkspace(ws, process.env)) return;
+  const sid = w.isSafeSessionId(input.session_id) ? input.session_id : w.readCurrentSession(ws);
+  let customer = null;
+  try { customer = sid ? w.readPointer(ws, sid)?.customer ?? null : null; } catch { customer = null; }
+  const { appendAudit } = await import("./audit.mjs");
+  const { summarizeInput } = await import("./tool-summary.mjs");
+  const tool = typeof input.tool_name === "string" ? input.tool_name : null;
+  appendAudit(ws, {
+    session: sid ?? null, customer, scope: null, kind: "guard", actor: `hook:${name}`,
+    payload: { decision: "deny", error: true, tool, reason, input_summary: tool ? summarizeInput(tool, input.tool_input ?? {}) : null,
+      agent_type: input.agent_type ?? null, agent_id: input.agent_id ?? null },
+  });
+}
+
 export async function runHook(fn, { name = "hook", failClosed = false } = {}) {
   let finished = false;
+  let parsed = null;
   const onError = (err) => {
     if (finished) return;
     finished = true;
     const msg = String(err?.message ?? err).slice(0, 300);
     try {
-      if (failClosed) write(deny(`guard error (fail-closed): ${name}: ${msg}`));
-      else {
+      if (failClosed) {
+        const out = deny(`guard error (fail-closed): ${name}: ${msg}`);
+        let sent = false;
+        const send = () => { if (!sent) { sent = true; write(out); } };
+        const timer = setTimeout(send, AUDIT_WAIT_MS);
+        auditErrorDeny(parsed, name, `guard error (fail-closed): ${msg}`).catch(() => {}).finally(() => { clearTimeout(timer); send(); });
+      } else {
         process.stderr.write(`[jvc:${name}] avviso: ${msg}\n`);
         write(warning(`[jvc:${name}] avviso: hook non riuscito (${msg}); si prosegue.`));
       }
@@ -59,6 +88,7 @@ export async function runHook(fn, { name = "hook", failClosed = false } = {}) {
     const raw = await readStdin();
     const input = raw.trim() ? JSON.parse(raw) : {};
     if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("input dell'hook non è un oggetto JSON");
+    parsed = input;
     if (process.env.JVC_TEST_THROW === "1") throw new Error("JVC_TEST_THROW: guasto simulato");
     // F0.3: ogni guard FAIL-CLOSED consulta prima il gate di integrità del pacchetto (integrity-gate.mjs):
     // integrità registrata a SessionStart non ok ⇒ deny di tutto tranne letture del workspace e doctor/verify.
