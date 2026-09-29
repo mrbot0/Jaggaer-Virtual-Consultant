@@ -276,9 +276,10 @@ const PROTECTED = [
   [".jvc/audit/**", "l'audit è append-only e lo scrive solo l'hook audit-append (T8): niente append, troncature o copie dalla shell"],
   // WP09c giro 1 (C1 a): la configurazione del cliente (environments, xray, remediation-scope…) decide host, credenziali
   // e deroghe; (I1) payload, mappa delle esecuzioni, pubblicazioni Xray e coda offline li scrivono solo gli script
-  ["customers/*/config/**", ALM_CONFIG_WHY],
+  // WP09c giro 2: a ogni profondità (un workspace "senza sessione" dentro il workspace non è una scorciatoia)
+  ["**/customers/*/config/**", ALM_CONFIG_WHY],
   ["**/runs/**/xray-*.json", ALM_FILES_WHY],
-  ["customers/*/queue/**", ALM_FILES_WHY],
+  ["**/customers/*/queue/**", ALM_FILES_WHY],
 ];
 const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
 const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);
