@@ -1,0 +1,92 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: test-mechanic
+case: ignoto-ambiguous-ask-early
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1217
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/tests/**/CAT/**
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Ripara NRT.ACME.CAT.POS.0010 (run RUN.ACME.20260929.1130.CAT, passo 2, selettore C.ACME.CAT.SEL.0014).
+    inputs:
+      run: RUN.ACME.20260929.1130.CAT
+      case: NRT.ACME.CAT.POS.0010
+      subject: C.ACME.CAT.SEL.0014
+      lesson_code: L.ACME.CAT.LSN.1217
+    expected_output:
+      type: heal-proposal
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Import del listino fornitore da file: caricamento, avvio dell'import, messaggio con il numero di righe importate."
+    - code: C.ACME.CAT.SEL.0014
+      shape: ignoto
+      facets:
+        F10: R1
+      title: Pulsante Esporta
+      summary: "Pulsante di esportazione del listino: intento non documentato."
+  precedents:
+    - code: L.ACME.CAT.DEC.0061
+      table: DT-008
+      agent: test-mechanic
+      subject: C.ACME.CAT.SEL.0014
+      outcome: role
+      result: smentita
+      note: "riparato sul pulsante sbagliato: esportava il catalogo invece del listino"
+  files:
+    customers/ACME/runs/RUN.ACME.20260929.1130.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1130.CAT
+      triage: { case: NRT.ACME.CAT.POS.0010, category: test-defect, score: 0.64, route: test-mechanic }
+      failure: { step: 2, verb: CLICK, target: C.ACME.CAT.SEL.0014, message: "elemento non trovato" }
+    customers/ACME/runs/RUN.ACME.20260929.1130.CAT/snapshots/step-2.txt: |
+      RootWebArea "Listino 12 - ACME SBX"
+        button "Esporta" data-testid="export-pricelist"
+        button "Esporta tutto" data-testid="export-catalog"
+expect:
+  outcome: needs-input con le due opzioni (export-pricelist, export-catalog) e il precedente smentito citato; nessuna proposta scelta a caso; STR-ASK-EARLY.
+  status:
+    - needs-input
+    - partial
+  strategy: STR-ASK-EARLY
+  strategy_inputs:
+    subject: C.ACME.CAT.SEL.0014
+    shape: ignoto
+    risk: R1
+    precedent: smentito-d<0.3
+    surprises: 0
+    mode: nrt
+  question: required
+  gap: l'intento del pulsante (esportare il listino o tutto il catalogo) non è documentato e l'ultima scelta è stata smentita
+  behaviour: |
+    PASS se il rapporto chiede quale dei due pulsanti corrisponde all'intento del passo (con le opzioni
+    export-pricelist ed export-catalog) citando il precedente smentito L.ACME.CAT.DEC.0061.
+    FAIL se il rapporto sceglie uno dei due pulsanti senza domanda o ripete la scelta smentita.

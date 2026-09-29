@@ -1,0 +1,96 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: test-mechanic
+case: unstable-testid-dynamic-grid
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1204
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 40000
+      minutes: 15
+    allowed_paths:
+      - customers/ACME/tests/**/CAT/**
+      - customers/ACME/runs/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/_inbox/CAT/digested/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Ripara NRT.ACME.CAT.POS.0009 (run RUN.ACME.20260929.1110.CAT, passo 2, selettore C.ACME.CAT.SEL.0012 della riga del listino).
+    inputs:
+      run: RUN.ACME.20260929.1110.CAT
+      case: NRT.ACME.CAT.POS.0009
+      subject: C.ACME.CAT.SEL.0012
+      lesson_code: L.ACME.CAT.LSN.1204
+    expected_output:
+      type: heal-proposal
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  items:
+    - code: C.ACME.CAT.FLW.0001
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Import catalogo da file
+      summary: "Import del listino fornitore da file: caricamento, avvio dell'import, messaggio con il numero di righe importate."
+    - code: C.ACME.CAT.SEL.0012
+      shape: consolidato
+      facets:
+        F10: R1
+      title: Cella prezzo della riga di listino
+      summary: Cella del prezzo nella griglia del listino con validazione asincrona (pattern dinamico).
+      body:
+        strategies:
+          - kind: testid
+            value: row-price-8f3a
+        stability: instabile
+        dynamic_pattern: true
+  files:
+    customers/ACME/tests/cases/CAT/NRT.ACME.CAT.POS.0009.yaml: |
+      id: NRT.ACME.CAT.POS.0009
+      type: NRT
+      title: Prezzo della riga validato
+      scope: CAT
+      genre: POS
+      state: promoted
+      composition:
+        flows: [C.ACME.CAT.FLW.0001]
+        steps:
+          - { n: 1, verb: NAVIGATE, target: { url_pattern: "/cat/pricelist/12" }, expect: { page_sig: "cat/pricelist" } }
+          - { n: 2, verb: CHECK, target: C.ACME.CAT.SEL.0012, expect: { value: "18,50" } }
+      boundary: { stop_at_step: 2, does_not_assert: [] }
+      compensations: []
+    customers/ACME/runs/RUN.ACME.20260929.1110.CAT/summary.yaml: |
+      run: RUN.ACME.20260929.1110.CAT
+      triage: { case: NRT.ACME.CAT.POS.0009, category: test-defect, score: 0.68, route: test-mechanic }
+      failure: { step: 2, verb: CHECK, target: C.ACME.CAT.SEL.0012, message: "elemento non trovato: [data-testid=row-price-8f3a]" }
+    customers/ACME/runs/RUN.ACME.20260929.1110.CAT/snapshots/step-2.txt: |
+      RootWebArea "Listino 12 - ACME SBX"
+        grid "Righe del listino"
+          row "Sedia ergonomica"
+            gridcell "Prezzo" data-testid="row-price-c71d" value="18,50"
+expect:
+  outcome: DT-008 con stabilità instabile e pattern dinamico ⇒ role (gridcell "Prezzo" nella riga), non il nuovo testid rigenerato; asserzione invariata.
+  status:
+    - ok
+  question: forbidden
+  gap: la stabilità e il pattern sono nell'Atlas
+  behaviour: |
+    PASS se il rapporto non adotta il testid rigenerato (row-price-c71d), sceglie role (gridcell "Prezzo" nella
+    riga) motivandolo con DT-008 (stabilità instabile, pattern dinamico) e lascia value "18,50".
+    FAIL se il rapporto sostituisce il testid con quello nuovo dello snapshot o cambia l'asserzione.
