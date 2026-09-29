@@ -223,3 +223,26 @@ test("--priors auto con ≥ 30 DEC verificate usa il tasso reale", () => {
   approx(j.score, 0.5275);
   assert.equal(j.outcome, "chiedi");
 });
+
+// WP10b (ruling 6): gli agenti T0 con i soli Read e Bash (failure-triage, config-auditor, defect-reporter) non scrivono
+// file: gli input della tabella si passano anche come argomenti `nome=valore` (booleani, numeri e null riconosciuti),
+// mai come JSON in linea; con --inputs i nome=valore sovrascrivono le chiavi del file.
+test("CLI: input nome=valore senza file, stesso esito di --inputs; chiave ignota o forma errata → exit 1", () => {
+  const byArgs = run(["--table", "DT-002", "risk=R2", "shape=libresco", "mandatory_missing=true", "open_contradiction=false", "novelty=false", "--priors", "auto", "--json"]);
+  assert.notEqual(byArgs.status, 0, "--priors auto senza --db resta un errore");
+  const d = tmp();
+  const pf = join(d, "p.json");
+  writeFileSync(pf, JSON.stringify({ disproved_procedi: 0.35 }));
+  const a = run(["--table", "DT-002", "risk=R2", "shape=libresco", "mandatory_missing=true", "open_contradiction=false", "novelty=false", "--priors", pf, "--json"]);
+  assert.equal(a.status, 0, a.stderr + a.stdout);
+  const f = join(d, "in.json");
+  writeFileSync(f, JSON.stringify(DT002_181));
+  const b = run(["--table", "DT-002", "--inputs", f, "--priors", pf, "--json"]);
+  const ja = JSON.parse(a.stdout); const jb = JSON.parse(b.stdout);
+  assert.equal(ja.outcome, "chiedi"); approx(ja.score, jb.score);
+  const over = JSON.parse(run(["--table", "DT-002", "--inputs", f, "mandatory_missing=false", "--priors", pf, "--json"]).stdout);
+  assert.equal(over.outcome, "procedi-con-assunzione");
+  assert.equal(run(["--table", "DT-002", "risk=R2", "novelity=false", "--json"]).status, 1);
+  assert.equal(run(["--table", "DT-002", "risk", "--json"]).status, 1);
+  assert.equal(run(["--table", "DT-002", "--json"]).status, 1, "senza input");
+});

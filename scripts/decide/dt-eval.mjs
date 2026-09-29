@@ -282,7 +282,7 @@ export function writeDecision(db, { customer, scope, root, result, agent = null,
   })();
 }
 
-const HELP = `uso: node scripts/decide/dt-eval.mjs --table DT-002 --inputs inputs.json [--priors auto|file.json]
+const HELP = `uso: node scripts/decide/dt-eval.mjs --table DT-002 (--inputs inputs.json | nome=valore …) [--priors auto|file.json]
        [--customer ACME] [--scope ADM] [--db path] [--root <dir cliente>] [--session SES…] [--agent nome]
        [--subject CODICE] [--cluster CL-…] [--strategy STR-…] [--write-dec]
        [--release R] [--confidence 0.85] [--effects | --no-effects] [--json] [--help]
@@ -290,6 +290,8 @@ const HELP = `uso: node scripts/decide/dt-eval.mjs --table DT-002 --inputs input
 Valuta una tabella di decisione (§15, §46.6) e stampa
 { outcome, score, components, prior_used, table_version, dec_code }.
 --inputs: file JSON (o JSON inline) con i valori degli input; i mancanti applicano null_policy.
+nome=valore (posizionali, ripetibili): gli input senza file (true/false/null/numeri tipizzati); sovrascrivono
+--inputs. È la forma per gli agenti che non scrivono file (mai JSON in linea negli argomenti degli agenti).
 --priors auto: tassi dal registro (outcomes-rates); sotto 30 DEC verificate vale il 'neutral' dichiarato.
 --priors file.json: { nome_prior: valore } in [0, 1].
 --effects / --no-effects: la decisione ha / non ha effetti; senza nessuno dei due gli effetti sono
@@ -307,15 +309,28 @@ function readJsonArg(v) {
   return JSON.parse(readFileSync(v, "utf8"));
 }
 
+// WP10b (ruling 6): input come argomenti posizionali `nome=valore` (per gli agenti che non scrivono file); true/false,
+// null e numeri sono tipizzati, il resto è testo. Mai JSON in linea negli argomenti degli agenti.
+export function parseKeyValues(args) {
+  const out = {};
+  for (const a of args) {
+    const m = /^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/s.exec(a);
+    if (!m) throw new Error(`argomento non riconosciuto: ${a} (atteso nome=valore)`);
+    const v = m[2];
+    out[m[1]] = v === "true" ? true : v === "false" ? false : v === "null" ? null : /^-?d+(.d+)?$/.test(v) ? Number(v) : v;
+  }
+  return out;
+}
+
 function main(argv) {
-  const { opts } = parseArgs(argv, { flags: ["write-dec", "effects", "no-effects"] });
+  const { opts, positional } = parseArgs(argv, { flags: ["write-dec", "effects", "no-effects"] });
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
-  if (!opts.table || !opts.inputs) return fail(asJson, 1, "richiesti --table e --inputs");
+  if (!opts.table || (!opts.inputs && !positional.length)) return fail(asJson, 1, "richiesti --table e gli input (--inputs <file.json> e/o nome=valore)");
   let table, inputs, filePriors = null, db = null;
   try {
     table = loadTable(opts.table);
-    inputs = readJsonArg(opts.inputs);
+    inputs = { ...(opts.inputs ? readJsonArg(opts.inputs) : {}), ...parseKeyValues(positional) };
     // file dei priori letto qui: un file mancante o malformato è un errore utente (exit 1)
     if (opts.priors && opts.priors !== "auto") filePriors = readJsonArg(opts.priors);
   } catch (e) { return fail(asJson, 1, String(e.message ?? e)); }
