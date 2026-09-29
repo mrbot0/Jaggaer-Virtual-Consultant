@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "din.schema.json",
+  "title": "Profilo statistico e anonimo dei documenti reali (DIN)",
+  "description": "§20.5.2: volumi, compilazione dei campi (fill_rate, distinti, quota dei primi 5), importi aggregati, tempi e percorsi del ciclo di vita, ruoli — MAI valori che identifichino persone, fornitori o documenti; nessun aggregato su gruppi < 20 (privacy.aggregation_min_group ≥ 20, values_retained: none). de_facto_mandatory: campi documentati opzionali con fill_rate ≥ 0.98 (→ CTR).",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/din"
+    }
+  ],
+  "$defs": {
+    "din": {
+      "type": "object",
+      "required": [
+        "type",
+        "document",
+        "sample",
+        "fields",
+        "privacy"
+      ],
+      "properties": {
+        "type": {
+          "const": "DIN"
+        },
+        "document": {
+          "type": "string",
+          "minLength": 3
+        },
+        "sample": {
+          "type": "object",
+          "required": [
+            "size"
+          ],
+          "properties": {
+            "size": {
+              "type": "integer",
+              "minimum": 20
+            },
+            "period": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            }
+          }
+        },
+        "volumes": {
+          "type": "object"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "field"
+            ],
+            "properties": {
+              "field": {
+                "type": "string",
+                "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.FLD\\.\\d{4}(\\.v\\d+)?$"
+              },
+              "fill_rate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "distinct": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "top5_share": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "empty_in_states": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "values_histogram": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "note": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "amounts": {
+          "type": "object"
+        },
+        "lifecycle": {
+          "type": "object"
+        },
+        "by_role": {
+          "type": "object"
+        },
+        "de_facto_mandatory": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.FLD\\.\\d{4}(\\.v\\d+)?$"
+          }
+        },
+        "privacy": {
+          "type": "object",
+          "required": [
+            "values_retained",
+            "aggregation_min_group"
+          ],
+          "properties": {
+            "values_retained": {
+              "const": "none"
+            },
+            "aggregation_min_group": {
+              "type": "integer",
+              "minimum": 20
+            }
+          }
+        },
+        "quality": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "err.schema.json",
+  "title": "Errore della piattaforma (ERR)",
+  "description": "§20.6.2: messaggio (it/en), codice, firma della pagina, innesco, categoria, bloccante, severità, significato, risoluzione (utente e configurazione), relazioni, deviazione dallo standard, osservazioni, test che lo provoca, qualità.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/err"
+    }
+  ],
+  "$defs": {
+    "err": {
+      "type": "object",
+      "required": [
+        "type",
+        "message",
+        "category"
+      ],
+      "properties": {
+        "type": {
+          "const": "ERR"
+        },
+        "message": {
+          "type": "object",
+          "minProperties": 1,
+          "properties": {
+            "it": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "en": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "page_signature": {
+          "type": "string"
+        },
+        "trigger": {
+          "type": "object"
+        },
+        "category": {
+          "enum": [
+            "validation",
+            "permission",
+            "integration",
+            "system",
+            "timeout",
+            "business-rule",
+            "concurrency",
+            "session"
+          ]
+        },
+        "blocking": {
+          "type": "boolean"
+        },
+        "severity": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "meaning": {
+          "type": "string"
+        },
+        "resolution": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "string"
+            },
+            "config": {
+              "type": "string"
+            }
+          }
+        },
+        "related": {
+          "type": "object"
+        },
+        "deviates_from": {
+          "type": "string",
+          "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.ERR\\.\\d{4}(\\.v\\d+)?$"
+        },
+        "observed": {
+          "type": "object",
+          "properties": {
+            "first": {
+              "type": "string"
+            },
+            "last": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "frequency_in_usr": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "expected_in": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "quality": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

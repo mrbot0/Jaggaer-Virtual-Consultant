@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "usr.schema.json",
+  "title": "Profilo d'uso per ruolo (USR)",
+  "description": "§20.5.3: azioni, sequenze, attriti ed errori per RUOLO, mai per utente (privacy.per_user: never, min_group ≥ 20, users_in_role ≥ 20).",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/usr"
+    }
+  ],
+  "$defs": {
+    "usr": {
+      "type": "object",
+      "required": [
+        "type",
+        "role",
+        "users_in_role",
+        "period",
+        "privacy"
+      ],
+      "properties": {
+        "type": {
+          "const": "USR"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 2
+        },
+        "users_in_role": {
+          "type": "integer",
+          "minimum": 20
+        },
+        "period": {
+          "type": "string"
+        },
+        "actions_per_week": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "sequences_top": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "seq",
+              "share"
+            ],
+            "properties": {
+              "seq": {
+                "type": "string"
+              },
+              "share": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        "friction": {
+          "type": "object",
+          "properties": {
+            "top_errors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "err"
+                ],
+                "properties": {
+                  "err": {
+                    "type": "string",
+                    "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.ERR\\.\\d{4}(\\.v\\d+)?$"
+                  },
+                  "share": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "never_used": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.FLW\\.\\d{4}(\\.v\\d+)?$"
+          }
+        },
+        "privacy": {
+          "type": "object",
+          "required": [
+            "per_user",
+            "min_group"
+          ],
+          "properties": {
+            "per_user": {
+              "const": "never"
+            },
+            "min_group": {
+              "type": "integer",
+              "minimum": 20
+            }
+          }
+        }
+      }
+    }
+  }
+}

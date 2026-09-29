@@ -23,7 +23,35 @@ const words = (s) => (s || "").trim().split(/\s+/).filter(Boolean).length;
 // WP09b: schemi di tipo (§5.5, §5.6, §27.1, §28, §64), agganciati per `type` (modifica minima). I casi NRT.* hanno il
 // loro schema (nrt-case.schema.json) e la loro grammatica del codice NRT.<CLIENTE>.<SCOPE>.<GENERE>.<SEQ>, fuori dal registro.
 export const TYPE_SCHEMAS = Object.freeze({ SEL: "sel.schema.json", HND: "hnd.schema.json", CHK: "chk.schema.json", CFP: "cfp.schema.json",
-  FLW: "flw.schema.json", KEY: "key.schema.json", LCY: "lcy.schema.json", INT: "int.schema.json", CFG: "cfg.schema.json" });
+  FLW: "flw.schema.json", KEY: "key.schema.json", LCY: "lcy.schema.json", INT: "int.schema.json", CFG: "cfg.schema.json",
+  // WP09d: Analytics (§20.3, §20.5, §20.6)
+  TBL: "tbl.schema.json", QRY: "qry.schema.json", DIN: "din.schema.json", USR: "usr.schema.json", PSP: "psp.schema.json", ERR: "err.schema.json" });
+
+// WP09d (§20.5.5): DIN e USR non conservano valori che identificano qualcuno. Oltre allo schema (values_retained: none,
+// gruppo minimo 20): nessun indirizzo email in nessun valore; nessun campo chiamato come nomi/email/codici/utenti/valori
+// con un elenco di valori; nessun gruppo aggregato (n/count/size) sotto 20.
+export const MIN_GROUP = 20;
+const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/;
+const IDENTIFYING_KEY = /(^|_)(names?|full_?names?|emails?|e_?mails?|mails?|users?|user_?names?|usernames?|user_?ids?|persons?|people|suppliers?|supplier_?names?|vendors?|codes?|ids|values|top_values|sample_values|samples|examples|document_?numbers?|doc_?numbers?|phones?|telefon[oi])$/i;
+export function privacyErrors(obj) {
+  const out = [];
+  const walk = (v, path) => {
+    if (typeof v === "string") { if (EMAIL.test(v)) out.push(`${path}: indirizzo email (valore identificativo, §20.5.5)`); return; }
+    if (Array.isArray(v)) {
+      v.forEach((x, i) => {
+        if (x && typeof x === "object" && !Array.isArray(x)) for (const k of ["n", "count", "size"]) if (typeof x[k] === "number" && x[k] < MIN_GROUP) out.push(`${path}/${i}: gruppo di ${x[k]} < ${MIN_GROUP} (nessun aggregato su gruppi piccoli)`);
+        walk(x, `${path}/${i}`);
+      });
+      return;
+    }
+    if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) {
+      if (IDENTIFYING_KEY.test(k) && Array.isArray(x) && x.some((e) => typeof e === "string" || typeof e === "number")) out.push(`${path}/${k}: elenco di valori identificativi (solo distribuzioni e quote)`);
+      walk(x, `${path}/${k}`);
+    }
+  };
+  walk(obj, "");
+  return out;
+}
 const fmtErr = (e) => `${e.instancePath || "/"} ${e.message}${e.params?.missingProperty ? ` (${e.params.missingProperty})` : ""}${e.params?.allowedValues ? ` (${e.params.allowedValues.join(" ")})` : ""}`;
 export const NRT_ID_RE = /^NRT\.(STD|[A-Z0-9]{4})\.([A-Z0-9]{3})\.(POS|NEG|INT|HND|BSL|CFG|SMK|OPS)\.(\d{4})$/;
 
@@ -57,6 +85,7 @@ export function validateItem(obj) {
       if (!errors.includes(m)) errors.push(m);
     }
   }
+  if (obj?.type === "DIN" || obj?.type === "USR") for (const e of privacyErrors(obj)) if (!errors.includes(e)) errors.push(e);
   if (obj?.type === "DOC" && !validateDoc(obj)) for (const e of validateDoc.errors) errors.push(`${e.instancePath || "/"} ${e.message}${e.params?.missingProperty ? ` (${e.params.missingProperty})` : ""}`);
   return { ok: errors.length === 0, errors };
 }

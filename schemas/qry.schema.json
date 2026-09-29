@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qry.schema.json",
+  "title": "Query Analytics consegnabile (QRY)",
+  "description": "§20.3, DT-015: una query diventa QRY solo se ESEGUITA con LIMIT e giudicata coerente; su tabelle ignote solo dopo due esecuzioni coerenti (executed.runs ≥ 2). Il testo SQL porta il LIMIT (o FETCH FIRST / TOP): scripts/analytics/query-guard.mjs lo inietta e lo verifica.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/qry"
+    }
+  ],
+  "$defs": {
+    "qry": {
+      "type": "object",
+      "required": [
+        "type",
+        "sql",
+        "limit",
+        "executed",
+        "tables_knowledge"
+      ],
+      "properties": {
+        "type": {
+          "const": "QRY"
+        },
+        "sql": {
+          "type": "string",
+          "minLength": 8,
+          "pattern": "([Ll][Ii][Mm][Ii][Tt]\\s+\\d+|[Ff][Ee][Tt][Cc][Hh]\\s+[Ff][Ii][Rr][Ss][Tt]\\s+\\d+|[Tt][Oo][Pp]\\s*\\(?\\s*\\d+)"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.TBL\\.\\d{4}(\\.v\\d+)?$"
+          }
+        },
+        "tables_knowledge": {
+          "enum": [
+            "validate",
+            "empiriche",
+            "ignote"
+          ]
+        },
+        "pattern": {
+          "type": "string",
+          "pattern": "^CL-ANL-\\d{3}$"
+        },
+        "executed": {
+          "type": "object",
+          "required": [
+            "runs",
+            "coherence"
+          ],
+          "properties": {
+            "runs": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "coherence": {
+              "const": "coerente"
+            },
+            "last_at": {
+              "type": "string"
+            },
+            "row_count": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "warning": {
+          "type": "string"
+        },
+        "portability": {
+          "type": "object",
+          "required": [
+            "class"
+          ],
+          "properties": {
+            "class": {
+              "enum": [
+                "universale",
+                "condizionata",
+                "specifica",
+                "ignota"
+              ]
+            },
+            "condition": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "tables_knowledge": {
+                "const": "ignote"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "executed": {
+                "properties": {
+                  "runs": {
+                    "minimum": 2
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "psp.schema.json",
+  "title": "Pattern di soluzione di processo (PSP)",
+  "description": "§20.5.4: quando si applica (modello di business, centralizzazione, soglie), cosa raccomanda (processo, configurazioni, check), cosa evitare, evidenze (clienti che confermano, contraddizioni), portabilità. Al livello S salgono solo i pattern, mai i numeri di un cliente.",
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/psp"
+    }
+  ],
+  "$defs": {
+    "psp": {
+      "type": "object",
+      "required": [
+        "type",
+        "applies_when",
+        "recommends",
+        "portability"
+      ],
+      "properties": {
+        "type": {
+          "const": "PSP"
+        },
+        "applies_when": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "recommends": {
+          "type": "object",
+          "minProperties": 1,
+          "properties": {
+            "process": {
+              "type": "string"
+            },
+            "config": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "checks": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "avoid": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "object",
+          "properties": {
+            "customers_confirmed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "contradicted": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "portability": {
+          "type": "object",
+          "required": [
+            "class"
+          ],
+          "properties": {
+            "class": {
+              "enum": [
+                "universale",
+                "condizionata",
+                "specifica",
+                "ignota"
+              ]
+            },
+            "condition": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
