@@ -11,7 +11,7 @@
 // deprecate <codice> --superseded-by <codice> [--customer C]
 //                                                F12 deprecato + superseded_by nel file; mai cancellato (§49.4).
 // Solo item in stato validato o clusterizzato si promuovono; lo schema dell'item nuovo è validato prima di scriverlo.
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
 import YAML from "yaml";
 import { openDb } from "./db.mjs";
@@ -20,7 +20,8 @@ import { assignSeq, formatCode } from "./assign-seq.mjs";
 import { validateItem } from "./validate-schema.mjs";
 import { indexItemFile, sourceWeight } from "./reindex.mjs";
 import { BOUNDARY_RULES } from "./validate-boundary.mjs";
-import { itemFile, loadItem } from "../lib/kb-items.mjs";
+import { itemFile, loadItem, loadItems } from "../lib/kb-items.mjs";
+import { withLock } from "./lock.mjs";
 import { pseudonymizer, saltFrom, PseudonymError } from "../digest/pseudonymize.mjs";
 import { approvalsFile, readApprovals, findGrant, consumeGrants } from "../admin/approvals.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
@@ -86,10 +87,56 @@ function updateItem(db, ws, code, customer, mutate) {
 }
 
 const KB_BOUNDARY = BOUNDARY_RULES.filter((r) => r.dir === "kb");
+export const CANDIDATE_VALIDITY_DAYS = 28;
+const OPEN_CTR = ["aperto", "aperta", "open", "irrisolta"];
+
+// Contraddizioni aperte sull'item: registro contradictions del DB del cliente e item CTR non chiusi che lo citano.
+export function openContradictions(db, ws, customer, code) {
+  const base = code.replace(/\.v\d+$/, "");
+  const out = [];
+  try {
+    for (const r of db.prepare("select code, a_code, b_code, status, resolution from contradictions").all()) {
+      const open = OPEN_CTR.includes(String(r.status ?? "").toLowerCase()) || (r.status == null && r.resolution == null);
+      if (open && [r.a_code, r.b_code].some((x) => x === code || x === base)) out.push(r.code);
+    }
+  } catch { /* DB senza la tabella: nessuna riga */ }
+  for (const it of loadItems(ws, { customer, types: ["CTR"] })) {
+    if (["deprecato"].includes(it.facets?.F12) || /risolt|chius/i.test(String(it.status ?? it.resolution?.status ?? ""))) continue;
+    if (JSON.stringify({ ...it, id: null }).includes(base)) out.push(it.id);
+  }
+  return [...new Set(out)];
+}
+
+// Lunedì (UTC) di una settimana ISO "YYYY-Www".
+export function isoWeekStart(id) {
+  const m = /^(\d{4})-W(\d{2})$/.exec(String(id));
+  if (!m) return null;
+  const jan4 = new Date(Date.UTC(Number(m[1]), 0, 4));
+  const monday1 = new Date(jan4.getTime() - ((jan4.getUTCDay() || 7) - 1) * 86400000);
+  return new Date(monday1.getTime() + (Number(m[2]) - 1) * 7 * 86400000);
+}
+
+// Candidato della digestione (customers/<C>/digest/<settimana>/candidates.yaml, scritto da weekly.mjs) che contiene l'item,
+// universale/condizionato con P ≥ 0.8, di una settimana non più vecchia di CANDIDATE_VALIDITY_DAYS.
+export function digestCandidate(ws, customer, code, now = new Date()) {
+  const dir = join(ws, "customers", customer, "digest");
+  if (!existsSync(dir)) return null;
+  for (const w of readdirSync(dir).filter((x) => /^\d{4}-W\d{2}$/.test(x)).sort().reverse()) {
+    const start = isoWeekStart(w);
+    if (!start || now.getTime() - start.getTime() > CANDIDATE_VALIDITY_DAYS * 86400000 + 7 * 86400000) continue;
+    const f = join(dir, w, "candidates.yaml");
+    if (!existsSync(f)) continue;
+    let d;
+    try { d = YAML.parse(readFileSync(f, "utf8")); } catch { continue; }
+    const c = (d?.candidates ?? []).find((x) => Array.isArray(x.items) && x.items.includes(code) && ["universale", "condizionata"].includes(x.class) && Number(x.p) >= 0.8);
+    if (c) return { ...c, week: w };
+  }
+  return null;
+}
 // Campi che un item S non porta (sono del cliente o del ciclo di vita dell'item di origine).
 const DROP_ON_PROMOTE = ["promoted_to", "superseded_by", "confirmed_by_observation", "observed", "deviates_from", "derives_from"];
 
-export function promote({ ws, code, customer, to = null, approval = null, sid = null, env = process.env, now = new Date() }) {
+export async function promote({ ws, code, customer, to = null, approval = null, sid = null, env = process.env, now = new Date() }) {
   const p = parseCode(code);
   if (!p) throw E1(`codice non valido: ${code}`);
   if (p.level === "S") throw E1("un item S non si promuove");
@@ -126,25 +173,44 @@ export function promote({ ws, code, customer, to = null, approval = null, sid = 
     const own = new RegExp(String.raw`\b[CL]\.${customer}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(?:\.v\d+)?\b`, "g");
     const cited = [...new Set((JSON.stringify({ ...src, id: null }).match(own) ?? []))];
     if (cited.length) throw E3(`l'item cita item del cliente (${cited.slice(0, 5).join(", ")}${cited.length > 5 ? ", …" : ""}): un item S non cita il livello cliente — promuovi prima i riferimenti o sostituiscili con i loro S`);
+    // §22.2: mai un item contraddetto; §22 passo 6: solo un candidato della digestione (DT-010) in attesa di approvazione.
+    const ctr = openContradictions(cdb, ws, customer, code);
+    if (ctr.length) throw E3(`l'item ha una contraddizione aperta (${ctr.join(", ")}): un item contraddetto non si promuove (§22.2)`);
+    const cand = digestCandidate(ws, customer, code, now);
+    if (!cand) throw E3(`${code} non è un candidato della digestione settimanale (universale/condizionato, P ≥ 0.8, ≥ 2 clienti: DT-010) nelle ultime ${CANDIDATE_VALIDITY_DAYS / 7} settimane: learn digest-weekly prima`);
     let salt;
     try { salt = saltFrom(env); } catch (err) { throw E3(err.message); }
     const ps = pseudonymizer({ salt, customers: [customer], ...customerNames(ws, customer) });
-    const pdb = openDb(productDbPath(ws));
+    const build = (newCode) => {
+      const o = structuredClone(src);
+      for (const k of DROP_ON_PROMOTE) delete o[k];
+      const body = ps.object(o, new Set(["facets", "classification", "cluster", "type"]));
+      const out = { ...body, id: newCode, type: src.type, promoted_from: code,
+        facets: { ...src.facets, F1: "promozione-digest", F12: "promosso" }, source_weight: sourceWeight(src) };
+      const text = YAML.stringify(out);
+      for (const r of KB_BOUNDARY) { const m = r.re.exec(text); if (m) throw E3(`l'item promosso violerebbe il confine dei domini (${r.rule}: ${m[0]})`); }
+      return out;
+    };
+    build(`S.STD.${p.scope}.${p.type}.0000`);   // confine e pseudonimizzazione verificati prima di consumare l'approvazione
+    // giro 1 (m7): sotto il lock di product/ della digestione; l'approvazione si consuma PRIMA di scrivere (monouso anche
+    // con due promozioni concorrenti con lo stesso token)
+    mkdirSync(join(ws, "product"), { recursive: true });
+    let result;
     try {
-      const made = createItem(pdb, ws, { level: "S", customer: "STD", scope: p.scope, type: p.type }, (newCode) => {
-        const o = structuredClone(src);
-        for (const k of DROP_ON_PROMOTE) delete o[k];
-        const body = ps.object(o, new Set(["facets", "classification", "cluster", "type"]));
-        const out = { ...body, id: newCode, type: src.type, promoted_from: code,
-          facets: { ...src.facets, F1: "promozione-digest", F12: "promosso" }, source_weight: sourceWeight(src) };
-        const text = YAML.stringify(out);
-        for (const r of KB_BOUNDARY) { const m = r.re.exec(text); if (m) throw E3(`l'item promosso violerebbe il confine dei domini (${r.rule}: ${m[0]})`); }
-        return out;
+      result = await withLock(join(ws, "product"), "knowledge", 10 * 60000, () => {
+        consumeGrants(file, [g.record], { date: now });
+        const pdb = openDb(productDbPath(ws));
+        try {
+          const made = createItem(pdb, ws, { level: "S", customer: "STD", scope: p.scope, type: p.type }, build);
+          updateItem(cdb, ws, code, customer, (o) => { o.promoted_to = made.code; return o; });
+          return { code: made.code, from: code, level: "S", file: made.file, approval: g.record.hash, candidate: cand.id, pseudonymized: [...new Set(ps.map.values())] };
+        } finally { pdb.close(); }
       });
-      updateItem(cdb, ws, code, customer, (o) => { o.promoted_to = made.code; return o; });
-      consumeGrants(file, [g.record], { date: now });
-      return { code: made.code, from: code, level: "S", file: made.file, approval: g.record.hash, pseudonymized: [...new Set(ps.map.values())] };
-    } finally { pdb.close(); }
+    } catch (err) {
+      if (/lock attivo/.test(String(err?.message))) throw E3(`${err.message}: una digestione o una promozione è in corso su product/ (admin lock)`);
+      throw err;
+    }
+    return result;
   } finally { cdb.close(); }
 }
 
@@ -207,7 +273,7 @@ export async function main(cmd, argv, env = process.env) {
     const customer = opts.customer ?? null;
     if (sc && customer && sc !== customer) return fail(asJson, 3, `--customer ${customer} diverso dal cliente della sessione (${sc}) (§46.4)`);
     const r = cmd === "promote"
-      ? promote({ ws, code, customer, to: opts.to ?? null, approval: opts.approval ?? null, sid, env })
+      ? await promote({ ws, code, customer, to: opts.to ?? null, approval: opts.approval ?? null, sid, env })
       : deprecate({ ws, code, supersededBy: opts["superseded-by"], customer });
     console.log(JSON.stringify({ ok: true, ...r }));
     return 0;

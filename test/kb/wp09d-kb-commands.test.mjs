@@ -14,6 +14,7 @@ import { migrate, migrationFiles } from "../../scripts/kb/migrate.mjs";
 import { flw, hnd, sel, writeItem, FACETS } from "../helpers/wp09b-items.mjs";
 import { ws09d, withSession, say, cli, SALT } from "../helpers/wp09d.mjs";
 import { readApprovals, approvalsFile } from "../../scripts/admin/approvals.mjs";
+import { isoWeek } from "../../scripts/digest/collect.mjs";
 
 const KB = "scripts/kb/kb.mjs";
 const custDb = (ws) => join(ws, "customers", "ACME", "knowledge.db");
@@ -155,6 +156,10 @@ function promoteWs() {
   writeItem(ws, flw("L.ACME.CAT.FLW.0002", { facets: { ...FACETS, F12: "quarantena" } }));
   writeItem(ws, flw("C.ACME.CAT.FLW.0005", { summary: "Flusso ACME validato." }));
   reindex(join(ws, "customers", "ACME"), custDb(ws));
+  // giro 1 (I2): la promozione a S vale solo per un candidato della digestione (DT-010) — qui come lo scrive weekly.mjs
+  const week = isoWeek(new Date()).id;
+  mkdirSync(join(ws, "customers/ACME/digest", week), { recursive: true });
+  writeFileSync(join(ws, "customers/ACME/digest", week, "candidates.yaml"), YAML.stringify({ week, customer: "ACME", candidates: [{ id: `CAND-${week}-001`, class: "universale", p: 1, items: ["L.ACME.CAT.FLW.0001"] }] }));
   return ws;
 }
 const item = (ws, rel) => YAML.parse(readFileSync(join(ws, rel), "utf8"));
