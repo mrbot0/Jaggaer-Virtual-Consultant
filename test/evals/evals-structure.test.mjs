@@ -31,7 +31,7 @@ const EVALS = join(ROOT, "evals");
 const AGENTS = readdirSync(join(ROOT, "agents")).filter((f) => f.endsWith(".md")).map((f) => f.slice(0, -3)).sort();
 // Blocchi della parte 2 (dispatch separati): A e B scritti, C segue. Un ruolo presente deve avere 20 casi.
 const BLOCK_A = ["scope-expert", "scope-extractor", "scope-digester", "customer-profiler", "process-mapper"];
-const BLOCK_B = []; // riempito con i ruoli del blocco B quando sono tutti scritti
+const BLOCK_B = ["cluster-validator", "weekly-digest", "root-cause-analyst", "config-designer", "lesson-validator"];
 // Categorie di §49.1 che ogni ruolo copre (almeno un caso con uno dei tag): percorso felice, budget, confine (tentativi
 // fuori cella), mai/dati non fidati, sorpresa o contraddizione, forma ignoto o libresco.
 const REQUIRED_CATEGORIES = {

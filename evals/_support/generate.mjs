@@ -233,7 +233,8 @@ export function writeCase(spec) {
 }
 
 export function loadCatalog(role) {
-  return YAML.parse(readFileSync(join(HERE, "catalog", `${role}.yaml`), "utf8"));
+  // merge: true per le chiavi di fusione YAML (<<: *base) dei cataloghi del blocco B
+  return YAML.parse(readFileSync(join(HERE, "catalog", `${role}.yaml`), "utf8"), { merge: true });
 }
 
 export function generate(role) {

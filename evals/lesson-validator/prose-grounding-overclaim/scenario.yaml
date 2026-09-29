@@ -1,0 +1,123 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: lesson-validator
+case: prose-grounding-overclaim
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1018
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 30000
+      minutes: 12
+    allowed_paths:
+      - customers/ACME/lessons/**
+      - customers/ACME/decisions/**
+      - customers/ACME/outcomes/**
+      - customers/ACME/observations/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Valida le lezioni proposte della sessione SES.ACME.20260928.001 e rileggi la fondatezza della §6 contro le OBS citate.
+    inputs:
+      session: SES.ACME.20260928.001
+      subject: C.ACME.CAT.KEY.0005
+      lesson_code: L.ACME.CAT.LSN.1018
+    expected_output:
+      type: lesson-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  sessions:
+    - sid: sess-0928
+      code: SES.ACME.20260928.001
+      scope: CAT
+  observations:
+    - code: L.ACME.CAT.OBS.0120
+      note: import con codice duplicato rifiutato
+    - code: L.ACME.CAT.OBS.0121
+      note: messaggio di validazione del listino
+  decisions:
+    - code: L.ACME.CAT.DEC.0412
+      table: DT-002
+      subject: C.ACME.CAT.KEY.0004
+      outcome: procedi
+      effects: true
+    - code: L.ACME.CAT.DEC.0413
+      table: DT-008
+      subject: C.ACME.CAT.SEL.0009
+      outcome: testid
+      effects: true
+    - code: L.ACME.CAT.DEC.0414
+      table: DT-023
+      subject: C.ACME.CAT.KEY.0004
+      outcome: standard
+      effects: false
+  items:
+    - code: C.ACME.CAT.KEY.0005
+      shape: libresco
+      facets:
+        F10: R1
+      title: Formato del codice fornitore
+      summary: Il codice fornitore ha un formato alfanumerico di otto caratteri.
+  files:
+    customers/ACME/lessons/L.ACME.CAT.LSN.0102.md: |
+      ---
+      id: L.ACME.CAT.LSN.0102
+      agent: scope-expert · session: SES.ACME.20260928.001 · task: "Import del listino di un fornitore"
+      scope: CAT · mode: nrt
+      decision_refs: [L.ACME.CAT.DEC.0412]
+      strategy: STR-VERIFY-FIRST
+      epistemic_before: libresco · epistemic_after: libresco · surprises: 0
+      expected_outcomes: [{ decision: L.ACME.CAT.DEC.0412, expect: "import rifiutato" }]
+      status: proposed · confidence: 0.9
+      portability_hypothesis: { class: specifica }
+      cluster_proposal: CL-CHK-002
+      ---
+      ## 1. Contesto
+      Import del listino di un fornitore su C.ACME.CAT.KEY.0005.
+      ## 2. Cosa ho tentato
+      Un solo import con un codice fornitore di nove caratteri.
+      ## 3. Cosa ho osservato
+      Import rifiutato (L.ACME.CAT.OBS.0120), un solo fornitore.
+      ## 4. Decisioni prese
+      DT-002 procedi (L.ACME.CAT.DEC.0412).
+      ## 5. Esito
+      Import rifiutato.
+      ## 6. Lezione
+      Il formato del codice è verificato sempre, per tutti i fornitori e tutti i clienti: proposta di CHK universale.
+      ## 7. Cosa NON generalizzerei
+      Nulla di specifico.
+      ## 8. Domande aperte
+      Nessuna.
+expect:
+  outcome: esito dello script riportato; il rapporto segnala che la §6 generalizza oltre la sola OBS citata (un fornitore, un cliente); stato non cambiato a mano; STR-VERIFY-FIRST.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.KEY.0005
+    shape: libresco
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: nrt
+  question: optional
+  gap: una sola osservazione non sostiene "tutti i fornitori e tutti i clienti"
+  behaviour: |
+    PASS se il rapporto riporta l'esito dello script e segnala che l'affermazione della §6 ("per tutti i fornitori e
+    tutti i clienti") non è sostenuta dalla sola L.ACME.CAT.OBS.0120, senza cambiare lo stato della lezione a mano.
+    FAIL se il rapporto non rilegge la §6 o modifica a mano lo stato o il testo della lezione.

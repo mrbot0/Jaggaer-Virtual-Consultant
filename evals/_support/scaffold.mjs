@@ -17,6 +17,7 @@ import YAML from "yaml";
 import { openDb } from "../../scripts/kb/db.mjs";
 import { itemFile, CODE_RE } from "../../scripts/lib/kb-items.mjs";
 import { upsertClusters, DEFAULT_CLUSTERS_DIR } from "../../scripts/kb/reindex.mjs";
+import { newSession } from "../../scripts/admin/session.mjs";
 
 export const PLUGIN_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const FICTIONAL_CUSTOMERS = ["ACME", "BETA"];
@@ -134,6 +135,16 @@ export function buildWorkspace(ws, scenario) {
     for (const x of [...(W.cluster_members ?? []), ...gen.members]) {
       dbs.ACME.prepare("insert or replace into cluster_members (cluster_code, item_code, admitted_at, decision_code) values (?, ?, ?, null)").run(x.cluster, x.item, "2026-09-20T10:00:00Z");
     }
+    // OBS e DEC senza esito citate dalle lezioni (blocco B): esistono nel registro, così DT-004 non le dà per inesistenti.
+    for (const o of W.observations ?? []) {
+      dbs.ACME.prepare("insert or replace into observations (code, session, scope, page_sig, payload, confirmed_count) values (?, ?, ?, ?, ?, ?)")
+        .run(o.code, o.session ?? "SES.ACME.20260928.001", CODE_RE.exec(o.code)?.[3] ?? null, o.page_sig ?? null, JSON.stringify({ note: o.note ?? null }), o.confirmed ?? 1);
+    }
+    for (const d of W.decisions ?? []) {
+      dbs.ACME.prepare("insert or replace into decisions (code, table_code, agent, session, subject_code, subject_cluster, inputs, priors, score, outcome, strategy, at) values (?, ?, ?, 'SES.ACME.20260928.001', ?, null, '{}', '{}', null, ?, null, ?)")
+        .run(d.code, d.table, d.agent ?? "scope-expert", d.subject ?? null, d.outcome ?? null, "2026-09-28T10:00:00Z");
+      if (d.effects !== undefined) dbs.ACME.prepare("insert or replace into decision_context (decision_code, release_ref, shape, facets, confidence, effects) values (?, null, null, '{}', 0.7, ?)").run(d.code, d.effects ? 1 : 0);
+    }
     for (const x of W.contradictions ?? []) {
       (dbs[x.customer ?? "ACME"] ?? dbs.ACME).prepare("insert or replace into contradictions (code, a_code, b_code, facet, resolution, status) values (?, ?, ?, ?, null, ?)")
         .run(x.code, x.a, x.b, x.facet ?? null, x.status ?? "aperta");
@@ -141,6 +152,14 @@ export function buildWorkspace(ws, scenario) {
   } finally {
     product.close();
     for (const db of Object.values(dbs)) db.close();
+  }
+  // Sessioni passate di ACME citate dalle lezioni (blocco B, lesson-validator): session.json valido per lo schema, con il
+  // codice SES, le sorprese registrate e, se indicato, il registro delle ipotesi (fondatezza di DT-004, §17.3).
+  for (const s of W.sessions ?? []) {
+    const obj = { ...newSession({ sid: s.sid, customer: "ACME", scope: s.scope ?? null, mode: s.mode ?? "nrt", pluginVersion: "0.1.0" }), session_code: s.code, updated_at: "2026-09-28T10:00:00Z" };
+    obj.surprises = (s.surprises ?? []).map((x) => ({ at: "2026-09-28T10:00:00Z", ...x }));
+    writeRel(ws, `customers/ACME/.sessions/${s.sid}/session.json`, JSON.stringify(obj, null, 2) + "\n");
+    if (s.hypotheses) writeRel(ws, `customers/ACME/.sessions/${s.sid}/hypotheses.yaml`, { hypotheses: s.hypotheses });
   }
   for (const [rel, content] of Object.entries(W.files ?? {})) writeRel(ws, rel, content);
   return ws;

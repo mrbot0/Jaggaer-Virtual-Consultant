@@ -1,0 +1,125 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: lesson-validator
+case: validate-happy
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: sonnet
+  header:
+    task_id: MSG.SES.ACME.20260929.001.1001
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T1
+    depth: standard
+    budget:
+      tokens: 30000
+      minutes: 12
+    allowed_paths:
+      - customers/ACME/lessons/**
+      - customers/ACME/decisions/**
+      - customers/ACME/outcomes/**
+      - customers/ACME/observations/**
+      - customers/ACME/kb/scopes/CAT/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Valida le lezioni proposte della sessione SES.ACME.20260928.001.
+    inputs:
+      session: SES.ACME.20260928.001
+      subject: C.ACME.CAT.KEY.0004
+      lesson_code: L.ACME.CAT.LSN.1001
+    expected_output:
+      type: lesson-validation
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  sessions:
+    - sid: sess-0928
+      code: SES.ACME.20260928.001
+      scope: CAT
+  observations:
+    - code: L.ACME.CAT.OBS.0120
+      note: import con codice duplicato rifiutato
+    - code: L.ACME.CAT.OBS.0121
+      note: messaggio di validazione del listino
+  decisions:
+    - code: L.ACME.CAT.DEC.0412
+      table: DT-002
+      subject: C.ACME.CAT.KEY.0004
+      outcome: procedi
+      effects: true
+    - code: L.ACME.CAT.DEC.0413
+      table: DT-008
+      subject: C.ACME.CAT.SEL.0009
+      outcome: testid
+      effects: true
+    - code: L.ACME.CAT.DEC.0414
+      table: DT-023
+      subject: C.ACME.CAT.KEY.0004
+      outcome: standard
+      effects: false
+  items:
+    - code: C.ACME.CAT.KEY.0004
+      shape: libresco
+      facets:
+        F10: R1
+      title: Unicità codice articolo per fornitore
+      summary: Il codice articolo è unico per fornitore.
+    - code: C.ACME.CAT.SEL.0009
+      title: Pulsante Importa
+      summary: Selettore del pulsante di import del listino.
+  files:
+    customers/ACME/lessons/L.ACME.CAT.LSN.0088.md: |
+      ---
+      id: L.ACME.CAT.LSN.0088
+      agent: scope-expert · session: SES.ACME.20260928.001 · task: "Import del listino con codice duplicato"
+      scope: CAT · mode: nrt
+      decision_refs: [L.ACME.CAT.DEC.0412, L.ACME.CAT.DEC.0413]
+      strategy: STR-VERIFY-FIRST
+      epistemic_before: libresco · epistemic_after: consolidato · surprises: 0
+      expected_outcomes: [{ decision: L.ACME.CAT.DEC.0412, expect: "import rifiutato con messaggio di validazione" }, { decision: L.ACME.CAT.DEC.0413, expect: "selettore stabile al prossimo giro" }]
+      status: proposed · confidence: 0.8
+      portability_hypothesis: { class: condizionata, condition: "F7 sap-s4" }
+      cluster_proposal: CL-CHK-002
+      ---
+      ## 1. Contesto
+      Import del listino con codice duplicato sulla chiave C.ACME.CAT.KEY.0004.
+      ## 2. Cosa ho tentato
+      Caso negativo generato dalla chiave, selettore scelto con DT-008.
+      ## 3. Cosa ho osservato
+      Import rifiutato con messaggio di validazione (L.ACME.CAT.OBS.0120).
+      ## 4. Decisioni prese
+      DT-002 procedi (L.ACME.CAT.DEC.0412); DT-008 selettore per testid (L.ACME.CAT.DEC.0413).
+      ## 5. Esito
+      Import rifiutato come atteso.
+      ## 6. Lezione
+      L'unicità per fornitore è applicata all'import: proposta di un CHK prima dell'import del listino.
+      ## 7. Cosa NON generalizzerei
+      Il testo del messaggio dipende dal profilo di import di ACME (F7).
+      ## 8. Domande aperte
+      Nessuna.
+expect:
+  outcome: L.ACME.CAT.LSN.0088 validata con DT-004 dallo script; due esiti attesi registrati.
+  status:
+    - ok
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.CAT.KEY.0004
+    shape: libresco
+    risk: R1
+    precedent: nessuno
+    surprises: 0
+    mode: nrt
+  question: forbidden
+  gap: la lezione è completa; non serve l'utente
+  behaviour: |
+    PASS se il rapporto dichiara L.ACME.CAT.LSN.0088 validata dallo script (learn validate, DT-004) con due esiti
+    attesi registrati.
+    FAIL se il rapporto cambia lo stato a mano, la respinge senza motivo o dichiara esiti non presenti.
