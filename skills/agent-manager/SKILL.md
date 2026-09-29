@@ -68,9 +68,11 @@ Leggi lo stato **solo** dalla console, che lo ricava dalle registrazioni degli h
 | **l'utente chiede cosa o come sta lavorando un agente** | `agents show <task_id>` e riporti la cronologia (azioni, deny, sorprese, domande). |
 
 **Seguire gli agenti dal vivo**: ricorda all'utente che può aprire un **terminale separato** (sola lettura, senza
-modello, si aggiorna da sé):
+modello, si aggiorna da sé). Nel suo terminale `${CLAUDE_PLUGIN_ROOT}` non è definita: gli dai la riga già risolta,
+con il percorso assoluto del plugin, l'identificativo della sessione (`session_id`, o `session_code` se c'è) letto
+dall'uscita di `agents status` e la cartella del workspace:
 
-    node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" watch --session <SES.C.AAAAMMGG.NNN> --interval 5
+    node "<percorso assoluto del plugin>/scripts/admin/agents.mjs" watch --session <session_id o session_code da agents status> --workspace <cartella del workspace> --interval 5
 
 **Il controllo è dell'utente.** Quando chiede come fermare o seguire un agente, gli spieghi le frasi, che scrive lui
 come **unico testo** del messaggio (maiuscole); tu non le scrivi mai in un input di strumento (guard-phrase le nega) e
@@ -127,7 +129,7 @@ Vale lo **status effettivo** (controlli falliti o domande aperte ⇒ `partial`; 
 | `ok` | componi il risultato (codici + summary) per l'utente |
 | `partial` | riporti cosa manca e perché; proponi il passo successivo |
 | `blocked` | leggi la richiesta (spesso un handoff o un permesso): mediala o chiedi all'utente |
-| `needs-input` | con `needs_input`: porti la domanda all'utente (skill `asking-the-user`), la risposta torna al sub-agente con un nuovo dispatch `reply_to`; con `approval_request`: sez. 6 |
+| `needs-input` | con `needs_input`: porti la domanda all'utente (skill `asking-the-user`), la risposta torna al sub-agente con un nuovo dispatch `reply_to`; con `approval_request`: sez. 6; con il piano e la **richiesta di attivazione**: attivi tu il piano (sez. 6, "Attivare un piano") e ridispacci con `reply_to` |
 | `escalate` | **un** nuovo dispatch con tier (e modello) superiore, l'output parziale negli `inputs` e `reply_to`; per il triage il nuovo dispatch è della root cause |
 | `aborted-by-user` | nessun nuovo dispatch; riporti le compensazioni pendenti |
 
@@ -152,10 +154,22 @@ Dopo la frase dell'utente (registrata da approval-capture, che per le approvazio
 token) riprendi il compito con `reply_to`. Frase diversa o finestra scaduta ⇒ "Approvazione non valida": lo dici e si
 riparte dall'A1.
 
-**Piani fuori sandbox**: l'attivazione richiede che l'utente abbia scritto `APPROVO PIANO <id>` **prima** che lo
-scope-expert esegua; in sandbox il piano si attiva senza A1. **Esplorazione senza piano** (solo sandbox): solo dopo
-che l'utente ha scritto `ESPLORA SANDBOX`, poi `/use mode esplorazione` entro 10 minuti; tu non la proponi come frase
-da copiare in un comando e non la scrivi.
+**Attivare un piano.** Un piano nuovo lo attiva **solo la sessione principale**: guard-config-scope nega ai sub-agenti
+l'attivazione di un piano che non è attivo né approvato. Quando lo scope-expert torna `needs-input` con il piano
+compilato e la richiesta di attivazione:
+
+- **in sandbox** lo attivi subito (nessuna A1), poi ridispacci lo scope-expert con `reply_to: <task_id>`;
+- **fuori sandbox** l'attivazione richiede che l'utente abbia scritto `APPROVO PIANO <id>` **prima** che lo
+  scope-expert esegua: mostri rischi, assunzioni e passi, attendi la frase, poi la stessa riga e il nuovo dispatch
+  (senza la frase, step-check risponde `approval_required` e il piano resta inattivo).
+
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/step-check.mjs" --plan <piano> --step 1 --run <RUN> --session "${CLAUDE_SESSION_ID}" --json
+
+`<piano>` è il file del piano relativo alla cartella del cliente, come lo riporta il rapporto; `<RUN>` il run del
+compito.
+
+**Esplorazione senza piano** (solo sandbox): solo dopo che l'utente ha scritto `ESPLORA SANDBOX`, poi
+`/use mode esplorazione` entro 10 minuti; tu non la proponi come frase da copiare in un comando e non la scrivi.
 
 ## 7. Casi speciali dei ruoli
 
@@ -165,7 +179,10 @@ da copiare in un comando e non la scrivi.
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/session.mjs" use paths --agent process-mapper --grant --session "${CLAUDE_SESSION_ID}" --json
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/session.mjs" use paths --agent process-mapper --restore --session "${CLAUDE_SESSION_ID}" --json
 
-  (per la digestione settimanale `--agent weekly-digest`). Il permesso è **per tipo di agente**, non per dispatch:
+  (per la digestione settimanale `--agent weekly-digest`). Lo scope dell'header deve essere quello della sessione:
+  per `process-mapper`, che lavora su XSC, prima `/use scope XSC`; per `weekly-digest` l'header porta lo scope della
+  sessione corrente (se serve un altro scope, prima `/use scope <S>`). Il cambio di scope riesce solo a sotto-compiti
+  chiusi (guard-budget lo nega con dispatch aperti). Il permesso è **per tipo di agente**, non per dispatch:
   **mai due dispatch in parallelo dello stesso tipo** con lettura trasversale (il `--restore` del primo lo toglierebbe
   al secondo).
 - **Ruoli con soli Read e Bash** (`failure-triage`, `config-auditor`, `defect-reporter`): non scrivono file. Al
@@ -181,13 +198,17 @@ da copiare in un comando e non la scrivi.
 - **`test-mechanic`**: prepara la PR; su `/nrt heal --apply` la **apri per la review umana e non la unisci mai**
   (nessun merge automatico); la verifica rieseguendo il passo è un compito dello scope-expert in shadow.
 - **Triage che torna `escalate`**: un dispatch di `root-cause-analyst` (opus, T2) con `reply_to` del triage.
-- **Handoff**: `kind: handoff`, `via: agent-manager`, `contract: <HND>` verso lo scope destinatario.
+- **Handoff**: prima `/use scope <destinatario>` (l'header deve avere lo scope della sessione; il cambio riesce solo a
+  sotto-compiti chiusi, quindi dopo il ritorno del richiedente), poi il dispatch `kind: handoff`, `via: agent-manager`,
+  `contract: <HND>` verso lo scope destinatario; al ritorno, se serve, `/use scope` di nuovo sullo scope d'origine.
 
 ## 8. Come invochi gli script
 
 Solo `node` sugli script del plugin, sempre `--json`, con input da **file** o **`nome=valore`**: mai JSON in linea e
 mai i caratteri `{ } ( ) $ ; & | < > , @` negli argomenti (i guard riconoscono solo invocazioni semplici), mai testo
-libero dell'utente sulla riga di comando (va in un file della sessione). Dove la forma esatta lo richiede (sessione,
+libero dell'utente sulla riga di comando (va in un file della sessione). I valori di dominio con `<`, `>` o apostrofo
+(volume di DT-003, classi di precedente di DT-017/DT-023) si passano nella forma ASCII (`volume=lt-5k`,
+`--precedent confermato-d-lt-0.2`: skill `decision-tables`). Dove la forma esatta lo richiede (sessione,
 console, retention, purge, promozione) usi `--session "${CLAUDE_SESSION_ID}"`, letterale. Gli exit code: 1 sintassi
 (correggi), 3 rifiuto motivato (riporta, non aggirare).
 

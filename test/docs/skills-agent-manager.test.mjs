@@ -56,7 +56,10 @@ test("contratto 1: docs/orchestration.md; console prima di instradare, dopo ogni
   assert.match(body, /docs\/orchestration\.md/);
   assert.ok(lines.some((l) => /agents\.mjs" status --session "\$\{CLAUDE_SESSION_ID\}" --json$/.test(l)), "agents status");
   assert.ok(lines.some((l) => /agents\.mjs" show <task_id> --session "\$\{CLAUDE_SESSION_ID\}" --json$/.test(l)), "agents show");
-  assert.ok(lines.some((l) => /agents\.mjs" watch --session <SES\.C\.AAAAMMGG\.NNN> --interval 5$/.test(l)), "agents watch");
+  // giro 1 (minore 2): nel terminale dell'utente ${CLAUDE_PLUGIN_ROOT} non esiste — percorso assoluto del plugin,
+  // sessione presa da agents status, --workspace
+  assert.ok(all.includes('node "<percorso assoluto del plugin>/scripts/admin/agents.mjs" watch --session <session_id o session_code da agents status> --workspace <cartella del workspace> --interval 5'), "agents watch");
+  assert.match(body, /\$\{CLAUDE_PLUGIN_ROOT\}`? non è definita/);
   const c = section("3\\. La console");
   for (const w of ["prima di instradare", "dopo ogni ritorno", "prima di rispondere", "cosa o come sta lavorando", "terminale separato"]) assert.ok(c.includes(w), w);
   for (const p of CONTROL_SYNTAX.filter((x) => !x.includes("|"))) assert.ok(all.includes(p), `frase di controllo ${p}`);
@@ -106,9 +109,6 @@ test("contratto 3: approval_request → la frase esatta di phraseOf nel messaggi
 });
 
 test("contratto 4: grant prima e restore dopo per process-mapper e weekly-digest; mai due dispatch paralleli dello stesso tipo", () => {
-  for (const [agent, text] of [["process-mapper", flat(skill.text)], ["weekly-digest", all]]) {
-    assert.ok(text.includes(`use paths --agent ${agent} --grant --session "\${CLAUDE_SESSION_ID}" --json`) || (agent === "weekly-digest" && text.includes("--agent weekly-digest")), `${agent}: grant`);
-  }
   assert.ok(lines.some((l) => /session\.mjs" use paths --agent process-mapper --grant --session "\$\{CLAUDE_SESSION_ID\}" --json$/.test(l)));
   assert.ok(lines.some((l) => /session\.mjs" use paths --agent process-mapper --restore --session "\$\{CLAUDE_SESSION_ID\}" --json$/.test(l)));
   assert.ok(lines.some((l) => /session\.mjs" use paths --agent weekly-digest --grant /.test(l)) && lines.some((l) => /session\.mjs" use paths --agent weekly-digest --restore /.test(l)), "sequenza della digestione settimanale");
@@ -119,6 +119,32 @@ test("contratto 5: failure-triage, config-auditor, defect-reporter — il manage
   const s = section("7\\. Casi speciali");
   for (const w of ["failure-triage", "config-auditor", "defect-reporter", "output.lesson_draft", "inputs.lesson_code", "inputs.summary_file", "templates/lesson.md", "riesegui l'auto-verifica"]) assert.ok(s.includes(w), w);
   assert.ok(lines.some((l) => /self-check\.mjs" --report .*--lesson .*--json$/.test(l)), "riga di self-check");
+});
+
+test("I2 (giro 1): attivazione del piano dalla sessione principale — in sandbox subito, fuori sandbox dopo l'A1 — poi nuovo dispatch con reply_to; anche nelle sequenze §45.3/§45.4", () => {
+  const act = /step-check\.mjs" --plan <piano> --step 1 --run <RUN> --session "\$\{CLAUDE_SESSION_ID\}" --json$/;
+  assert.ok(commandLines(skill.text).some((l) => act.test(l)), "riga di attivazione nel corpo");
+  const a = section("6\\. Le richieste di approvazione");
+  assert.match(a, /Attivare un piano/);
+  assert.match(a, /in sandbox/i);
+  assert.match(a, /fuori sandbox/i);
+  assert.match(a, /reply_to/);
+  assert.match(a, /guard-config-scope/);
+  assert.match(section("5\\. Il ritorno"), /richiesta di attivazione/);
+  const seq = skill.refs.find((r) => r.file === "sequences.md").text;
+  for (const h of ["## §45.3", "## §45.4"]) {
+    const from = seq.indexOf(h);
+    const to = seq.indexOf("\n## ", from + 3);
+    assert.ok(commandLines(seq.slice(from, to < 0 ? undefined : to)).some((l) => act.test(l)), `${h}: attivazione dalla sessione principale`);
+  }
+});
+
+test("minore 1 (giro 1): handoff e dispatch di process-mapper/weekly-digest su un altro scope — prima /use scope, a sotto-compiti chiusi", () => {
+  const s7 = section("7\\. Casi speciali");
+  assert.match(s7, /\*\*Handoff\*\*:[^-]*\/use scope <destinatario>/);
+  assert.match(s7, /sotto-compiti chiusi/);
+  assert.match(s7, /process-mapper[^.]*\/use scope XSC/);
+  assert.match(s7, /weekly-digest[^.]*scope della sessione/);
 });
 
 test("contratto 6: APPROVO PIANO prima dell'esecuzione fuori sandbox, ESPLORA SANDBOX dell'utente, PR del test-mechanic per la review umana e mai unita", () => {

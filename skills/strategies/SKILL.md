@@ -11,7 +11,7 @@ Non la inventi: la selezioni con uno script e la esegui. I piani stanno in `stra
 
 ## Selezionare
 
-    node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe> --surprises <n> --mode <modalità> --depth <profondità> --plan --json
+    node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/strategy-select.mjs" --shape <forma> --risk <R> --precedent <classe-ascii> --surprises <n> --mode <modalità> --depth <profondità> --plan --json
 
 Input (tutti dal passo VALUTARE, mai stimati):
 
@@ -19,12 +19,17 @@ Input (tutti dal passo VALUTARE, mai stimati):
 |---------|---------------|--------|
 | `--shape` | `kb epistemic` | consolidato · empirico · libresco · ignoto · contraddittorio |
 | `--risk` | rischio del **passo** critico (F10, classe d'azione) | R0 · R1 · R2 · R3 |
-| `--precedent` | il più vicino di `kb precedents` (skill `precedents`) | `confermato-d<0.2` · `confermato-d<0.5` · `nessuno` · `smentito-d<0.3` |
+| `--precedent` | il più vicino di `kb precedents` (skill `precedents`), **in forma ASCII** | `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` · `smentito-d-lt-0.3` |
+| `--precedents` | in alternativa: l'uscita di `kb precedents --json` salvata in un file (vale il più vicino) | file |
 | `--surprises` | sorprese già in sessione | 0, 1, 2 |
 | `--mode` | header | nrt · config · ops · diag |
 | `--depth` | header | rapida · standard · profonda |
 | `--divergence-unknown` | diagnosi con prima divergenza ignota | flag |
 | `--has-hypotheses` / `--preferred-prior` | registro delle ipotesi | flag / 0–1 |
+
+Le classi del precedente contengono `<` nel dominio di DT-017 (d < 0.2 …): sulla riga di comando si passano **solo**
+nella forma ASCII della tabella sopra (regola `<` → `-lt-`, skill `decision-tables`), perché i guard negano `<` e `>` in
+ogni argomento; lo script le riporta al valore canonico, e l'uscita (`inputs.precedent`) mostra quello.
 
 L'uscita è `{ strategy, then?, combine, score, rule }`: `strategy` va in `cognitive_trace.strategy` e nella DEC
 (`--strategy` di dt-eval), `combine` elenca le strategie da applicare insieme, `then` la strategia che segue.

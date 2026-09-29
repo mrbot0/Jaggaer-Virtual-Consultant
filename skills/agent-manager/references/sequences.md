@@ -25,8 +25,8 @@ dalla memoria della conversazione.
 ```
 1 agents status (nessun compito in corso sullo stesso soggetto, scope non bloccato, nessuna pausa)
 2 profondità (DT-023) e tier (DT-003):
-      node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/depth.mjs" --risk <R> --shape <forma> --surprises <n> --precedent <classe> --graph-radius <n> --never-executed-here <true-false> --json
-      node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-003 risk=<R> task_novelty=<novità> shape=<forma> synthesis=<sintesi> volume=<volume> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent agent-manager --subject <codice> --write-dec --json
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/depth.mjs" --risk <R> --shape <forma> --surprises <n> --precedent <classe-ascii> --graph-radius <n> --never-executed-here <true-false> --json
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/dt-eval.mjs" --table DT-003 risk=<R> task_novelty=<novità> shape=<forma> synthesis=<sintesi> volume=<volume-ascii> --priors auto --customer <C> --scope <S> --db customers/<C>/knowledge.db --session <SES> --agent agent-manager --subject <codice> --write-dec --json
    (la forma e il rischio per instradare li prendi dalla richiesta e dal codice del soggetto; se non li sai, il primo
     sotto-compito è di un agente, non tuo)
 3 budget del sotto-compito: classi d'azione del catalogo + 20 %, entro il residuo di sessione
@@ -41,6 +41,10 @@ dalla memoria della conversazione.
      SubagentStop (subagent-trace): traccia e lezione presenti? ledger, blackboard, audit
 6 rapporto: salvi e validi (agent-report.mjs); agents status; agents show <task> se non ok
      needs-input → formuli la domanda (asking-the-user) → risposta dell'utente → nuovo Agent con reply_to: <task>
+     needs-input con il piano compilato e la richiesta di attivazione → lo attivi tu (sessione principale:
+       guard-config-scope nega l'attivazione ai sub-agenti); in sandbox subito, fuori sandbox dopo l'A1 dell'utente
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/step-check.mjs" --plan <piano> --step 1 --run <RUN> --session "${CLAUDE_SESSION_ID}" --json
+       → nuovo Agent con reply_to: <task>, che esegue il piano attivo
      escalate    → un nuovo Agent con model superiore (e tier coerente), output parziale, reply_to: <task>
 7 risposta all'utente: codici + summary, riga di sintesi della console, avvisi
 ```
@@ -51,9 +55,12 @@ dalla memoria della conversazione.
 1 agents status; il piano c'è e l'ambiente è dichiarato e verificato
 2 Agent(scope-expert, sonnet, mode: config, inputs: { plan: <PLAN> })
      l'agente: piano con traccia attesa → prova a vuoto (SAVE/SUBMIT → CAPTURE) con step-check per passo
-3 fuori sandbox l'attivazione chiede l'A1: il rapporto torna needs-input con approval_request { kind: A1, plan }
-     tu: mostri rischi e assunzioni, poi i passi, poi la frase che l'utente deve scrivere (A1) — e attendi
-4 dopo la frase dell'utente: nuovo Agent(scope-expert, reply_to: <task>)
+3 il rapporto torna needs-input con il piano e la richiesta di attivazione (o approval_request { kind: A1, plan }):
+     in sandbox: attivi subito il piano dalla sessione principale (nessuna A1)
+     fuori sandbox: mostri rischi e assunzioni, poi i passi, poi la frase che l'utente deve scrivere (A1) — e attendi;
+     dopo la frase, la stessa attivazione:
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/step-check.mjs" --plan <piano> --step 1 --run <RUN> --session "${CLAUDE_SESSION_ID}" --json
+4 nuovo Agent(scope-expert, reply_to: <task>) sul piano attivo
      0 sorprese → check pre → snapshot → compensazione registrata → esecuzione reale con checkpoint per passo
      passo R2 senza approvazione → guard-config-scope nega → needs-input con approval_request { kind: A3, plan, step }
 5 tu: mostri il passo (cosa cambia, come si torna indietro) e la frase A3; attendi

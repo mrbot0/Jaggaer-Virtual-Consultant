@@ -57,3 +57,7 @@ export function knownSections() {
   if (existsSync(SPEC_FILE)) return { source: "spec", sections: specSections(readFileSync(SPEC_FILE, "utf8")) };
   return { source: "fixture", sections: lf(readFileSync(SECTIONS_FIXTURE, "utf8")).split("\n").filter(Boolean) };
 }
+
+// Skill citate in un corpo, anche negli elenchi ("skill `a`, `b` e `c`"): skillRefs di agents-md prende solo la prima.
+export const allSkillRefs = (body) => [...new Set([...String(body).matchAll(/skill[e]?\s+(`[a-z0-9-]+`(?:(?:,\s*|\s+e\s+)`[a-z0-9-]+`)*)/g)]
+  .flatMap((m) => [...m[1].matchAll(/`([a-z0-9-]+)`/g)].map((x) => x[1])))];

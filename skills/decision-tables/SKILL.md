@@ -44,6 +44,14 @@ un file da scrivere nella tua cartella di lavoro):
 | `--confidence 0.85` | la tua confidenza dichiarata: entra nella calibrazione (§17.4) |
 | `--write-dec` | scrive la DEC **prima** di stampare l'esito (§29.6) |
 
+**Valori con caratteri negati dai guard.** Alcuni valori di dominio contengono `<`, `>` o l'apostrofo (il volume di
+DT-003, le classi di precedente di DT-017 e DT-023, il genere d'uso di DT-011 e DT-019): i guard negano quei caratteri
+in ogni argomento di shell, con o senza virgolette. Sulla riga di comando si passa la **forma ASCII**, con una sola
+regola — `<` → `-lt-`, `>` → `-gt-`, apostrofo → `-` (per esempio `volume=lt-5k`, `volume=gt-30k`,
+`confermato-d-lt-0.2`, `preferred_genre=d-uso`); lo script la riporta al valore canonico, che è quello registrato
+nella DEC e restituito nell'uscita. Nelle righe dei ruoli questi segnaposto finiscono in `-ascii` (`<classe-ascii>`).
+Le chiavi numeriche con zeri iniziali (l'area di DT-007, `area=005`) valgono anche se il numero perde gli zeri.
+
 Uscita: `{ outcome, score, components[], prior_used, table_version, dec_code }`. `dec_code` va in
 `cognitive_trace.decisions`; `components` ti dice quali input hanno pesato di più (ti serve per il blocco `why`).
 

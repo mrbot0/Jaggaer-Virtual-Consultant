@@ -7,7 +7,7 @@ import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { agentFiles, parseAgent, skillRefs } from "../helpers/agents-md.mjs";
-import { SKILLS_DIR, MANAGER, WP10C_SKILLS, allSkills } from "../helpers/skills-md.mjs";
+import { SKILLS_DIR, MANAGER, WP10C_SKILLS, allSkills, allSkillRefs } from "../helpers/skills-md.mjs";
 
 const BY_DESCRIPTION_ONLY = ["jaggaer-domain"];
 
@@ -15,7 +15,7 @@ function usage() {
   const used = new Map();
   for (const [agent, text] of Object.entries(agentFiles())) {
     const { body, fm } = parseAgent(text);
-    for (const s of new Set([...skillRefs(body), ...(Array.isArray(fm?.skills) ? fm.skills : [])])) {
+    for (const s of new Set([...skillRefs(body), ...allSkillRefs(body), ...(Array.isArray(fm?.skills) ? fm.skills : [])])) {
       if (!used.has(s)) used.set(s, new Set());
       used.get(s).add(agent);
     }

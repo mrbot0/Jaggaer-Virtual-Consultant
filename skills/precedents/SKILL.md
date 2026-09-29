@@ -49,7 +49,9 @@ quel CHK, non ripetere la vecchia scelta. È la regola di spareggio: smentita pr
 Quando la decisione dipende da un precedente, applicala con dt-eval (skill `decision-tables`): input distanza,
 esito del precedente, se ha già prodotto un CHK o una deviazione incorporata, età, stessa forma. Esiti: `replay`
 (riusa le scelte), `orienta` (informa la strategia, non il prior), `ignora`. La classe del precedente più vicino è
-anche l'input `--precedent` di strategy-select: `confermato-d<0.2 · confermato-d<0.5 · nessuno · smentito-d<0.3`.
+anche l'input `--precedent` di strategy-select e di depth, da passare in forma ASCII: `confermato-d-lt-0.2` ·
+`confermato-d-lt-0.5` · `nessuno` · `smentito-d-lt-0.3` (oppure `--precedents <file>` con l'uscita di `kb precedents`
+salvata).
 
 ## Priori: spostano la soglia, non decidono (§12.2)
 
