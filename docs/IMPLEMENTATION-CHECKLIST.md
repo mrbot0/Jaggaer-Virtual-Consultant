@@ -3,18 +3,18 @@
 Fonte: `jaggaer-virtual-consultant-piano-di-sviluppo.md` (fasi) e `jaggaer-virtual-consultant-architettura.md` v8.0 (catalogo dei componenti §31.2, §43.3, §44).
 Legenda: ✅ completato e revisionato · 🔄 in corso · ⬜ da fare · Brief = requisiti pronti per l'implementazione.
 
-Ultimo aggiornamento: 28/09/2026 23:50 — **punto corrente: WP09b (NRT, esecuzione, evidenze, promozione) avviato; WP09a (ingestion) chiuso**.
+Ultimo aggiornamento: 29/09/2026 03:30 — **punto corrente: WP09c (adattatore ALM, server MCP, Xray) avviato; WP09b chiuso**.
 
 ## Avanzamento complessivo
 
-**≈ 58 % del progetto** (stima pesata sullo sforzo) · 9 pacchetti su 17 chiusi.
+**≈ 68 % del progetto** (stima pesata sullo sforzo) · 10 pacchetti su 17 chiusi.
 
 | Misura | Valore | Come è calcolata |
 |---|---|---|
-| Avanzamento pesato | **≈ 58 %** (64 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
-| Pacchetti chiusi | 9 / 17 = **53 %** | WP01–WP09a con review e tag |
+| Avanzamento pesato | **≈ 68 %** (76 / 111 unità) | peso stimato per pacchetto nella tabella sotto × % di completamento |
+| Pacchetti chiusi | 10 / 17 = **59 %** | WP01–WP09b con review e tag |
 | Hook del catalogo §44.4 | 16 / 16 = **100 %** | 15 hook + approval-capture; in più browser-origin e guard-phrase nati dalla review |
-| Test automatici | 721 / 721 verdi | `npm test` al tag `ingest-tooling-done` (`6eff63e`), incluso il test sul corpus reale |
+| Test automatici | 809 / 809 verdi | `npm test` al tag `run-tooling-done` (`f95ad08`), corpus reale incluso |
 
 ### Chiusura di WP03 (K2)
 - 4 giri di correzione dopo la review, tutti committati (`c491d1e..0bfb2a2`). Tag `k2-done` → `0bfb2a2`.
@@ -36,6 +36,21 @@ Ultimo aggiornamento: 28/09/2026 23:50 — **punto corrente: WP09b (NRT, esecuzi
 - Corretto dopo la review: nessuna formula di raccomandazione produce più un obbligo, e anche la validazione a valle lo impedisce. Il budget per documento non si può alzare, e il consumo resta legato alla sessione reale.
 - Da misurare con documenti reali: la precisione delle catene, obiettivo ≥ 80 %.
 - Da rispettare in WP09b: le forme INT/LCY lette dalle catene sono provvisorie.
+
+### Chiusura di WP09b (test NRT, esecuzione, evidenze, promozione)
+- Implementato in 7 commit, più 3 giri di correzione (`5db1e49..f95ad08`). Tag `run-tooling-done` → `f95ad08`.
+- Consegnato:
+  - gli schemi di test NRT, selettori, handoff, check, procedure di configurazione, flussi, chiavi, cicli di vita, integrazioni e configurazioni, e i 21 check iniziali della spec;
+  - i compilatori dei casi e delle procedure, con prova a vuoto e verificatore;
+  - i controlli anti-indebolimento dei test;
+  - i binari di esecuzione: suite, fixture, check, teardown senza cancellazioni, baseline, autenticazione e integrazione;
+  - la selezione delle evidenze e il contact sheet;
+  - il generatore di test negativi, la macchina di promozione dei test e la copertura.
+- Sui dati reali: da 747 campi e 20 integrazioni sono nati 848 scheletri di test, tutti in stato di prova.
+- Corretto nelle review, sul fronte sicurezza:
+  - uno snapshot di configurazione vale solo con osservazioni reali, autenticate dallo stato di sessione;
+  - i risultati dei run sono protetti come lo stato di sessione;
+  - la promozione conta solo i run della versione attuale del caso.
 
 ### Chiusura di WP09a (ingestion della documentazione JAGGAER) — tag `ingest-tooling-done` → `6eff63e`, 1 giro di correzione
 - La pipeline completa è eseguita sulla documentazione reale:
@@ -135,15 +150,15 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP07 | `step-check`, `observe-append`, errori della piattaforma, evidenze, intento DT-026, workflow, report ed esiti, budget, `compile-plan` opzionale | K6 | 8 | 100 | ✅ | tag `k6-done` → `ea67488`, 578 test, 5 giri di correzione, `docs/phase-reports/K6.md` |
 | WP08 | guard-destructive, guard-alm-write, integrità, `doctor`, template settings | F0 | 3 | 100 | ✅ | tag `f0-done` → `9327fff`, 652 test, 1 giro di correzione, `docs/phase-reports/F0.md` |
 | WP09a | Pipeline di ingestion: parser DOCX/XLSX/PDF/XSD/export/screenshot/trascrizioni/e-mail, unità, profilo DOC, banche di domande, back-check, alias, versioni, residuo, revisione, survey del tenant, PRF/PMP | F1' (strumenti) | 10 | 100 | ✅ | tag `ingest-tooling-done` → `6eff63e`, 721 test, corpus reale elaborato in `jvc-knowledge`, `docs/phase-reports/F1-tooling.md` |
-| WP09b | Schemi NRT/SEL/HND/CHK/CFP/FLW/KEY/LCY/INT/CFG, compile-case/cfp, lint, Atlas, corsie di esecuzione, compensazioni, snapshot, evidenze, negativi, promozione, copertura | F3–F7, C1 (strumenti) | 12 | 0 | 🔄 | `wp09b-run.md` |
-| WP09c | AlmAdapter (Xray Cloud/Server/Mock), server MCP ALM, script xray, coda offline, Defect, `.mcp.json`, NETWORK.md | F5 | 6 | 0 | ⬜ Brief | `wp09c-alm.md` |
+| WP09b | Schemi NRT/SEL/HND/CHK/CFP/FLW/KEY/LCY/INT/CFG, compile-case/cfp, lint, Atlas, corsie di esecuzione, compensazioni, snapshot, evidenze, negativi, promozione, copertura | F3–F7, C1 (strumenti) | 12 | 100 | ✅ | tag `run-tooling-done` → `f95ad08`, 809 test, 3 giri di correzione, `docs/phase-reports/F4-C1-tooling.md` |
+| WP09c | AlmAdapter (Xray Cloud/Server/Mock), server MCP ALM, script xray, coda offline, Defect, `.mcp.json`, NETWORK.md | F5 | 6 | 0 | 🔄 | `wp09c-alm.md` |
 | WP09d | Comandi `kb` restanti, digestione settimanale, Analytics (TBL/QRY/DIN/USR/PSP/ERR), dominio analitico, audit config, admin (status, lock, retention, purge) | F8–F12, G2–G3 (strumenti) | 8 | 0 | ⬜ Brief | `wp09d-ops.md` |
 | WP10a | Comandi `vc use kb nrt cfg ops learn admin`, template restanti, README, manuale integrato | §44.1, §55–58 | 4 | 0 | ⬜ Brief | `wp10a-commands.md` |
 | WP10b | 15 agenti foglia + suite `evals/` | §44.2, §49.1 | 5 | 0 | ⬜ Brief | `wp10b-agents.md` |
 | WP10d | **Layer di orchestrazione e controllo degli agenti** (richiesta utente 28/09): console `agents status/show/watch`, vigilanza ed escalation applicate dai guard, handoff verificati, monitor indipendente che sorveglia anche il manager, pausa/stop/passo-passo per agente | §23.2, §24, §29.5, §45 | 5 | 0 | ⬜ Brief | `wp10d-orchestration.md` — da eseguire prima di WP10c |
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 0 | ⬜ Brief | `wp10c-skills.md` |
 | FINAL | Review dell'intero branch | — | 2 | 0 | ⬜ | — |
-| **Totale** | | | **111** | **≈ 58** | | 64 unità completate |
+| **Totale** | | | **111** | **≈ 68** | | 76 unità completate |
 
 ## Catalogo dei componenti (spec §44)
 
