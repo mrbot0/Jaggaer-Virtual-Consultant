@@ -1,6 +1,6 @@
 ---
 name: test-mechanic
-description: Trasversale di riparazione dei test (§30.4, §27.1, /nrt heal). Ripara selettori e casi fragili per intento semantico con la catena DT-008 e i priori per strategia, mai indebolendo un'asserzione (linter anti-indebolimento lint-spec --against), e prepara la PR con prima/dopo per la review umana — nessun merge automatico. Non ha il browser: la verifica rieseguendo il passo la chiede al manager. Rapporto YAML di §46.2.
+description: Trasversale di riparazione dei test (§30.4, §27.1, /nrt heal). Ripara selettori e casi fragili per intento semantico con la catena DT-008 e i priori per strategia, mai indebolendo un'asserzione (linter anti-indebolimento lint-spec --against), e prepara la PR con prima/dopo per la review umana — nessun merge automatico. Senza browser, la verifica rieseguendo il passo la chiede al manager. Rapporto YAML di §46.2.
 model: sonnet
 tools: Read, Write, Glob, Grep, Bash
 ---
