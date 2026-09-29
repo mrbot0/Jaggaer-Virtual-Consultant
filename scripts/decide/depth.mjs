@@ -6,6 +6,8 @@
 import { evaluate, loadTable, DtDomainError, DtTableError } from "./dt-eval.mjs";
 import { precedentClass } from "./strategy-select.mjs";
 import { controlsFor } from "./self-check-controls.mjs";
+import { readFileSync } from "node:fs";
+import YAML from "yaml";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
@@ -40,24 +42,40 @@ export function deliberationDepth({ risk, shape, surprises = 0, precedent, graph
   return { depth: r.outcome, score: r.score, rule: r.rule, ...structuredClone(p), premortem, inputs: r.inputs };
 }
 
-const HELP = `uso: node scripts/decide/depth.mjs --risk R0..R3 [--shape <forma>] [--surprises N] [--precedent <classe>]
-       [--graph-radius N] [--never-executed-here true|false] [--json] [--help]
+const HELP = `uso: node scripts/decide/depth.mjs --risk R0..R3 [--shape <forma>] [--surprises N] [--precedent <classe>|--precedents file.json]
+       [--graph-radius N] [--never-executed-here true|false] [--input file.json|file.yaml] [--json] [--help]
 
 Profondità di deliberazione (§10.4, DT-023): { depth, recall: {items, precedents, other_customers},
 alternatives, open_files, premortem, hypotheses_register, self_check_controls, tier }.
+--precedent: confermato-d-lt-0.2 · confermato-d-lt-0.5 · nessuno · smentito-d-lt-0.3 (forma ASCII delle classi di
+             DT-023 confermato-d<0.2 …: < e > negli argomenti sono negati dai guard; regola < → -lt-)
+--precedents: l'output di 'kb precedents --json' salvato in un file (vale il più vicino).
+--input: tutti gli input in un file JSON o YAML (risk, shape, surprises, precedent, graph_radius, never_executed_here);
+         le opzioni della riga di comando prevalgono sul file.
 
-Exit code: 0 ok · 1 errore utente (input fuori dominio o mancante) · 2 errore di sistema.`;
+Exit code: 0 ok · 1 errore utente (input fuori dominio o mancante, file illeggibile) · 2 errore di sistema.`;
 
 export function run(argv) {
   const { opts } = parseArgs(argv);
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
+  // WP10c giro 1 (I1): input anche da file, come strategy-select (--input, --precedents); le opzioni prevalgono.
+  let input;
   try {
-    const r = deliberationDepth({
-      risk: opts.risk, shape: opts.shape, surprises: opts.surprises !== undefined ? Number(opts.surprises) : 0, precedent: opts.precedent,
-      graph_radius: opts["graph-radius"] !== undefined ? Number(opts["graph-radius"]) : undefined,
-      never_executed_here: opts["never-executed-here"] === undefined ? undefined : opts["never-executed-here"] === "true",
-    });
+    const readFile = (p) => YAML.parse(readFileSync(p, "utf8"));
+    input = opts.input ? readFile(opts.input) ?? {} : {};
+    if (typeof input !== "object" || Array.isArray(input)) throw new Error("--input: atteso un oggetto");
+    const precedents = opts.precedents ? readFile(opts.precedents) : undefined;
+    const set = (k, v) => { if (v !== undefined) input[k] = v; };
+    set("risk", opts.risk);
+    set("shape", opts.shape);
+    set("surprises", opts.surprises !== undefined ? Number(opts.surprises) : undefined);
+    set("precedent", precedents?.items ?? precedents ?? opts.precedent);
+    set("graph_radius", opts["graph-radius"] !== undefined ? Number(opts["graph-radius"]) : undefined);
+    set("never_executed_here", opts["never-executed-here"] === undefined ? undefined : opts["never-executed-here"] === "true");
+  } catch (e) { return fail(asJson, 1, `input illeggibile: ${e.message ?? e}`); }
+  try {
+    const r = deliberationDepth({ surprises: 0, ...input });
     console.log(JSON.stringify(asJson ? { ok: true, ...r } : r));
     return 0;
   } catch (e) {

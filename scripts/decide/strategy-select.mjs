@@ -11,14 +11,17 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
-import { evaluate, loadTable, DtDomainError, DtTableError } from "./dt-eval.mjs";
+import { evaluate, loadTable, canonicalValue, asciiAlias, DtDomainError, DtTableError } from "./dt-eval.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
 export const STRATEGIES_DIR = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "strategies");
 export const MODES = ["nrt", "config", "ops", "diag"];
 const MODE_ALIASES = { configurazione: "config", configuration: "config", operativa: "ops", operations: "ops", diagnosi: "diag", diagnosis: "diag", collaudo: "nrt" };
-const PRECEDENT_CLASSES = ["confermato-d<0.2", "confermato-d<0.5", "nessuno", "smentito-d<0.3"];
+// Le classi del precedente vengono dal dominio di DT-017 (WP10c giro 1): sulla riga di comando anche nella forma ASCII
+// (confermato-d-lt-0.2 …, regola di asciiAlias in dt-eval), riportata qui al valore canonico.
+const PRECEDENT_DOMAIN = loadTable("DT-017").inputs.find((i) => i.name === "precedent").domain;
+const PRECEDENT_CLASSES = Object.keys(PRECEDENT_DOMAIN.enum);
 // La strategia di forma dopo la prova a vuoto (le righe 0.35–0.55 e 0.55–0.75 di §14.3).
 const SHAPE_STRATEGY = { libresco: "STR-VERIFY-FIRST", empirico: "STR-GENERALIZE-CAUTIOUSLY", contraddittorio: "STR-TRIANGULATE", ignoto: "STR-ASK-EARLY" };
 
@@ -32,8 +35,9 @@ export class StrategyInputError extends DtDomainError { constructor(m) { super(m
 export function precedentClass(p) {
   if (p === undefined || p === null) return "nessuno";
   if (typeof p === "string") {
-    if (!PRECEDENT_CLASSES.includes(p)) throw new StrategyInputError(`precedente '${p}' fuori dominio (${PRECEDENT_CLASSES.join(" · ")})`);
-    return p;
+    const c = canonicalValue(PRECEDENT_DOMAIN, p);
+    if (!PRECEDENT_CLASSES.includes(c)) throw new StrategyInputError(`precedente '${p}' fuori dominio (${PRECEDENT_CLASSES.map((k) => (asciiAlias(k) === k ? k : `${asciiAlias(k)} = ${k}`)).join(" · ")})`);
+    return c;
   }
   const row = Array.isArray(p) ? p[0] : p;
   if (!row) return "nessuno";
@@ -89,7 +93,8 @@ const HELP = `uso: node scripts/decide/strategy-select.mjs --shape <forma> --ris
        [--depth rapida|standard|profonda] [--preferred-prior 0.7] [--input file.json] [--plan] [--json] [--help]
 
 Sceglie la strategia (§14.3) con DT-017 e stampa { strategy, then?, combine, score, rule }.
---precedent: confermato-d<0.2 · confermato-d<0.5 · nessuno · smentito-d<0.3
+--precedent: confermato-d-lt-0.2 · confermato-d-lt-0.5 · nessuno · smentito-d-lt-0.3 (forma ASCII delle classi
+            di DT-017 confermato-d<0.2 …: < e > negli argomenti sono negati dai guard; regola < → -lt-)
 --precedents: l'output di 'kb precedents --json' (vale il più vicino).
 --input: tutti gli input in un file JSON (chiavi come sopra, in snake_case).
 --plan: aggiunge il piano della strategia scelta (strategies/STR-*.yaml).

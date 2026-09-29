@@ -40,6 +40,29 @@ function domainKeys(domain) {
   if (domain.boolean) return ["true", "false"];
   return null;
 }
+// WP10c giro 1 (I1): alias ASCII dei valori di dominio con caratteri che i guard negano in ogni argomento di shell
+// (< e >: DT-003 volume, classi di precedente di DT-017/DT-023 — e `>` senza virgolette è una redirezione;
+// l'apostrofo: il genere "d'uso" di DT-011/DT-019). Una sola regola, applicata a ogni valore enum di ogni tabella:
+// `<` → `-lt-`, `>` → `-gt-`, `'` → `-`, poi via i trattini doppi e ai bordi ("<5k" → "lt-5k",
+// "confermato-d<0.2" → "confermato-d-lt-0.2", "d'uso" → "d-uso"). L'alias si riporta al valore canonico PRIMA della
+// valutazione: uscita, DEC e confronti usano il canonico. Stesso trattamento per le chiavi numeriche con zeri iniziali
+// (DT-007 area "005"): nome=valore le tipizza come numero (5), che si riporta alla chiave se è l'unica con quel valore.
+export const ALIAS_UNSAFE = /[<>']/;
+export const asciiAlias = (value) => String(value).replace(/</g, "-lt-").replace(/>/g, "-gt-").replace(/'/g, "-").replace(/-{2,}/g, "-").replace(/^-+|-+$/g, "");
+export function canonicalValue(domain, v) {
+  if (!domain?.enum || has(domain.enum, String(v))) return v;
+  if (typeof v === "number") {
+    const ks = Object.keys(domain.enum).filter((key) => /^\d+$/.test(key) && Number(key) === v);
+    return ks.length === 1 ? ks[0] : v;
+  }
+  if (typeof v !== "string") return v;
+  const k = Object.keys(domain.enum).find((key) => ALIAS_UNSAFE.test(key) && asciiAlias(key) === v);
+  return k ?? v;
+}
+const aliasNote = (domain) => {
+  const a = domainKeys(domain)?.filter((k) => ALIAS_UNSAFE.test(k)).map((k) => `${k} = ${asciiAlias(k)}`) ?? [];
+  return a.length ? `; alias ASCII: ${a.join(" · ")}` : "";
+};
 function inDomain(domain, v) {
   if (domain.enum) return (typeof v === "string" || typeof v === "number" || typeof v === "boolean") && has(domain.enum, String(v));
   if (domain.boolean) return typeof v === "boolean";
@@ -50,7 +73,7 @@ function scoreOf(inp, v) {
   const d = inp.domain;
   if (!inDomain(d, v)) {
     const allowed = d.range ? `[${d.range.join(", ")}]` : domainKeys(d).join(" · ");
-    throw new DtDomainError(`input '${inp.name}': valore ${JSON.stringify(v)} fuori dominio (${allowed})`);
+    throw new DtDomainError(`input '${inp.name}': valore ${JSON.stringify(v)} fuori dominio (${allowed}${d.range ? "" : aliasNote(d)})`);
   }
   if (d.enum) return d.enum[String(v)];
   if (d.boolean) return d.boolean[String(v)];
@@ -91,6 +114,12 @@ export function validateTable(t) {
   if (Math.abs(sum - 1) > EPS) errors.push(`somma dei pesi ${round6(sum)} ≠ 1.0 ± ${EPS}`);
   const byName = Object.fromEntries(t.inputs.map((i) => [i.name, i]));
   for (const i of t.inputs) if (i.domain.range && !(i.domain.range[1] > i.domain.range[0])) errors.push(`input '${i.name}': range vuoto`);
+  // alias ASCII (WP10c giro 1): un alias non può coincidere con un altro valore del dominio né con un altro alias
+  for (const i of t.inputs.filter((x) => x.domain.enum)) {
+    const keys = Object.keys(i.domain.enum);
+    const aliases = keys.filter((k) => ALIAS_UNSAFE.test(k)).map(asciiAlias);
+    if (new Set([...keys, ...aliases]).size !== keys.length + aliases.length) errors.push(`input '${i.name}': alias ASCII in collisione con un valore del dominio`);
+  }
   // bande contigue che coprono [0, 1]
   const th = t.thresholds;
   if (th[0].from !== 0) errors.push("bande: la prima deve partire da 0");
@@ -170,7 +199,7 @@ export function evaluate(table, inputs = {}, { priors = {} } = {}) {
   const values = {};
   const components = [];
   for (const inp of table.inputs) {
-    let v = inputs[inp.name];
+    let v = canonicalValue(inp.domain, inputs[inp.name]);
     let applied = null;
     if (v === undefined || v === null) {
       const policy = table.null_policy[inp.name];
@@ -293,6 +322,9 @@ Valuta una tabella di decisione (§15, §46.6) e stampa
 --inputs: file JSON (o JSON inline) con i valori degli input; i mancanti applicano null_policy.
 nome=valore (posizionali, ripetibili): gli input senza file (true/false/null/numeri tipizzati); sovrascrivono
 --inputs. È la forma per gli agenti che non scrivono file (mai JSON in linea negli argomenti degli agenti).
+Valori con < > o apostrofo (volume di DT-003, classi di precedente, genere d'uso): sulla riga di comando la forma ASCII,
+regola < → -lt-, > → -gt-, ' → - (volume=lt-5k · volume=gt-30k · precedent=confermato-d-lt-0.2 · preferred_genre=d-uso):
+i guard negano quei caratteri negli argomenti. Le chiavi numeriche con zeri (area=005) valgono anche come numero.
 --priors auto: tassi dal registro (outcomes-rates); sotto 30 DEC verificate vale il 'neutral' dichiarato.
 --priors file.json: { nome_prior: valore } in [0, 1].
 --effects / --no-effects: la decisione ha / non ha effetti; senza nessuno dei due gli effetti sono
