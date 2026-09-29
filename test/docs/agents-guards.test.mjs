@@ -12,8 +12,9 @@ const GUARDS = ["scope", "customer", "budget", "destructive", "config-scope", "p
 // <piano>: il piano ATTIVO (session.active_plan.file, relativo alla cartella del cliente): un sub-agente esegue step-check
 // solo su quello o su un piano approvato dall'utente (guard-config-scope, WP07 giro 1).
 const PLAN_FILE = "runs/RUN.ACME.20260929.1015.CAT/cases/NRT.ACME.CAT.NEG.0031/plan.json";
-// Scope di sessione del dispatch: i trasversali di onboarding lavorano su XSC (profilo e mappe dei processi).
-const SCOPE_OF = { "customer-profiler": "XSC", "process-mapper": "XSC" };
+// Scope di sessione del dispatch: i trasversali di onboarding lavorano su XSC (profilo e mappe dei processi),
+// analytics-learner su ANL; gli altri sullo scope del compito (qui CAT).
+const SCOPE_OF = { "customer-profiler": "XSC", "process-mapper": "XSC", "analytics-learner": "ANL" };
 const VALUES = { C: "ACME", sid: "sess-1", SES: "SES.ACME.20260929.001", task: "MSG.SES.ACME.20260929.001.0012", mese: "2026-09", piano: PLAN_FILE };
 
 function renderForGuards(line, scope) {
@@ -23,7 +24,7 @@ function renderForGuards(line, scope) {
 
 test("ogni riga di comando degli agenti passa i guard della shell come quel sub-agente (nessun deny)", async () => {
   const wsOf = {};
-  for (const scope of ["CAT", "XSC"]) {
+  for (const scope of ["CAT", "XSC", "ANL"]) {
     const ws = mkWs();
     seedSession(ws, { scope, extra: { active_plan: { plan_id: "PLAN.ACME.0001", file: PLAN_FILE, step: 1 } } });
     const env = { ...process.env, JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT };
