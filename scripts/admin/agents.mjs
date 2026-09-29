@@ -53,7 +53,10 @@ export function resolveMonitorSession(ws, arg, env = process.env) {
     if (!f) return { error: `sessione ${arg} non trovata` };
     ({ customer, sid } = f);
   } else {
-    sid = arg ?? env.JVC_SESSION_ID ?? readCurrentSession(ws);
+    // WP10c giro 1: stesso predicato di resolveSessionId (session.mjs) — un "${…}" non sostituito o un valore vuoto vale
+    // come assente e si ricade sulla sessione corrente del workspace
+    const pick = (v) => (typeof v === "string" && !/^\$\{.*\}$/.test(v) && v.trim() !== "" ? v.trim() : null);
+    sid = pick(arg) ?? pick(env.JVC_SESSION_ID) ?? readCurrentSession(ws);
     if (!isSafeSessionId(sid)) return { error: "nessuna sessione risolvibile: --session <id|SES…>" };
     let p;
     try { p = readPointer(ws, sid); } catch (err) { return { error: `puntatore di sessione illeggibile: ${err.message}` }; }
