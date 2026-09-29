@@ -31,3 +31,15 @@ test("/vc agents: la riga di comando resa (status, show, history) funziona sulla
     assert.equal(JSON.parse(r.stdout).ok, true, l);
   }
 });
+
+test("D5 docs/orchestration.md: contratto per la skill agent-manager allineato al codice (messaggi, limiti, frasi, tre livelli)", async () => {
+  const doc = readFileSync(join(ROOT, "docs/orchestration.md"), "utf8");
+  const { VIGILANCE_MESSAGE } = await import("../../hooks/lib/invocations.mjs");
+  const { ESCALATION_MESSAGE } = await import("../../hooks/lib/guards/orchestration.mjs");
+  const { DEFAULT_LIMITS, CONTROL_SYNTAX } = await import("../../hooks/lib/control.mjs");
+  assert.ok(doc.includes(VIGILANCE_MESSAGE));
+  assert.ok(doc.includes(ESCALATION_MESSAGE));
+  assert.ok(doc.includes(`${DEFAULT_LIMITS.calls} chiamate di strumento e ${DEFAULT_LIMITS.minutes} minuti`));
+  for (const p of CONTROL_SYNTAX) for (const part of p.split(/ <|\|/)[0].split(" ")) assert.ok(doc.includes(part), p);
+  for (const s of ["Prima di instradare", "Dopo ogni ritorno", "Prima di rispondere all'utente", "Regole applicate dal codice", "Resta istruzione della skill", "Manager", "Regole di orchestrazione", "Monitor"]) assert.ok(doc.includes(s), s);
+});
