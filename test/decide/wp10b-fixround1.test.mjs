@@ -100,10 +100,11 @@ test("minore 1: deontic --text-file legge la frase da un file (testo non fidato 
   const d = tmp();
   const f = join(d, "frase.txt");
   writeFileSync(f, 'Il campo "Centro di costo" è obbligatorio $HOME `x` salvo per il buyer.\n');
-  const a = node("scripts/ingest/deontic.mjs", ["--text-file", f, "--lang", "it", "--json"]);
+  // WP10b parte 2: il file sta nel workspace (--workspace), come per gli altri --text-file
+  const a = node("scripts/ingest/deontic.mjs", ["--text-file", f, "--workspace", d, "--lang", "it", "--json"]);
   assert.equal(a.status, 0, a.stdout + a.stderr);
   assert.equal(JSON.parse(a.stdout).ok, true);
-  assert.equal(node("scripts/ingest/deontic.mjs", ["--text-file", join(d, "manca.txt"), "--json"]).status, 1);
+  assert.equal(node("scripts/ingest/deontic.mjs", ["--text-file", join(d, "manca.txt"), "--workspace", d, "--json"]).status, 1);
 });
 
 test("minore 1: defect --summary-file prende il summary da un file (vince su summary=), file illeggibile ⇒ errore", async () => {

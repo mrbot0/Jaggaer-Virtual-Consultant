@@ -43,11 +43,32 @@ test("minore 2: ogni file d'ingresso fuori dal workspace è rifiutato (text-file
   assert.equal(run(ws, "scripts/kb/review.mjs", ["reject", "C.ACME.P2P.FLW.0001", "--payload-file", abs("p.yaml"), "--root", ws, "--customer", "ACME"]).status, 1);
   assert.equal(run(ws, "scripts/kb/compensation.mjs", ["add", "--step", "1", "--payload-file", abs("p.yaml"), "--json"]).status, 1);
   assert.equal(run(ws, "scripts/run/fixtures.mjs", ["register", "--run", "RUN.ACME.20260923.1000.P2P", "--payload-file", abs("p.yaml"), "--customer", "ACME", "--json"]).status, 1);
+  // WP10b parte 2 (carry): anche --text-file di deontic (--summary-file di defect: test sotto, serve la config ALM)
+  for (const f of [abs("t.txt"), rel("t.txt")]) assert.equal(run(ws, "scripts/ingest/deontic.mjs", ["--text-file", f, "--json"]).status, 1, `deontic ${f}`);
   // dentro il workspace: stessi comandi accettati
   const d = join(ws, "customers/ACME/.sessions/sess-1");
   writeFileSync(join(d, "q.sql"), "select 1 from t");
   const ok = run(ws, "scripts/analytics/query-guard.mjs", ["limit", "--sql-file", "customers/ACME/.sessions/sess-1/q.sql", "--json"]);
   assert.equal(ok.status, 0, ok.stdout + ok.stderr);
+  writeFileSync(join(d, "t.txt"), "Il campo deve essere compilato");
+  const dOk = run(ws, "scripts/ingest/deontic.mjs", ["--text-file", "customers/ACME/.sessions/sess-1/t.txt", "--json"]);
+  assert.equal(dOk.status, 0, dOk.stdout + dOk.stderr);
+  assert.equal(dOk.json.result.modality, "obbligo");
+});
+
+test("WP10b parte 2 (carry): defect --summary-file letto da text-file — fuori dal workspace o oltre 64 KB ⇒ errore 1", async () => {
+  const { loadFinding } = await import("../../scripts/xray/defect.mjs");
+  const ws = envWs({ env: "sandbox", scope: "P2P" });
+  const out = mkdtempSync(join(tmpdir(), "jvc-fuori-"));
+  writeFileSync(join(out, "s.txt"), "Il salvataggio fallisce");
+  for (const f of [join(out, "s.txt"), join("..", out.split(/[\\/]/).pop(), "s.txt")]) {
+    assert.throws(() => loadFinding({ "summary-file": f }, [], ws), (e) => e.code === 1 && /fuori dal workspace/.test(e.message), f);
+  }
+  const d = join(ws, "customers/ACME/.sessions/sess-1");
+  writeFileSync(join(d, "big.txt"), "x".repeat(64 * 1024 + 1));
+  assert.throws(() => loadFinding({ "summary-file": "customers/ACME/.sessions/sess-1/big.txt" }, [], ws), (e) => e.code === 1 && /64 KB/.test(e.message));
+  writeFileSync(join(d, "s.txt"), "Il salvataggio fallisce");
+  assert.equal(loadFinding({ "summary-file": "customers/ACME/.sessions/sess-1/s.txt" }, ["summary=altro"], ws).summary, "Il salvataggio fallisce");
 });
 
 // ---------------- I3: build-report con i dati da file ----------------

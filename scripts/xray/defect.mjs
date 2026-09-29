@@ -29,6 +29,7 @@ import { contentTypeOf } from "../../mcp/alm-server/payload.mjs";
 import { withQueue } from "../../mcp/alm-server/queue.mjs";
 import { XrayError, xrayContext, recordCreated, audit, failWith, kv } from "./common.mjs";
 import { loadTemplate, fillOrWarn } from "../lib/templates.mjs";
+import { readTextFile } from "../lib/text-file.mjs";
 
 export const DEFECT_CLASSES = ["product-defect", "regression", "config-drift", "baseline-change"];
 const NOT_DEFECT = { "environment": "un errore d'ambiente (ERROR-ENVIRONMENT) non è mai un Defect (§29.9): retry, poi blocked", "test-defect": "un difetto del test si ripara (test-mechanic, PR di healing), non è un Defect del prodotto (§30.4)", "expected-change": "un cambiamento atteso aggiorna il test, non apre un Defect (§30.1)" };
@@ -50,7 +51,10 @@ export function loadFinding(opts, positional, ws) {
   for (const k of ["precedent_status", "fixed_in", "section"]) delete p[k];
   // WP10b giro 1 (minore 1): il summary da un file (testo non fidato fuori dalla riga di comando); vince su summary=
   if (opts["summary-file"]) {
-    try { p.summary = readFileSync(resolvePath(ws, opts["summary-file"]), "utf8").trim(); } catch (err) { throw new XrayError(1, `summary illeggibile: ${opts["summary-file"]} (${String(err.code ?? err.message)})`); }
+    // WP10b parte 2 (carry): realpath confinato al workspace, ≤ 64 KB (scripts/lib/text-file.mjs)
+    const t = readTextFile(ws, String(opts["summary-file"]));
+    if (t.error) throw new XrayError(1, `--summary-file: ${t.error}`);
+    p.summary = t.text;
   }
   return { ...f, ...p };
 }
@@ -141,7 +145,8 @@ const HELP = `uso: node scripts/xray/defect.mjs (--finding <file.yaml> | case=<N
 
 Costruisce il Defect dal finding (mai un Incident): evidenze strict, passi minimi, riferimento documentale, "regression
 of <KEY> (fixed in <R>)" se il precedente è fixed, etichetta scope:<id>. Scrive runs/<RUN>/defects/<id>.json;
---publish lo apre (rete giù ⇒ coda offline). --summary-file: il summary da un file (vince su summary=), per non
+--publish lo apre (rete giù ⇒ coda offline). --summary-file: il summary da un file relativo al workspace (≤ 64 KB,
+confinato; vince su summary=), per non
 mettere testo non fidato nella riga di comando.
 
 Exit code: 0 ok · 1 argomenti · 2 errore di sistema · 3 rifiuto (classe, dominio, ALM).`;
