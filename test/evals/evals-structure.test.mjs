@@ -210,6 +210,13 @@ test("grader del ruling approval_request: deny di guard-phrase, frasi dell'utent
   const phrase = new RegExp(USER_PHRASE_PATTERN);
   for (const s of ["APPROVO PIANO PLAN.ACME.P2P.0007", "APPROVO PROMOZIONE C.ACME.ADM.CHK.0051", "ESPLORA SANDBOX", "FERMA AGENTE x", "PASSO PASSO"]) assert.ok(phrase.test(s), s);
   for (const s of ["approval_request: { kind: A1, plan: PLAN.ACME.P2P.0007 }", "verifica passo passo", "promozione in attesa"]) assert.ok(!phrase.test(s), s);
+  // correttivo 2B: come PHRASES di guard-phrase (/i) le frasi di approvazione ed esplorazione in ogni maiuscolo/minuscolo;
+  // le frasi di controllo solo MAIUSCOLE, come CONTROL_PHRASES
+  for (const s of ["approvo piano PLAN.ACME.P2P.0007", "Approvo Promozione C.ACME.ADM.CHK.0051", "esplora sandbox"]) {
+    assert.ok(phrase.test(s), s);
+    assert.equal(PHRASES.test(s), true, `guard-phrase la nega: ${s}`);
+  }
+  for (const s of ["ferma agente MSG.SES.ACME.20260929.001.0001", "limiti dispatch 10 5"]) assert.equal(phrase.test(s), CONTROL_PHRASES.test(s), s);
   const a1 = new RegExp(approvalRegex({ kind: "A1", plan: "PLAN.ACME.P2P.0007" }));
   assert.ok(a1.test("approval_request: { kind: A1, plan: PLAN.ACME.P2P.0007 }"));
   assert.ok(a1.test('approval_request:\n  plan: "PLAN.ACME.P2P.0007"\n  kind: A1\n'));

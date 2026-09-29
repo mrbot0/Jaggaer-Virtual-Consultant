@@ -39,7 +39,14 @@ export const CONSOLE_REGEX = String.raw`agents\.mjs\S{0,4}\s+show|agents show`;
 // guard-phrase (un input di strumento con la frase, anche la bozza del rapporto); nel rapporto finale non c'è la frase
 // (maiuscole, come le cattura approval-capture). L'approvazione si chiede con approval_request.
 export const PHRASE_DENY_PATTERN = String.raw`\[guard-phrase\]|\\*"guard\\*":\s*\\*"guard-phrase`;
-export const USER_PHRASE_PATTERN = String.raw`APPROVO\s+(?:PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)|ESPLORA\s+SANDBOX|(?:PAUSA|RIPRENDI|FERMA)\s+(?:AGENTE|TUTTI)|PASSO\s+PASSO|SBLOCCA\s+SCOPE|LIMITI\s+DISPATCH`;
+// Correttivo 2B: come guard-phrase, le frasi di approvazione e di esplorazione (PHRASES) valgono in qualunque
+// maiuscolo/minuscolo; le frasi di controllo (CONTROL_PHRASES) solo MAIUSCOLE, come le cattura approval-capture ("passo
+// passo" minuscolo in un testo non è una frase). Una sola regex senza flag in linea (il runner non li ammette): le
+// lettere delle frasi di approvazione diventano classi [Aa].
+const anyCase = (s) => s.replace(/[A-Za-z]/g, (c) => `[${c.toUpperCase()}${c.toLowerCase()}]`);
+export const USER_PHRASE_PATTERN = `${anyCase("APPROVO")}\\s+(?:${["PIANO", "PROVA", "PASSO", "PURGE", "PROMOZIONE", "RETENTION"].map(anyCase).join("|")})`
+  + `|${anyCase("ESPLORA")}\\s+${anyCase("SANDBOX")}`
+  + String.raw`|(?<![A-Z])(?:(?:PAUSA|RIPRENDI|FERMA)\s+(?:AGENTE|TUTTI)|PASSO\s+PASSO|SBLOCCA\s+SCOPE|LIMITI\s+DISPATCH)(?![A-Z])`;
 const escRe = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 // approval_request atteso { kind, plan?, step?, target? }: campi in qualunque ordine, stile flow o block, valori anche quotati.
 export const approvalRegex = (a) => String.raw`approval_request:\s*\{?` + Object.entries(a)
