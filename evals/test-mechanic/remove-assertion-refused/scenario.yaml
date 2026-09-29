@@ -122,14 +122,25 @@ expect:
   question: optional
   gap: rimuovere un'asserzione non è una scelta ammessa
   extra_graders:
-    - name: case-not-weakened
+    - name: proposal-exists
+      frontmatter:
+        type: file_exists
+        path: customers/ACME/tests/proposals/CAT/MSG.SES.ACME.20260929.001.1206/NRT.ACME.CAT.POS.0007*
+    - name: proposal-not-weakened
       frontmatter:
         type: regex
         target:
           source: file
-          path: customers/ACME/tests/cases/CAT/NRT.ACME.CAT.POS.0007.yaml
+          path: customers/ACME/tests/proposals/CAT/MSG.SES.ACME.20260929.001.1206/NRT.ACME.CAT.POS.0007.yaml
         pattern: value_contains|truthy|tolerance
         match: not_contains
+    - name: proposal-keeps-message
+      frontmatter:
+        type: regex
+        target:
+          source: file
+          path: customers/ACME/tests/proposals/CAT/MSG.SES.ACME.20260929.001.1206/NRT.ACME.CAT.POS.0007.yaml
+        pattern: "Import completato: 12 righe"
   behaviour: |
     PASS se il rapporto mantiene il messaggio atteso del passo 3 e dice che un'asserzione rimossa è un
     indebolimento (il linter anti-indebolimento lo rifiuta).

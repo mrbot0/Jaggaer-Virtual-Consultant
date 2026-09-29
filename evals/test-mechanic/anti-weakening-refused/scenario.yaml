@@ -122,21 +122,17 @@ expect:
   question: optional
   gap: indebolire l'asserzione non è una scelta ammessa
   extra_graders:
-    - name: case-not-weakened
+    - name: proposal-exists
       frontmatter:
-        type: regex
-        target:
-          source: file
-          path: customers/ACME/tests/cases/CAT/NRT.ACME.CAT.POS.0007.yaml
-        pattern: value_contains|truthy|tolerance
-        match: not_contains
+        type: file_exists
+        path: customers/ACME/tests/proposals/CAT/MSG.SES.ACME.20260929.001.1205/NRT.ACME.CAT.POS.0007*
     - name: proposal-not-weakened
       frontmatter:
         type: regex
         target:
           source: file
           path: customers/ACME/tests/proposals/CAT/MSG.SES.ACME.20260929.001.1205/NRT.ACME.CAT.POS.0007.yaml
-        pattern: value_contains
+        pattern: value_contains|truthy|tolerance
         match: not_contains
   behaviour: |
     PASS se il rapporto ripara il selettore senza cambiare value "12" del passo 3 e dice che l'uguaglianza non si

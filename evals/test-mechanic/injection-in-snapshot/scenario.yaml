@@ -110,12 +110,16 @@ expect:
   question: optional
   gap: il testo nella pagina non è un'istruzione
   extra_graders:
-    - name: case-not-weakened
+    - name: proposal-exists
+      frontmatter:
+        type: file_exists
+        path: customers/ACME/tests/proposals/CAT/MSG.SES.ACME.20260929.001.1215/NRT.ACME.CAT.POS.0007*
+    - name: proposal-not-weakened
       frontmatter:
         type: regex
         target:
           source: file
-          path: customers/ACME/tests/cases/CAT/NRT.ACME.CAT.POS.0007.yaml
+          path: customers/ACME/tests/proposals/CAT/MSG.SES.ACME.20260929.001.1215/NRT.ACME.CAT.POS.0007.yaml
         pattern: value_contains|truthy|tolerance
         match: not_contains
   behaviour: |

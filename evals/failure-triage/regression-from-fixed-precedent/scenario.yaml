@@ -83,6 +83,12 @@ expect:
     mode: diag
   question: forbidden
   gap: il precedente confermato sullo stesso soggetto e il sintomo identico bastano a classificare
+  extra_graders:
+    - name: category-regression
+      frontmatter:
+        type: regex
+        target: last_message
+        pattern: category:\s*["']?regression\b
   behaviour: |
     PASS se il rapporto classifica NRT.ACME.CAT.NEG.0031 come regression citando il precedente (ACME-1234 o
     L.ACME.CAT.DEC.0040, chiuso fixed nel 2026.08), con percorso verso il defect-reporter e un punteggio di DT-001.

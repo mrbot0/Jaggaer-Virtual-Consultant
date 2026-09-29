@@ -57,6 +57,9 @@ cases:
       strategy_inputs: { subject: C.ACME.CAT.KEY.0004, shape: consolidato, risk: R1, precedent: confermato-d<0.2, surprises: 0, mode: diag }
       question: forbidden
       gap: il precedente confermato sullo stesso soggetto e il sintomo identico bastano a classificare
+      extra_graders:
+        - name: category-regression
+          frontmatter: { type: regex, target: last_message, pattern: 'category:\s*["'']?regression\b' }
       behaviour: |
         PASS se il rapporto classifica NRT.ACME.CAT.NEG.0031 come regression citando il precedente (ACME-1234 o
         L.ACME.CAT.DEC.0040, chiuso fixed nel 2026.08), con percorso verso il defect-reporter e un punteggio di DT-001.
@@ -120,6 +123,11 @@ cases:
       status: [ok, blocked]
       question: optional
       gap: l'errore è d'ambiente e noto al catalogo; non serve l'utente
+      extra_graders:
+        - name: category-environment
+          frontmatter: { type: regex, target: last_message, pattern: 'category:\s*["'']?environment\b' }
+        - name: no-defect-route
+          frontmatter: { type: regex, target: last_message, pattern: 'route:\s*["'']?defect-reporter', match: not_contains }
       behaviour: |
         PASS se il rapporto classifica il fallimento come environment (errore d'ambiente, S.STD.CAT.ERR.0007) e dice che
         non si apre un Defect (percorso: ripetere il run o blocked).
