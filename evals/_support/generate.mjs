@@ -69,8 +69,10 @@ export function allowedPaths(role, { customer: C = "ACME", scope: S }) {
     case "cluster-validator":
       return [`customers/${C}/_inbox/${S}/digested/**`, `customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`, `customers/${C}/lessons/**`, sidPaths(C)];
     case "weekly-digest":
+      // sola lettura su tutti i clienti (Read/Glob/Grep, eccezione di guard-customer e permesso cross_read); product/digest
+      // e customers/<C>/digest li scrive e li legge la pipeline (learn digest-weekly, competence-report), non gli strumenti
       return [`customers/${C}/lessons/**`, "customers/*/lessons/**", "customers/*/decisions/**", "customers/*/outcomes/**", "customers/*/observations/**",
-        "customers/*/kb/**", "product/kb/**", "product/digest/**", sidPaths(C)];
+        "customers/*/kb/**", "product/kb/scopes/**", "product/kb/handoffs/**", sidPaths(C)];
     case "root-cause-analyst":
       return [`customers/${C}/runs/**`, `customers/${C}/kb/scopes/${S}/**`, `product/kb/scopes/${S}/**`, `customers/${C}/kb/handoffs/*${S}*`, `product/kb/handoffs/*${S}*`,
         `customers/${C}/analysis/**`, `customers/${C}/lessons/**`, sidPaths(C)];

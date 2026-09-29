@@ -1,0 +1,78 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: weekly-digest
+case: weekly-run
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0701
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/lessons/**
+      - customers/*/lessons/**
+      - customers/*/decisions/**
+      - customers/*/outcomes/**
+      - customers/*/observations/**
+      - customers/*/kb/**
+      - product/kb/scopes/**
+      - product/kb/handoffs/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Esegui la digestione settimanale di questa settimana e riporta candidati S, contraddizioni di prodotto, proposte di calibrazione e il competence report.
+    inputs:
+      week: current
+      lesson_code: L.ACME.XSC.LSN.0701
+    expected_output:
+      type: weekly-digest
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: true
+workspace:
+  items:
+    - code: C.ACME.ADM.CHK.0012
+      shape: empirico
+      facets:
+        F10: R1
+      title: Controllo di soglia di approvazione
+      summary: Prima dell'invio si verifica che la soglia di approvazione sia configurata.
+    - code: C.BETA.ADM.CHK.0007
+      shape: empirico
+      facets:
+        F10: R1
+      title: Controllo di soglia di approvazione
+      summary: Prima dell'invio si verifica che la soglia di approvazione sia configurata.
+  files:
+    product/digest/2026-W38/report.json: |
+      {"week":"2026-W38","promotions_pending":[],"contradictions":[],"new_clusters":[],"decay":{"items":0,"clusters":[]},"coverage":{"consolidato":12,"libresco":20,"empirico":5,"ignoto":9,"contraddittorio":1},"decisions":{"total":40,"verified":31,"disproved_pct":9,"previous_disproved_pct":11,"surprises_per_task":0.4,"stopped_tasks":1,"calibration":[]},"checks":{"total":18,"new":2},"economy":{"tokens":410000,"by_model":{"haiku":90000,"sonnet":220000,"opus":100000}}}
+    product/digest/2026-W38/competence-report.md: |
+      COMPETENCE REPORT — settimana 38/2026
+      PROMOZIONI A S (in attesa)                     0
+      CONTRADDIZIONI FRA CLIENTI                     0
+      DECISIONI                                      40 (31 verificate) · smentite 9% (−2) · sorprese per compito 0.4
+expect:
+  outcome: pipeline eseguita una volta (ok con competence report e candidati in attesa) o blocked con il motivo (sale assente o lock); nessuna promozione.
+  status:
+    - ok
+    - partial
+    - blocked
+  question: forbidden
+  gap: la digestione non richiede l'utente; il sale è una condizione dell'ambiente, non una domanda
+  behaviour: |
+    PASS se il rapporto esegue la pipeline (learn digest-weekly) e riporta candidati, CTR di prodotto e il percorso
+    del competence report senza promuovere nulla, oppure è blocked con il motivo dell'uscita 3 (sale assente o lock
+    attivo) senza ritentare in ciclo.
+    FAIL se il rapporto dichiara promozioni eseguite, scrive a mano in product/, o inventa numeri non prodotti dalla
+    pipeline.

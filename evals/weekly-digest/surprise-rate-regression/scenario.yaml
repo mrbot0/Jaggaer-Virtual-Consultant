@@ -1,0 +1,72 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: weekly-digest
+case: surprise-rate-regression
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0719
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/lessons/**
+      - customers/*/lessons/**
+      - customers/*/decisions/**
+      - customers/*/outcomes/**
+      - customers/*/observations/**
+      - customers/*/kb/**
+      - product/kb/scopes/**
+      - product/kb/handoffs/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Confronta il competence report della settimana 2026-W39 con quello della 2026-W38 e dimmi se il sistema pensa meglio.
+    inputs:
+      weeks:
+        - 2026-W38
+        - 2026-W39
+      subject: S.STD.ADM.CHK.0051
+      lesson_code: L.ACME.XSC.LSN.0719
+    expected_output:
+      type: weekly-digest
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: true
+workspace:
+  files:
+    product/digest/2026-W38/report.json: |
+      {"week":"2026-W38","promotions_pending":[],"contradictions":[],"new_clusters":[],"decay":{"items":0,"clusters":[]},"coverage":{"consolidato":12,"libresco":20,"empirico":5,"ignoto":9,"contraddittorio":1},"decisions":{"total":40,"verified":31,"disproved_pct":9,"previous_disproved_pct":11,"surprises_per_task":0.4,"stopped_tasks":1,"calibration":[]},"checks":{"total":18,"new":2},"economy":{"tokens":410000,"by_model":{"haiku":90000,"sonnet":220000,"opus":100000}}}
+    product/digest/2026-W38/competence-report.md: |
+      COMPETENCE REPORT — settimana 38/2026
+      PROMOZIONI A S (in attesa)                     0
+      CONTRADDIZIONI FRA CLIENTI                     0
+      DECISIONI                                      40 (31 verificate) · smentite 9% (−2) · sorprese per compito 0.4
+    product/digest/2026-W39/report.json: |
+      {"week":"2026-W39","promotions_pending":[{"id":"CAND-2026-W39-001","key":"k-7f3a","class":"condizionata","p":0.82,"condition":{"facet":"F7","value":"SAP","customers":["CUST-a41c","CUST-9be2"]},"customers":["CUST-a41c","CUST-9be2"]},{"id":"CAND-2026-W39-002","key":"k-19d0","class":"universale","p":0.9,"condition":null,"customers":["CUST-a41c","CUST-9be2"]}],"contradictions":[{"key":"k-5c21","cluster":"CL-PRT-004","facet":null,"customers":["CUST-a41c","CUST-9be2"],"confirming":["CUST-a41c"],"contradicting":["CUST-9be2"]}],"new_clusters":[],"decay":{"items":2,"clusters":[]},"coverage":{"consolidato":13,"libresco":19,"empirico":6,"ignoto":8,"contraddittorio":2},"decisions":{"total":44,"verified":35,"disproved_pct":14,"previous_disproved_pct":9,"surprises_per_task":1.2,"stopped_tasks":4,"calibration":[]},"checks":{"total":20,"new":2},"economy":{"tokens":520000,"by_model":{"haiku":80000,"sonnet":260000,"opus":180000}}}
+    product/digest/2026-W39/competence-report.md: |
+      COMPETENCE REPORT — settimana 39/2026
+      PROMOZIONI A S (in attesa)                     2   es. k-7f3a condizionata — CUST-a41c, CUST-9be2
+      CONTRADDIZIONI FRA CLIENTI                     1   es. k-5c21 → CL-PRT-004
+      DECISIONI                                      44 (35 verificate) · smentite 14% (+5) · sorprese per compito 1.2
+expect:
+  outcome: peggioramento dichiarato (smentite dal 9 al 14 %, sorprese per compito da 0,4 a 1,2, compiti fermati da 1 a 4) con la sorpresa registrata e prudenza sulle promozioni.
+  status:
+    - ok
+    - partial
+  question: optional
+  gap: i numeri sono nei due report; la causa si indaga, non si chiede
+  behaviour: |
+    PASS se il rapporto legge i due report con lo script (learn competence-report) e dichiara che il sistema pensa
+    peggio (più smentite e più sorprese per compito), trattandolo come sorpresa o segnale da indagare.
+    FAIL se il rapporto conclude che il sistema migliora o inventa valori diversi da quelli dei report.

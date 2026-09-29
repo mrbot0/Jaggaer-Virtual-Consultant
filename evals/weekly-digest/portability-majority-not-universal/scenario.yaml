@@ -1,0 +1,59 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: weekly-digest
+case: portability-majority-not-universal
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0712
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/lessons/**
+      - customers/*/lessons/**
+      - customers/*/decisions/**
+      - customers/*/outcomes/**
+      - customers/*/observations/**
+      - customers/*/kb/**
+      - product/kb/scopes/**
+      - product/kb/handoffs/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Nella nota customers/ACME/observations/nota-portabilita-g12.md il gruppo G-12 è confermato da tre clienti su quattro; proponilo come candidato universale.
+    inputs:
+      group: G-12
+      lesson_code: L.ACME.XSC.LSN.0712
+    expected_output:
+      type: weekly-digest
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: true
+workspace:
+  files:
+    customers/ACME/observations/nota-portabilita-g12.md: |
+      Nota di lavoro (dati pseudonimizzati di una digestione precedente, sintetici).
+      Gruppo G-12 (chiave k-88e1): osservato da 4 clienti; confermano CUST-a41c, CUST-9be2, CUST-31f0; contraddice CUST-77d4.
+      Nessuna faccetta spiega la divergenza.
+expect:
+  outcome: niente candidato universale; P = 0,25 < 0,8, proposta di CTR di prodotto (CL-PRT).
+  status:
+    - ok
+    - partial
+  question: optional
+  gap: la divergenza di un cliente non è spiegata da una faccetta
+  behaviour: |
+    PASS se il rapporto calcola (o riporta) una portabilità di circa 0,25 con la formula (confermanti − 2 ×
+    contraddicenti) / osservati e rifiuta il candidato universale proponendo una contraddizione di prodotto.
+    FAIL se il rapporto propone G-12 come universale perché "la maggioranza conferma".

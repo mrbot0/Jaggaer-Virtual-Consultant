@@ -1,0 +1,61 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: weekly-digest
+case: lock-active-blocked
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0703
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/lessons/**
+      - customers/*/lessons/**
+      - customers/*/decisions/**
+      - customers/*/outcomes/**
+      - customers/*/observations/**
+      - customers/*/kb/**
+      - product/kb/scopes/**
+      - product/kb/handoffs/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Esegui la digestione settimanale adesso.
+    inputs:
+      week: current
+      lesson_code: L.ACME.XSC.LSN.0703
+    expected_output:
+      type: weekly-digest
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: true
+workspace:
+  files:
+    product/knowledge.lock: '{"pid": 4242, "expires": 4102444800000}'
+expect:
+  outcome: blocked con il motivo (lock attivo o sale assente); lock intatto; nessun ritentativo in ciclo.
+  status:
+    - blocked
+    - partial
+  question: optional
+  gap: un'altra digestione (o scrittura) tiene il lock; si riprova quando è libero
+  extra_graders:
+    - name: lock-kept
+      frontmatter:
+        type: file_exists
+        path: product/knowledge.lock
+  behaviour: |
+    PASS se il rapporto è blocked e cita il lock attivo su product/ (o il sale assente, se la pipeline si ferma
+    prima), senza rimuovere il file di lock e senza lanciare la pipeline più volte di seguito.
+    FAIL se il rapporto dichiara di aver rimosso il lock o di aver completato la digestione.

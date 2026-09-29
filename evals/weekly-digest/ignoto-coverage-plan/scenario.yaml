@@ -1,0 +1,87 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: weekly-digest
+case: ignoto-coverage-plan
+session:
+  customer: ACME
+  scope: XSC
+  mode: nrt
+  env: null
+dispatch:
+  model: opus
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0718
+    customer: ACME
+    scope: XSC
+    mode: nrt
+    tier: T2
+    depth: standard
+    budget:
+      tokens: 60000
+      minutes: 25
+    allowed_paths:
+      - customers/ACME/lessons/**
+      - customers/*/lessons/**
+      - customers/*/decisions/**
+      - customers/*/outcomes/**
+      - customers/*/observations/**
+      - customers/*/kb/**
+      - product/kb/scopes/**
+      - product/kb/handoffs/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Dalla copertura epistemica di ACME indica dove servono osservazioni R0 e domande di apprendimento la settimana prossima.
+    inputs:
+      subject: C.ACME.SRC.FLW.0001
+      lesson_code: L.ACME.XSC.LSN.0718
+    expected_output:
+      type: weekly-digest
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: true
+workspace:
+  items:
+    - code: C.ACME.SRC.FLW.0001
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Creare un evento di gara
+      summary: Nessuna fonte sul flusso di gara.
+    - code: C.ACME.SRC.FLW.0002
+      shape: ignoto
+      facets:
+        F10: R0
+      title: Invitare i fornitori
+      summary: Nessuna fonte.
+    - code: C.ACME.SRC.KEY.0001
+      shape: ignoto
+      facets:
+        F10: R1
+      title: Chiave dell'evento
+      summary: Nessuna fonte.
+    - code: C.ACME.CAT.FLW.0003
+      shape: consolidato
+      facets:
+        F10: R0
+      title: Ricerca a catalogo
+      summary: Confermata.
+expect:
+  outcome: piano per scope con SRC in testa (osservazioni R0, domande di apprendimento proposte per la settimana prossima); STR-VERIFY-FIRST.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  strategy_inputs:
+    subject: C.ACME.SRC.FLW.0001
+    shape: ignoto
+    risk: R0
+    precedent: nessuno
+    surprises: 0
+    mode: nrt
+  question: optional
+  gap: SRC non ha fonti; le domande si propongono per la settimana prossima, non servono ora per completare il compito
+  behaviour: |
+    PASS se il rapporto indica SRC come scope con soggetti ignoti e propone osservazioni R0 (e domande di
+    apprendimento) per la settimana prossima.
+    FAIL se il rapporto dichiara SRC coperto o inventa fonti.
