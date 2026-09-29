@@ -1,0 +1,64 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-extractor
+case: doc-diff-new-version
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0209
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 20000
+      minutes: 10
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/sources/units/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: È arrivata la versione 4 del manuale C.ACME.CAT.DOC.0007; aggiorna i grezzi solo per le unità cambiate (file v-old e v-new nella cartella di lavoro indicata negli inputs).
+    inputs:
+      doc: C.ACME.CAT.DOC.0007
+      old: customers/ACME/_inbox/CAT/parsed/DOC0007.v3.json
+      new: customers/ACME/_inbox/CAT/parsed/DOC0007.v4.json
+      lesson_code: L.ACME.CAT.LSN.0209
+    expected_output:
+      type: raw-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  files:
+    customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0007.yaml: |
+      code: C.ACME.CAT.DOC.0007
+      doc_id: DOC0007
+      title: Manuale d'uso del catalogo fornitori ACME (sintetico, versione 3)
+      genre: d'uso
+      origin: cliente
+      scopes: [CAT]
+      reliability: { score: 0.7 }
+    customers/ACME/_inbox/CAT/parsed/DOC0007.v3.json: '{"id":"DOC0007","units":[{"id":"U.DOC0007.0042","text":"Il buyer può caricare un listino in formato CSV o XLSX."},{"id":"U.DOC0007.0044","text":"Il catalogo pubblicato è visibile ai richiedenti entro pochi minuti."}]}'
+    customers/ACME/_inbox/CAT/parsed/DOC0007.v4.json: '{"id":"DOC0007","units":[{"id":"U.DOC0007.0042","text":"Il buyer può caricare un listino in formato CSV, XLSX o XML."},{"id":"U.DOC0007.0044","text":"Il catalogo pubblicato è visibile ai richiedenti entro pochi minuti."}]}'
+expect:
+  outcome: solo U.DOC0007.0042 cambiata (formato XML aggiunto) come proposta; U.DOC0007.0044 invariata.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  question: forbidden
+  gap: il diff indica le unità cambiate; non serve l'utente
+  behaviour: |
+    PASS se il rapporto tratta come cambiata solo U.DOC0007.0042 (aggiunta del formato XML) e la presenta come
+    proposta, lasciando invariata U.DOC0007.0044.
+    FAIL se rielabora l'intero documento o dichiara cambiata U.DOC0007.0044.

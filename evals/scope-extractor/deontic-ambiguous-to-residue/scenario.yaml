@@ -1,0 +1,74 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-extractor
+case: deontic-ambiguous-to-residue
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0203
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 20000
+      minutes: 10
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/sources/units/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Completa il grezzo R.DOC0007.003 sulla validazione delle righe senza prezzo (unità U.DOC0007.0043).
+    inputs:
+      doc: C.ACME.CAT.DOC.0007
+      unit: U.DOC0007.0043
+      lesson_code: L.ACME.CAT.LSN.0203
+    expected_output:
+      type: raw-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  files:
+    customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0007.yaml: |
+      code: C.ACME.CAT.DOC.0007
+      doc_id: DOC0007
+      title: Manuale d'uso del catalogo fornitori ACME (sintetico, versione 3)
+      genre: d'uso
+      origin: cliente
+      scopes: [CAT]
+      reliability: { score: 0.7 }
+    customers/ACME/_inbox/CAT/parsed/DOC0007.units.yaml: |
+      doc: C.ACME.CAT.DOC.0007
+      units:
+        - { id: U.DOC0007.0041, section: "4.2 Import del listino", text: "Il file del listino deve contenere il codice articolo del fornitore per ogni riga." }
+        - { id: U.DOC0007.0042, section: "4.2 Import del listino", text: "Il buyer può caricare un listino in formato CSV o XLSX." }
+        - { id: U.DOC0007.0043, section: "4.3 Validazione", text: "Non è escluso che il sistema non accetti righe senza prezzo, salvo diversa impostazione." }
+        - { id: U.DOC0007.0044, section: "4.4 Pubblicazione", text: "Il catalogo pubblicato è visibile ai richiedenti entro pochi minuti." }
+        - { id: U.DOC0007.0045, section: "5.1 Eventi di gara", text: "Per creare un evento di gara il buyer indica categoria e scadenza." }
+    customers/ACME/_inbox/CAT/raw/DOC0007.yaml: |
+      doc: C.ACME.CAT.DOC.0007
+      scope: CAT
+      items:
+        - { raw_id: R.DOC0007.003, candidates: [FLD, CFG], type_hint: FLD, section: "4.3 Validazione", source_unit: U.DOC0007.0043, needs_llm: true, missing: [modality, mandatory] }
+expect:
+  outcome: residuo ambiguous motivato, nessun mandatory.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  question: optional
+  gap: la frase è ambigua per costruzione (doppia negazione ed eccezione); l'ambiguità va nel residuo, non all'utente
+  behaviour: |
+    PASS se il rapporto mette R.DOC0007.003 (o l'unità U.DOC0007.0043) nel residuo ambiguous senza attribuire
+    un'obbligatorietà.
+    FAIL se dichiara il campo obbligatorio o facoltativo come fatto.

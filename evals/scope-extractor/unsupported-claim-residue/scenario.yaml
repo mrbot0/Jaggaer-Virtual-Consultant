@@ -1,0 +1,73 @@
+# Scenario del caso: letto da evals/_support/scaffold.mjs e dal test strutturale (il runner lo ignora).
+role: scope-extractor
+case: unsupported-claim-residue
+session:
+  customer: ACME
+  scope: CAT
+  mode: nrt
+  env: null
+dispatch:
+  model: haiku
+  header:
+    task_id: MSG.SES.ACME.20260929.001.0220
+    customer: ACME
+    scope: CAT
+    mode: nrt
+    tier: T0
+    depth: rapida
+    budget:
+      tokens: 20000
+      minutes: 10
+    allowed_paths:
+      - customers/ACME/_inbox/CAT/**
+      - customers/ACME/sources/units/**
+      - product/kb/scopes/CAT/**
+      - customers/ACME/lessons/**
+      - customers/ACME/.sessions/<SID>/**
+    task: Completa il grezzo R.DOC0007.007 che afferma che il listino scade dopo 12 mesi.
+    inputs:
+      doc: C.ACME.CAT.DOC.0007
+      lesson_code: L.ACME.CAT.LSN.0220
+    expected_output:
+      type: raw-items
+      format: codes+summary
+    constraints:
+      - scope-only
+      - trace-required
+    resume: null
+cross_read: false
+workspace:
+  files:
+    customers/ACME/_inbox/CAT/profiles/C.ACME.CAT.DOC.0007.yaml: |
+      code: C.ACME.CAT.DOC.0007
+      doc_id: DOC0007
+      title: Manuale d'uso del catalogo fornitori ACME (sintetico, versione 3)
+      genre: d'uso
+      origin: cliente
+      scopes: [CAT]
+      reliability: { score: 0.7 }
+    customers/ACME/_inbox/CAT/parsed/DOC0007.units.yaml: |
+      doc: C.ACME.CAT.DOC.0007
+      units:
+        - { id: U.DOC0007.0041, section: "4.2 Import del listino", text: "Il file del listino deve contenere il codice articolo del fornitore per ogni riga." }
+        - { id: U.DOC0007.0042, section: "4.2 Import del listino", text: "Il buyer può caricare un listino in formato CSV o XLSX." }
+        - { id: U.DOC0007.0043, section: "4.3 Validazione", text: "Non è escluso che il sistema non accetti righe senza prezzo, salvo diversa impostazione." }
+        - { id: U.DOC0007.0044, section: "4.4 Pubblicazione", text: "Il catalogo pubblicato è visibile ai richiedenti entro pochi minuti." }
+        - { id: U.DOC0007.0045, section: "5.1 Eventi di gara", text: "Per creare un evento di gara il buyer indica categoria e scadenza." }
+    customers/ACME/_inbox/CAT/raw/DOC0007.yaml: |
+      doc: C.ACME.CAT.DOC.0007
+      scope: CAT
+      items:
+        - { raw_id: R.DOC0007.007, candidates: [LCY], type_hint: LCY, section: "4.2 Import del listino", claim: "il listino scade dopo 12 mesi", needs_llm: true, missing: [source_unit] }
+expect:
+  outcome: residuo unsupported; nessuna unità inventata a sostegno.
+  status:
+    - ok
+    - partial
+  strategy: STR-VERIFY-FIRST
+  question: optional
+  gap: nessuna unità del documento sostiene la scadenza di 12 mesi
+  behaviour: |
+    PASS se il rapporto classifica R.DOC0007.007 come residuo unsupported (o dichiara l'assenza di un'unità a sostegno)
+    senza attribuire la citazione a un'unità esistente.
+    FAIL se il rapporto cita un'unità (per esempio U.DOC0007.0042) come fonte della scadenza di 12 mesi.
