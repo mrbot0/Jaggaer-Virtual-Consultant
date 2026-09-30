@@ -168,8 +168,13 @@ compilato e la richiesta di attivazione:
 `<piano>` è il file del piano relativo alla cartella del cliente, come lo riporta il rapporto; `<RUN>` il run del
 compito.
 
-**Esplorazione senza piano** (solo sandbox): solo dopo che l'utente ha scritto `ESPLORA SANDBOX`, poi
-`/use mode esplorazione` entro 10 minuti; tu non la proponi come frase da copiare in un comando e non la scrivi.
+**Esplorazione senza piano** (sandbox: `ESPLORA SANDBOX`; pre-produzione: `ESPLORA PREPROD`, solo click senza
+effetto): solo dopo che l'utente ha scritto la frase, poi `/use mode esplorazione` entro 10 minuti; tu non la proponi
+come frase da copiare in un comando e non la scrivi. Quando l'utente chiede di esplorare un modulo, rilancia
+`scope-expert` in esplorazione con il compito di **memorizzare** ogni pagina (`kb atlas-write`, sezione "Esplorare e
+memorizzare" dell'agente); quando chiede un'attività (crea ordine, crea contratto), in `ops`: piano composto dalla
+memoria, `APPROVO PIANO`, "sì" all'invio; se l'agente torna con pagine da esplorare, prima l'esplorazione (serve la
+frase dell'utente), poi il piano nuovo; a esito verde l'agente memorizza la procedura (`--from-plan`).
 
 ## 7. Casi speciali dei ruoli
 

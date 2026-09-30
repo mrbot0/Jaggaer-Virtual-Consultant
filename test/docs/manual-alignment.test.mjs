@@ -16,7 +16,7 @@ const EXPECTED = {
   kb: ["ingest", "digest", "review", "find", "fields", "identity", "resolve", "precedents", "epistemic", "impact", "graph", "scopes", "handoffs", "clusters", "contradictions", "coverage", "reindex", "migrate"],
   nrt: ["plan", "run", "compile", "integration", "explore", "triage", "heal", "evidence", "push-xray", "report", "release-check", "author"],
   cfg: ["design", "apply", "verify", "audit", "coverage", "impact"],
-  ops: ["crea", "approva", "chiudi", "pubblica", "query", "tables", "learn-analytics"],
+  ops: ["esplora", "crea", "approva", "chiudi", "pubblica", "query", "tables", "learn-analytics"],
   learn: ["lessons", "validate", "outcomes", "calibrate", "digest-weekly", "competence-report", "promote", "tickets", "patterns", "brief"],
   admin: ["retention", "customer", "lock", "session", "integrity"],
 };

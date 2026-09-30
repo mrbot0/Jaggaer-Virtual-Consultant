@@ -197,6 +197,16 @@ Ultimo aggiornamento: 29/09/2026 22:45 — **sviluppo completato: tutti i 17 pac
   - Raccomandazione: rendere la cartella del plugin e `~/.claude` di sola lettura a livello di sistema operativo, oppure usare impostazioni gestite.
 - **Prerequisito bloccante:** prima che un agente usi il browser serve WP07, in particolare `observe-append`, che registra la pagina realmente osservata.
 
+### Dopo la chiusura — esplorare e operare su un tenant reale (soluzione B, 30/09/2026)
+Richiesta dell'utente: esplorare un sistema JAGGAER, memorizzarlo, poi creare ordini e contratti in modo quasi automatico, in pre-produzione con Chrome DevTools MCP.
+- [x] Esplorazione in pre-produzione: frase `ESPLORA PREPROD`, solo click su elementi senza effetto (guard-config-scope)
+- [x] Memoria dell'esplorazione: `kb atlas-write` (SEL, FLD, FLW nella conoscenza del cliente, validati, senza doppioni)
+- [x] Procedura memorizzata da un'esecuzione riuscita (`atlas-write --from-plan`)
+- [x] Istruzioni per `scope-expert` e `agent-manager`, comandi `ops esplora` e `use mode esplorazione`
+- [x] Guida [GUIDA-PRIMO-USO.md](GUIDA-PRIMO-USO.md)
+- [ ] Prova dal vivo sul tenant del cliente (prima esplorazione, primo ordine)
+- [ ] Soluzione A (mappa costruita da script dagli snapshot): da valutare dopo le prove
+
 ## Stato per pacchetto di lavoro
 
 Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va ricalibrata quando un pacchetto si chiude.

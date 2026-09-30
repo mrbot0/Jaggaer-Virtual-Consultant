@@ -58,6 +58,8 @@ Comandi:
   promote   <codice> --customer C [--to product --approval <token>] → scripts/kb/lifecycle.mjs
   deprecate <codice> --superseded-by <codice> [--customer C] → scripts/kb/lifecycle.mjs
   migrate   --db <file> [--root <dir>] [--dry-run] → scripts/kb/migrate.mjs (migrazioni + knowledge_version, §49.4)
+  atlas-write --in <bozza> | --from-plan <plan.json> --title <t> --customer C --scope S → scripts/kb/atlas-write.mjs
+            (memoria dell'esplorazione: SEL/FLD/FLW osservati nella conoscenza del cliente)
 
 Opzioni comuni: --db <file> (default knowledge.db) --json --help
 
@@ -78,6 +80,7 @@ export async function runAsync(argv) {
   const [cmd, ...rest] = argv;
   if (cmd === "promote" || cmd === "deprecate") return { exitCode: await (await import("./lifecycle.mjs")).main(cmd, rest) };
   if (cmd === "migrate") return { exitCode: (await import("./migrate.mjs")).main(rest) };
+  if (cmd === "atlas-write") return { exitCode: await (await import("./atlas-write.mjs")).main(rest) };
   return run(argv);
 }
 

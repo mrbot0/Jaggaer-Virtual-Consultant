@@ -1,7 +1,7 @@
 ---
 name: ops
 description: Operatività JAGGAER — creare in bozza con compensazione, approvare, chiudere, pubblicare (mai in produzione) e interrogare Analytics in sola lettura (ops)
-argument-hint: crea <richiesta|ordine|fornitore|evento|contratto> <dettagli> | approva <riferimento> | chiudi <riferimento> | pubblica <riferimento> | query "<domanda>" | tables | learn-analytics
+argument-hint: esplora <modulo> | crea <richiesta|ordine|fornitore|evento|contratto> <dettagli> | approva <riferimento> | chiudi <riferimento> | pubblica <riferimento> | query "<domanda>" | tables | learn-analytics
 allowed-tools: Bash(node *), Read
 ---
 
@@ -27,9 +27,16 @@ Modalità Operativa e Analytics (§56.6, §29, §20.5). `<C>` è il cliente atti
 
 ## Azioni
 
+- `esplora <modulo>` — esplora e **memorizza** un modulo (menu, pagine, pulsanti, campi, tendine) nella conoscenza
+  del cliente: `Agent(scope-expert, sonnet)` in modalità `esplorazione` (l'utente l'ha aperta con `ESPLORA SANDBOX` o
+  `ESPLORA PREPROD`, poi `/use mode esplorazione`); l'agente scrive con `kb atlas-write`. In pre-produzione solo click
+  senza effetto. Mai prod.
 - `crea <richiesta|ordine|fornitore|evento|contratto> …` — crea **in bozza** con compensazione registrata prima del
   passo: `Agent(scope-expert, sonnet)` in modalità ops. Sandbox e preprod; **mai prod**. Si ferma allo stato più
   conservativo (bozza) se l'utente non dice "fin dove". Nessuna approvazione per la sola bozza in sandbox (piano mostrato).
+  Il piano si compone dalla memoria (procedura FLW già imparata, oppure SEL/FLD dell'esplorazione); in pre-produzione
+  l'utente scrive `APPROVO PIANO <PLAN>` e poi `sì` prima dell'invio finale. Se mancano pagine, prima `esplora`. A esito
+  verde l'agente memorizza la procedura (`kb atlas-write --from-plan`): la volta dopo cambiano solo i dati.
 - `approva · chiudi · pubblica <riferimento>` — azioni R2: `Agent(scope-expert, sonnet)` in modalità ops, con
   approvazione (il `sì` dell'utente alla domanda del workflow, che mostra importo, stato di arrivo e compensazione).
   In sandbox; in preprod **solo con il referente del cliente**: chiedi all'utente di confermare il referente presente e

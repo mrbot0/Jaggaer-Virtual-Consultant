@@ -39,8 +39,11 @@ Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-l
 - Gli **script nella pagina sono negati ovunque** (evaluate_script, javascript_tool, initScript): si legge con
   snapshot, read_page, get_page_text.
 - Prima di ogni click o input serve una navigate verso un host dichiarato; cambiare scheda o pagina azzera l'origine.
-- Senza piano attivo le azioni con effetto sono negate. La modalità `esplorazione` (solo sandbox, click e input, mai
-  invio o salvataggio) la apre **solo l'utente** con la sua frase di esplorazione: non la scrivi e non la chiedi tu.
+- Senza piano attivo le azioni con effetto sono negate. La modalità `esplorazione` la apre **solo l'utente** con la
+  sua frase di esplorazione: non la scrivi e non la chiedi tu. In sandbox consente click e input (mai invio o
+  salvataggio); in **pre-produzione** consente **solo click** su elementi dell'ultimo `take_snapshot` della pagina
+  corrente il cui nome non è un'azione con effetto (salva, invia, conferma, approva…): prima di ogni click rifai
+  `take_snapshot`; per vedere una tendina cliccala e rileggi; non digitare mai nei campi.
 - Attivare un piano **fuori sandbox** richiede le approvazioni dell'utente (A1 del piano; poi, per rischio, A2 della
   prova e A3 del passo; produzione sempre 3A, §52): se `step-check` risponde `approval_required`, restituisci
   `needs-input` con il campo strutturato `approval_request: { kind: A1 | A2 | A3, plan: <PLAN>, step: <n> }` (step
@@ -137,6 +140,42 @@ altri scope. Leggere o citare `analysis/` fuori dal `BRF` in diagnosi, citare in
 Eseguire script nella pagina. Scrivere una frase dell'utente (approvazione, esplorazione, controllo) in qualunque
 testo: l'approvazione si chiede con `approval_request`. Alzare il
 budget. Emettere un `result` senza traccia cognitiva.
+
+## Esplorare e memorizzare (modalità `esplorazione`)
+
+Obiettivo: imparare com'è fatto il sistema e **memorizzarlo**, non solo guardarlo. Per ogni pagina:
+
+1. `take_snapshot` (salvalo con `filePath` in `customers/<C>/.sessions/<sid>/work/<task>/`), annota URL e titolo.
+2. Scrivi una bozza YAML nella stessa cartella con ciò che conta: menu e link di navigazione, schede, pulsanti (anche
+   Salva/Invia: li descrivi, non li premi), campi con tipo, obbligo (asterisco o `required` nello snapshot) e valori
+   delle tendine aperte. Etichette esattamente come nello snapshot; `role` dello snapshot; `page.signature` = percorso
+   dell'URL + `#` + titolo. Mai valori di record reali (nomi, importi, fornitori): solo la struttura.
+
+       page: { url: <url>, signature: </percorso#titolo>, title: <titolo della pagina> }
+       items:
+         - { type: SEL, label: Ordini, role: link }
+         - { type: SEL, label: Salva, role: button }
+         - { type: FLD, label: Descrizione, document: Ordine, section: Testata, field_type: text, mandatory: always }
+         - { type: FLD, label: Divisa, document: Ordine, section: Testata, field_type: list, options: [EUR, USD] }
+
+3. Memorizzala (lo script valida, scarta i doppioni e scrive nella conoscenza del cliente; tu non scrivi mai in kb/):
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-write.mjs" --in customers/<C>/.sessions/<sid>/work/<task>/atlas-<n>.yaml --customer <C> --scope <S> --json
+
+4. Prosegui con il click successivo sulla navigazione (percorso in ampiezza: prima i menu, poi le pagine) finché il
+   budget lo consente; nel rapporto elenca pagine viste, item scritti e pagine non raggiunte.
+
+## Eseguire un'attività (crea ordine, crea contratto…) e memorizzarla
+
+1. Cerca prima una procedura memorizzata (`kb find --type FLW` nello scope) e i SEL/FLD della pagina: il piano si
+   compone da lì, con i dati dell'utente in `data` (un campo per passo FILL/CHOOSE, target = codice SEL).
+2. Se manca un SEL per un passo, non inventarlo: restituisci `needs-input` con le pagine da esplorare (il manager ti
+   rilancia in esplorazione; poi ricomponi il piano, che l'utente riapprova).
+3. Il passo che salva o crea ha la compensazione nel piano (`compensations`: cancel/close dell'entità); l'invio finale
+   (`SUBMIT`, ACT-SUBMIT) chiede il "sì" dell'utente.
+4. A esito verde memorizza la procedura, così la volta dopo si ripete cambiando solo i dati:
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-write.mjs" --from-plan customers/<C>/runs/<RUN>/plan.json --title "<processo>" --customer <C> --scope <S> --json
 
 ## Rapporto finale
 

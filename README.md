@@ -48,6 +48,8 @@ Da sapere prima di installare:
 
 ## Installazione
 
+Primo uso su un tenant reale (esplorare e memorizzare, poi creare ordini e contratti): [guida passo passo](docs/GUIDA-PRIMO-USO.md).
+
 ```
 1  Installare il plugin (marketplace privato o cartella locale); nella cartella del plugin: npm ci
 2  Clonare il repository di conoscenza e aprirlo come workspace di Claude Code
@@ -88,7 +90,7 @@ Le frasi che il plugin riconosce si scrivono **come unico testo del messaggio**;
 
 - Approvazioni: `sì` (un'azione R2 in attesa) · `APPROVO PIANO <PLAN>` · `APPROVO PROVA <PLAN>` ·
   `APPROVO PASSO <n> <PLAN>` (in produzione con `DA <Nome Cognome>`, la prova da una persona diversa) ·
-  `ESPLORA SANDBOX` · `APPROVO PROMOZIONE <codice>` · `APPROVO RETENTION <C>` ·
+  `ESPLORA SANDBOX` · `ESPLORA PREPROD` · `APPROVO PROMOZIONE <codice>` · `APPROVO RETENTION <C>` ·
   `APPROVO PURGE <ID> DA <Nome Cognome>` (due persone diverse).
 - Controllo degli agenti: `PAUSA AGENTE <task_id>` · `PAUSA TUTTI` · `RIPRENDI AGENTE <task_id>` · `RIPRENDI TUTTI` ·
   `FERMA AGENTE <task_id>` · `FERMA TUTTI` (solo gli agenti in corso in quel momento) · `PASSO PASSO <task_id|TUTTI>`
