@@ -146,8 +146,8 @@ claude --plugin-dir <REPO>/plugin
 Il workspace è la cartella `<REPO>/knowledge`: contiene già la conoscenza del prodotto estratta dalla documentazione
 JAGGAER (livello S, database compreso). Si apre **sempre questa cartella** in Claude Code, non `plugin/`.
 
-1. Le impostazioni consigliate del workspace (abilitano il plugin e fissano i permessi minimi) sono già in
-   `knowledge/.claude/settings.json`. Se mancano, o per un workspace nuovo, copiale dal modello del plugin:
+1. Copia le impostazioni consigliate del workspace (abilitano il plugin e fissano i permessi minimi). Non sono nel
+   repository di proposito: chi clona non eredita permessi in automatico. Leggile prima di copiarle:
 
    ```bash
    cd <REPO>/knowledge
