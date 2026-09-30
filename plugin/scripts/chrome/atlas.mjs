@@ -114,7 +114,8 @@ export function atlasMatch(atlas, el, { page = null } = {}) {
   if (!n) return null;
   const hits = (atlas ?? []).filter((a) => a.label && normLabel(a.label) === n && roleCompatible(a.role, el.role));
   if (!hits.length) return null;
-  if (page) return hits.find((a) => a.page === page) ?? hits.find((a) => !a.page) ?? hits[0];
+  // con la pagina nota, una voce di un'altra pagina non si lega mai (seconda revisione: più stretto, fail-closed)
+  if (page) return hits.find((a) => a.page === page) ?? hits.find((a) => !a.page) ?? null;
   return hits[0];
 }
 

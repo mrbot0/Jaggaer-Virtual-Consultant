@@ -189,12 +189,18 @@ export function writeDraft({ ws, customer, scope, draft }) {
 
 // Un FLD già memorizzato si arricchisce (sessioni successive dell'esplorazione): opzioni unite, obbligo "always" se visto.
 // Validato e reindicizzato come un item nuovo; mai altri campi. → true se il file è cambiato
-export function enrichField({ ws, customer, code, options = [], mandatory = null }) {
+export function enrichField({ ws, customer, scope, code, options = [], mandatory = null, ambiguous = false }) {
+  // seconda revisione: solo un FLD del cliente attivo e dello scope, nel file che porta il suo codice
+  if (!/^[A-Z0-9]{4}$/.test(String(customer)) || !SCOPES.has(scope)) return false;
+  if (!new RegExp("^C\\." + customer + "\\." + scope + "\\.FLD\\.\\d{4}$").test(String(code))) return false;
   const file = itemFile(ws, code, customer);
   if (!file || !existsSync(file)) return false;
   const cur = YAML.parse(readFileSync(file, "utf8"));
+  if (cur?.id !== code) return false;
   const next = structuredClone(cur);
-  const notes = String(cur.notes ?? "");
+  let notes = String(cur.notes ?? "");
+  // un'ambiguità vista in una sessione successiva si registra: compose-plan chiederà invece di scegliere
+  if (ambiguous && !notes.includes(AMBIGUOUS_NOTE)) { notes = [AMBIGUOUS_NOTE, notes || null].filter(Boolean).join(" · "); next.notes = notes; }
   const seen = /valori osservati: (.*)$/.exec(notes)?.[1]?.split(" · ").filter(Boolean) ?? [];
   const add = options.map((o) => clip(red(String(o)), 80)).filter((o) => o && !seen.includes(o));
   if (add.length) {

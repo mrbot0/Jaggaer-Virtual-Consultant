@@ -26,8 +26,8 @@ export function readLog(file) {
 const INPUT_ROLES = new Set(["textbox", "searchbox", "spinbutton", "combobox", "textarea", "listbox"]);
 const groupOf = (role) => (INPUT_ROLES.has(role) ? "input" : role);
 // valori di una tendina: solo se aperta (≥ 2 opzioni) e mai per elenchi di persone (dati, non struttura)
-const PERSON_LABEL = /\b(richiedente|utente|user|buyer|acquirente|approvatore|approver|requester|owner|proprietario|assegnatario|assignee|referente|contatto|contact|responsabile|creato da|created by)\b/i;
-const CREATE_DOC = /\b(crea\w*|nuov[oaie]|new|create)\b/i;
+const PERSON_LABEL = /\b(richiedente|utente|user|buyer|acquirente|approvatore|approver|requester|owner|proprietario|assegnatario|assignee|referente|contatto|contact|responsabile|creato da|created by|nominativo|nome e cognome|dipendente|employee|richiesto da|approvato da|delegato|delegate|manager|persona|person)\b/i;
+const CREATE_DOC = /\b(crea|creare|creazione|nuov[oaie]|new|create)\b/i;
 const SAVE_LABEL = /\b(salva|save)\b/i;
 const SEND_LABEL = /\b(invia|inoltra|trasmetti|submit|send|conferma|confirm|approva|approve|pubblica|publish|place order)\b/i;
 const MASK = /\[[a-z][a-z.-]*\]/i;
@@ -51,9 +51,10 @@ export function buildDrafts(lines) {
     const document = els.find((e) => e.role === "heading" && e.level === 1 && e.name)?.name ?? l.title ?? l.page_sig;
     const p = pages.get(l.page_sig) ?? { title: l.title, document, url_path: l.url_path, visits: [], unlabeled: 0, iframes: 0, masked: false };
     p.visits.push(els);
-    p.unlabeled = Math.max(p.unlabeled, els.filter((e) => FIELD_TYPE[e.role] && !e.name).length);
-    p.iframes = Math.max(p.iframes, Number(l.iframes) || 0);
-    p.masked ||= els.some((e) => MASK.test(String(e.name ?? "")));
+    // seconda revisione: lo stato "da fare" viene dall'ULTIMA visita (così l'elenco si svuota quando l'agente rimedia)
+    p.unlabeled = els.filter((e) => FIELD_TYPE[e.role] && !e.name).length;
+    p.iframes = Number(l.iframes) || 0;
+    p.masked = els.some((e) => MASK.test(String(e.name ?? "")));
     pages.set(l.page_sig, p);
   }
   const fields = [];
@@ -139,7 +140,7 @@ export function atlasBuild({ ws, customer, scope, sid }) {
     // un campo già memorizzato (sessione precedente) si arricchisce con ciò che questa sessione ha visto in più
     for (const sk of r.skipped.filter((x) => x.type === "FLD" && /\.FLD\.\d{4}/.test(String(x.existing)))) {
       const it = items.find((i) => i.label === sk.label);
-      if (it && enrichField({ ws, customer, code: sk.existing, options: it.options ?? [], mandatory: it.mandatory })) updated.push(sk.existing);
+      if (it && enrichField({ ws, customer, scope, code: sk.existing, options: it.options ?? [], mandatory: it.mandatory, ambiguous: !!it.ambiguous })) updated.push(sk.existing);
     }
   }
   const flds = scopeItems(ws, customer, scope, "fields");
@@ -185,16 +186,16 @@ export function atlasTodo(d) {
     const page = p.document;
     const fields = d.fields.filter((f) => f.page_sig === sig);
     for (const f of fields) {
-      if (f.field_type === "list" && !f.options && !f.person_list) todo.push({ kind: "open-dropdown", page, what: f.label, action: `apri la tendina «${f.label}» nella pagina «${page}» e rifai take_snapshot a tendina aperta` });
-      if (f.ambiguous) todo.push({ kind: "ambiguous", page, what: f.label, action: `l'etichetta «${f.label}» compare più volte in «${page}»: completa con atlas-write un SEL distinto (testid o css) per ciascuno, con la sezione` });
+      if (f.field_type === "list" && !f.options && !f.person_list) todo.push({ kind: "open-dropdown", auto: true, page, what: f.label, action: `apri la tendina «${f.label}» nella pagina «${page}» e rifai take_snapshot a tendina aperta` });
+      if (f.ambiguous) todo.push({ kind: "ambiguous", auto: false, page, what: f.label, action: `l'etichetta «${f.label}» compare più volte in «${page}»: completa con atlas-write un SEL distinto (testid o css) per ciascuno, con la sezione` });
     }
-    if (p.unlabeled) todo.push({ kind: "unlabeled", page, what: String(p.unlabeled), action: `${p.unlabeled} campi senza etichetta in «${page}»: identificali (tooltip, etichetta vicina, segnaposto) e completali con atlas-write` });
-    if (sig !== entry && !routed.has(sig)) todo.push({ kind: "no-route", page, action: `raggiungi «${page}» cliccando dal menu (non aprendo l'indirizzo), così il percorso si memorizza` });
-    if (p.iframes) todo.push({ kind: "iframe", page, what: String(p.iframes), action: `«${page}» contiene ${p.iframes} iframe non letti: apri il contenuto del frame (navigate all'indirizzo del frame, stesso host) e rifai take_snapshot, oppure segnalalo` });
+    if (p.unlabeled) todo.push({ kind: "unlabeled", auto: false, page, what: String(p.unlabeled), action: `${p.unlabeled} campi senza etichetta in «${page}»: identificali (tooltip, etichetta vicina, segnaposto) e completali con atlas-write` });
+    if (sig !== entry && !routed.has(sig)) todo.push({ kind: "no-route", auto: true, page, action: `raggiungi «${page}» cliccando dal menu (non aprendo l'indirizzo), così il percorso si memorizza` });
+    if (p.iframes) todo.push({ kind: "iframe", auto: false, page, what: String(p.iframes), action: `«${page}» contiene ${p.iframes} iframe non letti: apri il contenuto del frame solo se il suo host è fra quelli dichiarati (navigate all'indirizzo del frame, poi take_snapshot); altrimenti segnalalo` });
     if (fields.length && CREATE_DOC.test(page) && !d.sels.some((s) => s.page_sig === sig && SAVE_LABEL.test(s.label) && !SEND_LABEL.test(s.label))) {
-      todo.push({ kind: "no-save", page, action: `pulsante di solo salvataggio non visto in «${page}»: scorri o espandi la pagina (sezioni chiuse, barra in fondo) e rifai take_snapshot` });
+      todo.push({ kind: "no-save", auto: true, page, action: `pulsante di solo salvataggio non visto in «${page}»: scorri o espandi la pagina (sezioni chiuse, barra in fondo) e rifai take_snapshot` });
     }
-    if (p.masked) todo.push({ kind: "redacted", page, action: `in «${page}» alcune etichette contenevano dati personali (oscurati): non usarle come riferimento e segnalalo nel rapporto` });
+    if (p.masked) todo.push({ kind: "redacted", auto: false, page, action: `in «${page}» alcune etichette contenevano dati personali (oscurati): non usarle come riferimento e segnalalo nel rapporto` });
   }
   return todo;
 }

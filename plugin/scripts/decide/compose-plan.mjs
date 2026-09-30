@@ -22,7 +22,7 @@ const OBJECTS = [
   ["evento", /\b(evento|event)\b/i, ["evento", "event"]],
 ];
 // verbi di creazione con confini di parola ("renew" non è creare); il modulo preferito comincia con verbo + oggetto
-const CREATE = /\b(crea\w*|nuov[oaie]|new|create)\b/i;
+const CREATE = /\b(crea|creare|creazione|nuov[oaie]|new|create)\b/i;
 const SAVE = /\b(salva|save)\b/i;
 const DRAFT = /(bozza|draft)/i;
 const SUBMIT = /\b(invia|submit|conferma|place order)\b/i;
@@ -58,7 +58,7 @@ export function composePlan({ ws, customer, scope, env, goal, data = {}, until =
       // un solo modulo: fra i documenti che corrispondono, quello che comincia con verbo + oggetto ("Nuovo ordine");
       // più documenti ugualmente buoni ⇒ ambiguo (nessuna scelta a caso)
       const docs = [...new Set(flds.filter((f) => CREATE.test(f.document ?? "") && has(f.document ?? "")).map((f) => f.document))];
-      const exact = docs.filter((d) => syn.some((w) => new RegExp("^(crea\\w*|nuov[oaie]|new|create)\\s+" + w + "$", "i").test(normLabel(d))));
+      const exact = docs.filter((d) => syn.some((w) => new RegExp("^(crea|creare|creazione|nuov[oaie]|new|create)\\s+" + w + "$", "i").test(normLabel(d))));
       const chosen = exact.length === 1 ? exact : docs.length === 1 ? docs : [];
       if (!chosen.length && docs.length > 1) gaps.push({ kind: "ambiguous", what: "modulo", hint: `più moduli possibili: ${docs.join(", ")}` });
       return flds.filter((f) => chosen.includes(f.document));

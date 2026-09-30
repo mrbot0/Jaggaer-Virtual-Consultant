@@ -407,19 +407,24 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     // prima i click (si riferiscono alla pagina precedente), poi la pagina di questa risposta; revisione finale (I4): un
     // click su un elemento dentro un record (riga, cella) della pagina precedente non si registra
     const clicked = state === "ok" ? (call.actions ?? [call]).filter((a) => a.kind === "click" && !a.submits && Array.isArray(a.targets) && a.targets.length) : [];
+    // seconda revisione: il click si registra solo se i ref dei record sono quelli dello STESSO snapshot che ha dato il
+    // nome (last-page.json con l'OBS di prevSnap); altrimenti non si sa se il bersaglio è un record ⇒ non si registra
     if (clicked.length) {
-      let rec = new Set();
-      try { rec = new Set(JSON.parse(readFileSync(lastPage, "utf8")).record_refs ?? []); } catch { /* nessuna pagina registrata */ }
+      let lp = null;
+      try { lp = JSON.parse(readFileSync(lastPage, "utf8")); } catch { lp = null; }
+      const rec = new Set(lp?.record_refs ?? []);
+      const same = !!lp && !!prevSnap?.obs && lp.obs === prevSnap.obs;
       for (const a of clicked) {
         const ref = String(a.targets[0]);
         const name = prevSnap?.names?.[ref];
-        if (name && !rec.has(ref)) full = appendAtlasLog(file, clickRecord({ fromSig: prevSig, name, ts: doc.ts })) === "full" || full;
+        if (same && name && !rec.has(ref)) full = appendAtlasLog(file, clickRecord({ fromSig: prevSig, name, ts: doc.ts })) === "full" || full;
       }
     }
     if (state === "ok" && mode === "complete" && pageUrl && page) {
       full = appendAtlasLog(file, pageRecord(page, { pageSig: doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts })) === "full" || full;
-      writeFileAtomic(lastPage, JSON.stringify({ record_refs: recordRefs(page) }));
     }
+    // ogni snapshot che lega i ref (lettura completa o risposta di un'azione con la pagina intera) aggiorna i ref dei record
+    if (state === "ok" && page && refs && pageUrl) writeFileAtomic(lastPage, JSON.stringify({ obs: code, record_refs: recordRefs(page) }));
     if (full && fullWarningOnce(dirname(file))) warn.push("registro dell'esplorazione pieno (20 MB): pagine non registrate da qui in poi");
   } catch (err) { warn.push(`registro dell'esplorazione non scritto (${String(err?.message ?? err).slice(0, 80)})`); }
 

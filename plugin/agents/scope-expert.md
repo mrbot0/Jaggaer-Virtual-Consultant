@@ -156,10 +156,12 @@ pagine: tu non descrivi le pagine a mano.
 
    **Verifica automatica (taratura sulle pagine vere):** l'uscita ha `todo`, ciò che la mappa non sa ancora
    (`open-dropdown`, `unlabeled`, `ambiguous`, `no-route`, `iframe`, `no-save`, `redacted`), ognuno con l'`action` da
-   fare. Eseguile tu, subito, dentro le regole dell'esplorazione (solo click, mai salva/invia): apri le tendine, raggiungi
-   le pagine dal menu, espandi le sezioni chiuse, apri i frame dello stesso host; per etichette ripetute o campi senza
-   etichetta completa con `atlas-write` (sotto). Poi rilancia `atlas-build`: ripeti finché `todo` è vuoto o il budget
-   finisce, senza chiedere nulla all'utente. Nel rapporto riporta solo il residuo, voce per voce.
+   fare. Le voci con `auto: true` (tendine da aprire, pagine da raggiungere dal menu, salvataggio non visto) le esegui tu,
+   subito, dentro le regole dell'esplorazione (solo click, mai salva/invia); poi rilanci `atlas-build`. Ti fermi quando non
+   restano voci `auto: true`, quando due giri consecutivi danno le stesse voci, o quando il budget finisce — senza chiedere
+   nulla all'utente. Le voci con `auto: false` (etichette ripetute, campi senza etichetta, iframe, etichette oscurate) le
+   provi al più una volta (per etichette ripetute o campi senza etichetta un SEL distinto con `atlas-write`, sotto; un frame
+   solo se il suo host è fra quelli dichiarati) e poi le riporti. Nel rapporto: il residuo, voce per voce.
 
 3. Per correggere o completare a mano (un elemento che lo snapshot non mostra), una bozza YAML nella cartella di lavoro
    memorizzata con:

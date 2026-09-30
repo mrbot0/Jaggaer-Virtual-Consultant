@@ -273,7 +273,8 @@ export function mainHeading(page) {
 }
 // WP07 giro 1 (spec I3): il titolo si redige (profilo) PRIMA dello slug — dopo, la redazione non lo riconosce più.
 export function pageSignature(page, { profile = "strict" } = {}) {
-  const p = page?.url ? normalizePath(page.url) : null;
+  // seconda revisione (soluzione A): anche il percorso si redige (un'e-mail o un codice nel percorso non entra nella firma)
+  const p = page?.url ? redact(normalizePath(page.url), { profile }) : null;
   const raw = mainHeading(page);
   const h = raw ? redact(raw, { profile }) : null;
   if (p == null && !h) return null;
