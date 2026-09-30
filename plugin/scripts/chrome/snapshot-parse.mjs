@@ -62,6 +62,9 @@ function finish(out, nodes) {
   }
   // WP07 giro 2 (I-1): i ref di TUTTI i nodi (anche testo, generic, label, RootWebArea) per i duplicati
   out.allRefs = nodes.map((n) => n.ref).filter((r) => r != null).map(String);
+  // soluzione A (registro dell'esplorazione): l'albero dei nodi (id, genitore, ruolo, ref) per sapere a quale tabella,
+  // gruppo o tendina appartiene un elemento; gli altri consumatori lo ignorano
+  out.nodes = nodes.map((n) => ({ id: n.id, parent: n.parent ?? null, role: n.role, ref: n.ref ?? null }));
   return out;
 }
 
