@@ -1,0 +1,240 @@
+doc: S.STD.XSC.DOC.0140
+scope: XSC
+extracted_at: 2026-09-30T04:30:58.436Z
+tier: T0
+stats:
+  units: 106
+  extracted_units: 6
+  document_candidates: 0
+  needs_llm: 5
+  t0_complete: 1
+  by_candidate:
+    FLD: 5
+    GLS: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 1775
+  sessions:
+    - n: 1
+      tokens: 1775
+      batches: 1
+      items: 5
+      batch_items:
+        - - R.DOC0140.0009
+          - R.DOC0140.0012
+          - R.DOC0140.0024
+          - R.DOC0140.0045
+          - R.DOC0140.0082
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0140.0009
+    source_unit: U.DOC0140.0009
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0140
+    section: JAGGAER Confidential. © 2020 JAGGAER Indirect Configuration Course Blueprint JAGGAER Product Configuration Certification
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0140.0009
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 9
+  - raw_id: R.DOC0140.0012
+    source_unit: U.DOC0140.0012
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0140
+    section: "JAGGAER Confidential. © 2020 Unit A: End User Essentials"
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0140.0012
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 4
+  - raw_id: R.DOC0140.0024
+    source_unit: U.DOC0140.0024
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0140
+    section: "JAGGAER Confidential. © 2020 Unit A: End User Essentials"
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0140.0024
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 4
+  - raw_id: R.DOC0140.0028
+    source_unit: U.DOC0140.0028
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0140
+    section: "JAGGAER Confidential. © 2020 Unit A: End User Essentials"
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - GLS
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: How
+      definition: the shopping da
+      aliases: []
+      lang: en
+      source_unit: U.DOC0140.0028
+    needs_llm: false
+    tokens: 6
+  - raw_id: R.DOC0140.0045
+    source_unit: U.DOC0140.0045
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0140
+    section: "JI‐ePro‐3000: JAGGAER eProc"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0140.0045
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 4
+  - raw_id: R.DOC0140.0082
+    source_unit: U.DOC0140.0082
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0140
+    section: "JI‐ePro‐3000: JAGGAER eProc"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0140.0082
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 4

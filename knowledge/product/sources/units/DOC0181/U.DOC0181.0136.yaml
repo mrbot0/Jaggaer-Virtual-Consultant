@@ -1,0 +1,47 @@
+id: U.DOC0181.0136
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: messageId | Description: PO validation message identifier provided in request
+  Attribute: timestamp | Description: Response timestamp in the format
+  yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  Attribute: status | Description: Validation response result.
+  See section “ValidateStatus [Validate JIOrder method]” below
+  Attribute: validateObjectErrors | Description: Container of validation error information
+  See section “ValidateError [Validate JIOrder method]” below
+hash: sha256:fac59bf789465a487fae6dbc5ce0f771b75cee82b3b875377163e7714d070a2b
+words: 55
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: ValidateResponseMessage [Validate JIOrder method]
+  section_path: 2.2.3.1
+  page: 60
+  lang: en
+  prev: U.DOC0181.0135
+  next: U.DOC0181.0137
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - messageId
+      - PO validation message identifier provided in request
+    - - timestamp
+      - |-
+        Response timestamp in the format
+        yyyy-MM-dd'T'HH:mm:ss.SSSZ
+    - - status
+      - |-
+        Validation response result.
+        See section “ValidateStatus [Validate JIOrder method]” below
+    - - validateObjectErrors
+      - |-
+        Container of validation error information
+        See section “ValidateError [Validate JIOrder method]” below
+  block: 1
+  blocks: 1

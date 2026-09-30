@@ -1,0 +1,47 @@
+id: U.DOC0168.0481
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: returnCode | Description: Global Operation result.
+  This code is about the web service call, not about import result.
+  For information about import, consider data specified in responseMessage field.
+  See “Error codes [JIOrder Status Import method]” below for a list of possible global code
+  Attribute: returnMessage | Description: Global result description. If operation completed successfully, it is “OK”, otherwise it is a brief explanation of mismatches found.
+  Attribute: statusResponseMessage | Description: Import operation result description, inserted if provided data is formally correct and no generic error (e.g.: communication error) was found.
+  If a problem occurred during the import, the responseMessage includes appropriate warning or error messages
+  See section “StatusResponseMessage [JIOrder Status Import method]” below.
+hash: sha256:ad695f22bef610750fa43db70b54939e6a92e2be90928318deb330fd2bb05c15
+words: 118
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: Response Data Format [JIOrder Status Import method]
+  section_path: 2.4.3
+  page: 106
+  lang: en
+  prev: U.DOC0168.0480
+  next: U.DOC0168.0482
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - returnCode
+      - |-
+        Global Operation result.
+        This code is about the web service call, not about import result.
+        For information about import, consider data specified in responseMessage field.
+        See “Error codes [JIOrder Status Import method]” below for a list of possible global code
+    - - returnMessage
+      - Global result description. If operation completed successfully, it is “OK”, otherwise it is a brief explanation of mismatches found.
+    - - statusResponseMessage
+      - |-
+        Import operation result description, inserted if provided data is formally correct and no generic error (e.g.: communication error) was found.
+        If a problem occurred during the import, the responseMessage includes appropriate warning or error messages
+        See section “StatusResponseMessage [JIOrder Status Import method]” below.
+  block: 1
+  blocks: 1

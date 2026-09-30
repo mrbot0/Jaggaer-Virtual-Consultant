@@ -1,0 +1,141 @@
+id: U.DOC0181.0036
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: "2: Completed - PO completed the validation process | Operators: Validation status filtering accepts following operation: EQUAL: auction status must be equal to provided value NOTEQUAL: any auction whose status is different from provided value GREATER_THAN: any auction whose status is equal to or greater than provided value LESS_THAN: any auction whose status is equal to or lower than provided value IN: any auction whose status matches one of provided values NOT_IN: any auction whose status doesn’t match anyone of provided values Condition Filter: poNumber | Description: Current Number of the PO. | Operators: These filters accept following operators: EQUAL: required field must match exactly provided value (case sensitive) NOTEQUAL: required field must be different from provided value STARTWITH: required field must start with provided value (case insensitive) CONTAINS: required field must contain provided value (case insensitive) ENDWITH: required field must terminate with provided value (case insensitive) IN: required field must be present in provided value list NOT_IN: required field must not be present in provided value list Condition Filter: originalPoNumber | Description: Original PO Number as when order was originally received (before validation) Condition Filter: supplierId | Description: Supplier internal identifier | Operators: Validation status filtering accepts following operation: EQUAL: auction status must be equal to provided value NOTEQUAL: any auction whose status is different from provided value GREATER_THAN: any auction whose status is equal to or greater than provided value LESS_THAN: any auction whose status is equal to or lower than provided value IN: any auction whose status matches one of provided values NOT_IN: any auction whose status doesn’t match anyone of provided values Condition Filter: supplierNumber | Description: Supplier ID that organization has provided for the supplier in the supplier profile | Operators: Filters accept following operators: EQUAL: required field must match exactly provided value (case sensitive)"
+hash: sha256:cec61f093105e92dd697e981a01ada59fd0358b52e1c4defe0e80d009ff7101f
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: Condition Filter [Export JIOrder method]
+  section_path: 2.1.2
+  page: 16
+  lang: en
+  prev: U.DOC0181.0035
+  next: U.DOC0181.0037
+table:
+  table: 1
+  headers:
+    - Condition Filter
+    - Description
+    - Operators
+  rows:
+    - - creationDate
+      - Date and time the Order was generated
+      - |-
+        Date filtering accepts following operators:
+        EQUAL: auction last update date must be equal to provided value
+        NOTEQUAL: any auction whose last update date is different from provided value
+        GREATER_THAN: any auction whose last update date is equal or greater than provided value
+        LESS_THAN: any auction whose last update date is lower or than provided value
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+    - - lastRevisionDate
+      - Date and time the revision was finalized
+      - ""
+    - - lastUpdateDate
+      - Date and time order information was last updated
+      - ""
+    - - poId
+      - Unique PO internal identifier
+      - |-
+        Internal identifier filter accepts following operators:
+        EQUAL: auction status must be equal to provided value
+        NOTEQUAL: any auction whose status is different from provided value
+        IN: any auction whose status matches one of provided values
+        NOT_IN: any auction whose status doesn’t match anyone of provided values
+    - - supplierStatus
+      - |-
+        General status of the order.
+        It accepts following values:
+        NewOrder
+        SentToSupplier
+        SupplierProcessing
+        Cancelled
+      - |-
+        These filters accept following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        ENDWITH: required field must terminate with provided value (case insensitive)
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+        The “workflowStep” filter accept also the following:
+        ISNULL: required field is checked to be not valorized
+        NOTNULL: required field is required to be valorized, no matter value
+    - - workflowStatus
+      - |-
+        Workflow status of the PO.
+        Possible values:
+        Completed: The PO has completed the workflow process.
+        Pending: The PO has not completed the workflow process.
+      - ""
+    - - workflowStep
+      - Workflow step in which the PO was when exported
+      - ""
+    - - validationStatus
+      - |-
+        PO validation requirement.
+        0: Unneeded, PO was exported with no validation requirements.
+        1: Pending - PO is waiting to complete the validation process.
+        2: Completed - PO completed the validation process
+      - |-
+        Validation status filtering accepts following operation:
+        EQUAL: auction status must be equal to provided value
+        NOTEQUAL: any auction whose status is different from provided value
+        GREATER_THAN: any auction whose status is equal to or greater than provided value
+        LESS_THAN: any auction whose status is equal to or lower than provided value
+        IN: any auction whose status matches one of provided values
+        NOT_IN: any auction whose status doesn’t match anyone of provided values
+    - - poNumber
+      - Current Number of the PO.
+      - |-
+        These filters accept following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        ENDWITH: required field must terminate with provided value (case insensitive)
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - originalPoNumber
+      - Original PO Number as when order was originally received (before validation)
+      - ""
+    - - supplierId
+      - Supplier internal identifier
+      - |-
+        Validation status filtering accepts following operation:
+        EQUAL: auction status must be equal to provided value
+        NOTEQUAL: any auction whose status is different from provided value
+        GREATER_THAN: any auction whose status is equal to or greater than provided value
+        LESS_THAN: any auction whose status is equal to or lower than provided value
+        IN: any auction whose status matches one of provided values
+        NOT_IN: any auction whose status doesn’t match anyone of provided values
+    - - supplierNumber
+      - Supplier ID that organization has provided for the supplier in the supplier profile
+      - |-
+        Filters accept following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        ENDWITH: required field must terminate with provided value (case insensitive)
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - revisionNumber
+      - Revision number of the PO
+      - ""
+    - - requisitionRefId
+      - Requisition internal ID number this Po is based on
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 3
+  of: 4

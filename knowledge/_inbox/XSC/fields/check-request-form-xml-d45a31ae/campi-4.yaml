@@ -1,0 +1,56 @@
+document: check-request-form-xml-d45a31ae
+scope: XSC
+section: campi-4
+section_title: Campi — Processing Instructions
+genre: tecnica
+rows:
+  - label: Processing Instructions
+    technical_name: ExternalInstructions
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=Select additional processing options below.
+      Check will be mailed to vendor according to usual address on-file during
+      the next scheduled check run after processing (5-7 days). · id=10003 ·
+      tipo=userdefined
+    section: campi-4
+    source_unit: check-request-form-xml-d45a31ae/campi-4#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: Payment Handling
+    technical_name: FlexPull9
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248317 · id=10005 · tipo=userdefined
+    section: campi-4
+    source_unit: check-request-form-xml-d45a31ae/campi-4#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: Desired Payment Pickup Date
+    technical_name: ContractStartDate
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10004 · tipo=userdefined
+    section: campi-4
+    source_unit: check-request-form-xml-d45a31ae/campi-4#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: Additional needs
+    technical_name: ExternalNotes
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=false;
+      UserDefinedFieldParamTextAreaRows=5;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=50 · id=10006 · tipo=userdefined
+    section: campi-4
+    source_unit: check-request-form-xml-d45a31ae/campi-4#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae

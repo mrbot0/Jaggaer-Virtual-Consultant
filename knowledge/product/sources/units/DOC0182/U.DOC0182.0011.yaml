@@ -1,0 +1,125 @@
+id: U.DOC0182.0011
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: "Revision: 8 | Date Released: 2019-09-30 | Version: JINT 19 04 | Description of Change: PR Export: Line Item Info: extended item info sub-component filter to export information about GeneralItemInfo, InternalItemInfo, ExternalItemInfo, Form and FormRequest CustomfieldValue: “columnIndex” field added Revision: 9 | Date Released: 2019-11-21 | Version: JINT 19 04 | Description of Change: PR Validate method, behavior chapter extended with note on custom field update Revision: 10 | Date Released: 2019-12-12 | Version: JINT 19 05 | Description of Change: PR Export Header: “BudgetDate” attribute added Line Item: “itemMasterId” attribute added Supplier: “FederalId” attribute added Revision: 11 | Date Released: 2020-01-08 | Version: JINT 19 05 | Description of Change: PR Import Header: “budgetDate” and “requisitionType” attributes added Line: “budgetDate” attribute added Line Item: “itemMasterId” attribute added Revision: 12 | Date Released: 2020-03-08 | Version: JINT 20 01 00 | Description of Change: Minor changes (no impact): new WSDL version management Revised structure: JINT webservices general guidelines moved to a separate document Revision: 13 | Date Released: 2020-04-06 | Version: JINT 20 01 01 | Description of Change: PR Export: New field “commodityCodeType” added in Item element. PR Import: “Attachment” element enhanced to provide file content and not only URL. Usage of “iletype” attribute deprecated since no more used. Revision: 12 | Date Released: 2020-07-13 | Version: JINT 20 01 01 | Description of Change: Added REST Interface Revision: 13 | Date Released: 2020-08-06 | Version: JINT 20 01 01 | Description of Change: PR Validate, Custom Field can be updated only if they have pre-populated values (free text strings are not allowed). Revision: 14 | Date Released: 2020-11-27 | Version: JINT 20 01 01 | Description of Change: PR Import: RequisitionLine: LineCharges node made optional; RequisitionSupplierGroup: RequisitionSupplierGroupInfo node made optional Revision: 15"
+hash: sha256:5f706b6ac4faa047ada2e5f189da9fc834cdd0a1c3336103b639134e49e09d59
+words: 294
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  section: Revision History
+  section_path: "0.2"
+  page: 5
+  lang: en
+  prev: U.DOC0182.0010
+  next: U.DOC0182.0012
+table:
+  table: 0
+  headers:
+    - Revision
+    - Date Released
+    - Version
+    - Description of Change
+  rows:
+    - - "0"
+      - 2018-09-03
+      - JINT 18 00
+      - First release
+    - - "1"
+      - 2018-09-25
+      - JINT 18 00
+      - WSDL Amended
+    - - "2"
+      - 2018-10-10
+      - JINT 18 00
+      - Added new Update Operation
+    - - "3"
+      - 2018-10-30
+      - JINT 18 00
+      - Detailed user identification and supplier identification approaches
+    - - "4"
+      - 2019-03-05
+      - JINT 19 00
+      - Added field businessUnit in userData for import method
+    - - "5"
+      - 2019-05-14
+      - JINT 19 01
+      - New “export” and “validate” operations added
+    - - "6"
+      - 2019-07-04
+      - JINT 19 02
+      - Type of “Quantity” field in Requisition Line object changed to double
+    - - "7"
+      - 2019-09-13
+      - JINT 19 03
+      - |-
+        PR Import method, new attribute “useSystemCatalogPrice” added under LineCharges.
+        PR Export method, new field “workflowStep” added.
+        New “jint” web service endpoint.
+    - - "8"
+      - 2019-09-30
+      - JINT 19 04
+      - |-
+        PR Export:
+        Line Item Info: extended item info sub-component filter to export information about GeneralItemInfo, InternalItemInfo, ExternalItemInfo, Form and FormRequest
+        CustomfieldValue: “columnIndex” field added
+    - - "9"
+      - 2019-11-21
+      - JINT 19 04
+      - PR Validate method, behavior chapter extended with note on custom field update
+    - - "10"
+      - 2019-12-12
+      - JINT 19 05
+      - |-
+        PR Export
+        Header: “BudgetDate” attribute added
+        Line Item: “itemMasterId” attribute added
+        Supplier: “FederalId” attribute added
+    - - "11"
+      - 2020-01-08
+      - JINT 19 05
+      - |-
+        PR Import
+        Header: “budgetDate” and “requisitionType” attributes added
+        Line: “budgetDate” attribute added
+        Line Item: “itemMasterId” attribute added
+    - - "12"
+      - 2020-03-08
+      - JINT 20 01 00
+      - |-
+        Minor changes (no impact): new WSDL version management
+        Revised structure: JINT webservices general guidelines moved to a separate document
+    - - "13"
+      - 2020-04-06
+      - JINT 20 01 01
+      - |-
+        PR Export:
+        New field “commodityCodeType” added in Item element.
+        PR Import:
+        “Attachment” element enhanced to provide file content and not only URL. Usage of “iletype” attribute deprecated since no more used.
+    - - "12"
+      - 2020-07-13
+      - JINT 20 01 01
+      - Added REST Interface
+    - - "13"
+      - 2020-08-06
+      - JINT 20 01 01
+      - PR Validate, Custom Field can be updated only if they have pre-populated values (free text strings are not allowed).
+    - - "14"
+      - 2020-11-27
+      - JINT 20 01 01
+      - |-
+        PR Import:
+        RequisitionLine: LineCharges node made optional;
+        RequisitionSupplierGroup: RequisitionSupplierGroupInfo node made optional
+    - - "15"
+      - ""
+      - ""
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

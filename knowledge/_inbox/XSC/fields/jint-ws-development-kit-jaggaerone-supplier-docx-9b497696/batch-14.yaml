@@ -1,0 +1,78 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-14
+section: 2.1.1.14
+section_title: J1Supplier/JISupplierData/BusinessUnitVendorNumberList/businessUnitVendorNumberType
+part: 1
+parts: 1
+rows:
+  - key: tech:BUSINESSUNITVENDORNUMBER
+    label: businessUnitVendorNumber
+    labels:
+      - businessUnitVendorNumber
+    technical_name: BUSINESSUNITVENDORNUMBER
+    section: 2.1.1.14
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.14
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.14#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: businessUnitVendorNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BUSINESSUNITINTERNALNAME
+    label: businessUnitInternalName
+    labels:
+      - businessUnitInternalName
+    technical_name: BUSINESSUNITINTERNALNAME
+    section: 2.1.1.14
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal name of a business unit assigned to the location.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.14
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.14#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: businessUnitInternalName
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.89
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.89#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: businessUnitInternalName
+        type: null
+        mandatory_text: N
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - Y
+          - N
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+tokens_estimate: 967

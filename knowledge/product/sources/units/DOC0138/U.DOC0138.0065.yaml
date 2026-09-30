@@ -1,0 +1,17 @@
+id: U.DOC0138.0065
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: Sometimes organizations take their ERPs offline to process data at the fiscal year’s end. <Activity name="InitialFiscalYearEnd"> <ActivityType>manual</ActivityType> <StepRef name="Initial Fiscal Year End" /> <Rule><![CDATA[[Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true]]]></Rule> <FolderSelectionRule>MultiElementDynamic</FolderSelectionRule> <Attribute name="RuleGroupInternalName"> <AttrValue lang="default">Initial Fiscal Year End Hold</AttrValue> </Attribute> <Attribute name="wfActivitySupportNote"> <AttrValue lang="default">Stops requisitions to hold while ERP is down for processing Fiscal Year End</AttrValue> </Attribute> <Attribute name="wfActivityHelp"> <AttrValue lang="default">Help for Initial Fiscal Year End Hold</AttrValue> </Attribute> </Activity>
+hash: sha256:96d0709ce25fc64890a77d0c415e6367692c810bb974ae0cabefa6ca4cf903f9
+words: 68
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: FISCAL YEAR END HOLD
+  section: FISCAL YEAR END HOLD
+  section_path: "16"
+  page: null
+  lang: en
+  prev: U.DOC0138.0064
+  next: U.DOC0138.0066

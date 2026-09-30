@@ -1,0 +1,39 @@
+document: equipment-service-form-xml-01ba2138
+scope: XSC
+batch: batch-01
+section: campi-1
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:LOGO
+    label: Logo
+    labels:
+      - Logo
+    technical_name: LOGO
+    section: campi-1
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=1;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/48443.png ·
+      id=10000 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-1
+        source_unit: equipment-service-form-xml-01ba2138/campi-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Logo
+        type: Image
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 673

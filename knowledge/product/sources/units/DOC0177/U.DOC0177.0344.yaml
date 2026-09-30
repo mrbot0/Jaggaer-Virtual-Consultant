@@ -1,0 +1,41 @@
+id: U.DOC0177.0344
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: fob | Mandatory (Y/N): N | Description: Freight on Board (FOB) information. | Mapping on Jaggaer One data model and notes: When shipping goods, FOB indicates whether the destination or the origin pays the loading and transportation costs, or the point at which the responsibility of the goods transfers from the shipper to the buyer.
+  “Destination”, “Origin” and “notApplicable” are the standard FOB options, but any previously configured FOB option is valid.
+  Values: (Destination | Origin | notApplicable)
+hash: sha256:f241c8cc793171be53a7ce9902c6ac77dc9221dce592d9386dbabe641fb578b9
+words: 79
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/termsAndCondition/paymentTerms
+  section_path: 2.1.1.81
+  page: 60
+  lang: en
+  prev: U.DOC0177.0343
+  next: U.DOC0177.0345
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - fob
+    - N
+    - Freight on Board (FOB) information.
+    - |-
+      When shipping goods, FOB indicates whether the destination or the origin pays the loading and transportation costs, or the point at which the responsibility of the goods transfers from the shipper to the buyer.
+      “Destination”, “Origin” and “notApplicable” are the standard FOB options, but any previously configured FOB option is valid.
+      Values: (Destination | Origin | notApplicable)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

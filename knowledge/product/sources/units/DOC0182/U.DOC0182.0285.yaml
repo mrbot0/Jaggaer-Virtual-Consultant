@@ -1,0 +1,116 @@
+id: U.DOC0182.0285
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: "Condition Filter: workflowStep | Description: Workflow step in which the PR was when exported Condition Filter: validationStatus | Description: Requisition validation requirement. 0: Unneeded, PR was exported with no validation requirements. 1: Pending – PR is waiting to complete the validation process. 2: Completed – PR completed the validation process | Operators: Validation status filtering accepts following operation: EQUAL: auction status must be equal to provided value NOTEQUAL: any auction whose status is different from provided value GREATER_THAN: any auction whose status is equal to or greater than provided value LESS_THAN: any auction whose status is equal to or lower than provided value IN: any auction whose status matches one of provided values NOT_IN: any auction whose status doesn’t match anyone of provided values"
+hash: sha256:56ee06ff422773fa7298e960d2b099025ce798833e396d270ae011a51b477b9e
+words: 124
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Condition filters [PR Export]
+  section_path: 2.3.2
+  page: 26
+  lang: en
+  prev: U.DOC0182.0284
+  next: U.DOC0182.0286
+table:
+  table: 1
+  headers:
+    - Condition Filter
+    - Description
+    - Operators
+  rows:
+    - - accountingDate
+      - Requisition accounting date
+      - |-
+        Date filtering accepts following operators:
+        EQUAL: auction last update date must be equal to provided value
+        NOTEQUAL: any auction whose last update date is different from provided value
+        GREATER_THAN: any auction whose last update date is equal or greater than provided value
+        LESS_THAN: any auction whose last update date is lower or than provided value
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+    - - creationDate
+      - Date and time the requisition was created in the solution
+      - ""
+    - - lastUpdateDate
+      - Date and time requisition information was last updated
+      - ""
+    - - submitDate
+      - Date and time the requisition was submitted
+      - ""
+    - - prId
+      - Unique purchase requisition internal identifier
+      - |-
+        Internal identifier filter accepts following operators:
+        EQUAL: auction status must be equal to provided value
+        NOTEQUAL: any auction whose status is different from provided value
+        IN: any auction whose status matches one of provided values
+        NOT_IN: any auction whose status doesn’t match anyone of provided values
+    - - requisitionName
+      - Purchase requisition name
+      - |-
+        These filters accept following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        ENDWITH: required field must terminate with provided value (case insensitive)
+        The “requisitionSource”, “requisitionType”, “workflowStatus” and “workflowStep” filters accept also the following:
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - requisitionSource
+      - |-
+        Source from which the PR was created:
+        Automated
+        Electronic
+        Manual
+        Supplier Portal
+      - ""
+    - - requisitionType
+      - |-
+        Purchase requisition type:
+        Normal
+        Consolidated
+        Kiosk
+      - ""
+    - - extReqNumber
+      - External Unique number associated with the PR
+      - ""
+    - - extReqNumber2
+      - Second External Unique number associated with the PR
+      - ""
+    - - workflowStatus
+      - |-
+        Workflow status of the PR.
+        Possible values:
+        Completed: The PO has completed the workflow process.
+        Pending: The PO has not completed the workflow process.
+      - ""
+    - - workflowStep
+      - Workflow step in which the PR was when exported
+      - ""
+    - - validationStatus
+      - |-
+        Requisition validation requirement.
+        0: Unneeded, PR was exported with no validation requirements.
+        1: Pending – PR is waiting to complete the validation process.
+        2: Completed – PR completed the validation process
+      - |-
+        Validation status filtering accepts following operation:
+        EQUAL: auction status must be equal to provided value
+        NOTEQUAL: any auction whose status is different from provided value
+        GREATER_THAN: any auction whose status is equal to or greater than provided value
+        LESS_THAN: any auction whose status is equal to or lower than provided value
+        IN: any auction whose status matches one of provided values
+        NOT_IN: any auction whose status doesn’t match anyone of provided values
+  block: 1
+  blocks: 1
+part:
+  n: 3
+  of: 3

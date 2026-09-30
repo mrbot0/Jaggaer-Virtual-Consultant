@@ -1,0 +1,37 @@
+id: U.DOC0183.0080
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: riga-tabella-campi
+text: |-
+  Attribute: quantity | Mandatory (Y/N): Y/N | Description: Quantity of product to which the receiptLineStatus applies, such as 5 items received, 1 item cancelled, or 3 items returned.
+  Required only for Quantity receipts, mutually exclusive with the cost element.
+hash: sha256:a7c4482bd97d554adae807c5c79dece0fe8c09403b4ead62c2c6b4960437ba2d
+words: 39
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Line [Import]
+  section_path: 2.1.1.9
+  page: 16
+  lang: en
+  prev: U.DOC0183.0079
+  next: U.DOC0183.0081
+row:
+  table: 0
+  row: 5
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - quantity
+    - Y/N
+    - |-
+      Quantity of product to which the receiptLineStatus applies, such as 5 items received, 1 item cancelled, or 3 items returned.
+      Required only for Quantity receipts, mutually exclusive with the cost element.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

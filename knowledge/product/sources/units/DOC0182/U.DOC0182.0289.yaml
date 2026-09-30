@@ -1,0 +1,167 @@
+id: U.DOC0182.0289
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: "Attribute: Requestor | Description: Information about the person who originally requested the PR validation See section “UserProfile [PR Export]” below Attribute: preparedBy | Description: Information about the person who originally prepared the PR See section “UserProfile [PR Export]” below Attribute: businessUnit | Description: Internal name of the business unit with which the PR is associated Attribute: department | Description: Department with which the PR is associated. Attribute: Priority | Description: Priority of the PR: Normal High Attribute: createDate | Description: Date and time the PR was generated Attribute: submitDate | Description: Date and time the PR was submitted, Attribute: accountingDate | Description: Accounting date of the PR, also known as the transaction date or the date against which the financial department charges the PR Attribute: billTo | Description: Billing to information. See section “BillTo [PR Export]” below Attribute: shipTo | Description: Shipping to information. See section “ShipTo [PR Export]” below Attribute: paymentInfo | Description: Payment information. See section “PaymentInfo [PR Export]” below Attribute: internalInfo | Description: PR Internal information. See section “InternalInfo [PR Export]” below Attribute: externalInfo | Description: PR External information. See section “ExternalInfo [PR Export]” below Attribute: customFieldValueSetList | Description: Container for Custom field value set information. See section “CustomFieldValueSet [PR Export]” below Attribute: splittableFieldSetGroupList | Description: Container for Splittable field Set Group information. See section “SplittableFieldSetGroup [PR Export]” below Attribute: deliveryInfo | Description: Delivery information. See section “DeliveryInfo [PR Export]” below Attribute: clauseList | Description: Container for clause applied to the PR. See section “Clause [PR Export]” below. Attribute: source | Description: Indicates the source from which the PR was created. Automated – Automatically created for a PO based upon a form or document type. Electronic – Created in cXML or EDI. Manual – Created by a user."
+hash: sha256:e60501a574a508930b3e54080dc5b75c2fd0d14c4c083fe5e78c53edae9d439a
+words: 291
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Header [PR Export]
+  section_path: 2.3.3.1
+  page: 26
+  lang: en
+  prev: U.DOC0182.0288
+  next: U.DOC0182.0290
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - originalRequestMessageId
+      - Unique identifier for the requisition export message which with this PR was saved
+      - ""
+    - - prId
+      - Unique Internal identifier of the purchase requisition
+      - ""
+    - - validationStatus
+      - |-
+        Flag describing purchase requisition validation requirement:
+        0: Unneeded, requisition was exported with no validation requirements.
+        1: Pending – requisition is waiting to complete the validation process.
+        2: Completed – requisition completed the validation process
+      - ""
+    - - workflowStep
+      - Workflow step in which the purchase requisition was when exported
+      - JA_19_03
+    - - lastUpdate
+      - Date and time requisition information was last updated
+      - ""
+    - - requisitionType
+      - |-
+        Type of PR.
+        Normal: the PR is a normal PR (that is, not a consolidated or Kiosk PR).
+        Consolidated: The PR has been consolidated with other PRs for a given supplier.
+        Kiosk: the PR was generated from a Kiosk order.
+      - ""
+    - - workflowStatus
+      - |-
+        Workflow status of the PO.
+        Pending: the PR has not completed the workflow process.
+        Rejected: the PR was rejected during workflow.
+        Completed: The PR has completed the workflow process.
+      - ""
+    - - externalRequisitionNumber
+      - Unique number associated with the PR. Originates outside the eProcurement solution but stored within the solution for cross-referencing.
+      - ""
+    - - externalRequisitionNumber2
+      - Second unique number associated with the PR. Originates outside the eProcurement solution but stored within the solution for cross-referencing.
+      - ""
+    - - requisitionName
+      - Name of the PR
+      - ""
+    - - description
+      - |-
+        Description of the PR.
+        If the description is longer than 250 characters, it is truncated and saved.
+      - ""
+    - - Requestor
+      - |-
+        Information about the person who originally requested the PR validation
+        See section “UserProfile [PR Export]” below
+      - ""
+    - - preparedBy
+      - |-
+        Information about the person who originally prepared the PR
+        See section “UserProfile [PR Export]” below
+      - ""
+    - - businessUnit
+      - Internal name of the business unit with which the PR is associated
+      - ""
+    - - department
+      - Department with which the PR is associated.
+      - ""
+    - - Priority
+      - |-
+        Priority of the PR:
+        Normal
+        High
+      - ""
+    - - createDate
+      - Date and time the PR was generated
+      - ""
+    - - submitDate
+      - Date and time the PR was submitted,
+      - ""
+    - - accountingDate
+      - Accounting date of the PR, also known as the transaction date or the date against which the financial department charges the PR
+      - ""
+    - - billTo
+      - |-
+        Billing to information.
+        See section “BillTo [PR Export]” below
+      - ""
+    - - shipTo
+      - |-
+        Shipping to information.
+        See section “ShipTo [PR Export]” below
+      - ""
+    - - paymentInfo
+      - |-
+        Payment information.
+        See section “PaymentInfo [PR Export]” below
+      - ""
+    - - internalInfo
+      - |-
+        PR Internal information.
+        See section “InternalInfo [PR Export]” below
+      - ""
+    - - externalInfo
+      - |-
+        PR External information.
+        See section “ExternalInfo [PR Export]” below
+      - ""
+    - - customFieldValueSetList
+      - |-
+        Container for Custom field value set information.
+        See section “CustomFieldValueSet [PR Export]” below
+      - ""
+    - - splittableFieldSetGroupList
+      - |-
+        Container for Splittable field Set Group information.
+        See section “SplittableFieldSetGroup [PR Export]” below
+      - ""
+    - - deliveryInfo
+      - |-
+        Delivery information.
+        See section “DeliveryInfo [PR Export]” below
+      - ""
+    - - clauseList
+      - |-
+        Container for clause applied to the PR.
+        See section “Clause [PR Export]” below.
+      - ""
+    - - source
+      - |-
+        Indicates the source from which the PR was created.
+        Automated – Automatically created for a PO based upon a form or document type.
+        Electronic – Created in cXML or EDI.
+        Manual – Created by a user.
+        Supplier Portal – Created by a supplier in the portal.
+      - ""
+    - - budgetDate
+      - |-
+        Date at which a spend amount can be counted against the budget.
+        If a BudgetDate is specified at the header level, all lines will use that date.
+        If no BudgetDate is provided at the header or line level in a completed workflow, the workflow completion date is used.
+        If no BudgetDate is provided at the header or line level in a pending workflow, the current date/time is used.
+      - JA_19_05
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 3

@@ -1,0 +1,86 @@
+id: S.STD.XSC.DOC.0157
+type: DOC
+title: JAGGAER ONE Essentials
+summary: "Documento training-deck (d'uso, origine vendor) \"JAGGAER ONE
+  Essentials\": 44 unità, 0 tabelle, 0 tabelle di campi; scope VEN, SRC, ADM,
+  CON; affidabilità 0.48."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2020-10-21
+    release: ignota
+  F15: d'uso
+sources:
+  - file: CORSI/JONE_2000 Resources/JONE_2000_Blueprint.pdf
+    sha256: sha256:da3b466a53a36e20c71018ed0972b934e67830a517a0cb1d8658a3ff68ce9561
+kind: training-deck
+genre: d'uso
+origin: vendor
+version: null
+dated: 2020-10-21
+covers_release: null
+languages:
+  - en
+scopes:
+  - VEN
+  - SRC
+  - ADM
+  - CON
+source:
+  path: CORSI/JONE_2000 Resources/JONE_2000_Blueprint.pdf
+  sha256: sha256:da3b466a53a36e20c71018ed0972b934e67830a517a0cb1d8658a3ff68ce9561
+  size: 196863
+  format: pdf
+  doc_id: jone-2000-blueprint-pdf-1b2e4512
+  doc_key: jone-2000-blueprint.pdf
+structure:
+  pages: 6
+  chapters: 6
+  sections: 6
+  tables: 0
+  figures: 1
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 44
+  by_type:
+    testo: 43
+    regola: 1
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 44
+  items_produced: 1
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.02
+  last_run: 2026-09-30
+  estimated_tokens: 438
+  sessions_planned: 1

@@ -1,0 +1,71 @@
+id: U.DOC0179.0091
+doc: S.STD.XSC.DOC.0179
+doc_id: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+type: tabella
+text: |-
+  Colonne: URL | /esop/jint/api/public/ji/v1/customfields/
+  URL: Http Method | /esop/jint/api/public/ji/v1/customfields/: POST
+  URL: Header Parameters | /esop/jint/api/public/ji/v1/customfields/: Authorization bearer XXXX
+  URL: Body | /esop/jint/api/public/ji/v1/customfields/: {
+  "cfCreateUpdate": {
+  "customField": {
+  "name": "Sub Code",
+  "customFieldValueSet": {
+  "customFieldValue": [
+  {
+  "action": "modify",
+  "value": "100",
+  "description": "Sub Code Description",
+  "active": 1
+  }
+  ]
+  }
+  }
+  }
+  }
+  URL: Return Code | /esop/jint/api/public/ji/v1/customfields/: 200 operation processed. See response content for results
+hash: sha256:968e0eb5cc8d2e74864ba79f3dc9d21aad73ad3172ba7f040db9b39fd1963859
+words: 64
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0179
+  chapter: JI Custom Field web-service
+  section: Request samples
+  section_path: 2.3.2
+  page: 7
+  lang: en
+  prev: U.DOC0179.0090
+  next: U.DOC0179.0092
+table:
+  table: 0
+  headers:
+    - URL
+    - /esop/jint/api/public/ji/v1/customfields/
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization bearer XXXX
+    - - Body
+      - |-
+        {
+        "cfCreateUpdate": {
+        "customField": {
+        "name": "Sub Code",
+        "customFieldValueSet": {
+        "customFieldValue": [
+        {
+        "action": "modify",
+        "value": "100",
+        "description": "Sub Code Description",
+        "active": 1
+        }
+        ]
+        }
+        }
+        }
+        }
+    - - Return Code
+      - 200 operation processed. See response content for results
+  block: 1
+  blocks: 1

@@ -1,0 +1,65 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+batch: batch-02
+section: campi-2
+section_title: Campi — Supplier Information
+part: 1
+parts: 1
+rows:
+  - key: tech:100
+    label: "100"
+    labels:
+      - "100"
+    technical_name: "100"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=100 · tipo=static
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-2
+        source_unit: capital-expense-form-xml-272b13f7/campi-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "100"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:116
+    label: "116"
+    labels:
+      - "116"
+    technical_name: "116"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=116 · tipo=static
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-2
+        source_unit: capital-expense-form-xml-272b13f7/campi-2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "116"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 800

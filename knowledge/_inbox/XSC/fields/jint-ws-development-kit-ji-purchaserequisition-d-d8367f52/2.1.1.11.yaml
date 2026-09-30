@@ -1,0 +1,193 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.11
+section_title: Item [PR Import]
+genre: tecnica
+rows:
+  - label: catalogNumber
+    technical_name: catalogNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique ID number for a specific stock item in the supplier inventory.
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: description
+    technical_name: description
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Description of the item being purchased.
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: productUnitOfMeasure
+    technical_name: productUnitOfMeasure
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Product unit of measure.
+      See section “Product Unit of Measure [PR Import]” below
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: productSize
+    technical_name: productSize
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Product size.
+      See section “Product size [PR Import]” below
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: unspsc
+    technical_name: unspsc
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Standardized commodity code value for the item, as specified by
+      http://www.unspsc.org (for example, 43191501 - Mobile phones).
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: commodityCode
+    technical_name: commodityCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Code assigned to a product, or a group of products, for the purposes of
+      identifying it in international commerce, or commerce in general.
+      CommodityCode is not a specific description of the goods or service.
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: productReferenceNumber
+    technical_name: productReferenceNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique ID for hosted products in JAGGAER Indirect, not usually needed by
+      customers.
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: productType
+    technical_name: productType
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Method by which the item was selected.
+      Valid values:
+      Catalog
+      NonCatalogItem
+      ContractItem
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: productClassification
+    technical_name: productClassification
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for produc classification.
+      See section “” below
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: manufacturerInfo
+    technical_name: manufacturerInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Manufacturer information.
+      See section “” below
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: leadTimeDays
+    technical_name: leadTimeDays
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Lead time the vendor requires to fill the order.
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: radioNuclide
+    technical_name: radioNuclide
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      RadioNuclide number to identify RadioNuclides.
+      Valid only if ProductClassification type="Radioactive" is set to true.
+      RadioNuclide is case-sensitive. For example, Barium is entered as "133Ba".
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: serialNumber
+    technical_name: serialNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Serial number of the trade-in line item. Valid only if the item is a
+      trade-in.
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: assetTagNumber
+    technical_name: assetTagNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Your company’s unique internal tracking identifier for the trade-in line
+      item. Valid only if the item is a trade-in.
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: itemMasterId
+    technical_name: itemMasterId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique identifier for the item.
+    section: 2.1.1.11
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.11#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

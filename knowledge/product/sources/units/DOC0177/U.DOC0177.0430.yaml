@@ -1,0 +1,35 @@
+id: U.DOC0177.0430
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: "Attribute: addressLine3 | Mandatory (Y/N): N | Description: Third line of address associated with the bank account. | Mapping on Jaggaer One data model and notes: Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode."
+hash: sha256:a5bda210c19819c8fba7afca91e7f8f729ecc462bee00d165af0d031b3902994
+words: 45
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 79
+  lang: en
+  prev: U.DOC0177.0429
+  next: U.DOC0177.0431
+row:
+  table: 0
+  row: 13
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - addressLine3
+    - N
+    - Third line of address associated with the bank account.
+    - Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

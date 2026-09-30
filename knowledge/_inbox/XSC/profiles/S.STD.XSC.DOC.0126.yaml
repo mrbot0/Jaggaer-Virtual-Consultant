@@ -1,0 +1,83 @@
+id: S.STD.XSC.DOC.0126
+type: DOC
+title: added special approval ADW steps
+summary: 'Documento config-export (tecnica, origine vendor) "added special
+  approval ADW steps": 4 unità, 4 tabelle, 0 tabelle di campi; scope P2P, ADM;
+  affidabilità 0.76.'
+facets:
+  F1: esecuzione-config
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2019-08-22
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-epro_3000/Class file/workflow_definition_PR_EHS notification.xml
+    sha256: sha256:1cde6d7ea814c33f1ed01d61cc532932f8407aa461f0a9d839322c6eecd6e30e
+kind: config-export
+genre: tecnica
+origin: vendor
+version: null
+dated: 2019-08-22
+covers_release: null
+languages:
+  - en
+scopes:
+  - P2P
+  - ADM
+source:
+  path: CORSI/JI-epro_3000/Class file/workflow_definition_PR_EHS notification.xml
+  sha256: sha256:1cde6d7ea814c33f1ed01d61cc532932f8407aa461f0a9d839322c6eecd6e30e
+  size: 9727
+  format: xml
+  doc_id: workflow-definition-pr-ehs-notification-xml-6e8304f6
+  doc_key: workflow-definition-pr-ehs-notification.xml
+structure:
+  pages: null
+  chapters: 4
+  sections: 4
+  tables: 4
+  figures: 0
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 4
+  by_type:
+    tabella: 4
+reliability:
+  base_by_kind: 0.95
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.76
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 4
+  items_produced: 5
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0
+  last_run: 2026-09-30
+  estimated_tokens: 15000
+  sessions_planned: 1

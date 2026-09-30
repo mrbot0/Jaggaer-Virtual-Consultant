@@ -1,0 +1,44 @@
+id: U.DOC0171.0236
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: permissionList/
+  comments | Mandatory (Y/N): N | Description: 1 = evaluation user can insert comments
+  0 = evaluation user cannot insert comments
+  Default is 0. | Mapping on JA data model and notes: Evaluation group, comments available
+hash: sha256:c9957bbd3167599d280aa8d73836dd24c51cef432e66d1325b206ef84f65d748
+words: 38
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Evaluation Group Member [Import/Update RfX method]
+  section_path: 2.1.1.24
+  page: 6
+  lang: en
+  prev: U.DOC0171.0235
+  next: U.DOC0171.0237
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - |-
+      permissionList/
+      comments
+    - N
+    - |-
+      1 = evaluation user can insert comments
+      0 = evaluation user cannot insert comments
+      Default is 0.
+    - Evaluation group, comments available
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

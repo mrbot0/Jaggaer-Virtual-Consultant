@@ -1,0 +1,192 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+batch: batch-06
+section: campi-6
+section_title: Campi — Delivery Information
+part: 1
+parts: 1
+rows:
+  - key: tech:DELIVERY_CONTACT_NAME
+    label: Delivery Contact Name
+    labels:
+      - Delivery Contact Name
+    technical_name: DELIVERY_CONTACT_NAME
+    section: campi-6
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: Identifies who will receive the delivery of the item. Typically this is
+      not the same person as the Requester or Requisition Approver of an order.
+      · UserDefinedFieldParamTextBoxSize=30;
+      UserDefinedFieldParamTextBoxMaxLength=50 · id=10046 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-6
+        source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Delivery Contact Name
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DELIVERY_CONTACT_PHONE
+    label: Delivery Contact Phone
+    labels:
+      - Delivery Contact Phone
+    technical_name: DELIVERY_CONTACT_PHONE
+    section: campi-6
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: Phone number of the person receiving the delivery of the item. ·
+      UserDefinedFieldParamTextBoxSize=16;
+      UserDefinedFieldParamTextBoxMaxLength=16 · id=10049 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-6
+        source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Delivery Contact Phone
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DELIVERY_CONTACT_EMAIL
+    label: Delivery Contact Email
+    labels:
+      - Delivery Contact Email
+    technical_name: DELIVERY_CONTACT_EMAIL
+    section: campi-6
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: Email address of the person receiving the delivery of the item. ·
+      UserDefinedFieldParamTextBoxSize=30;
+      UserDefinedFieldParamTextBoxMaxLength=50 · id=10077 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-6
+        source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Delivery Contact Email
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SPECIAL_HANDLING_EXPLANATION
+    label: Special Handling Explanation
+    labels:
+      - Special Handling Explanation
+    technical_name: SPECIAL_HANDLING_EXPLANATION
+    section: campi-6
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br>Enter any special handling information for
+      this item. If this is a RUSH order, please specify this and enter a
+      Desired Delivery Date. · id=10098 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-6
+        source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Special Handling Explanation
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SPECIAL_HANDLING
+    label: Special Handling
+    labels:
+      - Special Handling
+    technical_name: SPECIAL_HANDLING
+    section: campi-6
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: Specify any special handling instructions for the supplier, such as a
+      rush order. If this is rush order, specify the date that you wish the item
+      to be delivered in the Desired Delivery Date field. ·
+      UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=3;
+      UserDefinedFieldParamTextBoxMaxLength=250;
+      UserDefinedFieldParamTextAreaCols=45 · id=10055 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-6
+        source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Special Handling
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DESIRED_DEILVERY_DATE
+    label: Desired Deilvery Date
+    labels:
+      - Desired Deilvery Date
+    technical_name: DESIRED_DEILVERY_DATE
+    section: campi-6
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: Requested date for equipment delivery. · id=10097 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-6
+        source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: Desired Deilvery Date
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1809

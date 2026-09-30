@@ -1,0 +1,699 @@
+doc: S.STD.XSC.DOC.0172
+scope: XSC
+extracted_at: 2026-09-30T04:32:11.209Z
+tier: T0
+stats:
+  units: 48
+  extracted_units: 16
+  document_candidates: 1
+  needs_llm: 2
+  t0_complete: 15
+  by_candidate:
+    GLS: 1
+    FLW: 1
+    FLD: 14
+    INT: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 3578
+  sessions:
+    - n: 1
+      tokens: 3578
+      batches: 1
+      items: 2
+      batch_items:
+        - - R.DOC0172.0012
+          - R.DOC0172.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0172.0011
+    source_unit: U.DOC0172.0011
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0172
+    section: Executive Summary
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: structure of the current document
+      definition: "the following:"
+      aliases: []
+      lang: en
+      source_unit: U.DOC0172.0011
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0172.0012
+    source_unit: U.DOC0172.0012
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0172
+    section: Executive Summary
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: upsert
+          oggetto: method
+          valore: null
+        - n: 2
+          verbo: request
+          oggetto: "data format : describes the possible operations on import (CREATE, UPDATE and so on) and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted"
+          valore: describes the possible operations on import (CREATE, UPDATE and so on) and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted
+        - n: 3
+          verbo: "behavior:"
+          oggetto: describes how the web service processes the data passed in input, in case of some processes
+          valore: describes how the web service processes the data passed in input, in case of some processes
+        - n: 4
+          verbo: response
+          oggetto: "data format: describes the structure of the web service response and contains the list of possible error codes"
+          valore: describes the structure of the web service response and contains the list of possible error codes
+        - n: 5
+          verbo: rest
+          oggetto: INTERFACE
+          valore: null
+        - n: 6
+          verbo: operation
+          oggetto: "and Endpoints: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods"
+          valore: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods
+        - n: 7
+          verbo: request
+          oggetto: "samples: contains detailed samples of HTTP request/response for each available operation"
+          valore: contains detailed samples of HTTP request/response for each available operation
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0172.0012
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 228
+  - raw_id: R.DOC0172.0018
+    source_unit: U.DOC0172.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: IdmSupplierUser
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: email
+      technical_name: email
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Email address
+      section: 2.1.1.1
+      source_unit: U.DOC0172.0018
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 17
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: true
+  - raw_id: R.DOC0172.0019
+    source_unit: U.DOC0172.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: IdmSupplierUser
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: firstName
+      technical_name: firstName
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: First name
+      section: 2.1.1.1
+      source_unit: U.DOC0172.0019
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 17
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: true
+  - raw_id: R.DOC0172.0020
+    source_unit: U.DOC0172.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: IdmSupplierUser
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: lastName
+      technical_name: lastName
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Last name
+      section: 2.1.1.1
+      source_unit: U.DOC0172.0020
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 17
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: true
+  - raw_id: R.DOC0172.0021
+    source_unit: U.DOC0172.0021
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: JcsSupplierUser
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.85
+    extraction:
+      label: companyId
+      technical_name: companyId
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Company Id
+      section: 2.1.1.2
+      source_unit: U.DOC0172.0021
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 58
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: true
+  - raw_id: R.DOC0172.0022
+    source_unit: U.DOC0172.0022
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: JcsSupplierUser
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userStatus
+      technical_name: userStatus
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: User Status
+      section: 2.1.1.2
+      source_unit: U.DOC0172.0022
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 69
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: true
+  - raw_id: R.DOC0172.0023
+    source_unit: U.DOC0172.0023
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: JcsSupplierUser
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.85
+    extraction:
+      label: isoCountry
+      technical_name: isoCountry
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: 2-letter ISO country code of the country from which the supplier user
+      section: 2.1.1.2
+      source_unit: U.DOC0172.0023
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 69
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: false
+  - raw_id: R.DOC0172.0024
+    source_unit: U.DOC0172.0024
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: JcsSupplierUser
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: languageCode
+      technical_name: languageCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: 2-letter stangard Language Code
+      section: 2.1.1.2
+      source_unit: U.DOC0172.0024
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 23
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: false
+  - raw_id: R.DOC0172.0025
+    source_unit: U.DOC0172.0025
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: JcsSupplierUser
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: timeZone
+      technical_name: timeZone
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: User Time Zone
+      section: 2.1.1.2
+      source_unit: U.DOC0172.0025
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 18
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: false
+  - raw_id: R.DOC0172.0026
+    source_unit: U.DOC0172.0026
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: JiSupplierUser
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.85
+    extraction:
+      label: erpNumber
+      technical_name: erpNumber
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Current, unique ERP number associated with the supplier.
+        This field identifies supplier company in which add the supplier user.
+      section: 2.1.1.3
+      source_unit: U.DOC0172.0026
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 46
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: true
+  - raw_id: R.DOC0172.0027
+    source_unit: U.DOC0172.0027
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: JiSupplierUser
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: mainUser
+      technical_name: mainUser
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Flag to identify if the supplier user is a main user(true) or not (false).
+        Possible values:
+        true
+        false
+      section: 2.1.1.3
+      source_unit: U.DOC0172.0027
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 40
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: true
+  - raw_id: R.DOC0172.0028
+    source_unit: U.DOC0172.0028
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: JiSupplierUser
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: languageCode
+      technical_name: languageCode
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Supplier user’s language
+        Possible values:
+        en
+        fr
+        de
+        pl
+        es
+        it
+        ja
+        zh
+        nl
+        pt_br
+        en_gb
+        es_es
+        ko_kr
+        cs_cz
+        pt_pt
+        hu_hu
+        ru_ru
+        sv_se
+        fi_fi
+      section: 2.1.1.3
+      source_unit: U.DOC0172.0028
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 47
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: true
+  - raw_id: R.DOC0172.0029
+    source_unit: U.DOC0172.0029
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0172
+    section: JiSupplierUser
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: timeZone
+      technical_name: timeZone
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Supplier user’s timezone.
+        Must be included in your JI organization's list of supported timezones.
+      section: 2.1.1.3
+      source_unit: U.DOC0172.0029
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0172
+    needs_llm: false
+    tokens: 39
+    lineage:
+      required_by:
+        - ref: R.DOC0172.I001
+          mandatory_there: true
+  - raw_id: R.DOC0172.0044
+    source_unit: U.DOC0172.0044
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0172
+    section: Conditions to create a user in JI, JCS and ASO
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: JCS core app
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0172.0044
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0172.0045
+    source_unit: U.DOC0172.0045
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0172
+    section: Conditions to create a user in JI, JCS and ASO
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: ASO core app
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0172.0045
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0172.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0172
+    section: null
+    source_unit: U.DOC0172.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: J1P Development Kit- Supplier User web-service
+      protocol:
+        - REST
+        - JSON
+      endpoints:
+        - /j1p/api/public/j1/v1/supusr
+        - https://j1p-dev-api-reg01.de.jaggaer.com
+      operations: []
+      mappings:
+        - field_ref: R.DOC0172.0018
+          target: email
+          mandatory: true
+        - field_ref: R.DOC0172.0019
+          target: firstName
+          mandatory: true
+        - field_ref: R.DOC0172.0020
+          target: lastName
+          mandatory: true
+        - field_ref: R.DOC0172.0021
+          target: companyId
+          mandatory: true
+        - field_ref: R.DOC0172.0022
+          target: userStatus
+          mandatory: true
+        - field_ref: R.DOC0172.0023
+          target: isoCountry
+          mandatory: false
+        - field_ref: R.DOC0172.0024
+          target: languageCode
+          mandatory: false
+        - field_ref: R.DOC0172.0025
+          target: timeZone
+          mandatory: false
+        - field_ref: R.DOC0172.0026
+          target: erpNumber
+          mandatory: true
+        - field_ref: R.DOC0172.0027
+          target: mainUser
+          mandatory: true
+        - field_ref: R.DOC0172.0028
+          target: languageCode
+          mandatory: true
+        - field_ref: R.DOC0172.0029
+          target: timeZone
+          mandatory: true
+      error_catalog:
+        - code: "0"
+          description: Operation completed successfully
+          source_unit: U.DOC0172.0032
+        - code: "1"
+          description: Operation completed successfully with warnings as detailed in the returned message
+          source_unit: U.DOC0172.0032
+        - code: "2"
+          description: Operation not completed due to error as detailed in the returned message
+          source_unit: U.DOC0172.0032
+        - code: "-999"
+          description: Generic exception
+          source_unit: U.DOC0172.0032
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+    tokens: 2650

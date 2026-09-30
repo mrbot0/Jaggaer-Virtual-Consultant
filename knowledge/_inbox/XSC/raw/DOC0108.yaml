@@ -1,0 +1,428 @@
+doc: S.STD.XSC.DOC.0108
+scope: XSC
+extracted_at: 2026-09-30T04:30:48.479Z
+tier: T0
+stats:
+  units: 12
+  extracted_units: 10
+  document_candidates: 4
+  needs_llm: 4
+  t0_complete: 10
+  by_candidate:
+    FLD: 10
+    CFG: 4
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 12000
+  sessions:
+    - n: 1
+      tokens: 12000
+      batches: 2
+      items: 4
+      batch_items:
+        - - R.DOC0108.C001
+          - R.DOC0108.C002
+        - - R.DOC0108.C003
+          - R.DOC0108.C004
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0108.0003
+    source_unit: U.DOC0108.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / Contact Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Name of Employee
+      technical_name: "117425"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Name of Employee
+      section: domande-1
+      source_unit: U.DOC0108.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0108.0004
+    source_unit: U.DOC0108.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Phone Number
+      technical_name: "117426"
+      type: Numeric Text Box
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Phone Number
+      section: domande-1
+      source_unit: U.DOC0108.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0108.0005
+    source_unit: U.DOC0108.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Email Address
+      technical_name: "117427"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Email Address
+      section: domande-1
+      source_unit: U.DOC0108.0005
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0108.0006
+    source_unit: U.DOC0108.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department
+      technical_name: "117390"
+      type: Multiple Choice (Pick One)
+      mandatory_text: No
+      allowed_values: []
+      notes: Department
+      section: domande-1
+      source_unit: U.DOC0108.0006
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0108.0007
+    source_unit: U.DOC0108.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / Current Office Location
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Pickup Address of Office Goods
+      technical_name: "117391"
+      type: Numeric Text Box
+      mandatory_text: No
+      allowed_values: []
+      notes: Pickup Address of Office Goods
+      section: domande-2
+      source_unit: U.DOC0108.0007
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0108.0008
+    source_unit: U.DOC0108.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / Current Office Location
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Estimated Weight of Office Goods
+      technical_name: "117392"
+      type: Numeric Text Box
+      mandatory_text: No
+      allowed_values: []
+      notes: Estimated Weight of Office Goods
+      section: domande-2
+      source_unit: U.DOC0108.0008
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 48
+  - raw_id: R.DOC0108.0009
+    source_unit: U.DOC0108.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / Current Office Location
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Do you have fragile goods we need to be aware of?
+      technical_name: "117428"
+      type: Yes/No
+      mandatory_text: No
+      allowed_values: []
+      notes: Do you have fragile goods we need to be aware of?
+      section: domande-2
+      source_unit: U.DOC0108.0009
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0108.0010
+    source_unit: U.DOC0108.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / Current Office Location
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Please provide information regarding the fragile goods.
+      technical_name: "117429"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Please provide information regarding the fragile goods.
+      section: domande-2
+      source_unit: U.DOC0108.0010
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 60
+  - raw_id: R.DOC0108.0011
+    source_unit: U.DOC0108.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / New Office Location
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Drop-off Address Lcoation
+      technical_name: "117430"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Drop-off Address Lcoation
+      section: domande-3
+      source_unit: U.DOC0108.0011
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0108.0012
+    source_unit: U.DOC0108.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0108
+    section: Domande — Page 1 / New Office Location
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Diagram of Preferred Office Layout
+      technical_name: "117431"
+      type: File Upload
+      mandatory_text: No
+      allowed_values: []
+      notes: Diagram of Preferred Office Layout
+      section: domande-3
+      source_unit: U.DOC0108.0012
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0108
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0108.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0108
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0108.0002
+    facets: &a11
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: Title
+      current_state:
+        value: Office Move Request Form
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0108.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0108
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0108.0002
+    facets: *a11
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Services
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0108.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0108
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0108.0002
+    facets: *a11
+    extraction:
+      parameter: SearchableKeywords
+      current_state:
+        value: office cube move transition
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0108.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0108
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0108.0002
+    facets: *a11
+    extraction:
+      parameter: purpose
+      current_state:
+        value: GenericRequest
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

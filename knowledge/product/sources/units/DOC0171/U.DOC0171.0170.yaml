@@ -1,0 +1,51 @@
+id: U.DOC0171.0170
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: Type | Mandatory (Y/N): Y | Description: Parameter type | Mapping on JA data model and notes: [12.3.01] Allowed values:
+  PRICE
+  QUANTITY_RANGE
+  DISCOUNT
+  GENERIC_LINE
+  NOTE
+  If not specified, the default is
+  QUANTITY_RANGE if priceByQuantityRanges is provided, otherwise is PRICE.
+hash: sha256:51df1f771f802e92328a4ce93bab749b6a2788c126804be7ff43e973e71aea3d
+words: 40
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: economical parameter [Import/Update RfX method]"
+  section_path: 2.1.1.13
+  page: 6
+  lang: en
+  prev: U.DOC0171.0169
+  next: U.DOC0171.0171
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - Type
+    - Y
+    - Parameter type
+    - |-
+      [12.3.01] Allowed values:
+      PRICE
+      QUANTITY_RANGE
+      DISCOUNT
+      GENERIC_LINE
+      NOTE
+      If not specified, the default is
+      QUANTITY_RANGE if priceByQuantityRanges is provided, otherwise is PRICE.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

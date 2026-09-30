@@ -1,0 +1,614 @@
+doc: S.STD.XSC.DOC.0069
+scope: XSC
+extracted_at: 2026-09-30T04:30:21.479Z
+tier: T0
+stats:
+  units: 16
+  extracted_units: 8
+  document_candidates: 0
+  needs_llm: 8
+  t0_complete: 0
+  by_candidate:
+    FLW: 8
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 5251
+  sessions:
+    - n: 1
+      tokens: 5251
+      batches: 1
+      items: 8
+      batch_items:
+        - - R.DOC0069.0002
+          - R.DOC0069.0003
+          - R.DOC0069.0005
+          - R.DOC0069.0006
+          - R.DOC0069.0008
+          - R.DOC0069.0010
+          - R.DOC0069.0012
+          - R.DOC0069.0014
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0069.0002
+    source_unit: U.DOC0069.0002
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0069
+    section: sc-perspective-unofficial-implementation-conside-4cb385be
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: number
+          oggetto: ONE priority/concern/recommendation is to consult strongly on every topic, to try to drive the customer to the simplest possible solution. This can avoid even getting into some of the more difficult topics
+          valore: null
+        - n: 2
+          verbo: custom
+          oggetto: Fields and Account Codes – we use custom fields for account codes. The two are the same in the JAGGAER solution
+          valore: null
+        - n: 3
+          verbo: defining
+          oggetto: the customer’s account code string is a high priority week one task. Technical limitations often inform the direction of the setup in JAGGAER. For instance, we have no in-application validation process to ensure account code validity – we rely largely on an outbound integration with the customer ERP (PR Validation) or on parent-child relationships in which we expect the ERP to send us valid combinations
+          valore: null
+        - n: 4
+          verbo: parent-child
+          oggetto: relationship works well, but some customers’ account codes do not work well with this. We support one parent to many children. If you map a parent value, like an organization code, to a child value, like a department code, then when that organization is selected the list of children is limited to those you’ve mapped, like that aforementioned department code. This is the only relationship we really check – no other codes in the string in combination with this value. Additionally, the codes themselves are individual values and not a single string, though they can be transformed via integrations if needed
+          valore: null
+        - n: 5
+          verbo: the
+          oggetto: UI behind custom field selection is different in JAGGAER than in many ERP solutions as well, so that’s worth covering. Some ERPs or other purchasing software uses type-ahead matching, where a user starts typing their code and it will auto-complete with potential matches. We use either a drop-down of all values (if below a certain threshold) or a search interface, allowing users to search by value or description
+          valore: null
+        - n: 6
+          verbo: some
+          oggetto: "items and processes within JAGGAER do not support custom fields, or only support them in a limited fashion. Examples include: forms, contracts, sourcing events, supplier registration. Typically these will have a custom field equivalent but not always, and the workflow options available to custom fields are not always present here. While custom fields present great opportunities for creativity in workflow and for reporting enhancement, try to limit their usage to critical needs to avoid the customer developing the opinion that a custom field can solve all of their problems"
+          valore: forms, contracts, sourcing events, supplier registration. Typically these will have a custom field equivalent but not always, and the workflow options available to custom fields are not always present here. While custom fields present great opportunities for creativity in workflow and for reporting enhancement, try to limit their usage to critical needs to avoid the customer developing the opinion that a custom field can solve all of their problems
+        - n: 7
+          verbo: multiple
+          oggetto: Business Unit (MBU) Functionality
+          valore: null
+        - n: 8
+          verbo: not
+          oggetto: everything can be differentiated according to business unit (BU). Familiarize yourselves with what can and can’t be customized by BU and document it. If the client has the MBU license or is interested it, or if you identify a solution to a problem that requires MBU functionality, be prepared to speak to limitations
+          valore: null
+        - n: 9
+          verbo: document
+          oggetto: Visibility is controlled through Department/Business Unit, but NOT accounting elements
+          valore: null
+        - n: 10
+          verbo: more
+          oggetto: "comments:"
+          valore: null
+        - n: 11
+          verbo: we
+          oggetto: have some other options, but they’re a little more complicated
+          valore: null
+        - n: 12
+          verbo: it
+          oggetto: is best to get ahead of this quickly and try to drive toward department-based visibility, or user-based (user could only see his/her documents). Department is better but the client needs a way to define a user’s department, so it needs to come in when the log in via a single sign-on, or through a user import, or if they log in locally they should require it to be entered during user registration, or they need to be prepared to maintain this manually
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0069.0002
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 468
+  - raw_id: R.DOC0069.0003
+    source_unit: U.DOC0069.0003
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0069
+    section: sc-perspective-unofficial-implementation-conside-4cb385be
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: number
+          oggetto: ONE priority/concern/recommendation is to consult strongly on every topic, to try to drive the customer to the simplest possible solution. This can avoid even getting into some of the more difficult topics
+          valore: null
+        - n: 2
+          verbo: custom
+          oggetto: Fields and Account Codes – we use custom fields for account codes. The two are the same in the JAGGAER solution
+          valore: null
+        - n: 3
+          verbo: defining
+          oggetto: the customer’s account code string is a high priority week one task. Technical limitations often inform the direction of the setup in JAGGAER. For instance, we have no in-application validation process to ensure account code validity – we rely largely on an outbound integration with the customer ERP (PR Validation) or on parent-child relationships in which we expect the ERP to send us valid combinations
+          valore: null
+        - n: 4
+          verbo: parent-child
+          oggetto: relationship works well, but some customers’ account codes do not work well with this. We support one parent to many children. If you map a parent value, like an organization code, to a child value, like a department code, then when that organization is selected the list of children is limited to those you’ve mapped, like that aforementioned department code. This is the only relationship we really check – no other codes in the string in combination with this value. Additionally, the codes themselves are individual values and not a single string, though they can be transformed via integrations if needed
+          valore: null
+        - n: 5
+          verbo: the
+          oggetto: UI behind custom field selection is different in JAGGAER than in many ERP solutions as well, so that’s worth covering. Some ERPs or other purchasing software uses type-ahead matching, where a user starts typing their code and it will auto-complete with potential matches. We use either a drop-down of all values (if below a certain threshold) or a search interface, allowing users to search by value or description
+          valore: null
+        - n: 6
+          verbo: some
+          oggetto: "items and processes within JAGGAER do not support custom fields, or only support them in a limited fashion. Examples include: forms, contracts, sourcing events, supplier registration. Typically these will have a custom field equivalent but not always, and the workflow options available to custom fields are not always present here. While custom fields present great opportunities for creativity in workflow and for reporting enhancement, try to limit their usage to critical needs to avoid the customer developing the opinion that a custom field can solve all of their problems"
+          valore: forms, contracts, sourcing events, supplier registration. Typically these will have a custom field equivalent but not always, and the workflow options available to custom fields are not always present here. While custom fields present great opportunities for creativity in workflow and for reporting enhancement, try to limit their usage to critical needs to avoid the customer developing the opinion that a custom field can solve all of their problems
+        - n: 7
+          verbo: multiple
+          oggetto: Business Unit (MBU) Functionality
+          valore: null
+        - n: 8
+          verbo: not
+          oggetto: everything can be differentiated according to business unit (BU). Familiarize yourselves with what can and can’t be customized by BU and document it. If the client has the MBU license or is interested it, or if you identify a solution to a problem that requires MBU functionality, be prepared to speak to limitations
+          valore: null
+        - n: 9
+          verbo: document
+          oggetto: Visibility is controlled through Department/Business Unit, but NOT accounting elements
+          valore: null
+        - n: 10
+          verbo: more
+          oggetto: "comments:"
+          valore: null
+        - n: 11
+          verbo: we
+          oggetto: have some other options, but they’re a little more complicated
+          valore: null
+        - n: 12
+          verbo: it
+          oggetto: is best to get ahead of this quickly and try to drive toward department-based visibility, or user-based (user could only see his/her documents). Department is better but the client needs a way to define a user’s department, so it needs to come in when the log in via a single sign-on, or through a user import, or if they log in locally they should require it to be entered during user registration, or they need to be prepared to maintain this manually
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0069.0003
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 402
+  - raw_id: R.DOC0069.0005
+    source_unit: U.DOC0069.0005
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0069
+    section: sc-perspective-unofficial-implementation-conside-4cb385be
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: workflow
+          oggetto: is always linear. Rules will not be “re-triggered” if criteria is changed upon a document edit. WF can’t go backwards. An approver can only return or reject
+          valore: re-triggered
+        - n: 2
+          verbo: we
+          oggetto: have lots of different ways to implement WF
+          valore: null
+        - n: 3
+          verbo: we
+          oggetto: can do splits, but approvers are approving the whole document, not just their split. (It does route to approvers based on splits)
+          valore: null
+        - n: 4
+          verbo: the
+          oggetto: whole document is approved, not just a line, or a split on a line
+          valore: null
+        - n: 5
+          verbo: "note:"
+          oggetto: approvers can reject specific lines
+          valore: approvers can reject specific lines
+        - n: 6
+          verbo: only
+          oggetto: JAGGAER / Partners (not clients) can change the workflow XML
+          valore: null
+        - n: 7
+          verbo: ad
+          oggetto: hoc approvals not currently possible. ( Person submitting the document can’t choose who approves it)
+          valore: null
+        - n: 8
+          verbo: if
+          oggetto: you allow approvers to edit, they can edit the whole document. They could change values that were approved in earlier steps. The change they made would not re-initiate those approvals
+          valore: null
+        - n: 9
+          verbo: more
+          oggetto: "comments:"
+          valore: null
+        - n: 10
+          verbo: familiarize
+          oggetto: yourself with approval assignment options in JAGGAER. Customers coming from ERP solutions can have workflow expectations that we can’t support natively
+          valore: null
+        - n: 11
+          verbo: on
+          oggetto: this topic, consult strongly on this to guide a customer toward simpler, more sustainable workflow. This isn’t always possible, but it can help avoid extra cycles churning on workflow design
+          valore: null
+        - n: 12
+          verbo: one
+          oggetto: "distinction often not understood by customers: an approver is approving the document (e.g. the requisition or purchase order or invoice) not the accounting distribution line. Some ERP solutions and customer practices assume budget owners will only be responsible for approving “their distribution” if a requisition is split, but this is not necessarily the case. They will see the entire document, and an approval action is at the document level"
+          valore: their distribution
+        - n: 13
+          verbo: particularly
+          oggetto: if a customer is coming from a robust ERP solution, find out what they have from a data perspective that we can leverage with their purchased integrations. If we can get their workflow data into JAGGAER in an integrated fashion, it helps reduce maintenance requirements for the administrative team
+          valore: null
+        - n: 14
+          verbo: control
+          oggetto: "over workflow design. Limited ability for customer to design and implement new workflow. Brad: some bigger customers do it exactly as we explain (approve by cost center). You can reject specific lines"
+          valore: some bigger customers do it exactly as we explain (approve by cost center). You can reject specific lines
+        - n: 15
+          verbo: edit
+          oggetto: controls? Allow an approver to edit and it pushes over to a new spend threshold should require new approver but will not. Mid-workflow can adjust based on changes to the document
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0069.0005
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 436
+  - raw_id: R.DOC0069.0006
+    source_unit: U.DOC0069.0006
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0069
+    section: sc-perspective-unofficial-implementation-conside-4cb385be
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: workflow
+          oggetto: is always linear. Rules will not be “re-triggered” if criteria is changed upon a document edit. WF can’t go backwards. An approver can only return or reject
+          valore: re-triggered
+        - n: 2
+          verbo: we
+          oggetto: have lots of different ways to implement WF
+          valore: null
+        - n: 3
+          verbo: we
+          oggetto: can do splits, but approvers are approving the whole document, not just their split. (It does route to approvers based on splits)
+          valore: null
+        - n: 4
+          verbo: the
+          oggetto: whole document is approved, not just a line, or a split on a line
+          valore: null
+        - n: 5
+          verbo: "note:"
+          oggetto: approvers can reject specific lines
+          valore: approvers can reject specific lines
+        - n: 6
+          verbo: only
+          oggetto: JAGGAER / Partners (not clients) can change the workflow XML
+          valore: null
+        - n: 7
+          verbo: ad
+          oggetto: hoc approvals not currently possible. ( Person submitting the document can’t choose who approves it)
+          valore: null
+        - n: 8
+          verbo: if
+          oggetto: you allow approvers to edit, they can edit the whole document. They could change values that were approved in earlier steps. The change they made would not re-initiate those approvals
+          valore: null
+        - n: 9
+          verbo: more
+          oggetto: "comments:"
+          valore: null
+        - n: 10
+          verbo: familiarize
+          oggetto: yourself with approval assignment options in JAGGAER. Customers coming from ERP solutions can have workflow expectations that we can’t support natively
+          valore: null
+        - n: 11
+          verbo: on
+          oggetto: this topic, consult strongly on this to guide a customer toward simpler, more sustainable workflow. This isn’t always possible, but it can help avoid extra cycles churning on workflow design
+          valore: null
+        - n: 12
+          verbo: one
+          oggetto: "distinction often not understood by customers: an approver is approving the document (e.g. the requisition or purchase order or invoice) not the accounting distribution line. Some ERP solutions and customer practices assume budget owners will only be responsible for approving “their distribution” if a requisition is split, but this is not necessarily the case. They will see the entire document, and an approval action is at the document level"
+          valore: their distribution
+        - n: 13
+          verbo: particularly
+          oggetto: if a customer is coming from a robust ERP solution, find out what they have from a data perspective that we can leverage with their purchased integrations. If we can get their workflow data into JAGGAER in an integrated fashion, it helps reduce maintenance requirements for the administrative team
+          valore: null
+        - n: 14
+          verbo: control
+          oggetto: "over workflow design. Limited ability for customer to design and implement new workflow. Brad: some bigger customers do it exactly as we explain (approve by cost center). You can reject specific lines"
+          valore: some bigger customers do it exactly as we explain (approve by cost center). You can reject specific lines
+        - n: 15
+          verbo: edit
+          oggetto: controls? Allow an approver to edit and it pushes over to a new spend threshold should require new approver but will not. Mid-workflow can adjust based on changes to the document
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0069.0006
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 179
+  - raw_id: R.DOC0069.0008
+    source_unit: U.DOC0069.0008
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0069
+    section: sc-perspective-unofficial-implementation-conside-4cb385be
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: data
+          oggetto: clean-up and loading – we have limited tools to support. We don’t have the ability to merge duplicate supplier profiles or to combine data
+          valore: null
+        - n: 2
+          verbo: supplier
+          oggetto: data supports ePro / AP / Sourcing
+          valore: null
+        - n: 3
+          verbo: higher
+          oggetto: Ed clients sometimes want to include employees and students as suppliers (for check requests & T/E)
+          valore: null
+        - n: 4
+          verbo: suppliers
+          oggetto: are not Business Unit (BU) specific – a BU admin can’t just administer that BU’s suppliers
+          valore: null
+        - n: 5
+          verbo: we
+          oggetto: generally are not limited if a client wants to sync complete supplier records and not just deltas (SUNY – dozens of campus is an exception)
+          valore: null
+        - n: 6
+          verbo: more
+          oggetto: "comments:"
+          valore: null
+        - n: 7
+          verbo: customers
+          oggetto: often struggle with getting supplier data into the system. They should immediately begin the process of cleaning up their own supplier database, if they have one
+          valore: null
+        - n: 8
+          verbo: ordering
+          oggetto: when a vendor is not available in the site yet is an important topic to cover. Mandating onboarding prior to placing new orders is something that we usually recommend
+          valore: null
+        - n: 9
+          verbo: jaggaer
+          oggetto: supplier record ID, the "network"
+          valore: network
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0069.0008
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 258
+  - raw_id: R.DOC0069.0010
+    source_unit: U.DOC0069.0010
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0069
+    section: sc-perspective-unofficial-implementation-conside-4cb385be
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.55
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: some cases, we use middleware (webMethods) to convert flat files to XML where needed. In other cases, clients implement based on our “standards.”
+          valore: standards.
+        - n: 2
+          verbo: we
+          oggetto: 'have two major technical concerns: client development time if we are using our "standards", and our development time if we are using our middleware'
+          valore: standards
+        - n: 3
+          verbo: we
+          oggetto: have no direct API, it's all web services-based
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0069.0010
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 105
+  - raw_id: R.DOC0069.0012
+    source_unit: U.DOC0069.0012
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0069
+    section: sc-perspective-unofficial-implementation-conside-4cb385be
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: form
+          oggetto: Requests – popular in demos
+          valore: null
+        - n: 2
+          verbo: for
+          oggetto: the most part, custom fields are not included, but the check-request does include them
+          valore: null
+        - n: 3
+          verbo: result
+          oggetto: in single line only
+          valore: null
+        - n: 4
+          verbo: they
+          oggetto: have their own workflow – separate from requisition workflow
+          valore: null
+        - n: 5
+          verbo: conditionality
+          oggetto: is possible with these
+          valore: null
+        - n: 6
+          verbo: legacy
+          oggetto: Forms – used a lot for shopping
+          valore: null
+        - n: 7
+          verbo: need
+          oggetto: to be added to a shopping cart to be used – added to requisition workflow
+          valore: null
+        - n: 8
+          verbo: more
+          oggetto: comments
+          valore: null
+        - n: 9
+          verbo: all
+          oggetto: customers receive access to form requests, and they can be used for generic purposes (report issue with the site), supplier onboarding requests, contract creation requests, etc. or they can be used to procurement purposes or non-PO invoice generation/payment requests
+          valore: null
+        - n: 10
+          verbo: legacy
+          oggetto: forms have a clunky, grid-based design. Questions/fields cannot be configured with conditionality – e.g. one question only showing up if another is answered in a particular way
+          valore: null
+        - n: 11
+          verbo: form
+          oggetto: requests have a newer design, visually, that aligns more closely with our sourcing and contract modules and can have this conditionality built in so a single form can be configured to serve multiple purposes
+          valore: null
+        - n: 12
+          verbo: however,
+          oggetto: form requests are currently in a place where many features and possibilities, especially in the workflow space, are not available to them. If possible, try to use legacy forms for customers with requisition manager
+          valore: null
+        - n: 13
+          verbo: specific
+          oggetto: "to payment requests: payments to employees or students can be tricky. Payments often require address data and this is sensitive information for individuals. It is recommended that connections to student/employee addresses are made at the ERP level by making a connection between an employee or student ID and their own internal records, to avoid the possibility of sensitive information being exposed in JAGGAER"
+          valore: payments to employees or students can be tricky. Payments often require address data and this is sensitive information for individuals. It is recommended that connections to student/employee addresses are made at the ERP level by making a connection between an employee or student ID and their own internal records, to avoid the possibility of sensitive information being exposed in JAGGAER
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0069.0012
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 453
+  - raw_id: R.DOC0069.0014
+    source_unit: U.DOC0069.0014
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0069
+    section: sc-perspective-unofficial-implementation-conside-4cb385be
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: this
+          oggetto: can turn into a big mapping exercise -- especially for customers who don’t classify purchases today with commodities it can become a distraction and source of confusion
+          valore: null
+        - n: 2
+          verbo: we
+          oggetto: use UNSPSC natively; for new customers we like to recommend sticking with that. We support using the UNSPSC code itself or top-level category as the “commodity”
+          valore: commodity
+        - n: 3
+          verbo: many
+          oggetto: customers want to build a relationship between commodity codes and their own account or object codes. This is possible but doesn’t work very well in JAGGAER--discourage this if you can
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0069.0014
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 150

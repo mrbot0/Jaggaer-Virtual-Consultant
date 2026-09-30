@@ -1,0 +1,35 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.26
+section_title: CodesGroupSplit [Import]
+genre: tecnica
+rows:
+  - label: distributionValue
+    technical_name: distributionValue
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Distribution value for the split for the accounting codes group. According
+      to distribution type, it represents:
+
+      PercentOfQuantity and PercentOfPrice- the percentage of the split. In this
+      case, the the total of all distribution values must equal 100%.
+    section: 2.2.1.26
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.26#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: codesCustomField
+    technical_name: codesCustomField
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Account code custom field value container.
+      See section “CodesCustomField [Import]” below.
+    section: 2.2.1.26
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.26#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

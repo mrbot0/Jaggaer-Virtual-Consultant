@@ -1,0 +1,93 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-34
+section: 2.1.1.55
+section_title: J1Supplier/JISupplierData/diversityClassificationList/diversityClassification
+part: 1
+parts: 1
+rows:
+  - key: tech:ADDITIONALDATALIST
+    label: additionalDataList
+    labels:
+      - additionalDataList
+    technical_name: ADDITIONALDATALIST
+    section: 2.1.1.55
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.55
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.55#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: additionalDataList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DD_214CERTIFICATE
+    label: DD-214Certificate
+    labels:
+      - DD-214Certificate
+    technical_name: DD_214CERTIFICATE
+    section: 2.1.1.55
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.55
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.55#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: DD-214Certificate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DIVERSITYCERTIFICATE
+    label: diversityCertificate
+    labels:
+      - diversityCertificate
+    technical_name: DIVERSITYCERTIFICATE
+    section: 2.1.1.55
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.55
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.55#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: diversityCertificate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1003

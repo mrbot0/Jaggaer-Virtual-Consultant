@@ -1,0 +1,25 @@
+id: U.DOC0171.0315
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  For each envelope, if the proper object container is provided, the underlying section array (envelope.getSection()) is verified
+  1. Section array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any section: if operation is called in RESET mode, all previously defined envelope sections are removed.
+  2. Section array contains at least one element: newly listed sections –section whose name can’t be found in existing section list- are inserted. If operation is called in RESET mode, web service ensures only currently provided sections (identified by their name field –case sensitive check-) remain for the RFx (not listed sections are removed);
+hash: sha256:66519960f2261679eb9b0cc4fde00e3c10ba2040644ed2b246583e087d6d8257
+words: 107
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Envelope Management
+  section_path: 2.1.2.8
+  page: 6
+  lang: en
+  prev: U.DOC0171.0314
+  next: U.DOC0171.0316
+steps:
+  - "Section array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any section: if operation is called in RESET mode, all previously defined envelope sections are removed."
+  - "Section array contains at least one element: newly listed sections –section whose name can’t be found in existing section list- are inserted. If operation is called in RESET mode, web service ensures only currently provided sections (identified by their name field –case sensitive check-) remain for the RFx (not listed sections are removed);"
+procedure:
+  title: For each envelope, if the proper object container is provided, the underlying section array (envelope.getSection()) is verified

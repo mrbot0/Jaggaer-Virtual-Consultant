@@ -1,0 +1,39 @@
+id: U.DOC0167.0291
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: RequireCardSecurityCode | Mandatory (Y/N): N | Mapping on Jaggaer One data model and notes: Indicates whether the credit card security code (CSC) is required (true) or is not required (false) as part of the credit card information in a requisition. If set to true, the user must enter the CSC value if a credit card is being used for payment.
+  Values: ( true | false)
+hash: sha256:d7bbf6b987b2dd9ba402f8e5de46f411f5c82a2c2c7caa6eb1780cac5013576a
+words: 66
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/paymentMethod/poPaymentMethod/pCardPayment
+  section_path: 2.1.1.70
+  page: 5
+  lang: en
+  prev: U.DOC0167.0290
+  next: U.DOC0167.0292
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - RequireCardSecurityCode
+    - N
+    - ""
+    - |-
+      Indicates whether the credit card security code (CSC) is required (true) or is not required (false) as part of the credit card information in a requisition. If set to true, the user must enter the CSC value if a credit card is being used for payment.
+      Values: ( true | false)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

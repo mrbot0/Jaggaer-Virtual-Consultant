@@ -1,0 +1,38 @@
+document: marketing-services-and-materials-form-xml-d336dd5f
+scope: XSC
+batch: batch-01
+section: campi-1
+section_title: Campi — Order Form
+part: 1
+parts: 1
+rows:
+  - key: tech:ORDER_FORM100
+    label: Order Form
+    labels:
+      - Order Form
+    technical_name: ORDER_FORM100
+    section: campi-1
+    type: ItemList
+    mandatory_text: No
+    allowed_values: []
+    notes: Order Form · UserDefinedFieldParamFormListId=248343 · id=10010 ·
+      tipo=userdefined
+    sources:
+      - document: marketing-services-and-materials-form-xml-d336dd5f
+        section: campi-1
+        source_unit: marketing-services-and-materials-form-xml-d336dd5f/campi-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Order Form
+        type: ItemList
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 679

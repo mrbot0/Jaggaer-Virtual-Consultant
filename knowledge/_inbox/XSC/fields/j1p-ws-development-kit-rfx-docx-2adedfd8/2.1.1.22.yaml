@@ -1,0 +1,81 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.22
+section_title: Suppliers [Import/Update RfX method]
+genre: tecnica
+rows:
+  - label: |-
+      companyData/id
+      companyData/code
+      companyData/extUniqueCode
+    technical_name: |-
+      companyData/id
+      companyData/code
+      companyData/extUniqueCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Reference to the supplier company:
+      id = JA internal identifier
+      code = external code
+      extUniqueCode = external unique code
+    section: 2.1.1.22
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: invitationModeCode
+    technical_name: invitationModeCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Supplier invitation mode:
+      0 = invited;
+      1 = self-invited;
+      2 = invited after close
+    section: 2.1.1.22
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: invitationDate
+    technical_name: invitationDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date-time of invitation/self-invitation
+    section: 2.1.1.22
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: lateResponseAllowed
+    technical_name: lateResponseAllowed
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Answer allowed after rfq has been closed:
+      1 = late response allowed;
+      0 = late response not allowed
+    section: 2.1.1.22
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Invited
+    technical_name: Invited
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Answer allowed. Usually used in case of reopening of an RFx:
+      1 = supplier can answer (even if RFx was closed and then reopened);
+      0 = supplier, although invited, cannot respond (answer is blocked)
+    section: 2.1.1.22
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

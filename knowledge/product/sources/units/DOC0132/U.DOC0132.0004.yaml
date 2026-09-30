@@ -1,0 +1,122 @@
+id: U.DOC0132.0004
+doc: S.STD.XSC.DOC.0132
+doc_id: workflow-definition-pr-with-validation-xml-64feb5d8
+type: tabella
+text: 'Final PR Validation | Cartelle: WaitForPRApprovals | Regola: [Document.RequiresRuleGroupEvaluation("Omit from PR Validation") == false] | Selezione cartella: ExplicitFolder Attività: CreatePO | Tipo: automated | Passo: Create PO | Cartelle: Create PO | Regola: [Document.RequiresRuleGroupEvaluation("Omit from Create PO") == false] | Selezione cartella: ExplicitFolder Attività: END | Tipo: end | Selezione cartella: Dummy'
+hash: sha256:12f64017b553621493df3f06af277de5f59f54dbb28893189ed5b78fa106f0e2
+words: 52
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0132
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: en
+  prev: U.DOC0132.0003
+  next: U.DOC0132.0005
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Return1
+      - automated
+      - Return 1
+      - Auto-Return
+      - '[Document.RequiresRuleGroupEvaluation("Return 1") == true]'
+      - ExplicitFolder
+    - - Return2
+      - automated
+      - Return 2
+      - Auto-Return
+      - '[Document.RequiresRuleGroupEvaluation("Return 2") == true]'
+      - ExplicitFolder
+    - - InitialFiscalYearEnd
+      - manual
+      - Initial Fiscal Year End
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true]'
+      - MultiElementDynamic
+    - - InitialPRValidation
+      - notification
+      - Initial PR Validation
+      - WaitForPRApprovals
+      - '[Document.RequiresRuleGroupEvaluation("Omit from PR Validation") == false]'
+      - ExplicitFolder
+    - - InitialPRValidationWait
+      - manual
+      - Initial PR Validation
+      - WaitForPRApprovals
+      - '[Document.RequiresRuleGroupEvaluation("Omit from PR Validation") == false]'
+      - ExplicitFolder
+    - - Approval-1
+      - manual
+      - Approval 1
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Approval 1") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 1") == false]'
+      - MultiElementDynamic
+    - - Approval-2
+      - manual
+      - Approval 2
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Approval 2") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 2") == false]'
+      - MultiElementDynamic
+    - - Approval-3
+      - manual
+      - Approval 3
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Approval 3") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 3") == false]'
+      - MultiElementDynamic
+    - - Approval-4
+      - manual
+      - Approval 4
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Approval 4") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 4") == false]'
+      - MultiElementDynamic
+    - - FinalFiscalYearEnd
+      - manual
+      - Final Fiscal Year End
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true]'
+      - MultiElementDynamic
+    - - FinalPRValidation
+      - notification
+      - Final PR Validation
+      - WaitForPRApprovals
+      - '[Document.RequiresRuleGroupEvaluation("Omit from PR Validation") == false]'
+      - ExplicitFolder
+    - - FinalPRValidationWait
+      - manual
+      - Final PR Validation
+      - WaitForPRApprovals
+      - '[Document.RequiresRuleGroupEvaluation("Omit from PR Validation") == false]'
+      - ExplicitFolder
+    - - CreatePO
+      - automated
+      - Create PO
+      - Create PO
+      - '[Document.RequiresRuleGroupEvaluation("Omit from Create PO") == false]'
+      - ExplicitFolder
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

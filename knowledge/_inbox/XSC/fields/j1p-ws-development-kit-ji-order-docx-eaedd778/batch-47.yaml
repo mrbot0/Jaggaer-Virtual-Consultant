@@ -1,0 +1,178 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-47
+section: 2.3.1.48
+section_title: Comment [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:COMMENTDATE
+    label: commentDate
+    labels:
+      - commentDate
+    technical_name: COMMENTDATE
+    section: 2.3.1.48
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Date and time the comment was made
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.48
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.48#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: commentDate
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:USERFIRSTNAME
+    label: userFirstName
+    labels:
+      - userFirstName
+    technical_name: USERFIRSTNAME
+    section: 2.3.1.48
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: First name of the user responsible for the comment.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.48
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.48#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: userFirstName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERLASTNAME
+    label: userLastName
+    labels:
+      - userLastName
+    technical_name: USERLASTNAME
+    section: 2.3.1.48
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Last name of the user responsible for the comment.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.48
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.48#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: userLastName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMENTTEXT
+    label: commentText
+    labels:
+      - commentText
+    technical_name: COMMENTTEXT
+    section: 2.3.1.48
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Text of the comment.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.48
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.48#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: commentText
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:EMAILEDTO
+    label: emailedTo
+    labels:
+      - emailedTo
+    technical_name: EMAILEDTO
+    section: 2.3.1.48
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Container for Email address of the person to whom the comment is to be
+      emailed.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.48
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.48#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: emailedTo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ATTACHMENTID
+    label: attachmentId
+    labels:
+      - attachmentId
+    technical_name: ATTACHMENTID
+    section: 2.3.1.48
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: User-defined ID of the attachment for the comment, if any.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.48
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.48#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: attachmentId
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1519

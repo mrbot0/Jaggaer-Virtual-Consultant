@@ -1,0 +1,37 @@
+id: U.DOC0182.0108
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: money | Mandatory (Y/N): N | Description: Monetary amount of the supplier's discount for the PR. This is a numeric value of up to 15 digits.
+  DEPRECATED: uses field “money” of “discount” attribute
+hash: sha256:b47c3789bc1b1b9ca467da09d7ff0528531a77261e198e3b0e6a544bfd735ddf
+words: 34
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Discount Amount [PR Import]
+  section_path: 2.1.1.9
+  page: 18
+  lang: en
+  prev: U.DOC0182.0107
+  next: U.DOC0182.0109
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - money
+    - N
+    - |-
+      Monetary amount of the supplier's discount for the PR. This is a numeric value of up to 15 digits.
+      DEPRECATED: uses field “money” of “discount” attribute
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

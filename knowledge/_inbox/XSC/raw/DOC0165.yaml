@@ -1,0 +1,438 @@
+doc: S.STD.XSC.DOC.0165
+scope: XSC
+extracted_at: 2026-09-30T04:31:42.945Z
+tier: T0
+stats:
+  units: 431
+  extracted_units: 12
+  document_candidates: 0
+  needs_llm: 4
+  t0_complete: 8
+  by_candidate:
+    GLS: 2
+    FLD: 5
+    FLW: 2
+    CFG: 2
+    INV: 1
+  residue_marked: 1
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 1477
+  sessions:
+    - n: 1
+      tokens: 1477
+      batches: 1
+      items: 4
+      batch_items:
+        - - R.DOC0165.0071
+          - R.DOC0165.0255
+          - R.DOC0165.0284
+          - R.DOC0165.0422
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0165.0010
+    source_unit: U.DOC0165.0010
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0165
+    section: Essential Questions for this ClassEssential Questions for this Class
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: What
+      definition: the key tasks and challenges for site
+      aliases: []
+      lang: en
+      source_unit: U.DOC0165.0010
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0165.0022
+    source_unit: U.DOC0165.0022
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0165
+    section: Class Objectives (as seen in the Blueprint):Class Objectives (as seen in the Blueprint)
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: By the end of this class you
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0165.0022
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0165.0071
+    source_unit: U.DOC0165.0071
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0165
+    section: "Try It Yourself:Try It Yourself:"
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a new Personal Dashboard
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: widgets
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0165.0071
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 18
+  - raw_id: R.DOC0165.0097
+    source_unit: U.DOC0165.0097
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0165
+    section: "Admins: Managing Approvals"
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Who
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0165.0097
+    needs_llm: false
+    tokens: 5
+  - raw_id: R.DOC0165.0187
+    source_unit: U.DOC0165.0187
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0165
+    section: "Admins: Release Management"
+    page: 64
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Administrators
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0165.0187
+    needs_llm: false
+    tokens: 7
+  - raw_id: R.DOC0165.0255
+    source_unit: U.DOC0165.0255
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0165
+    section: "Configuration: Managing User Roles"
+    page: 98
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      kind: importante
+      text: "Important:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0165.0255
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0165.0284
+    source_unit: U.DOC0165.0284
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0165
+    section: "Configuration: Custom Data"
+    page: 109
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a7
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      kind: tacita
+      text: • Usually managed in ERP,
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0165.0284
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0165.0287
+    source_unit: U.DOC0165.0287
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0165
+    section: "Configuration: Custom Fields for ePro & AP"
+    page: 110
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: terminology that
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0165.0287
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 6
+  - raw_id: R.DOC0165.0290
+    source_unit: U.DOC0165.0290
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0165
+    section: "Configuration: Custom Fields for P2P"
+    page: 111
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - INV
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Users
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0165.0290
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 6
+  - raw_id: R.DOC0165.0332
+    source_unit: U.DOC0165.0332
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0165
+    section: "Key Terms:"
+    page: 127
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - GLS
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: It
+      definition: "a mixture of:"
+      aliases: []
+      lang: en
+      source_unit: U.DOC0165.0332
+    needs_llm: false
+    tokens: 5
+  - raw_id: R.DOC0165.0337
+    source_unit: U.DOC0165.0337
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0165
+    section: Workflows Support Client Processes
+    page: 128
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The system
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0165.0337
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0165.0422
+    source_unit: U.DOC0165.0422
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0165
+    section: "Quiz Time:Quiz Time:"
+    page: 157
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: visit
+          oggetto: your Transcript
+          valore: null
+        - n: 2
+          verbo: open
+          oggetto: the JAGGAER Indirect Foundations course
+          valore: null
+        - n: 3
+          verbo: clic
+          oggetto: the “Assessments” tab
+          valore: Assessments
+        - n: 4
+          verbo: launch
+          oggetto: the exam
+          valore: null
+        - n: 5
+          verbo: if
+          oggetto: you walk away for an extended time, CLOSE THE
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0165.0422
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 49

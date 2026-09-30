@@ -1,0 +1,117 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-05
+section: 2.2.1.5
+section_title: Attachment [Validate JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:FILENAME
+    label: fileName
+    labels:
+      - fileName
+    technical_name: FILENAME
+    section: 2.2.1.5
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Attachment file name
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.2.1.5
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.2.1.5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fileName
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.9
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.9#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fileName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FILEBASE64
+    label: fileBase64
+    labels:
+      - fileBase64
+    technical_name: FILEBASE64
+    section: 2.2.1.5
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Content of the file to be imported
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.2.1.5
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.2.1.5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: fileBase64
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.9
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.9#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: fileBase64
+        type: null
+        mandatory_text: At least one between fileBase64 and attachmentURL must be defined
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - Y
+          - At least one between fileBase64 and attachmentURL must be defined
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:VISIBILITY
+    label: visibility
+    labels:
+      - visibility
+    technical_name: VISIBILITY
+    section: 2.2.1.5
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Visibility of the attachment. Valid values:
+      internal: attachment is to be stored in the private/internal area
+      external: attachment will be saved in the public/external area
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.2.1.5
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.2.1.5#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: visibility
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1203

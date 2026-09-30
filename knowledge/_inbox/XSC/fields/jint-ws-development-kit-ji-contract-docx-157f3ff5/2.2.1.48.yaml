@@ -1,0 +1,191 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.48
+section_title: ServiceLineItem [Import]
+genre: tecnica
+rows:
+  - label: name
+    technical_name: name
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Name of a service line item from a JAGGAER Indirect Sourcing solution
+      event.
+
+      Valid only for Sourcing solution contracts.
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Description
+    technical_name: Description
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Description of the service line item.
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: catalogNumber
+    technical_name: catalogNumber
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Unique ID number for the service line item in the supplier inventory.
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Quantity
+    technical_name: Quantity
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Number of service items.
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: unitOfMeasure
+    technical_name: unitOfMeasure
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Packaging or size unit for the service line item, such as EA (each), PK
+      (pack), KG (kg), or LG (large).
+
+      The supplier item is the actual purchasable item available for the
+      shopper.
+
+      If the packaging or size also includes a quantity (for example, 2 per
+      package), then include the quantity with the code (for example, “2/PK”).
+
+      The default unitOfMeasure is EA.
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: unitPrice
+    technical_name: unitPrice
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Unit cost of the service line item
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: totalPrice
+    technical_name: totalPrice
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Total cost of the service line item (item quantity times the unit price).
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: targetPrice
+    technical_name: targetPrice
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Target cost for the service line item
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: commodityCode
+    technical_name: commodityCode
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Code assigned to the service line item, for the purposes of identifying it
+      in international commerce, or commerce in general.
+
+      It is not a specific description of the goods or service.
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: requestedServiceStartDate
+    technical_name: requestedServiceStartDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date you would like the service to begin
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: requestedServiceEndDate
+    technical_name: requestedServiceEndDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date you would like the service to end
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: requestedDeliveryDays
+    technical_name: requestedDeliveryDays
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Number of days after the sourcing event is awarded that you would like
+      the service line item to be delivered.
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: estimatedServiceStartDate
+    technical_name: estimatedServiceStartDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date you expect the service to begin
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: estimatedServiceEndDate
+    technical_name: estimatedServiceEndDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date you expect the service to end
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: estimatedDeliveryDays
+    technical_name: estimatedDeliveryDays
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Number of days after the sourcing event is awarded that you expect the
+      service line item to be delivered.
+    section: 2.2.1.48
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

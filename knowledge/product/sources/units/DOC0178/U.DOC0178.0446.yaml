@@ -1,0 +1,80 @@
+id: U.DOC0178.0446
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "Attribute: attachmentURL | Description: URL of the attachment (for contract attachment of type link only). | Available from version: JA 19 03 Attribute: mainDocument | Description: Indicates whether the attachment is (true) or is not (false) the main contract document (for contract attachment of type link only). | Available from version: JA 19 03"
+hash: sha256:cc03583283ba651c9a1ec0237124c898bbbe1e76a99ed06c5a46403c5d53bd39
+words: 54
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Attachment [Export]
+  section_path: 2.3.3.18
+  page: 97
+  lang: en
+  prev: U.DOC0178.0445
+  next: U.DOC0178.0447
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - jiId
+      - Internal JI identifier of the file
+      - ""
+    - - version
+      - Current revision number of the attachment (for contract attachment only).
+      - ""
+    - - fileSize
+      - Attachment size (in byte) (for contract attachment only).
+      - ""
+    - - dateUploaded
+      - Date the attachment was initially uploaded (for contract attachment only).
+      - ""
+    - - displayName
+      - Display name of the attachment (for contract attachment only).
+      - ""
+    - - fileName
+      - File name
+      - ""
+    - - type
+      - |-
+        Identifies the type of attachment (for contract attachment only).
+        MainDocument – The attachment is the main contract document
+        SignedDocument – The attachment is a signed document
+        CompiledDocument- The attachment is a compilation of multiple attachments
+        Attachment- The attachment is a normal attachment, not a main, signed, or compiled document.
+        PreviousSignedDocument- The attachment is a previously signed document.
+      - ""
+    - - printWithFullContract
+      - Indicates whether the attachment is (true) or is not (false) to be printed when the full contract is printed (for contract attachment only).
+      - ""
+    - - shareWithSecondParties
+      - Indicates whether the attachment can (true) or cannot (false) be shared with second parties (for contract attachment only).
+      - ""
+    - - contractSummaryVisibility
+      - |-
+        Indicates the visibility setting for the contract summary (for contract attachment only).
+        UseSummaryConfigVisibility- Use the visibility settings on the Contract Info tab on the Summary Configuration screen
+        AdminOrManagerVisibility- The contract summary is only visible to contract administrators and contract managers
+      - ""
+    - - fileId
+      - Internal identifier of the attachment, to be used for calling attachments web service to download it
+      - ""
+    - - secureToken
+      - It is the secure token to be used for calling attachments web service to download the attachment file.
+      - ""
+    - - attachmentURL
+      - URL of the attachment (for contract attachment of type link only).
+      - JA 19 03
+    - - mainDocument
+      - Indicates whether the attachment is (true) or is not (false) the main contract document (for contract attachment of type link only).
+      - JA 19 03
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

@@ -1,0 +1,43 @@
+id: U.DOC0171.0036
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: doNotMarkAsUpdated | Mandatory (Y/N): N | Description: Flag that indicates that the update operation for globalLastModTime will be skipped. | Mapping on JA data model and notes: Flag that indicates that the update operation for globalLastModTime will be skipped. Used with UPDATE_ADDINFO operation code. Possible values:
+  0: update operation will not be skipped.
+  1: update operation will be skipped.
+  Default value is 0.
+hash: sha256:5ab6656985448afeafcd8696ca151a8a61d736ffc651ca23bfcb57658d4aaac5
+words: 64
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Main Request structure
+  section_path: 2.1.1.1
+  page: 6
+  lang: en
+  prev: U.DOC0171.0035
+  next: U.DOC0171.0037
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - doNotMarkAsUpdated
+    - N
+    - Flag that indicates that the update operation for globalLastModTime will be skipped.
+    - |-
+      Flag that indicates that the update operation for globalLastModTime will be skipped. Used with UPDATE_ADDINFO operation code. Possible values:
+      0: update operation will not be skipped.
+      1: update operation will be skipped.
+      Default value is 0.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

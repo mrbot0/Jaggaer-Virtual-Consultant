@@ -1,0 +1,44 @@
+id: U.DOC0171.0180
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: Mandatory | Mandatory (Y/N): N | Description: Mandatory commercial parameter flag:
+  1 = parameter is mandatory
+  0 = parameter is optional | Mapping on JA data model and notes: Mandatory commercial parameter flag.
+  If not provided, new parameters are optional while existing parameter aren’t modified
+hash: sha256:392bd9e9d95cd0a9727465a94ab871d647d993778d6116f2437383a5bdac20a0
+words: 46
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: economical parameter [Import/Update RfX method]"
+  section_path: 2.1.1.13
+  page: 6
+  lang: en
+  prev: U.DOC0171.0179
+  next: U.DOC0171.0181
+row:
+  table: 0
+  row: 14
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - Mandatory
+    - N
+    - |-
+      Mandatory commercial parameter flag:
+      1 = parameter is mandatory
+      0 = parameter is optional
+    - |-
+      Mandatory commercial parameter flag.
+      If not provided, new parameters are optional while existing parameter aren’t modified
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

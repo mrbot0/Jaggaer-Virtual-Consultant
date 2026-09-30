@@ -1,0 +1,64 @@
+document: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3
+scope: XSC
+batch: batch-06
+section: campi-6
+section_title: Campi — External Notes and Attachments
+part: 1
+parts: 1
+rows:
+  - key: tech:8
+    label: "8"
+    labels:
+      - "8"
+    technical_name: "8"
+    section: campi-6
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=8 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3
+        section: campi-6
+        source_unit: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3/campi-6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "8"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:10
+    label: "10"
+    labels:
+      - "10"
+    technical_name: "10"
+    section: campi-6
+    type: static
+    mandatory_text: ""
+    allowed_values: []
+    notes: id=10 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3
+        section: campi-6
+        source_unit: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3/campi-6#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "10"
+        type: static
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 801

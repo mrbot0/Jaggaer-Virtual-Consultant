@@ -1,0 +1,45 @@
+id: U.DOC0175.0014
+doc: S.STD.XSC.DOC.0175
+doc_id: jint-ws-development-kit-push-services-overview-d-7b85c1d1
+type: tabella
+text: |-
+  Colonne:  | PULL Services (endpoint exposed by Jaggaer) | PUSH Services (endpoint exposed by the external system)
+  Service exposed by | PULL Services (endpoint exposed by Jaggaer): JINT | PUSH Services (endpoint exposed by the external system): partner/customer
+  Data exchange triggered by | PULL Services (endpoint exposed by Jaggaer): partner/customer
+  (polling based in case of outbound dataflows) | PUSH Services (endpoint exposed by the external system): JINT
+  Supported Data flow direction | PULL Services (endpoint exposed by Jaggaer): Inbound (from external system to J1)
+  Outbound (from J1 to external system) | PUSH Services (endpoint exposed by the external system): Outbound (from J1 to external system)
+hash: sha256:1ddc69bc499288c8ab8cc36e5a096096d598628be70d04eafce6661e80c273fc
+words: 105
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0175
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 8
+  lang: en
+  prev: U.DOC0175.0013
+  next: U.DOC0175.0015
+table:
+  table: 0
+  headers:
+    - ""
+    - PULL Services (endpoint exposed by Jaggaer)
+    - PUSH Services (endpoint exposed by the external system)
+  rows:
+    - - Service exposed by
+      - JINT
+      - partner/customer
+    - - Data exchange triggered by
+      - |-
+        partner/customer
+        (polling based in case of outbound dataflows)
+      - JINT
+    - - Supported Data flow direction
+      - |-
+        Inbound (from external system to J1)
+        Outbound (from J1 to external system)
+      - Outbound (from J1 to external system)
+  block: 1
+  blocks: 1

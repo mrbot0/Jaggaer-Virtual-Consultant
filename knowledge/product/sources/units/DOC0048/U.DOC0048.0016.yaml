@@ -1,0 +1,146 @@
+id: U.DOC0048.0016
+doc: S.STD.XSC.DOC.0048
+doc_id: ji-plt-2304-supplemental-tsm-import-template-xls-f9b53b50
+type: tabella
+text: "7 digits if the country is US, otherwise 10 digits max. | Max Length: 10 General / Field Name: Fax - Extension | Description: Fax extension for the address, if applicable. | Max Length: 5 General / Field Name: Fax - Combined | Description: Entire Fax number, which is then parsed to the individual elements using the SQTools:phoneStringToSQFormat package | Max Length: n/a General / Field Name: TollFree - Country Code | Description: Code to access the specific country, not including the international dialing sequence, for the toll-free number. | Max Length: 4 General / Field Name: TollFree - Area Code | Description: Area code for the toll-free number. 3 digits if the country is US, otherwise 5 digits max. | Max Length: 5 General / Field Name: TollFree - Number | Description: Toll-free number for the address. 7 digits if the country is US, otherwise 10 digits max. | Max Length: 10 General / Field Name: TollFree - Extension | Description: Toll-free extension for the address, if applicable. | Max Length: 5 General / Field Name: TollFree - Combined | Description: Entire Toll-free number, which is then parsed to the individual elements using the SQTools:phoneStringToSQFormat package | Max Length: n/a General / Field Name: Notes | Description: Note about the contact. | Max Length: 700 General / Field Name: Diversity Classes General / Field Name: Field Name | Description: Description | Max Length: Max Length General / Field Name: Supplier Name | Description: Current, unique ERP number associated with the supplier. Required. | Max Length: 30 General / Field Name: Supplier/ERP Number | Description: Name of the supplier. Required. | Max Length: 100 General / Field Name: Class Internal Name | Description: Name of the supplier diversity class. Must match a previously defined internal name for a supplier class."
+hash: sha256:945ca31db58bd7f1f8b016192ea89d77655291e308abf94a2b91aca58b7edc25
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0048
+  chapter: FIELD DEFINITIONS
+  section: FIELD DEFINITIONS
+  section_path: sheet-1
+  page: null
+  lang: en
+  prev: U.DOC0048.0015
+  next: U.DOC0048.0017
+table:
+  table: 0
+  headers:
+    - General / Field Name
+    - Description
+    - Max Length
+  rows:
+    - - Phone - Area Code
+      - Area code for the phone number. 3 digits if the country is US, otherwise 5 digits max.
+      - 5
+    - - Phone - Number
+      - Phone number for the address. 7 digits if the country is US, otherwise 10 digits max.
+      - 10
+    - - Phone - Extension
+      - Phone extension for the address, if applicable.
+      - 5
+    - - Phone - Combined
+      - Entire phone number, which is then parsed to the individual elements using the SQTools:phoneStringToSQFormat package
+      - n/a
+    - - Fax - Country Code
+      - Code to access the specific country, not including the international dialing sequence, for the fax number.
+      - 4
+    - - Fax - Area Code
+      - Area code for the fax number. 3 digits if the country is US, otherwise 5 digits max.
+      - 5
+    - - Fax - Number
+      - Fax number for the address. 7 digits if the country is US, otherwise 10 digits max.
+      - 10
+    - - Fax - Extension
+      - Fax extension for the address, if applicable.
+      - 5
+    - - Fax - Combined
+      - Entire Fax number, which is then parsed to the individual elements using the SQTools:phoneStringToSQFormat package
+      - n/a
+    - - TollFree - Country Code
+      - Code to access the specific country, not including the international dialing sequence, for the toll-free number.
+      - 4
+    - - TollFree - Area Code
+      - Area code for the toll-free number. 3 digits if the country is US, otherwise 5 digits max.
+      - 5
+    - - TollFree - Number
+      - Toll-free number for the address. 7 digits if the country is US, otherwise 10 digits max.
+      - 10
+    - - TollFree - Extension
+      - Toll-free extension for the address, if applicable.
+      - 5
+    - - TollFree - Combined
+      - Entire Toll-free number, which is then parsed to the individual elements using the SQTools:phoneStringToSQFormat package
+      - n/a
+    - - Notes
+      - Note about the contact.
+      - 700
+    - - Diversity Classes
+      - null
+      - null
+    - - Field Name
+      - Description
+      - Max Length
+    - - Supplier Name
+      - Current, unique ERP number associated with the supplier. Required.
+      - 30
+    - - Supplier/ERP Number
+      - Name of the supplier. Required.
+      - 100
+    - - Class Internal Name
+      - Name of the supplier diversity class. Must match a previously defined internal name for a supplier class. This name is static and cannot be edited in your system. Required.
+      - 100
+    - - Class Display Name
+      - Display name of the supplier diversity class. You can edit this name in your system.
+      - 100
+    - - Certified (Yes/No)
+      - Indicates whether the supplier is (Yes) or is not (No) certified.
+      - null
+    - - Certification Type
+      - Type of certification. Must be a valid type, as defined in the SciQuest application.
+      - null
+    - - Certifying Agency
+      - Agency responsible for the certification. Must be a valid agency, as defined in the SciQuest application.
+      - null
+    - - Expiration Date
+      - "Date the certification expires, in the following format: yyyy-mm-dd"
+      - null
+    - - Certification Number
+      - Number listed for the certification.
+      - 100
+    - - Ethnicity
+      - Ethnic group of the supplier. Must be a valid group, as defined in the SciQuest application.
+      - null
+    - - VetBiz Registry (Yes/No)
+      - Indicates whether the supplier is (Yes) or is not (No) listed in the VetBiz registry of veteran-owned businesses.
+      - null
+    - - SBA Certified (Yes/No)
+      - Indicates whether the supplier is (Yes) or is not (No) certified by the US Small Business Administration (SBA).
+      - null
+    - - Insurance
+      - null
+      - null
+    - - Field Name
+      - Description
+      - Max Length
+    - - Supplier Name
+      - Current, unique ERP number associated with the supplier. Required.
+      - 30
+    - - Supplier/ERP Number
+      - Name of the supplier. Required.
+      - 100
+    - - Agent
+      - Name of the insurance agent of record for the policy.
+      - 100
+    - - Expiration Date
+      - "Expiration date of the policy, in the following format: yyyy-mm-dd"
+      - 10
+    - - Insurance Limit
+      - Insurance limits for the policy. Required. INSURANCE_LIMIT_RANGE1 - [importo] or less INSURANCE_LIMIT_RANGE2 - [importo] to [importo] INSURANCE_LIMIT_RANGE3 - [importo] to [importo] INSURANCE_LIMIT_RANGE4 - More than [importo]
+      - n/a
+    - - Insurance Provider
+      - Name of the insurance company providing coverage for the policy.
+      - 100
+    - - Insurance Type
+      - "Type of insurance information. Required. Must be one of: AutomobileLiability | BusinessLiability | BusinessOwner | CommercialAutomobileLiability | CommercialGeneralLiability | EmployerLiability | EmploymentPracticeLiability | ErrorsAndOmissions | ExcessLiability | FireAndMarine | GeneralLiability | Malpractice | ProductLiability | ProfessionalLiability | PropertyDamage | PublicLiability | UmbrellaLiability | WorkersCompensation | Other"
+      - n/a
+    - - Other Type Name
+      - Type of insurance, other than those already provided for the Insurance type attribute. Valid only if Insurance Type is set to Other.
+      - 100
+  block: 4
+  blocks: 5
+part:
+  n: 2
+  of: 4

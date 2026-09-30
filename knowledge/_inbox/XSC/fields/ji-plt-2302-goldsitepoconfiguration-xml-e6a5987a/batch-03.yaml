@@ -1,0 +1,92 @@
+document: ji-plt-2302-goldsitepoconfiguration-xml-e6a5987a
+scope: XSC
+batch: batch-03
+section: campi-3
+section_title: Campi — Shipping Information
+part: 1
+parts: 1
+rows:
+  - key: tech:11
+    label: "11"
+    labels:
+      - "11"
+    technical_name: "11"
+    section: campi-3
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=11 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsitepoconfiguration-xml-e6a5987a
+        section: campi-3
+        source_unit: ji-plt-2302-goldsitepoconfiguration-xml-e6a5987a/campi-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "11"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:118
+    label: "118"
+    labels:
+      - "118"
+    technical_name: "118"
+    section: campi-3
+    type: static
+    mandatory_text: ""
+    allowed_values: []
+    notes: id=118 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsitepoconfiguration-xml-e6a5987a
+        section: campi-3
+        source_unit: ji-plt-2302-goldsitepoconfiguration-xml-e6a5987a/campi-3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "118"
+        type: static
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:14
+    label: "14"
+    labels:
+      - "14"
+    technical_name: "14"
+    section: campi-3
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=14 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsitepoconfiguration-xml-e6a5987a
+        section: campi-3
+        source_unit: ji-plt-2302-goldsitepoconfiguration-xml-e6a5987a/campi-3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "14"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 957

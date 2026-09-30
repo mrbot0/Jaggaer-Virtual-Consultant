@@ -1,0 +1,85 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.9
+section_title: Discount Amount [PR Import]
+genre: tecnica
+rows:
+  - label: option
+    technical_name: option
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates whether the supplier's discount is to be applied before
+      (beforetax) or after (aftertax) tax is applied to the PR.
+    section: 2.1.1.9
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.9#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates whether the supplier's discount is a percentage (percent) or a
+      fixed amount (amount).
+    section: 2.1.1.9
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.9#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: percentageRate
+    technical_name: percentageRate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Percent of the supplier's discount for the PR. This is a numeric value of
+      up to 15 digits, including up to 4 decimal places.
+    section: 2.1.1.9
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.9#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: money
+    technical_name: money
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Monetary amount of the supplier's discount for the PR. This is a numeric
+      value of up to 15 digits.
+
+      DEPRECATED: uses field “money” of “discount” attribute
+    section: 2.1.1.9
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.9#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: currency
+    technical_name: currency
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Exchangeable currency code. See the Integration Currency Codes document in
+      the JAGGAER Indirect Online Help for valid currency codes.
+
+      DEPRECATED: uses field “currency” of “discount” attribute
+    section: 2.1.1.9
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.9#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: discount
+    technical_name: discount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Monetary information about discount.
+      See section “Money [PR Import]” below.
+    section: 2.1.1.9
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.9#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

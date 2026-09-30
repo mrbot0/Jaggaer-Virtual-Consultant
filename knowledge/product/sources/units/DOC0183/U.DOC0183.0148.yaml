@@ -1,0 +1,124 @@
+id: U.DOC0183.0148
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: formType | Description: Mechanism for grouping forms.
+  Attribute: formTitle | Description: Caption given to the form for easy understanding.
+  Attribute: catalogNumber | Description: Catalog number of the form.
+  Attribute: description | Description: Description of the item being purchased.
+  Attribute: productSizeList | Description: Container for description of the size of the item.
+  See section “ProductSize [Export]” below
+  Attribute: quantity | Description: Number of items
+  Attribute: productUnitOfMeasureList | Description: Container for description of the unit of measure of the item.
+  See section “ProductUnitOfMeasure [Export]” below.
+  Attribute: unspsc | Description: Standardized commodity code value for the item, as specified by http://www.unspsc.org (for example, 43191501 – Mobile phones).
+  Attribute: productClassificationList | Description: Container of item classification.
+  See section “ProductClassification [Export]” below.
+  Attribute: manufacturerInfo | Description: Manufacturer informatin.
+  See section “ManufacturerInfo [Export]” above.
+  Attribute: commodityCode | Description: Code assigned to a product pr a group of products for the purposes of identifying it in international commerce, or commerce in general.
+  CommodityCode is not a specific description of the goods or service.
+  Attribute: contractNumber | Description: Number of the contract associated with the form, as well as the manufacturer.
+  Attribute: capitalExpense | Description: Indicates whether the item is (true) or is not (false) a capital expense.
+  Attribute: taxable | Description: Indicates whether the manufacturer is (true) or is not (false) taxable.
+  Attribute: configId | Description: Configuration identifier, if the form has a different configuration.
+  Attribute: configVersion | Description: Version of the current form.
+  Every configuration can have many versions.
+  Attribute: formFieldList | Description: Container for form field information.
+  See section “FormField [Export]” below.
+  Attribute: formID | Description: ID of the form.
+  Attribute: formElementNumber | Description: Element number of the form.
+hash: sha256:d6841e20093c3284d813da160a48b6f8c53ede6c54decefc890496fcf7e902a0
+words: 283
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Form [Export]
+  section_path: 2.2.3.28
+  page: 17
+  lang: en
+  prev: U.DOC0183.0147
+  next: U.DOC0183.0149
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - formType
+      - Mechanism for grouping forms.
+      - ""
+    - - formTitle
+      - Caption given to the form for easy understanding.
+      - ""
+    - - catalogNumber
+      - Catalog number of the form.
+      - ""
+    - - description
+      - Description of the item being purchased.
+      - ""
+    - - productSizeList
+      - |-
+        Container for description of the size of the item.
+        See section “ProductSize [Export]” below
+      - ""
+    - - quantity
+      - Number of items
+      - ""
+    - - productUnitOfMeasureList
+      - |-
+        Container for description of the unit of measure of the item.
+        See section “ProductUnitOfMeasure [Export]” below.
+      - ""
+    - - unspsc
+      - Standardized commodity code value for the item, as specified by http://www.unspsc.org (for example, 43191501 – Mobile phones).
+      - ""
+    - - productClassificationList
+      - |-
+        Container of item classification.
+        See section “ProductClassification [Export]” below.
+      - ""
+    - - manufacturerInfo
+      - |-
+        Manufacturer informatin.
+        See section “ManufacturerInfo [Export]” above.
+      - ""
+    - - commodityCode
+      - |-
+        Code assigned to a product pr a group of products for the purposes of identifying it in international commerce, or commerce in general.
+        CommodityCode is not a specific description of the goods or service.
+      - ""
+    - - contractNumber
+      - Number of the contract associated with the form, as well as the manufacturer.
+      - ""
+    - - capitalExpense
+      - Indicates whether the item is (true) or is not (false) a capital expense.
+      - ""
+    - - taxable
+      - Indicates whether the manufacturer is (true) or is not (false) taxable.
+      - ""
+    - - configId
+      - Configuration identifier, if the form has a different configuration.
+      - ""
+    - - configVersion
+      - |-
+        Version of the current form.
+        Every configuration can have many versions.
+      - ""
+    - - formFieldList
+      - |-
+        Container for form field information.
+        See section “FormField [Export]” below.
+      - ""
+    - - formID
+      - ID of the form.
+      - ""
+    - - formElementNumber
+      - Element number of the form.
+      - ""
+  block: 1
+  blocks: 1

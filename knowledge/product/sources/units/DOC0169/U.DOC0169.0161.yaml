@@ -1,0 +1,37 @@
+id: U.DOC0169.0161
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: tax2SplitAmount | Mandatory (Y/N): N | Description: Amount to be split for tax 2 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+  DEPRECATED: uses “decTax2SplitAmount” field
+hash: sha256:5068d099a1c553ff7709f5483be54684fd31cbbc0fab0801aea980cce79b07b9
+words: 39
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Custom Field Value [PR Import]
+  section_path: 2.1.1.24
+  page: 25
+  lang: en
+  prev: U.DOC0169.0160
+  next: U.DOC0169.0162
+row:
+  table: 0
+  row: 7
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - tax2SplitAmount
+    - N
+    - |-
+      Amount to be split for tax 2 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      DEPRECATED: uses “decTax2SplitAmount” field
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

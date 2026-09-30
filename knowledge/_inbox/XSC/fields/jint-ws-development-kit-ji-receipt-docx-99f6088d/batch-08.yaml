@@ -1,0 +1,39 @@
+document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+scope: XSC
+batch: batch-08
+section: 2.1.1.8
+section_title: AddressLine [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:ADDRESSLINE
+    label: addressLine
+    labels:
+      - addressLine
+    technical_name: ADDRESSLINE
+    section: 2.1.1.8
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Receipt address line information, usually containing the street address
+      and other address information
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.8
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.8#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: addressLine
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 684

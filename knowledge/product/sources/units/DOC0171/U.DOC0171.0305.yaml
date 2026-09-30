@@ -1,0 +1,32 @@
+id: U.DOC0171.0305
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: As noted previously by Luca, any attempt to update data elements that are part of the RFQ Award Type should be in the awardRfxAdditionalInfoList parameter when sent in the request 6. The web service implementation needs to add a check and a more informative error message when processing an UPDATE_ADDINFO request if the request includes updates for the data elements of the RFQ Type if the RFQ is in a status after RUNNING (if this is attempted right now, the web service just responds with the same, not very informative error message we are seeing now). 7. Web service implementation should also check and provide the same, more informative error message if the RFQ is after RUNNING status and the operation code on import is anything other than UPDATE_ADDINFO (after RUNNING status, this is the only valid operation code for import). 8. Web service implementation will also check and provide the same, more informative error message if the RFQ is AWARDED status or later. 9. Web service implementation needs to be updated so that the UPDATE_ADDINFO operation code will handle updates to both the RFQ type data elements and the RFQ Award Type data elements (right now, UPDATE_ADDINFO only tries to save updates to the RFQ Type data elements).
+hash: sha256:e427d5a093f094c36d809a1032a0cc41527a740a83e862405a67daf12792169c
+words: 209
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Data Element Management
+  section_path: 2.1.2.6
+  page: 6
+  lang: en
+  prev: U.DOC0171.0304
+  next: U.DOC0171.0306
+steps:
+  - "Additional Info array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any additional info: if operation is called in RESET mode, all previously associated data elements are removed"
+  - "Additional Info array contains at least one element: web service ensures currently provided data elements (identified by the value retrieved via provided data element name field) are created or updated, while not listed existing element are removed if operation is called in RESET mode, remains unchanged otherwise."
+  - Updating the RFQ Award Type data element values does work as part of an UPDATE request, but only if the RFQ is in “to be published” or “running” statuses. If the RFQ is in a state where you can update the data element values associated with the RFQ Type on the “Settings” page, then you can successfully also update the data element values for the RFQ Award Type. The problem comes in once the RFQ transitions past RUNNING status. After that point, the web services are assuming that no updates of any kind can be made to the RFQ, because the RFX web service does not manage changes to the award details or evaluation data. RFX web service should allow the RFQ Award Type data element values to be updated in at least some statuses past RUNNING.
+  - The request that is sent to update the RFQ Award Type data elements after the RFQ has moved past RUNNING status should be sent with an operation code of:UPDATE_ADDINFO instead of UPDATE. After an RFQ has moved past RUNNING status, any attempt to use the operation code of UPDATE will still fail.
+  - As noted previously by Luca, any attempt to update data elements that are part of the RFQ Award Type should be in the awardRfxAdditionalInfoList parameter when sent in the request
+  - The web service implementation needs to add a check and a more informative error message when processing an UPDATE_ADDINFO request if the request includes updates for the data elements of the RFQ Type if the RFQ is in a status after RUNNING (if this is attempted right now, the web service just responds with the same, not very informative error message we are seeing now).
+  - Web service implementation should also check and provide the same, more informative error message if the RFQ is after RUNNING status and the operation code on import is anything other than UPDATE_ADDINFO (after RUNNING status, this is the only valid operation code for import).
+  - Web service implementation will also check and provide the same, more informative error message if the RFQ is AWARDED status or later.
+  - Web service implementation needs to be updated so that the UPDATE_ADDINFO operation code will handle updates to both the RFQ type data elements and the RFQ Award Type data elements (right now, UPDATE_ADDINFO only tries to save updates to the RFQ Type data elements).
+procedure:
+  title: If this element is provided, the underlying additional info array (rfxAdditionalInfoList.getAdditionalInfo()) is verified
+part:
+  n: 2
+  of: 2

@@ -1,0 +1,98 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+section: campi-2
+section_title: Campi — 2. Service Information
+genre: tecnica
+rows:
+  - label: fldGeneralItemInst
+    technical_name: fldGeneralItemInst
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br><i>Enter a short description of the type of
+      the agreement in the appropriate fields below.</i><br><br> · id=10007 ·
+      tipo=userdefined
+    section: campi-2
+    source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: "111"
+    technical_name: "111"
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=111 · tipo=static
+    section: campi-2
+    source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: Service Category
+    technical_name: fldServiceCategory
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248344 · id=10005 · tipo=userdefined
+    section: campi-2
+    source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: Service Start Date
+    technical_name: fldBeginDate
+    type: Date
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10015 · tipo=userdefined
+    section: campi-2
+    source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: Service End Date
+    technical_name: fldEndDate
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10016 · tipo=userdefined
+    section: campi-2
+    source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: fldPriceInst
+    technical_name: fldPriceInst
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: "UserDefinedFieldParamHTML=<BR><I>Note: If you have not been quoted a
+      price, enter a best-guess estimate that can be used for approval purposes.
+      </I> · id=10006 · tipo=userdefined"
+    section: campi-2
+    source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: "105"
+    technical_name: "105"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=105 · tipo=static
+    section: campi-2
+    source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: Estimated Price
+    technical_name: Estimated Price
+    type: Price
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10000 · tipo=userdefined
+    section: campi-2
+    source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794

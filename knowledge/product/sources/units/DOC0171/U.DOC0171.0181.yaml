@@ -1,0 +1,41 @@
+id: U.DOC0171.0181
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: showUrlAsClickableLink | Mandatory (Y/N): N | Description: textAsUrl commercial parameter flag:
+  1 = parameter is yes
+  0 = parameter is no | Mapping on JA data model and notes: In the dropdown there are two options, yes or no. In case if we set as yes, it will be true (1 in response). In other case if we set to no, it will be false (0 in response).
+hash: sha256:dac160850a5b25c4ef6162809d01b2ca48b5b52d807977ffe7d8e112a3b6c1ab
+words: 69
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: economical parameter [Import/Update RfX method]"
+  section_path: 2.1.1.13
+  page: 6
+  lang: en
+  prev: U.DOC0171.0180
+  next: U.DOC0171.0182
+row:
+  table: 0
+  row: 15
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - showUrlAsClickableLink
+    - N
+    - |-
+      textAsUrl commercial parameter flag:
+      1 = parameter is yes
+      0 = parameter is no
+    - In the dropdown there are two options, yes or no. In case if we set as yes, it will be true (1 in response). In other case if we set to no, it will be false (0 in response).
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

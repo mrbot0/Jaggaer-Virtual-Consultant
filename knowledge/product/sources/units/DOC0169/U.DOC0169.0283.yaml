@@ -1,0 +1,55 @@
+id: U.DOC0169.0283
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: creditCard | Description: Credit card information.
+  See section “CreditCard [PR Export]” below
+  Attribute: paymentType | Description: Payment option for the PO associated to the PR:
+  Unknown
+  PO
+  BlanketPO
+  ContractBlanketPO
+  Pcard
+  GhostCard
+  Vcard
+  ExacTrac
+hash: sha256:0efacb3d7908f49a2b688f32a960065df979b07c4e6692bcdc7d73e44c55ce22
+words: 42
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: PaymentInfo [PR Export]
+  section_path: 2.3.3.8
+  page: 61
+  lang: en
+  prev: U.DOC0169.0282
+  next: U.DOC0169.0284
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - creditCard
+      - |-
+        Credit card information.
+        See section “CreditCard [PR Export]” below
+      - ""
+    - - paymentType
+      - |-
+        Payment option for the PO associated to the PR:
+        Unknown
+        PO
+        BlanketPO
+        ContractBlanketPO
+        Pcard
+        GhostCard
+        Vcard
+        ExacTrac
+      - ""
+  block: 1
+  blocks: 1

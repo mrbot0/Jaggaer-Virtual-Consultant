@@ -1,0 +1,66 @@
+document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+scope: XSC
+batch: batch-10
+section: 2.1.1.12
+section_title: Error [Custom Field Import method]
+part: 1
+parts: 1
+rows:
+  - key: tech:TYPE
+    label: type
+    labels:
+      - type
+    technical_name: TYPE
+    section: 2.1.1.12
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates whether the problem that occurred is an error, a warning, or
+      informational.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.12
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.12#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ERRORMESSAGE
+    label: errorMessage
+    labels:
+      - errorMessage
+    technical_name: ERRORMESSAGE
+    section: 2.1.1.12
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Text of the error, warning, or informational message.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.12
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.12#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: errorMessage
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 851

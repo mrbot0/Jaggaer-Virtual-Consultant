@@ -1,0 +1,48 @@
+id: U.DOC0183.0201
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: URL | / esop/jint/api/public/ji/v1/receipts /
+  URL: Http Method | / esop/jint/api/public/ji/v1/receipts /: POST
+  URL: Header Parameters | / esop/jint/api/public/ji/v1/receipts /: Authorization (see “JINT WS Development_Kit - Web Services Overview” document)
+  URL: Body | / esop/jint/api/public/ji/v1/receipts /: JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+  URL: Response format | / esop/jint/api/public/ji/v1/receipts /: JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+  URL: Return Codes | / esop/jint/api/public/ji/v1/receipts /: 200 operation processed. See response content for results
+  400 wrong or missing data in the request
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:2992e1bc428ef0cb102aa13509ea3df91d80c841f93f5f8e8aea10a87a99c384
+words: 122
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Import Receipt
+  section_path: 2.5.1.2
+  page: 18
+  lang: en
+  prev: U.DOC0183.0200
+  next: U.DOC0183.0202
+table:
+  table: 0
+  headers:
+    - URL
+    - / esop/jint/api/public/ji/v1/receipts /
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization (see “JINT WS Development_Kit - Web Services Overview” document)
+    - - Body
+      - JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+    - - Response format
+      - JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+    - - Return Codes
+      - |-
+        200 operation processed. See response content for results
+        400 wrong or missing data in the request
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

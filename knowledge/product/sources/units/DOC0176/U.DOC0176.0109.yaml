@@ -1,0 +1,62 @@
+id: U.DOC0176.0109
+doc: S.STD.XSC.DOC.0176
+doc_id: jint-ws-development-kit-web-services-overview-do-c57133dd
+type: tabella
+text: |-
+  Colonne: URL | /esop/jint/api/public/v1/tokens
+  URL: Http Method | /esop/jint/api/public/v1/tokens: POST
+  URL: Header Parameters
+  URL: Body Parameters | /esop/jint/api/public/v1/tokens: client_id : client identified defined at setup phase
+  client_secret: shared password defined at setup phase
+  grant_type=client_credentials (fixed value)
+  URL: Response format: JSON | /esop/jint/api/public/v1/tokens: Json response message including created token. The following fields are defined
+  Token: the opaque token to be used for invoking the JINT API
+  Resource: the endpoint the tokecn is valid for
+  token_type= Bearer [segreto] = the datetime the token expires (fomat yyyy-MM-dd'T'HH:mm:ss.SSSX). The token TTL is usually 24 hours
+  expire_in = the token TTL (in mseconds)
+  URL: Return Codes | /esop/jint/api/public/v1/tokens: 200 token created successfully
+  400 wrong or missing data
+  401 Unauthorized request ( i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:95609be5521c033ce73126dcb07f5d9ce4ce94a98431fcbb64017f0c6181acb8
+words: 125
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0176
+  chapter: JINT REST API
+  section: Access Token
+  section_path: 3.5.1
+  page: 18
+  lang: en
+  prev: U.DOC0176.0108
+  next: U.DOC0176.0110
+table:
+  table: 0
+  headers:
+    - URL
+    - /esop/jint/api/public/v1/tokens
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - ""
+    - - Body Parameters
+      - |-
+        client_id : client identified defined at setup phase
+        client_secret: shared password defined at setup phase
+        grant_type=client_credentials (fixed value)
+    - - "Response format: JSON"
+      - |-
+        Json response message including created token. The following fields are defined
+        Token: the opaque token to be used for invoking the JINT API
+        Resource: the endpoint the tokecn is valid for
+        token_type= Bearer [segreto] = the datetime the token expires (fomat yyyy-MM-dd'T'HH:mm:ss.SSSX). The token TTL is usually 24 hours
+        expire_in = the token TTL (in mseconds)
+    - - Return Codes
+      - |-
+        200 token created successfully
+        400 wrong or missing data
+        401 Unauthorized request ( i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

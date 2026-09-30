@@ -1,0 +1,59 @@
+id: U.DOC0044.0003
+doc: S.STD.XSC.DOC.0044
+doc_id: ji-plt-2303-receiptwfdefinition-xml-1cd341a2
+type: tabella
+text: |-
+  Tabella: attività
+  Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella
+  Attività: START | Tipo: start | Selezione cartella: Dummy
+  Attività: CostCheck | Tipo: manual | Passo: Cost Check | Regola: Document.RequiresRuleGroupEvaluation("Cost Based Approvals") == true | Selezione cartella: MultiElementDynamic
+  Attività: Create Inventory | Tipo: automated | Passo: Create Inventory Receipts | Cartelle: Create Inventory | Regola: true | Selezione cartella: ExplicitFolder
+  Attività: END | Tipo: end | Selezione cartella: Dummy
+hash: sha256:aacd6d5d264d339505139381e88f97ceec7c60eb82cdca942fd07bc6effb998d
+words: 75
+lang: it
+context:
+  doc: S.STD.XSC.DOC.0044
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: it
+  prev: U.DOC0044.0002
+  next: U.DOC0044.0004
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - CostCheck
+      - manual
+      - Cost Check
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Cost Based Approvals") == true
+      - MultiElementDynamic
+    - - Create Inventory
+      - automated
+      - Create Inventory Receipts
+      - Create Inventory
+      - "true"
+      - ExplicitFolder
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1

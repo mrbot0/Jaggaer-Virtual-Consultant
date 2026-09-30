@@ -1,0 +1,42 @@
+document: catering-form-xml-ce48f3d4
+scope: XSC
+section: campi-2
+section_title: Campi —
+genre: tecnica
+rows:
+  - label: Waiter
+    technical_name: Waiter
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=1;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/1940363/1517.jpg · id=10000
+      · tipo=userdefined
+    section: campi-2
+    source_unit: catering-form-xml-ce48f3d4/campi-2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: "100"
+    technical_name: "100"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=100 · tipo=static
+    section: campi-2
+    source_unit: catering-form-xml-ce48f3d4/campi-2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: Catering Link
+    technical_name: Catering Link
+    type: URL
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamLinkUrl=http://www.google.com;
+      UserDefinedFieldParamLinkTitle=Put link here · id=10003 · tipo=userdefined
+    section: campi-2
+    source_unit: catering-form-xml-ce48f3d4/campi-2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4

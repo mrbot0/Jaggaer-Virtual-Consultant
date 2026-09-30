@@ -1,0 +1,87 @@
+id: U.DOC0037.0003
+doc: S.STD.XSC.DOC.0037
+doc_id: ji-plt-2303-initialpoworkflowdefinition-xml-9915f422
+type: tabella
+text: |-
+  Tabella: attività
+  Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella
+  Attività: START | Tipo: start | Selezione cartella: Dummy
+  Attività: Invalid Distribution | Tipo: manual | Passo: Invalid Distribution | Cartelle: Invalid Distribution | Regola: Document.HasInvalidDistribution() == true | Selezione cartella: ExplicitFolder
+  Attività: Hold - Distribution Validation | Tipo: manual | Passo: Hold - Distribution Validation | Cartelle: Hold - Distribution Validation | Regola: [Document.RequiresRuleGroupEvaluation("Distribution Validation") == true] | Selezione cartella: ExplicitFolder
+  Attività: Revise PO | Tipo: automated | Passo: Revise PO | Cartelle: Revise PO | Regola: true | Selezione cartella: ExplicitFolder
+  Attività: PO Distribution | Tipo: automated | Passo: PO Distribution | Cartelle: Distribute PO | Regola: (Document.IsChangeOrder == false && [Document.RequiresRuleGroupEvaluation("Omit From Dist") == false]) || (Document.IsChangeOrder == true && Document.CanDistributeRevision == true && [Document.RequiresRuleGroupEvaluation("Omit From Dist") == false]) | Selezione cartella: ExplicitFolder
+  Attività: PO Export Simulation | Tipo: notification | Passo: PO Export Simulation | Cartelle: PO Export Simulation | Regola: true | Selezione cartella: ExplicitFolder
+  Attività: Auto Invoice | Tipo: automated | Passo: Auto Invoice | Cartelle: Create Invoice | Regola: [Document.RequiresRuleGroupEvaluation("Auto Invoice") == true] | Selezione cartella: ExplicitFolder
+  Attività: END | Tipo: end | Selezione cartella: Dummy
+hash: sha256:35cd718cd0d37c0d2d232de6913a0174208d4e3eba15a09ba4abba4b449da519
+words: 198
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0037
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: en
+  prev: U.DOC0037.0002
+  next: U.DOC0037.0004
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Invalid Distribution
+      - manual
+      - Invalid Distribution
+      - Invalid Distribution
+      - Document.HasInvalidDistribution() == true
+      - ExplicitFolder
+    - - Hold - Distribution Validation
+      - manual
+      - Hold - Distribution Validation
+      - Hold - Distribution Validation
+      - '[Document.RequiresRuleGroupEvaluation("Distribution Validation") == true]'
+      - ExplicitFolder
+    - - Revise PO
+      - automated
+      - Revise PO
+      - Revise PO
+      - "true"
+      - ExplicitFolder
+    - - PO Distribution
+      - automated
+      - PO Distribution
+      - Distribute PO
+      - (Document.IsChangeOrder == false && [Document.RequiresRuleGroupEvaluation("Omit From Dist") == false]) || (Document.IsChangeOrder == true && Document.CanDistributeRevision == true && [Document.RequiresRuleGroupEvaluation("Omit From Dist") == false])
+      - ExplicitFolder
+    - - PO Export Simulation
+      - notification
+      - PO Export Simulation
+      - PO Export Simulation
+      - "true"
+      - ExplicitFolder
+    - - Auto Invoice
+      - automated
+      - Auto Invoice
+      - Create Invoice
+      - '[Document.RequiresRuleGroupEvaluation("Auto Invoice") == true]'
+      - ExplicitFolder
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1

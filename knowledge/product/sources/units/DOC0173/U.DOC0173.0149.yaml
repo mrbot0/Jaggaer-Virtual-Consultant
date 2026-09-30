@@ -1,0 +1,39 @@
+id: U.DOC0173.0149
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: returnCode | Description: Operation result. Possible code are listed in the table below
+  Attribute: returnMessage | Description: Operation result description for each data classes (Company Data, Classification, Users and Data Elements) web service has been called for. If operation on a certain data class completes successfully, it is “OK”, otherwise it is a brief explanation of mismatches found (see “Error Codes” for detail)
+  Attribute: bravoId | Description: Company account id (internal identifier) of newly created or updated company | Available from version: 12_2_00
+hash: sha256:64a02a3f686ff1e18905227a3232236a2ffade9f661985af61e7de6fd327d5de
+words: 92
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Response data format
+  section_path: 4.1.4
+  page: 6
+  lang: en
+  prev: U.DOC0173.0148
+  next: U.DOC0173.0150
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - returnCode
+      - Operation result. Possible code are listed in the table below
+      - ""
+    - - returnMessage
+      - Operation result description for each data classes (Company Data, Classification, Users and Data Elements) web service has been called for. If operation on a certain data class completes successfully, it is “OK”, otherwise it is a brief explanation of mismatches found (see “Error Codes” for detail)
+      - ""
+    - - bravoId
+      - Company account id (internal identifier) of newly created or updated company
+      - 12_2_00
+  block: 1
+  blocks: 1

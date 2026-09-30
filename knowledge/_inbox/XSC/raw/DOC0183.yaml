@@ -1,0 +1,2758 @@
+doc: S.STD.XSC.DOC.0183
+scope: XSC
+extracted_at: 2026-09-30T04:32:48.534Z
+tier: T0
+stats:
+  units: 252
+  extracted_units: 67
+  document_candidates: 1
+  needs_llm: 6
+  t0_complete: 62
+  by_candidate:
+    GLS: 1
+    FLW: 3
+    FLD: 62
+    CFG: 1
+    INT: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 5497
+  sessions:
+    - n: 1
+      tokens: 5497
+      batches: 1
+      items: 6
+      batch_items:
+        - - R.DOC0183.0014
+          - R.DOC0183.0015
+          - R.DOC0183.0101
+          - R.DOC0183.0189
+          - R.DOC0183.0206
+          - R.DOC0183.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0183.0013
+    source_unit: U.DOC0183.0013
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0183
+    section: Executive Summary
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: structure of the current document
+      definition: "the following:"
+      aliases: []
+      lang: en
+      source_unit: U.DOC0183.0013
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0183.0014
+    source_unit: U.DOC0183.0014
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0183
+    section: Executive Summary
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: "import:"
+          oggetto: "Import:"
+          valore: null
+        - n: 2
+          verbo: request
+          oggetto: "data format [Import]: describes the structure of the import request"
+          valore: describes the structure of the import request
+        - n: 3
+          verbo: behavior
+          oggetto: "[Import]: describes how the web service processes the data passed in input, in case of particular processes"
+          valore: describes how the web service processes the data passed in input, in case of particular processes
+        - n: 4
+          verbo: response
+          oggetto: "data format [Import]: describes the structure of the web service response and contains the list of possible error codes"
+          valore: describes the structure of the web service response and contains the list of possible error codes
+        - n: 5
+          verbo: "export:"
+          oggetto: "Export:"
+          valore: null
+        - n: 6
+          verbo: component
+          oggetto: "filters [Export]: describes which sections of a receipt can be exported. The use of a component filter increments the number of sections in the response to every receipt exported"
+          valore: describes which sections of a receipt can be exported. The use of a component filter increments the number of sections in the response to every receipt exported
+        - n: 7
+          verbo: condition
+          oggetto: "filters [Export]: describes which fields can be used to filter the receipt to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of receipts extracted"
+          valore: describes which fields can be used to filter the receipt to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of receipts extracted
+        - n: 8
+          verbo: export
+          oggetto: "data format [Export]: describes the structure of the response in terms of exported fields and sections"
+          valore: describes the structure of the response in terms of exported fields and sections
+        - n: 9
+          verbo: error
+          oggetto: "codes [Export]: contains a list of possible error codes"
+          valore: contains a list of possible error codes
+        - n: 10
+          verbo: "validate:"
+          oggetto: "Validate:"
+          valore: null
+        - n: 11
+          verbo: request
+          oggetto: "data format [Validate]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted"
+          valore: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted
+        - n: 12
+          verbo: behavior
+          oggetto: "[Validate]: describes how the web service processes the data passed in input, in case of some particular processes"
+          valore: describes how the web service processes the data passed in input, in case of some particular processes
+        - n: 13
+          verbo: response
+          oggetto: "data format [Validate JIInvoice method]: describes the structure of the web service response and contains the list of possible error codes"
+          valore: describes the structure of the web service response and contains the list of possible error codes
+        - n: 14
+          verbo: soap
+          oggetto: INTERFACE
+          valore: null
+        - n: 15
+          verbo: available
+          oggetto: "methods: contains the list of the methods provided by the web service"
+          valore: contains the list of the methods provided by the web service
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0183.0014
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 417
+  - raw_id: R.DOC0183.0015
+    source_unit: U.DOC0183.0015
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0183
+    section: Executive Summary
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 15
+          verbo: available
+          oggetto: "methods: contains the list of the methods provided by the web service"
+          valore: contains the list of the methods provided by the web service
+        - n: 16
+          verbo: "wsdl:"
+          oggetto: in this paragraph is attached the JIReceipt.wsdl from which the web service has been created and is to be used to generate the client
+          valore: in this paragraph is attached the JIReceipt.wsdl from which the web service has been created and is to be used to generate the client
+        - n: 17
+          verbo: "endpoints:"
+          oggetto: available webservice SOAP endpoint URLs
+          valore: available webservice SOAP endpoint URLs
+        - n: 18
+          verbo: request
+          oggetto: "samples: sample SOAP requests to invoke the webservice"
+          valore: sample SOAP requests to invoke the webservice
+        - n: 19
+          verbo: rest
+          oggetto: INTERFACE
+          valore: null
+        - n: 20
+          verbo: operation
+          oggetto: "and Endpoints: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods"
+          valore: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods
+        - n: 21
+          verbo: request
+          oggetto: "Samples: provides some call examples and a POSTMAN collection with an extensive list of runnable calls"
+          valore: provides some call examples and a POSTMAN collection with an extensive list of runnable calls
+        - n: 22
+          verbo: data
+          oggetto: "Types and UI Default Labels: describes the type of the fields and the corresponding label in English language in the platform with the aim to simplify the mapping between the fields visible in the platform and the fields used in the web service"
+          valore: describes the type of the fields and the corresponding label in English language in the platform with the aim to simplify the mapping between the fields visible in the platform and the fields used in the web service
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0183.0015
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 235
+  - raw_id: R.DOC0183.0040
+    source_unit: U.DOC0183.0040
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Main request structure [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: jiReceipt
+      technical_name: jiReceipt
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Object containing the information to be used to create the receipt
+        See section “Receipt [Import]” below.
+      section: 2.1.1.1
+      source_unit: U.DOC0183.0040
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 41
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0041
+    source_unit: U.DOC0183.0041
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Receipt [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: header
+      technical_name: header
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: |-
+        Header information.
+        See section “Header [Import]” below.
+      section: 2.1.1.2
+      source_unit: U.DOC0183.0041
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 23
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0042
+    source_unit: U.DOC0183.0042
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Receipt [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: lineList
+      technical_name: lineList
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: |-
+        Container of Receipt lines.
+        See section “Line [Import]” below.
+      section: 2.1.1.2
+      source_unit: U.DOC0183.0042
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0043
+    source_unit: U.DOC0183.0043
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: receiptType
+      technical_name: receiptType
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Type of receipt.
+        Quantity - A Quantity receipt is used when a PO is based on item quantity times the unit price (such as non-catalog orders, hosted orders, and punchout orders).
+        Cost- A Cost receipt is used when a PO is considered amount-only (such as amount only POs, blanket POs, and service orders).
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0043
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 91
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0044
+    source_unit: U.DOC0183.0044
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: receiptNumber
+      technical_name: receiptNumber
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Receipt number associated with the receipt.
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0044
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0045
+    source_unit: U.DOC0183.0045
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: receiptName
+      technical_name: receiptName
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Name assigned to the receipt
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0045
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 22
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0046
+    source_unit: U.DOC0183.0046
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: receiptDate
+      technical_name: receiptDate
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Date associated with the receipt for accounting purposes
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0046
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 29
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0047
+    source_unit: U.DOC0183.0047
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: receiptCompleteDate
+      technical_name: receiptCompleteDate
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Date the receipt was completed
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0047
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0048
+    source_unit: U.DOC0183.0048
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: receiver
+      technical_name: receiver
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Person who created the receipt.
+        See section “UserProfile [Import]” below
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0048
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 32
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0049
+    source_unit: U.DOC0183.0049
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: department
+      technical_name: department
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Department associated with the receiver, from his or her profile.
+        Note: If the Department field is empty, the existing department in the Invoicing solution is not overwritten.
+        Only a populated Department field can overwrite the existing department.
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0049
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 77
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0050
+    source_unit: U.DOC0183.0050
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: receiptAddress
+      technical_name: receiptAddress
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Receipt Address information.
+        See section “ReceiptAddress [Import]” below.
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0050
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 34
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0051
+    source_unit: U.DOC0183.0051
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: packingSlipNumber
+      technical_name: packingSlipNumber
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Supplier's packing slip number
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0051
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 24
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0052
+    source_unit: U.DOC0183.0052
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: carrier
+      technical_name: carrier
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Internal name of the selected carrier.
+        The specified shipping method must be present and active for the specified Carrier.
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0052
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 45
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0053
+    source_unit: U.DOC0183.0053
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: shippingMethod
+      technical_name: shippingMethod
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Internal name of the shipping method.
+        The specified shipping method must be present and active.
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0053
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 40
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0054
+    source_unit: U.DOC0183.0054
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: trackingNumber
+      technical_name: trackingNumber
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Tracking number associated with the receipt
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0054
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 27
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0055
+    source_unit: U.DOC0183.0055
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: note
+      technical_name: note
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Text note attached to the receipt header.
+        If the note is longer than 1000 characters, it is truncated and saved.
+        Note: If the Note field is empty, the existing note in the Invoicing solution is not overwritten. Only a populated Note field can overwrite the existing note.
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0055
+      row_ref: t0.r12
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 81
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0056
+    source_unit: U.DOC0183.0056
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: flexText1
+      technical_name: flexText1
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Flex text attached to the receipt header.
+        It is an organization-managed, freeform field which can be renamed (in Field Management) and used in whatever way seems appropriate to enables organizations tracking their own custom data elements
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0056
+      row_ref: t0.r13
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 74
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0057
+    source_unit: U.DOC0183.0057
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: flexText2
+      technical_name: flexText2
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Second block of flex text attached to the receipt header.
+        If the text is longer than 100 characters, it is truncated and saved.
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0057
+      row_ref: t0.r14
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 46
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0058
+    source_unit: U.DOC0183.0058
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Header [Import]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: flexPullID
+      technical_name: flexPullID
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Identifier associated with the flexText field
+      section: 2.1.1.3
+      source_unit: U.DOC0183.0058
+      row_ref: t0.r15
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0059
+    source_unit: U.DOC0183.0059
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: UserProfile [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userName
+      technical_name: userName
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Basic [segreto] username of the user who created the receipt.
+        Note: The user does not require receiving permission in the Invoicing solution. Receiving permissions should be controlled on your sending system.
+      section: 2.1.1.4
+      source_unit: U.DOC0183.0059
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 66
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0060
+    source_unit: U.DOC0183.0060
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: ReceiptAddress [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: address
+      technical_name: address
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Receipt Address.
+        See section “Address [Import]” below.
+      section: 2.1.1.5
+      source_unit: U.DOC0183.0060
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 28
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0061
+    source_unit: U.DOC0183.0061
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Address [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: templateName
+      technical_name: templateName
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Name of the template to be called by this address.
+      section: 2.1.1.6
+      source_unit: U.DOC0183.0061
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 28
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0062
+    source_unit: U.DOC0183.0062
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Address [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.85
+    extraction:
+      label: addressCode
+      technical_name: addressCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Address code associated with this address.
+        Used to link the receipt address to the receipt address stored in an external ERP system.
+      section: 2.1.1.6
+      source_unit: U.DOC0183.0062
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 48
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0063
+    source_unit: U.DOC0183.0063
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Address [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: contactList
+      technical_name: contactList
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Contact name and information associated with this address.
+        See section “Contact [Import]” below
+      section: 2.1.1.6
+      source_unit: U.DOC0183.0063
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 39
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0064
+    source_unit: U.DOC0183.0064
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Address [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: addressLineList
+      technical_name: addressLineList
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Receipt addresses line information.
+        See section “AddressLine [Import]” below.
+      section: 2.1.1.6
+      source_unit: U.DOC0183.0064
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 35
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0065
+    source_unit: U.DOC0183.0065
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Address [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: city
+      technical_name: city
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Receipt address city
+      section: 2.1.1.6
+      source_unit: U.DOC0183.0065
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 18
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0066
+    source_unit: U.DOC0183.0066
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Address [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: state
+      technical_name: state
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Receipt address state
+      section: 2.1.1.6
+      source_unit: U.DOC0183.0066
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 19
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0067
+    source_unit: U.DOC0183.0067
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Address [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: postalCode
+      technical_name: postalCode
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Receipt address postal code
+      section: 2.1.1.6
+      source_unit: U.DOC0183.0067
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 22
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0068
+    source_unit: U.DOC0183.0068
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Address [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: country
+      technical_name: country
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Long name of the receipt address country.
+      section: 2.1.1.6
+      source_unit: U.DOC0183.0068
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 24
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0069
+    source_unit: U.DOC0183.0069
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Address [Import]
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: isoCountryCode
+      technical_name: isoCountryCode
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: 2-letter ISO country code of the receipt address country
+      section: 2.1.1.6
+      source_unit: U.DOC0183.0069
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 30
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0070
+    source_unit: U.DOC0183.0070
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Contact [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: label
+      technical_name: label
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Label of the Contact line, if applicable.
+      section: 2.1.1.7
+      source_unit: U.DOC0183.0070
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 24
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0071
+    source_unit: U.DOC0183.0071
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Contact [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: lineNumber
+      technical_name: lineNumber
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Line number of the Contact line.
+      section: 2.1.1.7
+      source_unit: U.DOC0183.0071
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 23
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0072
+    source_unit: U.DOC0183.0072
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Contact [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: contactName
+      technical_name: contactName
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Contact name and other contact information
+      section: 2.1.1.7
+      source_unit: U.DOC0183.0072
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0073
+    source_unit: U.DOC0183.0073
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: AddressLine [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: lineNumber
+      technical_name: lineNumber
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Line number of the AddressLine element.
+      section: 2.1.1.8
+      source_unit: U.DOC0183.0073
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0074
+    source_unit: U.DOC0183.0074
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: AddressLine [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: addressLine
+      technical_name: addressLine
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Receipt address line information, usually containing the street address
+        and other address information
+      section: 2.1.1.8
+      source_unit: U.DOC0183.0074
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 40
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0075
+    source_unit: U.DOC0183.0075
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: lineNumber
+      technical_name: lineNumber
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Position of the line item in the receipt document.
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0075
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 27
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0076
+    source_unit: U.DOC0183.0076
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: purchaseOrder
+      technical_name: purchaseOrder
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Information about Purchase Order associated to the receipt.
+        See section “PurchaseOrder [Import]” below.
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0076
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 41
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0077
+    source_unit: U.DOC0183.0077
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: receiptLineStatus
+      technical_name: receiptLineStatus
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Final status of the receipt line.
+        Cost Received
+        Cost Cancelled
+        Received
+        Cancelled
+        Returned
+        Received / Returned
+        Cost Received and Cost Cancelled are valid only for Cost receipts.
+        Received, Cancelled, Returned, and Received / Returned are valid only for Quantity receipts.
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0077
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 84
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0078
+    source_unit: U.DOC0183.0078
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: cost
+      technical_name: cost
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: |-
+        Cost to which the receiptLineStatus applies (either received or cancelled).
+        Required for Cost receipts, mutually exclusive with the quantity element.
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0078
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 51
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0079
+    source_unit: U.DOC0183.0079
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: currency
+      technical_name: currency
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: Exchangeable currency code of cost element.
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0079
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0080
+    source_unit: U.DOC0183.0080
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: quantity
+      technical_name: quantity
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: |-
+        Quantity of product to which the receiptLineStatus applies, such as 5 items received, 1 item cancelled, or 3 items returned.
+        Required only for Quantity receipts, mutually exclusive with the cost element.
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0080
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 66
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0081
+    source_unit: U.DOC0183.0081
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a45
+      - FLD
+    type_hint:
+      candidates: *a45
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: returnData
+      technical_name: returnData
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Return data information.
+        See section “ReturnData [Import]” below
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0081
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 31
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0082
+    source_unit: U.DOC0183.0082
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: note
+      technical_name: note
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Text note attached to the receipt line.
+        If the note is longer than 700 characters, it is truncated and saved.
+        Note: If the Note field is empty, the existing note in the Invoicing solution is not overwritten. Only a populated Note field can overwrite the existing note
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0082
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 80
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0083
+    source_unit: U.DOC0183.0083
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a47
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: flexText1
+      technical_name: flexText1
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Flex text attached to the receipt line.
+        The FlexText field is an organization-managed, freeform field which can be renamed (in Field Management) and used in whatever way seems appropriate.
+        This field enables organizations to track their own custom data elements along with the default fields that JAGGAER provides.
+        If the text is longer than 100 characters, it is truncated and saved.
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0083
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 111
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0084
+    source_unit: U.DOC0183.0084
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: flexText2
+      technical_name: flexText2
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Second block of flex text attached to the receipt line.
+        If the text is longer than 100 characters, it is truncated and saved.
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0084
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 46
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0085
+    source_unit: U.DOC0183.0085
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Line [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a49
+      - FLD
+    type_hint:
+      candidates: *a49
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: flexPullID
+      technical_name: flexPullID
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Identifier associated with the flexText field.
+      section: 2.1.1.9
+      source_unit: U.DOC0183.0085
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0086
+    source_unit: U.DOC0183.0086
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: PurchaseOrder [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a50
+      - FLD
+    type_hint:
+      candidates: *a50
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: poNumber
+      technical_name: poNumber
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Number of the PO associated with the receipt.
+      section: 2.1.1.10
+      source_unit: U.DOC0183.0086
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0087
+    source_unit: U.DOC0183.0087
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: PurchaseOrder [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a51
+      - FLD
+    type_hint:
+      candidates: *a51
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: externalPOID
+      technical_name: externalPOID
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: External identifier of the PO associated with the receipt.
+      section: 2.1.1.10
+      source_unit: U.DOC0183.0087
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 30
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0088
+    source_unit: U.DOC0183.0088
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: PurchaseOrder [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a52
+      - FLD
+    type_hint:
+      candidates: *a52
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: createDateTime
+      technical_name: createDateTime
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Date and time the PO associated with the receipt was generated,
+      section: 2.1.1.10
+      source_unit: U.DOC0183.0088
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 32
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0089
+    source_unit: U.DOC0183.0089
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: PurchaseOrder [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a53
+      - FLD
+    type_hint:
+      candidates: *a53
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: purchaseOrderLine
+      technical_name: purchaseOrderLine
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Information about the line of the Purchase Order associated to the receipt.
+        See section “PurchaseOrderLine [Import]” below.
+      section: 2.1.1.10
+      source_unit: U.DOC0183.0089
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 47
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0090
+    source_unit: U.DOC0183.0090
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: PurchaseOrderLine [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a54
+      - FLD
+    type_hint:
+      candidates: *a54
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: lineNumber
+      technical_name: lineNumber
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Position of the line item in the PO document.
+      section: 2.1.1.11
+      source_unit: U.DOC0183.0090
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0091
+    source_unit: U.DOC0183.0091
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: ReturnData [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a55
+      - FLD
+    type_hint:
+      candidates: *a55
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: returnedReason
+      technical_name: returnedReason
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Indicates the reason for the return:
+        Damaged
+        Not Ordered
+        Over Shipment
+      section: 2.1.1.12
+      source_unit: U.DOC0183.0091
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 33
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0092
+    source_unit: U.DOC0183.0092
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: ReturnData [Import]
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a56
+      - FLD
+    type_hint:
+      candidates: *a56
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: returnMaterialAuthNo
+      technical_name: returnMaterialAuthNo
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Return Material Authorization Number provided by the supplier
+      section: 2.1.1.12
+      source_unit: U.DOC0183.0092
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 33
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0101
+    source_unit: U.DOC0183.0101
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0183
+    section: Export
+    page: 17
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a57
+      - FLD
+    type_hint:
+      candidates: *a57
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0183.0101
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 27
+  - raw_id: R.DOC0183.0173
+    source_unit: U.DOC0183.0173
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Main request structure [Validate]
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a58
+      - FLD
+    type_hint:
+      candidates: *a58
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: originalRequestMessageId
+      technical_name: originalRequestMessageId
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Unique identifier for the receipt export message which with this receipt was saved
+      section: 2.3.1.1
+      source_unit: U.DOC0183.0173
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 39
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0174
+    source_unit: U.DOC0183.0174
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: Main request structure [Validate]
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a59
+      - FLD
+    type_hint:
+      candidates: *a59
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: receiptHeader
+      technical_name: receiptHeader
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Object defining receipt validation result.
+        See section “ValidateReceiptData [Validate]” below
+      section: 2.3.1.1
+      source_unit: U.DOC0183.0174
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 39
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0175
+    source_unit: U.DOC0183.0175
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: ValidateReceiptData [Validate]
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a60
+      - FLD
+    type_hint:
+      candidates: *a60
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: id
+      technical_name: id
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Internal identifier of the receipt
+      section: 2.3.1.2
+      source_unit: U.DOC0183.0175
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0176
+    source_unit: U.DOC0183.0176
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: ValidateReceiptData [Validate]
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a61
+      - FLD
+    type_hint:
+      candidates: *a61
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: status
+      technical_name: status
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Status of the validation request.
+        It can assume following value:
+        Approved: all receipt elements passed validation
+        Rejected: all receipt elements failed validation
+        Returned: one or more receipt elements failed the validation, but at least one element or field succeeded
+      section: 2.3.1.2
+      source_unit: U.DOC0183.0176
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 81
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: true
+  - raw_id: R.DOC0183.0177
+    source_unit: U.DOC0183.0177
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: ValidateReceiptData [Validate]
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a62
+      - FLD
+    type_hint:
+      candidates: *a62
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: updateReceiptNumber
+      technical_name: updateReceiptNumber
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: New value of the receipt Number to be used, in substitution of current one.
+      section: 2.3.1.2
+      source_unit: U.DOC0183.0177
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 36
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0178
+    source_unit: U.DOC0183.0178
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0183
+    section: ValidateReceiptData [Validate]
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a63
+      - FLD
+    type_hint:
+      candidates: *a63
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: note
+      technical_name: note
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Note to provide additional information about the object and its status.
+      section: 2.3.1.2
+      source_unit: U.DOC0183.0178
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0183
+    needs_llm: false
+    tokens: 31
+    lineage:
+      required_by:
+        - ref: R.DOC0183.I001
+          mandatory_there: false
+  - raw_id: R.DOC0183.0180
+    source_unit: U.DOC0183.0180
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0183
+    section: Behavior [Validate]
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a64
+      - FLD
+    type_hint:
+      candidates: *a64
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: To correctly manage such information, it
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0183.0180
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0183.0189
+    source_unit: U.DOC0183.0189
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0183
+    section: WSDL
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a65
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a65
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTE:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0183.0189
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0183.0195
+    source_unit: U.DOC0183.0195
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0183
+    section: WSDL
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a66
+      - FLD
+    type_hint:
+      candidates: *a66
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: For this reason, the WS client component
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0183.0195
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0183.0206
+    source_unit: U.DOC0183.0206
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0183
+    section: Postman Examples
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a67
+      - FLW
+    type_hint:
+      candidates: *a67
+      outcome: ambiguo
+      score: 0.55
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: "jinthostname:"
+          oggetto: the name of the host where your API is available, including protocol. Eg. https://customername-ws01.app.jaggaer.com
+          valore: the name of the host where your API is available, including protocol. Eg. https://customername-ws01.app.jaggaer.com
+        - n: 2
+          verbo: "client_id:"
+          oggetto: the username to retrieve an access token
+          valore: the username to retrieve an access token
+        - n: 3
+          verbo: "client_secret:"
+          oggetto: the password to retrieve an access token
+          valore: the password to retrieve an access token
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0183.0206
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 66
+  - raw_id: R.DOC0183.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0183
+    section: null
+    source_unit: U.DOC0183.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: JINT Development Kit- JI Receipt web-service
+      protocol:
+        - REST
+        - SOAP
+        - JSON
+      endpoints:
+        - https://MY-SERVER/esop/jint/services/JIReceipt?wsdl
+        - https://MY-SERVER/esop/jint/services/JIReceipt
+        - /esop/jint/api/public/ji/v1/receipts
+        - /jint/api/public/ji/v1/receipts
+        - /jint/api/public/ji/v1/receipts/validate
+        - https://customername-ws01.app.jaggaer.com
+      operations: []
+      mappings:
+        - field_ref: R.DOC0183.0040
+          target: jiReceipt
+          mandatory: true
+        - field_ref: R.DOC0183.0041
+          target: header
+          mandatory: false
+        - field_ref: R.DOC0183.0042
+          target: lineList
+          mandatory: false
+        - field_ref: R.DOC0183.0043
+          target: receiptType
+          mandatory: true
+        - field_ref: R.DOC0183.0044
+          target: receiptNumber
+          mandatory: true
+        - field_ref: R.DOC0183.0045
+          target: receiptName
+          mandatory: true
+        - field_ref: R.DOC0183.0046
+          target: receiptDate
+          mandatory: true
+        - field_ref: R.DOC0183.0047
+          target: receiptCompleteDate
+          mandatory: true
+        - field_ref: R.DOC0183.0048
+          target: receiver
+          mandatory: true
+        - field_ref: R.DOC0183.0049
+          target: department
+          mandatory: false
+        - field_ref: R.DOC0183.0050
+          target: receiptAddress
+          mandatory: false
+        - field_ref: R.DOC0183.0051
+          target: packingSlipNumber
+          mandatory: false
+        - field_ref: R.DOC0183.0052
+          target: carrier
+          mandatory: false
+        - field_ref: R.DOC0183.0053
+          target: shippingMethod
+          mandatory: false
+        - field_ref: R.DOC0183.0054
+          target: trackingNumber
+          mandatory: false
+        - field_ref: R.DOC0183.0055
+          target: note
+          mandatory: false
+        - field_ref: R.DOC0183.0056
+          target: flexText1
+          mandatory: false
+        - field_ref: R.DOC0183.0057
+          target: flexText2
+          mandatory: false
+        - field_ref: R.DOC0183.0058
+          target: flexPullID
+          mandatory: false
+        - field_ref: R.DOC0183.0059
+          target: userName
+          mandatory: true
+        - field_ref: R.DOC0183.0060
+          target: address
+          mandatory: true
+        - field_ref: R.DOC0183.0061
+          target: templateName
+          mandatory: false
+        - field_ref: R.DOC0183.0062
+          target: addressCode
+          mandatory: false
+        - field_ref: R.DOC0183.0063
+          target: contactList
+          mandatory: false
+        - field_ref: R.DOC0183.0064
+          target: addressLineList
+          mandatory: false
+        - field_ref: R.DOC0183.0065
+          target: city
+          mandatory: true
+        - field_ref: R.DOC0183.0066
+          target: state
+          mandatory: false
+        - field_ref: R.DOC0183.0067
+          target: postalCode
+          mandatory: true
+        - field_ref: R.DOC0183.0068
+          target: country
+          mandatory: true
+        - field_ref: R.DOC0183.0069
+          target: isoCountryCode
+          mandatory: true
+        - field_ref: R.DOC0183.0070
+          target: label
+          mandatory: false
+        - field_ref: R.DOC0183.0071
+          target: lineNumber
+          mandatory: true
+        - field_ref: R.DOC0183.0072
+          target: contactName
+          mandatory: true
+        - field_ref: R.DOC0183.0073
+          target: lineNumber
+          mandatory: true
+        - field_ref: R.DOC0183.0074
+          target: addressLine
+          mandatory: true
+        - field_ref: R.DOC0183.0075
+          target: lineNumber
+          mandatory: true
+        - field_ref: R.DOC0183.0076
+          target: purchaseOrder
+          mandatory: true
+        - field_ref: R.DOC0183.0077
+          target: receiptLineStatus
+          mandatory: true
+        - field_ref: R.DOC0183.0078
+          target: cost
+          mandatory: false
+        - field_ref: R.DOC0183.0079
+          target: currency
+          mandatory: false
+        - field_ref: R.DOC0183.0080
+          target: quantity
+          mandatory: false
+        - field_ref: R.DOC0183.0081
+          target: returnData
+          mandatory: false
+        - field_ref: R.DOC0183.0082
+          target: note
+          mandatory: false
+        - field_ref: R.DOC0183.0083
+          target: flexText1
+          mandatory: false
+        - field_ref: R.DOC0183.0084
+          target: flexText2
+          mandatory: false
+        - field_ref: R.DOC0183.0085
+          target: flexPullID
+          mandatory: false
+        - field_ref: R.DOC0183.0086
+          target: poNumber
+          mandatory: true
+        - field_ref: R.DOC0183.0087
+          target: externalPOID
+          mandatory: false
+        - field_ref: R.DOC0183.0088
+          target: createDateTime
+          mandatory: false
+        - field_ref: R.DOC0183.0089
+          target: purchaseOrderLine
+          mandatory: true
+        - field_ref: R.DOC0183.0090
+          target: lineNumber
+          mandatory: true
+        - field_ref: R.DOC0183.0091
+          target: returnedReason
+          mandatory: false
+        - field_ref: R.DOC0183.0092
+          target: returnMaterialAuthNo
+          mandatory: false
+        - field_ref: R.DOC0183.0173
+          target: originalRequestMessageId
+          mandatory: true
+        - field_ref: R.DOC0183.0174
+          target: receiptHeader
+          mandatory: true
+        - field_ref: R.DOC0183.0175
+          target: id
+          mandatory: true
+        - field_ref: R.DOC0183.0176
+          target: status
+          mandatory: true
+        - field_ref: R.DOC0183.0177
+          target: updateReceiptNumber
+          mandatory: false
+        - field_ref: R.DOC0183.0178
+          target: note
+          mandatory: false
+      error_catalog:
+        - code: "0"
+          description: operation completed successfully
+          source_unit: U.DOC0183.0100
+        - code: "1"
+          description: operation completed successfully with warnings as detailed in the returned message
+          source_unit: U.DOC0183.0100
+        - code: "-996"
+          description: Invalid SOAP Request Object (SOAP Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+          source_unit: U.DOC0183.0100
+        - code: "-997"
+          description: Unauthorized Method (Web Service method isn’t configured to be executed)
+          source_unit: U.DOC0183.0100
+        - code: "-998"
+          description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+          source_unit: U.DOC0183.0100
+        - code: "-999"
+          description: Generic exception
+          source_unit: U.DOC0183.0100
+        - code: "0"
+          description: operation completed successfully
+          source_unit: U.DOC0183.0170
+        - code: "-101"
+          description: GURU company not defined
+          source_unit: U.DOC0183.0170
+        - code: "-102"
+          description: GURU super user not defined
+          source_unit: U.DOC0183.0170
+        - code: "-501"
+          description: Invalid additional info
+          source_unit: U.DOC0183.0170
+        - code: "-503"
+          description: Wrong value for component filter
+          source_unit: U.DOC0183.0170
+        - code: "-504"
+          description: Wrong value for condition filter
+          source_unit: U.DOC0183.0170
+        - code: "-505"
+          description: Wrong value for server-side condition filter
+          source_unit: U.DOC0183.0170
+        - code: "-996"
+          description: Invalid SOAP Request Object (SOAP Request doesn’t match web service definition)
+          source_unit: U.DOC0183.0170
+        - code: "-997"
+          description: Unauthorized Method (JIReceipt Web Service export method isn’t configured to be executed)
+          source_unit: U.DOC0183.0170
+        - code: "-998"
+          description: Unable to acquire lock (JIReceipt Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+          source_unit: U.DOC0183.0170
+        - code: "-999"
+          description: Generic exception
+          source_unit: U.DOC0183.0170
+        - code: "0"
+          description: operation completed successfully
+          source_unit: U.DOC0183.0186
+        - code: "2"
+          description: Operation was not completed due to error in provided data.
+          source_unit: U.DOC0183.0186
+        - code: "-996"
+          description: Invalid SOAP Request Object (SOAP Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+          source_unit: U.DOC0183.0186
+        - code: "-997"
+          description: Unauthorized Method (Web Service method isn’t configured to be executed)
+          source_unit: U.DOC0183.0186
+        - code: "-998"
+          description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+          source_unit: U.DOC0183.0186
+        - code: "-999"
+          description: Generic exception
+          source_unit: U.DOC0183.0186
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+    tokens: 2650

@@ -1,0 +1,41 @@
+id: U.DOC0169.0253
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: requisitionId | Description: Internal identifier of the requisition to which update information refers
+  Attribute: requisitionPosition
+  Attribute: requisitionUpdateStatus | Description: Update requisition result.
+  Attribute: error | Description: List of error encountered while updating item.
+  See section “Error [PR Update]” below
+hash: sha256:52b11f472ced06487d51992951363d80f81021ffa492a7d5953c204de34aa605
+words: 44
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Update Requisition Ref [PR Update]
+  section_path: 2.2.3.3
+  page: 46
+  lang: en
+  prev: U.DOC0169.0252
+  next: U.DOC0169.0254
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - requisitionId
+      - Internal identifier of the requisition to which update information refers
+    - - requisitionPosition
+      - ""
+    - - requisitionUpdateStatus
+      - Update requisition result.
+    - - error
+      - |-
+        List of error encountered while updating item.
+        See section “Error [PR Update]” below
+  block: 1
+  blocks: 1

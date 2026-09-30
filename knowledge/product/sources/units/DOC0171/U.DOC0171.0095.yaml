@@ -1,0 +1,49 @@
+id: U.DOC0171.0095
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: commAlgorithmValuesStrategy | Mandatory (Y/N): N | Description: Price values strategy.
+  Required for all possible values of commScoringAlgorithm except for this following value:
+  NO_FORMULA
+  Possible values:
+  REVERSE = lower price preferred
+  DIRECT = higher price preferred
+  Default value: REVERSE
+hash: sha256:d01532eec36a51b5fecb44eef237c6a9ac7b467f514bce3b5f2e3c83fda09d99
+words: 39
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0094
+  next: U.DOC0171.0096
+row:
+  table: 0
+  row: 41
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - commAlgorithmValuesStrategy
+    - N
+    - |-
+      Price values strategy.
+      Required for all possible values of commScoringAlgorithm except for this following value:
+      NO_FORMULA
+      Possible values:
+      REVERSE = lower price preferred
+      DIRECT = higher price preferred
+      Default value: REVERSE
+    - ""
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

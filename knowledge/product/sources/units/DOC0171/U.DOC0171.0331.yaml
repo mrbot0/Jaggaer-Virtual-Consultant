@@ -1,0 +1,25 @@
+id: U.DOC0171.0331
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  If this element is provided, the underlying supplier array (supplierList.getSupplier()) is verified
+  1. Supplier array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any supplier: if operation is called in RESET mode, all previously invited suppliers are removed, otherwise no operation is performed.
+  2. Supplier array contains at least one element: newly listed supplier (suppliers are identified by their companyData/[id|code|extUniqueCode] field) are inserted and, if operation is called in RESET mode, not listed supplier are removed.
+hash: sha256:7a044c41d714a1dd215cec87251a0714b5b55c61939fc71465933d687b7020ee
+words: 85
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Supplier Management
+  section_path: 2.1.2.9
+  page: 6
+  lang: en
+  prev: U.DOC0171.0330
+  next: U.DOC0171.0332
+steps:
+  - "Supplier array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any supplier: if operation is called in RESET mode, all previously invited suppliers are removed, otherwise no operation is performed."
+  - "Supplier array contains at least one element: newly listed supplier (suppliers are identified by their companyData/[id|code|extUniqueCode] field) are inserted and, if operation is called in RESET mode, not listed supplier are removed."
+procedure:
+  title: If this element is provided, the underlying supplier array (supplierList.getSupplier()) is verified

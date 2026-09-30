@@ -1,0 +1,97 @@
+id: S.STD.XSC.DOC.0171
+type: DOC
+title: EvalJ1P Development Kit- RfX web-service
+summary: 'Documento spec-integrazione (tecnica, origine vendor) "EvalJ1P
+  Development Kit- RfX web-service": 572 unità, 150 tabelle, 32 tabelle di
+  campi; scope SRC, VEN, ADM, XSC; affidabilità 0.72.'
+facets:
+  F1: spec-integrazione-prosa
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2023-01-13
+    release: ignota
+  F15: tecnica
+sources:
+  - file: JAGGAER WS/J1P WS Development_Kit_RFX.docx
+    sha256: sha256:12a438527f9abb294e7b8d76f86caa8ebf35d16bf761f4391c8add1174048dc8
+kind: spec-integrazione
+genre: tecnica
+origin: vendor
+version: null
+dated: 2023-01-13
+covers_release: null
+languages:
+  - en
+scopes:
+  - SRC
+  - VEN
+  - ADM
+  - XSC
+source:
+  path: JAGGAER WS/J1P WS Development_Kit_RFX.docx
+  sha256: sha256:12a438527f9abb294e7b8d76f86caa8ebf35d16bf761f4391c8add1174048dc8
+  size: 626421
+  format: docx
+  doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+  doc_key: j1p-ws-development-kit-rfx.docx
+structure:
+  pages: 8
+  chapters: 3
+  sections: 187
+  tables: 150
+  figures: 4
+  field_tables: 32
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 572
+  by_type:
+    testo: 107
+    tabella: 152
+    definizione: 5
+    procedura: 20
+    passo: 17
+    riga-tabella-campi: 238
+    regola: 26
+    esempio: 2
+    riferimento: 3
+    nota: 2
+reliability:
+  base_by_kind: 0.9
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.72
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: tabelle annidate appiattite nel testo della cella
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 572
+  items_produced: 291
+  residue:
+    irrelevant: 6
+    duplicate: 0
+    ambiguous: 1
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.51
+  last_run: 2026-09-30
+  estimated_tokens: 69981
+  sessions_planned: 1

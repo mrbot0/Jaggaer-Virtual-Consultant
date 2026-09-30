@@ -1,0 +1,108 @@
+id: U.DOC0020.0003
+doc: S.STD.XSC.DOC.0020
+doc_id: ji-plt-2301-requesttemplatewfdefinitions-xml-b682b99b
+type: tabella
+text: |-
+  Tabella: attività
+  Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella
+  Attività: START | Tipo: start | Selezione cartella: Dummy
+  Attività: Form - Quick Quote Approval | Tipo: manual | Passo: Form - Quick Quote Approval | Cartelle: Form - Quick Quote Approval | Regola: Document.IsQuickQuote == true | Selezione cartella: ExplicitFolder
+  Attività: Form - Check Request Approval | Tipo: manual | Passo: Form - Check Request Approval | Regola: Document.RequiresRuleGroupEvaluation("Check Request Approval") == true | Selezione cartella: MultiElementDynamic
+  Attività: Form - Generic Approval | Tipo: manual | Passo: Form - Generic Approval | Regola: Document.RequiresRuleGroupEvaluation("Form Generic Approval") == true | Selezione cartella: MultiElementDynamic
+  Attività: Supplier Request Approval | Tipo: manual | Passo: Supplier Request Approval | Regola: Document.RequiresRuleGroupEvaluation("Supplier Request Approval") == true | Selezione cartella: MultiElementDynamic
+  Attività: Contract Request Approval | Tipo: manual | Passo: Contract Request Approval | Regola: Document.RequiresRuleGroupEvaluation("Contract Request Approval") == true | Selezione cartella: MultiElementDynamic
+  Attività: Form ADW Approval | Tipo: manual | Passo: Form ADW Approval | Regola: Document.RequiresRuleGroupEvaluation("Form ADW Approval") == true | Selezione cartella: MultiElementDynamic
+  Attività: Send Quick Quote Email | Tipo: automated | Passo: Send Quick Quote Email | Cartelle: Quick Quote Email Robot | Regola: Document.IsQuickQuote == true | Selezione cartella: ExplicitFolder
+  Attività: Create NonPO Invoice | Tipo: automated | Passo: Create NonPO Invoice | Cartelle: Create NonPO Invoice | Regola: Document.IsCheckRequest == true | Selezione cartella: ExplicitFolder
+  Attività: Form ADW Notification | Tipo: notification | Passo: Form ADW Notification | Regola: Document.RequiresRuleGroupEvaluation("Form ADW Notification") == true | Selezione cartella: MultiElementDynamic
+  Attività: END | Tipo: end | Selezione cartella: Dummy
+hash: sha256:8961c3ba6d4f25d8a2ca89f27cc0a45ccfd14846214f73aaafe6cfc9c7829e4a
+words: 264
+lang: it
+context:
+  doc: S.STD.XSC.DOC.0020
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: it
+  prev: U.DOC0020.0002
+  next: U.DOC0020.0004
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Form - Quick Quote Approval
+      - manual
+      - Form - Quick Quote Approval
+      - Form - Quick Quote Approval
+      - Document.IsQuickQuote == true
+      - ExplicitFolder
+    - - Form - Check Request Approval
+      - manual
+      - Form - Check Request Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Check Request Approval") == true
+      - MultiElementDynamic
+    - - Form - Generic Approval
+      - manual
+      - Form - Generic Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Form Generic Approval") == true
+      - MultiElementDynamic
+    - - Supplier Request Approval
+      - manual
+      - Supplier Request Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Supplier Request Approval") == true
+      - MultiElementDynamic
+    - - Contract Request Approval
+      - manual
+      - Contract Request Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Contract Request Approval") == true
+      - MultiElementDynamic
+    - - Form ADW Approval
+      - manual
+      - Form ADW Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Form ADW Approval") == true
+      - MultiElementDynamic
+    - - Send Quick Quote Email
+      - automated
+      - Send Quick Quote Email
+      - Quick Quote Email Robot
+      - Document.IsQuickQuote == true
+      - ExplicitFolder
+    - - Create NonPO Invoice
+      - automated
+      - Create NonPO Invoice
+      - Create NonPO Invoice
+      - Document.IsCheckRequest == true
+      - ExplicitFolder
+    - - Form ADW Notification
+      - notification
+      - Form ADW Notification
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Form ADW Notification") == true
+      - MultiElementDynamic
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1

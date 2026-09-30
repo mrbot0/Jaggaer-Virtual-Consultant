@@ -1,0 +1,237 @@
+document: check-request-request-template-xml-84b73eac
+scope: XSC
+batch: batch-01
+section: domande-1
+section_title: Domande — Check Request Information / Invoice Details
+part: 1
+parts: 1
+rows:
+  - key: tech:285274
+    label: SupplierInvoiceNumber
+    labels:
+      - SupplierInvoiceNumber
+    technical_name: "285274"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Supplier Invoice Number
+    sources:
+      - document: check-request-request-template-xml-84b73eac
+        section: domande-1
+        source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: SupplierInvoiceNumber
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:285275
+    label: CheckRequestDescription
+    labels:
+      - CheckRequestDescription
+    technical_name: "285275"
+    section: domande-1
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Description
+    sources:
+      - document: check-request-request-template-xml-84b73eac
+        section: domande-1
+        source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: CheckRequestDescription
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285276
+    label: CheckRequestCurrency
+    labels:
+      - CheckRequestCurrency
+    technical_name: "285276"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Currency
+    sources:
+      - document: check-request-request-template-xml-84b73eac
+        section: domande-1
+        source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: CheckRequestCurrency
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285277
+    label: CheckRequestAmount
+    labels:
+      - CheckRequestAmount
+    technical_name: "285277"
+    section: domande-1
+    type: Numeric Text Box
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Amount
+    sources:
+      - document: check-request-request-template-xml-84b73eac
+        section: domande-1
+        source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: CheckRequestAmount
+        type: Numeric Text Box
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:285301
+    label: CheckRequestTaxes
+    labels:
+      - CheckRequestTaxes
+    technical_name: "285301"
+    section: domande-1
+    type: Numeric Text Box
+    mandatory_text: No
+    allowed_values: []
+    notes: Taxes
+    sources:
+      - document: check-request-request-template-xml-84b73eac
+        section: domande-1
+        source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: CheckRequestTaxes
+        type: Numeric Text Box
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285302
+    label: CheckRequestNeedByDate
+    labels:
+      - CheckRequestNeedByDate
+    technical_name: "285302"
+    section: domande-1
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: Need by Date
+    sources:
+      - document: check-request-request-template-xml-84b73eac
+        section: domande-1
+        source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: CheckRequestNeedByDate
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285303
+    label: Reimbursement For
+    labels:
+      - Reimbursement For
+    technical_name: "285303"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Reimbursement For
+    sources:
+      - document: check-request-request-template-xml-84b73eac
+        section: domande-1
+        source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: Reimbursement For
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:285292
+    label: Upload a pdf of the invoice, or in the case of reimbursements, a
+      completed justification document using the attached Word form.
+    labels:
+      - Upload a pdf of the invoice, or in the case of reimbursements, a
+        completed justification document using the attached Word form.
+    technical_name: "285292"
+    section: domande-1
+    type: File Upload
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Upload a pdf of the invoice, or in the case of reimbursements, a
+      completed justification document using the attached Word form.
+    sources:
+      - document: check-request-request-template-xml-84b73eac
+        section: domande-1
+        source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: Upload a pdf of the invoice, or in the case of reimbursements, a
+          completed justification document using the attached Word form.
+        type: File Upload
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: file
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1943

@@ -1,0 +1,40 @@
+id: U.DOC0182.0261
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: returnCode | Description: Global operation result operation.
+  A success (0 or 1) means web service was successfully executed, but to know operation effective result, other response field must be analyzed.
+  See section “Error codes [PR Update]” below.
+  Attribute: returnMessage | Description: Operation result description.
+  See section “Return Message [PR Update]” below
+hash: sha256:77dd95049553e90e2309a1b3c9825902ea0ceccc0afaedfa7f752d3f5867d8bd
+words: 56
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Response data format [PR Update]
+  section_path: 2.2.3
+  page: 25
+  lang: en
+  prev: U.DOC0182.0260
+  next: U.DOC0182.0262
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - returnCode
+      - |-
+        Global operation result operation.
+        A success (0 or 1) means web service was successfully executed, but to know operation effective result, other response field must be analyzed.
+        See section “Error codes [PR Update]” below.
+    - - returnMessage
+      - |-
+        Operation result description.
+        See section “Return Message [PR Update]” below
+  block: 1
+  blocks: 1

@@ -1,0 +1,54 @@
+id: U.DOC0171.0013
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  The structure of the current document is the following (parte 1/2)
+  1. Import/Update RfX method
+  2. Request data format: describes the possible operations on import (CREATE, UPDATE, CREATE_FROM_TEMPLATE and so on) and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted.
+  3. Behavior: describes how the web service processes the data passed in input, in case of some particular processes.
+  4. Response data format: describes the structure of the web service response and contains the list of possible error codes.
+  5. Export RfX method
+  6. Component Filters: describes which sections of an Rfx can be exported. The use of a component filter increments the number of sections in the response to every Rfx exported.
+  7. Condition Filters: describes which fields can be used to filter the Rfx to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of Rfx extracted.
+  8. Data Elements Condition Filters: describes how to filter on the data elements in order to retrieve only rfx having data elements with specific values.
+  9. Export Response data format: describes the structure of the response in terms of exported fields and sections.
+  10. Error codes: contains a list of possible error codes.
+  11. REST INTERFACE
+  12. Operation and Endpoints: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods
+  13. Request samples: contains detailed samples of HTTP request/response for each available operation
+  14. PUSH INTERFACE
+  15. Data model: refers to push message data format
+hash: sha256:58d1cc177e656bda14d9ef3aa1d114b1bbb99c556e588d44bfc52d420968290f
+words: 280
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 5
+  lang: en
+  prev: U.DOC0171.0012
+  next: U.DOC0171.0014
+steps:
+  - Import/Update RfX method
+  - "Request data format: describes the possible operations on import (CREATE, UPDATE, CREATE_FROM_TEMPLATE and so on) and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted."
+  - "Behavior: describes how the web service processes the data passed in input, in case of some particular processes."
+  - "Response data format: describes the structure of the web service response and contains the list of possible error codes."
+  - Export RfX method
+  - "Component Filters: describes which sections of an Rfx can be exported. The use of a component filter increments the number of sections in the response to every Rfx exported."
+  - "Condition Filters: describes which fields can be used to filter the Rfx to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of Rfx extracted."
+  - "Data Elements Condition Filters: describes how to filter on the data elements in order to retrieve only rfx having data elements with specific values."
+  - "Export Response data format: describes the structure of the response in terms of exported fields and sections."
+  - "Error codes: contains a list of possible error codes."
+  - REST INTERFACE
+  - "Operation and Endpoints: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods"
+  - "Request samples: contains detailed samples of HTTP request/response for each available operation"
+  - PUSH INTERFACE
+  - "Data model: refers to push message data format"
+procedure:
+  title: The structure of the current document is the following
+  part: 1
+  parts: 2
+  first_step: 1

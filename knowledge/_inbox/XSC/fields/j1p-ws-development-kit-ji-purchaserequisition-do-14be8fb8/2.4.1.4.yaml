@@ -1,0 +1,40 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.4.1.4
+section_title: BudgetInfo [PR Validate]
+genre: tecnica
+rows:
+  - label: budgetPeriod
+    technical_name: budgetPeriod
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates whether the specified BudgetInfo is for the fiscal year
+      (Annually), quarter (Quarterly), or month (Monthly).
+    section: 2.4.1.4
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.4#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: budgetSpent
+    technical_name: budgetSpent
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Amount spent in the budget for the specified period
+    section: 2.4.1.4
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.4#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: budgetLeft
+    technical_name: budgetLeft
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Amount left in the budget for the specified period
+    section: 2.4.1.4
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.4#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

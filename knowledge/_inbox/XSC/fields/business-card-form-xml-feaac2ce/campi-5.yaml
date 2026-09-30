@@ -1,0 +1,43 @@
+document: business-card-form-xml-feaac2ce
+scope: XSC
+section: campi-5
+section_title: Campi — Card Sample
+genre: tecnica
+rows:
+  - label: Card Sample Text
+    technical_name: Card Sample Text
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<strong>Sample Business Card</strong> ·
+      id=10009 · tipo=userdefined
+    section: campi-5
+    source_unit: business-card-form-xml-feaac2ce/campi-5#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce
+  - label: Sample
+    technical_name: Sample
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=1;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/0/42041.gif · id=10010 ·
+      tipo=userdefined
+    section: campi-5
+    source_unit: business-card-form-xml-feaac2ce/campi-5#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce
+  - label: Link
+    technical_name: Link
+    type: URL
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamLinkUrl=http://www.JAGGAER.com · id=10011 ·
+      tipo=userdefined
+    section: campi-5
+    source_unit: business-card-form-xml-feaac2ce/campi-5#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce

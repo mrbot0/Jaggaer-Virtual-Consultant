@@ -1,0 +1,43 @@
+id: U.DOC0171.0075
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: bidsCurrency | Mandatory (Y/N): N | Description: External code of the bids currency.
+  If not provided:
+  When creating a new object, value to set for value currency (as described above) is used
+  When updating object, no changes are made | Mapping on JA data model and notes: External code of the bids currency
+hash: sha256:022d833458c884e6a1e8aa062c1b88ff7ef1d1e9db69ee7b68e9be12522b8a0b
+words: 54
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0074
+  next: U.DOC0171.0076
+row:
+  table: 0
+  row: 21
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - bidsCurrency
+    - N
+    - |-
+      External code of the bids currency.
+      If not provided:
+      When creating a new object, value to set for value currency (as described above) is used
+      When updating object, no changes are made
+    - External code of the bids currency
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

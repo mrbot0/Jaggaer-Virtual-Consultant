@@ -1,0 +1,212 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-09
+section: 2.3.1.4
+section_title: Requestor [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:USERNAME
+    label: username
+    labels:
+      - username
+      - userName
+    technical_name: USERNAME
+    section: 2.3.1.4
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Username of the person who originally requested the PO export.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: username
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.48
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.48#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: userName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:EMAIL
+    label: eMail
+    labels:
+      - eMail
+    technical_name: EMAIL
+    section: 2.3.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Email address of the requestor
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: eMail
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.7
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: eMail
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.34
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.34#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: eMail
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FIRSTNAME
+    label: firstName
+    labels:
+      - firstName
+    technical_name: FIRSTNAME
+    section: 2.3.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: First name of the requestor.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: firstName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LASTNAME
+    label: lastName
+    labels:
+      - lastName
+    technical_name: LASTNAME
+    section: 2.3.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Last name of the requestor.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: lastName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PHONE
+    label: phone
+    labels:
+      - phone
+    technical_name: PHONE
+    section: 2.3.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Telephone number of the requestor.
+      See section “TelephoneNumber [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: phone
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.7
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: phone
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:POSITION
+    label: position
+    labels:
+      - position
+    technical_name: POSITION
+    section: 2.3.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Position of the requestor within the department, from his or her profile.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: position
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1741

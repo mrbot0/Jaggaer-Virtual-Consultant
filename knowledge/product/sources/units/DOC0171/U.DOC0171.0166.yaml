@@ -1,0 +1,43 @@
+id: U.DOC0171.0166
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: id | Mandatory (Y/N): N | Description: Parameter identifier | Mapping on JA data model and notes: JA internal identifier of an existing commercial parameter to update;
+  It must not be specified when creating new parameter for both existing or new section;
+  If provided and the section doesn’t contain a parameter with such identifier, error is returned and operation aborted.
+  See §Behavior, section “Envelope Management”.
+hash: sha256:cb27a09f36cd2d22df371700fa67acf71d50a08833a8af6f347dfe1dcd418fab
+words: 66
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: economical parameter [Import/Update RfX method]"
+  section_path: 2.1.1.13
+  page: 6
+  lang: en
+  prev: U.DOC0171.0165
+  next: U.DOC0171.0167
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - id
+    - N
+    - Parameter identifier
+    - |-
+      JA internal identifier of an existing commercial parameter to update;
+      It must not be specified when creating new parameter for both existing or new section;
+      If provided and the section doesn’t contain a parameter with such identifier, error is returned and operation aborted.
+      See §Behavior, section “Envelope Management”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

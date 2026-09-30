@@ -1,0 +1,64 @@
+id: U.DOC0085.0051
+doc: S.STD.XSC.DOC.0085
+doc_id: commodity-codes-setup-docx-3fd557c2
+type: tabella
+text: "Things to know before beginning the Commodity Code & Mapping process: 6 | Things to know before beginning the Commodity Code & Mapping process: Will Commodity Codes be “mapped” to a Custom Field (i.e. Account Code)? | Things to know before beginning the Commodity Code & Mapping process: Will Commodity Codes be “mapped” to a Custom Field (i.e. Account Code)? | Things to know before beginning the Commodity Code & Mapping process: This is possible but requires careful consideration. Based on how closely related the Account Code is to Commodity Code, possible item mis-catagorization by Supplier and the extra System maintenance."
+hash: sha256:a0fc960af736a607b69b51e8bba9f429c7ebc12810b8e52bdaf99995f6394b41
+words: 101
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0085
+  chapter: commodity-codes-setup-docx-3fd557c2
+  section: How the JAGGAER Taxonomy is applied to JAGGAER ePro items
+  section_path: "0.3"
+  page: 7
+  lang: en
+  prev: U.DOC0085.0050
+  next: U.DOC0085.0052
+table:
+  table: 0
+  headers:
+    - Things to know before beginning the Commodity Code & Mapping process
+    - Things to know before beginning the Commodity Code & Mapping process
+    - Things to know before beginning the Commodity Code & Mapping process
+    - Things to know before beginning the Commodity Code & Mapping process
+  rows:
+    - - "1"
+      - Do they currently have/use Commodity Codes on their ERP?
+      - Do they currently have/use Commodity Codes on their ERP?
+      - ""
+    - - ""
+      - a.
+      - If YES, will their ePro Commodity Codes be based on these?
+      - Unless they are planning a restructure of their CC’s this will most likely be yes.
+    - - ""
+      - b.
+      - If NO, will they be using a UNSPSC based CC structure or creating their own structure?
+      - |-
+        UNSPSC: 4300000000 (IT/Broadcasting and Telecommunications)
+        OTHER: A400 (IT and Computer Accessories)
+    - - "2"
+      - Should Commodity Codes be automatically applied to ePro Hosted/Punch-out items?
+      - Should Commodity Codes be automatically applied to ePro Hosted/Punch-out items?
+      - Most do. Ensure Client knows this doesn’t apply to Non-Cat Items or Forms (although they can be “hardcoded” on a form)
+    - - "3"
+      - Should Users be able to modify Commodity Codes in their Cart?
+      - Should Users be able to modify Commodity Codes in their Cart?
+      - If they are using Non-Cat or Forms they should probably allow this
+    - - "4"
+      - Will Commodity Codes be used for workflow routing?
+      - Will Commodity Codes be used for workflow routing?
+      - Typically this is done for PR “Purchasing Approval” or “Buyer Review” workflow. Requires a setting under “General Workflow”
+    - - "5"
+      - Should Commodity Codes be “required” on the Cart/Requisition?
+      - Should Commodity Codes be “required” on the Cart/Requisition?
+      - If used for workflow then, yes. Requires “Checkout Validation” for the CC field on the Requisition Document. You can Error or Warn.
+    - - "6"
+      - Will Commodity Codes be “mapped” to a Custom Field (i.e. Account Code)?
+      - Will Commodity Codes be “mapped” to a Custom Field (i.e. Account Code)?
+      - This is possible but requires careful consideration. Based on how closely related the Account Code is to Commodity Code, possible item mis-catagorization by Supplier and the extra System maintenance.
+  block: 1
+  blocks: 1
+part:
+  n: 3
+  of: 3

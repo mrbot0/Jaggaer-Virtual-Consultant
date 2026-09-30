@@ -1,0 +1,43 @@
+id: U.DOC0173.0099
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: email | Mandatory (Y/N): Y
+  for CREATE
+  N
+  for UPDATE | Description: User email address | Mapping on JA data model and notes: Use ";" (semicolon) to separate multiple addresses.
+hash: sha256:8135742758b160243feaea49502b95e1951f8cec75307d7b5909c14856411aa8
+words: 31
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: SubUserInfo [Import/update of Company and Users Data]
+  section_path: 4.1.1.6
+  page: 6
+  lang: en
+  prev: U.DOC0173.0098
+  next: U.DOC0173.0100
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - email
+    - |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    - User email address
+    - Use ";" (semicolon) to separate multiple addresses.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

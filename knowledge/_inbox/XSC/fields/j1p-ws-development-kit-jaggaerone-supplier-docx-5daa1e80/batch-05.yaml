@@ -1,0 +1,265 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-05
+section: 2.1.1.5
+section_title: J1Supplier/JASupplierData/company
+part: 1
+parts: 1
+rows:
+  - key: tech:EXTCODE
+    label: extCode
+    labels:
+      - extCode
+    technical_name: EXTCODE
+    section: 2.1.1.5
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Company identification code within the external system
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: extCode
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EXTUNIQUECODE
+    label: extUniqueCode
+    labels:
+      - extUniqueCode
+    technical_name: EXTUNIQUECODE
+    section: 2.1.1.5
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Company unique identification code within the external system. When
+      valorized it must be unique within the companies registered and enabled in
+      the same toolkit group (companies deactivated and deleted are excluded).
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: extUniqueCode
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:REGISTRATIONSTATUS
+    label: registrationStatus
+    labels:
+      - registrationStatus
+    technical_name: REGISTRATIONSTATUS
+    section: 2.1.1.5
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.5#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: registrationStatus
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EXTSTATUS
+    label: extStatus
+    labels:
+      - extStatus
+    technical_name: EXTSTATUS
+    section: 2.1.1.5
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Alphanumeric external code of Seller extended status (secondary supplier
+      status).
+
+      Use empty string to reset extended status.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.5#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: extStatus
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BUYERMANAGED
+    label: buyerManaged
+    labels:
+      - buyerManaged
+    technical_name: BUYERMANAGED
+    section: 2.1.1.5
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Defines if the supplier is managed by the buyer or by the supplier
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.5#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: buyerManaged
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BIZEMAIL
+    label: bizEmail
+    labels:
+      - bizEmail
+    technical_name: BIZEMAIL
+    section: 2.1.1.5
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main email address
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.5#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: bizEmail
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BIZPHONE
+    label: bizPhone
+    labels:
+      - bizPhone
+    technical_name: BIZPHONE
+    section: 2.1.1.5
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main telephone number
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.5#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: bizPhone
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BIZFAX
+    label: bizFax
+    labels:
+      - bizFax
+    technical_name: BIZFAX
+    section: 2.1.1.5
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company fax
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.5#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: bizFax
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BIZLEGALSTRUCT
+    label: bizLegalStruct
+    labels:
+      - bizLegalStruct
+    technical_name: BIZLEGALSTRUCT
+    section: 2.1.1.5
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Legal structure title expressed according to company country
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.5#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: bizLegalStruct
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2054

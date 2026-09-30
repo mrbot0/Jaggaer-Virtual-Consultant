@@ -1,0 +1,88 @@
+id: S.STD.XSC.DOC.0069
+type: DOC
+title: sc-perspective-unofficial-implementation-conside-4cb385be
+summary: 'Documento doc-progetto (tecnica, origine vendor)
+  "sc-perspective-unofficial-implementation-conside-4cb385be": 16 unità, 0
+  tabelle, 0 tabelle di campi; scope ADM, VEN, XSC, P2P; affidabilità 0.48.'
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2018-03-26
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-2303/SC Perspective - UNOFFICIAL Implementation
+      Considerations.docx
+    sha256: sha256:fea3db1650a922121e53a0870d41819b5cfd78208a1d7a4064ef5dd933665f10
+kind: doc-progetto
+genre: tecnica
+origin: vendor
+version: null
+dated: 2018-03-26
+covers_release: null
+languages:
+  - en
+scopes:
+  - ADM
+  - VEN
+  - XSC
+  - P2P
+source:
+  path: CORSI/JI-2303/SC Perspective - UNOFFICIAL Implementation Considerations.docx
+  sha256: sha256:fea3db1650a922121e53a0870d41819b5cfd78208a1d7a4064ef5dd933665f10
+  size: 180357
+  format: docx
+  doc_id: sc-perspective-unofficial-implementation-conside-4cb385be
+  doc_key: sc-perspective-unofficial-implementation-considerations.docx
+structure:
+  pages: 14
+  chapters: 1
+  sections: 1
+  tables: 0
+  figures: 3
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 16
+  by_type:
+    testo: 8
+    procedura: 8
+reliability:
+  base_by_kind: 0.75
+  freshness: 0.8
+  authorship: 0.8
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - documento dichiarato non ufficiale o bozza
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 16
+  items_produced: 8
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.5
+  last_run: 2026-09-30
+  estimated_tokens: 5251
+  sessions_planned: 1

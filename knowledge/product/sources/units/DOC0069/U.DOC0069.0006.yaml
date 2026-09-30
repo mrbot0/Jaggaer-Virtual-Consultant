@@ -1,0 +1,38 @@
+id: U.DOC0069.0006
+doc: S.STD.XSC.DOC.0069
+doc_id: sc-perspective-unofficial-implementation-conside-4cb385be
+type: procedura
+text: "Particularly if a customer is coming from a robust ERP solution, find out what they have from a data perspective that we can leverage with their purchased integrations. If we can get their workflow data into JAGGAER in an integrated fashion, it helps reduce maintenance requirements for the administrative team. 14. Control over workflow design. Limited ability for customer to design and implement new workflow. Brad: some bigger customers do it exactly as we explain (approve by cost center). You can reject specific lines. 15. Edit controls? Allow an approver to edit and it pushes over to a new spend threshold should require new approver but will not. Mid-workflow can adjust based on changes to the document."
+hash: sha256:a7d69eb6d29b92264bd2e1bc599ddd29b96a094da749a64197cbbea3ca864300
+words: 117
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0069
+  chapter: sc-perspective-unofficial-implementation-conside-4cb385be
+  section: sc-perspective-unofficial-implementation-conside-4cb385be
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0069.0005
+  next: U.DOC0069.0007
+steps:
+  - Workflow is always linear. Rules will not be “re-triggered” if criteria is changed upon a document edit. WF can’t go backwards. An approver can only return or reject
+  - We have lots of different ways to implement WF
+  - We can do splits, but approvers are approving the whole document, not just their split. (It does route to approvers based on splits)
+  - The whole document is approved, not just a line, or a split on a line
+  - "Note: approvers can reject specific lines"
+  - Only JAGGAER / Partners (not clients) can change the workflow XML
+  - Ad hoc approvals not currently possible. ( Person submitting the document can’t choose who approves it)
+  - If you allow approvers to edit, they can edit the whole document. They could change values that were approved in earlier steps. The change they made would not re-initiate those approvals
+  - "More comments:"
+  - Familiarize yourself with approval assignment options in JAGGAER. Customers coming from ERP solutions can have workflow expectations that we can’t support natively.
+  - On this topic, consult strongly on this to guide a customer toward simpler, more sustainable workflow. This isn’t always possible, but it can help avoid extra cycles churning on workflow design.
+  - "One distinction often not understood by customers: an approver is approving the document (e.g. the requisition or purchase order or invoice) not the accounting distribution line. Some ERP solutions and customer practices assume budget owners will only be responsible for approving “their distribution” if a requisition is split, but this is not necessarily the case. They will see the entire document, and an approval action is at the document level."
+  - Particularly if a customer is coming from a robust ERP solution, find out what they have from a data perspective that we can leverage with their purchased integrations. If we can get their workflow data into JAGGAER in an integrated fashion, it helps reduce maintenance requirements for the administrative team.
+  - "Control over workflow design. Limited ability for customer to design and implement new workflow. Brad: some bigger customers do it exactly as we explain (approve by cost center). You can reject specific lines."
+  - Edit controls? Allow an approver to edit and it pushes over to a new spend threshold should require new approver but will not. Mid-workflow can adjust based on changes to the document.
+procedure:
+  title: sc-perspective-unofficial-implementation-conside-4cb385be
+part:
+  n: 2
+  of: 2

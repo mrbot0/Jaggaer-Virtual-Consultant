@@ -1,0 +1,38 @@
+document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+scope: XSC
+batch: batch-05
+section: 2.1.1.5
+section_title: UserRef [Custom Field Import method]
+part: 1
+parts: 1
+rows:
+  - key: tech:USERNAME
+    label: username
+    labels:
+      - username
+    technical_name: USERNAME
+    section: 2.1.1.5
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Approver's username. The username must exist in the JAGGAER Indirect
+      solution.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.5
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: username
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 677

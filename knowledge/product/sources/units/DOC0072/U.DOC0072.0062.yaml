@@ -1,0 +1,17 @@
+id: U.DOC0072.0062
+doc: S.STD.XSC.DOC.0072
+doc_id: xdoc-commodity-code-mapping-pdf-dcc2ec1b
+type: testo
+text: While testing for 18.1 we compared the way UNSPSC values are exported in XML and in document search exports to the way it was done in 17.3. We found that the separator is completely ignored for exports in the 17.3 release. Therefore, we are not using these settings in 18.1 when we do an XML export of a document or when we perform a transaction or full export of a set of documents in document search. In the 17.3 release the field "Apply to UN/SPSC Integration Value" field is not being obeyed for XML exports. Therefore, we are not changing this behavior in 18.1.
+hash: sha256:5d68a5207ea95dfdc8c3590382f228505f291db5a97389cb9fd98efb1dc3ae69
+words: 104
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0072
+  chapter: "Notes from testing - comparison between existing functions in Rambo 17.3 and Daffy 18.1:"
+  section: "Notes from testing - comparison between existing functions in Rambo 17.3 and Daffy 18.1:"
+  section_path: p14
+  page: 14
+  lang: en
+  prev: U.DOC0072.0061
+  next: U.DOC0072.0063

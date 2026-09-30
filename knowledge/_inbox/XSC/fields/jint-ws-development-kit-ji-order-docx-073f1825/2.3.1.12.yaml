@@ -1,0 +1,65 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.12
+section_title: PaymentInfo [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: creditCard
+    technical_name: creditCard
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Credit card information.
+      See section “CreditCard [Import JIOrder method]” below
+    section: 2.3.1.12
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: terms
+    technical_name: terms
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Payment terms
+      See section “Terms [Import JIOrder method]” below
+    section: 2.3.1.12
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: paymentType
+    technical_name: paymentType
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Payment option for the PO:
+      Unknown
+      PO
+      BlanketPO
+      ContractBlanketPO
+      PCard
+      GhostCard
+      VCard
+      ExacTrac
+    section: 2.3.1.12
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: customPaymentTerm
+    technical_name: customPaymentTerm
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Custom Payment Term.
+      See section “CustomPaymentTerm [Import JIOrder method]” below.
+    section: 2.3.1.12
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

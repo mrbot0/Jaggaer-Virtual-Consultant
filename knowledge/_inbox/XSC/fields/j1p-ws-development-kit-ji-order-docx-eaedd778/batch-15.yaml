@@ -1,0 +1,129 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-15
+section: 2.3.1.10
+section_title: Contact [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:LABEL
+    label: label
+    labels:
+      - label
+    technical_name: LABEL
+    section: 2.3.1.10
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Label of the Contact line, if applicable.
+
+      This attribute is not used for imports. Valid only for exports and
+      validations.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.10
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.10#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: label
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.11
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.11#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: label
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.19
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.19#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: label
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LINENUMBER
+    label: lineNumber
+    labels:
+      - lineNumber
+    technical_name: LINENUMBER
+    section: 2.3.1.10
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Line number of the Contact line
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.10
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.10#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: lineNumber
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.11
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.11#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: lineNumber
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: lineNumber
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CONTACT
+    label: contact
+    labels:
+      - contact
+    technical_name: CONTACT
+    section: 2.3.1.10
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Contact name and information associated with this billing address
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.10
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.10#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: contact
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1260

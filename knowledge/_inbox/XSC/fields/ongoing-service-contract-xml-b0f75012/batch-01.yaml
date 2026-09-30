@@ -1,0 +1,181 @@
+document: ongoing-service-contract-xml-b0f75012
+scope: XSC
+batch: batch-01
+section: domande-1
+section_title: Domande — Page 1 / Services Information
+part: 1
+parts: 1
+rows:
+  - key: tech:39069
+    label: Type of Service Requested
+    labels:
+      - Type of Service Requested
+    technical_name: "39069"
+    section: domande-1
+    type: Dropdown List (Pick One)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Type of Service Requested
+    sources:
+      - document: ongoing-service-contract-xml-b0f75012
+        section: domande-1
+        source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Type of Service Requested
+        type: Dropdown List (Pick One)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:39065
+    label: Service Description
+    labels:
+      - Service Description
+    technical_name: "39065"
+    section: domande-1
+    type: Text (Multi-Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Service Description
+    sources:
+      - document: ongoing-service-contract-xml-b0f75012
+        section: domande-1
+        source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Service Description
+        type: Text (Multi-Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:39066
+    label: Estimated Price
+    labels:
+      - Estimated Price
+    technical_name: "39066"
+    section: domande-1
+    type: User Defined
+    mandatory_text: No
+    allowed_values: []
+    notes: Estimated Price
+    sources:
+      - document: ongoing-service-contract-xml-b0f75012
+        section: domande-1
+        source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Estimated Price
+        type: User Defined
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:39067
+    label: Anticipated frequency of service
+    labels:
+      - Anticipated frequency of service
+    technical_name: "39067"
+    section: domande-1
+    type: Multiple Choice (Pick One)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Anticipated frequency of service
+    sources:
+      - document: ongoing-service-contract-xml-b0f75012
+        section: domande-1
+        source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Anticipated frequency of service
+        type: Multiple Choice (Pick One)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:39068
+    label: If you selected "other" in the field above, please specify the
+      anticipated frequency of service.
+    labels:
+      - If you selected "other" in the field above, please specify the
+        anticipated frequency of service.
+    technical_name: "39068"
+    section: domande-1
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: If you selected "other" in the field above, please specify the
+      anticipated frequency of service.
+    sources:
+      - document: ongoing-service-contract-xml-b0f75012
+        section: domande-1
+        source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: If you selected "other" in the field above, please specify the
+          anticipated frequency of service.
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:39513
+    label: "If other, please specify type:"
+    labels:
+      - "If other, please specify type:"
+    technical_name: "39513"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: "If other, please specify type:"
+    sources:
+      - document: ongoing-service-contract-xml-b0f75012
+        section: domande-1
+        source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: "If other, please specify type:"
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1603

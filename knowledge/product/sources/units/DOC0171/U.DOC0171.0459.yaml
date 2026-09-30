@@ -1,0 +1,88 @@
+id: U.DOC0171.0459
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: parameterId | Description: Id if the commercial field
+  Attribute: price | Description: Seller price (it can have exponential notation)
+  Attribute: quantity | Description: Seller quantity
+  Attribute: notes | Description: Seller notes
+  Attribute: buyerPrice | Description: Price confirmed by the buyer
+  Attribute: awardState | Description: Awarding state of the single offer item:
+  0 = not mixed awarding
+  1 = mixed-awarding – item awarded to the current supplier
+  2 = mixed-awarding – item not-awarded to the current supplier
+  3 = mixed-awarding – item moved to auction
+  Attribute: priceByQuantityValues | Description: Price by quantity parameter response [see section “Suppliers Offer: Price by quantity commercial parameters response” below]
+  Attribute: additionalColumnValues | Description: Additional columns response [see section “Suppliers Offer: Additional columns response” below]
+  Attribute: supplierResponseCurrency | Description: Supplier response currency (external code) | Available from version: BA_17_01
+  Attribute: supplierResponsePrice | Description: Price in the currency of the supplier (it can have exponential notation) | Available from version: BA_17_01
+  Attribute: discount | Description: Seller discount value (%) | Available from version: BA_17_02
+  Attribute: assignedQuantity | Description: Assigned quantity by buyer in awarding | Available from version: BA_18_00
+  Attribute: questionType | Description: The only value is PRICE for Price section | Available from version: JA_19_00
+hash: sha256:02ecfb71c3e47d0d2482e8e7bc1cbc52a1b83c97964516600df5338cd888cc1b
+words: 208
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Suppliers Offer: Response to commercial parameters [Export RfX method]"
+  section_path: 2.3.4.21
+  page: 7
+  lang: en
+  prev: U.DOC0171.0458
+  next: U.DOC0171.0460
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - parameterId
+      - Id if the commercial field
+      - ""
+    - - price
+      - Seller price (it can have exponential notation)
+      - ""
+    - - quantity
+      - Seller quantity
+      - ""
+    - - notes
+      - Seller notes
+      - ""
+    - - buyerPrice
+      - Price confirmed by the buyer
+      - ""
+    - - awardState
+      - |-
+        Awarding state of the single offer item:
+        0 = not mixed awarding
+        1 = mixed-awarding – item awarded to the current supplier
+        2 = mixed-awarding – item not-awarded to the current supplier
+        3 = mixed-awarding – item moved to auction
+      - ""
+    - - priceByQuantityValues
+      - "Price by quantity parameter response [see section “Suppliers Offer: Price by quantity commercial parameters response” below]"
+      - ""
+    - - additionalColumnValues
+      - "Additional columns response [see section “Suppliers Offer: Additional columns response” below]"
+      - ""
+    - - supplierResponseCurrency
+      - Supplier response currency (external code)
+      - BA_17_01
+    - - supplierResponsePrice
+      - Price in the currency of the supplier (it can have exponential notation)
+      - BA_17_01
+    - - discount
+      - Seller discount value (%)
+      - BA_17_02
+    - - assignedQuantity
+      - Assigned quantity by buyer in awarding
+      - BA_18_00
+    - - questionType
+      - The only value is PRICE for Price section
+      - JA_19_00
+  block: 1
+  blocks: 1

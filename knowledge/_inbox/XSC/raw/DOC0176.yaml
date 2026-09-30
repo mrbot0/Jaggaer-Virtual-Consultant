@@ -1,0 +1,1118 @@
+doc: S.STD.XSC.DOC.0176
+scope: XSC
+extracted_at: 2026-09-30T04:32:16.558Z
+tier: T0
+stats:
+  units: 138
+  extracted_units: 27
+  document_candidates: 1
+  needs_llm: 18
+  t0_complete: 10
+  by_candidate:
+    FLW: 8
+    FLD: 15
+    CFG: 4
+    INT: 1
+  residue_marked: 4
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 9904
+  sessions:
+    - n: 1
+      tokens: 9904
+      batches: 2
+      items: 18
+      batch_items:
+        - - R.DOC0176.0014
+          - R.DOC0176.0028
+          - R.DOC0176.0031
+          - R.DOC0176.0039
+          - R.DOC0176.0042
+          - R.DOC0176.0043
+          - R.DOC0176.0060
+          - R.DOC0176.0063
+          - R.DOC0176.0065
+          - R.DOC0176.0068
+          - R.DOC0176.0071
+          - R.DOC0176.0094
+          - R.DOC0176.0099
+          - R.DOC0176.0114
+          - R.DOC0176.0122
+          - R.DOC0176.0125
+          - R.DOC0176.0133
+        - - R.DOC0176.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0176.0014
+    source_unit: U.DOC0176.0014
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0176
+    section: Executive Summary
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: overall
+          oggetto: considerations valid both for SOAP and REST
+          valore: null
+        - n: 2
+          verbo: specific
+          oggetto: SOAP guidelines applicable to the SOAP interface of all webservices, including
+          valore: null
+        - n: 3
+          verbo: authentication
+          oggetto: approach
+          valore: null
+        - n: 4
+          verbo: attachments
+          oggetto: support and MTOM
+          valore: null
+        - n: 5
+          verbo: errors
+          oggetto: handling
+          valore: null
+        - n: 6
+          verbo: specific
+          oggetto: REST guidelines applicable to the REST interface of all webservices, including
+          valore: null
+        - n: 7
+          verbo: endpoints
+          oggetto: organization
+          valore: null
+        - n: 8
+          verbo: the
+          oggetto: “grammar” defining query expression to filter resources
+          valore: grammar
+        - n: 9
+          verbo: the
+          oggetto: authentication methods (based on access token or JWT)
+          valore: null
+        - n: 10
+          verbo: additional
+          oggetto: security measures and best practices that apply to both REST and SOAP
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0176.0014
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 142
+  - raw_id: R.DOC0176.0024
+    source_unit: U.DOC0176.0024
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: JINT SOAP Web Services
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: All SOAP requests including attachments
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0024
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0176.0028
+    source_unit: U.DOC0176.0028
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0176
+    section: JINT SOAP Web Services
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: ssl
+          oggetto: encryption, i.e. they are exposed on HTTPS
+          valore: null
+        - n: 2
+          verbo: ip
+          oggetto: Filtering, i.e. they are reachable only by the authorized IPs
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0176.0028
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 35
+  - raw_id: R.DOC0176.0031
+    source_unit: U.DOC0176.0031
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: HTTP Basic [segreto]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0176.0031
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 61
+  - raw_id: R.DOC0176.0032
+    source_unit: U.DOC0176.0032
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: HTTP Basic [segreto]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Therefore, the client components, in case basic authentication
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0032
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 60
+  - raw_id: R.DOC0176.0038
+    source_unit: U.DOC0176.0038
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0176
+    section: SSL Mutual Authentication (SSL Client certificate)
+    page: 12
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a6
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.2
+    extraction:
+      kind: tacita
+      text: To better manage performances, webservices export responses are limited to a predefined number of items that are configured on a single integration basis (usually it is defaulted to 100 objects per webservice call).
+      subject: To better manage performances, webservices export responses
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0176.0038
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0176.0039
+    source_unit: U.DOC0176.0039
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: SSL Mutual Authentication (SSL Client certificate)
+    page: 12
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0039
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 40
+  - raw_id: R.DOC0176.0042
+    source_unit: U.DOC0176.0042
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0176
+    section: SSL Mutual Authentication (SSL Client certificate)
+    page: 12
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: "totrecords:"
+          oggetto: number of objects matching the export criteria
+          valore: number of objects matching the export criteria
+        - n: 2
+          verbo: "returnedrecords:"
+          oggetto: number of objects returned in the current response
+          valore: number of objects returned in the current response
+        - n: 3
+          verbo: "startat:"
+          oggetto: index of the first item (it should be exactly what provided in the same parameter of the export request)
+          valore: index of the first item (it should be exactly what provided in the same parameter of the export request)
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0176.0042
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 75
+  - raw_id: R.DOC0176.0043
+    source_unit: U.DOC0176.0043
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: SSL Mutual Authentication (SSL Client certificate)
+    page: 12
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0043
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 42
+  - raw_id: R.DOC0176.0055
+    source_unit: U.DOC0176.0055
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0176
+    section: API Endpoints
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a10
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: Under the resources collection are usually available
+      subject: Under the resources collection
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0176.0055
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0176.0060
+    source_unit: U.DOC0176.0060
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0176
+    section: API Endpoints
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: the
+          oggetto: possibility to create or update resources by POSTING the resource create/update request
+          valore: null
+        - n: 2
+          verbo: one
+          oggetto: path for each web-service operation/method other than import and export (eg. workflow operations) to execute that operation
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0176.0060
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 60
+  - raw_id: R.DOC0176.0063
+    source_unit: U.DOC0176.0063
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: REST API Activation
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0063
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 66
+  - raw_id: R.DOC0176.0065
+    source_unit: U.DOC0176.0065
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: Introduction
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0065
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 26
+  - raw_id: R.DOC0176.0068
+    source_unit: U.DOC0176.0068
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0176
+    section: Introduction
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: "selector:"
+          oggetto: the field to be applied to the filter
+          valore: the field to be applied to the filter
+        - n: 2
+          verbo: "operator:"
+          oggetto: the logical comparison operator
+          valore: the logical comparison operator
+        - n: 3
+          verbo: the
+          oggetto: arguments to check the operator against. It can be single or multiple ones
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0176.0068
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 48
+  - raw_id: R.DOC0176.0071
+    source_unit: U.DOC0176.0071
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: Introduction
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0071
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 36
+  - raw_id: R.DOC0176.0072
+    source_unit: U.DOC0176.0072
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: Introduction
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: then you
+      modality: obbligo-condizionale
+      condition: you need to use both single and double quotes inside a quoted argument
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0072
+      mandatory:
+        kind: conditional
+        when: you need to use both single and double quotes inside a quoted argument
+    needs_llm: false
+    tokens: 32
+  - raw_id: R.DOC0176.0093
+    source_unit: U.DOC0176.0093
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: Attachments support
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: post
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0093
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 6
+  - raw_id: R.DOC0176.0094
+    source_unit: U.DOC0176.0094
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0176
+    section: Attachments support
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a18
+      - FLW
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: one
+          oggetto: parameter with a file representing the JSON payload (the same one used in plain data import); the name of the form parameter must be “data”
+          valore: data
+        - n: 2
+          verbo: one
+          oggetto: or more additional parameters for the files; each parameter must have as name the name given to the file in the JSON payload
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0176.0094
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 75
+  - raw_id: R.DOC0176.0099
+    source_unit: U.DOC0176.0099
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0176
+    section: Authentication
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: ssl
+          oggetto: encryption, i.e. they are exposed on HTTPS
+          valore: null
+        - n: 2
+          verbo: ip
+          oggetto: Filtering, i.e. they are reachable only by the authorized IPs
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0176.0099
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 33
+  - raw_id: R.DOC0176.0113
+    source_unit: U.DOC0176.0113
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: JSON Web Token (JWT)
+    page: 21
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: In details the JWT payload
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0113
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0176.0114
+    source_unit: U.DOC0176.0114
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0176
+    section: JSON Web Token (JWT)
+    page: 21
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a21
+      - FLW
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: issuer
+          oggetto: (iss) = agreed at activation time
+          valore: null
+        - n: 2
+          verbo: subject
+          oggetto: (sub)= agreed at activation time
+          valore: null
+        - n: 3
+          verbo: audience
+          oggetto: (aud) = hostname of the JINT endpoint
+          valore: null
+        - n: 4
+          verbo: issued
+          oggetto: At (iat) = JINT won’t accept a JWT issued in the future or older than 24h
+          valore: null
+        - n: 5
+          verbo: expire
+          oggetto: At (exp) = in case is provided JITN will check is not in the past
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0176.0114
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 80
+  - raw_id: R.DOC0176.0115
+    source_unit: U.DOC0176.0115
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: JSON Web Token (JWT)
+    page: 21
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: key-pair
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0115
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0176.0122
+    source_unit: U.DOC0176.0122
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0176
+    section: DoS attack protection
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a23
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: In the event the webservice client exceeds a preconfigured number of webservice calls per a given period (usually 100 per minute), when this scenario was not previously agreed, the server will return an HTTP status 429 (Too Many Requests) as per RFC 6585 (https://tools.ietf.org/html/rfc6585#page-3).
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0176.0122
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 75
+  - raw_id: R.DOC0176.0123
+    source_unit: U.DOC0176.0123
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: DoS attack protection
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: response
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0123
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 32
+  - raw_id: R.DOC0176.0125
+    source_unit: U.DOC0176.0125
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: Multiple concurrent calls
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0176.0125
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0176.0130
+    source_unit: U.DOC0176.0130
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0176
+    section: Cookies
+    page: 23
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: client component
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0176.0130
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0176.0133
+    source_unit: U.DOC0176.0133
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0176
+    section: Cookies
+    page: 23
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a27
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0
+    extraction:
+      kind: tacita
+      text: The web service exports all fields of type datetime in the installation reference timezone, usually UTC (Universal Time Coordinated) that corresponds to timezone GMT (Greenwich Mean Time).
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0176.0133
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 47
+  - raw_id: R.DOC0176.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0176
+    section: null
+    source_unit: U.DOC0176.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: JINT Development Kit-
+      protocol:
+        - REST
+        - SOAP
+        - JSON
+        - XML
+        - FTP
+      endpoints:
+        - /esop/jint/api/public
+        - https://customername-ws01.app.jaggaer.com/esop/jint/api/public/ja/v1/companyprofiles
+        - https://customer-ws01.app.jaggaer.com/esop/jint/api/public/ja/v1/companyprofiles/123456
+        - https://customer-ws01.app.jaggaer.com/esop/jint/api/public/ja/v1/companyprofiles/?flt=LASTMODTIME==20190801;TYPE==SELLER&start=1
+        - /esop/jint/api/public/v1/tokens
+        - http://customer01-ws01.app.jaggaer.com
+        - /esop/jint/api/public/ja/v1/companyprofiles
+        - https://developers.google.com/identity/protocols/OAuth2ServiceAccount#jwt-auth
+      operations: []
+      mappings: []
+      error_catalog: []
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+      - error_catalog
+    tokens: 2650

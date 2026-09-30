@@ -1,0 +1,37 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-17
+section: 2.1.1.17
+section_title: J1Supplier/JISupplierData/serviceAreaList
+part: 1
+parts: 1
+rows:
+  - key: tech:SERVICEAREA
+    label: serviceArea
+    labels:
+      - serviceArea
+    technical_name: SERVICEAREA
+    section: 2.1.1.17
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Geographic region served by the Supplier.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.17
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.17#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: serviceArea
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 669

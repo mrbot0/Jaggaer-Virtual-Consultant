@@ -1,0 +1,121 @@
+id: U.DOC0176.0076
+doc: S.STD.XSC.DOC.0176
+doc_id: jint-ws-development-kit-web-services-overview-do-c57133dd
+type: tabella
+text: "=none= | Accept multiple values: Yes | SOAP equivalent: NONE Operator: All the values | Symbol: =all= | Accept multiple values: Yes | SOAP equivalent: ALL"
+hash: sha256:422dfe97bdcc5a9fc2538bdfba52c246df7798ba32bcb60a4083625e1d3fb301
+words: 26
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0176
+  chapter: JINT REST API
+  section: Filter operators
+  section_path: 3.3.2
+  page: 15
+  lang: en
+  prev: U.DOC0176.0075
+  next: U.DOC0176.0077
+table:
+  table: 0
+  headers:
+    - Operator
+    - Symbol
+    - Accept multiple values
+    - Value
+    - SOAP equivalent
+  rows:
+    - - Equal to
+      - ==
+      - No
+      - ""
+      - EQUAL
+    - - Is null
+      - ==
+      - No
+      - $NULL$
+      - ISNULL
+    - - Expired
+      - ==
+      - No
+      - $EXPIRED$
+      - ISEXPIRED
+    - - Starts with
+      - ==
+      - No
+      - "* (asterisk) followed by any char"
+      - START_WITH
+    - - Ends with
+      - ==
+      - No
+      - Any char followed by *
+      - END_WITH
+    - - Contains
+      - ==
+      - No
+      - "* any char *"
+      - CONTAINS
+    - - Not equal to
+      - "!="
+      - No
+      - ""
+      - NOTEQUAL
+    - - Not Null
+      - "!="
+      - No
+      - $NULL$
+      - NOTNULL
+    - - Not Expired
+      - "!="
+      - No
+      - $EXPIRED$
+      - NOTEXPIRED
+    - - Less than
+      - =lt=
+      - No
+      - ""
+      - STRICTLY_LESS_THAN
+    - - Less than or equal to
+      - =le=
+      - No
+      - ""
+      - LESS_THAN
+    - - Greater than operator
+      - =gt=
+      - No
+      - ""
+      - STRICTLY_GREATER_THAN
+    - - Greater than or equal to
+      - =ge=
+      - No
+      - ""
+      - GREATER_THAN
+    - - In
+      - =in=
+      - Yes
+      - ""
+      - IN
+    - - Not In
+      - =out=
+      - Yes
+      - ""
+      - NOT_IN
+    - - At Least one of
+      - =alo=
+      - Yes
+      - ""
+      - AT_LEAST_ON
+    - - None of the values
+      - =none=
+      - Yes
+      - ""
+      - NONE
+    - - All the values
+      - =all=
+      - Yes
+      - ""
+      - ALL
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

@@ -1,0 +1,31 @@
+id: U.DOC0173.0134
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: procedura
+text: |-
+  If the login field is provided, the system checks for a user with the provided login
+  1. If the user exists, and the field extCode is provided, it is used to update the existing external code of the user.
+  2. If the user doesn’t exist, the system checks the extCode field:
+  3. If no extCode is provided the system returns an error.
+  4. If the extCode is provided and not exist user with this external code, the system returns an error.
+  5. If the extCode is provided and exists user with such external code, the system updates the login data of the user with the login provided.
+hash: sha256:71c032cbf3c13da84e4b5f93c1fec35066f4a3c257102595d94372cd122309dc
+words: 107
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Sub User identification strategy
+  section_path: 4.1.3.3
+  page: 6
+  lang: en
+  prev: U.DOC0173.0133
+  next: U.DOC0173.0135
+steps:
+  - If the user exists, and the field extCode is provided, it is used to update the existing external code of the user.
+  - "If the user doesn’t exist, the system checks the extCode field:"
+  - If no extCode is provided the system returns an error.
+  - If the extCode is provided and not exist user with this external code, the system returns an error.
+  - If the extCode is provided and exists user with such external code, the system updates the login data of the user with the login provided.
+procedure:
+  title: If the login field is provided, the system checks for a user with the provided login

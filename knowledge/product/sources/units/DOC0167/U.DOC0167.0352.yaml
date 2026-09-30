@@ -1,0 +1,45 @@
+id: U.DOC0167.0352
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: erpNumber | Mandatory (Y/N): N | Description: Current, unique ERP number associated with the associated supplier address. | Mapping on Jaggaer One data model and notes: Must match an existing address ERPNumber of the correct type in the AddressList element.
+  This field is first in priority when the JAGGAER ONE solution is searching for an associated supplier address.
+  At least one of the following fields in this element must be present for the address:
+  • erpNumber
+  • thirdPartyRefNumber
+hash: sha256:f94e84514478aada775fb82b9b9ec7d7549650b575b2d065c9cfda9b64d70fda
+words: 79
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/associatedAddressList/associatedAddress/addressRef
+  section_path: 2.1.1.92
+  page: 5
+  lang: en
+  prev: U.DOC0167.0351
+  next: U.DOC0167.0353
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - erpNumber
+    - N
+    - Current, unique ERP number associated with the associated supplier address.
+    - |-
+      Must match an existing address ERPNumber of the correct type in the AddressList element.
+      This field is first in priority when the JAGGAER ONE solution is searching for an associated supplier address.
+      At least one of the following fields in this element must be present for the address:
+      • erpNumber
+      • thirdPartyRefNumber
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

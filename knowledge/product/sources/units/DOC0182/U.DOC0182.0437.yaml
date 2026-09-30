@@ -1,0 +1,147 @@
+id: U.DOC0182.0437
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: lineNumber | Attribute: - | Datatype: NUMBER(10)
+  Attribute: item/catalogNumber | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: item/description | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: item/productUnitOfMeasure/type | Attribute: - | Datatype: VARCHAR2(20 CHAR)
+  Attribute: item/productSize/type | Attribute: - | Datatype: VARCHAR2(20 CHAR)
+  Attribute: item/unspsc | Attribute: - | Datatype: VARCHAR2(8 CHAR)
+  Attribute: item/commodityCode | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: item/productReferenceNumber | Attribute: - | Datatype: NUMBER(19)
+  Attribute: item/productType | Attribute: - | Datatype: VARCHAR2(30 CHAR)
+  Attribute: item/manufacturerInfo/name | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: item/manufacturerInfo/partNumber | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: item/leadTimeDays | Attribute: - | Datatype: NUMBER(10)
+  Attribute: item/radioNuclide | Attribute: - | Datatype: VARCHAR2(10 CHAR)
+  Attribute: item/serialNumber | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: item/assetTagNumber | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: Item/itemMasterId | Datatype: VARCHAR2(100 CHAR)
+  Attribute: Item/commodityCodeType | Datatype: VARCHAR2(10 CHAR)
+  Attribute: quantity | Attribute: - | Datatype: NUMBER(15, 4)
+  Attribute: capitalExpense | Attribute: - | Datatype: BOOLEAN
+  Attribute: fixedAsset | Attribute: - | Datatype: BOOLEAN
+  Attribute: taxable | Attribute: - | Datatype: BOOLEAN
+  Attribute: lineCharges/unitPrice/money | Attribute: - | Datatype: NUMBER(15,4)
+  Attribute: lineCharges/unitPrice/currency | Attribute: - | Datatype: VARCHAR2(3 CHAR)
+  Attribute: lineCharges/useSystemCatalogPrice | Datatype: BOOLEAN
+  Attribute: deliveryInfo/expediteValue | Attribute: - | Datatype: BOOLEAN
+  Attribute: deliveryInfo/shippingMethod/carrier | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: deliveryInfo/shippingMethod/methodName | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: deliveryInfo/requestedDeliveryDate | Attribute: - | Datatype: DATE
+  Attribute: supplierInfo/accountCode | Attribute: - | Datatype: VARCHAR2(30 CHAR)
+hash: sha256:f46c166b4927bf34bf9d1fefb09b21167edab5a9173ec9ed58be7a5143043b2d
+words: 257
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Requisition Line Section (1 to n)
+  section_path: 2.7.0.3
+  page: 28
+  lang: en
+  prev: U.DOC0182.0436
+  next: U.DOC0182.0438
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - lineNumber
+      - "-"
+      - NUMBER(10)
+    - - item/catalogNumber
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - item/description
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - item/productUnitOfMeasure/type
+      - "-"
+      - VARCHAR2(20 CHAR)
+    - - item/productSize/type
+      - "-"
+      - VARCHAR2(20 CHAR)
+    - - item/unspsc
+      - "-"
+      - VARCHAR2(8 CHAR)
+    - - item/commodityCode
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - item/productReferenceNumber
+      - "-"
+      - NUMBER(19)
+    - - item/productType
+      - "-"
+      - VARCHAR2(30 CHAR)
+    - - item/manufacturerInfo/name
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - item/manufacturerInfo/partNumber
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - item/leadTimeDays
+      - "-"
+      - NUMBER(10)
+    - - item/radioNuclide
+      - "-"
+      - VARCHAR2(10 CHAR)
+    - - item/serialNumber
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - item/assetTagNumber
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - Item/itemMasterId
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - Item/commodityCodeType
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - quantity
+      - "-"
+      - NUMBER(15, 4)
+    - - capitalExpense
+      - "-"
+      - BOOLEAN
+    - - fixedAsset
+      - "-"
+      - BOOLEAN
+    - - taxable
+      - "-"
+      - BOOLEAN
+    - - lineCharges/unitPrice/money
+      - "-"
+      - NUMBER(15,4)
+    - - lineCharges/unitPrice/currency
+      - "-"
+      - VARCHAR2(3 CHAR)
+    - - lineCharges/useSystemCatalogPrice
+      - ""
+      - BOOLEAN
+    - - deliveryInfo/expediteValue
+      - "-"
+      - BOOLEAN
+    - - deliveryInfo/shippingMethod/carrier
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - deliveryInfo/shippingMethod/methodName
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - deliveryInfo/requestedDeliveryDate
+      - "-"
+      - DATE
+    - - supplierInfo/accountCode
+      - "-"
+      - VARCHAR2(30 CHAR)
+  block: 1
+  blocks: 2

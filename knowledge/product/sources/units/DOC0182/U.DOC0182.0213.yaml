@@ -1,0 +1,47 @@
+id: U.DOC0182.0213
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: lineNumber | Mandatory (Y/N): Y | Description: Line number of the AddressLine element. AddressLine information can be repeated up to 5 times, to define up to 5 lines in the address, so this value represents the order of the line in the global address.
+  Valid values:
+  1
+  2
+  3
+  4
+  5
+hash: sha256:f74ffd4e966d50d01f5a141f2a239577605c0758b7fd75e48352e24b4b550ee1
+words: 52
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Address Line [PR Import]
+  section_path: 2.1.1.32
+  page: 24
+  lang: en
+  prev: U.DOC0182.0212
+  next: U.DOC0182.0214
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - lineNumber
+    - Y
+    - |-
+      Line number of the AddressLine element. AddressLine information can be repeated up to 5 times, to define up to 5 lines in the address, so this value represents the order of the line in the global address.
+      Valid values:
+      1
+      2
+      3
+      4
+      5
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

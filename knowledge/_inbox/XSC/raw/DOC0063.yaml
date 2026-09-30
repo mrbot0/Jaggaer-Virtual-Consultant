@@ -1,0 +1,241 @@
+doc: S.STD.XSC.DOC.0063.v2
+scope: XSC
+extracted_at: 2026-09-30T04:30:50.374Z
+tier: T0
+stats:
+  units: 26
+  extracted_units: 6
+  document_candidates: 0
+  needs_llm: 3
+  t0_complete: 3
+  by_candidate:
+    FLW: 2
+    FLD: 2
+    GLS: 1
+    CFG: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 1252
+  sessions:
+    - n: 1
+      tokens: 1252
+      batches: 1
+      items: 3
+      batch_items:
+        - - R.DOC0063.0002
+          - R.DOC0063.0017
+          - R.DOC0063.0026
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0063.0002
+    source_unit: U.DOC0063.0002
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0063.v2
+    section: sc-perspective-converting-jaggaer-csv-files-to-e-898b39f1
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: in Excel, separating in columns
+          valore: null
+        - n: 2
+          verbo: edit
+          oggetto: in Excel, save as csv, close
+          valore: null
+        - n: 3
+          verbo: open
+          oggetto: the file in Notepad
+          valore: null
+        - n: 4
+          verbo: “replace
+          oggetto: all” double quotes with commas OR “replace all” semicolons with commas
+          valore: Replace all
+        - n: 5
+          verbo: re-save
+          oggetto: Re-save
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0063.0002
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 73
+  - raw_id: R.DOC0063.0013
+    source_unit: U.DOC0063.0013
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0063.v2
+    section: sc-perspective-converting-jaggaer-csv-files-to-e-898b39f1
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: As a rule, Excel
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0063.0013
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0063.0017
+    source_unit: U.DOC0063.0017
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0063.v2
+    section: sc-perspective-converting-jaggaer-csv-files-to-e-898b39f1
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: pipe
+          oggetto: delimited files for integrations (instead of using comma-delimited files), or pipe qualified delimited files (even more robust)
+          valore: null
+        - n: 2
+          verbo: excel
+          oggetto: for User Interface managed uploads (since Excel will change the comma for the point and vice-versa based on the user’s own settings). In JA all of the file upload features are managed through Excel, never through CSV files
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0063.0017
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 101
+  - raw_id: R.DOC0063.0020
+    source_unit: U.DOC0063.0020
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0063.v2
+    section: sc-perspective-converting-jaggaer-csv-files-to-e-898b39f1
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - GLS
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This
+      definition: an excel setting
+      aliases: []
+      lang: en
+      source_unit: U.DOC0063.0020
+    needs_llm: false
+    tokens: 6
+  - raw_id: R.DOC0063.0024
+    source_unit: U.DOC0063.0024
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0063.v2
+    section: sc-perspective-converting-jaggaer-csv-files-to-e-898b39f1
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: For “List separator”
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0063.0024
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0063.0026
+    source_unit: U.DOC0063.0026
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0063.v2
+    section: sc-perspective-converting-jaggaer-csv-files-to-e-898b39f1
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTE: Some JI training participants have used an online converter effectively. It’s found at jsonformatter.org."
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0063.0026
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 28

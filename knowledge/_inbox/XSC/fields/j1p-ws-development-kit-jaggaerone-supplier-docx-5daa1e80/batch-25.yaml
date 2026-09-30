@@ -1,0 +1,106 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-25
+section: 2.1.1.28
+section_title: J1Supplier/JISupplierData/addressList/address/phone
+part: 1
+parts: 1
+rows:
+  - key: tech:TELEPHONENUMBER
+    label: telephoneNumber
+    labels:
+      - telephoneNumber
+    technical_name: TELEPHONENUMBER
+    section: 2.1.1.28
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.28
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.28#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: telephoneNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.30#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: telephoneNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.32
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.32#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: telephoneNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.39
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.39#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: telephoneNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.41
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.41#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: telephoneNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.43
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.43#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: telephoneNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.47
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.47#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: telephoneNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.86
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.86#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: telephoneNumber
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.114
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.114#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: telephoneNumber
+        type: null
+        mandatory_text: Y
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - N
+          - Y
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+tokens_estimate: 1252

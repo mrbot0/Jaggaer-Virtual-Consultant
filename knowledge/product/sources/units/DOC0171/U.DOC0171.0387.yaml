@@ -1,0 +1,72 @@
+id: U.DOC0171.0387
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Colonne: name | N | N | Section name | Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique | Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique name: sectionPos | N: Y | N: Y | Section name: Section position name: parameterList | N: Y | N: Y | Section name: Container object for a list of parameters name: parameter | N: Y (one of the two) | N: Y (one of the two) | Section name: Technical Parameter identifier. id or paramPos can be provided. id is preferred name: id | N: id | N: Y (one of the two) | Section name: Technical Parameter identifier. id or paramPos can be provided. id is preferred | Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique: Technical Parameter identifier. id or paramPos can be provided. id is preferred | Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique: JA internal identifier of an existing commercial parameter. If provided and the section doesn’t contain a parameter with such identifier, no score is updated. Position of the score row. Used only if no value is provided in id field. It represents the position of the parameter. name: paramPos | N: paramPos | Section name: Technical position of the score row | Section number or Name of an existing technical section to update."
+hash: sha256:205b1954acbfaebf363a51308b1f7851748aeba2971b7baa57697bd7ba66b974
+words: 294
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Technical Envelope Scoring [ImportScore method]
+  section_path: 2.2.1.1
+  page: 7
+  lang: en
+  prev: U.DOC0171.0386
+  next: U.DOC0171.0388
+table:
+  table: 1
+  headers:
+    - name
+    - N
+    - N
+    - Section name
+    - Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique
+    - Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique
+  rows:
+    - - sectionPos
+      - Y
+      - Y
+      - Section position
+      - ""
+      - ""
+    - - parameterList
+      - Y
+      - Y
+      - Container object for a list of parameters
+      - ""
+      - ""
+    - - parameter
+      - Y (one of the two)
+      - Y (one of the two)
+      - Technical Parameter identifier. id or paramPos can be provided. id is preferred
+      - ""
+      - ""
+    - - id
+      - id
+      - Y (one of the two)
+      - Technical Parameter identifier. id or paramPos can be provided. id is preferred
+      - Technical Parameter identifier. id or paramPos can be provided. id is preferred
+      - |-
+        JA internal identifier of an existing commercial parameter.
+        If provided and the section doesn’t contain a parameter with such identifier, no score is updated.
+        Position of the score row.
+        Used only if no value is provided in id field. It represents the position of the parameter.
+    - - paramPos
+      - paramPos
+      - ""
+      - Technical position of the score row
+      - Technical position of the score row
+      - ""
+    - - score
+      - score
+      - Y
+      - The technical envelope score the provide supplier
+      - The technical envelope score the provide supplier
+      - Numbers with up to 3 digits of decimal precision(Example 12.345)
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

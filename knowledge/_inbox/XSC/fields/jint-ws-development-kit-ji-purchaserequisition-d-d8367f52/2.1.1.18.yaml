@@ -1,0 +1,53 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.18
+section_title: Unit Price [PR Import]
+genre: tecnica
+rows:
+  - label: money
+    technical_name: money
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Price per unit. This is a numeric value of up to 15 digits, including up
+      to 4 decimal places.
+
+      Must be a positive number or zero.
+
+      DEPRECATED: uses field “money” of “price” attribute
+    section: 2.1.1.18
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.18#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: currency
+    technical_name: currency
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Exchangeable currency code. See the Integration Currency Codes document in
+      the JAGGAER Indirect Online Help for valid currency codes.
+
+      Must be a currency code of an active currency.
+
+      DEPRECATED: uses field “currency” of “price” attribute
+    section: 2.1.1.18
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.18#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: price
+    technical_name: price
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Monetary information about price.
+      See section “Money [PR Import]” above.
+    section: 2.1.1.18
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.18#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

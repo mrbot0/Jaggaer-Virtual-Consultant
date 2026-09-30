@@ -1,0 +1,43 @@
+id: U.DOC0183.0176
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: riga-tabella-campi
+text: |-
+  Attribute: status | Mandatory (Y/N): Y | Description: Status of the validation request.
+  It can assume following value:
+  Approved: all receipt elements passed validation
+  Rejected: all receipt elements failed validation
+  Returned: one or more receipt elements failed the validation, but at least one element or field succeeded
+hash: sha256:e9fce485b816f253039d264b98a6b5d6270f8acc2831d035d666409115b93759
+words: 47
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: ValidateReceiptData [Validate]
+  section_path: 2.3.1.2
+  page: 18
+  lang: en
+  prev: U.DOC0183.0175
+  next: U.DOC0183.0177
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - status
+    - Y
+    - |-
+      Status of the validation request.
+      It can assume following value:
+      Approved: all receipt elements passed validation
+      Rejected: all receipt elements failed validation
+      Returned: one or more receipt elements failed the validation, but at least one element or field succeeded
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

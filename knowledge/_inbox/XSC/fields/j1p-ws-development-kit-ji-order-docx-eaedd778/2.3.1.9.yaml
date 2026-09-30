@@ -1,0 +1,56 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.9
+section_title: Attachment [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: fileName
+    technical_name: fileName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the attachment.
+    section: 2.3.1.9
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.9#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: fileId
+    technical_name: fileId
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: User-defined ID of the attachment
+    section: 2.3.1.9
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.9#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: fileBase64
+    technical_name: fileBase64
+    type: null
+    mandatory_text: At least one between fileBase64 and attachmentURL must be defined
+    allowed_values: []
+    notes: |-
+      File content to be used to define attachment.
+      If not provided, the field attachmentURL is used.
+    section: 2.3.1.9
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.9#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: attachmentURL
+    technical_name: attachmentURL
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      URL of the attachment.
+
+      Used only if no data is provided in fileBase64 field to define an URL
+      based Attachment.
+    section: 2.3.1.9
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.9#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

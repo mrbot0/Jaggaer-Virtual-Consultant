@@ -1,0 +1,56 @@
+id: U.DOC0139.0007
+doc: S.STD.XSC.DOC.0139
+doc_id: workflow-typical-epro-wf-steps-guidelines-xlsx-39f47465
+type: tabella
+text: "Premier PO Workflow: Set up status: | Premier PO Workflow / Invalid Distribution: Set up Brittany and Tim as approvers (Completed) | Premier PO Workflow / Revise PO: (Completed) | Premier PO Workflow / PO Distribution: (Completed) | Premier PO Workflow / PO Requires Cost Matching: (Completed) | Premier PO Workflow / Auto Invoice: (Completed)"
+hash: sha256:c51164414ac7c85546b70ee603eed4521ed359c7fe859e6979a7ffcb6e547413
+words: 55
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0139
+  chapter: PO Workflow
+  section: PO Workflow
+  section_path: sheet-2
+  page: null
+  lang: en
+  prev: U.DOC0139.0006
+  next: U.DOC0139.0008
+table:
+  table: 0
+  headers:
+    - Premier PO Workflow
+    - Premier PO Workflow / Invalid Distribution
+    - Premier PO Workflow / Revise PO
+    - Premier PO Workflow / PO Distribution
+    - Premier PO Workflow / PO Requires Cost Matching
+    - Premier PO Workflow / Auto Invoice
+  rows:
+    - - "Step Type:"
+      - Manual
+      - Automated
+      - Automated
+      - Automated
+      - Automated
+    - - "Location of Approver(s):"
+      - Explicit Approval Folder
+      - N/A
+      - ADW (Manual PO Distribution)
+      - N/A
+      - N/A
+    - - "Description / Trigger(s):"
+      - Manual approval step that triggers when the supplier doesn't have a valid distribution method set up.
+      - Automated step that creates all PO distribution and export documents.
+      - Automated step which sends to PO out to the supplier.
+      - Automated step which triggers for blanket orders. This causes the PO to be flagged as a draw-down PO.
+      - Automated step that flips the PO to an invoice automatically. This is triggered for all payment requests.
+    - - "Set up status:"
+      - Set up Brittany and Tim as approvers (Completed)
+      - (Completed)
+      - (Completed)
+      - (Completed)
+      - (Completed)
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

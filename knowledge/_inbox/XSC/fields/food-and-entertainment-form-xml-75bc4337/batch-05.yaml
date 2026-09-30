@@ -1,0 +1,39 @@
+document: food-and-entertainment-form-xml-75bc4337
+scope: XSC
+batch: batch-05
+section: campi-5
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:F_E_FORM_IMAGE
+    label: F&E Form Image
+    labels:
+      - F&E Form Image
+    technical_name: F_E_FORM_IMAGE
+    section: campi-5
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=1;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/48443.png ·
+      id=10302 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-5
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: F&E Form Image
+        type: Image
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 688

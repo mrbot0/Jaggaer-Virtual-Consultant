@@ -1,0 +1,55 @@
+id: U.DOC0171.0478
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: user/Id | Description: User Internal identifier
+  Attribute: user/code | Description: User External code
+  Attribute: user/name | Description: User fullname
+  Attribute: user/login | Description: User login (if configured to be exported) | Available from version: JINT_20_02_00
+  Attribute: creationDate | Description: Date of creation of the comment
+  Attribute: comment | Description: Comment of the user
+  Attribute: attachment | Description: Attachment of the comment (if any) [see section “Comment Attachment” below]
+hash: sha256:4206b19bae5d5304c0944d0a0457ca24935fe5cf6f707d7ef748b33dbdd16e37
+words: 77
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Comment Data [Export RfX method]
+  section_path: 2.3.4.37
+  page: 7
+  lang: en
+  prev: U.DOC0171.0477
+  next: U.DOC0171.0479
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - user/Id
+      - User Internal identifier
+      - ""
+    - - user/code
+      - User External code
+      - ""
+    - - user/name
+      - User fullname
+      - ""
+    - - user/login
+      - User login (if configured to be exported)
+      - JINT_20_02_00
+    - - creationDate
+      - Date of creation of the comment
+      - ""
+    - - comment
+      - Comment of the user
+      - ""
+    - - attachment
+      - Attachment of the comment (if any) [see section “Comment Attachment” below]
+      - ""
+  block: 1
+  blocks: 1

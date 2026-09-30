@@ -1,0 +1,41 @@
+id: U.DOC0178.0237
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: minimumContractSpendPerInvoice | Description: Minimum contract spend amount allowed on the contract per invoice.
+  This value overwrites any existing value on the contract.
+  Valid only for blanket Pos.
+  Note: If the useReqLimitsForInvoice field is set to true, this field does not appear in the contract export message.
+hash: sha256:87ae64a51a6044ed4180d9c687c597d2211714c3215c8ef2f5ed689beba72b79
+words: 47
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Eprocurement [Import]
+  section_path: 2.2.1.24
+  page: 42
+  lang: en
+  prev: U.DOC0178.0236
+  next: U.DOC0178.0238
+row:
+  table: 0
+  row: 17
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - minimumContractSpendPerInvoice
+    - ""
+    - |-
+      Minimum contract spend amount allowed on the contract per invoice.
+      This value overwrites any existing value on the contract.
+      Valid only for blanket Pos.
+      Note: If the useReqLimitsForInvoice field is set to true, this field does not appear in the contract export message.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

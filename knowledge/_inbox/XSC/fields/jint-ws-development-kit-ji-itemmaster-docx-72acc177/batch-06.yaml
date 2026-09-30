@@ -1,0 +1,124 @@
+document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+scope: XSC
+batch: batch-06
+section: 2.1.1.6
+section_title: SupplierItem [Item Master Import method]
+part: 1
+parts: 1
+rows:
+  - key: tech:UNITOFMEASURE
+    label: unitOfMeasure
+    labels:
+      - unitOfMeasure
+    technical_name: UNITOFMEASURE
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Identifies Packaging or size unit for the supplier item, such as EA
+      (each), PK (pack), KG (kg), or LG (large).
+    sources:
+      - document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+        section: 2.1.1.6
+        source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: unitOfMeasure
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:SUPPLIER
+    label: supplier
+    labels:
+      - supplier
+    technical_name: SUPPLIER
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or max one Supplier
+      See section Supplier [Item Master Import method]
+    sources:
+      - document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+        section: 2.1.1.6
+        source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.6#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: supplier
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SUPPLIERPARTNUMBER
+    label: supplierPartNumber
+    labels:
+      - supplierPartNumber
+    technical_name: SUPPLIERPARTNUMBER
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Identifies supplier's part number (SKU code) for the item.
+    sources:
+      - document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+        section: 2.1.1.6
+        source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.6#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: supplierPartNumber
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:PRICING
+    label: pricing
+    labels:
+      - pricing
+    technical_name: PRICING
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: See section Pricing [Item Master Import method]
+    sources:
+      - document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+        section: 2.1.1.6
+        source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.6#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: pricing
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1213

@@ -1,0 +1,52 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.33
+section_title: Credit Card [PR Import]
+genre: tecnica
+rows:
+  - label: cardName
+    technical_name: cardName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of credit card holder.
+    section: 2.1.1.33
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.33#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: cardNumber
+    technical_name: cardNumber
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Credit card number
+    section: 2.1.1.33
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.33#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: expirationDate
+    technical_name: expirationDate
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Expiration date of the credit card, in the following format:
+      yyyy-mm
+    section: 2.1.1.33
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.33#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: cardSecurityCode
+    technical_name: cardSecurityCode
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Credit card security code.
+    section: 2.1.1.33
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.33#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

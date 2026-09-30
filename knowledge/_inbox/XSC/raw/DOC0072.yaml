@@ -1,0 +1,512 @@
+doc: S.STD.XSC.DOC.0072
+scope: XSC
+extracted_at: 2026-09-30T04:30:30.642Z
+tier: T0
+stats:
+  units: 84
+  extracted_units: 14
+  document_candidates: 0
+  needs_llm: 6
+  t0_complete: 8
+  by_candidate:
+    FLD: 14
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2440
+  sessions:
+    - n: 1
+      tokens: 2440
+      batches: 1
+      items: 6
+      batch_items:
+        - - R.DOC0072.0026
+          - R.DOC0072.0042
+          - R.DOC0072.0058
+          - R.DOC0072.0063
+          - R.DOC0072.0067
+          - R.DOC0072.0080
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0072.0003
+    source_unit: U.DOC0072.0003
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: Category,Commodity Code, UN/SPSC and UOM Mapping
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: What
+      modality: raccomandazione
+      condition: being imported into the site and how the internationally recognized UN/SPSC values should be structured in integration point messages
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0003
+    needs_llm: false
+    tokens: 84
+  - raw_id: R.DOC0072.0007
+    source_unit: U.DOC0072.0007
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: Category,Commodity Code, UN/SPSC and UOM Mapping
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: new framework
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0007
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0072.0019
+    source_unit: U.DOC0072.0019
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: "Commodity Code Values Export/Import:"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Then select the Import/Export tab. The user
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0019
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0072.0021
+    source_unit: U.DOC0072.0021
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: "Commodity Code Values Export/Import:"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: end user
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0021
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0072.0026
+    source_unit: U.DOC0072.0026
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: Configuration
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: UOM mapping is needed, how units of measure should be displayed in the site and how the units of measure on documents should be interpreted when exported or imported with an ERP (Enterprise Resource Planning) system
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0026
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 90
+  - raw_id: R.DOC0072.0034
+    source_unit: U.DOC0072.0034
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: In the old framework, these values were inherited from Default org. With the new framework this is no longer the case.
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: How
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0034
+    needs_llm: false
+    tokens: 57
+  - raw_id: R.DOC0072.0042
+    source_unit: U.DOC0072.0042
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: What is a UNSPSC code?
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0072.0042
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 60
+  - raw_id: R.DOC0072.0046
+    source_unit: U.DOC0072.0046
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: What is a UNSPSC code?
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: then JAGGAER
+      modality: obbligo-condizionale
+      condition: these new taxonomy values are introduced
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0072.0046
+      mandatory:
+        kind: conditional
+        when: these new taxonomy values are introduced
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0072.0056
+    source_unit: U.DOC0072.0056
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: "Notes from testing - comparison between existing functions in Rambo 17.3 and Daffy 18.1:"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: original help text for the
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0056
+    needs_llm: false
+    tokens: 48
+  - raw_id: R.DOC0072.0058
+    source_unit: U.DOC0072.0058
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: "Notes from testing - comparison between existing functions in Rambo 17.3 and Daffy 18.1:"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0058
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 77
+  - raw_id: R.DOC0072.0060
+    source_unit: U.DOC0072.0060
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: "Notes from testing - comparison between existing functions in Rambo 17.3 and Daffy 18.1:"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: above settings to the populated commodity code
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0060
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0072.0063
+    source_unit: U.DOC0072.0063
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: "Notes from testing - comparison between existing functions in Rambo 17.3 and Daffy 18.1:"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: this setting is equal to true
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0063
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 37
+  - raw_id: R.DOC0072.0067
+    source_unit: U.DOC0072.0067
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: "Notes from testing - comparison between existing functions in Rambo 17.3 and Daffy 18.1:"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0072.0067
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 51
+  - raw_id: R.DOC0072.0080
+    source_unit: U.DOC0072.0080
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0072
+    section: "FAQ:"
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0072.0080
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25

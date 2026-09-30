@@ -1,0 +1,66 @@
+id: U.DOC0174.0070
+doc: S.STD.XSC.DOC.0174
+doc_id: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+type: tabella
+text: |-
+  Colonne: Folder | File Name | Description
+  Folder: CREATE_UPDATE | File Name: <PREFIX>CFVALUE.CSV | Description: Information about custom field values to be modified (created or updated).
+  File Name: <PREFIX>CFVALUEDEL.CSV | Description: Information about custom field values to be deleted.
+  File Name: <PREFIX>CFVAPPROVER.CSV | Description: List of approver users related to the custom field value. The approvers list works in FULL-REFRESH. All approvers must be passed.
+  File Name: <PREFIX>CFVBU.CSV | Description: List of business units assigned to the custom field value.
+  Whatever the component of the custom field you want to update, if the custom field value has an existing business unit associated with it, this file must always be provided; otherwise, the existing business unit will be removed.
+  File Name: <PREFIX>CFVWFRULEDEL.CSV | Description: List of WF dynamic rules to be deleted related to the custom field value.
+  File Name: <PREFIX>CFVWFRULEMOD.CSV | Description: List of WF dynamic rules to be created or updated related to the custom field value.
+  File Name: <PREFIX>CFVWFAPPROVER.CSV | Description: List of approver users related to the WF dynamic rule. The approvers list works in FULL-REFRESH. All approvers must be passed.
+  File Name: <PREFIX>CFRELATIONSHIPMOD.CSV | Description: Information about custom field relationships to be added.
+  File Name: <PREFIX>CFRELATIONSHIPDEL.CSV | Description: Information about custom field relationships to be deleted.
+hash: sha256:3331b868ace5ce6d9bb23672e8fac73770687863db9d42b192f562a8f4293cb4
+words: 210
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0174
+  chapter: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0174.0069
+  next: U.DOC0174.0071
+table:
+  table: 4
+  headers:
+    - Folder
+    - File Name
+    - Description
+  rows:
+    - - CREATE_UPDATE
+      - <PREFIX>CFVALUE.CSV
+      - Information about custom field values to be modified (created or updated).
+    - - ""
+      - <PREFIX>CFVALUEDEL.CSV
+      - Information about custom field values to be deleted.
+    - - ""
+      - <PREFIX>CFVAPPROVER.CSV
+      - List of approver users related to the custom field value. The approvers list works in FULL-REFRESH. All approvers must be passed.
+    - - ""
+      - <PREFIX>CFVBU.CSV
+      - |-
+        List of business units assigned to the custom field value.
+        Whatever the component of the custom field you want to update, if the custom field value has an existing business unit associated with it, this file must always be provided; otherwise, the existing business unit will be removed.
+    - - ""
+      - <PREFIX>CFVWFRULEDEL.CSV
+      - List of WF dynamic rules to be deleted related to the custom field value.
+    - - ""
+      - <PREFIX>CFVWFRULEMOD.CSV
+      - List of WF dynamic rules to be created or updated related to the custom field value.
+    - - ""
+      - <PREFIX>CFVWFAPPROVER.CSV
+      - List of approver users related to the WF dynamic rule. The approvers list works in FULL-REFRESH. All approvers must be passed.
+    - - ""
+      - <PREFIX>CFRELATIONSHIPMOD.CSV
+      - Information about custom field relationships to be added.
+    - - ""
+      - <PREFIX>CFRELATIONSHIPDEL.CSV
+      - Information about custom field relationships to be deleted.
+  block: 1
+  blocks: 1

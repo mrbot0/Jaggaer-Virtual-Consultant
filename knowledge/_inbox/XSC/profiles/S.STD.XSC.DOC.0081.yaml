@@ -1,0 +1,96 @@
+id: S.STD.XSC.DOC.0081
+type: DOC
+title: catalog-item-file-template-xlsx-3c03d9b6
+summary: 'Documento dati-import (tecnica, origine vendor)
+  "catalog-item-file-template-xlsx-3c03d9b6": 3 unità, 3 tabelle, 0 tabelle di
+  campi; scope VEN, CON, CAT; affidabilità 0.48.'
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2019-01-08
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-epro_3000/Class file/catalog_item file_template.xlsx
+    sha256: sha256:95bf55c0cd169f0748e20347f50ff710a4ed60ce695d3b516cd26679cc620d2a
+kind: dati-import
+genre: tecnica
+origin: vendor
+version: null
+dated: 2019-01-08
+covers_release: null
+languages:
+  - en
+scopes:
+  - VEN
+  - CON
+  - CAT
+source:
+  path: CORSI/JI-epro_3000/Class file/catalog_item file_template.xlsx
+  sha256: sha256:95bf55c0cd169f0748e20347f50ff710a4ed60ce695d3b516cd26679cc620d2a
+  size: 41360
+  format: xlsx
+  doc_id: catalog-item-file-template-xlsx-3c03d9b6
+  doc_key: catalog-item-file-template.xlsx
+structure:
+  pages: null
+  chapters: 4
+  sections: 4
+  tables: 3
+  figures: 0
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 3
+  by_type:
+    tabella: 3
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: 'foglio Content and List Price: intestazione su due righe, composta come
+      "gruppo / colonna"'
+    status: parser
+  - section: null
+    note: 'foglio Multiple Prices: intestazione su due righe, composta come "gruppo
+      / colonna"'
+    status: parser
+  - section: null
+    note: 'foglio Punchout Accessibility: intestazione su due righe, composta come
+      "gruppo / colonna"'
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 3
+  items_produced: 0
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0
+  last_run: 2026-09-30
+  estimated_tokens: 0
+  sessions_planned: 0

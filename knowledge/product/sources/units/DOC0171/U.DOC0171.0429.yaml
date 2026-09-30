@@ -1,0 +1,233 @@
+id: U.DOC0171.0429
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Available when commScoringAlgorithm is BETTER_ABOVE_AVERAGE_DISCOUNT. | Available from version: BA_16_03 Attribute: hideValueFromSupplier | Description: Hide value from suppliers flag: 0 = value visible to suppliers 1 = value not visible to suppliers | Available from version: BA_16_04 Attribute: reservedPrice | Description: Reserved price | Available from version: BA_16_04 Attribute: enableOpeningCommittees | Description: Enable opening committees flag: 0 = disable opening committees 1 = enable opening committees | Available from version: BA_16_04 Attribute: endDateBuyerReplyMessages | Description: End date and time for buyer replies to messages | Available from version: BA_16_04 Attribute: maxScoreVisibleToSuppliers | Description: Max score visible to suppliers flag. Available only when supplier response ranking is BEST_TECHNICAL_SCORE (Best Technical Score) or MOST_ECONOMICAL_ADVANTAGEOUS (Best Score). Possible values: 0 = No 1 = Envelope Level Only 2 = Including Section and Question Level | Available from version: BA_16_04 Attribute: numReOpenRounds | Description: Number of re-opening rounds | Available from version: BA_17_00 Attribute: numUltimateOffers | Description: Number of ultimate offers requested | Available from version: BA_17_00 Attribute: multicurrencyBids | Description: Multicurrency bidding flag: 0 = disable multicurrency bidding 1 = enable multicurrency bidding | Available from version: BA_17_01 Attribute: multicurrencyTCO | Description: Flag to apply currency conversion to TCO: 0 = not apply currency conversion to TCO 1 = apply currency conversion to TCO | Available from version: BA_17_01 Attribute: rfqMlotBehaviour | Description: Rfq behavior in project. Visible in case of multi lot tender. • 1 = qualification only; • 0 = technical/ commercial; | Available from version: BA_17_02 Attribute: visibilityEGComments | Description: Blind evaluation comments for evaluation groups."
+hash: sha256:8b21fe131b52aaaec28398ed80af3e4889bddd3f313fe1032e8083ccc4907a59
+words: 256
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: RfX Setting [Export RfX method]
+  section_path: 2.3.4.1
+  page: 7
+  lang: en
+  prev: U.DOC0171.0428
+  next: U.DOC0171.0430
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - prDocumentType
+      - |-
+        PR document type (only if PR_DOCUMENT_TYPE component filter is available):
+        documentTypeId: internal identifier of the document type;
+        shortDescription: short description of the document type;
+        detailedDescription: detailed description of the document type;
+        documentTypeOwner: company owner of the document type:
+        id: internal identifier of the company
+        code: external code of the company
+        name: name of the company
+      - ""
+    - - rfxType
+      - RfX Typology external code
+      - 12_3_1_01
+    - - rfxTypeDescription
+      - RfX Typology short description (default language)
+      - 12_3_1_01
+    - - qualEnvelopeDigitalSignature
+      - |-
+        Qualification envelope digital signature configuration:
+        NOT_MANDATORY
+        NO
+      - 12_4_0_00
+    - - techEnvelopeDigitalSignature
+      - |-
+        Technical envelope digital signature configuration:
+        NOT_MANDATORY
+        NO
+      - 12_4_0_00
+    - - commEnvelopeDigitalSignature
+      - |-
+        Commercial envelope digital signature configuration:
+        NOT_MANDATORY
+        NO
+      - 12_4_0_00
+    - - supplierAgreementFeeAmount
+      - When the supplier agreement is “Contract Fee” it indicates the fee amount that supplier must pay
+      - 12_4_0_03
+    - - tcoHeader
+      - Redefined header for TCO additional column
+      - BA_16_01
+    - - tcoVisibleToSuppliers
+      - |-
+        Visibility of TCO additional column:
+        0 = not visible to suppliers
+        1 = visible to suppliers
+      - BA_16_01
+    - - consortiumAvailable
+      - |-
+        Flag to allow suppliers to respond by consortium.
+        In case of Rfx single lot, possible values are:
+        0 = not allowed
+        1 = allowed
+        In case of Rfx multi lots, possible values are:
+        0 = not allowed
+        1 = allowed and can be different for each lot
+        2 = allowed and must be the same for all lots
+      - BA_16_02
+    - - defaultScoringCalcCriteria
+      - |-
+        Default type of scoring calculation.
+        Available when rankingStrategy is BEST_TECHNICAL_SCORE or MOST_ECONOMICAL_ADVANTAGEOUS.
+        Possible values:
+        AUTOMATIC
+        ON_DEMAND
+      - BA_16_03
+    - - scoringMethod
+      - |-
+        Flag indicating the scoring method.
+        Available when rankingStrategy is BEST_TECHNICAL_SCORE or MOST_ECONOMICAL_ADVANTAGEOUS.
+        Possible values:
+        A = Absolute
+        W = Percentage Weight
+      - BA_16_03
+    - - maxTechScore
+      - |-
+        Maximum technical score.
+        Only for scoringMethod = A.
+      - BA_16_03
+    - - maxCommScore
+      - |-
+        Maximum commercial score.
+        Only for scoringMethod = A.
+      - BA_16_03
+    - - commEnvScoringMode
+      - |-
+        Scoring algorithm level (only for best score absolute or percentage).
+        Possible values:
+        0 = Based on Supplier Total Price (Grand total)
+        1 = Aggregation of Supplier Section Scores (Section total)
+      - BA_16_03
+    - - commScoringAlgorithm
+      - |-
+        Scoring algorithm to calculate the score.
+        Available when commEnvScoringMode = 0.
+        Possible values:
+        PROPORTIONAL_VS_BEST = Proportional vs Best
+        BETTER_ABOVE_AVERAGE_DISCOUNT = Better Above Average Discount
+        DIFFERENTIAL_VS_BASE_PRICE = Differential vs Base Price
+        LINEAR = Linear (Worst=0)
+        COPY_TCO = Copy of TCO
+        NO_FORMULA = No formula
+      - BA_16_03
+    - - commAlgorithmInputData
+      - |-
+        Source for Scoring algorithm.
+        Available when commScoringAlgorithm is not NO_FORMULA.
+        Possible values:
+        PRICE
+        TCO
+      - BA_16_03
+    - - commAlgorithmValuesStrategy
+      - |-
+        Price values strategy.
+        Available when commScoringAlgorithm is not NO_FORMULA.
+        Possible values:
+        REVERSE = lower price preferred
+        DIRECT = higher price preferred
+      - BA_16_03
+    - - commAlgorithmBaseValue
+      - |-
+        Base value for scoring algorithm.
+        Available when commScoringAlgorithm is BETTER_ABOVE_AVERAGE_DISCOUNT or DIFFERENTIAL_VS_BASE_PRICE.
+      - BA_16_03
+    - - commAlgorithmXParam
+      - X parameter between 0 and 1. Available when commScoringAlgorithm is BETTER_ABOVE_AVERAGE_DISCOUNT.
+      - BA_16_03
+    - - hideValueFromSupplier
+      - |-
+        Hide value from suppliers flag:
+        0 = value visible to suppliers
+        1 = value not visible to suppliers
+      - BA_16_04
+    - - reservedPrice
+      - Reserved price
+      - BA_16_04
+    - - enableOpeningCommittees
+      - |-
+        Enable opening committees flag:
+        0 = disable opening committees
+        1 = enable opening committees
+      - BA_16_04
+    - - endDateBuyerReplyMessages
+      - End date and time for buyer replies to messages
+      - BA_16_04
+    - - maxScoreVisibleToSuppliers
+      - |-
+        Max score visible to suppliers flag. Available only when supplier response ranking is BEST_TECHNICAL_SCORE (Best Technical Score) or
+        MOST_ECONOMICAL_ADVANTAGEOUS (Best Score).
+        Possible values:
+        0 = No
+        1 = Envelope Level Only
+        2 = Including Section and Question Level
+      - BA_16_04
+    - - numReOpenRounds
+      - Number of re-opening rounds
+      - BA_17_00
+    - - numUltimateOffers
+      - Number of ultimate offers requested
+      - BA_17_00
+    - - multicurrencyBids
+      - |-
+        Multicurrency bidding flag:
+        0 = disable multicurrency bidding
+        1 = enable multicurrency bidding
+      - BA_17_01
+    - - multicurrencyTCO
+      - |-
+        Flag to apply currency conversion to TCO:
+        0 = not apply currency conversion to TCO
+        1 = apply currency conversion to TCO
+      - BA_17_01
+    - - rfqMlotBehaviour
+      - |-
+        Rfq behavior in project. Visible in case of multi lot tender.
+        • 1 = qualification only;
+        • 0 = technical/ commercial;
+      - BA_17_02
+    - - visibilityEGComments
+      - |-
+        Blind evaluation comments for evaluation groups. Values:
+        0 – Always visible
+        1 – Blind behaviour
+      - BA_18_00
+    - - rfxAwardingType
+      - RfX Awarding Typology external code
+      - BA_18_03
+    - - rfxAwardingTypeDescription
+      - RfX Awarding Typology short description (default language)
+      - BA_18_03
+    - - templateFolderName
+      - In case of RfX template, it is the folder name containing the template
+      - JINT_20_01_02
+    - - totalReferencePrice
+      - |-
+        Total reference price, exported in case the exportTotalReferencePrice parameter is set to true
+        (it can have exponential notation)
+      - JINT_20_02_00
+    - - commAlgorithmExpParam
+      - Exponential parameter between 0,1 and 4. Available when commScoringAlgorithm is set on DIFFERENTIAL_VS_BASE_PRICE value.
+      - JINT_20_03_00
+    - - webApplicationServerTimeStamp
+      - WebApplicationServerTimeStamp to the export
+      - JINT_21_03_00
+  block: 3
+  blocks: 3
+part:
+  n: 3
+  of: 4

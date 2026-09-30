@@ -1,0 +1,535 @@
+document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+scope: XSC
+batch: batch-03
+section: 2.1.1.3
+section_title: Header [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:RECEIPTTYPE
+    label: receiptType
+    labels:
+      - receiptType
+    technical_name: RECEIPTTYPE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Type of receipt.
+
+      Quantity - A Quantity receipt is used when a PO is based on item quantity
+      times the unit price (such as non-catalog orders, hosted orders, and
+      punchout orders).
+
+      Cost- A Cost receipt is used when a PO is considered amount-only (such as
+      amount only POs, blanket POs, and service orders).
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: receiptType
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:RECEIPTNUMBER
+    label: receiptNumber
+    labels:
+      - receiptNumber
+    technical_name: RECEIPTNUMBER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Receipt number associated with the receipt.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: receiptNumber
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:RECEIPTNAME
+    label: receiptName
+    labels:
+      - receiptName
+    technical_name: RECEIPTNAME
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name assigned to the receipt
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: receiptName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:RECEIPTDATE
+    label: receiptDate
+    labels:
+      - receiptDate
+    technical_name: RECEIPTDATE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Date associated with the receipt for accounting purposes
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: receiptDate
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:RECEIPTCOMPLETEDATE
+    label: receiptCompleteDate
+    labels:
+      - receiptCompleteDate
+    technical_name: RECEIPTCOMPLETEDATE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Date the receipt was completed
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: receiptCompleteDate
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:RECEIVER
+    label: receiver
+    labels:
+      - receiver
+    technical_name: RECEIVER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Person who created the receipt.
+      See section “UserProfile [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: receiver
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:DEPARTMENT
+    label: department
+    labels:
+      - department
+    technical_name: DEPARTMENT
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Department associated with the receiver, from his or her profile.
+
+      Note: If the Department field is empty, the existing department in the
+      Invoicing solution is not overwritten.
+
+      Only a populated Department field can overwrite the existing department.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: department
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RECEIPTADDRESS
+    label: receiptAddress
+    labels:
+      - receiptAddress
+    technical_name: RECEIPTADDRESS
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Receipt Address information.
+      See section “ReceiptAddress [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: receiptAddress
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PACKINGSLIPNUMBER
+    label: packingSlipNumber
+    labels:
+      - packingSlipNumber
+    technical_name: PACKINGSLIPNUMBER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Supplier's packing slip number
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: packingSlipNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CARRIER
+    label: carrier
+    labels:
+      - carrier
+    technical_name: CARRIER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Internal name of the selected carrier.
+
+      The specified shipping method must be present and active for the specified
+      Carrier.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: carrier
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SHIPPINGMETHOD
+    label: shippingMethod
+    labels:
+      - shippingMethod
+    technical_name: SHIPPINGMETHOD
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Internal name of the shipping method.
+      The specified shipping method must be present and active.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: shippingMethod
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TRACKINGNUMBER
+    label: trackingNumber
+    labels:
+      - trackingNumber
+    technical_name: TRACKINGNUMBER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Tracking number associated with the receipt
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: trackingNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:NOTE
+    label: note
+    labels:
+      - note
+    technical_name: NOTE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Text note attached to the receipt header.
+
+      If the note is longer than 1000 characters, it is truncated and saved.
+
+      Note: If the Note field is empty, the existing note in the Invoicing
+      solution is not overwritten. Only a populated Note field can overwrite the
+      existing note.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: note
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: note
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.3.1.2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: note
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLEXTEXT1
+    label: flexText1
+    labels:
+      - flexText1
+    technical_name: FLEXTEXT1
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flex text attached to the receipt header.
+
+      It is an organization-managed, freeform field which can be renamed (in
+      Field Management) and used in whatever way seems appropriate to enables
+      organizations tracking their own custom data elements
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: flexText1
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: flexText1
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLEXTEXT2
+    label: flexText2
+    labels:
+      - flexText2
+    technical_name: FLEXTEXT2
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Second block of flex text attached to the receipt header.
+      If the text is longer than 100 characters, it is truncated and saved.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: flexText2
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: flexText2
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLEXPULLID
+    label: flexPullID
+    labels:
+      - flexPullID
+    technical_name: FLEXPULLID
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Identifier associated with the flexText field
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.3#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: flexPullID
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: flexPullID
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 3807

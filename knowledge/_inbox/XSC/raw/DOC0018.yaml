@@ -1,0 +1,65 @@
+doc: S.STD.XSC.DOC.0018
+scope: XSC
+extracted_at: 2026-09-30T04:28:15.010Z
+tier: T0
+stats:
+  units: 4
+  extracted_units: 1
+  document_candidates: 0
+  needs_llm: 1
+  t0_complete: 0
+  by_candidate:
+    FLW: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 399
+  sessions:
+    - n: 1
+      tokens: 399
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0018.0004
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0018.0004
+    source_unit: U.DOC0018.0004
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0018
+    section: Global vs. Business Unit System Administration
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: jaggaer
+          oggetto: estimates 1 FTE for Global System Administration responsibilities
+          valore: null
+        - n: 2
+          verbo: based
+          oggetto: on Business Unit Sys Admin estimated at 5 – 10 hours per week
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0018.0004
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 49

@@ -1,0 +1,125 @@
+document: equipment-service-form-xml-01ba2138
+scope: XSC
+batch: batch-03
+section: campi-3
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:MACHINE_EQUIPMENT_LOCATION
+    label: "Machine/Equipment Location:"
+    labels:
+      - "Machine/Equipment Location:"
+    technical_name: MACHINE_EQUIPMENT_LOCATION
+    section: campi-3
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=75;
+      UserDefinedFieldParamTextBoxMaxLength=75 · id=10009 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-3
+        source_unit: equipment-service-form-xml-01ba2138/campi-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "Machine/Equipment Location:"
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:MACHINE_EQUIPMENT_MANUFACTURER
+    label: "Machine/Equipment Manufacturer:"
+    labels:
+      - "Machine/Equipment Manufacturer:"
+    technical_name: MACHINE_EQUIPMENT_MANUFACTURER
+    section: campi-3
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=75;
+      UserDefinedFieldParamTextBoxMaxLength=75 · id=10002 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-3
+        source_unit: equipment-service-form-xml-01ba2138/campi-3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "Machine/Equipment Manufacturer:"
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:MACHINE_EQUIPMENT_MODEL_NUMBER
+    label: "Machine/Equipment Model Number:"
+    labels:
+      - "Machine/Equipment Model Number:"
+    technical_name: MACHINE_EQUIPMENT_MODEL_NUMBER
+    section: campi-3
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=75;
+      UserDefinedFieldParamTextBoxMaxLength=75 · id=10003 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-3
+        source_unit: equipment-service-form-xml-01ba2138/campi-3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "Machine/Equipment Model Number:"
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:MACHINE_EQUIPMENT_SERIAL_NUMBER
+    label: "Machine/Equipment Serial Number:"
+    labels:
+      - "Machine/Equipment Serial Number:"
+    technical_name: MACHINE_EQUIPMENT_SERIAL_NUMBER
+    section: campi-3
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=75;
+      UserDefinedFieldParamTextBoxMaxLength=75 · id=10004 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-3
+        source_unit: equipment-service-form-xml-01ba2138/campi-3#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: "Machine/Equipment Serial Number:"
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1303

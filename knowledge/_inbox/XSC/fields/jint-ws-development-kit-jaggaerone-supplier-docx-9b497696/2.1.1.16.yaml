@@ -1,0 +1,40 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+section: 2.1.1.16
+section_title: J1Supplier/JISupplierData/annualSalesList/annualSales
+genre: tecnica
+rows:
+  - label: annualSalesYear
+    technical_name: annualSalesYear
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: "Year for which AnnualSalesAmount is being provided, in the following
+      format: yyyy"
+    section: 2.1.1.16
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.16#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: annualSalesAmount
+    technical_name: annualSalesAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Total sales (revenue) for the supplier for the specified AnnualSalesYear.
+    section: 2.1.1.16
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.16#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: isoCurrencyCode
+    technical_name: isoCurrencyCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Currency code for the AnnualSalesAmount field.
+    section: 2.1.1.16
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.16#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696

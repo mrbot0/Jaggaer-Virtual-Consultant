@@ -1,0 +1,44 @@
+id: U.DOC0181.0198
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: riga-tabella-campi
+text: |-
+  Attribute: supplierNumber | Mandatory (Y/N): Y/N
+  See description | Description: Supplier ID that your organization has provided for this supplier in the supplier profile
+  You must specify either the id element, the supplierNumber field, or both.
+  If the supplier does not exist in JAGGAER ONE, do not include this field in your PO import message.
+  Valid only for SupplierInfo data specified at JIHeader level.
+hash: sha256:164ee57be3116d74a79add14ac8b1a03b27e95388fe2d3fc7f06b81007332d64
+words: 64
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: SupplierInfo [Import JIOrder method]
+  section_path: 2.3.1.6
+  page: 72
+  lang: en
+  prev: U.DOC0181.0197
+  next: U.DOC0181.0199
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - supplierNumber
+    - |-
+      Y/N
+      See description
+    - |-
+      Supplier ID that your organization has provided for this supplier in the supplier profile
+      You must specify either the id element, the supplierNumber field, or both.
+      If the supplier does not exist in JAGGAER ONE, do not include this field in your PO import message.
+      Valid only for SupplierInfo data specified at JIHeader level.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

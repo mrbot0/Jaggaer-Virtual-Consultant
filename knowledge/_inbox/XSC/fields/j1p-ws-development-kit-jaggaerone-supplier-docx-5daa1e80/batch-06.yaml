@@ -1,0 +1,73 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-06
+section: 2.1.1.6
+section_title: J1Supplier/JASupplierData/classification
+part: 1
+parts: 1
+rows:
+  - key: tech:OPERATIONCODE
+    label: operationCode
+    labels:
+      - operationCode
+    technical_name: OPERATIONCODE
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Code of requested operation
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: operationCode
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.8
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.8#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: operationCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CATEGORIES
+    label: categories
+    labels:
+      - categories
+    technical_name: CATEGORIES
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Classification data container (for all categories to work with)
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.6#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: categories
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 907

@@ -1,0 +1,185 @@
+id: U.DOC0171.0420
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: rfxId | Description: RfX internal identifier Attribute: rfxReferenceCode | Description: RfX user visible identifier Attribute: rfxExtCode | Description: RfX external code (when configured) Attribute: rfiFlag | Description: Defines if the RfX is an RFI or an RFQ (1=RFI 0=RFQ) Attribute: dummyFlag | Description: Defines if the RfX is a dummy RfX (1=true) Attribute: statusCode | Description: RfX status code."
+hash: sha256:380fb857459296276b70b700c36a608f7d90dc42d3c0c550eb46062e58943af1
+words: 68
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: RfX Setting [Export RfX method]
+  section_path: 2.3.4.1
+  page: 7
+  lang: en
+  prev: U.DOC0171.0419
+  next: U.DOC0171.0421
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - rfxId
+      - RfX internal identifier
+      - ""
+    - - rfxReferenceCode
+      - RfX user visible identifier
+      - ""
+    - - rfxExtCode
+      - RfX external code (when configured)
+      - ""
+    - - rfiFlag
+      - Defines if the RfX is an RFI or an RFQ (1=RFI 0=RFQ)
+      - ""
+    - - dummyFlag
+      - Defines if the RfX is a dummy RfX (1=true)
+      - ""
+    - - statusCode
+      - |-
+        RfX status code.
+        0 = To be Published
+        50 = Awarded to Offline Response
+        100 = To Be Approved
+        200 = Approval Declined
+        300 = Running
+        350 = Qualification Clarification
+        400 = To Be Evaluated
+        500 = Awarded
+        600 = Auction
+        700 = Not Awarded
+        750 = Qualification Evaluation
+        800 = Technical Evaluation
+        900 = Commercial Evaluation
+        950 = Final Evaluation
+        975 = Final Evaluation – Pre-Awarded
+        985 = Awarding Pending Approval
+        990 = Awarding Approved
+        1100 = Evaluation Suspended
+        1150 = Cancelled
+        1200 = Closed
+        1300 = Best and Final Offer
+        1400 = Best and Final Offer Evaluation
+        1500 = Ended
+        1600 = Mixed Awarding
+        1800 = Round Created in a new RFQ
+        1900 = Evaluation Transferred to RFQ
+        2000 = TIOC in Progress
+        2100 = TIOC Closed
+      - ""
+    - - status
+      - RfX status string in the default language
+      - ""
+    - - statusDate
+      - Date when the current status has been set
+      - "[NOT USED]"
+    - - tenderCode
+      - Code of the project/tender (internal identifier)
+      - ""
+    - - tenderReferenceCode
+      - Code of the project/tender (user visible identifier)
+      - ""
+    - - templateId
+      - id of the originating Rfx template (if any)
+      - ""
+    - - templateReferenceCode
+      - Reference code of the originating Rfx template (if any)
+      - ""
+    - - templateTitle
+      - Title of the originating Rfx template (if any)
+      - ""
+    - - contractIdFrom
+      - Internal identifier of the originating Contract
+      - ""
+    - - contractReferenceCodeFrom
+      - User visible identifier of the originating Contract
+      - ""
+    - - rfxIdFrom
+      - Internal identifier of the originating RfX
+      - ""
+    - - rfxReferenceCodeFrom
+      - User visible identifier of the originating RfX
+      - ""
+    - - shortDescription
+      - RfX short /title
+      - ""
+    - - longDescription
+      - RfX long description
+      - ""
+    - - archiveStatus
+      - If the RfX is archived (0 not archived, 1 archived)
+      - ""
+    - - buyerCompany/id
+      - Internal identifier of the buyer company
+      - ""
+    - - buyerCompany/code
+      - External code of the buyer company
+      - ""
+    - - buyerCompany/name
+      - External code of the buyer company
+      - ""
+    - - ownerUser/name
+      - RfX owner name and surname
+      - ""
+    - - ownerUser/id
+      - RfX owner internal id
+      - ""
+    - - ownerUser/code
+      - RfX owner external code
+      - ""
+    - - ownerUser/login
+      - RfX owner login
+      - JINT_20_02_00
+    - - divisionName
+      - Name of the RfX division
+      - ""
+    - - divisionId
+      - Id of the RfX division
+      - ""
+    - - supplierAccess
+      - |-
+        Type of supplier access:
+        RFQ_TYPE_PRIVATE_WITH_ANSWER
+        RFQ_TYPE_PUBLIC_WITH_ANSWER
+        RFQ_TYPE_PRIVATE_NO_ANSWER
+        RFQ_TYPE_PUBLIC_NO_ANSWER
+        RFQ_TYPE_SIMPLIFIED
+        RFQ_TYPE_PRIVATE_PPB
+        RFQ_TYPE_PUBLIC_PPB
+      - ""
+    - - offersOpeningCriteria
+      - |-
+        Envelope opening criteria:
+        NONE
+        OPEN_PARALLEL
+        BLIND_PARALLEL
+        BLIND_SEQUENTIAL
+      - ""
+    - - procedureType
+      - Name of type of the procedure
+      - ""
+    - - contractObject
+      - Object of the contract
+      - ""
+    - - value
+      - Value of the RfX (it can have exponential notation)
+      - ""
+    - - valueCurrency
+      - External code of the value currency
+      - ""
+    - - bidsCurrency
+      - External code of the bids currency
+      - ""
+    - - envelopeDigitalSignature
+      - |-
+        Envelope digital signature configuration:
+        NOT_MANDATORY
+        NO
+      - ""
+  block: 1
+  blocks: 3
+part:
+  n: 1
+  of: 3

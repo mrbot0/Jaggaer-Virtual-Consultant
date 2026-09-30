@@ -1,0 +1,27 @@
+id: U.DOC0137.0044
+doc: S.STD.XSC.DOC.0137
+doc_id: workflow-po-static-and-dynamic-guidelines-pdf-982cc3b9
+type: procedura
+text: |-
+  This activity covers a couple new ideas
+  1. <Ac tivityType>automated</ActivityType> : This rule will not require a user to approve the step. This means that the step will complete automatically.
+  2. <FolderRef name="Distribute PO" /> : This line may look familiar from the previous activities, but since thi s step is automated it works a little bit differently. Automated activities do not use a Shared Workflow step like manual activities. Instead automated activities take advantage of workflow robots. Robots are what allow automated steps to function witho ut user approval. You can see what robot is being used for this folder under the Workflow Folder Import/Export tab in workflow setup.
+  3. <Rule><![CDATA[ !(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) && !(Document.CustomFieldValues("Orde r Category") in {"2 - Confirming - Do Not Distribute"}) ]]></Rule> :
+hash: sha256:38ce8db0562fce44b59f786cef3cb2ff6b8c95b9a3ead7bf820c26b7744e038e
+words: 131
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0137
+  chapter: Spend Director Special ization For Solutions Consultants
+  section: Spend Director Special ization For Solutions Consultants
+  section_path: p5
+  page: 5
+  lang: en
+  prev: U.DOC0137.0043
+  next: U.DOC0137.0045
+steps:
+  - "<Ac tivityType>automated</ActivityType> : This rule will not require a user to approve the step. This means that the step will complete automatically."
+  - '<FolderRef name="Distribute PO" /> : This line may look familiar from the previous activities, but since thi s step is automated it works a little bit differently. Automated activities do not use a Shared Workflow step like manual activities. Instead automated activities take advantage of workflow robots. Robots are what allow automated steps to function witho ut user approval. You can see what robot is being used for this folder under the Workflow Folder Import/Export tab in workflow setup.'
+  - '<Rule><![CDATA[ !(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) && !(Document.CustomFieldValues("Orde r Category") in {"2 - Confirming - Do Not Distribute"}) ]]></Rule> :'
+procedure:
+  title: This activity covers a couple new ideas

@@ -1,0 +1,44 @@
+id: U.DOC0171.0054
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: rfxId | Mandatory (Y/N): N for CREATE or CREATEUPDATE
+  Y for UPDATE | Description: JA internal identifier | Mapping on JA data model and notes: RfX Id and
+  RfX reference code.
+  RfX to be updated is retrieved from these values as described in “Existing RfX selection”
+hash: sha256:c826252ee708c584e2315f77ce63df4e4598579d3529236d66032d58effc451a
+words: 47
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0053
+  next: U.DOC0171.0055
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - rfxId
+    - |-
+      N for CREATE or CREATEUPDATE
+      Y for UPDATE
+    - JA internal identifier
+    - |-
+      RfX Id and
+      RfX reference code.
+      RfX to be updated is retrieved from these values as described in “Existing RfX selection”
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

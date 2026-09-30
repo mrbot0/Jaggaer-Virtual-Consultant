@@ -1,0 +1,284 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-07
+section: 2.1.1.6
+section_title: Additional Info (data elements) [Import/Update RfX method]
+part: 1
+parts: 1
+rows:
+  - key: tech:NAME
+    label: name
+    labels:
+      - name
+      - Name
+    technical_name: NAME
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: data element name
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.10
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.10#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.11
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Name
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.12
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.12#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.16
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Name
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:TYPE
+    label: type
+    labels:
+      - type
+      - Type
+    technical_name: TYPE
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Type of the data-element
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.6#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.10
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.10#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y (even if not used for operation)
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.11
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Type
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.16
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Type
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.26
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.26#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - Y
+          - Y (even if not used for operation)
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:VALUES_VALUE
+    label: values/value
+    labels:
+      - values/value
+    technical_name: VALUES_VALUE
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Value of the Data Element
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.6#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: values/value
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:VALUES_VALUE_ID
+    label: values/value/@id
+    labels:
+      - values/value/@id
+    technical_name: VALUES_VALUE_ID
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: attribute used to clear the data element value
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.6#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: values/value/@id
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ATTACHMENTVALUE_FILENAME
+    label: attachmentValue/fileName
+    labels:
+      - attachmentValue/fileName
+    technical_name: ATTACHMENTVALUE_FILENAME
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Attachment file name
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.6#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: attachmentValue/fileName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ATTACHMENTVALUE_FILEDESCRIPTION
+    label: attachmentValue/fileDescription
+    labels:
+      - attachmentValue/fileDescription
+    technical_name: ATTACHMENTVALUE_FILEDESCRIPTION
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Attachment description
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.6#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: attachmentValue/fileDescription
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ATTACHMENTVALUE_FILEBASE64
+    label: attachmentValue/fileBase64
+    labels:
+      - attachmentValue/fileBase64
+    technical_name: ATTACHMENTVALUE_FILEBASE64
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Attachment content
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.6#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: attachmentValue/fileBase64
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2247

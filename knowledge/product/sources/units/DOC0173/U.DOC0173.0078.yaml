@@ -1,0 +1,35 @@
+id: U.DOC0173.0078
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: "Attribute: timezone | Mandatory (Y/N): N | Description: Super user time-zone identifier (e.g.: ‘Europe/Brussels’ or ‘America/New_York’) | Mapping on JA data model and notes: If an invalid code is provided, it is used the default site timezone. The same happens during creation if no value is specified."
+hash: sha256:074214ac9d30d1b6cefae7c8914c4d4f223c2ff6c4a9fcd578d78dc0189932f8
+words: 47
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Company and super-user data [Import/update of Company and Users Data]
+  section_path: 4.1.1.2
+  page: 6
+  lang: en
+  prev: U.DOC0173.0077
+  next: U.DOC0173.0079
+row:
+  table: 0
+  row: 42
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - timezone
+    - N
+    - "Super user time-zone identifier (e.g.: ‘Europe/Brussels’ or ‘America/New_York’)"
+    - If an invalid code is provided, it is used the default site timezone. The same happens during creation if no value is specified.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

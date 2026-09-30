@@ -1,0 +1,167 @@
+doc: S.STD.XSC.DOC.0001
+scope: XSC
+extracted_at: 2026-09-30T04:26:59.298Z
+tier: T0
+stats:
+  units: 34
+  extracted_units: 4
+  document_candidates: 0
+  needs_llm: 1
+  t0_complete: 3
+  by_candidate:
+    FLD: 3
+    INV: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 438
+  sessions:
+    - n: 1
+      tokens: 438
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0001.0015
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0001.0006
+    source_unit: U.DOC0001.0006
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0001
+    section: CASE STUDY
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: “To maintain our leadership position, we
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0001.0006
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 73
+  - raw_id: R.DOC0001.0015
+    source_unit: U.DOC0001.0015
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0001
+    section: HITTING THE GROUND RUNNING WITH
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0001.0015
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 88
+  - raw_id: R.DOC0001.0027
+    source_unit: U.DOC0001.0027
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0001
+    section: BOTTOM LINE RESULTS
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - INV
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: You
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0001.0027
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0001.0029
+    source_unit: U.DOC0001.0029
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0001
+    section: BOTTOM LINE RESULTS
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Trend data built over time
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0001.0029
+    needs_llm: false
+    tokens: 50

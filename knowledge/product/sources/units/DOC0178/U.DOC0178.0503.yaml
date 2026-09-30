@@ -1,0 +1,43 @@
+id: U.DOC0178.0503
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: status | Mandatory (Y/N): Y | Description: Status of the workflow step for the contract.
+  It can assume following value:
+  approve – The workflow step is approved. The contract can advance to the next step in the workflow.
+  approveWithException – The workflow step is approved, but with one or more exceptions. The exceptions should be noted in the Note element. The contract can advance to the next step in the workflow.
+  return – The workflow step is not approved. The contract is returned to draft status and does not advance to the next step in the workflow.
+hash: sha256:089ff92a0299a60f83ce1c2b92f3a3a2d4efd6cffe1cc0c2bd5648e196ec8bd4
+words: 98
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Main request structure [Validate]
+  section_path: 2.4.1.1
+  page: 123
+  lang: en
+  prev: U.DOC0178.0502
+  next: U.DOC0178.0504
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - status
+    - Y
+    - |-
+      Status of the workflow step for the contract.
+      It can assume following value:
+      approve – The workflow step is approved. The contract can advance to the next step in the workflow.
+      approveWithException – The workflow step is approved, but with one or more exceptions. The exceptions should be noted in the Note element. The contract can advance to the next step in the workflow.
+      return – The workflow step is not approved. The contract is returned to draft status and does not advance to the next step in the workflow.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

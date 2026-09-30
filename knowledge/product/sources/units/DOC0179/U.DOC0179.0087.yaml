@@ -1,0 +1,48 @@
+id: U.DOC0179.0087
+doc: S.STD.XSC.DOC.0179
+doc_id: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+type: tabella
+text: |-
+  Colonne: URL | /esop/jint/api/public/ji/v1/customfields/
+  URL: Http Method | /esop/jint/api/public/ji/v1/customfields/: POST
+  URL: Header Parameters | /esop/jint/api/public/ji/v1/customfields/: Authorization (see “JINT WS Development_Kit - Web Services Overview” document)
+  URL: Body | /esop/jint/api/public/ji/v1/customfields/: JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+  URL: Response format | /esop/jint/api/public/ji/v1/customfields/: JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+  URL: Return Codes | /esop/jint/api/public/ji/v1/customfields/: 200 operation processed. See response content for results
+  400 wrong or missing data in the request
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:2c96cb9bbef15fe2308ad2576c23e8bf177633216bc013e5c7ccfcd8a61693fd
+words: 110
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0179
+  chapter: JI Custom Field web-service
+  section: Endpoint definition
+  section_path: 2.3.1
+  page: 7
+  lang: en
+  prev: U.DOC0179.0086
+  next: U.DOC0179.0088
+table:
+  table: 0
+  headers:
+    - URL
+    - /esop/jint/api/public/ji/v1/customfields/
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization (see “JINT WS Development_Kit - Web Services Overview” document)
+    - - Body
+      - JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+    - - Response format
+      - JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+    - - Return Codes
+      - |-
+        200 operation processed. See response content for results
+        400 wrong or missing data in the request
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

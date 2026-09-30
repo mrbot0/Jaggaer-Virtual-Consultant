@@ -1,0 +1,333 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.16
+section_title: ObligationScheduledEvent [Import]
+genre: tecnica
+rows:
+  - label: frequencyEnum
+    technical_name: frequencyEnum
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether the obligation will be due one time only or on a
+      recurring basis.
+
+      Allowed values:
+
+      ObligationFrequencyOneTime
+
+      ObligationFrequencyRecurring
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: frequencyPeriodEnum
+    technical_name: frequencyPeriodEnum
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates whether the obligation recurs
+      Daily
+      Weekly
+      Monthly
+      Yearly
+      Valid only if frequencyEnum is set to ObligationFrequencyRecurring.
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: repeatsEvery
+    technical_name: repeatsEvery
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Number of times the obligation is to recur.
+      Valid range is 1 to 999.
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: dayOfWeekList
+    technical_name: dayOfWeekList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of day of week in which the obligation is to recur.
+      See section “DayOfWeek [Import]” below.
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: monthOfYearEnum
+    technical_name: monthOfYearEnum
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates the month in which the obligation is to recur.
+      Possible values:
+      Jan
+      Feb
+      Mar
+      Apr
+      May
+      Jun
+      Jul
+      Aug
+      Sep
+      Oct
+      Nov
+      Dec
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: dayOrWeekOfMonthEnum
+    technical_name: dayOrWeekOfMonthEnum
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the obligation is to recur on a specific Day of the
+      month, or on the First, Second, Third, Fourth, or Last day of the month.
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: dayOfMonth
+    technical_name: dayOfMonth
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: If dayOrWeekOfMonthEnum is set to Day, indicates the specific date of the
+      month on which the obligation is to recur
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: dayOfWeekEnum
+    technical_name: dayOfWeekEnum
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      If dayOrWeekOfMonthEnum is set to First, Second, Third, Fourth, or Last,
+      indicates the specific day of the month on which the obligation is to
+      recur (such as first Weekend Day, or third Thursday).
+
+      Possible values:
+
+      Day
+
+      Weekday
+
+      Weekend Day
+
+      Sunday
+
+      Monday
+
+      Tuesday
+
+      Wednesday
+
+      Thursday
+
+      Friday
+
+      Saturday
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: eventStartEnum
+    technical_name: eventStartEnum
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates the start date for the recurring obligation.
+      Possible values:
+      OnContractStartDate
+      BeforeContractStartDate
+      AfterContractStartDate
+      OnCustomDate
+      OnContractEndDate
+      BeforeContractEndDate
+      AfterContractEndDate
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: eventStartCustomDate
+    technical_name: eventStartCustomDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Custom start date for the recurring obligation
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: eventStartTimeInterval
+    technical_name: eventStartTimeInterval
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Interval between the start of obligations, or between the start of
+      occurrences of obligations. That is, the number of
+      eventStartTimeIntervalUnit units between starts, such as 3 days or 6
+      months
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: eventStartTimeIntervalUnit
+    technical_name: eventStartTimeIntervalUnit
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates the unit of time for the eventStartTimeInterval element: days,
+      weeks, months, or years.
+
+      Possible values:
+
+      ObligationDefinition_EventDateUnitDays
+
+      ObligationDefinition_EventDateUnitWeeks
+
+      ObligationDefinition_EventDateUnitMonths
+
+      ObligationDefinition_EventDateUnitYears
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: eventEndEnum
+    technical_name: eventEndEnum
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates the end date for a recurring obligation
+      Possible value:
+      ByContractEndDate
+      BeforeContractEndDate
+      AfterContractEndDate
+      ByCustomDate
+      After
+      ByContractStartDate
+      BeforeContractStartDate
+      AfterContractStartDate
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: eventEndCustomDate
+    technical_name: eventEndCustomDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Custom end date for the recurring obligation
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: occurrenceLimit
+    technical_name: occurrenceLimit
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Maximum number of times the obligation can recur
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: eventEndTimeInterval
+    technical_name: eventEndTimeInterval
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Interval between the end of obligations, or between the end of
+      occurrences of obligations. That is, the number of
+      eventStartTimeIntervalUnit units between ends, such as 3 days or 6 months.
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: eventEndTimeIntervalUnit
+    technical_name: eventEndTimeIntervalUnit
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates the unit of time for the eventEndTimeInterval element: days,
+      weeks, months, or years.
+
+      Possible values:
+
+      ObligationDefinition_EventDateUnitDays
+
+      ObligationDefinition_EventDateUnitWeeks
+
+      ObligationDefinition_EventDateUnitMonths
+
+      ObligationDefinition_EventDateUnitYears
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: dueTime
+    technical_name: dueTime
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Time the obligation is scheduled to be completed
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationTimeZone
+    technical_name: obligationTimeZone
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Timezone that the obligation is to use:
+      Valid values:
+      US/Eastern
+      US/Central
+      US/Pacific
+      US/Mountain
+      US/Arizona
+      US/East-Indiana
+      CETUS/Hawaii
+      Europe/London
+      Valid only if useTimeZoneContract setting is set to false.
+    section: 2.2.1.16
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

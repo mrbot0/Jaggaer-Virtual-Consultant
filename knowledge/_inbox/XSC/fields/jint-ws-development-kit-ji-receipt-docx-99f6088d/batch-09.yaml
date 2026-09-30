@@ -1,0 +1,205 @@
+document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+scope: XSC
+batch: batch-09
+section: 2.1.1.9
+section_title: Line [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:PURCHASEORDER
+    label: purchaseOrder
+    labels:
+      - purchaseOrder
+    technical_name: PURCHASEORDER
+    section: 2.1.1.9
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Information about Purchase Order associated to the receipt.
+      See section “PurchaseOrder [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: purchaseOrder
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:RECEIPTLINESTATUS
+    label: receiptLineStatus
+    labels:
+      - receiptLineStatus
+    technical_name: RECEIPTLINESTATUS
+    section: 2.1.1.9
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Final status of the receipt line.
+
+      Cost Received
+
+      Cost Cancelled
+
+      Received
+
+      Cancelled
+
+      Returned
+
+      Received / Returned
+
+      Cost Received and Cost Cancelled are valid only for Cost receipts.
+
+      Received, Cancelled, Returned, and Received / Returned are valid only for
+      Quantity receipts.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: receiptLineStatus
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:COST
+    label: cost
+    labels:
+      - cost
+    technical_name: COST
+    section: 2.1.1.9
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: >-
+      Cost to which the receiptLineStatus applies (either received or
+      cancelled).
+
+      Required for Cost receipts, mutually exclusive with the quantity element.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: cost
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CURRENCY
+    label: currency
+    labels:
+      - currency
+    technical_name: CURRENCY
+    section: 2.1.1.9
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Exchangeable currency code of cost element.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: currency
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:QUANTITY
+    label: quantity
+    labels:
+      - quantity
+    technical_name: QUANTITY
+    section: 2.1.1.9
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: >-
+      Quantity of product to which the receiptLineStatus applies, such as 5
+      items received, 1 item cancelled, or 3 items returned.
+
+      Required only for Quantity receipts, mutually exclusive with the cost
+      element.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: quantity
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:RETURNDATA
+    label: returnData
+    labels:
+      - returnData
+    technical_name: RETURNDATA
+    section: 2.1.1.9
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Return data information.
+      See section “ReturnData [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: returnData
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1648

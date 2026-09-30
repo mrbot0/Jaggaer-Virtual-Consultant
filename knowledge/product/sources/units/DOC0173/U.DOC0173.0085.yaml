@@ -1,0 +1,44 @@
+id: U.DOC0173.0085
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: extUniqueCode | Mandatory (Y/N): Y/N | Description: Company unique identification code within the external system. When valorized it must be unique within the companies registered and enabled in the same toolkit group (companies deactivated and deleted are excluded).
+  Available from version 12_4_0_02. | Mapping on JA data model and notes: It may be used in case of UPDATE to identify the company to work on, when the identification strategy is based on userAlias but web service has been called to update this value.
+  It is possible to enable the configuration parameter to use extUniqueCode as a company identifier.
+  See section “Company identification strategy” in paragraph “Behaviour”.
+hash: sha256:ca2008bf6a475a265c3664766a85a5185ab35ba0961f1092ac0e423ee31040ce
+words: 107
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Company and super-user data [Import/update of Company and Users Data]
+  section_path: 4.1.1.2
+  page: 6
+  lang: en
+  prev: U.DOC0173.0084
+  next: U.DOC0173.0086
+row:
+  table: 0
+  row: 49
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - extUniqueCode
+    - Y/N
+    - |-
+      Company unique identification code within the external system. When valorized it must be unique within the companies registered and enabled in the same toolkit group (companies deactivated and deleted are excluded).
+      Available from version 12_4_0_02.
+    - |-
+      It may be used in case of UPDATE to identify the company to work on, when the identification strategy is based on userAlias but web service has been called to update this value.
+      It is possible to enable the configuration parameter to use extUniqueCode as a company identifier.
+      See section “Company identification strategy” in paragraph “Behaviour”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

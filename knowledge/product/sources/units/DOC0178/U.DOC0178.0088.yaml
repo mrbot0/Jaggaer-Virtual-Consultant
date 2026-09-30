@@ -1,0 +1,53 @@
+id: U.DOC0178.0088
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: Status | Description: Indicates the actual status of the contract (that is, where the contract is in the workflow process).
+  Valid only if you are creating a new contract.
+  Possible values:
+  Draft
+  Executed
+  The default status is Draft.
+  If the status is Executed, then the specified startDate and endDate elements determine which executed status applies:
+  Executed: Future Contract- The contract is being created before the StartDate.
+  Executed: In Effect Contract- The contract is being created between the StartDate and EndDate.
+  Completed Contract- The contract is being created after the EndDate.
+hash: sha256:87a862cda582df9359fb8ed93e99ff98d6815c66d85866e54e52c7ff3ae639ae
+words: 91
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: JIContract [Import]
+  section_path: 2.2.1.2
+  page: 19
+  lang: en
+  prev: U.DOC0178.0087
+  next: U.DOC0178.0089
+row:
+  table: 0
+  row: 9
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - Status
+    - ""
+    - |-
+      Indicates the actual status of the contract (that is, where the contract is in the workflow process).
+      Valid only if you are creating a new contract.
+      Possible values:
+      Draft
+      Executed
+      The default status is Draft.
+      If the status is Executed, then the specified startDate and endDate elements determine which executed status applies:
+      Executed: Future Contract- The contract is being created before the StartDate.
+      Executed: In Effect Contract- The contract is being created between the StartDate and EndDate.
+      Completed Contract- The contract is being created after the EndDate.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,92 @@
+id: U.DOC0178.0478
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: name | Description: Name of a product line item from a JAGGAER Indirect Sourcing solution event.
+  Valid only for Sourcing solution contracts.
+  Attribute: Description | Description: Description of the product line item.
+  Attribute: catalogNumber | Description: Unique ID number for the product line item in the supplier inventory.
+  Attribute: Quantity | Description: Number of product items
+  Attribute: unitOfMeasure | Description: Packaging or size unit for the product line item, such as EA (each), PK (pack), KG (kg), or LG (large).
+  The supplier item is the actual purchasable item available for the shopper.
+  Attribute: unitPrice | Description: Unit cost of the product line item.
+  Attribute: totalPrice | Description: Total cost of the product line item (item quantity times the unit price).
+  Attribute: targetPrice | Description: Target cost for the product line item
+  Attribute: commodityCode | Description: Code assigned to the product line item, for the purposes of identifying it in international commerce, or commerce in general.
+  It is not a specific description of the goods or service
+  Attribute: estimatedDeliveryDate | Description: Date you expect the product line item to be delivered
+  Attribute: estimatedDeliveryDays | Description: Number of days after the sourcing event is awarded that you expect the product line item to be delivered.
+  Attribute: requestedDeliveryDate | Description: Date you would like the product line item delivered
+  Attribute: requestedDeliveryDays | Description: Number of days after the sourcing event is awarded that you would like the product line item to be delivered.
+  Attribute: itemMasterId | Description: Unique identifier for the item. | Available from version: JINT_20_03_00
+hash: sha256:1a70724d7674e82b34805d5197d1b5bdeb3c660a11e2c516728d88394fc8ffd1
+words: 263
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ProductLineItem [Export]
+  section_path: 2.3.3.48
+  page: 111
+  lang: en
+  prev: U.DOC0178.0477
+  next: U.DOC0178.0479
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - name
+      - |-
+        Name of a product line item from a JAGGAER Indirect Sourcing solution event.
+        Valid only for Sourcing solution contracts.
+      - ""
+    - - Description
+      - Description of the product line item.
+      - ""
+    - - catalogNumber
+      - Unique ID number for the product line item in the supplier inventory.
+      - ""
+    - - Quantity
+      - Number of product items
+      - ""
+    - - unitOfMeasure
+      - |-
+        Packaging or size unit for the product line item, such as EA (each), PK (pack), KG (kg), or LG (large).
+        The supplier item is the actual purchasable item available for the shopper.
+      - ""
+    - - unitPrice
+      - Unit cost of the product line item.
+      - ""
+    - - totalPrice
+      - Total cost of the product line item (item quantity times the unit price).
+      - ""
+    - - targetPrice
+      - Target cost for the product line item
+      - ""
+    - - commodityCode
+      - |-
+        Code assigned to the product line item, for the purposes of identifying it in international commerce, or commerce in general.
+        It is not a specific description of the goods or service
+      - ""
+    - - estimatedDeliveryDate
+      - Date you expect the product line item to be delivered
+      - ""
+    - - estimatedDeliveryDays
+      - Number of days after the sourcing event is awarded that you expect the product line item to be delivered.
+      - ""
+    - - requestedDeliveryDate
+      - Date you would like the product line item delivered
+      - ""
+    - - requestedDeliveryDays
+      - Number of days after the sourcing event is awarded that you would like the product line item to be delivered.
+      - ""
+    - - itemMasterId
+      - Unique identifier for the item.
+      - JINT_20_03_00
+  block: 1
+  blocks: 1

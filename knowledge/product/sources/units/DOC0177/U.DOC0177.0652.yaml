@@ -1,0 +1,113 @@
+id: U.DOC0177.0652
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: tabella
+text: |-
+  Colonne: Dataset | Min/max occurrences | Description | Available from version
+  Dataset: type | Min/max occurrences: 0/1 | Description: Indicates the type of bank account to which payments to the supplier will be made.
+  Dataset: bankName | Min/max occurrences: 0/1 | Description: Name of the bank used by the account.
+  Dataset: accountHolderName | Min/max occurrences: 0/1 | Description: Name of the bank account holder.
+  Dataset: accountNumberType | Min/max occurrences: 0/1
+  Dataset: routingNumber | Min/max occurrences: 0/1 | Description: Routing or transit number of the bank.
+  Dataset: bankAccountNumber | Min/max occurrences: 0/1 | Description: Account number of the bank account.
+  Dataset: ibanBankAccountNumber | Min/max occurrences: 0/1 | Description: IBAN of the bank account.
+  Dataset: directDepositFormat | Min/max occurrences: 0/1 | Description: Direct deposit format used by the bank.
+  Dataset: bankIdentifierCodeText | Min/max occurrences: 0/1 | Description: Also known as BIC. Unique 8-character or 11-digit identifier for the bank.
+  Dataset: internationalRoutingCode | Min/max occurrences: 0/1 | Description: Also known as IRC. Country-specific bank routing code for international banking transactions.
+  Dataset: isoCountryCode | Min/max occurrences: 0/1 | Description: Country associated with the bank account.
+  Dataset: addressLine1 | Min/max occurrences: 0/1 | Description: First line of address associated with the bank account.
+  Dataset: addressLine2 | Min/max occurrences: 0/1 | Description: Second line of address associated with the bank account.
+  Dataset: addressLine3 | Min/max occurrences: 0/1 | Description: Third line of address associated with the bank account.
+  Dataset: city | Min/max occurrences: 0/1 | Description: City associated with the bank account.
+  Dataset: state | Min/max occurrences: 0/1 | Description: State associated with the bank account.
+  Dataset: postalCode | Min/max occurrences: 0/1 | Description: Postal code associated with the bank account.
+hash: sha256:abce42261a830e03cf9bbd3fda648e73e3f98c365a374dd45249b2378a5650a2
+words: 275
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.2.4.103
+  page: 162
+  lang: en
+  prev: U.DOC0177.0651
+  next: U.DOC0177.0653
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrences
+    - Description
+    - Available from version
+  rows:
+    - - type
+      - 0/1
+      - Indicates the type of bank account to which payments to the supplier will be made.
+      - ""
+    - - bankName
+      - 0/1
+      - Name of the bank used by the account.
+      - ""
+    - - accountHolderName
+      - 0/1
+      - Name of the bank account holder.
+      - ""
+    - - accountNumberType
+      - 0/1
+      - ""
+      - ""
+    - - routingNumber
+      - 0/1
+      - Routing or transit number of the bank.
+      - ""
+    - - bankAccountNumber
+      - 0/1
+      - Account number of the bank account.
+      - ""
+    - - ibanBankAccountNumber
+      - 0/1
+      - IBAN of the bank account.
+      - ""
+    - - directDepositFormat
+      - 0/1
+      - Direct deposit format used by the bank.
+      - ""
+    - - bankIdentifierCodeText
+      - 0/1
+      - Also known as BIC. Unique 8-character or 11-digit identifier for the bank.
+      - ""
+    - - internationalRoutingCode
+      - 0/1
+      - Also known as IRC. Country-specific bank routing code for international banking transactions.
+      - ""
+    - - isoCountryCode
+      - 0/1
+      - Country associated with the bank account.
+      - ""
+    - - addressLine1
+      - 0/1
+      - First line of address associated with the bank account.
+      - ""
+    - - addressLine2
+      - 0/1
+      - Second line of address associated with the bank account.
+      - ""
+    - - addressLine3
+      - 0/1
+      - Third line of address associated with the bank account.
+      - ""
+    - - city
+      - 0/1
+      - City associated with the bank account.
+      - ""
+    - - state
+      - 0/1
+      - State associated with the bank account.
+      - ""
+    - - postalCode
+      - 0/1
+      - Postal code associated with the bank account.
+      - ""
+  block: 1
+  blocks: 1

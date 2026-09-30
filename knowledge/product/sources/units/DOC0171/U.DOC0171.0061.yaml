@@ -1,0 +1,41 @@
+id: U.DOC0171.0061
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: templateId | Mandatory (Y/N): Y/N for creation from template | Description: JA internal identifier of the RfX template to be used to create the object | Mapping on JA data model and notes: Used only with operation code CREATE_FROM_TEMPLATE.
+  When creating a new item from template, at least one of these fields must be provided.
+  Template selection is evaluated as described in “RfX template selection”
+hash: sha256:4fc1483bf9d4c3b41db9834bd8506a97fa766bdb47c9774d612d0436b35c84b5
+words: 66
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0060
+  next: U.DOC0171.0062
+row:
+  table: 0
+  row: 7
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - templateId
+    - Y/N for creation from template
+    - JA internal identifier of the RfX template to be used to create the object
+    - |-
+      Used only with operation code CREATE_FROM_TEMPLATE.
+      When creating a new item from template, at least one of these fields must be provided.
+      Template selection is evaluated as described in “RfX template selection”
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

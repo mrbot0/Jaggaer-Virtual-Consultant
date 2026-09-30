@@ -1,0 +1,121 @@
+document: request-for-hr-data-request-template-xml-0aba1ac3
+scope: XSC
+batch: batch-02
+section: domande-2
+section_title: Domande — Personal Information / Personal Data
+part: 1
+parts: 1
+rows:
+  - key: tech:188717
+    label: Phone Number
+    labels:
+      - Phone Number
+    technical_name: "188717"
+    section: domande-2
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Phone Number
+    sources:
+      - document: request-for-hr-data-request-template-xml-0aba1ac3
+        section: domande-2
+        source_unit: request-for-hr-data-request-template-xml-0aba1ac3/domande-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Phone Number
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:188718
+    label: Personal Email Address
+    labels:
+      - Personal Email Address
+    technical_name: "188718"
+    section: domande-2
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Personal Email Address
+    sources:
+      - document: request-for-hr-data-request-template-xml-0aba1ac3
+        section: domande-2
+        source_unit: request-for-hr-data-request-template-xml-0aba1ac3/domande-2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Personal Email Address
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:188691
+    label: Home Address
+    labels:
+      - Home Address
+    technical_name: "188691"
+    section: domande-2
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Home Address
+    sources:
+      - document: request-for-hr-data-request-template-xml-0aba1ac3
+        section: domande-2
+        source_unit: request-for-hr-data-request-template-xml-0aba1ac3/domande-2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Home Address
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:188692
+    label: Emergency Contact
+    labels:
+      - Emergency Contact
+    technical_name: "188692"
+    section: domande-2
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Emergency Contact
+    sources:
+      - document: request-for-hr-data-request-template-xml-0aba1ac3
+        section: domande-2
+        source_unit: request-for-hr-data-request-template-xml-0aba1ac3/domande-2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Emergency Contact
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1178

@@ -1,0 +1,53 @@
+id: U.DOC0183.0163
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: poLineId | Description: Unique ID of the PO line.
+  Attribute: lineNumber | Description: Position of the line item in the PO document.
+  Attribute: splittableFieldSetGroupList | Description: Container for SplittableFieldSetGroup information.
+  See section “SplittableFieldSetGroup [Export]” above
+  Attribute: commodityCodeType | Description: Identifies whether the Commodity Code is for products or services. A value of None indicates that the Commodity Code is not for a product or a service.
+  Products
+  Services
+  None | Available from version: JINT_21_01_00
+hash: sha256:27c546a80ad8e12470ea8a4aa7b9f19bdc24c1c71f9c4a9b29ab840ed1d5949a
+words: 83
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: PurchaseOrderLine [Export]
+  section_path: 2.2.3.43
+  page: 17
+  lang: en
+  prev: U.DOC0183.0162
+  next: U.DOC0183.0164
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - poLineId
+      - Unique ID of the PO line.
+      - ""
+    - - lineNumber
+      - Position of the line item in the PO document.
+      - ""
+    - - splittableFieldSetGroupList
+      - |-
+        Container for SplittableFieldSetGroup information.
+        See section “SplittableFieldSetGroup [Export]” above
+      - ""
+    - - commodityCodeType
+      - |-
+        Identifies whether the Commodity Code is for products or services. A value of None indicates that the Commodity Code is not for a product or a service.
+        Products
+        Services
+        None
+      - JINT_21_01_00
+  block: 1
+  blocks: 1

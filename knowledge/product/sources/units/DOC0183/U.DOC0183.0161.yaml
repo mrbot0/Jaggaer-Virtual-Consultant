@@ -1,0 +1,67 @@
+id: U.DOC0183.0161
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: distributionValue | Description: Distribution value for the split. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  Must be a positive number or zero.
+  According to specific distribution type, it represents
+  AmountOfQuantity: the portion of the quantity to be split.
+  AmountOfPrice: the monetary amount to be split.
+  PercentOfQuantity and PercentOfPrice: the percentage of the split. For these values, the total of all distribution values must equal 100%
+  Attribute: splitIndex | Description: Split sequence number from 0 to n-1, where n is the number of CustomFieldValue elements in the CustomFieldValue Set element
+  Attribute: splitAmount | Description: Amount to be split for the line item.
+  For AmountOfPrice splits, the distributionValue and splitAmount attributes are calculated identically and will always match each other.
+  Attribute: customFieldValueList | Description: Container for custom field value object.
+  See section “CustomFieldValue [Export]” below.
+  Attribute: customAttributeList | Description: Container for custom attribute of this split.
+  See section “CustomAttribute [Export]” above.
+hash: sha256:a4512a7e0a32e800c6abe783565740a4bf788a666b17c79e725cb3ada560ffa3
+words: 167
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: SplittableFieldIndex [Export]
+  section_path: 2.2.3.41
+  page: 17
+  lang: en
+  prev: U.DOC0183.0160
+  next: U.DOC0183.0162
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - distributionValue
+      - |-
+        Distribution value for the split. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+        Must be a positive number or zero.
+        According to specific distribution type, it represents
+        AmountOfQuantity: the portion of the quantity to be split.
+        AmountOfPrice: the monetary amount to be split.
+        PercentOfQuantity and PercentOfPrice: the percentage of the split. For these values, the total of all distribution values must equal 100%
+      - ""
+    - - splitIndex
+      - Split sequence number from 0 to n-1, where n is the number of CustomFieldValue elements in the CustomFieldValue Set element
+      - ""
+    - - splitAmount
+      - |-
+        Amount to be split for the line item.
+        For AmountOfPrice splits, the distributionValue and splitAmount attributes are calculated identically and will always match each other.
+      - ""
+    - - customFieldValueList
+      - |-
+        Container for custom field value object.
+        See section “CustomFieldValue [Export]” below.
+      - ""
+    - - customAttributeList
+      - |-
+        Container for custom attribute of this split.
+        See section “CustomAttribute [Export]” above.
+      - ""
+  block: 1
+  blocks: 1

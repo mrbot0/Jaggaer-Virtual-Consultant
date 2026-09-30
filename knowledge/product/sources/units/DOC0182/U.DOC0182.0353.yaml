@@ -1,0 +1,98 @@
+id: U.DOC0182.0353
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: "CommodityCode is not a specific description of the goods or service. | Available from version: JA_19_04 Attribute: contractNumber | Description: Contract number against which the item was purchased. | Available from version: JA_19_04 Attribute: capitalExpense | Description: Indicates whether the item is (true) or is not (false) a capital expense. | Available from version: JA_19_04 Attribute: taxable | Description: Indicates whether the manufacturer is (true) or is not (false) taxable. | Available from version: JA_19_04 Attribute: configId | Description: Configuration identifier, if the form has a different configuration | Available from version: JA_19_04 Attribute: configVersion | Description: Version of the current form. Every configuration can have many versions. | Available from version: JA_19_04 Attribute: formFieldList | Description: Container for form fields. See section “FormField [PR Export]” below. | Available from version: JA_19_04 Attribute: formID | Description: ID of the form | Available from version: JA_19_04 Attribute: formElementNumber | Description: Element number of the form. | Available from version: JA_19_04"
+hash: sha256:a80f9b0bbc1825bfe31a77029c080443326e1c41e18bfc45eb19a968a518c2fd
+words: 159
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Form [PR Export]
+  section_path: 2.3.3.59
+  page: 26
+  lang: en
+  prev: U.DOC0182.0352
+  next: U.DOC0182.0354
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - formType
+      - Mechanism for grouping forms
+      - JA_19_04
+    - - formTitle
+      - Caption given to the form for easy understanding
+      - JA_19_04
+    - - catalogNumber
+      - Catalog number of the form
+      - JA_19_04
+    - - description
+      - Description of the item being purchased
+      - JA_19_04
+    - - productSizeList
+      - |-
+        Container for description of the size of the item.
+        See section “ProductSize [PR Export]” above.
+      - JA_19_04
+    - - quantity
+      - Number of items
+      - JA_19_04
+    - - productUnitOfMeasureList
+      - |-
+        Container for description of the unit of measure of the item
+        See section “ProductUnitOfMeasure [PR Export]” above
+      - JA_19_04
+    - - unspsc
+      - Standardized commodity code value for the item, as specified by http://www.unspsc.org (for example, 43191501 – Mobile phones).
+      - JA_19_04
+    - - productClassificationList
+      - |-
+        Container of item classification.
+        See section “ProductClassification [PR Export]” above.
+      - JA_19_04
+    - - manufacturerInfo
+      - |-
+        Manufacturer information.
+        See section “ManufacturerInfo [PR Export]” above.
+      - JA_19_04
+    - - commoditycode
+      - Code assigned to a product, or a group of products, for the purposes of identifying it in international commerce, or commerce in general. CommodityCode is not a specific description of the goods or service.
+      - JA_19_04
+    - - contractNumber
+      - Contract number against which the item was purchased.
+      - JA_19_04
+    - - capitalExpense
+      - Indicates whether the item is (true) or is not (false) a capital expense.
+      - JA_19_04
+    - - taxable
+      - Indicates whether the manufacturer is (true) or is not (false) taxable.
+      - JA_19_04
+    - - configId
+      - Configuration identifier, if the form has a different configuration
+      - JA_19_04
+    - - configVersion
+      - |-
+        Version of the current form.
+        Every configuration can have many versions.
+      - JA_19_04
+    - - formFieldList
+      - |-
+        Container for form fields.
+        See section “FormField [PR Export]” below.
+      - JA_19_04
+    - - formID
+      - ID of the form
+      - JA_19_04
+    - - formElementNumber
+      - Element number of the form.
+      - JA_19_04
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

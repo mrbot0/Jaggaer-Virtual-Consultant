@@ -1,0 +1,113 @@
+id: U.DOC0167.0606
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Dataset | Min/max occurrences | Description | Available from version
+  Dataset: active | Min/max occurrences: 0/1 | Description: Indicates whether these payment terms are (true) or are not (false) active.
+  Dataset: discount | Min/max occurrences: 0/1 | Description: Discount
+  Dataset: days | Min/max occurrences: 0/1 | Description: Number of days after the invoice date that the discount can be applied to the invoice.
+  Dataset: net | Min/max occurrences: 0/1 | Description: Number of days after the invoice date that the invoice is due.
+  Dataset: fob | Min/max occurrences: 0/1 | Description: Freight on Board (FOB) information.
+  Dataset: customPaymentTerm | Min/max occurrences: 0/1
+  Dataset: standardPaymentTermsCode | Min/max occurrences: 0/1 | Description: Uniquely identifies a specific preconfigured combination of payment terms. | Available from version: JINT_20_03_01
+  Dataset: standardPaymentTermsCode/@isChanged | Min/max occurrences: 0/1 | Description: Element was/wasn’t modified after last export | Available from version: JINT_20_03_01
+  Push only
+  Dataset: termsType | Min/max occurrences: 0/1 | Description: Used in conjunction with the daysAfter element to determine the invoice due date.
+  Possible values:
+  Net
+  EOM
+  MFI
+  EOQ
+  Manual | Available from version: JINT_20_03_01
+  Dataset: termsType/@isChanged | Min/max occurrences: 0/1 | Description: Element was/wasn’t modified after last export | Available from version: JINT_20_03_01
+  Push only
+  Dataset: daysAfter | Min/max occurrences: 0/1 | Description: Used in conjunction with the termsType element to compute the invoice due date.
+  Possible values: [0 - 999] | Available from version: JINT_20_03_01
+  Dataset: daysAfter/@isChanged | Min/max occurrences: 0/1 | Description: Element was/wasn’t modified after last export | Available from version: JINT_20_03_01
+  Push only
+hash: sha256:a648c62f82822c7f99440c75437850c61eb46e0805972331e65a351b331fa56b
+words: 252
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/termsAndCondition/paymentTerms
+  section_path: 2.2.4.78
+  page: 7
+  lang: en
+  prev: U.DOC0167.0605
+  next: U.DOC0167.0607
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrences
+    - Description
+    - Available from version
+  rows:
+    - - active
+      - 0/1
+      - Indicates whether these payment terms are (true) or are not (false) active.
+      - ""
+    - - discount
+      - 0/1
+      - Discount
+      - ""
+    - - days
+      - 0/1
+      - Number of days after the invoice date that the discount can be applied to the invoice.
+      - ""
+    - - net
+      - 0/1
+      - Number of days after the invoice date that the invoice is due.
+      - ""
+    - - fob
+      - 0/1
+      - Freight on Board (FOB) information.
+      - ""
+    - - customPaymentTerm
+      - 0/1
+      - ""
+      - ""
+    - - standardPaymentTermsCode
+      - 0/1
+      - Uniquely identifies a specific preconfigured combination of payment terms.
+      - JINT_20_03_01
+    - - standardPaymentTermsCode/@isChanged
+      - 0/1
+      - Element was/wasn’t modified after last export
+      - |-
+        JINT_20_03_01
+        Push only
+    - - termsType
+      - 0/1
+      - |-
+        Used in conjunction with the daysAfter element to determine the invoice due date.
+        Possible values:
+        Net
+        EOM
+        MFI
+        EOQ
+        Manual
+      - JINT_20_03_01
+    - - termsType/@isChanged
+      - 0/1
+      - Element was/wasn’t modified after last export
+      - |-
+        JINT_20_03_01
+        Push only
+    - - daysAfter
+      - 0/1
+      - |-
+        Used in conjunction with the termsType element to compute the invoice due date.
+        Possible values: [0 - 999]
+      - JINT_20_03_01
+    - - daysAfter/@isChanged
+      - 0/1
+      - Element was/wasn’t modified after last export
+      - |-
+        JINT_20_03_01
+        Push only
+  block: 1
+  blocks: 1

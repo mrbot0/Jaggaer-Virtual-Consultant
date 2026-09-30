@@ -1,0 +1,119 @@
+id: U.DOC0182.0333
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: "Attribute: casNumber | Description: CAS number to identify chemicals Attribute: barCode | Description: Bar code for the item. Attribute: itemAttributeList | Description: Item attribute. See section “ItemAttribute [PR Export]” below. Attribute: extendedItemInfo | Description: Container for extended item information. See section “ExtendedItemInfo [PR Export]” below. | Available from version: JA_19_04 Attribute: itemMasterId | Description: Unique identifier for the item. | Available from version: JA_19_05 Attribute: commodityCodeType | Description: Identifies whether the Commodity Code is for products or services. A value of None indicates that the Commodity Code is not for a product or a service. Products Services None | Available from version: JINT_20_01_01"
+hash: sha256:f75d3332be9e96da4ad558b880d839ed679431ca703dd674364f0de26d2cf346
+words: 103
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Item [PR Export]
+  section_path: 2.3.3.40
+  page: 26
+  lang: en
+  prev: U.DOC0182.0332
+  next: U.DOC0182.0334
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - catalogNumber
+      - Unique ID number for a specific stock item in the supplier inventory.
+      - ""
+    - - auxiliaryCatalogNumber
+      - Catalog number. Sometimes used by punchout suppliers to provide additional identification of an item.
+      - ""
+    - - description
+      - Description of the item being purchased.
+      - ""
+    - - productUnitOfMeasureList
+      - |-
+        Container for description of the unit of measure of the item
+        See section “ProductUnitOfMeasure [PR Export]” below
+      - ""
+    - - productSizeList
+      - |-
+        Container for description of the size of the item.
+        See section “ProductSize [PR Export]” below.
+      - ""
+    - - Unspsc
+      - Standardized commodity code value for the item, as specified by http://www.unspsc.org (for example, 43191501 – Mobile phones).
+      - ""
+    - - commodityCode
+      - Code assigned to a product, or a group of products, for the purposes of identifying it in international commerce, or commerce in general. CommodityCode is not a specific description of the goods or service.
+      - ""
+    - - productReferenceNumber
+      - Unique ID for hosted products in JAGGAER Indirect, not usually needed by customers.
+      - ""
+    - - productType
+      - |-
+        Method by which the item was selected.
+        Catalog
+        Form
+        Punchout
+        NonCatalogItem
+        ContractItem
+      - ""
+    - - productClassificationList
+      - |-
+        Container of item classification.
+        See section “ProductClassification [PR Export]” below.
+      - ""
+    - - supplier
+      - |-
+        Purchase requisition line supplier information.
+        See section “Supplier [PR Export]” below
+      - ""
+    - - manufacturerInfo
+      - |-
+        Manufacturer information.
+        See section “ManufacturerInfo [PR Export]” below.
+      - ""
+    - - leadTimeDays
+      - Lead time the vendor requires to fill the order.
+      - ""
+    - - radioNuclide
+      - RadioNuclide number to identify RadioNuclides
+      - ""
+    - - serialNumber
+      - Serial number of the trade-in line item. Valid only if the item is a trade-in.
+      - ""
+    - - assetTagNumber
+      - Company’s unique internal tracking identifier for the trade-in line item. Valid only if the item is a trade-in.
+      - ""
+    - - casNumber
+      - CAS number to identify chemicals
+      - ""
+    - - barCode
+      - Bar code for the item.
+      - ""
+    - - itemAttributeList
+      - |-
+        Item attribute.
+        See section “ItemAttribute [PR Export]” below.
+      - ""
+    - - extendedItemInfo
+      - |-
+        Container for extended item information.
+        See section “ExtendedItemInfo [PR Export]” below.
+      - JA_19_04
+    - - itemMasterId
+      - Unique identifier for the item.
+      - JA_19_05
+    - - commodityCodeType
+      - |-
+        Identifies whether the Commodity Code is for products or services. A value of None indicates that the Commodity Code is not for a product or a service.
+        Products
+        Services
+        None
+      - JINT_20_01_01
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

@@ -1,0 +1,40 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+section: 2.1.1.70
+section_title: J1Supplier/JISupplierData/locationList/location/paymentMethod/poPaymentMethod/pCardPayment
+genre: tecnica
+rows:
+  - label: active
+    technical_name: active
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the PCard payment method is (true) or is not (false)
+      active.
+    section: 2.1.1.70
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.70#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: poNumberSelection
+    technical_name: poNumberSelection
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.70
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.70#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: RequireCardSecurityCode
+    technical_name: RequireCardSecurityCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.70
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.70#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80

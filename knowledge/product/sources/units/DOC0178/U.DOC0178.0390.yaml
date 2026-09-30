@@ -1,0 +1,41 @@
+id: U.DOC0178.0390
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: type | Description: Type of the commodity code.
+  0 – Reporting commodity code, used to limit the results of a Sourcing Savings Report. Each sourcing event can have only one reporting commodity code.
+  1 – Additional commodity code. Any commodity code that is not a reporting commodity code is an additional commodity code.
+  Note: If the reporting commodity code was added via the sourcing event, you can only add additional commodity codes manually.
+hash: sha256:0d56a5cf702d70a94e26aae76a87a7a06b28ad29e94157c8c8fad89f4eb12c27
+words: 74
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ContractCommodityCode [Import]
+  section_path: 2.2.1.63
+  page: 67
+  lang: en
+  prev: U.DOC0178.0389
+  next: U.DOC0178.0391
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - type
+    - ""
+    - |-
+      Type of the commodity code.
+      0 – Reporting commodity code, used to limit the results of a Sourcing Savings Report. Each sourcing event can have only one reporting commodity code.
+      1 – Additional commodity code. Any commodity code that is not a reporting commodity code is an additional commodity code.
+      Note: If the reporting commodity code was added via the sourcing event, you can only add additional commodity codes manually.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

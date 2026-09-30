@@ -1,0 +1,39 @@
+id: U.DOC0167.0388
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: accountType | Mandatory (Y/N): N | Description: Indicates the type of Pay Mode account. | Mapping on Jaggaer One data model and notes: • Optional if the “type” field on the AccountsPayable element is set to PayMode.
+  • Must be blank if the “type” field on the AccountsPayable element is set to DirectDeposit, Check, Credit, ePayable, or WireTransfer.
+hash: sha256:4a851dfccd9b3cf1205c82391f05ddde5d57a35187d92e3fcbf294b1f805cce8
+words: 59
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable
+  section_path: 2.1.1.103
+  page: 5
+  lang: en
+  prev: U.DOC0167.0387
+  next: U.DOC0167.0389
+row:
+  table: 0
+  row: 14
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - accountType
+    - N
+    - Indicates the type of Pay Mode account.
+    - |-
+      • Optional if the “type” field on the AccountsPayable element is set to PayMode.
+      • Must be blank if the “type” field on the AccountsPayable element is set to DirectDeposit, Check, Credit, ePayable, or WireTransfer.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

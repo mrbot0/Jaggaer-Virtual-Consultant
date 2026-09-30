@@ -1,0 +1,39 @@
+id: U.DOC0177.0201
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: erpNumber | Mandatory (Y/N): N | Description: Current, unique ERP number associated with the contact. | Mapping on Jaggaer One data model and notes: This field is second in priority, after OldERPNumber, when the JAGGAER ONE Supplier Management solution is searching for a contact.
+  If OldERPNumber is present, the JAGGAER ONE Supplier Management solution uses PNumber to update the contact
+hash: sha256:729689d1649ada2b1e551ebcddd0779912b0ddc6993d48b29ad4a85603d0727b
+words: 61
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/contactList/contact
+  section_path: 2.1.1.38
+  page: 37
+  lang: en
+  prev: U.DOC0177.0200
+  next: U.DOC0177.0202
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - erpNumber
+    - N
+    - Current, unique ERP number associated with the contact.
+    - |-
+      This field is second in priority, after OldERPNumber, when the JAGGAER ONE Supplier Management solution is searching for a contact.
+      If OldERPNumber is present, the JAGGAER ONE Supplier Management solution uses PNumber to update the contact
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

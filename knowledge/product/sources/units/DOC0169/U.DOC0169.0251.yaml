@@ -1,0 +1,44 @@
+id: U.DOC0169.0251
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: messageId
+  Attribute: timestamp | Description: Timestamp when operation was completed.
+  Attribute: status | Description: Status update information.
+  See section “Status [PR Update]” below.
+  Attribute: updateObjectErrors | Description: List of error encountered while carrying on operation.
+  See section “Update Requisition Ref [PR Update]” below.
+hash: sha256:53176080aad91f4a73a573185894620b7373eca2398c01d680406382426fa714
+words: 48
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Return Message [PR Update]
+  section_path: 2.2.3.1
+  page: 45
+  lang: en
+  prev: U.DOC0169.0250
+  next: U.DOC0169.0252
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - messageId
+      - ""
+    - - timestamp
+      - Timestamp when operation was completed.
+    - - status
+      - |-
+        Status update information.
+        See section “Status [PR Update]” below.
+    - - updateObjectErrors
+      - |-
+        List of error encountered while carrying on operation.
+        See section “Update Requisition Ref [PR Update]” below.
+  block: 1
+  blocks: 1

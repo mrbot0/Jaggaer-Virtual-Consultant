@@ -1,0 +1,39 @@
+id: U.DOC0178.0061
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: returnCode | Description: Operation result code.
+  0: operation completed successfully
+  1: operation completed successfully with warnings as detailed in the returned message
+  2: operation not completed due to error as detailed in the returned message
+  Attribute: contractSpendMessage | Description: Operation result container. See section “Contract Response Message [ImportSpend]” below
+hash: sha256:2fc27c563804022df69d99cc5d0c836d28440f12e13f51d31f8844e9e0421547
+words: 54
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Response Data Format [ImportSpend]
+  section_path: 2.1.3
+  page: 15
+  lang: en
+  prev: U.DOC0178.0060
+  next: U.DOC0178.0062
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - returnCode
+      - |-
+        Operation result code.
+        0: operation completed successfully
+        1: operation completed successfully with warnings as detailed in the returned message
+        2: operation not completed due to error as detailed in the returned message
+    - - contractSpendMessage
+      - Operation result container. See section “Contract Response Message [ImportSpend]” below
+  block: 1
+  blocks: 1

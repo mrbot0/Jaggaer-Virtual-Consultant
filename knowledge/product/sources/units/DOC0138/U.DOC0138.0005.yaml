@@ -1,0 +1,17 @@
+id: U.DOC0138.0005
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: The rule uses basic workflow objects to evaluate whether the document owner (requisitioner) has an assigned HR department of “Chemistry”, and also whether there is a product in the requisition with a Product Type of “radioactive”. If the Owner is both in the department Chemistry, AND (denoted by the &&) there is a radioactive item in the requisition, the requisition will route to the explicit folder noted in the FolderRef section, “Chemistry”. If the user is in the Chemistry department and submits a requisition that does not have a radioactive item, the requisition will not stop at this particular activity.
+hash: sha256:4e3d318e8f8b3a08f02b07cc28e094c55cbf51b33e5482a7f0508842e36a890e
+words: 100
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: MULTIPLE ELEMENT STATIC WORKFLOW
+  section: MULTIPLE ELEMENT STATIC WORKFLOW
+  section_path: "1"
+  page: null
+  lang: en
+  prev: U.DOC0138.0004
+  next: U.DOC0138.0006

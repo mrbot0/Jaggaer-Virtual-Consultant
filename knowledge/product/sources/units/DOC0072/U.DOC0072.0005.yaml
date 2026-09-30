@@ -1,0 +1,17 @@
+id: U.DOC0072.0005
+doc: S.STD.XSC.DOC.0072
+doc_id: xdoc-commodity-code-mapping-pdf-dcc2ec1b
+type: testo
+text: Why did we need a new database structure and a data migration? The new schema is designed so that in a future release, a Multi-Business Unit organization can specify one mapping set to use per business unit. The new schema design will also eventually allow a Non-Multi-Business Unit organization to create a new mapping set and completely configure it before making it the default for business processes.(Currently, each time an admin makes a change, that change immediately becomes live. Admins would like to fully configure all of their planned changes before switching business processes over to their new configuration.) The data from the old Manage Commodity Codes and Mappings user interface was migrated from the SciQuest database schema to a new schema called CategoryUOMMappingSets.
+hash: sha256:02aaf17661d18032a983cc0c8c29a85e6c72d574b072f8e60272e0a2d9d3e776
+words: 124
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0072
+  chapter: Category,Commodity Code, UN/SPSC and UOM Mapping
+  section: Category,Commodity Code, UN/SPSC and UOM Mapping
+  section_path: p1
+  page: 1
+  lang: en
+  prev: U.DOC0072.0004
+  next: U.DOC0072.0006

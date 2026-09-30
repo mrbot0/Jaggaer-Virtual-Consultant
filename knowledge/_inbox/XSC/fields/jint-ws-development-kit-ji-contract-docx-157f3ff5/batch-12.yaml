@@ -1,0 +1,67 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-12
+section: 2.2.1.8
+section_title: ContractPartiesList [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:FIRSTPARTYLIST
+    label: firstPartyList
+    labels:
+      - firstPartyList
+    technical_name: FIRSTPARTYLIST
+    section: 2.2.1.8
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of first party information.
+      See section “Party [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.8
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.8#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: firstPartyList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SECONDPARTYLIST
+    label: secondPartyList
+    labels:
+      - secondPartyList
+    technical_name: SECONDPARTYLIST
+    section: 2.2.1.8
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of second party information.
+      See section “Party [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.8
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.8#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: secondPartyList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 858

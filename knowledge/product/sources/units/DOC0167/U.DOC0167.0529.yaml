@@ -1,0 +1,76 @@
+id: U.DOC0167.0529
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Dataset | Min/max occurrences | Description | Available from version
+  Dataset: name | Min/max occurrences: 1/1 | Description: data element name
+  Dataset: type | Min/max occurrences: 0/1 | Description: Data element type
+  Dataset: values/value | Min/max occurrences: 0/N | Description: Value of the Data Element (eVM answer)
+  According to data element type, values can be:
+  0: text
+  1: number formatted in the default locale without grouping separator
+  2: date string in the format "yyyy-MM-dd". It is possible to configure a different format for date (example: "yyyy-MM-dd"). In this case the same format will be applied to import, export and data element condition filter.
+  3: 0 for false, 1 for true
+  4 and 7: attachment filename
+  5 and 6: Choice Label in “neutral” language, as it appears in the choice list
+  Dataset: values/value/@id | Min/max occurrences: 0/1 | Description: In case of attachment, it is the Internal identifier of the attachment, to be used for calling attachments web service to download it.
+  In case of choice/multichoice the id of the choice
+  Dataset: values/value/@secureToken | Min/max occurrences: 0/1 | Description: In case of attachment, it is the secure token to be used for calling attachments web service to download the attachment file.
+  Dataset: attachmentExpiryDate | Min/max occurrences: 0/1 | Description: Attachment expiring date (without time) for data element type 4 and 7.
+hash: sha256:e40072db141ed89c56f9261e33f0803cb01bd9768d7ba54aba0cae4e7a38aacb
+words: 221
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JASupplierData/dataElements/deInfoList/deInfo
+  section_path: 2.2.4.9
+  page: 7
+  lang: en
+  prev: U.DOC0167.0528
+  next: U.DOC0167.0530
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrences
+    - Description
+    - Available from version
+  rows:
+    - - name
+      - 1/1
+      - data element name
+      - ""
+    - - type
+      - 0/1
+      - Data element type
+      - ""
+    - - values/value
+      - 0/N
+      - |-
+        Value of the Data Element (eVM answer)
+        According to data element type, values can be:
+        0: text
+        1: number formatted in the default locale without grouping separator
+        2: date string in the format "yyyy-MM-dd". It is possible to configure a different format for date (example: "yyyy-MM-dd"). In this case the same format will be applied to import, export and data element condition filter.
+        3: 0 for false, 1 for true
+        4 and 7: attachment filename
+        5 and 6: Choice Label in “neutral” language, as it appears in the choice list
+      - ""
+    - - values/value/@id
+      - 0/1
+      - |-
+        In case of attachment, it is the Internal identifier of the attachment, to be used for calling attachments web service to download it.
+        In case of choice/multichoice the id of the choice
+      - ""
+    - - values/value/@secureToken
+      - 0/1
+      - In case of attachment, it is the secure token to be used for calling attachments web service to download the attachment file.
+      - ""
+    - - attachmentExpiryDate
+      - 0/1
+      - Attachment expiring date (without time) for data element type 4 and 7.
+      - ""
+  block: 1
+  blocks: 1

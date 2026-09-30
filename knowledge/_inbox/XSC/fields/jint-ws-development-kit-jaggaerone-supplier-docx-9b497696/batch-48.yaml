@@ -1,0 +1,117 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-48
+section: 2.1.1.74
+section_title: J1Supplier/JISupplierData/locationList/location/shipping/surchargeConfiguration
+part: 1
+parts: 1
+rows:
+  - key: tech:FEE
+    label: fee
+    labels:
+      - fee
+    technical_name: FEE
+    section: 2.1.1.74
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.74
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.74#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fee
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.77
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.77#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fee
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USEORDERTHRESHOLD
+    label: useOrderThreshold
+    labels:
+      - useOrderThreshold
+    technical_name: USEORDERTHRESHOLD
+    section: 2.1.1.74
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.74
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.74#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: useOrderThreshold
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.77
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.77#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: useOrderThreshold
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ORDERTHRESHOLD
+    label: orderThreshold
+    labels:
+      - orderThreshold
+    technical_name: ORDERTHRESHOLD
+    section: 2.1.1.74
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.74
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.74#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: orderThreshold
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.77
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.77#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: orderThreshold
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1196

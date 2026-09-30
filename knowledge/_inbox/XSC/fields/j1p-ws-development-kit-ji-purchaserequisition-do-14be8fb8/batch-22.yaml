@@ -1,0 +1,539 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+batch: batch-22
+section: 2.1.1.24
+section_title: Custom Field Value [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:DISTRIBUTIONVALUE
+    label: distributionValue
+    labels:
+      - distributionValue
+    technical_name: DISTRIBUTIONVALUE
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Distribution value for the split. This is an integer numeric value.
+
+      Must be a positive number or zero.
+
+      According to specific distribution type, it represents:
+
+      AmountOfQuantity: the portion of the quantity to be split.
+
+      AmountOfPrice: the monetary amount to be split.
+
+      PercentOfQuantity and PercentOfPrice: the percentage of the split. For
+      these values, the total of all distribution values must equal 100%
+
+      DEPRECATED: uses “decDistributionValue” field
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: distributionValue
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: distributionValue
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SPLITINDEX
+    label: splitIndex
+    labels:
+      - splitIndex
+    technical_name: SPLITINDEX
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Split sequence number.
+
+      The @splitIndex attribute must be a positive number from 0 to n-1, where n
+      is the number of CustomFieldValue elements in the CustomFieldValueSet
+      element. For example, given a CustomFieldValueSet element with four
+      CustomFieldValue elements, the @splitIndex attributes are numbered 0 to 3.
+      The default split index is zero (0).
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: splitIndex
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: splitIndex
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SPLITAMOUNT
+    label: splitAmount
+    labels:
+      - splitAmount
+    technical_name: SPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Amount to be split for the line item. This is a numeric value of up to 15
+      digits, including up to 4 decimal places.
+
+      For AmountOfPrice splits, the distributionvalue and splitAmount attributes
+      are calculated identically and will always match each other.
+
+      DEPRECATED: uses “decSplitAmount” field
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: splitAmount
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: splitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SHIPPINGSPLITAMOUNT
+    label: shippingSplitAmount
+    labels:
+      - shippingSplitAmount
+    technical_name: SHIPPINGSPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Amount to be split for shipping for the line item. This is a numeric value
+      of up to 15 digits, including up to 4 decimal places
+
+      DEPRECATED: uses “decShippingSplitAmount” field
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: shippingSplitAmount
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: shippingSplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:HANDLINGSPLITAMOUNT
+    label: handlingSplitAmount
+    labels:
+      - handlingSplitAmount
+    technical_name: HANDLINGSPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Amount to be split for handling for the line item. This is a numeric value
+      of up to 15 digits, including up to 4 decimal places
+
+      DEPRECATED: uses “decHandlingSplitAmount” field
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: handlingSplitAmount
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: handlingSplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX1SPLITAMOUNT
+    label: tax1SplitAmount
+    labels:
+      - tax1SplitAmount
+    technical_name: TAX1SPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Amount to be split for tax 1 for the line item. This is a numeric value of
+      up to 15 digits, including up to 4 decimal places
+
+      DEPRECATED: uses “decTax1SplitAmount” field
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: tax1SplitAmount
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: tax1SplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX2SPLITAMOUNT
+    label: tax2SplitAmount
+    labels:
+      - tax2SplitAmount
+    technical_name: TAX2SPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Amount to be split for tax 2 for the line item. This is a numeric value of
+      up to 15 digits, including up to 4 decimal places
+
+      DEPRECATED: uses “decTax2SplitAmount” field
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: tax2SplitAmount
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: tax2SplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DECDISTRIBUTIONVALUE
+    label: decDistributionValue
+    labels:
+      - decDistributionValue
+    technical_name: DECDISTRIBUTIONVALUE
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Distribution value for the split. This is a numeric value of up to 15
+      digits, including up to 4 decimal places.
+
+      Must be a positive number or zero.
+
+      According to specific distribution type, it represents:
+
+      AmountOfQuantity: the portion of the quantity to be split.
+
+      AmountOfPrice: the monetary amount to be split.
+
+      PercentOfQuantity and PercentOfPrice: the percentage of the split. For
+      these values, the total of all distribution values must equal 100%
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: decDistributionValue
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: decDistributionValue
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DECSPLITAMOUNT
+    label: decSplitAmount
+    labels:
+      - decSplitAmount
+    technical_name: DECSPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Amount to be split for the line item. This is a numeric value of up to 15
+      digits, including up to 4 decimal places.
+
+      For AmountOfPrice splits, the distributionvalue and splitAmount attributes
+      are calculated identically and will always match each other.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: decSplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DECSHIPPINGSPLITAMOUNT
+    label: decShippingSplitAmount
+    labels:
+      - decShippingSplitAmount
+    technical_name: DECSHIPPINGSPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Amount to be split for shipping for the line item. This is a numeric
+      value of up to 15 digits, including up to 4 decimal places
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: decShippingSplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DECHANDLINGSPLITAMOUNT
+    label: decHandlingSplitAmount
+    labels:
+      - decHandlingSplitAmount
+    technical_name: DECHANDLINGSPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Amount to be split for handling for the line item. This is a numeric
+      value of up to 15 digits, including up to 4 decimal places
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: decHandlingSplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DECTAX1SPLITAMOUNT
+    label: decTax1SplitAmount
+    labels:
+      - decTax1SplitAmount
+    technical_name: DECTAX1SPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Amount to be split for tax 1 for the line item. This is a numeric value
+      of up to 15 digits, including up to 4 decimal places
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: decTax1SplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DECTAX2SPLITAMOUNT
+    label: decTax2SplitAmount
+    labels:
+      - decTax2SplitAmount
+    technical_name: DECTAX2SPLITAMOUNT
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Amount to be split for tax 2 for the line item. This is a numeric value
+      of up to 15 digits, including up to 4 decimal places
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: decTax2SplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:VALUE
+    label: value
+    labels:
+      - value
+    technical_name: VALUE
+    section: 2.1.1.24
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Value of the custom field.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.24#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: value
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.4.1.5
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: value
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 4257

@@ -1,0 +1,39 @@
+id: U.DOC0167.0427
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: type | Mandatory (Y/N): Y | Description: Type of insurance information. | Mapping on Jaggaer One data model and notes: Required if InsuranceInformation element is provided.
+  Values: (AutomobileLiability | BusinessLiability | BusinessOwner | CommercialAutomobileLiability | CommercialGeneralLiability | CyberLiability | EmployerLiability | EmploymentPracticeLiability | ErrorsAndOmissions | ExcessLiability | FireAndMarine | GeneralLiability | Malpractice | ProductLiability | ProfessionalLiability | PropertyDamage | PublicLiability | UmbrellaLiability | WorkersCompensation | Other)
+hash: sha256:834f53949e3216b5ccaba3964b2339b365efddbb0be7ab3a85e9a30f322698c6
+words: 67
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/insuranceInformationList/insuranceInformation
+  section_path: 2.1.1.113
+  page: 5
+  lang: en
+  prev: U.DOC0167.0426
+  next: U.DOC0167.0428
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - type
+    - Y
+    - Type of insurance information.
+    - |-
+      Required if InsuranceInformation element is provided.
+      Values: (AutomobileLiability | BusinessLiability | BusinessOwner | CommercialAutomobileLiability | CommercialGeneralLiability | CyberLiability | EmployerLiability | EmploymentPracticeLiability | ErrorsAndOmissions | ExcessLiability | FireAndMarine | GeneralLiability | Malpractice | ProductLiability | ProfessionalLiability | PropertyDamage | PublicLiability | UmbrellaLiability | WorkersCompensation | Other)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,77 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.4.1.2
+section_title: JIPoStatus [JIOrder Status Import method]
+genre: tecnica
+rows:
+  - label: poId
+    technical_name: poId
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Internal identifier of the po on which operation is to be executed.
+    section: 2.4.1.2
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.4.1.2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: poNumber
+    technical_name: poNumber
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: >-
+      Internal tracking number assigned to the order by the eProcurement
+      solution, on which operation is to be executed.
+
+      PoNumber must be present unless the poId is provided.
+    section: 2.4.1.2
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.4.1.2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: poStatus
+    technical_name: poStatus
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Status of the PO
+      Supported statuses are:
+      open
+      closed
+    section: 2.4.1.2
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.4.1.2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: notes
+    technical_name: notes
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Internal notes in the PO document.
+
+      If additional data elements are needed that are not supported by the PO
+      Status Import, you can use the Notes field to store the data.
+
+      If not provided or empty, existing notes are not overwritten.
+    section: 2.4.1.2
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.4.1.2#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: customFieldValueList
+    technical_name: customFieldValueList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of custom field value to be set on the order header.
+      See section “CustomfieldValue [JIOrder Status Import method]” below.
+    section: 2.4.1.2
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.4.1.2#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

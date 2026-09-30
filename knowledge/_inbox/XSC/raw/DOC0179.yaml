@@ -1,0 +1,1993 @@
+doc: S.STD.XSC.DOC.0179
+scope: XSC
+extracted_at: 2026-09-30T04:32:32.674Z
+tier: T0
+stats:
+  units: 102
+  extracted_units: 49
+  document_candidates: 1
+  needs_llm: 4
+  t0_complete: 46
+  by_candidate:
+    GLS: 1
+    FLW: 2
+    FLD: 45
+    CFG: 1
+    INT: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 4480
+  sessions:
+    - n: 1
+      tokens: 4480
+      batches: 1
+      items: 4
+      batch_items:
+        - - R.DOC0179.0013
+          - R.DOC0179.0075
+          - R.DOC0179.0090
+          - R.DOC0179.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0179.0012
+    source_unit: U.DOC0179.0012
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0179
+    section: Executive Summary
+    page: 4
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: structure of the current document
+      definition: "the following:"
+      aliases: []
+      lang: en
+      source_unit: U.DOC0179.0012
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0179.0013
+    source_unit: U.DOC0179.0013
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0179
+    section: Executive Summary
+    page: 4
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: custom
+          oggetto: Field import method
+          valore: null
+        - n: 2
+          verbo: request
+          oggetto: "data format: describes the structure of the import request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted"
+          valore: describes the structure of the import request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted
+        - n: 3
+          verbo: "behavior:"
+          oggetto: describes how the web service processes the data passed in input, in case of some processes
+          valore: describes how the web service processes the data passed in input, in case of some processes
+        - n: 4
+          verbo: response
+          oggetto: "data format: describes the structure of the web service response and contains the list of possible error codes"
+          valore: describes the structure of the web service response and contains the list of possible error codes
+        - n: 5
+          verbo: soap
+          oggetto: INTERFACE
+          valore: null
+        - n: 6
+          verbo: available
+          oggetto: "methods: contains the list of the methods provided by the web service"
+          valore: contains the list of the methods provided by the web service
+        - n: 7
+          verbo: "wsdl:"
+          oggetto: in this paragraph is attached the JICustomField.wsdl from which the web service has been created and is to be used to generate the client
+          valore: in this paragraph is attached the JICustomField.wsdl from which the web service has been created and is to be used to generate the client
+        - n: 8
+          verbo: "endpoints:"
+          oggetto: available webservice SOAP endpoint URLs
+          valore: available webservice SOAP endpoint URLs
+        - n: 9
+          verbo: request
+          oggetto: "samples: sample SOAP requests to invoke the webservice"
+          valore: sample SOAP requests to invoke the webservice
+        - n: 10
+          verbo: rest
+          oggetto: INTERFACE
+          valore: null
+        - n: 11
+          verbo: operation
+          oggetto: "and Endpoints: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods"
+          valore: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods
+        - n: 12
+          verbo: request
+          oggetto: "Samples: provides some call examples and a POSTMAN collection with an extensive list of runnable calls"
+          valore: provides some call examples and a POSTMAN collection with an extensive list of runnable calls
+        - n: 13
+          verbo: data
+          oggetto: "Types and UI Default Labels: describes the type of the fields and the corresponding label in English language in the platform with the aim to simplify the mapping between the fields visible in the platform and the fields used in the web service"
+          valore: describes the type of the fields and the corresponding label in English language in the platform with the aim to simplify the mapping between the fields visible in the platform and the fields used in the web service
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0179.0013
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 362
+  - raw_id: R.DOC0179.0016
+    source_unit: U.DOC0179.0016
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: Main Request structure
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: CFCreateUpdate
+      technical_name: CFCreateUpdate
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Container of one or more CustomField data defining custom field data to be imported.
+        See section CustomField [Custom Field Import method].
+      section: 2.1.1.1
+      source_unit: U.DOC0179.0016
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 50
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0017
+    source_unit: U.DOC0179.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: Main Request structure
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: CFRelationship
+      technical_name: CFRelationship
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Container of one or more Relationship data defining relationship to be imported.
+        See section Relationship [Custom Field Import method]
+      section: 2.1.1.1
+      source_unit: U.DOC0179.0017
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 49
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0018
+    source_unit: U.DOC0179.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: name
+      technical_name: name
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Name of the custom field
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0018
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 19
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0019
+    source_unit: U.DOC0179.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: active
+      technical_name: active
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the custom field should (1) or should not (0) be active within the Jaggaer indirect solution.
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0019
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 42
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0020
+    source_unit: U.DOC0179.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: externalText
+      technical_name: externalText
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Description of the custom field to be displayed externally (for example, on a PO)
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0020
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 36
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0021
+    source_unit: U.DOC0179.0021
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: allowCodeSplits
+      technical_name: allowCodeSplits
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the custom field can (1) or cannot (0) be subject to splits within a PR. Splitting a custom field allows the user to assign various distributions across multiple values for the custom field. This field is only valid for custom fields within the Codes section of the PR.
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0021
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 88
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0022
+    source_unit: U.DOC0179.0022
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: showOnPlainTextEmail
+      technical_name: showOnPlainTextEmail
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the custom field can (1) or cannot (0) be shown on plain text email PO revisions sent to the supplier.
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0022
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 47
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0023
+    source_unit: U.DOC0179.0023
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: sortBy
+      technical_name: sortBy
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Method to be used when sorting custom field values in search results and the user's profile.
+        Allowed values are:
+        Alpha-numeric - The values are sorted alpha-numerically.
+        Explicitly - The values are sorted in the order specified on the Administration > organization setup > Custom Fields > Values tab.
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0023
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 89
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0024
+    source_unit: U.DOC0179.0024
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: useAsAnMBUChartOfAccountsField
+      technical_name: useAsAnMBUChartOfAccountsField
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Indicates whether the custom field is (1) or is not (0) to be added to the MBU Chart-of-Accounts list. When this field is set to 1, you can uniquely assign the custom field to a specific business unit in your organization.
+        Note: Setting this field to 0 for a parent custom field also sets it to false for all its children.
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0024
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 100
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0025
+    source_unit: U.DOC0179.0025
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: useDynamicWorkflow
+      technical_name: useDynamicWorkflow
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether values associated with the custom field can (1) or cannot (0) be part of dynamic workflow. JAGGAER Services must set up the associated dynamic workflow step or activity before you can set this field to true.
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0025
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 73
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0026
+    source_unit: U.DOC0179.0026
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: customFieldStyle
+      technical_name: customFieldStyle
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Style to be applied to the custom field.
+        Possible values:
+        0 - Use user profile permissions -This style uses the custom field permissions as set up in the user's profile or role.
+        1 - Yes/No (checkbox) - This style shows up as a checkbox in the JAGGAER Indirect solution UI for the user to select. The user must have either the View or Edit Personal List custom field permission to be able to see and select the checkbox. Default values saved in the profile are not automatically applied.
+        2 - Organization-wide list - This style shows the user all your organization's values within the Values tab in a drop-down list on the PR or PO.
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0026
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 174
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0027
+    source_unit: U.DOC0179.0027
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: helpText
+      technical_name: helpText
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Help text that is to appear when the user selects the custom field name in the JAGGAER Indirect solution UI
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0027
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 41
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0028
+    source_unit: U.DOC0179.0028
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: defaultAutoApproveReqAndPO
+      technical_name: defaultAutoApproveReqAndPO
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether automatic approval is (1) or is not (0) enabled by default for any new rule created, if the individual placing the order is an approver of the rule.
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0028
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 60
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0029
+    source_unit: U.DOC0179.0029
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomField [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: customFieldValueSet
+      technical_name: customFieldValueSet
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Container of one or more CustomFieldValue data defining customFieldValue to be imported.
+        See section CustomFieldValue [Custom Field Import method].
+      section: 2.1.1.2
+      source_unit: U.DOC0179.0029
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 54
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0030
+    source_unit: U.DOC0179.0030
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomFieldValue [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: action
+      technical_name: action
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Action to perform on the custom field value.
+        Allowed values:
+        modify - Update the existing value or add a value if none exists.
+        delete - Delete the value, provided a relationship does not exist.
+        If a relationship does exist for the value, you must delete the relationship before you can delete the value.
+      section: 2.1.1.3
+      source_unit: U.DOC0179.0030
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 90
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0031
+    source_unit: U.DOC0179.0031
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomFieldValue [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: value
+      technical_name: value
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Value of the custom field.
+      section: 2.1.1.3
+      source_unit: U.DOC0179.0031
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 20
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0032
+    source_unit: U.DOC0179.0032
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomFieldValue [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: description
+      technical_name: description
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Description of the custom field value.
+      section: 2.1.1.3
+      source_unit: U.DOC0179.0032
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0033
+    source_unit: U.DOC0179.0033
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomFieldValue [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: active
+      technical_name: active
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Indicates whether the value should (1) or should not (0) be active for shoppers in the JAGGAER Indirect solution.
+        An active item is available to appropriate end users when shopping in the solution. An inactive item is not available to end users. A value might be marked inactive even if it has relationships in place.
+      section: 2.1.1.3
+      source_unit: U.DOC0179.0033
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 93
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0034
+    source_unit: U.DOC0179.0034
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomFieldValue [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: approvers
+      technical_name: approvers
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or more Approvers data.
+        See section Approvers [Custom Field Import method]
+      section: 2.1.1.3
+      source_unit: U.DOC0179.0034
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 34
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0035
+    source_unit: U.DOC0179.0035
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomFieldValue [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: wfdynamicRuleSet
+      technical_name: wfdynamicRuleSet
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Container of zero or more WFDynamicRule.
+        See section WFDynamicRule [Custom Field Import method].
+      section: 2.1.1.3
+      source_unit: U.DOC0179.0035
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 40
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0036
+    source_unit: U.DOC0179.0036
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: CustomFieldValue [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: assignedBusinessUnits
+      technical_name: assignedBusinessUnits
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Container of zero or more BusinessUnit.
+        See section BusinessUnit [Custom Field Import method]
+      section: 2.1.1.3
+      source_unit: U.DOC0179.0036
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 41
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0037
+    source_unit: U.DOC0179.0037
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: Approvers [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: workflowType
+      technical_name: workflowType
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Indicates the type of workflow for which the user is an approver.
+        Allowed values:
+        requisition
+        po
+        invoice
+      section: 2.1.1.4
+      source_unit: U.DOC0179.0037
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 41
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0038
+    source_unit: U.DOC0179.0038
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: Approvers [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userRef
+      technical_name: userRef
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or more UserRef.
+        See section UserRef [Custom Field Import method]
+      section: 2.1.1.4
+      source_unit: U.DOC0179.0038
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 32
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0039
+    source_unit: U.DOC0179.0039
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: UserRef [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: username
+      technical_name: username
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Approver's username. The username must exist in the JAGGAER Indirect solution.
+      section: 2.1.1.5
+      source_unit: U.DOC0179.0039
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 34
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0040
+    source_unit: U.DOC0179.0040
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: WFDynamicRule [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: action
+      technical_name: action
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Indicates whether the workflow rule is modified or deleted.
+        Allowed values:
+        modify
+        delete
+      section: 2.1.1.6
+      source_unit: U.DOC0179.0040
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 36
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0041
+    source_unit: U.DOC0179.0041
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: WFDynamicRule [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: workflowType
+      technical_name: workflowType
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Type of workflow. Must be a valid workflow type licensed to your organization.
+        Allowed values:
+        requisition
+        po
+        invoice
+      section: 2.1.1.6
+      source_unit: U.DOC0179.0041
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 45
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0042
+    source_unit: U.DOC0179.0042
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: WFDynamicRule [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: ruleMinRange
+      technical_name: ruleMinRange
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Minimum value that triggers the workflow rule.
+      section: 2.1.1.6
+      source_unit: U.DOC0179.0042
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 27
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0043
+    source_unit: U.DOC0179.0043
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: WFDynamicRule [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: ruleMaxRange
+      technical_name: ruleMaxRange
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Maximum value that triggers the workflow rule.
+        If there is no maximum value, specify an asterisk (*).
+      section: 2.1.1.6
+      source_unit: U.DOC0179.0043
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 41
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0044
+    source_unit: U.DOC0179.0044
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: WFDynamicRule [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: ruleCurrency
+      technical_name: ruleCurrency
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Currency type for the range amount.
+      section: 2.1.1.6
+      source_unit: U.DOC0179.0044
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 24
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0045
+    source_unit: U.DOC0179.0045
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: WFDynamicRule [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: approvers
+      technical_name: approvers
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or max one Approvers.
+        See section Approvers [Custom Field Import method]
+      section: 2.1.1.6
+      source_unit: U.DOC0179.0045
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 34
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0046
+    source_unit: U.DOC0179.0046
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: WFDynamicRule [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: autoApprove
+      technical_name: autoApprove
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Enables the automatic approval of the rule when the user placing the order is an approver for that rule
+      section: 2.1.1.6
+      source_unit: U.DOC0179.0046
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 41
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0047
+    source_unit: U.DOC0179.0047
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: BusinessUnit [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: name
+      technical_name: name
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Business unit internal name of the business unit assigned to the custom field
+      section: 2.1.1.7
+      source_unit: U.DOC0179.0047
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 33
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0048
+    source_unit: U.DOC0179.0048
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: Relationship [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: parentcfname
+      technical_name: parentcfname
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Name of the parent custom field. Must be a valid custom field name.
+      section: 2.1.1.8
+      source_unit: U.DOC0179.0048
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 32
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0049
+    source_unit: U.DOC0179.0049
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: Relationship [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: childcfname
+      technical_name: childcfname
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Name of the child custom field. Must be a valid custom field name.
+      section: 2.1.1.8
+      source_unit: U.DOC0179.0049
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 32
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0050
+    source_unit: U.DOC0179.0050
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: Relationship [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: parentCustomFieldValueRef
+      technical_name: parentCustomFieldValueRef
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        One or more ParentCustomFieldValueRef.
+        See section ParentCustomFieldValueRef [Error! Reference source not found.]
+      section: 2.1.1.8
+      source_unit: U.DOC0179.0050
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 47
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0051
+    source_unit: U.DOC0179.0051
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: ParentCustomFieldValueRef [Error! Reference source not found.]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: value
+      technical_name: value
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Value of the parent custom field.
+      section: 2.1.1.9
+      source_unit: U.DOC0179.0051
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 22
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0052
+    source_unit: U.DOC0179.0052
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: ParentCustomFieldValueRef [Error! Reference source not found.]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: childCustomFieldValueSet
+      technical_name: childCustomFieldValueSet
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or more ChildCustomFieldValueSet.
+        See section
+        ChildCustomFieldValueSet [Custom Field Import method]
+      section: 2.1.1.9
+      source_unit: U.DOC0179.0052
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 44
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0053
+    source_unit: U.DOC0179.0053
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: ParentCustomFieldValueRef [Error! Reference source not found.]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: error
+      technical_name: error
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or more Error.
+        See section Error [Custom Field Import method]
+      section: 2.1.1.9
+      source_unit: U.DOC0179.0053
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 30
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0054
+    source_unit: U.DOC0179.0054
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: ChildCustomFieldValueSet [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: action
+      technical_name: action
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        Indicates whether the specified child custom field is to be added or deleted to the parent custom field.
+        Allowed values:
+        add
+        delete
+      section: 2.1.1.10
+      source_unit: U.DOC0179.0054
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 47
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0055
+    source_unit: U.DOC0179.0055
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: ChildCustomFieldValueSet [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: childCustomFieldValueRef
+      technical_name: childCustomFieldValueRef
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        One or more ChildCustomFieldValueRef.
+        See section ChildCustomFieldValueRef [Custom Field Import method]
+      section: 2.1.1.10
+      source_unit: U.DOC0179.0055
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 44
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0056
+    source_unit: U.DOC0179.0056
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: ChildCustomFieldValueRef [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: value
+      technical_name: value
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Value of the child custom field.
+      section: 2.1.1.11
+      source_unit: U.DOC0179.0056
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 22
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0057
+    source_unit: U.DOC0179.0057
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: ChildCustomFieldValueRef [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: error
+      technical_name: error
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: |-
+        Container of zero or more Error.
+        See section Error [Custom Field Import method]
+      section: 2.1.1.11
+      source_unit: U.DOC0179.0057
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 28
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: false
+  - raw_id: R.DOC0179.0058
+    source_unit: U.DOC0179.0058
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: Error [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a45
+      - FLD
+    type_hint:
+      candidates: *a45
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: type
+      technical_name: type
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Indicates whether the problem that occurred is an error, a warning, or informational.
+      section: 2.1.1.12
+      source_unit: U.DOC0179.0058
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 35
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0059
+    source_unit: U.DOC0179.0059
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0179
+    section: Error [Custom Field Import method]
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: errorMessage
+      technical_name: errorMessage
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Text of the error, warning, or informational message.
+      section: 2.1.1.12
+      source_unit: U.DOC0179.0059
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0179
+    needs_llm: false
+    tokens: 29
+    lineage:
+      required_by:
+        - ref: R.DOC0179.I001
+          mandatory_there: true
+  - raw_id: R.DOC0179.0075
+    source_unit: U.DOC0179.0075
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0179
+    section: WSDL
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a47
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTE:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0179.0075
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0179.0081
+    source_unit: U.DOC0179.0081
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0179
+    section: WSDL
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: For this reason, the WS client component
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0179.0081
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0179.0090
+    source_unit: U.DOC0179.0090
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0179
+    section: Request samples
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a49
+      - FLW
+    type_hint:
+      candidates: *a49
+      outcome: ambiguo
+      score: 0.55
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: "jinthostname:"
+          oggetto: the name of the host where your API is available, including protocol. Eg. https://customername-ws01.app.jaggaer.com
+          valore: the name of the host where your API is available, including protocol. Eg. https://customername-ws01.app.jaggaer.com
+        - n: 2
+          verbo: "client_id:"
+          oggetto: the username to retrieve an access token
+          valore: the username to retrieve an access token
+        - n: 3
+          verbo: "client_secret:"
+          oggetto: the password to retrieve an access token
+          valore: the password to retrieve an access token
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0179.0090
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 66
+  - raw_id: R.DOC0179.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0179
+    section: null
+    source_unit: U.DOC0179.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: JINT Development Kit-JI Custom Field web-service
+      protocol:
+        - REST
+        - SOAP
+        - JSON
+      endpoints:
+        - https://MY-SERVER/esop/jint/services/JICustomField?wsdl
+        - https://MY-SERVER/esop/jint/services/JICustomField
+        - /esop/jint/api/public/ji/v1/customfields
+        - https://customername-ws01.app.jaggaer.com
+      operations: []
+      mappings:
+        - field_ref: R.DOC0179.0016
+          target: CFCreateUpdate
+          mandatory: false
+        - field_ref: R.DOC0179.0017
+          target: CFRelationship
+          mandatory: false
+        - field_ref: R.DOC0179.0018
+          target: name
+          mandatory: true
+        - field_ref: R.DOC0179.0019
+          target: active
+          mandatory: false
+        - field_ref: R.DOC0179.0020
+          target: externalText
+          mandatory: false
+        - field_ref: R.DOC0179.0021
+          target: allowCodeSplits
+          mandatory: false
+        - field_ref: R.DOC0179.0022
+          target: showOnPlainTextEmail
+          mandatory: false
+        - field_ref: R.DOC0179.0023
+          target: sortBy
+          mandatory: false
+        - field_ref: R.DOC0179.0024
+          target: useAsAnMBUChartOfAccountsField
+          mandatory: false
+        - field_ref: R.DOC0179.0025
+          target: useDynamicWorkflow
+          mandatory: false
+        - field_ref: R.DOC0179.0026
+          target: customFieldStyle
+          mandatory: false
+        - field_ref: R.DOC0179.0027
+          target: helpText
+          mandatory: false
+        - field_ref: R.DOC0179.0028
+          target: defaultAutoApproveReqAndPO
+          mandatory: false
+        - field_ref: R.DOC0179.0029
+          target: customFieldValueSet
+          mandatory: false
+        - field_ref: R.DOC0179.0030
+          target: action
+          mandatory: true
+        - field_ref: R.DOC0179.0031
+          target: value
+          mandatory: false
+        - field_ref: R.DOC0179.0032
+          target: description
+          mandatory: false
+        - field_ref: R.DOC0179.0033
+          target: active
+          mandatory: false
+        - field_ref: R.DOC0179.0034
+          target: approvers
+          mandatory: false
+        - field_ref: R.DOC0179.0035
+          target: wfdynamicRuleSet
+          mandatory: false
+        - field_ref: R.DOC0179.0036
+          target: assignedBusinessUnits
+          mandatory: false
+        - field_ref: R.DOC0179.0037
+          target: workflowType
+          mandatory: true
+        - field_ref: R.DOC0179.0038
+          target: userRef
+          mandatory: false
+        - field_ref: R.DOC0179.0039
+          target: username
+          mandatory: true
+        - field_ref: R.DOC0179.0040
+          target: action
+          mandatory: true
+        - field_ref: R.DOC0179.0041
+          target: workflowType
+          mandatory: true
+        - field_ref: R.DOC0179.0042
+          target: ruleMinRange
+          mandatory: true
+        - field_ref: R.DOC0179.0043
+          target: ruleMaxRange
+          mandatory: false
+        - field_ref: R.DOC0179.0044
+          target: ruleCurrency
+          mandatory: false
+        - field_ref: R.DOC0179.0045
+          target: approvers
+          mandatory: false
+        - field_ref: R.DOC0179.0046
+          target: autoApprove
+          mandatory: false
+        - field_ref: R.DOC0179.0047
+          target: name
+          mandatory: false
+        - field_ref: R.DOC0179.0048
+          target: parentcfname
+          mandatory: true
+        - field_ref: R.DOC0179.0049
+          target: childcfname
+          mandatory: true
+        - field_ref: R.DOC0179.0050
+          target: parentCustomFieldValueRef
+          mandatory: true
+        - field_ref: R.DOC0179.0051
+          target: value
+          mandatory: true
+        - field_ref: R.DOC0179.0052
+          target: childCustomFieldValueSet
+          mandatory: false
+        - field_ref: R.DOC0179.0053
+          target: error
+          mandatory: false
+        - field_ref: R.DOC0179.0054
+          target: action
+          mandatory: true
+        - field_ref: R.DOC0179.0055
+          target: childCustomFieldValueRef
+          mandatory: true
+        - field_ref: R.DOC0179.0056
+          target: value
+          mandatory: false
+        - field_ref: R.DOC0179.0057
+          target: error
+          mandatory: false
+        - field_ref: R.DOC0179.0058
+          target: type
+          mandatory: true
+        - field_ref: R.DOC0179.0059
+          target: errorMessage
+          mandatory: true
+      error_catalog:
+        - code: "0"
+          description: |-
+            Provided data was successfully received and used to try creating objects.
+            That means that data is formally correct, but to know if operation really successes or failed it is necessary to analyse other response part.
+          source_unit: U.DOC0179.0072
+        - code: "2"
+          description: Operation was not completed due to error in provided data.
+          source_unit: U.DOC0179.0072
+        - code: "-996"
+          description: Invalid SOAP Request Object (SOAP Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+          source_unit: U.DOC0179.0072
+        - code: "-997"
+          description: Unauthorized Method (Web Service method isn’t configured to be executed)
+          source_unit: U.DOC0179.0072
+        - code: "-998"
+          description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+          source_unit: U.DOC0179.0072
+        - code: "-999"
+          description: Generic exception
+          source_unit: U.DOC0179.0072
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+    tokens: 2650

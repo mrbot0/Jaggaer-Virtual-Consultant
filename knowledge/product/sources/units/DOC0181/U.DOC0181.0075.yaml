@@ -1,0 +1,110 @@
+id: U.DOC0181.0075
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: lineId | Description: Unique ID of the PO line Attribute: lineNumber | Description: Position of the line item in the PO document Attribute: workflowStatus | Description: Workflow status of the line item. Completed: The line item has completed the workflow process. Pending: The line item has not completed the workflow process. Rejected: The line item has been rejected during the workflow process. Attribute: supplierStatus | Description: Supplier status of the line item. See section “SupplierStatus [Export JIOrder method]” above Attribute: item | Description: Order Line item information. See section “Item [Export JIOrder method]” below Attribute: quantity | Description: Number of items In case quantity is a positive whole number, it is exported with no decimal value and with no decimal separator. Attribute: capitalExpense | Description: Indicates whether the item is (true) or is not (false) a capital expense. Attribute: fixedAsset | Description: Indicates whether the item is (true) or is not (false) a fixed asset. Attribute: taxable | Description: Indicates whether the manufacturer is (true) or is not (false) taxable. Attribute: lineCharges | Description: Order line charges. See section “LineCharges [Export JIOrder method]” below. Attribute: deliveryInfo | Description: Order line delivery information. See section “DeliveryInfo [Export JIOrder method]” below. Attribute: supplierInfo | Description: Order line Supplier Information. See section “SupplierInfo [Export JIOrder method]” above Attribute: customFieldValueSetList | Description: Container for Custom field value set information at line level. See section “CustomFieldValueSet [Export JIOrder method]” above Attribute: splittableFieldSetGroupList | Description: Container for Splittable field Set Group information at line level. See section “SplittableFieldSetGroup [Export JIOrder method]” above Attribute: requisitionLineRefId | Description: Unique requisition line number, Attribute: orderLineclauseList | Description: Container for clause applied to the order at line level. See section “OrderClause [Export JIOrder method]” above."
+hash: sha256:4f6f35189ca32ae4f6597d64d46344e506335d21d87359e9639ca17ab54f931a
+words: 294
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: JIOrderLine [Export JIOrder method]
+  section_path: 2.1.3.33
+  page: 40
+  lang: en
+  prev: U.DOC0181.0074
+  next: U.DOC0181.0076
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - lineId
+      - Unique ID of the PO line
+      - ""
+    - - lineNumber
+      - Position of the line item in the PO document
+      - ""
+    - - workflowStatus
+      - |-
+        Workflow status of the line item.
+        Completed: The line item has completed the workflow process.
+        Pending: The line item has not completed the workflow process.
+        Rejected: The line item has been rejected during the workflow process.
+      - ""
+    - - supplierStatus
+      - |-
+        Supplier status of the line item.
+        See section “SupplierStatus [Export JIOrder method]” above
+      - ""
+    - - item
+      - |-
+        Order Line item information.
+        See section “Item [Export JIOrder method]” below
+      - ""
+    - - quantity
+      - |-
+        Number of items
+        In case quantity is a positive whole number, it is exported with no decimal value and with no decimal separator.
+      - ""
+    - - capitalExpense
+      - Indicates whether the item is (true) or is not (false) a capital expense.
+      - ""
+    - - fixedAsset
+      - Indicates whether the item is (true) or is not (false) a fixed asset.
+      - ""
+    - - taxable
+      - Indicates whether the manufacturer is (true) or is not (false) taxable.
+      - ""
+    - - lineCharges
+      - |-
+        Order line charges.
+        See section “LineCharges [Export JIOrder method]” below.
+      - ""
+    - - deliveryInfo
+      - |-
+        Order line delivery information.
+        See section “DeliveryInfo [Export JIOrder method]” below.
+      - ""
+    - - supplierInfo
+      - |-
+        Order line Supplier Information.
+        See section “SupplierInfo [Export JIOrder method]” above
+      - ""
+    - - customFieldValueSetList
+      - |-
+        Container for Custom field value set information at line level.
+        See section “CustomFieldValueSet [Export JIOrder method]” above
+      - ""
+    - - splittableFieldSetGroupList
+      - |-
+        Container for Splittable field Set Group information at line level.
+        See section “SplittableFieldSetGroup [Export JIOrder method]” above
+      - ""
+    - - requisitionLineRefId
+      - Unique requisition line number,
+      - ""
+    - - orderLineclauseList
+      - |-
+        Container for clause applied to the order at line level.
+        See section “OrderClause [Export JIOrder method]” above.
+      - ""
+    - - lineLevelInternalNote
+      - Internal note for the requisition line
+      - ""
+    - - linkedToLineNumber
+      - |-
+        For a trade-in line item that is linked to a positive non-trade-in line item, position of the positive non-trade-in line item in the PO document.
+        Valid only if the item is a trade-in
+      - ""
+    - - brand
+      - Brand associated with the PO line
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

@@ -1,0 +1,109 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-04
+section: 2.1.1.4
+section_title: J1Supplier/JASupplierData
+part: 1
+parts: 1
+rows:
+  - key: tech:COMPANY
+    label: company
+    labels:
+      - company
+    technical_name: COMPANY
+    section: 2.1.1.4
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Company data for JA system
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.4
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: company
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CLASSIFICATION
+    label: classification
+    labels:
+      - classification
+    technical_name: CLASSIFICATION
+    section: 2.1.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Classification data for JA system
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.4
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.4#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: classification
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.52
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.52#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: classification
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.54
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.54#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: classification
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DATAELEMENTS
+    label: dataElements
+    labels:
+      - dataElements
+    technical_name: DATAELEMENTS
+    section: 2.1.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Data Elements for JA system
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.4
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.4#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: dataElements
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1131

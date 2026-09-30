@@ -1,0 +1,42 @@
+id: U.DOC0183.0150
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: measurementAmount | Description: Size (weight, volume, or garment size) of the item.
+  Attribute: measurementUnit | Description: Measure unit, such as KG (kg), LG (large), EA (each) or PK (pack).
+  Must be a standard packaging or size abbreviation.
+  Attribute: measurementValue | Description: Combination of MeasurementAmount and MeasurementUnit. If only one of the values is available, that value is shown.
+hash: sha256:0553bfbff3e1fb68c7208cccbd5512e92c11218933a7c5f74b3a8aa28ccc4317
+words: 67
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Measurement [Export]
+  section_path: 2.2.3.30
+  page: 17
+  lang: en
+  prev: U.DOC0183.0149
+  next: U.DOC0183.0151
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - measurementAmount
+      - Size (weight, volume, or garment size) of the item.
+      - ""
+    - - measurementUnit
+      - |-
+        Measure unit, such as KG (kg), LG (large), EA (each) or PK (pack).
+        Must be a standard packaging or size abbreviation.
+      - ""
+    - - measurementValue
+      - Combination of MeasurementAmount and MeasurementUnit. If only one of the values is available, that value is shown.
+      - ""
+  block: 1
+  blocks: 1

@@ -1,0 +1,70 @@
+id: U.DOC0169.0301
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: id | Description: Automatically generated supplier ID that JAGGAER Indirect has associated with a supplier. This is the internal ID.
+  Attribute: Name | Description: Custom name for the supplier that your organization configured in the supplier profile in JAGGAER Indirect, or the default name for the supplier if no custom name exists.
+  Attribute: supplierNumber | Description: Supplier ID that your organization has provided for this supplier in the supplier profile. The SupplierNumber might be used in your ERP system.
+  Attribute: Duns | Description: Dun & Bradstreet (DUNS) number for this supplier.
+  Attribute: fulfillmentAddressInternalId | Description: Internal ID for the fulfillment center. The fulfillment center address must be active and unique.
+  Attribute: fulfillmentAddressId | Description: External ID defined by your organization for this fulfillment center. The fulfillment center address must be active and unique.
+  Attribute: fulfillmentAddressThirdPartyId | Description: Unique external ID defined by a third party for this fulfillment center. The fulfillment center address must be active and unique.
+  Attribute: contactInfoList | Description: Supplier contact information.
+  See section “ContactInfo [PR Export]” below.
+  Attribute: businessUnitVendorId | Description: Vendor ID assigned to this supplier by the business unit. Must match an existing vendor ID number in the eProcurement solution.
+  Attribute: federalId | Description: Supplier’s TIN or other federal ID number. | Available from version: JA_19_05
+hash: sha256:5daff0122c6ffa042d1a85777c9f2d5ad3afc9182016c176e061aa68901c5a43
+words: 221
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Supplier [PR Export]
+  section_path: 2.3.3.25
+  page: 70
+  lang: en
+  prev: U.DOC0169.0300
+  next: U.DOC0169.0302
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - id
+      - Automatically generated supplier ID that JAGGAER Indirect has associated with a supplier. This is the internal ID.
+      - ""
+    - - Name
+      - Custom name for the supplier that your organization configured in the supplier profile in JAGGAER Indirect, or the default name for the supplier if no custom name exists.
+      - ""
+    - - supplierNumber
+      - Supplier ID that your organization has provided for this supplier in the supplier profile. The SupplierNumber might be used in your ERP system.
+      - ""
+    - - Duns
+      - Dun & Bradstreet (DUNS) number for this supplier.
+      - ""
+    - - fulfillmentAddressInternalId
+      - Internal ID for the fulfillment center. The fulfillment center address must be active and unique.
+      - ""
+    - - fulfillmentAddressId
+      - External ID defined by your organization for this fulfillment center. The fulfillment center address must be active and unique.
+      - ""
+    - - fulfillmentAddressThirdPartyId
+      - Unique external ID defined by a third party for this fulfillment center. The fulfillment center address must be active and unique.
+      - ""
+    - - contactInfoList
+      - |-
+        Supplier contact information.
+        See section “ContactInfo [PR Export]” below.
+      - ""
+    - - businessUnitVendorId
+      - Vendor ID assigned to this supplier by the business unit. Must match an existing vendor ID number in the eProcurement solution.
+      - ""
+    - - federalId
+      - Supplier’s TIN or other federal ID number.
+      - JA_19_05
+  block: 1
+  blocks: 1

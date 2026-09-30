@@ -1,0 +1,123 @@
+id: U.DOC0181.0025
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: "Component Filter: LINE_ITEMINFO | Description: Extract Line item information. | Possible values: Allowed values: GENERAL: retrieve data from general line item section. INTERNAL: retrieve data from internal line item section EXTERNAL: retrieve data from external line item section FORM: retrieve line item form section information. FORMREQUEST: retrieve line item form request section information. Component Filter: LINE_ORDERCLAUSE | Description: Extract Order Clause information. | Possible values: N.A. Component Filter: LINE_SHIPPINGCHARGES | Description: Extract Line shipping charges information. | Possible values: N.A. Component Filter: LINE_SPLITTABLEFIELDGROUP | Description: Extract Line splittable field group information. | Possible values: N.A. Component Filter: LINE_SUPPLIERINFO | Description: Extract Line Supplier information. | Possible values: N.A. Component Filter: LINE_TAX1 | Description: Extract Line tax 1 information. | Possible values: N.A. Component Filter: LINE_TAX2 | Description: Extract Line tax 2 information. | Possible values: N.A. Component Filter: HISTORY | Description: Extract History event information. | Possible values: N.A."
+hash: sha256:0457faf4a11dfe98ffe44768f13b773d868e6af50abd9ab24661e8efa952efec
+words: 149
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: Component Filter [Export JIOrder method]
+  section_path: 2.1.1
+  page: 14
+  lang: en
+  prev: U.DOC0181.0024
+  next: U.DOC0181.0026
+table:
+  table: 0
+  headers:
+    - Component Filter
+    - Description
+    - Possible values
+  rows:
+    - - HEADER_BILLTO
+      - Extract Order billing information.
+      - N.A.
+    - - HEADER_CUSTOMFIELDVALUE
+      - Extract Order custom field value information.
+      - N.A.
+    - - HEADER_DISCOUNT
+      - Extract Order Discount information.
+      - N.A.
+    - - HEADER_EXTERNALINFO
+      - Extract Order external information.
+      - N.A.
+    - - HEADER_HANDLINGCHARGES
+      - Extract Order handling charges information.
+      - N.A.
+    - - HEADER_INTERNALINFO
+      - Extract Order internal information.
+      - N.A.
+    - - HEADER_ORDERCLAUSE
+      - Extract Order Clause information.
+      - N.A.
+    - - HEADER_PAYMENTINFO
+      - Extract Order payment information.
+      - N.A.
+    - - HEADER_SHIPTO
+      - Extract Order shipping information.
+      - N.A.
+    - - HEADER_SHIPPINGCHARGES
+      - Extract Order shipping charges information.
+      - N.A.
+    - - HEADER_SPLITTABLEFIELDGROUP
+      - Extract Order splittable field group information.
+      - N.A.
+    - - HEADER_SUPPLIERCONTACTINFO
+      - Extract Supplier Contact Information List.
+      - N.A.
+    - - HEADER_TAX1
+      - Extract Order tax 1 information.
+      - N.A.
+    - - HEADER_TAX2
+      - Extract Order tax 2 information.
+      - N.A.
+    - - HEADER_ORDERDISTRIBUTION
+      - |-
+        Extract Order Distribution information.
+        Available from JINT 20 03 00
+      - N.A.
+    - - LINE
+      - Extract Line base information.
+      - |-
+        N.A.
+        It must be specified to enable retrieval of all other “LINE” components
+    - - LINE_CUSTOMFIELDVALUE
+      - Extract Line custom field value information.
+      - N.A.
+    - - LINE_DELIVERYINFO
+      - Extract Line Delivery information.
+      - N.A.
+    - - LINE_DISCOUNTAMOUNT
+      - Extract Line Discount Amount information.
+      - N.A.
+    - - LINE_HANDLINGCHARGES
+      - Extract Line handling charges information.
+      - N.A.
+    - - LINE_ITEMINFO
+      - Extract Line item information.
+      - |-
+        Allowed values:
+        GENERAL: retrieve data from general line item section.
+        INTERNAL: retrieve data from internal line item section
+        EXTERNAL: retrieve data from external line item section
+        FORM: retrieve line item form section information.
+        FORMREQUEST: retrieve line item form request section information.
+    - - LINE_ORDERCLAUSE
+      - Extract Order Clause information.
+      - N.A.
+    - - LINE_SHIPPINGCHARGES
+      - Extract Line shipping charges information.
+      - N.A.
+    - - LINE_SPLITTABLEFIELDGROUP
+      - Extract Line splittable field group information.
+      - N.A.
+    - - LINE_SUPPLIERINFO
+      - Extract Line Supplier information.
+      - N.A.
+    - - LINE_TAX1
+      - Extract Line tax 1 information.
+      - N.A.
+    - - LINE_TAX2
+      - Extract Line tax 2 information.
+      - N.A.
+    - - HISTORY
+      - Extract History event information.
+      - N.A.
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

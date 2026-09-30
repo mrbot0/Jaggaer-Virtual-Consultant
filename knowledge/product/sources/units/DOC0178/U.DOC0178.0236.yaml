@@ -1,0 +1,43 @@
+id: U.DOC0178.0236
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: useReqLimitsForInvoice | Description: Indicates whether the minimum and maximum contract spend and line item quantity limits set for PRs do (true) or do not (false) also apply to invoices.
+  That is, if this field is set to true, then:
+  The values of the PR-specific fields (minimumContractSpendPerPR, maximumContractSpendPerPR, minimumLineItemQuantityPerPR, and maximumLineItemQuantityPerPR) also apply to invoices.
+  The invoicespecific fields (minimumContractSpendPerInvoice, maximumContractSpendPerInvoice, minimumLineItemQuantityPerInvoice, and maximumLineItemQuantityPerInvoice) do not appear in the contract export message.
+  The values of the PR-specific fields overwrite any values currently configured for the invoice-specific fields
+hash: sha256:ded3411cf3539cff82b1ae15f4ad81a66c5fd62066348b5dc85d4bcf357611a5
+words: 86
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Eprocurement [Import]
+  section_path: 2.2.1.24
+  page: 42
+  lang: en
+  prev: U.DOC0178.0235
+  next: U.DOC0178.0237
+row:
+  table: 0
+  row: 16
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - useReqLimitsForInvoice
+    - ""
+    - |-
+      Indicates whether the minimum and maximum contract spend and line item quantity limits set for PRs do (true) or do not (false) also apply to invoices.
+      That is, if this field is set to true, then:
+      The values of the PR-specific fields (minimumContractSpendPerPR, maximumContractSpendPerPR, minimumLineItemQuantityPerPR, and maximumLineItemQuantityPerPR) also apply to invoices.
+      The invoicespecific fields (minimumContractSpendPerInvoice, maximumContractSpendPerInvoice, minimumLineItemQuantityPerInvoice, and maximumLineItemQuantityPerInvoice) do not appear in the contract export message.
+      The values of the PR-specific fields overwrite any values currently configured for the invoice-specific fields
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

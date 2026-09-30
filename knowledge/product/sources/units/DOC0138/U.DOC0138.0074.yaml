@@ -1,0 +1,17 @@
+id: U.DOC0138.0074
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: Next is another automated activity that would occur during Purchase Order workflow. This rule hinges on the values of a couple of custom fields that the organization has created and placed on the PO Document. <Activity name="PO Distribution"> <ActivityType>automated</ActivityType> <StepRef name="PO Distribution" /> <FolderRef name="Distribute PO" /> <Rule><![CDATA[ !(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) && !(Document.CustomFieldValues("Order Category") in {"2 - Confirming - Do Not Distribute"}) ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>
+hash: sha256:92e4c83e7e10b5fa44bc34a79b4d34f3dab7e7206cc3f5b7ed43340a3b28c382
+words: 67
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: PO DISTRIBUTION
+  section: PO DISTRIBUTION
+  section_path: "20"
+  page: null
+  lang: en
+  prev: U.DOC0138.0073
+  next: U.DOC0138.0075

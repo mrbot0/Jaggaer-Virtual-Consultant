@@ -1,0 +1,17 @@
+id: U.DOC0137.0050
+doc: S.STD.XSC.DOC.0137
+doc_id: workflow-po-static-and-dynamic-guidelines-pdf-982cc3b9
+type: testo
+text: "Finally, let's look at an activity that stops documents based on different possible rules: <Activity name=\"EH&amp;S Notification\"> <ActivityType> notification</ActivityType> <FolderRef name=\"EH&amp;S Notification\" /> <Rule><![CDATA[ [Product.Radioactive = true || Product.RadioactiveMinor = true || Product.HazMat = true || Product.Controlled = true || Product.Toxin = true || Product.SelectAg ent = true] ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>"
+hash: sha256:aeb1825b6b8a2df994438d392438cc35b61489edb048e4172374b6fd13959825
+words: 51
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0137
+  chapter: Spend Director Special ization For Solutions Consultants
+  section: Spend Director Special ization For Solutions Consultants
+  section_path: p6
+  page: 6
+  lang: en
+  prev: U.DOC0137.0049
+  next: U.DOC0137.0051

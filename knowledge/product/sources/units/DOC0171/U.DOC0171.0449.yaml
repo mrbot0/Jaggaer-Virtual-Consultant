@@ -1,0 +1,83 @@
+id: U.DOC0171.0449
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: id | Description: JA internal identifier of the column (referenced in offers) Attribute: name | Description: Column title Attribute: type | Description: Column type: Valid value: BOOLEAN (True/False) MULTILINE (multi line text) TEXT NUMERIC (number) COMBO (single choice) NUMERIC_FORMULA [12.3.01] DATE [22.02.00] Note: format is yyyy-MM-dd NUMERIC_SR_FORMULA[23.1.0] Attribute: allowedValues | Description: In case of choice list of allowed values Attribute: defaultValue | Description: The additional column default value Note: In case of additional column with type NUMBER, the number format has 3 decimal positions by default. It is possible to enable a ws configuration parameter to check the DECIMAL_SCALE toolkit parameter in order to align the decimal positions in the ws output with the ones shown in the platform. | Available from version: 12_2_00 Attribute: sellerVisibility | Description: Visibility of the additional column to the seller. Valid value: 0 = not visible 1 = visible in read-only mode 2 = visible and writeable | Available from version: 12_2_00 Attribute: columnPos | Description: Progressive identifier of the additional column parameter (1-based enumeration) | Available from version: 12_2_00 Attribute: mandatory | Description: Mandatory additional column parameter flag. (1-parameter is mandatory; 0-parameter is optional) | Available from version: 12_2_00 Attribute: defaultLineValues | Description: Default line value redefined for additional column [see section “Commercial Envelope: Redefined Default Line Values” below] Attribute: formulaData | Description: For additional column type of NUMERIC_FORMULA or NUMERIC_SR_FORMULA, formulaTCO is always shown, and if formulaTCO=1, then aggregationTypeTCO is also shown. Formula value is shown for additional column of type NUMERIC_FORMULA [see section “Commercial Envelope: Formula Values” below] Attribute: code | Description: It is a code that can be used by external systems to identify the column and that it must be unique."
+hash: sha256:fdb873e9e2de4446b9ab3c0f309a960d4b2a8bfb511403418e8fadc239d603f8
+words: 291
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: Additional Columns section [Export RfX method]"
+  section_path: 2.3.4.15
+  page: 7
+  lang: en
+  prev: U.DOC0171.0448
+  next: U.DOC0171.0450
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - id
+      - JA internal identifier of the column (referenced in offers)
+      - ""
+    - - name
+      - Column title
+      - ""
+    - - type
+      - |-
+        Column type:
+        Valid value:
+        BOOLEAN (True/False)
+        MULTILINE (multi line text)
+        TEXT
+        NUMERIC (number)
+        COMBO (single choice)
+        NUMERIC_FORMULA [12.3.01]
+        DATE [22.02.00] Note: format is yyyy-MM-dd
+        NUMERIC_SR_FORMULA[23.1.0]
+      - ""
+    - - allowedValues
+      - In case of choice list of allowed values
+      - ""
+    - - defaultValue
+      - |-
+        The additional column default value
+        Note: In case of additional column with type NUMBER, the number format has 3 decimal positions by default.
+        It is possible to enable a ws configuration parameter to check the DECIMAL_SCALE toolkit parameter in order to align the decimal positions in the ws output with the ones shown in the platform.
+      - 12_2_00
+    - - sellerVisibility
+      - |-
+        Visibility of the additional column to the seller.
+        Valid value:
+        0 = not visible
+        1 = visible in read-only mode
+        2 = visible and writeable
+      - 12_2_00
+    - - columnPos
+      - Progressive identifier of the additional column parameter (1-based enumeration)
+      - 12_2_00
+    - - mandatory
+      - Mandatory additional column parameter flag. (1-parameter is mandatory; 0-parameter is optional)
+      - 12_2_00
+    - - defaultLineValues
+      - "Default line value redefined for additional column [see section “Commercial Envelope: Redefined Default Line Values” below]"
+      - ""
+    - - formulaData
+      - "For additional column type of NUMERIC_FORMULA or NUMERIC_SR_FORMULA, formulaTCO is always shown, and if formulaTCO=1, then aggregationTypeTCO is also shown. Formula value is shown for additional column of type NUMERIC_FORMULA [see section “Commercial Envelope: Formula Values” below]"
+      - ""
+    - - code
+      - It is a code that can be used by external systems to identify the column and that it must be unique. It is the unique name of the column belonging to the Column Library
+      - JINT_20_03_01
+    - - columnUniqueCode
+      - It's a code used to identify the column.
+      - JINT_23_01_00
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

@@ -1,0 +1,56 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.34
+section_title: Distribution Method [PR Import]
+genre: tecnica
+rows:
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Method by which the PR is to be delivered. Used only for non-catalog
+      items.
+
+      Valid values:
+
+      manual
+
+      cxml
+
+      fax
+
+      email
+
+      html_email
+
+      html_email_attachments
+    section: 2.1.1.34
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.34#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: fax
+    technical_name: fax
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Phone [PR Import]” below
+    section: 2.1.1.34
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.34#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: email
+    technical_name: email
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Email address of the PR, using the standard PR format (HTML, not plain
+      text).
+    section: 2.1.1.34
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.34#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

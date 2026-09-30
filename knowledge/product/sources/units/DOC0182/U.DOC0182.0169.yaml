@@ -1,0 +1,37 @@
+id: U.DOC0182.0169
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: shippingSplitAmount | Mandatory (Y/N): N | Description: Amount to be split for shipping for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+  DEPRECATED: uses “decShippingSplitAmount” field
+hash: sha256:a1b09753c3d8d0cb125a49c367602769f1ad50f59a921e1c0fafa2252754d627
+words: 38
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Custom Field Value [PR Import]
+  section_path: 2.1.1.24
+  page: 24
+  lang: en
+  prev: U.DOC0182.0168
+  next: U.DOC0182.0170
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - shippingSplitAmount
+    - N
+    - |-
+      Amount to be split for shipping for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      DEPRECATED: uses “decShippingSplitAmount” field
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

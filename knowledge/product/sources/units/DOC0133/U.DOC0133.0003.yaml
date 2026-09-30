@@ -1,0 +1,128 @@
+id: U.DOC0133.0003
+doc: S.STD.XSC.DOC.0133
+doc_id: workflow-definition-pr-xml-activities-samples-tx-fb46d373
+type: tabella
+text: 'Tabella: attività Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella Attività: START | Tipo: start | Selezione cartella: Dummy Attività: Return1 | Tipo: automated | Passo: Return 1 | Cartelle: Auto-Return | Regola: [Document.RequiresRuleGroupEvaluation("Return 1") == true] | Selezione cartella: ExplicitFolder Attività: InitialFiscalYearEnd | Tipo: manual | Passo: Initial Fiscal Year End | Regola: Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true | Selezione cartella: MultiElementDynamic Attività: Form Approval | Tipo: manual | Passo: Form Approval | Regola: Document.RequiresRuleGroupEvaluation("Form Approval") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 1") == false | Selezione cartella: MultiElementDynamic Attività: Financial Approval | Tipo: manual | Passo: Financial Approval | Regola: Document.RequiresRuleGroupEvaluation("Purchasing Approval") == true | Selezione cartella: MultiElementDynamic Attività: Buyer Assignment | Tipo: manual | Passo: Buyer Assignment | Regola: Document.RequiresRuleGroupEvaluation("Buyer Assignment") == true | Selezione cartella: MultiElementDynamic Attività: Buyer Review | Tipo: manual | Passo: Buyer Review | Regola: Document.RequiresRuleGroupEvaluation("Buyer Review") == true | Selezione cartella: MultiElementDynamic Attività: Contract Review | Tipo: manual | Passo: Contract Review | Regola: Document.RequiresRuleGroupEvaluation("Contract Review") == true | Selezione cartella: MultiElementDynamic Attività: Special Approval | Tipo: manual | Passo: Special Approval | Regola: Document.RequiresRuleGroupEvaluation("Special Approval") == true | Selezione cartella: MultiElementDynamic Attività: EHSCheck | Tipo: manual | Passo: EHS Check | Cartelle: EHS Check | Regola: [Product.Toxin=true] || [Product.Hazardous=true] | Selezione cartella: ExplicitFolder Attività: EHS Notification | Tipo: notification | Passo: EHS Notification | Regola: Document.RequiresRuleGroupEvaluation("EHS Notification") == true | Selezione cartella: MultiElementDynamic Attività: CFO Approval | Tipo: manual | Passo: CFO Approval | Regola: Document.RequiresRuleGroupEvaluation("CFO Approval") == true | Selezione cartella: MultiElementDynamic Attività: Missing Approver Catch | Tipo: manual | Passo: Missing Approver Catch | Cartelle: Missing Approver Catch | Regola: [Document.RequiresRuleGroupEvaluation("Purchasing Approval") == false ] && [Document.RequiresRuleGroupEvaluation("Purchasing Approval") == false ] && [Document.RequiresRuleGroupEvaluation("Financial Approval") == false ] && [Document.RequiresRuleGroupEvaluation("Buyer Review") == false ]'
+hash: sha256:15feed25b024e79e7a16b2e5a720dc3aeea889eb138d88ba465d872bd35a5c8a
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0133
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: en
+  prev: U.DOC0133.0002
+  next: U.DOC0133.0004
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Return1
+      - automated
+      - Return 1
+      - Auto-Return
+      - '[Document.RequiresRuleGroupEvaluation("Return 1") == true]'
+      - ExplicitFolder
+    - - InitialFiscalYearEnd
+      - manual
+      - Initial Fiscal Year End
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true
+      - MultiElementDynamic
+    - - Form Approval
+      - manual
+      - Form Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Form Approval") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 1") == false
+      - MultiElementDynamic
+    - - Financial Approval
+      - manual
+      - Financial Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Purchasing Approval") == true
+      - MultiElementDynamic
+    - - Buyer Assignment
+      - manual
+      - Buyer Assignment
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Buyer Assignment") == true
+      - MultiElementDynamic
+    - - Buyer Review
+      - manual
+      - Buyer Review
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Buyer Review") == true
+      - MultiElementDynamic
+    - - Contract Review
+      - manual
+      - Contract Review
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Contract Review") == true
+      - MultiElementDynamic
+    - - Special Approval
+      - manual
+      - Special Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Special Approval") == true
+      - MultiElementDynamic
+    - - EHSCheck
+      - manual
+      - EHS Check
+      - EHS Check
+      - "[Product.Toxin=true] || [Product.Hazardous=true]"
+      - ExplicitFolder
+    - - EHS Notification
+      - notification
+      - EHS Notification
+      - ""
+      - Document.RequiresRuleGroupEvaluation("EHS Notification") == true
+      - MultiElementDynamic
+    - - CFO Approval
+      - manual
+      - CFO Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("CFO Approval") == true
+      - MultiElementDynamic
+    - - Missing Approver Catch
+      - manual
+      - Missing Approver Catch
+      - Missing Approver Catch
+      - '[Document.RequiresRuleGroupEvaluation("Purchasing Approval") == false ] && [Document.RequiresRuleGroupEvaluation("Purchasing Approval") == false ] && [Document.RequiresRuleGroupEvaluation("Financial Approval") == false ] && [Document.RequiresRuleGroupEvaluation("Buyer Review") == false ] && [Document.RequiresRuleGroupEvaluation("Contract Review") == false ] && [DocLine.CreditCardNumber = ""]'
+      - ExplicitFolder
+    - - FinalFiscalYearEnd
+      - manual
+      - Final Fiscal Year End
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true
+      - MultiElementDynamic
+    - - CreatePO
+      - automated
+      - Create PO
+      - Create PO
+      - Document.RequiresRuleGroupEvaluation("Omit from Create PO") == false
+      - ExplicitFolder
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

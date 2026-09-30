@@ -1,0 +1,27 @@
+id: U.DOC0138.0044
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: procedura
+text: |-
+  Financial Approvals functionality allows organizations to trigger approvals based on a user’s financial limits. If this type of workflow approval is used by an organization, it is typically the first manual approval step in the workflow process. This means that outside of auto-rejections and other system validations, a user’s financial approver is the first person to review and approve or reject the line items in the requisition. Financial approval can be implemented for requisitions, purchase orders, or invoices. Financial Approval is required when a user submits a requisition, purchase order or invoice that is above their allowed limit, in which case, approval is required by a specified approver. For example, David Jones is assigned the Requester role with a requisition limit of [importo]. He submits a requisition for [importo] which does not require Financial Approval. He submits a second requisition for [importo], and financial approval is required. In order for this to work
+  1. “Org Has Financial Approvers” must be enabled. This can be accomplished via Setup > Workflow Setup > General Workflow Settings.
+  2. Financial limits must be set on the user profile. This can be managed through user roles. It’s possible to set limits for requisition total, line item amount. It’s also possible to set a financial limit for an approver’s approval limit – meaning if the amount is about that, an additional financial approval step will be required.
+  3. Financial Approvers must be assigned for each user. Some organizations assign approvers to each of its users and others allow their users to determine who can approve their orders. Each user can have one or more financial approver assigned. The Financial Approvers are configured on the user's profile under Default User Settings > Financial Approvers.
+hash: sha256:51ab9244cb4e1b4756098eb245597d030d78dee87d201ae934d5a8bf9881febd
+words: 287
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: FINANCIAL APPROVAL
+  section: FINANCIAL APPROVAL
+  section_path: "10"
+  page: null
+  lang: en
+  prev: U.DOC0138.0043
+  next: U.DOC0138.0045
+steps:
+  - “Org Has Financial Approvers” must be enabled. This can be accomplished via Setup > Workflow Setup > General Workflow Settings.
+  - Financial limits must be set on the user profile. This can be managed through user roles. It’s possible to set limits for requisition total, line item amount. It’s also possible to set a financial limit for an approver’s approval limit – meaning if the amount is about that, an additional financial approval step will be required.
+  - Financial Approvers must be assigned for each user. Some organizations assign approvers to each of its users and others allow their users to determine who can approve their orders. Each user can have one or more financial approver assigned. The Financial Approvers are configured on the user's profile under Default User Settings > Financial Approvers.
+procedure:
+  title: Financial Approvals functionality allows organizations to trigger approvals based on a user’s financial limits. If this type of workflow approval is used by an organization, it is typically the first manual approval step in the workflow process. This means that outside of auto-rejections and other system validations, a user’s financial approver is the first person to review and approve or reject the line items in the requisition. Financial approval can be implemented for requisitions, purchase orders, or invoices. Financial Approval is required when a user submits a requisition, purchase order or invoice that is above their allowed limit, in which case, approval is required by a specified approver. For example, David Jones is assigned the Requester role with a requisition limit of [importo]. He submits a requisition for [importo] which does not require Financial Approval. He submits a second requisition for [importo], and financial approval is required. In order for this to work

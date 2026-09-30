@@ -1,0 +1,86 @@
+doc: S.STD.XSC.DOC.0062
+scope: XSC
+extracted_at: 2026-09-30T04:30:17.564Z
+tier: T0
+stats:
+  units: 30
+  extracted_units: 2
+  document_candidates: 0
+  needs_llm: 0
+  t0_complete: 2
+  by_candidate:
+    FLD: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 0
+  sessions: []
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0062.0016
+    source_unit: U.DOC0062.0016
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0062
+    section: Client ERP and Technology
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Does the client have other systems we
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0062.0016
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0062.0029
+    source_unit: U.DOC0062.0029
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0062
+    section: Project Guidance
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What other information
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0062.0029
+    needs_llm: false
+    tokens: 23

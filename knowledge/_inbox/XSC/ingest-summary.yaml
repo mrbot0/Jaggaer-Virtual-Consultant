@@ -1,0 +1,113 @@
+scope: XSC
+root: C:\Users\PC-Marco\Desktop\plugin\jaggaer-virtual-consultant\knowledge
+ms: 530453
+files:
+  total: 385
+  parsed: 184
+  residue: 201
+  sidecars: 0
+  parser_errors: 0
+  by_format:
+    pdf: 60
+    docx: 31
+    image: 133
+    .db: 10
+    html: 1
+    csv: 4
+    .snag: 21
+    .jpg: 18
+    xml: 64
+    txt: 8
+    xlsx: 12
+    pptx: 3
+    .7z: 1
+    .png: 6
+    .xlsx: 1
+    .zip: 3
+    xls: 1
+    .csv: 2
+    .xml: 5
+    .gif: 1
+documents:
+  profiled: 184
+  errors: 0
+  by_kind:
+    manuale-utente: 19
+    training-deck: 37
+    doc-progetto: 9
+    guida-admin: 14
+    spec-integrazione: 20
+    help-online: 1
+    dati-import: 20
+    config-export: 64
+  inconsistent: []
+units:
+  total: 20868
+  by_type:
+    testo: 12407
+    regola: 1163
+    riferimento: 250
+    esempio: 202
+    decisione: 1
+    procedura: 580
+    tabella: 2343
+    definizione: 116
+    nota: 146
+    figura: 17
+    riga-tabella-campi: 3501
+    passo: 142
+fields:
+  field_rows: 3501
+  tracciato_elements: 0
+  max_batch_rows: 43
+  batch_limit: 50
+items_raw: 5797
+residue:
+  units_by_class:
+    irrelevant: 84
+    duplicate: 0
+    ambiguous: 9
+    unsupported: 0
+    deferred: 6
+    tacit: 30
+  files_by_class:
+    irrelevant: 10
+    duplicate: 35
+    ambiguous: 0
+    unsupported: 19
+    deferred: 137
+    tacit: 0
+  files_by_reason:
+    "deferred: manca il sidecar OCR (<immagine>.ocr.txt): l'agente deve produrre il testo dell'immagine": 133
+    "irrelevant: file di sistema (miniature, impostazioni della cartella)": 10
+    "unsupported: formato proprietario Snagit: esportare l'immagine in PNG (e produrne il sidecar OCR)": 19
+    "duplicate: stesso contenuto di un altro file": 35
+    "deferred: archivio compresso (.7z): estrarlo in una cartella e rilanciare harvest su quella": 1
+    "deferred: archivio compresso (.zip): estrarlo in una cartella e rilanciare harvest su quella": 3
+  dataset_rows_outside_sample: 99059
+budget:
+  per_document: 80000
+  max_session_tokens: 79640
+  respected: true
+  over_unit_budget: 0
+tokens:
+  corpus_text: 1109995
+  t1_extraction: 1797829
+  field_digestion: 792287
+  total_llm_estimate: 2590116
+candidates:
+  FLD: 4391
+  INV: 130
+  CFG: 540
+  FLW: 489
+  CFP: 112
+  GLS: 116
+  INT: 20
+  LCY: 8
+  KEY: 19
+  residuo: 9
+aliases:
+  added: 167
+  terms_created: 1359
+  unverified: 0
+errors: []

@@ -1,0 +1,41 @@
+id: U.DOC0182.0015
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: procedura
+text: "The structure of the current document is the following (parte 1/2) 1. PR Import: 2. Request data format [PR Import]: describes the possible operations on import and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted. 3. Behavior [PR Import]: describes how the web service processes the data passed in input, in case of some particular processes. 4. Response Data Format [PR Import]: describes the structure of the web service response and contains the list of possible error codes. 5. PR Update: 6. Request data format [PR Update]: describes the structure of the update request. 7. Behavior [PR Update]: describes how the web service processes the data passed in input, in case of some particular processes 8. Response data format [PR Update]: describes the structure of the web service response and contains the list of possible error codes 9. PR Export: 10. Component filters [PR Export]: describes which sections of a purchase requisition can be exported. The use of a component filter increments the number of sections in the response to every purchase requisition exported. 11. Condition filters [PR Export]: describes which fields can be used to filter the purchase requisition to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of purchase requisition extracted. 12. Export data format [PR Export]: describes the structure of the response in terms of exported fields and sections. 13. Error codes [PR Export]: contains a list of possible error codes 14. PR Validate: 15. Request data format [PR Validate]: describes the structure of the validation request."
+hash: sha256:54cf37cc389594c5778317ac80f16b21b266b35b3b297260adc602a65a351468
+words: 294
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 9
+  lang: en
+  prev: U.DOC0182.0014
+  next: U.DOC0182.0016
+steps:
+  - "PR Import:"
+  - "Request data format [PR Import]: describes the possible operations on import and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted."
+  - "Behavior [PR Import]: describes how the web service processes the data passed in input, in case of some particular processes."
+  - "Response Data Format [PR Import]: describes the structure of the web service response and contains the list of possible error codes."
+  - "PR Update:"
+  - "Request data format [PR Update]: describes the structure of the update request."
+  - "Behavior [PR Update]: describes how the web service processes the data passed in input, in case of some particular processes"
+  - "Response data format [PR Update]: describes the structure of the web service response and contains the list of possible error codes"
+  - "PR Export:"
+  - "Component filters [PR Export]: describes which sections of a purchase requisition can be exported. The use of a component filter increments the number of sections in the response to every purchase requisition exported."
+  - "Condition filters [PR Export]: describes which fields can be used to filter the purchase requisition to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of purchase requisition extracted."
+  - "Export data format [PR Export]: describes the structure of the response in terms of exported fields and sections."
+  - "Error codes [PR Export]: contains a list of possible error codes"
+  - "PR Validate:"
+  - "Request data format [PR Validate]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted."
+procedure:
+  title: The structure of the current document is the following
+  part: 1
+  parts: 2
+  first_step: 1
+part:
+  n: 1
+  of: 2

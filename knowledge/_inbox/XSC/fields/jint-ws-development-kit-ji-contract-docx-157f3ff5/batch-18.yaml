@@ -1,0 +1,367 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-18
+section: 2.2.1.14
+section_title: Obligation [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:OBLIGATIONID
+    label: obligationId
+    labels:
+      - obligationId
+    technical_name: OBLIGATIONID
+    section: 2.2.1.14
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Unique identifier for the obligation.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: obligationId
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:OBLIGATIONNAME
+    label: obligationName
+    labels:
+      - obligationName
+    technical_name: OBLIGATIONNAME
+    section: 2.2.1.14
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the obligation
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: obligationName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:OBLIGATIONDESCRIPTION
+    label: obligationDescription
+    labels:
+      - obligationDescription
+    technical_name: OBLIGATIONDESCRIPTION
+    section: 2.2.1.14
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Description of the obligation
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: obligationDescription
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:REQUIRESDOCUMENTATION
+    label: requiresDocumentation
+    labels:
+      - requiresDocumentation
+    technical_name: REQUIRESDOCUMENTATION
+    section: 2.2.1.14
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether documentation is (true) or is not (false) required to
+      fulfill the obligation.
+
+      If documentation is required, the obligation cannot be marked completed
+      without an attachment.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: requiresDocumentation
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CANCELLED
+    label: Cancelled
+    labels:
+      - Cancelled
+      - cancelled
+    technical_name: CANCELLED
+    section: 2.2.1.14
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether the obligation has (true) or has not (false) been
+      cancelled.
+
+      If the obligation has been cancelled, it cannot be edited or marked as
+      complete.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Cancelled
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.18
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.18#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: cancelled
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:PROMPTTOCREATEINVOICE
+    label: promptToCreateInvoice
+    labels:
+      - promptToCreateInvoice
+    technical_name: PROMPTTOCREATEINVOICE
+    section: 2.2.1.14
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the obligation is (true) or is not (false) to prompt
+      the user to create an invoice when the obligation is marked as Complete
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: promptToCreateInvoice
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:USETIMEZONECONTRACT
+    label: useTimeZoneContract
+    labels:
+      - useTimeZoneContract
+    technical_name: USETIMEZONECONTRACT
+    section: 2.2.1.14
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the obligation is (true) or is not (false) to use the
+      contract time zone.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: useTimeZoneContract
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:OBLIGATIONTAGLIST
+    label: obligationTagList
+    labels:
+      - obligationTagList
+    technical_name: OBLIGATIONTAGLIST
+    section: 2.2.1.14
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation tag information.
+      See section “ObligationTag [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: obligationTagList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:OBLIGATIONSCHEDULEDEVENT
+    label: obligationScheduledEvent
+    labels:
+      - obligationScheduledEvent
+    technical_name: OBLIGATIONSCHEDULEDEVENT
+    section: 2.2.1.14
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Obligation scheduled event information.
+      See section “ObligationScheduledEvent [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: obligationScheduledEvent
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:OBLIGATIONOCCURRENCELIST
+    label: obligationOccurrenceList
+    labels:
+      - obligationOccurrenceList
+    technical_name: OBLIGATIONOCCURRENCELIST
+    section: 2.2.1.14
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation occurrence information.
+      See section “ObligationOccurrence [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: obligationOccurrenceList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:OBLIGATIONOWNERLIST
+    label: obligationOwnerList
+    labels:
+      - obligationOwnerList
+    technical_name: OBLIGATIONOWNERLIST
+    section: 2.2.1.14
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation owner information.
+      See section “ObligationOwner [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: obligationOwnerList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:OBLIGATIONLEADTIMELIST
+    label: obligationLeadTimeList
+    labels:
+      - obligationLeadTimeList
+    technical_name: OBLIGATIONLEADTIMELIST
+    section: 2.2.1.14
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation lead time information.
+      See section “ObligationLeadTime [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.14
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: obligationLeadTimeList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 2852

@@ -1,0 +1,49 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.25
+section_title: CodesGroup [Import]
+genre: tecnica
+rows:
+  - label: distributionType
+    technical_name: distributionType
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Manner in which the funds are to be distributed to each split for the
+      accounting codes defaults for the invoice custom fields:
+
+      PercentOfQuantity – funds are distributed based on a user-specified
+      percentage of the quantity
+
+      PercentOfPrice – funds are distributed based on a user-specified
+      percentage of the price
+    section: 2.2.1.25
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.25#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: codesGroupName
+    technical_name: codesGroupName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the accounting codes group
+    section: 2.2.1.25
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.25#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: codesGroupSplit
+    technical_name: codesGroupSplit
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for distribution for the split for the accounting codes group.
+      See section “CodesGroupSplit [Import]CodesGroupSplit [Export]” below
+    section: 2.2.1.25
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.25#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

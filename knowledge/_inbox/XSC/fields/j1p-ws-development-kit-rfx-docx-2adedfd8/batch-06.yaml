@@ -1,0 +1,75 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-06
+section: 2.1.1.5
+section_title: Rfx Category (header information) [Import/Update RfX method]
+part: 1
+parts: 1
+rows:
+  - key: tech:CODE
+    label: code
+    labels:
+      - code
+    technical_name: CODE
+    section: 2.1.1.5
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Category Code
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.5
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: code
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.14
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.14#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: code
+        type: null
+        mandatory_text: Y/N
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.16
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: code
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.28
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.28#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: code
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.29
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.29#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: code
+        type: null
+        mandatory_text: N
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - Y
+          - Y/N
+          - N
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+tokens_estimate: 916

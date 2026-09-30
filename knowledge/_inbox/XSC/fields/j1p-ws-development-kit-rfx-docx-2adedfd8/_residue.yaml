@@ -1,0 +1,134 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+ambiguous:
+  - key: tech:RFXID
+    label: rfxId
+    mandatory_text: |-
+      N for CREATE or CREATEUPDATE
+      Y for UPDATE
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.32#part-1
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.2.1.1#part-1
+  - key: tech:RFXREFERENCECODE
+    label: rfxReferenceCode
+    mandatory_text: ""
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.32#part-1
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.2.1.1#part-1
+  - key: tech:TENDERCODE
+    label: tenderCode
+    mandatory_text: |-
+      Y/N for insert
+      Not used for update
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+  - key: tech:TENDERREFERENCECODE
+    label: tenderReferenceCode
+    mandatory_text: |-
+      Y/N for insert
+      Not used for update
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+  - key: tech:TEMPLATEID
+    label: templateId
+    mandatory_text: Y/N for creation from template
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+  - key: tech:TEMPLATEREFERENCECODE
+    label: templateReferenceCode
+    mandatory_text: Y/N for creation from template
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+  - key: tech:RFXIDFROM
+    label: rfxIdFrom
+    mandatory_text: Y/N for duplicate
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+  - key: tech:RFXREFERENCECODEFROM
+    label: rfxReferenceCodeFrom
+    mandatory_text: Y/N for duplicate
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+  - key: tech:SHORTDESCRIPTION
+    label: shortDescription
+    mandatory_text: |-
+      Y for insert
+      N for update
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+  - key: tech:BUYERCOMPANY
+    label: buyerCompany
+    mandatory_text: |-
+      Y for insert
+      Not used for update
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+  - key: tech:COMMALGORITHMINPUTDATA
+    label: commAlgorithmInputData
+    mandatory_text: Y/N
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+  - key: tech:COMMALGORITHMEXPPARAM
+    label: commAlgorithmExpParam
+    mandatory_text: Y/N
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+  - key: tech:INSTRUCTION_FILENAME
+    label: instruction/fileName
+    mandatory_text: ""
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+  - key: tech:INSTRUCTION_FILEDESCRIPTION
+    label: instruction/fileDescription
+    mandatory_text: ""
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+  - key: tech:INSTRUCTION_FILEBASE64
+    label: instruction/fileBase64
+    mandatory_text: ""
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+  - key: tech:GLOBALIST_ID
+    label: globalist/id
+    mandatory_text: ""
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+  - key: tech:GLOBALIST_NAME
+    label: globalist/name
+    mandatory_text: ""
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+  - key: tech:GLOBALIST_TITLE
+    label: globalist/title
+    mandatory_text: ""
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+  - key: tech:LINKEDCONDITION
+    label: linkedCondition
+    mandatory_text: ""
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+  - key: tech:QUANTITY
+    label: quantity
+    mandatory_text: Y to create a new price item
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+  - key: tech:PRICEBYQUANTITYRANGES
+    label: priceByQuantityRanges
+    mandatory_text: |-
+      Y to create a “price by quantity” parameter
+      Not to be set to define a normal price parameter
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+  - key: tech:PARAMNAME
+    label: paramName
+    mandatory_text: Y/N
+    sources:
+      - j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.31#part-1
+over_unit_budget: []

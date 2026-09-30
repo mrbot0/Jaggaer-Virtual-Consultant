@@ -1,0 +1,39 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+batch: batch-07
+section: campi-7
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:CONSULTINGFORMLOGO
+    label: consultingformlogo
+    labels:
+      - consultingformlogo
+    technical_name: CONSULTINGFORMLOGO
+    section: campi-7
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=0;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/48443.png ·
+      id=10020 · tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-7
+        source_unit: consulting-service-form-xml-d4861794/campi-7#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: consultingformlogo
+        type: Image
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 691

@@ -1,0 +1,98 @@
+id: U.DOC0064.0053
+doc: S.STD.XSC.DOC.0064
+doc_id: sc-perspective-example-tcm-implementation-workbo-e9405319
+type: tabella
+text: "Colonne: Step Order | Workflow Step | Total Contract Value | Contract Type | Custom Field | Workgroup | Notes | Approver(s) (username) Step Order: 1 | Workflow Step: Department Approval | Workgroup: All except Procurement Services | Notes: All workgroups except for Procurement Services. Probably won't be invoked for initial Go-Live | Approver(s) (username): Approver based on workgroup Step Order: 2 | Workflow Step: Contract Administrator Approval | Total Contract Value: All | Contract Type: All Contract Types | Workgroup: All workgroups | Approver(s) (username): Casey Laurienzo; Rosey Murton Step Order: 3 | Workflow Step: Sponsored Research Approval | Total Contract Value: >/=[importo]0 | Contract Type: All | Custom Field: Will the contract involve sponsored (federal, state, private) funding? Y or N | Workgroup: All | Approver(s) (username): Pamela Ray Step Order: 4 | Workflow Step: IT Approval | Total Contract Value: All | Contract Type: All | Custom Field: 1. Does the contract contain IT software/services? Y or N 2. On renewals, \"Is there a scope change to the original contract?\" - if 'no', bypass workflow | Workgroup: All | Notes: - Jim to determine the Custom Field from current IT form. Done (CL) - Renewal - bypass workflow - Trying to get to 1 workflow step (JUST 1 IT QUESTION) | Approver(s) (username): Sean Bankston Step Order: 5 | Workflow Step: Office of Business Services | Total Contract Value: 1. >[importo]K 2. >[importo] | Contract Type: 1. Revenue Contract Types | Custom Field: 2. Contract Term 5 years or more | Workgroup: All | Notes: These will not be in scope for Phase 1. Note: SG set up basic step & initial rule that shouldn't be triggered. Step Order: 6 | Workflow Step: Controller | Total Contract Value: 1. >[importo]K 2. >[importo] | Contract Type: 1."
+hash: sha256:448bee8a3eb2f38e85da6b5213bf38dbd514553cff25ab647305cd8ce700bd9f
+words: 299
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0064
+  chapter: Contract Approval Workflow
+  section: Contract Approval Workflow
+  section_path: sheet-12
+  page: null
+  lang: en
+  prev: U.DOC0064.0052
+  next: U.DOC0064.0054
+table:
+  table: 0
+  headers:
+    - Step Order
+    - Workflow Step
+    - Total Contract Value
+    - Contract Type
+    - Custom Field
+    - Workgroup
+    - Notes
+    - Approver(s) (username)
+  rows:
+    - - 1
+      - Department Approval
+      - null
+      - null
+      - null
+      - All except Procurement Services
+      - All workgroups except for Procurement Services. Probably won't be invoked for initial Go-Live
+      - Approver based on workgroup
+    - - 2
+      - Contract Administrator Approval
+      - All
+      - All Contract Types
+      - null
+      - All workgroups
+      - null
+      - Casey Laurienzo; Rosey Murton
+    - - 3
+      - Sponsored Research Approval
+      - ">/=[importo]0"
+      - All
+      - Will the contract involve sponsored (federal, state, private) funding? Y or N
+      - All
+      - null
+      - Pamela Ray
+    - - 4
+      - IT Approval
+      - All
+      - All
+      - 1. Does the contract contain IT software/services? Y or N 2. On renewals, "Is there a scope change to the original contract?" - if 'no', bypass workflow
+      - All
+      - "- Jim to determine the Custom Field from current IT form. Done (CL) - Renewal - bypass workflow - Trying to get to 1 workflow step (JUST 1 IT QUESTION)"
+      - Sean Bankston
+    - - 5
+      - Office of Business Services
+      - 1. >[importo]K 2. >[importo]
+      - 1. Revenue Contract Types
+      - 2. Contract Term 5 years or more
+      - All
+      - "These will not be in scope for Phase 1. Note: SG set up basic step & initial rule that shouldn't be triggered."
+      - null
+    - - 6
+      - Controller
+      - 1. >[importo]K 2. >[importo]
+      - 1. Revenue Contract Types
+      - 2. Contract Term 5 years or more
+      - All
+      - "These will not be in scope for Phase 1. Note: SG set up basic step & initial rule that shouldn't be triggered."
+      - null
+    - - 7
+      - Procurement Services
+      - null
+      - All Goods and Services
+      - null
+      - All
+      - null
+      - Rosey Murton
+    - - 8
+      - Legal
+      - 1. >[importo]K - all contract 2. >[importo]
+      - 1. All Contract Types 2. Lease Agreements, License Agreement, All Revenue Contracts (if Contract term is 5 years or more)
+      - null
+      - All
+      - "Legal to clarify the rules (pending April meeting)…If over [importo]k, goes to Legal (don't worry about #2 for Go-Live)"
+      - Michael Flury; Michele Osborne
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

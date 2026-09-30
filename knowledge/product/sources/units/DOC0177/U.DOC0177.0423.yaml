@@ -1,0 +1,43 @@
+id: U.DOC0177.0423
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: ibanBankAccountNumber | Mandatory (Y/N): N | Description: IBAN of the bank account. | Mapping on Jaggaer One data model and notes: • If the “type” field on the AccountsPayable element is set to DirectDeposit, this field is required for all countries except the United States. Must be blank for the United States.
+  • If the “type” field on the AccountsPayable element is set to WireTransfer, this field is always required for some countries, and required for other countries if the AccountNumberType field is set to Iban. See IbanBankAccountNumber Field (see page 89) for the full list of countries for which this field is required. Must be blank for all other countries.
+  • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+  See AccountNumberType, BankAccountNumber and InternationalRoutingCode Fields for the full list of countries for which this field is required (see page 89), if the APType field is set to WireTransfer.
+hash: sha256:df38cc93eda5bb2fb92bdf51953fb626d8042071e731a99bb38705e757476fac
+words: 161
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 79
+  lang: en
+  prev: U.DOC0177.0422
+  next: U.DOC0177.0424
+row:
+  table: 0
+  row: 6
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - ibanBankAccountNumber
+    - N
+    - IBAN of the bank account.
+    - |-
+      • If the “type” field on the AccountsPayable element is set to DirectDeposit, this field is required for all countries except the United States. Must be blank for the United States.
+      • If the “type” field on the AccountsPayable element is set to WireTransfer, this field is always required for some countries, and required for other countries if the AccountNumberType field is set to Iban. See IbanBankAccountNumber Field (see page 89) for the full list of countries for which this field is required. Must be blank for all other countries.
+      • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+      See AccountNumberType, BankAccountNumber and InternationalRoutingCode Fields for the full list of countries for which this field is required (see page 89), if the APType field is set to WireTransfer.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

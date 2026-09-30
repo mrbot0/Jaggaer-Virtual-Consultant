@@ -1,0 +1,30 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.13
+section_title: CustomFieldTableRow [Import]
+genre: tecnica
+rows:
+  - label: rowNumber
+    technical_name: rowNumber
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Number of the custom field table row.
+    section: 2.2.1.13
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.13#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: customField
+    technical_name: customField
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Arrays of custom field belonging to this row.
+      See section “CustomField [Import]” above.
+    section: 2.2.1.13
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.13#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

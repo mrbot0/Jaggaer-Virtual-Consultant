@@ -1,0 +1,47 @@
+id: U.DOC0171.0220
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: formulaTCO | Mandatory (Y/N): N | Description: 0 = numeric formula or numeric single row formula (generic)
+  1 = use TCO formula
+  Default is 0.
+  Note:
+  If there is already an additional column in the price section with title being TCO and formulaTCO flag being 1, and the import request is trying to create another additional column in the same section with title being TCO and formulaTCO flag being 1, then the existing TCO column’s formulaTCO flag will be set to 0 while keeping its title.
+  If more than one new additional columns are to be created in the price section with title being TCO and formulaTCO flag being 1, then only the first TCO column will have formulaTCO flag will be set to 1 and the rest will automatically set to 0 because only one of these columns is allowed to have value of 1.
+hash: sha256:cb9e8a9bf82bf19e9f1659c0881cdd04224a07ff660db6aab743cc7e7b6e771f
+words: 147
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: formula data for additional column [Import/Update RfX method]"
+  section_path: 2.1.1.20
+  page: 6
+  lang: en
+  prev: U.DOC0171.0219
+  next: U.DOC0171.0221
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - formulaTCO
+    - N
+    - |-
+      0 = numeric formula or numeric single row formula (generic)
+      1 = use TCO formula
+      Default is 0.
+      Note:
+      If there is already an additional column in the price section with title being TCO and formulaTCO flag being 1, and the import request is trying to create another additional column in the same section with title being TCO and formulaTCO flag being 1, then the existing TCO column’s formulaTCO flag will be set to 0 while keeping its title.
+      If more than one new additional columns are to be created in the price section with title being TCO and formulaTCO flag being 1, then only the first TCO column will have formulaTCO flag will be set to 1 and the rest will automatically set to 0 because only one of these columns is allowed to have value of 1.
+    - ""
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

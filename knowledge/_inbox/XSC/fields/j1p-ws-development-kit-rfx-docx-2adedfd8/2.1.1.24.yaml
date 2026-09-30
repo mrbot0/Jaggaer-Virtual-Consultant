@@ -1,0 +1,149 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.24
+section_title: Evaluation Group Member [Import/Update RfX method]
+genre: tecnica
+rows:
+  - label: |-
+      evaluationUser/id
+      evaluationUser/code
+      evaluationUser/name
+      evaluationUser/login
+    technical_name: |-
+      evaluationUser/id
+      evaluationUser/code
+      evaluationUser/name
+      evaluationUser/login
+    type: null
+    mandatory_text: |-
+      Y
+      (only one of id/code/name/login is mandatory)
+    allowed_values: []
+    notes: |-
+      Complex type for Group Member user. Following elements are defined
+      id: user internal identifier
+      code: user external code
+      name = user name and surname
+      login: user login
+    section: 2.1.1.24
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Active
+    technical_name: Active
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      1 = evaluation user is active
+      0 = evaluation user is not active
+      Default is 1.
+    section: 2.1.1.24
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: |-
+      permissionList/
+      comments
+    technical_name: |-
+      permissionList/
+      comments
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      1 = evaluation user can insert comments
+      0 = evaluation user cannot insert comments
+      Default is 0.
+    section: 2.1.1.24
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: |-
+      permissionList/
+      evaluation
+    technical_name: |-
+      permissionList/
+      evaluation
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      1 = evaluation user can insert evaluation
+      0 = evaluation user cannot insert evaluation
+      Default is 0.
+    section: 2.1.1.24
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: |-
+      permissionList/
+      freeze
+    technical_name: |-
+      permissionList/
+      freeze
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      1 = evaluation user can freeze the envelope
+      0 = evaluation user cannot freeze the envelope
+      Default is 0.
+    section: 2.1.1.24
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: |-
+      permissionList/
+      forceRfxVisibility
+    technical_name: |-
+      permissionList/
+      forceRfxVisibility
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag to force the Rfx visibility for the user:
+
+      1 = redefine the permission by assigning the visibility on the Rfx for the
+      evaluation user. If the permission is already present in the standard
+      permissions, no redefinition is performed.
+
+      0 = not redefine the permission for the evaluation user
+
+      Default is 0.
+    section: 2.1.1.24
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: |-
+      permissionList/
+      forceSensitiveDataVisibility
+    technical_name: |-
+      permissionList/
+      forceSensitiveDataVisibility
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag to force the sensitive data visibility for the user:
+
+      1 = redefine the permission by assigning the visibility of the sensitive
+      data (supplier response & buyer evaluation) on the Rfx for the evaluation
+      user. If the permission is already present in the standard permissions, no
+      redefinition is performed.
+
+      0 = not redefine the permission for the evaluation user
+
+      Default is 0.
+    section: 2.1.1.24
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

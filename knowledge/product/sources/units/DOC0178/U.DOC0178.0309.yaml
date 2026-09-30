@@ -1,0 +1,41 @@
+id: U.DOC0178.0309
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: standardPaymentTermsCode | Description: Uniquely identifies a specific preconfigured combination of payment terms.
+  If StandardPaymentTermsCode is provided in an import message, PaymentTermsType, PaymentTermsDaysAfter, and Discount are populated based on the code.
+  If both StandardPaymentTermsCode and Discount are provided, the value for Discount is used.
+  Note: If StandardPaymentTermsCode is provided in an import message, the Net and PaymentTermsType elements cannot have values.
+hash: sha256:14bde185845a89b29817cf5c2d1f819a0bed9aefa7a6717dfb2fedd201cbf013
+words: 61
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: PaymentTerms [Import]
+  section_path: 2.2.1.45
+  page: 56
+  lang: en
+  prev: U.DOC0178.0308
+  next: U.DOC0178.0310
+row:
+  table: 0
+  row: 6
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - standardPaymentTermsCode
+    - ""
+    - |-
+      Uniquely identifies a specific preconfigured combination of payment terms.
+      If StandardPaymentTermsCode is provided in an import message, PaymentTermsType, PaymentTermsDaysAfter, and Discount are populated based on the code.
+      If both StandardPaymentTermsCode and Discount are provided, the value for Discount is used.
+      Note: If StandardPaymentTermsCode is provided in an import message, the Net and PaymentTermsType elements cannot have values.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

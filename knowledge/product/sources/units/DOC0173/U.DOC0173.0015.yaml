@@ -1,0 +1,177 @@
+id: U.DOC0173.0015
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: "Rev.N°: 37 | Date: 2017-07-29 | WSDL Version: BA 17 01 | Notes: Export Profile Added condition filter euVat Rev.N°: 38 | Date: 2017-08-07 | WSDL Version: BA 17 01 | Notes: Import Profile “Contract Management-Contact Visible to Buyer” right granted via “SET_FULL_SUBUSER_SELLER_PROFILE” rightsProfile keyword Rev.N°: 39 | Date: 2017-09-18 | WSDL Version: BA 17 01 | Notes: Import Profile Managed the field userId in subUser section to identify the sub user to be updated Rev.N°: 40 | Date: 2017-11-07 | WSDL Version: BA 17 01 | Notes: Export Profile Added condition filter superUserLogin Added condition filter userLogin Rev.N°: 41 | Date: 2017-11-13 | WSDL Version: BA 17 01 | Notes: Import Profile Added configuration option to use the extUniqueCode field as company identifier. Rev.N°: 42 | Date: 2018-02-20 | WSDL Version: BA 17 01 | Notes: Import Profile (BA18) Added permission “Contact Visible to Buyer” for “Contract Management” to profile SET_DEFAULT_SUBUSER_SELLER_PROFILE Rev.N°: 43 | Date: 2018-03-21 | WSDL Version: BA 18 00 | Notes: Export Profile Added field lastConfirmedDate for data elements Rev.N°: 44 | Date: 2018-04-04 | WSDL Version: BA 18 00 | Notes: Import Profile Added accessAuctions, accessRfx, accessFileSharing fields to CompanyInfo. Fields managed by configuration parameter."
+hash: sha256:405da50a66b35854664356cfabfb9ebf64cd281f176737501add60c6b1eb89b1
+words: 200
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Release notes
+  section: Release notes
+  section_path: "2"
+  page: 4
+  lang: en
+  prev: U.DOC0173.0014
+  next: U.DOC0173.0016
+table:
+  table: 0
+  headers:
+    - Rev.N°
+    - Date
+    - WSDL Version
+    - Notes
+  rows:
+    - - "23"
+      - 2016-10-13
+      - BA 16 01
+      - Added dummy node in the WSDL file, inside the complex type CategoryInfo (container of the list of categories) to manage Microsoft bug when a client application is generated starting from the WSDL, using Microsoft technologies. Previous client applications remain compatible, without need to change version.
+    - - "24"
+      - 2016-10-25
+      - BA 16 02
+      - |-
+        Export Profile
+        Added fields registrationDateTime and userLastLoginDateTime in company info section
+    - - "25"
+      - 2016-11-08
+      - BA 16 02
+      - "Import Profile: special values “RESET_SUBUSER_SELLER_PROFILE” and “SET_DEFAULT_SUBUSER_SELLER_PROFILE” available for the rightsProfile of seller subuser"
+    - - "26"
+      - 2016-11-17
+      - "-"
+      - |-
+        Removed attachments with allowed values for Languages, Timezone, Business Legal Forms, Country-Province.
+        Allowed values available in BS PSM File Sharing Area, link “Master Data List File”.
+    - - "27"
+      - 2016-11-24
+      - "-"
+      - "Import Profile: province and province2 can be set using the special value “NOT_DEF”."
+    - - "28"
+      - 2017-01-24
+      - "-"
+      - "Import Profile: special value “SET_FULL_SUBUSER_SELLER_PROFILE” available for the rightsProfile of seller subuser"
+    - - "29"
+      - 2017-01-27
+      - BA 17 00
+      - |-
+        Export Profile
+        Modified request structure adding the optional deComponentFilterValues to extract a subset of data elements in basic/extended/category forms.
+        Added fields statusCode and timezoneCode in company info section
+        Added field timezoneCode in sub user section
+        Import Profile
+        Added operation code ENABLE in Company area to enable a registered company.
+    - - "30"
+      - 2017-02-17
+      - BA 17 00
+      - |-
+        Import Profile
+        Extended email fields to use “;” (semicolon) to separate multiple addresses.
+    - - "31"
+      - 2017-04-19
+      - BA 17 00
+      - |-
+        Import Profile
+        Added import of expiring date for attachment data element
+        Export Profile
+        Added the following condition filters:
+        companyName
+        zip
+        city
+        province
+        address
+        DANDBCODE
+        isoCountry
+        isoProvince
+    - - "32"
+      - 2017-04-26
+      - BA 17 00
+      - |-
+        Export Profile
+        Added the following condition filters:
+        address2
+        zip2
+        city2
+        province2
+        isoCountry2
+        isoProvince2
+        bizEmail
+        userEmail
+    - - "33"
+      - 2017-06-09
+      - BA 17 00
+      - |-
+        Import Profile
+        Managed reset of data element values: attribute “id” can be used with the keyword “reset” to clear the existing data element value.
+    - - "34"
+      - 2017-06-19
+      - BA 17 01
+      - |-
+        Export Profile
+        Added attribute secureToken to values/value section for data elements. In case of attachment it is the secure token to be used for calling attachments web service to download the attachment file.
+    - - "35"
+      - 2017-07-04
+      - BA 17 01
+      - |-
+        Export Profile
+        Added condition filter “_companyName_”.
+        This filter applies the operator CONTAINS.
+    - - "36"
+      - 2017-07-06
+      - BA 17 01
+      - Added possibility to configure the date format for data element of type Date. The configured format will be applied to import, export and data element condition filter.
+    - - "37"
+      - 2017-07-29
+      - BA 17 01
+      - |-
+        Export Profile
+        Added condition filter euVat
+    - - "38"
+      - 2017-08-07
+      - BA 17 01
+      - |-
+        Import Profile
+        “Contract Management-Contact Visible to Buyer” right granted via “SET_FULL_SUBUSER_SELLER_PROFILE” rightsProfile keyword
+    - - "39"
+      - 2017-09-18
+      - BA 17 01
+      - |-
+        Import Profile
+        Managed the field userId in subUser section to identify the sub user to be updated
+    - - "40"
+      - 2017-11-07
+      - BA 17 01
+      - |-
+        Export Profile
+        Added condition filter superUserLogin
+        Added condition filter userLogin
+    - - "41"
+      - 2017-11-13
+      - BA 17 01
+      - |-
+        Import Profile
+        Added configuration option to use the extUniqueCode field as company identifier.
+    - - "42"
+      - 2018-02-20
+      - BA 17 01
+      - |-
+        Import Profile (BA18)
+        Added permission “Contact Visible to Buyer” for “Contract Management” to profile SET_DEFAULT_SUBUSER_SELLER_PROFILE
+    - - "43"
+      - 2018-03-21
+      - BA 18 00
+      - |-
+        Export Profile
+        Added field lastConfirmedDate for data elements
+    - - "44"
+      - 2018-04-04
+      - BA 18 00
+      - |-
+        Import Profile
+        Added accessAuctions, accessRfx, accessFileSharing fields to CompanyInfo.
+        Fields managed by configuration parameter.
+  block: 2
+  blocks: 2
+part:
+  n: 3
+  of: 3

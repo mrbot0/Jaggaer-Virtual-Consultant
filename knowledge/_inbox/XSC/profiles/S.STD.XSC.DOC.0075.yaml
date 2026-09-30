@@ -1,0 +1,83 @@
+id: S.STD.XSC.DOC.0075
+type: DOC
+title: xfile-uom-export-data-xlsx-612e1c3f
+summary: 'Documento dati-import (tecnica, origine vendor)
+  "xfile-uom-export-data-xlsx-612e1c3f": 30 unità, 1 tabelle, 0 tabelle di
+  campi; scope P2P; affidabilità 0.48.'
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2020-04-09
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-2303/XFILE - UOM export data.xlsx
+    sha256: sha256:105581583f126923c01ea65df9b1ef5867a821acea458509f06e3f80c3b73416
+kind: dati-import
+genre: tecnica
+origin: vendor
+version: null
+dated: 2020-04-09
+covers_release: null
+languages:
+  - en
+  - it
+scopes:
+  - P2P
+source:
+  path: CORSI/JI-2303/XFILE - UOM export data.xlsx
+  sha256: sha256:105581583f126923c01ea65df9b1ef5867a821acea458509f06e3f80c3b73416
+  size: 31815
+  format: xlsx
+  doc_id: xfile-uom-export-data-xlsx-612e1c3f
+  doc_key: xfile-uom-export-data.xlsx
+structure:
+  pages: null
+  chapters: 1
+  sections: 1
+  tables: 1
+  figures: 0
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 30
+  by_type:
+    tabella: 30
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 30
+  items_produced: 0
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0
+  last_run: 2026-09-30
+  estimated_tokens: 0
+  sessions_planned: 0

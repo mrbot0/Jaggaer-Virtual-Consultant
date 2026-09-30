@@ -1,0 +1,121 @@
+doc: S.STD.XSC.DOC.0068
+scope: XSC
+extracted_at: 2026-09-30T04:30:21.367Z
+tier: T0
+stats:
+  units: 76
+  extracted_units: 3
+  document_candidates: 0
+  needs_llm: 1
+  t0_complete: 2
+  by_candidate:
+    FLD: 2
+    GLS: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 387
+  sessions:
+    - n: 1
+      tokens: 387
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0068.0063
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0068.0050
+    source_unit: U.DOC0068.0050
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0068
+    section: SAMPLE MONTHLY MEETING CADENCE
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "*There"
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0068.0050
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0068.0063
+    source_unit: U.DOC0068.0063
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0068
+    section: ROLLOUT PLANNING
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0068.0063
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 37
+  - raw_id: R.DOC0068.0071
+    source_unit: U.DOC0068.0071
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0068
+    section: PROJECT SURVEYS
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - GLS
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: survey
+      definition: a formal way to help JAGGAER gather your feedback
+      aliases: []
+      lang: en
+      source_unit: U.DOC0068.0071
+    needs_llm: false
+    tokens: 16

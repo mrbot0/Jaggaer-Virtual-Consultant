@@ -1,0 +1,7142 @@
+doc: S.STD.XSC.DOC.0141
+scope: XSC
+extracted_at: 2026-09-30T04:31:02.243Z
+tier: T0
+stats:
+  units: 876
+  extracted_units: 161
+  document_candidates: 0
+  needs_llm: 139
+  t0_complete: 22
+  by_candidate:
+    FLD: 30
+    FLW: 101
+    CFP: 27
+    INV: 2
+    CFG: 1
+  residue_marked: 1
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 58532
+  sessions:
+    - n: 1
+      tokens: 58532
+      batches: 8
+      items: 139
+      batch_items:
+        - - R.DOC0141.0002
+          - R.DOC0141.0004
+          - R.DOC0141.0020
+          - R.DOC0141.0022
+          - R.DOC0141.0026
+          - R.DOC0141.0036
+          - R.DOC0141.0039
+          - R.DOC0141.0050
+          - R.DOC0141.0073
+          - R.DOC0141.0076
+          - R.DOC0141.0099
+          - R.DOC0141.0103
+          - R.DOC0141.0106
+          - R.DOC0141.0112
+          - R.DOC0141.0162
+          - R.DOC0141.0165
+          - R.DOC0141.0168
+          - R.DOC0141.0175
+          - R.DOC0141.0184
+          - R.DOC0141.0187
+        - - R.DOC0141.0189
+          - R.DOC0141.0191
+          - R.DOC0141.0203
+          - R.DOC0141.0205
+          - R.DOC0141.0219
+          - R.DOC0141.0225
+          - R.DOC0141.0228
+          - R.DOC0141.0233
+          - R.DOC0141.0236
+          - R.DOC0141.0239
+          - R.DOC0141.0248
+          - R.DOC0141.0250
+          - R.DOC0141.0257
+          - R.DOC0141.0259
+          - R.DOC0141.0262
+          - R.DOC0141.0276
+          - R.DOC0141.0278
+          - R.DOC0141.0286
+          - R.DOC0141.0288
+        - - R.DOC0141.0293
+          - R.DOC0141.0295
+          - R.DOC0141.0300
+          - R.DOC0141.0322
+          - R.DOC0141.0324
+          - R.DOC0141.0330
+          - R.DOC0141.0332
+          - R.DOC0141.0343
+          - R.DOC0141.0345
+          - R.DOC0141.0353
+          - R.DOC0141.0356
+          - R.DOC0141.0362
+          - R.DOC0141.0364
+          - R.DOC0141.0370
+          - R.DOC0141.0372
+          - R.DOC0141.0375
+          - R.DOC0141.0380
+        - - R.DOC0141.0392
+          - R.DOC0141.0412
+          - R.DOC0141.0413
+          - R.DOC0141.0441
+          - R.DOC0141.0450
+          - R.DOC0141.0452
+          - R.DOC0141.0455
+          - R.DOC0141.0461
+          - R.DOC0141.0463
+          - R.DOC0141.0468
+          - R.DOC0141.0473
+          - R.DOC0141.0483
+          - R.DOC0141.0495
+          - R.DOC0141.0497
+          - R.DOC0141.0499
+          - R.DOC0141.0504
+          - R.DOC0141.0507
+        - - R.DOC0141.0509
+          - R.DOC0141.0520
+          - R.DOC0141.0522
+          - R.DOC0141.0528
+          - R.DOC0141.0530
+          - R.DOC0141.0533
+          - R.DOC0141.0537
+          - R.DOC0141.0539
+          - R.DOC0141.0543
+          - R.DOC0141.0545
+          - R.DOC0141.0553
+          - R.DOC0141.0555
+          - R.DOC0141.0558
+          - R.DOC0141.0561
+          - R.DOC0141.0565
+          - R.DOC0141.0567
+          - R.DOC0141.0569
+          - R.DOC0141.0576
+          - R.DOC0141.0578
+        - - R.DOC0141.0579
+          - R.DOC0141.0581
+          - R.DOC0141.0586
+          - R.DOC0141.0588
+          - R.DOC0141.0591
+          - R.DOC0141.0598
+          - R.DOC0141.0599
+          - R.DOC0141.0601
+          - R.DOC0141.0603
+          - R.DOC0141.0607
+          - R.DOC0141.0610
+          - R.DOC0141.0613
+          - R.DOC0141.0620
+          - R.DOC0141.0623
+          - R.DOC0141.0626
+          - R.DOC0141.0628
+          - R.DOC0141.0642
+          - R.DOC0141.0647
+          - R.DOC0141.0648
+        - - R.DOC0141.0649
+          - R.DOC0141.0660
+          - R.DOC0141.0670
+          - R.DOC0141.0674
+          - R.DOC0141.0676
+          - R.DOC0141.0682
+          - R.DOC0141.0705
+          - R.DOC0141.0733
+          - R.DOC0141.0738
+          - R.DOC0141.0744
+          - R.DOC0141.0749
+          - R.DOC0141.0766
+          - R.DOC0141.0780
+          - R.DOC0141.0791
+          - R.DOC0141.0795
+          - R.DOC0141.0797
+          - R.DOC0141.0802
+          - R.DOC0141.0806
+          - R.DOC0141.0814
+        - - R.DOC0141.0819
+          - R.DOC0141.0825
+          - R.DOC0141.0829
+          - R.DOC0141.0842
+          - R.DOC0141.0859
+          - R.DOC0141.0861
+          - R.DOC0141.0865
+          - R.DOC0141.0869
+          - R.DOC0141.0876
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0141.0002
+    source_unit: U.DOC0141.0002
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0141.0002
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 33
+  - raw_id: R.DOC0141.0003
+    source_unit: U.DOC0141.0003
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: All tasks
+      modality: obbligo-condizionale
+      condition: null
+      exception: explicitly marked
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.75
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0003
+      mandatory:
+        kind: conditional
+        when: NOT (explicitly marked)
+        unless: explicitly marked
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0141.0004
+    source_unit: U.DOC0141.0004
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0004
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 46
+  - raw_id: R.DOC0141.0005
+    source_unit: U.DOC0141.0005
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: There
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0005
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 33
+  - raw_id: R.DOC0141.0006
+    source_unit: U.DOC0141.0006
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Upon completion of the classes, you
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0006
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 63
+  - raw_id: R.DOC0141.0015
+    source_unit: U.DOC0141.0015
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Using JAGGAER eProcurement
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Your user name
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0141.0015
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0141.0020
+    source_unit: U.DOC0141.0020
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 1: How JAGGAER ePro curement Addresses Business"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: explore
+          oggetto: the Menu
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: "the modules related to ePro:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0020
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 29
+  - raw_id: R.DOC0141.0022
+    source_unit: U.DOC0141.0022
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 1: How JAGGAER ePro curement Addresses Business"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: "the Menu Search:"
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: "catalog and view the results "
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: the breadcrumbs
+          valore: null
+        - n: 4
+          verbo: select
+          oggetto: Default Ordering Settings
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0022
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 47
+  - raw_id: R.DOC0141.0026
+    source_unit: U.DOC0141.0026
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 1: How JAGGAER ePro curement Addresses Business"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: "All: catalog "
+          valore: "catalog "
+        - n: 2
+          verbo: search
+          oggetto: "Help: catalog "
+          valore: "catalog "
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0026
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 17
+  - raw_id: R.DOC0141.0036
+    source_unit: U.DOC0141.0036
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Shopping from Catalogs in eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: an item to the cart and notice how is transferred to the cart in ePro
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the hosted catalog stickers on the showcase
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0036
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0141.0039
+    source_unit: U.DOC0141.0039
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Shopping from Catalogs in eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: access
+          oggetto: the Internal Stockrooms catalog
+          valore: null
+        - n: 2
+          verbo: access
+          oggetto: the catalog of a Science Supplier
+          valore: null
+        - n: 3
+          verbo: "scenario:"
+          oggetto: Purchase some bolts
+          valore: Purchase some bolts
+        - n: 4
+          verbo: search
+          oggetto: for bolts
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0039
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 48
+  - raw_id: R.DOC0141.0050
+    source_unit: U.DOC0141.0050
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Shopping from Catalogs in eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: bolts to the cart
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a bolt to your Personal Favorites folder
+          valore: null
+        - n: 3
+          verbo: go
+          oggetto: to the Recommended for the Office favorites sticker and view the items
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: items from Shared Favorites to your cart
+          valore: null
+        - n: 5
+          verbo: review
+          oggetto: the cart
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0050
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 68
+  - raw_id: R.DOC0141.0073
+    source_unit: U.DOC0141.0073
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: "scenario:"
+          oggetto: Request a rental car, which is managed outside of ePro
+          valore: Request a rental car, which is managed outside of ePro
+        - n: 2
+          verbo: search
+          oggetto: "for a rental car "
+          valore: null
+        - n: 3
+          verbo: select
+          oggetto: More Info
+          valore: null
+        - n: 4
+          verbo: review
+          oggetto: the instructions
+          valore: null
+        - n: 5
+          verbo: review
+          oggetto: the contract summary for this service. These instructions are managed on the contract
+          valore: null
+        - n: 6
+          verbo: "scenario:"
+          oggetto: Buy an item that requires additional information
+          valore: Buy an item that requires additional information
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0073
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 86
+  - raw_id: R.DOC0141.0076
+    source_unit: U.DOC0141.0076
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: fill
+          oggetto: out this form or request and add it to the cart
+          valore: null
+        - n: 2
+          verbo: "scenario:"
+          oggetto: Buy an item that does not exist in any catalog, contract, or form on this organization’s site
+          valore: Buy an item that does not exist in any catalog, contract, or form on this organization’s site
+        - n: 3
+          verbo: search
+          oggetto: "for a ukulele "
+          valore: null
+        - n: 4
+          verbo: select
+          oggetto: the Non-Catalog Item form
+          valore: null
+        - n: 5
+          verbo: fill
+          oggetto: out the form
+          valore: null
+        - n: 6
+          verbo: add
+          oggetto: it to the cart
+          valore: null
+        - n: 7
+          verbo: "scenario:"
+          oggetto: Request internal services
+          valore: Request internal services
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0076
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 88
+  - raw_id: R.DOC0141.0099
+    source_unit: U.DOC0141.0099
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Approving Requisitions"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: a requisition that you just submitted and assign it to yourself
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: the requisition
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: the workflow
+          valore: null
+        - n: 4
+          verbo: approve
+          oggetto: the requisition
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0099
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 46
+  - raw_id: R.DOC0141.0101
+    source_unit: U.DOC0141.0101
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Approving Requisitions"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Request a Change in an Order Scenario: You"
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0101
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0141.0103
+    source_unit: U.DOC0141.0103
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Approving Requisitions"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLW
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: find
+          oggetto: "the POs you have generated: Orders > My Orders > My Purchase Orders"
+          valore: Orders > My Orders > My Purchase Orders
+        - n: 2
+          verbo: open
+          oggetto: "and review the PO:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0103
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 34
+  - raw_id: R.DOC0141.0106
+    source_unit: U.DOC0141.0106
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 6: Management Tools"
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - FLW
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a change request
+          valore: null
+        - n: 2
+          verbo: make
+          oggetto: a change to the CR and submit it
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: the approval status of the CR and approve it
+          valore: null
+        - n: 4
+          verbo: view
+          oggetto: "the revised PO:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0106
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 44
+  - raw_id: R.DOC0141.0112
+    source_unit: U.DOC0141.0112
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 6: Management Tools"
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: explore
+          oggetto: "Business Analytics Dashboards: Reporting > Operational and Site Usage Reports < Bu siness Analytics Dashboards > Global"
+          valore: Reporting > Operational and Site Usage Reports < Bu siness Analytics Dashboards > Global
+        - n: 2
+          verbo: run
+          oggetto: "the following reports:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0112
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 47
+  - raw_id: R.DOC0141.0140
+    source_unit: U.DOC0141.0140
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: BE AWARE! •
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "• Sandbox site: https://usertest.sciquest.com/org/yoursitename (your user name"
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0141.0140
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0141.0162
+    source_unit: U.DOC0141.0162
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 1: Catalog Types"
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - FLW
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: your sandbox site, search for items from punchout and hosted catalog suppliers
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: for “sticky notes” from product search
+          valore: sticky notes
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0162
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 40
+  - raw_id: R.DOC0141.0165
+    source_unit: U.DOC0141.0165
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 1: Catalog Types"
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - FLW
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: some items to your cart from the prod uct search results and from a punchout site
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: for suppliers with hosted and punchout catalogs
+          valore: null
+        - n: 3
+          verbo: confirm
+          oggetto: which catalogs each of the suppliers above offer
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0165
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 59
+  - raw_id: R.DOC0141.0168
+    source_unit: U.DOC0141.0168
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 1: Catalog Types"
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLW
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "the shopping dashboard:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to where dashboards are managed: Administer > Administration > Manage Organization Dashboards"
+          valore: Administer > Administration > Manage Organization Dashboards
+        - n: 3
+          verbo: create
+          oggetto: a new shopping home page and enable it for all users
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0168
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 57
+  - raw_id: R.DOC0141.0175
+    source_unit: U.DOC0141.0175
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - FLW
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: "to where dashboards are managed: Administer > Administration > Manage Organization Dashboards"
+          valore: Administer > Administration > Manage Organization Dashboards
+        - n: 2
+          verbo: create
+          oggetto: a new home page and enable it for all users
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0175
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 50
+  - raw_id: R.DOC0141.0184
+    source_unit: U.DOC0141.0184
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a25
+      - FLW
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: "showcases to your sandbox site:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to where the showcases are managed: Shop > Shopping Settings > Manage Shopping Showcase"
+          valore: Shop > Shopping Settings > Manage Shopping Showcase
+        - n: 3
+          verbo: add
+          oggetto: "showcases:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0184
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 49
+  - raw_id: R.DOC0141.0187
+    source_unit: U.DOC0141.0187
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a26
+      - FLW
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: "stickers:"
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a supplier sticker for Carolina Biological Supply to the Lab Suppliers showcase
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: "a Favorites sticker for office supplies:"
+          valore: null
+        - n: 4
+          verbo: create
+          oggetto: "Shared Favorites folders:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0187
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 57
+  - raw_id: R.DOC0141.0189
+    source_unit: U.DOC0141.0189
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a27
+      - FLW
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: items to the Office Supplies folder
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a Favorites sticker to a showcase
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: logos, background colors, and images to supplier stickers. Images are provided in the class files
+          valore: null
+        - n: 4
+          verbo: activate
+          oggetto: showcase changes. Search for Items and Configure Search Results
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0189
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 77
+  - raw_id: R.DOC0141.0191
+    source_unit: U.DOC0141.0191
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Price Sets"
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a28
+      - FLW
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: "for items in your sandbox site:"
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: from the Shop widget
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0191
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 26
+  - raw_id: R.DOC0141.0203
+    source_unit: U.DOC0141.0203
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Price Sets"
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a29
+      - FLW
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the Catalog Manager role under the Administration role
+          valore: null
+        - n: 2
+          verbo: grant
+          oggetto: "the role these permissions:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0203
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 33
+  - raw_id: R.DOC0141.0205
+    source_unit: U.DOC0141.0205
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Price Sets"
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a30
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: approve
+          oggetto: Assigned Supplier Price Files
+          valore: null
+        - n: 2
+          verbo: assign
+          oggetto: the Catalog Manager role to a regular user who is NOT already a Catalog Admin or System Admin (because those roles ahve the perm ission to approve all supplier price files). View Price Settings and Price Files In your sandbox site, view the price settings and price files for individual suppliers and the site
+          valore: null
+        - n: 3
+          verbo: enable
+          oggetto: list pricing for a supplier
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0205
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 108
+  - raw_id: R.DOC0141.0216
+    source_unit: U.DOC0141.0216
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Configuring Taxono my Sets and Custom Catalog"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: • Verify that price set approval
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0216
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0141.0219
+    source_unit: U.DOC0141.0219
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Configuring Taxono my Sets and Custom Catalog"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a32
+      - FLW
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: assign
+          oggetto: the user you just added the Catalog Admin role to as an approver of price sets for this supplier
+          valore: null
+        - n: 2
+          verbo: for
+          oggetto: "the whole site:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0219
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 47
+  - raw_id: R.DOC0141.0225
+    source_unit: U.DOC0141.0225
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Configuring Taxono my Sets and Custom Catalog"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a33
+      - FLW
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: your sandbox site, view the unre viewed price sets at the site level
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: for products from either of these suppliers. What results do you get?
+          valore: null
+        - n: 3
+          verbo: request
+          oggetto: a price extract for Education Lab Supplies
+          valore: null
+        - n: 4
+          verbo: review
+          oggetto: the extract
+          valore: null
+        - n: 5
+          verbo: approve
+          oggetto: one version a price set
+          valore: null
+        - n: 6
+          verbo: add
+          oggetto: Education Lab Supplies to the showcase
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0225
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 93
+  - raw_id: R.DOC0141.0226
+    source_unit: U.DOC0141.0226
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Configuring Taxono my Sets and Custom Catalog"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a34
+      - INV
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Showcase the catalog search. This option
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0141.0226
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0141.0228
+    source_unit: U.DOC0141.0228
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Configuring Taxono my Sets and Custom Catalog"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a35
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      kind: tacita
+      text: "• Note : When making changes or additions to item s, it can take some time (usually a few minutes to a few hours, and sometimes up to 24 hours) for these new/modified items to show up in search results."
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0141.0228
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 51
+  - raw_id: R.DOC0141.0233
+    source_unit: U.DOC0141.0233
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a36
+      - FLW
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: "to the JSN portal: https://usertest.sciquest.com/apps/Router/SupplierLogin"
+          valore: https://usertest.sciquest.com/apps/Router/SupplierLogin
+        - n: 2
+          verbo: use
+          oggetto: the one of the following supplier email addresses
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0233
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 46
+  - raw_id: R.DOC0141.0236
+    source_unit: U.DOC0141.0236
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a37
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: under
+          oggetto: "the Need Assistance? widget, select Online Training and Support "
+          valore: null
+        - n: 2
+          verbo: under
+          oggetto: the Hosted Catalog Management widget in Reference Materials, select Item Categories and Attributes . Import and Commodity Code List and Category Map You may have completed this activity in the platform class. If not, do so now in your sandbox site
+          valore: null
+        - n: 3
+          verbo: enable
+          oggetto: "and configure category mapping:"
+          valore: null
+        - n: 4
+          verbo: navigate
+          oggetto: "to Setup > Hosted Catalog & Ordering Configuration > Category, Commodity and UOM Taxonomy Sets "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0236
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 131
+  - raw_id: R.DOC0141.0239
+    source_unit: U.DOC0141.0239
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a38
+      - FLW
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: import
+          oggetto: the commodity code list
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to the Commodity Code Import/Export subtab:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0239
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0141.0248
+    source_unit: U.DOC0141.0248
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a39
+      - FLW
+    type_hint:
+      candidates: *a39
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the text “NO COMMODITY CODE ASSIGNED” for categories without a corresponding commodity code
+          valore: NO COMMODITY CODE ASSIGNED
+        - n: 2
+          verbo: navigate
+          oggetto: to the Configuration tab and type in “NO COMMODITY CODE ASSIGNED” for the If no category/commodity code available, use field
+          valore: NO COMMODITY CODE ASSIGNED
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0248
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 69
+  - raw_id: R.DOC0141.0250
+    source_unit: U.DOC0141.0250
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a40
+      - FLW
+    type_hint:
+      candidates: *a40
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: "the category-commodity code mappings: Commodity Code > Category Map . For more detailed information on commodity codes and how to map them, see commodity codes_setup in the class files. Add and Map a Co mmodity Code Scenario: The organization wa nts to add a commodity code DENTAL SUPPLIES and map it to the UNSPSC code Dental and all its children"
+          valore: "Commodity Code > Category Map . For more detailed information on commodity codes and how to map them, see commodity codes_setup in the class files. Add and Map a Co mmodity Code Scenario: The organization wa nts to add a commodity code DENTAL SUPPLIES and map it to the UNSPSC code Dental and all its children"
+        - n: 2
+          verbo: in
+          oggetto: your sandbox site, manually add DENTAL SUPPLIES to your existing list of commodity codes
+          valore: null
+        - n: 3
+          verbo: map
+          oggetto: this value to the UNSPSC code Dental and all of its children via a category mapping import
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0250
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 148
+  - raw_id: R.DOC0141.0257
+    source_unit: U.DOC0141.0257
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a41
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a41
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: your sandbox site, view the current fl at commodity code list in Advanced Search
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: the commodity code tree structure setting
+          valore: null
+        - n: 3
+          verbo: navigate
+          oggetto: "to Setup > Hosted Catalog and Ordering Configuration > Category, Commodity and UOM Taxonomy Sets > Commodity Code > Configuration "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0257
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 81
+  - raw_id: R.DOC0141.0259
+    source_unit: U.DOC0141.0259
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a42
+      - FLW
+    type_hint:
+      candidates: *a42
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: export
+          oggetto: the existing flat commodity code list
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the Import/Export tab
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0259
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 31
+  - raw_id: R.DOC0141.0262
+    source_unit: U.DOC0141.0262
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a43
+      - FLW
+    type_hint:
+      candidates: *a43
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the commodity code tree
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: the export file
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0262
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 25
+  - raw_id: R.DOC0141.0267
+    source_unit: U.DOC0141.0267
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • At least one Group Level Name
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0267
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0141.0268
+    source_unit: U.DOC0141.0268
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a45
+      - INV
+    type_hint:
+      candidates: *a45
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Levels
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0141.0268
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0141.0272
+    source_unit: U.DOC0141.0272
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: You
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0272
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0141.0276
+    source_unit: U.DOC0141.0276
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a47
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a47
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: test
+          oggetto: the commodity code tree in Advanced Search and on a requisition. Configure Units of Measure
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: "UOM mapping in your sandbox site: Setup > Hosted Catalog and Ordering Configuration > Category, Commodity and UOM Taxonomy Sets > UOMs"
+          valore: Setup > Hosted Catalog and Ordering Configuration > Category, Commodity and UOM Taxonomy Sets > UOMs
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0276
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 71
+  - raw_id: R.DOC0141.0278
+    source_unit: U.DOC0141.0278
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a48
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a48
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: UOM mapping
+          valore: null
+        - n: 2
+          verbo: choose
+          oggetto: the UOM display format for packaging UOMs
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0278
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 29
+  - raw_id: R.DOC0141.0286
+    source_unit: U.DOC0141.0286
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a49
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a49
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: an icon
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: the Search/Display Configuration settings
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: "keywords: e.g., first aid, virus"
+          valore: e.g., first aid, virus
+        - n: 4
+          verbo: add
+          oggetto: display name and help text
+          valore: null
+        - n: 5
+          verbo: assign
+          oggetto: "the attribute to specific items (e.g., masks, gowns, gloves): Setup > Hosted Catalog and Ordering Configuration > Hosted Catalog Content Administration > Item Administration"
+          valore: Setup > Hosted Catalog and Ordering Configuration > Hosted Catalog Content Administration > Item Administration
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0286
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 91
+  - raw_id: R.DOC0141.0288
+    source_unit: U.DOC0141.0288
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a50
+      - FLW
+    type_hint:
+      candidates: *a50
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: "for items using keywords and filters, e.g.: o Categories: Medical/Clinical o Supplier: Grainger o Include any of the words: mask gown gloves"
+          valore: "o Categories: Medical/Clinical o Supplier: Grainger o Include any of the words: mask gown gloves"
+        - n: 2
+          verbo: select
+          oggetto: items from multiple suppliers to apply the custom catalog attribute to
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0288
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 68
+  - raw_id: R.DOC0141.0293
+    source_unit: U.DOC0141.0293
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 5: Managing Product Visibility"
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a51
+      - FLW
+    type_hint:
+      candidates: *a51
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: buyer
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: save,
+          oggetto: "validate, and upload the file: Setup > Hosted Catalog and Ordering Configuration > Hosted Catalog Content Administration > item buyer data import"
+          valore: Setup > Hosted Catalog and Ordering Configuration > Hosted Catalog Content Administration > item buyer data import
+        - n: 2
+          verbo: filter
+          oggetto: "on the custom catalog attribute in item administration "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0293
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 65
+  - raw_id: R.DOC0141.0295
+    source_unit: U.DOC0141.0295
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 5: Managing Product Visibility"
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a52
+      - FLW
+    type_hint:
+      candidates: *a52
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: see
+          oggetto: how the attribute appears as a search filt er in Advanced Search and how it can be used as a filter search results
+          valore: null
+        - n: 2
+          verbo: highlight
+          oggetto: "the items with the Emergency Supplie s custom attribute offered by Grainger on its supplier sticker on the showcase:"
+          valore: null
+        - n: 3
+          verbo: edit
+          oggetto: "the Grainger sticker:"
+          valore: null
+      risultato_atteso: See how the attribute appears as a search filt er in Advanced Search and how it can be used as a filter search results.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0295
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 80
+  - raw_id: R.DOC0141.0300
+    source_unit: U.DOC0141.0300
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 5: Managing Product Visibility"
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a53
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a53
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: define
+          oggetto: "a category class for lab and medical supplies: Setup > Hosted Catalog and Ordering Configuration > Manage Category Classes"
+          valore: Setup > Hosted Catalog and Ordering Configuration > Manage Category Classes
+        - n: 2
+          verbo: define
+          oggetto: "the category class: Under Definitions, select a category class, name it Lab/Medical Supplies , and activate it"
+          valore: Under Definitions, select a category class, name it Lab/Medical Supplies , and activate it
+        - n: 3
+          verbo: configure
+          oggetto: "the category class: Under Configuration , select the category class you just defined and select the lab and medical product categories that you want researchers to have access to and general shoppers to not have access to"
+          valore: Under Configuration , select the category class you just defined and select the lab and medical product categories that you want researchers to have access to and general shoppers to not have access to
+        - n: 4
+          verbo: create
+          oggetto: "two product views: Standard and Lab Research. Setup > Hosted Catalog and Ordering Configuration > Manage Product Views"
+          valore: Standard and Lab Research. Setup > Hosted Catalog and Ordering Configuration > Manage Product Views
+        - n: 5
+          verbo: create
+          oggetto: two new product views
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0300
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 173
+  - raw_id: R.DOC0141.0322
+    source_unit: U.DOC0141.0322
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a54
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a54
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: apply
+          oggetto: the Researcher user role to your user and view the product views your user has access to
+          valore: null
+        - n: 2
+          verbo: return
+          oggetto: "visibility of Customer Base Role to all products. Make a Product Category Unavailable Sitewide Scenario: Disallow every item in the Cleaning Equipment and Suppliers category for every user in the site"
+          valore: Disallow every item in the Cleaning Equipment and Suppliers category for every user in the site
+        - n: 3
+          verbo: in
+          oggetto: your sandbox site, search for “degreaser” in the item search. Note the total number of results and the number for each supplier
+          valore: degreaser
+        - n: 4
+          verbo: disallow
+          oggetto: "Cleaning Equipment and Supplies as a product category:"
+          valore: null
+        - n: 5
+          verbo: navigate
+          oggetto: to Hosted Catalog and Ordering Configuration > Manage Product Categories
+          valore: null
+        - n: 6
+          verbo: open
+          oggetto: "MRO/Facilities "
+          valore: null
+        - n: 7
+          verbo: search
+          oggetto: "again for “degreaser”, and again note the total number of results and the number for each supplier. Make a Product Category Available from a Supplier Scenario: Allow one of the suppliers to offer all their products in the Cleaning Equipment and Supplies category"
+          valore: degreaser
+        - n: 8
+          verbo: in
+          oggetto: "your sandbox site, do a supplier search for the supplier and select Manage > Category Review/Selection "
+          valore: null
+        - n: 9
+          verbo: enable
+          oggetto: the Cleaning Equipment and Supplies category
+          valore: null
+        - n: 10
+          verbo: search
+          oggetto: "for degreaser and note the number of results for that supplier. Make Certain Items Not Viewable Scenario: You have discovered that some cleaning items available to shoppers are radioactive. You need to remove access immediately while you determine the best way to control their visibility in the longer term"
+          valore: You have discovered that some cleaning items available to shoppers are radioactive. You need to remove access immediately while you determine the best way to control their visibility in the longer term
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0322
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 356
+  - raw_id: R.DOC0141.0324
+    source_unit: U.DOC0141.0324
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a55
+      - FLW
+    type_hint:
+      candidates: *a55
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: "Setup > Hosted Catalog and Ordering Configuration > item administration "
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: a filter or type in a search word. What might be a more scalable way to manage access to these items?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0324
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 59
+  - raw_id: R.DOC0141.0330
+    source_unit: U.DOC0141.0330
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Forms and Requests
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a56
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a56
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the form
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: "the form:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0330
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 18
+  - raw_id: R.DOC0141.0332
+    source_unit: U.DOC0141.0332
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Forms and Requests
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a57
+      - FLW
+    type_hint:
+      candidates: *a57
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: the results of changes to configuration. Complete Some Forms
+          valore: null
+        - n: 2
+          verbo: in
+          oggetto: the WorldWide Widgets WorldMarket site (https://usertest.sciquest.com/org/SQUFS) , review how forms and requests are accessed
+          valore: //usertest.sciquest.com/org/SQUFS) , review how forms and requests are accessed
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0332
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 58
+  - raw_id: R.DOC0141.0343
+    source_unit: U.DOC0141.0343
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Configuring Forms"
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a58
+      - FLW
+    type_hint:
+      candidates: *a58
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: make
+          oggetto: it easy to find and select a supplier in the Form Properties tab
+          valore: null
+        - n: 2
+          verbo: make
+          oggetto: some edits to the form layout
+          valore: null
+        - n: 3
+          verbo: make
+          oggetto: "it accessible to shoppers:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0343
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 44
+  - raw_id: R.DOC0141.0345
+    source_unit: U.DOC0141.0345
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Configuring Forms"
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a59
+      - FLW
+    type_hint:
+      candidates: *a59
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: it to Favorites
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: it to the Showcase
+          valore: null
+        - n: 3
+          verbo: access
+          oggetto: the form either via search or showcase sticker
+          valore: null
+        - n: 4
+          verbo: fill
+          oggetto: it out and put it in a cart
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0345
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 44
+  - raw_id: R.DOC0141.0353
+    source_unit: U.DOC0141.0353
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Configuring Forms"
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a60
+      - FLW
+    type_hint:
+      candidates: *a60
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the request template and select the appropriate purpose
+          valore: null
+        - n: 2
+          verbo: complete
+          oggetto: each section
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: questions; create at least one conditional question
+          valore: null
+        - n: 4
+          verbo: use
+          oggetto: the Preview function to test it
+          valore: null
+        - n: 5
+          verbo: make
+          oggetto: "it visible:"
+          valore: null
+        - n: 6
+          verbo: add
+          oggetto: it to a Favorites Shared folder
+          valore: null
+        - n: 7
+          verbo: add
+          oggetto: a sticker to the showcase
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0353
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 80
+  - raw_id: R.DOC0141.0356
+    source_unit: U.DOC0141.0356
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a61
+      - FLW
+    type_hint:
+      candidates: *a61
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: the XML file of a form from the form samples folder in your class files and try to determine what is in the form
+          valore: null
+        - n: 2
+          verbo: import
+          oggetto: the form to your sandbox site
+          valore: null
+        - n: 3
+          verbo: address
+          oggetto: any errors
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: the form to a folder in Shared Favorites
+          valore: null
+        - n: 5
+          verbo: add
+          oggetto: a sticker to the showcase
+          valore: null
+        - n: 6
+          verbo: access
+          oggetto: the form from the showcase
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0356
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 86
+  - raw_id: R.DOC0141.0362
+    source_unit: U.DOC0141.0362
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Suppliers and Order Distribution
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a62
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a62
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: New Class/Definition
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: the search preference
+          valore: null
+        - n: 3
+          verbo: open
+          oggetto: the profile for Education Lab Supplies or another supplier in your site
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0362
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 46
+  - raw_id: R.DOC0141.0364
+    source_unit: U.DOC0141.0364
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Suppliers and Order Distribution
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a63
+      - FLW
+    type_hint:
+      candidates: *a63
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: supplier search, search for the supplier using the Supplier Class filter
+          valore: null
+        - n: 2
+          verbo: in
+          oggetto: advanced item search, search for items from that supplier and view the supplier class filter option. Review Settings for Hosted and Punchout Catalog Suppliers
+          valore: null
+        - n: 3
+          verbo: find
+          oggetto: an active hosted and punc hout supplier in your sandbox site
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0364
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 89
+  - raw_id: R.DOC0141.0370
+    source_unit: U.DOC0141.0370
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Suppliers and Order Distribution
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a64
+      - FLW
+    type_hint:
+      candidates: *a64
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: "the profile of an active non-catalog supplier, navigate to the addresses: Contacts and Locations > Addresses"
+          valore: Contacts and Locations > Addresses
+        - n: 2
+          verbo: add
+          oggetto: a physical, fulfillment, and remittance address using the Address Wizard
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0370
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 60
+  - raw_id: R.DOC0141.0371
+    source_unit: U.DOC0141.0371
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Suppliers and Order Distribution
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a65
+      - FLD
+    type_hint:
+      candidates: *a65
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Required fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0371
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0141.0372
+    source_unit: U.DOC0141.0372
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Suppliers and Order Distribution
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a66
+      - FLW
+    type_hint:
+      candidates: *a66
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: assign
+          oggetto: the address to a location
+          valore: null
+        - n: 2
+          verbo: make
+          oggetto: "sure that the active fulfillment and remittance addresses are associated with the fulfillment center (Fulfillment Centers > General ). If not, add them by clicking Edit "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0372
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 65
+  - raw_id: R.DOC0141.0375
+    source_unit: U.DOC0141.0375
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a67
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a67
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: "your sandbox site, view the order distri bution default settings at the site level: Setup > Hosted Catalog and Ordering Configuration > Default Ordering Settings > Order Distribution > Order Distribution Defaults"
+          valore: Setup > Hosted Catalog and Ordering Configuration > Default Ordering Settings > Order Distribution > Order Distribution Defaults
+        - n: 2
+          verbo: in
+          oggetto: "the non-catalog supplier’s profile, review the setting that enables non-catalog items: About > System Settings > Shopping Configuration"
+          valore: About > System Settings > Shopping Configuration
+        - n: 3
+          verbo: configure
+          oggetto: "the order distribution method for this supplier (either email or fax): Contacts and Locations > Fulfillment Centers > Order Distribution Configure PCard at Site and Supplier Levels"
+          valore: Contacts and Locations > Fulfillment Centers > Order Distribution Configure PCard at Site and Supplier Levels
+        - n: 4
+          verbo: enable
+          oggetto: "PCards as a site default in your sandbox site: Setup > Hosted Catalog and Ordering Configuration > Default Ordering Settings > Payment Method > Use PCard"
+          valore: Setup > Hosted Catalog and Ordering Configuration > Default Ordering Settings > Payment Method > Use PCard
+        - n: 5
+          verbo: navigate
+          oggetto: to the profile of a non-catalo g supplier and review its PCard settings. Set Up PO Terms
+          valore: null
+        - n: 6
+          verbo: set
+          oggetto: up a new PO clause in your sandbox site
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0375
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 227
+  - raw_id: R.DOC0141.0380
+    source_unit: U.DOC0141.0380
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a68
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a68
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: terms and conditions at the site level on the Terms and Conditions tab
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the results on the profile of your active non-catalog supplier
+          valore: null
+        - n: 3
+          verbo: apply
+          oggetto: the PO clause you created to that supplier. Manage Suppliers (optional)
+          valore: null
+        - n: 4
+          verbo: in
+          oggetto: your sandbox site, create supplier addresses
+          valore: null
+        - n: 5
+          verbo: add
+          oggetto: contact information
+          valore: null
+        - n: 6
+          verbo: change
+          oggetto: supplier status
+          valore: null
+        - n: 7
+          verbo: review
+          oggetto: supplier history
+          valore: null
+        - n: 8
+          verbo: export
+          oggetto: supplier information
+          valore: null
+        - n: 9
+          verbo: set
+          oggetto: supplier profile elements as required
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0380
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 121
+  - raw_id: R.DOC0141.0392
+    source_unit: U.DOC0141.0392
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Creating a Contract"
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a69
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a69
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: default notifications
+          valore: null
+        - n: 2
+          verbo: assign
+          oggetto: the Contract Configuration role to your user. Find and View Contracts
+          valore: null
+        - n: 3
+          verbo: in
+          oggetto: the WorldWide Widgets WorldMarket site (https://usertest.sciquest.com/org/SQUFS ), search the catalog of Daigger, which has a hosted catalog associated with a contract
+          valore: //usertest.sciquest.com/org/SQUFS ), search the catalog of Daigger, which has a hosted catalog associated with a contract
+        - n: 4
+          verbo: open
+          oggetto: the contract summary and view its contents
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: "all contracts that have been drawn up for Daigger in its supplier profile, under Legal and Compliance > Contracts "
+          valore: null
+        - n: 6
+          verbo: navigate
+          oggetto: to contract search and view the cont racts with Daigger that are active for shopping
+          valore: null
+        - n: 7
+          verbo: save
+          oggetto: and export a search
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0392
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 155
+  - raw_id: R.DOC0141.0407
+    source_unit: U.DOC0141.0407
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Creating a Contract"
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a70
+      - FLD
+    type_hint:
+      candidates: *a70
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Create a New Contract Scenario: The organization"
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0407
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0141.0412
+    source_unit: U.DOC0141.0412
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a71
+      - FLW
+    type_hint:
+      candidates: *a71
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the pages of the contract record in the left frame and their status (green/gray check mark)
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: all the general pages that would appe ar in an ePro-only implementation and fill out the required and relevant fields
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0412
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 68
+  - raw_id: R.DOC0141.0413
+    source_unit: U.DOC0141.0413
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a72
+      - FLD
+    type_hint:
+      candidates: *a72
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0413
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 16
+  - raw_id: R.DOC0141.0441
+    source_unit: U.DOC0141.0441
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Setting Up a Contract for Shopping"
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a73
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a73
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: your sandbox site, open the contract you created with Education Lab Supplies
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: "up the contract for shopping in eProcurement Setup "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0441
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 47
+  - raw_id: R.DOC0141.0450
+    source_unit: U.DOC0141.0450
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Setting Up a Contract for Shopping"
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a74
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a74
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: shop
+          oggetto: for an item from Education Lab Supplies and view the associated contract in the cart
+          valore: null
+        - n: 2
+          verbo: submit
+          oggetto: "the requisition. Track Spend and Set Up a Budget Scenario: Track spend against the contract with Education Lab Supplies and enforce a contract budget"
+          valore: Track spend against the contract with Education Lab Supplies and enforce a contract budget
+        - n: 3
+          verbo: in
+          oggetto: your sandbox site, review the Budget and Spend page in the Education Lab Supplies contract
+          valore: null
+        - n: 4
+          verbo: note
+          oggetto: "the current spend, and se t a budget amount and enforce it:"
+          valore: null
+        - n: 5
+          verbo: set
+          oggetto: the budget amount
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0450
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 123
+  - raw_id: R.DOC0141.0452
+    source_unit: U.DOC0141.0452
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Setting Up a Contract for Shopping"
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a75
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a75
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: the PR document configuration to produce a warning if the budget is exceeded
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the Requisition Document Configuration
+          valore: null
+        - n: 3
+          verbo: open
+          oggetto: a draft of the active configuration
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0452
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 57
+  - raw_id: R.DOC0141.0455
+    source_unit: U.DOC0141.0455
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Setting Up a Contract for Shopping"
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a76
+      - FLW
+    type_hint:
+      candidates: *a76
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: purchase
+          oggetto: items from this contract and exceed the budget. Note the warning in the cart
+          valore: null
+        - n: 2
+          verbo: open
+          oggetto: "the contract and view the changes to the budget. Adjust Spend on a Contract (optional) Scenario: Some spend against the contract with Education Lab Supplies has occurred outside the system. Adjust the spend against the contract"
+          valore: Some spend against the contract with Education Lab Supplies has occurred outside the system. Adjust the spend against the contract
+        - n: 3
+          verbo: in
+          oggetto: your sandbox site, adjust spend on PR and PO
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: a note for reference
+          valore: null
+        - n: 5
+          verbo: observe
+          oggetto: "the change in spend data. Expose Non-Catalog Items with a Contract Scenario: The organization has a local vendor who provides specialized products that are not in a supplier catalog. These items are managed by the organization within the contract"
+          valore: The organization has a local vendor who provides specialized products that are not in a supplier catalog. These items are managed by the organization within the contract
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0455
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 178
+  - raw_id: R.DOC0141.0461
+    source_unit: U.DOC0141.0461
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a77
+      - FLW
+    type_hint:
+      candidates: *a77
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: "the contract summary from the contract icon in the search results and view the total number of non-catalog items managed on this contract (under Goods and Services ). Add Non-Catalog Items to a Contract Scenario: Education Lab Supplies offers some specia lized non-catalog items to the organization. Add those items to your contract with this supplier"
+          valore: Education Lab Supplies offers some specia lized non-catalog items to the organization. Add those items to your contract with this supplier
+        - n: 2
+          verbo: in
+          oggetto: your sandbox site, go to the contract ( Goods and Services > Non-Catalog Items ) and import the non-catalog items from the class files ( contract_non-catalog items_import.txt ). Add item logos, if you like
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: for the items
+          valore: null
+        - n: 4
+          verbo: on
+          oggetto: the Education Lab Supplies sticker on the showcase, enable Showcase Browse Contracts and any other relevant options. Invoice from a Contract (optional)
+          valore: null
+        - n: 5
+          verbo: in
+          oggetto: your sandbox site, add services as non-catalog items to your contract
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0461
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 218
+  - raw_id: R.DOC0141.0463
+    source_unit: U.DOC0141.0463
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a78
+      - FLW
+    type_hint:
+      candidates: *a78
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: once
+          oggetto: the contract is in effe ct, create an invoice from it. Expose Instructions from a Contract – Part 1 The organization has an auto rental contract wi th Enterprise Rent-A-Car. Reservations are made online in the Enterprise’s system
+          valore: null
+        - n: 2
+          verbo: in
+          oggetto: the WorldWide Widgets WorldMarket site (https://usertest.sciquest.com/org/SQUFS) , search for a rental car
+          valore: //usertest.sciquest.com/org/SQUFS) , search for a rental car
+        - n: 3
+          verbo: view
+          oggetto: the instructions
+          valore: null
+        - n: 4
+          verbo: view
+          oggetto: the contract summary. Expose Instructions from a Contract – Part 2
+          valore: null
+        - n: 5
+          verbo: in
+          oggetto: your sandbox site, add the instructions to the contract with Education Lab Supplies (in Goods and Services > Ordering Instructions )
+          valore: null
+        - n: 6
+          verbo: search
+          oggetto: for the instructions in the item search. Assign a PO Clause to a Contract
+          valore: null
+        - n: 7
+          verbo: in
+          oggetto: your sandbox site, apply a PO clause to the contract with Education Lab Supplies (in PO Clauses )
+          valore: null
+        - n: 8
+          verbo: purchase
+          oggetto: "an item associated with that contract and view the PO clause on the PO fax. Limit Access to a Contract and Its Associated Items Scenario: The European business unit is the on ly group who should have access to the items associated with the contract with Education Lab Supplies"
+          valore: The European business unit is the on ly group who should have access to the items associated with the contract with Education Lab Supplies
+        - n: 9
+          verbo: in
+          oggetto: your sandbox site, make sure your user is not in the Europe business unit
+          valore: null
+        - n: 10
+          verbo: limit
+          oggetto: access to the contract to the Europe business unit (in Applies To)
+          valore: null
+        - n: 11
+          verbo: search
+          oggetto: for the items associated with this contract
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0463
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 332
+  - raw_id: R.DOC0141.0468
+    source_unit: U.DOC0141.0468
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Contract Administration and Configuration"
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a79
+      - FLW
+    type_hint:
+      candidates: *a79
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: use
+          oggetto: Field Management to hide the Contract Status field
+          valore: null
+        - n: 2
+          verbo: open
+          oggetto: "field help ( ?) for the Contract Header and navigate to Contract Status : Contract Header > Contract Header > Contract Status"
+          valore: Contract Header > Contract Header > Contract Status
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0468
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 61
+  - raw_id: R.DOC0141.0473
+    source_unit: U.DOC0141.0473
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Contract Administration and Configuration"
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a80
+      - FLW
+    type_hint:
+      candidates: *a80
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: these changes in the Contract Header Configure a Contracts Dashboard
+          valore: null
+        - n: 2
+          verbo: in
+          oggetto: "your sandbox site, create a dashboard from the system default: Contracts > Contracts Home > Configure This Dashboard"
+          valore: Contracts > Contracts Home > Configure This Dashboard
+        - n: 3
+          verbo: name
+          oggetto: it and make it accessible to the Contract Configuration role
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: and modify widgets that would be useful for a contract manager
+          valore: null
+        - n: 5
+          verbo: publish
+          oggetto: the changes
+          valore: null
+        - n: 6
+          verbo: review
+          oggetto: "the dashboard: Contracts > Contracts Home > Configure This Dashboard"
+          valore: Contracts > Contracts Home > Configure This Dashboard
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0473
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 124
+  - raw_id: R.DOC0141.0483
+    source_unit: U.DOC0141.0483
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Administering eProcurement
+    page: 32
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a81
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a81
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "the new business unit: Setup > Organization Structure and Settings > Add/Manage Business Units"
+          valore: Setup > Organization Structure and Settings > Add/Manage Business Units
+        - n: 2
+          verbo: configure
+          oggetto: "the following:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0483
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 55
+  - raw_id: R.DOC0141.0495
+    source_unit: U.DOC0141.0495
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Us er Roles and Profiles"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a82
+      - FLW
+    type_hint:
+      candidates: *a82
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: "to department settings: Setup > Organization Structure and Settin gs > Configure Departments and Positions"
+          valore: Setup > Organization Structure and Settin gs > Configure Departments and Positions
+        - n: 2
+          verbo: select
+          oggetto: the Asia business unit
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: the new department to the business unit
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: others if you like
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0495
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 68
+  - raw_id: R.DOC0141.0497
+    source_unit: U.DOC0141.0497
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Us er Roles and Profiles"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a83
+      - FLW
+    type_hint:
+      candidates: *a83
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: setup
+          oggetto: "> Org Structure & Sett ings > Manage User Roles"
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: "the shopping related roles:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0497
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 35
+  - raw_id: R.DOC0141.0499
+    source_unit: U.DOC0141.0499
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Us er Roles and Profiles"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a84
+      - FLW
+    type_hint:
+      candidates: *a84
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: Requester
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the permissions for Shopping, Carts & Requisitions and Orders for the Shopper and Requester roles
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: "these permissions to the Requester role: Permissions"
+          valore: Permissions
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0499
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 53
+  - raw_id: R.DOC0141.0504
+    source_unit: U.DOC0141.0504
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Us er Roles and Profiles"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a85
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a85
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: make
+          oggetto: it active and assign it to the Asia business unit
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: the permissions and settings, e.g ., default home page, approval limits, product views, punchout/currency access, custom fields, permissions, notifications
+          valore: null
+        - n: 3
+          verbo: assign
+          oggetto: a user to this role. Note that the user must be part of the Asia bu siness unit before they can be assigned to BU- specific role
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0504
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 103
+  - raw_id: R.DOC0141.0507
+    source_unit: U.DOC0141.0507
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a86
+      - FLW
+    type_hint:
+      candidates: *a86
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: find
+          oggetto: a user with the Shopper role and open their profile
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: "assignees: Default User Settings > Cart Assignees"
+          valore: Default User Settings > Cart Assignees
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0507
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 39
+  - raw_id: R.DOC0141.0509
+    source_unit: U.DOC0141.0509
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a87
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a87
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: "an assignee as preferred. Assign the Prepared-for User Scenario: You need to prepare a requisition on someone else’s behalf"
+          valore: You need to prepare a requisition on someone else’s behalf
+        - n: 2
+          verbo: in
+          oggetto: "your sandbox site, pick a user to create the PR for. Set default accounting codes and addresses on the user profile of that user:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0509
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 77
+  - raw_id: R.DOC0141.0520
+    source_unit: U.DOC0141.0520
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a88
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a88
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: personas for business units. Setup > Organization Structure and Settings > Configure User Persona Settings
+          valore: null
+        - n: 2
+          verbo: give
+          oggetto: "your user access to the Europe business unit: User Profile > User Roles and Access > Access"
+          valore: User Profile > User Roles and Access > Access
+        - n: 3
+          verbo: create
+          oggetto: "a Europe BU persona: User Profile > User Roles and Access > Assigned Shopping Personas"
+          valore: User Profile > User Roles and Access > Assigned Shopping Personas
+        - n: 4
+          verbo: assume
+          oggetto: "the Europe BU persona and search for items for Education Lab Supplies: User > Change Shopping Persona Set Purchasing and Approval Limits on User Roles"
+          valore: User > Change Shopping Persona Set Purchasing and Approval Limits on User Roles
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0520
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 128
+  - raw_id: R.DOC0141.0522
+    source_unit: U.DOC0141.0522
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a89
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a89
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: purchasing limits on shopping roles in your sandbox site
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: "the PCard limit for the Customer Base Role to [importo] "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0522
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 42
+  - raw_id: R.DOC0141.0528
+    source_unit: U.DOC0141.0528
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a90
+      - FLW
+    type_hint:
+      candidates: *a90
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: "your sandbox site, navigate to Payment Options in your user profile under Default User Settings "
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: "a new card:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0528
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 40
+  - raw_id: R.DOC0141.0530
+    source_unit: U.DOC0141.0530
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a91
+      - FLW
+    type_hint:
+      candidates: *a91
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: users_import.txt from your class files in Excel and review the contents
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a user to the Asia business unit in your sandbox site
+          valore: null
+        - n: 3
+          verbo: copy
+          oggetto: "the values from another user, but change the following:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0530
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 61
+  - raw_id: R.DOC0141.0533
+    source_unit: U.DOC0141.0533
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a92
+      - FLW
+    type_hint:
+      candidates: *a92
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: make
+          oggetto: any other modifications you would like to explore
+          valore: null
+        - n: 2
+          verbo: validate
+          oggetto: the file, address an y issues, and import the file
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0533
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 40
+  - raw_id: R.DOC0141.0537
+    source_unit: U.DOC0141.0537
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a93
+      - FLW
+    type_hint:
+      candidates: *a93
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the new users in your site via user search. Update Custom Field Defaults via Import Use the custom field defaults of Sam Shopper to populate those of Brock Lee in your sandbox site
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: the accounting code defaults for Sam Shopper and Brock Lee
+          valore: null
+        - n: 3
+          verbo: export
+          oggetto: Sam Shopper’s data using the Tab Delimited Export option
+          valore: null
+        - n: 4
+          verbo: in
+          oggetto: the custom field export file ( UserCFExport ) using Excel, substitute blee as the user
+          valore: null
+        - n: 5
+          verbo: change
+          oggetto: some of the values and defaults
+          valore: null
+        - n: 6
+          verbo: validate
+          oggetto: and import the new file
+          valore: null
+        - n: 7
+          verbo: check
+          oggetto: Brock’s profile. Add User Profile Comments
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0537
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 149
+  - raw_id: R.DOC0141.0539
+    source_unit: U.DOC0141.0539
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Documents"
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a94
+      - FLW
+    type_hint:
+      candidates: *a94
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: your sandbox site, open a user profile
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: "a comment in a section of their profile: User History > Add Profile Comment"
+          valore: User History > Add Profile Comment
+        - n: 3
+          verbo: view
+          oggetto: the comment in the user profile history. Use the search filter. User History > View User’s History
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0539
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 66
+  - raw_id: R.DOC0141.0543
+    source_unit: U.DOC0141.0543
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Documents"
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a95
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a95
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: "Grainger to allow trade-ins:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the supplier profile for Grainger
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0543
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 30
+  - raw_id: R.DOC0141.0545
+    source_unit: U.DOC0141.0545
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Documents"
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a96
+      - FLW
+    type_hint:
+      candidates: *a96
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the Add/Edit Trade-ins permission to the Advanced Shopper role
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: the Advanced Shopper role to your user
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: a new desk from Grainger to yo ur cart, and trade in the one you have. Set Up Shared Carts
+          valore: null
+        - n: 4
+          verbo: make
+          oggetto: "sure shared carts are enabled in your sandbox site:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0545
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 76
+  - raw_id: R.DOC0141.0553
+    source_unit: U.DOC0141.0553
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Documents"
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a97
+      - FLW
+    type_hint:
+      candidates: *a97
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "a shared cart group and add user s (e.g., create a group for the Operations department): Shop > Admin > Manage Groups for Shared Carts"
+          valore: Shop > Admin > Manage Groups for Shared Carts
+        - n: 2
+          verbo: add
+          oggetto: the Share cart field to the requisition configuration in the General section
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: for an item, put it in the cart, change th e cart name to make it clear what it’s for (e.g., Operations Dept Cart – week of x), share it, and unlock it
+          valore: null
+        - n: 4
+          verbo: log
+          oggetto: in as a user who is in the Operations department and has the Advanced Shopper role, view the shared cart notification, open the shared cart, add items to it
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0553
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 147
+  - raw_id: R.DOC0141.0555
+    source_unit: U.DOC0141.0555
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a98
+      - FLW
+    type_hint:
+      candidates: *a98
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: the Requester
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: log
+          oggetto: back in as your config user, navigate to the shared cart, lock the cart to proceed to checkout, review the requisition history and the Share cart field, and submit. Pay with a PCard
+          valore: null
+        - n: 2
+          verbo: in
+          oggetto: your sandbox site, review the PCard on your use profile
+          valore: null
+        - n: 3
+          verbo: shop
+          oggetto: for an item. Exceed the PCard limit on your profile (based on the Requester role)
+          valore: null
+        - n: 4
+          verbo: in
+          oggetto: checkout, edit the requisition under Billing to pay via credit card
+          valore: null
+        - n: 5
+          verbo: submit
+          oggetto: the requisition
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0555
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 121
+  - raw_id: R.DOC0141.0558
+    source_unit: U.DOC0141.0558
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a99
+      - FLW
+    type_hint:
+      candidates: *a99
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: "your sandbox site, create a cust om field called Delivery Variables: Setup > Configure Documents > Manage Custom Fields"
+          valore: Setup > Configure Documents > Manage Custom Fields
+        - n: 2
+          verbo: create
+          oggetto: New Field
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0558
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 46
+  - raw_id: R.DOC0141.0560
+    source_unit: U.DOC0141.0560
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a100
+      - FLD
+    type_hint:
+      candidates: *a100
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: • For internal names, it
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0141.0560
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0141.0561
+    source_unit: U.DOC0141.0561
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a101
+      - FLW
+    type_hint:
+      candidates: *a101
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: select
+          oggetto: "Searchable in Document Search for Requisition "
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: "Searchable in Document Search for PO "
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: "values:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0561
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 41
+  - raw_id: R.DOC0141.0565
+    source_unit: U.DOC0141.0565
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a102
+      - FLD
+    type_hint:
+      candidates: *a102
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0565
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 5
+  - raw_id: R.DOC0141.0567
+    source_unit: U.DOC0141.0567
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a103
+      - FLD
+    type_hint:
+      candidates: *a103
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0567
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0141.0569
+    source_unit: U.DOC0141.0569
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a104
+      - FLW
+    type_hint:
+      candidates: *a104
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: specify
+          oggetto: that this field can appear in the Delivery section of Documents. Place the Field on Documents and Set Visibility
+          valore: null
+        - n: 2
+          verbo: in
+          oggetto: your sandbox site, place the Delivery Variables field on the PR and PO documents
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0569
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 63
+  - raw_id: R.DOC0141.0576
+    source_unit: U.DOC0141.0576
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a105
+      - FLW
+    type_hint:
+      candidates: *a105
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: make
+          oggetto: No Special Needs the default for the base role
+          valore: null
+        - n: 2
+          verbo: test
+          oggetto: "it. What if you needed to make the Delivery Variables field:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0576
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 41
+  - raw_id: R.DOC0141.0578
+    source_unit: U.DOC0141.0578
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a106
+      - FLD
+    type_hint:
+      candidates: *a106
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: it's assigned to them?
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0578
+      mandatory:
+        kind: conditional
+        when: it's assigned to them?
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 21
+  - raw_id: R.DOC0141.0579
+    source_unit: U.DOC0141.0579
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a107
+      - FLD
+    type_hint:
+      candidates: *a107
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0579
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 9
+  - raw_id: R.DOC0141.0581
+    source_unit: U.DOC0141.0581
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a108
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a108
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: verify
+          oggetto: "that change requests are enabled on your sandbox site: Setup > Site Profile Configure Site Profile Miscellaneous Settings > Enable PO Change Request Comments"
+          valore: Setup > Site Profile Configure Site Profile Miscellaneous Settings > Enable PO Change Request Comments
+        - n: 2
+          verbo: configure
+          oggetto: "the CR document: Setup > Configure Documents > Configure Change Request"
+          valore: Setup > Configure Documents > Configure Change Request
+        - n: 3
+          verbo: add
+          oggetto: "PO revision and change request permissions to the appropriate shopper and requisitioner roles:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0581
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 98
+  - raw_id: R.DOC0141.0586
+    source_unit: U.DOC0141.0586
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Configuring an d Managing System Emails"
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a109
+      - FLW
+    type_hint:
+      candidates: *a109
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: find
+          oggetto: a PO to change, make the change, and submit the request
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the approval status of the CR
+          valore: null
+        - n: 3
+          verbo: approve
+          oggetto: the CR
+          valore: null
+        - n: 4
+          verbo: view
+          oggetto: the revised PO
+          valore: null
+        - n: 5
+          verbo: review
+          oggetto: the revision number and related documents
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0586
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 62
+  - raw_id: R.DOC0141.0588
+    source_unit: U.DOC0141.0588
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Configuring an d Managing System Emails"
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a110
+      - FLW
+    type_hint:
+      candidates: *a110
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: examine
+          oggetto: "the Org default email address in your sandbox site: Administer > Email Management > Email Configuration"
+          valore: Administer > Email Management > Email Configuration
+        - n: 2
+          verbo: view
+          oggetto: "system emails: Administer > Email Management > System Emails"
+          valore: Administer > Email Management > System Emails
+        - n: 3
+          verbo: review
+          oggetto: emails related to ePro
+          valore: null
+        - n: 4
+          verbo: edit
+          oggetto: a system email and preview your changes
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: History
+          valore: null
+        - n: 6
+          verbo: view
+          oggetto: Logs. Manage Older System Emails
+          valore: null
+        - n: 7
+          verbo: edit
+          oggetto: a system email notification in your sandbox site
+          valore: null
+        - n: 8
+          verbo: navigate
+          oggetto: "to a message in Field Management: Setup > Field Management > Mana ge Field Names and Help Text"
+          valore: Setup > Field Management > Mana ge Field Names and Help Text
+        - n: 9
+          verbo: search
+          oggetto: "for Email Notification "
+          valore: null
+        - n: 10
+          verbo: clic
+          oggetto: Browse fields and review various messages
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0588
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 157
+  - raw_id: R.DOC0141.0591
+    source_unit: U.DOC0141.0591
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Configuring an d Managing System Emails"
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a111
+      - FLW
+    type_hint:
+      candidates: *a111
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: system email settings and addresses
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to Setup > General Site Settings > System Settings & Configuration > Configuration "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0591
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 49
+  - raw_id: R.DOC0141.0598
+    source_unit: U.DOC0141.0598
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Requisitio n and Purchase Order Workflows"
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a112
+      - FLD
+    type_hint:
+      candidates: *a112
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0598
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 47
+  - raw_id: R.DOC0141.0599
+    source_unit: U.DOC0141.0599
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Requisitio n and Purchase Order Workflows"
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a113
+      - FLW
+    type_hint:
+      candidates: *a113
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: determine
+          oggetto: which step you should create the rule for in your sandbox site
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: the activities in the requisition workflow process in the org site
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0599
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 54
+  - raw_id: R.DOC0141.0601
+    source_unit: U.DOC0141.0601
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Requisitio n and Purchase Order Workflows"
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a114
+      - FLW
+    type_hint:
+      candidates: *a114
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: an ADW rule fo r a step in PR workflow
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: existing ADW rules in your site
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: the ADW document- and line-level triggers for requisition workflow
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0601
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 58
+  - raw_id: R.DOC0141.0603
+    source_unit: U.DOC0141.0603
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Requisitio n and Purchase Order Workflows"
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a115
+      - FLW
+    type_hint:
+      candidates: *a115
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: the approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: assign
+          oggetto: the rule to the appropriate rule group, configure the workflow objects, and assign the approver
+          valore: null
+        - n: 2
+          verbo: test
+          oggetto: "the rule:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0603
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 47
+  - raw_id: R.DOC0141.0607
+    source_unit: U.DOC0141.0607
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Requisitio n and Purchase Order Workflows"
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a116
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a116
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: Approvers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: "ad hoc approval for requisitions in your sandbox site: Setup > Workflow Setup > General Workflow Settings"
+          valore: Setup > Workflow Setup > General Workflow Settings
+        - n: 2
+          verbo: add
+          oggetto: the Ad-Hoc Approvers field to the General section of your requisition document; finalize and activate the new version
+          valore: null
+        - n: 3
+          verbo: grant
+          oggetto: "permissions: Permission Settings > Approv als > Requisition Approvals"
+          valore: Permission Settings > Approv als > Requisition Approvals
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0607
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 96
+  - raw_id: R.DOC0141.0610
+    source_unit: U.DOC0141.0610
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Requisitio n and Purchase Order Workflows"
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a117
+      - FLW
+    type_hint:
+      candidates: *a117
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: the Approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: both of these permissions to the Approver With Edit role
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: "the notification to alert users when they have been assigned to a PR as an ad hoc approver: PR pending Ad-Hoc Workflow approval (Notification Preferences > Shopping, Carts & Requisitions )"
+          valore: PR pending Ad-Hoc Workflow approval (Notification Preferences > Shopping, Carts & Requisitions )
+        - n: 3
+          verbo: make
+          oggetto: the Comments field on the Ad-Hoc Approver overlay mandatory, so that users are required to enter a comment when addi ng or changing an ad-hoc approver. This setting applies to the Comments field for both invoices and requisitions
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0610
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 140
+  - raw_id: R.DOC0141.0613
+    source_unit: U.DOC0141.0613
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Managing Requisitio n and Purchase Order Workflows"
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a118
+      - FLW
+    type_hint:
+      candidates: *a118
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: select
+          oggetto: the Required checkbox and save
+          valore: null
+        - n: 2
+          verbo: test
+          oggetto: it
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0613
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 29
+  - raw_id: R.DOC0141.0620
+    source_unit: U.DOC0141.0620
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Fo rm Request Workflow"
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a119
+      - FLW
+    type_hint:
+      candidates: *a119
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: save
+          oggetto: Save
+          valore: null
+        - n: 2
+          verbo: approve
+          oggetto: the requisition
+          valore: null
+        - n: 3
+          verbo: log
+          oggetto: in as the ad hoc approver
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0620
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 28
+  - raw_id: R.DOC0141.0623
+    source_unit: U.DOC0141.0623
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Fo rm Request Workflow"
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a120
+      - FLW
+    type_hint:
+      candidates: *a120
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the request template you created in the Forms class
+          valore: null
+        - n: 2
+          verbo: think
+          oggetto: about what should happen once the request is filled out and submitted
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0623
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 46
+  - raw_id: R.DOC0141.0625
+    source_unit: U.DOC0141.0625
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Fo rm Request Workflow"
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a121
+      - FLD
+    type_hint:
+      candidates: *a121
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • What criteria
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0141.0625
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0141.0626
+    source_unit: U.DOC0141.0626
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Fo rm Request Workflow"
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a122
+      - FLW
+    type_hint:
+      candidates: *a122
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: "examples of workflow configurations for requests that go through requisition and form request workflow streams on the WorldWide Widgets WorldMarket site:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to the shopping dashboard: https://usertest.sciquest.com/org/SQUFS"
+          valore: https://usertest.sciquest.com/org/SQUFS
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0626
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 71
+  - raw_id: R.DOC0141.0628
+    source_unit: U.DOC0141.0628
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Fo rm Request Workflow"
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a123
+      - FLW
+    type_hint:
+      candidates: *a123
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: complete
+          oggetto: "the request, making greater than [importo] and Add and go to Cart "
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: "the PR workflow in the checkout:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0628
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 41
+  - raw_id: R.DOC0141.0642
+    source_unit: U.DOC0141.0642
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Fo rm Request Workflow"
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a124
+      - FLW
+    type_hint:
+      candidates: *a124
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: define
+          oggetto: "the workflow:"
+          valore: null
+        - n: 2
+          verbo: define
+          oggetto: the if-then statements
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0642
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 25
+  - raw_id: R.DOC0141.0644
+    source_unit: U.DOC0141.0644
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Fo rm Request Workflow"
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a125
+      - FLD
+    type_hint:
+      candidates: *a125
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Which workflow step
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0141.0644
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0141.0645
+    source_unit: U.DOC0141.0645
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Managing Fo rm Request Workflow"
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a126
+      - FLD
+    type_hint:
+      candidates: *a126
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • How
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0141.0645
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0141.0647
+    source_unit: U.DOC0141.0647
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: ePro Workflow XML"
+    page: 44
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a127
+      - FLW
+    type_hint:
+      candidates: *a127
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: approvers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: ADW rules an d select approvers
+          valore: null
+        - n: 2
+          verbo: test
+          oggetto: the workflow
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0647
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 23
+  - raw_id: R.DOC0141.0648
+    source_unit: U.DOC0141.0648
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: ePro Workflow XML"
+    page: 44
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a128
+      - FLD
+    type_hint:
+      candidates: *a128
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0141.0648
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0141.0649
+    source_unit: U.DOC0141.0649
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: ePro Workflow XML"
+    page: 44
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a129
+      - FLW
+    type_hint:
+      candidates: *a129
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: approvers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: your sandbox site, navigate to the setup page for any configured workflow process
+          valore: null
+        - n: 2
+          verbo: from
+          oggetto: the Shared Folders tab, select a folder
+          valore: null
+        - n: 3
+          verbo: assign
+          oggetto: one or more approvers Add Another Shared Folder (optional)
+          valore: null
+        - n: 4
+          verbo: in
+          oggetto: "your sandbox site, export the workflow folders file for requisition workflow: Setup > Workflow Setup > Requisition Workflow Setup > Workflow Folder Import/Export"
+          valore: Setup > Workflow Setup > Requisition Workflow Setup > Workflow Folder Import/Export
+        - n: 5
+          verbo: add
+          oggetto: "another shared (manual) folder called An other Approval to the XML, import it, examine the Shared Workflow Folders tab Add a Workflow Step In your sandbox site, create a new workfl ow step to meet this requirement: If the requisition is over the user’s PCard limit designated in their profile, then automatically reject it"
+          valore: If the requisition is over the user’s PCard limit designated in their profile, then automatically reject it
+        - n: 6
+          verbo: add
+          oggetto: the folder with the reject requisition robot into the Workflow Folder XML file
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0649
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 205
+  - raw_id: R.DOC0141.0660
+    source_unit: U.DOC0141.0660
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: ePro Workflow XML"
+    page: 44
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a130
+      - FLW
+    type_hint:
+      candidates: *a130
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: update
+          oggetto: the version description with a description of what you are changing
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: "the step name for your new step in the Steps section:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0660
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 42
+  - raw_id: R.DOC0141.0663
+    source_unit: U.DOC0141.0663
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: ePro Workflow XML"
+    page: 44
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a131
+      - FLD
+    type_hint:
+      candidates: *a131
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Identify an existing step that
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0663
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0141.0664
+    source_unit: U.DOC0141.0664
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: ePro Workflow XML"
+    page: 44
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a132
+      - FLD
+    type_hint:
+      candidates: *a132
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • You
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0664
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 4
+  - raw_id: R.DOC0141.0670
+    source_unit: U.DOC0141.0670
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Budgets in eProcurement
+    page: 45
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a133
+      - FLW
+    type_hint:
+      candidates: *a133
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the activity relationships for the new activity and save
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: "an ADW rule group:"
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: an ADW rule group matching the rule group you identified in the Workflow Definition XML file
+          valore: null
+        - n: 4
+          verbo: import
+          oggetto: "the Workflow Definition XML file:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0670
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 69
+  - raw_id: R.DOC0141.0674
+    source_unit: U.DOC0141.0674
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Budgets in eProcurement
+    page: 45
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a134
+      - FLW
+    type_hint:
+      candidates: *a134
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "an ADW rule to trigger the step:"
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: Rule
+          valore: null
+        - n: 3
+          verbo: fill
+          oggetto: out the Rule Info
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: the rule
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0674
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 33
+  - raw_id: R.DOC0141.0675
+    source_unit: U.DOC0141.0675
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Budgets in eProcurement
+    page: 45
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a135
+      - FLD
+    type_hint:
+      candidates: *a135
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Determine what ADW workflow objects and values
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0141.0675
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0141.0676
+    source_unit: U.DOC0141.0676
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Budgets in eProcurement
+    page: 45
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a136
+      - FLW
+    type_hint:
+      candidates: *a136
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: "the PCard limit on your user profile: Ordering and Approval Settings > User Pu rchasing and Approval Limit Values > PCard Limit"
+          valore: Ordering and Approval Settings > User Pu rchasing and Approval Limit Values > PCard Limit
+        - n: 2
+          verbo: review
+          oggetto: "the field help for that setting---notice that it states: “Any line item in a requisition exceeding this limit will have to be processed through the LPO folder.”"
+          valore: “Any line item in a requisition exceeding this limit will have to be processed through the LPO folder.”
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0676
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 99
+  - raw_id: R.DOC0141.0682
+    source_unit: U.DOC0141.0682
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Managing Budgets in eProcurement
+    page: 45
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a137
+      - FLD
+    type_hint:
+      candidates: *a137
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0682
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 30
+  - raw_id: R.DOC0141.0705
+    source_unit: U.DOC0141.0705
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 2: Setting Up Budget Manager"
+    page: 46
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a138
+      - FLW
+    type_hint:
+      candidates: *a138
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: submit
+          oggetto: the PR and view the approvals
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: "the spend against the budget:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0705
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 29
+  - raw_id: R.DOC0141.0733
+    source_unit: U.DOC0141.0733
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Enforcing Budgets"
+    page: 47
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a139
+      - FLW
+    type_hint:
+      candidates: *a139
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "an account code configuration: Budget Manager > Administration > Account Code Configuration"
+          valore: Budget Manager > Administration > Account Code Configuration
+        - n: 2
+          verbo: add
+          oggetto: Configuration
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0733
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 38
+  - raw_id: R.DOC0141.0738
+    source_unit: U.DOC0141.0738
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Enforcing Budgets"
+    page: 47
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a140
+      - FLW
+    type_hint:
+      candidates: *a140
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: import
+          oggetto: budget approval workflow
+          valore: null
+        - n: 2
+          verbo: open
+          oggetto: Budget Manager Workflow Definition XML file in the class files
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0738
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 34
+  - raw_id: R.DOC0141.0744
+    source_unit: U.DOC0141.0744
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Enforcing Budgets"
+    page: 47
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a141
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a141
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: the budget approval workflow step
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: "an ADW rule: any budget amount above [importo] must be approved by Finance"
+          valore: any budget amount above [importo] must be approved by Finance
+        - n: 3
+          verbo: enable
+          oggetto: "budget check at checkout: Setup > Configure Documents > General Documentation Configuration Settings > General Configuration"
+          valore: Setup > Configure Documents > General Documentation Configuration Settings > General Configuration
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0744
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 74
+  - raw_id: R.DOC0141.0749
+    source_unit: U.DOC0141.0749
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 3: Enforcing Budgets"
+    page: 47
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a142
+      - FLW
+    type_hint:
+      candidates: *a142
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: approve
+          oggetto: the budget
+          valore: null
+        - n: 2
+          verbo: put
+          oggetto: items in your cart and code it to that budget
+          valore: null
+        - n: 3
+          verbo: do
+          oggetto: a budget check at checkout
+          valore: null
+        - n: 4
+          verbo: submit
+          oggetto: the PR and view the PR Approvals
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: "the results on the budget:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0749
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 55
+  - raw_id: R.DOC0141.0766
+    source_unit: U.DOC0141.0766
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 48
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a143
+      - FLW
+    type_hint:
+      candidates: *a143
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a new budget and explore using the Budget Date field to associate spend to date ranges in a budget
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: new budget and su bmit it for approval
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0766
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 50
+  - raw_id: R.DOC0141.0780
+    source_unit: U.DOC0141.0780
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 48
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a144
+      - FLW
+    type_hint:
+      candidates: *a144
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: put
+          oggetto: an item in your cart and code it to the budget
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: an active, approved budget
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0780
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 33
+  - raw_id: R.DOC0141.0791
+    source_unit: U.DOC0141.0791
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a145
+      - FLW
+    type_hint:
+      candidates: *a145
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: to the PR workflow process and interpret the budget check and budget approval steps
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the budget and review how the spend is applied
+          valore: null
+        - n: 3
+          verbo: navigate
+          oggetto: to the Search Budgets page and view the spend on the budget
+          valore: null
+        - n: 4
+          verbo: open
+          oggetto: the budget and view the spend on the Date Ranges page
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0791
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 84
+  - raw_id: R.DOC0141.0795
+    source_unit: U.DOC0141.0795
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a146
+      - FLW
+    type_hint:
+      candidates: *a146
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: "for requisition budget check in online searchable help:"
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: "“budget check workflow” or navigate in the table of contents to: Budget Manager > Setup and Administration > Set Up Budget Manager Workflow > Configure Requisition, Purchase Order and Invoice Workflows"
+          valore: budget check workflow
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0795
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 79
+  - raw_id: R.DOC0141.0797
+    source_unit: U.DOC0141.0797
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a147
+      - FLW
+    type_hint:
+      candidates: *a147
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: copy
+          oggetto: the markup for the folders and make any necessary changes
+          valore: null
+        - n: 2
+          verbo: save
+          oggetto: and import the file. Troubleshoot any issues
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: "the robot and approval steps into the requisition workflow process configuration:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0797
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 62
+  - raw_id: R.DOC0141.0802
+    source_unit: U.DOC0141.0802
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a148
+      - FLW
+    type_hint:
+      candidates: *a148
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the step name for the new steps in the Steps section
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: the step name for the step that will trigger the spend collection budget check robot. Include help text
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0802
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 53
+  - raw_id: R.DOC0141.0806
+    source_unit: U.DOC0141.0806
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a149
+      - FLW
+    type_hint:
+      candidates: *a149
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the activities for the new steps in the Activity section. Refer to Configure Requisition, Purchase Order and Invoice Workflows in the online searchable help
+          valore: null
+        - n: 2
+          verbo: copy
+          oggetto: the markup for the automated and manual activities and make any necessary changes to the reference names
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0806
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 79
+  - raw_id: R.DOC0141.0814
+    source_unit: U.DOC0141.0814
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Transferring Budget Funds"
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a150
+      - FLW
+    type_hint:
+      candidates: *a150
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: an approver to the Shared Folder you identified in the budget approval step
+          valore: null
+        - n: 2
+          verbo: test
+          oggetto: the new steps
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: the budget date range that you want to exceed
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0814
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 50
+  - raw_id: R.DOC0141.0819
+    source_unit: U.DOC0141.0819
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Transferring Budget Funds"
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a151
+      - FLW
+    type_hint:
+      candidates: *a151
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: submit
+          oggetto: the requisition and view the approval status
+          valore: null
+        - n: 2
+          verbo: approve
+          oggetto: the budget
+          valore: null
+        - n: 3
+          verbo: navigate
+          oggetto: to the budget and review how the spend is applied
+          valore: null
+        - n: 4
+          verbo: navigate
+          oggetto: to the Search Budgets page and view the spend on the budget
+          valore: null
+        - n: 5
+          verbo: open
+          oggetto: the budget and view the spend on the Date Ranges page
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0819
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 79
+  - raw_id: R.DOC0141.0825
+    source_unit: U.DOC0141.0825
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Transferring Budget Funds"
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a152
+      - FLW
+    type_hint:
+      candidates: *a152
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: copy
+          oggetto: the markup for the automated folder and make any necessary changes
+          valore: null
+        - n: 2
+          verbo: save
+          oggetto: and import the file. Troubleshoot any issues
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: a step in form request workflow to trigger the robot
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0825
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 57
+  - raw_id: R.DOC0141.0827
+    source_unit: U.DOC0141.0827
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Transferring Budget Funds"
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a153
+      - FLD
+    type_hint:
+      candidates: *a153
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The step
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0141.0827
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0141.0829
+    source_unit: U.DOC0141.0829
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 4: Transferring Budget Funds"
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a154
+      - FLW
+    type_hint:
+      candidates: *a154
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: update
+          oggetto: the version description in the header section
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: the step name for your new step in the Steps section. Include help text
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: the XML activity with the rule to trigger the budget transfer. Refer to Configure Form Request Workflow in the online searchable help
+          valore: null
+        - n: 4
+          verbo: copy
+          oggetto: the markup for the automated activity and make any necessary changes to the reference names
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0829
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 105
+  - raw_id: R.DOC0141.0842
+    source_unit: U.DOC0141.0842
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 51
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a155
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a155
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: approvers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: an ADW rule (e.g., set approvers based on accounting codes)
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: "permissions and notifications for relevant roles:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0842
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 43
+  - raw_id: R.DOC0141.0859
+    source_unit: U.DOC0141.0859
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 51
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a156
+      - FLW
+    type_hint:
+      candidates: *a156
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: complete
+          oggetto: the template and finalize and activate it
+          valore: null
+        - n: 2
+          verbo: test
+          oggetto: it out
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0859
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 27
+  - raw_id: R.DOC0141.0861
+    source_unit: U.DOC0141.0861
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 51
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a157
+      - FLW
+    type_hint:
+      candidates: *a157
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: the source budget
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the Date Ranges page and request a budget transfer
+          valore: null
+        - n: 3
+          verbo: fill
+          oggetto: out the request. View the Transfer Approval page so see if workflow will be triggered
+          valore: null
+        - n: 4
+          verbo: submit
+          oggetto: the request
+          valore: null
+        - n: 5
+          verbo: approve
+          oggetto: the transfer
+          valore: null
+        - n: 6
+          verbo: open
+          oggetto: "the target budget:"
+          valore: null
+        - n: 7
+          verbo: navigate
+          oggetto: to the Incoming Transfers page and view the status of your request and the total transfer amount
+          valore: null
+      risultato_atteso: Fill out the request. View the Transfer Approval page so see if workflow will be triggered.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0861
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 119
+  - raw_id: R.DOC0141.0865
+    source_unit: U.DOC0141.0865
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 5: Updating and Reporting on Budget Data"
+    page: 52
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a158
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a158
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: "spend adjustments in your sandbox site: Budget Manager > Administration > Defaults Used When Creating a New Budget > Allow Spend Adjustments"
+          valore: Budget Manager > Administration > Defaults Used When Creating a New Budget > Allow Spend Adjustments
+        - n: 2
+          verbo: navigate
+          oggetto: to the Spend Adjustments page and add a spend adjustment
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: the spend adjustment yo u just made now on that page
+          valore: null
+        - n: 4
+          verbo: navigate
+          oggetto: to the Date Ranges page and view the adjustment in the blue information icon
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: the adjustment in the History
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0865
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 115
+  - raw_id: R.DOC0141.0869
+    source_unit: U.DOC0141.0869
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: "Lesson 5: Updating and Reporting on Budget Data"
+    page: 52
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a159
+      - FLW
+    type_hint:
+      candidates: *a159
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: select
+          oggetto: Importable for the type
+          valore: null
+        - n: 2
+          verbo: make
+          oggetto: adjustments to your budgets (such as account codes, date ranges or budget amounts) using the export/import function
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0869
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 52
+  - raw_id: R.DOC0141.0875
+    source_unit: U.DOC0141.0875
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0141
+    section: Wrapping Up JI-ePRO-3000
+    page: 53
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a160
+      - FLD
+    type_hint:
+      candidates: *a160
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following
+      modality: obbligo-condizionale
+      condition: classwork has ended
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0141.0875
+      mandatory:
+        kind: conditional
+        when: classwork has ended
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0141.0876
+    source_unit: U.DOC0141.0876
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0141
+    section: Wrapping Up JI-ePRO-3000
+    page: 53
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a161
+      - FLW
+    type_hint:
+      candidates: *a161
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: complete
+          oggetto: this task list
+          valore: null
+        - n: 2
+          verbo: ask
+          oggetto: for help if you need it
+          valore: null
+        - n: 3
+          verbo: finish
+          oggetto: your capstone products and mark it complete in JAGGAER University. (JAGGAER U will send the instructor a notification to check and approve completion.)
+          valore: null
+        - n: 4
+          verbo: take
+          oggetto: the exam
+          valore: null
+        - n: 5
+          verbo: complete
+          oggetto: the evaluation. Done all that? Congratulations! You’re ready to move ahead with implementation projects. You are also eligible to complete other product- specific certification courses that will prepare you to implement additional JAGGAER products for your clients!
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0141.0876
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 144

@@ -1,0 +1,39 @@
+id: U.DOC0173.0216
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Request | HTTP status | Response
+  Request: SOAP Request is not compliant to agreed WSDL/SOAP protocol (e.g. formal error, mostly because of wrong XML format) | HTTP status: 500 | Response: SOAP Fault
+  Request: SOAP Request is fully compliant to WSDL/SOAP protocol and the content is successfully processed by Jaggaer | HTTP status: 200 | Response: SOAP Response with a success code
+  Request: SOAP Request is fully compliant to WSDL/SOAP protocol but the content is not validated in the Jaggaer specific scenario (e.g. wrong object identifier) | HTTP status: 200 | Response: SOAP Response with an error code
+hash: sha256:3763f7abd8086f585e6520381985a3be1b82be53af14ee00a91d454adf850282
+words: 99
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Errors handling
+  section_path: 4.5.3
+  page: 7
+  lang: en
+  prev: U.DOC0173.0215
+  next: U.DOC0173.0217
+table:
+  table: 0
+  headers:
+    - Request
+    - HTTP status
+    - Response
+  rows:
+    - - SOAP Request is not compliant to agreed WSDL/SOAP protocol (e.g. formal error, mostly because of wrong XML format)
+      - "500"
+      - SOAP Fault
+    - - SOAP Request is fully compliant to WSDL/SOAP protocol and the content is successfully processed by Jaggaer
+      - "200"
+      - SOAP Response with a success code
+    - - SOAP Request is fully compliant to WSDL/SOAP protocol but the content is not validated in the Jaggaer specific scenario (e.g. wrong object identifier)
+      - "200"
+      - SOAP Response with an error code
+  block: 1
+  blocks: 1

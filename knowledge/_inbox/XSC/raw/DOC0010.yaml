@@ -1,0 +1,482 @@
+doc: S.STD.XSC.DOC.0010
+scope: XSC
+extracted_at: 2026-09-30T04:27:01.457Z
+tier: T0
+stats:
+  units: 143
+  extracted_units: 11
+  document_candidates: 0
+  needs_llm: 6
+  t0_complete: 5
+  by_candidate:
+    FLD: 2
+    CFP: 2
+    FLW: 3
+    INV: 4
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2304
+  sessions:
+    - n: 1
+      tokens: 2304
+      batches: 1
+      items: 6
+      batch_items:
+        - - R.DOC0010.0048
+          - R.DOC0010.0054
+          - R.DOC0010.0084
+          - R.DOC0010.0096
+          - R.DOC0010.0107
+          - R.DOC0010.0124
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0010.0020
+    source_unit: U.DOC0010.0020
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0010
+    section: "Be Aware:"
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • What
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0010.0020
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0010.0048
+    source_unit: U.DOC0010.0048
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0010
+    section: Steps for Supplier Bulk Upload
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: cleanse
+          oggetto: the supplier data provided by the customer
+          valore: null
+        - n: 2
+          verbo: locate
+          oggetto: the Excel template
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: import instructions
+          valore: null
+        - n: 4
+          verbo: configure
+          oggetto: the supplier data in Excel accordingly
+          valore: null
+        - n: 5
+          verbo: run
+          oggetto: the bulk upload function
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0010.0048
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 58
+  - raw_id: R.DOC0010.0054
+    source_unit: U.DOC0010.0054
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0010
+    section: "Exercise:"
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the Supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: locate
+          oggetto: the Supplier Bulk Upload Excel template
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: import instructions
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: data formatting
+          valore: null
+        - n: 4
+          verbo: import
+          oggetto: the Excel file
+          valore: null
+        - n: 5
+          verbo: review
+          oggetto: Error Report
+          valore: null
+        - n: 6
+          verbo: make
+          oggetto: corrections and reupload
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0010.0054
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 49
+  - raw_id: R.DOC0010.0084
+    source_unit: U.DOC0010.0084
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0010
+    section: "Supplier Management+: Forms – Basic [segreto] Profile"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: default title and description
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: as Basic or Extended
+          valore: null
+        - n: 3
+          verbo: set
+          oggetto: visibility in supplier dossier
+          valore: null
+        - n: 4
+          verbo: save
+          oggetto: Save
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0010.0084
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 41
+  - raw_id: R.DOC0010.0096
+    source_unit: U.DOC0010.0096
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0010
+    section: "Exercise:"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "a Basic [segreto] Form:"
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: sections
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0010.0096
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 15
+  - raw_id: R.DOC0010.0100
+    source_unit: U.DOC0010.0100
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0010
+    section: "Supplier Management+: Forms – Extended & Conditional"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Trigger
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0010.0100
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 11
+  - raw_id: R.DOC0010.0107
+    source_unit: U.DOC0010.0107
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0010
+    section: What’s Important
+    page: 40
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - INV
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0010.0107
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 5
+  - raw_id: R.DOC0010.0111
+    source_unit: U.DOC0010.0111
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0010
+    section: "Sourcing+: RFQ Forms Usage"
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - INV
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Collect RFx data that
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0010.0111
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0010.0115
+    source_unit: U.DOC0010.0115
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0010
+    section: When Should a Customer Use RFQ Forms?
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - INV
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • What data
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0010.0115
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0010.0124
+    source_unit: U.DOC0010.0124
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0010
+    section: "Exercise:"
+    page: 45
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: an RFQ Form called “APP” and add the above fields
+          valore: APP
+        - n: 2
+          verbo: create
+          oggetto: an RFQ Type called “APP” and associate it with the above Form
+          valore: APP
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0010.0124
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 36
+  - raw_id: R.DOC0010.0140
+    source_unit: U.DOC0010.0140
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0010
+    section: "Quick Review:"
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - INV
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Collect RFx data that
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0010.0140
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 14

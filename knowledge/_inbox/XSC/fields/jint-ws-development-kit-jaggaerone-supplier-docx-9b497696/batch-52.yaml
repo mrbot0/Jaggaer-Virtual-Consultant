@@ -1,0 +1,252 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-52
+section: 2.1.1.81
+section_title: J1Supplier/JISupplierData/locationList/location/termsAndCondition/paymentTerms
+part: 1
+parts: 1
+rows:
+  - key: tech:DISCOUNT
+    label: discount
+    labels:
+      - discount
+    technical_name: DISCOUNT
+    section: 2.1.1.81
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.81
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.81#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: discount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DAYS
+    label: days
+    labels:
+      - days
+    technical_name: DAYS
+    section: 2.1.1.81
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Number of days after the invoice date that the discount can be applied to
+      the invoice.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.81
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.81#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: days
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:NET
+    label: net
+    labels:
+      - net
+    technical_name: NET
+    section: 2.1.1.81
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Number of days after the invoice date that the invoice is due.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.81
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.81#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: net
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FOB
+    label: fob
+    labels:
+      - fob
+    technical_name: FOB
+    section: 2.1.1.81
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Freight on Board (FOB) information.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.81
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.81#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: fob
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMPAYMENTTERM
+    label: customPaymentTerm
+    labels:
+      - customPaymentTerm
+    technical_name: CUSTOMPAYMENTTERM
+    section: 2.1.1.81
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.81
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.81#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: customPaymentTerm
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:STANDARDPAYMENTTERMSCODE
+    label: standardPaymentTermsCode
+    labels:
+      - standardPaymentTermsCode
+    technical_name: STANDARDPAYMENTTERMSCODE
+    section: 2.1.1.81
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Uniquely identifies a specific preconfigured combination of payment terms.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.81
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.81#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: standardPaymentTermsCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TERMSTYPE
+    label: termsType
+    labels:
+      - termsType
+    technical_name: TERMSTYPE
+    section: 2.1.1.81
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Used in conjunction with the daysAfter element to determine the invoice
+      due date.
+
+      Possible values:
+
+      Net
+
+      EOM
+
+      MFI
+
+      EOQ
+
+      Manual
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.81
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.81#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: termsType
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DAYSAFTER
+    label: daysAfter
+    labels:
+      - daysAfter
+    technical_name: DAYSAFTER
+    section: 2.1.1.81
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Used in conjunction with the termsType element to compute the invoice due
+      date.
+
+      Possible values: [0 - 999]
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.81
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.81#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: daysAfter
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1877

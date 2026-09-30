@@ -1,0 +1,34 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.2
+section_title: Purchase Requisition data container [PR Import]
+genre: tecnica
+rows:
+  - label: Purchase Requisition Header
+    technical_name: Purchase Requisition Header
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Purchase requisition main settings.
+      See section “Purchase Requisition Header [PR Import]” below.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: Purchase Requisition Supplier Group
+    technical_name: Purchase Requisition Supplier Group
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Purchase requisition Supplier groups and line item information.
+
+      See section “Purchase Requisition Supplier Group [PR Import]” below.
+      information
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

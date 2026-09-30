@@ -1,0 +1,87 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+section: campi-6
+section_title: Campi — Delivery Information
+genre: tecnica
+rows:
+  - label: Delivery Contact Name
+    technical_name: Delivery Contact Name
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: Identifies who will receive the delivery of the item. Typically this is
+      not the same person as the Requester or Requisition Approver of an order.
+      · UserDefinedFieldParamTextBoxSize=30;
+      UserDefinedFieldParamTextBoxMaxLength=50 · id=10046 · tipo=userdefined
+    section: campi-6
+    source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Delivery Contact Phone
+    technical_name: Delivery Contact Phone
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: Phone number of the person receiving the delivery of the item. ·
+      UserDefinedFieldParamTextBoxSize=16;
+      UserDefinedFieldParamTextBoxMaxLength=16 · id=10049 · tipo=userdefined
+    section: campi-6
+    source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Delivery Contact Email
+    technical_name: Delivery Contact Email
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: Email address of the person receiving the delivery of the item. ·
+      UserDefinedFieldParamTextBoxSize=30;
+      UserDefinedFieldParamTextBoxMaxLength=50 · id=10077 · tipo=userdefined
+    section: campi-6
+    source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Special Handling Explanation
+    technical_name: Special Handling Explanation
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br>Enter any special handling information for
+      this item. If this is a RUSH order, please specify this and enter a
+      Desired Delivery Date. · id=10098 · tipo=userdefined
+    section: campi-6
+    source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Special Handling
+    technical_name: Special Handling
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: Specify any special handling instructions for the supplier, such as a
+      rush order. If this is rush order, specify the date that you wish the item
+      to be delivered in the Desired Delivery Date field. ·
+      UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=3;
+      UserDefinedFieldParamTextBoxMaxLength=250;
+      UserDefinedFieldParamTextAreaCols=45 · id=10055 · tipo=userdefined
+    section: campi-6
+    source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Desired Deilvery Date
+    technical_name: Desired Deilvery Date
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: Requested date for equipment delivery. · id=10097 · tipo=userdefined
+    section: campi-6
+    source_unit: capital-expense-form-xml-272b13f7/campi-6#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7

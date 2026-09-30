@@ -1,0 +1,386 @@
+doc: S.STD.XSC.DOC.0134
+scope: XSC
+extracted_at: 2026-09-30T04:30:56.849Z
+tier: T0
+stats:
+  units: 58
+  extracted_units: 10
+  document_candidates: 0
+  needs_llm: 1
+  t0_complete: 9
+  by_candidate:
+    FLD: 10
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 430
+  sessions:
+    - n: 1
+      tokens: 430
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0134.0029
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0134.0005
+    source_unit: U.DOC0134.0005
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Handout
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Dynamic workflow
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0005
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0134.0015
+    source_unit: U.DOC0134.0015
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Spend Director Specialization For Solutions Consultants
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Custom
+      modality: obbligo-condizionale
+      condition: the Custom Field is available for Dynamic Workflow
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0015
+      mandatory:
+        kind: conditional
+        when: the Custom Field is available for Dynamic Workflow
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0134.0019
+    source_unit: U.DOC0134.0019
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Spend Director Specialization For Solutions Consultants
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: no approval
+      modality: obbligo-condizionale
+      condition: a Requisition containing this custo m field value falls under [importo]
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0019
+      mandatory:
+        kind: conditional
+        when: a Requisition containing this custo m field value falls under [importo]
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0134.0020
+    source_unit: U.DOC0134.0020
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Spend Director Specialization For Solutions Consultants
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Matt Boge
+      modality: obbligo-condizionale
+      condition: the same requisition is between [importo] and [importo]
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0020
+      mandatory:
+        kind: conditional
+        when: the same requisition is between [importo] and [importo]
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0134.0021
+    source_unit: U.DOC0134.0021
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Spend Director Specialization For Solutions Consultants
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Aaron
+      modality: obbligo-condizionale
+      condition: the requisition is greater than [importo]
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0021
+      mandatory:
+        kind: conditional
+        when: the requisition is greater than [importo]
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0134.0025
+    source_unit: U.DOC0134.0025
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Configuring Form Type Dynamic Workflow
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Static Workflow
+      modality: obbligo-condizionale
+      condition: Form Types are available for Dynamic Workflow
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0025
+      mandatory:
+        kind: conditional
+        when: Form Types are available for Dynamic Workflow
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0134.0029
+    source_unit: U.DOC0134.0029
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Spend Director Specialization For Solutions Consultants
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0029
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 80
+  - raw_id: R.DOC0134.0033
+    source_unit: U.DOC0134.0033
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Configuring Department Dynamic Workflow
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Static Wor kflow
+      modality: obbligo-condizionale
+      condition: Departments are available for Dynamic Workflow
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0033
+      mandatory:
+        kind: conditional
+        when: Departments are available for Dynamic Workflow
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0134.0041
+    source_unit: U.DOC0134.0041
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Con figuring Contract Type Dynamic Workflow
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Static Workf low
+      modality: obbligo-condizionale
+      condition: Contract Types are available for Dynamic Workflow
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0041
+      mandatory:
+        kind: conditional
+        when: Contract Types are available for Dynamic Workflow
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0134.0048
+    source_unit: U.DOC0134.0048
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0134
+    section: Configuring Commodity Code Dynamic Workflow
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Static Workflow
+      modality: obbligo-condizionale
+      condition: Commodity Codes are available for Dynamic Workflow
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0134.0048
+      mandatory:
+        kind: conditional
+        when: Commodity Codes are available for Dynamic Workflow
+    needs_llm: false
+    tokens: 37

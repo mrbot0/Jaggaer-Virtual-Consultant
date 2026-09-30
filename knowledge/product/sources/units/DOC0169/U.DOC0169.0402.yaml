@@ -1,0 +1,55 @@
+id: U.DOC0169.0402
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: URL | /j1p/api/public/ji/v1/purchaserequests/
+  URL: Http Method | /j1p/api/public/ji/v1/purchaserequests/: GET
+  URL: Header Parameters | /j1p/api/public/ji/v1/purchaserequests/: Authorization (see “J1P WS Development_Kit – Web Services Overview” document)
+  URL: URL Parameters | /j1p/api/public/ji/v1/purchaserequests/: Param Name | Reference | Format
+  flt | MAIN Condition Filters | Sequence of filters expressed in J1P query language (see “J1P WS Development_Kit – Web Services Overview” document). Only “equal” operator is allowed
+  comp | Component Filters | List of required component filters separated by ; (semicolon)
+  start | Start At | Numeric value
+  URL: Response format | /j1p/api/public/ji/v1/purchaserequests/: JSON string representing the export response. See “export data format” chapter in this doc related to the specific module
+  URL: Return Codes | /j1p/api/public/ji/v1/purchaserequests/: 200 query successfully executed
+  400 wrong or missing data in the request
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:635e50432d125cf2f9fdae7a23581ceb94c81ca4d92faf2de6b736cc63d4e1a5
+words: 138
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Search PR [export PR]
+  section_path: 2.5.1.1
+  page: 99
+  lang: en
+  prev: U.DOC0169.0401
+  next: U.DOC0169.0403
+table:
+  table: 0
+  headers:
+    - URL
+    - /j1p/api/public/ji/v1/purchaserequests/
+  rows:
+    - - Http Method
+      - GET
+    - - Header Parameters
+      - Authorization (see “J1P WS Development_Kit – Web Services Overview” document)
+    - - URL Parameters
+      - |-
+        Param Name | Reference | Format
+        flt | MAIN Condition Filters | Sequence of filters expressed in J1P query language (see “J1P WS Development_Kit – Web Services Overview” document). Only “equal” operator is allowed
+        comp | Component Filters | List of required component filters separated by ; (semicolon)
+        start | Start At | Numeric value
+    - - Response format
+      - JSON string representing the export response. See “export data format” chapter in this doc related to the specific module
+    - - Return Codes
+      - |-
+        200 query successfully executed
+        400 wrong or missing data in the request
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

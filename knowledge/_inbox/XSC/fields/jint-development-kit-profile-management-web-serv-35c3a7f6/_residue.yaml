@@ -1,0 +1,135 @@
+document: jint-development-kit-profile-management-web-serv-35c3a7f6
+scope: XSC
+ambiguous:
+  - key: tech:BRAVOID
+    label: bravoId
+    mandatory_text: Y/N
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+  - key: tech:FISCALCODE
+    label: fiscalCode
+    mandatory_text: Y/N
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+  - key: tech:VAT
+    label: vat
+    mandatory_text: ""
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+  - key: tech:EUVAT
+    label: euVat
+    mandatory_text: ""
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+  - key: tech:DANDBCODE
+    label: dAndBCode
+    mandatory_text: ""
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+  - key: tech:USERALIAS
+    label: userAlias
+    mandatory_text: ""
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+  - key: tech:ISOCOUNTRY
+    label: isoCountry
+    mandatory_text: Y/N
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+  - key: tech:EXTCODE
+    label: extCode
+    mandatory_text: Y/N
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.6#part-1
+  - key: tech:EXTUNIQUECODE
+    label: extUniqueCode
+    mandatory_text: Y/N
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+  - key: tech:NAME
+    label: name
+    mandatory_text: |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.6#part-1
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+  - key: tech:SURNAME
+    label: surName
+    mandatory_text: |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.6#part-1
+  - key: tech:EMAIL
+    label: email
+    mandatory_text: |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.6#part-1
+  - key: tech:PHONENUMBER
+    label: phoneNumber
+    mandatory_text: |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.6#part-1
+  - key: tech:DIVISION
+    label: division
+    mandatory_text: |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.6#part-1
+  - key: tech:LOGIN
+    label: login
+    mandatory_text: |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.6#part-1
+  - key: tech:USERID
+    label: userId
+    mandatory_text: Y/N
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.6#part-1
+  - key: tech:VALUES_VALUE
+    label: values/value
+    mandatory_text: Y/N
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+  - key: tech:ATTACHMENTVALUE_FILENAME
+    label: attachmentValue/fileName
+    mandatory_text: ""
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+  - key: tech:ATTACHMENTVALUE_FILEDESCRIPTION
+    label: attachmentValue/fileDescription
+    mandatory_text: ""
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+  - key: tech:ATTACHMENTVALUE_FILEBASE64
+    label: attachmentValue/fileBase64
+    mandatory_text: ""
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+  - key: tech:ATTACHMENTEXPIRYDATE
+    label: attachmentExpiryDate
+    mandatory_text: ""
+    sources:
+      - jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+over_unit_budget: []

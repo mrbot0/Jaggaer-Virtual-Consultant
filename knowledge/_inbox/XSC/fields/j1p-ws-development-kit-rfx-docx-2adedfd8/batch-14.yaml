@@ -1,0 +1,508 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-14
+section: 2.1.1.13
+section_title: "Commercial Envelope: economical parameter [Import/Update RfX method]"
+part: 1
+parts: 1
+rows:
+  - key: tech:REFERENCE
+    label: Reference
+    labels:
+      - Reference
+    technical_name: REFERENCE
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Identifier of the contract row.
+      [12.3.01] If the parameter type is NOTE, it is the Title of the note.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Reference
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:NOTES
+    label: Notes
+    labels:
+      - Notes
+    technical_name: NOTES
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Price notes
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: Notes
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SHOWNOTES
+    label: showNotes
+    labels:
+      - showNotes
+    technical_name: SHOWNOTES
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      State if notes must be shown:
+      0 = no
+      1 = yes
+      If not expressed, 1 is assumed
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: showNotes
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:QUANTITY
+    label: quantity
+    labels:
+      - quantity
+    technical_name: QUANTITY
+    section: 2.1.1.13
+    type: null
+    mandatory_text: Y to create a new price item
+    allowed_values: []
+    notes: Quantity
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: quantity
+        type: null
+        mandatory_text: Y to create a new price item
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SHOWQUANTITY
+    label: showQuantity
+    labels:
+      - showQuantity
+    technical_name: SHOWQUANTITY
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      State if quantity must be shown (0=no, 1=yes)
+      If not expressed, 1 is assumed
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: showQuantity
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:QUANTITYINSERTEDBY
+    label: quantityInsertedBy
+    labels:
+      - quantityInsertedBy
+    technical_name: QUANTITYINSERTEDBY
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      State if quantity must be inserted by BUYER or SELLER. Possible values
+      are:
+
+      BUYER
+
+      SELLER
+
+      If not specified, BUYER is assumed
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: quantityInsertedBy
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CURRENCY
+    label: currency
+    labels:
+      - currency
+    technical_name: CURRENCY
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Currency
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: currency
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:UNITOFMEASURE
+    label: unitOfMeasure
+    labels:
+      - unitOfMeasure
+    technical_name: UNITOFMEASURE
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unit of measure external code
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: unitOfMeasure
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:GOODSGROUP
+    label: goodsGroup
+    labels:
+      - goodsGroup
+    technical_name: GOODSGROUP
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Goods group external code
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: goodsGroup
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PRICEBYQUANTITYRANGES
+    label: priceByQuantityRanges
+    labels:
+      - priceByQuantityRanges
+    technical_name: PRICEBYQUANTITYRANGES
+    section: 2.1.1.13
+    type: null
+    mandatory_text: |-
+      Y to create a “price by quantity” parameter
+      Not to be set to define a normal price parameter
+    allowed_values: []
+    notes: Prices ranges to be used for “price by quantity” parameter
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: priceByQuantityRanges
+        type: null
+        mandatory_text: |-
+          Y to create a “price by quantity” parameter
+          Not to be set to define a normal price parameter
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:REFERENCEPRICE
+    label: referencePrice
+    labels:
+      - referencePrice
+    technical_name: REFERENCEPRICE
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Reference price
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r19
+        genre: tecnica
+        label: referencePrice
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:MINVALUE
+    label: minValue
+    labels:
+      - minValue
+    technical_name: MINVALUE
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Minimum value
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r20
+        genre: tecnica
+        label: minValue
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:MAXVALUE
+    label: maxValue
+    labels:
+      - maxValue
+    technical_name: MAXVALUE
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Maximum value
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r21
+        genre: tecnica
+        label: maxValue
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BASEPRICEBEFOREDISCOUNT
+    label: basePriceBeforeDiscount
+    labels:
+      - basePriceBeforeDiscount
+    technical_name: BASEPRICEBEFOREDISCOUNT
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Base price before discount
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r22
+        genre: tecnica
+        label: basePriceBeforeDiscount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SHOWBASEPRICE
+    label: showBasePrice
+    labels:
+      - showBasePrice
+    technical_name: SHOWBASEPRICE
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      State if “base price before discount” must be shown (0=no, 1=yes)
+      If not expressed, 0 is assumed
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r23
+        genre: tecnica
+        label: showBasePrice
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EXTCODE
+    label: extCode
+    labels:
+      - extCode
+    technical_name: EXTCODE
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Identifier of the price item in the external system (field available only
+      via WS not in the user interface)
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r24
+        genre: tecnica
+        label: extCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ASSOCIATEDMASTERITEM
+    label: associatedMasterItem
+    labels:
+      - associatedMasterItem
+    technical_name: ASSOCIATEDMASTERITEM
+    section: 2.1.1.13
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Master Item associated with the economical parameter.
+      See section “Commercial Envelope: Associated Master Item” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+        row_ref: t0.r25
+        genre: tecnica
+        label: associatedMasterItem
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 3437

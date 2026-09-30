@@ -1,0 +1,92 @@
+id: U.DOC0132.0005
+doc: S.STD.XSC.DOC.0132
+doc_id: workflow-definition-pr-with-validation-xml-64feb5d8
+type: tabella
+text: |-
+  Tabella: transizioni
+  Colonne: Da | A | Condizione
+  Da: START | A: Return1
+  Da: Return1 | A: Return2
+  Da: Return2 | A: InitialFiscalYearEnd
+  Da: InitialFiscalYearEnd | A: InitialPRValidation
+  Da: InitialFiscalYearEnd | A: InitialPRValidationWait
+  Da: InitialPRValidation | A: Approval-1
+  Da: InitialPRValidationWait | A: Approval-1
+  Da: Approval-1 | A: Approval-2
+  Da: Approval-2 | A: Approval-3
+  Da: Approval-3 | A: Approval-4
+  Da: Approval-4 | A: FinalFiscalYearEnd
+  Da: FinalFiscalYearEnd | A: FinalPRValidation
+  Da: FinalFiscalYearEnd | A: FinalPRValidationWait
+  Da: FinalPRValidation | A: CreatePO
+  Da: FinalPRValidationWait | A: CreatePO
+  Da: CreatePO | A: END
+hash: sha256:b4bc67d2621a3540a78e4f17cbed1120875f8f6a9e9157f641c27118c1cac2bf
+words: 88
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0132
+  chapter: Transizioni (ActivityRelationship)
+  section: Transizioni (ActivityRelationship)
+  section_path: transizioni
+  page: null
+  lang: en
+  prev: U.DOC0132.0004
+  next: null
+table:
+  table: 0
+  headers:
+    - Da
+    - A
+    - Condizione
+  rows:
+    - - START
+      - Return1
+      - ""
+    - - Return1
+      - Return2
+      - ""
+    - - Return2
+      - InitialFiscalYearEnd
+      - ""
+    - - InitialFiscalYearEnd
+      - InitialPRValidation
+      - ""
+    - - InitialFiscalYearEnd
+      - InitialPRValidationWait
+      - ""
+    - - InitialPRValidation
+      - Approval-1
+      - ""
+    - - InitialPRValidationWait
+      - Approval-1
+      - ""
+    - - Approval-1
+      - Approval-2
+      - ""
+    - - Approval-2
+      - Approval-3
+      - ""
+    - - Approval-3
+      - Approval-4
+      - ""
+    - - Approval-4
+      - FinalFiscalYearEnd
+      - ""
+    - - FinalFiscalYearEnd
+      - FinalPRValidation
+      - ""
+    - - FinalFiscalYearEnd
+      - FinalPRValidationWait
+      - ""
+    - - FinalPRValidation
+      - CreatePO
+      - ""
+    - - FinalPRValidationWait
+      - CreatePO
+      - ""
+    - - CreatePO
+      - END
+      - ""
+  block: 1
+  blocks: 1

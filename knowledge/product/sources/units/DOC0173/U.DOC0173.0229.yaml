@@ -1,0 +1,134 @@
+id: U.DOC0173.0229
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: "Colonne: Attribute | Attribute | Datatype Attribute: userEmail | Attribute: Email Address | Datatype: VARCHAR2(256 CHAR) Attribute: userPhone | Attribute: Phone Number | Datatype: VARCHAR2(64 CHAR) Attribute: userFax | Attribute: Fax Number | Datatype: VARCHAR2(64 CHAR) Attribute: userMobPhone | Attribute: Mobile Phone Number | Datatype: VARCHAR2(64 CHAR) Attribute: userRole | Attribute: Role within Organisation | Datatype: VARCHAR2(2000 CHAR) Attribute: locale | Attribute: Preferred language for use in system interface | Datatype: VARCHAR2(2000 CHAR) Attribute: timezone | Attribute: Time Zone | Datatype: VARCHAR2(100 CHAR) Attribute: prefContact | Attribute: Preferred Contact Method | Datatype: VARCHAR2(2000 CHAR) Attribute: prefFolder | Attribute: Default path for attachments | Datatype: VARCHAR2(300 CHAR) Attribute: userExtCode | Attribute: User External Code | Datatype: VARCHAR2(100 CHAR) Attribute: userBusinessUnitCode | Attribute: Department | Datatype: VARCHAR2(256 CHAR) Attribute: userDivisionCode | Attribute: - | Datatype: VARCHAR2(80 CHAR) Attribute: userProfileCode | Attribute: - | Datatype: VARCHAR2(80 CHAR) Attribute: registrationDate | Attribute: Registration Date | Datatype: DATE Attribute: isoProvince | Attribute: - | Datatype: VARCHAR2(15 CHAR) Attribute: isoProvince2 | Attribute: - | Datatype: VARCHAR2(15 CHAR) Attribute: buyerManaged | Attribute: - | Datatype: NUMBER(1) Attribute: extStatus | Attribute: Secondary Supplier Status | Datatype: VARCHAR2(100 CHAR) Attribute: type | Attribute: - | Datatype: VARCHAR2(7 CHAR) Attribute: lastModTime | Attribute: - | Datatype: DATE Attribute: userId | Attribute: - | Datatype: NUMBER(38) Attribute: userDivisionId | Attribute: - | Datatype: NUMBER(38) Attribute: userLoginCount | Attribute: - | Datatype: NUMBER(38) Attribute: userLastLoginDate | Attribute: - | Datatype: DATE Attribute: deleted | Attribute: - | Datatype: NUMBER(1) Attribute: extUniqueCode | Attribute: External Unique Code | Datatype: VARCHAR2(256) Attribute: userLastModTime | Attribute: - | Datatype: DATE Attribute: companyLastModTime | Attribute: - | Datatype: DATE Attribute: registrationDateTime | Attribute: Registration Date | Datatype: DATE Attribute: userLastLoginDateTime | Attribute: - | Datatype: DATE Attribute: statusCode | Attribute: - | Datatype: NUMBER(5) Attribute: timezoneCode"
+hash: sha256:74f2ee070b12fe00a1bc6a9a83cf479534fd0c026b04b9d29d9ce29f2b2f3a6d
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: CompanyInfo
+  section_path: 4.8.1
+  page: 8
+  lang: en
+  prev: U.DOC0173.0228
+  next: U.DOC0173.0230
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - userEmail
+      - Email Address
+      - VARCHAR2(256 CHAR)
+    - - userPhone
+      - Phone Number
+      - VARCHAR2(64 CHAR)
+    - - userFax
+      - Fax Number
+      - VARCHAR2(64 CHAR)
+    - - userMobPhone
+      - Mobile Phone Number
+      - VARCHAR2(64 CHAR)
+    - - userRole
+      - Role within Organisation
+      - VARCHAR2(2000 CHAR)
+    - - locale
+      - Preferred language for use in system interface
+      - VARCHAR2(2000 CHAR)
+    - - timezone
+      - Time Zone
+      - VARCHAR2(100 CHAR)
+    - - prefContact
+      - Preferred Contact Method
+      - VARCHAR2(2000 CHAR)
+    - - prefFolder
+      - Default path for attachments
+      - VARCHAR2(300 CHAR)
+    - - userExtCode
+      - User External Code
+      - VARCHAR2(100 CHAR)
+    - - userBusinessUnitCode
+      - Department
+      - VARCHAR2(256 CHAR)
+    - - userDivisionCode
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - userProfileCode
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - registrationDate
+      - Registration Date
+      - DATE
+    - - isoProvince
+      - "-"
+      - VARCHAR2(15 CHAR)
+    - - isoProvince2
+      - "-"
+      - VARCHAR2(15 CHAR)
+    - - buyerManaged
+      - "-"
+      - NUMBER(1)
+    - - extStatus
+      - Secondary Supplier Status
+      - VARCHAR2(100 CHAR)
+    - - type
+      - "-"
+      - VARCHAR2(7 CHAR)
+    - - lastModTime
+      - "-"
+      - DATE
+    - - userId
+      - "-"
+      - NUMBER(38)
+    - - userDivisionId
+      - "-"
+      - NUMBER(38)
+    - - userLoginCount
+      - "-"
+      - NUMBER(38)
+    - - userLastLoginDate
+      - "-"
+      - DATE
+    - - deleted
+      - "-"
+      - NUMBER(1)
+    - - extUniqueCode
+      - External Unique Code
+      - VARCHAR2(256)
+    - - userLastModTime
+      - "-"
+      - DATE
+    - - companyLastModTime
+      - "-"
+      - DATE
+    - - registrationDateTime
+      - Registration Date
+      - DATE
+    - - userLastLoginDateTime
+      - "-"
+      - DATE
+    - - statusCode
+      - "-"
+      - NUMBER(5)
+    - - timezoneCode
+      - "-"
+      - VARCHAR2(50 CHAR)
+    - - accessAuctions
+      - Access to Auctions
+      - NUMBER(1)
+    - - accessRfx
+      - Access to RFx
+      - NUMBER(1)
+    - - accessFileSharing
+      - Access to File Sharing
+      - NUMBER(1)
+  block: 2
+  blocks: 2
+part:
+  n: 1
+  of: 2

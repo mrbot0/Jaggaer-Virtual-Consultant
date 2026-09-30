@@ -1,0 +1,42 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.17
+section_title: LineCharges [PR Import]
+genre: tecnica
+rows:
+  - label: unirPrice
+    technical_name: unirPrice
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Line unit price.
+      See section “Unit Price [PR Import]” below
+    section: 2.1.1.17
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.17#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: useSystemCatalogPrice
+    technical_name: useSystemCatalogPrice
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Indicates whether the catalog price in the eProcurement solution is (true)
+      or is not (false) to be used for the PR line charge.
+
+      If set to false, use the UnitPrice specified in the PR import document.
+      This is the default setting.
+
+      If set to true, use the catalog price in the eProcurement solution.
+
+      If the eProcurement solution catalog does not have a price for the item,
+      use the UnitPrice.
+
+      Required if ProductType is set to Catalog.
+    section: 2.1.1.17
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.17#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

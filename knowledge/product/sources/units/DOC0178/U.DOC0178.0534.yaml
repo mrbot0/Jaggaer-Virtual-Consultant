@@ -1,0 +1,79 @@
+id: U.DOC0178.0534
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: URL | /esop/jint/api/public/ji/v1/contracts/
+  URL: Http Method | /esop/jint/api/public/ji/v1/contracts/: POST
+  URL: Header Parameters | /esop/jint/api/public/ji/v1/contracts/: Authorization bearer XXXX
+  URL: Body | /esop/jint/api/public/ji/v1/contracts/: {
+  “contract”: {
+  “contractId”: “542121”,
+  “contractName”: “Test”,
+  “contractNumber”: “123345”,
+  “currency”: “USD”,
+  “status”: “Running”
+  }
+  }
+  URL: Response format | /esop/jint/api/public/ji/v1/contracts/: {
+  “returnCode”: “0”,
+  “importResponseMessage”: {
+  “timestamp”: “2020-07-08T08:53:44.790+0000”,
+  “status”: {
+  “statusCode”: 200,
+  “statusText”: “Success (Counts: Total documents attempted=1, Total documents completed=1. Documents successful without warnings=1)”,
+  “errors”: []
+  }
+  }
+  }
+  URL: Return Code | /esop/jint/api/public/ji/v1/contracts/: 200 operation processed. See response content for results
+hash: sha256:158a2c48520ba59d25e5cd813077ec0936e312fb3d395d951476633c7ee0dc70
+words: 84
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Import/Update Currencies [import Currencies]
+  section_path: 2.6.2.1
+  page: 131
+  lang: en
+  prev: U.DOC0178.0533
+  next: U.DOC0178.0535
+table:
+  table: 0
+  headers:
+    - URL
+    - /esop/jint/api/public/ji/v1/contracts/
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization bearer XXXX
+    - - Body
+      - |-
+        {
+        “contract”: {
+        “contractId”: “542121”,
+        “contractName”: “Test”,
+        “contractNumber”: “123345”,
+        “currency”: “USD”,
+        “status”: “Running”
+        }
+        }
+    - - Response format
+      - |-
+        {
+        “returnCode”: “0”,
+        “importResponseMessage”: {
+        “timestamp”: “2020-07-08T08:53:44.790+0000”,
+        “status”: {
+        “statusCode”: 200,
+        “statusText”: “Success (Counts: Total documents attempted=1, Total documents completed=1. Documents successful without warnings=1)”,
+        “errors”: []
+        }
+        }
+        }
+    - - Return Code
+      - 200 operation processed. See response content for results
+  block: 1
+  blocks: 1

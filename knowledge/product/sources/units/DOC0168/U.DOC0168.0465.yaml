@@ -1,0 +1,37 @@
+id: U.DOC0168.0465
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: riga-tabella-campi
+text: |-
+  Attribute: poNumber | Mandatory (Y/N): Y/N | Description: Internal tracking number assigned to the order by the eProcurement solution, on which operation is to be executed.
+  PoNumber must be present unless the poId is provided.
+hash: sha256:ceb0f6561a566541a1c55c92b9ef98093cbd70761d23f400f12f1e62f9bb747d
+words: 35
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: JIPoStatus [JIOrder Status Import method]
+  section_path: 2.4.1.2
+  page: 105
+  lang: en
+  prev: U.DOC0168.0464
+  next: U.DOC0168.0466
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - poNumber
+    - Y/N
+    - |-
+      Internal tracking number assigned to the order by the eProcurement solution, on which operation is to be executed.
+      PoNumber must be present unless the poId is provided.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

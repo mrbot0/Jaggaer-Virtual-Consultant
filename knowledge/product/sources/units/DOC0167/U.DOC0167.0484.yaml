@@ -1,0 +1,47 @@
+id: U.DOC0167.0484
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Code | Description
+  Code: 0 | Description: operation completed successfully
+  Code: 1 | Description: operation completed successfully with warnings as detailed in the returned message
+  Code: 2 | Description: operation not completed due to error as detailed in the returned message (see table below “Error Codes”)
+  Code: -996 | Description: Invalid Request Object (Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+  Code: -997 | Description: Unauthorized Method (Web Service method isn’t configured to be executed)
+  Code: -998 | Description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+  Code: -999 | Description: Generic exception
+hash: sha256:2442ce46a02e9131e8049869549a7b9f75686251698017bc6ae19f406f276e24
+words: 129
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: Response data format
+  section_path: 2.1.7
+  page: 6
+  lang: en
+  prev: U.DOC0167.0483
+  next: U.DOC0167.0485
+table:
+  table: 1
+  headers:
+    - Code
+    - Description
+  rows:
+    - - "0"
+      - operation completed successfully
+    - - "1"
+      - operation completed successfully with warnings as detailed in the returned message
+    - - "2"
+      - operation not completed due to error as detailed in the returned message (see table below “Error Codes”)
+    - - "-996"
+      - Invalid Request Object (Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+    - - "-997"
+      - Unauthorized Method (Web Service method isn’t configured to be executed)
+    - - "-998"
+      - Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+    - - "-999"
+      - Generic exception
+  block: 1
+  blocks: 1

@@ -1,0 +1,39 @@
+document: maintenance-service-request-form-xml-ca8b48f0
+scope: XSC
+batch: batch-02
+section: campi-2
+section_title: Campi — Logo
+part: 1
+parts: 1
+rows:
+  - key: tech:LOGO
+    label: Logo
+    labels:
+      - Logo
+    technical_name: LOGO
+    section: campi-2
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=1;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/48443.png ·
+      id=10250 · tipo=userdefined
+    sources:
+      - document: maintenance-service-request-form-xml-ca8b48f0
+        section: campi-2
+        source_unit: maintenance-service-request-form-xml-ca8b48f0/campi-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Logo
+        type: Image
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-012
+      functional_section: sistema-audit
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 682

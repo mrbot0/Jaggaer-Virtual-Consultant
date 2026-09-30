@@ -1,0 +1,39 @@
+id: U.DOC0069.0008
+doc: S.STD.XSC.DOC.0069
+doc_id: sc-perspective-unofficial-implementation-conside-4cb385be
+type: procedura
+text: |-
+  sc-perspective-unofficial-implementation-conside-4cb385be
+  1. Data clean-up and loading – we have limited tools to support. We don’t have the ability to merge duplicate supplier profiles or to combine data
+  2. Supplier data supports ePro / AP / Sourcing
+  3. Higher Ed clients sometimes want to include employees and students as suppliers (for check requests & T/E)
+  4. Suppliers are not Business Unit (BU) specific – a BU admin can’t just administer that BU’s suppliers
+  5. We generally are not limited if a client wants to sync complete supplier records and not just deltas (SUNY – dozens of campus is an exception)
+  6. More comments:
+  7. Customers often struggle with getting supplier data into the system. They should immediately begin the process of cleaning up their own supplier database, if they have one.
+  8. Ordering when a vendor is not available in the site yet is an important topic to cover. Mandating onboarding prior to placing new orders is something that we usually recommend.
+  9. JAGGAER supplier record ID, the "network"
+hash: sha256:9c6fc763614ae55ee03c672fa80efd48dcbcff32eb593e113570a7bdaecebbc2
+words: 168
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0069
+  chapter: sc-perspective-unofficial-implementation-conside-4cb385be
+  section: sc-perspective-unofficial-implementation-conside-4cb385be
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0069.0007
+  next: U.DOC0069.0009
+steps:
+  - Data clean-up and loading – we have limited tools to support. We don’t have the ability to merge duplicate supplier profiles or to combine data
+  - Supplier data supports ePro / AP / Sourcing
+  - Higher Ed clients sometimes want to include employees and students as suppliers (for check requests & T/E)
+  - Suppliers are not Business Unit (BU) specific – a BU admin can’t just administer that BU’s suppliers
+  - We generally are not limited if a client wants to sync complete supplier records and not just deltas (SUNY – dozens of campus is an exception)
+  - "More comments:"
+  - Customers often struggle with getting supplier data into the system. They should immediately begin the process of cleaning up their own supplier database, if they have one.
+  - Ordering when a vendor is not available in the site yet is an important topic to cover. Mandating onboarding prior to placing new orders is something that we usually recommend.
+  - JAGGAER supplier record ID, the "network"
+procedure:
+  title: sc-perspective-unofficial-implementation-conside-4cb385be

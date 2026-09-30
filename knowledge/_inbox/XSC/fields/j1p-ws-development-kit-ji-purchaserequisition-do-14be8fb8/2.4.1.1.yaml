@@ -1,0 +1,46 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.4.1.1
+section_title: Main request structure [PR Validate]
+genre: tecnica
+rows:
+  - label: originalRequestMessageId
+    technical_name: originalRequestMessageId
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Unique identifier for the Purchase Requisition export message with which
+      requisition was saved
+    section: 2.4.1.1
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: requisitionHeader
+    technical_name: requisitionHeader
+    type: null
+    mandatory_text: |-
+      Y
+      Only one between such elements can be provided
+    allowed_values: []
+    notes: |-
+      Object defining validation result to be applied at global header level.
+      See section “ValidateRequisitionData [PR Validate]” below.
+    section: 2.4.1.1
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: requisitionLineList
+    technical_name: requisitionLineList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of validation information to be applied at line level.
+      See section “ValidateRequisitionLineDataList [PR Validate]” below.
+    section: 2.4.1.1
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

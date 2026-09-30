@@ -1,0 +1,39 @@
+id: U.DOC0167.0043
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: isoCountry | Mandatory (Y/N): Y | Description: Company main postal address – Country (ISO code or country name) | Mapping on Jaggaer One data model and notes: See chapter 2.7- Master Data List for allowed values
+  Not used in case of JI is the Primary SM. If addresses needed then use the JI addresses section
+hash: sha256:ac1ccb3fea7be6ac04ab7478d804dd88011ef961007814c6a4158e957981926a
+words: 56
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/J1SupplierData
+  section_path: 2.1.1.3
+  page: 5
+  lang: en
+  prev: U.DOC0167.0042
+  next: U.DOC0167.0044
+row:
+  table: 0
+  row: 10
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - isoCountry
+    - Y
+    - Company main postal address – Country (ISO code or country name)
+    - |-
+      See chapter 2.7- Master Data List for allowed values
+      Not used in case of JI is the Primary SM. If addresses needed then use the JI addresses section
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,47 @@
+id: U.DOC0171.0219
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: paramDefaultValue | Mandatory (Y/N): Y | Description: Default value of the additional column to be redefined for the commercial parameter. According to parameter type, possible values are:
+  BOOLEAN: TRUE or 1 for true value, any other value means false
+  MULTILINE OR TEXT: any string
+  NUMERIC: a string representing a number
+  COMBO: any value among allowed ones
+  DATE [22.02.00] Note: format is yyyy-MM-dd
+hash: sha256:a8ab9dae75f97736ad574b8955ba34444b6d953312593870e43b268505f002a7
+words: 63
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: default line value for section additional column [Import/Update RfX method]"
+  section_path: 2.1.1.19
+  page: 6
+  lang: en
+  prev: U.DOC0171.0218
+  next: U.DOC0171.0220
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - paramDefaultValue
+    - Y
+    - |-
+      Default value of the additional column to be redefined for the commercial parameter. According to parameter type, possible values are:
+      BOOLEAN: TRUE or 1 for true value, any other value means false
+      MULTILINE OR TEXT: any string
+      NUMERIC: a string representing a number
+      COMBO: any value among allowed ones
+      DATE [22.02.00] Note: format is yyyy-MM-dd
+    - ""
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

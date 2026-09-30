@@ -1,0 +1,52 @@
+id: U.DOC0182.0348
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: productFormName | Description: Name of form used for purchase | Available from version: JA_19_04
+  Attribute: note | Description: Internal description of the line item.
+  If the description is longer than 1000 characters, it is truncated and saved. | Available from version: JA_19_04
+  Attribute: productSizeList | Description: Container for description of the size of the item.
+  See section “ProductSize [PR Export]” above. | Available from version: JA_19_04
+  Attribute: itemInfoFieldList | Description: Container for item general information fields.
+  See section “ItemInfoField [PR Export]” below. | Available from version: JA_19_04
+hash: sha256:dbec9ceb1f4261d3d17cf105c8485b9427507e18930d99bed1a7585dd085cb8b
+words: 96
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: GeneralItemInfo [PR Export]
+  section_path: 2.3.3.55
+  page: 26
+  lang: en
+  prev: U.DOC0182.0347
+  next: U.DOC0182.0349
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - productFormName
+      - Name of form used for purchase
+      - JA_19_04
+    - - note
+      - |-
+        Internal description of the line item.
+        If the description is longer than 1000 characters, it is truncated and saved.
+      - JA_19_04
+    - - productSizeList
+      - |-
+        Container for description of the size of the item.
+        See section “ProductSize [PR Export]” above.
+      - JA_19_04
+    - - itemInfoFieldList
+      - |-
+        Container for item general information fields.
+        See section “ItemInfoField [PR Export]” below.
+      - JA_19_04
+  block: 1
+  blocks: 1

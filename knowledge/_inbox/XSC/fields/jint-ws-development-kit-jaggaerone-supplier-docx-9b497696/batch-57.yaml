@@ -1,0 +1,37 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-57
+section: 2.1.1.89
+section_title: J1Supplier/JISupplierData/locationList/location/assignedBusinessUnitsList/assignedBusinessUnit
+part: 1
+parts: 1
+rows:
+  - key: tech:PREFERREDFORTHISBUSINESSUNIT
+    label: preferredForThisBusinessUnit
+    labels:
+      - preferredForThisBusinessUnit
+    technical_name: PREFERREDFORTHISBUSINESSUNIT
+    section: 2.1.1.89
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.89
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.89#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: preferredForThisBusinessUnit
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 681

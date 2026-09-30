@@ -1,0 +1,41 @@
+id: U.DOC0168.0014
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: procedura
+text: "Endpoint definitionError! Reference source not found.: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods"
+hash: sha256:f65b5c8b6d52f33b69bdd1b648da8109c3df1ee89e95d49199cd50d13f841f53
+words: 19
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 10
+  lang: en
+  prev: U.DOC0168.0013
+  next: U.DOC0168.0015
+steps:
+  - "Export JIOrder method:"
+  - "Component Filter [Export JIOrder method]: describes which sections of an order can be exported. The use of a component filter increments the number of sections in the response to every order exported."
+  - "Condition Filter [Export JIOrder method]: describes which fields can be used to filter the order to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of orders extracted"
+  - "Export data format [Export JIOrder method]: describes the structure of the response in terms of exported fields and sections."
+  - "Error codes [Export JIOrder method]: contains a list of possible error codes"
+  - "Validate JIOrder method:"
+  - "Request data format [Validate JIOrder method]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted."
+  - "Behaviour [Validate JIOrder method]: describes how the web service processes the data passed in input, in case of some particular processes."
+  - "Response Data Format [Validate JIOrder method]: describes the structure of the web service response and contains the list of possible error codes."
+  - "Import JIOrder method:"
+  - "Request data format [Import JIOrder method]: describes the structure of the import request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted"
+  - "Behaviour [Import JIOrder method]: describes how the web service processes the data passed in input"
+  - "Response data format [Import JIOrder method]: describes the structure of the web service response and contains the list of possible error codes"
+  - REST INTERFACE
+  - "Endpoint definitionError! Reference source not found.: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods"
+procedure:
+  title: The structure of the current document is the following
+  part: 1
+  parts: 2
+  first_step: 1
+part:
+  n: 2
+  of: 2

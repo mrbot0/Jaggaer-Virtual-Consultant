@@ -1,0 +1,32 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.1.1.1
+section_title: Main request structure [ImportSpend]
+genre: tecnica
+rows:
+  - label: operationCode
+    technical_name: operationCode
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Code of the operation. It accepts following value:
+      UPDATE: an existing object is updated.
+    section: 2.1.1.1
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.1.1.1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractSpendMessage
+    technical_name: contractSpendMessage
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Contract data container (for spend information to be imported).
+      See section “ContractSpendMessage data container [ImportSpend]” below.
+    section: 2.1.1.1
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.1.1.1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

@@ -1,0 +1,46 @@
+id: U.DOC0085.0087
+doc: S.STD.XSC.DOC.0085
+doc_id: commodity-codes-setup-docx-3fd557c2
+type: tabella
+text: "Steps: Were “Use Supplier Master CC Values” or “if no category/CC available” Used? | What am I looking for?: Check you mapping Hierarchy: Use Mapped Value – If none then… Use Supplier Master (on Supplier Profile) – If none then… Use the defined catch-all CC"
+hash: sha256:9e385e0b977f753abb867b547be1ebd4c4af4bda65dfabb39c27a298a76cd541
+words: 45
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0085
+  chapter: commodity-codes-setup-docx-3fd557c2
+  section: Verify the Configuration and Mapping
+  section_path: "0.6"
+  page: 20
+  lang: en
+  prev: U.DOC0085.0086
+  next: U.DOC0085.0088
+table:
+  table: 0
+  headers:
+    - Steps
+    - What am I looking for?
+  rows:
+    - - Go to the “Category Map”
+      - Perform a cursory check of your mapping. Do you have the applicable Overridden Indicator and associated Client Commodity Code? Open some tree sub-categories; are they inheriting as expected?
+    - - Were Commodity Codes automatically applied to ePro Hosted/Punch-out items?
+      - If so, add some hosted items to your cart. Is the CC automatically applied? Is it “mapped” correctly? Check a punch-out item as well.
+    - - Were Users allowed to modify Commodity Codes in their Cart?
+      - If so, the auto-applied Commodity Code in the cart should be editable by the User.
+    - - Were Commodity Codes used for workflow routing?
+      - If you imported/set-up CC Dynamic Workflow, then you better check a few Rules. For an applicable CC in your Cart/PR is it routing properly (check Approvals tab).
+    - - Were Commodity Codes “required” on the Cart/Requisition?
+      - If so, either delete the CC in the cart (if you are allowed) or find an item that doesn’t have a CC mapped. It should Error or Warn on Checkout depending on your PR Doc setting for the CC Field.
+    - - Were Commodity Codes “mapped” to a Custom Field?
+      - "If so, verify that for the applicable CC, the associated custom field is either populated (if defaulted) of the choices are limited to the mapped values. Note: Mapping only applies to the Cart /Requisition."
+    - - Were “Use Supplier Master CC Values” or “if no category/CC available” Used?
+      - |-
+        Check you mapping Hierarchy:
+        Use Mapped Value – If none then…
+        Use Supplier Master (on Supplier Profile) – If none then…
+        Use the defined catch-all CC
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

@@ -1,0 +1,47 @@
+id: U.DOC0169.0236
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Error Code | Error Message | Error Description
+  Error Code: 2 | Error Message: 129 | Error Description: Invalid operation code
+  Error Code: 2 | Error Message: 135 <field> | Error Description: Field <field> value not configured in platform lists
+  Error Code: 2 | Error Message: -996 | Error Description: Invalid Request Object (Request has errors)
+  Error Code: 2 | Error Message: -997 | Error Description: Unauthorized Method (Web Service method isn’t configured to be executed)
+  Error Code: 2 | Error Message: -998 | Error Description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+hash: sha256:d5a7e70e9b7cc0468d7f87f2ad6c78c475e1525ae5e8a38a0c9acb7eace7975b
+words: 118
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Error Codes [PR Import]
+  section_path: 2.1.3.10
+  page: 41
+  lang: en
+  prev: U.DOC0169.0235
+  next: U.DOC0169.0237
+table:
+  table: 0
+  headers:
+    - Error Code
+    - Error Message
+    - Error Description
+  rows:
+    - - "2"
+      - "129"
+      - Invalid operation code
+    - - "2"
+      - 135 <field>
+      - Field <field> value not configured in platform lists
+    - - "2"
+      - "-996"
+      - Invalid Request Object (Request has errors)
+    - - "2"
+      - "-997"
+      - Unauthorized Method (Web Service method isn’t configured to be executed)
+    - - "2"
+      - "-998"
+      - Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+  block: 1
+  blocks: 1

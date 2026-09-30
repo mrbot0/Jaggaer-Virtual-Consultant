@@ -1,0 +1,41 @@
+id: U.DOC0173.0095
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: sendEMail | Mandatory (Y/N): N | Description: For operations on sub users as CREATE, UPDATE, ENABLE, DISABLE, this flag states if a mail must be sent to notify the operation | Mapping on JA data model and notes: Possible value:
+  1: mail is sent
+  Any other value or not provided: no mail is sent
+hash: sha256:3b88089b5128740d9ed07a4df485935c5dccfae946bbb9c6d13723399a409acd
+words: 55
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Sub User Import Request structure [Import/update of Company and Users Data]
+  section_path: 4.1.1.5
+  page: 6
+  lang: en
+  prev: U.DOC0173.0094
+  next: U.DOC0173.0096
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - sendEMail
+    - N
+    - For operations on sub users as CREATE, UPDATE, ENABLE, DISABLE, this flag states if a mail must be sent to notify the operation
+    - |-
+      Possible value:
+      1: mail is sent
+      Any other value or not provided: no mail is sent
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

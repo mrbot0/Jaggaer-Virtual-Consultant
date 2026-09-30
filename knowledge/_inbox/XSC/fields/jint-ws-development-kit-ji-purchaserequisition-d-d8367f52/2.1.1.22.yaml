@@ -1,0 +1,83 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.22
+section_title: Attachment [PR Import]
+genre: tecnica
+rows:
+  - label: fileId
+    technical_name: fileId
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal attachment identifier
+    section: 2.1.1.22
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.22#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: fileType
+    technical_name: fileType
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Type of attachment. Possible values:
+
+      File
+
+      URL
+
+      NO MORE USED, type automatically assigned according to file information
+      (fileBase64 or fileUrl) used.
+    section: 2.1.1.22
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.22#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: fileName
+    technical_name: fileName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the attachment
+    section: 2.1.1.22
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.22#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: fileUrl
+    technical_name: fileUrl
+    type: null
+    mandatory_text: At least one between fileUrl and fileBase64 must be defined
+    allowed_values: []
+    notes: >-
+      URL of the attachment.
+
+      If no data is provided in fileBase64 field, it is used to define an URL
+      based Attachment.
+
+      File Type assigned is URL.
+    section: 2.1.1.22
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.22#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: fileBase64
+    technical_name: fileBase64
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      File content to be used to define attachment.
+
+      If not provided, the field fileUrl is used.
+
+      If the fileUrl field is provided, it is used to define the URL information
+      of the attachment.
+
+      File Type assigned is File
+    section: 2.1.1.22
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.22#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

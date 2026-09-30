@@ -1,0 +1,165 @@
+id: U.DOC0178.0442
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "That is, the number of eventStartTimeIntervalUnit units between starts, such as 3 days or 6 months Attribute: eventStartTimeIntervalUnit | Description: Indicates the unit of time for the eventStartTimeInterval element: days, weeks, months, or years. Possible values: ObligationDefinition_EventDateUnitDays ObligationDefinition_EventDateUnitWeeks ObligationDefinition_EventDateUnitMonths ObligationDefinition_EventDateUnitYears Attribute: eventEndEnum | Description: Indicates the end date for a recurring obligation Possible value: ByContractEndDate BeforeContractEndDate AfterContractEndDate ByCustomDate After ByContractStartDate BeforeContractStartDate AfterContractStartDate Attribute: eventEndCustomDate | Description: Custom end date for the recurring obligation Attribute: occurrenceLimit | Description: Maximum number of times the obligation can recur Attribute: eventEndTimeInterval | Description: Interval between the end of obligations, or between the end of occurrences of obligations. That is, the number of eventStartTimeIntervalUnit units between ends, such as 3 days or 6 months. Attribute: eventEndTimeIntervalUnit | Description: Indicates the unit of time for the eventEndTimeInterval element: days, weeks, months, or years. Possible values: ObligationDefinition_EventDateUnitDays ObligationDefinition_EventDateUnitWeeks ObligationDefinition_EventDateUnitMonths ObligationDefinition_EventDateUnitYears Attribute: dueTime | Description: Time the obligation is scheduled to be completed Attribute: obligationTimeZone | Description: Timezone that the obligation is to use: Valid values: US/Eastern US/Central US/Pacific US/Mountain US/Arizona US/East-Indiana CETUS/Hawaii Europe/London"
+hash: sha256:96f2ec38bc114871cc0d4aa2ae4a966cdc2cb422ad7169b3addc1c5961dca6e4
+words: 176
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ObligationScheduledEvent [Export]
+  section_path: 2.3.3.15
+  page: 92
+  lang: en
+  prev: U.DOC0178.0441
+  next: U.DOC0178.0443
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - frequencyEnum
+      - |-
+        Indicates whether the obligation will be due one time only or on a recurring basis.
+        Allowed values:
+        ObligationFrequencyOneTime
+        ObligationFrequencyRecurring
+      - ""
+    - - frequencyPeriodEnum
+      - |-
+        Indicates whether the obligation recurs
+        Daily
+        Weekly
+        Monthly
+        Yearly
+        Valid only if frequencyEnum is set to ObligationFrequencyRecurring.
+      - ""
+    - - repeatsEvery
+      - Number of times the obligation is to recur.
+      - ""
+    - - dayOfWeekList
+      - |-
+        Container of day of week in which the obligation is to recur.
+        See section “DayOfWeek [Export]” below.
+      - ""
+    - - monthOfYearEnum
+      - |-
+        Indicates the month in which the obligation is to recur.
+        Possible values:
+        Jan
+        Feb
+        Mar
+        Apr
+        May
+        Jun
+        Jul
+        Aug
+        Sep
+        Oct
+        Nov
+        Dec
+      - ""
+    - - dayOrWeekOfMonthEnum
+      - Indicates whether the obligation is to recur on a specific Day of the month, or on the First, Second, Third, Fourth, or Last day of the month.
+      - ""
+    - - dayOfMonth
+      - If dayOrWeekOfMonthEnum is set to Day, indicates the specific date of the month on which the obligation is to recur
+      - ""
+    - - dayOfWeekEnum
+      - |-
+        If dayOrWeekOfMonthEnum is set to First, Second, Third, Fourth, or Last, indicates the specific day of the month on which the obligation is to recur (such as first Weekend Day, or third Thursday).
+        Possible values:
+        Day
+        Weekday
+        Weekend Day
+        Sunday
+        Monday
+        Tuesday
+        Wednesday
+        Thursday
+        Friday
+        Saturday
+      - ""
+    - - eventStartEnum
+      - |-
+        Indicates the start date for the recurring obligation.
+        Possible values:
+        OnContractStartDate
+        BeforeContractStartDate
+        AfterContractStartDate
+        OnCustomDate
+        OnContractEndDate
+        BeforeContractEndDate
+        AfterContractEndDate
+      - ""
+    - - eventStartCustomDate
+      - Custom start date for the recurring obligation
+      - ""
+    - - eventStartTimeInterval
+      - Interval between the start of obligations, or between the start of occurrences of obligations. That is, the number of eventStartTimeIntervalUnit units between starts, such as 3 days or 6 months
+      - ""
+    - - eventStartTimeIntervalUnit
+      - |-
+        Indicates the unit of time for the eventStartTimeInterval element: days, weeks, months, or years.
+        Possible values:
+        ObligationDefinition_EventDateUnitDays
+        ObligationDefinition_EventDateUnitWeeks
+        ObligationDefinition_EventDateUnitMonths
+        ObligationDefinition_EventDateUnitYears
+      - ""
+    - - eventEndEnum
+      - |-
+        Indicates the end date for a recurring obligation
+        Possible value:
+        ByContractEndDate
+        BeforeContractEndDate
+        AfterContractEndDate
+        ByCustomDate
+        After
+        ByContractStartDate
+        BeforeContractStartDate
+        AfterContractStartDate
+      - ""
+    - - eventEndCustomDate
+      - Custom end date for the recurring obligation
+      - ""
+    - - occurrenceLimit
+      - Maximum number of times the obligation can recur
+      - ""
+    - - eventEndTimeInterval
+      - Interval between the end of obligations, or between the end of occurrences of obligations. That is, the number of eventStartTimeIntervalUnit units between ends, such as 3 days or 6 months.
+      - ""
+    - - eventEndTimeIntervalUnit
+      - |-
+        Indicates the unit of time for the eventEndTimeInterval element: days, weeks, months, or years.
+        Possible values:
+        ObligationDefinition_EventDateUnitDays
+        ObligationDefinition_EventDateUnitWeeks
+        ObligationDefinition_EventDateUnitMonths
+        ObligationDefinition_EventDateUnitYears
+      - ""
+    - - dueTime
+      - Time the obligation is scheduled to be completed
+      - ""
+    - - obligationTimeZone
+      - |-
+        Timezone that the obligation is to use:
+        Valid values:
+        US/Eastern
+        US/Central
+        US/Pacific
+        US/Mountain
+        US/Arizona
+        US/East-Indiana
+        CETUS/Hawaii
+        Europe/London
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

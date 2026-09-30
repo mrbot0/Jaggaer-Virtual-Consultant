@@ -1,0 +1,747 @@
+doc: S.STD.XSC.DOC.0014
+scope: XSC
+extracted_at: 2026-09-30T04:27:04.119Z
+tier: T0
+stats:
+  units: 433
+  extracted_units: 20
+  document_candidates: 0
+  needs_llm: 9
+  t0_complete: 11
+  by_candidate:
+    FLD: 9
+    FLW: 7
+    GLS: 3
+    LCY: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 3323
+  sessions:
+    - n: 1
+      tokens: 3323
+      batches: 1
+      items: 9
+      batch_items:
+        - - R.DOC0014.0044
+          - R.DOC0014.0049
+          - R.DOC0014.0164
+          - R.DOC0014.0257
+          - R.DOC0014.0266
+          - R.DOC0014.0313
+          - R.DOC0014.0331
+          - R.DOC0014.0392
+          - R.DOC0014.0394
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0014.0027
+    source_unit: U.DOC0014.0027
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: "Objective: Savings on IT Setup and Service"
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: improvement, we
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0014.0027
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0014.0044
+    source_unit: U.DOC0014.0044
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0014
+    section: "Classification: Defined"
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: spend
+          oggetto: Groups Created and Prioritized
+          valore: null
+        - n: 2
+          verbo: data
+          oggetto: Classified
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0014.0044
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 21
+  - raw_id: R.DOC0014.0049
+    source_unit: U.DOC0014.0049
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0014
+    section: "Classification: Supplier Normalization"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: and group additional suggestions
+          valore: null
+        - n: 2
+          verbo: top-down
+          oggetto: review (by spend) of non-
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0014.0049
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 30
+  - raw_id: R.DOC0014.0071
+    source_unit: U.DOC0014.0071
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: Spend Optimization > Supplier Fragmentation
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Where
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0014.0071
+    needs_llm: false
+    tokens: 4
+  - raw_id: R.DOC0014.0092
+    source_unit: U.DOC0014.0092
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: "Objective: Savings on IT Setup and Service"
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: So now we
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0014.0092
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 4
+  - raw_id: R.DOC0014.0108
+    source_unit: U.DOC0014.0108
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0014
+    section: "Category Management: Strategy Components"
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - GLS
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This
+      definition: the highest-level goal of a category
+      aliases: []
+      lang: en
+      source_unit: U.DOC0014.0108
+    needs_llm: false
+    tokens: 11
+  - raw_id: R.DOC0014.0129
+    source_unit: U.DOC0014.0129
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: "Category Management: Strategy"
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: strategy. This
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0014.0129
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0014.0150
+    source_unit: U.DOC0014.0150
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: "Category Management: Strategy"
+    page: 40
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: before it
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0014.0150
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0014.0164
+    source_unit: U.DOC0014.0164
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: "Objective: Savings on IT Setup and Service"
+    page: 46
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0014.0164
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0014.0257
+    source_unit: U.DOC0014.0257
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0014
+    section: "Guided Activity:"
+    page: 75
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: Setup Pages
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: Details Tab
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: Communications Tab
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0014.0257
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 23
+  - raw_id: R.DOC0014.0266
+    source_unit: U.DOC0014.0266
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0014
+    section: "Guided Activity:"
+    page: 77
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: Setup Page
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: and Update Details Tab
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0014.0266
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 18
+  - raw_id: R.DOC0014.0293
+    source_unit: U.DOC0014.0293
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0014
+    section: "Additional Submodule : Program Manager"
+    page: 82
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - GLS
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Program Manager
+      definition: a purchasable
+      aliases: []
+      lang: en
+      source_unit: U.DOC0014.0293
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0014.0313
+    source_unit: U.DOC0014.0313
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0014
+    section: "Guided Activity:"
+    page: 88
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: log
+          oggetto: in as a Supplier
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: RFQ
+          valore: null
+        - n: 3
+          verbo: accept
+          oggetto: Terms and Conditions
+          valore: null
+        - n: 4
+          verbo: complete
+          oggetto: "each Envelope:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0014.0313
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 29
+  - raw_id: R.DOC0014.0329
+    source_unit: U.DOC0014.0329
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0014
+    section: "Key Terms:Key Terms:"
+    page: 91
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - GLS
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: for review and evaluation
+      definition: the Qualification envelope.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0014.0329
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0014.0331
+    source_unit: U.DOC0014.0331
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: "Key Terms:Key Terms:"
+    page: 91
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - LCY
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: immutabilita
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: LCY.immutable_fields_after
+      confidence: 0.85
+      signals:
+        - immutabilita
+      source_unit: U.DOC0014.0331
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 18
+  - raw_id: R.DOC0014.0332
+    source_unit: U.DOC0014.0332
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: "Key Terms:Key Terms:"
+    page: 91
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Technical envelope responses, etc. This setting
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0014.0332
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0014.0366
+    source_unit: U.DOC0014.0366
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: "Objective: Savings on IT Setup and Service"
+    page: 103
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Having decided who
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0014.0366
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0014.0392
+    source_unit: U.DOC0014.0392
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0014
+    section: "Guided Activity:"
+    page: 112
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - FLW
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: Section
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: Item
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0014.0392
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 12
+  - raw_id: R.DOC0014.0394
+    source_unit: U.DOC0014.0394
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0014
+    section: "Guided Activity:"
+    page: 112
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: submit
+          oggetto: Proposal
+          valore: null
+        - n: 2
+          verbo: approve
+          oggetto: Price List
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0014.0394
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 15
+  - raw_id: R.DOC0014.0415
+    source_unit: U.DOC0014.0415
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0014
+    section: "Key Terms:Key Terms:"
+    page: 118
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: client
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0014.0415
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 8

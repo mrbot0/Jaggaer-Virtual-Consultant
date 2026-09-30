@@ -1,0 +1,640 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-19
+section: 2.2.1.16
+section_title: ObligationScheduledEvent [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:FREQUENCYENUM
+    label: frequencyEnum
+    labels:
+      - frequencyEnum
+    technical_name: FREQUENCYENUM
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether the obligation will be due one time only or on a
+      recurring basis.
+
+      Allowed values:
+
+      ObligationFrequencyOneTime
+
+      ObligationFrequencyRecurring
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: frequencyEnum
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:FREQUENCYPERIODENUM
+    label: frequencyPeriodEnum
+    labels:
+      - frequencyPeriodEnum
+    technical_name: FREQUENCYPERIODENUM
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates whether the obligation recurs
+      Daily
+      Weekly
+      Monthly
+      Yearly
+      Valid only if frequencyEnum is set to ObligationFrequencyRecurring.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: frequencyPeriodEnum
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:REPEATSEVERY
+    label: repeatsEvery
+    labels:
+      - repeatsEvery
+    technical_name: REPEATSEVERY
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Number of times the obligation is to recur.
+      Valid range is 1 to 999.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: repeatsEvery
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:DAYOFWEEKLIST
+    label: dayOfWeekList
+    labels:
+      - dayOfWeekList
+    technical_name: DAYOFWEEKLIST
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of day of week in which the obligation is to recur.
+      See section “DayOfWeek [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: dayOfWeekList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MONTHOFYEARENUM
+    label: monthOfYearEnum
+    labels:
+      - monthOfYearEnum
+    technical_name: MONTHOFYEARENUM
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates the month in which the obligation is to recur.
+      Possible values:
+      Jan
+      Feb
+      Mar
+      Apr
+      May
+      Jun
+      Jul
+      Aug
+      Sep
+      Oct
+      Nov
+      Dec
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: monthOfYearEnum
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:DAYORWEEKOFMONTHENUM
+    label: dayOrWeekOfMonthEnum
+    labels:
+      - dayOrWeekOfMonthEnum
+    technical_name: DAYORWEEKOFMONTHENUM
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the obligation is to recur on a specific Day of the
+      month, or on the First, Second, Third, Fourth, or Last day of the month.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: dayOrWeekOfMonthEnum
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:DAYOFMONTH
+    label: dayOfMonth
+    labels:
+      - dayOfMonth
+    technical_name: DAYOFMONTH
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: If dayOrWeekOfMonthEnum is set to Day, indicates the specific date of the
+      month on which the obligation is to recur
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: dayOfMonth
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:DAYOFWEEKENUM
+    label: dayOfWeekEnum
+    labels:
+      - dayOfWeekEnum
+    technical_name: DAYOFWEEKENUM
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      If dayOrWeekOfMonthEnum is set to First, Second, Third, Fourth, or Last,
+      indicates the specific day of the month on which the obligation is to
+      recur (such as first Weekend Day, or third Thursday).
+
+      Possible values:
+
+      Day
+
+      Weekday
+
+      Weekend Day
+
+      Sunday
+
+      Monday
+
+      Tuesday
+
+      Wednesday
+
+      Thursday
+
+      Friday
+
+      Saturday
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: dayOfWeekEnum
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EVENTSTARTENUM
+    label: eventStartEnum
+    labels:
+      - eventStartEnum
+    technical_name: EVENTSTARTENUM
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates the start date for the recurring obligation.
+      Possible values:
+      OnContractStartDate
+      BeforeContractStartDate
+      AfterContractStartDate
+      OnCustomDate
+      OnContractEndDate
+      BeforeContractEndDate
+      AfterContractEndDate
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: eventStartEnum
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EVENTSTARTCUSTOMDATE
+    label: eventStartCustomDate
+    labels:
+      - eventStartCustomDate
+    technical_name: EVENTSTARTCUSTOMDATE
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Custom start date for the recurring obligation
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: eventStartCustomDate
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EVENTSTARTTIMEINTERVAL
+    label: eventStartTimeInterval
+    labels:
+      - eventStartTimeInterval
+    technical_name: EVENTSTARTTIMEINTERVAL
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Interval between the start of obligations, or between the start of
+      occurrences of obligations. That is, the number of
+      eventStartTimeIntervalUnit units between starts, such as 3 days or 6
+      months
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: eventStartTimeInterval
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EVENTSTARTTIMEINTERVALUNIT
+    label: eventStartTimeIntervalUnit
+    labels:
+      - eventStartTimeIntervalUnit
+    technical_name: EVENTSTARTTIMEINTERVALUNIT
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates the unit of time for the eventStartTimeInterval element: days,
+      weeks, months, or years.
+
+      Possible values:
+
+      ObligationDefinition_EventDateUnitDays
+
+      ObligationDefinition_EventDateUnitWeeks
+
+      ObligationDefinition_EventDateUnitMonths
+
+      ObligationDefinition_EventDateUnitYears
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: eventStartTimeIntervalUnit
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EVENTENDENUM
+    label: eventEndEnum
+    labels:
+      - eventEndEnum
+    technical_name: EVENTENDENUM
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates the end date for a recurring obligation
+      Possible value:
+      ByContractEndDate
+      BeforeContractEndDate
+      AfterContractEndDate
+      ByCustomDate
+      After
+      ByContractStartDate
+      BeforeContractStartDate
+      AfterContractStartDate
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: eventEndEnum
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EVENTENDCUSTOMDATE
+    label: eventEndCustomDate
+    labels:
+      - eventEndCustomDate
+    technical_name: EVENTENDCUSTOMDATE
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Custom end date for the recurring obligation
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: eventEndCustomDate
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:OCCURRENCELIMIT
+    label: occurrenceLimit
+    labels:
+      - occurrenceLimit
+    technical_name: OCCURRENCELIMIT
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Maximum number of times the obligation can recur
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: occurrenceLimit
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EVENTENDTIMEINTERVAL
+    label: eventEndTimeInterval
+    labels:
+      - eventEndTimeInterval
+    technical_name: EVENTENDTIMEINTERVAL
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Interval between the end of obligations, or between the end of
+      occurrences of obligations. That is, the number of
+      eventStartTimeIntervalUnit units between ends, such as 3 days or 6 months.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: eventEndTimeInterval
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EVENTENDTIMEINTERVALUNIT
+    label: eventEndTimeIntervalUnit
+    labels:
+      - eventEndTimeIntervalUnit
+    technical_name: EVENTENDTIMEINTERVALUNIT
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates the unit of time for the eventEndTimeInterval element: days,
+      weeks, months, or years.
+
+      Possible values:
+
+      ObligationDefinition_EventDateUnitDays
+
+      ObligationDefinition_EventDateUnitWeeks
+
+      ObligationDefinition_EventDateUnitMonths
+
+      ObligationDefinition_EventDateUnitYears
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: eventEndTimeIntervalUnit
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:DUETIME
+    label: dueTime
+    labels:
+      - dueTime
+    technical_name: DUETIME
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Time the obligation is scheduled to be completed
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: dueTime
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:OBLIGATIONTIMEZONE
+    label: obligationTimeZone
+    labels:
+      - obligationTimeZone
+    technical_name: OBLIGATIONTIMEZONE
+    section: 2.2.1.16
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Timezone that the obligation is to use:
+      Valid values:
+      US/Eastern
+      US/Central
+      US/Pacific
+      US/Mountain
+      US/Arizona
+      US/East-Indiana
+      CETUS/Hawaii
+      Europe/London
+      Valid only if useTimeZoneContract setting is set to false.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.16
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.16#part-1
+        row_ref: t0.r18
+        genre: tecnica
+        label: obligationTimeZone
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 4341

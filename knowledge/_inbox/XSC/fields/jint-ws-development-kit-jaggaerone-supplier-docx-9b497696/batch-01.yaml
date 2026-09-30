@@ -1,0 +1,148 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-01
+section: 2.1.1.1
+section_title: J1Supplier
+part: 1
+parts: 1
+rows:
+  - key: tech:OPERATION
+    label: operation
+    labels:
+      - operation
+    technical_name: OPERATION
+    section: 2.1.1.1
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Code of requested operation
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.1
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: operation
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:J1SUPPLIERDATA
+    label: J1SupplierData
+    labels:
+      - J1SupplierData
+    technical_name: J1SUPPLIERDATA
+    section: 2.1.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Company data shared by all subsystems
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.1
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: J1SupplierData
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:JASUPPLIERDATA
+    label: JASupplierData
+    labels:
+      - JASupplierData
+    technical_name: JASUPPLIERDATA
+    section: 2.1.1.1
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Specific data for JA System, mandatory in case JA is the primary system,
+      not used in case JI is the primary system.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.1
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: JASupplierData
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:JISUPPLIERDATA
+    label: JISupplierData
+    labels:
+      - JISupplierData
+    technical_name: JISUPPLIERDATA
+    section: 2.1.1.1
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Specific data for JI System, mandatory in case JI is the primary system
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.1
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: JISupplierData
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:JDSUPPLIERDATA
+    label: JDSupplierData
+    labels:
+      - JDSupplierData
+    technical_name: JDSUPPLIERDATA
+    section: 2.1.1.1
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Specific data for JD System
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.1
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: JDSupplierData
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1368

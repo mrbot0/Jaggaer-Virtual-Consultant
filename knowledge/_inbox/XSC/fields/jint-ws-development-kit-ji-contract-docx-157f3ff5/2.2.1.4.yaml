@@ -1,0 +1,129 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.4
+section_title: ContractDates [Import]
+genre: tecnica
+rows:
+  - label: startOnExecution
+    technical_name: startOnExecution
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether the contract start date is (true) or is not (false) to
+      be set to the date when the contract reaches “Executed: In Effect” status.
+
+      For eSignature contracts, this is the date and time that the final signer
+      signs the contract, or a signed contract is manually uploaded.
+
+      If this field is set to true, you must still enter a startDate.
+
+      The entered start date is provisional until the contract reaches Executed:
+      In Effect status, at which time the solution replaces the entered start
+      date with that date.
+
+      If the contract requires a manual upload, you can update the start and end
+      dates at that time.
+    section: 2.2.1.4
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.4#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: timeZone
+    technical_name: timeZone
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Timezone associated with the ContractDates element.
+      Valid values:
+      US/Eastern
+      US/Central
+      US/Pacific
+      US/Mountain
+      US/Arizona
+      US/East-Indiana
+      CETUS/Hawaii
+      Europe/London
+    section: 2.2.1.4
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.4#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: startDate
+    technical_name: startDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date on which the contract take effect.
+    section: 2.2.1.4
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.4#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: endDate
+    technical_name: endDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Last effective date for the contract
+    section: 2.2.1.4
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.4#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: doesNotExpire
+    technical_name: doesNotExpire
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether the contract is (true) or is not (false) to expire
+      automatically when the endDate occurs.
+
+      If set to false, notifications prior to the end date enable a contract
+      manager to amend or renew the contract
+    section: 2.2.1.4
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.4#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractRenewal
+    technical_name: contractRenewal
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Contract renewal specification.
+      See section “ContractRenewal [Import]” below
+    section: 2.2.1.4
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.4#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractReview
+    technical_name: contractReview
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Contract review information.
+      See section “ContractReview [Import]” below
+    section: 2.2.1.4
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.4#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: terminationScheduled
+    technical_name: terminationScheduled
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for scheduled termination settings.
+      See section “TerminationSchedule [Import]” below
+    section: 2.2.1.4
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.4#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

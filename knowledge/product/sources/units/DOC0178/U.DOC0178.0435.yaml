@@ -1,0 +1,70 @@
+id: U.DOC0178.0435
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: internalName | Description: Internal name of the custom field value.
+  Attribute: Type | Description: Contract custom field type
+  Text (Single Line) – Freeform single-line entry area, up to 100 alphanumeric characters. Cannot be a parent custom field.
+  Text (Multi-Line) – Freeform multi-line entry area, up to 2000 alphanumeric characters. Cannot be a parent custom field.
+  Numeric Text Box – Freeform single-line entry area, numbers only. Cannot be a parent custom field.
+  Yes/No – Yes-No checkbox. You can enable multiple checkboxes.
+  Dropdown List (Pick One) – Predefined set of selections in dropdown list format.
+  Multiple Choice (Pick One) – Also known as a Radio Button Group. Predefined set of selections in radio button group format.
+  Multiple Select (Pick Many) – Predefined set of selections. User can enter all custom field values that apply. This is the only custom field type that can accept more than one custom field value.
+  File Upload – Add a file attachment.
+  Date – Date field, with today’s date as the default selection.
+  Table – Create a table composed of other custom fields.
+  Attribute: customFieldValueList | Description: Container for custom field values.
+  See section “CustomFieldValue [Export]” below.
+  Attribute: customFieldTableRowList | Description: Container for custom field table rows.
+  See section “CustomFieldTableRow [Export]” below
+hash: sha256:15fbd680853faca8925de8fa90fb0be5f3c642324d5f528467025a7545bc7fba
+words: 214
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Custom Field [Export]
+  section_path: 2.3.3.9
+  page: 89
+  lang: en
+  prev: U.DOC0178.0434
+  next: U.DOC0178.0436
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - internalName
+      - Internal name of the custom field value.
+      - ""
+    - - Type
+      - |-
+        Contract custom field type
+        Text (Single Line) – Freeform single-line entry area, up to 100 alphanumeric characters. Cannot be a parent custom field.
+        Text (Multi-Line) – Freeform multi-line entry area, up to 2000 alphanumeric characters. Cannot be a parent custom field.
+        Numeric Text Box – Freeform single-line entry area, numbers only. Cannot be a parent custom field.
+        Yes/No – Yes-No checkbox. You can enable multiple checkboxes.
+        Dropdown List (Pick One) – Predefined set of selections in dropdown list format.
+        Multiple Choice (Pick One) – Also known as a Radio Button Group. Predefined set of selections in radio button group format.
+        Multiple Select (Pick Many) – Predefined set of selections. User can enter all custom field values that apply. This is the only custom field type that can accept more than one custom field value.
+        File Upload – Add a file attachment.
+        Date – Date field, with today’s date as the default selection.
+        Table – Create a table composed of other custom fields.
+      - ""
+    - - customFieldValueList
+      - |-
+        Container for custom field values.
+        See section “CustomFieldValue [Export]” below.
+      - ""
+    - - customFieldTableRowList
+      - |-
+        Container for custom field table rows.
+        See section “CustomFieldTableRow [Export]” below
+      - ""
+  block: 1
+  blocks: 1

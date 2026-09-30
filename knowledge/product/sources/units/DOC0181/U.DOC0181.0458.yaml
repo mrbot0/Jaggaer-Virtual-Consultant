@@ -1,0 +1,55 @@
+id: U.DOC0181.0458
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: |-
+  Colonne: URL | /esop/jint/api/public/ji/v1/orders/
+  URL: Http Method | /esop/jint/api/public/ji/v1/orders/: GET
+  URL: Header Parameters | /esop/jint/api/public/ji/v1/orders/: Authorization (see “JINT WS Development_Kit - Web Services Overview ” document)
+  URL: URL Parameters | /esop/jint/api/public/ji/v1/orders/: Param Name | Reference | Format
+  flt | MAIN Condition Filters | Sequence of filters expressed in JINT query language (see “JINT WS Development_Kit - Web Services Overview” document). Only “equal” operator is allowed
+  comp | Component Filters | List of required component filters separated by ; (semicolon)
+  start | Start At | Numeric value
+  URL: Response format | /esop/jint/api/public/ji/v1/orders/: JSON string representing the export response. See “export data format” chapter in this doc related to the specific module
+  URL: Return Codes | /esop/jint/api/public/ji/v1/orders/: 200 query successfully executed
+  400 wrong or missing data in the request
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:12e1dd831679ed349176496e82f96733bf7fbbaa11532fc7f121633443643406
+words: 139
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: Search Orders [export Orders]
+  section_path: 2.5.1.1
+  page: 108
+  lang: en
+  prev: U.DOC0181.0457
+  next: U.DOC0181.0459
+table:
+  table: 0
+  headers:
+    - URL
+    - /esop/jint/api/public/ji/v1/orders/
+  rows:
+    - - Http Method
+      - GET
+    - - Header Parameters
+      - Authorization (see “JINT WS Development_Kit - Web Services Overview ” document)
+    - - URL Parameters
+      - |-
+        Param Name | Reference | Format
+        flt | MAIN Condition Filters | Sequence of filters expressed in JINT query language (see “JINT WS Development_Kit - Web Services Overview” document). Only “equal” operator is allowed
+        comp | Component Filters | List of required component filters separated by ; (semicolon)
+        start | Start At | Numeric value
+    - - Response format
+      - JSON string representing the export response. See “export data format” chapter in this doc related to the specific module
+    - - Return Codes
+      - |-
+        200 query successfully executed
+        400 wrong or missing data in the request
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

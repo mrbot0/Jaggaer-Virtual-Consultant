@@ -1,0 +1,48 @@
+id: U.DOC0171.0452
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: paramId | Description: JA internal identifier of the commercial parameter
+  Attribute: paramPos | Description: Position of the commercial parameter
+  Attribute: paramReference | Description: Reference of the commercial parameter
+  Attribute: formualValue | Description: Formula related to the additional column for the commercial parameter
+  Note: In case of additional column with type NUMERIC or NUMERIC_FORMULA, the number format has 3 decimal positions by default.
+  It is possible to enable a ws configuration parameter to check the DECIMAL_SCALE toolkit parameter in order to align the decimal positions in the ws output with the ones shown in the platform.
+hash: sha256:ac44af91d6bbfb52b6b0d3120dc13330c1fbf2b0dd8eae4d451a1e8c308b884b
+words: 104
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: Formula Values [Export RfX method]"
+  section_path: 2.3.4.17
+  page: 7
+  lang: en
+  prev: U.DOC0171.0451
+  next: U.DOC0171.0453
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - paramId
+      - JA internal identifier of the commercial parameter
+      - ""
+    - - paramPos
+      - Position of the commercial parameter
+      - ""
+    - - paramReference
+      - Reference of the commercial parameter
+      - ""
+    - - formualValue
+      - |-
+        Formula related to the additional column for the commercial parameter
+        Note: In case of additional column with type NUMERIC or NUMERIC_FORMULA, the number format has 3 decimal positions by default.
+        It is possible to enable a ws configuration parameter to check the DECIMAL_SCALE toolkit parameter in order to align the decimal positions in the ws output with the ones shown in the platform.
+      - ""
+  block: 1
+  blocks: 1

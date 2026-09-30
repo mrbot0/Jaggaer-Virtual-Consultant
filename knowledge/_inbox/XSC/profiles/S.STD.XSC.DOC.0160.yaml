@@ -1,0 +1,87 @@
+id: S.STD.XSC.DOC.0160
+type: DOC
+title: JAGGAER Indirect Foundations
+summary: "Documento training-deck (d'uso, origine vendor) \"JAGGAER Indirect
+  Foundations\": 71 unità, 0 tabelle, 0 tabelle di campi; scope ADM, VEN, ANL,
+  CON; affidabilità 0.48."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2020-04-13
+    release: ignota
+  F15: d'uso
+sources:
+  - file: CORSI/JT-PLT-2100/JI-PLT-2100_Blueprint_.pdf
+    sha256: sha256:e5c6fa0a0e9ddd44b137bb921d60b64ed4c95890dbfe11345330e429aaa797ba
+kind: training-deck
+genre: d'uso
+origin: vendor
+version: null
+dated: 2020-04-13
+covers_release: null
+languages:
+  - en
+scopes:
+  - ADM
+  - VEN
+  - ANL
+  - CON
+source:
+  path: CORSI/JT-PLT-2100/JI-PLT-2100_Blueprint_.pdf
+  sha256: sha256:e5c6fa0a0e9ddd44b137bb921d60b64ed4c95890dbfe11345330e429aaa797ba
+  size: 220454
+  format: pdf
+  doc_id: ji-plt-2100-blueprint-pdf-5c080168
+  doc_key: ji-plt-2100-blueprint.pdf
+structure:
+  pages: 8
+  chapters: 8
+  sections: 8
+  tables: 0
+  figures: 1
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 71
+  by_type:
+    testo: 68
+    definizione: 1
+    regola: 2
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 71
+  items_produced: 3
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.04
+  last_run: 2026-09-30
+  estimated_tokens: 730
+  sessions_planned: 1

@@ -1,0 +1,130 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.14
+section_title: Terms [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: discount
+    technical_name: discount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Discount informatin.
+      See section “Discount [Import JIOrder method]” below
+    section: 2.3.1.14
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.14#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: days
+    technical_name: days
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Number of days after the invoice date that the discount can be applied to
+      the invoice. That is, if payment is received within the specified number
+      of days of the invoice date, the discount is applied
+    section: 2.3.1.14
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.14#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: net
+    technical_name: net
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Number of days after the invoice date that the invoice is due.
+
+      Note: Starting from the DTD version 3.2, the Net tag is no longer
+      supported. It must be replaced by TermsType and DaysAfter.
+
+      For example:
+
+      <net>15</net>
+
+      must be replaced with
+
+      <termsType>Net</termsType>
+
+      <daysAfter>15</daysAfter>
+    section: 2.3.1.14
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.14#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: standardPaymentTermsCode
+    technical_name: standardPaymentTermsCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Uniquely identifies a specific preconfigured combination of payment terms.
+
+      If provided, TermsType, DaysAfter, and Discount are populated based on the
+      preconfigured values set in StandardPaymentTermsCode.
+
+      If both StandardPaymentTermsCode and Discount are provided, the value for
+      Discount is used.
+
+      If StandardPaymentTermsCode is provided, the TermsType element cannot have
+      values.
+
+      Note: The StandardPaymentTermsCode element is supported in version 3.2 of
+      the DTD and later.
+    section: 2.3.1.14
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.14#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: termsType
+    technical_name: termsType
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Used in conjunction with the daysAfter element to determine the invoice
+      due date.
+
+      Possible values:
+
+      Net
+
+      EOM
+
+      MFI
+
+      EOQ
+
+      Manual
+
+      If TermsType is provided the StandardPaymentTermsCode element cannot have
+      values.
+
+      Note: The TermsType element is supported in version 3.2 of the DTD and
+      later. Older versions of the DTD support the Net tag.
+    section: 2.3.1.14
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.14#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: daysAfter
+    technical_name: daysAfter
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Used in conjunction with the TermsType element to compute the invoice due
+      date.
+
+      Possible values: [0 - 999]
+
+      Note: The DaysAfter element is supported in version 3.2 of the DTD and
+      later. Older versions of the DTD support the Net tag.
+    section: 2.3.1.14
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.14#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

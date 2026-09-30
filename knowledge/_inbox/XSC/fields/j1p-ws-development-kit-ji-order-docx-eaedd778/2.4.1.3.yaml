@@ -1,0 +1,49 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.4.1.3
+section_title: CustomfieldValue [JIOrder Status Import method]
+genre: tecnica
+rows:
+  - label: internalName
+    technical_name: internalName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Internal name of the non-splittable custom field to be set on header.
+
+      If this field does not match an existing custom field, the import fails,
+      and an error is added to the response.
+
+      The custom field must be header-only and non-splittable.
+    section: 2.4.1.3
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.4.1.3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: value
+    technical_name: value
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Value of the custom field.
+      Overrides the existing value in the PO for the custom field.
+    section: 2.4.1.3
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.4.1.3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: description
+    technical_name: description
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Description of the custom field.
+      Overrides the existing description in the PO for the custom field.
+    section: 2.4.1.3
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.4.1.3#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

@@ -1,0 +1,39 @@
+id: U.DOC0171.0216
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: paramId | Mandatory (Y/N): N | Description: Commercial Parameter identifier | Mapping on JA data model and notes: JA internal identifier of an existing commercial parameter to redefine additional column default value for.
+  If provided and the section doesn’t contain a parameter with such identifier, no default value is redefined
+hash: sha256:574f95c380f363babe2532ad478f06059b8787c3d6e06fcb6e4e49840c782bb4
+words: 51
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: default line value for section additional column [Import/Update RfX method]"
+  section_path: 2.1.1.19
+  page: 6
+  lang: en
+  prev: U.DOC0171.0215
+  next: U.DOC0171.0217
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - paramId
+    - N
+    - Commercial Parameter identifier
+    - |-
+      JA internal identifier of an existing commercial parameter to redefine additional column default value for.
+      If provided and the section doesn’t contain a parameter with such identifier, no default value is redefined
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

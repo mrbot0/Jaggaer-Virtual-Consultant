@@ -1,0 +1,38 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.18
+section_title: ExernalInfo [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: note
+    technical_name: note
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      External note.
+
+      If the external note is longer than 1000 characters, it is truncated and
+      saved.
+
+      Note: If the Note field is empty, the existing note in the eProcurement
+      solution is not overwritten. Only a populated Note field can overwrite the
+      existing note.
+    section: 2.3.1.18
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.18#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: attachmentList
+    technical_name: attachmentList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Externally visible Attachment information
+      See section “Attachment [Import JIOrder method]” above
+    section: 2.3.1.18
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.18#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

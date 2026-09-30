@@ -1,0 +1,172 @@
+document: jint-development-kit-profile-management-web-serv-35c3a7f6
+scope: XSC
+batch: batch-09
+section: 4.1.1.8
+section_title: DeInfo (Additional Info) [Import/update of Company and Users Data]
+part: 1
+parts: 1
+rows:
+  - key: tech:VALUES_VALUE
+    label: values/value
+    labels:
+      - values/value
+    technical_name: VALUES_VALUE
+    section: 4.1.1.8
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Value of the Data Element (eVM answer)
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.8
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: values/value
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:VALUES_VALUE_ID
+    label: values/value/@id
+    labels:
+      - values/value/@id
+    technical_name: VALUES_VALUE_ID
+    section: 4.1.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: attribute used to clear the data element value
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.8
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: values/value/@id
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ATTACHMENTVALUE_FILENAME
+    label: attachmentValue/fileName
+    labels:
+      - attachmentValue/fileName
+    technical_name: ATTACHMENTVALUE_FILENAME
+    section: 4.1.1.8
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment file name
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.8
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: attachmentValue/fileName
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ATTACHMENTVALUE_FILEDESCRIPTION
+    label: attachmentValue/fileDescription
+    labels:
+      - attachmentValue/fileDescription
+    technical_name: ATTACHMENTVALUE_FILEDESCRIPTION
+    section: 4.1.1.8
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment description
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.8
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: attachmentValue/fileDescription
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ATTACHMENTVALUE_FILEBASE64
+    label: attachmentValue/fileBase64
+    labels:
+      - attachmentValue/fileBase64
+    technical_name: ATTACHMENTVALUE_FILEBASE64
+    section: 4.1.1.8
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment body
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.8
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: attachmentValue/fileBase64
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ATTACHMENTEXPIRYDATE
+    label: attachmentExpiryDate
+    labels:
+      - attachmentExpiryDate
+    technical_name: ATTACHMENTEXPIRYDATE
+    section: 4.1.1.8
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment expiring date (without time)
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.8
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.8#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: attachmentExpiryDate
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1586

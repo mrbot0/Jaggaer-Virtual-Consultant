@@ -1,0 +1,487 @@
+doc: S.STD.XSC.DOC.0029
+scope: XSC
+extracted_at: 2026-09-30T04:30:08.856Z
+tier: T0
+stats:
+  units: 40
+  extracted_units: 13
+  document_candidates: 0
+  needs_llm: 6
+  t0_complete: 7
+  by_candidate:
+    FLD: 8
+    INV: 2
+    GLS: 1
+    FLW: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2404
+  sessions:
+    - n: 1
+      tokens: 2404
+      batches: 1
+      items: 6
+      batch_items:
+        - - R.DOC0029.0002
+          - R.DOC0029.0005
+          - R.DOC0029.0017
+          - R.DOC0029.0024
+          - R.DOC0029.0036
+          - R.DOC0029.0038
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0029.0002
+    source_unit: U.DOC0029.0002
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0029
+    section: JAGGAER INDIRECT SOLUTION CONSULTANT BULLETI N
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0029.0002
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 52
+  - raw_id: R.DOC0029.0003
+    source_unit: U.DOC0029.0003
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0029
+    section: JAGGAER INDIRECT SOLUTION CONSULTANT BULLETI N
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: WHERE
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0029.0003
+    needs_llm: false
+    tokens: 7
+  - raw_id: R.DOC0029.0005
+    source_unit: U.DOC0029.0005
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0029
+    section: JAGGAER INDIRECT SOLUTION CONSULTANT BULLETI N
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - INV
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0029.0005
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25
+  - raw_id: R.DOC0029.0007
+    source_unit: U.DOC0029.0007
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0029
+    section: JAGGAER INDIRECT SOLUTION CONSULTANT BULLETI N
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Approvers
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0029.0007
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0029.0010
+    source_unit: U.DOC0029.0010
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0029
+    section: JAGGAER INDIRECT SOLUTION CONSULTANT BULLETI N
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: WHAT ELSE
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0029.0010
+    needs_llm: false
+    tokens: 6
+  - raw_id: R.DOC0029.0012
+    source_unit: U.DOC0029.0012
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0029
+    section: JAGGAER INDIRECT SOLUTION CONSULTANT BULLETI N
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - GLS
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Defaulting Manual inherits to all Suppliers and
+      definition: a valid distribution method.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0029.0012
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0029.0017
+    source_unit: U.DOC0029.0017
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0029
+    section: STEPS TO IMPLEMENT
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: FLW
+      score: 0.8
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: "new “Invalid Distribution” step to PO Workflow before the Revision and Distribution steps:"
+          valore: Invalid Distribution
+        - n: 2
+          verbo: ensure
+          oggetto: "the static Workflow Activity has the proper criteria:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0029.0017
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0029.0020
+    source_unit: U.DOC0029.0020
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0029
+    section: STEPS TO IMPLEMENT
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Additional criteria
+      modality: raccomandazione
+      condition: the PO has been flagged to distribute) o Document.IsNotValid() == true (Typically used for PO Imports, returns true if the imported PO has issues pertaining to the Supplier configuration) o Document.RequiresRuleGroupEvaluation("Exclude from Distribution") == fal se (If you are using an ADW Rule Group to determine POs that should NOT distribute )
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0029.0020
+    needs_llm: false
+    tokens: 112
+  - raw_id: R.DOC0029.0024
+    source_unit: U.DOC0029.0024
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0029
+    section: STEPS TO IMPLEMENT
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - INV
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: nota
+      text: "Remember: In order to modify a Supplier’s Fulfillment Center the “approver” has to have the “ Manage Supplier Profiles ” permission. If they don’t a process has to be in place (perhaps using the PO Comments) for the approver to notify a User that can update the Supp lier Profile / Fulfillment Center."
+      subject: null
+      rules:
+        - text: "Remember: In order to modify a Supplier’s Fulfillment Center the “approver” has to have the “ Manage Supplier Profiles ” permission."
+          modality: obbligo
+          consequence: FLD.mandatory
+          mandatory:
+            kind: always
+        - text: If they don’t a process has to be in place (perhaps using the PO Comments) for the approver to notify a User that can update the Supp lier Profile / Fulfillment Center.
+          modality: obbligo
+          consequence: FLD.mandatory
+          mandatory:
+            kind: always
+      author: null
+      date: null
+      source_unit: U.DOC0029.0024
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 76
+  - raw_id: R.DOC0029.0026
+    source_unit: U.DOC0029.0026
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0029
+    section: Revise PO Step
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: WHERE
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0029.0026
+    needs_llm: false
+    tokens: 7
+  - raw_id: R.DOC0029.0028
+    source_unit: U.DOC0029.0028
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0029
+    section: Revise PO Step
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: WHAT ELSE
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0029.0028
+    needs_llm: false
+    tokens: 6
+  - raw_id: R.DOC0029.0036
+    source_unit: U.DOC0029.0036
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0029
+    section: Revise PO Step
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: an export has already created the revision
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0029.0036
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 38
+  - raw_id: R.DOC0029.0038
+    source_unit: U.DOC0029.0038
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0029
+    section: STEPS TO IMPLEMENT
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: FLW
+      score: 0.8
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: ensure
+          oggetto: you have loaded the PO Workflow Folder that uses the CreatePORevisionRobot
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: "new “ Revise PO ” step to PO Workflow before the Distribution step :"
+          valore: " Revise PO "
+        - n: 3
+          verbo: add
+          oggetto: "the static Workflow Activity , using the “Folder ” that was loaded for the Robot :"
+          valore: "Folder "
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0029.0038
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 68

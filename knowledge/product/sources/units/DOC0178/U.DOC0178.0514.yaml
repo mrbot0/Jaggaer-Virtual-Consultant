@@ -1,0 +1,44 @@
+id: U.DOC0178.0514
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: timestamp | Description: Response timestamp in the format
+  yyyy-MM-dd’T’HH:mm:ss.SSSZ
+  Attribute: validateStatus | Description: Validation response result.
+  See section “ValidateStatus [Validate]” below
+  Attribute: validateObjectErrors | Description: Container of validation error information
+  See section “ValidateError [Validate]” below
+hash: sha256:5f44f1a623bb93ede26c572c2f8a56df0607bda5d15750bc234e7110c91ec24e
+words: 40
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ValidateResponseMessage [Validate]
+  section_path: 2.4.3.1
+  page: 124
+  lang: en
+  prev: U.DOC0178.0513
+  next: U.DOC0178.0515
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - timestamp
+      - |-
+        Response timestamp in the format
+        yyyy-MM-dd’T’HH:mm:ss.SSSZ
+    - - validateStatus
+      - |-
+        Validation response result.
+        See section “ValidateStatus [Validate]” below
+    - - validateObjectErrors
+      - |-
+        Container of validation error information
+        See section “ValidateError [Validate]” below
+  block: 1
+  blocks: 1

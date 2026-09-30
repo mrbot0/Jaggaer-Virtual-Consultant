@@ -1,0 +1,39 @@
+id: U.DOC0177.0148
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: serviceAreaInternalName | Mandatory (Y/N): N | Description: Internal name of the geographic region serviced by the supplier. | Mapping on Jaggaer One data model and notes: Valid values are Local, National, or the 2-letter ISO country code for the appropriate service area. See the Integration Country Codes document in the JAGGAER ONE Online Help for valid country codes.
+  Required if ServiceArea element is provided.
+hash: sha256:77b58ee16c6670b9b45d4ad9bc406db8faedb00c37c6b30a86e0e09aa71bc4aa
+words: 65
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/serviceArea
+  section_path: 2.1.1.18
+  page: 28
+  lang: en
+  prev: U.DOC0177.0147
+  next: U.DOC0177.0149
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - serviceAreaInternalName
+    - N
+    - Internal name of the geographic region serviced by the supplier.
+    - |-
+      Valid values are Local, National, or the 2-letter ISO country code for the appropriate service area. See the Integration Country Codes document in the JAGGAER ONE Online Help for valid country codes.
+      Required if ServiceArea element is provided.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

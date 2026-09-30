@@ -1,0 +1,102 @@
+id: U.DOC0177.0512
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: tabella
+text: |-
+  Colonne: Component Filter | Description | Possible values
+  Component Filter: J1DATA | Description: J1 supplier main data (shared among J1 modules) | Possible values: Always included
+  Component Filter: JA_REG | Description: JA registration data | Possible values: N.A.
+  Component Filter: JA_CLASS | Description: JA classification information | Possible values: N.A.
+  Component Filter: JA_DE | Description: JA eVM profile questions | Possible values: List of the DE name to be exported separated by ; (semicolon) e.g: “de.name.1;de.name.2”
+  Special values:
+  * extract all data-elements
+  BASIC: extract all DE belonging to basic eVM forms
+  EXTENDED: extract all DE belonging to extended eVM forms
+  CATEGORY: extract all DE belonging to category eVM forms
+  Component Filter: JI_REG | Description: JI main supplier company data | Possible values: N.A.
+  Component Filter: JI_ADD_REG | Description: JI additional supplier company data | Possible values: N.A.
+  Component Filter: JI_SERVICEAREA | Description: JI supplier service areas | Possible values: N.A.
+  Component Filter: JI_COMMODITYCODE | Description: JI supplier commodity codes | Possible values: N.A.
+  Component Filter: JI_NAICSCODE | Description: JI supplier NAICS codes | Possible values: N.A.
+  Component Filter: JI_CURRENCY | Description: JI supplier currencies | Possible values: N.A.
+  Component Filter: JI_ADDRESS | Description: JI supplier addresses (fulfillment center, remit to, ..) | Possible values: N.A.
+  Component Filter: JI_CONTACT | Description: JI supplier contacts | Possible values: N.A.
+  Component Filter: JI_CLASSIFICATION | Description: JI supplier additional classes and diversity classification | Possible values: N.A.
+  Component Filter: JI_LOCATION | Description: JI supplier locations | Possible values: N.A.
+  Component Filter: JI_CUSTOMELEMENT | Description: JI supplier custom elements | Possible values: N.A.
+  Component Filter: JI_ACCOUNTSPAYABLE | Description: JI supplier accounts payable info | Possible values: N.A.
+hash: sha256:135ba4a6791d6490e2edc024803ddf3a5585f8fffc0d2afeb6ffa7cc0a3b6cdd
+words: 272
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: Component filters [Export of Company Data]
+  section_path: 2.2.1
+  page: 108
+  lang: en
+  prev: U.DOC0177.0511
+  next: U.DOC0177.0513
+table:
+  table: 0
+  headers:
+    - Component Filter
+    - Description
+    - Possible values
+  rows:
+    - - J1DATA
+      - J1 supplier main data (shared among J1 modules)
+      - Always included
+    - - JA_REG
+      - JA registration data
+      - N.A.
+    - - JA_CLASS
+      - JA classification information
+      - N.A.
+    - - JA_DE
+      - JA eVM profile questions
+      - |-
+        List of the DE name to be exported separated by ; (semicolon) e.g: “de.name.1;de.name.2”
+        Special values:
+        * extract all data-elements
+        BASIC: extract all DE belonging to basic eVM forms
+        EXTENDED: extract all DE belonging to extended eVM forms
+        CATEGORY: extract all DE belonging to category eVM forms
+    - - JI_REG
+      - JI main supplier company data
+      - N.A.
+    - - JI_ADD_REG
+      - JI additional supplier company data
+      - N.A.
+    - - JI_SERVICEAREA
+      - JI supplier service areas
+      - N.A.
+    - - JI_COMMODITYCODE
+      - JI supplier commodity codes
+      - N.A.
+    - - JI_NAICSCODE
+      - JI supplier NAICS codes
+      - N.A.
+    - - JI_CURRENCY
+      - JI supplier currencies
+      - N.A.
+    - - JI_ADDRESS
+      - JI supplier addresses (fulfillment center, remit to, ..)
+      - N.A.
+    - - JI_CONTACT
+      - JI supplier contacts
+      - N.A.
+    - - JI_CLASSIFICATION
+      - JI supplier additional classes and diversity classification
+      - N.A.
+    - - JI_LOCATION
+      - JI supplier locations
+      - N.A.
+    - - JI_CUSTOMELEMENT
+      - JI supplier custom elements
+      - N.A.
+    - - JI_ACCOUNTSPAYABLE
+      - JI supplier accounts payable info
+      - N.A.
+  block: 1
+  blocks: 1

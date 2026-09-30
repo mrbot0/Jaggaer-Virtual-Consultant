@@ -1,0 +1,43 @@
+id: U.DOC0178.0116
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: startOnExecution | Description: Indicates whether the contract start date is (true) or is not (false) to be set to the date when the contract reaches “Executed: In Effect” status.
+  For eSignature contracts, this is the date and time that the final signer signs the contract, or a signed contract is manually uploaded.
+  If this field is set to true, you must still enter a startDate.
+  The entered start date is provisional until the contract reaches Executed: In Effect status, at which time the solution replaces the entered start date with that date.
+  If the contract requires a manual upload, you can update the start and end dates at that time.
+hash: sha256:8041bb24b97855411e54b49a85379a0d09145b635ca3d9e10e47dbbd279fb787
+words: 111
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ContractDates [Import]
+  section_path: 2.2.1.4
+  page: 25
+  lang: en
+  prev: U.DOC0178.0115
+  next: U.DOC0178.0117
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - startOnExecution
+    - ""
+    - |-
+      Indicates whether the contract start date is (true) or is not (false) to be set to the date when the contract reaches “Executed: In Effect” status.
+      For eSignature contracts, this is the date and time that the final signer signs the contract, or a signed contract is manually uploaded.
+      If this field is set to true, you must still enter a startDate.
+      The entered start date is provisional until the contract reaches Executed: In Effect status, at which time the solution replaces the entered start date with that date.
+      If the contract requires a manual upload, you can update the start and end dates at that time.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

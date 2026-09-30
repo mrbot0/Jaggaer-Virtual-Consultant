@@ -1,0 +1,39 @@
+id: U.DOC0177.0390
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: customElementIdentifier | Mandatory (Y/N): N | Mapping on Jaggaer One data model and notes: Unique identifier for the custom element. Must match a previously defined ID for a custom element. This ID is static and cannot be edited in your system.
+  You must provide the CustomElementIdentifier, the DisplayName, or both. However, if the DisplayName that you provide does not match the display name in your system, the custom element is not updated. Therefore, we recommend that you provide the CustomElementIdentifier and omit the DisplayName.
+hash: sha256:331689ae2a8d1e68d267c8fee7c96a038a47e9724c688499550bdff863375f1e
+words: 85
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/customElementList/customElement
+  section_path: 2.1.1.100
+  page: 73
+  lang: en
+  prev: U.DOC0177.0389
+  next: U.DOC0177.0391
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - customElementIdentifier
+    - N
+    - ""
+    - |-
+      Unique identifier for the custom element. Must match a previously defined ID for a custom element. This ID is static and cannot be edited in your system.
+      You must provide the CustomElementIdentifier, the DisplayName, or both. However, if the DisplayName that you provide does not match the display name in your system, the custom element is not updated. Therefore, we recommend that you provide the CustomElementIdentifier and omit the DisplayName.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

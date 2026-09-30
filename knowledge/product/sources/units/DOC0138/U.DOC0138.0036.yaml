@@ -1,0 +1,17 @@
+id: U.DOC0138.0036
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: From the Support Notes below we can deduce that the display name for acctElement10 is “Account Code.”). Notice that in this activity there is also a flag that would allow an approver with sourcing permissions to initiate a sourcing event here. Note that the rule includes a component that says the request would stop ONLY if there is no credit card number – in other words, if the organization is using pCard and this requisition is a credit card purchase, it gets to skip this step. <Activity name="Budget Manager Approval"> <ActivityType>manual</ActivityType> <StepRef name="Budget Manager Approval" /> <Rule><![CDATA[Document.RequiresCustomFieldValueApproval("acctElement10") == true && [DocLine.CreditCardNumber = ""]]]></Rule> <FolderSelectionRule>CustomFieldValue</FolderSelectionRule> <Flag>AllowCreateSourcingEvent</Flag> <Attribute name="wfFolderRuleCustomFieldName"> <AttrValue lang="default">acctElement10</AttrValue> </Attribute> <Attribute name="wfActivitySupportNote"> <AttrValue lang="default">Budget manager approves based on Account Code segment</AttrValue> </Attribute> <Attribute name="wfActivityHelp"> <AttrValue lang="default">Budget manager approves based on Account Code segment.</AttrValue> </Attribute> </Activity>
+hash: sha256:10b29a3cc8286efa2a98bce7844353a558854f80807b9d6b9580d1223d4fc19c
+words: 135
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: BUDGET APPROVALS
+  section: BUDGET APPROVALS
+  section_path: "8"
+  page: null
+  lang: en
+  prev: U.DOC0138.0035
+  next: U.DOC0138.0037

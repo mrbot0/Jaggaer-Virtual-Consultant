@@ -1,0 +1,68 @@
+id: U.DOC0171.0375
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Colonne: Code | Description Code: 0 | Description: operation completed successfully Code: 1 | Description: operation completed successfully with warnings as detailed in the returned message Code: -500 | Description: Error occurred while saving RFQ header/settings Code: -501 | Description: Error occurred while saving Additional Information/Data Elements Code: -502 | Description: Unable to save Attachments Code: -503 | Description: Error occurred while saving Supplier Code: -504 | Description: Error occurred while saving Technical or Qualification Envelope Code: -505 | Description: Error occurred while saving Commercial Envelope Code: -506 | Description: Unable to remove RFx Code: -507 | Description: Unable to create RFx from template Code: -508 | Description: Error occurred while saving Evaluation Group Code: -509 | Description: Error saving RFx e-mail recipients Code: -510 | Description: Error creating RFx Code: -511 | Description: Unable to save Opening Committee Code: -512 | Description: Error duplicating RFx Code: -996 | Description: Invalid Request Object (Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission). NOTE: This generic error code can show in the error message the sub-code 132(Attach.fileBase64). This means that in the platform there is an existing version of the same attachment you are trying to import in the Rfx request and it cannot be overwritten, or you are trying to perform an UPDATE_RESET operation. Generally, this occurs because the Rfx is already running. Instead, when the Rfx is “to be published” all the attachments can be overwritten or it is a seller attachment and seller attachments are not allowed in that Rfq state."
+hash: sha256:d82966695c0713bd5eaeb9e60fdd5834276c9893080037d7c0d6114d7ec10f0a
+words: 264
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Error codes
+  section_path: 2.1.3.1
+  page: 6
+  lang: en
+  prev: U.DOC0171.0374
+  next: U.DOC0171.0376
+table:
+  table: 0
+  headers:
+    - Code
+    - Description
+  rows:
+    - - "0"
+      - operation completed successfully
+    - - "1"
+      - operation completed successfully with warnings as detailed in the returned message
+    - - "-500"
+      - Error occurred while saving RFQ header/settings
+    - - "-501"
+      - Error occurred while saving Additional Information/Data Elements
+    - - "-502"
+      - Unable to save Attachments
+    - - "-503"
+      - Error occurred while saving Supplier
+    - - "-504"
+      - Error occurred while saving Technical or Qualification Envelope
+    - - "-505"
+      - Error occurred while saving Commercial Envelope
+    - - "-506"
+      - Unable to remove RFx
+    - - "-507"
+      - Unable to create RFx from template
+    - - "-508"
+      - Error occurred while saving Evaluation Group
+    - - "-509"
+      - Error saving RFx e-mail recipients
+    - - "-510"
+      - Error creating RFx
+    - - "-511"
+      - Unable to save Opening Committee
+    - - "-512"
+      - Error duplicating RFx
+    - - "-996"
+      - |-
+        Invalid Request Object (Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission).
+        NOTE: This generic error code can show in the error message the sub-code 132(Attach.fileBase64). This means that in the platform there is an existing version of the same attachment you are trying to import in the Rfx request and it cannot be overwritten, or you are trying to perform an UPDATE_RESET operation. Generally, this occurs because the Rfx is already running. Instead, when the Rfx is “to be published” all the attachments can be overwritten or it is a seller attachment and seller attachments are not allowed in that Rfq state.
+    - - "-997"
+      - Unauthorized Method (Web Service method isn’t configured to be executed)
+    - - "-998"
+      - Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+    - - "-999"
+      - Generic exception
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

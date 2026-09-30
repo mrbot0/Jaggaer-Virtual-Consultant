@@ -1,0 +1,50 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-36
+section: 2.2.1.37
+section_title: UNSPSC [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:CODE
+    label: code
+    labels:
+      - code
+      - Code
+    technical_name: CODE
+    section: 2.2.1.37
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Standardized commodity code value, as specified by http://www.unspsc.org
+      (for example, 43191501 – Mobile phones).
+
+      If the restrictProductApplicability attribute is set to true, then this
+      contract can only apply to those items that match this UNSPSC code.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.37
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.37#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: code
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.63
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.63#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Code
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 776

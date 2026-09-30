@@ -1,0 +1,17 @@
+id: U.DOC0138.0059
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: regola
+text: The FormType names listed within the rule seen below are specific to the organization, so the rule would need to be re-written for other clients. <Activity name="Mixed Order Auto-Return"> <ActivityType>automated</ActivityType> <StepRef name="Mixed Order Auto-Return" /> <FolderRef name="Auto-Return" /> <Rule><![CDATA[([Product.FormType ~ "/NonPO/"] && [Product.FormType !~ "/NonPO/"]) || ([Product.FormType ~ "/NoDistro/"] && [Product.FormType !~ "/NoDistro/"]) || ([Product.FormType ~ "/AutoInv/"] && [Product.FormType !~ "/AutoInv/"])]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> <Flag>AllowCreateSourcingEvent</Flag> <Attribute name="wfActivitySupportNote"> <AttrValue lang="default">Items that do not create POs cannot be mixed with items that do create POs.
+hash: sha256:8cf74bca7f2a852ae5b078535a62f67fcd819524ca4925c1d8690c6516413221
+words: 81
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: MIXED ORDER AUTO-RETURN
+  section: MIXED ORDER AUTO-RETURN
+  section_path: "15"
+  page: null
+  lang: en
+  prev: U.DOC0138.0058
+  next: U.DOC0138.0060

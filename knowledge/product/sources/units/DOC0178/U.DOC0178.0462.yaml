@@ -1,0 +1,81 @@
+id: U.DOC0178.0462
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: restrictProductAppliesTo | Description: Indicates whether access to this contact is (true) or is not (false) to be restricted based on settings contained in this element.
+  Attribute: grantAccessViaDeptAndRole | Description: Indicates whether access to this contact is (true) or is not (false) to be granted using roles, departments, and business units.
+  When this field is set to true:
+  if roleList, departmentList and businessUnitList are empty or set to all, access is granted to all user.
+  Otherwise access is granted to all user matching criteria provided in to roleList, departmentList and businessUnitList
+  When this field is set to false, access is granted only to user listed in userList.
+  Attribute: userList | Description: List of users allowed to access this contract.
+  The user is allowed to access the contract even if he or she does not meet the criteria specified in roleList, departmentList and businessUnitList.
+  See section “User [Export]” below
+  Attribute: groupAppliesTo | Description: Container for role, department and businessUnit list specifying group access criteria.
+  See section “GroupAppliesTo [Export]” below
+  Attribute: unspscList | Description: Standardized commodity code value list.
+  See section “UNSPSC [Export]” below
+  Attribute: fulfillmentCenterList | Description: List of name or label of fulfillment centers to which this contract can apply
+  See section “FulfillmentCenter [Export]” below
+  Attribute: productSKUList | Description: List of manufacturer’s part number (SKU code) of a product to which this contract can apply.
+  See section “ProductSKU [Export]” below.
+hash: sha256:601e8555aa5df68249c942ef5853dbe3820d43165602a917dd7553ef799c6311
+words: 238
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: AppliesTo [Export]
+  section_path: 2.3.3.32
+  page: 105
+  lang: en
+  prev: U.DOC0178.0461
+  next: U.DOC0178.0463
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - restrictProductAppliesTo
+      - Indicates whether access to this contact is (true) or is not (false) to be restricted based on settings contained in this element.
+      - ""
+    - - grantAccessViaDeptAndRole
+      - |-
+        Indicates whether access to this contact is (true) or is not (false) to be granted using roles, departments, and business units.
+        When this field is set to true:
+        if roleList, departmentList and businessUnitList are empty or set to all, access is granted to all user.
+        Otherwise access is granted to all user matching criteria provided in to roleList, departmentList and businessUnitList
+        When this field is set to false, access is granted only to user listed in userList.
+      - ""
+    - - userList
+      - |-
+        List of users allowed to access this contract.
+        The user is allowed to access the contract even if he or she does not meet the criteria specified in roleList, departmentList and businessUnitList.
+        See section “User [Export]” below
+      - ""
+    - - groupAppliesTo
+      - |-
+        Container for role, department and businessUnit list specifying group access criteria.
+        See section “GroupAppliesTo [Export]” below
+      - ""
+    - - unspscList
+      - |-
+        Standardized commodity code value list.
+        See section “UNSPSC [Export]” below
+      - ""
+    - - fulfillmentCenterList
+      - |-
+        List of name or label of fulfillment centers to which this contract can apply
+        See section “FulfillmentCenter [Export]” below
+      - ""
+    - - productSKUList
+      - |-
+        List of manufacturer’s part number (SKU code) of a product to which this contract can apply.
+        See section “ProductSKU [Export]” below.
+      - ""
+  block: 1
+  blocks: 1

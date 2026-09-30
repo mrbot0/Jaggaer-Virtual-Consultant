@@ -1,0 +1,37 @@
+id: U.DOC0058.0444
+doc: S.STD.XSC.DOC.0058
+doc_id: ji-plt-2305-jaggaer-eproap-ppq-docx-4d68cf0d
+type: procedura
+text: |-
+  C. “Holding” JAGGAER Marketplace Invoices during Fiscal Year Cutover
+  1. This uses the “Accounting Date” on the Invoice/Credit Memo which is pre-populated with the date the draft document was created.
+  2. Invoice Workflow Steps:
+  3. Whenever possible Advanced Dynamic Workflow (ADW) should be used to create the workflow step in order to give the System Administrator full control of the process. If the step requires the checking of advanced criteria, the workflow may need to be hardcoded, requiring SQ Support to “activate” the workflow each year.
+  4. Fiscal Year workflow steps would be “activated” at the start of the “Cutover” period and “inactivated” when the Fiscal Year rollover is complete.
+  5. “Fiscal Year Cutover” ADW step: Sends any Invoice/Credit Memo with an Accounting Date between June 15th and July 15th(from above example) to a workflow folder for review by Accounts Payable/Purchasing.
+  6. The “Fiscal Year Cutover” Invoice workflow step would hold the Invoice/Credit Memo at the start of Invoice workflow to limit match exceptions and any other approval/review steps.
+  7. The workflow Approvers can review these documents based on when the goods/services will be received to either allow the document to continue (with or without edits) or hold the documents until after all systems are ready for New Fiscal Year processing (cutover complete).
+  8. Once the New Fiscal Year cutover is complete, the Invoice Fiscal Year related workflow step(s) can be inactivated or updated to evaluate for the next Fiscal Year Cutover.
+hash: sha256:265f56cc8297f738768427eb16ed241b342b6ff5bbcf55410e1ba8a92e24d666
+words: 242
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0058
+  chapter: Best Practices
+  section: C. “Holding” JAGGAER Marketplace Invoices during Fiscal Year Cutover
+  section_path: 13.0.3.7
+  page: 74
+  lang: en
+  prev: U.DOC0058.0443
+  next: U.DOC0058.0445
+steps:
+  - This uses the “Accounting Date” on the Invoice/Credit Memo which is pre-populated with the date the draft document was created.
+  - "Invoice Workflow Steps:"
+  - Whenever possible Advanced Dynamic Workflow (ADW) should be used to create the workflow step in order to give the System Administrator full control of the process. If the step requires the checking of advanced criteria, the workflow may need to be hardcoded, requiring SQ Support to “activate” the workflow each year.
+  - Fiscal Year workflow steps would be “activated” at the start of the “Cutover” period and “inactivated” when the Fiscal Year rollover is complete.
+  - "“Fiscal Year Cutover” ADW step: Sends any Invoice/Credit Memo with an Accounting Date between June 15th and July 15th(from above example) to a workflow folder for review by Accounts Payable/Purchasing."
+  - The “Fiscal Year Cutover” Invoice workflow step would hold the Invoice/Credit Memo at the start of Invoice workflow to limit match exceptions and any other approval/review steps.
+  - The workflow Approvers can review these documents based on when the goods/services will be received to either allow the document to continue (with or without edits) or hold the documents until after all systems are ready for New Fiscal Year processing (cutover complete).
+  - Once the New Fiscal Year cutover is complete, the Invoice Fiscal Year related workflow step(s) can be inactivated or updated to evaluate for the next Fiscal Year Cutover.
+procedure:
+  title: C. “Holding” JAGGAER Marketplace Invoices during Fiscal Year Cutover

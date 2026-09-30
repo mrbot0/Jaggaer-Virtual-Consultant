@@ -1,0 +1,66 @@
+id: U.DOC0085.0079
+doc: S.STD.XSC.DOC.0085
+doc_id: commodity-codes-setup-docx-3fd557c2
+type: tabella
+text: "One of three values: JAGGAER defined, informative. For IMPORT: No Modification Needed: Reset: | JAGGAER defined, informative. For IMPORT: No Modification Needed: Reset the Mapping to the default value JAGGAER defined, informative. For IMPORT: No Modification Needed: Modify: | JAGGAER defined, informative. For IMPORT: No Modification Needed: Override the default value and map to the “Overridden Value” provided JAGGAER defined, informative. For IMPORT: No Modification Needed: *: | JAGGAER defined, informative. For IMPORT: No Modification Needed: Do nothing. Leave the line as it currently is."
+hash: sha256:0a6201a1a6103107f8c4cd8547021c4ce439dcaababacbb8ec8f9720cf843518
+words: 85
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0085
+  chapter: commodity-codes-setup-docx-3fd557c2
+  section: "Step 2: Prepare your Category Map Import File"
+  section_path: 0.5.2
+  page: 18
+  lang: en
+  prev: U.DOC0085.0078
+  next: U.DOC0085.0080
+table:
+  table: 1
+  headers:
+    - ""
+    - JAGGAER Category Id
+    - "JAGGAER defined, informative. For IMPORT: No Modification Needed"
+    - "JAGGAER defined, informative. For IMPORT: No Modification Needed"
+  rows:
+    - - ""
+      - JAGGAER Category Tree
+      - "JAGGAER defined, informative. For IMPORT: No Modification Needed"
+      - "JAGGAER defined, informative. For IMPORT: No Modification Needed"
+    - - ""
+      - JAGGAER Category Name
+      - "JAGGAER defined, informative. For IMPORT: No Modification Needed"
+      - "JAGGAER defined, informative. For IMPORT: No Modification Needed"
+    - - ""
+      - JAGGAER UNSPSC
+      - "JAGGAER defined, informative. For IMPORT: No Modification Needed"
+      - "JAGGAER defined, informative. For IMPORT: No Modification Needed"
+    - - ""
+      - Effective Value
+      - "Informative for Export. Displays the current mapped value. For Import For IMPORT: No Modification Needed, this can be BLANK."
+      - "Informative for Export. Displays the current mapped value. For Import For IMPORT: No Modification Needed, this can be BLANK."
+    - - ""
+      - Overridden Value
+      - "For IMPORT: Required. This is the value (Clients Commodity Code) that you will be mapping the JAGGAER Category & UNSPSC to."
+      - "For IMPORT: Required. This is the value (Clients Commodity Code) that you will be mapping the JAGGAER Category & UNSPSC to."
+    - - ""
+      - Action
+      - "For IMPORT: Required. One of three values:"
+      - "For IMPORT: Required. One of three values:"
+    - - ""
+      - ""
+      - "Reset:"
+      - Reset the Mapping to the default value
+    - - ""
+      - ""
+      - "Modify:"
+      - Override the default value and map to the “Overridden Value” provided
+    - - ""
+      - ""
+      - "*:"
+      - Do nothing. Leave the line as it currently is.
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

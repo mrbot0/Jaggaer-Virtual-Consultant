@@ -1,0 +1,149 @@
+id: U.DOC0171.0398
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Component filter: SELLER_ATTACHMENTS | Description: Extracts external attachments info Component filter: INSTRUCTIONAL_ATTACHMENTS | Description: Extracts instructional attachments info (available from version 12.3.02) Component filter: AWARD_ATTACHMENTS | Description: Extracts award attachments info Component filter: PUBLISH_RESULT_DOCUMENTS | Description: Extracts publish results documents info Component filter: QUAL_ENVELOPE | Description: Extracts qualification envelope configuration | Possible values: “NO_INSTRUCTIONAL_ATTACH” to avoid extracting information about instructional attachment. Available from version 12_3_02. Component filter: TECH_ENVELOPE | Description: Extracts technical envelope configuration Component filter: COMM_ENVELOPE | Description: Extracts commercial envelope configuration | Possible values: “PR_INFO” to export PR information codes RFx commercial parameters come from. Available from version 12_2_01. “NO_MC_INFO” to avoid extracting information about multi column parameters. Available from version 12_3_02. “NO_INSTRUCTIONAL_ATTACH” to avoid extracting information about instructional attachment. Available from version 12_3_02. “MC_FORMULA” to export the formula field and its related fields for the multi columns of type NUMERIC_FORMULA or NUMERIC_SR_FORMULA. “MC_REDEF_VAL” to export the redefined default values for the multi columns. Component filter: SUPPLIERS | Description: Extracts invited suppliers | Possible values: “USERS” to export the list of all users that belong to the supplier company and have the rights to access the details of the Rfx (even if not explicitly added to the contact list) “ONLY_CONTACT_USERS” to export the list of users belonging to the supplier company explicitly added to the contact list in the Rfx “IDENTIFIERS” to export supplier fiscal data Component filter: OFFERS | Description: Extracts supplier offers (already submitted and under evaluation) | Possible values: “NO_MC_INFO” to avoid extracting information about multi column parameter answers. Available from version 12_3_02. “NO_ATTACH” to avoid extracting information about offer attachments. Available from version 12_3_02. “ATTACH_COUNT_ONLY” to extract just the number and the total size of defined attachments. Available from version 12_3_02. “CONSORTIUM” to extract information about the consortium (if any) in the answer."
+hash: sha256:acdef60f35c63bff3dad288f308fcbd059e7de0a1eb2972fa56f8c2fb59aa450
+words: 299
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Component Filters
+  section_path: 2.3.1
+  page: 7
+  lang: en
+  prev: U.DOC0171.0397
+  next: U.DOC0171.0399
+table:
+  table: 0
+  headers:
+    - Component filter
+    - Description
+    - Possible values
+  rows:
+    - - ADDITIONAL_INFO
+      - Extracts RfX additional info
+      - |-
+        List of data element names information will be retrieved for.
+        To export more than one named data element, the component filter must be repeated with all requested values or a semicolon separated list of values can be provided in a single component filter (both strategies can be applied together).
+        In order to ask for all available data elements, the <value> element can be left blank or the special value of an asterisk (*) must be used.
+        It is possible to put the partial name (case sensitive) of the data element using the “*” as wildcard. Examples:
+        ABCD* to extract all the data elements having the name that starts with ABCD
+        *ABCD* to extract all the data elements having the name that contains the string ABCD
+        *ABCD to extract all the data elements having the name that ends with ABCD
+        *AB*CD* to extract all the data elements having the name that contains the strings AB and CD
+        Validation against configuration parameter: maxNumDataElementsForFilter (Maximum number of unique data elements for filter after all wild-cards have been resolved (default=250, no more than 1000) is performed.
+        In addition, it is possible to ask for only data elements that are explicitly defined for the specific RFx typology. In order to ask for such data elements, the <value> element must contain the special value “FORM_ONLY”
+    - - RFX_PLANNING
+      - Extracts RfX planning info
+      - N.A. [DEPRECATED]
+    - - RFX_CATEGORIES
+      - Extracts categories
+      - N.A.
+    - - BUYER_ATTACHMENTS
+      - Extracts internal attachments info
+      - “ATTACH_COUNT_ONLY” to extract just the number and the total size of defined attachments. Available from version 12_3_02.
+    - - SELLER_ATTACHMENTS
+      - Extracts external attachments info
+      - ""
+    - - INSTRUCTIONAL_ATTACHMENTS
+      - Extracts instructional attachments info (available from version 12.3.02)
+      - ""
+    - - AWARD_ATTACHMENTS
+      - Extracts award attachments info
+      - ""
+    - - PUBLISH_RESULT_DOCUMENTS
+      - Extracts publish results documents info
+      - ""
+    - - QUAL_ENVELOPE
+      - Extracts qualification envelope configuration
+      - “NO_INSTRUCTIONAL_ATTACH” to avoid extracting information about instructional attachment. Available from version 12_3_02.
+    - - TECH_ENVELOPE
+      - Extracts technical envelope configuration
+      - ""
+    - - COMM_ENVELOPE
+      - Extracts commercial envelope configuration
+      - |-
+        “PR_INFO” to export PR information codes RFx commercial parameters come from. Available from version 12_2_01.
+        “NO_MC_INFO” to avoid extracting information about multi column parameters. Available from version 12_3_02.
+        “NO_INSTRUCTIONAL_ATTACH” to avoid extracting information about instructional attachment. Available from version 12_3_02.
+        “MC_FORMULA” to export the formula field and its related fields for the multi columns of type NUMERIC_FORMULA or NUMERIC_SR_FORMULA.
+        “MC_REDEF_VAL” to export the redefined default values for the multi columns.
+    - - SUPPLIERS
+      - Extracts invited suppliers
+      - |-
+        “USERS” to export the list of all users that belong to the supplier company and have the rights to access the details of the Rfx (even if not explicitly added to the contact list)
+        “ONLY_CONTACT_USERS” to export the list of users belonging to the supplier company explicitly added to the contact list in the Rfx
+        “IDENTIFIERS” to export supplier fiscal data
+    - - OFFERS
+      - Extracts supplier offers (already submitted and under evaluation)
+      - |-
+        “NO_MC_INFO” to avoid extracting information about multi column parameter answers. Available from version 12_3_02.
+        “NO_ATTACH” to avoid extracting information about offer attachments. Available from version 12_3_02.
+        “ATTACH_COUNT_ONLY” to extract just the number and the total size of defined attachments. Available from version 12_3_02.
+        “CONSORTIUM” to extract information about the consortium (if any) in the answer.
+        “PRE_EVALUATION_INFO” to extract information about accept/reject offer in pre-evaluation.
+        N.B.: if both “NO_ATTACH” and “ATTACH_COUNT_ONLY” values are specified, system behaves as if “NO_ATTACH” was requested
+        “SIGNED” to extract information about signed attachment documents.
+    - - EVALUATION_GROUPS
+      - Extracts the list of RFX evaluation groups
+      - N.A.
+    - - EMAIL_RECIPIENTS
+      - Extracts the list of RFX email recipients
+      - N.A.
+    - - EVAL_ENVELOPE_COMMENTS
+      - Extracts the evaluation envelope comments
+      - |-
+        “COUNT_ONLY” to extract only the number of comments.
+        “ALL” to extract all data about the comments (attachments included) .
+        “NO_ATTACH” to extract all data about the comments, leaving out the attachments.
+        Default value is “COUNT_ONLY”.
+    - - EVAL_SUPPLIER_ENVELOPE_COMMENTS
+      - Extracts the evaluation supplier envelope comments
+      - ""
+    - - EVAL_ANSWER_PARAM_COMMENTS
+      - Extracts the evaluation answer comments (parameter level)
+      - ""
+    - - AWARDING_COMMENTS
+      - Extracts the general awarding comments (final evaluation)
+      - ""
+    - - AWARDING_SUPPLIER_COMMENTS
+      - Extracts the supplier awarding comments
+      - ""
+    - - PR_DOCUMENT_TYPE
+      - Extracts the PR document type
+      - ""
+    - - OFFLINE_ANSWERS
+      - Extracts the RfX offline answers
+      - ""
+    - - SUPPLIER_RESPONSE_COUNTERS
+      - Extracts a list of counters related to the responses of the invited suppliers [see section “Supplier Response Counters”]
+      - |-
+        LAST_ROUND: counters related to the last round.
+        ALL_ROUNDS: counters related to all rounds.
+        It is possible to use more values using the character “;” as separator.
+        Default value is LAST_ROUND.
+    - - OPENING_COMMITTEES
+      - Extracts the list of RFX opening committees
+      - N.A.
+    - - BUSINESS_UNITS
+      - Extracts the list of business units
+      - N.A.
+    - - REGIONS
+      - Extracts the list of regions
+      - N.A.
+    - - ADDITIONAL_TERMS
+      - Extracts additional terms
+      - N.A.
+    - - AWARD_ADD_INFO
+      - Extracts Rfx award additional info
+      - Refer to ADDITIONAL_INFO
+    - - TIOC
+      - Extracts Rfx Tioc (Take It or Compete) data
+      - N.A.
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 4

@@ -1,0 +1,37 @@
+id: U.DOC0168.0250
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: riga-tabella-campi
+text: |-
+  Attribute: fileBase64 | Mandatory (Y/N): At least one between fileBase64 and attachmentURL must be defined | Description: File content to be used to define attachment.
+  If not provided, the field attachmentURL is used.
+hash: sha256:2d7a472f30acc806d75722c5d6d0bade9e630ad7a3c1e8170ef8aed24602c3e9
+words: 33
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: Attachment [Import JIOrder method]
+  section_path: 2.3.1.9
+  page: 77
+  lang: en
+  prev: U.DOC0168.0249
+  next: U.DOC0168.0251
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - fileBase64
+    - At least one between fileBase64 and attachmentURL must be defined
+    - |-
+      File content to be used to define attachment.
+      If not provided, the field attachmentURL is used.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

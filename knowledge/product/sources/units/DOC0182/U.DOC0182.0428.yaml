@@ -1,0 +1,48 @@
+id: U.DOC0182.0428
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: URL | / esop/jint/api/public/ji/v1/purchaserequests/update
+  URL: Http Method | / esop/jint/api/public/ji/v1/purchaserequests/update: POST
+  URL: Header Parameters | / esop/jint/api/public/ji/v1/purchaserequests/update: Authorization (see “JINT WS Development_Kit - Web Services Overview” document)
+  URL: Body | / esop/jint/api/public/ji/v1/purchaserequests/update: JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+  URL: Response format | / esop/jint/api/public/ji/v1/purchaserequests/update: JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+  URL: Return Codes | / esop/jint/api/public/ji/v1/purchaserequests/update: 200 operation processed. See response content for results
+  400 wrong or missing data in the request
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:e3dd2b5c7c03fd040ad971f21a4c5de0731ed6f4a718166b1e2545a1802e14ff
+words: 116
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Update Purchase Request [PR Update]
+  section_path: 2.6.1.4
+  page: 28
+  lang: en
+  prev: U.DOC0182.0427
+  next: U.DOC0182.0429
+table:
+  table: 0
+  headers:
+    - URL
+    - / esop/jint/api/public/ji/v1/purchaserequests/update
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization (see “JINT WS Development_Kit - Web Services Overview” document)
+    - - Body
+      - JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+    - - Response format
+      - JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+    - - Return Codes
+      - |-
+        200 operation processed. See response content for results
+        400 wrong or missing data in the request
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

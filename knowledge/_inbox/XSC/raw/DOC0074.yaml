@@ -1,0 +1,5735 @@
+doc: S.STD.XSC.DOC.0074
+scope: XSC
+extracted_at: 2026-09-30T04:30:32.420Z
+tier: T0
+stats:
+  units: 540
+  extracted_units: 157
+  document_candidates: 0
+  needs_llm: 109
+  t0_complete: 48
+  by_candidate:
+    FLD: 132
+    INV: 1
+    KEY: 9
+    CFG: 9
+    GLS: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 39491
+  sessions:
+    - n: 1
+      tokens: 39491
+      batches: 6
+      items: 109
+      batch_items:
+        - - R.DOC0074.0014
+          - R.DOC0074.0015
+          - R.DOC0074.0016
+          - R.DOC0074.0036
+          - R.DOC0074.0084
+          - R.DOC0074.0099
+          - R.DOC0074.0102
+          - R.DOC0074.0105
+          - R.DOC0074.0115
+          - R.DOC0074.0120
+          - R.DOC0074.0124
+          - R.DOC0074.0127
+          - R.DOC0074.0130
+          - R.DOC0074.0131
+          - R.DOC0074.0134
+          - R.DOC0074.0140
+          - R.DOC0074.0147
+          - R.DOC0074.0148
+          - R.DOC0074.0155
+          - R.DOC0074.0156
+        - - R.DOC0074.0157
+          - R.DOC0074.0160
+          - R.DOC0074.0161
+          - R.DOC0074.0164
+          - R.DOC0074.0165
+          - R.DOC0074.0169
+          - R.DOC0074.0171
+          - R.DOC0074.0172
+          - R.DOC0074.0177
+          - R.DOC0074.0182
+          - R.DOC0074.0183
+          - R.DOC0074.0188
+          - R.DOC0074.0191
+          - R.DOC0074.0192
+          - R.DOC0074.0196
+          - R.DOC0074.0197
+          - R.DOC0074.0200
+          - R.DOC0074.0201
+          - R.DOC0074.0205
+          - R.DOC0074.0206
+        - - R.DOC0074.0209
+          - R.DOC0074.0210
+          - R.DOC0074.0213
+          - R.DOC0074.0214
+          - R.DOC0074.0217
+          - R.DOC0074.0220
+          - R.DOC0074.0223
+          - R.DOC0074.0224
+          - R.DOC0074.0228
+          - R.DOC0074.0232
+          - R.DOC0074.0233
+          - R.DOC0074.0239
+          - R.DOC0074.0241
+          - R.DOC0074.0245
+          - R.DOC0074.0248
+          - R.DOC0074.0251
+          - R.DOC0074.0265
+          - R.DOC0074.0289
+          - R.DOC0074.0294
+          - R.DOC0074.0297
+        - - R.DOC0074.0300
+          - R.DOC0074.0314
+          - R.DOC0074.0319
+          - R.DOC0074.0334
+          - R.DOC0074.0337
+          - R.DOC0074.0349
+          - R.DOC0074.0350
+          - R.DOC0074.0353
+          - R.DOC0074.0357
+          - R.DOC0074.0363
+          - R.DOC0074.0366
+          - R.DOC0074.0369
+          - R.DOC0074.0370
+          - R.DOC0074.0371
+          - R.DOC0074.0375
+          - R.DOC0074.0380
+          - R.DOC0074.0383
+          - R.DOC0074.0386
+          - R.DOC0074.0387
+          - R.DOC0074.0398
+        - - R.DOC0074.0404
+          - R.DOC0074.0407
+          - R.DOC0074.0410
+          - R.DOC0074.0411
+          - R.DOC0074.0412
+          - R.DOC0074.0419
+          - R.DOC0074.0422
+          - R.DOC0074.0425
+          - R.DOC0074.0433
+          - R.DOC0074.0438
+          - R.DOC0074.0441
+          - R.DOC0074.0446
+          - R.DOC0074.0450
+          - R.DOC0074.0459
+          - R.DOC0074.0463
+          - R.DOC0074.0470
+          - R.DOC0074.0476
+          - R.DOC0074.0481
+          - R.DOC0074.0491
+          - R.DOC0074.0497
+        - - R.DOC0074.0502
+          - R.DOC0074.0511
+          - R.DOC0074.0517
+          - R.DOC0074.0525
+          - R.DOC0074.0527
+          - R.DOC0074.0531
+          - R.DOC0074.0532
+          - R.DOC0074.0536
+          - R.DOC0074.0538
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0074.0009
+    source_unit: U.DOC0074.0009
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: TSM Supplier Import Utility
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Therefore, the customer's org
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0009
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 33
+  - raw_id: R.DOC0074.0010
+    source_unit: U.DOC0074.0010
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: TSM Supplier Import Utility
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following two items
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0010
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0074.0012
+    source_unit: U.DOC0074.0012
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Notes on TSM Supplier Import
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: ERP type for Supplier manager org's ERP System
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0012
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0074.0014
+    source_unit: U.DOC0074.0014
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Notes on TSM Supplier Import
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0014
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 22
+  - raw_id: R.DOC0074.0015
+    source_unit: U.DOC0074.0015
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Notes on TSM Supplier Import
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0015
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 52
+  - raw_id: R.DOC0074.0016
+    source_unit: U.DOC0074.0016
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Notes on TSM Supplier Import
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: you are loading all brand new suppliers
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0016
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 31
+  - raw_id: R.DOC0074.0017
+    source_unit: U.DOC0074.0017
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Notes on TSM Supplier Import
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: you
+      modality: raccomandazione
+      condition: you are trying to update existing suppliers
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0017
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0074.0036
+    source_unit: U.DOC0074.0036
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: "1."
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0036
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 33
+  - raw_id: R.DOC0074.0040
+    source_unit: U.DOC0074.0040
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: "1."
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "- Data Options This"
+      modality: raccomandazione
+      condition: the data should be posted to the POST URL at the top of the screen, or e-mailed as an attachment
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0040
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0074.0041
+    source_unit: U.DOC0074.0041
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: "1."
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: e-mail address
+      modality: obbligo-condizionale
+      condition: the e-mail option is selected
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0041
+      mandatory:
+        kind: conditional
+        when: the e-mail option is selected
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0074.0051
+    source_unit: U.DOC0074.0051
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: How to verify results in the site
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: errored entries
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0051
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0074.0053
+    source_unit: U.DOC0074.0053
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: How to verify results in the site
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: All suppliers
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0053
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0074.0059
+    source_unit: U.DOC0074.0059
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Section Information
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0059
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0074.0063
+    source_unit: U.DOC0074.0063
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Section Information
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: External ID as configured on the custom
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0063
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0074.0067
+    source_unit: U.DOC0074.0067
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Section Information
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: There
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0067
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0074.0084
+    source_unit: U.DOC0074.0084
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Section Information
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0084
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 8
+  - raw_id: R.DOC0074.0094
+    source_unit: U.DOC0074.0094
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - INV
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: SQIN
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0074.0094
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0074.0099
+    source_unit: U.DOC0074.0099
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - KEY
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0074.0099
+      reason:
+        kind: integration
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0074.0102
+    source_unit: U.DOC0074.0102
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0102
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0105
+    source_unit: U.DOC0074.0105
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0105
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0110
+    source_unit: U.DOC0074.0110
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: then this field
+      modality: obbligo-condizionale
+      condition: so
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0110
+      mandatory:
+        kind: conditional
+        when: so
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0074.0115
+    source_unit: U.DOC0074.0115
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0115
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0074.0118
+    source_unit: U.DOC0074.0118
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0118
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0074.0120
+    source_unit: U.DOC0074.0120
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Notes:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0074.0120
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0074.0124
+    source_unit: U.DOC0074.0124
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0124
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0127
+    source_unit: U.DOC0074.0127
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0127
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0130
+    source_unit: U.DOC0074.0130
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0130
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0131
+    source_unit: U.DOC0074.0131
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0131
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 16
+  - raw_id: R.DOC0074.0134
+    source_unit: U.DOC0074.0134
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Accounts Payable
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0134
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0140
+    source_unit: U.DOC0074.0140
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0140
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0147
+    source_unit: U.DOC0074.0147
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0147
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0074.0148
+    source_unit: U.DOC0074.0148
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0148
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0155
+    source_unit: U.DOC0074.0155
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "DirectDeposit" or" WireTransfer"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0155
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "DirectDeposit" or" WireTransfer"
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 27
+  - raw_id: R.DOC0074.0156
+    source_unit: U.DOC0074.0156
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0156
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25
+  - raw_id: R.DOC0074.0157
+    source_unit: U.DOC0074.0157
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0157
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 9
+  - raw_id: R.DOC0074.0160
+    source_unit: U.DOC0074.0160
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "DirectDeposit" or "WireTransfer"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0160
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "DirectDeposit" or "WireTransfer"
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 27
+  - raw_id: R.DOC0074.0161
+    source_unit: U.DOC0074.0161
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0161
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25
+  - raw_id: R.DOC0074.0164
+    source_unit: U.DOC0074.0164
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "DirectDeposit" or "WireTransfer"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0164
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "DirectDeposit" or "WireTransfer"
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 27
+  - raw_id: R.DOC0074.0165
+    source_unit: U.DOC0074.0165
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0165
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25
+  - raw_id: R.DOC0074.0168
+    source_unit: U.DOC0074.0168
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: this field
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "DirectDeposit"
+      exception: the United States
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.75
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0168
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "DirectDeposit" AND NOT (the United States)
+        unless: the United States
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0074.0169
+    source_unit: U.DOC0074.0169
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0169
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 9
+  - raw_id: R.DOC0074.0170
+    source_unit: U.DOC0074.0170
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: this field
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "WireTransfer"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0170
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "WireTransfer"
+    needs_llm: false
+    tokens: 67
+  - raw_id: R.DOC0074.0171
+    source_unit: U.DOC0074.0171
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0171
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0074.0172
+    source_unit: U.DOC0074.0172
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0172
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25
+  - raw_id: R.DOC0074.0175
+    source_unit: U.DOC0074.0175
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a45
+      - FLD
+    type_hint:
+      candidates: *a45
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: AccountNumberType
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set "DirectDeposit"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0175
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set "DirectDeposit"
+    needs_llm: false
+    tokens: 56
+  - raw_id: R.DOC0074.0176
+    source_unit: U.DOC0074.0176
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: this field
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "WireTransfer"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0176
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "WireTransfer"
+    needs_llm: false
+    tokens: 32
+  - raw_id: R.DOC0074.0177
+    source_unit: U.DOC0074.0177
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a47
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0177
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to "Check" or "Credit"
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 34
+  - raw_id: R.DOC0074.0180
+    source_unit: U.DOC0074.0180
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: AccountNumberType
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to DirectDeposit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0180
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to DirectDeposit
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0074.0181
+    source_unit: U.DOC0074.0181
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a49
+      - FLD
+    type_hint:
+      candidates: *a49
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: AccountNumberType
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to WireTransfer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0181
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to WireTransfer
+    needs_llm: false
+    tokens: 88
+  - raw_id: R.DOC0074.0182
+    source_unit: U.DOC0074.0182
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a50
+      - FLD
+    type_hint:
+      candidates: *a50
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0182
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0074.0183
+    source_unit: U.DOC0074.0183
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Number
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a51
+      - FLD
+    type_hint:
+      candidates: *a51
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0183
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0187
+    source_unit: U.DOC0074.0187
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a52
+      - FLD
+    type_hint:
+      candidates: *a52
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: this field
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to DirectDeposit
+      exception: the United States
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.75
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0187
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to DirectDeposit AND NOT (the United States)
+        unless: the United States
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0074.0188
+    source_unit: U.DOC0074.0188
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a53
+      - FLD
+    type_hint:
+      candidates: *a53
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0188
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 9
+  - raw_id: R.DOC0074.0189
+    source_unit: U.DOC0074.0189
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a54
+      - FLD
+    type_hint:
+      candidates: *a54
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: AccountNumberType
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to WireTransfer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0189
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to WireTransfer
+    needs_llm: false
+    tokens: 52
+  - raw_id: R.DOC0074.0190
+    source_unit: U.DOC0074.0190
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a55
+      - FLD
+    type_hint:
+      candidates: *a55
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: full list of countries for which this
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0190
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0074.0191
+    source_unit: U.DOC0074.0191
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a56
+      - FLD
+    type_hint:
+      candidates: *a56
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0191
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0074.0192
+    source_unit: U.DOC0074.0192
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a57
+      - FLD
+    type_hint:
+      candidates: *a57
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0192
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0196
+    source_unit: U.DOC0074.0196
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a58
+      - FLD
+    type_hint:
+      candidates: *a58
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0196
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0197
+    source_unit: U.DOC0074.0197
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a59
+      - FLD
+    type_hint:
+      candidates: *a59
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0197
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0200
+    source_unit: U.DOC0074.0200
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a60
+      - FLD
+    type_hint:
+      candidates: *a60
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to WireTransfer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0200
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to WireTransfer
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 22
+  - raw_id: R.DOC0074.0201
+    source_unit: U.DOC0074.0201
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a61
+      - FLD
+    type_hint:
+      candidates: *a61
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to DirectDeposit, Check, or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0201
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to DirectDeposit, Check, or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 28
+  - raw_id: R.DOC0074.0204
+    source_unit: U.DOC0074.0204
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a62
+      - FLD
+    type_hint:
+      candidates: *a62
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: AccountNumberType
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to WireTransfer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0204
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to WireTransfer
+    needs_llm: false
+    tokens: 81
+  - raw_id: R.DOC0074.0205
+    source_unit: U.DOC0074.0205
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a63
+      - FLD
+    type_hint:
+      candidates: *a63
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0205
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0074.0206
+    source_unit: U.DOC0074.0206
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a64
+      - FLD
+    type_hint:
+      candidates: *a64
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to DirectDeposit, Check, or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0206
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to DirectDeposit, Check, or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 28
+  - raw_id: R.DOC0074.0209
+    source_unit: U.DOC0074.0209
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a65
+      - FLD
+    type_hint:
+      candidates: *a65
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to DirectDeposit or WireTransfer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0209
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to DirectDeposit or WireTransfer
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 26
+  - raw_id: R.DOC0074.0210
+    source_unit: U.DOC0074.0210
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a66
+      - FLD
+    type_hint:
+      candidates: *a66
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0210
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0213
+    source_unit: U.DOC0074.0213
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a67
+      - FLD
+    type_hint:
+      candidates: *a67
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to DirectDeposit or WireTransfer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0213
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to DirectDeposit or WireTransfer
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 26
+  - raw_id: R.DOC0074.0214
+    source_unit: U.DOC0074.0214
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a68
+      - FLD
+    type_hint:
+      candidates: *a68
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0214
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0217
+    source_unit: U.DOC0074.0217
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a69
+      - FLD
+    type_hint:
+      candidates: *a69
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0217
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0220
+    source_unit: U.DOC0074.0220
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a70
+      - FLD
+    type_hint:
+      candidates: *a70
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0220
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0223
+    source_unit: U.DOC0074.0223
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a71
+      - FLD
+    type_hint:
+      candidates: *a71
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to DirectDeposit or WireTransfer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0223
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to DirectDeposit or WireTransfer
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 26
+  - raw_id: R.DOC0074.0224
+    source_unit: U.DOC0074.0224
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a72
+      - FLD
+    type_hint:
+      candidates: *a72
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0224
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0228
+    source_unit: U.DOC0074.0228
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a73
+      - FLD
+    type_hint:
+      candidates: *a73
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check, Credit, or WireTransfer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0228
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check, Credit, or WireTransfer
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 28
+  - raw_id: R.DOC0074.0231
+    source_unit: U.DOC0074.0231
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a74
+      - FLD
+    type_hint:
+      candidates: *a74
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: this field
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to DirectDeposit or WireTransfer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0231
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to DirectDeposit or WireTransfer
+    needs_llm: false
+    tokens: 57
+  - raw_id: R.DOC0074.0232
+    source_unit: U.DOC0074.0232
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a75
+      - FLD
+    type_hint:
+      candidates: *a75
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0074.0232
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 9
+  - raw_id: R.DOC0074.0233
+    source_unit: U.DOC0074.0233
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Iban Bank
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a76
+      - FLD
+    type_hint:
+      candidates: *a76
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the @type attribute on the AccountsPayable element is set to Check or Credit
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0233
+      mandatory:
+        kind: conditional
+        when: the @type attribute on the AccountsPayable element is set to Check or Credit
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0074.0235
+    source_unit: U.DOC0074.0235
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Addresses
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a77
+      - FLD
+    type_hint:
+      candidates: *a77
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0235
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0074.0239
+    source_unit: U.DOC0074.0239
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0074
+    section: Addresses
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a78
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a78
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Notes:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0074.0239
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0074.0241
+    source_unit: U.DOC0074.0241
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Addresses
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a79
+      - FLD
+    type_hint:
+      candidates: *a79
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: using the Auto Create Fulfillment Centers for Fulfillment Addresses option
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0241
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 42
+  - raw_id: R.DOC0074.0245
+    source_unit: U.DOC0074.0245
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Addresses
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a80
+      - FLD
+    type_hint:
+      candidates: *a80
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0245
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0248
+    source_unit: U.DOC0074.0248
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Addresses
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a81
+      - FLD
+    type_hint:
+      candidates: *a81
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0248
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0251
+    source_unit: U.DOC0074.0251
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Addresses
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a82
+      - FLD
+    type_hint:
+      candidates: *a82
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0251
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0255
+    source_unit: U.DOC0074.0255
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Addresses
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a83
+      - FLD
+    type_hint:
+      candidates: *a83
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Indicates whether the address
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0255
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0074.0264
+    source_unit: U.DOC0074.0264
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0074
+    section: Addresses
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a84
+      - GLS
+    type_hint:
+      candidates: *a84
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Address Type Indicates whether the address
+      definition: a physical address, remittance address, or fulfillment center address.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0074.0264
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0074.0265
+    source_unit: U.DOC0074.0265
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Addresses
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a85
+      - FLD
+    type_hint:
+      candidates: *a85
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0265
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0287
+    source_unit: U.DOC0074.0287
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Contacts
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a86
+      - FLD
+    type_hint:
+      candidates: *a86
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0287
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0074.0289
+    source_unit: U.DOC0074.0289
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0074
+    section: Contacts
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a87
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a87
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Notes:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0074.0289
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0074.0294
+    source_unit: U.DOC0074.0294
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Contacts
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a88
+      - FLD
+    type_hint:
+      candidates: *a88
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0294
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0297
+    source_unit: U.DOC0074.0297
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Contacts
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a89
+      - FLD
+    type_hint:
+      candidates: *a89
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0297
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0300
+    source_unit: U.DOC0074.0300
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Contacts
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a90
+      - FLD
+    type_hint:
+      candidates: *a90
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0300
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0304
+    source_unit: U.DOC0074.0304
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Contacts
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a91
+      - FLD
+    type_hint:
+      candidates: *a91
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Indicates whether the contact
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0074.0304
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0074.0314
+    source_unit: U.DOC0074.0314
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Contacts
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a92
+      - FLD
+    type_hint:
+      candidates: *a92
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0314
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0319
+    source_unit: U.DOC0074.0319
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Annual Sales
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a93
+      - KEY
+    type_hint:
+      candidates: *a93
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0074.0319
+      reason:
+        kind: integration
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 22
+  - raw_id: R.DOC0074.0323
+    source_unit: U.DOC0074.0323
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0074
+    section: Annual Sales
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a94
+      - GLS
+    type_hint:
+      candidates: *a94
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Indicates whether the address
+      definition: a physical address, remittance address, or fulfillment center address.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0074.0323
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0074.0331
+    source_unit: U.DOC0074.0331
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Annual Sales
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a95
+      - FLD
+    type_hint:
+      candidates: *a95
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0331
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 72
+  - raw_id: R.DOC0074.0334
+    source_unit: U.DOC0074.0334
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Annual Sales
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a96
+      - FLD
+    type_hint:
+      candidates: *a96
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0334
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0337
+    source_unit: U.DOC0074.0337
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Annual Sales
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a97
+      - FLD
+    type_hint:
+      candidates: *a97
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0337
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0349
+    source_unit: U.DOC0074.0349
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a98
+      - FLD
+    type_hint:
+      candidates: *a98
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0349
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 11
+  - raw_id: R.DOC0074.0350
+    source_unit: U.DOC0074.0350
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a99
+      - FLD
+    type_hint:
+      candidates: *a99
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0350
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0353
+    source_unit: U.DOC0074.0353
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a100
+      - FLD
+    type_hint:
+      candidates: *a100
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0353
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0074.0355
+    source_unit: U.DOC0074.0355
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a101
+      - FLD
+    type_hint:
+      candidates: *a101
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0355
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0074.0357
+    source_unit: U.DOC0074.0357
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a102
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a102
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Notes:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0074.0357
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0074.0359
+    source_unit: U.DOC0074.0359
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a103
+      - KEY
+    type_hint:
+      candidates: *a103
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: supplier class name
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0074.0359
+      reason:
+        kind: integration
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0074.0363
+    source_unit: U.DOC0074.0363
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a104
+      - FLD
+    type_hint:
+      candidates: *a104
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0363
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0366
+    source_unit: U.DOC0074.0366
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a105
+      - FLD
+    type_hint:
+      candidates: *a105
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0366
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0369
+    source_unit: U.DOC0074.0369
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a106
+      - KEY
+    type_hint:
+      candidates: *a106
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0074.0369
+      reason:
+        kind: integration
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 17
+  - raw_id: R.DOC0074.0370
+    source_unit: U.DOC0074.0370
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a107
+      - KEY
+    type_hint:
+      candidates: *a107
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0074.0370
+      reason:
+        kind: integration
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 31
+  - raw_id: R.DOC0074.0371
+    source_unit: U.DOC0074.0371
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a108
+      - FLD
+    type_hint:
+      candidates: *a108
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0371
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0373
+    source_unit: U.DOC0074.0373
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a109
+      - FLD
+    type_hint:
+      candidates: *a109
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0373
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0074.0375
+    source_unit: U.DOC0074.0375
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a110
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a110
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Notes:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0074.0375
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0074.0377
+    source_unit: U.DOC0074.0377
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a111
+      - KEY
+    type_hint:
+      candidates: *a111
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: commodity code
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0074.0377
+      reason:
+        kind: integration
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0074.0380
+    source_unit: U.DOC0074.0380
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a112
+      - FLD
+    type_hint:
+      candidates: *a112
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0380
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0383
+    source_unit: U.DOC0074.0383
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a113
+      - FLD
+    type_hint:
+      candidates: *a113
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0383
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0386
+    source_unit: U.DOC0074.0386
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a114
+      - KEY
+    type_hint:
+      candidates: *a114
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0074.0386
+      reason:
+        kind: integration
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0074.0387
+    source_unit: U.DOC0074.0387
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Classes
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a115
+      - FLD
+    type_hint:
+      candidates: *a115
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0387
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0396
+    source_unit: U.DOC0074.0396
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a116
+      - FLD
+    type_hint:
+      candidates: *a116
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0396
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0074.0398
+    source_unit: U.DOC0074.0398
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a117
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a117
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Notes:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0074.0398
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0074.0400
+    source_unit: U.DOC0074.0400
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a118
+      - FLD
+    type_hint:
+      candidates: *a118
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: specified diversity code
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0400
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0074.0404
+    source_unit: U.DOC0074.0404
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a119
+      - FLD
+    type_hint:
+      candidates: *a119
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0404
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0407
+    source_unit: U.DOC0074.0407
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a120
+      - FLD
+    type_hint:
+      candidates: *a120
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0407
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0410
+    source_unit: U.DOC0074.0410
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a121
+      - KEY
+    type_hint:
+      candidates: *a121
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0074.0410
+      reason:
+        kind: integration
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 17
+  - raw_id: R.DOC0074.0411
+    source_unit: U.DOC0074.0411
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a122
+      - KEY
+    type_hint:
+      candidates: *a122
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0074.0411
+      reason:
+        kind: integration
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 31
+  - raw_id: R.DOC0074.0412
+    source_unit: U.DOC0074.0412
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a123
+      - FLD
+    type_hint:
+      candidates: *a123
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0412
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0419
+    source_unit: U.DOC0074.0419
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a124
+      - FLD
+    type_hint:
+      candidates: *a124
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0419
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 16
+  - raw_id: R.DOC0074.0422
+    source_unit: U.DOC0074.0422
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a125
+      - FLD
+    type_hint:
+      candidates: *a125
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0422
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 16
+  - raw_id: R.DOC0074.0425
+    source_unit: U.DOC0074.0425
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a126
+      - FLD
+    type_hint:
+      candidates: *a126
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0425
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 16
+  - raw_id: R.DOC0074.0431
+    source_unit: U.DOC0074.0431
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a127
+      - FLD
+    type_hint:
+      candidates: *a127
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0431
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0074.0433
+    source_unit: U.DOC0074.0433
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0074
+    section: Diversity Classes
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a128
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a128
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Notes:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0074.0433
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0074.0438
+    source_unit: U.DOC0074.0438
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Locations
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a129
+      - FLD
+    type_hint:
+      candidates: *a129
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0438
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0441
+    source_unit: U.DOC0074.0441
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Locations
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a130
+      - FLD
+    type_hint:
+      candidates: *a130
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0441
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0446
+    source_unit: U.DOC0074.0446
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Locations
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a131
+      - FLD
+    type_hint:
+      candidates: *a131
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0446
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0450
+    source_unit: U.DOC0074.0450
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Locations
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a132
+      - FLD
+    type_hint:
+      candidates: *a132
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0450
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0457
+    source_unit: U.DOC0074.0457
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Locations
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a133
+      - FLD
+    type_hint:
+      candidates: *a133
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0457
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0074.0459
+    source_unit: U.DOC0074.0459
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0074
+    section: Locations
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a134
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a134
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Notes:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0074.0459
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0074.0460
+    source_unit: U.DOC0074.0460
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Locations
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a135
+      - FLD
+    type_hint:
+      candidates: *a135
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Terms
+      modality: obbligo-condizionale
+      condition: any terms information is included Discount percentage is required if terms information is included Acceptable distribution types are email, fax, and manual "Disable Other Distribution Methods On Import" will mark each distribution type as disabled, then enable the method specified Multiple associated addresses can be specified; they must be pipe delimited
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0460
+      mandatory:
+        kind: conditional
+        when: any terms information is included Discount percentage is required if terms information is included Acceptable distribution types are email, fax, and manual "Disable Other Distribution Methods On Import" will mark each distribution type as disabled, then enable the method specified Multiple associated addresses can be specified; they must be pipe delimited
+    needs_llm: false
+    tokens: 98
+  - raw_id: R.DOC0074.0463
+    source_unit: U.DOC0074.0463
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Locations
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a136
+      - FLD
+    type_hint:
+      candidates: *a136
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0463
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0470
+    source_unit: U.DOC0074.0470
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a137
+      - FLD
+    type_hint:
+      candidates: *a137
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0470
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0473
+    source_unit: U.DOC0074.0473
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a138
+      - GLS
+    type_hint:
+      candidates: *a138
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Indicates whether the specified location
+      definition: a fulfillment center (Yes) or some other type of location (No). n/a
+      aliases:
+        - Yes
+      lang: en
+      source_unit: U.DOC0074.0473
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0074.0476
+    source_unit: U.DOC0074.0476
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a139
+      - FLD
+    type_hint:
+      candidates: *a139
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0476
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0481
+    source_unit: U.DOC0074.0481
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a140
+      - FLD
+    type_hint:
+      candidates: *a140
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0481
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0490
+    source_unit: U.DOC0074.0490
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a141
+      - GLS
+    type_hint:
+      candidates: *a141
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Indicates whether the associated address
+      definition: a physical address, remittance address, or fulfillment center address.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0074.0490
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0074.0491
+    source_unit: U.DOC0074.0491
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a142
+      - FLD
+    type_hint:
+      candidates: *a142
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0491
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0074.0496
+    source_unit: U.DOC0074.0496
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a143
+      - GLS
+    type_hint:
+      candidates: *a143
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Indicates whether the associated contact
+      definition: a remittance or fulfillment contact.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0074.0496
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0074.0497
+    source_unit: U.DOC0074.0497
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a144
+      - FLD
+    type_hint:
+      candidates: *a144
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0497
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0074.0502
+    source_unit: U.DOC0074.0502
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a145
+      - FLD
+    type_hint:
+      candidates: *a145
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: payment terms provided. n/a
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0502
+      mandatory:
+        kind: conditional
+        when: payment terms provided. n/a
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0074.0511
+    source_unit: U.DOC0074.0511
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a146
+      - FLD
+    type_hint:
+      candidates: *a146
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0511
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0074.0515
+    source_unit: U.DOC0074.0515
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a147
+      - FLD
+    type_hint:
+      candidates: *a147
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0515
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0074.0517
+    source_unit: U.DOC0074.0517
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0074
+    section: NAICS Codes
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a148
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a148
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Notes:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0074.0517
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0074.0523
+    source_unit: U.DOC0074.0523
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Service Areas
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a149
+      - FLD
+    type_hint:
+      candidates: *a149
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: NAICS code being passed
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0523
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0074.0525
+    source_unit: U.DOC0074.0525
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Service Areas
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a150
+      - FLD
+    type_hint:
+      candidates: *a150
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0525
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0527
+    source_unit: U.DOC0074.0527
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Service Areas
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a151
+      - FLD
+    type_hint:
+      candidates: *a151
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0527
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0529
+    source_unit: U.DOC0074.0529
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0074
+    section: Service Areas
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a152
+      - GLS
+    type_hint:
+      candidates: *a152
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Indicates if the NAICS code
+      definition: the Primary (Yes) for the supplier or a seconday (No). n/a
+      aliases:
+        - Yes
+      lang: en
+      source_unit: U.DOC0074.0529
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0074.0531
+    source_unit: U.DOC0074.0531
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Service Areas
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a153
+      - FLD
+    type_hint:
+      candidates: *a153
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0531
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0074.0532
+    source_unit: U.DOC0074.0532
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Service Areas
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a154
+      - FLD
+    type_hint:
+      candidates: *a154
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0532
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0534
+    source_unit: U.DOC0074.0534
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Service Areas
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a155
+      - FLD
+    type_hint:
+      candidates: *a155
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: following fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0534
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0074.0536
+    source_unit: U.DOC0074.0536
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Service Areas
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a156
+      - FLD
+    type_hint:
+      candidates: *a156
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0536
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0074.0538
+    source_unit: U.DOC0074.0538
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0074
+    section: Service Areas
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a157
+      - FLD
+    type_hint:
+      candidates: *a157
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0074.0538
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3

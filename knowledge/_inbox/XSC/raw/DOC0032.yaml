@@ -1,0 +1,603 @@
+doc: S.STD.XSC.DOC.0032
+scope: XSC
+extracted_at: 2026-09-30T04:30:08.991Z
+tier: T0
+stats:
+  units: 1
+  extracted_units: 0
+  document_candidates: 24
+  needs_llm: 24
+  t0_complete: 0
+  by_candidate:
+    CFG: 24
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 51600
+  sessions:
+    - n: 1
+      tokens: 51600
+      batches: 8
+      items: 24
+      batch_items:
+        - - R.DOC0032.C001
+          - R.DOC0032.C002
+          - R.DOC0032.C003
+        - - R.DOC0032.C004
+          - R.DOC0032.C005
+          - R.DOC0032.C006
+        - - R.DOC0032.C007
+          - R.DOC0032.C008
+          - R.DOC0032.C009
+        - - R.DOC0032.C010
+          - R.DOC0032.C011
+          - R.DOC0032.C012
+        - - R.DOC0032.C013
+          - R.DOC0032.C014
+          - R.DOC0032.C015
+        - - R.DOC0032.C016
+          - R.DOC0032.C017
+          - R.DOC0032.C018
+        - - R.DOC0032.C019
+          - R.DOC0032.C020
+          - R.DOC0032.C021
+        - - R.DOC0032.C022
+          - R.DOC0032.C023
+          - R.DOC0032.C024
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0032.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: &a1
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: workflow folder SendToSourcingMgr
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: ReqExportRobot
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder AdditionalApproval
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Banner Budget Authorization
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: SCTPRBudgetAuthRobot
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Account Code Response
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder SpecialApproval
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Budget Auth
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: SCTPRBudgetAuthRobot
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C007
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder PR Validation
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C008
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Purchasing Approval
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C009
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Auto-Reject
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: RejectRequisitionRobot
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C010
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder PRValidation
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: PRValidationRobotAsynchronous
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C011
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Restrict Withdrawal
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: RestrictPRWithdrawalRobot
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C012
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Auto-Return
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: ReturnRequisitionRobot
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C013
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Missing Supplier Catch
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C014
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder WaitForPRApprovals
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C015
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder EH&S Approval
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C016
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Create PO
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: CreatePORobot
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C017
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder PCard Reject
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: RejectRequisitionRobot
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C018
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Account Code Validation
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: PRValidationRobotAsynchronous
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C019
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Banner Budget Authorization 2
+      current_state:
+        value:
+          type: automated
+          workflow: requisition
+          robot: SCTPRBudgetAuthRobot
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C020
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder Missing Approver Catch
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C021
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder EHS Check
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C022
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder BidReview
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C023
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder New Supplier Approval
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800
+  - raw_id: R.DOC0032.C024
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0032
+    section: Cartelle del workflow
+    source_unit: U.DOC0032.0001
+    facets: *a1
+    extraction:
+      parameter: workflow folder ERP Budget Authorization
+      current_state:
+        value:
+          type: shared
+          workflow: requisition
+          robot: null
+        observed_at: 2019-10-21
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800

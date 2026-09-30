@@ -1,0 +1,93 @@
+id: S.STD.XSC.DOC.0164
+type: DOC
+title: ji-plt-2202-downstream-slides-pdf-aea156d1
+summary: "Documento training-deck (d'uso, origine vendor)
+  \"ji-plt-2202-downstream-slides-pdf-aea156d1\": 344 unità, 0 tabelle, 0
+  tabelle di campi; scope P2P, INV, ADM, VEN; affidabilità 0.48."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2020-04-13
+    release: ignota
+  F15: d'uso
+sources:
+  - file: CORSI/JT-PLT-2100/JI-PLT-2202_Downstream_Slides.pdf
+    sha256: sha256:64a42f9b5cb718288958f9a6c3f4421b194691c4ec21ef8a2e46292cb9f0da13
+kind: training-deck
+genre: d'uso
+origin: vendor
+version: null
+dated: 2020-04-13
+covers_release: null
+languages:
+  - en
+scopes:
+  - P2P
+  - INV
+  - ADM
+  - VEN
+source:
+  path: CORSI/JT-PLT-2100/JI-PLT-2202_Downstream_Slides.pdf
+  sha256: sha256:64a42f9b5cb718288958f9a6c3f4421b194691c4ec21ef8a2e46292cb9f0da13
+  size: 10072166
+  format: pdf
+  doc_id: ji-plt-2202-downstream-slides-pdf-aea156d1
+  doc_key: ji-plt-2202-downstream-slides.pdf
+structure:
+  pages: 121
+  chapters: 121
+  sections: 121
+  tables: 0
+  figures: 396
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 344
+  by_type:
+    testo: 322
+    regola: 9
+    procedura: 10
+    definizione: 1
+    nota: 1
+    riferimento: 1
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: 1 pagine con sole immagini (testo da OCR)
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 344
+  items_produced: 21
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 1
+    tacit: 0
+  coverage_ratio: 0.06
+  last_run: 2026-09-30
+  estimated_tokens: 5934
+  sessions_planned: 1

@@ -1,0 +1,50 @@
+id: U.DOC0183.0144
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: productFormName | Description: Internal name of the form used for purchase, if the ReceiptLine is a non-catalog item.
+  Attribute: contractStartDate | Description: Start date of the contract,
+  Attribute: contractEndDate | Description: End date of the contract
+  Attribute: note | Description: Description of the line item. This field is available only for form or noncatalog items.
+  Attribute: itemInfoFieldList | Description: Container for item general information fields.
+  Se section “ItemInfoField [Export]” below.
+hash: sha256:132179d83068fe4b0baebd8ec7f15b0df683ea1e91e7e437c10a7209cfbcc462
+words: 79
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: GeneralItemInfo [Export]
+  section_path: 2.2.3.24
+  page: 17
+  lang: en
+  prev: U.DOC0183.0143
+  next: U.DOC0183.0145
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - productFormName
+      - Internal name of the form used for purchase, if the ReceiptLine is a non-catalog item.
+      - ""
+    - - contractStartDate
+      - Start date of the contract,
+      - ""
+    - - contractEndDate
+      - End date of the contract
+      - ""
+    - - note
+      - Description of the line item. This field is available only for form or noncatalog items.
+      - ""
+    - - itemInfoFieldList
+      - |-
+        Container for item general information fields.
+        Se section “ItemInfoField [Export]” below.
+      - ""
+  block: 1
+  blocks: 1

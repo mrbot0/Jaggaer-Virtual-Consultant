@@ -1,0 +1,119 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.5
+section_title: ContractRenewal [Import]
+genre: tecnica
+rows:
+  - label: autoRenew
+    technical_name: autoRenew
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the contract is (true) or is not (false) to be renewed
+      automatically on the EffectiveEndDate.
+    section: 2.2.1.5
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.5#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: autoApplyPriceFile
+    technical_name: autoApplyPriceFile
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: If the contract is associated with a hosted price file, indicates whether
+      that same price file will (true) or will not (false) apply when the
+      contract is automatically renewed.
+    section: 2.2.1.5
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.5#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: renewalNumber
+    technical_name: renewalNumber
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Renewal number for the contract.
+
+      If you are updating an existing contract, use the renewalNumber to specify
+      which renewal the update is to be applied to. If you do not specify a
+      renewal number, the update applies to the original contract.
+    section: 2.2.1.5
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.5#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: renewalTerm
+    technical_name: renewalTerm
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Number of days, months, or years (defined by renewalTermType) for which
+      the contract will be automatically renewed.
+
+      Mandatory if autoRenew is true.
+    section: 2.2.1.5
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.5#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: renewalTermType
+    technical_name: renewalTermType
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Renewal period for the renewalTerm element.
+      Mandatory if renewTerm is specified.
+      Valid values:
+      Days
+      Months
+      Years
+    section: 2.2.1.5
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.5#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: renewalsRemaining
+    technical_name: renewalsRemaining
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Number of automatic renewals allowed for the contract.
+      Required if autoRenew is set to true.
+    section: 2.2.1.5
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.5#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: renewalDate
+    technical_name: renewalDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date on which the contract is to be renewed
+    section: 2.2.1.5
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.5#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: autoRenewalLeadDays
+    technical_name: autoRenewalLeadDays
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Number of days prior to the end date of a contract when the contract will
+      auto renew.
+
+      Valid only if autoRenew is set to true and the renewalDate field is
+      populated.
+    section: 2.2.1.5
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.5#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

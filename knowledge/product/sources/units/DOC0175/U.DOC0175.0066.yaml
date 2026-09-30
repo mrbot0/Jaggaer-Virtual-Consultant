@@ -1,0 +1,27 @@
+id: U.DOC0175.0066
+doc: S.STD.XSC.DOC.0175
+doc_id: jint-ws-development-kit-push-services-overview-d-7b85c1d1
+type: procedura
+text: |-
+  XML Response message
+  1. HTTP Basic [segreto]: each HTTP message pushed by JINT to the external system contains username/password defined during the setup of the integration
+  2. Signed JWT: each HTTP message pushed by JINT to the external system contains a bearer token representing a signed JWT
+  3. SSL mutual authentication (not yet available): the external system during the SSL handshake requires JINT to provide a client certificate to prove its identity
+hash: sha256:3446cfdaef729336f2aeeda50f32f41bff17e51dff4fb73a3d09394ef952e2dc
+words: 72
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0175
+  chapter: Overview
+  section: XML Response message
+  section_path: 2.0.4.2
+  page: 16
+  lang: en
+  prev: U.DOC0175.0065
+  next: U.DOC0175.0067
+steps:
+  - "HTTP Basic [segreto]: each HTTP message pushed by JINT to the external system contains username/password defined during the setup of the integration"
+  - "Signed JWT: each HTTP message pushed by JINT to the external system contains a bearer token representing a signed JWT"
+  - "SSL mutual authentication (not yet available): the external system during the SSL handshake requires JINT to provide a client certificate to prove its identity"
+procedure:
+  title: XML Response message

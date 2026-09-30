@@ -1,0 +1,84 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.48
+section_title: Comment [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: commentDate
+    technical_name: commentDate
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Date and time the comment was made
+    section: 2.3.1.48
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.48#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: userName
+    technical_name: userName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Username of the user responsible for the comment
+    section: 2.3.1.48
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.48#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: userFirstName
+    technical_name: userFirstName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: First name of the user responsible for the comment.
+    section: 2.3.1.48
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.48#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: userLastName
+    technical_name: userLastName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Last name of the user responsible for the comment.
+    section: 2.3.1.48
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.48#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: commentText
+    technical_name: commentText
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Text of the comment.
+    section: 2.3.1.48
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.48#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: emailedTo
+    technical_name: emailedTo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Container for Email address of the person to whom the comment is to be
+      emailed.
+    section: 2.3.1.48
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.48#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: attachmentId
+    technical_name: attachmentId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: User-defined ID of the attachment for the comment, if any.
+    section: 2.3.1.48
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.48#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

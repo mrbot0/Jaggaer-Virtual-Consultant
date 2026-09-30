@@ -1,0 +1,41 @@
+id: U.DOC0177.0354
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: id | Mandatory (Y/N): Y | Description: Unique ID of the custom payment terms file. | Mapping on Jaggaer One data model and notes: The file must exist in the Supplier Management
+  solution.
+  Required if CustomPaymentTerm element is provided.
+hash: sha256:14b1d17207144fab7e58f9bcbd7de444935cb67190153ce837e39370ff69e4db
+words: 40
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/termsAndCondition/paymentTerms/customPaymentTerm
+  section_path: 2.1.1.83
+  page: 62
+  lang: en
+  prev: U.DOC0177.0353
+  next: U.DOC0177.0355
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - id
+    - Y
+    - Unique ID of the custom payment terms file.
+    - |-
+      The file must exist in the Supplier Management
+      solution.
+      Required if CustomPaymentTerm element is provided.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

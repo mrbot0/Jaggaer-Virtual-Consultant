@@ -1,0 +1,77 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-14
+section: 2.2.1.10
+section_title: CustomFieldList [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:UPDATECUSTOMFIELDVERSION
+    label: updateCustomFieldVersion
+    labels:
+      - updateCustomFieldVersion
+    technical_name: UPDATECUSTOMFIELDVERSION
+    section: 2.2.1.10
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether the custom field version is (true) or is not (false)
+      being updated.
+
+      The default setting is false.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.10
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.10#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: updateCustomFieldVersion
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CUSTOMFIELD
+    label: customField
+    labels:
+      - customField
+    technical_name: CUSTOMFIELD
+    section: 2.2.1.10
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Custom field data.
+      See section “CustomField [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.10
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.10#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: customField
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.13
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.13#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: customField
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 939

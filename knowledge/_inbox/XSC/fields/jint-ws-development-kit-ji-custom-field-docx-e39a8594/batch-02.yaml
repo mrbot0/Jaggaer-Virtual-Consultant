@@ -1,0 +1,413 @@
+document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+scope: XSC
+batch: batch-02
+section: 2.1.1.2
+section_title: CustomField [Custom Field Import method]
+part: 1
+parts: 1
+rows:
+  - key: tech:NAME
+    label: name
+    labels:
+      - name
+    technical_name: NAME
+    section: 2.1.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the custom field
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.7
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.7#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: N
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - Y
+          - N
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:ACTIVE
+    label: active
+    labels:
+      - active
+    technical_name: ACTIVE
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the custom field should (1) or should not (0) be active
+      within the Jaggaer indirect solution.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.3
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.3#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EXTERNALTEXT
+    label: externalText
+    labels:
+      - externalText
+    technical_name: EXTERNALTEXT
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Description of the custom field to be displayed externally (for example,
+      on a PO)
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: externalText
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ALLOWCODESPLITS
+    label: allowCodeSplits
+    labels:
+      - allowCodeSplits
+    technical_name: ALLOWCODESPLITS
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the custom field can (1) or cannot (0) be subject to
+      splits within a PR. Splitting a custom field allows the user to assign
+      various distributions across multiple values for the custom field. This
+      field is only valid for custom fields within the Codes section of the PR.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: allowCodeSplits
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SHOWONPLAINTEXTEMAIL
+    label: showOnPlainTextEmail
+    labels:
+      - showOnPlainTextEmail
+    technical_name: SHOWONPLAINTEXTEMAIL
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the custom field can (1) or cannot (0) be shown on
+      plain text email PO revisions sent to the supplier.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: showOnPlainTextEmail
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SORTBY
+    label: sortBy
+    labels:
+      - sortBy
+    technical_name: SORTBY
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Method to be used when sorting custom field values in search results and
+      the user's profile.
+
+      Allowed values are:
+
+      Alpha-numeric - The values are sorted alpha-numerically.
+
+      Explicitly - The values are sorted in the order specified on the
+      Administration > organization setup > Custom Fields > Values tab.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: sortBy
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USEASANMBUCHARTOFACCOUNTSFIELD
+    label: useAsAnMBUChartOfAccountsField
+    labels:
+      - useAsAnMBUChartOfAccountsField
+    technical_name: USEASANMBUCHARTOFACCOUNTSFIELD
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Indicates whether the custom field is (1) or is not (0) to be added to the
+      MBU Chart-of-Accounts list. When this field is set to 1, you can uniquely
+      assign the custom field to a specific business unit in your organization.
+
+      Note: Setting this field to 0 for a parent custom field also sets it to
+      false for all its children.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: useAsAnMBUChartOfAccountsField
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USEDYNAMICWORKFLOW
+    label: useDynamicWorkflow
+    labels:
+      - useDynamicWorkflow
+    technical_name: USEDYNAMICWORKFLOW
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether values associated with the custom field can (1) or
+      cannot (0) be part of dynamic workflow. JAGGAER Services must set up the
+      associated dynamic workflow step or activity before you can set this field
+      to true.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: useDynamicWorkflow
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMFIELDSTYLE
+    label: customFieldStyle
+    labels:
+      - customFieldStyle
+    technical_name: CUSTOMFIELDSTYLE
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Style to be applied to the custom field.
+
+      Possible values:
+
+      0 - Use user profile permissions -This style uses the custom field
+      permissions as set up in the user's profile or role.
+
+      1 - Yes/No (checkbox) - This style shows up as a checkbox in the JAGGAER
+      Indirect solution UI for the user to select. The user must have either the
+      View or Edit Personal List custom field permission to be able to see and
+      select the checkbox. Default values saved in the profile are not
+      automatically applied.
+
+      2 - Organization-wide list - This style shows the user all your
+      organization's values within the Values tab in a drop-down list on the PR
+      or PO.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: customFieldStyle
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:HELPTEXT
+    label: helpText
+    labels:
+      - helpText
+    technical_name: HELPTEXT
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Help text that is to appear when the user selects the custom field name
+      in the JAGGAER Indirect solution UI
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: helpText
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DEFAULTAUTOAPPROVEREQANDPO
+    label: defaultAutoApproveReqAndPO
+    labels:
+      - defaultAutoApproveReqAndPO
+    technical_name: DEFAULTAUTOAPPROVEREQANDPO
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether automatic approval is (1) or is not (0) enabled by
+      default for any new rule created, if the individual placing the order is
+      an approver of the rule.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: defaultAutoApproveReqAndPO
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMFIELDVALUESET
+    label: customFieldValueSet
+    labels:
+      - customFieldValueSet
+    technical_name: CUSTOMFIELDVALUESET
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Container of one or more CustomFieldValue data defining customFieldValue
+      to be imported.
+
+      See section CustomFieldValue [Custom Field Import method].
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.2#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: customFieldValueSet
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 3280

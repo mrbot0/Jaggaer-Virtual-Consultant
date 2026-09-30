@@ -1,0 +1,92 @@
+document: document-config-goldsitepo-xml-2d0a5f9c
+scope: XSC
+batch: batch-06
+section: campi-6
+section_title: Campi — Supplier Information
+part: 1
+parts: 1
+rows:
+  - key: tech:132
+    label: "132"
+    labels:
+      - "132"
+    technical_name: "132"
+    section: campi-6
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=132 · tipo=static
+    sources:
+      - document: document-config-goldsitepo-xml-2d0a5f9c
+        section: campi-6
+        source_unit: document-config-goldsitepo-xml-2d0a5f9c/campi-6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "132"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:8
+    label: "8"
+    labels:
+      - "8"
+    technical_name: "8"
+    section: campi-6
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=8 · tipo=static
+    sources:
+      - document: document-config-goldsitepo-xml-2d0a5f9c
+        section: campi-6
+        source_unit: document-config-goldsitepo-xml-2d0a5f9c/campi-6#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "8"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:10
+    label: "10"
+    labels:
+      - "10"
+    technical_name: "10"
+    section: campi-6
+    type: static
+    mandatory_text: ""
+    allowed_values: []
+    notes: id=10 · tipo=static
+    sources:
+      - document: document-config-goldsitepo-xml-2d0a5f9c
+        section: campi-6
+        source_unit: document-config-goldsitepo-xml-2d0a5f9c/campi-6#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "10"
+        type: static
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 951

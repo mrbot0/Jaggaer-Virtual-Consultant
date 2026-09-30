@@ -1,0 +1,64 @@
+id: U.DOC0041.0001
+doc: S.STD.XSC.DOC.0041
+doc_id: ji-plt-2303-poworkflowfolders-xml-58630aab
+type: tabella
+text: |-
+  Tabella: cartelle
+  Colonne: Cartella | Tipo | Workflow | Robot
+  Cartella: PO Export Simulation | Tipo: shared | Workflow: po
+  Cartella: Revise PO | Tipo: automated | Workflow: po | Robot: CreatePORevisionRobot
+  Cartella: Create Invoice | Tipo: automated | Workflow: po | Robot: CreateBuyerInvoiceRobot
+  Cartella: Distribute PO | Tipo: automated | Workflow: po | Robot: PODistributor
+  Cartella: PO Distribution | Tipo: automated | Workflow: po | Robot: PODistributor
+  Cartella: Invalid Distribution | Tipo: shared | Workflow: po
+  Cartella: Hold - Distribution Validation | Tipo: shared | Workflow: po
+hash: sha256:39d2e35c86b3cee8ed745f695c99180121d77687bedaa485ae39b36bf42354be
+words: 88
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0041
+  chapter: Cartelle del workflow
+  section: Cartelle del workflow
+  section_path: cartelle
+  page: null
+  lang: en
+  prev: null
+  next: null
+table:
+  table: 0
+  headers:
+    - Cartella
+    - Tipo
+    - Workflow
+    - Robot
+  rows:
+    - - PO Export Simulation
+      - shared
+      - po
+      - ""
+    - - Revise PO
+      - automated
+      - po
+      - CreatePORevisionRobot
+    - - Create Invoice
+      - automated
+      - po
+      - CreateBuyerInvoiceRobot
+    - - Distribute PO
+      - automated
+      - po
+      - PODistributor
+    - - PO Distribution
+      - automated
+      - po
+      - PODistributor
+    - - Invalid Distribution
+      - shared
+      - po
+      - ""
+    - - Hold - Distribution Validation
+      - shared
+      - po
+      - ""
+  block: 1
+  blocks: 1

@@ -1,0 +1,59 @@
+id: U.DOC0174.0076
+doc: S.STD.XSC.DOC.0174
+doc_id: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+type: tabella
+text: |-
+  Colonne: Field | Description | Datatype | Notes | UI Default Label (EN)
+  Field: OBJ_KEY | Description: Internal file identifier, used to link data from this file with data retrieved from other files. | Notes: Mandatory
+  Field: PARENT_CF_NAME | Description: Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  Field: PARENT_CF_VALUE | Description: Value of the custom field. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  Field: CHILD_CF_NAME | Description: Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  Field: CHILD_CF_VALUE | Description: Value of the custom field. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+hash: sha256:47cee9b4069b7cc7e618febfc74d6deee87a1036fc882ca0c0d969966f8f1679
+words: 124
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0174
+  chapter: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0174.0075
+  next: U.DOC0174.0077
+table:
+  table: 10
+  headers:
+    - Field
+    - Description
+    - Datatype
+    - Notes
+    - UI Default Label (EN)
+  rows:
+    - - OBJ_KEY
+      - Internal file identifier, used to link data from this file with data retrieved from other files.
+      - ""
+      - Mandatory
+      - ""
+    - - PARENT_CF_NAME
+      - Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution.
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+    - - PARENT_CF_VALUE
+      - Value of the custom field.
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+    - - CHILD_CF_NAME
+      - Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution.
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+    - - CHILD_CF_VALUE
+      - Value of the custom field.
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+  block: 1
+  blocks: 1

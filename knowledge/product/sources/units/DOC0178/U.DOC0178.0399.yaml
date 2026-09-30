@@ -1,0 +1,40 @@
+id: U.DOC0178.0399
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: returnCode | Description: Global operation result operation.
+  A success (0 or 1) means web service was successfully executed, but to know operation effective result, other response field must be analyzed.
+  See section “Error codes [Import]” below.
+  Attribute: importResponseMessage | Description: Operation result description.
+  See section “Response Message [Import]Response Message [Import]” below
+hash: sha256:55ef9949f0a4296afadd7bc5ab8ca5377e1c344f2ab2d0ce17e80960fedb2921
+words: 56
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Response data format [Import]
+  section_path: 2.2.3
+  page: 68
+  lang: en
+  prev: U.DOC0178.0398
+  next: U.DOC0178.0400
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - returnCode
+      - |-
+        Global operation result operation.
+        A success (0 or 1) means web service was successfully executed, but to know operation effective result, other response field must be analyzed.
+        See section “Error codes [Import]” below.
+    - - importResponseMessage
+      - |-
+        Operation result description.
+        See section “Response Message [Import]Response Message [Import]” below
+  block: 1
+  blocks: 1

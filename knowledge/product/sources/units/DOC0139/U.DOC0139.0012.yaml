@@ -1,0 +1,74 @@
+id: U.DOC0139.0012
+doc: S.STD.XSC.DOC.0139
+doc_id: workflow-typical-epro-wf-steps-guidelines-xlsx-39f47465
+type: tabella
+text: "Workflow / Procurement Approval: ADW | Premier TSM Registration Workflow / QA Approval: ADW | Premier TSM Registration Workflow / AP Approval: ADW | Premier TSM Registration Workflow / Sync to ERP: N/A Premier TSM Registration Workflow / Step Name:: Description / Trigger(s): | Premier TSM Registration Workflow / Perform OFAC Check: Automated step that does an OFAC check | Premier TSM Registration Workflow / Potential OFAC Match: Manual approval step that triggers when supplier fails OFAC check. | Premier TSM Registration Workflow / Perform Supplier Duplicate Check: Automated step that checks for duplicate suppliers | Premier TSM Registration Workflow / Duplicate TIN: Manual approval step that triggers when duplicate TIN | Premier TSM Registration Workflow / Duplicate DUNS: Manual approval step that triggers when duplicate DUNS | Premier TSM Registration Workflow / Duplicate Supplier Name: Manual approval step that triggers when duplicate supplier name | Premier TSM Registration Workflow / Vendor Management Approval: Manual step for all supplier registrations | Premier TSM Registration Workflow / Procurement Approval: Manual step for all supplier registrations | Premier TSM Registration Workflow / QA Approval: Manual step that triggers when on TSM custom field (supplier service area) | Premier TSM Registration Workflow / AP Approval: Manual step for all supplier registrations | Premier TSM Registration Workflow / Sync to ERP: Automated step that sends the supplier record to Banner."
+hash: sha256:17bc21351fc40dc18ad89a7a64ab6bbee29541def0e085959547f8f76c864510
+words: 226
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0139
+  chapter: TSM
+  section: TSM
+  section_path: sheet-4
+  page: null
+  lang: en
+  prev: U.DOC0139.0011
+  next: null
+table:
+  table: 0
+  headers:
+    - "Premier TSM Registration Workflow / Step Name:"
+    - Premier TSM Registration Workflow / Perform OFAC Check
+    - Premier TSM Registration Workflow / Potential OFAC Match
+    - Premier TSM Registration Workflow / Perform Supplier Duplicate Check
+    - Premier TSM Registration Workflow / Duplicate TIN
+    - Premier TSM Registration Workflow / Duplicate DUNS
+    - Premier TSM Registration Workflow / Duplicate Supplier Name
+    - Premier TSM Registration Workflow / Vendor Management Approval
+    - Premier TSM Registration Workflow / Procurement Approval
+    - Premier TSM Registration Workflow / QA Approval
+    - Premier TSM Registration Workflow / AP Approval
+    - Premier TSM Registration Workflow / Sync to ERP
+  rows:
+    - - "Step Type:"
+      - Automated
+      - Manual
+      - Automated
+      - null
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+    - - "Location of Approver(s):"
+      - N/A
+      - Explicit Approval Folder
+      - N/A
+      - Explicit Approval Folder
+      - Explicit Approval Folder
+      - Explicit Approval Folder
+      - ADW
+      - ADW
+      - ADW
+      - ADW
+      - N/A
+    - - "Description / Trigger(s):"
+      - Automated step that does an OFAC check
+      - Manual approval step that triggers when supplier fails OFAC check.
+      - Automated step that checks for duplicate suppliers
+      - Manual approval step that triggers when duplicate TIN
+      - Manual approval step that triggers when duplicate DUNS
+      - Manual approval step that triggers when duplicate supplier name
+      - Manual step for all supplier registrations
+      - Manual step for all supplier registrations
+      - Manual step that triggers when on TSM custom field (supplier service area)
+      - Manual step for all supplier registrations
+      - Automated step that sends the supplier record to Banner.
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

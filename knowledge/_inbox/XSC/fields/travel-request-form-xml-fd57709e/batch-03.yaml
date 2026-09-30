@@ -1,0 +1,37 @@
+document: travel-request-form-xml-fd57709e
+scope: XSC
+batch: batch-03
+section: campi-3
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:113
+    label: "113"
+    labels:
+      - "113"
+    technical_name: "113"
+    section: campi-3
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=113 · tipo=static
+    sources:
+      - document: travel-request-form-xml-fd57709e
+        section: campi-3
+        source_unit: travel-request-form-xml-fd57709e/campi-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "113"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 643

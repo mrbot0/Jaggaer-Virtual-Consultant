@@ -1,0 +1,37 @@
+id: U.DOC0169.0156
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: splitIndex | Mandatory (Y/N): N | Description: Split sequence number.
+  The @splitIndex attribute must be a positive number from 0 to n-1, where n is the number of CustomFieldValue elements in the CustomFieldValueSet element. For example, given a CustomFieldValueSet element with four CustomFieldValue elements, the @splitIndex attributes are numbered 0 to 3. The default split index is zero (0).
+hash: sha256:7f2daa56a5d7b160132995841f03b4cee7d98c39d6176171c34513b36d180ab7
+words: 60
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Custom Field Value [PR Import]
+  section_path: 2.1.1.24
+  page: 25
+  lang: en
+  prev: U.DOC0169.0155
+  next: U.DOC0169.0157
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - splitIndex
+    - N
+    - |-
+      Split sequence number.
+      The @splitIndex attribute must be a positive number from 0 to n-1, where n is the number of CustomFieldValue elements in the CustomFieldValueSet element. For example, given a CustomFieldValueSet element with four CustomFieldValue elements, the @splitIndex attributes are numbered 0 to 3. The default split index is zero (0).
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

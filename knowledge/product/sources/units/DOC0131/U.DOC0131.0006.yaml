@@ -1,0 +1,88 @@
+id: U.DOC0131.0006
+doc: S.STD.XSC.DOC.0131
+doc_id: workflow-definition-pr-squfs-site-xml-defa4232
+type: tabella
+text: |-
+  Tabella: transizioni
+  Colonne: Da | A | Condizione
+  Da: START | A: Return1
+  Da: Return1 | A: pCard Limit Check
+  Da: pCard Limit Check | A: Mixed Order Auto-Return
+  Da: Mixed Order Auto-Return | A: Missing Supplier Catch
+  Da: Missing Supplier Catch | A: New Supplier Approval
+  Da: New Supplier Approval | A: Financial Approval
+  Da: Financial Approval | A: Buyer Assignment
+  Da: Buyer Assignment | A: Buyer Review
+  Da: Buyer Review | A: Contract Review
+  Da: Contract Review | A: Special Circumstance Approval
+  Da: Special Circumstance Approval | A: EH&S Approval
+  Da: EH&S Approval | A: Form Approval
+  Da: Form Approval | A: Missing Approver Catch
+  Da: Missing Approver Catch | A: Create PO
+  Da: Create PO | A: END
+hash: sha256:b6571fa32968d52c3ba8b929497cef19cd09741033669cb5277d6388637ccd71
+words: 121
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0131
+  chapter: Transizioni (ActivityRelationship)
+  section: Transizioni (ActivityRelationship)
+  section_path: transizioni
+  page: null
+  lang: en
+  prev: U.DOC0131.0005
+  next: null
+table:
+  table: 0
+  headers:
+    - Da
+    - A
+    - Condizione
+  rows:
+    - - START
+      - Return1
+      - ""
+    - - Return1
+      - pCard Limit Check
+      - ""
+    - - pCard Limit Check
+      - Mixed Order Auto-Return
+      - ""
+    - - Mixed Order Auto-Return
+      - Missing Supplier Catch
+      - ""
+    - - Missing Supplier Catch
+      - New Supplier Approval
+      - ""
+    - - New Supplier Approval
+      - Financial Approval
+      - ""
+    - - Financial Approval
+      - Buyer Assignment
+      - ""
+    - - Buyer Assignment
+      - Buyer Review
+      - ""
+    - - Buyer Review
+      - Contract Review
+      - ""
+    - - Contract Review
+      - Special Circumstance Approval
+      - ""
+    - - Special Circumstance Approval
+      - EH&S Approval
+      - ""
+    - - EH&S Approval
+      - Form Approval
+      - ""
+    - - Form Approval
+      - Missing Approver Catch
+      - ""
+    - - Missing Approver Catch
+      - Create PO
+      - ""
+    - - Create PO
+      - END
+      - ""
+  block: 1
+  blocks: 1

@@ -1,0 +1,653 @@
+doc: S.STD.XSC.DOC.0077
+scope: XSC
+extracted_at: 2026-09-30T04:30:35.862Z
+tier: T0
+stats:
+  units: 63
+  extracted_units: 16
+  document_candidates: 0
+  needs_llm: 8
+  t0_complete: 8
+  by_candidate:
+    FLD: 8
+    residuo: 1
+    CFP: 4
+    FLW: 2
+    INV: 1
+  residue_marked: 1
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 3890
+  sessions:
+    - n: 1
+      tokens: 3890
+      batches: 1
+      items: 8
+      batch_items:
+        - - R.DOC0077.0006
+          - R.DOC0077.0015
+          - R.DOC0077.0021
+          - R.DOC0077.0026
+          - R.DOC0077.0030
+          - R.DOC0077.0036
+          - R.DOC0077.0060
+          - R.DOC0077.0063
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0077.0006
+    source_unit: U.DOC0077.0006
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: Handout
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0077.0006
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 53
+  - raw_id: R.DOC0077.0008
+    source_unit: U.DOC0077.0008
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: Handout
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: This
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0077.0008
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0077.0009
+    source_unit: U.DOC0077.0009
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: Handout
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: ambiguous
+      reason: modalità deontica non determinata (obbligo, facolta-in-contrasto, obbligo e facoltà in contrasto)
+    candidates: []
+    type_hint:
+      candidates: []
+      outcome: null
+      score: null
+    extraction:
+      subject: This handout
+      modality: ambiguo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: residue
+      confidence: 0.3
+      signals:
+        - obbligo
+        - facolta-in-contrasto
+        - obbligo e facoltà in contrasto
+      source_unit: U.DOC0077.0009
+    needs_llm: false
+    tokens: 50
+  - raw_id: R.DOC0077.0013
+    source_unit: U.DOC0077.0013
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: Procedure
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: First, the Item Master license
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0077.0013
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0077.0015
+    source_unit: U.DOC0077.0015
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0077
+    section: Procedure
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: "the Internal Store supplier class and rename it: o Go to the Suppliers > Configuration Settings > Manage Supplier Classes page and enable the Internal Store class, and rename it to Client Internal Catalog Suppliers . o Make it active. o Assign an icon to it and give it top priority for search filter s"
+          valore: o Go to the Suppliers > Configuration Settings > Manage Supplier Classes page and enable the Internal Store class, and rename it to Client Internal Catalog Suppliers . o Make it active. o Assign an icon to it and give it top priority for search filter s
+        - n: 2
+          verbo: grant
+          oggetto: "the permissions necessary to the relevant roles to manage the catalog: o Give the System Admin and Catalog Admin roles the following per missions: o Administration > System Administration:"
+          valore: "o Give the System Admin and Catalog Admin roles the following per missions: o Administration > System Administration:"
+        - n: 3
+          verbo: edit
+          oggetto: Items / Catalogs
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0077.0015
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 137
+  - raw_id: R.DOC0077.0019
+    source_unit: U.DOC0077.0019
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: your user (who has the System Admin role)
+      modality: raccomandazione
+      condition: you've done that
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0077.0019
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0077.0021
+    source_unit: U.DOC0077.0021
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: 'the new supplier: o From the Suppliers icon, add a new "internally managed supplier" and give it a name. o Note : Do not send an email invitation to register. o Note : This cannot be a supplier who has logged into the supplier portal; it has to be an entirely client‐managed instance of the supplier. If the client already does business with the supplier and the supplier logs in to the portal, the client should upload their own catalog that way'
+          valore: internally managed supplier
+        - n: 2
+          verbo: configure
+          oggetto: "the Supplier:"
+          valore: null
+        - n: 3
+          verbo: make
+          oggetto: them Active for Shopping from the General tab
+          valore: null
+        - n: 4
+          verbo: in
+          oggetto: the supplier’s profile, assign it to the Client Internal Catalog Suppliers class
+          valore: null
+        - n: 5
+          verbo: (jaggaer
+          oggetto: user) From the System Settings tab, click " Has Catalog "
+          valore: " Has Catalog "
+        - n: 6
+          verbo: from
+          oggetto: Contacts and Locations > Addresses , Use the Add an Address with Address Wizard option to set up an address and fulfillment center for the supplier
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0077.0021
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 228
+  - raw_id: R.DOC0077.0026
+    source_unit: U.DOC0077.0026
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: (jaggaer
+          oggetto: user) Expose list pricing
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: "list pricing: o eProcurement > Price Config/List Price o Use List Pricing: Yes"
+          valore: "o eProcurement > Price Config/List Price o Use List Pricing: Yes"
+        - n: 3
+          verbo: (jaggaer
+          oggetto: "user) Determine the display name of the site: o Find the organization’s display name by navigating to Setup > Site Profile > Configure Site Profile Miscellaneous Settings. You will need to know this for the next step"
+          valore: o Find the organization’s display name by navigating to Setup > Site Profile > Configure Site Profile Miscellaneous Settings. You will need to know this for the next step
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0077.0026
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 104
+  - raw_id: R.DOC0077.0030
+    source_unit: U.DOC0077.0030
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0077.0030
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 21
+  - raw_id: R.DOC0077.0031
+    source_unit: U.DOC0077.0031
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "• Warning : You"
+      modality: obbligo-condizionale
+      condition: you Save, you cannot chang e this setting!
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0077.0031
+      mandatory:
+        kind: conditional
+        when: you Save, you cannot chang e this setting!
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0077.0036
+    source_unit: U.DOC0077.0036
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: (jaggaer
+          oggetto: "user) Enable the catalog availability for the site: o eProcurement > Catalog Availability"
+          valore: o eProcurement > Catalog Availability
+        - n: 2
+          verbo: add
+          oggetto: "the supplier ID and name to the item file: o From the class files, open the catalog item file called: catalog_item file ‐ USD_org‐ managed.xlsx o Put your new Supplier’s Supplier ID in cell A1 and your supplier’s name in cell B1. You can get this information from the supplier profile in About > Summary "
+          valore: "o From the class files, open the catalog item file called: catalog_item file ‐ USD_org‐ managed.xlsx o Put your new Supplier’s Supplier ID in cell A1 and your supplier’s name in cell B1. You can get this information from the supplier profile in About > Summary "
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0077.0036
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 119
+  - raw_id: R.DOC0077.0044
+    source_unit: U.DOC0077.0044
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: You
+      modality: raccomandazione
+      condition: lf‐managed supplier you just c reated in the Supplier search box
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0077.0044
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0077.0050
+    source_unit: U.DOC0077.0050
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: For those users whose default currency
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0077.0050
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0077.0051
+    source_unit: U.DOC0077.0051
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - INV
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: In some instances, it
+      modality: divieto
+      condition: the system runs a complete re‐indexing
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0077.0051
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0077.0060
+    source_unit: U.DOC0077.0060
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: "this currency for all suppliers: o Setup > General Site Settings > Configure Currency Settings"
+          valore: o Setup > General Site Settings > Configure Currency Settings
+        - n: 2
+          verbo: give
+          oggetto: "users access to the cu rrency the supplier is using: o Go ahead and give that to all us ers if you would like by settin g it on the Base Role. (If only a certain group needed access to t his supplier, setting up a role for them that provided access to that currency would be one way to accomplish this.)"
+          valore: o Go ahead and give that to all us ers if you would like by settin g it on the Base Role. (If only a certain group needed access to t his supplier, setting up a role for them that provided access to that currency would be one way to accomplish this.)
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0077.0060
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 119
+  - raw_id: R.DOC0077.0063
+    source_unit: U.DOC0077.0063
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0077
+    section: "JI-ePRO-3000: JAGGAER Indirect eProcurement Specialization"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: Buyers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: upload
+          oggetto: "the non‐USD price list for your supplier. o The item file you uploaded in the previous exercise contained l ist pricing in USD. If you were adding an internally managed supplier from the start who provid ed pricing not in USD, then you would leave the Corporate List(USD) column (column F) blank. If you changed this column to zeros, it would make all the pr icing [importo] if you were using list pricing. o To upload the price list for yo ur supplier, in your class files , open: catalog_price file ‐ world currencies_org‐managed.xlsx Put your supplier’s Supplier ID in cell A1 and your supplier’s name in cell B1. You can get this information from the supplie r profile in your sandbox. If you would like to add or change a currency column, you may d o so"
+          valore: catalog_price file ‐ world currencies_org‐managed.xlsx Put your supplier’s Supplier ID in cell A1 and your supplier’s name in cell B1. You can get this information from the supplie r profile in your sandbox. If you would like to add or change a currency column, you may d o so
+        - n: 2
+          verbo: (jaggaer
+          oggetto: "user) Create a relationship between the client organization and the s elf‐managed supplier: o Tools > Manage Buyers, Suppliers, and Relati onships > Create Re lationships"
+          valore: o Tools > Manage Buyers, Suppliers, and Relati onships > Create Re lationships
+        - n: 3
+          verbo: upload
+          oggetto: "the price list. o Contracts > Hosted Catalog Items and Price > Submit Hosted Cont ent and Price Data o Submission Type: Prices – Add/Update o Remember, an indexing may be re quired, so results won’t be imme diate"
+          valore: Prices – Add/Update o Remember, an indexing may be re quired, so results won’t be imme diate
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0077.0063
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 309

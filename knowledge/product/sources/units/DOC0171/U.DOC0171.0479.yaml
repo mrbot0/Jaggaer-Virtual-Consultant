@@ -1,0 +1,51 @@
+id: U.DOC0171.0479
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: fileId | Description: Internal identifier of the attachment, to be used for calling attachments web service to download it
+  Attribute: fileName | Description: Attachment filename
+  Attribute: fileDescription | Description: Attachment description
+  Attribute: fileSize | Description: Attachment size in bytes
+  Attribute: creationDate | Description: Attachment creation date | Available from version: BA_17_01
+  Attribute: secureToken | Description: It is the secure token to be used for calling attachments web service to download the attachment file. | Available from version: BA_17_03
+hash: sha256:e3b67a2b67b953ff81544a53b2e60292941a98ecf581a643f530ebf4064b16b3
+words: 87
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Comment Attachment [Export RfX method]
+  section_path: 2.3.4.38
+  page: 7
+  lang: en
+  prev: U.DOC0171.0478
+  next: U.DOC0171.0480
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - fileId
+      - Internal identifier of the attachment, to be used for calling attachments web service to download it
+      - ""
+    - - fileName
+      - Attachment filename
+      - ""
+    - - fileDescription
+      - Attachment description
+      - ""
+    - - fileSize
+      - Attachment size in bytes
+      - ""
+    - - creationDate
+      - Attachment creation date
+      - BA_17_01
+    - - secureToken
+      - It is the secure token to be used for calling attachments web service to download the attachment file.
+      - BA_17_03
+  block: 1
+  blocks: 1

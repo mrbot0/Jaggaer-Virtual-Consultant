@@ -1,0 +1,475 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-40
+section: 2.2.1.43
+section_title: NonCatalogItems [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:DESCRIPTION
+    label: description
+    labels:
+      - description
+      - Description
+    technical_name: DESCRIPTION
+    section: 2.2.1.43
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Description of the noncatalog item that displays in product search.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: description
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.47
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.47#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Description
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.48
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Description
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.58
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.58#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: description
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CATALOGNUMBER
+    label: catalogNumber
+    labels:
+      - catalogNumber
+    technical_name: CATALOGNUMBER
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Unique ID number for the item.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: catalogNumber
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.47
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.47#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: catalogNumber
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.48
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: catalogNumber
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SIZE
+    label: Size
+    labels:
+      - Size
+    technical_name: SIZE
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Unit of size for the item, such as 1 mg (milligram) or 16 fl oz (fluid
+      ounces).
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Size
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:PRICE
+    label: Price
+    labels:
+      - Price
+    technical_name: PRICE
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Price of the item
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Price
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:PACKAGING
+    label: packaging
+    labels:
+      - packaging
+    technical_name: PACKAGING
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Packaging of the item, such as 1 ea or 1 case of 12.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: packaging
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:PROMOTEINPRODUCTSEARCH
+    label: promoteInProductSearch
+    labels:
+      - promoteInProductSearch
+    technical_name: PROMOTEINPRODUCTSEARCH
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the item is (Yes) or are not (No) to be promoted to
+      shoppers who have access to the contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: promoteInProductSearch
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:COLOR
+    label: Color
+    labels:
+      - Color
+    technical_name: COLOR
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Color of the item
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: Color
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:COMMODITYCODE
+    label: commodityCode
+    labels:
+      - commodityCode
+    technical_name: COMMODITYCODE
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Code assigned to the item, for the purposes of identifying it in
+      international commerce, or commerce in general.
+
+      CommodityCode is not a specific description of the goods or service.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: commodityCode
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.47
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.47#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: commodityCode
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.48
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: commodityCode
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:UNSPSC
+    label: Unspsc
+    labels:
+      - Unspsc
+    technical_name: UNSPSC
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Standardized commodity code value for the contract item,
+      See section “UNSPSC [Import]” above
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: Unspsc
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SEARCHABLEKEYWORDS
+    label: searchableKeywords
+    labels:
+      - searchableKeywords
+    technical_name: SEARCHABLEKEYWORDS
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Keywords by which the item can be found in product search.
+
+      Commas are used to separate more keywords.
+
+      Appropriate keywords include commodities, products, services, and
+      categories that describe the item.
+
+      Use common product search terms that are typically used when searching for
+      products. These terms can then be searched for by users in product search.
+
+      If the list of keywords is longer than 1000 characters, it is truncated
+      and saved.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: searchableKeywords
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.51
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.51#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: searchableKeywords
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:LONGDESCRIPTION
+    label: longDescription
+    labels:
+      - longDescription
+    technical_name: LONGDESCRIPTION
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Long description of the item
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: longDescription
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MANUFACTURERNAME
+    label: manufacturerName
+    labels:
+      - manufacturerName
+    technical_name: MANUFACTURERNAME
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Name of the manufacturer
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: manufacturerName
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MANUFACTURERPARTNUMBER
+    label: manufacturerPartNumber
+    labels:
+      - manufacturerPartNumber
+    technical_name: MANUFACTURERPARTNUMBER
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Manufacturer’s part number (SKU code) for the item.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: manufacturerPartNumber
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:DYNAMICATTRIBUTELIST
+    label: dynamicAttributeList
+    labels:
+      - dynamicAttributeList
+    technical_name: DYNAMICATTRIBUTELIST
+    section: 2.2.1.43
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      List of dynamic attributes.
+      See section “DynamicAttribute [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.43
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: dynamicAttributeList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 3566

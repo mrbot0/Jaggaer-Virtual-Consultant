@@ -1,0 +1,41 @@
+id: U.DOC0178.0015
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: procedura
+text: "The structure of the current document is the following (parte 1/2) 1. ImportSpend: 2. Request data format [ImportSpend]: describes the possible operations on import and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted. 3. Behavior [ImportSpend]: describes how the web service processes the data passed in input, in case of some particular processes. 4. Response Data Format [ImportSpend]: describes the structure of the web service response and contains the list of possible error codes. 5. Import: 6. Request data format [Import]: describes the structure of the import request. 7. Behavior [Import]: describes how the web service processes the data passed in input, in case of some processes 8. Response data format [Import]: describes the structure of the web service response and contains the list of possible error codes 9. Export: 10. Component filters [Export]: describes which sections of a contract can be exported. The use of a component filter increments the number of sections in the response to every contract exported. 11. Condition filters [Export]: describes which fields can be used to filter the contract to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of contract extracted. 12. Export data format [Export]: describes the structure of the response in terms of exported fields and sections. 13. Error codes [Export]: contains a list of possible error codes 14. Validate: 15. Request data format [Validate]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled."
+hash: sha256:cde2b950a737a12be36f0f2bf9b04b277889ddf1130e90be394525164c83de9b
+words: 290
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 11
+  lang: en
+  prev: U.DOC0178.0014
+  next: U.DOC0178.0016
+steps:
+  - "ImportSpend:"
+  - "Request data format [ImportSpend]: describes the possible operations on import and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted."
+  - "Behavior [ImportSpend]: describes how the web service processes the data passed in input, in case of some particular processes."
+  - "Response Data Format [ImportSpend]: describes the structure of the web service response and contains the list of possible error codes."
+  - "Import:"
+  - "Request data format [Import]: describes the structure of the import request."
+  - "Behavior [Import]: describes how the web service processes the data passed in input, in case of some processes"
+  - "Response data format [Import]: describes the structure of the web service response and contains the list of possible error codes"
+  - "Export:"
+  - "Component filters [Export]: describes which sections of a contract can be exported. The use of a component filter increments the number of sections in the response to every contract exported."
+  - "Condition filters [Export]: describes which fields can be used to filter the contract to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of contract extracted."
+  - "Export data format [Export]: describes the structure of the response in terms of exported fields and sections."
+  - "Error codes [Export]: contains a list of possible error codes"
+  - "Validate:"
+  - "Request data format [Validate]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted."
+procedure:
+  title: The structure of the current document is the following
+  part: 1
+  parts: 2
+  first_step: 1
+part:
+  n: 1
+  of: 2

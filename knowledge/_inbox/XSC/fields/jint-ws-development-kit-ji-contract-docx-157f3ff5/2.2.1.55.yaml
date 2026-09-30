@@ -1,0 +1,66 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.55
+section_title: AdvanceNotice [Import]
+genre: tecnica
+rows:
+  - label: startDateLeadTime
+    technical_name: startDateLeadTime
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Information about number of days prior to the contract start date that the
+      notification should be generated.
+
+      See section “LeadTime [Import]” below.
+    section: 2.2.1.55
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.55#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: endDateLeadTimeList
+    technical_name: endDateLeadTimeList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Container for information about number of days prior to the contract end
+      date that the notification should be generated.
+
+      See section “LeadTime [Import]” below.
+    section: 2.2.1.55
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.55#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: renewalDateLeadTimeList
+    technical_name: renewalDateLeadTimeList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Container for information about number of days prior to the contract
+      renewal date that the notification should be generated.
+
+      See section “LeadTime [Import]” below.
+    section: 2.2.1.55
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.55#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: sourcingEventLeadTime
+    technical_name: sourcingEventLeadTime
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Information about number of days prior to the contract sourcing event date
+      that the notification should be generated.
+
+      See section “LeadTime [Import]” below.
+    section: 2.2.1.55
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.55#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

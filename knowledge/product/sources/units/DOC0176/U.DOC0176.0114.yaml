@@ -1,0 +1,31 @@
+id: U.DOC0176.0114
+doc: S.STD.XSC.DOC.0176
+doc_id: jint-ws-development-kit-web-services-overview-do-c57133dd
+type: procedura
+text: |-
+  JSON Web Token (JWT)
+  1. Issuer (iss) = agreed at activation time
+  2. Subject (sub)= agreed at activation time
+  3. Audience (aud) = hostname of the JINT endpoint
+  4. Issued At (iat) = JINT won’t accept a JWT issued in the future or older than 24h
+  5. Expire At (exp) = in case is provided JITN will check is not in the past
+hash: sha256:ab83994af8b2be3aca0831ad6fead03ade68e6fc2cfa436902d6939e969f5183
+words: 63
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0176
+  chapter: JINT REST API
+  section: JSON Web Token (JWT)
+  section_path: 3.5.2
+  page: 21
+  lang: en
+  prev: U.DOC0176.0113
+  next: U.DOC0176.0115
+steps:
+  - Issuer (iss) = agreed at activation time
+  - Subject (sub)= agreed at activation time
+  - Audience (aud) = hostname of the JINT endpoint
+  - Issued At (iat) = JINT won’t accept a JWT issued in the future or older than 24h
+  - Expire At (exp) = in case is provided JITN will check is not in the past
+procedure:
+  title: JSON Web Token (JWT)

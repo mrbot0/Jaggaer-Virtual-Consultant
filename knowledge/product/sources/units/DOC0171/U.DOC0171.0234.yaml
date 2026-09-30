@@ -1,0 +1,55 @@
+id: U.DOC0171.0234
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: evaluationUser/id
+  evaluationUser/code
+  evaluationUser/name
+  evaluationUser/login | Mandatory (Y/N): Y
+  (only one of id/code/name/login is mandatory) | Description: Complex type for Group Member user. Following elements are defined
+  id: user internal identifier
+  code: user external code
+  name = user name and surname
+  login: user login | Mapping on JA data model and notes: Evaluation group, user id.
+hash: sha256:db66151b6b618f15a22e4225e1beac70a3f08800c5a9cb2bd67c83bfe9a17372
+words: 56
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Evaluation Group Member [Import/Update RfX method]
+  section_path: 2.1.1.24
+  page: 6
+  lang: en
+  prev: U.DOC0171.0233
+  next: U.DOC0171.0235
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - |-
+      evaluationUser/id
+      evaluationUser/code
+      evaluationUser/name
+      evaluationUser/login
+    - |-
+      Y
+      (only one of id/code/name/login is mandatory)
+    - |-
+      Complex type for Group Member user. Following elements are defined
+      id: user internal identifier
+      code: user external code
+      name = user name and surname
+      login: user login
+    - Evaluation group, user id.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

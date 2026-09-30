@@ -1,0 +1,41 @@
+id: U.DOC0173.0034
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: sendEMail | Mandatory (Y/N): N | Description: Flag stating if, in case of creation of a new supplier company, mail must be sent to notify the registration | Mapping on JA data model and notes: Possible value:
+  1: mail is sent to notify the registration
+  Any other value or not provided: no mail is sent
+hash: sha256:ea97a6302f50ce85e0ab48f2ff081058d6d5dfcca345167439bb09048c2612d0
+words: 56
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Company Import Request structure
+  section_path: 4.1.1.1
+  page: 6
+  lang: en
+  prev: U.DOC0173.0033
+  next: U.DOC0173.0035
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - sendEMail
+    - N
+    - Flag stating if, in case of creation of a new supplier company, mail must be sent to notify the registration
+    - |-
+      Possible value:
+      1: mail is sent to notify the registration
+      Any other value or not provided: no mail is sent
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

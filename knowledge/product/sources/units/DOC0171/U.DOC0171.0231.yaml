@@ -1,0 +1,41 @@
+id: U.DOC0171.0231
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: Invited | Mandatory (Y/N): N | Description: Answer allowed. Usually used in case of reopening of an RFx:
+  1 = supplier can answer (even if RFx was closed and then reopened);
+  0 = supplier, although invited, cannot respond (answer is blocked) | Mapping on JA data model and notes: Block Answer
+hash: sha256:ee91c837c3831d43848e0841ba974942d513fe211fdbaf519846caa71fa86915
+words: 52
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Suppliers [Import/Update RfX method]
+  section_path: 2.1.1.22
+  page: 6
+  lang: en
+  prev: U.DOC0171.0230
+  next: U.DOC0171.0232
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - Invited
+    - N
+    - |-
+      Answer allowed. Usually used in case of reopening of an RFx:
+      1 = supplier can answer (even if RFx was closed and then reopened);
+      0 = supplier, although invited, cannot respond (answer is blocked)
+    - Block Answer
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

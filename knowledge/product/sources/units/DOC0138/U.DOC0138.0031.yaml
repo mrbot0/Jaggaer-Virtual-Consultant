@@ -1,0 +1,17 @@
+id: U.DOC0138.0031
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: <Activity name="DepartmentApproval"> <ActivityType>manual</ActivityType> <StepRef name="Department Approval" /> <Rule><![CDATA[[Document.RequiresRuleGroupEvaluation("Department Approval") == true]]]></Rule> <FolderSelectionRule>MultiElementDynamic</FolderSelectionRule> <Attribute name="RuleGroupInternalName"> <AttrValue lang="default">Department Approval</AttrValue> </Attribute> </Activity>
+hash: sha256:8aac990fc3a17cd1286104846536a3b570bd74a0e768d408be37c1bfb4d8e74f
+words: 19
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: DEPARTMENT APPROVALS
+  section: DEPARTMENT APPROVALS
+  section_path: "7"
+  page: null
+  lang: en
+  prev: U.DOC0138.0030
+  next: U.DOC0138.0032

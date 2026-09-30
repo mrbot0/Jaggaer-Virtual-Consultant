@@ -1,0 +1,97 @@
+id: S.STD.XSC.DOC.0182
+type: DOC
+title: JINT Development Kit- JI Purchase Requisition web-service
+summary: 'Documento spec-integrazione (tecnica, origine vendor) "JINT
+  Development Kit- JI Purchase Requisition web-service": 447 unità, 168 tabelle,
+  46 tabelle di campi; scope XSC, P2P, ADM, VEN; affidabilità 0.72.'
+facets:
+  F1: spec-integrazione-prosa
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2021-01-18
+    release: ignota
+  F15: tecnica
+sources:
+  - file: JAGGAER WS/JINT WS Development_Kit_JI PurchaseRequisition.docx
+    sha256: sha256:4f0624b5456016c9896455c1cdbf41b244f710833218cb3c27f4c99fcbef0be2
+kind: spec-integrazione
+genre: tecnica
+origin: vendor
+version: null
+dated: 2021-01-18
+covers_release: null
+languages:
+  - en
+scopes:
+  - XSC
+  - P2P
+  - ADM
+  - VEN
+source:
+  path: JAGGAER WS/JINT WS Development_Kit_JI PurchaseRequisition.docx
+  sha256: sha256:4f0624b5456016c9896455c1cdbf41b244f710833218cb3c27f4c99fcbef0be2
+  size: 297118
+  format: docx
+  doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  doc_key: jint-ws-development-kit-ji-purchaserequisition.docx
+structure:
+  pages: 28
+  chapters: 3
+  sections: 186
+  tables: 168
+  figures: 1
+  field_tables: 46
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 447
+  by_type:
+    testo: 46
+    tabella: 137
+    definizione: 1
+    procedura: 4
+    passo: 26
+    riga-tabella-campi: 209
+    nota: 2
+    regola: 17
+    esempio: 2
+    riferimento: 3
+reliability:
+  base_by_kind: 0.9
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.72
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: tabelle annidate appiattite nel testo della cella
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 447
+  items_produced: 233
+  residue:
+    irrelevant: 4
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 1
+  coverage_ratio: 0.52
+  last_run: 2026-09-30
+  estimated_tokens: 57042
+  sessions_planned: 1

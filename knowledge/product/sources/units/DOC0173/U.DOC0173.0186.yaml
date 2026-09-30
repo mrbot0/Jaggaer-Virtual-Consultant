@@ -1,0 +1,54 @@
+id: U.DOC0173.0186
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Call # | Request | Response
+  Call #: 1 | Request: startAt=1 | Response: startAt=1
+  totRecords=250
+  returnedRecords=100
+  Call #: 2 | Request: startAt=101 | Response: startAt=101
+  totRecords=250
+  returnedRecords=100
+  Call #: 3 | Request: startAt=201 | Response: startAt=201
+  totRecords=250
+  returnedRecords=50
+hash: sha256:3fc73e8cbed1be9a6cc42902ed9d5ef8808098f1c662e9e07310f8f283f600b9
+words: 40
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Results pagination
+  section_path: 4.2.3
+  page: 7
+  lang: en
+  prev: U.DOC0173.0185
+  next: U.DOC0173.0187
+table:
+  table: 0
+  headers:
+    - "Call #"
+    - Request
+    - Response
+  rows:
+    - - "1"
+      - startAt=1
+      - |-
+        startAt=1
+        totRecords=250
+        returnedRecords=100
+    - - "2"
+      - startAt=101
+      - |-
+        startAt=101
+        totRecords=250
+        returnedRecords=100
+    - - "3"
+      - startAt=201
+      - |-
+        startAt=201
+        totRecords=250
+        returnedRecords=50
+  block: 1
+  blocks: 1

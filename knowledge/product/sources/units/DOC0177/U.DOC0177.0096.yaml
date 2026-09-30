@@ -1,0 +1,49 @@
+id: U.DOC0177.0096
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: values/value | Mandatory (Y/N): Y/N | Description: Value of the Data Element (eVM answer) | Mapping on Jaggaer One data model and notes: According to data element type, values can be:
+  textual: text
+  number: number formatted in the default locale without grouping separator
+  date: date string in the format “yyyyMMdd” or timestamp in “yyyy-MM-dd HH:mm:ss.SSS Z” format .
+  It is possible to configure a different format for date (example: “yyyy-MM-dd”). In this case the same format will be applied to import, export and data element condition filter.
+  boolean:’1’, ‘true’, ‘yes’ for true value, any other not empty string for false
+  Choice and mutichoice: Choice Label in default language, as it appears in the choice list
+hash: sha256:b9df7e606b24dbcb34739a7cc8dc0ea343f362732e2b46d41d39793875373a9c
+words: 116
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JASupplierData/dataElements/deInfoList/deInfo
+  section_path: 2.1.1.10
+  page: 20
+  lang: en
+  prev: U.DOC0177.0095
+  next: U.DOC0177.0097
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - values/value
+    - Y/N
+    - Value of the Data Element (eVM answer)
+    - |-
+      According to data element type, values can be:
+      textual: text
+      number: number formatted in the default locale without grouping separator
+      date: date string in the format “yyyyMMdd” or timestamp in “yyyy-MM-dd HH:mm:ss.SSS Z” format .
+      It is possible to configure a different format for date (example: “yyyy-MM-dd”). In this case the same format will be applied to import, export and data element condition filter.
+      boolean:’1’, ‘true’, ‘yes’ for true value, any other not empty string for false
+      Choice and mutichoice: Choice Label in default language, as it appears in the choice list
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

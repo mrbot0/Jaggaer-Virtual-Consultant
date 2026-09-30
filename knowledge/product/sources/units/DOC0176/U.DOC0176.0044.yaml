@@ -1,0 +1,47 @@
+id: U.DOC0176.0044
+doc: S.STD.XSC.DOC.0176
+doc_id: jint-ws-development-kit-web-services-overview-do-c57133dd
+type: tabella
+text: |-
+  Colonne: Request | HTTP status | Response
+  Request: SOAP Request is not compliant to agreed WSDL/SOAP protocol (e.g. formal error, mostly because of wrong XML format) | HTTP status: 500 | Response: SOAP Fault
+  Request: SOAP Request is fully compliant to WSDL/SOAP protocol and the content is successfully processed by Jaggaer | HTTP status: 200 | Response: SOAP Response with a success code
+  Request: SOAP Request is fully compliant to WSDL/SOAP protocol but the content is not validated in the Jaggaer specific scenario (e.g. wrong object identifier) | HTTP status: 200 | Response: SOAP Response with an error code
+  Request: SOAP Requests size is over the preconfigured threshold and MTOM is not used | HTTP status: 400 | Response: No response body
+  Request: The client components did not provide required security credentials (basic auth username/password or certificate) | HTTP status: 401 | Response: No response body
+hash: sha256:967d1adfaa42524e762afaa364610ffc992efa7cd22e5852753cb71a94f12a66
+words: 146
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0176
+  chapter: JINT SOAP Web Services
+  section: SSL Mutual Authentication (SSL Client certificate)
+  section_path: 2.0.2
+  page: 12
+  lang: en
+  prev: U.DOC0176.0043
+  next: U.DOC0176.0045
+table:
+  table: 0
+  headers:
+    - Request
+    - HTTP status
+    - Response
+  rows:
+    - - SOAP Request is not compliant to agreed WSDL/SOAP protocol (e.g. formal error, mostly because of wrong XML format)
+      - "500"
+      - SOAP Fault
+    - - SOAP Request is fully compliant to WSDL/SOAP protocol and the content is successfully processed by Jaggaer
+      - "200"
+      - SOAP Response with a success code
+    - - SOAP Request is fully compliant to WSDL/SOAP protocol but the content is not validated in the Jaggaer specific scenario (e.g. wrong object identifier)
+      - "200"
+      - SOAP Response with an error code
+    - - SOAP Requests size is over the preconfigured threshold and MTOM is not used
+      - "400"
+      - No response body
+    - - The client components did not provide required security credentials (basic auth username/password or certificate)
+      - "401"
+      - No response body
+  block: 1
+  blocks: 1

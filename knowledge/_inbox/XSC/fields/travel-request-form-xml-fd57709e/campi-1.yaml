@@ -1,0 +1,41 @@
+document: travel-request-form-xml-fd57709e
+scope: XSC
+section: campi-1
+section_title: Campi —
+genre: tecnica
+rows:
+  - label: "100"
+    technical_name: "100"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=100 · tipo=static
+    section: campi-1
+    source_unit: travel-request-form-xml-fd57709e/campi-1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: travel-request-form-xml-fd57709e
+  - label: Total Amount
+    technical_name: Total Amount
+    type: Price
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Enter the total estimated cost of the travel from the completed travel
+      authorization form attached. · id=10003 · tipo=userdefined
+    section: campi-1
+    source_unit: travel-request-form-xml-fd57709e/campi-1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: travel-request-form-xml-fd57709e
+  - label: Motor Fleet Vehicle Requested?
+    technical_name: Motor Fleet Vehicle Requested?
+    type: RadioButtonGroup
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Click here if you will need a motor fleet vehicle. ·
+      UserDefinedFieldParamFormListId=211365 · id=10004 · tipo=userdefined
+    section: campi-1
+    source_unit: travel-request-form-xml-fd57709e/campi-1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: travel-request-form-xml-fd57709e

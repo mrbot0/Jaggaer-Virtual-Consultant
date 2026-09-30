@@ -1,0 +1,42 @@
+id: U.DOC0169.0322
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: measurementAmount | Description: Value of the measure.
+  Attribute: measurementUnit | Description: Measure unit, such as KG (kg), LG (large), EA (each) or PK (pack).
+  Must be a standard packaging or size abbreviation.
+  Attribute: measurementValue | Description: Combination of MeasurementAmount and MeasurementUnit. If only one of the values is available, that value is shown.
+hash: sha256:8dfbb55ebfd1c79a8078b7419a24a00e98595f5aa623179fd91ddb114b5fc75d
+words: 62
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Measurement [PR Export]
+  section_path: 2.3.3.43
+  page: 80
+  lang: en
+  prev: U.DOC0169.0321
+  next: U.DOC0169.0323
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - measurementAmount
+      - Value of the measure.
+      - ""
+    - - measurementUnit
+      - |-
+        Measure unit, such as KG (kg), LG (large), EA (each) or PK (pack).
+        Must be a standard packaging or size abbreviation.
+      - ""
+    - - measurementValue
+      - Combination of MeasurementAmount and MeasurementUnit. If only one of the values is available, that value is shown.
+      - ""
+  block: 1
+  blocks: 1

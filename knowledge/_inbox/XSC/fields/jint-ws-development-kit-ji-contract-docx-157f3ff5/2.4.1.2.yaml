@@ -1,0 +1,73 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.4.1.2
+section_title: Custom Field Value [Validate]
+genre: tecnica
+rows:
+  - label: internalName
+    technical_name: internalName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Internal name of the custom field value.
+
+      The contract custom field must exist in the CLM solution before you can
+      update it via validation
+    section: 2.4.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Contract custom field type
+
+      Text (Single Line) – Freeform single-line entry area, up to 100
+      alphanumeric characters. Cannot be a parent custom field.
+
+      Text (Multi-Line) – Freeform multi-line entry area, up to 2000
+      alphanumeric characters. Cannot be a parent custom field.
+
+      Numeric Text Box – Freeform single-line entry area, numbers only. Cannot
+      be a parent custom field.
+
+      Yes/No – Yes-No checkbox. You can enable multiple checkboxes.
+
+      Dropdown List (Pick One) – Predefined set of selections in dropdown list
+      format.
+
+      Multiple Choice (Pick One) – Also known as a Radio Button Group.
+      Predefined set of selections in radio button group format.
+
+      Multiple Select (Pick Many) – Predefined set of selections. User can enter
+      all custom field values that apply. This is the only custom field type
+      that can accept more than one custom field value.
+
+      File Upload – Add a file attachment.
+
+      Date – Date field, with today’s date as the default selection.
+
+      Table – Create a table composed of other custom fields.
+    section: 2.4.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: customFieldValueList
+    technical_name: customFieldValueList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Value of the custom field.
+      See section “Custom Field Value [Validate]” below
+    section: 2.4.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

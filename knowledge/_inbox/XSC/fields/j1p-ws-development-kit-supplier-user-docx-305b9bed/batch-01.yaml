@@ -1,0 +1,93 @@
+document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+scope: XSC
+batch: batch-01
+section: 2.1.1.1
+section_title: IdmSupplierUser
+part: 1
+parts: 1
+rows:
+  - key: tech:EMAIL
+    label: email
+    labels:
+      - email
+    technical_name: EMAIL
+    section: 2.1.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Email address
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.1
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: email
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FIRSTNAME
+    label: firstName
+    labels:
+      - firstName
+    technical_name: FIRSTNAME
+    section: 2.1.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: First name
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.1
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: firstName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:LASTNAME
+    label: lastName
+    labels:
+      - lastName
+    technical_name: LASTNAME
+    section: 2.1.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Last name
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.1
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: lastName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 958

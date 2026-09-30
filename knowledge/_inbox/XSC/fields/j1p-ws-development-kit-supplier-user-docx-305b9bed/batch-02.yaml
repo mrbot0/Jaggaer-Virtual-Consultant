@@ -1,0 +1,175 @@
+document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+scope: XSC
+batch: batch-02
+section: 2.1.1.2
+section_title: JcsSupplierUser
+part: 1
+parts: 1
+rows:
+  - key: tech:COMPANYID
+    label: companyId
+    labels:
+      - companyId
+    technical_name: COMPANYID
+    section: 2.1.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Company Id
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: companyId
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:USERSTATUS
+    label: userStatus
+    labels:
+      - userStatus
+    technical_name: USERSTATUS
+    section: 2.1.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: User Status
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: userStatus
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ISOCOUNTRY
+    label: isoCountry
+    labels:
+      - isoCountry
+    technical_name: ISOCOUNTRY
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: 2-letter ISO country code of the country from which the supplier user
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: isoCountry
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LANGUAGECODE
+    label: languageCode
+    labels:
+      - languageCode
+    technical_name: LANGUAGECODE
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: 2-letter stangard Language Code
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: languageCode
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: languageCode
+        type: null
+        mandatory_text: Y
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - N
+          - Y
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:TIMEZONE
+    label: timeZone
+    labels:
+      - timeZone
+    technical_name: TIMEZONE
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: User Time Zone
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.2#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: timeZone
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.3#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: timeZone
+        type: null
+        mandatory_text: Y
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - N
+          - Y
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+tokens_estimate: 1487

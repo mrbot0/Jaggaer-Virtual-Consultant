@@ -1,0 +1,89 @@
+id: S.STD.XSC.DOC.0084
+type: DOC
+title: System Administrator Training
+summary: "Documento training-deck (d'uso, origine vendor) \"System Administrator
+  Training\": 420 unità, 0 tabelle, 0 tabelle di campi; scope ADM, VEN, P2P;
+  affidabilità 0.48."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: d'uso
+sources:
+  - file: CORSI/JI-epro_3000/Class file/client sysadmin_training.pdf
+    sha256: sha256:03445331420d8d0c02fbea738f4ae1b20262d7a2d03e51646a072a08bb9efda6
+kind: training-deck
+genre: d'uso
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - ADM
+  - VEN
+  - P2P
+source:
+  path: CORSI/JI-epro_3000/Class file/client sysadmin_training.pdf
+  sha256: sha256:03445331420d8d0c02fbea738f4ae1b20262d7a2d03e51646a072a08bb9efda6
+  size: 479719
+  format: pdf
+  doc_id: client-sysadmin-training-pdf-8eedbe3e
+  doc_key: client-sysadmin-training.pdf
+structure:
+  pages: 42
+  chapters: 42
+  sections: 42
+  tables: 0
+  figures: 87
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 420
+  by_type:
+    testo: 305
+    riferimento: 6
+    regola: 38
+    nota: 66
+    esempio: 1
+    procedura: 4
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 420
+  items_produced: 106
+  residue:
+    irrelevant: 4
+    duplicate: 0
+    ambiguous: 2
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.25
+  last_run: 2026-09-30
+  estimated_tokens: 29461
+  sessions_planned: 1

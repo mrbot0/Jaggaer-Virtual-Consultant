@@ -1,0 +1,37 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.28
+section_title: Internal Info [PR Import]
+genre: tecnica
+rows:
+  - label: note
+    technical_name: note
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      External note.
+
+      If the internal note is longer than 1000 characters, it is truncated and
+      saved.
+
+      Note: If the Note field is empty, the existing note is not overwritten.
+      Only a populated Note field can overwrite the existing note.
+    section: 2.1.1.28
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.28#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: attachmentList
+    technical_name: attachmentList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      List of attachment information defined internally.
+      See section “Attachment [PR Import]” above
+    section: 2.1.1.28
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.28#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

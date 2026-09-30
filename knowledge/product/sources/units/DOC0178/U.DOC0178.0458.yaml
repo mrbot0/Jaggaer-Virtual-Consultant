@@ -1,0 +1,43 @@
+id: U.DOC0178.0458
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: organizationFee | Description: Administrative fee that your organization adds to purchases for this contract.
+  Note: This element is mutually exclusive with the businessUnitFeeList element.
+  Attribute: businessUnitFeeList | Description: List of business unit that add a fee to purchase for this contract.
+  See section “BusinessUnitFee [Export]” below
+  Note: This element is mutually exclusive with the organizationFee element.
+hash: sha256:988a5405328481e2cea34ab831673610b766d12e2f65e1a2273388304d0f1cd0
+words: 65
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: AdministrativeFee [Export]
+  section_path: 2.3.3.28
+  page: 104
+  lang: en
+  prev: U.DOC0178.0457
+  next: U.DOC0178.0459
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - organizationFee
+      - |-
+        Administrative fee that your organization adds to purchases for this contract.
+        Note: This element is mutually exclusive with the businessUnitFeeList element.
+      - ""
+    - - businessUnitFeeList
+      - |-
+        List of business unit that add a fee to purchase for this contract.
+        See section “BusinessUnitFee [Export]” below
+        Note: This element is mutually exclusive with the organizationFee element.
+      - ""
+  block: 1
+  blocks: 1

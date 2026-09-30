@@ -1,0 +1,66 @@
+id: U.DOC0169.0293
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: decDistributionValue | Description: Distribution value for the split. This is a numeric value of up to 15 digits, including up to 4 decimal places. Must be a positive number or zero. According to specific distribution type, it represents AmountOfQuantity: the portion of the quantity to be split. AmountOfPrice: the monetary amount to be split. PercentOfQuantity and PercentOfPrice: the percentage of the split. For these values, the total of all distribution values must equal 100% Attribute: splitIndex | Description: Split sequence number Attribute: splitAmount | Description: Amount to be split for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places. For AmountOfPrice splits, the distributionvalue and splitAmount attributes are calculated identically and will always match each other. Attribute: shippingSplitAmount | Description: Amount to be split for shipping for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places Attribute: handlingSplitAmount | Description: Amount to be split for handling for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places Attribute: tax1SplitAmount | Description: Amount to be split for tax 1 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places Attribute: tax2SplitAmount | Description: Amount to be split for tax 2 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places Attribute: discountSplitAmount | Description: Discount split amount. This is a numeric value of up to 15 digits, including up to 4 decimal places. This information does not appear in the message if there is no split."
+hash: sha256:c3d46ce44d1cf6b08bfce5a3a8f07befbece46584ff6252b6e216541fcd4c2ca
+words: 293
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: SplittableFieldIndex [PR Export]
+  section_path: 2.3.3.18
+  page: 66
+  lang: en
+  prev: U.DOC0169.0292
+  next: U.DOC0169.0294
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - decDistributionValue
+      - |-
+        Distribution value for the split. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+        Must be a positive number or zero.
+        According to specific distribution type, it represents
+        AmountOfQuantity: the portion of the quantity to be split.
+        AmountOfPrice: the monetary amount to be split.
+        PercentOfQuantity and PercentOfPrice: the percentage of the split. For these values, the total of all distribution values must equal 100%
+      - ""
+    - - splitIndex
+      - Split sequence number
+      - ""
+    - - splitAmount
+      - |-
+        Amount to be split for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+        For AmountOfPrice splits, the distributionvalue and splitAmount attributes are calculated identically and will always match each other.
+      - ""
+    - - shippingSplitAmount
+      - Amount to be split for shipping for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      - ""
+    - - handlingSplitAmount
+      - Amount to be split for handling for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      - ""
+    - - tax1SplitAmount
+      - Amount to be split for tax 1 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      - ""
+    - - tax2SplitAmount
+      - Amount to be split for tax 2 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      - ""
+    - - discountSplitAmount
+      - Discount split amount. This is a numeric value of up to 15 digits, including up to 4 decimal places. This information does not appear in the message if there is no split.
+      - ""
+    - - customFieldValueList
+      - |-
+        Container for custom field value object.
+        See section “CustomFieldValue [PR Export]” above
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

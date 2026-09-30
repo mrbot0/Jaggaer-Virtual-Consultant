@@ -1,0 +1,333 @@
+doc: S.STD.XSC.DOC.0109
+scope: XSC
+extracted_at: 2026-09-30T04:30:48.582Z
+tier: T0
+stats:
+  units: 8
+  extracted_units: 6
+  document_candidates: 5
+  needs_llm: 5
+  t0_complete: 6
+  by_candidate:
+    FLD: 6
+    CFG: 5
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 15000
+  sessions:
+    - n: 1
+      tokens: 15000
+      batches: 3
+      items: 5
+      batch_items:
+        - - R.DOC0109.C001
+          - R.DOC0109.C002
+        - - R.DOC0109.C003
+          - R.DOC0109.C004
+        - - R.DOC0109.C005
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0109.0003
+    source_unit: U.DOC0109.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0109
+    section: Domande — Page 1 / Services Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Type of Service Requested
+      technical_name: "39069"
+      type: Dropdown List (Pick One)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Type of Service Requested
+      section: domande-1
+      source_unit: U.DOC0109.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0109
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0109.0004
+    source_unit: U.DOC0109.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0109
+    section: Domande — Page 1 / Services Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Service Description
+      technical_name: "39065"
+      type: Text (Multi-Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Service Description
+      section: domande-1
+      source_unit: U.DOC0109.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0109
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0109.0005
+    source_unit: U.DOC0109.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0109
+    section: Domande — Page 1 / Services Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Estimated Price
+      technical_name: "39066"
+      type: User Defined
+      mandatory_text: No
+      allowed_values: []
+      notes: Estimated Price
+      section: domande-1
+      source_unit: U.DOC0109.0005
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0109
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0109.0006
+    source_unit: U.DOC0109.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0109
+    section: Domande — Page 1 / Services Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Anticipated frequency of service
+      technical_name: "39067"
+      type: Multiple Choice (Pick One)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Anticipated frequency of service
+      section: domande-1
+      source_unit: U.DOC0109.0006
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0109
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0109.0007
+    source_unit: U.DOC0109.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0109
+    section: Domande — Page 1 / Services Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: If you selected "other" in the field above, please specify the anticipated frequency of service.
+      technical_name: "39068"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: If you selected "other" in the field above, please specify the anticipated frequency of service.
+      section: domande-1
+      source_unit: U.DOC0109.0007
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0109
+    needs_llm: false
+    tokens: 79
+  - raw_id: R.DOC0109.0008
+    source_unit: U.DOC0109.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0109
+    section: Domande — Page 1 / Services Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "If other, please specify type:"
+      technical_name: "39513"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: "If other, please specify type:"
+      section: domande-1
+      source_unit: U.DOC0109.0008
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0109
+    needs_llm: false
+    tokens: 46
+  - raw_id: R.DOC0109.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0109
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0109.0002
+    facets: &a7
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: Title
+      current_state:
+        value: Ongoing Service Contract
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0109.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0109
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0109.0002
+    facets: *a7
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Services
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0109.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0109
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0109.0002
+    facets: *a7
+    extraction:
+      parameter: ContextType
+      current_state:
+        value: NORMAL
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0109.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0109
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0109.0002
+    facets: *a7
+    extraction:
+      parameter: SearchableKeywords
+      current_state:
+        value: service request form ongoing
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0109.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0109
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0109.0002
+    facets: *a7
+    extraction:
+      parameter: purpose
+      current_state:
+        value: ProcurementRequest
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

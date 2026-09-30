@@ -1,0 +1,75 @@
+document: catering-form-xml-ce48f3d4
+scope: XSC
+section: campi-4
+section_title: Campi —
+genre: tecnica
+rows:
+  - label: Boxed lunch pic
+    technical_name: Boxed lunch pic
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=2;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/1940363/1518.jpg · id=10009
+      · tipo=userdefined
+    section: campi-4
+    source_unit: catering-form-xml-ce48f3d4/campi-4#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: Menu text
+    technical_name: Menu text
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br><br><br>Please enter the desired quantity
+      for each item below. <br><br>(add relevent directions here) All sandwiches
+      include condiments, table service, Miss Vickie's Potato Chips and 2
+      homestyle cookies. · id=10011 · tipo=userdefined
+    section: campi-4
+    source_unit: catering-form-xml-ce48f3d4/campi-4#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: Menu Pic 2
+    technical_name: Menu Pic 2
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=0;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/1940363/1518.jpg · id=10012
+      · tipo=userdefined
+    section: campi-4
+    source_unit: catering-form-xml-ce48f3d4/campi-4#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: Menu Item Entry
+    technical_name: Menu Item Entry
+    type: EditableItemList
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamEditableItemList_DescSize=80;
+      UserDefinedFieldParamEditableItemList_Size=10;
+      UserDefinedFieldParamEditableItemList_DescMaxLength=80;
+      UserDefinedFieldParamEditableItemList_ShowTotal=true;
+      UserDefinedFieldParamEditableItemList_ShowQty=true · id=10014 ·
+      tipo=userdefined
+    section: campi-4
+    source_unit: catering-form-xml-ce48f3d4/campi-4#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: Special Order Instructions
+    technical_name: Special Order Instructions
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaRows=4;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=80 · id=10013 · tipo=userdefined
+    section: campi-4
+    source_unit: catering-form-xml-ce48f3d4/campi-4#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4

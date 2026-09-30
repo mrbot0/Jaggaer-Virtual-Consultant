@@ -1,0 +1,68 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-20
+section: 2.3.1.15
+section_title: CustomPaymentTerm [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:USEFLAG
+    label: useFlag
+    labels:
+      - useFlag
+    technical_name: USEFLAG
+    section: 2.3.1.15
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether custom payment terms are (true) or are not (false) to
+      be used
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.15
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.15#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: useFlag
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TERMFILEJIID
+    label: termFileJIId
+    labels:
+      - termFileJIId
+    technical_name: TERMFILEJIID
+    section: 2.3.1.15
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Unique Internal JI identifier of the custom payment terms file.
+      The file must exist in the Supplier Management solution.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.15
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.15#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: termFileJIId
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 863

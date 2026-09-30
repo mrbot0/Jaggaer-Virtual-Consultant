@@ -1,0 +1,48 @@
+id: U.DOC0171.0381
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: operatorUser | Mandatory (Y/N): N | Description: Reference to the buyer user to be used as RfX creator:
+  id = JA internal identifier
+  code = external code
+  login = user login
+  If not specified, companyData superuser is used. | Mapping on JA data model and notes: Buyer company
+  User selection is described in 0-Creator/Updater Account Id Selection
+hash: sha256:98c3085a7442e12316c41c4d6959ddb094e1eee1bd56dd1bb2d0999aa7f2f98d
+words: 58
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Technical Envelope Scoring [ImportScore method]
+  section_path: 2.2.1.1
+  page: 7
+  lang: en
+  prev: U.DOC0171.0380
+  next: U.DOC0171.0382
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - operatorUser
+    - N
+    - |-
+      Reference to the buyer user to be used as RfX creator:
+      id = JA internal identifier
+      code = external code
+      login = user login
+      If not specified, companyData superuser is used.
+    - |-
+      Buyer company
+      User selection is described in 0-Creator/Updater Account Id Selection
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

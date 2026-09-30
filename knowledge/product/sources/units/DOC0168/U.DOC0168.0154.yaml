@@ -1,0 +1,39 @@
+id: U.DOC0168.0154
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: statusCode | Description: Validation response result code.
+  200: The request was processed successfully.
+  400: The request could not be understood due to syntax errors.
+  500: The request could not be processed due to a transient error
+  Attribute: statusText | Description: General validation response result description.
+hash: sha256:b9b0d09bc8f36567aea8673deb91cd7e20958cf0b2e423837fbec417cd7f247c
+words: 50
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: ValidateStatus [Validate JIOrder method]
+  section_path: 2.2.3.2
+  page: 61
+  lang: en
+  prev: U.DOC0168.0153
+  next: U.DOC0168.0155
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - statusCode
+      - |-
+        Validation response result code.
+        200: The request was processed successfully.
+        400: The request could not be understood due to syntax errors.
+        500: The request could not be processed due to a transient error
+    - - statusText
+      - General validation response result description.
+  block: 1
+  blocks: 1

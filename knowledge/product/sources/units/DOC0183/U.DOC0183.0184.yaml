@@ -1,0 +1,39 @@
+id: U.DOC0183.0184
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: statusCode | Description: Validation response result code.
+  200 - The request was processed successfully.
+  400 - The request could not be understood due to syntax errors.
+  500 - The request could not be processed due to a transient error.
+  Attribute: statusText | Description: General validation response result description.
+hash: sha256:8fa959f6d6caa44617137b1d8289b5ed3cfc3b3ac9050a1d9ced97f058a442db
+words: 53
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: ValidateStatus [Validate]
+  section_path: 2.3.3.2
+  page: 18
+  lang: en
+  prev: U.DOC0183.0183
+  next: U.DOC0183.0185
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - statusCode
+      - |-
+        Validation response result code.
+        200 - The request was processed successfully.
+        400 - The request could not be understood due to syntax errors.
+        500 - The request could not be processed due to a transient error.
+    - - statusText
+      - General validation response result description.
+  block: 1
+  blocks: 1

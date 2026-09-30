@@ -1,0 +1,94 @@
+doc: S.STD.XSC.DOC.0073
+scope: XSC
+extracted_at: 2026-09-30T04:30:30.700Z
+tier: T0
+stats:
+  units: 15
+  extracted_units: 2
+  document_candidates: 0
+  needs_llm: 1
+  t0_complete: 1
+  by_candidate:
+    FLD: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 426
+  sessions:
+    - n: 1
+      tokens: 426
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0073.0001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0073.0001
+    source_unit: U.DOC0073.0001
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0073
+    section: Units of Measure
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: UOM mapping is needed, how units of measure should be displayed in the site and how the units of measure on documents should be interpreted when exported or imported with an ERP (Enterprise Resource Planning) system
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0073.0001
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 76
+  - raw_id: R.DOC0073.0009
+    source_unit: U.DOC0073.0009
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0073
+    section: Package Inbound
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: How
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0073.0009
+    needs_llm: false
+    tokens: 30

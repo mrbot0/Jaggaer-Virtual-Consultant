@@ -1,0 +1,39 @@
+id: U.DOC0171.0229
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: invitationDate | Mandatory (Y/N): N | Description: Date-time of invitation/self-invitation | Mapping on JA data model and notes: Date-time of invitation/self-invitation.
+  If supplier is invited by buyer but RfX hasn’t been published, when updating RfX the invitation date is reset to null value
+hash: sha256:b6b7a1804f7471c2f8cbd25fb1efc107a96338024b258529fad21195cbc774fb
+words: 44
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Suppliers [Import/Update RfX method]
+  section_path: 2.1.1.22
+  page: 6
+  lang: en
+  prev: U.DOC0171.0228
+  next: U.DOC0171.0230
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - invitationDate
+    - N
+    - Date-time of invitation/self-invitation
+    - |-
+      Date-time of invitation/self-invitation.
+      If supplier is invited by buyer but RfX hasn’t been published, when updating RfX the invitation date is reset to null value
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

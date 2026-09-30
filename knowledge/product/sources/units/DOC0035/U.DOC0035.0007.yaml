@@ -1,0 +1,17 @@
+id: U.DOC0035.0007
+doc: S.STD.XSC.DOC.0035
+doc_id: ji-plt-2303-handout-workflowsyntax-pdf-36176c48
+type: testo
+text: "Each step is typically listed in order (although the order is not important in this section, it does help to be consist ent with the intended order of workflow). The only necessary element is the Step name tag, which will contain the name of the step itself as show here: <Step name=\"Missing Distribution\" /> <Step name=\"Missing Distribution II\" /> It is also possible to include help text with any workflow step that can be used to explain it's intended purpose. This is done by using the \"wfActivityHelp\" attribute with the help text included within the AttrValue element: <Step name=\"PO Distribution\"> <Attribute name=\"wfActivityHelp\"> <AttrValue lang=\"default\">System step to distribute a Purchase Order.</AttrValue> </Attribute> </Step>"
+hash: sha256:0d3ff909893211c0305e531f13ffecdb37e340d0be3556f808ce28717e67a915
+words: 112
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0035
+  chapter: Handout
+  section: Handout
+  section_path: p1
+  page: 1
+  lang: en
+  prev: U.DOC0035.0006
+  next: U.DOC0035.0008

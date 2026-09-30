@@ -1,0 +1,256 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.6
+section_title: SupplierInfo [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: id
+    technical_name: id
+    type: null
+    mandatory_text: |-
+      Y/N
+      See description
+    allowed_values: []
+    notes: |-
+      JI internal identifier of the supplier
+      You must specify either the id element, the supplierNumber field, or both.
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: name
+    technical_name: name
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Supplier Name
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: supplierNumber
+    technical_name: supplierNumber
+    type: null
+    mandatory_text: |-
+      Y/N
+      See description
+    allowed_values: []
+    notes: >-
+      Supplier ID that your organization has provided for this supplier in the
+      supplier profile
+
+      You must specify either the id element, the supplierNumber field, or both.
+
+      If the supplier does not exist in JAGGAER ONE, do not include this field
+      in your PO import message.
+
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: thirdyPartyRefNumber
+    technical_name: thirdyPartyRefNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Supplier ID for the supplier, provided by your organization for use by
+      other systems
+
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: businessUnitVendorId
+    technical_name: businessUnitVendorId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Vendor ID assigned to this supplier by the business unit
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: DUNS
+    technical_name: DUNS
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Dun & Bradstreet (DUNS) number for this supplier
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: contactInfoList
+    technical_name: contactInfoList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Container for possible supplier contact information.
+
+      See section “ContactInfo [Import JIOrder method]” below.
+
+      Note: If the supplier does not exist in JAGGAER ONE, at least a
+      ContactInfo element is required, and its type attribute must be set to
+      main. You can choose to omit the other ContactInfo sub-elements, fields,
+      and attributes, but the ContactInfo element and the type attribute are
+      required.
+
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: accountCode
+    technical_name: accountCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Account code sent to the supplier with the order line.
+      Valid only for SupplierInfo data specified at JIOrderLine level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: pricingCode
+    technical_name: pricingCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Specifies any special pricing or promotional codes with the order line.
+      Valid only for SupplierInfo data specified at JIOrderLine level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: contractNumber
+    technical_name: contractNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Contract number sent to the supplier with the order line.
+      Valid only for SupplierInfo data specified at JIOrderLine level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: contractName
+    technical_name: contractName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Contract name sent to the supplier with the order line.
+      Valid only for SupplierInfo data specified at JIOrderLine level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: contractRenewalNumber
+    technical_name: contractRenewalNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Contract renewal number sent to the supplier with the order line.
+      Valid only for SupplierInfo data specified at JIOrderLine level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: note
+    technical_name: note
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Text note for the supplier that is entered in the cart.
+      Valid only for SupplierInfo data specified at JIOrderLine level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: fulfillmentAddressInternalId
+    technical_name: fulfillmentAddressInternalId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Internal ID for the fulfillment center. The fulfillment center address
+      must be active and unique.
+
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: fulfillmentAddressId
+    technical_name: fulfillmentAddressId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      External ID defined by your organization for this fulfillment center. The
+      fulfillment center address must be active and unique.
+
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: fulfillmentAddressThirdPartyId
+    technical_name: fulfillmentAddressThirdPartyId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Unique external ID defined by a third party for this fulfillment center.
+      The fulfillment center address must be active and unique.
+
+      Valid only for SupplierInfo data specified at JIHeader level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: quoteNumber
+    technical_name: quoteNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Special quote number to be sent to the supplier.
+      Valid only for SupplierInfo data specified at JIOrderLine level.
+    section: 2.3.1.6
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.6#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

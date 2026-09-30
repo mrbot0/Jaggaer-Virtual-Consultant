@@ -1,0 +1,70 @@
+id: U.DOC0181.0056
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: discount | Description: Discount information.
+  See section “Discount [Export JIOrder method]” below
+  Attribute: days | Description: Number of days after the invoice date that the discount can be applied to the invoice. That is, if payment is received within the specified number of days of the invoice date, the discount is applied
+  Attribute: net | Description: Number of days after the invoice date that the invoice is due.
+  Attribute: standardPaymentTermsCode | Description: Uniquely identifies a specific preconfigured combination of payment terms. | Available from version: JINT_20_03_01
+  Attribute: termsType | Description: Used in conjunction with the daysAfter element to determine the invoice due date.
+  Possible values:
+  Net
+  EOM
+  MFI
+  EOQ
+  Manual | Available from version: JINT_20_03_01
+  Attribute: daysAfter | Description: Used in conjunction with the termsType element to compute the invoice due date.
+  Possible values: [0 - 999] | Available from version: JINT_20_03_01
+hash: sha256:e16da3d4df2c622bd20878620f3dabd673ba0e4d5121248847cdbf44a95e8c96
+words: 151
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: Terms [Export JIOrder method]
+  section_path: 2.1.3.14
+  page: 32
+  lang: en
+  prev: U.DOC0181.0055
+  next: U.DOC0181.0057
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - discount
+      - |-
+        Discount information.
+        See section “Discount [Export JIOrder method]” below
+      - ""
+    - - days
+      - Number of days after the invoice date that the discount can be applied to the invoice. That is, if payment is received within the specified number of days of the invoice date, the discount is applied
+      - ""
+    - - net
+      - Number of days after the invoice date that the invoice is due.
+      - ""
+    - - standardPaymentTermsCode
+      - Uniquely identifies a specific preconfigured combination of payment terms.
+      - JINT_20_03_01
+    - - termsType
+      - |-
+        Used in conjunction with the daysAfter element to determine the invoice due date.
+        Possible values:
+        Net
+        EOM
+        MFI
+        EOQ
+        Manual
+      - JINT_20_03_01
+    - - daysAfter
+      - |-
+        Used in conjunction with the termsType element to compute the invoice due date.
+        Possible values: [0 - 999]
+      - JINT_20_03_01
+  block: 1
+  blocks: 1

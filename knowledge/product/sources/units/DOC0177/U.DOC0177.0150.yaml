@@ -1,0 +1,39 @@
+id: U.DOC0177.0150
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: stateServiceAreaInternalName | Mandatory (Y/N): N | Description: 2-letter state code for the supplier's service area. | Mapping on Jaggaer One data model and notes: Valid only if ServiceAreaInternalName is set to US.
+  Repeatable.
+hash: sha256:0a6d5f2bebeacf92052df88f83f186f563705a3e06cf1bfc710a4d90d87e3b9b
+words: 34
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/stateServiceAreaList
+  section_path: 2.1.1.19
+  page: 29
+  lang: en
+  prev: U.DOC0177.0149
+  next: U.DOC0177.0151
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - stateServiceAreaInternalName
+    - N
+    - 2-letter state code for the supplier's service area.
+    - |-
+      Valid only if ServiceAreaInternalName is set to US.
+      Repeatable.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

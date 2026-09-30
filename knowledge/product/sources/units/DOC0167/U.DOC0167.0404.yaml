@@ -1,0 +1,39 @@
+id: U.DOC0167.0404
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: bankIdentifierCodeText | Mandatory (Y/N): N | Description: Also known as BIC. Unique 8-character or 11-digit identifier for the bank. | Mapping on Jaggaer One data model and notes: • Required if the “type” field on the AccountsPayable element is set to WireTransfer.
+  • Must be blank if the “type” field on the AccountsPayable element is set to DirectDeposit, Check, Credit, ePayable, or PayMode.
+hash: sha256:9e1facbed2e7b2976c4f8d1807891ddd6e63121662f09f9d3a1e8322db43deb7
+words: 64
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 5
+  lang: en
+  prev: U.DOC0167.0403
+  next: U.DOC0167.0405
+row:
+  table: 0
+  row: 8
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - bankIdentifierCodeText
+    - N
+    - Also known as BIC. Unique 8-character or 11-digit identifier for the bank.
+    - |-
+      • Required if the “type” field on the AccountsPayable element is set to WireTransfer.
+      • Must be blank if the “type” field on the AccountsPayable element is set to DirectDeposit, Check, Credit, ePayable, or PayMode.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

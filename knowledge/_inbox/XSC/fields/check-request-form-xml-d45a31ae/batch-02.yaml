@@ -1,0 +1,237 @@
+document: check-request-form-xml-d45a31ae
+scope: XSC
+batch: batch-02
+section: campi-2
+section_title: Campi — Expense Info
+part: 1
+parts: 1
+rows:
+  - key: tech:GENERALINSTRUCTIONS
+    label: Instructions
+    labels:
+      - Instructions
+    technical_name: GENERALINSTRUCTIONS
+    section: campi-2
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=Use this form to request a check be prepared
+      for a previous expenditure. Complete this form, select the supplier above,
+      and attach scanned image of required documentation. Alternately, send
+      documentation to Accounts Payable referencing the submitted requisition
+      number. · id=10000 · tipo=userdefined
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-2
+        source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:111
+    label: "111"
+    labels:
+      - "111"
+    technical_name: "111"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=111 · tipo=static
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-2
+        source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "111"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:105
+    label: "105"
+    labels:
+      - "105"
+    technical_name: "105"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=105 · tipo=static
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-2
+        source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "105"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:103
+    label: "103"
+    labels:
+      - "103"
+    technical_name: "103"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=103 · tipo=static
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-2
+        source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: "103"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:UNIT_PRICE
+    label: Unit Price
+    labels:
+      - Unit Price
+    technical_name: UNIT_PRICE
+    section: campi-2
+    type: Price
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10250 · tipo=userdefined
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-2
+        source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Unit Price
+        type: Price
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:117
+    label: "117"
+    labels:
+      - "117"
+    technical_name: "117"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=117 · tipo=static
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-2
+        source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: "117"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:118
+    label: "118"
+    labels:
+      - "118"
+    technical_name: "118"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=118 · tipo=static
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-2
+        source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: "118"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:119
+    label: "119"
+    labels:
+      - "119"
+    technical_name: "119"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=119 · tipo=static
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-2
+        source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: "119"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1738

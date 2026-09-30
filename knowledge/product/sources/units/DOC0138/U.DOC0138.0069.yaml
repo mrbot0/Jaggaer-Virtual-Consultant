@@ -1,0 +1,17 @@
+id: U.DOC0138.0069
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: Note that BOTH of these activities occur during the Initial PR Validation step. The Activity Relationships might be set up as follows, indicating that after the Initial Fiscal Year End, there are two concurrent activities in the next step. <ActivityRelationship previous="Return2" next="InitialFiscalYearEnd" /> <ActivityRelationship previous="InitialFiscalYearEnd" next="InitialPRValidation" /> <ActivityRelationship previous="InitialFiscalYearEnd" next="InitialPRValidationWait" /> <ActivityRelationship previous="InitialPRValidation" next="Approval-1" /> <ActivityRelationship previous="InitialPRValidationWait" next="Approval-1" /> <ActivityRelationship previous="Approval-1" next="Approval-2" />
+hash: sha256:e55c23d16913eee94252d6c8448ee8ef8b998ae34e0f0a1505f8ef89c3a44cea
+words: 63
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: PR VALIDATION
+  section: PR VALIDATION
+  section_path: "17"
+  page: null
+  lang: en
+  prev: U.DOC0138.0068
+  next: U.DOC0138.0070

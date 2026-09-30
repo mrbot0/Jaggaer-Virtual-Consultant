@@ -1,0 +1,41 @@
+id: U.DOC0167.0400
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: routingNumber | Mandatory (Y/N): N | Description: Routing or transit number of the bank. | Mapping on Jaggaer One data model and notes: • If the “type” field on the AccountsPayable element is set to DirectDeposit, this field is always required for the United States, and required for all other countries if the AccountNumberType field is set to AccountNumber.
+  • If the “type” field on the AccountsPayable element is set to WireTransfer, this field is required for the United States. Must be blank for all other countries.
+  • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+hash: sha256:fd6d02a4a8c8efe3a7500a6ba1d0ba239c432706325538500224c9104ecf76f7
+words: 108
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 5
+  lang: en
+  prev: U.DOC0167.0399
+  next: U.DOC0167.0401
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - routingNumber
+    - N
+    - Routing or transit number of the bank.
+    - |-
+      • If the “type” field on the AccountsPayable element is set to DirectDeposit, this field is always required for the United States, and required for all other countries if the AccountNumberType field is set to AccountNumber.
+      • If the “type” field on the AccountsPayable element is set to WireTransfer, this field is required for the United States. Must be blank for all other countries.
+      • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

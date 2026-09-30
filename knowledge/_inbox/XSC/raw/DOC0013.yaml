@@ -1,0 +1,86 @@
+doc: S.STD.XSC.DOC.0013
+scope: XSC
+extracted_at: 2026-09-30T04:27:02.713Z
+tier: T0
+stats:
+  units: 31
+  extracted_units: 2
+  document_candidates: 0
+  needs_llm: 1
+  t0_complete: 1
+  by_candidate:
+    GLS: 1
+    FLD: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 374
+  sessions:
+    - n: 1
+      tokens: 374
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0013.0007
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0013.0003
+    source_unit: U.DOC0013.0003
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0013
+    section: JAGGAER Advantage Foundations
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This course
+      definition: a cross -product immersion into the JAGGAER Advantage Platform, and the products built within it.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0013.0003
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0013.0007
+    source_unit: U.DOC0013.0007
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0013
+    section: JA-PLT -2100 – JAGGAER Advantage Configuration Certification
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0013.0007
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24

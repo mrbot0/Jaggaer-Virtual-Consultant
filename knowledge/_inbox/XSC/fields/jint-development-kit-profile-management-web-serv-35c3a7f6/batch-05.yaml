@@ -1,0 +1,37 @@
+document: jint-development-kit-profile-management-web-serv-35c3a7f6
+scope: XSC
+batch: batch-05
+section: 4.1.1.4
+section_title: Categoria [Import/update of Company and Users Data]
+part: 1
+parts: 1
+rows:
+  - key: tech:CATEGORYCODE
+    label: categoryCode
+    labels:
+      - categoryCode
+    technical_name: CATEGORYCODE
+    section: 4.1.1.4
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Category reference code
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.4
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: categoryCode
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 670

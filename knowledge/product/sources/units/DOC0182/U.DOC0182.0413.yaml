@@ -1,0 +1,38 @@
+id: U.DOC0182.0413
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Method name | Description
+  Method name: Import | Description: Transfers purchase requests from the customer ERP to the Jaggaer Indirect platform.
+  Method name: update | Description: “Withdraw” or “Reject” an existing purchase requests, or “update” it by adding attachments.
+  Method name: export | Description: Retrieves a list of information about JI requisition matching optional filtering criteria
+  Method name: validate | Description: Validate a requisition by entirely accepting or discarding it, or by signaling that some requisition line elements failed the validation while at least one of them succeeded
+hash: sha256:72f8ea7801ee5211facbbf34465d0498ea9199428c124831b2b7239b62abffc9
+words: 89
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Available methods
+  section_path: 2.5.1
+  page: 28
+  lang: en
+  prev: U.DOC0182.0412
+  next: U.DOC0182.0414
+table:
+  table: 0
+  headers:
+    - Method name
+    - Description
+  rows:
+    - - Import
+      - Transfers purchase requests from the customer ERP to the Jaggaer Indirect platform.
+    - - update
+      - “Withdraw” or “Reject” an existing purchase requests, or “update” it by adding attachments.
+    - - export
+      - Retrieves a list of information about JI requisition matching optional filtering criteria
+    - - validate
+      - Validate a requisition by entirely accepting or discarding it, or by signaling that some requisition line elements failed the validation while at least one of them succeeded
+  block: 1
+  blocks: 1

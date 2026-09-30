@@ -1,0 +1,57 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.63
+section_title: ContractCommodityCode [Import]
+genre: tecnica
+rows:
+  - label: source
+    technical_name: source
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Source of the commodity code.
+      0 – manually added.
+      1 – added via sourcing event
+    section: 2.2.1.63
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.63#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Type of the commodity code.
+
+      0 – Reporting commodity code, used to limit the results of a Sourcing
+      Savings Report. Each sourcing event can have only one reporting commodity
+      code.
+
+      1 – Additional commodity code. Any commodity code that is not a reporting
+      commodity code is an additional commodity code.
+
+      Note: If the reporting commodity code was added via the sourcing event,
+      you can only add additional commodity codes manually.
+    section: 2.2.1.63
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.63#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Code
+    technical_name: Code
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Code assigned to a product, or a group of products, for the purposes of
+      identifying it in international commerce, or commerce in general.
+
+      Commodity Code is not a specific description of the goods or service.
+    section: 2.2.1.63
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.63#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

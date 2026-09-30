@@ -1,0 +1,43 @@
+id: U.DOC0181.0327
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: riga-tabella-campi
+text: |-
+  Attribute: lineOperationCode | Mandatory (Y/N): N | Description: Indicates whether the PO Line is new, an update, or is being cancelled. The default operation is new
+  Possible value (case sensitive):
+  new
+  update
+  cancel
+hash: sha256:7b6a3b89765e30287746fd54bf70c130f00e61a8f8f125aff1bfaa5e50ff1873
+words: 33
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: JIOrderLine [Import JIOrder method]
+  section_path: 2.3.1.36
+  page: 88
+  lang: en
+  prev: U.DOC0181.0326
+  next: U.DOC0181.0328
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - lineOperationCode
+    - N
+    - |-
+      Indicates whether the PO Line is new, an update, or is being cancelled. The default operation is new
+      Possible value (case sensitive):
+      new
+      update
+      cancel
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

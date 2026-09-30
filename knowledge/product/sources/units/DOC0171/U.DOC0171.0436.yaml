@@ -1,0 +1,63 @@
+id: U.DOC0171.0436
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: fileId | Description: Internal identifier of the attachment, to be used for calling attachments web service to download it
+  Attribute: fileName | Description: Attachment filename
+  Attribute: fileDescription | Description: Attachment description
+  Attribute: filePath | Description: Attachment full path
+  Attribute: fileSize | Description: Attachment size in bytes
+  Attribute: paramId | Description: Valorized only for instructional attachment information, it represents the internal parameter identifier instruction has been defined for | Available from version: 12_3_02
+  Attribute: creationDate | Description: Attachment creation date | Available from version: BA_17_01
+  Attribute: secureToken | Description: It is the secure token to be used for calling attachments web service to download the attachment file. | Available from version: BA_17_03
+  Attribute: downloadable | Description: Flag that indicates the possibility of downloading the document. | Available from version: BA_18_01
+hash: sha256:6da9887dc5759ccac1ebf06c43009e756bb71e73fe40017652e2ad1a5d681ad4
+words: 138
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Buyer Side, Seller Side, Instrumental and Award Attachments, Publish Results Documents [Export RfX method]
+  section_path: 2.3.4.6
+  page: 7
+  lang: en
+  prev: U.DOC0171.0435
+  next: U.DOC0171.0437
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - fileId
+      - Internal identifier of the attachment, to be used for calling attachments web service to download it
+      - ""
+    - - fileName
+      - Attachment filename
+      - ""
+    - - fileDescription
+      - Attachment description
+      - ""
+    - - filePath
+      - Attachment full path
+      - ""
+    - - fileSize
+      - Attachment size in bytes
+      - ""
+    - - paramId
+      - Valorized only for instructional attachment information, it represents the internal parameter identifier instruction has been defined for
+      - 12_3_02
+    - - creationDate
+      - Attachment creation date
+      - BA_17_01
+    - - secureToken
+      - It is the secure token to be used for calling attachments web service to download the attachment file.
+      - BA_17_03
+    - - downloadable
+      - Flag that indicates the possibility of downloading the document.
+      - BA_18_01
+  block: 1
+  blocks: 1

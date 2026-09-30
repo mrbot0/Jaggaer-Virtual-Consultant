@@ -1,0 +1,139 @@
+id: U.DOC0171.0535
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: Field | Attribute: UI default label (EN)
+  Attribute: supplierId | Attribute: - | Datatype: NUMBER(38)
+  Attribute: offerState | Attribute: Response Status | Datatype: NUMBER
+  Attribute: isWinner | Attribute: - | Datatype: NUMBER(1)
+  Attribute: sellerRejectReason | Attribute: Rejection Notes | Datatype: VARCHAR2(512 CHAR)
+  Attribute: preEvalStatus | Attribute: - | Datatype: NUMBER(1)
+  Attribute: preEvalBuyerComments | Attribute: Official Reject/Accept Notes | Datatype: VARCHAR2(2000 CHAR)
+  Attribute: qualStatus | Attribute: - | Datatype: NUMBER(1)
+  Attribute: qualBuyerComments | Attribute: Official Notes on Acceptance or Rejection of Response | Datatype: VARCHAR2(512 CHAR)
+  Attribute: techStatus | Attribute: - | Datatype: NUMBER(1)
+  Attribute: techBuyerComments | Attribute: Official Notes on Acceptance or Rejection of Response | Datatype: VARCHAR2(512 CHAR)
+  Attribute: commStatus | Attribute: - | Datatype: NUMBER(1)
+  Attribute: commBuyerComments | Attribute: Official Notes on Acceptance or Rejection of Response | Datatype: VARCHAR2(512 CHAR)
+  Attribute: lastUpdateDate | Attribute: Response Date | Datatype: DATE
+  Attribute: techPoints | Attribute: Current Technical Score | Datatype: NUMBER(19,3)
+  Attribute: commPoints | Attribute: Current Commercial Score | Datatype: NUMBER(19,3)
+  Attribute: totPoints | Attribute: Total Score | Datatype: NUMBER(19,3)
+  Attribute: confirmedAmount | Attribute: Confirmed Price | Datatype: NUMBER
+  Attribute: ranking | Attribute: Supplier Response Ranking | Datatype: NUMBER
+  Attribute: awardingRanking | Attribute: Ranking | Datatype: NUMBER
+  Attribute: answerUserId | Attribute: - | Datatype: NUMBER(38)
+  Attribute: answerRound | Attribute: Round | Datatype: NUMBER
+  Attribute: answerVersion | Attribute: - | Datatype: NUMBER(5)
+  Attribute: tcoValue | Attribute: TCO Value | Datatype: NUMBER
+  Attribute: tiocFlag | Attribute: - | Datatype: NUMBER(1)
+  Attribute: openQualDate | Attribute: Qualification Envelope First Access | Datatype: DATE
+  Attribute: openTechDate | Attribute: Technical Envelope First Access | Datatype: DATE
+  Attribute: openPriceDate | Attribute: Commercial Envelope First Access | Datatype: DATE
+hash: sha256:42f0e9ee745ebe07996bc8f1b1539e5fd674ddb3b4731607b5818edc5abedaa7
+words: 279
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Main offer data
+  section_path: 2.5.10.1
+  page: 8
+  lang: en
+  prev: U.DOC0171.0534
+  next: U.DOC0171.0536
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - Field
+      - UI default label (EN)
+      - ""
+    - - supplierId
+      - "-"
+      - NUMBER(38)
+    - - offerState
+      - Response Status
+      - NUMBER
+    - - isWinner
+      - "-"
+      - NUMBER(1)
+    - - sellerRejectReason
+      - Rejection Notes
+      - VARCHAR2(512 CHAR)
+    - - preEvalStatus
+      - "-"
+      - NUMBER(1)
+    - - preEvalBuyerComments
+      - Official Reject/Accept Notes
+      - VARCHAR2(2000 CHAR)
+    - - qualStatus
+      - "-"
+      - NUMBER(1)
+    - - qualBuyerComments
+      - Official Notes on Acceptance or Rejection of Response
+      - VARCHAR2(512 CHAR)
+    - - techStatus
+      - "-"
+      - NUMBER(1)
+    - - techBuyerComments
+      - Official Notes on Acceptance or Rejection of Response
+      - VARCHAR2(512 CHAR)
+    - - commStatus
+      - "-"
+      - NUMBER(1)
+    - - commBuyerComments
+      - Official Notes on Acceptance or Rejection of Response
+      - VARCHAR2(512 CHAR)
+    - - lastUpdateDate
+      - Response Date
+      - DATE
+    - - techPoints
+      - Current Technical Score
+      - NUMBER(19,3)
+    - - commPoints
+      - Current Commercial Score
+      - NUMBER(19,3)
+    - - totPoints
+      - Total Score
+      - NUMBER(19,3)
+    - - confirmedAmount
+      - Confirmed Price
+      - NUMBER
+    - - ranking
+      - Supplier Response Ranking
+      - NUMBER
+    - - awardingRanking
+      - Ranking
+      - NUMBER
+    - - answerUserId
+      - "-"
+      - NUMBER(38)
+    - - answerRound
+      - Round
+      - NUMBER
+    - - answerVersion
+      - "-"
+      - NUMBER(5)
+    - - tcoValue
+      - TCO Value
+      - NUMBER
+    - - tiocFlag
+      - "-"
+      - NUMBER(1)
+    - - openQualDate
+      - Qualification Envelope First Access
+      - DATE
+    - - openTechDate
+      - Technical Envelope First Access
+      - DATE
+    - - openPriceDate
+      - Commercial Envelope First Access
+      - DATE
+  block: 1
+  blocks: 1

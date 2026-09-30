@@ -1,0 +1,114 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-38
+section: 2.1.1.59
+section_title: J1Supplier/JISupplierData/diversityClassificationList/diversityClassification/DD-214Certificate/attachments/attachment
+part: 1
+parts: 1
+rows:
+  - key: tech:FILENAME
+    label: fileName
+    labels:
+      - fileName
+      - filename
+    technical_name: FILENAME
+    section: 2.1.1.59
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Name of the attached file.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.59
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.59#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fileName
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.61
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.61#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: filename
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.111
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.111#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fileName
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.117
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.117#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fileName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FILECONTENT
+    label: fileContent
+    labels:
+      - fileContent
+    technical_name: FILECONTENT
+    section: 2.1.1.59
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: File content
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.59
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.59#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: fileContent
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.61
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.61#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: fileContent
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.111
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.111#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: fileContent
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.117
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.117#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: fileContent
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1241

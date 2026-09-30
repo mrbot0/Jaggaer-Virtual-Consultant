@@ -1,0 +1,17 @@
+id: U.DOC0072.0050
+doc: S.STD.XSC.DOC.0072
+doc_id: xdoc-commodity-code-mapping-pdf-dcc2ec1b
+type: testo
+text: 'UN/SPSC Masking Format: This setting specifies how many segments of the code to be shown in the JAGGAER system. Some organizations only want the first two segments, in which case zeros are sent for the final two segments if sent to an external system. The UNSPSC value has 4 parts to it. The first 2 digits represent a "Segment". The next 2 digits represent a "Family". Then the two digits after that represent a "Class". The last two digits represent a "Commodity". Sometimes the customer only care about part of the UNSPSC, therefore we give them a way to only show the values for the portions they care about and populate the other portions with zeros.'
+hash: sha256:c68000446785bdef3cece923c1fd2c82f6d2d86d77d88dae27467dcf6d46750d
+words: 116
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0072
+  chapter: "How to configure the format in the site:"
+  section: "How to configure the format in the site:"
+  section_path: p13
+  page: 13
+  lang: en
+  prev: U.DOC0072.0049
+  next: U.DOC0072.0051

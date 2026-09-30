@@ -1,0 +1,75 @@
+id: U.DOC0168.0527
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: lineId | Datatype: NUMBER(199
+  Attribute: lineNumber | Datatype: VARCHAR2(10 CHAR)(Maximum Character Length of 4)
+  Attribute: workflowStatus | Datatype: VARCHAR2(10 CHAR)
+  Attribute: quantity | Datatype: NUMBER(15,4)
+  Attribute: capitalExpense | Datatype: BOOLEAN
+  Attribute: fixedAsset | Datatype: BOOLEAN
+  Attribute: taxable | Datatype: BOOLEAN
+  Attribute: requisitionLineRefId | Datatype: NUMBER(19)
+  Attribute: lineLevelInternalNote | Datatype: VARCHAR2(1000 CHAR)
+  Attribute: linkedToLineNumber | Datatype: NUMBER(10)
+  Attribute: brand | Datatype: VARCHAR2(100 CHAR)
+hash: sha256:ad47beca11dde1577123efdb01e280b3845e900a8df8b2b8c075b48e422e4cbc
+words: 78
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: JIOrderLine
+  section_path: 2.6.30
+  page: 128
+  lang: en
+  prev: U.DOC0168.0526
+  next: U.DOC0168.0528
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - lineId
+      - ""
+      - NUMBER(199
+    - - lineNumber
+      - ""
+      - VARCHAR2(10 CHAR)(Maximum Character Length of 4)
+    - - workflowStatus
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - quantity
+      - ""
+      - NUMBER(15,4)
+    - - capitalExpense
+      - ""
+      - BOOLEAN
+    - - fixedAsset
+      - ""
+      - BOOLEAN
+    - - taxable
+      - ""
+      - BOOLEAN
+    - - requisitionLineRefId
+      - ""
+      - NUMBER(19)
+    - - lineLevelInternalNote
+      - ""
+      - VARCHAR2(1000 CHAR)
+    - - linkedToLineNumber
+      - ""
+      - NUMBER(10)
+    - - brand
+      - ""
+      - VARCHAR2(100 CHAR)
+  block: 1
+  blocks: 1

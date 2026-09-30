@@ -1,0 +1,1270 @@
+doc: S.STD.XSC.DOC.0057
+scope: XSC
+extracted_at: 2026-09-30T04:30:13.935Z
+tier: T0
+stats:
+  units: 448
+  extracted_units: 34
+  document_candidates: 0
+  needs_llm: 24
+  t0_complete: 10
+  by_candidate:
+    FLD: 32
+    FLW: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 9383
+  sessions:
+    - n: 1
+      tokens: 9383
+      batches: 2
+      items: 24
+      batch_items:
+        - - R.DOC0057.0007
+          - R.DOC0057.0015
+          - R.DOC0057.0027
+          - R.DOC0057.0052
+          - R.DOC0057.0060
+          - R.DOC0057.0065
+          - R.DOC0057.0072
+          - R.DOC0057.0078
+          - R.DOC0057.0085
+          - R.DOC0057.0089
+          - R.DOC0057.0092
+          - R.DOC0057.0164
+          - R.DOC0057.0186
+          - R.DOC0057.0212
+          - R.DOC0057.0242
+          - R.DOC0057.0277
+          - R.DOC0057.0284
+          - R.DOC0057.0293
+          - R.DOC0057.0325
+          - R.DOC0057.0378
+        - - R.DOC0057.0391
+          - R.DOC0057.0398
+          - R.DOC0057.0411
+          - R.DOC0057.0435
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0057.0003
+    source_unit: U.DOC0057.0003
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Portal Configuration
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: portal configuration section of this questionnaire
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0003
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0057.0006
+    source_unit: U.DOC0057.0006
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Branding
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: following items
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0006
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0057.0007
+    source_unit: U.DOC0057.0007
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0057
+    section: Branding
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: company
+          oggetto: logo (recommended in .png format)
+          valore: null
+        - n: 2
+          verbo: client
+          oggetto: images for JAGGAER homepage
+          valore: null
+        - n: 3
+          verbo: colors
+          oggetto: and associated hex codes
+          valore: null
+        - n: 4
+          verbo: font
+          oggetto: Font
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0057.0007
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 82
+  - raw_id: R.DOC0057.0015
+    source_unit: U.DOC0057.0015
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Category Tree
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0015
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 20
+  - raw_id: R.DOC0057.0018
+    source_unit: U.DOC0057.0018
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Category Tree
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Categories
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0018
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0057.0027
+    source_unit: U.DOC0057.0027
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Business Divisions and Organizations
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0027
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 22
+  - raw_id: R.DOC0057.0045
+    source_unit: U.DOC0057.0045
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Registration & On-Boarding
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What suppliers
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0045
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0057.0052
+    source_unit: U.DOC0057.0052
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Registration & On-Boarding
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0052
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 31
+  - raw_id: R.DOC0057.0060
+    source_unit: U.DOC0057.0060
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Qualification Assessments
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0060
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 34
+  - raw_id: R.DOC0057.0065
+    source_unit: U.DOC0057.0065
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Qualification Assessments
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0065
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 23
+  - raw_id: R.DOC0057.0072
+    source_unit: U.DOC0057.0072
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Segmentation Assessments
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0072
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 34
+  - raw_id: R.DOC0057.0078
+    source_unit: U.DOC0057.0078
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Segmentation Assessments
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0078
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 23
+  - raw_id: R.DOC0057.0085
+    source_unit: U.DOC0057.0085
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Risk Assessments
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: applicable) or are there certain criteria to identify suppliers who should be risk assessed?
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0085
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 47
+  - raw_id: R.DOC0057.0089
+    source_unit: U.DOC0057.0089
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Risk Assessments
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0089
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0057.0092
+    source_unit: U.DOC0057.0092
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Risk Assessments
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0092
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0057.0164
+    source_unit: U.DOC0057.0164
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Supplier Management
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0164
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 40
+  - raw_id: R.DOC0057.0186
+    source_unit: U.DOC0057.0186
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Sourcing
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0186
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 37
+  - raw_id: R.DOC0057.0209
+    source_unit: U.DOC0057.0209
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Savings Management+
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What metrics/fields do you
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0209
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0057.0212
+    source_unit: U.DOC0057.0212
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Savings Management+
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0212
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0057.0242
+    source_unit: U.DOC0057.0242
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Sourcing Director
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0242
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 39
+  - raw_id: R.DOC0057.0255
+    source_unit: U.DOC0057.0255
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Contracts+
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Will visibility of contracts
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0255
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0057.0277
+    source_unit: U.DOC0057.0277
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Contracts+
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0277
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 38
+  - raw_id: R.DOC0057.0284
+    source_unit: U.DOC0057.0284
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Contracts
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0284
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 16
+  - raw_id: R.DOC0057.0290
+    source_unit: U.DOC0057.0290
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Contracts
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What fields do you
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0290
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0057.0293
+    source_unit: U.DOC0057.0293
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Contracts
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0293
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0057.0314
+    source_unit: U.DOC0057.0314
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: eProcurement (ePro)
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What segments
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0314
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0057.0325
+    source_unit: U.DOC0057.0325
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: eProcurement (ePro)
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0325
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 35
+  - raw_id: R.DOC0057.0342
+    source_unit: U.DOC0057.0342
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: eProcurement (ePro)
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Should approvers who
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0342
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0057.0354
+    source_unit: U.DOC0057.0354
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: eProcurement (ePro)
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Who
+      modality: raccomandazione
+      condition: they have questions about the purchase order?
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0354
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0057.0378
+    source_unit: U.DOC0057.0378
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: eProcurement (ePro)
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0378
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 36
+  - raw_id: R.DOC0057.0391
+    source_unit: U.DOC0057.0391
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Invoicing
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0391
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0057.0398
+    source_unit: U.DOC0057.0398
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Invoicing
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: so
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0057.0398
+      mandatory:
+        kind: conditional
+        when: so
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 21
+  - raw_id: R.DOC0057.0411
+    source_unit: U.DOC0057.0411
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0057
+    section: Invoicing
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0057.0411
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 36
+  - raw_id: R.DOC0057.0435
+    source_unit: U.DOC0057.0435
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0057
+    section: Spend Analytics
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a34
+      - FLW
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: if
+          oggetto: the small business status on the diversity vendor lookup file does not contain a date range, when that vendor file is updated in 2015, all of the 2014 transactions that used to show Supplier XYZ as small business will now lose that status
+          valore: null
+        - n: 2
+          verbo: if
+          oggetto: the small business status in the diversity vendor lookup file includes an applicability date range, logic can be written so that transactions with that supplier will be shown as small business or not small business according to the date range
+          valore: null
+      risultato_atteso: If the small business status in the diversity vendor lookup file includes an applicability date range, logic can be written so that transactions with that supplier will be shown as small business or not small business according to the date range.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0057.0435
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 243

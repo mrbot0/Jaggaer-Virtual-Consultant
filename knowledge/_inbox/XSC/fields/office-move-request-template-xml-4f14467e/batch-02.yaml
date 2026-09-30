@@ -1,0 +1,121 @@
+document: office-move-request-template-xml-4f14467e
+scope: XSC
+batch: batch-02
+section: domande-2
+section_title: Domande — Page 1 / Current Office Location
+part: 1
+parts: 1
+rows:
+  - key: tech:117391
+    label: Pickup Address of Office Goods
+    labels:
+      - Pickup Address of Office Goods
+    technical_name: "117391"
+    section: domande-2
+    type: Numeric Text Box
+    mandatory_text: No
+    allowed_values: []
+    notes: Pickup Address of Office Goods
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-2
+        source_unit: office-move-request-template-xml-4f14467e/domande-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Pickup Address of Office Goods
+        type: Numeric Text Box
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:117392
+    label: Estimated Weight of Office Goods
+    labels:
+      - Estimated Weight of Office Goods
+    technical_name: "117392"
+    section: domande-2
+    type: Numeric Text Box
+    mandatory_text: No
+    allowed_values: []
+    notes: Estimated Weight of Office Goods
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-2
+        source_unit: office-move-request-template-xml-4f14467e/domande-2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Estimated Weight of Office Goods
+        type: Numeric Text Box
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:117428
+    label: Do you have fragile goods we need to be aware of?
+    labels:
+      - Do you have fragile goods we need to be aware of?
+    technical_name: "117428"
+    section: domande-2
+    type: Yes/No
+    mandatory_text: No
+    allowed_values: []
+    notes: Do you have fragile goods we need to be aware of?
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-2
+        source_unit: office-move-request-template-xml-4f14467e/domande-2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Do you have fragile goods we need to be aware of?
+        type: Yes/No
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:117429
+    label: Please provide information regarding the fragile goods.
+    labels:
+      - Please provide information regarding the fragile goods.
+    technical_name: "117429"
+    section: domande-2
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Please provide information regarding the fragile goods.
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-2
+        source_unit: office-move-request-template-xml-4f14467e/domande-2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Please provide information regarding the fragile goods.
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1256

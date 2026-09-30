@@ -1,0 +1,38 @@
+id: U.DOC0168.0485
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: poId | Description: Internal identifier of the order.
+  Attribute: poNumber | Description: Internal tracking number assigned to the order by eProcurement solution.
+  Attribute: orderImportErrorList | Description: List of mismatches found importing the specific status order.
+  See section “Error [JIOrder Status Import method]” above.
+hash: sha256:2171874b84978e36c605e45474870c137bc4d3b3d6b573c3d503a2118bd3efa1
+words: 48
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: PoError [JIOrder Status Import method]
+  section_path: 2.4.3.4
+  page: 110
+  lang: en
+  prev: U.DOC0168.0484
+  next: U.DOC0168.0486
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - poId
+      - Internal identifier of the order.
+    - - poNumber
+      - Internal tracking number assigned to the order by eProcurement solution.
+    - - orderImportErrorList
+      - |-
+        List of mismatches found importing the specific status order.
+        See section “Error [JIOrder Status Import method]” above.
+  block: 1
+  blocks: 1

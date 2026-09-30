@@ -1,0 +1,55 @@
+id: U.DOC0171.0248
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: committeeMember/id
+  committeeMember/code
+  committeeMember/name
+  committeeMember/login | Mandatory (Y/N): Y
+  (only one of id/code/name/login is mandatory) | Description: Complex type for Committee Member user. Following elements are defined
+  Id: user internal identifier
+  code: user external code
+  name: user name and surname
+  login: user login
+hash: sha256:d00aede5bd9d1726197a8203859dcf24a7777873028f45f992ce179d54d2e2ee
+words: 43
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Opening Committee Member [Import/Update RfX method]
+  section_path: 2.1.1.27
+  page: 6
+  lang: en
+  prev: U.DOC0171.0247
+  next: U.DOC0171.0249
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - |-
+      committeeMember/id
+      committeeMember/code
+      committeeMember/name
+      committeeMember/login
+    - |-
+      Y
+      (only one of id/code/name/login is mandatory)
+    - |-
+      Complex type for Committee Member user. Following elements are defined
+      Id: user internal identifier
+      code: user external code
+      name: user name and surname
+      login: user login
+    - ""
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

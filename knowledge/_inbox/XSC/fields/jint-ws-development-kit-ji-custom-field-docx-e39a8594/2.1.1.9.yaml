@@ -1,0 +1,44 @@
+document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+scope: XSC
+section: 2.1.1.9
+section_title: ParentCustomFieldValueRef [Error! Reference source not found.]
+genre: tecnica
+rows:
+  - label: value
+    technical_name: value
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Value of the parent custom field.
+    section: 2.1.1.9
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.9#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+  - label: childCustomFieldValueSet
+    technical_name: childCustomFieldValueSet
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or more ChildCustomFieldValueSet.
+      See section
+      ChildCustomFieldValueSet [Custom Field Import method]
+    section: 2.1.1.9
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.9#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+  - label: error
+    technical_name: error
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or more Error.
+      See section Error [Custom Field Import method]
+    section: 2.1.1.9
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.9#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594

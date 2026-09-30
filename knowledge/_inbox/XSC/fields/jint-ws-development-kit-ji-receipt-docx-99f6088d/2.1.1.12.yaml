@@ -1,0 +1,32 @@
+document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+scope: XSC
+section: 2.1.1.12
+section_title: ReturnData [Import]
+genre: tecnica
+rows:
+  - label: returnedReason
+    technical_name: returnedReason
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Indicates the reason for the return:
+      Damaged
+      Not Ordered
+      Over Shipment
+    section: 2.1.1.12
+    source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.12#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+  - label: returnMaterialAuthNo
+    technical_name: returnMaterialAuthNo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Return Material Authorization Number provided by the supplier
+    section: 2.1.1.12
+    source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.12#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-receipt-docx-99f6088d

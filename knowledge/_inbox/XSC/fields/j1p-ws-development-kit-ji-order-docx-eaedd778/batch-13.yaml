@@ -1,0 +1,278 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-13
+section: 2.3.1.8
+section_title: Address [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:TEMPLATENAME
+    label: templateName
+    labels:
+      - templateName
+    technical_name: TEMPLATENAME
+    section: 2.3.1.8
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Used in billTo information, Name of the template to be called by this
+      label type.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.8
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.8#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: templateName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ADDRESSCODE
+    label: addressCode
+    labels:
+      - addressCode
+    technical_name: ADDRESSCODE
+    section: 2.3.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Used in billTo information, Address code associated with this billing
+      address. Use the AddressCode field to link the BillTo address to the
+      billing address stored in your ERP system.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.8
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.8#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: addressCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CONTACTLIST
+    label: contactList
+    labels:
+      - contactList
+    technical_name: CONTACTLIST
+    section: 2.3.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of contact information
+      See section “Contact [Import JIOrder method]” below
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.8
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.8#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: contactList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDRESSLINELIST
+    label: addressLineList
+    labels:
+      - addressLineList
+    technical_name: ADDRESSLINELIST
+    section: 2.3.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of address line information.
+      See section “AddressLine [Import JIOrder method]N” below
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.8
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.8#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: addressLineList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CITY
+    label: city
+    labels:
+      - city
+    technical_name: CITY
+    section: 2.3.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: City
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.8
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.8#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: city
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:STATE
+    label: state
+    labels:
+      - state
+    technical_name: STATE
+    section: 2.3.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      For US addresses, 2-character state code.
+      For non-US addresses, name of the province, county, or region.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.8
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.8#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: state
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:POSTALCODE
+    label: postalCode
+    labels:
+      - postalCode
+    technical_name: POSTALCODE
+    section: 2.3.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Postal code.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.8
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.8#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: postalCode
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.13
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.13#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: postalCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COUNTRY
+    label: country
+    labels:
+      - country
+    technical_name: COUNTRY
+    section: 2.3.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Long name of the country.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.8
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.8#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: country
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ISOCOUNTRYCODE
+    label: isoCountryCode
+    labels:
+      - isoCountryCode
+    technical_name: ISOCOUNTRYCODE
+    section: 2.3.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: 2-letter ISO country code of the contact's country.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.8
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.8#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: isoCountryCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2117

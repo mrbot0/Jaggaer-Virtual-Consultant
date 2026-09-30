@@ -1,0 +1,188 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-04
+section: 2.2.1.4
+section_title: CustomFieldValue [Validate JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:NAME
+    label: name
+    labels:
+      - name
+    technical_name: NAME
+    section: 2.2.1.4
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal name of the custom field value.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.2.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.6
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.6#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.19
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.19#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.21
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.21#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.26
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.26#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.42
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.42#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: N
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - Y
+          - N
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:VALUE
+    label: value
+    labels:
+      - value
+    technical_name: VALUE
+    section: 2.2.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Value of the custom field.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.2.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.4#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: value
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: value
+        type: null
+        mandatory_text: Y
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - N
+          - Y
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:DESCRIPTION
+    label: description
+    labels:
+      - description
+    technical_name: DESCRIPTION
+    section: 2.2.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Description of the custom field.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.2.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.4#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: description
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: description
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.26
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.26#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: description
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.37
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.37#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: description
+        type: null
+        mandatory_text: Y
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - N
+          - Y
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+tokens_estimate: 1691

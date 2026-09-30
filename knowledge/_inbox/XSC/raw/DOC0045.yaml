@@ -1,0 +1,51 @@
+doc: S.STD.XSC.DOC.0045
+scope: XSC
+extracted_at: 2026-09-30T04:30:10.237Z
+tier: T0
+stats:
+  units: 1
+  extracted_units: 0
+  document_candidates: 1
+  needs_llm: 1
+  t0_complete: 0
+  by_candidate:
+    CFG: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2150
+  sessions:
+    - n: 1
+      tokens: 2150
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0045.C001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0045.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0045
+    section: Cartelle del workflow
+    source_unit: U.DOC0045.0001
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: workflow folder Create Inventory
+      current_state:
+        value:
+          type: automated
+          workflow: receipt
+          robot: CreateInventoryRobot
+        observed_at: 2020-04-23
+        source: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - impacts
+      - risk
+      - rollback
+    tokens: 1800

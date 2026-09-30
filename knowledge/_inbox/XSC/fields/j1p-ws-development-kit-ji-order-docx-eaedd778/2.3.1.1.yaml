@@ -1,0 +1,46 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.1
+section_title: Main request structure [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: header
+    technical_name: header
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Header information.
+      See section “Header [Import JIOrder method]” below
+    section: 2.3.1.1
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: lineList
+    technical_name: lineList
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Container of Order lines.
+      At least an order line must be provided in the request
+      See section “JIOrderLine [Import JIOrder method]” beloe
+    section: 2.3.1.1
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: commentList
+    technical_name: commentList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of Order comments.
+      See section “Comment [Import JIOrder method]” beloe
+    section: 2.3.1.1
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

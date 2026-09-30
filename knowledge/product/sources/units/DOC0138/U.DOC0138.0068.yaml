@@ -1,0 +1,17 @@
+id: U.DOC0138.0068
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: <Activity name="InitialPRValidationWait"> <ActivityType>manual</ActivityType> <StepRef name="Initial PR Validation" /> <FolderRef name="WaitForPRApprovals" /> <Rule><![CDATA[[Document.RequiresRuleGroupEvaluation("Omit from PR Validation") == false]]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> <Flag>NoBypass</Flag> <Attribute name="wfActivitySupportNote"> <AttrValue lang="default">Holds PR while waiting for asynchronous response from the ERP.</AttrValue> </Attribute> <Attribute name="wfActivityHelp"> <AttrValue lang="default">Help for PR Validation Wait</AttrValue> </Attribute> <Attribute name="wfReturnReqInsteadOfReject"> <AttrValue lang="default">true</AttrValue> </Attribute> </Activity>
+hash: sha256:e0950c86925cf4f9c2e09b18bf22b51466e20b3cd93c0aa184eeb42e094902cf
+words: 48
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: PR VALIDATION
+  section: PR VALIDATION
+  section_path: "17"
+  page: null
+  lang: en
+  prev: U.DOC0138.0067
+  next: U.DOC0138.0069

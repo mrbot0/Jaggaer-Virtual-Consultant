@@ -1,0 +1,86 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.21
+section_title: Supplier Info [PR Import]
+genre: tecnica
+rows:
+  - label: accountCode
+    technical_name: accountCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Account code sent to the supplier with the order.
+    section: 2.1.1.21
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: pricingCode
+    technical_name: pricingCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Specifies any special pricing or promotional codes with the order.
+    section: 2.1.1.21
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: contractNumber
+    technical_name: contractNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Contract number sent to the supplier with the order.
+
+      The eProcurement solution automatically populates the contract number on
+      the PR
+    section: 2.1.1.21
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: note
+    technical_name: note
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Text note for the supplier that is entered in the cart and carried over to
+      POs and PRs.
+
+      If the note is longer than 1000 characters, it is truncated and saved.
+
+      Note: If the Note field is empty, the existing note in the eProcurement
+      solution is not overwritten. Only a populated Note field can overwrite the
+      existing note.
+    section: 2.1.1.21
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: attachments
+    technical_name: attachments
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for supplier attachments.
+      See section “Attachment [PR Import]” below
+    section: 2.1.1.21
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: quoteNumber
+    technical_name: quoteNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Special quote number to be sent to the supplier
+    section: 2.1.1.21
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

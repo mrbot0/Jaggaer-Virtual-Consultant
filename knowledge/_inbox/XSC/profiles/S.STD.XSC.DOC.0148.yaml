@@ -1,0 +1,89 @@
+id: S.STD.XSC.DOC.0148
+type: DOC
+title: 1..
+summary: 'Documento guida-admin (tecnica, origine vendor) "1": 190 unità, 0
+  tabelle, 0 tabelle di campi; scope ADM, P2P, CAT; affidabilità 0.6.'
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-epro_3000/ePRO-3301_Workflow.pdf
+    sha256: sha256:af5684ee3c60f2fd9aa43e5990fe8050067ea3d3b5ba3132d9facb9b13193c30
+kind: guida-admin
+genre: tecnica
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - ADM
+  - P2P
+  - CAT
+source:
+  path: CORSI/JI-epro_3000/ePRO-3301_Workflow.pdf
+  sha256: sha256:af5684ee3c60f2fd9aa43e5990fe8050067ea3d3b5ba3132d9facb9b13193c30
+  size: 4043069
+  format: pdf
+  doc_id: epro-3301-workflow-pdf-77da2b2c
+  doc_key: epro-3301-workflow.pdf
+structure:
+  pages: 37
+  chapters: 37
+  sections: 37
+  tables: 0
+  figures: 308
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 190
+  by_type:
+    testo: 162
+    regola: 13
+    riferimento: 3
+    nota: 1
+    esempio: 3
+    procedura: 7
+    definizione: 1
+reliability:
+  base_by_kind: 0.75
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.6
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 190
+  items_produced: 21
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 2
+  coverage_ratio: 0.11
+  last_run: 2026-09-30
+  estimated_tokens: 6203
+  sessions_planned: 1

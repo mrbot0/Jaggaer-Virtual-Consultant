@@ -1,0 +1,41 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.19
+section_title: Delivery Info [PR Import]
+genre: tecnica
+rows:
+  - label: expediteValue
+    technical_name: expediteValue
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) an expedited item.
+    section: 2.1.1.19
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.19#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: shippingMethod
+    technical_name: shippingMethod
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Shipping method.
+      See section “Shipping Method [PR Import]” below
+    section: 2.1.1.19
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.19#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: requestedDeliveryDate
+    technical_name: requestedDeliveryDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date you would like the items delivered
+    section: 2.1.1.19
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.19#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

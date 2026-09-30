@@ -1,0 +1,69 @@
+document: red-wagon-kit-form-xml-2be9020a
+scope: XSC
+batch: batch-01
+section: campi-1
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:INSTRUCTIONS
+    label: Instructions
+    labels:
+      - Instructions
+    technical_name: INSTRUCTIONS
+    section: campi-1
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=Use this form to order all the parts required
+      to build a red wagon. This form can be used to order the entire wagon kit
+      or specific parts. · id=10000 · tipo=userdefined
+    sources:
+      - document: red-wagon-kit-form-xml-2be9020a
+        section: campi-1
+        source_unit: red-wagon-kit-form-xml-2be9020a/campi-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:WAGONIMAGE
+    label: WagonImage
+    labels:
+      - WagonImage
+    technical_name: WAGONIMAGE
+    section: campi-1
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=0;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/61640.jpg;
+      UserDefinedFieldParamImageTitle=red wagon · id=10002 · tipo=userdefined
+    sources:
+      - document: red-wagon-kit-form-xml-2be9020a
+        section: campi-1
+        source_unit: red-wagon-kit-form-xml-2be9020a/campi-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: WagonImage
+        type: Image
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 885

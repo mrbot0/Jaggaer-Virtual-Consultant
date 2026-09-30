@@ -1,0 +1,278 @@
+id: U.DOC0065.0004
+doc: S.STD.XSC.DOC.0065
+doc_id: sc-perspective-golive-checklist-xlsx-75ea4c0f
+type: tabella
+text: "Migration Activities | #: 18 | Activity: Activate Document formats | Manual / OrgCopy: Manual | Owner: SC | Due Date: 40424 | Status: Complete Migration Activities | #: 19 | Activity: Modify UOM Mapping | Manual / OrgCopy: Manual | Dependencies: 11 | Owner: Customer | Status: Out of Scope Migration Activities | #: 20 | Activity: Validate Imported Users for Go Live | Manual / OrgCopy: Manual | Owner: Customer | Due Date: 40424 | Status: Pending"
+hash: sha256:051afe6f7d6986a7f03c5fab85c366be9282a74d964c534e7d564a3f2dea111c
+words: 79
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0065
+  chapter: Sheet1
+  section: Sheet1
+  section_path: sheet-1
+  page: null
+  lang: en
+  prev: U.DOC0065.0003
+  next: U.DOC0065.0005
+table:
+  table: 0
+  headers:
+    - ""
+    - "#"
+    - Activity
+    - Manual / OrgCopy
+    - Dependencies
+    - Owner
+    - Due Date
+    - Status
+    - Comments
+  rows:
+    - - Migration Prep
+      - 1
+      - Create Solution Spec
+      - Manual
+      - null
+      - SC
+      - 40422
+      - Complete
+      - null
+    - - Migration Prep
+      - 2
+      - Send out Live Order Testing Plan
+      - Manual
+      - null
+      - SE
+      - ???
+      - Pending
+      - null
+    - - Migration Prep
+      - 3
+      - Site Validation Signoff
+      - Manual
+      - null
+      - IM
+      - 40422
+      - In Progress
+      - null
+    - - Migration Prep
+      - 4
+      - Schedule Site Cleanout
+      - Manual
+      - null
+      - SC
+      - 40431
+      - Complete
+      - Create JIRA ticket.
+    - - Migration Prep
+      - 5
+      - Populate User Template
+      - Manual
+      - null
+      - Customer
+      - 40423
+      - In Progress
+      - Fill out user import (tab delimited) template for all approvers and pilot users (can be migrated from UIT and cleaned up).
+    - - Migration Prep
+      - 5
+      - Populate Non Catalog Supplier template
+      - Manual
+      - null
+      - Customer
+      - 40424
+      - In Progress
+      - Fill out supplier import template for initial non-catalog supplier load (with 3rd party numbers)
+    - - Migration Prep
+      - 6
+      - Populate Custom Field Values template
+      - Manual
+      - null
+      - Customer
+      - 40423
+      - In Progress
+      - This is all of the Accounting elements (Custom Fields).
+    - - Migration Prep
+      - 7
+      - Export Commodity Code Mapping from UIT
+      - Manual
+      - null
+      - SC
+      - 40422
+      - Complete
+      - Catalog Mgt > Map attributes
+    - - Migration Prep
+      - 8
+      - Export ShipTo and BillTo addresses from UIT
+      - OrgCopy
+      - null
+      - SC
+      - 40422
+      - Complete
+      - null
+    - - Migration Prep
+      - 10
+      - Provide Production Logo
+      - Manual
+      - null
+      - Customer
+      - 40423
+      - Complete
+      - null
+    - - Migration Prep
+      - 9
+      - Verify Client certificate in Production
+      - Manual
+      - null
+      - SC
+      - 40423
+      - Out of Scope
+      - null
+    - - Migration Prep
+      - 10
+      - Provide Organization Message
+      - Manual
+      - null
+      - Customer
+      - 40430
+      - In Progress
+      - null
+    - - Migration Prep
+      - 11
+      - Provide Support Contact Info
+      - Manual
+      - null
+      - Customer
+      - 40423
+      - In Progress
+      - Need email address and phone number for end users to contact if questions or issues arise
+    - - Migration Activities
+      - 12
+      - Perform Organization Copy
+      - Manual
+      - null
+      - SC
+      - 40422
+      - Complete
+      - null
+    - - Migration Activities
+      - 15
+      - Create Color Theme / Logo Update
+      - Manual
+      - null
+      - Customer
+      - 40422
+      - Complete
+      - null
+    - - Migration Activities
+      - 13
+      - Create local administrator accounts
+      - Manual
+      - null
+      - SC
+      - 40422
+      - Complete
+      - null
+    - - Migration Activities
+      - 14
+      - Verify Custom Fields and Relationships
+      - OrgCopy
+      - null
+      - SC
+      - 40422
+      - Complete
+      - manually verify and create them if not
+    - - Migration Activities
+      - null
+      - Verify Custom Field Placement
+      - Manual
+      - null
+      - SC
+      - 40422
+      - Complete
+      - null
+    - - Migration Activities
+      - 15
+      - Import User Template
+      - Manual
+      - 3,11,12
+      - Customer
+      - 40424
+      - Pending
+      - null
+    - - Migration Activities
+      - 16
+      - Import Commodity Code Mapping
+      - Manual
+      - null
+      - SC
+      - 40422
+      - Complete
+      - null
+    - - Migration Activities
+      - 21
+      - Import Custom Field Values
+      - Manual
+      - 5,11,12
+      - Customer
+      - 40424
+      - Pending
+      - null
+    - - Migration Activities
+      - null
+      - Create Suppliers for all Forms
+      - Manual
+      - null
+      - SC
+      - 40422
+      - Complete
+      - null
+    - - Migration Activities
+      - null
+      - Create Favorites for Shared Forms
+      - Manual
+      - null
+      - SC
+      - 40422
+      - Complete
+      - null
+    - - Migration Activities
+      - 17
+      - Migrate Forms
+      - Manual
+      - null
+      - SC
+      - 40422
+      - Complete
+      - Need to adjust supplier id and fullfillment center in the form XML.
+    - - Migration Activities
+      - 18
+      - Activate Document formats
+      - Manual
+      - null
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - Migration Activities
+      - 19
+      - Modify UOM Mapping
+      - Manual
+      - "11"
+      - Customer
+      - null
+      - Out of Scope
+      - null
+    - - Migration Activities
+      - 20
+      - Validate Imported Users for Go Live
+      - Manual
+      - null
+      - Customer
+      - 40424
+      - Pending
+      - null
+  block: 1
+  blocks: 2
+part:
+  n: 4
+  of: 4

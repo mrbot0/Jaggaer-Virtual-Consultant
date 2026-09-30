@@ -1,0 +1,92 @@
+id: U.DOC0133.0005
+doc: S.STD.XSC.DOC.0133
+doc_id: workflow-definition-pr-xml-activities-samples-tx-fb46d373
+type: tabella
+text: |-
+  Tabella: transizioni
+  Colonne: Da | A | Condizione
+  Da: START | A: Return1
+  Da: Return1 | A: Return2
+  Da: Return2 | A: InitialFiscalYearEnd
+  Da: InitialFiscalYearEnd | A: Form Approval
+  Da: Form Approval | A: Financial Approval
+  Da: Financial Approval | A: Buyer Assignment
+  Da: Buyer Assignment | A: Buyer Review
+  Da: Buyer Review | A: Contract Review
+  Da: Contract Review | A: Special Approval
+  Da: Special Approval | A: EHSCheck
+  Da: EHSCheck | A: EHS Notification
+  Da: EHS Notification | A: CFO Approval
+  Da: CFO Approval | A: Missing Approver Catch
+  Da: Missing Approver Catch | A: FinalFiscalYearEnd
+  Da: FinalFiscalYearEnd | A: CreatePO
+  Da: CreatePO | A: END
+hash: sha256:ec594a1293dd7f79c120e7c2b8767f2313292c6d32863f46fe30f378ae0ab28a
+words: 108
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0133
+  chapter: Transizioni (ActivityRelationship)
+  section: Transizioni (ActivityRelationship)
+  section_path: transizioni
+  page: null
+  lang: en
+  prev: U.DOC0133.0004
+  next: null
+table:
+  table: 0
+  headers:
+    - Da
+    - A
+    - Condizione
+  rows:
+    - - START
+      - Return1
+      - ""
+    - - Return1
+      - Return2
+      - ""
+    - - Return2
+      - InitialFiscalYearEnd
+      - ""
+    - - InitialFiscalYearEnd
+      - Form Approval
+      - ""
+    - - Form Approval
+      - Financial Approval
+      - ""
+    - - Financial Approval
+      - Buyer Assignment
+      - ""
+    - - Buyer Assignment
+      - Buyer Review
+      - ""
+    - - Buyer Review
+      - Contract Review
+      - ""
+    - - Contract Review
+      - Special Approval
+      - ""
+    - - Special Approval
+      - EHSCheck
+      - ""
+    - - EHSCheck
+      - EHS Notification
+      - ""
+    - - EHS Notification
+      - CFO Approval
+      - ""
+    - - CFO Approval
+      - Missing Approver Catch
+      - ""
+    - - Missing Approver Catch
+      - FinalFiscalYearEnd
+      - ""
+    - - FinalFiscalYearEnd
+      - CreatePO
+      - ""
+    - - CreatePO
+      - END
+      - ""
+  block: 1
+  blocks: 1

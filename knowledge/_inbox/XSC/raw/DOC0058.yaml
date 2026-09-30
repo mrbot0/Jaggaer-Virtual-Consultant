@@ -1,0 +1,3550 @@
+doc: S.STD.XSC.DOC.0058
+scope: XSC
+extracted_at: 2026-09-30T04:30:15.486Z
+tier: T0
+stats:
+  units: 455
+  extracted_units: 90
+  document_candidates: 0
+  needs_llm: 52
+  t0_complete: 38
+  by_candidate:
+    FLW: 37
+    FLD: 45
+    INV: 3
+    GLS: 3
+    residuo: 1
+    CFG: 1
+  residue_marked: 2
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 23293
+  sessions:
+    - n: 1
+      tokens: 23293
+      batches: 4
+      items: 52
+      batch_items:
+        - - R.DOC0058.0004
+          - R.DOC0058.0055
+          - R.DOC0058.0068
+          - R.DOC0058.0073
+          - R.DOC0058.0076
+          - R.DOC0058.0078
+          - R.DOC0058.0102
+          - R.DOC0058.0106
+          - R.DOC0058.0109
+          - R.DOC0058.0114
+          - R.DOC0058.0126
+          - R.DOC0058.0146
+          - R.DOC0058.0158
+          - R.DOC0058.0166
+          - R.DOC0058.0172
+          - R.DOC0058.0180
+          - R.DOC0058.0192
+          - R.DOC0058.0219
+          - R.DOC0058.0229
+        - - R.DOC0058.0237
+          - R.DOC0058.0242
+          - R.DOC0058.0248
+          - R.DOC0058.0258
+          - R.DOC0058.0265
+          - R.DOC0058.0271
+          - R.DOC0058.0276
+          - R.DOC0058.0279
+          - R.DOC0058.0285
+          - R.DOC0058.0328
+          - R.DOC0058.0341
+          - R.DOC0058.0353
+          - R.DOC0058.0374
+          - R.DOC0058.0388
+          - R.DOC0058.0389
+          - R.DOC0058.0396
+          - R.DOC0058.0397
+          - R.DOC0058.0398
+        - - R.DOC0058.0402
+          - R.DOC0058.0407
+          - R.DOC0058.0417
+          - R.DOC0058.0418
+          - R.DOC0058.0425
+          - R.DOC0058.0427
+          - R.DOC0058.0429
+          - R.DOC0058.0435
+          - R.DOC0058.0437
+          - R.DOC0058.0440
+          - R.DOC0058.0444
+          - R.DOC0058.0447
+          - R.DOC0058.0449
+          - R.DOC0058.0451
+        - - R.DOC0058.0455
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0058.0004
+    source_unit: U.DOC0058.0004
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Site Appearance
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: by
+          oggetto: determining your marketplace name
+          valore: null
+        - n: 2
+          verbo: by
+          oggetto: loading your organization’s logo’s
+          valore: null
+        - n: 3
+          verbo: by
+          oggetto: specifying your organization’s colors
+          valore: null
+        - n: 4
+          verbo: by
+          oggetto: changing terms in the marketplace to match the terms you use today
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0004
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 70
+  - raw_id: R.DOC0058.0007
+    source_unit: U.DOC0058.0007
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Site Appearance
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Site branding
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0007
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0058.0017
+    source_unit: U.DOC0058.0017
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Consideration: The recommended size for the site logo"
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0017
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0058.0018
+    source_unit: U.DOC0058.0018
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Format
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0018
+    needs_llm: false
+    tokens: 7
+  - raw_id: R.DOC0058.0021
+    source_unit: U.DOC0058.0021
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Who
+      modality: raccomandazione
+      condition: they have questions or issues while shopping in the Marketplace?
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0021
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0058.0030
+    source_unit: U.DOC0058.0030
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What
+      modality: raccomandazione
+      condition: "they are responding to an email that was sent from the Marketplace? i. e. what is the email address in the To: field?"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0030
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0058.0033
+    source_unit: U.DOC0058.0033
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0033
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0058.0055
+    source_unit: U.DOC0058.0055
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Users
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: who
+          oggetto: will be using the Marketplace
+          valore: null
+        - n: 2
+          verbo: how
+          oggetto: each user will access the Marketplace
+          valore: null
+        - n: 3
+          verbo: what
+          oggetto: access each user will have in the Marketplace
+          valore: null
+      risultato_atteso: who will be using the Marketplace
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0055
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 48
+  - raw_id: R.DOC0058.0059
+    source_unit: U.DOC0058.0059
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Users
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - INV
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Shopper: These users"
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0058.0059
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0058.0066
+    source_unit: U.DOC0058.0066
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Consideration
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0066
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0058.0068
+    source_unit: U.DOC0058.0068
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0068
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 18
+  - raw_id: R.DOC0058.0069
+    source_unit: U.DOC0058.0069
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Examples
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0069
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0058.0073
+    source_unit: U.DOC0058.0073
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0073
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0058.0074
+    source_unit: U.DOC0058.0074
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Best Practice Note: Approvers"
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0074
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0058.0076
+    source_unit: U.DOC0058.0076
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: buyers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: should
+          oggetto: your buyers have the ability to edit requisitions?
+          valore: null
+        - n: 2
+          verbo: should
+          oggetto: your users be able to only view their own Purchase Orders, their Departments Purchase Orders, or all Purchase Orders?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0076
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 53
+  - raw_id: R.DOC0058.0078
+    source_unit: U.DOC0058.0078
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a16
+      - FLW
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: administrator
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: do
+          oggetto: you have users who shop and complete requisitions for different departments?
+          valore: null
+        - n: 2
+          verbo: will
+          oggetto: your users be allowed to pay for their order with a p-card?
+          valore: null
+        - n: 3
+          verbo: have
+          oggetto: you decided what your MBUs are going to be?
+          valore: null
+        - n: 4
+          verbo: will
+          oggetto: you be controlling order visibility by MBU?
+          valore: null
+        - n: 5
+          verbo: will
+          oggetto: centralized purchasing administer the Business Units or will each Business Unit have their own administrator?
+          valore: null
+        - n: 6
+          verbo: should
+          oggetto: users have the ability to select from all the accounting codes in the Marketplace or should they only select from the ones to which they have access?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0078
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 139
+  - raw_id: R.DOC0058.0083
+    source_unit: U.DOC0058.0083
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Who
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0058.0083
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0058.0084
+    source_unit: U.DOC0058.0084
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Consideration: For some clients their shoppers"
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0058.0084
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0058.0102
+    source_unit: U.DOC0058.0102
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Contract
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: the
+          oggetto: number of contracts to be loaded in the Marketplace for go live
+          valore: null
+        - n: 2
+          verbo: if
+          oggetto: approval is required for certain contract purchases
+          valore: null
+        - n: 3
+          verbo: are
+          oggetto: there contract maximums or spending limits
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0102
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 59
+  - raw_id: R.DOC0058.0106
+    source_unit: U.DOC0058.0106
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Contract
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: someone orders from this supplier
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0106
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 68
+  - raw_id: R.DOC0058.0109
+    source_unit: U.DOC0058.0109
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a21
+      - FLW
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: if
+          oggetto: you are using Spend Director Enterprise, will you load contracts as part of your implementation?
+          valore: null
+        - n: 2
+          verbo: please
+          oggetto: provide an estimate of the number of active contracts with suppliers that will be used in the Marketplace
+          valore: null
+      risultato_atteso: Please provide an estimate of the number of active contracts with suppliers that will be used in the Marketplace.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0109
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 61
+  - raw_id: R.DOC0058.0113
+    source_unit: U.DOC0058.0113
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: There
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0058.0113
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0058.0114
+    source_unit: U.DOC0058.0114
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a23
+      - FLW
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: are
+          oggetto: there contracts that should only be viewed or used by certain users, departments, or roles?
+          valore: null
+        - n: 2
+          verbo: do
+          oggetto: you ever define spending caps on your contracts?
+          valore: null
+        - n: 3
+          verbo: do
+          oggetto: you have a spending limit per requisition when using a contract?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0114
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 62
+  - raw_id: R.DOC0058.0126
+    source_unit: U.DOC0058.0126
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Shopping
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a24
+      - FLW
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: for
+          oggetto: purchasing goods and services
+          valore: null
+        - n: 2
+          verbo: for
+          oggetto: defining preferred suppliers
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0126
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 39
+  - raw_id: R.DOC0058.0133
+    source_unit: U.DOC0058.0133
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Shopping
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Only 2 people
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0133
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0058.0140
+    source_unit: U.DOC0058.0140
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Are there any items/purchases that
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0140
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0058.0144
+    source_unit: U.DOC0058.0144
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: If so
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0144
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0058.0146
+    source_unit: U.DOC0058.0146
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a28
+      - FLW
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: should
+          oggetto: all users be able to enter non-catalog items? Or, will shopping be limited to only the catalogs and the suppliers who provide those catalogs
+          valore: null
+        - n: 2
+          verbo: are
+          oggetto: non-catalog orders allowed for all suppliers?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0146
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 57
+  - raw_id: R.DOC0058.0158
+    source_unit: U.DOC0058.0158
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Purchase Orders
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a29
+      - FLW
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: define
+          oggetto: the numbering scheme for purchase orders in the Marketplace
+          valore: null
+        - n: 2
+          verbo: design
+          oggetto: the purchase order document that is distributed by Fax or Email
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0158
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 48
+  - raw_id: R.DOC0058.0166
+    source_unit: U.DOC0058.0166
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 25
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a30
+      - FLW
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: what
+          oggetto: is your default freight on board definition?
+          valore: null
+        - n: 2
+          verbo: do
+          oggetto: you require Terms and Conditions to be sent on all purchase orders?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0166
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 38
+  - raw_id: R.DOC0058.0169
+    source_unit: U.DOC0058.0169
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 25
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Consideration PO Clauses
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0169
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0058.0172
+    source_unit: U.DOC0058.0172
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 25
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a32
+      - FLW
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: who
+          oggetto: should the supplier contact if they have questions about the purchase order?
+          valore: null
+        - n: 2
+          verbo: please
+          oggetto: "review the image below and if the following applies, please provide:"
+          valore: null
+        - n: 3
+          verbo: po
+          oggetto: "Fax Logo – size recommended size limit: 100px H by 150px W"
+          valore: 100px H by 150px W
+        - n: 4
+          verbo: image
+          oggetto: of the approval signature (Optional)
+          valore: null
+        - n: 5
+          verbo: letter
+          oggetto: Head Text
+          valore: null
+        - n: 6
+          verbo: terms
+          oggetto: and Conditions Document
+          valore: null
+        - n: 7
+          verbo: po
+          oggetto: Clauses
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0172
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 91
+  - raw_id: R.DOC0058.0180
+    source_unit: U.DOC0058.0180
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Requisition Workflow
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a33
+      - FLW
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: define
+          oggetto: the fields or data that is required as part of the check-out process
+          valore: null
+        - n: 2
+          verbo: understand
+          oggetto: what is required to configure the requisition workflow in the Marketplace
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0180
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 51
+  - raw_id: R.DOC0058.0192
+    source_unit: U.DOC0058.0192
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a34
+      - FLW
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enter
+          oggetto: "the dollar amount and describe the approval: Click here to enter text"
+          valore: Click here to enter text
+        - n: 2
+          verbo: enter
+          oggetto: the dollar amount and describe the approval:Click here to enter text
+          valore: Click here to enter text
+        - n: 3
+          verbo: enter
+          oggetto: "the dollar amount and describe the approval: Click here to enter text"
+          valore: Click here to enter text
+        - n: 4
+          verbo: enter
+          oggetto: "the dollar amount and describe the approval: Click here to enter text"
+          valore: Click here to enter text
+        - n: 5
+          verbo: what
+          oggetto: elements of your GL Account Code drive approvals for a requisition?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0192
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 105
+  - raw_id: R.DOC0058.0197
+    source_unit: U.DOC0058.0197
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Please describe the requisitions that the Purchasing Department
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0197
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0058.0213
+    source_unit: U.DOC0058.0213
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: How
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0213
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0058.0219
+    source_unit: U.DOC0058.0219
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0219
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0058.0220
+    source_unit: U.DOC0058.0220
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a38
+      - GLS
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Consideration Automatic approval
+      definition: a setting in the workflow rules that allows a requisition to be automatically approved if the requestor and the approver are the same people.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0058.0220
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0058.0221
+    source_unit: U.DOC0058.0221
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: ambiguous
+      reason: modalità deontica non determinata (nessun segnale deontico)
+    candidates: []
+    type_hint:
+      candidates: []
+      outcome: null
+      score: null
+    extraction:
+      subject: Consideration Automatic approval
+      modality: ambiguo
+      condition: the requestor and the approver are the same people. This enables a user to not have to approve their own orders
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: residue
+      confidence: 0.3
+      signals:
+        - nessun segnale deontico
+      source_unit: U.DOC0058.0221
+    needs_llm: false
+    tokens: 60
+  - raw_id: R.DOC0058.0229
+    source_unit: U.DOC0058.0229
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0229
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0058.0233
+    source_unit: U.DOC0058.0233
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Should approvers who
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0233
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0058.0237
+    source_unit: U.DOC0058.0237
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Invoices
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a41
+      - FLW
+    type_hint:
+      candidates: *a41
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: define
+          oggetto: who will be entering invoices in the marketplace
+          valore: null
+        - n: 2
+          verbo: define
+          oggetto: tolerances
+          valore: null
+        - n: 3
+          verbo: define
+          oggetto: invoice routing/workflow
+          valore: null
+        - n: 4
+          verbo: define
+          oggetto: general invoicing configuration that is required
+          valore: null
+      risultato_atteso: Define who will be entering invoices in the marketplace
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0237
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 55
+  - raw_id: R.DOC0058.0240
+    source_unit: U.DOC0058.0240
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Invoices
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Using the receiving functionality
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0058.0240
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0058.0242
+    source_unit: U.DOC0058.0242
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Invoices
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0058.0242
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 41
+  - raw_id: R.DOC0058.0248
+    source_unit: U.DOC0058.0248
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0248
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0058.0249
+    source_unit: U.DOC0058.0249
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a45
+      - GLS
+    type_hint:
+      candidates: *a45
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Consideration A duplicate invoice number
+      definition: an invoice with a supplier invoice number that matches an invoice that has been received previously.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0058.0249
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0058.0258
+    source_unit: U.DOC0058.0258
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: so
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0058.0258
+      mandatory:
+        kind: conditional
+        when: so
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 21
+  - raw_id: R.DOC0058.0265
+    source_unit: U.DOC0058.0265
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a47
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0058.0265
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 20
+  - raw_id: R.DOC0058.0271
+    source_unit: U.DOC0058.0271
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0271
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0058.0276
+    source_unit: U.DOC0058.0276
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a49
+      - FLD
+    type_hint:
+      candidates: *a49
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: they are different from those payment terms that are defined in the site for the supplier?
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0276
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 38
+  - raw_id: R.DOC0058.0279
+    source_unit: U.DOC0058.0279
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a50
+      - FLD
+    type_hint:
+      candidates: *a50
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: the payment terms are different on the invoice than what is on the Purchase Order?
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0279
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 31
+  - raw_id: R.DOC0058.0285
+    source_unit: U.DOC0058.0285
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a51
+      - FLD
+    type_hint:
+      candidates: *a51
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: a Purchase Order is fully invoiced
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0285
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0058.0305
+    source_unit: U.DOC0058.0305
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a52
+      - FLD
+    type_hint:
+      candidates: *a52
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Which remit to address
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0305
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0058.0328
+    source_unit: U.DOC0058.0328
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 46
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a53
+      - FLW
+    type_hint:
+      candidates: *a53
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: are
+          oggetto: commodity codes used to classify purchases?
+          valore: null
+        - n: 2
+          verbo: do
+          oggetto: your shoppers select a commodity code for their purchases today?
+          valore: null
+        - n: 3
+          verbo: will
+          oggetto: you require your end users to always populate a commodity code as part of the Marketplace shopping?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0328
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 63
+  - raw_id: R.DOC0058.0330
+    source_unit: U.DOC0058.0330
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 46
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a54
+      - FLD
+    type_hint:
+      candidates: *a54
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: However, for non- catalog requisitions the end user
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0058.0330
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0058.0341
+    source_unit: U.DOC0058.0341
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Suppliers
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a55
+      - FLW
+    type_hint:
+      candidates: *a55
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: catalog
+          oggetto: suppliers for the Marketplace
+          valore: null
+        - n: 2
+          verbo: a
+          oggetto: standardized Ship to address format for your shipping labels
+          valore: null
+        - n: 3
+          verbo: billing
+          oggetto: addresses to be used in the Marketplace
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0341
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 53
+  - raw_id: R.DOC0058.0345
+    source_unit: U.DOC0058.0345
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0058
+    section: Suppliers
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a56
+      - GLS
+    type_hint:
+      candidates: *a56
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Billing and Shipping addresses
+      definition: a key part of your Marketplace configuration because they determine who is billed for a purchase and that products are successfully delivered in a timely manner.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0058.0345
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0058.0346
+    source_unit: U.DOC0058.0346
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Suppliers
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a57
+      - FLD
+    type_hint:
+      candidates: *a57
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: formats for these addresses
+      modality: raccomandazione
+      condition: possible
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0346
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0058.0353
+    source_unit: U.DOC0058.0353
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 52
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a58
+      - FLW
+    type_hint:
+      candidates: *a58
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: please
+          oggetto: enter your billing address
+          valore: null
+        - n: 2
+          verbo: clic
+          oggetto: here to enter text
+          valore: null
+        - n: 3
+          verbo: provide
+          oggetto: a sample file with all your current Ship-To and Bill-To addresses. A template is provided
+          valore: null
+        - n: 4
+          verbo: are
+          oggetto: there any suppliers who should be enabled via an internal catalog?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0353
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 67
+  - raw_id: R.DOC0058.0374
+    source_unit: U.DOC0058.0374
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Solution Configuration
+    page: 59
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a59
+      - FLW
+    type_hint:
+      candidates: *a59
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: should
+          oggetto: all users be allowed to export data?
+          valore: null
+        - n: 2
+          verbo: please
+          oggetto: provide a list of the any reports that is needed using data from the Marketplace
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0374
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 41
+  - raw_id: R.DOC0058.0379
+    source_unit: U.DOC0058.0379
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Units of Measure
+    page: 61
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a60
+      - FLD
+    type_hint:
+      candidates: *a60
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Identify if Units of measures
+      modality: raccomandazione
+      condition: Units of measures should be mapped in the Marketplace
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0379
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0058.0382
+    source_unit: U.DOC0058.0382
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Units of Measure
+    page: 61
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a61
+      - FLD
+    type_hint:
+      candidates: *a61
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: your organization
+      modality: facolta
+      condition: not required
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0058.0382
+      mandatory:
+        kind: never
+        when: not required
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0058.0385
+    source_unit: U.DOC0058.0385
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Objectives
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a62
+      - FLD
+    type_hint:
+      candidates: *a62
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: This document
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0385
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0058.0388
+    source_unit: U.DOC0058.0388
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Consideration
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a63
+      - FLD
+    type_hint:
+      candidates: *a63
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0388
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 33
+  - raw_id: R.DOC0058.0389
+    source_unit: U.DOC0058.0389
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Consideration
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a64
+      - FLD
+    type_hint:
+      candidates: *a64
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0389
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 78
+  - raw_id: R.DOC0058.0391
+    source_unit: U.DOC0058.0391
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: "Facilitate Settlement:"
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a65
+      - FLD
+    type_hint:
+      candidates: *a65
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: For clients using Invoicing/Matching on Marketplace, it
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0391
+    needs_llm: false
+    tokens: 51
+  - raw_id: R.DOC0058.0392
+    source_unit: U.DOC0058.0392
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: "Facilitate Settlement:"
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a66
+      - FLD
+    type_hint:
+      candidates: *a66
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Change Orders
+      modality: obbligo-condizionale
+      condition: Invoice/Matching is not part of the Marketplace solution
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0058.0392
+      mandatory:
+        kind: conditional
+        when: Invoice/Matching is not part of the Marketplace solution
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0058.0394
+    source_unit: U.DOC0058.0394
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: "Re-distribute Purchase Orders:"
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a67
+      - INV
+    type_hint:
+      candidates: *a67
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Suppliers
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0058.0394
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0058.0396
+    source_unit: U.DOC0058.0396
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: "General Process/Prerequisites:"
+    page: 66
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a68
+      - FLW
+    type_hint:
+      candidates: *a68
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: users
+          oggetto: will not change POs directly. They will use a form to communicate the change(s) needed, Financial Approval can be required and if valid, Purchasing will be responsible for completing the changes
+          valore: null
+        - n: 2
+          verbo: a
+          oggetto: Change Order form is created on the Marketplace to allow users to request Purchase Order changes
+          valore: null
+        - n: 3
+          verbo: the
+          oggetto: form allows the user to enter the PO number, change description (free text field), new PO amount and type of change(s) required (pull-down or checkboxes)
+          valore: null
+        - n: 4
+          verbo: type
+          oggetto: "of change required is a pull-down or checkbox selection that allows for a user to select 1 more items to change. Ex: Increase amount, add line, change accounting information, cancel Purchase Order"
+          valore: Increase amount, add line, change accounting information, cancel Purchase Order
+        - n: 5
+          verbo: change
+          oggetto: Order forms are completed, added to a cart and submitted by Users
+          valore: null
+        - n: 6
+          verbo: change
+          oggetto: Order forms cannot be mixed in the cart with any other item
+          valore: null
+        - n: 7
+          verbo: requisition
+          oggetto: workflow on the Marketplace will be such that
+          valore: null
+        - n: 8
+          verbo: change
+          oggetto: Order Requisitions may require Financial Approval, routing to Approvers based on the change being requested (i.e. Increase dollar amount) and Requisition data
+          valore: null
+        - n: 9
+          verbo: change
+          oggetto: Order Requisitions that are valid will stop for purchasing approval or action as the final Workflow step
+          valore: null
+        - n: 10
+          verbo: change
+          oggetto: Order Requisitions will not “create” Purchase Orders
+          valore: create
+        - n: 11
+          verbo: change
+          oggetto: Order Requests will be reviewed and acted on by Purchasing as part of the workflow/approval process
+          valore: null
+        - n: 12
+          verbo: invalid
+          oggetto: Change Order requests will be rejected or returned to the User
+          valore: null
+        - n: 13
+          verbo: for
+          oggetto: valid Change Orders, reference recommended solutions below
+          valore: null
+      risultato_atteso: Invalid Change Order requests will be rejected or returned to the User.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0396
+    needs_llm: true
+    missing:
+      - trigger
+    tokens: 380
+  - raw_id: R.DOC0058.0397
+    source_unit: U.DOC0058.0397
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: "Recommendation 1: Purchasing modifies POs manually in both JAGGAER Marketplace and ERP (JAGGAER recommended)"
+    page: 66
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a69
+      - FLW
+    type_hint:
+      candidates: *a69
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: valid
+          oggetto: "Change Order requests will be completed on the Marketplace and the ERP by modifying the referenced Purchase Order accordingly in both systems. For the Marketplace PO:"
+          valore: null
+        - n: 2
+          verbo: modifications
+          oggetto: are made/saved on the Marketplace PO
+          valore: null
+        - n: 3
+          verbo: the
+          oggetto: “Finalize Revision” Action is invoked, creating a Marketplace PO revision
+          valore: Finalize Revision
+        - n: 4
+          verbo: once
+          oggetto: the Purchase Order modifications have been completed, the Change Order Requisition is approved/completed
+          valore: null
+      risultato_atteso: "Valid Change Order requests will be completed on the Marketplace and the ERP by modifying the referenced Purchase Order accordingly in both systems. For the Marketplace PO:"
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0397
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 134
+  - raw_id: R.DOC0058.0398
+    source_unit: U.DOC0058.0398
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: "Recommendation 2: Purchasing modifies PO in JAGGAER Marketplace. PO revisions are integrated with ERP. This recommendation requires a compatible integration."
+    page: 66
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a70
+      - FLW
+    type_hint:
+      candidates: *a70
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: valid
+          oggetto: Change Order requests will be completed on the Marketplace by modifying the referenced Purchase Order accordingly
+          valore: null
+        - n: 2
+          verbo: modifications
+          oggetto: are made/saved on the Marketplace PO
+          valore: null
+        - n: 3
+          verbo: the
+          oggetto: “Finalize Revision” Action is invoked with the “Resend to…”ERP PO Export option checked/on
+          valore: Finalize Revision
+        - n: 4
+          verbo: once
+          oggetto: the Purchase Order modifications have been completed, the Change Order Requisition is approved/completed
+          valore: null
+      risultato_atteso: Valid Change Order requests will be completed on the Marketplace by modifying the referenced Purchase Order accordingly.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0398
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 137
+  - raw_id: R.DOC0058.0400
+    source_unit: U.DOC0058.0400
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Objectives
+    page: 67
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a71
+      - FLD
+    type_hint:
+      candidates: *a71
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Typically there
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0058.0400
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0058.0402
+    source_unit: U.DOC0058.0402
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Considerations
+    page: 67
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a72
+      - FLW
+    type_hint:
+      candidates: *a72
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: the
+          oggetto: following recommendations are only applicable if the client is using Requisition Manager
+          valore: null
+        - n: 2
+          verbo: client
+          oggetto: policy and dollar thresholds dictate the recommendation or combination of recommendations to handle the bidding process. For example, end users are allowed to obtain quotes below a certain dollar amount. While if the requisition exceeds the dollar threshold, the purchasing department has to complete the bid process for requisitions
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0402
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 114
+  - raw_id: R.DOC0058.0405
+    source_unit: U.DOC0058.0405
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0058
+    section: "Scenario 1: Purchasing Policy requires the requisitioner to obtain a number of quotes for their item for orders meeting a specific dollar threshold. The order is placed with the lowest bidder."
+    page: 67
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a73
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a73
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: tacita
+      text: Typically, workflow is configured to require an approval for non-catalog orders, so these types of request are usually reviewed.
+      subject: Typically, workflow
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0058.0405
+    needs_llm: false
+    tokens: 32
+  - raw_id: R.DOC0058.0407
+    source_unit: U.DOC0058.0407
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: "Scenario 2: Purchasing Policy requires the Purchasing Department to complete a bid process for orders exceeding a specific dollar threshold."
+    page: 67
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a74
+      - FLW
+    type_hint:
+      candidates: *a74
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the requestor
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: if
+          oggetto: the organization's policy is that the Purchasing Department has to initiate the bid process, then a Bid Request Form is created for use in the Marketplace. If the end user knows their item requires bidding he or she completes the form and submits the Bid Request Form to Purchasing. The Purchasing Department completes the bidding process and notifies the end user that a supplier has been identified. The end user submits a non-catalog requisition to the identified supplier for goods or services to be procured. The requisition routes through workflow for approvals as required
+          valore: null
+        - n: 2
+          verbo: in
+          oggetto: cases where the end user does not know that the item requires bidding and he or she has submitted a requisition, the Purchasing Department is able to review the requisition and conduct the bidding process outside of the Marketplace. Clients can determine how the bid award should be handled, i.e. the requestor is notified and he or she must submit a new requisition with the updated supplier and price of the item (s). Or, Purchasing updates the requisition with the new supplier and price or the item (s)
+          valore: null
+      risultato_atteso: If the organization's policy is that the Purchasing Department has to initiate the bid process, then a Bid Request Form is created for use in the Marketplace. If the end user knows their item requires bidding he or she completes the form and submits the Bid Request Form to Purchasing. The Purchasing Department completes the bidding process and notifies the end user that a supplier has been identified. The end user submits a non-catalog requisition to the identified supplier for goods or services to be procured. The requisition routes through workflow for approvals as required.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0407
+    needs_llm: true
+    missing:
+      - trigger
+    tokens: 279
+  - raw_id: R.DOC0058.0412
+    source_unit: U.DOC0058.0412
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Objective
+    page: 70
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a75
+      - FLD
+    type_hint:
+      candidates: *a75
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: 1. This document
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0058.0412
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0058.0413
+    source_unit: U.DOC0058.0413
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0058
+    section: Definitions
+    page: 70
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a76
+      - INV
+    type_hint:
+      candidates: *a76
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Fiscal Year: A fiscal year"
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0058.0413
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 58
+  - raw_id: R.DOC0058.0417
+    source_unit: U.DOC0058.0417
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Considerations
+    page: 70
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a77
+      - FLW
+    type_hint:
+      candidates: *a77
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: while
+          oggetto: a Fiscal Year can be any 52-week period, Higher Education and State Government organizations typically begin their Fiscal Year on July 1st while Commercial/Businesses begin on January 1st
+          valore: null
+        - n: 2
+          verbo: generally
+          oggetto: Accepted Accounting Principles (GAAP) requires that all financial and accounting transactions be recorded in the Fiscal Year in which they are made
+          valore: null
+        - n: 3
+          verbo: organizations
+          oggetto: should have a Fiscal Year End Close-out process established with procedures specific to their accounting/procurement systems as well as document processing deadlines and closing dates that are published to Users. The Fiscal Year End Close-out process may also include; Different document processing deadlines based on amount or purchase type, an Accounts Payable “window” for submitting Year End Invoices and/or specific system instructions for Users on submitting orders for the new Fiscal Year as well as budget considerations
+          valore: window
+        - n: 4
+          verbo: the
+          oggetto: "intent of this document is to provide recommendations specifically for the JAGGAER e-Procurement application (Marketplace). All recommendations should be carefully scrutinized to ensure:"
+          valore: null
+        - n: 5
+          verbo: the
+          oggetto: best fit with your established Fiscal Year End Close-out process
+          valore: null
+        - n: 6
+          verbo: compatibility
+          oggetto: with any external system processing and integrations
+          valore: null
+        - n: 7
+          verbo: efficiency
+          oggetto: and effectiveness based on your Marketplace modules
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0417
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 332
+  - raw_id: R.DOC0058.0418
+    source_unit: U.DOC0058.0418
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: "General Process/Prerequisites for all Recommended Solutions:"
+    page: 72
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a78
+      - FLW
+    type_hint:
+      candidates: *a78
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: purchase
+          oggetto: Order and/or Invoice processing deadlines for Fiscal Year End should be published for Marketplace Users. This can be accomplished on Marketplace using the “Message Board”, “Send Email To Users” or the “Site Terms and Conditions”
+          valore: Message Board
+        - n: 2
+          verbo: when
+          oggetto: practical, Organizations are encouraged to setup a Purchasing administrated website to publish Fiscal Year End; procedures and policies, processing deadlines and Frequently Ask Questions (FAQs)
+          valore: null
+        - n: 3
+          verbo: blanket/standing
+          oggetto: "Orders: Organizations should follow established policies for handling Blanket/Standing Orders during Fiscal Year End"
+          valore: Organizations should follow established policies for handling Blanket/Standing Orders during Fiscal Year End
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0418
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 161
+  - raw_id: R.DOC0058.0425
+    source_unit: U.DOC0058.0425
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: A. “Shutting Down” Current Year JAGGAER Marketplace Requisitions
+    page: 72
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a79
+      - FLW
+    type_hint:
+      candidates: *a79
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the System Administrator
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: whenever
+          oggetto: possible Advanced Dynamic Workflow (ADW) should be used to create these workflow steps in order to give the System Administrator full control of the process. If these steps require the checking of advanced criteria, the workflow may need to be hardcoded, requiring SQ Support to “activate” the workflow each year
+          valore: activate
+        - n: 2
+          verbo: fiscal
+          oggetto: Year workflow steps would be “activated” at the start of the “Shut Down” period and “inactivated” when the Fiscal Year rollover is complete
+          valore: activated
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0425
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 126
+  - raw_id: R.DOC0058.0427
+    source_unit: U.DOC0058.0427
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: A. “Shutting Down” Current Year JAGGAER Marketplace Requisitions
+    page: 72
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a80
+      - FLW
+    type_hint:
+      candidates: *a80
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: The Approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: approve
+          oggetto: (i.e. emergency orders)
+          valore: null
+        - n: 2
+          verbo: change
+          oggetto: the Accounting Date to later than July 1st and Approve
+          valore: null
+        - n: 3
+          verbo: reject
+          oggetto: the Requisition
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0427
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 72
+  - raw_id: R.DOC0058.0429
+    source_unit: U.DOC0058.0429
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: A. “Shutting Down” Current Year JAGGAER Marketplace Requisitions
+    page: 72
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a81
+      - FLW
+    type_hint:
+      candidates: *a81
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: Approvers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: users
+          oggetto: would need to be trained on placing New Fiscal Year orders, by editing the “Accounting Date” to July 1st or later during the Checkout process
+          valore: Accounting Date
+        - n: 2
+          verbo: the
+          oggetto: workflow Approvers (Purchasing or Buyers) can review and approve these Requisitions once all systems are ready for New Fiscal Year processing
+          valore: null
+        - n: 3
+          verbo: "note:"
+          oggetto: "This step can be omitted for the Requisition and the New Fiscal Year Order can be held at the Purchase Order stage. See: B. “Holding” New Fiscal Year JAGGAER Marketplace Purchase Orders"
+          valore: Holding
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0429
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 141
+  - raw_id: R.DOC0058.0435
+    source_unit: U.DOC0058.0435
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: B. “Holding” New Fiscal Year JAGGAER Marketplace Purchase Orders
+    page: 73
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a82
+      - FLW
+    type_hint:
+      candidates: *a82
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the System Administrator
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: whenever
+          oggetto: possible Advanced Dynamic Workflow (ADW) should be used to create the workflow step in order to give the System Administrator full control of the process. If the step requires the checking of advanced criteria, the workflow may need to be hardcoded, requiring SQ Support to “activate” the workflow each year
+          valore: activate
+        - n: 2
+          verbo: fiscal
+          oggetto: Year workflow steps would be “activated” at the start of the “Shut Down” period and “inactivated” when the Fiscal Year rollover is complete
+          valore: activated
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0435
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 126
+  - raw_id: R.DOC0058.0437
+    source_unit: U.DOC0058.0437
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: B. “Holding” New Fiscal Year JAGGAER Marketplace Purchase Orders
+    page: 73
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a83
+      - FLW
+    type_hint:
+      candidates: *a83
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: Approvers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: users
+          oggetto: would need to be trained on placing New Fiscal Year orders, by editing the “Accounting Date” to July 1st or later during the Requisition Checkout process
+          valore: Accounting Date
+        - n: 2
+          verbo: the
+          oggetto: “New Fiscal Year Orders” Purchase Order workflow step would hold the Purchase Order prior to the revision (or “Purchase Order Create” for Banner) step
+          valore: New Fiscal Year Orders
+        - n: 3
+          verbo: the
+          oggetto: workflow Approvers can review and Approve these Purchase Orders once all systems are ready for New Fiscal Year processing
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0437
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 130
+  - raw_id: R.DOC0058.0440
+    source_unit: U.DOC0058.0440
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: C. “Holding” JAGGAER Marketplace Invoices during Fiscal Year Cutover
+    page: 74
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a84
+      - FLW
+    type_hint:
+      candidates: *a84
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: allows
+          oggetto: Accounts Payable/Purchasing to review these Marketplace documents to ensure that the charges/credits align with the Fiscal year in which the goods were received or services performed
+          valore: null
+        - n: 2
+          verbo: can
+          oggetto: be used to hold Invoices/Credits while the ERP is unavailable during the cutover
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0440
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 117
+  - raw_id: R.DOC0058.0444
+    source_unit: U.DOC0058.0444
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: C. “Holding” JAGGAER Marketplace Invoices during Fiscal Year Cutover
+    page: 74
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a85
+      - FLW
+    type_hint:
+      candidates: *a85
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the System Administrator
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: this
+          oggetto: uses the “Accounting Date” on the Invoice/Credit Memo which is pre-populated with the date the draft document was created
+          valore: Accounting Date
+        - n: 2
+          verbo: invoice
+          oggetto: "Workflow Steps:"
+          valore: null
+        - n: 3
+          verbo: whenever
+          oggetto: possible Advanced Dynamic Workflow (ADW) should be used to create the workflow step in order to give the System Administrator full control of the process. If the step requires the checking of advanced criteria, the workflow may need to be hardcoded, requiring SQ Support to “activate” the workflow each year
+          valore: activate
+        - n: 4
+          verbo: fiscal
+          oggetto: Year workflow steps would be “activated” at the start of the “Cutover” period and “inactivated” when the Fiscal Year rollover is complete
+          valore: activated
+        - n: 5
+          verbo: “fiscal
+          oggetto: "Year Cutover” ADW step: Sends any Invoice/Credit Memo with an Accounting Date between June 15th and July 15th(from above example) to a workflow folder for review by Accounts Payable/Purchasing"
+          valore: Fiscal Year Cutover
+        - n: 6
+          verbo: the
+          oggetto: “Fiscal Year Cutover” Invoice workflow step would hold the Invoice/Credit Memo at the start of Invoice workflow to limit match exceptions and any other approval/review steps
+          valore: Fiscal Year Cutover
+        - n: 7
+          verbo: the
+          oggetto: workflow Approvers can review these documents based on when the goods/services will be received to either allow the document to continue (with or without edits) or hold the documents until after all systems are ready for New Fiscal Year processing (cutover complete)
+          valore: null
+        - n: 8
+          verbo: once
+          oggetto: the New Fiscal Year cutover is complete, the Invoice Fiscal Year related workflow step(s) can be inactivated or updated to evaluate for the next Fiscal Year Cutover
+          valore: null
+      risultato_atteso: The workflow Approvers can review these documents based on when the goods/services will be received to either allow the document to continue (with or without edits) or hold the documents until after all systems are ready for New Fiscal Year processing (cutover complete).
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0444
+    needs_llm: true
+    missing:
+      - trigger
+    tokens: 383
+  - raw_id: R.DOC0058.0447
+    source_unit: U.DOC0058.0447
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: Consideration
+    page: 77
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a86
+      - FLW
+    type_hint:
+      candidates: *a86
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: clients
+          oggetto: who are not using Requisition Manager are unable to use forms in as described in the solutions below
+          valore: null
+        - n: 2
+          verbo: spend
+          oggetto: Director/Order Manager (Sandwich) Clients can use the non-catalog item to initiate the requisition for service and complete the process in their ERP
+          valore: null
+        - n: 3
+          verbo: when
+          oggetto: "using forms in the Marketplace, only the following fields are transferred to the ERP: Supplier, Product Description, Quantity, UOM, Commodity Code, and Unit Price"
+          valore: Supplier, Product Description, Quantity, UOM, Commodity Code, and Unit Price
+        - n: 4
+          verbo: all
+          oggetto: clients can use the non-catalog item if specific information for a purchase does not need to be collected
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0447
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 143
+  - raw_id: R.DOC0058.0449
+    source_unit: U.DOC0058.0449
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: "Scenario 1: One time service where specific information is required"
+    page: 77
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a87
+      - FLW
+    type_hint:
+      candidates: *a87
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: a
+          oggetto: custom form is typically used to gather specific requests. The form may be configured with the preferred or specific supplier for that service. Using a form allows the client to drive end users to a specific services supplier and it also allows the organization to capture the correct information for that purchase. There are some instances where the service that is being procured requires a special approval prior to creating the purchase order. In these cases, the form is routed to a special form approver for their review
+          valore: null
+        - n: 2
+          verbo: "examples:"
+          oggetto: Moving Services, Catering Services, Guest Lecturer
+          valore: Moving Services, Catering Services, Guest Lecturer
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0449
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 153
+  - raw_id: R.DOC0058.0451
+    source_unit: U.DOC0058.0451
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: "Scenario 2: An organization that wants to collect specific information regarding a type of service where multiple invoices are expected (i.e. a blanket) from an external supplier, a custom form is typically used to handle specific requests."
+    page: 79
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a88
+      - FLW
+    type_hint:
+      candidates: *a88
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: the
+          oggetto: form may be configured with the preferred or specific supplier for that service. Using a form allows the client to drive end users to a specific services supplier and it also allows the organization to capture the correct information for that purchase. There are some instances where the service that is being procured requires a special approval prior to creating the purchase order. In these cases, the form is routed to a special form approver for their review
+          valore: null
+        - n: 2
+          verbo: if
+          oggetto: the client has Settlement and multiple invoices are expected (e.g. blankets), then the form is used to trigger workflow to draw down the purchase order amount. The purchase order remains open until the purchase amount is reached and disregards the quantity received. The end user creates a cost receipt to track the services rendered as invoices are received
+          valore: null
+        - n: 3
+          verbo: for
+          oggetto: organizations using spend director enterprise, a contract can be created with a form associated to the contract. This method allows the client to use some of the contract manager features like tracking spend and notification tiers against a defined Purchase Order (budget) each time the form is used
+          valore: null
+        - n: 4
+          verbo: examples
+          oggetto: "include: Landscaping Services, Cleaning Services, Copy Machine Maintenance, etc"
+          valore: Landscaping Services, Cleaning Services, Copy Machine Maintenance, etc
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0451
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 313
+  - raw_id: R.DOC0058.0455
+    source_unit: U.DOC0058.0455
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0058
+    section: "Scenario 2: An organization that wants to collect specific information regarding a type of service where multiple invoices are expected (i.e. a blanket) from an external supplier, a custom form is typically used to handle specific requests."
+    page: 79
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a89
+      - FLW
+    type_hint:
+      candidates: *a89
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: a
+          oggetto: form is typically used to handle specific internal requests. The form is setup with the preferred or specific supplier for that service. Using the form allows the organization to capture the correct information for this service request. For these types of requests, a purchase order is generated and sent to the internal department. Examples are Catering or Printing Services. In some cases, a purchase order is not generated and the form is routed to an approver who will use the information on the form to complete the request. Examples are IT Request or Maintenance/Work Order Request. In either case, when the purchase order or the form is received, the requestor is contacted to schedule the service
+          valore: null
+        - n: 2
+          verbo: examples
+          oggetto: "of internal services include: Work Order Request, IT request – New user account setup, hardware installation"
+          valore: Work Order Request, IT request – New user account setup, hardware installation
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0058.0455
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 212

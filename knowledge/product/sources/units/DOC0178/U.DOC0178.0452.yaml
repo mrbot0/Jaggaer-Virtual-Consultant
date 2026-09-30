@@ -1,0 +1,170 @@
+id: U.DOC0178.0452
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: activeForShopping | Description: Indicates whether the contact is (true) or is not (false) active for shopping Attribute: allowSupplierEditItems | Description: Indicates whether supplier can (true) or cannot (false) edit the price on a contract noncatalog line item that has been populated from the contract on a portal invoice or credit memo. This field does not apply to other non-catalog line items, only those populated from the contract on a portal invoice or credit memo. Note: This field applies to price only. Suppliers cannot edit the part number, product size, packaging, or description of an item. Attribute: blanketPONumber | Description: Number of the blanket PO associated with the contract. Attribute: autoApplyPurchase | Description: Indicates whether the contact is (true) or is not (false) to be automatically applied to a purchase request Attribute: requiresPriceSet | Description: Indicates whether the contact is (true) or is not (false) associated with a price set (hosted catalog). Attribute: evaluateReceiptSettlement | Description: Indicates whether the contact does (true) or does not (false) have the Evaluated Receipt Settlement setting enabled. When the setting is enabled, and a receipt is created from the contract, the associated invoice can be created automatically. Attribute: associatedPriceSetName | Description: Name of the price set associated with the contract Attribute: codesDefaultForInvoices | Description: Accounting codes group container. See section “CodesGroup [Export]” below. Attribute: administrativeFee | Description: Administrative fee information. See section “AdministrativeFee [Export]” below. Attribute: allowNonCatalogItems | Description: Indicates whether the contact does (true) or does not (false) allow non-catalog purchases. Attribute: poClauseList | Description: Container for PO clauses associated to this contract. See section “Clause [Export]” below Attribute: budget | Description: Budget for the contract. If the enforceBudget is set to true, then the value must be greater than zero."
+hash: sha256:32744cb5fac3e35f14ef838c184ca05a20a8cd08876fe5a155ccd564c66e69b3
+words: 296
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Eprocurement [Export]
+  section_path: 2.3.3.24
+  page: 100
+  lang: en
+  prev: U.DOC0178.0451
+  next: U.DOC0178.0453
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - activeForShopping
+      - Indicates whether the contact is (true) or is not (false) active for shopping
+      - ""
+    - - allowSupplierEditItems
+      - |-
+        Indicates whether supplier can (true) or cannot (false) edit the price on a contract noncatalog line item that has been populated from the contract on a portal invoice or credit memo.
+        This field does not apply to other non-catalog line items, only those populated from the contract on a portal invoice or credit memo.
+        Note: This field applies to price only. Suppliers cannot edit the part number, product size, packaging, or description of an item.
+      - ""
+    - - blanketPONumber
+      - Number of the blanket PO associated with the contract.
+      - ""
+    - - autoApplyPurchase
+      - Indicates whether the contact is (true) or is not (false) to be automatically applied to a purchase request
+      - ""
+    - - requiresPriceSet
+      - Indicates whether the contact is (true) or is not (false) associated with a price set (hosted catalog).
+      - ""
+    - - evaluateReceiptSettlement
+      - |-
+        Indicates whether the contact does (true) or does not (false) have the Evaluated Receipt Settlement setting enabled.
+        When the setting is enabled, and a receipt is created from the contract, the associated invoice can be created automatically.
+      - ""
+    - - associatedPriceSetName
+      - Name of the price set associated with the contract
+      - ""
+    - - codesDefaultForInvoices
+      - |-
+        Accounting codes group container.
+        See section “CodesGroup [Export]” below.
+      - ""
+    - - administrativeFee
+      - |-
+        Administrative fee information.
+        See section “AdministrativeFee [Export]” below.
+      - ""
+    - - allowNonCatalogItems
+      - Indicates whether the contact does (true) or does not (false) allow non-catalog purchases.
+      - ""
+    - - poClauseList
+      - |-
+        Container for PO clauses associated to this contract.
+        See section “Clause [Export]” below
+      - ""
+    - - budget
+      - |-
+        Budget for the contract.
+        If the enforceBudget is set to true, then the value must be greater than zero.
+      - ""
+    - - enforceBudget
+      - Indicates whether the contract budget rules, such as minimumContractSpendPerPR, are (true) or are not (false) to be enforced on PRs, Pos, and invoices.
+      - ""
+    - - minimumContractSpendForPR
+      - |-
+        Minimum spend allowed on the contract per PR.
+        This value overwrites any existing value on the contract.
+        Valid only for blanket Pos.
+      - ""
+    - - maximumContractSpendForPR
+      - |-
+        Maximum spend allowed on the contract per PR.
+        This value overwrites any existing value on the contract.
+        Valid only for blanket Pos.
+      - ""
+    - - minimumLineItemQuantityPerPR
+      - |-
+        Minimum line item quantity allowed on the contract per PR.
+        This value overwrites any existing value on the contract.
+        Valid only for blanket Pos
+      - ""
+    - - maximumLineItemQuantityPerPR
+      - |-
+        Maximum line item quantity allowed on the contract per PR.
+        This value overwrites any existing value on the contract.
+        Valid only for blanket Pos.
+      - ""
+    - - useReqLimitsForInvoice
+      - |-
+        Indicates whether the minimum and maximum contract spend and line item quantity limits set for PRs do (true) or do not (false) also apply to invoices.
+        That is, if this field is set to true, then:
+        The values of the PR-specific fields (minimumContractSpendPerPR, maximumContractSpendPerPR, minimumLineItemQuantityPerPR, and maximumLineItemQuantityPerPR) also apply to invoices.
+        The invoicespecific fields (minimumContractSpendPerInvoice, maximumContractSpendPerInvoice, minimumLineItemQuantityPerInvoice, and maximumLineItemQuantityPerInvoice) do not appear in the contract export message.
+        The values of the PR-specific fields overwrite any values currently configured for the invoice-specific fields
+      - ""
+    - - minimumContractSpendPerInvoice
+      - |-
+        Minimum contract spend amount allowed on the contract per invoice.
+        This value overwrites any existing value on the contract.
+        Valid only for blanket Pos.
+        Note: If the useReqLimitsForInvoice field is set to true, this field does not appear in the contract export message.
+      - ""
+    - - maximumContractSpendPerInvoice
+      - |-
+        Maximum contract spend amount allowed on the contract per invoice.
+        This value overwrites any existing value on the contract.
+        Valid only for blanket Pos.
+        Note: If the useReqLimitsForInvoice field is set to true, this field does not appear in the contract export message.
+      - ""
+    - - minimumLineItemQuantityPerInvoice
+      - |-
+        Minimum line item quantity allowed on the contract per invoice.
+        This value overwrites any existing value on the contract.
+        Valid only for blanket Pos
+        Note: If the useReqLimitsForInvoice field is set to true, this field does not appear in the contract export message.
+      - ""
+    - - maximumLineItemQuantityPerInvoice
+      - |-
+        Maximum line item quantity allowed on the contract per invoice.
+        This value overwrites any existing value on the contract.
+        Valid only for blanket Pos
+        Note: If the useReqLimitsForInvoice field is set to true, this field does not appear in the contract export message.
+      - ""
+    - - prSpend
+      - Beginning PR spend amount.
+      - ""
+    - - poSpend
+      - Beginning PO spend amount.
+      - ""
+    - - invoiceSpend
+      - Beginning invoice spend amount.
+      - ""
+    - - appliesTo
+      - |-
+        Specify contract access condition.
+        See section “AppliesTo [Export]” below.
+      - ""
+    - - goodsAndServices
+      - |-
+        Goods and Services settings.
+        See section “GoodsAdServices [Export]” below.
+      - ""
+    - - paymentTerms
+      - |-
+        Payment terms.
+        See section “PaymentTerms [Export]” below
+      - ""
+    - - supplierCustomFieldSettings
+      - |-
+        Supplier custom field settings
+        See section “SupplierCustomFieldSettings [Export]” below.
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 3

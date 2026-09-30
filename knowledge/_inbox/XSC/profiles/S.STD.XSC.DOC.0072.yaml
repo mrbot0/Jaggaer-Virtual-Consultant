@@ -1,0 +1,91 @@
+id: S.STD.XSC.DOC.0072
+type: DOC
+title: Category,Commodity Code, UN/SPSC and UOM Mapping
+summary: "Documento manuale-utente (d'uso, origine vendor) \"Category,Commodity
+  Code, UN/SPSC and UOM Mapping\": 84 unità, 0 tabelle, 0 tabelle di campi;
+  scope XSC, ADM, VEN, P2P; affidabilità 0.56."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2020-04-09
+    release: R18.1
+  F15: d'uso
+sources:
+  - file: CORSI/JI-2303/XDOC - Commodity Code Mapping.pdf
+    sha256: sha256:3f3949adab5c2cd7b30231614906803a825dd5eba5a2df595aef5791fa8108b5
+kind: manuale-utente
+genre: d'uso
+origin: vendor
+version: null
+dated: 2020-04-09
+covers_release: R18.1
+languages:
+  - en
+scopes:
+  - XSC
+  - ADM
+  - VEN
+  - P2P
+source:
+  path: CORSI/JI-2303/XDOC - Commodity Code Mapping.pdf
+  sha256: sha256:3f3949adab5c2cd7b30231614906803a825dd5eba5a2df595aef5791fa8108b5
+  size: 1833353
+  format: pdf
+  doc_id: xdoc-commodity-code-mapping-pdf-dcc2ec1b
+  doc_key: xdoc-commodity-code-mapping.pdf
+structure:
+  pages: 20
+  chapters: 20
+  sections: 20
+  tables: 0
+  figures: 37
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 84
+  by_type:
+    testo: 60
+    regola: 14
+    riferimento: 7
+    esempio: 3
+reliability:
+  base_by_kind: 0.7
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.56
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: 3 pagine con sole immagini (testo da OCR)
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 84
+  items_produced: 14
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 3
+    tacit: 0
+  coverage_ratio: 0.17
+  last_run: 2026-09-30
+  estimated_tokens: 2440
+  sessions_planned: 1

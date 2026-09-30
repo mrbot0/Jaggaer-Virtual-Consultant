@@ -1,0 +1,96 @@
+document: check-request-request-template-xml-84b73eac
+scope: XSC
+section: domande-1
+section_title: Domande — Check Request Information / Invoice Details
+genre: tecnica
+rows:
+  - label: SupplierInvoiceNumber
+    technical_name: "285274"
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Supplier Invoice Number
+    section: domande-1
+    source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: check-request-request-template-xml-84b73eac
+  - label: CheckRequestDescription
+    technical_name: "285275"
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Description
+    section: domande-1
+    source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: check-request-request-template-xml-84b73eac
+  - label: CheckRequestCurrency
+    technical_name: "285276"
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Currency
+    section: domande-1
+    source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: check-request-request-template-xml-84b73eac
+  - label: CheckRequestAmount
+    technical_name: "285277"
+    type: Numeric Text Box
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Amount
+    section: domande-1
+    source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: check-request-request-template-xml-84b73eac
+  - label: CheckRequestTaxes
+    technical_name: "285301"
+    type: Numeric Text Box
+    mandatory_text: No
+    allowed_values: []
+    notes: Taxes
+    section: domande-1
+    source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: check-request-request-template-xml-84b73eac
+  - label: CheckRequestNeedByDate
+    technical_name: "285302"
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: Need by Date
+    section: domande-1
+    source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: check-request-request-template-xml-84b73eac
+  - label: Reimbursement For
+    technical_name: "285303"
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Reimbursement For
+    section: domande-1
+    source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: check-request-request-template-xml-84b73eac
+  - label: Upload a pdf of the invoice, or in the case of reimbursements, a
+      completed justification document using the attached Word form.
+    technical_name: "285292"
+    type: File Upload
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Upload a pdf of the invoice, or in the case of reimbursements, a
+      completed justification document using the attached Word form.
+    section: domande-1
+    source_unit: check-request-request-template-xml-84b73eac/domande-1#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: check-request-request-template-xml-84b73eac

@@ -1,0 +1,93 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-51
+section: 2.2.1.57
+section_title: SpendTierNotification [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:FORPRSPEND
+    label: forPRSpend
+    labels:
+      - forPRSpend
+    technical_name: FORPRSPEND
+    section: 2.2.1.57
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether PR spend notification emails will (true) or will not
+      (false) be generated from this contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.57
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.57#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: forPRSpend
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:FORPOSPEND
+    label: forPOSpend
+    labels:
+      - forPOSpend
+    technical_name: FORPOSPEND
+    section: 2.2.1.57
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether PO spend notification emails will (true) or will not
+      (false) be generated from this contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.57
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.57#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: forPOSpend
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:FORINVOICESPEND
+    label: forInvoiceSpend
+    labels:
+      - forInvoiceSpend
+    technical_name: FORINVOICESPEND
+    section: 2.2.1.57
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether invoice spend notification emails will (true) or will
+      not (false) be generated from this contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.57
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.57#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: forInvoiceSpend
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1057

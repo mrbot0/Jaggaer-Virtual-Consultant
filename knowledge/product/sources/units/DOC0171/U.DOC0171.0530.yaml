@@ -1,0 +1,127 @@
+id: U.DOC0171.0530
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: Field | Attribute: UI default label (EN)
+  Attribute: id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: reference | Attribute: Reference | Datatype: VARCHAR2(50 CHAR)
+  Attribute: description | Attribute: Description | Datatype: VARCHAR2(512 CHAR)
+  Attribute: type | Attribute: - | Datatype: VARCHAR2(14 CHAR)
+  Attribute: notes | Attribute: Remarks | Datatype: VARCHAR2(2000 CHAR)
+  Attribute: showNotes | Attribute: Display Remarks | Datatype: NUMBER(1)
+  Attribute: showQuantity | Attribute: Display Quantity to Supplier | Datatype: NUMBER(1)
+  Attribute: quantityInsertedBy | Attribute: Quantity to be entered by | Datatype: VARCHAR2(6 CHAR)
+  Attribute: quantity | Attribute: Quantity | Datatype: NUMBER
+  Attribute: unitOfMeasure | Attribute: Unit of Measurement | Datatype: VARCHAR2(100 CHAR)
+  Attribute: goodsGroup | Attribute: Goods Group | Datatype: VARCHAR2(100 CHAR)
+  Attribute: mandatory | Attribute: Mandatory | Datatype: NUMBER(1)
+  Attribute: prCodes/prCode | Attribute: - | Datatype: VARCHAR2(125 CHAR)
+  Attribute: prEntries/prEntry | Attribute: - | Datatype: -
+  Attribute: originatingPrCode (in prEntry) | Datatype: VARCHAR2(80 CHAR)
+  Attribute: row (in prEntry) | Attribute: - | Datatype: NUMBER(5,0)
+  Attribute: referencePrice | Attribute: Reference Price | Datatype: NUMBER
+  Attribute: minValue | Attribute: Minimum Unit Price/Minimum Discount Value | Datatype: NUMBER
+  Attribute: maxValue | Attribute: Maximum Unit Price/Maximum Discount Value | Datatype: NUMBER
+  Attribute: basePriceBeforeDiscount | Attribute: Base Price Before Discount | Datatype: NUMBER
+  Attribute: showBasePrice | Attribute: Display Base Price to Suppliers | Datatype: NUMBER(1)
+  Attribute: extCode | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: paramPos | Attribute: - | Datatype: NUMBER(5)
+  Attribute: showUrlAsClickableLink | Attribute: textAsUrl | Datatype: NUMBER(1)
+hash: sha256:f003e7d6cb4fad695203d28e0628b167bba20c681c28669c3c6828943b571f63
+words: 244
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Economical parameter
+  section_path: 2.5.8.7
+  page: 8
+  lang: en
+  prev: U.DOC0171.0529
+  next: U.DOC0171.0531
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - Field
+      - UI default label (EN)
+      - ""
+    - - id
+      - "-"
+      - NUMBER(38)
+    - - reference
+      - Reference
+      - VARCHAR2(50 CHAR)
+    - - description
+      - Description
+      - VARCHAR2(512 CHAR)
+    - - type
+      - "-"
+      - VARCHAR2(14 CHAR)
+    - - notes
+      - Remarks
+      - VARCHAR2(2000 CHAR)
+    - - showNotes
+      - Display Remarks
+      - NUMBER(1)
+    - - showQuantity
+      - Display Quantity to Supplier
+      - NUMBER(1)
+    - - quantityInsertedBy
+      - Quantity to be entered by
+      - VARCHAR2(6 CHAR)
+    - - quantity
+      - Quantity
+      - NUMBER
+    - - unitOfMeasure
+      - Unit of Measurement
+      - VARCHAR2(100 CHAR)
+    - - goodsGroup
+      - Goods Group
+      - VARCHAR2(100 CHAR)
+    - - mandatory
+      - Mandatory
+      - NUMBER(1)
+    - - prCodes/prCode
+      - "-"
+      - VARCHAR2(125 CHAR)
+    - - prEntries/prEntry
+      - "-"
+      - "-"
+    - - originatingPrCode (in prEntry)
+      - ""
+      - VARCHAR2(80 CHAR)
+    - - row (in prEntry)
+      - "-"
+      - NUMBER(5,0)
+    - - referencePrice
+      - Reference Price
+      - NUMBER
+    - - minValue
+      - Minimum Unit Price/Minimum Discount Value
+      - NUMBER
+    - - maxValue
+      - Maximum Unit Price/Maximum Discount Value
+      - NUMBER
+    - - basePriceBeforeDiscount
+      - Base Price Before Discount
+      - NUMBER
+    - - showBasePrice
+      - Display Base Price to Suppliers
+      - NUMBER(1)
+    - - extCode
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - paramPos
+      - "-"
+      - NUMBER(5)
+    - - showUrlAsClickableLink
+      - textAsUrl
+      - NUMBER(1)
+  block: 1
+  blocks: 1

@@ -1,0 +1,37 @@
+document: equipment-service-form-xml-01ba2138
+scope: XSC
+batch: batch-02
+section: campi-2
+section_title: Campi — Supplier
+part: 1
+parts: 1
+rows:
+  - key: tech:100
+    label: "100"
+    labels:
+      - "100"
+    technical_name: "100"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=100 · tipo=static
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-2
+        source_unit: equipment-service-form-xml-01ba2138/campi-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "100"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 652

@@ -1,0 +1,72 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-44
+section: 2.3.1.45
+section_title: UnitPrice [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:PRICE
+    label: price
+    labels:
+      - price
+    technical_name: PRICE
+    section: 2.3.1.45
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Price per unit
+      See section “Money [Import JIOrder method]” above
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.45
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.45#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: price
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:PRICESOURCE
+    label: priceSource
+    labels:
+      - priceSource
+    technical_name: PRICESOURCE
+    section: 2.3.1.45
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Identifies the origin of the price:
+      External: Supplier
+      Organizational: Contract
+      Consortium: Consortium
+      Manual: Manually entered
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.45
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.45#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: priceSource
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 856

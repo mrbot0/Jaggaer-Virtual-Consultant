@@ -1,0 +1,74 @@
+id: U.DOC0183.0106
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Component Filter | Description | Possible values
+  Component Filter: HEADER_ReceiptAddress | Description: Retrieve Receipt Address information | Possible values: contactList: retrieve contact data from receipt address section.
+  Component Filter: HEADER_Attachment | Description: Retrieve attachment information defined at header level. | Possible values: N.A.
+  Component Filter: HEADER_ExchangeRateList | Description: Retrieve Exchange Rate List information | Possible values: N.A.
+  Component Filter: LINE | Description: Retrieve base receipt line information.
+  It must be specified to enable retrieval of all other “LINE” components. | Possible values: poSplittableFieldGroup: retrieve splittable field group data from purchase order section.
+  poLineSplittableFieldGroup: retrieve splittable field group data from purchase order line section.
+  Component Filter: LINE_ItemInfo | Description: Extract line item information | Possible values: alternateDimension: extract alternate measurement for item size and unit of measure.
+  productFlag: retrieve item product classification flag list.
+  supplierContact: retrieve contact data from supplier information section.
+  general: retrieve data from general line item section.
+  internal: retrieve data from internal line item section
+  external: retrieve data from external line item section
+  form: retrieve line item form section information.
+  Component Filter: LINE_StockedItem | Description: Extract line stocked item information | Possible values: customItemAttribute: retrieve stocked item custom attribute information.
+  Component Filter: LINE_Attachment | Description: Retrieve attachment information defined at line level. | Possible values: N.A.
+hash: sha256:73708384b113e6b989d18078cf494f8785459474aa4ad826b92bbc5d82199f3d
+words: 209
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Component filters [Export]
+  section_path: 2.2.1
+  page: 17
+  lang: en
+  prev: U.DOC0183.0105
+  next: U.DOC0183.0107
+table:
+  table: 0
+  headers:
+    - Component Filter
+    - Description
+    - Possible values
+  rows:
+    - - HEADER_ReceiptAddress
+      - Retrieve Receipt Address information
+      - "contactList: retrieve contact data from receipt address section."
+    - - HEADER_Attachment
+      - Retrieve attachment information defined at header level.
+      - N.A.
+    - - HEADER_ExchangeRateList
+      - Retrieve Exchange Rate List information
+      - N.A.
+    - - LINE
+      - |-
+        Retrieve base receipt line information.
+        It must be specified to enable retrieval of all other “LINE” components.
+      - |-
+        poSplittableFieldGroup: retrieve splittable field group data from purchase order section.
+        poLineSplittableFieldGroup: retrieve splittable field group data from purchase order line section.
+    - - LINE_ItemInfo
+      - Extract line item information
+      - |-
+        alternateDimension: extract alternate measurement for item size and unit of measure.
+        productFlag: retrieve item product classification flag list.
+        supplierContact: retrieve contact data from supplier information section.
+        general: retrieve data from general line item section.
+        internal: retrieve data from internal line item section
+        external: retrieve data from external line item section
+        form: retrieve line item form section information.
+    - - LINE_StockedItem
+      - Extract line stocked item information
+      - "customItemAttribute: retrieve stocked item custom attribute information."
+    - - LINE_Attachment
+      - Retrieve attachment information defined at line level.
+      - N.A.
+  block: 1
+  blocks: 1

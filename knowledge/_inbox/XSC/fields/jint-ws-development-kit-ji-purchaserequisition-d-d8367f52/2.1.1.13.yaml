@@ -1,0 +1,42 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.13
+section_title: Product size [PR Import]
+genre: tecnica
+rows:
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Indicates the product size version.
+
+      Valid values are:
+
+      buyer: buyer specified values
+
+      supplier: supplier specified value
+
+      system: default system value
+
+      Customers usually prefer the buyer version as it is the version that maps
+      to organization's list of product sizes
+    section: 2.1.1.13
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.13#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: measurement
+    technical_name: measurement
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Size measure.
+      See section “Measurement [PR Import]” below.
+    section: 2.1.1.13
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.13#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

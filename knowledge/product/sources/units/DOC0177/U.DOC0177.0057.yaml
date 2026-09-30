@@ -1,0 +1,39 @@
+id: U.DOC0177.0057
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: euVat | Mandatory (Y/N): Y/N | Description: European VAT code | Mapping on Jaggaer One data model and notes: The value could be mandatory and/or unique according to configuration. If the field is defined as “unique” (in other words a key) for suppliers in instance configuration, it cannot be updated via web service.
+  Not mandatory when JI is Primary
+hash: sha256:e742f1790256a5a3c553ee96e3f4a5cc3bbe36113c5e7f4154fbec842b7616d3
+words: 60
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/J1SupplierData
+  section_path: 2.1.1.3
+  page: 14
+  lang: en
+  prev: U.DOC0177.0056
+  next: U.DOC0177.0058
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - euVat
+    - Y/N
+    - European VAT code
+    - |-
+      The value could be mandatory and/or unique according to configuration. If the field is defined as “unique” (in other words a key) for suppliers in instance configuration, it cannot be updated via web service.
+      Not mandatory when JI is Primary
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

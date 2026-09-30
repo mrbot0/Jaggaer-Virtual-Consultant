@@ -1,0 +1,141 @@
+id: U.DOC0183.0120
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: originalRequestMessageId | Description: Unique identifier for the receipt export message which with this PR was saved Attribute: receiptId | Description: Unique Internal identifier of the receipt Attribute: validationStatus | Description: Flag describing receipt validation requirement: 0: Unneeded, object was exported with no validation requirements. 1: Pending - object is waiting to complete the validation process. 2: Completed - object completed the validation process Attribute: workflowStep | Description: Workflow step in which the receipt was when exported Attribute: lastUpdate | Description: Date and time receipt information was last updated Attribute: receiptType | Description: Type of receipt. 1:Quantity - A Quantity receipt is used when a PO is based on item quantity times the unit price (such as non-catalog orders, hosted orders, and punchout orders). 2:Cost- A Cost receipt is used when a PO is considered amount-only (such as amount only POs, blanket POs, and service orders). Attribute: receiptNumber | Description: Receipt number associated with the receipt. Attribute: receiptName | Description: Name assigned to the receipt Attribute: receiptDate | Description: Date associated with the receipt for accounting purposes Attribute: receiptCreateDate | Description: Date and time the receipt was created in the solution Attribute: receiptCompleteDate | Description: Date the receipt was completed Attribute: receiver | Description: Information about the person who created the receipt See section “UserProfile [Export]” below Attribute: businessUnit | Description: Business unit with which the receipt is associated. Must be an active business unit. See section “BusinessUnit [Export]” below. Attribute: department | Description: Department with which the receipt is associated. Attribute: receiptAddress | Description: Receipt Address information. See section “ReceiptAddress [Export]” below Attribute: packingSlipNumber | Description: Supplier's packing slip number Attribute: carrier | Description: Internal name of the selected carrier."
+hash: sha256:444d21d69ab9b3067411527987ff03242a93ede1faee71acfedda0385f525491
+words: 289
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Header [Export]
+  section_path: 2.2.3.2
+  page: 17
+  lang: en
+  prev: U.DOC0183.0119
+  next: U.DOC0183.0121
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - originalRequestMessageId
+      - Unique identifier for the receipt export message which with this PR was saved
+      - ""
+    - - receiptId
+      - Unique Internal identifier of the receipt
+      - ""
+    - - validationStatus
+      - |-
+        Flag describing receipt validation requirement:
+        0: Unneeded, object was exported with no validation requirements.
+        1: Pending - object is waiting to complete the validation process.
+        2: Completed - object completed the validation process
+      - ""
+    - - workflowStep
+      - Workflow step in which the receipt was when exported
+      - ""
+    - - lastUpdate
+      - Date and time receipt information was last updated
+      - ""
+    - - receiptType
+      - |-
+        Type of receipt.
+        1:Quantity - A Quantity receipt is used when a PO is based on item quantity times the unit price (such as non-catalog orders, hosted orders, and punchout orders).
+        2:Cost- A Cost receipt is used when a PO is considered amount-only (such as amount only POs, blanket POs, and service orders).
+      - ""
+    - - receiptNumber
+      - Receipt number associated with the receipt.
+      - ""
+    - - receiptName
+      - Name assigned to the receipt
+      - ""
+    - - receiptDate
+      - Date associated with the receipt for accounting purposes
+      - ""
+    - - receiptCreateDate
+      - Date and time the receipt was created in the solution
+      - ""
+    - - receiptCompleteDate
+      - Date the receipt was completed
+      - ""
+    - - receiver
+      - |-
+        Information about the person who created the receipt
+        See section “UserProfile [Export]” below
+      - ""
+    - - businessUnit
+      - |-
+        Business unit with which the receipt is associated. Must be an active business unit.
+        See section “BusinessUnit [Export]” below.
+      - ""
+    - - department
+      - Department with which the receipt is associated.
+      - ""
+    - - receiptAddress
+      - |-
+        Receipt Address information.
+        See section “ReceiptAddress [Export]” below
+      - ""
+    - - packingSlipNumber
+      - Supplier's packing slip number
+      - ""
+    - - carrier
+      - |-
+        Internal name of the selected carrier.
+        The specified shipping method must be present and active for the specified Carrier.
+      - ""
+    - - shippingMethod
+      - |-
+        Internal name of the shipping method.
+        The specified shipping method must be present and active.
+      - ""
+    - - trackingNumber
+      - Tracking number associated with the receipt
+      - ""
+    - - note
+      - Text note attached to the receipt header.
+      - ""
+    - - flexText1
+      - |-
+        Flex text attached to the receipt header.
+        It is an organization-managed, freeform field which can be renamed (in Field Management) and used in whatever way seems appropriate to enables organizations tracking their own custom data elements
+      - ""
+    - - flexPullID
+      - Identifier associated with the flexText field
+      - ""
+    - - attachmentList
+      - |-
+        Header attachment information.
+        See section “Attachment [Export]” below.
+      - ""
+    - - matchStatus
+      - |-
+        Matching status of the receipt header with the PO and invoice, per the configured tolerance setting.
+        No Matches- The receipt header does not match.
+        Fully Matched- The receipt header fully matches.
+        With Forced Matches- The receipt header does not fully match, but it should be paid according to the invoice.
+      - ""
+    - - exchangeRateList
+      - |-
+        Information on receipt currency.
+        See section “ExchangeRateList [Export]” below.
+      - ""
+    - - workflowStatus
+      - |-
+        Status of the receipt in workflow.
+        Valid values:
+        Draft
+        Pending
+        Complete
+        Rejected
+        Cancelled
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

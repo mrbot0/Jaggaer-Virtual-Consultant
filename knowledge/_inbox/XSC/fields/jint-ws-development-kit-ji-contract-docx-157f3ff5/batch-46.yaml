@@ -1,0 +1,42 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-46
+section: 2.2.1.52
+section_title: FlexField [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:FIELD
+    label: field
+    labels:
+      - field
+    technical_name: FIELD
+    section: 2.2.1.52
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Internal flex field value for the contract.
+
+      Organization can use contract flex fields to track any additional
+      information that is needed for the contract, such as the originating
+      department, whether an insurance certificate is required, a revenue
+      contract, or a state contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.52
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.52#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: field
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 719

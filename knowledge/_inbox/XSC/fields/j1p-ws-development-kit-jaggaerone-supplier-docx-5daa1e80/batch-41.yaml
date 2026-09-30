@@ -1,0 +1,65 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-41
+section: 2.1.1.66
+section_title: J1Supplier/JISupplierData/locationList/location/paymentMethod
+part: 1
+parts: 1
+rows:
+  - key: tech:POPAYMENTMETHOD
+    label: poPaymentMethod
+    labels:
+      - poPaymentMethod
+    technical_name: POPAYMENTMETHOD
+    section: 2.1.1.66
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.66
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.66#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: poPaymentMethod
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BLANKETPOPAYMENTMETHOD
+    label: blanketPOPaymentMethod
+    labels:
+      - blanketPOPaymentMethod
+    technical_name: BLANKETPOPAYMENTMETHOD
+    section: 2.1.1.66
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.66
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.66#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: blanketPOPaymentMethod
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 836

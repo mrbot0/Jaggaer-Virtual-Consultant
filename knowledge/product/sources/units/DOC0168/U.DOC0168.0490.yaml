@@ -1,0 +1,53 @@
+id: U.DOC0168.0490
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: URL | /j1p/api/public/ji/v1/orders/{id}
+  URL: Http Method | /j1p/api/public/ji/v1/orders/{id}: GET
+  URL: Header Parameters | /j1p/api/public/ji/v1/orders/{id}: Authorization (see “J1P WS Development_Kit - Web Services Overview” document)
+  URL: Path Parameters | /j1p/api/public/ji/v1/orders/{id}: Param Name | Reference | Format
+  id | Jaggaer internal id of the PO () | String
+  URL: Response format | /j1p/api/public/ji/v1/orders/{id}: JSON string representing the configuration data. See “export data format” chapter in this doc related to the specific module
+  URL: Return Codes | /j1p/api/public/ji/v1/orders/{id}: 200 query successfully executed
+  400 wrong or missing data in the request
+  404 the object with the provided id does not exist
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:d6517e36ac5dbb421d589882964fd01a5bc0fd788eecb457b167985650fcf3d7
+words: 110
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: Retrieve single Order [export Order by id]
+  section_path: 2.5.1.2
+  page: 113
+  lang: en
+  prev: U.DOC0168.0489
+  next: U.DOC0168.0491
+table:
+  table: 0
+  headers:
+    - URL
+    - /j1p/api/public/ji/v1/orders/{id}
+  rows:
+    - - Http Method
+      - GET
+    - - Header Parameters
+      - Authorization (see “J1P WS Development_Kit - Web Services Overview” document)
+    - - Path Parameters
+      - |-
+        Param Name | Reference | Format
+        id | Jaggaer internal id of the PO () | String
+    - - Response format
+      - JSON string representing the configuration data. See “export data format” chapter in this doc related to the specific module
+    - - Return Codes
+      - |-
+        200 query successfully executed
+        400 wrong or missing data in the request
+        404 the object with the provided id does not exist
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

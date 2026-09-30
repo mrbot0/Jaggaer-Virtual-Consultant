@@ -1,0 +1,39 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.40
+section_title: Measurement [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: measurementAmount
+    technical_name: measurementAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Number of items available per packaging unit.
+    section: 2.3.1.40
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.40#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: measurementUnit
+    technical_name: measurementUnit
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Packaging unit for the product, such as EA (each) or PK (pack).
+    section: 2.3.1.40
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.40#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: measurementValue
+    technical_name: measurementValue
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Combination of MeasurementAmount and MeasurementUnit.
+    section: 2.3.1.40
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.40#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

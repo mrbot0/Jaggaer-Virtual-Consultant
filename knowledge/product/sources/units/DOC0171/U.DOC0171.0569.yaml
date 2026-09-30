@@ -1,0 +1,67 @@
+id: U.DOC0171.0569
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: Field | Attribute: UI default label (EN)
+  Attribute: deliveryDate | Attribute: Delivery Date | Datatype: DATE
+  Attribute: paymentTerms | Attribute: Payment Terms | Datatype: VARCHAR2(256 CHAR)
+  Attribute: returns | Attribute: Returns policy (if applicable) | Datatype: VARCHAR2(256 CHAR)
+  Attribute: packaging | Attribute: Packaging required | Datatype: VARCHAR2(256 CHAR)
+  Attribute: freightBilling | Attribute: Freight charged on | Datatype: NUMBER(1)
+  Attribute: incoterms | Attribute: - | Datatype: NUMBER(2)
+  Attribute: incotermsDescription | Attribute: Incoterms | Datatype: VARCHAR2(256 CHAR)
+  Attribute: otherTerms | Attribute: Further terms and/or conditions | Datatype: VARCHAR2(2000 CHAR)
+  Attribute: mocInfo | Attribute: Further information | Datatype: VARCHAR2(512 CHAR)
+hash: sha256:b0e94eefaeb84419a271985aa1d81a8a3bf06a8f74f26795dd1c4d2186998eb3
+words: 104
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Additional terms
+  section_path: 2.5.19
+  page: 8
+  lang: en
+  prev: U.DOC0171.0568
+  next: U.DOC0171.0570
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - Field
+      - UI default label (EN)
+      - ""
+    - - deliveryDate
+      - Delivery Date
+      - DATE
+    - - paymentTerms
+      - Payment Terms
+      - VARCHAR2(256 CHAR)
+    - - returns
+      - Returns policy (if applicable)
+      - VARCHAR2(256 CHAR)
+    - - packaging
+      - Packaging required
+      - VARCHAR2(256 CHAR)
+    - - freightBilling
+      - Freight charged on
+      - NUMBER(1)
+    - - incoterms
+      - "-"
+      - NUMBER(2)
+    - - incotermsDescription
+      - Incoterms
+      - VARCHAR2(256 CHAR)
+    - - otherTerms
+      - Further terms and/or conditions
+      - VARCHAR2(2000 CHAR)
+    - - mocInfo
+      - Further information
+      - VARCHAR2(512 CHAR)
+  block: 1
+  blocks: 1

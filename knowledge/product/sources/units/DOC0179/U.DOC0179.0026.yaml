@@ -1,0 +1,43 @@
+id: U.DOC0179.0026
+doc: S.STD.XSC.DOC.0179
+doc_id: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+type: riga-tabella-campi
+text: |-
+  Attribute: customFieldStyle | Mandatory (Y/N): N | Description: Style to be applied to the custom field.
+  Possible values:
+  0 - Use user profile permissions -This style uses the custom field permissions as set up in the user's profile or role.
+  1 - Yes/No (checkbox) - This style shows up as a checkbox in the JAGGAER Indirect solution UI for the user to select. The user must have either the View or Edit Personal List custom field permission to be able to see and select the checkbox. Default values saved in the profile are not automatically applied.
+  2 - Organization-wide list - This style shows the user all your organization's values within the Values tab in a drop-down list on the PR or PO.
+hash: sha256:2b5a118164de68f91fe585d91bfd87b6132e56aa9a1a6348ea85a39af9a86c04
+words: 123
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0179
+  chapter: JI Custom Field web-service
+  section: CustomField [Custom Field Import method]
+  section_path: 2.1.1.2
+  page: 5
+  lang: en
+  prev: U.DOC0179.0025
+  next: U.DOC0179.0027
+row:
+  table: 0
+  row: 8
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - customFieldStyle
+    - N
+    - |-
+      Style to be applied to the custom field.
+      Possible values:
+      0 - Use user profile permissions -This style uses the custom field permissions as set up in the user's profile or role.
+      1 - Yes/No (checkbox) - This style shows up as a checkbox in the JAGGAER Indirect solution UI for the user to select. The user must have either the View or Edit Personal List custom field permission to be able to see and select the checkbox. Default values saved in the profile are not automatically applied.
+      2 - Organization-wide list - This style shows the user all your organization's values within the Values tab in a drop-down list on the PR or PO.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

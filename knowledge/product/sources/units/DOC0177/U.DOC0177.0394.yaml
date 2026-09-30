@@ -1,0 +1,45 @@
+id: U.DOC0177.0394
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: accountsPayable | Mandatory (Y/N): N | Mapping on Jaggaer One data model and notes: Repeatable once for each payment type.
+  For a supplier import, at least one of the following fields in this element must be present for each account:
+  ERPNumber
+  OldERPNumber
+  ThirdPartyRefNumber
+hash: sha256:c460ae3627861d1f5bdc0dde64c5921776bb4304860dffb023977159bf56995e
+words: 44
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList
+  section_path: 2.1.1.102
+  page: 75
+  lang: en
+  prev: U.DOC0177.0393
+  next: U.DOC0177.0395
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - accountsPayable
+    - N
+    - ""
+    - |-
+      Repeatable once for each payment type.
+      For a supplier import, at least one of the following fields in this element must be present for each account:
+      ERPNumber
+      OldERPNumber
+      ThirdPartyRefNumber
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

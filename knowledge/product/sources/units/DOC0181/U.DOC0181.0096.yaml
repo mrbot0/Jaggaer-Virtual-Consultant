@@ -1,0 +1,98 @@
+id: U.DOC0181.0096
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: "Attribute: formRequestLineItem | Description: Internal reference number for the form request question, or for a user-defined item on the form request."
+hash: sha256:5f5120460b23d2323a09b24d4f98f61dbd3d4ad7243af67c095f564433850a91
+words: 21
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: FormRequest [Export JIOrder method]
+  section_path: 2.1.3.50
+  page: 49
+  lang: en
+  prev: U.DOC0181.0095
+  next: U.DOC0181.0097
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - formType
+      - Mechanism for grouping form requests
+      - ""
+    - - formTitle
+      - Caption given to the form request for easy understanding
+      - ""
+    - - catalogNumber
+      - Catalog number of the form request
+      - ""
+    - - description
+      - Description of the form request
+      - ""
+    - - productSizeList
+      - |-
+        Container for description of the size of the item.
+        See section “ProductSize [Export JIOrder method]” above.
+      - ""
+    - - quantity
+      - Number of items
+      - ""
+    - - productUnitOfMeasureList
+      - |-
+        Container for description of the unit of measure of the item
+        See section “ProductUnitOfMeasure [Export JIOrder method]” above
+      - ""
+    - - unspsc
+      - Standardized commodity code value for the item, as specified by http://www.unspsc.org (for example, 43191501 – Mobile phones).
+      - ""
+    - - productClassificationList
+      - |-
+        Container of item classification.
+        See section “ProductClassification [Export JIOrder method]” above.
+      - ""
+    - - manufacturerInfo
+      - |-
+        Manufacturer information.
+        See section “ManufacturerInfo [Export JIOrder method]” above.
+      - ""
+    - - categoryInfo
+      - |-
+        Item category information.
+        See section “CategoryInfo [Export JIOrder method]” above
+      - ""
+    - - commoditycode
+      - Code assigned to a product, or a group of products, for the purposes of identifying it in international commerce, or commerce in general. CommodityCode is not a specific description of the goods or service.
+      - ""
+    - - contractNumber
+      - Contract number against which the item was purchased.
+      - ""
+    - - capitalExpense
+      - Indicates whether the item is (true) or is not (false) a capital expense.
+      - ""
+    - - taxable
+      - Indicates whether the manufacturer is (true) or is not (false) taxable.
+      - ""
+    - - templateId
+      - ID of the template to be used to create the form request
+      - ""
+    - - formRequestFields
+      - |-
+        Container for form request fields.
+        See section “FormRequestFields [Export JIOrder method]” below
+      - ""
+    - - formRequestID
+      - ID of the form request.
+      - ""
+    - - formRequestLineItem
+      - Internal reference number for the form request question, or for a user-defined item on the form request.
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

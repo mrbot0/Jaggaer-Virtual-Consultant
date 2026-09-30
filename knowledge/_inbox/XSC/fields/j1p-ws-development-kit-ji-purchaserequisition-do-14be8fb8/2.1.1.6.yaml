@@ -1,0 +1,256 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.6
+section_title: Requisition Line [PR Import]
+genre: tecnica
+rows:
+  - label: lineNumber
+    technical_name: lineNumber
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Position of the line item in the PR document.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: item
+    technical_name: item
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Item description.
+      See section “Item [PR Import]” below
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: quantity
+    technical_name: quantity
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Number of items.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: capitalExpense
+    technical_name: capitalExpense
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a capital expense.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: fixedAsset
+    technical_name: fixedAsset
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a fixed asset.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: taxable
+    technical_name: taxable
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the manufacturer is (true) or is not (false) taxable.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: lineCharges
+    technical_name: lineCharges
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Line charges information.
+      See section “LineCharges [PR Import]” below
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: deliveryInfo
+    technical_name: deliveryInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Delivery information.
+      See section “Delivery Info [PR Import]” below.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: supplierInfo
+    technical_name: supplierInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Supplier information.
+      See section “Supplier Info [PR Import]” below.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: customFieldValueSet
+    technical_name: customFieldValueSet
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Custom field value set data defined at line level.
+      See section “Custom field Value Set [PR Import]” below.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: splittableFieldSetGroup
+    technical_name: splittableFieldSetGroup
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for splittable field set data defined at line level.
+      See section “Splittable Field Set [PR Import]” below
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: internalInfo
+    technical_name: internalInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Line item internal information.
+      See section “Internal Info [PR Import]” below.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: billTo
+    technical_name: billTo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Billing information.
+      See section “Address [PR Import]” below.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: shipTo
+    technical_name: shipTo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Shipping information.
+      See section “Address [PR Import]” below.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: paymentInfo
+    technical_name: paymentInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Payment information.
+      See section “Credit Card [PR Import]” below.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: distributionMethod
+    technical_name: distributionMethod
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Distribution method information.
+      See section “Distribution Method [PR Import]” below.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: linkedToLineNumber
+    technical_name: linkedToLineNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      For a trade-in line item that is linked to a positive non-trade-in line
+      item, position of the positive non-trade-in line item in the PR document.
+
+      Valid only if the item is a trade-in.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: brand
+    technical_name: brand
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Brand associated with the PR line; must exist in the organization's
+      master brand list.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: discountAmount
+    technical_name: discountAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Discount information.
+      See section “Discount Amount [PR Import]” below.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: budgetDate
+    technical_name: budgetDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date at which a spend amount can be counted against the budget for the
+      specific line.
+    section: 2.1.1.6
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+    row_ref: t0.r19
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

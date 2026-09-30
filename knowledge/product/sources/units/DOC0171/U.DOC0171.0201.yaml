@@ -1,0 +1,41 @@
+id: U.DOC0171.0201
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: Name | Mandatory (Y/N): Y | Description: Column title | Mapping on JA data model and notes: Column title.
+  If nor valid id neither valid columnPos fields are provided, it is used to check if a parameter with the same name already exists and so it is an update operation.
+  See §Behavior, section “Envelope Management”.
+hash: sha256:ae27566713ec9eb58f6c3caa098bfd307fd4e28dda06ce66149f23dda8e0cf88
+words: 56
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: Section additional column [Import/Update RfX method]"
+  section_path: 2.1.1.16
+  page: 6
+  lang: en
+  prev: U.DOC0171.0200
+  next: U.DOC0171.0202
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - Name
+    - Y
+    - Column title
+    - |-
+      Column title.
+      If nor valid id neither valid columnPos fields are provided, it is used to check if a parameter with the same name already exists and so it is an update operation.
+      See §Behavior, section “Envelope Management”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,586 @@
+doc: S.STD.XSC.DOC.0035
+scope: XSC
+extracted_at: 2026-09-30T04:30:09.390Z
+tier: T0
+stats:
+  units: 55
+  extracted_units: 14
+  document_candidates: 0
+  needs_llm: 9
+  t0_complete: 5
+  by_candidate:
+    FLD: 6
+    GLS: 2
+    FLW: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 4793
+  sessions:
+    - n: 1
+      tokens: 4793
+      batches: 1
+      items: 9
+      batch_items:
+        - - R.DOC0035.0004
+          - R.DOC0035.0011
+          - R.DOC0035.0025
+          - R.DOC0035.0032
+          - R.DOC0035.0035
+          - R.DOC0035.0041
+          - R.DOC0035.0047
+          - R.DOC0035.0049
+          - R.DOC0035.0055
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0035.0004
+    source_unit: U.DOC0035.0004
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0035
+    section: Handout
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0035.0004
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 111
+  - raw_id: R.DOC0035.0011
+    source_unit: U.DOC0035.0011
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0035
+    section: Activities
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0035.0011
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 63
+  - raw_id: R.DOC0035.0014
+    source_unit: U.DOC0035.0014
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0035
+    section: Activities
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: When this activity
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0035.0014
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0035.0018
+    source_unit: U.DOC0035.0018
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0035
+    section: Activities
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - GLS
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: FolderRef name - This
+      definition: the shared workflow folder that is used to determine which users are able to approve the step.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0035.0018
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0035.0019
+    source_unit: U.DOC0035.0019
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0035
+    section: Activities
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: FolderRef name - This
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0035.0019
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0035.0025
+    source_unit: U.DOC0035.0025
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0035
+    section: Activities
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0035.0025
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 49
+  - raw_id: R.DOC0035.0030
+    source_unit: U.DOC0035.0030
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0035
+    section: Spend Director Specialization For Solutions Consultants
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - GLS
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Next
+      definition: 'an example of a basic workflow activity: <Activity name="Missing Distribution"> <ActivityType>manual</ActivityType> <StepRef name="Missing Distribution" /> <FolderRef name="Missing Distribution" /> <Rule><![CDATA[ Document.HasInvalidDistribution() == true ]]>< /Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>'
+      aliases: []
+      lang: en
+      source_unit: U.DOC0035.0030
+    needs_llm: false
+    tokens: 87
+  - raw_id: R.DOC0035.0032
+    source_unit: U.DOC0035.0032
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0035
+    section: Spend Director Specialization For Solutions Consultants
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: <activity
+          oggetto: 'name="Missing Distribution"> : The activity starts off with the name. This displays in SelectSite in the activity section'
+          valore: Missing Distribution
+        - n: 2
+          verbo: <activitytype>manual</activitytype>
+          oggetto: ": This activity is manual. This indicates that an approver from the organization must approve this step in order for the document to move on to the next step"
+          valore: This activity is manual. This indicates that an approver from the organization must approve this step in order for the document to move on to the next step
+        - n: 3
+          verbo: <stepref
+          oggetto: 'name="Missing Distribution" /> : This line shows the Workflow step that is tied to this activity. This activity will cause the step in this field to be triggered'
+          valore: Missing Distribution
+        - n: 4
+          verbo: <folderref
+          oggetto: 'name="Missing Distribution" /> : This line indicates the Shared Workflow folder that is tied to the activity, which defines the users that are able to approve the workflow step. In this case the Missing Distribution folder contains the users with approval powers'
+          valore: Missing Distribution
+        - n: 5
+          verbo: <rule><![cdata[
+          oggetto: "Document.HasInvalidDistribution() == true ]]></Rule> : This section defines the rule for the activity. Rules will always be contained within the <![CDATA[ ]> element"
+          valore: This section defines the rule for the activity. Rules will always be contained within the <![CDATA[ ]> element
+        - n: 6
+          verbo: in
+          oggetto: "this case the rule is Document.HasInvalidDistribution() == true "
+          valore: null
+        - n: 7
+          verbo: the
+          oggetto: prefix of this rule is Document. This means that the rule evaluation is for the entire document. Alternately, if a ru le contains the prefix "DocLine." the rule evaluates individual line items on the document. ii. The suffix of this rule defines the "object" that is being triggered for the evaluation, in this case HasInvalidDistribution() . This object checks to see if the do cument is missing distribution information or if it is somehow invalid. iii. The last part of this rule == true says that if the Document.HasInvalidDistribution() evaluation is true that the document will stop at the associated step. If this rule read == false instead, then the document would not stop here
+          valore: DocLine.
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0035.0032
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 443
+  - raw_id: R.DOC0035.0033
+    source_unit: U.DOC0035.0033
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0035
+    section: Spend Director Specialization For Solutions Consultants
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "• NOTE: Use of double equals signs (==)"
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0035.0033
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0035.0035
+    source_unit: U.DOC0035.0035
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0035
+    section: Spend Director Specialization For Solutions Consultants
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: approvers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: <folderselectionrule>explicitfolder</folderselectionrule>
+          oggetto: ": This line indicates th e folder that the type of folder being used for approvals is an Explicit Folder. In other words, this rule uses a Shared Workflow folder, which is populated with approvers that have the ability to advance the document to the next step in workflow"
+          valore: This line indicates th e folder that the type of folder being used for approvals is an Explicit Folder. In other words, this rule uses a Shared Workflow folder, which is populated with approvers that have the ability to advance the document to the next step in workflow
+        - n: 2
+          verbo: </activ
+          oggetto: "ity> : Each activity must end with this element. This indicates that the activity stops here"
+          valore: Each activity must end with this element. This indicates that the activity stops here
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0035.0035
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 124
+  - raw_id: R.DOC0035.0041
+    source_unit: U.DOC0035.0041
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0035
+    section: Spend Director Specialization For Solutions Consultants
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: <rule><![cdata[
+          oggetto: 'Document.RequiresRuleGroupEvaluation("D irector Approval") == true ]]></Rule> : This line shows an ADW rule'
+          valore: D irector Approval
+        - n: 2
+          verbo: document.
+          oggetto: indicates that this evaluates the entire document
+          valore: null
+        - n: 3
+          verbo: requiresrulegroupevaluation
+          oggetto: shows that an ADW rule is being evaluated. In this case the rule being evaluated is Director Appr oval . This rule can be found in the Advanced Dynamic Workflow section of workflow configuration. There many rules can be configured under ADW. A document stops here if any one of the ADW rules in the group are true
+          valore: null
+        - n: 4
+          verbo: <attribute
+          oggetto: 'name="RuleGroupInternalNam e"> : The attribute name line will display in SelectSite and makes it easy to see which ADW rule group is evaluated in this activity'
+          valore: RuleGroupInternalNam e
+        - n: 5
+          verbo: <attrvalue
+          oggetto: 'lang="default">Director Approval</AttrValue> : This shows the rule group name itself'
+          valore: default
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0035.0041
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 212
+  - raw_id: R.DOC0035.0047
+    source_unit: U.DOC0035.0047
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0035
+    section: Spend Director Specialization For Solutions Consultants
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: <activitytype>automated</activitytype>
+          oggetto: ": This rule will not require a user to approve the step. This means that the step will complete automatically"
+          valore: This rule will not require a user to approve the step. This means that the step will complete automatically
+        - n: 2
+          verbo: <folderref
+          oggetto: 'name="Distribute PO" /> : This line may look familiar from the previous activities, but since this step is automated it works a little bit differently. Automated activities do not use a Shared Workflow step like manual activities. Instead automated activities take advantage of workflow robots. Robots are what a llow automated steps to function without user approval. You can see what robot is being used for this folder under the Workflow Folder Import/Export tab in workflow setup'
+          valore: Distribute PO
+        - n: 3
+          verbo: <rule><![cdata[
+          oggetto: '!(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) && !(Document.CustomFieldValues("Order Category") in {"2 - Confirming - Do Not Distribute"}) ]]></Rule> :'
+          valore: Manual Purchase Order
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0035.0047
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 221
+  - raw_id: R.DOC0035.0049
+    source_unit: U.DOC0035.0049
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0035
+    section: Spend Director Specialization For Solutions Consultants
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: '!(document.customfieldvalues("manual'
+          oggetto: Purchase Order") in {"true"})
+          valore: Manual Purchase Order
+        - n: 2
+          verbo: this
+          oggetto: shows that the rule is looking at a Custom Field value at the document level
+          valore: null
+        - n: 3
+          verbo: the
+          oggetto: "rule is looking to see if the value of the Manual Purchase Order Custom Field has a value of true "
+          valore: null
+        - n: 4
+          verbo: notice
+          oggetto: the ! in front of this rule. If you see ! at the beginning of any rule, then a document will only stop if that rule IS NOT true. In this case, as long as the Manual Purchase Order is not true , the document will stop here
+          valore: null
+        - n: 5
+          verbo: "&&"
+          oggetto: '- When you see two "and" symbols like this (&&) that means that the rule following the preceding rule MUST also be true. This allows customers to require several criteria in order for a document to stop. Many && can be used in a given activity'
+          valore: and
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0035.0049
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 197
+  - raw_id: R.DOC0035.0055
+    source_unit: U.DOC0035.0055
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0035
+    section: Spend Director Specialization For Solutions Consultants
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: <rule><![cdata[
+          oggetto: "[Product.Radioactive = true || Product.RadioactiveMinor = true || Product.HazMat = true || Product.Controlled = true || Product.Toxin = true || Product.SelectAgent = true] ]]></Rule> :"
+          valore: null
+        - n: 2
+          verbo: notice
+          oggetto: the || between each rule evaluation, this represents an OR. This means that a document will stop if any one of these r ules is true. Unlike the && found in the above example, all of these rules do not have to be true for the rule to be triggered. This allows an activity to be triggered based on separate and distinct criteria
+          valore: null
+        - n: 3
+          verbo: the
+          oggetto: rules in this activity are looking at the products contained in the document. This is indicated by the Product. prefix. Each product here contains different product attribute flags. This allows customers to stop documents that contain any product they want that contains any one of these attrib ute flags
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0035.0055
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 223

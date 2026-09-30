@@ -1,0 +1,131 @@
+id: U.DOC0181.0466
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: originalRequestMessageId | Datatype: VARCHAR2(128 CHAR)
+  Attribute: orderId | Datatype: NUMBER(19,0)
+  Attribute: validationStatus | Datatype: NUMBER(1,0)
+  Attribute: workflowStep | Datatype: VARCHAR2(30 CHAR)
+  Attribute: lastUpdateDate | Datatype: TIMESTAMP
+  Attribute: poNumber | Datatype: VARCHAR2(256 CHAR)
+  Attribute: alternatePONumber | Datatype: VARCHAR2(50 CHAR)
+  Attribute: originalPONumber | Datatype: VARCHAR2(256 CHAR)
+  Attribute: workflowStatus | Datatype: VARCHAR2(10 CHAR)
+  Attribute: apStatus | Datatype: VARCHAR2(10 CHAR)
+  Attribute: evaluatedReceiptSettlement | Datatype: BOOLEAN
+  Attribute: revisionNumber | Datatype: NUMBER(20,0)
+  Attribute: revisionDate | Datatype: TIMESTAMP
+  Attribute: distributeRevision | Datatype: BOOLEAN
+  Attribute: businessUnit | Datatype: VARCHAR2(100 CHAR)
+  Attribute: department | Datatype: VARCHAR2(100 CHAR)
+  Attribute: priority | Datatype: VARCHAR2(10 CHAR)
+  Attribute: createDate | Datatype: TIMESTAMP
+  Attribute: initialRevisionDate | Datatype: TIMESTAMP
+  Attribute: accountingDate | Datatype: DATE
+  Attribute: freightOnBoard | Datatype: VARCHAR2(20 CHAR)
+  Attribute: requisitionRefId | Datatype: NUMBER(19)
+  Attribute: invoiceStatus | Datatype: VARCHAR2(35 CHAR)
+  Attribute: receiptStatus | Datatype: VARCHAR2(50 CHAR)
+  Attribute: closeDate | Datatype: TIMESTAMP
+hash: sha256:bd8e915b7c0fde83b159991af0ff661042a13739bb0b63d48152ead6778d133a
+words: 153
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: Header
+  section_path: 2.6.1
+  page: 114
+  lang: en
+  prev: U.DOC0181.0465
+  next: U.DOC0181.0467
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - originalRequestMessageId
+      - ""
+      - VARCHAR2(128 CHAR)
+    - - orderId
+      - ""
+      - NUMBER(19,0)
+    - - validationStatus
+      - ""
+      - NUMBER(1,0)
+    - - workflowStep
+      - ""
+      - VARCHAR2(30 CHAR)
+    - - lastUpdateDate
+      - ""
+      - TIMESTAMP
+    - - poNumber
+      - ""
+      - VARCHAR2(256 CHAR)
+    - - alternatePONumber
+      - ""
+      - VARCHAR2(50 CHAR)
+    - - originalPONumber
+      - ""
+      - VARCHAR2(256 CHAR)
+    - - workflowStatus
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - apStatus
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - evaluatedReceiptSettlement
+      - ""
+      - BOOLEAN
+    - - revisionNumber
+      - ""
+      - NUMBER(20,0)
+    - - revisionDate
+      - ""
+      - TIMESTAMP
+    - - distributeRevision
+      - ""
+      - BOOLEAN
+    - - businessUnit
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - department
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - priority
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - createDate
+      - ""
+      - TIMESTAMP
+    - - initialRevisionDate
+      - ""
+      - TIMESTAMP
+    - - accountingDate
+      - ""
+      - DATE
+    - - freightOnBoard
+      - ""
+      - VARCHAR2(20 CHAR)
+    - - requisitionRefId
+      - ""
+      - NUMBER(19)
+    - - invoiceStatus
+      - ""
+      - VARCHAR2(35 CHAR)
+    - - receiptStatus
+      - ""
+      - VARCHAR2(50 CHAR)
+    - - closeDate
+      - ""
+      - TIMESTAMP
+  block: 1
+  blocks: 1

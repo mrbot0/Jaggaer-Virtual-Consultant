@@ -1,0 +1,31 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.15
+section_title: CustomPaymentTerm [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: useFlag
+    technical_name: useFlag
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether custom payment terms are (true) or are not (false) to
+      be used
+    section: 2.3.1.15
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.15#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: termFileJIId
+    technical_name: termFileJIId
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Unique Internal JI identifier of the custom payment terms file.
+      The file must exist in the Supplier Management solution.
+    section: 2.3.1.15
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.15#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

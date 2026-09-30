@@ -1,0 +1,116 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.32
+section_title: AppliesTo [Import]
+genre: tecnica
+rows:
+  - label: restrictProductAppliesTo
+    technical_name: restrictProductAppliesTo
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether access to this contact is (true) or is not (false) to
+      be restricted based on settings contained in this element.
+    section: 2.2.1.32
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.32#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: grantAccessViaDeptAndRole
+    technical_name: grantAccessViaDeptAndRole
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether access to this contact is (true) or is not (false) to be
+      granted using roles, departments, and business units.
+
+      To grant access to all users, set this field to true, and set the role,
+      department, and businessUnit fields to all (or leave them blank).
+
+      To limit access based on role, department, or business unit, set this
+      field to true, and specify the limiting criteria in the role, department,
+      and businessUnit fields.
+
+      To limit access to only specific users, set this field to false, and
+      specify the users in the user field.
+    section: 2.2.1.32
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.32#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: userList
+    technical_name: userList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      List of users to be explicitly allowed to access this contract.
+
+      The user is allowed to access the contract even if he or she does not meet
+      the criteria specified in roleList, departmentList and businessUnitList.
+
+      See section “User [Import]” below
+    section: 2.2.1.32
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.32#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: groupAppliesTo
+    technical_name: groupAppliesTo
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Container for role, department and businessUnit list specifying group
+      access criteria.
+
+      See section “GroupAppliesTo [Import]” below
+    section: 2.2.1.32
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.32#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: unspscList
+    technical_name: unspscList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Standardized commodity code value list.
+      See section “UNSPSC [Import]” below
+    section: 2.2.1.32
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.32#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: fulfillmentCenterList
+    technical_name: fulfillmentCenterList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      List of name or label of fulfillment centers to which this contract can
+      apply
+
+      See section “FullfillmentCenter [Import]” below
+    section: 2.2.1.32
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.32#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: productSKUList
+    technical_name: productSKUList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      List of manufacturer’s part number (SKU code) of a product to which this
+      contract can apply.
+
+      See section “ProductSKU [Import]” below.
+    section: 2.2.1.32
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.32#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

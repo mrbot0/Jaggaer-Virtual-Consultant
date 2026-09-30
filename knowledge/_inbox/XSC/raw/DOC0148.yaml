@@ -1,0 +1,920 @@
+doc: S.STD.XSC.DOC.0148
+scope: XSC
+extracted_at: 2026-09-30T04:31:10.550Z
+tier: T0
+stats:
+  units: 190
+  extracted_units: 22
+  document_candidates: 0
+  needs_llm: 16
+  t0_complete: 6
+  by_candidate:
+    FLD: 11
+    CFG: 1
+    FLW: 5
+    CFP: 2
+    INV: 2
+    GLS: 1
+  residue_marked: 1
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 6203
+  sessions:
+    - n: 1
+      tokens: 6203
+      batches: 1
+      items: 16
+      batch_items:
+        - - R.DOC0148.0030
+          - R.DOC0148.0048
+          - R.DOC0148.0049
+          - R.DOC0148.0063
+          - R.DOC0148.0069
+          - R.DOC0148.0083
+          - R.DOC0148.0092
+          - R.DOC0148.0101
+          - R.DOC0148.0119
+          - R.DOC0148.0123
+          - R.DOC0148.0125
+          - R.DOC0148.0134
+          - R.DOC0148.0138
+          - R.DOC0148.0147
+          - R.DOC0148.0177
+          - R.DOC0148.0184
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0148.0017
+    source_unit: U.DOC0148.0017
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "2"
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The system
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0148.0017
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0148.0030
+    source_unit: U.DOC0148.0030
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0148
+    section: "7"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a2
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: tacita
+      text: What steps do requisition an d purchase order workflow usually consist of and how do you configure them?
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0148.0030
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 26
+  - raw_id: R.DOC0148.0048
+    source_unit: U.DOC0148.0048
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "10"
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0148.0048
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25
+  - raw_id: R.DOC0148.0049
+    source_unit: U.DOC0148.0049
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0148
+    section: "10"
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: determine
+          oggetto: which step you should create the rule for
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: an ADW rule for a step in PR workflow
+          valore: null
+        - n: 3
+          verbo: test
+          oggetto: the rule
+          valore: null
+        - n: 4
+          verbo: share
+          oggetto: the rule
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0148.0049
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 36
+  - raw_id: R.DOC0148.0063
+    source_unit: U.DOC0148.0063
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0148
+    section: "12"
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: request examples in Procurement and Form Request workflow
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: workflow for a request
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0148.0063
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 29
+  - raw_id: R.DOC0148.0069
+    source_unit: U.DOC0148.0069
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0148
+    section: "13"
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the request template
+          valore: null
+        - n: 2
+          verbo: think
+          oggetto: about what should happen once the request is filled out and submitted
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: examples of workflow configurations for requests that go through requisition and form request workflow stre ams on the Worldwide Widgets WorldMarket site
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0148.0069
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 70
+  - raw_id: R.DOC0148.0083
+    source_unit: U.DOC0148.0083
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0148
+    section: "17"
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: Approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: form request notifications on the Customer Base and Approver roles
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: the ADW workflow options of the workflow stream your request will pass through
+          valore: null
+        - n: 3
+          verbo: define
+          oggetto: the workflow
+          valore: null
+        - n: 4
+          verbo: create
+          oggetto: ADW rules and select approvers
+          valore: null
+        - n: 5
+          verbo: test
+          oggetto: the workflow
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0148.0083
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 65
+  - raw_id: R.DOC0148.0092
+    source_unit: U.DOC0148.0092
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0148
+    section: "18"
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the folder with the reject requisition robot into the Workflow Folder XML file
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a step into the Workflow Definition XML file that will point to the rule and the robot
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: an ADW rule group
+          valore: null
+        - n: 4
+          verbo: import
+          oggetto: the Workflow Definition XML file and address any errors
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: an ADW rule to trigger the step
+          valore: null
+        - n: 6
+          verbo: test
+          oggetto: the step for your user
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0148.0092
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 89
+  - raw_id: R.DOC0148.0101
+    source_unit: U.DOC0148.0101
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0148
+    section: "20"
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the folder with the reject requisition robot into the Workflow Folder XML file
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a step into the Workflow Definition XML file that will point to the rule and the robot
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: an ADW rule group
+          valore: null
+        - n: 4
+          verbo: import
+          oggetto: the Workflow Definition XML file and address any errors
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: an ADW rule to trigger the step
+          valore: null
+        - n: 6
+          verbo: test
+          oggetto: the step for your user
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0148.0101
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 89
+  - raw_id: R.DOC0148.0106
+    source_unit: U.DOC0148.0106
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "20"
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - INV
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Clients
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0148.0106
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0148.0113
+    source_unit: U.DOC0148.0113
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0148
+    section: "22"
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - GLS
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: only necessary element
+      definition: the Step name tag, which will contain the name of the step itself
+      aliases: []
+      lang: en
+      source_unit: U.DOC0148.0113
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0148.0119
+    source_unit: U.DOC0148.0119
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "24"
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0148.0119
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0148.0123
+    source_unit: U.DOC0148.0123
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "24"
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0148.0123
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 17
+  - raw_id: R.DOC0148.0125
+    source_unit: U.DOC0148.0125
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "24"
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0148.0125
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0148.0134
+    source_unit: U.DOC0148.0134
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "25"
+    page: 25
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0148.0134
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0148.0138
+    source_unit: U.DOC0148.0138
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "26"
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0148.0138
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0148.0140
+    source_unit: U.DOC0148.0140
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "26"
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Does not
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0148.0140
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0148.0147
+    source_unit: U.DOC0148.0147
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "27"
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0148.0147
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0148.0158
+    source_unit: U.DOC0148.0158
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "30"
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Sometimes, an approval or a system action
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0148.0158
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0148.0177
+    source_unit: U.DOC0148.0177
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "33"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0148.0177
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0148.0181
+    source_unit: U.DOC0148.0181
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0148
+    section: "33"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a21
+      - INV
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Indicates that a certain action
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0148.0181
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0148.0184
+    source_unit: U.DOC0148.0184
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0148
+    section: "34"
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a22
+      - FLW
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the folder with the reject requisition robot into the Workflow Folder XML file
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a step into the Workflow Definition XML file that will point to the rule and the robot
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: an ADW rule group
+          valore: null
+        - n: 4
+          verbo: import
+          oggetto: the Workflow Definition XML file and address any errors
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: an ADW rule to trigger the step
+          valore: null
+        - n: 6
+          verbo: test
+          oggetto: the step for your user
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0148.0184
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 89

@@ -1,0 +1,113 @@
+id: U.DOC0178.0429
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: startOnExecution | Description: Indicates whether the contract start date is (true) or is not (false) to be set to the date when the contract reaches “Executed: In Effect” status.
+  For eSignature contracts, this is the date and time that the final signer signs the contract, or a signed contract is manually uploaded.
+  Attribute: timeZone | Description: Timezone associated with the ContractDates element.
+  Valid values:
+  US/Eastern
+  US/Central
+  US/Pacific
+  US/Mountain
+  US/Arizona
+  US/East-Indiana
+  CETUS/Hawaii
+  Europe/London
+  Attribute: createdDate | Description: Date on which the contract was created.
+  Attribute: startDate | Description: Date on which the contract take effect.
+  Attribute: endDate | Description: Last effective date for the contract
+  Attribute: terminationDate | Description: Date on which the contract is to be terminated
+  Attribute: terminationReason | Description: Reason entered by the user when the contract was terminated.
+  Attribute: doesNotExpire | Description: Indicates whether the contract is (true) or is not (false) to expire automatically when the endDate occurs.
+  Attribute: contractRenewal | Description: Contract renewal specification.
+  See section “ContractRenewal [Export]” below
+  Attribute: contractReview | Description: Contract review information.
+  See section “ContractReview [Export]” below
+  Attribute: fullyExecutedDate | Description: Date on which the contract was fully executed (signed and dated by all parties)
+  Attribute: outForSignatureDate | Description: Date on which the contract was sent out for eSignature.
+  Valid only for contracts that use eSignature
+  Attribute: terminationScheduled | Description: Container for scheduled termination settings.
+  See section “TerminationScheduled [Export]” below.
+hash: sha256:62aff0ff4ecce7ce85e4cda9cea6104bcab703594a9100cbece9493597752082
+words: 238
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ContractDates [Export]
+  section_path: 2.3.3.3
+  page: 85
+  lang: en
+  prev: U.DOC0178.0428
+  next: U.DOC0178.0430
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - startOnExecution
+      - |-
+        Indicates whether the contract start date is (true) or is not (false) to be set to the date when the contract reaches “Executed: In Effect” status.
+        For eSignature contracts, this is the date and time that the final signer signs the contract, or a signed contract is manually uploaded.
+      - ""
+    - - timeZone
+      - |-
+        Timezone associated with the ContractDates element.
+        Valid values:
+        US/Eastern
+        US/Central
+        US/Pacific
+        US/Mountain
+        US/Arizona
+        US/East-Indiana
+        CETUS/Hawaii
+        Europe/London
+      - ""
+    - - createdDate
+      - Date on which the contract was created.
+      - ""
+    - - startDate
+      - Date on which the contract take effect.
+      - ""
+    - - endDate
+      - Last effective date for the contract
+      - ""
+    - - terminationDate
+      - Date on which the contract is to be terminated
+      - ""
+    - - terminationReason
+      - Reason entered by the user when the contract was terminated.
+      - ""
+    - - doesNotExpire
+      - Indicates whether the contract is (true) or is not (false) to expire automatically when the endDate occurs.
+      - ""
+    - - contractRenewal
+      - |-
+        Contract renewal specification.
+        See section “ContractRenewal [Export]” below
+      - ""
+    - - contractReview
+      - |-
+        Contract review information.
+        See section “ContractReview [Export]” below
+      - ""
+    - - fullyExecutedDate
+      - Date on which the contract was fully executed (signed and dated by all parties)
+      - ""
+    - - outForSignatureDate
+      - |-
+        Date on which the contract was sent out for eSignature.
+        Valid only for contracts that use eSignature
+      - ""
+    - - terminationScheduled
+      - |-
+        Container for scheduled termination settings.
+        See section “TerminationScheduled [Export]” below.
+      - ""
+  block: 1
+  blocks: 1

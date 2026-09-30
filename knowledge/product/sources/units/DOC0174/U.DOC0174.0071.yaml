@@ -1,0 +1,66 @@
+id: U.DOC0174.0071
+doc: S.STD.XSC.DOC.0174
+doc_id: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+type: tabella
+text: |-
+  Colonne: Field | Description | Datatype | Notes | UI Default Label (EN)
+  Field: OBJ_KEY | Description: Internal file identifier, used to link data from this file with data retrieved from other files. | Notes: Mandatory
+  Field: CF_NAME | Description: Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  Field: CF_VALUE | Description: Value of the custom field. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  Field: DESCRIPTION | Description: Description of the custom field value. | Datatype: VARCHAR2(100 CHAR)
+  Field: ACTIVE | Description: Indicates whether the value should be active for shoppers in the JAGGAER Indirect solution:
+  true = Value should be active for shoppers. An active item is available to appropriate end users when shopping in the solution.
+  false = The value should be inactive for shoppers. An inactive item is not available to end users. A value might be marked inactive even if it has relationships in place.
+  Default is 1. | Datatype: VARCHAR2(5 CHAR) | Notes: Mandatory
+hash: sha256:56ef8c06b52d164d458550d214ec93453b70a99d44f99f9ad562aa96c7fbdf90
+words: 175
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0174
+  chapter: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0174.0070
+  next: U.DOC0174.0072
+table:
+  table: 5
+  headers:
+    - Field
+    - Description
+    - Datatype
+    - Notes
+    - UI Default Label (EN)
+  rows:
+    - - OBJ_KEY
+      - Internal file identifier, used to link data from this file with data retrieved from other files.
+      - ""
+      - Mandatory
+      - ""
+    - - CF_NAME
+      - Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution.
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+    - - CF_VALUE
+      - Value of the custom field.
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+    - - DESCRIPTION
+      - Description of the custom field value.
+      - VARCHAR2(100 CHAR)
+      - ""
+      - ""
+    - - ACTIVE
+      - |-
+        Indicates whether the value should be active for shoppers in the JAGGAER Indirect solution:
+        true = Value should be active for shoppers. An active item is available to appropriate end users when shopping in the solution.
+        false = The value should be inactive for shoppers. An inactive item is not available to end users. A value might be marked inactive even if it has relationships in place.
+        Default is 1.
+      - VARCHAR2(5 CHAR)
+      - Mandatory
+      - ""
+  block: 1
+  blocks: 1

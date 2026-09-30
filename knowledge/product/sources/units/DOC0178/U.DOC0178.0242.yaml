@@ -1,0 +1,37 @@
+id: U.DOC0178.0242
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: poSpend | Description: Additional PO spend amount.
+  Note: Values in the poSpend field for subsequent updates are added to the current poSpend total for the contract. For example, if the current poSpend value for the contract in the CLM solution is [importo], and the import document contains a value of [importo], the updated value for the contract in the CLM solution, after the import, will be [importo]. Therefore, we recommend that you leave this field blank unless you are manually updating the poSpend total.
+hash: sha256:a6bc85fd8b14a6aa862026fd40c9ecbb94898bece8e1e6d052c42f71d28b9cf8
+words: 85
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Eprocurement [Import]
+  section_path: 2.2.1.24
+  page: 42
+  lang: en
+  prev: U.DOC0178.0241
+  next: U.DOC0178.0243
+row:
+  table: 0
+  row: 22
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - poSpend
+    - ""
+    - |-
+      Additional PO spend amount.
+      Note: Values in the poSpend field for subsequent updates are added to the current poSpend total for the contract. For example, if the current poSpend value for the contract in the CLM solution is [importo], and the import document contains a value of [importo], the updated value for the contract in the CLM solution, after the import, will be [importo]. Therefore, we recommend that you leave this field blank unless you are manually updating the poSpend total.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,83 @@
+id: U.DOC0171.0439
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: id | Description: JA internal identifier of the parameter (referenced in offers)
+  Attribute: name | Description: Question title
+  Attribute: description | Description: Question description
+  Attribute: type | Description: Question type
+  Attribute: allowedValues | Description: In case of choice/multi-choice list of allowed values
+  Attribute: dataElementId | Description: In case of eVm question, the id of related data element
+  Attribute: mandatory | Description: Mandatory technical/qualification parameter flag. (1-parameter is mandatory; 0-parameter is optional) | Available from version: 12_2_00
+  Attribute: showUrlAsClickableLink | Description: TextAsUrl technical/qualification parameter flag (1-parameter is yes; 0-parameter is no) | Available from version: JINT 22_03_00
+  Attribute: instruction | Description: Instructional attachment | Available from version: 12_3_00
+  Attribute: paramPos | Description: Progressive number of the parameter inside envelope section | Available from version: 12_3_02
+  Attribute: lobalist/id | Description: Internal identifier of the global list in case of parameter type GLBLIST | Available from version: 12_4_0_02
+  Attribute: lobalist/name | Description: Name of the global list in case of parameter type GLBLIST | Available from version: 12_4_0_02
+  Attribute: lobalist/title | Description: Title of the global list in case of parameter type GLBLIST | Available from version: 12_4_0_02
+  Attribute: dataElementName | Description: In case of eVm question, the name of related data element | Available from version: JINT_20_02_01
+hash: sha256:32f0598a713288db428c6292a18015c1abbb7da4eb023a69d16eda2b4558e0da
+words: 214
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Qualification and Technical Envelope: Parameter [Export RfX method]"
+  section_path: 2.3.4.8
+  page: 7
+  lang: en
+  prev: U.DOC0171.0438
+  next: U.DOC0171.0440
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - id
+      - JA internal identifier of the parameter (referenced in offers)
+      - ""
+    - - name
+      - Question title
+      - ""
+    - - description
+      - Question description
+      - ""
+    - - type
+      - Question type
+      - ""
+    - - allowedValues
+      - In case of choice/multi-choice list of allowed values
+      - ""
+    - - dataElementId
+      - In case of eVm question, the id of related data element
+      - ""
+    - - mandatory
+      - Mandatory technical/qualification parameter flag. (1-parameter is mandatory; 0-parameter is optional)
+      - 12_2_00
+    - - showUrlAsClickableLink
+      - TextAsUrl technical/qualification parameter flag (1-parameter is yes; 0-parameter is no)
+      - JINT 22_03_00
+    - - instruction
+      - Instructional attachment
+      - 12_3_00
+    - - paramPos
+      - Progressive number of the parameter inside envelope section
+      - 12_3_02
+    - - lobalist/id
+      - Internal identifier of the global list in case of parameter type GLBLIST
+      - 12_4_0_02
+    - - lobalist/name
+      - Name of the global list in case of parameter type GLBLIST
+      - 12_4_0_02
+    - - lobalist/title
+      - Title of the global list in case of parameter type GLBLIST
+      - 12_4_0_02
+    - - dataElementName
+      - In case of eVm question, the name of related data element
+      - JINT_20_02_01
+  block: 1
+  blocks: 1

@@ -1,0 +1,27 @@
+id: U.DOC0167.0471
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: procedura
+text: |-
+  Supplier Sync process flow when JA is Principal Supplier Management System
+  1. Step 1) the supplier is created or updated in JA using the relevant data-model provided in the webservice call
+  2. Step2) supplier data are synched between JA and JI, i.e. the supplier is created or updated in JI taking the latest version of JA data
+  3. Step 3) JI supplier data are enriched with the information provided in the webservice call (JI specific data-model)
+hash: sha256:cbccfe068507e17416256cd3cf0067faf9f6ced86d0f46acf03beb29aded26e4
+words: 76
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: Supplier Sync process flow when JA is Principal Supplier Management System
+  section_path: 2.1.6.2
+  page: 6
+  lang: en
+  prev: U.DOC0167.0470
+  next: U.DOC0167.0472
+steps:
+  - Step 1) the supplier is created or updated in JA using the relevant data-model provided in the webservice call
+  - Step2) supplier data are synched between JA and JI, i.e. the supplier is created or updated in JI taking the latest version of JA data
+  - Step 3) JI supplier data are enriched with the information provided in the webservice call (JI specific data-model)
+procedure:
+  title: Supplier Sync process flow when JA is Principal Supplier Management System

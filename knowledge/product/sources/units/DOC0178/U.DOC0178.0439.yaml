@@ -1,0 +1,108 @@
+id: U.DOC0178.0439
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: obligationId | Description: Unique identifier for the obligation.
+  Attribute: obligationName | Description: Name of the obligation
+  Attribute: obligationDescription | Description: Description of the obligation
+  Attribute: obligationCancelledTime | Description: If the obligation was cancelled, date and time of the cancellation
+  Attribute: requiresDocumentation | Description: Indicates whether documentation is (true) or is not (false) required to fulfill the obligation.
+  Attribute: Cancelled | Description: Indicates whether the obligation has (true) or has not (false) been cancelled
+  Attribute: promptToCreateInvoice | Description: Indicates whether the obligation is (true) or is not (false) to prompt the user to create an invoice when the obligation is marked as Complete
+  Attribute: useTimeZoneContract | Description: Indicates whether the obligation is (true) or is not (false) to use the contract time zone.
+  Attribute: obligationTagList | Description: Container for obligation tag information.
+  See section “ObligationTag [Export]” below.
+  Attribute: obligationScheduledEvent | Description: Obligation scheduled event information.
+  See section “ObligationScheduledEvent [Export]” below
+  Attribute: obligationOccurrenceList | Description: Container for obligation occurrence information.
+  See section “ObligationOccurrence [Export]” below
+  Attribute: obligationOwnerList | Description: Container for obligation owner information.
+  See section “ObligationOwner [Export]” below
+  Attribute: obligationLeadTimeList | Description: Container for obligation lead time information.
+  See section “ObligationLeadTime [Export]” below
+  Attribute: obligationUseScorecard | Description: Indicates whether the obligation is (true) or is not (false) to use a scorecard.
+  The default setting is false. | Available from version: JINT_20_03_00
+  Attribute: obligationScorecardList | Description: Container for obligation scorecard information.
+  See section “ObligationScorecard {Export}” below. | Available from version: JINT_20_03_00
+hash: sha256:ba030d211f2267a8438152dba0ff72b9a99212029affe6e83bb64f5be07c2a03
+words: 248
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Obligation [Export]
+  section_path: 2.3.3.13
+  page: 90
+  lang: en
+  prev: U.DOC0178.0438
+  next: U.DOC0178.0440
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - obligationId
+      - Unique identifier for the obligation.
+      - ""
+    - - obligationName
+      - Name of the obligation
+      - ""
+    - - obligationDescription
+      - Description of the obligation
+      - ""
+    - - obligationCancelledTime
+      - If the obligation was cancelled, date and time of the cancellation
+      - ""
+    - - requiresDocumentation
+      - Indicates whether documentation is (true) or is not (false) required to fulfill the obligation.
+      - ""
+    - - Cancelled
+      - Indicates whether the obligation has (true) or has not (false) been cancelled
+      - ""
+    - - promptToCreateInvoice
+      - Indicates whether the obligation is (true) or is not (false) to prompt the user to create an invoice when the obligation is marked as Complete
+      - ""
+    - - useTimeZoneContract
+      - Indicates whether the obligation is (true) or is not (false) to use the contract time zone.
+      - ""
+    - - obligationTagList
+      - |-
+        Container for obligation tag information.
+        See section “ObligationTag [Export]” below.
+      - ""
+    - - obligationScheduledEvent
+      - |-
+        Obligation scheduled event information.
+        See section “ObligationScheduledEvent [Export]” below
+      - ""
+    - - obligationOccurrenceList
+      - |-
+        Container for obligation occurrence information.
+        See section “ObligationOccurrence [Export]” below
+      - ""
+    - - obligationOwnerList
+      - |-
+        Container for obligation owner information.
+        See section “ObligationOwner [Export]” below
+      - ""
+    - - obligationLeadTimeList
+      - |-
+        Container for obligation lead time information.
+        See section “ObligationLeadTime [Export]” below
+      - ""
+    - - obligationUseScorecard
+      - |-
+        Indicates whether the obligation is (true) or is not (false) to use a scorecard.
+        The default setting is false.
+      - JINT_20_03_00
+    - - obligationScorecardList
+      - |-
+        Container for obligation scorecard information.
+        See section “ObligationScorecard {Export}” below.
+      - JINT_20_03_00
+  block: 1
+  blocks: 1

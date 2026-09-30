@@ -1,0 +1,134 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-17
+section: 2.3.1.12
+section_title: PaymentInfo [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:CREDITCARD
+    label: creditCard
+    labels:
+      - creditCard
+    technical_name: CREDITCARD
+    section: 2.3.1.12
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Credit card information.
+      See section “CreditCard [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.12
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: creditCard
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TERMS
+    label: terms
+    labels:
+      - terms
+    technical_name: TERMS
+    section: 2.3.1.12
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Payment terms
+      See section “Terms [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.12
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: terms
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PAYMENTTYPE
+    label: paymentType
+    labels:
+      - paymentType
+    technical_name: PAYMENTTYPE
+    section: 2.3.1.12
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Payment option for the PO:
+      Unknown
+      PO
+      BlanketPO
+      ContractBlanketPO
+      PCard
+      GhostCard
+      VCard
+      ExacTrac
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.12
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: paymentType
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CUSTOMPAYMENTTERM
+    label: customPaymentTerm
+    labels:
+      - customPaymentTerm
+    technical_name: CUSTOMPAYMENTTERM
+    section: 2.3.1.12
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Custom Payment Term.
+      See section “CustomPaymentTerm [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.12
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: customPaymentTerm
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1207

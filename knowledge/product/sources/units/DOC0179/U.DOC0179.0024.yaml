@@ -1,0 +1,37 @@
+id: U.DOC0179.0024
+doc: S.STD.XSC.DOC.0179
+doc_id: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+type: riga-tabella-campi
+text: |-
+  Attribute: useAsAnMBUChartOfAccountsField | Mandatory (Y/N): N | Description: Indicates whether the custom field is (1) or is not (0) to be added to the MBU Chart-of-Accounts list. When this field is set to 1, you can uniquely assign the custom field to a specific business unit in your organization.
+  Note: Setting this field to 0 for a parent custom field also sets it to false for all its children.
+hash: sha256:6ade7fa599677e59bbf4a725f654fa1e8621d05853bb688aad5a63b1414a324a
+words: 69
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0179
+  chapter: JI Custom Field web-service
+  section: CustomField [Custom Field Import method]
+  section_path: 2.1.1.2
+  page: 5
+  lang: en
+  prev: U.DOC0179.0023
+  next: U.DOC0179.0025
+row:
+  table: 0
+  row: 6
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - useAsAnMBUChartOfAccountsField
+    - N
+    - |-
+      Indicates whether the custom field is (1) or is not (0) to be added to the MBU Chart-of-Accounts list. When this field is set to 1, you can uniquely assign the custom field to a specific business unit in your organization.
+      Note: Setting this field to 0 for a parent custom field also sets it to false for all its children.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

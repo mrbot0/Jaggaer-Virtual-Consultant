@@ -1,0 +1,41 @@
+id: U.DOC0169.0056
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: budgetDate | Mandatory (Y/N): N | Description: Date at which a spend amount can be counted against the budget.
+  If a BudgetDate is specified at the header level, all lines will use that date.
+  If no BudgetDate is provided at the header or line level in a completed workflow, the workflow completion date is used.
+  If no BudgetDate is provided at the header or line level in a pending workflow, the current date/time is used.
+hash: sha256:0f28f0ad056ef06326b1bbd85067b98815791f0cec4635eb6ab4da7d299e77e5
+words: 76
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Purchase Requisition Header [PR Import]
+  section_path: 2.1.1.3
+  page: 11
+  lang: en
+  prev: U.DOC0169.0055
+  next: U.DOC0169.0057
+row:
+  table: 0
+  row: 18
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - budgetDate
+    - N
+    - |-
+      Date at which a spend amount can be counted against the budget.
+      If a BudgetDate is specified at the header level, all lines will use that date.
+      If no BudgetDate is provided at the header or line level in a completed workflow, the workflow completion date is used.
+      If no BudgetDate is provided at the header or line level in a pending workflow, the current date/time is used.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

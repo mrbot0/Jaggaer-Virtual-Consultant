@@ -1,0 +1,39 @@
+id: U.DOC0167.0289
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: active | Mandatory (Y/N): N | Description: Indicates whether the PCard payment method is (true) or is not (false) active. | Mapping on Jaggaer One data model and notes: Valid only when the payment method type field is set to “po”.
+  Values: (true | false)
+hash: sha256:9601b211e2aa4b3c24e26e4c59d6ab0225080d73de3d083b2623f1a547cf8d29
+words: 46
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/paymentMethod/poPaymentMethod/pCardPayment
+  section_path: 2.1.1.70
+  page: 5
+  lang: en
+  prev: U.DOC0167.0288
+  next: U.DOC0167.0290
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - active
+    - N
+    - Indicates whether the PCard payment method is (true) or is not (false) active.
+    - |-
+      Valid only when the payment method type field is set to “po”.
+      Values: (true | false)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,41 @@
+id: U.DOC0182.0250
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: operationCode | Mandatory (Y/N): Y | Description: Code of the operation. It accepts following value:
+  withdraw: purchase request is withdrawn.
+  reject: purchase request is completely rejected
+  update: purchase request is to be update by adding provided attachment data
+hash: sha256:ba66c294c544be1b7eddc7c323bdedf8ac738f0871dfaa469dd978029c603a0c
+words: 39
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Main request structure [PR Update]
+  section_path: 2.2.1.1
+  page: 25
+  lang: en
+  prev: U.DOC0182.0249
+  next: U.DOC0182.0251
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - operationCode
+    - Y
+    - |-
+      Code of the operation. It accepts following value:
+      withdraw: purchase request is withdrawn.
+      reject: purchase request is completely rejected
+      update: purchase request is to be update by adding provided attachment data
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

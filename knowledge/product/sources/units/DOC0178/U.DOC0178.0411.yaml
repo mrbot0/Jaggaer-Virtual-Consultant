@@ -1,0 +1,114 @@
+id: U.DOC0178.0411
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "Component Filter: EPROCUREMENT | Description: Contract Eprocurement information | Possible values: “CODES_GROUP”: to extract information about Eprocurement codes group (if any) “CODES_GROUP_SPLIT”: to extract information about Eprocurement codes group split (if any) “ADMINISTRATIVE_FEE”: to extract information about Eprocurement administrative fee (if any) “POCLAUSE”: to extract information about Eprocurement related order clause (if any) “APPLIES_TO”: to extract information about Eprocurement applies to data (if any) “GOODS_AND_SERVICES”: to extract information about Eprocurement goods and service (if any) “PAYMENT_TERMS”: to extract information about Eprocurement payment terms (if any) Component Filter: PRODUCT_LINE | Description: Contract Sourcing Product Line Items information Component Filter: SERVICE_LINE | Description: Contract Sourcing Service Line Items information Component Filter: MANAGER | Description: Contract Manager user information Component Filter: STAKEHOLDER | Description: Contract Stakeholder user information Component Filter: INVOICE_APPROVERS | Description: Contract Invoice Approvers information Component Filter: ADDITIONAL_DETAILS | Description: Contract Additional Details information Component Filter: NOTIFICATION | Description: Contract Notification information Component Filter: ADVANCE_NOTICE | Description: Contract Notification Advance Notice information Component Filter: SPEND_TIER | Description: Contract Notification Spend Tier information Component Filter: NOTIFICATION_TIER | Description: Contract Notification Notification Tier information Component Filter: CONTRACT_FAMILY | Description: Relationship information from the current Contract and other contracts Component Filter: CONSORTIUM | Description: Contract Consortium Settings information Component Filter: ATTACHMENT | Description: Contract Attachment information Component Filter: COMMODITY_CODE | Description: Contract Commodity Code information Component Filter: SALESFORCE_FIELDS | Description: SalesForce Fields information. Available from JINT_20_03_01"
+hash: sha256:f47b974f3f224ad51d8b50c2ba5ffef163b58435359ac3a48920a99e5b131745
+words: 232
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Component filters [Export]
+  section_path: 2.3.1
+  page: 74
+  lang: en
+  prev: U.DOC0178.0410
+  next: U.DOC0178.0412
+table:
+  table: 0
+  headers:
+    - Component Filter
+    - Description
+    - Possible values
+  rows:
+    - - DATES_RENEWAL
+      - Contract Dates renewal information
+      - ""
+    - - DATES_REVIEW
+      - Contract Dates review information
+      - ""
+    - - DATES_TERMINATION
+      - Contract Dates scheduled termination information
+      - ""
+    - - PARTIES
+      - Contract first and secondary parties information
+      - ""
+    - - CUSTOM_FIELD
+      - Contract custom field information
+      - ""
+    - - SIGNER
+      - Contract signer information
+      - ""
+    - - OBLIGATION
+      - Contract Obligation information
+      - |-
+        “TAG”: to extract information about obligation tag components (if any)
+        “SCHEDULED_EVENT”: to extract information about obligation scheduled events (if any)
+        “OCCURRENCE”: to extract information about obligation occurrences (if any)
+        “OCCURRENCE_ATTACHMENT”: extract information about obligation occurrences and enrich them with obligation occurrence attachments informatin.
+        “OWNER”: to extract information about obligation owners (if any)
+        “LEAD_TIME”: to extract information about obligation lead time information
+        “SCORECARD”: to extract information about obligation scorecard (if any).
+    - - EPROCUREMENT
+      - Contract Eprocurement information
+      - |-
+        “CODES_GROUP”: to extract information about Eprocurement codes group (if any)
+        “CODES_GROUP_SPLIT”: to extract information about Eprocurement codes group split (if any)
+        “ADMINISTRATIVE_FEE”: to extract information about Eprocurement administrative fee (if any)
+        “POCLAUSE”: to extract information about Eprocurement related order clause (if any)
+        “APPLIES_TO”: to extract information about Eprocurement applies to data (if any)
+        “GOODS_AND_SERVICES”: to extract information about Eprocurement goods and service (if any)
+        “PAYMENT_TERMS”: to extract information about Eprocurement payment terms (if any)
+    - - PRODUCT_LINE
+      - Contract Sourcing Product Line Items information
+      - ""
+    - - SERVICE_LINE
+      - Contract Sourcing Service Line Items information
+      - ""
+    - - MANAGER
+      - Contract Manager user information
+      - ""
+    - - STAKEHOLDER
+      - Contract Stakeholder user information
+      - ""
+    - - INVOICE_APPROVERS
+      - Contract Invoice Approvers information
+      - ""
+    - - ADDITIONAL_DETAILS
+      - Contract Additional Details information
+      - ""
+    - - NOTIFICATION
+      - Contract Notification information
+      - ""
+    - - ADVANCE_NOTICE
+      - Contract Notification Advance Notice information
+      - ""
+    - - SPEND_TIER
+      - Contract Notification Spend Tier information
+      - ""
+    - - NOTIFICATION_TIER
+      - Contract Notification Notification Tier information
+      - ""
+    - - CONTRACT_FAMILY
+      - Relationship information from the current Contract and other contracts
+      - ""
+    - - CONSORTIUM
+      - Contract Consortium Settings information
+      - ""
+    - - ATTACHMENT
+      - Contract Attachment information
+      - ""
+    - - COMMODITY_CODE
+      - Contract Commodity Code information
+      - ""
+    - - SALESFORCE_FIELDS
+      - |-
+        SalesForce Fields information.
+        Available from JINT_20_03_01
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

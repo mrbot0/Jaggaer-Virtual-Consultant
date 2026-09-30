@@ -1,0 +1,31 @@
+id: U.DOC0137.0046
+doc: S.STD.XSC.DOC.0137
+doc_id: workflow-po-static-and-dynamic-guidelines-pdf-982cc3b9
+type: procedura
+text: |-
+  This rule shows some interesting concepts
+  1. !(Document.CustomFieldValues("Manual Purchase Order") in {"true"})
+  2. This shows that the rule is looking at a Custom Field value at the documen t level.
+  3. The rule is looking to see if the value of the Manual Purchase Order Custom Field has a value of true .
+  4. Notice the ! in front of this rule. If you see ! at the beginning of any rule, then a document will only stop if that rule IS NOT true. In th is case, as long as the Manual Purchase Order is not true , the document will stop here.
+  5. && - When you see two "and" symbols like this (&&) that means that the rule following the preceding rule MUST also be true. This allows customers to require several cr iteria in order for a document to stop. Many && can be used in a given activity.
+hash: sha256:d02b5e8a96116667daa71b14037634c7563c49a6aaff1c711ca32b77b3a94423
+words: 153
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0137
+  chapter: Spend Director Special ization For Solutions Consultants
+  section: Spend Director Special ization For Solutions Consultants
+  section_path: p5
+  page: 5
+  lang: en
+  prev: U.DOC0137.0045
+  next: U.DOC0137.0047
+steps:
+  - '!(Document.CustomFieldValues("Manual Purchase Order") in {"true"})'
+  - This shows that the rule is looking at a Custom Field value at the documen t level.
+  - The rule is looking to see if the value of the Manual Purchase Order Custom Field has a value of true .
+  - Notice the ! in front of this rule. If you see ! at the beginning of any rule, then a document will only stop if that rule IS NOT true. In th is case, as long as the Manual Purchase Order is not true , the document will stop here.
+  - '&& - When you see two "and" symbols like this (&&) that means that the rule following the preceding rule MUST also be true. This allows customers to require several cr iteria in order for a document to stop. Many && can be used in a given activity.'
+procedure:
+  title: This rule shows some interesting concepts

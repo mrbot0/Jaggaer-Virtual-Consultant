@@ -1,0 +1,122 @@
+id: U.DOC0177.0522
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: tabella
+text: "Only when JA is Principal SM. | Operators: Date filtering accepts following operators: EQUAL: auction last update date must be equal to provided value NOTEQUAL: any auction whose last update date is different from provided value GREATER_THAN: any auction whose last update date is equal or greater than provided value LESS_THAN: any auction whose last update date is lower or than provided value Date value must be expressed in the form yyyy-MM-dd or yyyy-MM-dd HH:mm:ss.SSS Z eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100 Condition Filter: JI_lastUpdateDate | Description: Date and time supplier information was last updated in JI platform | Operators: Date filtering accepts following operators: EQUAL: auction last update date must be equal to provided value NOTEQUAL: any auction whose last update date is different from provided value GREATER_THAN: any auction whose last update date is equal or greater than provided value LESS_THAN: any auction whose last update date is lower or than provided value Date value must be expressed in the form yyyy-MM-dd or yyyy-MM-dd HH:mm:ss.SSS Z eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100 Condition Filter: JI_InternalId | Description: JI internal supplier id | Operators: The filters accept following operators: • EQUAL: value must be equal to provided value • NOTEQUAL: value is different from provided value • IN: value matches any of provided values • NOT_IN: value does not matches any of provided values Condition Filter: JI_ERPNumber | Description: JI ERP Number Condition Filter: JI_ThirdPartyRefNumber | Description: JI Third Party Ref Number Condition Filter: awarded | Description: YES NO YES_INCLUDE_OFFLINE NO_INCLUDE_OFFLINE Only when JA is Principal SM | Operators: YES if a supplier has been successful in at least one negotiation in JA (offline negotiation EXCLUDED). NO if a supplier has not been successful in any negotiation in JA (offline negotiation EXCLUDED)."
+hash: sha256:ea9d714d47be35a392f155cf8d6c5ab53426ba8c1aa06ed327132133d074d78a
+words: 293
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: Main Condition Filters
+  section_path: 2.2.2.1
+  page: 109
+  lang: en
+  prev: U.DOC0177.0521
+  next: U.DOC0177.0523
+table:
+  table: 0
+  headers:
+    - Condition Filter
+    - Description
+    - Operators
+  rows:
+    - - j1id
+      - J1 supplier id
+      - |-
+        The filters accept following operators:
+        EQUAL: value must be equal to provided value
+        NOTEQUAL: value is different from provided value
+        IN: value matches any of provided values
+        NOT_IN: value does not matches any of provided values
+        ISNULL: value is null (not available for j1id filter)
+        NOTNULL: value is not null (not available for j1id filter)
+    - - extuniquecode
+      - Supplier ext unique code (as defined in JA) only when JA is principal SM
+      - ""
+    - - externalcode
+      - Supplier ext code (as defined in JA) only when JA is principal SM
+      - ""
+    - - fiscalcode
+      - Supplier fiscal code (as defined in JA)
+      - ""
+    - - vat
+      - Supplier VAT (as defined in JA)
+      - ""
+    - - euvat
+      - Supplier EU VAT (as defined in JA)
+      - ""
+    - - DANDBCODE
+      - Supplier Dun&Bradstreet number (as defined in JA)
+      - ""
+    - - lastUpdateDate
+      - Date and time supplier information was last updated
+      - |-
+        Date filtering accepts following operators:
+        EQUAL: auction last update date must be equal to provided value
+        NOTEQUAL: any auction whose last update date is different from provided value
+        GREATER_THAN: any auction whose last update date is equal or greater than provided value
+        LESS_THAN: any auction whose last update date is lower or than provided value
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+    - - JA_lastUpdateDate
+      - Date and time supplier information was last updated in JA platform. Only when JA is Principal SM.
+      - |-
+        Date filtering accepts following operators:
+        EQUAL: auction last update date must be equal to provided value
+        NOTEQUAL: any auction whose last update date is different from provided value
+        GREATER_THAN: any auction whose last update date is equal or greater than provided value
+        LESS_THAN: any auction whose last update date is lower or than provided value
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+    - - JI_lastUpdateDate
+      - Date and time supplier information was last updated in JI platform
+      - |-
+        Date filtering accepts following operators:
+        EQUAL: auction last update date must be equal to provided value
+        NOTEQUAL: any auction whose last update date is different from provided value
+        GREATER_THAN: any auction whose last update date is equal or greater than provided value
+        LESS_THAN: any auction whose last update date is lower or than provided value
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+    - - JI_InternalId
+      - JI internal supplier id
+      - |-
+        The filters accept following operators:
+        • EQUAL: value must be equal to provided value
+        • NOTEQUAL: value is different from provided value
+        • IN: value matches any of provided values
+        • NOT_IN: value does not matches any of provided values
+    - - JI_ERPNumber
+      - JI ERP Number
+      - ""
+    - - JI_ThirdPartyRefNumber
+      - JI Third Party Ref Number
+      - ""
+    - - awarded
+      - |-
+        YES
+        NO
+        YES_INCLUDE_OFFLINE
+        NO_INCLUDE_OFFLINE
+        Only when JA is Principal SM
+      - |-
+        YES if a supplier has been successful in at least one negotiation in JA (offline negotiation EXCLUDED).
+        NO if a supplier has not been successful in any negotiation in JA (offline negotiation EXCLUDED).
+        YES_INCLUDE_OFFLINE if a supplier has been successful in at least one negotiation in JA (offline negotiation INCLUDED).
+        NO_INCLUDE_OFFLINE if a supplier has not been successful in any negotiation in JA (offline negotiation INCLUDED).
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 3

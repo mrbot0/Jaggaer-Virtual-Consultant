@@ -1,0 +1,69 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-25
+section: 2.3.1.22
+section_title: SplittableFieldSetGroup [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:SPLITTABLEFIELDINDEXSET
+    label: splittableFieldIndexSet
+    labels:
+      - splittableFieldIndexSet
+    technical_name: SPLITTABLEFIELDINDEXSET
+    section: 2.3.1.22
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of splittable Field Index Set object.
+      See section “SplittableFieldIndexSet [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.22
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.22#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: splittableFieldIndexSet
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SPLITTABLEFIELDSET
+    label: splittableFieldSet
+    labels:
+      - splittableFieldSet
+    technical_name: SPLITTABLEFIELDSET
+    section: 2.3.1.22
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for Splirttable field set object.
+      See section “SplittableFieldSet [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.22
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.22#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: splittableFieldSet
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 895

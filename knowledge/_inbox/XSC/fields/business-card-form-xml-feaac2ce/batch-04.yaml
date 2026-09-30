@@ -1,0 +1,155 @@
+document: business-card-form-xml-feaac2ce
+scope: XSC
+batch: batch-04
+section: campi-4
+section_title: Campi — Personal Information
+part: 1
+parts: 1
+rows:
+  - key: tech:NAME
+    label: Name
+    labels:
+      - Name
+    technical_name: NAME
+    section: campi-4
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=40 · id=10003 · tipo=userdefined
+    sources:
+      - document: business-card-form-xml-feaac2ce
+        section: campi-4
+        source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Name
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:TITLE
+    label: Title
+    labels:
+      - Title
+    technical_name: TITLE
+    section: campi-4
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10004 · tipo=userdefined
+    sources:
+      - document: business-card-form-xml-feaac2ce
+        section: campi-4
+        source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Title
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DEPARTMENT
+    label: Department
+    labels:
+      - Department
+    technical_name: DEPARTMENT
+    section: campi-4
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10005 · tipo=userdefined
+    sources:
+      - document: business-card-form-xml-feaac2ce
+        section: campi-4
+        source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Department
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDRESS
+    label: Address
+    labels:
+      - Address
+    technical_name: ADDRESS
+    section: campi-4
+    type: TextArea
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaRows=5;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=40 · id=10006 · tipo=userdefined
+    sources:
+      - document: business-card-form-xml-feaac2ce
+        section: campi-4
+        source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Address
+        type: TextArea
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:EMAIL
+    label: email
+    labels:
+      - email
+    technical_name: EMAIL
+    section: campi-4
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10007 · tipo=userdefined
+    sources:
+      - document: business-card-form-xml-feaac2ce
+        section: campi-4
+        source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: email
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1356

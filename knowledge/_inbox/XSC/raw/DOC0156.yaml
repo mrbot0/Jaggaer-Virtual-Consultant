@@ -1,0 +1,1530 @@
+doc: S.STD.XSC.DOC.0156
+scope: XSC
+extracted_at: 2026-09-30T04:31:30.115Z
+tier: T0
+stats:
+  units: 587
+  extracted_units: 42
+  document_candidates: 0
+  needs_llm: 24
+  t0_complete: 18
+  by_candidate:
+    FLD: 34
+    GLS: 2
+    KEY: 1
+    residuo: 1
+    INV: 4
+  residue_marked: 1
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 9430
+  sessions:
+    - n: 1
+      tokens: 9430
+      batches: 2
+      items: 24
+      batch_items:
+        - - R.DOC0156.0014
+          - R.DOC0156.0112
+          - R.DOC0156.0117
+          - R.DOC0156.0140
+          - R.DOC0156.0146
+          - R.DOC0156.0157
+          - R.DOC0156.0204
+          - R.DOC0156.0218
+          - R.DOC0156.0220
+          - R.DOC0156.0251
+          - R.DOC0156.0276
+          - R.DOC0156.0281
+          - R.DOC0156.0300
+          - R.DOC0156.0365
+          - R.DOC0156.0417
+          - R.DOC0156.0430
+          - R.DOC0156.0496
+          - R.DOC0156.0504
+          - R.DOC0156.0506
+          - R.DOC0156.0518
+        - - R.DOC0156.0524
+          - R.DOC0156.0532
+          - R.DOC0156.0535
+          - R.DOC0156.0564
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0156.0007
+    source_unit: U.DOC0156.0007
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Implementation Teams and Processes
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: By the end of this session, you
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0007
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0156.0014
+    source_unit: U.DOC0156.0014
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Configure Solutions
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0156.0014
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 112
+  - raw_id: R.DOC0156.0089
+    source_unit: U.DOC0156.0089
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Integration Build Strategy
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Best Practice
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0089
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0156.0099
+    source_unit: U.DOC0156.0099
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Connectivity
+    page: 54
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: In the case that the customer
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0099
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0156.0108
+    source_unit: U.DOC0156.0108
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "SSO: SAML 2.0"
+    page: 59
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Functional requirements for user profile
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0108
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0156.0110
+    source_unit: U.DOC0156.0110
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0156
+    section: "SSO: SAML 2.0"
+    page: 59
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - GLS
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      term: Ensure that username
+      definition: the same in ERP (Employee ID?)
+      aliases: []
+      lang: en
+      source_unit: U.DOC0156.0110
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0156.0112
+    source_unit: U.DOC0156.0112
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "SSO: LoginXML"
+    page: 60
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0112
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0156.0115
+    source_unit: U.DOC0156.0115
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0156
+    section: "SSO: LoginXML"
+    page: 60
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - GLS
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      term: Ensure that username
+      definition: the same as ERP
+      aliases: []
+      lang: en
+      source_unit: U.DOC0156.0115
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0156.0117
+    source_unit: U.DOC0156.0117
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Custom Field Import (Account Code Import)
+    page: 61
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0117
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 17
+  - raw_id: R.DOC0156.0120
+    source_unit: U.DOC0156.0120
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Custom Field Import (Account Code Import)
+    page: 61
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: CF values
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0120
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0156.0121
+    source_unit: U.DOC0156.0121
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Custom Field Import (Account Code Import)
+    page: 61
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Approvers
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0121
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0156.0125
+    source_unit: U.DOC0156.0125
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Advanced Dynamic Workflow (ADW) Import
+    page: 62
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: Identify data source for the ADW rules that
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0125
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0156.0126
+    source_unit: U.DOC0156.0126
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Advanced Dynamic Workflow (ADW) Import
+    page: 62
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: Functional workflow requirements
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0126
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0156.0127
+    source_unit: U.DOC0156.0127
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Advanced Dynamic Workflow (ADW) Import
+    page: 62
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - KEY
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: Master data (approvers, accounting fields, etc.)
+      modality: vincolo-esterno
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: KEY.cross_system
+      confidence: 0.85
+      signals:
+        - vincolo-esterno
+      source_unit: U.DOC0156.0127
+      reason:
+        kind: integration
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0156.0138
+    source_unit: U.DOC0156.0138
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Purchase Order Export
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Allows for follow-on processes that
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0138
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0156.0140
+    source_unit: U.DOC0156.0140
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Purchase Order Export
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0140
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 18
+  - raw_id: R.DOC0156.0146
+    source_unit: U.DOC0156.0146
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Invoice/Credit Memo Export
+    page: 66
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0146
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 17
+  - raw_id: R.DOC0156.0157
+    source_unit: U.DOC0156.0157
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: TSM Supplier Export
+    page: 68
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: the record is added to ERP
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0157
+      mandatory:
+        kind: conditional
+        when: the record is added to ERP
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 21
+  - raw_id: R.DOC0156.0158
+    source_unit: U.DOC0156.0158
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: TSM Supplier Export
+    page: 68
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: What supplier information
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0158
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0156.0172
+    source_unit: U.DOC0156.0172
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: TSM Supplier Import
+    page: 69
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: Customer
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0172
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0156.0204
+    source_unit: U.DOC0156.0204
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Team Introductions
+    page: 86
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0156.0204
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0156.0218
+    source_unit: U.DOC0156.0218
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: All Spend, All Processes, ONE Platform
+    page: 89
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0218
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 43
+  - raw_id: R.DOC0156.0219
+    source_unit: U.DOC0156.0219
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: All Spend, All Processes, ONE Platform
+    page: 89
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.55
+    extraction:
+      subject: Jaggaer One platform
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0219
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 124
+  - raw_id: R.DOC0156.0220
+    source_unit: U.DOC0156.0220
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: All Spend, All Processes, ONE Platform
+    page: 89
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0220
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 71
+  - raw_id: R.DOC0156.0251
+    source_unit: U.DOC0156.0251
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "In Scope: Supplier Onboarding & Profile"
+    page: 96
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0251
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0156.0276
+    source_unit: U.DOC0156.0276
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "In Scope: Supplier Management"
+    page: 97
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0276
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 29
+  - raw_id: R.DOC0156.0281
+    source_unit: U.DOC0156.0281
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "In Scope: Sourcing"
+    page: 98
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0281
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0156.0300
+    source_unit: U.DOC0156.0300
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "In Scope: Sourcing+ & Auctions"
+    page: 99
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0300
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0156.0365
+    source_unit: U.DOC0156.0365
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "In Scope: Savings Management"
+    page: 107
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0365
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 17
+  - raw_id: R.DOC0156.0417
+    source_unit: U.DOC0156.0417
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: BPC Offering Details
+    page: 123
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0156.0417
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0156.0430
+    source_unit: U.DOC0156.0430
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Professional Services’ Implementation Process
+    page: 127
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0430
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0156.0496
+    source_unit: U.DOC0156.0496
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: Managing Releases
+    page: 159
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: ambiguous
+      reason: modalità deontica non determinata (obbligo, facolta-in-contrasto, obbligo e facoltà in contrasto)
+    candidates: []
+    type_hint:
+      candidates: []
+      outcome: null
+      score: null
+    extraction:
+      subject: null
+      modality: ambiguo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: residue
+      confidence: 0.3
+      signals:
+        - obbligo
+        - facolta-in-contrasto
+        - obbligo e facoltà in contrasto
+      source_unit: U.DOC0156.0496
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 94
+  - raw_id: R.DOC0156.0504
+    source_unit: U.DOC0156.0504
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "Product Release Library: library.jaggaer.com"
+    page: 162
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0504
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 56
+  - raw_id: R.DOC0156.0505
+    source_unit: U.DOC0156.0505
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "Product Release Library: library.jaggaer.com"
+    page: 162
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Call up the Snapshot and show how it
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0505
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 94
+  - raw_id: R.DOC0156.0506
+    source_unit: U.DOC0156.0506
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "Product Release Library: library.jaggaer.com"
+    page: 162
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0506
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 78
+  - raw_id: R.DOC0156.0511
+    source_unit: U.DOC0156.0511
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "Admins: New Release Checklist"
+    page: 163
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a35
+      - INV
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: Integration testing
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0156.0511
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0156.0518
+    source_unit: U.DOC0156.0518
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "Admins: New Release Checklist"
+    page: 164
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0518
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 55
+  - raw_id: R.DOC0156.0524
+    source_unit: U.DOC0156.0524
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "Finding Help: In Context Help"
+    page: 166
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a37
+      - INV
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0156.0524
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 68
+  - raw_id: R.DOC0156.0528
+    source_unit: U.DOC0156.0528
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "Finding Help: Online Searchable Help"
+    page: 167
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a38
+      - INV
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: There
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0156.0528
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 94
+  - raw_id: R.DOC0156.0532
+    source_unit: U.DOC0156.0532
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "Finding Help: Online Searchable Help"
+    page: 168
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0156.0532
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 91
+  - raw_id: R.DOC0156.0535
+    source_unit: U.DOC0156.0535
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: "Finding Help: Menu Search and Site Map"
+    page: 169
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a40
+      - INV
+    type_hint:
+      candidates: *a40
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0156.0535
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 68
+  - raw_id: R.DOC0156.0564
+    source_unit: U.DOC0156.0564
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0156
+    section: JAGGAER Indirect Configuration Certifications
+    page: 180
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0156.0564
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 102

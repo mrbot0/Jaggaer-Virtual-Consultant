@@ -1,0 +1,74 @@
+id: U.DOC0178.0444
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: cancelled | Description: Indicates whether the occurrence has (true) or has not (false) been cancelled.
+  Attribute: occurrenceKey | Description: Identifier for the occurrence, in the following format:
+  ObligationId-OccurrenceIteration
+  For example, if the ObligationId is 12345 and the OccurrenceIteration is 3 (that is, the third occurrence of the obligation), the OccurrenceKey is 12345-3.
+  Attribute: occurrenceIteration | Description: Iteration number for the occurrence (number of times the obligation has recurred).
+  One (1) indicates the first occurrence of the obligation.
+  Attribute: occurrenceCompletedDate | Description: Date and time the occurrence was actually completed
+  Attribute: occurrenceDueDate | Description: Date and time the occurrence is due, as specified by the user
+  Attribute: occurrenceCalculatedDueDate | Description: Date and time the occurrence is due, calculated by the CLM solution based on the frequency settings of the obligation
+  Attribute: occurrenceNotes | Description: Freeform text field providing additional details about the occurrence
+  Attribute: occurrenceCompletedByUser | Description: Username of the user who marked the obligation as Complete
+  Attribute: obligationAttachmentList | Description: Container for obligation attachments.
+  See section “Attachment [Export]” below
+hash: sha256:1cdf492aa09706f9eb9388dab58cad19d9a5d4809a634688e8dbe652a93a3bce
+words: 178
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ObligationOccurrence [Export]
+  section_path: 2.3.3.17
+  page: 96
+  lang: en
+  prev: U.DOC0178.0443
+  next: U.DOC0178.0445
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - cancelled
+      - Indicates whether the occurrence has (true) or has not (false) been cancelled.
+      - ""
+    - - occurrenceKey
+      - |-
+        Identifier for the occurrence, in the following format:
+        ObligationId-OccurrenceIteration
+        For example, if the ObligationId is 12345 and the OccurrenceIteration is 3 (that is, the third occurrence of the obligation), the OccurrenceKey is 12345-3.
+      - ""
+    - - occurrenceIteration
+      - |-
+        Iteration number for the occurrence (number of times the obligation has recurred).
+        One (1) indicates the first occurrence of the obligation.
+      - ""
+    - - occurrenceCompletedDate
+      - Date and time the occurrence was actually completed
+      - ""
+    - - occurrenceDueDate
+      - Date and time the occurrence is due, as specified by the user
+      - ""
+    - - occurrenceCalculatedDueDate
+      - Date and time the occurrence is due, calculated by the CLM solution based on the frequency settings of the obligation
+      - ""
+    - - occurrenceNotes
+      - Freeform text field providing additional details about the occurrence
+      - ""
+    - - occurrenceCompletedByUser
+      - Username of the user who marked the obligation as Complete
+      - ""
+    - - obligationAttachmentList
+      - |-
+        Container for obligation attachments.
+        See section “Attachment [Export]” below
+      - ""
+  block: 1
+  blocks: 1

@@ -1,0 +1,149 @@
+id: U.DOC0070.0049
+doc: S.STD.XSC.DOC.0070
+doc_id: si-perspective-sample-supplier-master-report-jan-ad7146da
+type: tabella
+text: "Look for \"New Column >>\" in column A.: Suppliers are enabled to send EDI Invoices to SciQuest via a standard EDI Invoice transaction in accordance with SciQuest's agreements with each supplier and as provided by each supplier. Invoices must adhere to SciQuest’s established PO#/Matching criteria. LAST UPDATED - August 2018: Portal Invoice Enabled | This tab provides details of the information found in the rest of the tabs in this file. / August 2018: A new column has been added - \"Live Price Plus\" - to the \"SciQuest Supplier Master\" worksheet. Information about this column is available in the list below. Look for \"New Column >>\" in column A.: Suppliers are enabled to utilize the SciQuest Supplier Portal application to create invoices for their customers. This could be either a bulk load or PO to Invoice Flip (POTIF) enablement LAST UPDATED - August 2018: cXML Order Confirmation Enabled | This tab provides details of the information found in the rest of the tabs in this file. / August 2018: A new column has been added - \"Live Price Plus\" - to the \"SciQuest Supplier Master\" worksheet. Information about this column is available in the list below. Look for \"New Column >>\" in column A.: Suppliers are enabled to send confirmation, via cXML message, to the SciQuest Procurement Applications once the PO has been received. Such confirmation appears in PO history. LAST UPDATED - August 2018: cXML Advanced Shipment Notice Enabled | This tab provides details of the information found in the rest of the tabs in this file. / August 2018: A new column has been added - \"Live Price Plus\" - to the \"SciQuest Supplier Master\" worksheet. Information about this column is available in the list below."
+hash: sha256:91e6ecc1e1b34ddddec7418e731dc2e6454260c0d60cf2feb289bc0fef02f2c6
+words: 288
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0070
+  chapter: Instructions
+  section: Instructions
+  section_path: sheet-6
+  page: null
+  lang: en
+  prev: U.DOC0070.0048
+  next: U.DOC0070.0050
+table:
+  table: 0
+  headers:
+    - Instructions
+    - LAST UPDATED - August 2018
+    - 'This tab provides details of the information found in the rest of the tabs in this file. / August 2018: A new column has been added - "Live Price Plus" - to the "SciQuest Supplier Master" worksheet. Information about this column is available in the list below. Look for "New Column >>" in column A.'
+  rows:
+    - - Name of Tab
+      - Name of Column
+      - Details
+    - - SciQuest Supplier Master
+      - null
+      - This tab provides details about all the suppliers in the SciQuest Supplier Network
+    - - null
+      - Supplier Changes
+      - "This column indicates supplier changes such as new additions, deletions and changes in ability. The information, available in the 'Changes' and the 'Changes - Enablements' worksheets is used to populate this column so that such changes are readily visible on the main supplier list. The column is populated with following values - 'New Supplier': Indicated when a supplier has been added to the Supplier Master - 'Deleted Supplier': Indicated when a supplier has been deleted from Supplier Master, the Supplier ID and Supplier Name is provided - along with three informational columns indicating if the supplier had Science Catalog and/or premium enablements and/or punchout enablements - using using strikeout text styles. Such suppliers are sorted at the end of the list. - 'Change in Ability': Indicated when a supplier has added/removed an ability such as cXML PO Confirmation etc. Note that this text is a hyperlink. When clicked, it takes you to the 'Changes - Enablements' worksheet which provides details about the ability change. If a supplier has multiple changes in abilities, they are listed on separate rows in the 'Changes - Enablements' worksheet. The link will take you to first row. The text that provides details about ability change is itself a hyperlink and when clicked, it will bring you back to the main supplier list, on appropriate row."
+    - - null
+      - The Science Catalog
+      - These suppliers' product offerings are available with the license of the Science Catalog or individually via Content Packs, in accordance with SciQuest's agreements with each supplier and as provided by each supplier. Products will be enabled with the List Price provided by the supplier.
+    - - null
+      - Platinum Supplier
+      - This supplier is a Platinum supplier. These suppliers aim to gain insight into customer needs to be able to a deliver superior buying experience to their buyers, whether they have a hosted catalog or punch-out catalog with us.
+    - - null
+      - Premium Hosted Catalogs
+      - Catalog content, client-specific pricing and product availability links (where available and as provided by the supplier) for Premium Hosted Catalog suppliers are available individually via Content Packs and are subject to approval by each supplier.
+    - - null
+      - Punch Out Enabled
+      - These suppliers' product offerings are available individually via Content Packs through a "punch-out" integration from SelectSite to the suppliers' web sites, in accordance with SciQuest's agreements with each supplier and as provided by each supplier.
+    - - null
+      - Punch Out Edit & Inspect
+      - Suppliers are enabled to receive a punch-out setup request message for a cart that was created from previous punch-out session, allowing the end user to "edit and inspect" the cart in a subsequent punch-out session.
+    - - null
+      - PunchOut is Mobile Compatible
+      - The punchout provided by these suppliers is mobile compatible and so can be viewed on mobile devices such as smartphones and tablets.
+    - - null
+      - cXML PO Enabled
+      - These suppliers are enabled to receive their Purchase Orders via a standard cXML PurchaseOrder transaction in accordance with SciQuest's agreements with each supplier and as provided by each supplier.
+    - - null
+      - cXML Invoice Enabled
+      - Suppliers are enabled to send cXML Invoices to SciQuest via a standard cXML Invoice transaction in accordance with SciQuest's agreements with each supplier and as provided by each supplier. Invoices must adhere to SciQuest’s established PO#/Matching criteria.
+    - - null
+      - EDI PO Enabled
+      - These suppliers are enabled to receive their Purchase Orders via a standard EDI PurchaseOrder transaction in accordance with SciQuest's agreements with each supplier and as provided by each supplier.
+    - - null
+      - EDI Invoice Enabled
+      - Suppliers are enabled to send EDI Invoices to SciQuest via a standard EDI Invoice transaction in accordance with SciQuest's agreements with each supplier and as provided by each supplier. Invoices must adhere to SciQuest’s established PO#/Matching criteria.
+    - - null
+      - Portal Invoice Enabled
+      - Suppliers are enabled to utilize the SciQuest Supplier Portal application to create invoices for their customers. This could be either a bulk load or PO to Invoice Flip (POTIF) enablement
+    - - null
+      - cXML Order Confirmation Enabled
+      - Suppliers are enabled to send confirmation, via cXML message, to the SciQuest Procurement Applications once the PO has been received. Such confirmation appears in PO history.
+    - - null
+      - cXML Advanced Shipment Notice Enabled
+      - Suppliers are enabled to send confirmation, via cXML message, to the SciQuest Procurement Applications once the item has been shipped. Such confirmation appears in PO history.
+    - - null
+      - Provides HigherEd List Price
+      - Suppliers have provided a HigherEd List price in addition to or instead of a CorporateList Price.
+    - - null
+      - Available as an E&I Supplier
+      - "SciQuest has a strong partnership with E&I, Educational and Institutional Cooperative Purchasing. The list of Provista suppliers can now be found in the E&I Consortium. The administrator for your organization can see the list of consortium suppliers using the consortium management options in SelectSite/HigherMarkets. The following rules apply: - Members must use the E&I pricing agreements - Members must choose the enablement type (hosted or punch out) that is agreed between the supplier and E&I - E&I will add suppliers to the list over time - E&I has the right to remove suppliers from the list - E&I receives consolidated purchasing information per supplier (not per customer) - E&I receives the list of customers that are making use of the licenses"
+    - - null
+      - Available as an Provista Supplier
+      - Since Nov 2015, this column has been removed as SciQuest no longer has partnership with Provista.
+    - - null
+      - Has a Supplier Portal
+      - Supplier has a SciQuest Portal that lets them manage catalog, integrations settings etc.
+    - - null
+      - SciQuest monitors punch-out availability
+      - SciQuest will proactively ping the supplier's punch-out and confirm availability. If the punch-out is not available, the administrator from each org that uses the punch-out will be emailed a notification.
+    - - null
+      - Availability call
+      - These suppliers are enabled to check the availability of a hosted catalog item from the supplier when shopping within SciQuest
+    - - null
+      - Suppliers Managing Order Failures via Portal
+      - Supplier has been enabled to manage order failure within their SciQuest Portal
+    - - null
+      - Live Price
+      - These suppliers are enabled to check the the current (real-time) price of a hosted catalog item when shopping within SciQuest
+    - - New Column >>
+      - Live Price Plus
+      - "For these suppliers, the JAGGAER Procurement Application can fetch live prices using the standard cXML call used for punchout. NOTE: If the value in the column is 'No', this functionality is not available for this supplier. If the column is blank, JAGGAER has not yet made the evaluation."
+    - - null
+      - Level II Punch-out (Store Level)
+      - Level II allows items that can normally only be found through a punch-out session to display in the search results within SelectSite/HigherMarkets. Although the item cannot be ordered directly from the product search results, this option allows comparison shopping for hosted and punch-out items and the user can click on the link to go to the appropriate punch-out site. With Store Level, when the user clicks the link to go to the punch-out site, they arrive at the top level of the store, not the individual item from the search results.
+    - - null
+      - Level II Punch-out (Category Level)
+      - Level II allows items that can normally only be found through a punch-out session to display in the search results within SelectSite/HigherMarkets. Although the item cannot be ordered directly from the product search results, this option allows comparison shopping for hosted and punch-out items and the user can click on the link to go to the appropriate punch-out site. With Category Level, when the user clicks the link to go to the punch-out site, they arrive at the category of the item from the search results, not the individual item from the search results.
+    - - null
+      - Level II Punch-out (Product Level)
+      - Level II allows items that can normally only be found through a punch-out session to display in the search results within SelectSite/HigherMarkets. Although the item cannot be ordered directly from the product search results, this option allows comparison shopping for hosted and punch-out items and the user can click on the link to go to the appropriate punch-out site. With Product Level, when the user clicks the link to go to the punch-out site, they arrive at individual item from the search results.
+    - - null
+      - Punch-out Digital Signature
+      - Digital signatures confirm the identity of the sender of an electronic document, and ensure that the document was not modified after it was generated by the signer.
+    - - null
+      - Column "AED" to "ZAR"
+      - These columns indicate if the supplier provides prices in the currency indicated by column header. List of 3 letter currency designations and their names are given at the end.
+    - - Products by Verticals
+      - null
+      - This tab provides percentage of products that fall under specific verticals based on categories assigned to the products
+    - - null
+      - SupplierID
+      - SupplierID used by SciQuest to uniquely identify a supplier
+    - - null
+      - Supplier Name
+      - Name of the supplier
+    - - null
+      - The Science Catalog
+      - These suppliers' product offerings are available with the license of the Science Catalog or individually via Content Packs, in accordance with SciQuest's agreements with each supplier and as provided by each supplier. Products will be enabled with the List Price provided by the supplier.
+    - - null
+      - Premium Hosted Catalogs
+      - Catalog content, client-specific pricing and product availability links (where available and as provided by the supplier) for Premium Hosted Catalog suppliers are available individually via Content Packs and are subject to approval by each supplier.
+    - - null
+      - Punch Out Enabled
+      - These suppliers' product offerings are available individually via Content Packs through a "punch-out" integration from SelectSite to the suppliers' web sites, in accordance with SciQuest's agreements with each supplier and as provided by each supplier.
+    - - null
+      - Hosted Products
+      - Indicates number of hosted products in the catalog when the Supplier Master file is generated
+    - - null
+      - Column G to Column R
+      - These columns indicate the number of hosted products that are found in product verticals based on the categories assigned to the products. The column headers are names of the verticals.
+    - - Science Catalog Stats
+      - null
+      - This tab provides additional information about only Science Catalog suppliers
+    - - null
+      - SupplierID
+      - SupplierID used by SciQuest to uniquely identify a supplier
+  block: 1
+  blocks: 3
+part:
+  n: 6
+  of: 15

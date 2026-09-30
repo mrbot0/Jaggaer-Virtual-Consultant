@@ -1,0 +1,95 @@
+id: U.DOC0174.0074
+doc: S.STD.XSC.DOC.0174
+doc_id: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+type: tabella
+text: |-
+  Colonne: Field | Description | Datatype | Notes | UI Default Label (EN)
+  Field: RULE_KEY | Description: Internal file identifier, used to link data from this file with data retrieved from other files. | Notes: Mandatory
+  Field: CF_NAME | Description: Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  Field: CF_VALUE | Description: Value of the custom field. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  Field: WORKFLOW_TYPE | Description: Type of workflow. Must be a valid workflow type licensed to your organization.
+  Possible values:
+  requisition
+  po
+  invoice | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  Field: RULE_MIN_RANGE | Description: Minimum value that triggers the workflow rule. This is a numeric value of up to 15 digits, including up to 4 decimal places. | Datatype: NUMBER(15,4) | Notes: Mandatory
+  Field: RULE_MAX_RANGE | Description: Maximum value that triggers the workflow rule. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  If there is no maximum value, specify an asterisk (*). | Datatype: NUMBER(15,4) | Notes: Mandatory
+  Field: RULE_CURRENCY | Description: Currency type for the range amount.
+  See the Integration Currency Codes document in the JAGGAER Indirect Online Help for valid currency codes. Must be among your organization’s supported currencies. | Datatype: VARCHAR2(3 CHAR)
+  Field: AUTO_APPROVE | Description: Enables the automatic approval of the rule when the user placing the order is an approver for that rule.
+  Possible value: true and false | Datatype: VARCHAR2(5 CHAR)
+hash: sha256:bb4d77e542c62c36072732508fe4bdec82010679c0475790dd188a43c357bc9f
+words: 254
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0174
+  chapter: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0174.0073
+  next: U.DOC0174.0075
+table:
+  table: 8
+  headers:
+    - Field
+    - Description
+    - Datatype
+    - Notes
+    - UI Default Label (EN)
+  rows:
+    - - RULE_KEY
+      - Internal file identifier, used to link data from this file with data retrieved from other files.
+      - ""
+      - Mandatory
+      - ""
+    - - CF_NAME
+      - Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution.
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+    - - CF_VALUE
+      - Value of the custom field.
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+    - - WORKFLOW_TYPE
+      - |-
+        Type of workflow. Must be a valid workflow type licensed to your organization.
+        Possible values:
+        requisition
+        po
+        invoice
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+    - - RULE_MIN_RANGE
+      - Minimum value that triggers the workflow rule. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+      - NUMBER(15,4)
+      - Mandatory
+      - ""
+    - - RULE_MAX_RANGE
+      - |-
+        Maximum value that triggers the workflow rule. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+        If there is no maximum value, specify an asterisk (*).
+      - NUMBER(15,4)
+      - Mandatory
+      - ""
+    - - RULE_CURRENCY
+      - |-
+        Currency type for the range amount.
+        See the Integration Currency Codes document in the JAGGAER Indirect Online Help for valid currency codes. Must be among your organization’s supported currencies.
+      - VARCHAR2(3 CHAR)
+      - ""
+      - ""
+    - - AUTO_APPROVE
+      - |-
+        Enables the automatic approval of the rule when the user placing the order is an approver for that rule.
+        Possible value: true and false
+      - VARCHAR2(5 CHAR)
+      - ""
+      - ""
+  block: 1
+  blocks: 1

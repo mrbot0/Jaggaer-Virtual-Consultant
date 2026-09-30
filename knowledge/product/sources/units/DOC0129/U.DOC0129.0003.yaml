@@ -1,0 +1,108 @@
+id: U.DOC0129.0003
+doc: S.STD.XSC.DOC.0129
+doc_id: workflow-definition-pr-phase-2-xml-5aa16398
+type: tabella
+text: |-
+  Tabella: attività
+  Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella
+  Attività: START | Tipo: start | Selezione cartella: Dummy
+  Attività: Return1 | Tipo: automated | Passo: Return 1 | Cartelle: Auto-Return | Regola: [Document.RequiresRuleGroupEvaluation("Return 1") == true] | Selezione cartella: ExplicitFolder
+  Attività: Return2 | Tipo: automated | Passo: Return 2 | Cartelle: Auto-Return | Regola: [Document.RequiresRuleGroupEvaluation("Return 2") == true] | Selezione cartella: ExplicitFolder
+  Attività: InitialFiscalYearEnd | Tipo: manual | Passo: Initial Fiscal Year End | Regola: [Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true] | Selezione cartella: MultiElementDynamic
+  Attività: Approval-1 | Tipo: manual | Passo: Approval 1 | Regola: [Document.RequiresRuleGroupEvaluation("Approval 1") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 1") == false] | Selezione cartella: MultiElementDynamic
+  Attività: Approval-2 | Tipo: manual | Passo: Approval 2 | Regola: [Document.RequiresRuleGroupEvaluation("Approval 2") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 2") == false] | Selezione cartella: MultiElementDynamic
+  Attività: Approval-3 | Tipo: manual | Passo: Approval 3 | Regola: [Document.RequiresRuleGroupEvaluation("Approval 3") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 3") == false] | Selezione cartella: MultiElementDynamic
+  Attività: EHSCheck | Tipo: manual | Passo: EHS Check | Cartelle: EHS Check | Regola: [Product.Toxin=true] || [Product.Hazardous=true] | Selezione cartella: ExplicitFolder
+  Attività: FinalFiscalYearEnd | Tipo: manual | Passo: Final Fiscal Year End | Regola: [Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true] | Selezione cartella: MultiElementDynamic
+  Attività: CreatePO | Tipo: automated | Passo: Create PO | Cartelle: Create PO | Regola: [Document.RequiresRuleGroupEvaluation("Omit from Create PO") == false] | Selezione cartella: ExplicitFolder
+  Attività: END | Tipo: end | Selezione cartella: Dummy
+hash: sha256:8929b37be6741d9a0bada8fb49ab4093bc7252e07ce372f664b4fbf7a48d7304
+words: 248
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0129
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: en
+  prev: U.DOC0129.0002
+  next: U.DOC0129.0004
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Return1
+      - automated
+      - Return 1
+      - Auto-Return
+      - '[Document.RequiresRuleGroupEvaluation("Return 1") == true]'
+      - ExplicitFolder
+    - - Return2
+      - automated
+      - Return 2
+      - Auto-Return
+      - '[Document.RequiresRuleGroupEvaluation("Return 2") == true]'
+      - ExplicitFolder
+    - - InitialFiscalYearEnd
+      - manual
+      - Initial Fiscal Year End
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true]'
+      - MultiElementDynamic
+    - - Approval-1
+      - manual
+      - Approval 1
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Approval 1") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 1") == false]'
+      - MultiElementDynamic
+    - - Approval-2
+      - manual
+      - Approval 2
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Approval 2") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 2") == false]'
+      - MultiElementDynamic
+    - - Approval-3
+      - manual
+      - Approval 3
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Approval 3") == true && Document.RequiresRuleGroupEvaluation("Omit from Approval 3") == false]'
+      - MultiElementDynamic
+    - - EHSCheck
+      - manual
+      - EHS Check
+      - EHS Check
+      - "[Product.Toxin=true] || [Product.Hazardous=true]"
+      - ExplicitFolder
+    - - FinalFiscalYearEnd
+      - manual
+      - Final Fiscal Year End
+      - ""
+      - '[Document.RequiresRuleGroupEvaluation("Fiscal Year End Hold") == true]'
+      - MultiElementDynamic
+    - - CreatePO
+      - automated
+      - Create PO
+      - Create PO
+      - '[Document.RequiresRuleGroupEvaluation("Omit from Create PO") == false]'
+      - ExplicitFolder
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1

@@ -1,0 +1,53 @@
+id: U.DOC0177.0490
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: tabella
+text: |-
+  Colonne: Field Name | Notes
+  Field Name: j1id | Notes: The identification code of the company in Jaggaer One system.
+  Field Name: extuniquecode | Notes: External and unique identification code (only if JA is the principal system)
+  Field Name: extcode | Notes: External identification code (only if JA is the principal system)
+  Not available for UPDATE or CREATE_UPDATE operation.
+  Field Name: fiscalcode | Notes: Fiscal Code
+  Field Name: vat | Notes: VAT code
+  Field Name: euvat | Notes: European VAT code
+  Field Name: dandb | Notes: Dun & Bradstreet code
+  Field Name: erpNumber | Notes: JI ERP Number used only when JI is Principal.
+hash: sha256:ea7db1b39275ec1a536eea1ee38ad19b408d01fcf004d9cf02f1138bccf2e7f1
+words: 104
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: Company identification strategy
+  section_path: 2.1.6.1
+  page: 101
+  lang: en
+  prev: U.DOC0177.0489
+  next: U.DOC0177.0491
+table:
+  table: 0
+  headers:
+    - Field Name
+    - Notes
+  rows:
+    - - j1id
+      - The identification code of the company in Jaggaer One system.
+    - - extuniquecode
+      - External and unique identification code (only if JA is the principal system)
+    - - extcode
+      - |-
+        External identification code (only if JA is the principal system)
+        Not available for UPDATE or CREATE_UPDATE operation.
+    - - fiscalcode
+      - Fiscal Code
+    - - vat
+      - VAT code
+    - - euvat
+      - European VAT code
+    - - dandb
+      - Dun & Bradstreet code
+    - - erpNumber
+      - JI ERP Number used only when JI is Principal.
+  block: 1
+  blocks: 1

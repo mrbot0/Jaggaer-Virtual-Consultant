@@ -1,0 +1,45 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-44
+section: 2.1.1.69
+section_title: J1Supplier/JISupplierData/locationList/location/paymentMethod/poPaymentMethod/poPayment/poNumberSelection
+part: 1
+parts: 1
+rows:
+  - key: tech:NUMBERWHEEL
+    label: numberWheel
+    labels:
+      - numberWheel
+    technical_name: NUMBERWHEEL
+    section: 2.1.1.69
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.69
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.69#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: numberWheel
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.71
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.71#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: numberWheel
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 728

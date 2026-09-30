@@ -1,0 +1,17 @@
+id: U.DOC0138.0019
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: <Activity name="EH&S Notification"> <ActivityType>notification</ActivityType> <FolderRef name="EH&S Notification" /> <Rule><![CDATA[ [Product.Radioactive = true || Product.RadioactiveMinor = true || Product.HazMat = true || Product.Controlled = true || Product.Toxin = true || Product.SelectAgent = true] ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>
+hash: sha256:d31ff4944a6f0868ef188714a66aebe5090d56d1e703b77f06bf996c568c5307
+words: 35
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: "NOTIFICATION MANAGED THROUGH STATIC WORKFLOW:"
+  section: "NOTIFICATION MANAGED THROUGH STATIC WORKFLOW:"
+  section_path: "4"
+  page: null
+  lang: en
+  prev: U.DOC0138.0018
+  next: U.DOC0138.0020

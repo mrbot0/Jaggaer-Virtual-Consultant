@@ -1,0 +1,78 @@
+document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+scope: XSC
+batch: batch-08
+section: 2.1.1.9
+section_title: ParentCustomFieldValueRef [Error! Reference source not found.]
+part: 1
+parts: 1
+rows:
+  - key: tech:CHILDCUSTOMFIELDVALUESET
+    label: childCustomFieldValueSet
+    labels:
+      - childCustomFieldValueSet
+    technical_name: CHILDCUSTOMFIELDVALUESET
+    section: 2.1.1.9
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or more ChildCustomFieldValueSet.
+      See section
+      ChildCustomFieldValueSet [Custom Field Import method]
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.9#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: childCustomFieldValueSet
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-010
+      functional_section: riferimenti-monte
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ERROR
+    label: error
+    labels:
+      - error
+    technical_name: ERROR
+    section: 2.1.1.9
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or more Error.
+      See section Error [Custom Field Import method]
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.9#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: error
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.11#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: error
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-010
+      functional_section: riferimenti-monte
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 940

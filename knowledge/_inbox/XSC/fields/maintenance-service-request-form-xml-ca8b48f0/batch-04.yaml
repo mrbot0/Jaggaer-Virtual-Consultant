@@ -1,0 +1,40 @@
+document: maintenance-service-request-form-xml-ca8b48f0
+scope: XSC
+batch: batch-04
+section: campi-4
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:INTERNALINSTRUCTIONS
+    label: Instructions
+    labels:
+      - Instructions
+    technical_name: INTERNALINSTRUCTIONS
+    section: campi-4
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=Complete work order request form below.
+      Required fields are in <b>bold</b>.<br><br> In the event of an emergency
+      request, please contact the Facilities Department directly at 659-2200. ·
+      id=10001 · tipo=userdefined
+    sources:
+      - document: maintenance-service-request-form-xml-ca8b48f0
+        section: campi-4
+        source_unit: maintenance-service-request-form-xml-ca8b48f0/campi-4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 719

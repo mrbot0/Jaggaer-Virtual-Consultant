@@ -1,0 +1,17 @@
+id: U.DOC0134.0057
+doc: S.STD.XSC.DOC.0134
+doc_id: workflow-dynamic-guidelines-pdf-4d2d261b
+type: testo
+text: <Activity name="Form Approval"> <ActivityType>manual</ActivityType> <StepRef name="Form Approval" /> <Rule><![CDATA[ Document.RequiresFormTypeApproval() == true ]]></Rule> <FolderSelectionRule>FormType</FolderSelectionRule> <Attribute name="wfActivityHelp"> <AttrValue lang="default">Form type you are using requires review and appr oval</AttrValue> </Attribute> </Activity>
+hash: sha256:18b303f2f5b34ebf2f293066efcfc9234b4bff1397aac0324dde6abf4f6e351c
+words: 29
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0134
+  chapter: Form Type
+  section: Form Type
+  section_path: p12
+  page: 12
+  lang: en
+  prev: U.DOC0134.0056
+  next: U.DOC0134.0058

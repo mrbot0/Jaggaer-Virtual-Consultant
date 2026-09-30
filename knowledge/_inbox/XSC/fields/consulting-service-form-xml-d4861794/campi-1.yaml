@@ -1,0 +1,29 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+section: campi-1
+section_title: Campi — 1. Supplier Information
+genre: tecnica
+rows:
+  - label: fldSupplierInst
+    technical_name: fldSupplierInst
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<i>Select a Supplier by clicking the <B>{Choose
+      Supplier...}</B> link.</i><BR><BR> · id=10013 · tipo=userdefined
+    section: campi-1
+    source_unit: consulting-service-form-xml-d4861794/campi-1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: "100"
+    technical_name: "100"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=100 · tipo=static
+    section: campi-1
+    source_unit: consulting-service-form-xml-d4861794/campi-1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794

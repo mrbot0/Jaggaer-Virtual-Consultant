@@ -1,0 +1,37 @@
+id: U.DOC0178.0079
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: contractId | Mandatory (Y/N): Y for update | Description: Unique Internal identifier of the contract to be updated
+  If you do not provide a contract ID, the CLM solution assumes that you want to create a new contract and verifies that the contractNumber is new
+hash: sha256:3216c154ad835af9d2cdb96fe8fcd2f03f0f24212cb2fdcfff38deb2e8e7fc6c
+words: 46
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: JIContract [Import]
+  section_path: 2.2.1.2
+  page: 19
+  lang: en
+  prev: U.DOC0178.0078
+  next: U.DOC0178.0080
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - contractId
+    - Y for update
+    - |-
+      Unique Internal identifier of the contract to be updated
+      If you do not provide a contract ID, the CLM solution assumes that you want to create a new contract and verifies that the contractNumber is new
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,519 @@
+doc: S.STD.XSC.DOC.0159
+scope: XSC
+extracted_at: 2026-09-30T04:31:33.563Z
+tier: T0
+stats:
+  units: 227
+  extracted_units: 13
+  document_candidates: 0
+  needs_llm: 7
+  t0_complete: 6
+  by_candidate:
+    FLW: 3
+    GLS: 1
+    FLD: 9
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2572
+  sessions:
+    - n: 1
+      tokens: 2572
+      batches: 1
+      items: 7
+      batch_items:
+        - - R.DOC0159.0090
+          - R.DOC0159.0103
+          - R.DOC0159.0105
+          - R.DOC0159.0132
+          - R.DOC0159.0158
+          - R.DOC0159.0179
+          - R.DOC0159.0211
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0159.0090
+    source_unit: U.DOC0159.0090
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: repeat
+          oggetto: Repeat
+          valore: null
+        - n: 2
+          verbo: gather
+          oggetto: Gather
+          valore: null
+        - n: 3
+          verbo: analyse
+          oggetto: Analyse
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0159.0090
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 11
+  - raw_id: R.DOC0159.0092
+    source_unit: U.DOC0159.0092
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - GLS
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Spend Analytics
+      definition: the process of identifying ,
+      aliases: []
+      lang: en
+      source_unit: U.DOC0159.0092
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0159.0103
+    source_unit: U.DOC0159.0103
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0159.0103
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 11
+  - raw_id: R.DOC0159.0105
+    source_unit: U.DOC0159.0105
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0159.0105
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 11
+  - raw_id: R.DOC0159.0132
+    source_unit: U.DOC0159.0132
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0159.0132
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0159.0151
+    source_unit: U.DOC0159.0151
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: email and
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0159.0151
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 5
+  - raw_id: R.DOC0159.0158
+    source_unit: U.DOC0159.0158
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0159.0158
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0159.0179
+    source_unit: U.DOC0159.0179
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 46
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: sso
+          oggetto: for internal users (2-way)
+          valore: null
+        - n: 2
+          verbo: internal
+          oggetto: User Synchronization
+          valore: null
+        - n: 3
+          verbo: supplier
+          oggetto: Synchronization
+          valore: null
+        - n: 4
+          verbo: sourcing
+          oggetto: Request to Draft RFQ
+          valore: null
+        - n: 5
+          verbo: pr
+          oggetto: to Draft RFQ
+          valore: null
+        - n: 6
+          verbo: awarded
+          oggetto: RFQ to PR
+          valore: null
+        - n: 7
+          verbo: awarded
+          oggetto: RFQ/Auction to Draft
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0159.0179
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 53
+  - raw_id: R.DOC0159.0203
+    source_unit: U.DOC0159.0203
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 53
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Instances
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0159.0203
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0159.0205
+    source_unit: U.DOC0159.0205
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 53
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Users
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0159.0205
+    needs_llm: false
+    tokens: 7
+  - raw_id: R.DOC0159.0206
+    source_unit: U.DOC0159.0206
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 53
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Suppliers
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0159.0206
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0159.0211
+    source_unit: U.DOC0159.0211
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 54
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: j1
+          oggetto: Integration with 3rd party services
+          valore: null
+        - n: 2
+          verbo: j1
+          oggetto: Integration with customers’ systems (e.g. ERPs)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0159.0211
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 27
+  - raw_id: R.DOC0159.0219
+    source_unit: U.DOC0159.0219
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0159
+    section: 10/21/2020
+    page: 56
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Currently, JAGGAER
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0159.0219
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 11

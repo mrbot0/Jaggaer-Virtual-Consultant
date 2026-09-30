@@ -1,0 +1,139 @@
+id: U.DOC0180.0089
+doc: S.STD.XSC.DOC.0180
+doc_id: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+type: tabella
+text: |-
+  Colonne: URL | /esop/jint/api/public/ji/v1/itemsmaster/
+  URL: Http Method | /esop/jint/api/public/ji/v1/itemsmaster/: POST
+  URL: Header Parameters | /esop/jint/api/public/ji/v1/itemsmaster/: Authorization bearer XXXX
+  URL: Body | /esop/jint/api/public/ji/v1/itemsmaster/: {
+  "itemMasterItem": [
+  {
+  "active": "true",
+  "itemMasterId": "800",
+  "description": "Laminectomy Arm Cradles (5'' X 24'' X 3'')",
+  "longDescription": "Laminectomy Arm Cradles (5'' X 24'' X 3'')",
+  "searchableKeywords": "Laminectomy Arm Cradle,Laminectomy,Arm Cradle",
+  "unspsc": "42000000",
+  "imageUrl": "http://test.imagesite.com/images/RPL99999M/ALP303.jpg",
+  "manufacturer": {
+  "id": "fqesd",
+  "manufacturerName": [
+  {
+  "value": "Test"
+  }
+  ]
+  },
+  "manufacturerPartNumber": "ALP 303",
+  "supplierItem": [
+  {
+  "unitOfMeasure": "EA",
+  "supplier": {
+  "supplierName": "Ale Locatelli Test 11",
+  "supplierNumber": "JA_160029"
+  },
+  "supplierPartNumber": "ALP 303",
+  "pricing": {
+  "unitPrice": [
+  {
+  "businessUnit": "BusinessUnit1",
+  "currency": "USD"
+  }
+  ]
+  }
+  }
+  ]
+  }
+  ]
+  }
+  URL: Response format | /esop/jint/api/public/ji/v1/itemsmaster/: {
+  "returnCode": "0",
+  "returnMessage": "OK",
+  "responseMessage": {
+  "status": {
+  "statusCode": 200,
+  "statusText": "Success (Counts: Total documents attempted=1, Total documents completed=1. Documents successful without warnings=1)"
+  }
+  }
+  }
+  URL: Return Code | /esop/jint/api/public/ji/v1/itemsmaster/: 200 operation processed. See response content for results
+hash: sha256:62faffa8d3b5972d830169d29666400e6f1dbf9b827eab6de05e2e1991e97f27
+words: 152
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0180
+  chapter: JI Item Master web-service
+  section: Import ItemMaster
+  section_path: 2.3.2.1
+  page: 23
+  lang: en
+  prev: U.DOC0180.0088
+  next: U.DOC0180.0090
+table:
+  table: 0
+  headers:
+    - URL
+    - /esop/jint/api/public/ji/v1/itemsmaster/
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization bearer XXXX
+    - - Body
+      - |-
+        {
+        "itemMasterItem": [
+        {
+        "active": "true",
+        "itemMasterId": "800",
+        "description": "Laminectomy Arm Cradles (5'' X 24'' X 3'')",
+        "longDescription": "Laminectomy Arm Cradles (5'' X 24'' X 3'')",
+        "searchableKeywords": "Laminectomy Arm Cradle,Laminectomy,Arm Cradle",
+        "unspsc": "42000000",
+        "imageUrl": "http://test.imagesite.com/images/RPL99999M/ALP303.jpg",
+        "manufacturer": {
+        "id": "fqesd",
+        "manufacturerName": [
+        {
+        "value": "Test"
+        }
+        ]
+        },
+        "manufacturerPartNumber": "ALP 303",
+        "supplierItem": [
+        {
+        "unitOfMeasure": "EA",
+        "supplier": {
+        "supplierName": "Ale Locatelli Test 11",
+        "supplierNumber": "JA_160029"
+        },
+        "supplierPartNumber": "ALP 303",
+        "pricing": {
+        "unitPrice": [
+        {
+        "businessUnit": "BusinessUnit1",
+        "currency": "USD"
+        }
+        ]
+        }
+        }
+        ]
+        }
+        ]
+        }
+    - - Response format
+      - |-
+        {
+        "returnCode": "0",
+        "returnMessage": "OK",
+        "responseMessage": {
+        "status": {
+        "statusCode": 200,
+        "statusText": "Success (Counts: Total documents attempted=1, Total documents completed=1. Documents successful without warnings=1)"
+        }
+        }
+        }
+    - - Return Code
+      - 200 operation processed. See response content for results
+  block: 1
+  blocks: 1

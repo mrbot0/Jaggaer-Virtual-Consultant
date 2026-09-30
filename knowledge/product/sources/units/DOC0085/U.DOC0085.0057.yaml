@@ -1,0 +1,43 @@
+id: U.DOC0085.0057
+doc: S.STD.XSC.DOC.0085
+doc_id: commodity-codes-setup-docx-3fd557c2
+type: tabella
+text: |-
+  Colonne:  | Tax Flag Action (for Orgs using Tax Estimations) | N/A: No taxable status is associated with this value. Tax Applies: The Taxable flag will be set to TRUE for items with this Commodity Code Tax Exempt: The Taxable flag will be set to FALSE for items with This Commodity Code
+  Tax Flag Action (for Orgs using Tax Estimations): Workflow (dynamic) | N/A: No taxable status is associated with this value. Tax Applies: The Taxable flag will be set to TRUE for items with this Commodity Code Tax Exempt: The Taxable flag will be set to FALSE for items with This Commodity Code: Only available if Org has: “Organization uses dynamic workflow for Commodity Code” enabled
+  Site Configuration > Workflow Setup > General Workflow Settings
+  Workflow for Commodity Codes is imported separately from the Commodity Codes themselves.
+  Tax Flag Action (for Orgs using Tax Estimations): Custom Field Mappings | N/A: No taxable status is associated with this value. Tax Applies: The Taxable flag will be set to TRUE for items with this Commodity Code Tax Exempt: The Taxable flag will be set to FALSE for items with This Commodity Code: Only Available if Org has: “Map Commodity Codes to Custom Field Values (Value List only)” enabled
+  Site Configuration > Hosted Catalog And Ordering Config > Manage Commodity Codes And Mapping
+hash: sha256:7dbc92dfc5f72af450818b7f92dff8cca3ee5494805b1b38716145f4e14ed36e
+words: 221
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0085
+  chapter: commodity-codes-setup-docx-3fd557c2
+  section: "Step 2: Determine “functionality” (if needed) for the Commodity Codes on the list."
+  section_path: 0.4.2
+  page: 9
+  lang: en
+  prev: U.DOC0085.0056
+  next: U.DOC0085.0058
+table:
+  table: 0
+  headers:
+    - ""
+    - Tax Flag Action (for Orgs using Tax Estimations)
+    - "N/A: No taxable status is associated with this value. Tax Applies: The Taxable flag will be set to TRUE for items with this Commodity Code Tax Exempt: The Taxable flag will be set to FALSE for items with This Commodity Code"
+  rows:
+    - - ""
+      - Workflow (dynamic)
+      - |-
+        Only available if Org has: “Organization uses dynamic workflow for Commodity Code” enabled
+        Site Configuration > Workflow Setup > General Workflow Settings
+        Workflow for Commodity Codes is imported separately from the Commodity Codes themselves.
+    - - ""
+      - Custom Field Mappings
+      - |-
+        Only Available if Org has: “Map Commodity Codes to Custom Field Values (Value List only)” enabled
+        Site Configuration > Hosted Catalog And Ordering Config > Manage Commodity Codes And Mapping
+  block: 1
+  blocks: 1

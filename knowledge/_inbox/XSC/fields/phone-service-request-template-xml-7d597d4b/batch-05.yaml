@@ -1,0 +1,261 @@
+document: phone-service-request-template-xml-7d597d4b
+scope: XSC
+batch: batch-05
+section: domande-5
+section_title: Domande — Move Service / Move Service Information
+part: 1
+parts: 1
+rows:
+  - key: tech:285408
+    label: Service Telephone Number
+    labels:
+      - Service Telephone Number
+    technical_name: "285408"
+    section: domande-5
+    type: Numeric Text Box
+    mandatory_text: No
+    allowed_values: []
+    notes: Service Telephone Number
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-5
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Service Telephone Number
+        type: Numeric Text Box
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285409
+    label: Current Building Name
+    labels:
+      - Current Building Name
+    technical_name: "285409"
+    section: domande-5
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Current Building Name
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-5
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Current Building Name
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285410
+    label: Current Building Address (Including Room#)
+    labels:
+      - Current Building Address (Including Room#)
+    technical_name: "285410"
+    section: domande-5
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Current Building Address (Including Room#)
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-5
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-5#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Current Building Address (Including Room#)
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285411
+    label: Current Jack Number
+    labels:
+      - Current Jack Number
+    technical_name: "285411"
+    section: domande-5
+    type: Numeric Text Box
+    mandatory_text: No
+    allowed_values: []
+    notes: Current Jack Number
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-5
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-5#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Current Jack Number
+        type: Numeric Text Box
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285412
+    label: New Building Name
+    labels:
+      - New Building Name
+    technical_name: "285412"
+    section: domande-5
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: New Building Name
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-5
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-5#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: New Building Name
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285413
+    label: New Building Address (Including Room#)
+    labels:
+      - New Building Address (Including Room#)
+    technical_name: "285413"
+    section: domande-5
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: New Building Address (Including Room#)
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-5
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-5#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: New Building Address (Including Room#)
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285414
+    label: New Jack Required?
+    labels:
+      - New Jack Required?
+    technical_name: "285414"
+    section: domande-5
+    type: Yes/No
+    mandatory_text: No
+    allowed_values: []
+    notes: New Jack Required?
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-5
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-5#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: New Jack Required?
+        type: Yes/No
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285415
+    label: Data Activation Required?
+    labels:
+      - Data Activation Required?
+    technical_name: "285415"
+    section: domande-5
+    type: Yes/No
+    mandatory_text: No
+    allowed_values: []
+    notes: Data Activation Required?
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-5
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-5#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: Data Activation Required?
+        type: Yes/No
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285416
+    label: Please specify any Additional Comments for the IT Staff.
+    labels:
+      - Please specify any Additional Comments for the IT Staff.
+    technical_name: "285416"
+    section: domande-5
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Please specify any Additional Comments for the IT Staff.
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-5
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-5#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: Please specify any Additional Comments for the IT Staff.
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2098

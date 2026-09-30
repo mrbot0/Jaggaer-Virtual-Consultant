@@ -1,0 +1,1618 @@
+doc: S.STD.XSC.DOC.0105
+scope: XSC
+extracted_at: 2026-09-30T04:30:47.919Z
+tier: T0
+stats:
+  units: 51
+  extracted_units: 48
+  document_candidates: 6
+  needs_llm: 6
+  t0_complete: 48
+  by_candidate:
+    FLD: 48
+    CFG: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 18000
+  sessions:
+    - n: 1
+      tokens: 18000
+      batches: 3
+      items: 6
+      batch_items:
+        - - R.DOC0105.C001
+          - R.DOC0105.C002
+        - - R.DOC0105.C003
+          - R.DOC0105.C004
+        - - R.DOC0105.C005
+          - R.DOC0105.C006
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0105.0003
+    source_unit: U.DOC0105.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Order Form
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Order Form
+      technical_name: Order Form100
+      type: ItemList
+      mandatory_text: No
+      allowed_values: []
+      notes: Order Form · UserDefinedFieldParamFormListId=248343 · id=10010 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0105.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0105.0004
+    source_unit: U.DOC0105.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Product List
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Visitor's Guide
+      technical_name: Visitor's Guide200
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: "Visitor's Guide · UserDefinedFieldParamHTML=The <b>Visitor's Guide</b> is an extensive introduction to the University; its campus and the city of CollegeTown. It provides helpful and detailed information to newcomers, visitors, prospective students and their parents, prospective faculty and staff as well as Univ. Healthcare visitors. This guide provides campus highlights and its nearby amenities and services. Included in this 8.5 by 11 inch, full-color booklet is an illustrated, color-coded campus map.<b> Price - No Charge</b> Available for PDF download: <a href=\"http://communications.emory.edu/documents/marketing/Visitor_Guide_2011.pdf\">2011 Visitor's Guide</a> · id=10012 · tipo=userdefined"
+      section: campi-2
+      source_unit: U.DOC0105.0004
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 211
+  - raw_id: R.DOC0105.0005
+    source_unit: U.DOC0105.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Product List
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Pocket Map
+      technical_name: Pocket Map 200
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: Pocket Map · UserDefinedFieldParamHTML=The <b>Pocket Map</b> highlights 35 of our most-visited buildings, provides key fact about the University, and features a transportation map on the reverse side. The map is small in size but big in detail, providing a three-dimensional view of campus buildings. Portable and practical, this map is ideal for a quick orientation for campus visitors. For those with mobile devices, included are QR codes linking you to University Mobile and Transloc (the Cliff shuttle app). The map folds down to 2 1/8&quot; x 3 1/4&quot;, with a full size of 12 1/4&quot; x 6 1/4&quot;. <b>Price - [importo]</b> · id=10031 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0105.0005
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 200
+  - raw_id: R.DOC0105.0006
+    source_unit: U.DOC0105.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Product List
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Presentation Folder
+      technical_name: Presentation Folder 200
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: Presentation Folder · UserDefinedFieldParamHTML=The <b>Presentation Folder</b> is a lightweight folder that measures 9 ½ x 12”. Specially designed to present University materials in a very attractive manner; the folder holds letter-sized documents in two inside pockets and has cardholder slots precut. University’s vision statement is imprinted on the left pocket. <b>Price - $.72</b> · id=10033 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0105.0006
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 142
+  - raw_id: R.DOC0105.0007
+    source_unit: U.DOC0105.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Product List
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Campus Map
+      technical_name: Campus Map
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=The <b>Campus Map</b> is an advertising-supported brochure that contains a map of academic buildings, residence halls and parking structures across campus. It also includes a map of colleges and universities in the Atlanta area. This piece measures 4”x9”. <b>Price – No charge</b> · id=10250 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0105.0007
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 117
+  - raw_id: R.DOC0105.0008
+    source_unit: U.DOC0105.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Product List
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Facts and Figures Brochure
+      technical_name: Facts and Figures
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: Facts and Figures Brochure · UserDefinedFieldParamHTML=With impressive economy, the <b>Facts and Figures Brochure </b>provides some of the most commonly requested information about University’s people, schools, and resources—including enrollment, faculty, and staff data, as well as financial and academic support information. The new design features an elegant twenty-page booklet with maps of the Atlanta and Oxford campuses tucked inside the back cover. Additionally, Facts & Figures contains a list of the University's points of distinction along with updated statistical information. <b><font color="red">New Price - [importo]</font></b> · id=10015 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0105.0008
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 207
+  - raw_id: R.DOC0105.0009
+    source_unit: U.DOC0105.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Product List
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Interact with University
+      technical_name: Interact with University
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<font color="red">NEW</font>&nbsp&nbsp<b>Interact with University</b> is a PDF with live links that puts all of the University’s ample news sources at your fingertips. This interactive resource provides you with information about the University wherever you are. Whether you are in your home, office, or on the go, use this tool to find out what’s going at the University. <b>Price - No Charge</b> <a href="http://communications.emory.edu/documents/marketing/interact-live-links.pdf">Download your PDF copy now.</a> · id=10261 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0105.0009
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 174
+  - raw_id: R.DOC0105.0010
+    source_unit: U.DOC0105.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Product List
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Other
+      technical_name: Other
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<b>The images shown below are not to scale. · id=10036 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0105.0010
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 51
+  - raw_id: R.DOC0105.0011
+    source_unit: U.DOC0105.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Supplier Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "100"
+      technical_name: "100"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=100 · tipo=static
+      section: campi-3
+      source_unit: U.DOC0105.0011
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0105.0012
+    source_unit: U.DOC0105.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Supplier Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Special Instructions
+      technical_name: Special Instructions2
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: "Special Instructions · UserDefinedFieldParamHTML=<b>University Marketing Services phone number: 404-727-1987</b><br><br> <b>University Marketing Services email address: [email]</b> · id=10028 · tipo=userdefined"
+      section: campi-3
+      source_unit: U.DOC0105.0012
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 93
+  - raw_id: R.DOC0105.0013
+    source_unit: U.DOC0105.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Other Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Other Information
+      technical_name: Other information
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: Other Information · UserDefinedFieldParamHTML=<b>Please allow five business days for delivery of materials. If you need materials immediately, please call University Marketing Services at 404-727-1987.</b><P> · id=10026 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0105.0013
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 97
+  - raw_id: R.DOC0105.0014
+    source_unit: U.DOC0105.0014
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Other Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department Contact Person
+      technical_name: Department Contact
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Please provide the Departmental Contact person and their phone number. · UserDefinedFieldParamTextBoxSize=30; UserDefinedFieldParamTextBoxMaxLength=40 · id=10027 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0105.0014
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 86
+  - raw_id: R.DOC0105.0015
+    source_unit: U.DOC0105.0015
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Other Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department Contact Phone
+      technical_name: Department Contact Phone
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Department Contact Phone · UserDefinedFieldParamTextBoxSize=30; UserDefinedFieldParamTextBoxMaxLength=10 · id=10034 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0105.0015
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 75
+  - raw_id: R.DOC0105.0016
+    source_unit: U.DOC0105.0016
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — Other Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Special Instructions
+      technical_name: Special Instructions
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true; UserDefinedFieldParamTextAreaRows=3; UserDefinedFieldParamTextBoxMaxLength=200; UserDefinedFieldParamTextAreaCols=27 · id=10035 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0105.0016
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 90
+  - raw_id: R.DOC0105.0017
+    source_unit: U.DOC0105.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Availability Notice 6
+      technical_name: Availability Notice 6
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br> · id=10259 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0017
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0105.0018
+    source_unit: U.DOC0105.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Availability Notice
+      technical_name: Availability Notice
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<font color='red'>This item is currently Sold Out.</font> · id=10253 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0018
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 53
+  - raw_id: R.DOC0105.0019
+    source_unit: U.DOC0105.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Availability Notice2
+      technical_name: Availability Notice2
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br> · id=10254 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0019
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0105.0020
+    source_unit: U.DOC0105.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Availability Notice 3
+      technical_name: Availability Notice 3
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br> · id=10255 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0020
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0105.0021
+    source_unit: U.DOC0105.0021
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Availability Notice 4
+      technical_name: Availability Notice 4
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br> · id=10256 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0021
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0105.0022
+    source_unit: U.DOC0105.0022
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Campus Map
+      technical_name: Campus Map 2011
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: Campus Map · UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageTitle=Campus Map; UserDefinedFieldParamImageUrl=/pics/orgimages/150020/5607.jpg · id=10251 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0022
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 74
+  - raw_id: R.DOC0105.0023
+    source_unit: U.DOC0105.0023
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Facts and Figures
+      technical_name: Facts and Figs
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageTitle=Facts and Figures; UserDefinedFieldParamImageUrl=/pics/orgimages/150020/5906.jpg · id=10252 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0023
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 74
+  - raw_id: R.DOC0105.0024
+    source_unit: U.DOC0105.0024
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Interact Thumb
+      technical_name: Interact Thumb
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageTitle=Interact with University; UserDefinedFieldParamImageUrl=/pics/orgimages/150020/6521.jpg · id=10260 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0024
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 69
+  - raw_id: R.DOC0105.0025
+    source_unit: U.DOC0105.0025
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Facts and Figures Brochure
+      technical_name: Facts and Figures Brochure200
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: Facts and Figures Brochure · id=10013 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0025
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 50
+  - raw_id: R.DOC0105.0026
+    source_unit: U.DOC0105.0026
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Overview Book
+      technical_name: Overview Book200
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: Overview Book · id=10014 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0026
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0105.0027
+    source_unit: U.DOC0105.0027
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Visitor's Guide - SOLD OUT
+      technical_name: Visitor's Guide Image2
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: Visitor's Guide Image2 · UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageTitle=Visitor's Guide; UserDefinedFieldParamImageUrl=/pics/orgimages/150020/5493.jpg · id=10020 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0027
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 84
+  - raw_id: R.DOC0105.0028
+    source_unit: U.DOC0105.0028
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Facts and Figures Brochure
+      technical_name: Facts and Figures Brochure Image2
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: Facts and Figures Brochure · id=10021 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0028
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 51
+  - raw_id: R.DOC0105.0029
+    source_unit: U.DOC0105.0029
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Overview Book
+      technical_name: Overview Book2
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: Overview Book · id=10022 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0029
+      row_ref: t0.r12
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0105.0030
+    source_unit: U.DOC0105.0030
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: University Profile Sheet2
+      technical_name: University Profile Sheet2
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: University Profile Sheet · id=10023 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0030
+      row_ref: t0.r13
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0105.0031
+    source_unit: U.DOC0105.0031
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Presentation Folder2
+      technical_name: Presentation Folder2
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: Presentation Folder · UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageTitle=Presentation Folder; UserDefinedFieldParamImageUrl=/pics/orgimages/150020/2833.jpg · id=10025 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0031
+      row_ref: t0.r14
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 75
+  - raw_id: R.DOC0105.0032
+    source_unit: U.DOC0105.0032
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Pocket Map
+      technical_name: Pocket Map2
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: Pocket Map · UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageTitle=Pocket Map; UserDefinedFieldParamImageUrl=/pics/orgimages/150020/5929.jpg · id=10032 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0032
+      row_ref: t0.r15
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 73
+  - raw_id: R.DOC0105.0033
+    source_unit: U.DOC0105.0033
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: openHTML8
+      technical_name: openHTML8
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10000 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0033
+      row_ref: t0.r16
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0034
+    source_unit: U.DOC0105.0034
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: openHTML1
+      technical_name: openHTML1
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10001 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0034
+      row_ref: t0.r17
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0035
+    source_unit: U.DOC0105.0035
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: openHTML3
+      technical_name: openHTML3
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10002 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0035
+      row_ref: t0.r18
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0036
+    source_unit: U.DOC0105.0036
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: openHTML6
+      technical_name: openHTML6
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10003 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0036
+      row_ref: t0.r19
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0037
+    source_unit: U.DOC0105.0037
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: openform1
+      technical_name: openform1
+      type: ItemList
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10004 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0037
+      row_ref: t0.r20
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0105.0038
+    source_unit: U.DOC0105.0038
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: openimage7
+      technical_name: openimage7
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10005 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0038
+      row_ref: t0.r21
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0039
+    source_unit: U.DOC0105.0039
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: openHTML9
+      technical_name: openHTML9
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10006 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0039
+      row_ref: t0.r22
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0040
+    source_unit: U.DOC0105.0040
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: openHTML2
+      technical_name: openHTML2
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10007 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0040
+      row_ref: t0.r23
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0041
+    source_unit: U.DOC0105.0041
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: openHTML4
+      technical_name: openHTML4
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10008 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0041
+      row_ref: t0.r24
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0042
+    source_unit: U.DOC0105.0042
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: openHTML7
+      technical_name: openHTML7
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10009 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0042
+      row_ref: t0.r25
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0043
+    source_unit: U.DOC0105.0043
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: openimage4
+      technical_name: openimage4
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10011 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0043
+      row_ref: t0.r26
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0044
+    source_unit: U.DOC0105.0044
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: openimage3
+      technical_name: openimage3
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10016 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0044
+      row_ref: t0.r27
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0045
+    source_unit: U.DOC0105.0045
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: openimage6
+      technical_name: openimage6
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10017 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0045
+      row_ref: t0.r28
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0046
+    source_unit: U.DOC0105.0046
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: openimage1
+      technical_name: openimage1
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10018 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0046
+      row_ref: t0.r29
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0047
+    source_unit: U.DOC0105.0047
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a45
+      - FLD
+    type_hint:
+      candidates: *a45
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: openimage2
+      technical_name: openimage2
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10019 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0047
+      row_ref: t0.r30
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0048
+    source_unit: U.DOC0105.0048
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: openimage5
+      technical_name: openimage5
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10024 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0048
+      row_ref: t0.r31
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0049
+    source_unit: U.DOC0105.0049
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a47
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: opentext1
+      technical_name: opentext1
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10029 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0049
+      row_ref: t0.r32
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.0050
+    source_unit: U.DOC0105.0050
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0105
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: openHTML5
+      technical_name: openHTML5
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10030 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0105.0050
+      row_ref: t0.r33
+      genre: tecnica
+      document: S.STD.XSC.DOC.0105
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0105.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0105
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0105.0001
+    facets: &a49
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: VersionDescription
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0105.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0105
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0105.0001
+    facets: *a49
+    extraction:
+      parameter: AdditionalInformation
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0105.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0105
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0105.0001
+    facets: *a49
+    extraction:
+      parameter: SearchableKeyword
+      current_state:
+        value: Marketing Services and Materials
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0105.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0105
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0105.0001
+    facets: *a49
+    extraction:
+      parameter: Title
+      current_state:
+        value: Marketing Services
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0105.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0105
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0105.0001
+    facets: *a49
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Marketing
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0105.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0105
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0105.0001
+    facets: *a49
+    extraction:
+      parameter: LimitSupplierSelection
+      current_state:
+        value: "true"
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

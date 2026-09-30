@@ -1,0 +1,39 @@
+id: U.DOC0178.0264
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: userList | Description: List of users to be explicitly allowed to access this contract.
+  The user is allowed to access the contract even if he or she does not meet the criteria specified in roleList, departmentList and businessUnitList.
+  See section “User [Import]” below
+hash: sha256:82c79d3a154dc128e2cc9152f900b85a739c67f450462f898aae9ff25e9be36c
+words: 44
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: AppliesTo [Import]
+  section_path: 2.2.1.32
+  page: 52
+  lang: en
+  prev: U.DOC0178.0263
+  next: U.DOC0178.0265
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - userList
+    - ""
+    - |-
+      List of users to be explicitly allowed to access this contract.
+      The user is allowed to access the contract even if he or she does not meet the criteria specified in roleList, departmentList and businessUnitList.
+      See section “User [Import]” below
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

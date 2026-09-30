@@ -1,0 +1,77 @@
+id: U.DOC0174.0072
+doc: S.STD.XSC.DOC.0174
+doc_id: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+type: tabella
+text: |-
+  Colonne: Field | Description | Datatype | Notes | UI Default Label (EN)
+  Field: OBJ_KEY | Description: Internal file identifier, used to link data from this file with data retrieved from other files. | Notes: Mandatory
+  Field: CF_NAME | Description: Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  (if master file CFVALUE is not present)
+  Field: CF_VALUE | Description: Value of the custom field. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  (if master file CFVALUE is not present)
+  Field: WORKFLOW_TYPE | Description: Indicates the type of workflow for which the user is an approver.
+  Possible values:
+  requisition
+  po
+  invoice | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+  Field: USERNAME | Description: Approver's username
+  The username must exist in the JAGGAER Indirect Solution. | Datatype: VARCHAR2(100 CHAR) | Notes: Mandatory
+hash: sha256:b10b8e102cba3e7938a3ade7f3d58132b5dd180f056180bdb563b123861a94b5
+words: 144
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0174
+  chapter: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0174.0071
+  next: U.DOC0174.0073
+table:
+  table: 6
+  headers:
+    - Field
+    - Description
+    - Datatype
+    - Notes
+    - UI Default Label (EN)
+  rows:
+    - - OBJ_KEY
+      - Internal file identifier, used to link data from this file with data retrieved from other files.
+      - ""
+      - Mandatory
+      - ""
+    - - CF_NAME
+      - Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution.
+      - VARCHAR2(100 CHAR)
+      - |-
+        Mandatory
+        (if master file CFVALUE is not present)
+      - ""
+    - - CF_VALUE
+      - Value of the custom field.
+      - VARCHAR2(100 CHAR)
+      - |-
+        Mandatory
+        (if master file CFVALUE is not present)
+      - ""
+    - - WORKFLOW_TYPE
+      - |-
+        Indicates the type of workflow for which the user is an approver.
+        Possible values:
+        requisition
+        po
+        invoice
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+    - - USERNAME
+      - |-
+        Approver's username
+        The username must exist in the JAGGAER Indirect Solution.
+      - VARCHAR2(100 CHAR)
+      - Mandatory
+      - ""
+  block: 1
+  blocks: 1

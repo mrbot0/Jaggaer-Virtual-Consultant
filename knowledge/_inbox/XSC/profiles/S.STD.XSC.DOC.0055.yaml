@@ -1,0 +1,86 @@
+id: S.STD.XSC.DOC.0055
+type: DOC
+title: CORSI/JI-2303/JI-PLT_2304_SupplierEmailTemplate.txt
+summary: 'Documento dati-import (tecnica, origine vendor)
+  "CORSI/JI-2303/JI-PLT_2304_SupplierEmailTemplate.txt": 8 unità, 0 tabelle, 0
+  tabelle di campi; scope INV, VEN, ADM; affidabilità 0.48.'
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-2303/JI-PLT_2304_SupplierEmailTemplate.txt
+    sha256: sha256:d6097f377a472e4a17e63bd0ff348a70283dae8ecb6f16b003edbbdbf7bebbf4
+kind: dati-import
+genre: tecnica
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - INV
+  - VEN
+  - ADM
+source:
+  path: CORSI/JI-2303/JI-PLT_2304_SupplierEmailTemplate.txt
+  sha256: sha256:d6097f377a472e4a17e63bd0ff348a70283dae8ecb6f16b003edbbdbf7bebbf4
+  size: 1020
+  format: txt
+  doc_id: ji-plt-2304-supplieremailtemplate-txt-27daf98f
+  doc_key: ji-plt-2304-supplieremailtemplate.txt
+structure:
+  pages: null
+  chapters: 1
+  sections: 1
+  tables: 0
+  figures: 0
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 8
+  by_type:
+    testo: 6
+    regola: 1
+    riferimento: 1
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 8
+  items_produced: 1
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.13
+  last_run: 2026-09-30
+  estimated_tokens: 0
+  sessions_planned: 0

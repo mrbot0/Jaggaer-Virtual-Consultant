@@ -1,0 +1,39 @@
+id: U.DOC0171.0223
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: paramId | Mandatory (Y/N): N | Description: Commercial Parameter identifier | Mapping on JA data model and notes: JA internal identifier of an existing commercial parameter.
+  If provided and the section doesn’t contain a parameter with such identifier, no formula is updated.
+hash: sha256:ba60b33a671105ca66b240d7748372b9abe8be8d2ba4a8c95380cf2c909efa01
+words: 43
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: formula values [Import/Update RfX method]"
+  section_path: 2.1.1.21
+  page: 6
+  lang: en
+  prev: U.DOC0171.0222
+  next: U.DOC0171.0224
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - paramId
+    - N
+    - Commercial Parameter identifier
+    - |-
+      JA internal identifier of an existing commercial parameter.
+      If provided and the section doesn’t contain a parameter with such identifier, no formula is updated.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

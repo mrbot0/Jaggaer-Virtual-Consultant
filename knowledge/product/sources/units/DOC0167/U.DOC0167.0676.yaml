@@ -1,0 +1,139 @@
+id: U.DOC0167.0676
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: operationCode
+  Attribute: deInfoList/deInfo/name | Attribute: Title | Datatype: VARCHAR2(80 CHAR)
+  Attribute: deInfoList/deInfo/type | Attribute: Type | Datatype: NUMBER(1)
+  Attribute: deInfoList/deInfo/values/deValue | Datatype: VARCHAR2(2000 CHAR)
+  Attribute: deInfoList/deInfo/values/@id | Datatype: NUMBER(38)
+  Attribute: deInfoList/deInfo/values/@secureToken | Datatype: VARCHAR2(1000 CHAR)
+  Attribute: deInfoList/deInfo/attachmentValue/filename | Datatype: VARCHAR2(256 CHAR)
+  Attribute: deInfoList/deInfo/attachmentValue/fileDescription | Datatype: VARCHAR2(2000 CHAR)
+  Attribute: deInfoList/deInfo/attachmentValue/fileBase64 | Datatype: BASE64BINARY
+  Attribute: deInfoList/deInfo/defaultLabel | Attribute: Label | Datatype: VARCHAR2(256 CHAR)
+  Attribute: deInfoList/deInfo/defaultLabelLocale | Attribute: Default Language | Datatype: VARCHAR2(5 CHAR)
+  Attribute: deInfoList/deInfo/attachmentExpiryDate | Attribute: Expiring on/Expiring Date | Datatype: DATE
+  Attribute: deInfoList/deInfo/attachmentExpiryDateManagedBy | Attribute: - | Datatype: VARCHAR2(12 CHAR)
+  Attribute: deInfoList/deInfo/attachmentExpiryDateLastUpdateUser/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: deInfoList/deInfo/attachmentExpiryDateLastUpdateUser/code | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: deInfoList/deInfo/attachmentExpiryDateLastUpdateUser/name | Attribute: Expiry Date Last Modified by | Datatype: VARCHAR2(257 CHAR)
+  Attribute: deInfoList/deInfo/attachmentExpiryDateLastUpdateDate | Attribute: Expiry Date Last Modified on | Datatype: DATE
+  Attribute: lastAnswerDate | Attribute: Last Modified | Datatype: DATE
+  Attribute: deValue | Attribute: Current Response to this Question | Datatype: VARCHAR2(2000 CHAR)
+  Attribute: lastAnswerUser/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: lastAnswerUser/code | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: lastAnswerUser/name | Attribute: Last Modified by User | Datatype: VARCHAR2(257 CHAR)
+  Attribute: lastAnswerUser/profile/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: lastAnswerUser/profile/name | Attribute: - | Datatype: VARCHAR2(80 CHAR)
+  Attribute: lastAnswerUser/division/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: lastAnswerUser/division/name | Attribute: - | Datatype: VARCHAR2(80 CHAR)
+  Attribute: lastConfirmedDate | Attribute: Last Confirmed on | Datatype: DATE
+hash: sha256:12109947b0f2e488543177ebce1f587567463dfc95a738d6267b15ac81069313
+words: 243
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: supplier/JAData/dataElements
+  section_path: 2.5.6
+  page: 7
+  lang: en
+  prev: U.DOC0167.0675
+  next: U.DOC0167.0677
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - operationCode
+      - ""
+      - ""
+    - - deInfoList/deInfo/name
+      - Title
+      - VARCHAR2(80 CHAR)
+    - - deInfoList/deInfo/type
+      - Type
+      - NUMBER(1)
+    - - deInfoList/deInfo/values/deValue
+      - ""
+      - VARCHAR2(2000 CHAR)
+    - - deInfoList/deInfo/values/@id
+      - ""
+      - NUMBER(38)
+    - - deInfoList/deInfo/values/@secureToken
+      - ""
+      - VARCHAR2(1000 CHAR)
+    - - deInfoList/deInfo/attachmentValue/filename
+      - ""
+      - VARCHAR2(256 CHAR)
+    - - deInfoList/deInfo/attachmentValue/fileDescription
+      - ""
+      - VARCHAR2(2000 CHAR)
+    - - deInfoList/deInfo/attachmentValue/fileBase64
+      - ""
+      - BASE64BINARY
+    - - deInfoList/deInfo/defaultLabel
+      - Label
+      - VARCHAR2(256 CHAR)
+    - - deInfoList/deInfo/defaultLabelLocale
+      - Default Language
+      - VARCHAR2(5 CHAR)
+    - - deInfoList/deInfo/attachmentExpiryDate
+      - Expiring on/Expiring Date
+      - DATE
+    - - deInfoList/deInfo/attachmentExpiryDateManagedBy
+      - "-"
+      - VARCHAR2(12 CHAR)
+    - - deInfoList/deInfo/attachmentExpiryDateLastUpdateUser/id
+      - "-"
+      - NUMBER(38)
+    - - deInfoList/deInfo/attachmentExpiryDateLastUpdateUser/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - deInfoList/deInfo/attachmentExpiryDateLastUpdateUser/name
+      - Expiry Date Last Modified by
+      - VARCHAR2(257 CHAR)
+    - - deInfoList/deInfo/attachmentExpiryDateLastUpdateDate
+      - Expiry Date Last Modified on
+      - DATE
+    - - lastAnswerDate
+      - Last Modified
+      - DATE
+    - - deValue
+      - Current Response to this Question
+      - VARCHAR2(2000 CHAR)
+    - - lastAnswerUser/id
+      - "-"
+      - NUMBER(38)
+    - - lastAnswerUser/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - lastAnswerUser/name
+      - Last Modified by User
+      - VARCHAR2(257 CHAR)
+    - - lastAnswerUser/profile/id
+      - "-"
+      - NUMBER(38)
+    - - lastAnswerUser/profile/name
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - lastAnswerUser/division/id
+      - "-"
+      - NUMBER(38)
+    - - lastAnswerUser/division/name
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - lastConfirmedDate
+      - Last Confirmed on
+      - DATE
+  block: 1
+  blocks: 1

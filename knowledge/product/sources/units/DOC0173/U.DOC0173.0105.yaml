@@ -1,0 +1,46 @@
+id: U.DOC0173.0105
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: login | Mandatory (Y/N): Y
+  for CREATE
+  N
+  for UPDATE | Description: User login | Mapping on JA data model and notes: It is used in case of UPDATE, ENABLE, DISABLE to identify the sub user to work on.
+  In case of update, it may not match an existing sub user, meaning web service has been called to change this value: in this situation, extCode or userId must be expressed and identify the subUser whose login is to be changed.
+hash: sha256:87ebf72c3cb27ff8aa294e244c996490bff3b5c612c1f461e9e55590a293c343
+words: 81
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: SubUserInfo [Import/update of Company and Users Data]
+  section_path: 4.1.1.6
+  page: 6
+  lang: en
+  prev: U.DOC0173.0104
+  next: U.DOC0173.0106
+row:
+  table: 0
+  row: 8
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - login
+    - |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    - User login
+    - |-
+      It is used in case of UPDATE, ENABLE, DISABLE to identify the sub user to work on.
+      In case of update, it may not match an existing sub user, meaning web service has been called to change this value: in this situation, extCode or userId must be expressed and identify the subUser whose login is to be changed.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,28 @@
+document: jint-development-kit-profile-management-web-serv-35c3a7f6
+scope: XSC
+section: 4.1.1.7
+section_title: Data Element Import Request structure [Import/update of Company and Users Data]
+genre: tecnica
+rows:
+  - label: operationCode
+    technical_name: operationCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Code of requested operation
+    section: 4.1.1.7
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.7#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: dataElements
+    technical_name: dataElements
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: eVm answer container data
+    section: 4.1.1.7
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.7#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6

@@ -1,0 +1,718 @@
+doc: S.STD.XSC.DOC.0097
+scope: XSC
+extracted_at: 2026-09-30T04:30:45.556Z
+tier: T0
+stats:
+  units: 22
+  extracted_units: 18
+  document_candidates: 6
+  needs_llm: 6
+  t0_complete: 18
+  by_candidate:
+    FLD: 18
+    CFG: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 18000
+  sessions:
+    - n: 1
+      tokens: 18000
+      batches: 3
+      items: 6
+      batch_items:
+        - - R.DOC0097.C001
+          - R.DOC0097.C002
+        - - R.DOC0097.C003
+          - R.DOC0097.C004
+        - - R.DOC0097.C005
+          - R.DOC0097.C006
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0097.0003
+    source_unit: U.DOC0097.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Supplier Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "100"
+      technical_name: "100"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=100 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0097.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0097.0004
+    source_unit: U.DOC0097.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Expense Info
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Instructions
+      technical_name: GeneralInstructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=Use this form to request a check be prepared for a previous expenditure. Complete this form, select the supplier above, and attach scanned image of required documentation. Alternately, send documentation to Accounts Payable referencing the submitted requisition number. · id=10000 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0097.0004
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 111
+  - raw_id: R.DOC0097.0005
+    source_unit: U.DOC0097.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Expense Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "111"
+      technical_name: "111"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=111 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0097.0005
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0097.0006
+    source_unit: U.DOC0097.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Expense Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "105"
+      technical_name: "105"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=105 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0097.0006
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0097.0007
+    source_unit: U.DOC0097.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Expense Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "103"
+      technical_name: "103"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=103 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0097.0007
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0097.0008
+    source_unit: U.DOC0097.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Expense Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Unit Price
+      technical_name: Unit Price
+      type: Price
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=10250 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0097.0008
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0097.0009
+    source_unit: U.DOC0097.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Expense Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "117"
+      technical_name: "117"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=117 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0097.0009
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0097.0010
+    source_unit: U.DOC0097.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Expense Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "118"
+      technical_name: "118"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=118 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0097.0010
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0097.0011
+    source_unit: U.DOC0097.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Expense Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "119"
+      technical_name: "119"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=119 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0097.0011
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0097.0012
+    source_unit: U.DOC0097.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Invoice Attachment and Supporting Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "115"
+      technical_name: "115"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=115 · tipo=static
+      section: campi-3
+      source_unit: U.DOC0097.0012
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0097.0013
+    source_unit: U.DOC0097.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Invoice Attachment and Supporting Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Basis of Award
+      technical_name: FlexPull1
+      type: DropdownList
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248316 · id=10002 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0097.0013
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 53
+  - raw_id: R.DOC0097.0014
+    source_unit: U.DOC0097.0014
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Invoice Attachment and Supporting Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "113"
+      technical_name: "113"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=113 · tipo=static
+      section: campi-3
+      source_unit: U.DOC0097.0014
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0097.0015
+    source_unit: U.DOC0097.0015
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Processing Instructions
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Processing Instructions
+      technical_name: ExternalInstructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=Select additional processing options below. Check will be mailed to vendor according to usual address on-file during the next scheduled check run after processing (5-7 days). · id=10003 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0097.0015
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 96
+  - raw_id: R.DOC0097.0016
+    source_unit: U.DOC0097.0016
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Processing Instructions
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Payment Handling
+      technical_name: FlexPull9
+      type: DropdownList
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248317 · id=10005 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0097.0016
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 53
+  - raw_id: R.DOC0097.0017
+    source_unit: U.DOC0097.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Processing Instructions
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Desired Payment Pickup Date
+      technical_name: ContractStartDate
+      type: Date
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10004 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0097.0017
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 46
+  - raw_id: R.DOC0097.0018
+    source_unit: U.DOC0097.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — Processing Instructions
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Additional needs
+      technical_name: ExternalNotes
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=false; UserDefinedFieldParamTextAreaRows=5; UserDefinedFieldParamTextBoxMaxLength=1000; UserDefinedFieldParamTextAreaCols=50 · id=10006 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0097.0018
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 87
+  - raw_id: R.DOC0097.0019
+    source_unit: U.DOC0097.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "112"
+      technical_name: "112"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=112 · tipo=static
+      section: campi-5
+      source_unit: U.DOC0097.0019
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0097.0020
+    source_unit: U.DOC0097.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0097
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "104"
+      technical_name: "104"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=104 · tipo=static
+      section: campi-5
+      source_unit: U.DOC0097.0020
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0097
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0097.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0097
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0097.0001
+    facets: &a19
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: VersionDescription
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0097.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0097
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0097.0001
+    facets: *a19
+    extraction:
+      parameter: AdditionalInformation
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0097.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0097
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0097.0001
+    facets: *a19
+    extraction:
+      parameter: SearchableKeyword
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0097.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0097
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0097.0001
+    facets: *a19
+    extraction:
+      parameter: Title
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0097.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0097
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0097.0001
+    facets: *a19
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Check Request
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0097.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0097
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0097.0001
+    facets: *a19
+    extraction:
+      parameter: LimitSupplierSelection
+      current_state:
+        value: "false"
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

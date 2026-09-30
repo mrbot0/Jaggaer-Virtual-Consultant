@@ -1,0 +1,43 @@
+id: U.DOC0171.0144
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: id | Mandatory (Y/N): N | Description: Parameter identifier | Mapping on JA data model and notes: JA internal identifier of an existing qualification or technical parameter to update;
+  It must not be specified when creating new parameter for both existing or new section;
+  If provided and the section doesn’t contain a parameter with such identifier, error is returned and operation aborted.
+  See §Behavior, section “Envelope Management”.
+hash: sha256:79611acf731fd672fa4e8c1b00a2b4271a113df06770708e06075f750e70a59a
+words: 68
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Qualification and Technical envelope: parameter [Import/Update RfX method]"
+  section_path: 2.1.1.11
+  page: 6
+  lang: en
+  prev: U.DOC0171.0143
+  next: U.DOC0171.0145
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - id
+    - N
+    - Parameter identifier
+    - |-
+      JA internal identifier of an existing qualification or technical parameter to update;
+      It must not be specified when creating new parameter for both existing or new section;
+      If provided and the section doesn’t contain a parameter with such identifier, error is returned and operation aborted.
+      See §Behavior, section “Envelope Management”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

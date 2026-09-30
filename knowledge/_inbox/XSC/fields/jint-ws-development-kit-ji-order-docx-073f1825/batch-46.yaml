@@ -1,0 +1,93 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-46
+section: 2.3.1.47
+section_title: ShippingMethod [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:SHIPPINGMETHODID
+    label: shippingMethodId
+    labels:
+      - shippingMethodId
+    technical_name: SHIPPINGMETHODID
+    section: 2.3.1.47
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique ID of the shipping method
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.47
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.47#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: shippingMethodId
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CARRIERNAME
+    label: carrierName
+    labels:
+      - carrierName
+    technical_name: CARRIERNAME
+    section: 2.3.1.47
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Internal name of the carrier
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.47
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.47#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: carrierName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:METHODNAME
+    label: methodName
+    labels:
+      - methodName
+    technical_name: METHODNAME
+    section: 2.3.1.47
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Internal name of the shipping method.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.47
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.47#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: methodName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1002

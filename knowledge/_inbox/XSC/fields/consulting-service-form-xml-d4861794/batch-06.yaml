@@ -1,0 +1,50 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+batch: batch-06
+section: campi-6
+section_title: Campi — Instructions
+part: 1
+parts: 1
+rows:
+  - key: tech:FLDFORMINSTRUCTIONS
+    label: fldFormInstructions
+    labels:
+      - fldFormInstructions
+    technical_name: FLDFORMINSTRUCTIONS
+    section: campi-6
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=Use this form to submit a request for the
+      purchase of consultant services or maintenance agreements.<br><br>
+      <b>NOTES:</b><br> This request will be routed to your Business Unit's
+      Purchasing Dept. for review prior to a PO being created and sent to the
+      supplier.<br><br> For one-time service requests, use the <b>General
+      Services Request</b> form.<br><br> Fields with <b>bold labels</b>
+      represent required fields.<br><br> <b>When selecting a supplier...</b><br>
+      If the supplier you are looking for is not returned in your search, search
+      for and select <b>NEW SUPPLIER</b>. Then enter as much information as you
+      can provide about the supplier in the Internal Notes section
+      below.<br><br> If you don't know (or don't care) where the service is
+      purchased from, search for and select <b>UNKNOWN SUPPLIER</B>. Purchasing
+      will then do their best to find a source for you. · id=10014 ·
+      tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-6
+        source_unit: consulting-service-form-xml-d4861794/campi-6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fldFormInstructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 889

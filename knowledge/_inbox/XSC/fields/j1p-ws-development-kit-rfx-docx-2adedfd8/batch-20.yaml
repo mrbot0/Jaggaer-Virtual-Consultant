@@ -1,0 +1,172 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-20
+section: 2.1.1.22
+section_title: Suppliers [Import/Update RfX method]
+part: 1
+parts: 1
+rows:
+  - key: tech:COMPANYDATA_ID_COMPANYDATA_CODE_COMPANYDATA_EXTUNIQUECODE
+    label: |-
+      companyData/id
+      companyData/code
+      companyData/extUniqueCode
+    labels:
+      - |-
+        companyData/id
+        companyData/code
+        companyData/extUniqueCode
+    technical_name: COMPANYDATA_ID_COMPANYDATA_CODE_COMPANYDATA_EXTUNIQUECODE
+    section: 2.1.1.22
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Reference to the supplier company:
+      id = JA internal identifier
+      code = external code
+      extUniqueCode = external unique code
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: |-
+          companyData/id
+          companyData/code
+          companyData/extUniqueCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INVITATIONMODECODE
+    label: invitationModeCode
+    labels:
+      - invitationModeCode
+    technical_name: INVITATIONMODECODE
+    section: 2.1.1.22
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Supplier invitation mode:
+      0 = invited;
+      1 = self-invited;
+      2 = invited after close
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: invitationModeCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INVITATIONDATE
+    label: invitationDate
+    labels:
+      - invitationDate
+    technical_name: INVITATIONDATE
+    section: 2.1.1.22
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date-time of invitation/self-invitation
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: invitationDate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LATERESPONSEALLOWED
+    label: lateResponseAllowed
+    labels:
+      - lateResponseAllowed
+    technical_name: LATERESPONSEALLOWED
+    section: 2.1.1.22
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Answer allowed after rfq has been closed:
+      1 = late response allowed;
+      0 = late response not allowed
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: lateResponseAllowed
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INVITED
+    label: Invited
+    labels:
+      - Invited
+    technical_name: INVITED
+    section: 2.1.1.22
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Answer allowed. Usually used in case of reopening of an RFx:
+      1 = supplier can answer (even if RFx was closed and then reopened);
+      0 = supplier, although invited, cannot respond (answer is blocked)
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.22#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Invited
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1485

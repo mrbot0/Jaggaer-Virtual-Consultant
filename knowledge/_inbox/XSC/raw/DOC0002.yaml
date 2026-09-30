@@ -1,0 +1,247 @@
+doc: S.STD.XSC.DOC.0002
+scope: XSC
+extracted_at: 2026-09-30T04:26:59.376Z
+tier: T0
+stats:
+  units: 25
+  extracted_units: 6
+  document_candidates: 0
+  needs_llm: 5
+  t0_complete: 1
+  by_candidate:
+    FLD: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2186
+  sessions:
+    - n: 1
+      tokens: 2186
+      batches: 1
+      items: 5
+      batch_items:
+        - - R.DOC0002.0004
+          - R.DOC0002.0006
+          - R.DOC0002.0015
+          - R.DOC0002.0020
+          - R.DOC0002.0024
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0002.0004
+    source_unit: U.DOC0002.0004
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0002
+    section: SUCCESS STORY
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0002.0004
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 59
+  - raw_id: R.DOC0002.0006
+    source_unit: U.DOC0002.0006
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0002
+    section: SUCCESS STORY
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0002.0006
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 75
+  - raw_id: R.DOC0002.0015
+    source_unit: U.DOC0002.0015
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0002
+    section: JAGGAER.com
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0002.0015
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 134
+  - raw_id: R.DOC0002.0019
+    source_unit: U.DOC0002.0019
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0002
+    section: JOIN THE CONVERSATION
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: “Our franchisees
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0002.0019
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 48
+  - raw_id: R.DOC0002.0020
+    source_unit: U.DOC0002.0020
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0002
+    section: JOIN THE CONVERSATION
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: McDonald's calls for tenders to purchase energy
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0002.0020
+      mandatory:
+        kind: conditional
+        when: McDonald's calls for tenders to purchase energy
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 56
+  - raw_id: R.DOC0002.0024
+    source_unit: U.DOC0002.0024
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0002
+    section: JOIN THE CONVERSATION
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0002.0024
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 112

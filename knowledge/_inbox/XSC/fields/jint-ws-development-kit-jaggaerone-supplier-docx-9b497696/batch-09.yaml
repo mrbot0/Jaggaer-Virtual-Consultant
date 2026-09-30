@@ -1,0 +1,37 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-09
+section: 2.1.1.9
+section_title: J1Supplier/JASupplierData/dataElements/deInfoList
+part: 1
+parts: 1
+rows:
+  - key: tech:DEINFO
+    label: deInfo
+    labels:
+      - deInfo
+    technical_name: DEINFO
+    section: 2.1.1.9
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: eVm answer container data
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.9
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.9#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: deInfo
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 658

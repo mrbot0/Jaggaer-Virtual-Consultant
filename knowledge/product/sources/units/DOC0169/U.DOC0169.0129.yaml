@@ -1,0 +1,43 @@
+id: U.DOC0169.0129
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: useSystemCatalogPrice | Mandatory (Y/N): N | Description: Indicates whether the catalog price in the eProcurement solution is (true) or is not (false) to be used for the PR line charge.
+  If set to false, use the UnitPrice specified in the PR import document. This is the default setting.
+  If set to true, use the catalog price in the eProcurement solution.
+  If the eProcurement solution catalog does not have a price for the item, use the UnitPrice.
+  Required if ProductType is set to Catalog.
+hash: sha256:4a128000afdf796eb520b783627f08b991c95a3a04ef89d20747c7c4dd62009d
+words: 84
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: LineCharges [PR Import]
+  section_path: 2.1.1.17
+  page: 22
+  lang: en
+  prev: U.DOC0169.0128
+  next: U.DOC0169.0130
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - useSystemCatalogPrice
+    - N
+    - |-
+      Indicates whether the catalog price in the eProcurement solution is (true) or is not (false) to be used for the PR line charge.
+      If set to false, use the UnitPrice specified in the PR import document. This is the default setting.
+      If set to true, use the catalog price in the eProcurement solution.
+      If the eProcurement solution catalog does not have a price for the item, use the UnitPrice.
+      Required if ProductType is set to Catalog.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,557 @@
+doc: S.STD.XSC.DOC.0152
+scope: XSC
+extracted_at: 2026-09-30T04:31:19.549Z
+tier: T0
+stats:
+  units: 494
+  extracted_units: 15
+  document_candidates: 0
+  needs_llm: 8
+  t0_complete: 7
+  by_candidate:
+    FLD: 8
+    GLS: 2
+    CFG: 2
+    CFP: 1
+    INV: 1
+    FLW: 1
+  residue_marked: 1
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2936
+  sessions:
+    - n: 1
+      tokens: 2936
+      batches: 1
+      items: 8
+      batch_items:
+        - - R.DOC0152.0096
+          - R.DOC0152.0180
+          - R.DOC0152.0195
+          - R.DOC0152.0253
+          - R.DOC0152.0419
+          - R.DOC0152.0423
+          - R.DOC0152.0448
+          - R.DOC0152.0463
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0152.0016
+    source_unit: U.DOC0152.0016
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0152
+    section: Class Objectives
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: By the end of this session, you
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0152.0016
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0152.0076
+    source_unit: U.DOC0152.0076
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0152
+    section: Basic [segreto]
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - GLS
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Each Workflow
+      definition: a series of Steps that
+      aliases: []
+      lang: en
+      source_unit: U.DOC0152.0076
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0152.0081
+    source_unit: U.DOC0152.0081
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0152
+    section: Basic [segreto]
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: In what order
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0152.0081
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0152.0085
+    source_unit: U.DOC0152.0085
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0152
+    section: Basic [segreto]
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - GLS
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Each activity
+      definition: a snippet of XML code that says something
+      aliases: []
+      lang: en
+      source_unit: U.DOC0152.0085
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0152.0096
+    source_unit: U.DOC0152.0096
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0152
+    section: Basic [segreto]
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0152.0096
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 9
+  - raw_id: R.DOC0152.0113
+    source_unit: U.DOC0152.0113
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0152
+    section: Base User Roles
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: These starter roles
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0152.0113
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0152.0129
+    source_unit: U.DOC0152.0129
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0152
+    section: Suppliers in the JAGGAER Indirect Universe
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Several suppliers
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0152.0129
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0152.0180
+    source_unit: U.DOC0152.0180
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0152
+    section: "CAUTION: Org Classification"
+    page: 53
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: attenzione
+      text: "CAUTION: Org Classification Site Profile Settings"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0152.0180
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0152.0195
+    source_unit: U.DOC0152.0195
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0152
+    section: "Guided Activity:"
+    page: 60
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: Additional Countries
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: a default language
+          valore: null
+        - n: 3
+          verbo: enable
+          oggetto: a default currency
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0152.0195
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 26
+  - raw_id: R.DOC0152.0253
+    source_unit: U.DOC0152.0253
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0152
+    section: "Take it to the Next Level:"
+    page: 84
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0152.0253
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 23
+  - raw_id: R.DOC0152.0364
+    source_unit: U.DOC0152.0364
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0152
+    section: "Be Aware:"
+    page: 121
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - INV
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: nota
+      text: "Note: A client’s Departments may be represented"
+      subject: "Note: A client’s Departments"
+      rules:
+        - text: "Note: A client’s Departments may be represented"
+          modality: facolta
+          consequence: FLD.mandatory
+          mandatory:
+            kind: never
+      author: null
+      date: null
+      source_unit: U.DOC0152.0364
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0152.0419
+    source_unit: U.DOC0152.0419
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0152
+    section: System Emails from the Admin Icon
+    page: 142
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0152.0419
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 8
+  - raw_id: R.DOC0152.0423
+    source_unit: U.DOC0152.0423
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0152
+    section: System Emails from the Admin Icon
+    page: 142
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a13
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.55
+    extraction:
+      kind: tacita
+      text: usually set up at the Role level
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0152.0423
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 8
+  - raw_id: R.DOC0152.0448
+    source_unit: U.DOC0152.0448
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0152
+    section: Supplier Email Templates
+    page: 150
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0152.0448
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 5
+  - raw_id: R.DOC0152.0463
+    source_unit: U.DOC0152.0463
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0152
+    section: "Guided Activity:"
+    page: 156
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: to an ADW Rule
+          valore: null
+        - n: 2
+          verbo: clic
+          oggetto: the question mark by “Document-Level Rules”
+          valore: Document-Level Rules
+        - n: 3
+          verbo: “edit
+          oggetto: in Field Management”
+          valore: Edit in Field Management
+        - n: 4
+          verbo: modify
+          oggetto: field name
+          valore: null
+        - n: 5
+          verbo: save
+          oggetto: and observe the change
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0152.0463
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 44

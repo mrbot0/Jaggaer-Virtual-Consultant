@@ -1,0 +1,59 @@
+id: U.DOC0173.0030
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Data | Insert | Update | Delete
+  Data: Company Data (including “super user”) | Insert: A new company record is created
+  (supplier company) | Update: Company profile data is updated (note: the super user login details cannot be changed) | Delete: In this case the service assigns the value “blocked” to the supplier status.
+  From that moment forward the supplier will not be able to access the platform.
+  The history of actions is maintained in case the supplier account is reactivated at a later time.
+  Data: Classification | Insert: Association of categories to the uploaded supplier | Update: The existing categories are substituted with the new list provided | Delete: Associated category list is deleted for the supplier
+  Data: Users | Insert: Creation of users (other users within the same company) | Update: Update of user data (with particular rules for login, external code and rights) | Delete: [DEPRECATED] Users deletion
+  Any negotiations linked to the user become associated to the Division Manager.
+  Data: Data Element | Insert: Create new seller answers for eVm questions | Update: Updates the seller answers to eVm questions | Delete: N/A. Answers can be deleted via WS using a particular syntax (reset) in the data element value (see DeInfo section)
+hash: sha256:dbef4ccc04b11bf22d61593989296f1679557a6288d05cae8540ac22a39b3edd
+words: 207
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Import/update of Company and Users Data
+  section_path: "4.1"
+  page: 6
+  lang: en
+  prev: U.DOC0173.0029
+  next: U.DOC0173.0031
+table:
+  table: 0
+  headers:
+    - Data
+    - Insert
+    - Update
+    - Delete
+  rows:
+    - - Company Data (including “super user”)
+      - |-
+        A new company record is created
+        (supplier company)
+      - "Company profile data is updated (note: the super user login details cannot be changed)"
+      - |-
+        In this case the service assigns the value “blocked” to the supplier status.
+        From that moment forward the supplier will not be able to access the platform.
+        The history of actions is maintained in case the supplier account is reactivated at a later time.
+    - - Classification
+      - Association of categories to the uploaded supplier
+      - The existing categories are substituted with the new list provided
+      - Associated category list is deleted for the supplier
+    - - Users
+      - Creation of users (other users within the same company)
+      - Update of user data (with particular rules for login, external code and rights)
+      - |-
+        [DEPRECATED] Users deletion
+        Any negotiations linked to the user become associated to the Division Manager.
+    - - Data Element
+      - Create new seller answers for eVm questions
+      - Updates the seller answers to eVm questions
+      - N/A. Answers can be deleted via WS using a particular syntax (reset) in the data element value (see DeInfo section)
+  block: 1
+  blocks: 1

@@ -1,0 +1,17 @@
+id: U.DOC0138.0067
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: This requires a PR Validation integration. In this case, some requisitions could skip this step because there is an “Omit from” Rule Group where administrators could set up rules that would allow some requests to go through without needing validation. If the requisition doesn’t meet that criteria, the system performs a budget check by sending a notification to the ERP and awaiting a response that confirms there’s enough money. It’s typical for organizations that use PR Validation to include it twice in requisition workflow – an ‘initial’ check in the beginning and a ‘final’ check later. Note that the “wait” activity includes a flag that does not allow items to bypass this step by being expedited. If there isn’t enough money, the requisition is returned to the requester. <Activity name="InitialPRValidation"> <ActivityType>notification</ActivityType> <StepRef name="Initial PR Validation" /> <FolderRef name="WaitForPRApprovals" /> <Rule><![CDATA[[Document.RequiresRuleGroupEvaluation("Omit from PR Validation") == false]]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> <Attribute name="wfActivitySupportNote"> <AttrValue lang="default">Validates the PR against the ERP</AttrValue> </Attribute> <Attribute name="wfActivityHelp"> <AttrValue lang="default">Help for PR Validation</AttrValue> </Attribute> </Activity>
+hash: sha256:342432698393a4650c3c8c321c83ab53c99befc0be6ee339dbf4b25adfc01b6f
+words: 165
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: PR VALIDATION
+  section: PR VALIDATION
+  section_path: "17"
+  page: null
+  lang: en
+  prev: U.DOC0138.0066
+  next: U.DOC0138.0068

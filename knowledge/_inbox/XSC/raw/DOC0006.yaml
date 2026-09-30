@@ -1,0 +1,535 @@
+doc: S.STD.XSC.DOC.0006
+scope: XSC
+extracted_at: 2026-09-30T04:27:00.498Z
+tier: T0
+stats:
+  units: 283
+  extracted_units: 14
+  document_candidates: 0
+  needs_llm: 3
+  t0_complete: 11
+  by_candidate:
+    FLD: 10
+    FLW: 1
+    INV: 3
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 1204
+  sessions:
+    - n: 1
+      tokens: 1204
+      batches: 1
+      items: 3
+      batch_items:
+        - - R.DOC0006.0013
+          - R.DOC0006.0052
+          - R.DOC0006.0247
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0006.0013
+    source_unit: U.DOC0006.0013
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "Class Objectives (as seen in the Blueprint):"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0006.0013
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0006.0052
+    source_unit: U.DOC0006.0052
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0006
+    section: "Take it to the Next Level:"
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: familiarize
+          oggetto: yourself with the questions in the JLL Client Business Insights form
+          valore: null
+        - n: 2
+          verbo: read
+          oggetto: through the pdf Case Study for JLL and make note of the things that might apply to the form
+          valore: null
+        - n: 3
+          verbo: fill
+          oggetto: out the JLL Client Business Insights form to the best of your ability using the Case Study
+          valore: null
+        - n: 4
+          verbo: read
+          oggetto: through the other two Case Studies and make note of the different needs and processes that the other two company’s have vs. those of JLL
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0006.0052
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 114
+  - raw_id: R.DOC0006.0059
+    source_unit: U.DOC0006.0059
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "Be Aware:"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - INV
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • User rights
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0006.0059
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0006.0062
+    source_unit: U.DOC0006.0062
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "Be Aware:"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - INV
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • User rights
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0006.0062
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0006.0102
+    source_unit: U.DOC0006.0102
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "JA Instance Components: Modules"
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Collaborators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0006.0102
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0006.0110
+    source_unit: U.DOC0006.0110
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "JA Instance Components: Modules"
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Collaborators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0006.0110
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0006.0118
+    source_unit: U.DOC0006.0118
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "JA Instance Components: Modules"
+    page: 51
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Collaborators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0006.0118
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0006.0126
+    source_unit: U.DOC0006.0126
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "JA Instance Components: Modules"
+    page: 52
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Collaborators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0006.0126
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0006.0134
+    source_unit: U.DOC0006.0134
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "JA Instance Components: Modules"
+    page: 53
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Collaborators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0006.0134
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0006.0224
+    source_unit: U.DOC0006.0224
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "JA Instance Components: Parameters"
+    page: 68
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - INV
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Only accessible through Admin Console – customers
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0006.0224
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0006.0230
+    source_unit: U.DOC0006.0230
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "Initial Instance Activation: User Agreement (UA)"
+    page: 71
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • A user agreement
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0006.0230
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0006.0237
+    source_unit: U.DOC0006.0237
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "Initial Instance Activation: User Agreement (UA)"
+    page: 71
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The UA
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0006.0237
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0006.0247
+    source_unit: U.DOC0006.0247
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "Initial Instance Activation: Code of Conduct"
+    page: 72
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0006.0247
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25
+  - raw_id: R.DOC0006.0255
+    source_unit: U.DOC0006.0255
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0006
+    section: "Initial Instance Activation: What is a JA Homepage?"
+    page: 79
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "• Best practice: The consultant/partner"
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0006.0255
+    needs_llm: false
+    tokens: 28

@@ -1,0 +1,1141 @@
+doc: S.STD.XSC.DOC.0142
+scope: XSC
+extracted_at: 2026-09-30T04:31:03.897Z
+tier: T0
+stats:
+  units: 296
+  extracted_units: 27
+  document_candidates: 0
+  needs_llm: 19
+  t0_complete: 8
+  by_candidate:
+    FLW: 11
+    INV: 2
+    FLD: 13
+    CFP: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 7273
+  sessions:
+    - n: 1
+      tokens: 7273
+      batches: 1
+      items: 19
+      batch_items:
+        - - R.DOC0142.0008
+          - R.DOC0142.0023
+          - R.DOC0142.0059
+          - R.DOC0142.0063
+          - R.DOC0142.0085
+          - R.DOC0142.0087
+          - R.DOC0142.0132
+          - R.DOC0142.0147
+          - R.DOC0142.0150
+          - R.DOC0142.0164
+          - R.DOC0142.0166
+          - R.DOC0142.0168
+          - R.DOC0142.0170
+          - R.DOC0142.0181
+          - R.DOC0142.0185
+          - R.DOC0142.0216
+          - R.DOC0142.0233
+          - R.DOC0142.0246
+          - R.DOC0142.0261
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0142.0008
+    source_unit: U.DOC0142.0008
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: and submit a requisition for approval
+          valore: null
+        - n: 2
+          verbo: approve
+          oggetto: requisitions
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: a change request
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0008
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 30
+  - raw_id: R.DOC0142.0023
+    source_unit: U.DOC0142.0023
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - INV
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0142.0023
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0142.0059
+    source_unit: U.DOC0142.0059
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: items to favorites
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: items to a cart
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0059
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 17
+  - raw_id: R.DOC0142.0063
+    source_unit: U.DOC0142.0063
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0142.0063
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0142.0085
+    source_unit: U.DOC0142.0085
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0142.0085
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 45
+  - raw_id: R.DOC0142.0087
+    source_unit: U.DOC0142.0087
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: buyer
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: punches
+          oggetto: out from ePro to supplier’s customized web site
+          valore: null
+        - n: 2
+          verbo: site
+          oggetto: experience is managed by supplier and configured based on contract negotiated between buyer and supplier
+          valore: null
+        - n: 3
+          verbo: items
+          oggetto: placed into cart and submitted
+          valore: null
+        - n: 4
+          verbo: return
+          oggetto: to JAGGAER cart
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0087
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 65
+  - raw_id: R.DOC0142.0090
+    source_unit: U.DOC0142.0090
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • User
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0142.0090
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0142.0107
+    source_unit: U.DOC0142.0107
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 25
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Org
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0142.0107
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0142.0110
+    source_unit: U.DOC0142.0110
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The customer
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0142.0110
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0142.0112
+    source_unit: U.DOC0142.0112
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Organizations that stock items to have “on-hand”
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0142.0112
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0142.0132
+    source_unit: U.DOC0142.0132
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0142.0132
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0142.0147
+    source_unit: U.DOC0142.0147
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: shop
+          oggetto: for non-catalog items and fill out internal requests
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: them to your cart
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: your cart
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0147
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0142.0150
+    source_unit: U.DOC0142.0150
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review/edit
+          oggetto: field values
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: layout and fields
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0150
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 20
+  - raw_id: R.DOC0142.0164
+    source_unit: U.DOC0142.0164
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: begins
+          oggetto: when the requisition is submitted at checkout
+          valore: null
+        - n: 2
+          verbo: it
+          oggetto: "passes through workflow steps , each of which contain a trigger "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0164
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 37
+  - raw_id: R.DOC0142.0166
+    source_unit: U.DOC0142.0166
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: begins
+          oggetto: when the requisition is submitted at checkout
+          valore: null
+        - n: 2
+          verbo: it
+          oggetto: passes through workflow steps , each of which contain a trigger
+          valore: null
+        - n: 3
+          verbo: when
+          oggetto: the requisition meets the criteria of a step, it triggers an action and then moves on to the next step in the workflow
+          valore: null
+        - n: 4
+          verbo: upon
+          oggetto: the last approval, the purchase order is created
+          valore: null
+      risultato_atteso: Upon the last approval, the purchase order is created.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0166
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 83
+  - raw_id: R.DOC0142.0168
+    source_unit: U.DOC0142.0168
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLD
+      - ERR
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: comportamento-sistema
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states:
+          - PENDING_APPROVAL
+        categories: []
+      consequence: FLD.validation
+      confidence: 0.85
+      signals:
+        - comportamento-sistema
+      source_unit: U.DOC0142.0168
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25
+  - raw_id: R.DOC0142.0170
+    source_unit: U.DOC0142.0170
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLD
+      - ERR
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: comportamento-sistema
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states:
+          - PENDING_APPROVAL
+        categories: []
+      consequence: FLD.validation
+      confidence: 0.85
+      signals:
+        - comportamento-sistema
+      source_unit: U.DOC0142.0170
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 18
+  - raw_id: R.DOC0142.0177
+    source_unit: U.DOC0142.0177
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 45
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - INV
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Rejected requisitions
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0142.0177
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 11
+  - raw_id: R.DOC0142.0181
+    source_unit: U.DOC0142.0181
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 47
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: the requisitions that you can approve
+          valore: null
+        - n: 2
+          verbo: open
+          oggetto: the requisition you just submitted and assign it to yourself
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: the requisition
+          valore: null
+        - n: 4
+          verbo: approve
+          oggetto: the requisition
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0181
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 48
+  - raw_id: R.DOC0142.0185
+    source_unit: U.DOC0142.0185
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0142.0185
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0142.0214
+    source_unit: U.DOC0142.0214
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 55
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Scenario: You"
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0142.0214
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 21
+  - raw_id: R.DOC0142.0216
+    source_unit: U.DOC0142.0216
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 55
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - FLW
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: find
+          oggetto: the POs you have generated
+          valore: null
+        - n: 2
+          verbo: open
+          oggetto: and review the PO
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: a change request
+          valore: null
+        - n: 4
+          verbo: make
+          oggetto: a change to the CR and submit it
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: the approval status of the CR and approve it
+          valore: null
+        - n: 6
+          verbo: view
+          oggetto: the revised PO
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0216
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 58
+  - raw_id: R.DOC0142.0233
+    source_unit: U.DOC0142.0233
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 59
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLW
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: start
+          oggetto: with a dashboard
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: reports
+          valore: null
+        - n: 3
+          verbo: preserve
+          oggetto: answers
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0233
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 21
+  - raw_id: R.DOC0142.0235
+    source_unit: U.DOC0142.0235
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 59
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Business Analytics Dashboards This
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0142.0235
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0142.0238
+    source_unit: U.DOC0142.0238
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 60
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Permissions Business Analytics
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0142.0238
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0142.0246
+    source_unit: U.DOC0142.0246
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 61
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a26
+      - FLW
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: predefined reports
+          valore: null
+        - n: 2
+          verbo: explore
+          oggetto: "Business Anal ytics Dashboards:"
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: the dashboards and see how a report can be created from an existing visualization
+          valore: null
+        - n: 4
+          verbo: run
+          oggetto: some reports
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0246
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 51
+  - raw_id: R.DOC0142.0261
+    source_unit: U.DOC0142.0261
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0142
+    section: Using eProcurement
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a27
+      - FLW
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: the existing budgets
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: and review a budget
+          valore: null
+        - n: 3
+          verbo: shop
+          oggetto: against the budget
+          valore: null
+        - n: 4
+          verbo: submit
+          oggetto: the PR and view the approvals
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: the spend in the budget
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0142.0261
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 46

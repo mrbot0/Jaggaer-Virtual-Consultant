@@ -1,0 +1,87 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.20
+section_title: ObligationOwner [Import]
+genre: tecnica
+rows:
+  - label: obligationOwnerRole
+    technical_name: obligationOwnerRole
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Role of the owner of the obligation
+    section: 2.2.1.20
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.20#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: secondPartyContact
+    technical_name: secondPartyContact
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Contact associated with second party.
+      See section “SecondPartyContact [Import]” below.
+    section: 2.2.1.20
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.20#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: ownerType
+    technical_name: ownerType
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Type of owner to be specified for the obligation.
+      Possible values:
+      ContractManager
+      PickAUser
+      ToBeNamed
+    section: 2.2.1.20
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.20#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationUser
+    technical_name: obligationUser
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Username of an owner or stakeholder for the obligation.
+
+      The owner can be someone who is responsible for meeting the obligation, or
+      responsible for ensuring it is met, or simply interested in knowing when
+      the obligation is met.
+    section: 2.2.1.20
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.20#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: taskNote
+    technical_name: taskNote
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Freeform text field providing additional details about the owner’s task
+      as it relates to the obligation.
+    section: 2.2.1.20
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.20#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: sendNotificationList
+    technical_name: sendNotificationList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation notifications to be sent.
+      See section “SendNotification [Import]” below.
+    section: 2.2.1.20
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.20#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

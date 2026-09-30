@@ -1,0 +1,103 @@
+document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+scope: XSC
+batch: batch-13
+section: 2.3.1.2
+section_title: ValidateReceiptData [Validate]
+part: 1
+parts: 1
+rows:
+  - key: tech:ID
+    label: id
+    labels:
+      - id
+    technical_name: ID
+    section: 2.3.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal identifier of the receipt
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.3.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: id
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:STATUS
+    label: status
+    labels:
+      - status
+    technical_name: STATUS
+    section: 2.3.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Status of the validation request.
+
+      It can assume following value:
+
+      Approved: all receipt elements passed validation
+
+      Rejected: all receipt elements failed validation
+
+      Returned: one or more receipt elements failed the validation, but at least
+      one element or field succeeded
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.3.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: status
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:UPDATERECEIPTNUMBER
+    label: updateReceiptNumber
+    labels:
+      - updateReceiptNumber
+    technical_name: UPDATERECEIPTNUMBER
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: New value of the receipt Number to be used, in substitution of current one.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.3.1.2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: updateReceiptNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1048

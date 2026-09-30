@@ -1,0 +1,29 @@
+id: U.DOC0138.0018
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: procedura
+text: |-
+  This activity covers a couple new ideas
+  1. <ActivityType>automated</ActivityType> : This rule will not require a user to approve the step. This means that the step will complete automatically.
+  2. <FolderRef name="Distribute PO" /> : This line may look familiar from the previous activities, but since this step is automated it works a little bit differently. Automated activities do not use a Shared Workflow folder like manual activities. Instead, automated activities take advantage of workflow robots. Robots are what allow automated steps to function without user approval. You can see what robot is being used for this folder under the Workflow Folder Import/Export tab in workflow setup.
+  3. <Rule><![CDATA[ !(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) && !(Document.CustomFieldValues("Order Category") in {"2 - Confirming - Do Not Distribute"}) ]]></Rule>: This rule shows some interesting concepts:
+  4. !(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) i. This shows that the rule is looking at a Custom Field value at the document level. ii. The rule is looking to see if the value of the Manual Purchase Order Custom Field has a value of true. iii. Notice the ! in front of this rule. If you see ! at the beginning of any rule, then a document will only stop if that rule IS NOT true. In this case, as long as the Manual Purchase Order is not true, the document will stop here. b. && - When you see two "and" symbols like this (&&) that means that the rule following the preceding rule MUST also be true. This allows customers to require several criteria in order for a document to stop. Many && can be used in a given activity.
+hash: sha256:9f6119babbb7955424dc99d394ce8d04f88ecbaef9a55b70cf282929df43d283
+words: 274
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: AUTOMATED STEP THAT REQUIRES MULTIPLE RULE EVALUATIONS
+  section: AUTOMATED STEP THAT REQUIRES MULTIPLE RULE EVALUATIONS
+  section_path: "3"
+  page: null
+  lang: en
+  prev: U.DOC0138.0017
+  next: U.DOC0138.0019
+steps:
+  - "<ActivityType>automated</ActivityType> : This rule will not require a user to approve the step. This means that the step will complete automatically."
+  - '<FolderRef name="Distribute PO" /> : This line may look familiar from the previous activities, but since this step is automated it works a little bit differently. Automated activities do not use a Shared Workflow folder like manual activities. Instead, automated activities take advantage of workflow robots. Robots are what allow automated steps to function without user approval. You can see what robot is being used for this folder under the Workflow Folder Import/Export tab in workflow setup.'
+  - '<Rule><![CDATA[ !(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) && !(Document.CustomFieldValues("Order Category") in {"2 - Confirming - Do Not Distribute"}) ]]></Rule>: This rule shows some interesting concepts:'
+  - '!(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) i. This shows that the rule is looking at a Custom Field value at the document level. ii. The rule is looking to see if the value of the Manual Purchase Order Custom Field has a value of true. iii. Notice the ! in front of this rule. If you see ! at the beginning of any rule, then a document will only stop if that rule IS NOT true. In this case, as long as the Manual Purchase Order is not true, the document will stop here. b. && - When you see two "and" symbols like this (&&) that means that the rule following the preceding rule MUST also be true. This allows customers to require several criteria in order for a document to stop. Many && can be used in a given activity.'
+procedure:
+  title: This activity covers a couple new ideas

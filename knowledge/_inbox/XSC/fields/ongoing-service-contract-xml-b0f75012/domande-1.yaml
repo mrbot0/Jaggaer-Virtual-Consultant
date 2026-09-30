@@ -1,0 +1,74 @@
+document: ongoing-service-contract-xml-b0f75012
+scope: XSC
+section: domande-1
+section_title: Domande — Page 1 / Services Information
+genre: tecnica
+rows:
+  - label: Type of Service Requested
+    technical_name: "39069"
+    type: Dropdown List (Pick One)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Type of Service Requested
+    section: domande-1
+    source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: ongoing-service-contract-xml-b0f75012
+  - label: Service Description
+    technical_name: "39065"
+    type: Text (Multi-Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Service Description
+    section: domande-1
+    source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: ongoing-service-contract-xml-b0f75012
+  - label: Estimated Price
+    technical_name: "39066"
+    type: User Defined
+    mandatory_text: No
+    allowed_values: []
+    notes: Estimated Price
+    section: domande-1
+    source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: ongoing-service-contract-xml-b0f75012
+  - label: Anticipated frequency of service
+    technical_name: "39067"
+    type: Multiple Choice (Pick One)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Anticipated frequency of service
+    section: domande-1
+    source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: ongoing-service-contract-xml-b0f75012
+  - label: If you selected "other" in the field above, please specify the
+      anticipated frequency of service.
+    technical_name: "39068"
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: If you selected "other" in the field above, please specify the
+      anticipated frequency of service.
+    section: domande-1
+    source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: ongoing-service-contract-xml-b0f75012
+  - label: "If other, please specify type:"
+    technical_name: "39513"
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: "If other, please specify type:"
+    section: domande-1
+    source_unit: ongoing-service-contract-xml-b0f75012/domande-1#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: ongoing-service-contract-xml-b0f75012

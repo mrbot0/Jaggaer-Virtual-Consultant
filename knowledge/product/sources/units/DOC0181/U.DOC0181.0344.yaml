@@ -1,0 +1,37 @@
+id: U.DOC0181.0344
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: riga-tabella-campi
+text: |-
+  Attribute: linkedToLineNumber | Mandatory (Y/N): N | Description: For a trade-in line item that is linked to a positive non-trade-in line item, position of the positive non-trade-in line item in the PO document.
+  Valid only if the item is a trade-in
+hash: sha256:25a4fa2ec8946d3b87ed006e63fe8c35d720793739b4ab509ec78bfde0ce0b8e
+words: 41
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: JIOrderLine [Import JIOrder method]
+  section_path: 2.3.1.36
+  page: 88
+  lang: en
+  prev: U.DOC0181.0343
+  next: U.DOC0181.0345
+row:
+  table: 0
+  row: 17
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - linkedToLineNumber
+    - N
+    - |-
+      For a trade-in line item that is linked to a positive non-trade-in line item, position of the positive non-trade-in line item in the PO document.
+      Valid only if the item is a trade-in
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,86 @@
+id: S.STD.XSC.DOC.0150
+type: DOC
+title: Course Workbook
+summary: "Documento training-deck (d'uso, origine vendor) \"Course Workbook\":
+  192 unità, 0 tabelle, 0 tabelle di campi; scope CAT, CON, ADM; affidabilità
+  0.48."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: d'uso
+sources:
+  - file: CORSI/JI-epro_3000/Resources/ePRO-4101_VirtualItemMaster_Workbook.pdf
+    sha256: sha256:e411838c62e1258bef31a8207ce157aa4c1efe63bc4867185d42a638cc4b1a7d
+kind: training-deck
+genre: d'uso
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - CAT
+  - CON
+  - ADM
+source:
+  path: CORSI/JI-epro_3000/Resources/ePRO-4101_VirtualItemMaster_Workbook.pdf
+  sha256: sha256:e411838c62e1258bef31a8207ce157aa4c1efe63bc4867185d42a638cc4b1a7d
+  size: 130865
+  format: pdf
+  doc_id: epro-4101-virtualitemmaster-workbook-pdf-cbfe187e
+  doc_key: epro-4101-virtualitemmaster-workbook.pdf
+structure:
+  pages: 10
+  chapters: 10
+  sections: 10
+  tables: 0
+  figures: 2
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 192
+  by_type:
+    testo: 150
+    regola: 11
+    procedura: 31
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 192
+  items_produced: 42
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.22
+  last_run: 2026-09-30
+  estimated_tokens: 14817
+  sessions_planned: 1

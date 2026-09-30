@@ -1,0 +1,107 @@
+id: U.DOC0173.0191
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: name | Description: User first name
+  Attribute: surName | Description: User last name
+  Attribute: email | Description: User email address
+  Attribute: phoneNumber | Description: User telephone
+  Attribute: mobilePhoneNumber | Description: User mobile phone
+  Attribute: division | Description: User division name
+  Attribute: businessUnit | Description: User business unit (department name)
+  Attribute: rightsProfile | Description: User profile
+  Attribute: login | Description: User login
+  Attribute: language | Description: User default language (built up from language and country codes. E.g.: “en_GB” or “it_IT”)
+  Attribute: timeZone | Description: User time-zone name with GMT offset specification (e.g.: “(GMT 0:00) Western Europe Time, London, Lisbon” )
+  Attribute: extCode | Description: User identification code within the external system
+  Attribute: userId | Description: User internal identifier | Available from version: 12_1_03
+  Attribute: userState | Description: User platform state - 0: enabled; 1: disabled; 2:deleted | Available from version: 12_1_03
+  Attribute: divisionId | Description: Internal id of the user division | Available from version: 12_1_03
+  Attribute: creationDate | Description: User creation date | Available from version: 12_1_03
+  Attribute: lastLoginDate | Description: User last login date | Available from version: 12_1_03
+  Attribute: loginCount | Description: User login count | Available from version: 12_1_03
+  Attribute: lastModTime | Description: User last modification date | Available from version: 12_4_0_02
+  Attribute: timezoneCode | Description: Univocal user time-zone identifier (e.g.: “Europe/London") | Available from version: BA_17_00
+hash: sha256:944e12032162f9e889bfd40fbff635b39ce8c81827db722731d0a26dcabc4c3c
+words: 229
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Sub-user data [Export of Company and Users Data]
+  section_path: 4.2.4.2
+  page: 7
+  lang: en
+  prev: U.DOC0173.0190
+  next: U.DOC0173.0192
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - name
+      - User first name
+      - ""
+    - - surName
+      - User last name
+      - ""
+    - - email
+      - User email address
+      - ""
+    - - phoneNumber
+      - User telephone
+      - ""
+    - - mobilePhoneNumber
+      - User mobile phone
+      - ""
+    - - division
+      - User division name
+      - ""
+    - - businessUnit
+      - User business unit (department name)
+      - ""
+    - - rightsProfile
+      - User profile
+      - ""
+    - - login
+      - User login
+      - ""
+    - - language
+      - "User default language (built up from language and country codes. E.g.: “en_GB” or “it_IT”)"
+      - ""
+    - - timeZone
+      - "User time-zone name with GMT offset specification (e.g.: “(GMT 0:00) Western Europe Time, London, Lisbon” )"
+      - ""
+    - - extCode
+      - User identification code within the external system
+      - ""
+    - - userId
+      - User internal identifier
+      - 12_1_03
+    - - userState
+      - "User platform state - 0: enabled; 1: disabled; 2:deleted"
+      - 12_1_03
+    - - divisionId
+      - Internal id of the user division
+      - 12_1_03
+    - - creationDate
+      - User creation date
+      - 12_1_03
+    - - lastLoginDate
+      - User last login date
+      - 12_1_03
+    - - loginCount
+      - User login count
+      - 12_1_03
+    - - lastModTime
+      - User last modification date
+      - 12_4_0_02
+    - - timezoneCode
+      - 'Univocal user time-zone identifier (e.g.: “Europe/London")'
+      - BA_17_00
+  block: 1
+  blocks: 1

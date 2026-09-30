@@ -1,0 +1,131 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-39
+section: 2.2.1.41
+section_title: OrderingInstruction [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:DISPLAYINPRODUCTSEARCH
+    label: displayInProductSearch
+    labels:
+      - displayInProductSearch
+    technical_name: DISPLAYINPRODUCTSEARCH
+    section: 2.2.1.41
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether contact-specific ordering instructions are (true) or
+      are not (false) to be displayed directly in Product Search Results when a
+      user enters search terms that result in a match to a contract keyword or
+      the Product Description of the ordering instructions.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.41
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.41#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: displayInProductSearch
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:PRODUCTDESCRIPTION
+    label: productDescription
+    labels:
+      - productDescription
+    technical_name: PRODUCTDESCRIPTION
+    section: 2.2.1.41
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Description of the product
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.41
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.41#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: productDescription
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ADDITIONALINFORMATION
+    label: additionalInformation
+    labels:
+      - additionalInformation
+    technical_name: ADDITIONALINFORMATION
+    section: 2.2.1.41
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: More detailed information about the contract or ordering instructions.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.41
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.41#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: additionalInformation
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:INSTRUCTIONS
+    label: Instructions
+    labels:
+      - Instructions
+      - instructions
+    technical_name: INSTRUCTIONS
+    section: 2.2.1.41
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Contract-specific ordering instructions for the contract.
+      See section “Instructions [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.41
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.41#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Instructions
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.42
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.42#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: instructions
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1348

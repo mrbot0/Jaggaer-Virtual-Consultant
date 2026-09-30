@@ -1,0 +1,17 @@
+id: U.DOC0138.0054
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: Next, let’s look at an example that uses an Advanced Dynamic Workflow rule evaluation to trigger a notification, not an approval. If the item is radioactive, radioactive minor, controlled, toxin or select agent, a system notification will be sent to any approver named on the Shared Folder called “EH&S Notification.” <Activity name="EH&S Notification"> <ActivityType>notification</ActivityType> <FolderRef name="EH&S Notification" /> <Rule><![CDATA[ [Product.Radioactive = true || Product.RadioactiveMinor = true || Product.HazMat = true || Product.Controlled = true || Product.Toxin = true || Product.SelectAgent = true] ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>
+hash: sha256:a30590f336ed623b84edf22549a97d859ca91cff9d4b3e9be77e5e5378850829
+words: 85
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: EH&S APPROVAL
+  section: EH&S APPROVAL
+  section_path: "12"
+  page: null
+  lang: en
+  prev: U.DOC0138.0053
+  next: U.DOC0138.0055

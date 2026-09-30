@@ -1,0 +1,121 @@
+document: phone-service-request-template-xml-7d597d4b
+scope: XSC
+batch: batch-01
+section: domande-1
+section_title: Domande — Telephone Services / Contact Information
+part: 1
+parts: 1
+rows:
+  - key: tech:285381
+    label: Name
+    labels:
+      - Name
+    technical_name: "285381"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Name
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-1
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Name
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:285382
+    label: Phone
+    labels:
+      - Phone
+    technical_name: "285382"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Phone
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-1
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Phone
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:285383
+    label: Department
+    labels:
+      - Department
+    technical_name: "285383"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Department
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-1
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Department
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:285384
+    label: Address
+    labels:
+      - Address
+    technical_name: "285384"
+    section: domande-1
+    type: Text (Multi-Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Address
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-1
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-1#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Address
+        type: Text (Multi-Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1128

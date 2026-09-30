@@ -1,0 +1,25 @@
+id: U.DOC0171.0347
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  If this element is provided, the underlying opening committees array is verified
+  1. OpeningCommittee array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any opening committee: if operation is called in RESET mode, all previously opening committees are removed, otherwise no operation is performed.
+  2. OpeningCommittee array contains at least one element: newly listed opening committees are inserted and, if operation is called in RESET mode, not listed opening committees are removed.
+hash: sha256:6facc1d614732e82752d62a791e3cc79bb66c9c8955d5ffee1c1a5f1a6ba8b2f
+words: 81
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Opening Committee Management
+  section_path: 2.1.2.12
+  page: 6
+  lang: en
+  prev: U.DOC0171.0346
+  next: U.DOC0171.0348
+steps:
+  - "OpeningCommittee array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any opening committee: if operation is called in RESET mode, all previously opening committees are removed, otherwise no operation is performed."
+  - "OpeningCommittee array contains at least one element: newly listed opening committees are inserted and, if operation is called in RESET mode, not listed opening committees are removed."
+procedure:
+  title: If this element is provided, the underlying opening committees array is verified

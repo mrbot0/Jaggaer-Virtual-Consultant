@@ -1,0 +1,123 @@
+id: U.DOC0174.0078
+doc: S.STD.XSC.DOC.0174
+doc_id: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+type: tabella
+text: "Colonne: Field | Description | Datatype Field: OBJ_KEY | Description: Internal file identifier, used to link data inside the various processed files. Field: STATUS_CODE | Description: 3-digit HTTP status code. Required if Status element is provided. | Datatype: NUMBER(3) Field: STATUS_TEXT | Description: Text of the status message. Required if Status element is provided. | Datatype: VARCHAR2(2000) Field: ERROR_TYPE | Description: Identifies the type of problem that occurred: Error Warning Info | Datatype: VARCHAR2(30) Field: ERROR_MESSAGE | Description: Text of the error, warning, or informational message. | Datatype: VARCHAR2(2000) Field: CF_NAME | Description: Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution. | Datatype: VARCHAR2(100) Field: CF_ERROR_TYPE | Description: Identifies the type of problem that occurred: Error Warning Info | Datatype: VARCHAR2(30) Field: CF_ERROR_MESSAGE | Description: Text of the error, warning, or informational message. | Datatype: VARCHAR2(2000) Field: CF_VALUE | Description: Value of the custom field. | Datatype: VARCHAR2(100) Field: CF_V_ERROR_TYPE | Description: Identifies the type of problem that occurred: Error Warning Info | Datatype: VARCHAR2(30) Field: CF_V_ERROR_MESSAGE | Description: Text of the error, warning, or informational message. | Datatype: VARCHAR2(2000) Field: CHILD_CF_NAME | Description: Name of the child custom field. Must be a valid custom field name. | Datatype: VARCHAR2(100) Field: PARENT_CF_NAME | Description: Name of the parent custom field."
+hash: sha256:dd5d3afaa1d5a7305362f8ae37e39cf4ad0ddfdce9e693bb3d90f4cc6221158a
+words: 219
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0174
+  chapter: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0174.0077
+  next: U.DOC0174.0079
+table:
+  table: 12
+  headers:
+    - Field
+    - Description
+    - Datatype
+  rows:
+    - - OBJ_KEY
+      - Internal file identifier, used to link data inside the various processed files.
+      - ""
+    - - STATUS_CODE
+      - |-
+        3-digit HTTP status code.
+        Required if Status element is provided.
+      - NUMBER(3)
+    - - STATUS_TEXT
+      - |-
+        Text of the status message.
+        Required if Status element is provided.
+      - VARCHAR2(2000)
+    - - ERROR_TYPE
+      - |-
+        Identifies the type of problem that occurred:
+        Error
+        Warning
+        Info
+      - VARCHAR2(30)
+    - - ERROR_MESSAGE
+      - Text of the error, warning, or informational message.
+      - VARCHAR2(2000)
+    - - CF_NAME
+      - Hard-coded value, such as Cost Center. Must be a valid custom field name defined in the solution.
+      - VARCHAR2(100)
+    - - CF_ERROR_TYPE
+      - |-
+        Identifies the type of problem that occurred:
+        Error
+        Warning
+        Info
+      - VARCHAR2(30)
+    - - CF_ERROR_MESSAGE
+      - Text of the error, warning, or informational message.
+      - VARCHAR2(2000)
+    - - CF_VALUE
+      - Value of the custom field.
+      - VARCHAR2(100)
+    - - CF_V_ERROR_TYPE
+      - |-
+        Identifies the type of problem that occurred:
+        Error
+        Warning
+        Info
+      - VARCHAR2(30)
+    - - CF_V_ERROR_MESSAGE
+      - Text of the error, warning, or informational message.
+      - VARCHAR2(2000)
+    - - CHILD_CF_NAME
+      - Name of the child custom field. Must be a valid custom field name.
+      - VARCHAR2(100)
+    - - PARENT_CF_NAME
+      - Name of the parent custom field. Must be a valid custom field name.
+      - VARCHAR2(100)
+    - - REL_ERROR_TYPE
+      - |-
+        Identifies the type of problem that occurred:
+        Error
+        Warning
+        Info
+      - VARCHAR2(30)
+    - - REL_ERROR_MESSAGE
+      - Text of the error, warning, or informational message.
+      - VARCHAR2(2000)
+    - - PARENT_CF_VALUE
+      - Value of the custom field.
+      - VARCHAR2(100)
+    - - PARENT_CF_ERROR_TYPE
+      - |-
+        Identifies the type of problem that occurred:
+        Error
+        Warning
+        Info
+      - VARCHAR2(30)
+    - - PARENT_CF_ERROR_MESSAGE
+      - Text of the error, warning, or informational message.
+      - VARCHAR2(2000)
+    - - CHILD_CF_V_ACTION
+      - Indicates whether the specified child custom field is to be added or deleted to the parent custom field.
+      - VARCHAR2(30)
+    - - CHILD_CF_VALUE
+      - Value of the custom field.
+      - VARCHAR2(100)
+    - - CHILD_CF_V_ERROR_TYPE
+      - |-
+        Identifies the type of problem that occurred:
+        Error
+        Warning
+        Info
+      - VARCHAR2(30)
+    - - CHILD_CF_V_ERROR_MESSAGE
+      - Text of the error, warning, or informational message.
+      - VARCHAR2(2000)
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

@@ -1,0 +1,111 @@
+id: U.DOC0173.0231
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: name | Attribute: First Name | Datatype: VARCHAR2(128 CHAR)
+  Attribute: surName | Attribute: Last Name | Datatype: VARCHAR2(128 CHAR)
+  Attribute: email | Attribute: Email Address | Datatype: VARCHAR2(256 CHAR)
+  Attribute: phoneNumber | Attribute: Phone Number | Datatype: VARCHAR2(64 CHAR)
+  Attribute: mobilePhoneNumber | Attribute: Mobile Phone Number | Datatype: VARCHAR2(64 CHAR)
+  Attribute: division | Attribute: Division Name | Datatype: VARCHAR2(80 CHAR)
+  Attribute: businessUnit | Attribute: Department | Datatype: VARCHAR2(256 CHAR)
+  Attribute: rightsProfile | Attribute: Role Name | Datatype: VARCHAR2(80 CHAR)
+  Attribute: login | Attribute: Choose your Username and check it is not already in use | Datatype: VARCHAR2(256 CHAR)
+  Attribute: language | Attribute: Preferred Language | Datatype: VARCHAR2(2000 CHAR)
+  Attribute: timeZone | Attribute: Time Zone | Datatype: VARCHAR2(100 CHAR)
+  Attribute: extCode | Attribute: External Code | Datatype: VARCHAR2(100 CHAR)
+  Attribute: userId | Attribute: - | Datatype: NUMBER(38)
+  Attribute: userState | Attribute: - | Datatype: NUMBER(1)
+  Attribute: divisionId | Attribute: - | Datatype: NUMBER(38)
+  Attribute: creationDate | Attribute: - | Datatype: DATE
+  Attribute: lastLoginDate | Attribute: - | Datatype: DATE
+  Attribute: loginCount | Attribute: - | Datatype: NUMBER(38)
+  Attribute: lastModTime | Attribute: - | Datatype: DATE
+  Attribute: timezoneCode | Attribute: - | Datatype: VARCHAR2(50 CHAR)
+hash: sha256:d6416db71800b5a029c992bc8dacfd2f2e3f882c9ac41879fc31c553a4008996
+words: 209
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: SubUserInfo
+  section_path: 4.8.2
+  page: 8
+  lang: en
+  prev: U.DOC0173.0230
+  next: U.DOC0173.0232
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - name
+      - First Name
+      - VARCHAR2(128 CHAR)
+    - - surName
+      - Last Name
+      - VARCHAR2(128 CHAR)
+    - - email
+      - Email Address
+      - VARCHAR2(256 CHAR)
+    - - phoneNumber
+      - Phone Number
+      - VARCHAR2(64 CHAR)
+    - - mobilePhoneNumber
+      - Mobile Phone Number
+      - VARCHAR2(64 CHAR)
+    - - division
+      - Division Name
+      - VARCHAR2(80 CHAR)
+    - - businessUnit
+      - Department
+      - VARCHAR2(256 CHAR)
+    - - rightsProfile
+      - Role Name
+      - VARCHAR2(80 CHAR)
+    - - login
+      - Choose your Username and check it is not already in use
+      - VARCHAR2(256 CHAR)
+    - - language
+      - Preferred Language
+      - VARCHAR2(2000 CHAR)
+    - - timeZone
+      - Time Zone
+      - VARCHAR2(100 CHAR)
+    - - extCode
+      - External Code
+      - VARCHAR2(100 CHAR)
+    - - userId
+      - "-"
+      - NUMBER(38)
+    - - userState
+      - "-"
+      - NUMBER(1)
+    - - divisionId
+      - "-"
+      - NUMBER(38)
+    - - creationDate
+      - "-"
+      - DATE
+    - - lastLoginDate
+      - "-"
+      - DATE
+    - - loginCount
+      - "-"
+      - NUMBER(38)
+    - - lastModTime
+      - "-"
+      - DATE
+    - - timezoneCode
+      - "-"
+      - VARCHAR2(50 CHAR)
+  block: 1
+  blocks: 1

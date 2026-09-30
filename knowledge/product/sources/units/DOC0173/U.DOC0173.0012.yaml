@@ -1,0 +1,147 @@
+id: U.DOC0173.0012
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: "Rev.N°: 13 | Date: 2015-03-03 | WSDL Version: 12.4.0.00 | Notes: Export profile – Added fields in Data Element section: lastAnswerDate lastAnswerUser Rev.N°: 14 | Date: 2015-03-06 | WSDL Version: 12.4.0.00 | Notes: Import profile: added operation codes DISABLE (or 010) and ENABLE (or 011) in Sub User area. Rev.N°: 15 | Date: 2015-03-12 | WSDL Version: 12.4.0.01 | Notes: Export profile: added extUniqueCode field in Company data. Rev.N°: 16 | Date: 2015-04-09 | WSDL Version: 12.4.0.01 | Notes: Added the possibility to identify the sub-user by extCode in update/delete/enable/disable operations. Rev.N°: 17 | Date: 2015-05-12 | WSDL Version: 12.4.0.02 | Notes: Export Profile: Added lastModTime for sub-user. Added the values YES_INCLUDE_OFFLINE and NO_INCLUDE_OFFLINE in the AWARDED condition filter to include the awards offline. Import Profile: Added company identification by external unique code in case of userAlias update. Added excel file “allowedCountry-Province.xlsx” Rev.N°: 18 | Date: 2016-02-08 | WSDL Version: BA 16 00 | Notes: Export Profile: Added userLastModTime for super-user Rev.N°: 19 | Date: 2016-07-14 | WSDL Version: BA 16 00 | Notes: Export Profile: Added condition filter SUBUSERLOGIN Rev.N°: 20 | Date: 2016-07-25 | WSDL Version: BA 16 00 | Notes: Import Profile: Added field sendEMail for sub-users Rev.N°: 21 | Date: 2016-09-26 | WSDL Version: BA 16 00 | Notes: Export Profile Updated Data Element Condition filters for type Attachment and Signed Attachment: Managed operators ISNULL and NOTNULL Added two new operators ISEXPIRED and NOTEXPIRED to filter on the expiry date. Rev.N°: 22 | Date: 2016-10-03 | WSDL Version: BA 16 01 | Notes: Export Profile Added field companyLastModTime in company info section Added condition filters userLastModTime, companyLastModTime."
+hash: sha256:5ad872057066492c22d5a6106a8b097bca8962ebab2232fc5820ec1116ae5ef0
+words: 271
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Release notes
+  section: Release notes
+  section_path: "2"
+  page: 4
+  lang: en
+  prev: U.DOC0173.0011
+  next: U.DOC0173.0013
+table:
+  table: 0
+  headers:
+    - Rev.N°
+    - Date
+    - WSDL Version
+    - Notes
+  rows:
+    - - "1"
+      - 2012-10
+      - 12.2.0
+      - First release
+    - - "2"
+      - 2012-12
+      - 12.2.0
+      - Add full management of business unit field for subusers
+    - - "3"
+      - 2013-01
+      - 12.2.0
+      - Allowed values section added
+    - - "4"
+      - 2013-08
+      - 12.2.0
+      - |-
+        Import profile method documented;
+        Global document revision;
+    - - "5"
+      - 2013-11
+      - 12.3.0
+      - External XSD file (xmlmime.xsd)
+    - - "6"
+      - 2014-01
+      - 12.3.0
+      - New company import operation code “CREATE_REGONLY” to register a new supplier company without enabling it
+    - - "7"
+      - 2014-02
+      - 12.3.0
+      - province and province2 can be set using the special value “ALTRO”; bizLegalStruct can be set using the special value “NOT_DEF” to state information is not defined
+    - - "8"
+      - 2014-05
+      - 12.3.0
+      - Added VAT condition filter.
+    - - "9"
+      - 2014-07
+      - 12.3.01
+      - |-
+        Export profile: added fields for data element of type attachment:
+        attachmentExpiryDate
+        attachmentExpiryDateManagedBy
+        attachmentExpiryDateLastUpdateUser
+        attachmentExpiryDateLastUpdateDate
+    - - "10"
+      - 2014-09-12
+      - 12.3.01
+      - Added mapping of “WSDL field – UI label”
+    - - "11"
+      - 2014-11-11
+      - 12.3.1.00
+      - "Import profile: added update of the rightsProfile of subuser"
+    - - "12"
+      - 2014-12-29
+      - 12.3.1.00
+      - "Import profile: extended the identification strategy of the super user company role (userRole field)."
+    - - "13"
+      - 2015-03-03
+      - 12.4.0.00
+      - |-
+        Export profile – Added fields in Data Element section:
+        lastAnswerDate
+        lastAnswerUser
+    - - "14"
+      - 2015-03-06
+      - 12.4.0.00
+      - "Import profile: added operation codes DISABLE (or 010) and ENABLE (or 011) in Sub User area."
+    - - "15"
+      - 2015-03-12
+      - 12.4.0.01
+      - "Export profile: added extUniqueCode field in Company data."
+    - - "16"
+      - 2015-04-09
+      - 12.4.0.01
+      - Added the possibility to identify the sub-user by extCode in update/delete/enable/disable operations.
+    - - "17"
+      - 2015-05-12
+      - 12.4.0.02
+      - |-
+        Export Profile:
+        Added lastModTime for sub-user.
+        Added the values YES_INCLUDE_OFFLINE and NO_INCLUDE_OFFLINE in the AWARDED condition filter to include the awards offline.
+        Import Profile:
+        Added company identification by external unique code in case of userAlias update.
+        Added excel file “allowedCountry-Province.xlsx”
+    - - "18"
+      - 2016-02-08
+      - BA 16 00
+      - |-
+        Export Profile:
+        Added userLastModTime for super-user
+    - - "19"
+      - 2016-07-14
+      - BA 16 00
+      - |-
+        Export Profile:
+        Added condition filter SUBUSERLOGIN
+    - - "20"
+      - 2016-07-25
+      - BA 16 00
+      - |-
+        Import Profile:
+        Added field sendEMail for sub-users
+    - - "21"
+      - 2016-09-26
+      - BA 16 00
+      - |-
+        Export Profile
+        Updated Data Element Condition filters for type Attachment and Signed Attachment:
+        Managed operators ISNULL and NOTNULL
+        Added two new operators ISEXPIRED and NOTEXPIRED to filter on the expiry date.
+    - - "22"
+      - 2016-10-03
+      - BA 16 01
+      - |-
+        Export Profile
+        Added field companyLastModTime in company info section
+        Added condition filters userLastModTime, companyLastModTime.
+  block: 1
+  blocks: 2
+part:
+  n: 2
+  of: 2

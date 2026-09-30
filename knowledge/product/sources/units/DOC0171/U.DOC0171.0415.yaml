@@ -1,0 +1,51 @@
+id: U.DOC0171.0415
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  A DEConditionFilter must specify
+  1. Key: the name of the data element whose value must be matched
+  2. Operator: the kind of match required. The following operators can be applied:
+  3. EXIST, NOT_EXIST: data element has (hasn’t) been defined for the rfx
+  4. ISNULL, NOTNULL: data element value must (must not) be null (data element has been defined for the rfx and it hasn’t been answered –if ISNULL- or it has been answered no matter value –if NOTNULL-). Provided filter values are ignored
+  5. EQUAL, NOTEQUAL: data element value must (must not) match the first value in provided list
+  6. IN, NOT_IN: data element value must (must not) be found in provided list.
+  7. AT_LEAST_ONE: valid only for choice and multi choice typed data element, allow to ask data element value to match at least one of provided values (as string)
+  8. START_WITH, CONTAINS: valid only for textual data element, require data element value to begin with (to contain) first provided value
+  9. GREATER_THAN, LESS_THAN: valid only for date and number typed data element, require data element value to be grater or equal (lower or equal) first provided value
+  10. Values: string representing the value to be filtered for. Depending on the target data element, it must be expressed in the following format:
+  11. TEXT: free text
+  12. NUMBER: string representing a number using dot to separate decimal
+  13. DATE: Date value expressed in the form “yyyy-MM-dd” (e.g. 2012-03-01) or “yyyy-MM-dd HH:mm:ss.SSS Z” (e.g. 2012-03-01 12:36:42.535 +0100)
+  14. BOOLEAN: string “1”and “true” evaluate to TRUE, every other strings evaluate to FALSE
+  15. In case of option/multichoice data element, the value must be in the system default language. If the condition filter independentLocale is set, the value must be in the “neutral” language.
+hash: sha256:dfbdeba4287f8fe0ade4459362cc0bee1ae6f7c6ffd4693e75f06a2bec3c2218
+words: 292
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Data Elements Condition Filters
+  section_path: 2.3.3
+  page: 7
+  lang: en
+  prev: U.DOC0171.0414
+  next: U.DOC0171.0416
+steps:
+  - "Key: the name of the data element whose value must be matched"
+  - "Operator: the kind of match required. The following operators can be applied:"
+  - "EXIST, NOT_EXIST: data element has (hasn’t) been defined for the rfx"
+  - "ISNULL, NOTNULL: data element value must (must not) be null (data element has been defined for the rfx and it hasn’t been answered –if ISNULL- or it has been answered no matter value –if NOTNULL-). Provided filter values are ignored"
+  - "EQUAL, NOTEQUAL: data element value must (must not) match the first value in provided list"
+  - "IN, NOT_IN: data element value must (must not) be found in provided list."
+  - "AT_LEAST_ONE: valid only for choice and multi choice typed data element, allow to ask data element value to match at least one of provided values (as string)"
+  - "START_WITH, CONTAINS: valid only for textual data element, require data element value to begin with (to contain) first provided value"
+  - "GREATER_THAN, LESS_THAN: valid only for date and number typed data element, require data element value to be grater or equal (lower or equal) first provided value"
+  - "Values: string representing the value to be filtered for. Depending on the target data element, it must be expressed in the following format:"
+  - "TEXT: free text"
+  - "NUMBER: string representing a number using dot to separate decimal"
+  - "DATE: Date value expressed in the form “yyyy-MM-dd” (e.g. 2012-03-01) or “yyyy-MM-dd HH:mm:ss.SSS Z” (e.g. 2012-03-01 12:36:42.535 +0100)"
+  - "BOOLEAN: string “1”and “true” evaluate to TRUE, every other strings evaluate to FALSE"
+  - In case of option/multichoice data element, the value must be in the system default language. If the condition filter independentLocale is set, the value must be in the “neutral” language.
+procedure:
+  title: A DEConditionFilter must specify

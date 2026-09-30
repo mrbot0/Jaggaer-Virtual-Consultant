@@ -1,0 +1,46 @@
+id: U.DOC0169.0331
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: originalExternalRequisitionNumber | Description: Unique number associated with the incoming PR, copied to the outgoing PR. Originates outside the eProcurement solution, but stored within the solution for cross-referencing.
+  Attribute: originalExternalRequisitionNumber2 | Description: Second unique number associated with the incoming PR, copied to the outgoing PR. Originates outside the eProcurement solution, but stored within the solution for cross-referencing.
+  Attribute: originalRequisitionId | Description: Unique requisition number of the incoming PR,
+  Attribute: sourcingItem | Description: Sourcing item
+  See section “SourcingItem [PR Export]” below.
+hash: sha256:fbc3a09cf4d013b42977922134e0506b22f6278ae57b1ff1fc60d6ccee0115fb
+words: 88
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: SourcingDetail [PR Export]
+  section_path: 2.3.3.52
+  page: 83
+  lang: en
+  prev: U.DOC0169.0330
+  next: U.DOC0169.0332
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - originalExternalRequisitionNumber
+      - Unique number associated with the incoming PR, copied to the outgoing PR. Originates outside the eProcurement solution, but stored within the solution for cross-referencing.
+      - ""
+    - - originalExternalRequisitionNumber2
+      - Second unique number associated with the incoming PR, copied to the outgoing PR. Originates outside the eProcurement solution, but stored within the solution for cross-referencing.
+      - ""
+    - - originalRequisitionId
+      - Unique requisition number of the incoming PR,
+      - ""
+    - - sourcingItem
+      - |-
+        Sourcing item
+        See section “SourcingItem [PR Export]” below.
+      - ""
+  block: 1
+  blocks: 1

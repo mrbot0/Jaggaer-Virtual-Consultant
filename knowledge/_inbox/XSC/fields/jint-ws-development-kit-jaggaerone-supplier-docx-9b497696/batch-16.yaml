@@ -1,0 +1,131 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-16
+section: 2.1.1.16
+section_title: J1Supplier/JISupplierData/annualSalesList/annualSales
+part: 1
+parts: 1
+rows:
+  - key: tech:ANNUALSALESYEAR
+    label: annualSalesYear
+    labels:
+      - annualSalesYear
+    technical_name: ANNUALSALESYEAR
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: "Year for which AnnualSalesAmount is being provided, in the following
+      format: yyyy"
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.16
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.16#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: annualSalesYear
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ANNUALSALESAMOUNT
+    label: annualSalesAmount
+    labels:
+      - annualSalesAmount
+    technical_name: ANNUALSALESAMOUNT
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Total sales (revenue) for the supplier for the specified AnnualSalesYear.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.16
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.16#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: annualSalesAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ISOCURRENCYCODE
+    label: isoCurrencyCode
+    labels:
+      - isoCurrencyCode
+    technical_name: ISOCURRENCYCODE
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Currency code for the AnnualSalesAmount field.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.16
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.16#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: isoCurrencyCode
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.24
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.24#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: isoCurrencyCode
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.25
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.25#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: isoCurrencyCode
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.82
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.82#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: isoCurrencyCode
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: isoCurrencyCode
+        type: null
+        mandatory_text: Y
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - N
+          - Y
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+tokens_estimate: 1353

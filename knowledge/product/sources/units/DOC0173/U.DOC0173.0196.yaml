@@ -1,0 +1,59 @@
+id: U.DOC0173.0196
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Code | Description
+  Code: 0 | Description: operation completed successfully
+  Code: 1 | Description: operation completed successfully with warnings as detailed in the returned message
+  Code: 2 | Description: operation not completed due to error as detailed in the returned message
+  Code: -501 | Description: Invalid additional info
+  Code: -503 | Description: Wrong value for component filter
+  Code: -504 | Description: Wrong value for condition filter
+  Code: -505 | Description: Wrong value for server side condition filter
+  Code: -996 | Description: Invalid SOAP Request Object (SOAP Request doesn’t match web service definition)
+  Code: -997 | Description: Unauthorized Method (Web Service method isn’t configured to be executed)
+  Code: -998 | Description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+  Code: -999 | Description: Generic exception
+hash: sha256:4b583711fb62dea06009b2a7fd1089c7b49481aae773686400fb1283d63ade12
+words: 148
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Error codes
+  section_path: 4.2.6
+  page: 7
+  lang: en
+  prev: U.DOC0173.0195
+  next: U.DOC0173.0197
+table:
+  table: 0
+  headers:
+    - Code
+    - Description
+  rows:
+    - - "0"
+      - operation completed successfully
+    - - "1"
+      - operation completed successfully with warnings as detailed in the returned message
+    - - "2"
+      - operation not completed due to error as detailed in the returned message
+    - - "-501"
+      - Invalid additional info
+    - - "-503"
+      - Wrong value for component filter
+    - - "-504"
+      - Wrong value for condition filter
+    - - "-505"
+      - Wrong value for server side condition filter
+    - - "-996"
+      - Invalid SOAP Request Object (SOAP Request doesn’t match web service definition)
+    - - "-997"
+      - Unauthorized Method (Web Service method isn’t configured to be executed)
+    - - "-998"
+      - Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+    - - "-999"
+      - Generic exception
+  block: 1
+  blocks: 1

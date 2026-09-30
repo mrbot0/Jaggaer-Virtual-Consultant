@@ -1,0 +1,89 @@
+id: S.STD.XSC.DOC.0166
+type: DOC
+title: J1P Development Kit -
+summary: 'Documento spec-integrazione (tecnica, origine vendor) "J1P Development
+  Kit -": 212 unità, 0 tabelle, 0 tabelle di campi; scope XSC, ADM; affidabilità
+  0.72.'
+facets:
+  F1: spec-integrazione-prosa
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2022-10-13
+    release: ignota
+  F15: tecnica
+sources:
+  - file: JAGGAER WS/J1P WS Development_Kit - Web Services Overview.pdf
+    sha256: sha256:7e43f09eb6f787768338e1527339cd1c127e700f32e9c70be931443e8b21fc5b
+kind: spec-integrazione
+genre: tecnica
+origin: vendor
+version: null
+dated: 2022-10-13
+covers_release: null
+languages:
+  - en
+scopes:
+  - XSC
+  - ADM
+source:
+  path: JAGGAER WS/J1P WS Development_Kit - Web Services Overview.pdf
+  sha256: sha256:7e43f09eb6f787768338e1527339cd1c127e700f32e9c70be931443e8b21fc5b
+  size: 643475
+  format: pdf
+  doc_id: j1p-ws-development-kit-web-services-overview-pdf-b091164d
+  doc_key: j1p-ws-development-kit-web-services-overview.pdf
+structure:
+  pages: 25
+  chapters: 25
+  sections: 25
+  tables: 0
+  figures: 1661
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 212
+  by_type:
+    regola: 51
+    testo: 139
+    esempio: 12
+    nota: 1
+    riferimento: 6
+    definizione: 2
+    procedura: 1
+reliability:
+  base_by_kind: 0.9
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.72
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 212
+  items_produced: 54
+  residue:
+    irrelevant: 7
+    duplicate: 0
+    ambiguous: 1
+    unsupported: 0
+    deferred: 0
+    tacit: 1
+  coverage_ratio: 0.24
+  last_run: 2026-09-30
+  estimated_tokens: 18953
+  sessions_planned: 1

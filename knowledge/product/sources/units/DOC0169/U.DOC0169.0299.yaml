@@ -1,0 +1,49 @@
+id: U.DOC0169.0299
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: requisitionSupplierGroupId | Description: Internal identifier of the supplier group.
+  Attribute: requisitionSupplierGroupInfo | Description: Supplier group information container.
+  Exported if “GROUPINFO” component filter specified.
+  See section “RequisitionSupplierGroupInfo [PR Export]” below.
+  Attribute: requisitionLineList | Description: Container of purchase requisition line.
+  Exported if “LINE” component filter specified.
+  See section “RequisitionLine [PR Export]” below.
+hash: sha256:f8c23a9cd92d9eaa07d1b5349f305807118f51450345a3e72742d1ca5c849f34
+words: 59
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: PurchaseRequisitionSupplierGroup [PR Export]
+  section_path: 2.3.3.23
+  page: 69
+  lang: en
+  prev: U.DOC0169.0298
+  next: U.DOC0169.0300
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - requisitionSupplierGroupId
+      - Internal identifier of the supplier group.
+      - ""
+    - - requisitionSupplierGroupInfo
+      - |-
+        Supplier group information container.
+        Exported if “GROUPINFO” component filter specified.
+        See section “RequisitionSupplierGroupInfo [PR Export]” below.
+      - ""
+    - - requisitionLineList
+      - |-
+        Container of purchase requisition line.
+        Exported if “LINE” component filter specified.
+        See section “RequisitionLine [PR Export]” below.
+      - ""
+  block: 1
+  blocks: 1

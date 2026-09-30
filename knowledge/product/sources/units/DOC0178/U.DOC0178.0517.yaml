@@ -1,0 +1,44 @@
+id: U.DOC0178.0517
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Code | Description
+  Code: 0 | Description: operation completed successfully
+  Code: 2 | Description: Operation was not completed due to error in provided data.
+  Code: -996 | Description: Invalid SOAP Request Object (SOAP Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+  Code: -997 | Description: Unauthorized Method (Web Service method isn’t configured to be executed)
+  Code: -998 | Description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+  Code: -999 | Description: Generic exception
+hash: sha256:6c768a94a3f764b0e7fc0791d85121866d92d41f0a3e4b6da301c780956423af
+words: 109
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Error codes [Validate]
+  section_path: 2.4.3.4
+  page: 125
+  lang: en
+  prev: U.DOC0178.0516
+  next: U.DOC0178.0518
+table:
+  table: 0
+  headers:
+    - Code
+    - Description
+  rows:
+    - - "0"
+      - operation completed successfully
+    - - "2"
+      - Operation was not completed due to error in provided data.
+    - - "-996"
+      - Invalid SOAP Request Object (SOAP Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+    - - "-997"
+      - Unauthorized Method (Web Service method isn’t configured to be executed)
+    - - "-998"
+      - Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+    - - "-999"
+      - Generic exception
+  block: 1
+  blocks: 1

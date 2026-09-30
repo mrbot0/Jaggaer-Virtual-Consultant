@@ -1,0 +1,102 @@
+document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+scope: XSC
+section: 2.1.1.6
+section_title: WFDynamicRule [Custom Field Import method]
+genre: tecnica
+rows:
+  - label: action
+    technical_name: action
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Indicates whether the workflow rule is modified or deleted.
+      Allowed values:
+      modify
+      delete
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+  - label: workflowType
+    technical_name: workflowType
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Type of workflow. Must be a valid workflow type licensed to your
+      organization.
+
+      Allowed values:
+
+      requisition
+
+      po
+
+      invoice
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+  - label: ruleMinRange
+    technical_name: ruleMinRange
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Minimum value that triggers the workflow rule.
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+  - label: ruleMaxRange
+    technical_name: ruleMaxRange
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Maximum value that triggers the workflow rule.
+      If there is no maximum value, specify an asterisk (*).
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+  - label: ruleCurrency
+    technical_name: ruleCurrency
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Currency type for the range amount.
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+  - label: approvers
+    technical_name: approvers
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or max one Approvers.
+      See section Approvers [Custom Field Import method]
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+  - label: autoApprove
+    technical_name: autoApprove
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Enables the automatic approval of the rule when the user placing the
+      order is an approver for that rule
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-custom-field-docx-e39a8594

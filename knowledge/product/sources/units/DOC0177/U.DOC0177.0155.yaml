@@ -1,0 +1,35 @@
+id: U.DOC0177.0155
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: "Attribute: secondaryNaics | Mandatory (Y/N): N | Description: Secondary North American Industry Classification System supplier reference number. | Mapping on Jaggaer One data model and notes: Must be a valid NAICS code. You can use the data in the NumberOfEmployees and AnnualSalesAmount fields, along with the NAICS codes, to determine the supplier's Small Business Enterprise classification. Required if SecondaryNaicsList element is provided. Repeatable."
+hash: sha256:52c0738d780a8bc8494d07819608acbe46927c8ae57e25d83fdadc56b689ba18
+words: 63
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/secondaryNaicsList
+  section_path: 2.1.1.23
+  page: 30
+  lang: en
+  prev: U.DOC0177.0154
+  next: U.DOC0177.0156
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - secondaryNaics
+    - N
+    - Secondary North American Industry Classification System supplier reference number.
+    - Must be a valid NAICS code. You can use the data in the NumberOfEmployees and AnnualSalesAmount fields, along with the NAICS codes, to determine the supplier's Small Business Enterprise classification. Required if SecondaryNaicsList element is provided. Repeatable.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

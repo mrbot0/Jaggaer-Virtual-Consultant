@@ -1,0 +1,46 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.14
+section_title: Measurement [PR Import]
+genre: tecnica
+rows:
+  - label: measurementAmount
+    technical_name: measurementAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Number of items available per packaging unit
+    section: 2.1.1.14
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.14#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: measurementUnit
+    technical_name: measurementUnit
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Packaging unit for the product, such as EA (each) or PK (pack).
+
+      We recommend that you use a standard packaging abbreviation, as defined in
+      the JAGGAER Packaging UOM and Product Size Attributes Guidelines.
+
+      The default MeasurementUnit is EA.
+    section: 2.1.1.14
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.14#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: measurementValue
+    technical_name: measurementValue
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Combination of MeasurementAmount and MeasurementUnit. If only one of the
+      values is available, that value is shown
+    section: 2.1.1.14
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.14#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

@@ -1,0 +1,43 @@
+id: U.DOC0167.0401
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: bankAccountNumber | Mandatory (Y/N): N | Description: Account number of the bank account. | Mapping on Jaggaer One data model and notes: • If the “type” field on the AccountsPayable element is set to DirectDeposit, this field is required for the United States, and required for all other countries if the AccountNumberType field is set to AccountNumber.
+  • If the “type” field on the AccountsPayable element is set to WireTransfer, and the AccountNumberType field is set to AccountNumber, this field is required for the United States, and for the countries identified in AccountNumberType, BankAccountNumber, and InternationalRoutingCode Fields (see page 89). Must be blank for all other countries.
+  • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+  See AccountNumberType, BankAccountNumber, and InternationalRoutingCode Fields (see page 89) for the full list of countries for which this field is required, if the “type” field on the AccountsPayable element is set to WireTransfer, and the AccountNumberType field is set to AccountNumber.
+hash: sha256:1475c0d9593534916a5ee41332688aff116fbe378f28cc995b94426fec7d2d46
+words: 169
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 5
+  lang: en
+  prev: U.DOC0167.0400
+  next: U.DOC0167.0402
+row:
+  table: 0
+  row: 5
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - bankAccountNumber
+    - N
+    - Account number of the bank account.
+    - |-
+      • If the “type” field on the AccountsPayable element is set to DirectDeposit, this field is required for the United States, and required for all other countries if the AccountNumberType field is set to AccountNumber.
+      • If the “type” field on the AccountsPayable element is set to WireTransfer, and the AccountNumberType field is set to AccountNumber, this field is required for the United States, and for the countries identified in AccountNumberType, BankAccountNumber, and InternationalRoutingCode Fields (see page 89). Must be blank for all other countries.
+      • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+      See AccountNumberType, BankAccountNumber, and InternationalRoutingCode Fields (see page 89) for the full list of countries for which this field is required, if the “type” field on the AccountsPayable element is set to WireTransfer, and the AccountNumberType field is set to AccountNumber.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

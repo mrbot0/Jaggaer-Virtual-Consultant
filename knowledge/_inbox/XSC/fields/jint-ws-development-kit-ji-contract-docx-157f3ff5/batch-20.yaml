@@ -1,0 +1,45 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-20
+section: 2.2.1.17
+section_title: DayOfWeek [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:DAYOFWEEK
+    label: dayOfweek
+    labels:
+      - dayOfweek
+    technical_name: DAYOFWEEK
+    section: 2.2.1.17
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates the day of the week on which the obligation is to recur.
+      Possible values:
+      Sunday
+      Monday
+      Tuesday
+      Wednesday
+      Thursday
+      Friday
+      Saturday
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.17
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.17#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: dayOfweek
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 692

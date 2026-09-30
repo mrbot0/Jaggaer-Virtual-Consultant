@@ -1,0 +1,116 @@
+doc: S.STD.XSC.DOC.0123
+scope: XSC
+extracted_at: 2026-09-30T04:30:54.676Z
+tier: T0
+stats:
+  units: 20
+  extracted_units: 3
+  document_candidates: 0
+  needs_llm: 0
+  t0_complete: 3
+  by_candidate:
+    GLS: 1
+    FLD: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 0
+  sessions: []
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0123.0005
+    source_unit: U.DOC0123.0005
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0123
+    section: Handout
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: ADW C onfiguration Below
+      definition: the s yntax for a ADW Rule Group reference in the workflow definitions file .
+      aliases: []
+      lang: en
+      source_unit: U.DOC0123.0005
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0123.0006
+    source_unit: U.DOC0123.0006
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0123
+    section: Handout
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: rule
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0123.0006
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0123.0007
+    source_unit: U.DOC0123.0007
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0123
+    section: Handout
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Note, that the attribute
+      modality: facolta
+      condition: you are using the Rule Group solely to evaluate the document, but not route it dynamic ally
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - obbligo-negato
+      source_unit: U.DOC0123.0007
+      mandatory:
+        kind: never
+        when: you are using the Rule Group solely to evaluate the document, but not route it dynamic ally
+    needs_llm: false
+    tokens: 34

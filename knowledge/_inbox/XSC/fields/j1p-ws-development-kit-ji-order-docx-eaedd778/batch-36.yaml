@@ -1,0 +1,453 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-36
+section: 2.3.1.36
+section_title: JIOrderLine [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:LINEOPERATIONCODE
+    label: lineOperationCode
+    labels:
+      - lineOperationCode
+    technical_name: LINEOPERATIONCODE
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Indicates whether the PO Line is new, an update, or is being cancelled.
+      The default operation is new
+
+      Possible value (case sensitive):
+
+      new
+
+      update
+
+      cancel
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: lineOperationCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LINEID
+    label: lineId
+    labels:
+      - lineId
+    technical_name: LINEID
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique ID of the PO line
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: lineId
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ITEM
+    label: item
+    labels:
+      - item
+    technical_name: ITEM
+    section: 2.3.1.36
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Order Line item information.
+      See section “Item [Import JIOrder method]” below
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: item
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:QUANTITY
+    label: quantity
+    labels:
+      - quantity
+    technical_name: QUANTITY
+    section: 2.3.1.36
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Number of items
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: quantity
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CAPITALEXPENSE
+    label: capitalExpense
+    labels:
+      - capitalExpense
+    technical_name: CAPITALEXPENSE
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a capital expense.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: capitalExpense
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FIXEDASSET
+    label: fixedAsset
+    labels:
+      - fixedAsset
+    technical_name: FIXEDASSET
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a fixed asset.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: fixedAsset
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAXABLE
+    label: taxable
+    labels:
+      - taxable
+    technical_name: TAXABLE
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the manufacturer is (true) or is not (false) taxable.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: taxable
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LINECHARGES
+    label: lineCharges
+    labels:
+      - lineCharges
+    technical_name: LINECHARGES
+    section: 2.3.1.36
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Order line charges.
+      See section “LineCharges [Import JIOrder method]” below.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: lineCharges
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:DELIVERYINFO
+    label: deliveryInfo
+    labels:
+      - deliveryInfo
+    technical_name: DELIVERYINFO
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Order line delivery information
+      See section “DeliveryInfo [Import JIOrder method]” below
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: deliveryInfo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SUPPLIERINFO
+    label: supplierInfo
+    labels:
+      - supplierInfo
+    technical_name: SUPPLIERINFO
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Order line Supplier Information
+      See section “SupplierInfo [Import JIOrder method]” above
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: supplierInfo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:REQUISITIONLINEREFID
+    label: requisitionLineRefId
+    labels:
+      - requisitionLineRefId
+    technical_name: REQUISITIONLINEREFID
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique requisition line number
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: requisitionLineRefId
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ORDERLINECLAUSELIST
+    label: orderLineclauseList
+    labels:
+      - orderLineclauseList
+    technical_name: ORDERLINECLAUSELIST
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for clause applied to the order at line level.
+      See section “OrderClause [Import JIOrder method]” above
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: orderLineclauseList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LINELEVELINTERNALNOTE
+    label: lineLevelInternalNote
+    labels:
+      - lineLevelInternalNote
+    technical_name: LINELEVELINTERNALNOTE
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Internal note for the requisition line
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: lineLevelInternalNote
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LINKEDTOLINENUMBER
+    label: linkedToLineNumber
+    labels:
+      - linkedToLineNumber
+    technical_name: LINKEDTOLINENUMBER
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      For a trade-in line item that is linked to a positive non-trade-in line
+      item, position of the positive non-trade-in line item in the PO document.
+
+      Valid only if the item is a trade-in
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: linkedToLineNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BRAND
+    label: brand
+    labels:
+      - brand
+    technical_name: BRAND
+    section: 2.3.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Brand associated with the PO line
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.36
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.36#part-1
+        row_ref: t0.r18
+        genre: tecnica
+        label: brand
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 3166

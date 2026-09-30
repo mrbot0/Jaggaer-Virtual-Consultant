@@ -1,0 +1,47 @@
+id: U.DOC0171.0125
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: values/value | Mandatory (Y/N): N | Description: Value of the Data Element | Mapping on JA data model and notes: According to data element type, values can be:
+  textual: text
+  number: number formatted in the English locale without grouping separator (decimal separator “.”)
+  date: date string in the format “yyyyMMdd” or timestamp in “yyyy-MM-dd HH:mm:ss.SSS Z” format
+  Boolean:’1’, ‘true’, ‘yes’ for true value, any other not empty string for false
+  Choice and mutichoice: Choice Label in default language, as it appears in the choice list
+hash: sha256:06d08c72fca69e42894f208d95a2fc308b5c2df0f153410ea5324e27e59d28f6
+words: 86
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Additional Info (data elements) [Import/Update RfX method]
+  section_path: 2.1.1.6
+  page: 6
+  lang: en
+  prev: U.DOC0171.0124
+  next: U.DOC0171.0126
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - values/value
+    - N
+    - Value of the Data Element
+    - |-
+      According to data element type, values can be:
+      textual: text
+      number: number formatted in the English locale without grouping separator (decimal separator “.”)
+      date: date string in the format “yyyyMMdd” or timestamp in “yyyy-MM-dd HH:mm:ss.SSS Z” format
+      Boolean:’1’, ‘true’, ‘yes’ for true value, any other not empty string for false
+      Choice and mutichoice: Choice Label in default language, as it appears in the choice list
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

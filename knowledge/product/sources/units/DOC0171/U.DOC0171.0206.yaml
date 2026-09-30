@@ -1,0 +1,43 @@
+id: U.DOC0171.0206
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: columnPos | Mandatory (Y/N): N | Description: Progressive identifier of the additional column parameter (1-based enumeration) | Mapping on JA data model and notes: Progressive identifier of an existing additional column parameter to update;
+  It must not be specified when creating parameter for new section; for existing section, it is used to try to identify an existing parameter to update and so, in case of creation of new parameter, it is advisable not to specify this value.
+  If positive and the section doesn’t contain a multi column parameter with such identifier, it is assumed that it refers to a new parameter to be created. Otherwise it is used to identify a parameter to be updated.
+  See §Behavior, section “Envelope Management”.
+hash: sha256:383c2d83ce207b1f2a16c25349ffb49ce66e9773a0a576e5d16fe60a8d54ec1e
+words: 121
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: Section additional column [Import/Update RfX method]"
+  section_path: 2.1.1.16
+  page: 6
+  lang: en
+  prev: U.DOC0171.0205
+  next: U.DOC0171.0207
+row:
+  table: 0
+  row: 6
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - columnPos
+    - N
+    - Progressive identifier of the additional column parameter (1-based enumeration)
+    - |-
+      Progressive identifier of an existing additional column parameter to update;
+      It must not be specified when creating parameter for new section; for existing section, it is used to try to identify an existing parameter to update and so, in case of creation of new parameter, it is advisable not to specify this value.
+      If positive and the section doesn’t contain a multi column parameter with such identifier, it is assumed that it refers to a new parameter to be created. Otherwise it is used to identify a parameter to be updated.
+      See §Behavior, section “Envelope Management”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

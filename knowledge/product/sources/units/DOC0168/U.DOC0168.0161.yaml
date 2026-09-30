@@ -1,0 +1,39 @@
+id: U.DOC0168.0161
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: riga-tabella-campi
+text: |-
+  Attribute: lineList | Mandatory (Y/N): Y | Description: Container of Order lines.
+  At least an order line must be provided in the request
+  See section “JIOrderLine [Import JIOrder method]” beloe
+hash: sha256:85c2d3e241cd9398ebb62e0d3b1530f89b9c99387ca43685f818b42e3d83cf6f
+words: 30
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: Main request structure [Import JIOrder method]
+  section_path: 2.3.1.1
+  page: 64
+  lang: en
+  prev: U.DOC0168.0160
+  next: U.DOC0168.0162
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - lineList
+    - Y
+    - |-
+      Container of Order lines.
+      At least an order line must be provided in the request
+      See section “JIOrderLine [Import JIOrder method]” beloe
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

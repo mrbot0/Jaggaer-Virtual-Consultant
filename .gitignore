@@ -1,12 +1,8 @@
-node_modules/
-.superpowers/
-*.db
-*.db-wal
-*.db-shm
-tmp-*
-.sessions/
-.auth/
+# Radice del repository: plugin/ (il plugin, con il suo .gitignore) e knowledge/ (la conoscenza, che cresce).
+# Conoscenza: il DB si versiona (come per i clienti, §8.2); mai i file temporanei di SQLite, le sessioni, le credenziali.
+knowledge/**/knowledge.db-wal
+knowledge/**/knowledge.db-shm
+knowledge/**/.sessions/
+knowledge/**/.auth/
+knowledge/**/tmp-*
 .env
-# Documentazione JAGGAER di partenza (materiale proprietario, corpus di ingestion): mai nel repo del plugin
-JAGGAER DOC/
-evals/results/

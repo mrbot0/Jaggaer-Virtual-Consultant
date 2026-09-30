@@ -1,0 +1,38 @@
+id: U.DOC0168.0482
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: responseStatus | Description: Effective import result description.
+  See section “Status [JIOrder Status Import method]” below
+  Attribute: poErrorList | Description: List of error information found on specific provided payment.
+  See section “PoError [JIOrder Status Import method]” below.
+hash: sha256:1f29f625c4c8a123433681731a17642fb8ec69d1c25fa9b490e47e6fc024ac48
+words: 41
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: StatusResponseMessage [JIOrderStatus Import method]
+  section_path: 2.4.3.1
+  page: 108
+  lang: en
+  prev: U.DOC0168.0481
+  next: U.DOC0168.0483
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - responseStatus
+      - |-
+        Effective import result description.
+        See section “Status [JIOrder Status Import method]” below
+    - - poErrorList
+      - |-
+        List of error information found on specific provided payment.
+        See section “PoError [JIOrder Status Import method]” below.
+  block: 1
+  blocks: 1

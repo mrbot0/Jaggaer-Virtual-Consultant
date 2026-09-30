@@ -1,0 +1,163 @@
+id: U.DOC0168.0494
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: URL | /j1p/api/public/ji/v1/orders/
+  URL: Http Method | /j1p/api/public/ji/v1/orders/: GET
+  URL: Header Parameters | /j1p/api/public/ji/v1/orders/: Authorization bearer XXXX
+  URL: Response format | /j1p/api/public/ji/v1/orders/: {
+  "returnCode": 0,
+  "returnMessage": "",
+  "totRecords": 1,
+  "returnedRecords": 1,
+  "startAt": 1,
+  "jiorderList": {
+  "jiorder": [
+  {
+  "header": {
+  "originalRequestMessageId": "14822edb-b126-49b0-80e1-0166c561d45d",
+  "orderId": 1398308,
+  "validationStatus": "Unneeded",
+  "lastUpdate": "2020-01-16",
+  "poNumber": "1398308",
+  "originalPONumber": "1398308",
+  "workflowStatus": "Pending",
+  "supplierStatus": {
+  "status": "NewOrder",
+  "hasBackorderedItem": "false",
+  "hasCancelledItems": "false",
+  "hasSupplierEdits": "false",
+  "hasShippedItems": "false"
+  },
+  "apStatus": "Open",
+  "revisionNumber": 0,
+  "revisionDate": "2019-11-29T16:56:04.118Z",
+  "requestor": {
+  "username": "requester01",
+  "businessUnit": "DIASORIN_IT",
+  "department": "Division_IT",
+  "firstName": "Requester",
+  "lastName": "User",
+  "phone": {
+  "countryCode": "39",
+  "number": "456712345"
+  },
+  "position": "Evaluator",
+  "email": "[email]"
+  },
+  "buyer": {},
+  "businessUnit": "DIASORIN_IT",
+  "department": "Division_IT",
+  "priority": "Normal",
+  "createDate": "2019-11-29T16:55:07.150Z",
+  "initialRevisionDate": "2019-11-29T00:00:00.000Z",
+  "supplier": {
+  "id": 1000058910,
+  "name": "Beta Ricambi",
+  "supplierNumber": "VIT0000019",
+  "thirdPartyRefNumber": "19628",
+  "fulfillmentAddressInternalId": 450449901,
+  "fulfillmentAddressId": "VIT0000019"
+  },
+  "freightOnBoard": "Origin",
+  "requisitionRefId": 1686914,
+  "invoiceStatus": "none",
+  "receiptStatus": "none"
+  }
+  }
+  ]
+  }
+  }
+  URL: Return Code | /j1p/api/public/ji/v1/orders/: 200 operation processed. See response content for results
+hash: sha256:6480d170b15031aa06a1aefc71ab576b16fd58e46a37272a9f092984661f0665
+words: 152
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: Export Orders
+  section_path: 2.5.2.1
+  page: 114
+  lang: en
+  prev: U.DOC0168.0493
+  next: U.DOC0168.0495
+table:
+  table: 0
+  headers:
+    - URL
+    - /j1p/api/public/ji/v1/orders/
+  rows:
+    - - Http Method
+      - GET
+    - - Header Parameters
+      - Authorization bearer XXXX
+    - - Response format
+      - |-
+        {
+        "returnCode": 0,
+        "returnMessage": "",
+        "totRecords": 1,
+        "returnedRecords": 1,
+        "startAt": 1,
+        "jiorderList": {
+        "jiorder": [
+        {
+        "header": {
+        "originalRequestMessageId": "14822edb-b126-49b0-80e1-0166c561d45d",
+        "orderId": 1398308,
+        "validationStatus": "Unneeded",
+        "lastUpdate": "2020-01-16",
+        "poNumber": "1398308",
+        "originalPONumber": "1398308",
+        "workflowStatus": "Pending",
+        "supplierStatus": {
+        "status": "NewOrder",
+        "hasBackorderedItem": "false",
+        "hasCancelledItems": "false",
+        "hasSupplierEdits": "false",
+        "hasShippedItems": "false"
+        },
+        "apStatus": "Open",
+        "revisionNumber": 0,
+        "revisionDate": "2019-11-29T16:56:04.118Z",
+        "requestor": {
+        "username": "requester01",
+        "businessUnit": "DIASORIN_IT",
+        "department": "Division_IT",
+        "firstName": "Requester",
+        "lastName": "User",
+        "phone": {
+        "countryCode": "39",
+        "number": "456712345"
+        },
+        "position": "Evaluator",
+        "email": "[email]"
+        },
+        "buyer": {},
+        "businessUnit": "DIASORIN_IT",
+        "department": "Division_IT",
+        "priority": "Normal",
+        "createDate": "2019-11-29T16:55:07.150Z",
+        "initialRevisionDate": "2019-11-29T00:00:00.000Z",
+        "supplier": {
+        "id": 1000058910,
+        "name": "Beta Ricambi",
+        "supplierNumber": "VIT0000019",
+        "thirdPartyRefNumber": "19628",
+        "fulfillmentAddressInternalId": 450449901,
+        "fulfillmentAddressId": "VIT0000019"
+        },
+        "freightOnBoard": "Origin",
+        "requisitionRefId": 1686914,
+        "invoiceStatus": "none",
+        "receiptStatus": "none"
+        }
+        }
+        ]
+        }
+        }
+    - - Return Code
+      - 200 operation processed. See response content for results
+  block: 1
+  blocks: 1

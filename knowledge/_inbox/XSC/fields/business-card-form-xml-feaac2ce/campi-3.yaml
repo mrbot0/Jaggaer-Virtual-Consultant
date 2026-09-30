@@ -1,0 +1,39 @@
+document: business-card-form-xml-feaac2ce
+scope: XSC
+section: campi-3
+section_title: Campi — Order Information
+genre: tecnica
+rows:
+  - label: "105"
+    technical_name: "105"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=105 · tipo=static
+    section: campi-3
+    source_unit: business-card-form-xml-feaac2ce/campi-3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce
+  - label: Order Size
+    technical_name: Order Size
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248346 · id=10001 · tipo=userdefined
+    section: campi-3
+    source_unit: business-card-form-xml-feaac2ce/campi-3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce
+  - label: Order Type
+    technical_name: Order Type
+    type: RadioButtonGroup
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248347 · id=10002 · tipo=userdefined
+    section: campi-3
+    source_unit: business-card-form-xml-feaac2ce/campi-3#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce

@@ -1,0 +1,124 @@
+id: U.DOC0171.0445
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "(it can have exponential notation) | Available from version: 12_3_01 Attribute: maxValue | Description: “Maximum Unit Price” for parameter type PRICE and QUANTITY_RANGE; “Maximum Discount Value” for parameter type DISCOUNT. (it can have exponential notation) | Available from version: 12_3_01 Attribute: basePriceBeforeDiscount | Description: Base price before discount. (it can have exponential notation) | Available from version: 12_3_01 Attribute: showBasePrice | Description: “Base price before discount” visibility flag (0 base price is hidden; 1 base price is visible to supplier) | Available from version: 12_3_01 Attribute: extCode | Description: Identifier of the price item in the external system (field available only via WS not in the user interface) | Available from version: 12_3_01 Attribute: paramPos | Description: Progressive number of the parameter inside envelope section | Available from version: 12_3_02 Attribute: associatedMasterItem | Description: Master Item associated with the economical parameter. See section “Master Item” below. | Available from version: JA_19_01"
+hash: sha256:114ec8466df7bfd1fa6c3c501890181c5b7864a1f7e2e232110b02c01d40ecde
+words: 151
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: Economical Parameter [Export RfX method]"
+  section_path: 2.3.4.12
+  page: 7
+  lang: en
+  prev: U.DOC0171.0444
+  next: U.DOC0171.0446
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - id
+      - JA internal identifier of the parameter (referenced in offers)
+      - ""
+    - - reference
+      - Id of the contract row
+      - ""
+    - - description
+      - Price description
+      - ""
+    - - type
+      - |-
+        Parameter type.
+        Allowed values:
+        PRICE
+        QUANTITY_RANGE
+        DISCOUNT
+        GENERIC_LINE
+        NOTE
+      - 12_3_01
+    - - notes
+      - Price notes
+      - ""
+    - - showNotes
+      - Notes visibility flag (0 notes are not visible to supplier, 1 they are visible)
+      - 12_3_00
+    - - quantity
+      - Quantity
+      - ""
+    - - showQuantity
+      - Quantity visibility flag (0 quantity is shown to supplier, 1 it is hidden)
+      - 12_3_00
+    - - quantityInsertedBy
+      - State if quantity must be inserted by BUYER or SELLER.
+      - 12_3_00
+    - - currency
+      - Currency
+      - ""
+    - - unitOfMeasure
+      - Unit of measure external code
+      - ""
+    - - goodsGroup
+      - Goods group external code
+      - ""
+    - - priceByQuantityRanges
+      - Ranges in case of price by quantity parameter
+      - ""
+    - - mandatory
+      - Mandatory commercial parameter flag. (1-parameter is mandatory; 0-parameter is optional)
+      - 12_2_00
+    - - prCodes/prcode
+      - Code of the PR current parameter is linked to, in the form “code of the PR”-row-“PR row number” (e.g. PR001-row-1)
+      - 12_2_01
+    - - prEntries/prEntry
+      - "Each prEntry is composed of 2 elements: originating PR code and PR row number"
+      - JINT 21_01_01
+    - - instruction
+      - Instructional attachment
+      - 12_3_00
+    - - referencePrice
+      - |-
+        “Reference Price” for parameter type PRICE and QUANTITY_RANGE;
+        “Reference Discounted Price” for parameter type DISCOUNT.
+        (it can have exponential notation)
+      - 12_3_01
+    - - minValue
+      - |-
+        “Minimum Unit Price” for parameter type PRICE and QUANTITY_RANGE
+        “Minimum Discount Value” for parameter type DISCOUNT.
+        (it can have exponential notation)
+      - 12_3_01
+    - - maxValue
+      - |-
+        “Maximum Unit Price” for parameter type PRICE and QUANTITY_RANGE;
+        “Maximum Discount Value” for parameter type DISCOUNT.
+        (it can have exponential notation)
+      - 12_3_01
+    - - basePriceBeforeDiscount
+      - |-
+        Base price before discount.
+        (it can have exponential notation)
+      - 12_3_01
+    - - showBasePrice
+      - “Base price before discount” visibility flag (0 base price is hidden; 1 base price is visible to supplier)
+      - 12_3_01
+    - - extCode
+      - Identifier of the price item in the external system (field available only via WS not in the user interface)
+      - 12_3_01
+    - - paramPos
+      - Progressive number of the parameter inside envelope section
+      - 12_3_02
+    - - associatedMasterItem
+      - |-
+        Master Item associated with the economical parameter.
+        See section “Master Item” below.
+      - JA_19_01
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

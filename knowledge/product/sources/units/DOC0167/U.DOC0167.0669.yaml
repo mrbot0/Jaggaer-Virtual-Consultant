@@ -1,0 +1,17 @@
+id: U.DOC0167.0669
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: testo
+text: When the J1P service sends the supplier export message to the external system for the first time, it sets all of the fields to isChanged="Yes". When the external system returns a success response, the solution will begin tracking changes on subsequent exports. The unchanged fields will then be set to isChanged="No", leaving only the changed fields set to isChanged="Yes".
+hash: sha256:6210ae7b549f50595a85c9e5cf92ccf36dd886fa30e73e5818c00801a7fd8f8e
+words: 59
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: Is Changed
+  section_path: 2.4.3
+  page: 7
+  lang: en
+  prev: U.DOC0167.0668
+  next: U.DOC0167.0670

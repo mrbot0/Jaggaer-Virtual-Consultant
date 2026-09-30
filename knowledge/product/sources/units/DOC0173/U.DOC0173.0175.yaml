@@ -1,0 +1,53 @@
+id: U.DOC0173.0175
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Filter Value | Filter Description
+  Filter Value: MASTER | Filter Description: Retrieve the all the information declared visible for Vendor management in the site configuration section
+  Filter Value: CLASS | Filter Description: Retrieve all the classifications assigned to the company in terms of code and description
+  Filter Value: USER | Filter Description: Retrieve the full profile of all sub users within the given company; . IMPORTANT NOTICE: the “login” field can be omitted for suppliers sub-users with an explicit configuration option of this service.
+  Filter Value: DEBASIC | Filter Description: Retrieve the list of question (DATA ELEMENT or DE) linked to a visible form
+  DEBASIC: registration supplementary forms
+  DEEXTENDED: complementary forms
+  DECATEGORY: classification forms
+  The retrieved list will include all the types of element (text, number, date, combo, multi item, attachment, etc) and will be independent from the user in charge of the filling (seller, buyer, external systems).
+  Filter Value: DEEXTENDED
+  Filter Value: DECATEGORY
+hash: sha256:69611d6a81229924453ef1ec3e2e321e059658cb072d2357f96da23bdab627dd
+words: 155
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: List of Component Filters
+  section_path: 4.2.2.1
+  page: 7
+  lang: en
+  prev: U.DOC0173.0174
+  next: U.DOC0173.0176
+table:
+  table: 0
+  headers:
+    - Filter Value
+    - Filter Description
+  rows:
+    - - MASTER
+      - Retrieve the all the information declared visible for Vendor management in the site configuration section
+    - - CLASS
+      - Retrieve all the classifications assigned to the company in terms of code and description
+    - - USER
+      - "Retrieve the full profile of all sub users within the given company; . IMPORTANT NOTICE: the “login” field can be omitted for suppliers sub-users with an explicit configuration option of this service."
+    - - DEBASIC
+      - |-
+        Retrieve the list of question (DATA ELEMENT or DE) linked to a visible form
+        DEBASIC: registration supplementary forms
+        DEEXTENDED: complementary forms
+        DECATEGORY: classification forms
+        The retrieved list will include all the types of element (text, number, date, combo, multi item, attachment, etc) and will be independent from the user in charge of the filling (seller, buyer, external systems).
+    - - DEEXTENDED
+      - ""
+    - - DECATEGORY
+      - ""
+  block: 1
+  blocks: 1

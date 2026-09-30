@@ -1,0 +1,35 @@
+id: U.DOC0173.0109
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: "Attribute: userId | Mandatory (Y/N): Y/N | Description: User internal identifier | Mapping on JA data model and notes: It may be used in case of UPDATE, ENABLE, DISABLE to identify the user to work on, when no user alias (login) is specified or when the web service has been called to update the login value."
+hash: sha256:7fff30c1f1c584cb027765ad842db9743b2774462d0807e15353352d075a12c5
+words: 56
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: SubUserInfo [Import/update of Company and Users Data]
+  section_path: 4.1.1.6
+  page: 6
+  lang: en
+  prev: U.DOC0173.0108
+  next: U.DOC0173.0110
+row:
+  table: 0
+  row: 12
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - userId
+    - Y/N
+    - User internal identifier
+    - It may be used in case of UPDATE, ENABLE, DISABLE to identify the user to work on, when no user alias (login) is specified or when the web service has been called to update the login value.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,311 @@
+doc: S.STD.XSC.DOC.0112
+scope: XSC
+extracted_at: 2026-09-30T04:30:49.229Z
+tier: T0
+stats:
+  units: 8
+  extracted_units: 6
+  document_candidates: 4
+  needs_llm: 4
+  t0_complete: 6
+  by_candidate:
+    FLD: 6
+    CFG: 4
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 12000
+  sessions:
+    - n: 1
+      tokens: 12000
+      batches: 2
+      items: 4
+      batch_items:
+        - - R.DOC0112.C001
+          - R.DOC0112.C002
+        - - R.DOC0112.C003
+          - R.DOC0112.C004
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0112.0002
+    source_unit: U.DOC0112.0002
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0112
+    section: Impostazioni del modello di richiesta
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: You
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0112.0002
+    needs_llm: false
+    tokens: 316
+  - raw_id: R.DOC0112.0004
+    source_unit: U.DOC0112.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0112
+    section: Domande — Questions for Buyers / Questions for Buyers
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Please classify the type of items you are seeking in this quick quote request.
+      technical_name: "285350"
+      type: Dropdown List (Pick One)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Please classify the type of items you are seeking in this quick quote request.
+      section: domande-1
+      source_unit: U.DOC0112.0004
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0112
+    needs_llm: false
+    tokens: 76
+  - raw_id: R.DOC0112.0005
+    source_unit: U.DOC0112.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0112
+    section: Domande — Questions for Buyers / Questions for Buyers
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Is this item needed within the next two weeks?
+      technical_name: "285351"
+      type: Yes/No
+      mandatory_text: No
+      allowed_values: []
+      notes: Is this item needed within the next two weeks?
+      section: domande-1
+      source_unit: U.DOC0112.0005
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0112
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0112.0006
+    source_unit: U.DOC0112.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0112
+    section: Domande — Questions for Buyers / Questions for Buyers
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: If needed quickly, briefly explain why.
+      technical_name: "285352"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: If needed quickly, briefly explain why.
+      section: domande-1
+      source_unit: U.DOC0112.0006
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0112
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0112.0007
+    source_unit: U.DOC0112.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0112
+    section: Domande — Questions for Buyers / Questions for Buyers
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Have you searched for this item from a contract or catalog?
+      technical_name: "285353"
+      type: Yes/No
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Have you searched for this item from a contract or catalog?
+      section: domande-1
+      source_unit: U.DOC0112.0007
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0112
+    needs_llm: false
+    tokens: 62
+  - raw_id: R.DOC0112.0008
+    source_unit: U.DOC0112.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0112
+    section: Domande — Questions for Buyers / Questions for Buyers
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Why not? Can't you even be bothered to make the smallest effort to buy off contract? Is that too much to ask?? Explain yourself.
+      technical_name: "285354"
+      type: Text (Multi-Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Why not? Can't you even be bothered to make the smallest effort to buy off contract? Is that too much to ask?? Explain yourself.
+      section: domande-1
+      source_unit: U.DOC0112.0008
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0112
+    needs_llm: false
+    tokens: 99
+  - raw_id: R.DOC0112.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0112
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0112.0003
+    facets: &a7
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: Title
+      current_state:
+        value: Quick Quote Request Form
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0112.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0112
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0112.0003
+    facets: *a7
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Quick Quote
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0112.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0112
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0112.0003
+    facets: *a7
+    extraction:
+      parameter: SearchableKeywords
+      current_state:
+        value: quotes vendors competitive
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0112.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0112
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0112.0003
+    facets: *a7
+    extraction:
+      parameter: purpose
+      current_state:
+        value: QuickQuoteRequest
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

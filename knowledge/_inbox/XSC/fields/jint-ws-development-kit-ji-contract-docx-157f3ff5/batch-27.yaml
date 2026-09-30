@@ -1,0 +1,773 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-27
+section: 2.2.1.24
+section_title: Eprocurement [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:ACTIVEFORSHOPPING
+    label: activeForShopping
+    labels:
+      - activeForShopping
+    technical_name: ACTIVEFORSHOPPING
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the contact is (true) or is not (false) active for
+      shopping
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: activeForShopping
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ALLOWSUPPLIEREDITITEMS
+    label: allowSupplierEditItems
+    labels:
+      - allowSupplierEditItems
+    technical_name: ALLOWSUPPLIEREDITITEMS
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether supplier can (true) or cannot (false) edit the price on
+      a contract noncatalog line item that has been populated from the contract
+      on a portal invoice or credit memo.
+
+      This field does not apply to other non-catalog line items, only those
+      populated from the contract on a portal invoice or credit memo.
+
+      Note: This field applies to price only. Suppliers cannot edit the part
+      number, product size, packaging, or description of an item.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: allowSupplierEditItems
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:BLANKETPONUMBER
+    label: blanketPONumber
+    labels:
+      - blanketPONumber
+    technical_name: BLANKETPONUMBER
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Number of the blanket PO associated with the contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: blanketPONumber
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:AUTOAPPLYPURCHASE
+    label: autoApplyPurchase
+    labels:
+      - autoApplyPurchase
+    technical_name: AUTOAPPLYPURCHASE
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the contact is (true) or is not (false) to be
+      automatically applied to a purchase request
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: autoApplyPurchase
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:REQUIRESPRICESET
+    label: requiresPriceSet
+    labels:
+      - requiresPriceSet
+    technical_name: REQUIRESPRICESET
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the contact is (true) or is not (false) associated with
+      a price set (hosted catalog).
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: requiresPriceSet
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EVALUATERECEIPTSETTLEMENT
+    label: evaluateReceiptSettlement
+    labels:
+      - evaluateReceiptSettlement
+    technical_name: EVALUATERECEIPTSETTLEMENT
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether the contact does (true) or does not (false) have the
+      Evaluated Receipt Settlement setting enabled.
+
+      When the setting is enabled, and a receipt is created from the contract,
+      the associated invoice can be created automatically.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: evaluateReceiptSettlement
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CODESDEFAULTFORINVOICES
+    label: codesDefaultForInvoices
+    labels:
+      - codesDefaultForInvoices
+    technical_name: CODESDEFAULTFORINVOICES
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Accounting codes group container.
+      See section “CodesGroup [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: codesDefaultForInvoices
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ADMINISTRATIVEFEE
+    label: administrativeFee
+    labels:
+      - administrativeFee
+    technical_name: ADMINISTRATIVEFEE
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Administrative fee information.
+      See section “AdministrativeFee [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: administrativeFee
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ALLOWNONCATALOGITEMS
+    label: allowNonCatalogItems
+    labels:
+      - allowNonCatalogItems
+    technical_name: ALLOWNONCATALOGITEMS
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the contact does (true) or does not (false) allow
+      non-catalog purchases.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: allowNonCatalogItems
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:POCLAUSELIST
+    label: poClauseList
+    labels:
+      - poClauseList
+    technical_name: POCLAUSELIST
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for PO clauses associated to this contract.
+      See section “Clause [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: poClauseList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:BUDGET
+    label: budget
+    labels:
+      - budget
+    technical_name: BUDGET
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Budget for the contract.
+
+      If the enforceBudget is set to true, then the value must be greater than
+      zero.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: budget
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ENFORCEBUDGET
+    label: enforceBudget
+    labels:
+      - enforceBudget
+    technical_name: ENFORCEBUDGET
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the contract budget rules, such as
+      minimumContractSpendPerPR, are (true) or are not (false) to be enforced on
+      PRs, Pos, and invoices.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: enforceBudget
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MINIMUMCONTRACTSPENDFORPR
+    label: minimumContractSpendForPR
+    labels:
+      - minimumContractSpendForPR
+    technical_name: MINIMUMCONTRACTSPENDFORPR
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Minimum spend allowed on the contract per PR.
+      This value overwrites any existing value on the contract.
+      Valid only for blanket Pos.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: minimumContractSpendForPR
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MAXIMUMCONTRACTSPENDFORPR
+    label: maximumContractSpendForPR
+    labels:
+      - maximumContractSpendForPR
+    technical_name: MAXIMUMCONTRACTSPENDFORPR
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Maximum spend allowed on the contract per PR.
+      This value overwrites any existing value on the contract.
+      Valid only for blanket Pos.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: maximumContractSpendForPR
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MINIMUMLINEITEMQUANTITYPERPR
+    label: minimumLineItemQuantityPerPR
+    labels:
+      - minimumLineItemQuantityPerPR
+    technical_name: MINIMUMLINEITEMQUANTITYPERPR
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Minimum line item quantity allowed on the contract per PR.
+      This value overwrites any existing value on the contract.
+      Valid only for blanket Pos
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: minimumLineItemQuantityPerPR
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MAXIMUMLINEITEMQUANTITYPERPR
+    label: maximumLineItemQuantityPerPR
+    labels:
+      - maximumLineItemQuantityPerPR
+    technical_name: MAXIMUMLINEITEMQUANTITYPERPR
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Maximum line item quantity allowed on the contract per PR.
+      This value overwrites any existing value on the contract.
+      Valid only for blanket Pos.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: maximumLineItemQuantityPerPR
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:USEREQLIMITSFORINVOICE
+    label: useReqLimitsForInvoice
+    labels:
+      - useReqLimitsForInvoice
+    technical_name: USEREQLIMITSFORINVOICE
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether the minimum and maximum contract spend and line item
+      quantity limits set for PRs do (true) or do not (false) also apply to
+      invoices.
+
+      That is, if this field is set to true, then:
+
+      The values of the PR-specific fields (minimumContractSpendPerPR,
+      maximumContractSpendPerPR, minimumLineItemQuantityPerPR, and
+      maximumLineItemQuantityPerPR) also apply to invoices.
+
+      The invoicespecific fields (minimumContractSpendPerInvoice,
+      maximumContractSpendPerInvoice, minimumLineItemQuantityPerInvoice, and
+      maximumLineItemQuantityPerInvoice) do not appear in the contract export
+      message.
+
+      The values of the PR-specific fields overwrite any values currently
+      configured for the invoice-specific fields
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: useReqLimitsForInvoice
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MINIMUMCONTRACTSPENDPERINVOICE
+    label: minimumContractSpendPerInvoice
+    labels:
+      - minimumContractSpendPerInvoice
+    technical_name: MINIMUMCONTRACTSPENDPERINVOICE
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Minimum contract spend amount allowed on the contract per invoice.
+
+      This value overwrites any existing value on the contract.
+
+      Valid only for blanket Pos.
+
+      Note: If the useReqLimitsForInvoice field is set to true, this field does
+      not appear in the contract export message.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: minimumContractSpendPerInvoice
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MAXIMUMCONTRACTSPENDPERINVOICE
+    label: maximumContractSpendPerInvoice
+    labels:
+      - maximumContractSpendPerInvoice
+    technical_name: MAXIMUMCONTRACTSPENDPERINVOICE
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Maximum contract spend amount allowed on the contract per invoice.
+
+      This value overwrites any existing value on the contract.
+
+      Valid only for blanket Pos.
+
+      Note: If the useReqLimitsForInvoice field is set to true, this field does
+      not appear in the contract export message.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r18
+        genre: tecnica
+        label: maximumContractSpendPerInvoice
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MINIMUMLINEITEMQUANTITYPERINVOICE
+    label: minimumLineItemQuantityPerInvoice
+    labels:
+      - minimumLineItemQuantityPerInvoice
+    technical_name: MINIMUMLINEITEMQUANTITYPERINVOICE
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Minimum line item quantity allowed on the contract per PR.
+      This value overwrites any existing value on the contract.
+      Valid only for blanket Pos
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r19
+        genre: tecnica
+        label: minimumLineItemQuantityPerInvoice
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MAXIMUMLINEITEMQUANTITYPERINVOICE
+    label: maximumLineItemQuantityPerInvoice
+    labels:
+      - maximumLineItemQuantityPerInvoice
+    technical_name: MAXIMUMLINEITEMQUANTITYPERINVOICE
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Maximum line item quantity allowed on the contract per PR.
+      This value overwrites any existing value on the contract.
+      Valid only for blanket Pos.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r20
+        genre: tecnica
+        label: maximumLineItemQuantityPerInvoice
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:APPLIESTO
+    label: appliesTo
+    labels:
+      - appliesTo
+    technical_name: APPLIESTO
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Specify contract access condition.
+      See section “AppliesTo [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r24
+        genre: tecnica
+        label: appliesTo
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:GOODSANDSERVICES
+    label: goodsAndServices
+    labels:
+      - goodsAndServices
+    technical_name: GOODSANDSERVICES
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Goods and Services settings.
+      See section “GoodsAndService [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r25
+        genre: tecnica
+        label: goodsAndServices
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:PAYMENTTERMS
+    label: paymentTerms
+    labels:
+      - paymentTerms
+    technical_name: PAYMENTTERMS
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Payment terms.
+      See section “PaymentTerms [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r26
+        genre: tecnica
+        label: paymentTerms
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SUPPLIERCUSTOMFIELDSETTINGS
+    label: supplierCustomFieldSettings
+    labels:
+      - supplierCustomFieldSettings
+    technical_name: SUPPLIERCUSTOMFIELDSETTINGS
+    section: 2.2.1.24
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Supplier custom field settings
+      See section “SupplierCustomFieldSettings [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r27
+        genre: tecnica
+        label: supplierCustomFieldSettings
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 5728

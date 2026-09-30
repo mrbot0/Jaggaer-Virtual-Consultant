@@ -1,0 +1,182 @@
+id: U.DOC0167.0008
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: "Modified fields type from unsignedLong to String (RoutingNumber and InternationalRoutingCode) Revision: 14 | Date Released: 2020-08-27 | Version: JINT 20 02 01 | Description of Change: Additional info values for choice and multi-choice are exported in the “neutral” locale. Revision: 15 | Date Released: 2020-10-21 | Version: JINT 20 03 00 | Description of Change: J1Supplier import: Added bizLegalStruct field J1Supplier export: Added bizLegalStruct field Added extStatusNote field Revision: 16 | Date Released: 2020-11-09 | Version: JINT 20 03 01 | Description of Change: J1Supplier Import/Export: Managed Custom Elements for Locations (Fulfillment centers) J1Supplier Export: Managed attribute isChanged for PUSH interface in the following cases (Supplier Custom Elements and Location Custom Elements): CustomElementIdentifier DisplayName CustomElementValueList CustomElementValue Revision: 17 | Date Released: 2020-11-13 | Version: JINT 20 03 01 | Description of Change: J1Supplier Import/Export Managed the following fields in JIData/locationList/location/termsAndCondition/paymentTerms section: standardPaymentTermsCode termsType daysAfter Revision: 18 | Date Released: 2021-01-07 | Version: JINT 20 03 01 | Description of Change: Added REST Interface Revision: 19 | Date Released: 2021-02-26 | Version: JINT 21 01 00 | Description of Change: J1Supplier Import/Export Managed the following structure data in JIData/contactList/contact section: mobilePhone Managed the following structure data in JIData/accountsPayableList/accountsPayable section: flexFields Revision: 20 | Date Released: 2021-04-15 | Version: JINT 21 01 00 | Description of Change: J1Supplier Export Added condition filter “awarded” referring to negotiations in JA, with possible values: YES, NO, YES_INCLUDE_OFFLINE, NO_INCLUDE_OFFLINE. Revision: 21 | Date Released: 2021-05-31 | Version: JINT 21 01 00 | Description of Change: Updated postman collections related to REST Interface."
+hash: sha256:c600c98a030f33fcfb2846308c0043372bdab79cb093f9ed365d2cc7a7011ff7
+words: 256
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  section: Revision History
+  section_path: "0.2"
+  page: 3
+  lang: en
+  prev: U.DOC0167.0007
+  next: U.DOC0167.0009
+table:
+  table: 0
+  headers:
+    - Revision
+    - Date Released
+    - Version
+    - Description of Change
+  rows:
+    - - "1"
+      - 2019-11
+      - 19.0.0
+      - First release
+    - - "2"
+      - 2019-12
+      - 19.1.0
+      - Added export method – DRAFT version
+    - - "3"
+      - 2020-01
+      - 19.1.0
+      - Refined export method
+    - - "4"
+      - 2020-01
+      - 19.1.0
+      - Added internalId in import and export
+    - - "5"
+      - 2020-02
+      - 19.1.0
+      - Added additional fields in conditional filters
+    - - "6"
+      - 2020-02-17
+      - 19.2.0
+      - Added new JI fields. Added PUSH interface with isChanged attributes to notify modifications
+    - - "7"
+      - 2020-03-06
+      - 19.2.0
+      - Revision of notes on some fields of J1SupplierData import section; added PUSH configuration samples
+    - - "8"
+      - 2020-03-08
+      - JINT 20 01 00
+      - "Minor changes (no impact): new WSDL version management"
+    - - "9"
+      - 2020-03-09
+      - JINT 20 01 00
+      - Update in J1Supplier\JASupplierData\company\registrationStatus field notes
+    - - "10"
+      - 2020-05-04
+      - JINT 20 01 00
+      - Added description for DE Condition Filters.
+    - - "11"
+      - 2020-05-26
+      - JINT 20 01 01
+      - Added BankIdentifierCodeText field. Deleted BankIdentifierCode field.
+    - - "12"
+      - 2020-06-26
+      - JINT 20 02 00
+      - Added biz fields (bizEmail, bizPhone, bizFax) and returnedRecords field.
+    - - "13"
+      - 2020-07-31
+      - JINT 20 02 01
+      - Added CustomPaymentText field. Modified fields type from unsignedLong to String (RoutingNumber and InternationalRoutingCode)
+    - - "14"
+      - 2020-08-27
+      - JINT 20 02 01
+      - Additional info values for choice and multi-choice are exported in the “neutral” locale.
+    - - "15"
+      - 2020-10-21
+      - JINT 20 03 00
+      - |-
+        J1Supplier import:
+        Added bizLegalStruct field
+        J1Supplier export:
+        Added bizLegalStruct field
+        Added extStatusNote field
+    - - "16"
+      - 2020-11-09
+      - JINT 20 03 01
+      - |-
+        J1Supplier Import/Export:
+        Managed Custom Elements for Locations (Fulfillment centers)
+        J1Supplier Export:
+        Managed attribute isChanged for PUSH interface in the following cases (Supplier Custom Elements and Location Custom Elements):
+        CustomElementIdentifier
+        DisplayName
+        CustomElementValueList
+        CustomElementValue
+    - - "17"
+      - 2020-11-13
+      - JINT 20 03 01
+      - |-
+        J1Supplier Import/Export
+        Managed the following fields in JIData/locationList/location/termsAndCondition/paymentTerms section:
+        standardPaymentTermsCode
+        termsType
+        daysAfter
+    - - "18"
+      - 2021-01-07
+      - JINT 20 03 01
+      - Added REST Interface
+    - - "19"
+      - 2021-02-26
+      - JINT 21 01 00
+      - |-
+        J1Supplier Import/Export
+        Managed the following structure data in JIData/contactList/contact section:
+        mobilePhone
+        Managed the following structure data in JIData/accountsPayableList/accountsPayable section:
+        flexFields
+    - - "20"
+      - 2021-04-15
+      - JINT 21 01 00
+      - |-
+        J1Supplier Export
+        Added condition filter “awarded” referring to negotiations in JA, with possible values: YES, NO, YES_INCLUDE_OFFLINE, NO_INCLUDE_OFFLINE.
+    - - "21"
+      - 2021-05-31
+      - JINT 21 01 00
+      - Updated postman collections related to REST Interface.
+    - - "22"
+      - 2021-08-12
+      - JINT 21 01 00
+      - |-
+        J1Supplier Export
+        Added missing description for J1Supplier/J1SupplierData/id field
+    - - "23"
+      - 2021-10-2f0
+      - JINT 21 02 00
+      - |-
+        J1Supplier Import
+        Field “approvedForERPSync” added in J1Supplier\JISupplierData structure
+    - - "24"
+      - 2021-11-18
+      - JINT 21 02 00
+      - |-
+        J1Supplier Import
+        Paragraph 2.1.6 Behaviour, Company Identification Strategy: note added to state ext_code field cannot be used for UPDATE and CREATE_UPDATE operation.
+    - - "25"
+      - 2022-01-05
+      - JINT 22 01 00
+      - |-
+        J1Supplier Import / Export
+        Added new web service behaviors in case of JI primary system for the supplier management.
+    - - "26"
+      - 2022-05-10
+      - JINT 22 01 05
+      - |-
+        Supplier Company creation in JCS
+        Added new section defining the condition to create company in JCS with mapping table
+        Updated response for Export of Supplier Company with part with the JCS response.
+    - - "27"
+      - 2022-07-27
+      - JINT 22 02
+      - |-
+        J1Supplier Import / Export
+        Added new field distributionLanguage.
+    - - "28"
+      - 2022-08-04
+      - JINT 22 02
+      - |-
+        J1Supplier Export
+        Changed type of field taxIdentificationType from Boolean to String.
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 3

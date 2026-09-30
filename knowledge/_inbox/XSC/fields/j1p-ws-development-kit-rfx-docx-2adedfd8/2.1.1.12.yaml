@@ -1,0 +1,76 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.12
+section_title: "Commercial Envelope: Section [Import/Update RfX method]"
+genre: tecnica
+rows:
+  - label: sectionType
+    technical_name: sectionType
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: "Identifies the type of the section. Allowed values are: “section” for
+      commercial section and “techQualSection” for other sections"
+    section: 2.1.1.12
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.12#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: name
+    technical_name: name
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Section name
+    section: 2.1.1.12
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.12#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: sectionPos
+    technical_name: sectionPos
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Section position
+    section: 2.1.1.12
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.12#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: includedInTotal
+    technical_name: includedInTotal
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      If the section is included in the total:
+      0 = no
+      1 = yes
+    section: 2.1.1.12
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.12#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: columnGroupId
+    technical_name: columnGroupId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Column Group internal identifier
+    section: 2.1.1.12
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.12#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: columnGroupCode
+    technical_name: columnGroupCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Column Group unique name
+    section: 2.1.1.12
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.12#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

@@ -1,0 +1,42 @@
+id: U.DOC0171.0059
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: tenderCode | Mandatory (Y/N): Y/N for insert
+  Not used for update | Description: Code of the project/tender (JA internal identifier) | Mapping on JA data model and notes: When updating an existing RfX, these fields are ignored (RfX is kept in original project).
+  When creating a new item, if the field autoCreateTender is not specified, at least one between tenderCode and tenderReferenceCode must be specified as defined in as described in “Tender (Project) selection”
+hash: sha256:c554e0dafd83772becd55583ee242b4e93349fe56063bf476fbab19263cbee63
+words: 75
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0058
+  next: U.DOC0171.0060
+row:
+  table: 0
+  row: 5
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - tenderCode
+    - |-
+      Y/N for insert
+      Not used for update
+    - Code of the project/tender (JA internal identifier)
+    - |-
+      When updating an existing RfX, these fields are ignored (RfX is kept in original project).
+      When creating a new item, if the field autoCreateTender is not specified, at least one between tenderCode and tenderReferenceCode must be specified as defined in as described in “Tender (Project) selection”
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

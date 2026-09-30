@@ -1,0 +1,86 @@
+id: U.DOC0139.0008
+doc: S.STD.XSC.DOC.0139
+doc_id: workflow-typical-epro-wf-steps-guidelines-xlsx-39f47465
+type: tabella
+text: "Colonne: Premier Invoice Workflow / Step Name: | Premier Invoice Workflow / Assign Invoice Number | Premier Invoice Workflow / Cancelled/Closed PO | Premier Invoice Workflow / Substitute Item Approval | Premier Invoice Workflow / Recurring Invoice Review | Premier Invoice Workflow / Tax Review | Premier Invoice Workflow / Hold for Receiving | Premier Invoice Workflow / Matching Exceptions | Premier Invoice Workflow / AP Review Catch-all | Premier Invoice Workflow / AP Review | Premier Invoice Workflow / Okay To Pay | Premier Invoice Workflow / Auto-Close PO Premier Invoice Workflow / Step Name:: Step Type: | Premier Invoice Workflow / Assign Invoice Number: Automated | Premier Invoice Workflow / Cancelled/Closed PO: Manual | Premier Invoice Workflow / Substitute Item Approval: Manual | Premier Invoice Workflow / Recurring Invoice Review: Manual | Premier Invoice Workflow / Tax Review: Manual | Premier Invoice Workflow / Hold for Receiving: Automated | Premier Invoice Workflow / Matching Exceptions: Manual | Premier Invoice Workflow / AP Review Catch-all: Manual | Premier Invoice Workflow / AP Review: Manual | Premier Invoice Workflow / Okay To Pay: Automated | Premier Invoice Workflow / Auto-Close PO: Automated Premier Invoice Workflow / Step Name:: Location of Approver(s): | Premier Invoice Workflow / Assign Invoice Number: N/A | Premier Invoice Workflow / Cancelled/Closed PO: Explicit Folder (Cancelled / Closed PO Exception) | Premier Invoice Workflow / Substitute Item Approval: Requester | Premier Invoice Workflow / Recurring Invoice Review: ADW (Recurring Invoice Review) | Premier Invoice Workflow / Hold for Receiving: N/A | Premier Invoice Workflow / Matching Exceptions: Explicit Approval Folder | Premier Invoice Workflow / AP Review Catch-all: ADW (AP Review) | Premier Invoice Workflow / AP Review: ADW (AP Review) | Premier Invoice Workflow / Okay To Pay: N/A | Premier Invoice Workflow / Auto-Close"
+hash: sha256:41699442b8492ed1327822143aec0df6e1c157f68fdc43c491b5345ea5c49ef8
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0139
+  chapter: Invoice Workflow
+  section: Invoice Workflow
+  section_path: sheet-3
+  page: null
+  lang: en
+  prev: U.DOC0139.0007
+  next: U.DOC0139.0009
+table:
+  table: 0
+  headers:
+    - "Premier Invoice Workflow / Step Name:"
+    - Premier Invoice Workflow / Assign Invoice Number
+    - Premier Invoice Workflow / Cancelled/Closed PO
+    - Premier Invoice Workflow / Substitute Item Approval
+    - Premier Invoice Workflow / Recurring Invoice Review
+    - Premier Invoice Workflow / Tax Review
+    - Premier Invoice Workflow / Hold for Receiving
+    - Premier Invoice Workflow / Matching Exceptions
+    - Premier Invoice Workflow / AP Review Catch-all
+    - Premier Invoice Workflow / AP Review
+    - Premier Invoice Workflow / Okay To Pay
+    - Premier Invoice Workflow / Auto-Close PO
+  rows:
+    - - "Step Type:"
+      - Automated
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Automated
+      - Manual
+      - Manual
+      - Manual
+      - Automated
+      - Automated
+    - - "Location of Approver(s):"
+      - N/A
+      - Explicit Folder (Cancelled / Closed PO Exception)
+      - Requester
+      - ADW (Recurring Invoice Review)
+      - null
+      - N/A
+      - Explicit Approval Folder
+      - ADW (AP Review)
+      - ADW (AP Review)
+      - N/A
+      - N/A
+    - - "Description / Trigger(s):"
+      - Automated step that assigns an invoice number to electronic invoices.
+      - Manual approval step that triggers when an electronic invoice is received against a closed or cancelled PO.
+      - Manual approval step that triggers when a substitute items is included on an invoice.
+      - Manual approval step that triggers for specified recurring invoices.
+      - Tax over 30% of PO price
+      - Automated step that holds an invoice for a set period of time in order to wait for the receipt to be submitted.
+      - Manual approval step that triggers when an invoice isn't matched based on the matching tolerances configured. Routes to Procurement.
+      - Manual approval step which triggers if the AP Review step doesn't have an approver.
+      - For all invoices for AP to check.
+      - Automated step that marks the invoice as okay to pay which triggers the export of the invoice to CostPoint for payment.
+      - Automated step that evaluates whether or not the PO is fully invoiced and if so closes the PO.
+    - - "Set up status:"
+      - (Completed)
+      - Set up Ken and Gary as approvers (Completed)
+      - Added approve/reject invoice permission to Requester role (Completed)
+      - Added step with Kim as approver (Completed)
+      - Added step with Kim as approver (Completed)
+      - (Completed)
+      - Set up Ken and Gary as approvers (Completed)
+      - (Completed)
+      - (Completed)
+      - (Completed)
+      - (Completed)
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 3

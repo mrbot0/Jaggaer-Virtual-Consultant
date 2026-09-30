@@ -1,0 +1,1099 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-07
+section: 2.3.1.2
+section_title: Header [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:OPERATIONCODE
+    label: operationCode
+    labels:
+      - operationCode
+    technical_name: OPERATIONCODE
+    section: 2.3.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Indicates whether the PO is new, an update, or is being cancelled. The
+      default operation is new
+
+      Possible value (case sensitive):
+
+      new
+
+      update
+
+      cancel
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: operationCode
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:PONUMBER
+    label: poNumber
+    labels:
+      - poNumber
+    technical_name: PONUMBER
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Number of the PO.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: poNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ALTERNATEPONUMBER
+    label: alternatePONumber
+    labels:
+      - alternatePONumber
+    technical_name: ALTERNATEPONUMBER
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Alternate PO number.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: alternatePONumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SUPPLIERSTATUS
+    label: supplierstatus
+    labels:
+      - supplierstatus
+      - supplierStatus
+    technical_name: SUPPLIERSTATUS
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Supplier status.
+      See section “SupplierStatus [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: supplierstatus
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.36
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: supplierStatus
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EVALUATEDRECEIPTSETTLEMENT
+    label: evaluatedReceiptSettlement
+    labels:
+      - evaluatedReceiptSettlement
+    technical_name: EVALUATEDRECEIPTSETTLEMENT
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the PO does (true) or does not (false) have the
+      Evaluated Receipt Settlement setting enabled. When the setting is enabled,
+      invoices cannot be created from the PO (credit memos can still be
+      created).
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: evaluatedReceiptSettlement
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:REVISIONNUMBER
+    label: revisionNumber
+    labels:
+      - revisionNumber
+    technical_name: REVISIONNUMBER
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Revision number of the PO. New POs begin with revision 0. The revision
+      number is incremented sequentially (that is, 0, 1, 2, and so on).
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: revisionNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:REVISIONDATE
+    label: revisionDate
+    labels:
+      - revisionDate
+    technical_name: REVISIONDATE
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date and time the revision was finalized
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: revisionDate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DISTRIBUTEREVISION
+    label: distributeRevision
+    labels:
+      - distributeRevision
+    technical_name: DISTRIBUTEREVISION
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Set to true if the revision was flagged to be distributed to the
+      supplier. Otherwise, false.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: distributeRevision
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:REQUESTOR
+    label: requestor
+    labels:
+      - requestor
+    technical_name: REQUESTOR
+    section: 2.3.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Information about the person who originally requested the PO export.
+      See section “Requestor [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: requestor
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:BUSINESSUNIT
+    label: businessUnit
+    labels:
+      - businessUnit
+    technical_name: BUSINESSUNIT
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Name of the business unit with which the buyer is associated
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: businessUnit
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: businessUnit
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DEPARTMENT
+    label: department
+    labels:
+      - department
+    technical_name: DEPARTMENT
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Department of the buyer, from his or her profile.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: department
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.4
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: department
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PRIORITY
+    label: priority
+    labels:
+      - priority
+    technical_name: PRIORITY
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Priority of the PO:
+      High
+      Normal
+      Empty
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: priority
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CREATEDATE
+    label: createDate
+    labels:
+      - createDate
+    technical_name: CREATEDATE
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date and time the PO was generated
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: createDate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INITIALREVISIONDATE
+    label: initialRevisionDate
+    labels:
+      - initialRevisionDate
+    technical_name: INITIALREVISIONDATE
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date and time the PO was initially revised
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: initialRevisionDate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ACCOUNTINGDATE
+    label: accountingDate
+    labels:
+      - accountingDate
+    technical_name: ACCOUNTINGDATE
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Accounting date of the PO, also known as the transaction date or the date
+      against which the financial department charges the PO
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: accountingDate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SUPPLIER
+    label: supplier
+    labels:
+      - supplier
+    technical_name: SUPPLIER
+    section: 2.3.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Order Supplier Information.
+      It must always be provided.
+      See section “SupplierInfo [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: supplier
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:BILLTO
+    label: billTo
+    labels:
+      - billTo
+    technical_name: BILLTO
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Billing to Address
+      See section “Address [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: billTo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SHIPTO
+    label: shipTo
+    labels:
+      - shipTo
+    technical_name: SHIPTO
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Shipping to Address
+      See section “Address [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: shipTo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PAYMENTINFO
+    label: paymentInfo
+    labels:
+      - paymentInfo
+    technical_name: PAYMENTINFO
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Payment information.
+
+      See section “AddressLine [Import JIOrder method]
+
+      Attribute | Mandatory (Y/N) | Description
+
+      label | N | Label of the address line, if applicable
+
+      This attribute is not used for imports. Valid only for exports and
+      validations.
+
+      lineNumber | Y | Line number of the address line
+
+      addressLine | N | Address line information, usually containing the street
+      address and other address information.
+
+      PaymentInfo [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r18
+        genre: tecnica
+        label: paymentInfo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INTERNALINFO
+    label: internalInfo
+    labels:
+      - internalInfo
+    technical_name: INTERNALINFO
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Internal Information.
+      See section “InternalInfo [Import JIOrder method]External information.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r19
+        genre: tecnica
+        label: internalInfo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EXTERNALINFO
+    label: externalInfo
+    labels:
+      - externalInfo
+    technical_name: EXTERNALINFO
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      External information.
+      See section “ExernalInfo [Import JIOrder method]” below.” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r20
+        genre: tecnica
+        label: externalInfo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FREIGHTONBOARD
+    label: freightOnBoard
+    labels:
+      - freightOnBoard
+    technical_name: FREIGHTONBOARD
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Freight on Board (FOB) information.
+
+      When shipping goods, FOB indicates whether the destination or the origin
+      pays the loading and transportation costs, or the point at which the
+      responsibility of the goods transfers from the shipper to the buyer.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r21
+        genre: tecnica
+        label: freightOnBoard
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMFIELDVALUESETLIST
+    label: customFieldValueSetList
+    labels:
+      - customFieldValueSetList
+    technical_name: CUSTOMFIELDVALUESETLIST
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for Custom field value set information.
+      See section “CustomFieldValueSet [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r22
+        genre: tecnica
+        label: customFieldValueSetList
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.36
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: customFieldValueSetList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SPLITTABLEFIELDSETGROUPLIST
+    label: splittableFieldSetGroupList
+    labels:
+      - splittableFieldSetGroupList
+    technical_name: SPLITTABLEFIELDSETGROUPLIST
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for Splittable field Set Group information.
+      See section “SplittableFieldSetGroup [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r23
+        genre: tecnica
+        label: splittableFieldSetGroupList
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.36
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: splittableFieldSetGroupList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:REQUISITIONREFID
+    label: requisitionRefId
+    labels:
+      - requisitionRefId
+    technical_name: REQUISITIONREFID
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: JAGGAER requisition ID number
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r24
+        genre: tecnica
+        label: requisitionRefId
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SHIPPINGCHARGES_TAXSHIPPINGHANDLING
+    label: shippingCharges/taxShippingHandling
+    labels:
+      - shippingCharges/taxShippingHandling
+    technical_name: SHIPPINGCHARGES_TAXSHIPPINGHANDLING
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Charger for shipping item.
+      See section “TaxShippingHandling [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r25
+        genre: tecnica
+        label: shippingCharges/taxShippingHandling
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.44
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.44#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: shippingCharges/taxShippingHandling
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:HANDLINGCHARGES_TAXSHIPPINGHANDLING
+    label: handlingCharges/taxShippingHandling
+    labels:
+      - handlingCharges/taxShippingHandling
+    technical_name: HANDLINGCHARGES_TAXSHIPPINGHANDLING
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Charger for handling item.
+      See section “TaxShippingHandling [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r26
+        genre: tecnica
+        label: handlingCharges/taxShippingHandling
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.44
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.44#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: handlingCharges/taxShippingHandling
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX1_TAXSHIPPINGHANDLING
+    label: tax1/taxShippingHandling
+    labels:
+      - tax1/taxShippingHandling
+    technical_name: TAX1_TAXSHIPPINGHANDLING
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Charger for tax 1.
+      See section “TaxShippingHandling [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r27
+        genre: tecnica
+        label: tax1/taxShippingHandling
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.44
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.44#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: tax1/taxShippingHandling
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX2_TAXSHIPPINGHANDLING
+    label: tax2/taxShippingHandling
+    labels:
+      - tax2/taxShippingHandling
+    technical_name: TAX2_TAXSHIPPINGHANDLING
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Charger for tax 2.
+      See section “TaxShippingHandling [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r28
+        genre: tecnica
+        label: tax2/taxShippingHandling
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.44
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.44#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: tax2/taxShippingHandling
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DISCOUNTAMOUNT
+    label: discountAmount
+    labels:
+      - discountAmount
+    technical_name: DISCOUNTAMOUNT
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Discount amount to be applied.
+      See section “DiscountAmount [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r29
+        genre: tecnica
+        label: discountAmount
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.44
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.44#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: discountAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ORDERCLAUSELIST
+    label: orderClauseList
+    labels:
+      - orderClauseList
+    technical_name: ORDERCLAUSELIST
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for clause applied to the order.
+      See section “OrderClause [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r30
+        genre: tecnica
+        label: orderClauseList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ORDERDISTRIBUTION
+    label: orderDistribution
+    labels:
+      - orderDistribution
+    technical_name: ORDERDISTRIBUTION
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Order distribution information.
+      See section “OrderDistribution [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r31
+        genre: tecnica
+        label: orderDistribution
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDITIONALNOTES
+    label: additionalNotes
+    labels:
+      - additionalNotes
+    technical_name: ADDITIONALNOTES
+    section: 2.3.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Order additional notes.
+      See section “AdditionalNote [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+        row_ref: t0.r32
+        genre: tecnica
+        label: additionalNotes
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.36
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+        row_ref: t0.r19
+        genre: tecnica
+        label: additionalNotes
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 7439

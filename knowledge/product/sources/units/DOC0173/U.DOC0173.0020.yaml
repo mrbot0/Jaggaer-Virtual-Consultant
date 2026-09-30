@@ -1,0 +1,35 @@
+id: U.DOC0173.0020
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: procedura
+text: |-
+  Each method has a specific paragraph dedicated. The structure is as follows
+  1. Import/update of Company and Users Data
+  2. Request data format: describes the possible operations on company (CREATE, UPDATE, CREATE_REGONLY and so on), on classification (CREATE, UPDATE, DELETE and so on), on sub-users (CREATE, UPDATE, ENABLE, DISABLE and so on) and data elements (CREATE). Then, it describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted.
+  3. Request samples: includes some examples of import requests.
+  4. Behaviour: describes how the web service processes the data passed in input, in case of some particular processes.
+  5. Response data format: describes the structure of the web service response and contains the list of possible error codes.
+  6. Export of Company and Users Data
+  7. Condition Filters: describes which fields can be used to filter the records to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of records extracted.
+hash: sha256:d4e59bfbc093c11e3bd109902d4646aae355a5113a0374a29d9adbd5f0cf37fa
+words: 190
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "3"
+  page: 5
+  lang: en
+  prev: U.DOC0173.0019
+  next: U.DOC0173.0021
+steps:
+  - Import/update of Company and Users Data
+  - "Request data format: describes the possible operations on company (CREATE, UPDATE, CREATE_REGONLY and so on), on classification (CREATE, UPDATE, DELETE and so on), on sub-users (CREATE, UPDATE, ENABLE, DISABLE and so on) and data elements (CREATE). Then, it describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted."
+  - "Request samples: includes some examples of import requests."
+  - "Behaviour: describes how the web service processes the data passed in input, in case of some particular processes."
+  - "Response data format: describes the structure of the web service response and contains the list of possible error codes."
+  - Export of Company and Users Data
+  - "Condition Filters: describes which fields can be used to filter the records to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of records extracted."
+procedure:
+  title: Each method has a specific paragraph dedicated. The structure is as follows

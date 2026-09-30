@@ -1,0 +1,145 @@
+id: U.DOC0171.0512
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Attribute: Object of the Contract | Datatype: VARCHAR2(256 CHAR) Attribute: value | Attribute: Estimated Value of Contract | Datatype: NUMBER Attribute: valueCurrency | Attribute: Currency | Datatype: VARCHAR2(100 CHAR) Attribute: bidsCurrency | Attribute: Event Currency | Datatype: VARCHAR2(100 CHAR) Attribute: envelopeDigitalSignature | Attribute: Require Digital Signature of Supplier Responses | Datatype: VARCHAR2(15 CHAR) Attribute: rankingStrategy | Attribute: Supplier Response Ranking (“Settings” area, “Awarding Strategy” section) | Datatype: VARCHAR2(30 CHAR)"
+hash: sha256:c5a93e25ad1fb0445696427a8c1ea541c986bab6f2e6468d3c24a3a14a93d52c
+words: 69
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: RfX Setting
+  section_path: 2.5.1
+  page: 8
+  lang: en
+  prev: U.DOC0171.0511
+  next: U.DOC0171.0513
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - Field
+      - UI default label (EN)
+      - ""
+    - - rfxId
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - rfxReferenceCode
+      - Rfq Code
+      - VARCHAR2(80 CHAR)
+    - - rfxExtCode
+      - "-"
+      - VARCHAR2(2000 CHAR)
+    - - rfiFlag
+      - "-"
+      - NUMBER(1)
+    - - dummyFlag
+      - Test RFQ
+      - NUMBER(1)
+    - - statusCode
+      - "-"
+      - NUMBER(5)
+    - - status
+      - Status
+      - VARCHAR2(128 CHAR)
+    - - tenderCode
+      - Project
+      - VARCHAR2(80 CHAR)
+    - - tenderReferenceCode
+      - ""
+      - VARCHAR2(80 CHAR)
+    - - templateId
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - templateReferenceCode
+      - Copied from
+      - VARCHAR2(80 CHAR)
+    - - templateTitle
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - contractIdFrom
+      - "-"
+      - NUMBER(38)
+    - - contractReferenceCodeFrom
+      - Copied from
+      - VARCHAR2(80 CHAR)
+    - - rfxIdFrom
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - rfxReferenceCodeFrom
+      - Originating RFQ
+      - VARCHAR2(80 CHAR)
+    - - shortDescription
+      - RFQ Title
+      - VARCHAR2(256 CHAR)
+    - - longDescription
+      - RFQ Description
+      - VARCHAR2(2000 CHAR)
+    - - archiveStatus
+      - "-"
+      - NUMBER(1)
+    - - buyerCompany/id
+      - "-"
+      - NUMBER(38)
+    - - buyerCompany/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - buyerCompany/name
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - ownerUser/name
+      - "-"
+      - VARCHAR2(257 CHAR)
+    - - ownerUser/id
+      - "-"
+      - NUMBER(38)
+    - - ownerUser/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - ownerUser/login
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - divisionName
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - divisionId
+      - "-"
+      - NUMBER(38)
+    - - supplierAccess
+      - Type of Supplier Access
+      - VARCHAR2(128 CHAR)
+    - - offersOpeningCriteria
+      - Options for Viewing Responses
+      - VARCHAR2(128 CHAR)
+    - - procedureType
+      - Type of Procedure
+      - VARCHAR2(256 CHAR)
+    - - contractObject
+      - Object of the Contract
+      - VARCHAR2(256 CHAR)
+    - - value
+      - Estimated Value of Contract
+      - NUMBER
+    - - valueCurrency
+      - Currency
+      - VARCHAR2(100 CHAR)
+    - - bidsCurrency
+      - Event Currency
+      - VARCHAR2(100 CHAR)
+    - - envelopeDigitalSignature
+      - Require Digital Signature of Supplier Responses
+      - VARCHAR2(15 CHAR)
+    - - rankingStrategy
+      - |-
+        Supplier Response Ranking
+        (“Settings” area, “Awarding Strategy” section)
+      - VARCHAR2(30 CHAR)
+  block: 1
+  blocks: 3
+part:
+  n: 2
+  of: 2

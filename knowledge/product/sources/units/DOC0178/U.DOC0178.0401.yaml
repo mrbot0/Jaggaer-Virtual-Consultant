@@ -1,0 +1,51 @@
+id: U.DOC0178.0401
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: statusCode | Description: Create contract response result code.
+  200 – The request was processed successfully.
+  400 – The request could not be understood due to syntax errors.
+  403 – system understood the request, but server is refusing to fulfill it for some reason.
+  408 – The server timed out while waiting for the request
+  412 – The precondition given in one or more of the request-header fields evaluated to false when it was tested on the server
+  500 – The request could not be processed due to a transient error.
+  Attribute: statusText | Description: Text of the status message.
+  Attribute: errorList | Description: List of error encountered while updating status.
+  See section “Error [Import]” below
+hash: sha256:8e8affaec0948ad7d74d238583a64a8691d036a052d17d5fe6ff18020f71f4fa
+words: 120
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Status [Import]
+  section_path: 2.2.3.2
+  page: 70
+  lang: en
+  prev: U.DOC0178.0400
+  next: U.DOC0178.0402
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - statusCode
+      - |-
+        Create contract response result code.
+        200 – The request was processed successfully.
+        400 – The request could not be understood due to syntax errors.
+        403 – system understood the request, but server is refusing to fulfill it for some reason.
+        408 – The server timed out while waiting for the request
+        412 – The precondition given in one or more of the request-header fields evaluated to false when it was tested on the server
+        500 – The request could not be processed due to a transient error.
+    - - statusText
+      - Text of the status message.
+    - - errorList
+      - |-
+        List of error encountered while updating status.
+        See section “Error [Import]” below
+  block: 1
+  blocks: 1

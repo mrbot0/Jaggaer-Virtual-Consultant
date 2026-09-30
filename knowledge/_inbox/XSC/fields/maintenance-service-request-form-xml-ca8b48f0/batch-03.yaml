@@ -1,0 +1,182 @@
+document: maintenance-service-request-form-xml-ca8b48f0
+scope: XSC
+batch: batch-03
+section: campi-3
+section_title: Campi — External Info
+part: 1
+parts: 1
+rows:
+  - key: tech:CONTRACTSTARTDATE
+    label: Requested Completion Date
+    labels:
+      - Requested Completion Date
+    technical_name: CONTRACTSTARTDATE
+    section: campi-3
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10002 · tipo=userdefined
+    sources:
+      - document: maintenance-service-request-form-xml-ca8b48f0
+        section: campi-3
+        source_unit: maintenance-service-request-form-xml-ca8b48f0/campi-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Requested Completion Date
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLEXTEXT9
+    label: Building
+    labels:
+      - Building
+    technical_name: FLEXTEXT9
+    section: campi-3
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=20;
+      UserDefinedFieldParamTextBoxMaxLength=30 · id=10003 · tipo=userdefined
+    sources:
+      - document: maintenance-service-request-form-xml-ca8b48f0
+        section: campi-3
+        source_unit: maintenance-service-request-form-xml-ca8b48f0/campi-3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Building
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FLEXTEXT10
+    label: Room / Floor
+    labels:
+      - Room / Floor
+    technical_name: FLEXTEXT10
+    section: campi-3
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=20;
+      UserDefinedFieldParamTextBoxMaxLength=30 · id=10004 · tipo=userdefined
+    sources:
+      - document: maintenance-service-request-form-xml-ca8b48f0
+        section: campi-3
+        source_unit: maintenance-service-request-form-xml-ca8b48f0/campi-3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Room / Floor
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FLEXPULL7
+    label: Service Type
+    labels:
+      - Service Type
+    technical_name: FLEXPULL7
+    section: campi-3
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248483 · id=10005 · tipo=userdefined
+    sources:
+      - document: maintenance-service-request-form-xml-ca8b48f0
+        section: campi-3
+        source_unit: maintenance-service-request-form-xml-ca8b48f0/campi-3#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Service Type
+        type: DropdownList
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:EXTERNALNOTES
+    label: Special Requests (1000 char)
+    labels:
+      - Special Requests (1000 char)
+    technical_name: EXTERNALNOTES
+    section: campi-3
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=false;
+      UserDefinedFieldParamTextAreaRows=5;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=50 · id=10006 · tipo=userdefined
+    sources:
+      - document: maintenance-service-request-form-xml-ca8b48f0
+        section: campi-3
+        source_unit: maintenance-service-request-form-xml-ca8b48f0/campi-3#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Special Requests (1000 char)
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:114
+    label: "114"
+    labels:
+      - "114"
+    technical_name: "114"
+    section: campi-3
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=114 · tipo=static
+    sources:
+      - document: maintenance-service-request-form-xml-ca8b48f0
+        section: campi-3
+        source_unit: maintenance-service-request-form-xml-ca8b48f0/campi-3#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: "114"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1579

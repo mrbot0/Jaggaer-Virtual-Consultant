@@ -1,0 +1,31 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.29
+section_title: BusinessUnitFee [Import]
+genre: tecnica
+rows:
+  - label: businessUnit
+    technical_name: businessUnit
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Business unit that adds a fee to purchases for this contract.
+      See section “BusinessUnit [Import]” below
+    section: 2.2.1.29
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.29#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: fee
+    technical_name: fee
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Administrative fee that this business unit adds to purchases for this
+      contract
+    section: 2.2.1.29
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.29#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

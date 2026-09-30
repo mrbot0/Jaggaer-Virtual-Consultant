@@ -1,0 +1,56 @@
+id: U.DOC0037.0004
+doc: S.STD.XSC.DOC.0037
+doc_id: ji-plt-2303-initialpoworkflowdefinition-xml-9915f422
+type: tabella
+text: |-
+  Tabella: transizioni
+  Colonne: Da | A | Condizione
+  Da: START | A: Invalid Distribution
+  Da: Invalid Distribution | A: Hold - Distribution Validation
+  Da: Hold - Distribution Validation | A: Revise PO
+  Da: Revise PO | A: PO Distribution
+  Da: PO Distribution | A: PO Export Simulation
+  Da: PO Export Simulation | A: Auto Invoice
+  Da: Auto Invoice | A: END
+hash: sha256:0c5abf52ba5f344c3ff4f5eb9806809a2caf8a465f55e40029d18645952e2e61
+words: 61
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0037
+  chapter: Transizioni (ActivityRelationship)
+  section: Transizioni (ActivityRelationship)
+  section_path: transizioni
+  page: null
+  lang: en
+  prev: U.DOC0037.0003
+  next: null
+table:
+  table: 0
+  headers:
+    - Da
+    - A
+    - Condizione
+  rows:
+    - - START
+      - Invalid Distribution
+      - ""
+    - - Invalid Distribution
+      - Hold - Distribution Validation
+      - ""
+    - - Hold - Distribution Validation
+      - Revise PO
+      - ""
+    - - Revise PO
+      - PO Distribution
+      - ""
+    - - PO Distribution
+      - PO Export Simulation
+      - ""
+    - - PO Export Simulation
+      - Auto Invoice
+      - ""
+    - - Auto Invoice
+      - END
+      - ""
+  block: 1
+  blocks: 1

@@ -1,0 +1,41 @@
+id: U.DOC0171.0218
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: paramReference | Mandatory (Y/N): N | Description: Commercial Identifier of the contract row | Mapping on JA data model and notes: Id of the contract row.
+  Used only if no value is provided in id or paramPos field. It represents the reference of the parameter to redefine default value for.
+  If the section doesn’t contain a parameter with such reference, no default value is redefined
+hash: sha256:92115fd3b276ed4392bb7b513c35a25ddfc66aee6c7fa7ad97729a7360487104
+words: 66
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: default line value for section additional column [Import/Update RfX method]"
+  section_path: 2.1.1.19
+  page: 6
+  lang: en
+  prev: U.DOC0171.0217
+  next: U.DOC0171.0219
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - paramReference
+    - N
+    - Commercial Identifier of the contract row
+    - |-
+      Id of the contract row.
+      Used only if no value is provided in id or paramPos field. It represents the reference of the parameter to redefine default value for.
+      If the section doesn’t contain a parameter with such reference, no default value is redefined
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

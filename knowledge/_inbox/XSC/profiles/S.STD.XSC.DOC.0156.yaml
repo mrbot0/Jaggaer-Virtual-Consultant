@@ -1,0 +1,90 @@
+id: S.STD.XSC.DOC.0156
+type: DOC
+title: JAGGAER Indirect Configuration
+summary: "Documento training-deck (d'uso, origine vendor) \"JAGGAER Indirect
+  Configuration\": 587 unità, 25 tabelle, 0 tabelle di campi; scope ADM, VEN,
+  XSC, CON; affidabilità 0.48."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2020-06-18
+    release: ignota
+  F15: d'uso
+sources:
+  - file: CORSI/JI-PLT-2300/JI-PLT-2305_Implementation.pptx
+    sha256: sha256:be3e6e736fe122eeca0cf3453c16d0942da17c76ef0383a97b6d99d0fd6b7ce3
+kind: training-deck
+genre: d'uso
+origin: vendor
+version: null
+dated: 2020-06-18
+covers_release: null
+languages:
+  - en
+scopes:
+  - ADM
+  - VEN
+  - XSC
+  - CON
+source:
+  path: CORSI/JI-PLT-2300/JI-PLT-2305_Implementation.pptx
+  sha256: sha256:be3e6e736fe122eeca0cf3453c16d0942da17c76ef0383a97b6d99d0fd6b7ce3
+  size: 29677354
+  format: pptx
+  doc_id: ji-plt-2305-implementation-pptx-76a37ae6
+  doc_key: ji-plt-2305-implementation.pptx
+structure:
+  pages: 189
+  chapters: 189
+  sections: 189
+  tables: 25
+  figures: 206
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 587
+  by_type:
+    testo: 499
+    tabella: 26
+    regola: 40
+    riferimento: 10
+    definizione: 2
+    esempio: 10
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 587
+  items_produced: 41
+  residue:
+    irrelevant: 4
+    duplicate: 0
+    ambiguous: 1
+    unsupported: 0
+    deferred: 0
+    tacit: 1
+  coverage_ratio: 0.07
+  last_run: 2026-09-30
+  estimated_tokens: 9430
+  sessions_planned: 1

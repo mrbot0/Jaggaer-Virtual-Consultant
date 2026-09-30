@@ -1,0 +1,17 @@
+id: U.DOC0134.0054
+doc: S.STD.XSC.DOC.0134
+doc_id: workflow-dynamic-guidelines-pdf-4d2d261b
+type: testo
+text: Custom Field <Activity name="Fund Approval"> <ActivityType>manual</ActivityType> <StepRef name="Fund Approval" /> <Rule><![CDATA[ Document.RequiresCustomFieldValueApproval("ORG_FUND") == true ]]></Rule> <FolderSelectionRule>CustomFieldValue< /FolderSelectionRule> <Attribute name="wfFolderRuleCustomFieldName"> <AttrValue lang="default">ORG_FUND</AttrValue> </Attribute> </Activity>
+hash: sha256:2b976f69f9cc92f2f0ce4371fe2e21c705de337eaf78e882fffa3b32ea23c328
+words: 23
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0134
+  chapter: "Dynamic Workflow Activity Examples:"
+  section: "Dynamic Workflow Activity Examples:"
+  section_path: p11
+  page: 11
+  lang: en
+  prev: U.DOC0134.0053
+  next: U.DOC0134.0055

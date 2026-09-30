@@ -1,0 +1,41 @@
+id: U.DOC0177.0426
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: internationalRoutingCode | Mandatory (Y/N): N | Description: Also known as IRC. Country-specific bank routing code for international banking transactions. | Mapping on Jaggaer One data model and notes: • If the “type” field on the AccountsPayable element is set to WireTransfer, and the AccountNumberType field is set to AccountNumber, this field is required for the countries identified in AccountNumberType, BankAccountNumber, and InternationalRoutingCode Fields (see page 89). Must be blank for all other countries.
+  • Must be blank if the “type” field on the AccountsPayable element is set to DirectDeposit, Check, Credit, ePayable, or PayMode.
+  See AccountNumberType, BankAccountNumber, and InternationalRoutingCode Fields (see page 89) for the full list of countries for which this field is required, if the “type” field on the AccountsPayable element is set to WireTransfer, and the AccountNumberType field is set to AccountNumber.
+hash: sha256:405249067bf79bf7a09b913dc19c10cf22c7e2007b06d68a31037610afd77f9c
+words: 136
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 79
+  lang: en
+  prev: U.DOC0177.0425
+  next: U.DOC0177.0427
+row:
+  table: 0
+  row: 9
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - internationalRoutingCode
+    - N
+    - Also known as IRC. Country-specific bank routing code for international banking transactions.
+    - |-
+      • If the “type” field on the AccountsPayable element is set to WireTransfer, and the AccountNumberType field is set to AccountNumber, this field is required for the countries identified in AccountNumberType, BankAccountNumber, and InternationalRoutingCode Fields (see page 89). Must be blank for all other countries.
+      • Must be blank if the “type” field on the AccountsPayable element is set to DirectDeposit, Check, Credit, ePayable, or PayMode.
+      See AccountNumberType, BankAccountNumber, and InternationalRoutingCode Fields (see page 89) for the full list of countries for which this field is required, if the “type” field on the AccountsPayable element is set to WireTransfer, and the AccountNumberType field is set to AccountNumber.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

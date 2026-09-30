@@ -1,0 +1,89 @@
+id: S.STD.XSC.DOC.0120
+type: DOC
+title: Blanket Order Request Overview
+summary: 'Documento guida-admin (tecnica, origine vendor) "Blanket Order Request
+  Overview": 35 unità, 0 tabelle, 0 tabelle di campi; scope CON, ADM, P2P, VEN;
+  affidabilità 0.6.'
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-epro_3000/Class file/payment methods_blanket order_setup.pdf
+    sha256: sha256:bf02dfe503bfdab80f34750247375b90b82c92d5bd8fa990df9376c67cb3c341
+kind: guida-admin
+genre: tecnica
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - CON
+  - ADM
+  - P2P
+  - VEN
+source:
+  path: CORSI/JI-epro_3000/Class file/payment methods_blanket order_setup.pdf
+  sha256: sha256:bf02dfe503bfdab80f34750247375b90b82c92d5bd8fa990df9376c67cb3c341
+  size: 1345927
+  format: pdf
+  doc_id: payment-methods-blanket-order-setup-pdf-d3622bc7
+  doc_key: payment-methods-blanket-order-setup.pdf
+structure:
+  pages: 7
+  chapters: 7
+  sections: 7
+  tables: 0
+  figures: 18
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 35
+  by_type:
+    testo: 24
+    riferimento: 3
+    regola: 6
+    procedura: 1
+    definizione: 1
+reliability:
+  base_by_kind: 0.75
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.6
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 35
+  items_produced: 8
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.23
+  last_run: 2026-09-30
+  estimated_tokens: 1345
+  sessions_planned: 1

@@ -1,0 +1,43 @@
+id: U.DOC0171.0078
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: qualEnvStatus | Mandatory (Y/N): N | Description: Status of the envelope:
+  0 = not active
+  1 = active with no response attachments
+  2 = active with response attachments allowed | Mapping on JA data model and notes: Qualification envelope and generic attachments availability for envelope
+hash: sha256:88a8c3773f40c482dfbd68ef898072a9ea10e8da4feed976ff53889135843753
+words: 46
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0077
+  next: U.DOC0171.0079
+row:
+  table: 0
+  row: 24
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - qualEnvStatus
+    - N
+    - |-
+      Status of the envelope:
+      0 = not active
+      1 = active with no response attachments
+      2 = active with response attachments allowed
+    - Qualification envelope and generic attachments availability for envelope
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

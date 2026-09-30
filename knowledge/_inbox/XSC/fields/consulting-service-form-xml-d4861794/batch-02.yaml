@@ -1,0 +1,237 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+batch: batch-02
+section: campi-2
+section_title: Campi — 2. Service Information
+part: 1
+parts: 1
+rows:
+  - key: tech:FLDGENERALITEMINST
+    label: fldGeneralItemInst
+    labels:
+      - fldGeneralItemInst
+    technical_name: FLDGENERALITEMINST
+    section: campi-2
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br><i>Enter a short description of the type of
+      the agreement in the appropriate fields below.</i><br><br> · id=10007 ·
+      tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-2
+        source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fldGeneralItemInst
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:111
+    label: "111"
+    labels:
+      - "111"
+    technical_name: "111"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=111 · tipo=static
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-2
+        source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "111"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLDSERVICECATEGORY
+    label: Service Category
+    labels:
+      - Service Category
+    technical_name: FLDSERVICECATEGORY
+    section: campi-2
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248344 · id=10005 · tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-2
+        source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Service Category
+        type: DropdownList
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FLDBEGINDATE
+    label: Service Start Date
+    labels:
+      - Service Start Date
+    technical_name: FLDBEGINDATE
+    section: campi-2
+    type: Date
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10015 · tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-2
+        source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Service Start Date
+        type: Date
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FLDENDDATE
+    label: Service End Date
+    labels:
+      - Service End Date
+    technical_name: FLDENDDATE
+    section: campi-2
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10016 · tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-2
+        source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Service End Date
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLDPRICEINST
+    label: fldPriceInst
+    labels:
+      - fldPriceInst
+    technical_name: FLDPRICEINST
+    section: campi-2
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: "UserDefinedFieldParamHTML=<BR><I>Note: If you have not been quoted a
+      price, enter a best-guess estimate that can be used for approval purposes.
+      </I> · id=10006 · tipo=userdefined"
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-2
+        source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: fldPriceInst
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:105
+    label: "105"
+    labels:
+      - "105"
+    technical_name: "105"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=105 · tipo=static
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-2
+        source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: "105"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ESTIMATED_PRICE
+    label: Estimated Price
+    labels:
+      - Estimated Price
+    technical_name: ESTIMATED_PRICE
+    section: campi-2
+    type: Price
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10000 · tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-2
+        source_unit: consulting-service-form-xml-d4861794/campi-2#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: Estimated Price
+        type: Price
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1841

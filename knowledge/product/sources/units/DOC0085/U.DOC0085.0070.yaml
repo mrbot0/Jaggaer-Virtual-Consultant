@@ -1,0 +1,46 @@
+id: U.DOC0085.0070
+doc: S.STD.XSC.DOC.0085
+doc_id: commodity-codes-setup-docx-3fd557c2
+type: tabella
+text: "Note: For a custom field value to be applied to the mapped commodity code, the custom field and value must be active, and placed in the codes section (header and line level) on the requisition document configuration. Allow users to modify value in cart: SCT ONLY - Use Commodity Code field in integration | If users are to be allowed to override Commodity Code values that auto-populated, select this option. The Commodity Code field is free-form for mapping types other than Value List. For value List, the field is a pull-down if there are 50 or fewer values, and it is a free-form for greater than 50 values. If free-form, the value is validated against the defined list.: For Banner Customers only: Uses the Commodity Code Field for Banner Integrations"
+hash: sha256:d7a70a92769c7256e02f829bdb6e7535947c0d2233310364ee554b0b65abad8e
+words: 130
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0085
+  chapter: commodity-codes-setup-docx-3fd557c2
+  section: "Step 1: Commodity Code Configuration"
+  section_path: 0.5.1
+  page: 12
+  lang: en
+  prev: U.DOC0085.0069
+  next: U.DOC0085.0071
+table:
+  table: 1
+  headers:
+    - ""
+    - Allow users to modify value in cart
+    - If users are to be allowed to override Commodity Code values that auto-populated, select this option. The Commodity Code field is free-form for mapping types other than Value List. For value List, the field is a pull-down if there are 50 or fewer values, and it is a free-form for greater than 50 values. If free-form, the value is validated against the defined list.
+  rows:
+    - - ""
+      - Show commodity code description (Value List only)
+      - This setting will determine whether or not commodity code description is shown on a requisition, PO, or invoice. If the box is not checked, the commodity code will be displayed with no description. This will not impact the ability to search on description if the commodity code search is being utilized.
+    - - ""
+      - Show commodity description in selection drop-down box (Value List only)
+      - This option adds the commodity code description to the drop-down selection box on the document. If the number of commodity code values is less than the organization search threshold then the commodity code values are displayed in a drop-down selection box. Please note that only the first 40 characters will be displayed in the selection box, which includes the value.
+    - - ""
+      - Sort commodity code values by description
+      - Sorts the selection of Commodity Codes by description as opposed to value.
+    - - ""
+      - Map Commodity Codes to Custom Field Values (Value List only)
+      - |-
+        For the Value List Mapping Type, you may select an active Custom Field to use in mapping commodity codes to specific custom field values. Once you have selected a custom field, you may select commodity codes to map a custom field value.
+        Note: For a custom field value to be applied to the mapped commodity code, the custom field and value must be active, and placed in the codes section (header and line level) on the requisition document configuration.
+    - - ""
+      - SCT ONLY - Use Commodity Code field in integration
+      - "For Banner Customers only: Uses the Commodity Code Field for Banner Integrations"
+  block: 1
+  blocks: 1
+part:
+  n: 3
+  of: 3

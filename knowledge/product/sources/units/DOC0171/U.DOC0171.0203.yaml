@@ -1,0 +1,39 @@
+id: U.DOC0171.0203
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: allowedValues | Mandatory (Y/N): N | Description: In case of COMBO, it is the list of allowed values to be defined. | Mapping on JA data model and notes: List of selectable values.
+  For COMBO column, in case of update of an existing item, if such list is provided all selectable values previously defined are removed and substituted with new value: if the list is empty, combo column won’t contain any choice.
+hash: sha256:0d7e96b958334f8d0fe63dcb773e2afe608a7e533c3a278c7af0bf8a63aaf4a3
+words: 73
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: Section additional column [Import/Update RfX method]"
+  section_path: 2.1.1.16
+  page: 6
+  lang: en
+  prev: U.DOC0171.0202
+  next: U.DOC0171.0204
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - allowedValues
+    - N
+    - In case of COMBO, it is the list of allowed values to be defined.
+    - |-
+      List of selectable values.
+      For COMBO column, in case of update of an existing item, if such list is provided all selectable values previously defined are removed and substituted with new value: if the list is empty, combo column won’t contain any choice.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,31 @@
+id: U.DOC0137.0038
+doc: S.STD.XSC.DOC.0137
+doc_id: workflow-po-static-and-dynamic-guidelines-pdf-982cc3b9
+type: procedura
+text: |-
+  This rule shows some new concepts
+  1. <Rule><![CDATA[ Document.RequiresRuleGroupEvaluation("Director Approval") == true ]]></Rule> : This line shows an ADW rule.
+  2. Document. indicates that this evaluates the entire document.
+  3. RequiresRuleGroupEvaluation shows that an ADW rule is being evaluated. In this case the rule being evaluated is Director Approval . This rule can be found in the Adv anced Dynamic Workflow section of workflow configuration. There many rules can be configured under ADW. A document stops here if any one of the ADW rules in the group are true.
+  4. <Attribute name="RuleGroupInternalName"> : The attribute name line will displa y in SelectSite and makes it easy to see which ADW rule group is evaluated in this activity.
+  5. <AttrValue lang="default">Director Approval</AttrValue> : This shows the rule group name itself.
+hash: sha256:70936089e11e03818aadfcce3a684d93bb7007765dfe565ca00601c2bc83bef2
+words: 129
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0137
+  chapter: Spend Director Special ization For Solutions Consultants
+  section: Spend Director Special ization For Solutions Consultants
+  section_path: p4
+  page: 4
+  lang: en
+  prev: U.DOC0137.0037
+  next: U.DOC0137.0039
+steps:
+  - '<Rule><![CDATA[ Document.RequiresRuleGroupEvaluation("Director Approval") == true ]]></Rule> : This line shows an ADW rule.'
+  - Document. indicates that this evaluates the entire document.
+  - RequiresRuleGroupEvaluation shows that an ADW rule is being evaluated. In this case the rule being evaluated is Director Approval . This rule can be found in the Adv anced Dynamic Workflow section of workflow configuration. There many rules can be configured under ADW. A document stops here if any one of the ADW rules in the group are true.
+  - '<Attribute name="RuleGroupInternalName"> : The attribute name line will displa y in SelectSite and makes it easy to see which ADW rule group is evaluated in this activity.'
+  - '<AttrValue lang="default">Director Approval</AttrValue> : This shows the rule group name itself.'
+procedure:
+  title: This rule shows some new concepts

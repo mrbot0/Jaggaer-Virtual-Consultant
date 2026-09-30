@@ -1,0 +1,187 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+batch: batch-19
+section: 2.1.1.21
+section_title: Supplier Info [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:ACCOUNTCODE
+    label: accountCode
+    labels:
+      - accountCode
+    technical_name: ACCOUNTCODE
+    section: 2.1.1.21
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Account code sent to the supplier with the order.
+    sources:
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.21
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: accountCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CONTRACTNUMBER
+    label: contractNumber
+    labels:
+      - contractNumber
+    technical_name: CONTRACTNUMBER
+    section: 2.1.1.21
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Contract number sent to the supplier with the order.
+
+      The eProcurement solution automatically populates the contract number on
+      the PR
+    sources:
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.21
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: contractNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:NOTE
+    label: note
+    labels:
+      - note
+    technical_name: NOTE
+    section: 2.1.1.21
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Text note for the supplier that is entered in the cart and carried over to
+      POs and PRs.
+
+      If the note is longer than 1000 characters, it is truncated and saved.
+
+      Note: If the Note field is empty, the existing note in the eProcurement
+      solution is not overwritten. Only a populated Note field can overwrite the
+      existing note.
+    sources:
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.21
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: note
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.28
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.28#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: note
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.29
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.29#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: note
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.4.1.3
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.4.1.3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: note
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ATTACHMENTS
+    label: attachments
+    labels:
+      - attachments
+    technical_name: ATTACHMENTS
+    section: 2.1.1.21
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for supplier attachments.
+      See section “Attachment [PR Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.21
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: attachments
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:QUOTENUMBER
+    label: quoteNumber
+    labels:
+      - quoteNumber
+    technical_name: QUOTENUMBER
+    section: 2.1.1.21
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Special quote number to be sent to the supplier
+    sources:
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.21
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.21#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: quoteNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1669

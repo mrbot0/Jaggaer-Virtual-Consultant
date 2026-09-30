@@ -1,0 +1,17 @@
+id: U.DOC0136.0020
+doc: S.STD.XSC.DOC.0136
+doc_id: workflow-po-invalid-distribution-setup-pdf-f76b8b8d
+type: regola
+text: • Additional criteria can also be added; o Document.CanDistributeRevision == true (Returns true if the PO has been flagged to distribute) o Document.IsNotValid() == true (Typically used for PO Imports, returns true if the imported PO has issues pertaining to the Supplier configuration) o Document.RequiresRuleGroupEvaluation("Exclude from Distribution") == fal se (If you are using an ADW Rule Group to determine POs that should NOT distribute )
+hash: sha256:dee4f85bc1e59e19798c2b336e02e7ad52abb0389576281f63e9397ef40288d3
+words: 66
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0136
+  chapter: STEPS TO IMPLEMENT
+  section: STEPS TO IMPLEMENT
+  section_path: p2
+  page: 2
+  lang: en
+  prev: U.DOC0136.0019
+  next: U.DOC0136.0021

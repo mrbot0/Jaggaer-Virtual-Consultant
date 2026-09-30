@@ -1,0 +1,160 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-02
+section: 2.2.1.2
+section_title: UpdateData [Validate JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:VALIDATIONRESPONSE
+    label: validationResponse
+    labels:
+      - validationResponse
+    technical_name: VALIDATIONRESPONSE
+    section: 2.2.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Validation outcome container.
+      See section “ValidationResponse [Validate JIOrder method]” below,
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: validationResponse
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:EXTPONUMBER
+    label: extPONumber
+    labels:
+      - extPONumber
+    technical_name: EXTPONUMBER
+    section: 2.2.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: New value of the PO Number to be used, in substitution of current one.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: extPONumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMFIELDVALUELIST
+    label: customFieldValueList
+    labels:
+      - customFieldValueList
+      - customfieldValueList
+    technical_name: CUSTOMFIELDVALUELIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of custom field value to be set on the order.
+      See section “CustomFieldValue [Validate JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: customFieldValueList
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.19
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.19#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: customFieldValueList
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.24
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.24#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: customfieldValueList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ATTACHMENTLIST
+    label: attachmentList
+    labels:
+      - attachmentList
+    technical_name: ATTACHMENTLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for attachment information to be set on the order.
+      See section “Attachment [Validate JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: attachmentList
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.17
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.17#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: attachmentList
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.18
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.18#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: attachmentList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1498

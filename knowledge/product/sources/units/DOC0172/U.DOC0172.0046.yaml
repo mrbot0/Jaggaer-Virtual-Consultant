@@ -1,0 +1,75 @@
+id: U.DOC0172.0046
+doc: S.STD.XSC.DOC.0172
+doc_id: j1p-ws-development-kit-supplier-user-docx-305b9bed
+type: tabella
+text: |-
+  Colonne: JCS Attribute | Request Attribute | Description
+  JCS Attribute: j1p_uid | Request Attribute: j1p_uid | Description: IDM user reference
+  JCS Attribute: userId | Request Attribute: j1p_uid | Description: Unique identification of the user
+  JCS Attribute: email | Request Attribute: idm/email | Description: User email address
+  JCS Attribute: userName | Request Attribute: idm/email | Description: User name
+  JCS Attribute: firstName | Request Attribute: idm/firstName | Description: First name
+  JCS Attribute: lastName | Request Attribute: idm/lastName | Description: Last name
+  JCS Attribute: roleName | Request Attribute: “Administrator” | Description: Role name
+  JCS Attribute: userStatus | Request Attribute: jcs/userStatus | Description: User status
+  JCS Attribute: timeZone | Request Attribute: jcs/timeZone | Description: User time zone
+  JCS Attribute: languageCode | Request Attribute: jcs/languageCode | Description: Two letter standard language code
+  JCS Attribute: isoCountry | Request Attribute: jcs/isoCountry | Description: ISO country code. If not supplied use company’s country
+  JCS Attribute: companyId | Request Attribute: jcs/companyId | Description: JCS company reference
+hash: sha256:16f468b2e918032471b5f71c1ec3105cc0f0d5dab98a94afc7ce73b109e303d0
+words: 157
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0172
+  chapter: Supplier user web-service
+  section: Mapping table for JCS
+  section_path: 2.3.2
+  page: 14
+  lang: en
+  prev: U.DOC0172.0045
+  next: U.DOC0172.0047
+table:
+  table: 0
+  headers:
+    - JCS Attribute
+    - Request Attribute
+    - Description
+  rows:
+    - - j1p_uid
+      - j1p_uid
+      - IDM user reference
+    - - userId
+      - j1p_uid
+      - Unique identification of the user
+    - - email
+      - idm/email
+      - User email address
+    - - userName
+      - idm/email
+      - User name
+    - - firstName
+      - idm/firstName
+      - First name
+    - - lastName
+      - idm/lastName
+      - Last name
+    - - roleName
+      - “Administrator”
+      - Role name
+    - - userStatus
+      - jcs/userStatus
+      - User status
+    - - timeZone
+      - jcs/timeZone
+      - User time zone
+    - - languageCode
+      - jcs/languageCode
+      - Two letter standard language code
+    - - isoCountry
+      - jcs/isoCountry
+      - ISO country code. If not supplied use company’s country
+    - - companyId
+      - jcs/companyId
+      - JCS company reference
+  block: 1
+  blocks: 1

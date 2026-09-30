@@ -1,0 +1,37 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.29
+section_title: External Info [PR Import]
+genre: tecnica
+rows:
+  - label: note
+    technical_name: note
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      External note.
+
+      If the external note is longer than 1000 characters, it is truncated and
+      saved.
+
+      Note: If the Note field is empty, the existing note is not overwritten.
+      Only a populated Note field can overwrite the existing note.
+    section: 2.1.1.29
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.29#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: attachmentList
+    technical_name: attachmentList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      List of attachment information defined at external level.
+      See section “Attachment [PR Import]” above
+    section: 2.1.1.29
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.29#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

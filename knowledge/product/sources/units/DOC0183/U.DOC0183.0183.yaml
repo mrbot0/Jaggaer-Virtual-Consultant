@@ -1,0 +1,47 @@
+id: U.DOC0183.0183
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: messageId | Description: Receipt validation message identifier provided in request
+  Attribute: timestamp | Description: Response timestamp in the format
+  yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  Attribute: validateStatus | Description: Validation response result.
+  See section “ValidateStatus [Validate]” below
+  Attribute: validateObjectErrors | Description: Container of validation error information
+  See section “ValidateError [Validate]” below
+hash: sha256:3f0e5649435d0cf26fd6cec5c35cd4256f82c981dddb5671df3f0d93e6d34640
+words: 51
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: ValidateResponseMessage [Validate]
+  section_path: 2.3.3.1
+  page: 18
+  lang: en
+  prev: U.DOC0183.0182
+  next: U.DOC0183.0184
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - messageId
+      - Receipt validation message identifier provided in request
+    - - timestamp
+      - |-
+        Response timestamp in the format
+        yyyy-MM-dd'T'HH:mm:ss.SSSZ
+    - - validateStatus
+      - |-
+        Validation response result.
+        See section “ValidateStatus [Validate]” below
+    - - validateObjectErrors
+      - |-
+        Container of validation error information
+        See section “ValidateError [Validate]” below
+  block: 1
+  blocks: 1

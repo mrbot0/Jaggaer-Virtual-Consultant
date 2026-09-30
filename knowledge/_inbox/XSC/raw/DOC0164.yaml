@@ -1,0 +1,844 @@
+doc: S.STD.XSC.DOC.0164
+scope: XSC
+extracted_at: 2026-09-30T04:31:40.222Z
+tier: T0
+stats:
+  units: 344
+  extracted_units: 21
+  document_candidates: 0
+  needs_llm: 16
+  t0_complete: 5
+  by_candidate:
+    FLD: 8
+    FLW: 8
+    GLS: 1
+    INV: 1
+    CFG: 1
+    CFP: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 5934
+  sessions:
+    - n: 1
+      tokens: 5934
+      batches: 1
+      items: 16
+      batch_items:
+        - - R.DOC0164.0040
+          - R.DOC0164.0043
+          - R.DOC0164.0063
+          - R.DOC0164.0075
+          - R.DOC0164.0077
+          - R.DOC0164.0110
+          - R.DOC0164.0120
+          - R.DOC0164.0129
+          - R.DOC0164.0136
+          - R.DOC0164.0138
+          - R.DOC0164.0177
+          - R.DOC0164.0195
+          - R.DOC0164.0214
+          - R.DOC0164.0236
+          - R.DOC0164.0297
+          - R.DOC0164.0298
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0164.0032
+    source_unit: U.DOC0164.0032
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0164
+    section: "Objective: Savings on IT Setup and Service"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: people who
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0164.0032
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0164.0040
+    source_unit: U.DOC0164.0040
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: "Look & Learn:Look & Learn:"
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: shop
+          oggetto: for those items
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: to a cart, submit and approve the requisition
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0040
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 26
+  - raw_id: R.DOC0164.0043
+    source_unit: U.DOC0164.0043
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0164
+    section: Procurement Simplified
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0164.0043
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0164.0051
+    source_unit: U.DOC0164.0051
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0164
+    section: "eProcurement: The Challenges"
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - GLS
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: What
+      definition: the problems potential
+      aliases: []
+      lang: en
+      source_unit: U.DOC0164.0051
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0164.0063
+    source_unit: U.DOC0164.0063
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: "Guided Activity:Guided Activity:"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: for Desk Chairs
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: one to the cart
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0063
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 21
+  - raw_id: R.DOC0164.0075
+    source_unit: U.DOC0164.0075
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: "Guided Activity:Guided Activity:"
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: shop
+          oggetto: from a Catalog
+          valore: null
+        - n: 2
+          verbo: shop
+          oggetto: from a Punch-Out
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0075
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 16
+  - raw_id: R.DOC0164.0077
+    source_unit: U.DOC0164.0077
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: "Guided Activity:Guided Activity:"
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: order
+          oggetto: a Non-Catalog Item
+          valore: null
+        - n: 2
+          verbo: buy
+          oggetto: yourself something nice
+          valore: null
+        - n: 3
+          verbo: now
+          oggetto: rename your cart including your name
+          valore: null
+        - n: 4
+          verbo: submit
+          oggetto: it!
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0077
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 38
+  - raw_id: R.DOC0164.0100
+    source_unit: U.DOC0164.0100
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0164
+    section: Approve, Return or Reject?
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - INV
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: requisitions
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0164.0100
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 5
+  - raw_id: R.DOC0164.0110
+    source_unit: U.DOC0164.0110
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: "Try It Yourself:Try It Yourself:"
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: assign
+          oggetto: it to yourself
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: it
+          valore: null
+        - n: 3
+          verbo: approve
+          oggetto: it
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0110
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 21
+  - raw_id: R.DOC0164.0120
+    source_unit: U.DOC0164.0120
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0164
+    section: "Try It Yourself:Try It Yourself:"
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Note: This training site has limited data, so you’re really"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0164.0120
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0164.0129
+    source_unit: U.DOC0164.0129
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: eProcurement Additional Features
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: sourcing events from carts
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: invoices from contracts
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0129
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 21
+  - raw_id: R.DOC0164.0136
+    source_unit: U.DOC0164.0136
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: eProcurement Configuration
+    page: 45
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: up User Roles
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: Suppliers & Catalogs
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0136
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 16
+  - raw_id: R.DOC0164.0138
+    source_unit: U.DOC0164.0138
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: eProcurement Configuration
+    page: 45
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: Documents
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: Workflow
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: Contract Functionality
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0138
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 27
+  - raw_id: R.DOC0164.0177
+    source_unit: U.DOC0164.0177
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: "Guided Activity:Guided Activity:"
+    page: 62
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: find
+          oggetto: a PO you created
+          valore: null
+        - n: 2
+          verbo: note
+          oggetto: that it has not been received or invoiced
+          valore: null
+        - n: 3
+          verbo: open
+          oggetto: it and create the receipt
+          valore: null
+        - n: 4
+          verbo: on
+          oggetto: the summary screen of the PO, note that it is
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0177
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 47
+  - raw_id: R.DOC0164.0195
+    source_unit: U.DOC0164.0195
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0164
+    section: "Guided Activity:Guided Activity:"
+    page: 68
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: that same PO and create the invoice
+          valore: null
+        - n: 2
+          verbo: return
+          oggetto: to the summary screen of the PO, and notice
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0164.0195
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 31
+  - raw_id: R.DOC0164.0214
+    source_unit: U.DOC0164.0214
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0164
+    section: Invoice Payment Status
+    page: 74
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: in the system
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0164.0214
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 18
+  - raw_id: R.DOC0164.0236
+    source_unit: U.DOC0164.0236
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0164
+    section: Invoicing Additional Features
+    page: 81
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0164.0236
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 11
+  - raw_id: R.DOC0164.0295
+    source_unit: U.DOC0164.0295
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0164
+    section: "Sourcing Optimizer: Event Data"
+    page: 104
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: •What Suppliers
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0164.0295
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 7
+  - raw_id: R.DOC0164.0297
+    source_unit: U.DOC0164.0297
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0164
+    section: "Sourcing Optimizer: Event Data"
+    page: 104
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0164.0297
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0164.0298
+    source_unit: U.DOC0164.0298
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0164
+    section: "Sourcing Optimizer: Event Data"
+    page: 104
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0164.0298
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0164.0324
+    source_unit: U.DOC0164.0324
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0164
+    section: "Research Material Management: The Needs"
+    page: 112
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Potential RMM clients
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0164.0324
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 8

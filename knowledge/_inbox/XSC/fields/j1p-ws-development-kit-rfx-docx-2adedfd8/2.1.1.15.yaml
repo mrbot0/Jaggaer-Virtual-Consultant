@@ -1,0 +1,29 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.15
+section_title: "Commercial Envelope: Price by quantity parameter [Import/Update RfX method]"
+genre: tecnica
+rows:
+  - label: from
+    technical_name: from
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Lower limit of the price range
+    section: 2.1.1.15
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.15#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: to
+    technical_name: to
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Upper limit of the price range (must be equal to the lower limit of
+      following range)
+    section: 2.1.1.15
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.15#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

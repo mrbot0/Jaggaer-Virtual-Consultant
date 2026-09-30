@@ -1,0 +1,91 @@
+id: U.DOC0173.0151
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Error Code | Error Message | Error Description
+  Error Code: ERRMSG_INTERNAL_ERROR | Error Message: 100 | Error Description: Generic error (see table below “Generic Error – Sub Codes”)
+  Error Code: ERRMSG_NODATA | Error Message: 111 | Error Description: No Data Found
+  Error Code: ERRMSG_RECORD_ALREADY_EXIST | Error Message: 112 | Error Description: Record already exist, operation not executed
+  Error Code: ERRMSG_OPCODE_IGNORED | Error Message: 113 | Error Description: Operation Code updated
+  Error Code: ERRMSG_LEN_OUT_OF_SIZE | Error Message: 116 | Error Description: Filed Length out of size. Field truncated
+  Error Code: ERRMSG_MANDATORY | Error Message: 120 | Error Description: Mandatory field missing
+  Error Code: ERRMSG_FORMAT_EXCEPTION | Error Message: 122 | Error Description: Field format not correct
+  Error Code: ERRMSG_INVALID_PARAM_SYNTAX | Error Message: 124 | Error Description: Syntax parameter not valid
+  Error Code: ERRMSG_INCORRECT_DIVISION | Error Message: 125 | Error Description: Division not valid
+  Error Code: ERRMSG_OPCODE_UNEXPECTED | Error Message: 129 | Error Description: Operation code not valid
+  Error Code: ERRMSG_FIELD_NOT_UPDATABLE | Error Message: 132 | Error Description: Field not updatable
+  Error Code: ERRMSG_COULD_NOT_BE_EMPTY | Error Message: 133 | Error Description: Empty value not allowed for this field
+  Error Code: ERRMSG_SELLER_NOT_REGISTERED | Error Message: 134 | Error Description: Seller not updatable because it is not present
+  Error Code: ERRMSG_FK_VIOLATED | Error Message: 135 | Error Description: Filed value not allowed according to check list
+  Error Code: ERRMSG_LEN_UNDER_SIZED | Error Message: 136 | Error Description: Field length under minimum valid length
+  Error Code: ERRMSG_FK_VIOLATED_ISOCOUNTRYANDPROVINCE | Error Message: 137 | Error Description: Province value not allowed for country
+hash: sha256:76b90d512a06b06c43a11f063d1345ce2316aae7012446e1ecd1137dcc55860d
+words: 254
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Error codes
+  section_path: 4.1.4.1
+  page: 6
+  lang: en
+  prev: U.DOC0173.0150
+  next: U.DOC0173.0152
+table:
+  table: 0
+  headers:
+    - Error Code
+    - Error Message
+    - Error Description
+  rows:
+    - - ERRMSG_INTERNAL_ERROR
+      - "100"
+      - Generic error (see table below “Generic Error – Sub Codes”)
+    - - ERRMSG_NODATA
+      - "111"
+      - No Data Found
+    - - ERRMSG_RECORD_ALREADY_EXIST
+      - "112"
+      - Record already exist, operation not executed
+    - - ERRMSG_OPCODE_IGNORED
+      - "113"
+      - Operation Code updated
+    - - ERRMSG_LEN_OUT_OF_SIZE
+      - "116"
+      - Filed Length out of size. Field truncated
+    - - ERRMSG_MANDATORY
+      - "120"
+      - Mandatory field missing
+    - - ERRMSG_FORMAT_EXCEPTION
+      - "122"
+      - Field format not correct
+    - - ERRMSG_INVALID_PARAM_SYNTAX
+      - "124"
+      - Syntax parameter not valid
+    - - ERRMSG_INCORRECT_DIVISION
+      - "125"
+      - Division not valid
+    - - ERRMSG_OPCODE_UNEXPECTED
+      - "129"
+      - Operation code not valid
+    - - ERRMSG_FIELD_NOT_UPDATABLE
+      - "132"
+      - Field not updatable
+    - - ERRMSG_COULD_NOT_BE_EMPTY
+      - "133"
+      - Empty value not allowed for this field
+    - - ERRMSG_SELLER_NOT_REGISTERED
+      - "134"
+      - Seller not updatable because it is not present
+    - - ERRMSG_FK_VIOLATED
+      - "135"
+      - Filed value not allowed according to check list
+    - - ERRMSG_LEN_UNDER_SIZED
+      - "136"
+      - Field length under minimum valid length
+    - - ERRMSG_FK_VIOLATED_ISOCOUNTRYANDPROVINCE
+      - "137"
+      - Province value not allowed for country
+  block: 1
+  blocks: 1

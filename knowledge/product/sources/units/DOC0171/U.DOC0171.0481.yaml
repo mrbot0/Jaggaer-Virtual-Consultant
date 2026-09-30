@@ -1,0 +1,92 @@
+id: U.DOC0171.0481
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: numSupplInvited | Description: Number of invited suppliers.
+  Attribute: numSupplResponded | Description: Number of invited suppliers who have responded.
+  Attribute: numSupplNotResponded | Description: Number of invited suppliers who have not responded.
+  Attribute: numSupplRespDeclined | Description: Number of invited suppliers who have declined to respond (auto-excluded).
+  Attribute: numSupplRespAccepted | Description: Number of invited suppliers with response accepted (populated if the RfX is in evaluation phase i.e. RfX status > 400).
+  This is a subset of the suppliers counted in numSupplResponded.
+  Attribute: numSupplRespExcluded | Description: Number of invited suppliers having submitted a valid response, but then excluded during pre-evaluation or evaluation phase.
+  This is a subset of the suppliers counted in numSupplResponded.
+  Attribute: numSupplRespExcludedPreEval | Description: Number of invited suppliers that have been excluded in pre-evaluation stage.
+  This is a subset of the suppliers counted in numSupplRespExcluded.
+  Attribute: numSupplRespExcludedQual | Description: Number of invited suppliers that have been excluded in evaluation stage, qualification phase.
+  This is a subset of the suppliers counted in numSupplRespExcluded.
+  Attribute: numSupplRespExcludedTech | Description: Number of invited suppliers that have been excluded in evaluation stage, technical phase.
+  This is a subset of the suppliers counted in numSupplRespExcluded.
+  Attribute: numSupplRespExcludedComm | Description: Number of invited suppliers that have been excluded in evaluation stage, commercial phase.
+  This is a subset of the suppliers counted in numSupplRespExcluded.
+  Attribute: numSupplRespExcludedAward | Description: Number of invited suppliers with response accepted but then excluded from awarding.
+  This is a subset of the suppliers counted in numSupplRespAccepted.
+hash: sha256:6ce5751c4dad3d056471e28ea15e72bfe8b9a479f6fd6e1a02fd03efb66b17e3
+words: 250
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Supplier Response Counters [Export RfX method]
+  section_path: 2.3.4.40
+  page: 7
+  lang: en
+  prev: U.DOC0171.0480
+  next: U.DOC0171.0482
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - numSupplInvited
+      - Number of invited suppliers.
+      - ""
+    - - numSupplResponded
+      - Number of invited suppliers who have responded.
+      - ""
+    - - numSupplNotResponded
+      - Number of invited suppliers who have not responded.
+      - ""
+    - - numSupplRespDeclined
+      - Number of invited suppliers who have declined to respond (auto-excluded).
+      - ""
+    - - numSupplRespAccepted
+      - |-
+        Number of invited suppliers with response accepted (populated if the RfX is in evaluation phase i.e. RfX status > 400).
+        This is a subset of the suppliers counted in numSupplResponded.
+      - ""
+    - - numSupplRespExcluded
+      - |-
+        Number of invited suppliers having submitted a valid response, but then excluded during pre-evaluation or evaluation phase.
+        This is a subset of the suppliers counted in numSupplResponded.
+      - ""
+    - - numSupplRespExcludedPreEval
+      - |-
+        Number of invited suppliers that have been excluded in pre-evaluation stage.
+        This is a subset of the suppliers counted in numSupplRespExcluded.
+      - ""
+    - - numSupplRespExcludedQual
+      - |-
+        Number of invited suppliers that have been excluded in evaluation stage, qualification phase.
+        This is a subset of the suppliers counted in numSupplRespExcluded.
+      - ""
+    - - numSupplRespExcludedTech
+      - |-
+        Number of invited suppliers that have been excluded in evaluation stage, technical phase.
+        This is a subset of the suppliers counted in numSupplRespExcluded.
+      - ""
+    - - numSupplRespExcludedComm
+      - |-
+        Number of invited suppliers that have been excluded in evaluation stage, commercial phase.
+        This is a subset of the suppliers counted in numSupplRespExcluded.
+      - ""
+    - - numSupplRespExcludedAward
+      - |-
+        Number of invited suppliers with response accepted but then excluded from awarding.
+        This is a subset of the suppliers counted in numSupplRespAccepted.
+      - ""
+  block: 1
+  blocks: 1

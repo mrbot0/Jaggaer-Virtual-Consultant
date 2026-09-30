@@ -1,0 +1,446 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.2
+section_title: Header [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: operationCode
+    technical_name: operationCode
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Indicates whether the PO is new, an update, or is being cancelled. The
+      default operation is new
+
+      Possible value (case sensitive):
+
+      new
+
+      update
+
+      cancel
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: poNumber
+    technical_name: poNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Number of the PO.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: alternatePONumber
+    technical_name: alternatePONumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Alternate PO number.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: supplierstatus
+    technical_name: supplierstatus
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Supplier status.
+      See section “SupplierStatus [Import JIOrder method]” below.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: evaluatedReceiptSettlement
+    technical_name: evaluatedReceiptSettlement
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the PO does (true) or does not (false) have the
+      Evaluated Receipt Settlement setting enabled. When the setting is enabled,
+      invoices cannot be created from the PO (credit memos can still be
+      created).
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: revisionNumber
+    technical_name: revisionNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Revision number of the PO. New POs begin with revision 0. The revision
+      number is incremented sequentially (that is, 0, 1, 2, and so on).
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: revisionDate
+    technical_name: revisionDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date and time the revision was finalized
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: distributeRevision
+    technical_name: distributeRevision
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Set to true if the revision was flagged to be distributed to the
+      supplier. Otherwise, false.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: requestor
+    technical_name: requestor
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Information about the person who originally requested the PO export.
+      See section “Requestor [Import JIOrder method]” below.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: businessUnit
+    technical_name: businessUnit
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Name of the business unit with which the buyer is associated
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: department
+    technical_name: department
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Department of the buyer, from his or her profile.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: priority
+    technical_name: priority
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Priority of the PO:
+      High
+      Normal
+      Empty
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: createDate
+    technical_name: createDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date and time the PO was generated
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: initialRevisionDate
+    technical_name: initialRevisionDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date and time the PO was initially revised
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: accountingDate
+    technical_name: accountingDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Accounting date of the PO, also known as the transaction date or the date
+      against which the financial department charges the PO
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: supplier
+    technical_name: supplier
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Order Supplier Information.
+      It must always be provided.
+      See section “SupplierInfo [Import JIOrder method]” below
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: billTo
+    technical_name: billTo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Billing to Address
+      See section “Address [Import JIOrder method]” below
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: shipTo
+    technical_name: shipTo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Shipping to Address
+      See section “Address [Import JIOrder method]” below
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: paymentInfo
+    technical_name: paymentInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Payment information.
+
+      See section “AddressLine [Import JIOrder method]
+
+      Attribute | Mandatory (Y/N) | Description
+
+      label | N | Label of the address line, if applicable
+
+      This attribute is not used for imports. Valid only for exports and
+      validations.
+
+      lineNumber | Y | Line number of the address line
+
+      addressLine | N | Address line information, usually containing the street
+      address and other address information.
+
+      PaymentInfo [Import JIOrder method]” below
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: internalInfo
+    technical_name: internalInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Internal Information.
+      See section “InternalInfo [Import JIOrder method]External information.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r19
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: externalInfo
+    technical_name: externalInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      External information.
+      See section “ExernalInfo [Import JIOrder method]” below.” below
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r20
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: freightOnBoard
+    technical_name: freightOnBoard
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Freight on Board (FOB) information.
+
+      When shipping goods, FOB indicates whether the destination or the origin
+      pays the loading and transportation costs, or the point at which the
+      responsibility of the goods transfers from the shipper to the buyer.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r21
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: customFieldValueSetList
+    technical_name: customFieldValueSetList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for Custom field value set information.
+      See section “CustomFieldValueSet [Import JIOrder method]” below
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r22
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: splittableFieldSetGroupList
+    technical_name: splittableFieldSetGroupList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for Splittable field Set Group information.
+      See section “SplittableFieldSetGroup [Import JIOrder method]” below
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r23
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: requisitionRefId
+    technical_name: requisitionRefId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: JAGGAER requisition ID number
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r24
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: shippingCharges/taxShippingHandling
+    technical_name: shippingCharges/taxShippingHandling
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Charger for shipping item.
+      See section “TaxShippingHandling [Import JIOrder method]” below.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r25
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: handlingCharges/taxShippingHandling
+    technical_name: handlingCharges/taxShippingHandling
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Charger for handling item.
+      See section “TaxShippingHandling [Import JIOrder method]” below.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r26
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: tax1/taxShippingHandling
+    technical_name: tax1/taxShippingHandling
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Charger for tax 1.
+      See section “TaxShippingHandling [Import JIOrder method]” below.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r27
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: tax2/taxShippingHandling
+    technical_name: tax2/taxShippingHandling
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Charger for tax 2.
+      See section “TaxShippingHandling [Import JIOrder method]” below.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r28
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: discountAmount
+    technical_name: discountAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Discount amount to be applied.
+      See section “DiscountAmount [Import JIOrder method]” below.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r29
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: orderClauseList
+    technical_name: orderClauseList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for clause applied to the order.
+      See section “OrderClause [Import JIOrder method]” below
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r30
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: orderDistribution
+    technical_name: orderDistribution
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Order distribution information.
+      See section “OrderDistribution [Import JIOrder method]” below.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r31
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: additionalNotes
+    technical_name: additionalNotes
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Order additional notes.
+      See section “AdditionalNote [Import JIOrder method]” below.
+    section: 2.3.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.2#part-1
+    row_ref: t0.r32
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

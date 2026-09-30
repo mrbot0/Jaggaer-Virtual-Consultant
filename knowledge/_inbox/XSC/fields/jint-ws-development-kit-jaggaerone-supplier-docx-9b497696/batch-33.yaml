@@ -1,0 +1,97 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-33
+section: 2.1.1.53
+section_title: J1Supplier/JISupplierData/classificationList/classification
+part: 1
+parts: 1
+rows:
+  - key: tech:INTERNALNAME
+    label: internalName
+    labels:
+      - internalName
+    technical_name: INTERNALNAME
+    section: 2.1.1.53
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Internal name for the supplier class.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.53
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.53#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: internalName
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.55
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.55#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: internalName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DISPLAYNAME
+    label: displayName
+    labels:
+      - displayName
+    technical_name: DISPLAYNAME
+    section: 2.1.1.53
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Label for the supplier class.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.53
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.53#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: displayName
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.55
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.55#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: displayName
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.97
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.97#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: displayName
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.100
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.100#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: displayName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1111

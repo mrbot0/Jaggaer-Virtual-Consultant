@@ -1,0 +1,43 @@
+id: U.DOC0175.0055
+doc: S.STD.XSC.DOC.0175
+doc_id: jint-ws-development-kit-push-services-overview-d-7b85c1d1
+type: tabella
+text: |-
+  Colonne:  | Http Status | Response “code” field | Meaning
+  Case 1 | Http Status: 200 | Response “code” field: OK | Meaning: Message has been processed with success
+  Case 2 | Http Status: 200 | Response “code” field: ≠ OK or missing field | Meaning: Message has been processed with negative result (“description” field should be used to describe the reason for the error an inform users about possible corrective actions)
+  Case 3 | Http Status: ≠ 200 | Response “code” field: This field will be ignored | Meaning: Message has not been processed due unexpected errors
+hash: sha256:5e00e5d23654a2180de1e5778f7b1c0776365f16bb20d3c4d1426d463ce83ce3
+words: 98
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0175
+  chapter: Overview
+  section: Push message response
+  section_path: 2.0.4
+  page: 16
+  lang: en
+  prev: U.DOC0175.0054
+  next: U.DOC0175.0056
+table:
+  table: 1
+  headers:
+    - ""
+    - Http Status
+    - Response “code” field
+    - Meaning
+  rows:
+    - - Case 1
+      - "200"
+      - OK
+      - Message has been processed with success
+    - - Case 2
+      - "200"
+      - ≠ OK or missing field
+      - Message has been processed with negative result (“description” field should be used to describe the reason for the error an inform users about possible corrective actions)
+    - - Case 3
+      - ≠ 200
+      - This field will be ignored
+      - Message has not been processed due unexpected errors
+  block: 1
+  blocks: 1

@@ -1,0 +1,42 @@
+id: U.DOC0168.0213
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: riga-tabella-campi
+text: |-
+  Attribute: id | Mandatory (Y/N): Y/N
+  See description | Description: JI internal identifier of the supplier
+  You must specify either the id element, the supplierNumber field, or both.
+  Valid only for SupplierInfo data specified at JIHeader level.
+hash: sha256:e300b2b4cc9d579df87de232e8922fbe423ff46d0ca58fc53d3fb7eab58c1c43
+words: 37
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: SupplierInfo [Import JIOrder method]
+  section_path: 2.3.1.6
+  page: 73
+  lang: en
+  prev: U.DOC0168.0212
+  next: U.DOC0168.0214
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - id
+    - |-
+      Y/N
+      See description
+    - |-
+      JI internal identifier of the supplier
+      You must specify either the id element, the supplierNumber field, or both.
+      Valid only for SupplierInfo data specified at JIHeader level.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

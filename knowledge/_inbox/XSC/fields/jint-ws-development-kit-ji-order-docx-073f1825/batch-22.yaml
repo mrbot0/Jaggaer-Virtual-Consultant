@@ -1,0 +1,91 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-22
+section: 2.3.1.19
+section_title: CustomFieldValueSet [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:DISTRIBUTIONTYPE
+    label: distributionType
+    labels:
+      - distributionType
+    technical_name: DISTRIBUTIONTYPE
+    section: 2.3.1.19
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Way the funds are to be distributed to each split.
+
+      Possible values:
+
+      PercentOfQuantity: funds are distributed based on a user-specified
+      percentage of the quantity.
+
+      PercentOfPrice: funds are distributed based on a user-specified percentage
+      of the price
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.19
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.19#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: distributionType
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.23
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.23#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: distributionType
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMATTRIBUTELIST
+    label: customAttributeList
+    labels:
+      - customAttributeList
+    technical_name: CUSTOMATTRIBUTELIST
+    section: 2.3.1.19
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for custom attribute objects.
+      See section “CustomAttribute [Import JIOrder method]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.19
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.19#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: customAttributeList
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.26
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.26#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: customAttributeList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1048

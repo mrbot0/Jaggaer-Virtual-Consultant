@@ -1,0 +1,39 @@
+id: U.DOC0182.0158
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: fileUrl | Mandatory (Y/N): At least one between fileUrl and fileBase64 must be defined | Description: URL of the attachment.
+  If no data is provided in fileBase64 field, it is used to define an URL based Attachment.
+  File Type assigned is URL.
+hash: sha256:3231a5be9881ac4d4bd7d44b24777f7a8fd7bb1522b908293d7b719310c90522
+words: 43
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Attachment [PR Import]
+  section_path: 2.1.1.22
+  page: 24
+  lang: en
+  prev: U.DOC0182.0157
+  next: U.DOC0182.0159
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - fileUrl
+    - At least one between fileUrl and fileBase64 must be defined
+    - |-
+      URL of the attachment.
+      If no data is provided in fileBase64 field, it is used to define an URL based Attachment.
+      File Type assigned is URL.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

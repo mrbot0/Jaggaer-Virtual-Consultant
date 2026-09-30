@@ -1,0 +1,46 @@
+id: U.DOC0167.0042
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: isoProvince | Mandatory (Y/N): N | Description: Province/County code
+  It can contain the province code or its code-name.
+  Example: for isoCountry US and county Hawaii, province can be filled indifferently with “HI” or “US-HI” | Mapping on Jaggaer One data model and notes: The special value “NOT_DEF” can be used to specify a generic province
+  See chapter 2.7- Master Data List for allowed values
+  Not used in case of JI is the Primary SM. If addresses needed then use the JI addresses section
+hash: sha256:76a736ed45f3b2f3064c1c0680f021d74b785fceae05188e90446f46947ecd36
+words: 84
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/J1SupplierData
+  section_path: 2.1.1.3
+  page: 5
+  lang: en
+  prev: U.DOC0167.0041
+  next: U.DOC0167.0043
+row:
+  table: 0
+  row: 9
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - isoProvince
+    - N
+    - |-
+      Province/County code
+      It can contain the province code or its code-name.
+      Example: for isoCountry US and county Hawaii, province can be filled indifferently with “HI” or “US-HI”
+    - |-
+      The special value “NOT_DEF” can be used to specify a generic province
+      See chapter 2.7- Master Data List for allowed values
+      Not used in case of JI is the Primary SM. If addresses needed then use the JI addresses section
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

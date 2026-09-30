@@ -1,0 +1,71 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.4.1.1
+section_title: Main request structure [Validate]
+genre: tecnica
+rows:
+  - label: contractId
+    technical_name: contractId
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal identifier of the contract on which operation is to be executed
+    section: 2.4.1.1
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: status
+    technical_name: status
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Status of the workflow step for the contract.
+
+      It can assume following value:
+
+      approve – The workflow step is approved. The contract can advance to the
+      next step in the workflow.
+
+      approveWithException – The workflow step is approved, but with one or more
+      exceptions. The exceptions should be noted in the Note element. The
+      contract can advance to the next step in the workflow.
+
+      return – The workflow step is not approved. The contract is returned to
+      draft status and does not advance to the next step in the workflow.
+    section: 2.4.1.1
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Note
+    technical_name: Note
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Note about the workflow step status. Stored in the Note column of the
+      ContractAuditTrail table.
+
+      If the note is longer than 1000 characters, it is truncated and saved.
+
+      If not provided or empty, existing notes are not overwritten.
+    section: 2.4.1.1
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: customFieldList
+    technical_name: customFieldList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of custom field value to be set on contract
+      See section “Custom Field Value [Validate]” below.
+    section: 2.4.1.1
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.1#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

@@ -1,0 +1,39 @@
+id: U.DOC0177.0350
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: discountAmount | Mandatory (Y/N): N | Description: Amount of the discount for the prescribed period. | Mapping on Jaggaer One data model and notes: This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  Required if @unit element is provided and is set to “amount”.
+hash: sha256:2f417ed9b26d96e618adaca2e57b5b77292dba3a381531b2b59eaa3e80f9ef9c
+words: 52
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/termsAndCondition/paymentTerms/discount
+  section_path: 2.1.1.82
+  page: 61
+  lang: en
+  prev: U.DOC0177.0349
+  next: U.DOC0177.0351
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - discountAmount
+    - N
+    - Amount of the discount for the prescribed period.
+    - |-
+      This is a numeric value of up to 15 digits, including up to 4 decimal places.
+      Required if @unit element is provided and is set to “amount”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

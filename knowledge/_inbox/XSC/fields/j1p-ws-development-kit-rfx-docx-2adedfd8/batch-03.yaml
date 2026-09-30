@@ -1,0 +1,967 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-03
+section: 2.1.1.3
+section_title: Rfx Setting (header information) [Import/Update RfX method]
+part: 1
+parts: 2
+rows:
+  - key: tech:RFXID
+    label: rfxId
+    labels:
+      - rfxId
+    technical_name: RFXID
+    section: 2.1.1.3
+    type: null
+    mandatory_text: |-
+      N for CREATE or CREATEUPDATE
+      Y for UPDATE
+    allowed_values: []
+    notes: JA internal identifier
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: rfxId
+        type: null
+        mandatory_text: |-
+          N for CREATE or CREATEUPDATE
+          Y for UPDATE
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.32
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.32#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: rfxId
+        type: null
+        mandatory_text: Y (one of the two)
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.2.1.1
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.2.1.1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: rfxId
+        type: null
+        mandatory_text: Y (one of the two)
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - |-
+            N for CREATE or CREATEUPDATE
+            Y for UPDATE
+          - Y (one of the two)
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:RFXREFERENCECODE
+    label: rfxReferenceCode
+    labels:
+      - rfxReferenceCode
+    technical_name: RFXREFERENCECODE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: JA identifier (visible to user)
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: rfxReferenceCode
+        type: null
+        mandatory_text: ""
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.32
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.32#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: rfxReferenceCode
+        type: null
+        mandatory_text: ""
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.2.1.1
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.2.1.1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: rfxReferenceCode
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:RFXEXTCODE
+    label: rfxExtCode
+    labels:
+      - rfxExtCode
+    technical_name: RFXEXTCODE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: External identifier of the RfX. It can be used to identify the RfX in
+      update operation (when configured).
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: rfxExtCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DUMMYFLAG
+    label: dummyFlag
+    labels:
+      - dummyFlag
+    technical_name: DUMMYFLAG
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Defines if the RfX is a dummy RfX (1=true)
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: dummyFlag
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RFIFLAG
+    label: rfiFlag
+    labels:
+      - rfiFlag
+    technical_name: RFIFLAG
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Defines if the RfX is an RFI or an RFQ
+      1 = RFI
+      0 = RFQ
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: rfiFlag
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TENDERCODE
+    label: tenderCode
+    labels:
+      - tenderCode
+    technical_name: TENDERCODE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: |-
+      Y/N for insert
+      Not used for update
+    allowed_values: []
+    notes: Code of the project/tender (JA internal identifier)
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: tenderCode
+        type: null
+        mandatory_text: |-
+          Y/N for insert
+          Not used for update
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:TENDERREFERENCECODE
+    label: tenderReferenceCode
+    labels:
+      - tenderReferenceCode
+    technical_name: TENDERREFERENCECODE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: |-
+      Y/N for insert
+      Not used for update
+    allowed_values: []
+    notes: Code of the project/tender (user visible identifier)
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: tenderReferenceCode
+        type: null
+        mandatory_text: |-
+          Y/N for insert
+          Not used for update
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:TEMPLATEID
+    label: templateId
+    labels:
+      - templateId
+    technical_name: TEMPLATEID
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y/N for creation from template
+    allowed_values: []
+    notes: JA internal identifier of the RfX template to be used to create the object
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: templateId
+        type: null
+        mandatory_text: Y/N for creation from template
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:TEMPLATEREFERENCECODE
+    label: templateReferenceCode
+    labels:
+      - templateReferenceCode
+    technical_name: TEMPLATEREFERENCECODE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y/N for creation from template
+    allowed_values: []
+    notes: Reference Code (user visible identifier) of the RfX template to be used
+      to create the object
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: templateReferenceCode
+        type: null
+        mandatory_text: Y/N for creation from template
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:RFXIDFROM
+    label: rfxIdFrom
+    labels:
+      - rfxIdFrom
+    technical_name: RFXIDFROM
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y/N for duplicate
+    allowed_values: []
+    notes: JA internal identifier of the RfX to be used to create the object
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: rfxIdFrom
+        type: null
+        mandatory_text: Y/N for duplicate
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:RFXREFERENCECODEFROM
+    label: rfxReferenceCodeFrom
+    labels:
+      - rfxReferenceCodeFrom
+    technical_name: RFXREFERENCECODEFROM
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y/N for duplicate
+    allowed_values: []
+    notes: Reference Code (user visible identifier) of the RfX to be used to create
+      the object
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: rfxReferenceCodeFrom
+        type: null
+        mandatory_text: Y/N for duplicate
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SHORTDESCRIPTION
+    label: shortDescription
+    labels:
+      - shortDescription
+    technical_name: SHORTDESCRIPTION
+    section: 2.1.1.3
+    type: null
+    mandatory_text: |-
+      Y for insert
+      N for update
+    allowed_values: []
+    notes: Title of the RfX
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: shortDescription
+        type: null
+        mandatory_text: |-
+          Y for insert
+          N for update
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:LONGDESCRIPTION
+    label: longDescription
+    labels:
+      - longDescription
+    technical_name: LONGDESCRIPTION
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: RfX Description
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: longDescription
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BUYERCOMPANY
+    label: buyerCompany
+    labels:
+      - buyerCompany
+    technical_name: BUYERCOMPANY
+    section: 2.1.1.3
+    type: null
+    mandatory_text: |-
+      Y for insert
+      Not used for update
+    allowed_values: []
+    notes: Reference to the buyer company (external code –code field- or JA internal
+      id –id field) whose superuser is used as RfX creator if no ownerUser
+      specified
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: buyerCompany
+        type: null
+        mandatory_text: |-
+          Y for insert
+          Not used for update
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:OWNERUSER
+    label: ownerUser
+    labels:
+      - ownerUser
+    technical_name: OWNERUSER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Reference to the buyer user to be used as RfX creator:
+      id = JA internal identifier
+      code = external code
+      login = user login
+      If not specified, companyData superuser is used.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: ownerUser
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SUPPLIERACCESS
+    label: supplierAccess
+    labels:
+      - supplierAccess
+    technical_name: SUPPLIERACCESS
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Type of supplier access:
+      RFQ_TYPE_PRIVATE_WITH_ANSWER
+      RFQ_TYPE_PUBLIC_WITH_ANSWER
+      RFQ_TYPE_PRIVATE_NO_ANSWER
+      RFQ_TYPE_PUBLIC_NO_ANSWER
+      RFQ_TYPE_SIMPLIFIED
+      RFQ_TYPE_PRIVATE_PPB
+      RFQ_TYPE_PUBLIC_PPB
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: supplierAccess
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:OFFERSOPENINGCRITERIA
+    label: offersOpeningCriteria
+    labels:
+      - offersOpeningCriteria
+    technical_name: OFFERSOPENINGCRITERIA
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Envelope opening criteria:
+
+      NONE
+
+      OPEN_PARALLEL
+
+      BLIND_PARALLEL
+
+      BLIND_SEQUENTIAL
+
+      The first value is valid only if the field is not enabled for the RfX
+      profile, the others if the field is enabled, then mandatory
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: offersOpeningCriteria
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PROCEDURETYPE
+    label: procedureType
+    labels:
+      - procedureType
+    technical_name: PROCEDURETYPE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: |-
+      N
+      (required for autopublish)
+    allowed_values: []
+    notes: Numeric code or full description (no matter case) of the procedure type
+      for government to be set on RfX.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: procedureType
+        type: null
+        mandatory_text: |-
+          N
+          (required for autopublish)
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.9
+      mandatory:
+        kind: always
+  - key: tech:CONTRACTOBJECT
+    label: contractObject
+    labels:
+      - contractObject
+    technical_name: CONTRACTOBJECT
+    section: 2.1.1.3
+    type: null
+    mandatory_text: |-
+      N
+      (required for autopublish)
+    allowed_values: []
+    notes: >-
+      Numeric code or full description (no matter case) of the contract object
+      for government to be set on RfX. Accepted numeric code:
+
+      1 = works
+
+      2 = prevision of service
+
+      3 = intellectual performance
+
+      4 = supplies
+
+      0 (or any other numeric value) = not selected
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r18
+        genre: tecnica
+        label: contractObject
+        type: null
+        mandatory_text: |-
+          N
+          (required for autopublish)
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.9
+      mandatory:
+        kind: always
+  - key: tech:VALUE
+    label: value
+    labels:
+      - value
+    technical_name: VALUE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Value of the RfX
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r19
+        genre: tecnica
+        label: value
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:VALUECURRENCY
+    label: valueCurrency
+    labels:
+      - valueCurrency
+    technical_name: VALUECURRENCY
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      External code of the value currency.
+
+      If not provided:
+
+      When creating new object, the default instance currency is used
+
+      When updating object, previous value (if any) is kept or, if no value set
+      for existing item, default instance currency is used
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r20
+        genre: tecnica
+        label: valueCurrency
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BIDSCURRENCY
+    label: bidsCurrency
+    labels:
+      - bidsCurrency
+    technical_name: BIDSCURRENCY
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      External code of the bids currency.
+
+      If not provided:
+
+      When creating a new object, value to set for value currency (as described
+      above) is used
+
+      When updating object, no changes are made
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r21
+        genre: tecnica
+        label: bidsCurrency
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ENVELOPEDIGITALSIGNATURE
+    label: envelopeDigitalSignature
+    labels:
+      - envelopeDigitalSignature
+    technical_name: ENVELOPEDIGITALSIGNATURE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Envelope digital signature configuration (global for all envelopes):
+      NOT_MANDATORY/YES/1
+      NO/0
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r22
+        genre: tecnica
+        label: envelopeDigitalSignature
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RANKINGSTRATEGY
+    label: rankingStrategy
+    labels:
+      - rankingStrategy
+    technical_name: RANKINGSTRATEGY
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Ranking strategy:
+      NONE
+      NO_RANKING
+      BEST_TECHNICAL_SCORE
+      BEST_ECONOMICAL_OFFER
+      MOST_ECONOMICAL_ADVANTAGEOUS
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r23
+        genre: tecnica
+        label: rankingStrategy
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:QUALENVSTATUS
+    label: qualEnvStatus
+    labels:
+      - qualEnvStatus
+    technical_name: QUALENVSTATUS
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Status of the envelope:
+      0 = not active
+      1 = active with no response attachments
+      2 = active with response attachments allowed
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r24
+        genre: tecnica
+        label: qualEnvStatus
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TECHENVSTATUS
+    label: techEnvStatus
+    labels:
+      - techEnvStatus
+    technical_name: TECHENVSTATUS
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Status of the envelope:
+      0 = not active
+      1 = active with no response attachments
+      2 = active with response attachments allowed
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r25
+        genre: tecnica
+        label: techEnvStatus
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMENVSTATUS
+    label: commEnvStatus
+    labels:
+      - commEnvStatus
+    technical_name: COMMENVSTATUS
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Status of the envelope:
+      0 = not active
+      1 = active with no response attachments
+      2 = active with response attachments allowed
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r26
+        genre: tecnica
+        label: commEnvStatus
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CLOSEDATE
+    label: closeDate
+    labels:
+      - closeDate
+    technical_name: CLOSEDATE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Last close date
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r27
+        genre: tecnica
+        label: closeDate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:AUTOPUBLISH
+    label: autopublish
+    labels:
+      - autopublish
+    technical_name: AUTOPUBLISH
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Auto-publishing flag:
+
+      0 = RfX will be published manually
+
+      1 = RfX will be published automatically on date expressed in
+      autopublishDate
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+        row_ref: t0.r28
+        genre: tecnica
+        label: autopublish
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 6212

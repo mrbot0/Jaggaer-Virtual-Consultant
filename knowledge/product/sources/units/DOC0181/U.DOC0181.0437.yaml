@@ -1,0 +1,43 @@
+id: U.DOC0181.0437
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: returnCode | Description: Global operation result operation.
+  A success (0 or 1) means web service was successfully executed, but to know operation effective result, other response field must be analyzed.
+  See section “ErrorCodes [Import JIOrder method]” below.
+  Attribute: returnMessage | Description: Global result description. If operation completed successfully, it is “OK”, otherwise it is a brief explanation of mismatches found.
+  Attribute: importResponseMessage | Description: Operation result description.
+  See section “ImportResponseMessage [Import JIOrder method]” below
+hash: sha256:8240160d66207b8d3ceef9b36586298a604325e8aad6631b394207b136739f46
+words: 79
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: Response data format [Import JIOrder method]
+  section_path: 2.3.3
+  page: 100
+  lang: en
+  prev: U.DOC0181.0436
+  next: U.DOC0181.0438
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - returnCode
+      - |-
+        Global operation result operation.
+        A success (0 or 1) means web service was successfully executed, but to know operation effective result, other response field must be analyzed.
+        See section “ErrorCodes [Import JIOrder method]” below.
+    - - returnMessage
+      - Global result description. If operation completed successfully, it is “OK”, otherwise it is a brief explanation of mismatches found.
+    - - importResponseMessage
+      - |-
+        Operation result description.
+        See section “ImportResponseMessage [Import JIOrder method]” below
+  block: 1
+  blocks: 1

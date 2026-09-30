@@ -1,0 +1,47 @@
+id: U.DOC0175.0078
+doc: S.STD.XSC.DOC.0175
+doc_id: jint-ws-development-kit-push-services-overview-d-7b85c1d1
+type: tabella
+text: |-
+  Colonne: Customer | Object Type | Operation Type | Authentication | Login/Pwd | FormatType | External Endpoint
+  Customer: Acme Inc | Object Type: PO | Operation Type: Export | Authentication: Basic | Login/Pwd: expLogin expPwd | FormatType: JSON | External Endpoint: https://validation.service.com
+  Customer: Acme Inc | Object Type: PO | Operation Type: Validate | Authentication: Basic | Login/Pwd: valLogin valPwd | FormatType: XML | External Endpoint: https://export.service.com
+hash: sha256:e1da35796f792f2d365f2ab6d1f26ccbee8618c8fa913b7c64e7a03ef42d7944
+words: 67
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0175
+  chapter: Overview
+  section: XML Response message
+  section_path: 2.0.4.2
+  page: 16
+  lang: en
+  prev: U.DOC0175.0077
+  next: null
+table:
+  table: 0
+  headers:
+    - Customer
+    - Object Type
+    - Operation Type
+    - Authentication
+    - Login/Pwd
+    - FormatType
+    - External Endpoint
+  rows:
+    - - Acme Inc
+      - PO
+      - Export
+      - Basic
+      - expLogin expPwd
+      - JSON
+      - https://validation.service.com
+    - - Acme Inc
+      - PO
+      - Validate
+      - Basic
+      - valLogin valPwd
+      - XML
+      - https://export.service.com
+  block: 1
+  blocks: 1

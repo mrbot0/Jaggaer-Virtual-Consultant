@@ -1,0 +1,39 @@
+id: U.DOC0178.0306
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: Net | Description: Number of days after the invoice date that the invoice is due.
+  Note: A Net payment terms type can be specified using either the Net element or the combination of the PaymentTermsType element set to Net and the PaymentTermsDaysAfter element.
+  Note: If Net is provided in an import message, the PaymentTermsType and StandardPaymentTermsCode elements cannot have values.
+hash: sha256:efaae79df6e69223af108dd2c3f63a5d9d7b37b09e92259eaf28ef72484cf214
+words: 61
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: PaymentTerms [Import]
+  section_path: 2.2.1.45
+  page: 56
+  lang: en
+  prev: U.DOC0178.0305
+  next: U.DOC0178.0307
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - Net
+    - ""
+    - |-
+      Number of days after the invoice date that the invoice is due.
+      Note: A Net payment terms type can be specified using either the Net element or the combination of the PaymentTermsType element set to Net and the PaymentTermsDaysAfter element.
+      Note: If Net is provided in an import message, the PaymentTermsType and StandardPaymentTermsCode elements cannot have values.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

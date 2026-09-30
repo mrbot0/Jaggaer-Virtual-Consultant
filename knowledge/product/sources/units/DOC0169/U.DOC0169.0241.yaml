@@ -1,0 +1,39 @@
+id: U.DOC0169.0241
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: updateData | Mandatory (Y/N): N | Description: Object containing the information to be used to update the purchase requisition.
+  Used only with operationCode=update.
+  See section “UpdateData [PR Update]” below.
+hash: sha256:3f32688afdfb093005d4db4bc0521a25f5177a53f5f5716d7321ef95e7a92b14
+words: 30
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Main request structure [PR Update]
+  section_path: 2.2.1.1
+  page: 43
+  lang: en
+  prev: U.DOC0169.0240
+  next: U.DOC0169.0242
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - updateData
+    - N
+    - |-
+      Object containing the information to be used to update the purchase requisition.
+      Used only with operationCode=update.
+      See section “UpdateData [PR Update]” below.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

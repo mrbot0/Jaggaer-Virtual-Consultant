@@ -1,0 +1,53 @@
+id: U.DOC0177.0688
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: tabella
+text: |-
+  Colonne: URL | /esop/jint/api/public/j1/v1/suppliecrs/{id}
+  URL: Http Method | /esop/jint/api/public/j1/v1/suppliecrs/{id}: GET
+  URL: Header Parameters | /esop/jint/api/public/j1/v1/suppliecrs/{id}: Authorization (see “JINT WS Development_Kit - Web Services Overview” document)
+  URL: Path Parameters | /esop/jint/api/public/j1/v1/suppliecrs/{id}: Param Name | Reference | Format
+  id | Jaggaer internal id of the j1 supplier (j1 supplier id) | String
+  URL: Response format | /esop/jint/api/public/j1/v1/suppliecrs/{id}: JSON string representing the j1 supplier data.
+  URL: Return Codes | /esop/jint/api/public/j1/v1/suppliecrs/{id}: 200 query successfully executed
+  400 wrong or missing data in the request
+  404 the object with the provided id does not exist
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:430b6ba64ea2e7cd98c969652b8884b5a06955bd6c5dccb3d77529f505edd0fb
+words: 101
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: Retrieve single J1Supplier [export J1Supplier]
+  section_path: 2.4.1.2
+  page: 167
+  lang: en
+  prev: U.DOC0177.0687
+  next: U.DOC0177.0689
+table:
+  table: 0
+  headers:
+    - URL
+    - /esop/jint/api/public/j1/v1/suppliecrs/{id}
+  rows:
+    - - Http Method
+      - GET
+    - - Header Parameters
+      - Authorization (see “JINT WS Development_Kit - Web Services Overview” document)
+    - - Path Parameters
+      - |-
+        Param Name | Reference | Format
+        id | Jaggaer internal id of the j1 supplier (j1 supplier id) | String
+    - - Response format
+      - JSON string representing the j1 supplier data.
+    - - Return Codes
+      - |-
+        200 query successfully executed
+        400 wrong or missing data in the request
+        404 the object with the provided id does not exist
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

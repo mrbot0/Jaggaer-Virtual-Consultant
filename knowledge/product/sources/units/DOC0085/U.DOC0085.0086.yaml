@@ -1,0 +1,46 @@
+id: U.DOC0085.0086
+doc: S.STD.XSC.DOC.0085
+doc_id: commodity-codes-setup-docx-3fd557c2
+type: tabella
+text: "Colonne: Steps | What am I looking for? Steps: Go to the “Category Map” | What am I looking for?: Perform a cursory check of your mapping. Do you have the applicable Overridden Indicator and associated Client Commodity Code? Open some tree sub-categories; are they inheriting as expected? Steps: Were Commodity Codes automatically applied to ePro Hosted/Punch-out items? | What am I looking for?: If so, add some hosted items to your cart. Is the CC automatically applied? Is it “mapped” correctly? Check a punch-out item as well. Steps: Were Users allowed to modify Commodity Codes in their Cart? | What am I looking for?: If so, the auto-applied Commodity Code in the cart should be editable by the User. Steps: Were Commodity Codes used for workflow routing? | What am I looking for?: If you imported/set-up CC Dynamic Workflow, then you better check a few Rules. For an applicable CC in your Cart/PR is it routing properly (check Approvals tab). Steps: Were Commodity Codes “required” on the Cart/Requisition? | What am I looking for?: If so, either delete the CC in the cart (if you are allowed) or find an item that doesn’t have a CC mapped. It should Error or Warn on Checkout depending on your PR Doc setting for the CC Field. Steps: Were Commodity Codes “mapped” to a Custom Field? | What am I looking for?: If so, verify that for the applicable CC, the associated custom field is either populated (if defaulted) of the choices are limited to the mapped values. Note: Mapping only applies to the Cart /Requisition."
+hash: sha256:6dc24c50f20e4ea82cabafcb4245303831e6fdda8c0d66f8cb2cdfb08c302247
+words: 264
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0085
+  chapter: commodity-codes-setup-docx-3fd557c2
+  section: Verify the Configuration and Mapping
+  section_path: "0.6"
+  page: 20
+  lang: en
+  prev: U.DOC0085.0085
+  next: U.DOC0085.0087
+table:
+  table: 0
+  headers:
+    - Steps
+    - What am I looking for?
+  rows:
+    - - Go to the “Category Map”
+      - Perform a cursory check of your mapping. Do you have the applicable Overridden Indicator and associated Client Commodity Code? Open some tree sub-categories; are they inheriting as expected?
+    - - Were Commodity Codes automatically applied to ePro Hosted/Punch-out items?
+      - If so, add some hosted items to your cart. Is the CC automatically applied? Is it “mapped” correctly? Check a punch-out item as well.
+    - - Were Users allowed to modify Commodity Codes in their Cart?
+      - If so, the auto-applied Commodity Code in the cart should be editable by the User.
+    - - Were Commodity Codes used for workflow routing?
+      - If you imported/set-up CC Dynamic Workflow, then you better check a few Rules. For an applicable CC in your Cart/PR is it routing properly (check Approvals tab).
+    - - Were Commodity Codes “required” on the Cart/Requisition?
+      - If so, either delete the CC in the cart (if you are allowed) or find an item that doesn’t have a CC mapped. It should Error or Warn on Checkout depending on your PR Doc setting for the CC Field.
+    - - Were Commodity Codes “mapped” to a Custom Field?
+      - "If so, verify that for the applicable CC, the associated custom field is either populated (if defaulted) of the choices are limited to the mapped values. Note: Mapping only applies to the Cart /Requisition."
+    - - Were “Use Supplier Master CC Values” or “if no category/CC available” Used?
+      - |-
+        Check you mapping Hierarchy:
+        Use Mapped Value – If none then…
+        Use Supplier Master (on Supplier Profile) – If none then…
+        Use the defined catch-all CC
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

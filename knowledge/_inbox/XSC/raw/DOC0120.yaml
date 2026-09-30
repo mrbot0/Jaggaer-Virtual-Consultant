@@ -1,0 +1,317 @@
+doc: S.STD.XSC.DOC.0120
+scope: XSC
+extracted_at: 2026-09-30T04:30:50.115Z
+tier: T0
+stats:
+  units: 35
+  extracted_units: 8
+  document_candidates: 0
+  needs_llm: 3
+  t0_complete: 5
+  by_candidate:
+    FLD: 6
+    FLW: 1
+    GLS: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 1345
+  sessions:
+    - n: 1
+      tokens: 1345
+      batches: 1
+      items: 3
+      batch_items:
+        - - R.DOC0120.0006
+          - R.DOC0120.0010
+          - R.DOC0120.0016
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0120.0006
+    source_unit: U.DOC0120.0006
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0120
+    section: "2. Blanket Order Request: Workflow"
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0120.0006
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 73
+  - raw_id: R.DOC0120.0008
+    source_unit: U.DOC0120.0008
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0120
+    section: "3. Buyer Requirements for Contract Creation:"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: they
+      modality: obbligo-condizionale
+      condition: the request reaches the “Blanket Contract Creation” queue of the Buyer
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0120.0008
+      mandatory:
+        kind: conditional
+        when: the request reaches the “Blanket Contract Creation” queue of the Buyer
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0120.0009
+    source_unit: U.DOC0120.0009
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0120
+    section: "3. Buyer Requirements for Contract Creation:"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Below
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0120.0009
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0120.0010
+    source_unit: U.DOC0120.0010
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0120
+    section: "3. Buyer Requirements for Contract Creation:"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: Buyer
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: buyer(s)
+          oggetto: "need to have “ Contract Manager ” permission . 1.1. Campus Decision: Add permission t o Buyer Role?"
+          valore: " Contract Manager "
+        - n: 2
+          verbo: campus
+          oggetto: "Contract Work Group specific to “Procurement” (?) 2.1. Campus Decision: Create specific Work Group for Internal Procurement Contracts? 2.2. Temporarily added “Buyers” Role to UB Work Group “Procurement Systems Team” 2.3. A new Work Group can use a designated Number Wheel to assign Contract Numbers . i.e. UB -BLKT -###"
+          valore: Procurement
+        - n: 3
+          verbo: campus/global
+          oggetto: "Contract Type of “Blanket Order” (?) 3.1. Campus Decision: Create a Campus specific TCM Contract Type? 3.2. Temporarily using Global “Blanket Order” Contract Type created for Focus Group"
+          valore: Blanket Order
+        - n: 4
+          verbo: tcm
+          oggetto: "Workflow Adjustments 4.1. Campus Decision: Inter nal P rocurement Contracts to skip “Signature ” workflow? 4.2. No temporary adjustments made in UIT"
+          valore: "Signature "
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0120.0010
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 212
+  - raw_id: R.DOC0120.0012
+    source_unit: U.DOC0120.0012
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0120
+    section: 5. Contract Creation Setup
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - GLS
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Below
+      definition: the Buyer steps, sections, consideration s and options for creating and editing the draft Blanket Order Contract.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0120.0012
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0120.0016
+    source_unit: U.DOC0120.0016
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0120
+    section: 5. Contract Creation Setup
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0120.0016
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0120.0032
+    source_unit: U.DOC0120.0032
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0120
+    section: Blanket Order Request Overview – Pg. 7
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: • “Active For Shopping ”
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0120.0032
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0120.0033
+    source_unit: U.DOC0120.0033
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0120
+    section: Blanket Order Request Overview – Pg. 7
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • “Restrict Products To ”
+      modality: obbligo-condizionale
+      condition: Step 5.2 was used to set Product/SKU OR Non-Catalog Item applicability
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0120.0033
+      mandatory:
+        kind: conditional
+        when: Step 5.2 was used to set Product/SKU OR Non-Catalog Item applicability
+    needs_llm: false
+    tokens: 38

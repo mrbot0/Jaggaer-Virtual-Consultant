@@ -1,0 +1,213 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-62
+section: 2.1.1.103
+section_title: J1Supplier/JISupplierData/accountsPayableList/accountsPayable
+part: 1
+parts: 1
+rows:
+  - key: tech:CONTACTNAME
+    label: contactName
+    labels:
+      - contactName
+    technical_name: CONTACTNAME
+    section: 2.1.1.103
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Name of the contact for the account.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: contactName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-003
+      functional_section: contabilita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PURPOSE
+    label: purpose
+    labels:
+      - purpose
+    technical_name: PURPOSE
+    section: 2.1.1.103
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Purpose of the transaction.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: purpose
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-003
+      functional_section: contabilita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ACCOUNTID
+    label: accountId
+    labels:
+      - accountId
+    technical_name: ACCOUNTID
+    section: 2.1.1.103
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: ID of the PayMode account.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: accountId
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-003
+      functional_section: contabilita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ACCOUNTHOLDERNAME
+    label: accountHolderName
+    labels:
+      - accountHolderName
+    technical_name: ACCOUNTHOLDERNAME
+    section: 2.1.1.103
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Name of the Pay Mode account holder
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: accountHolderName
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.106
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.106#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: accountHolderName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-003
+      functional_section: contabilita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ACCOUNTTYPE
+    label: accountType
+    labels:
+      - accountType
+    technical_name: ACCOUNTTYPE
+    section: 2.1.1.103
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates the type of Pay Mode account.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: accountType
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-003
+      functional_section: contabilita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BANKACCOUNT
+    label: bankAccount
+    labels:
+      - bankAccount
+    technical_name: BANKACCOUNT
+    section: 2.1.1.103
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: bankAccount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-003
+      functional_section: contabilita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLEXFIELDS
+    label: flexFields
+    labels:
+      - flexFields
+    technical_name: FLEXFIELDS
+    section: 2.1.1.103
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: flexFields
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-003
+      functional_section: contabilita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1756

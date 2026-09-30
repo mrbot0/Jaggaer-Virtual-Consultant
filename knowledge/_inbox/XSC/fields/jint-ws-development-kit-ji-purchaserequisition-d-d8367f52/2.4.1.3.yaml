@@ -1,0 +1,88 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.4.1.3
+section_title: ValidateRequisitionData [PR Validate]
+genre: tecnica
+rows:
+  - label: id
+    technical_name: id
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal identifier of the requisition (if for global header data) or
+      requisition line identifier (if for specific line data) on which operation
+      is to be executed
+    section: 2.4.1.3
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.4.1.3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: status
+    technical_name: status
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Status of the validation request.
+
+      When structure is defined at global header level, it can assume following
+      value:
+
+      Approved: all requisition elements passed validation
+
+      Rejected: all requisition elements failed validation
+
+      Returned: one or more requisition elements failed the validation, but at
+      least one element or field succeeded
+
+      When structure is defined at line level, it can assume following value:
+
+      Approved: requisition line passed validation
+
+      Rejected: requisition line failed validation
+    section: 2.4.1.3
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.4.1.3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: note
+    technical_name: note
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Note to provide additional information about the object and its status.
+      If not provided or empty, existing notes are not overwritten.
+    section: 2.4.1.3
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.4.1.3#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: budgetInfo
+    technical_name: budgetInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Element describing budget information about the element.
+      See section “BudgetInfo [PR Validate]” below
+    section: 2.4.1.3
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.4.1.3#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: customFieldValueList
+    technical_name: customFieldValueList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Container of custom field value to be set on the requisition line.
+      Available for line object only,
+
+      See section “Custom Field Value [PR Validate]” below.
+    section: 2.4.1.3
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.4.1.3#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

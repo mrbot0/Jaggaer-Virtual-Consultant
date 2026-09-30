@@ -1,0 +1,27 @@
+id: U.DOC0171.0277
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  When updating an existing RfX
+  1. if rfxReferenceCode is provided but reference code service is not available, error is prepared to be returned.
+  2. Otherwise an RfX internal identifier matching such rfxReferenceCode is looked for: if no existing RfX can be found with such reference code or if rfxId value has been provided but such value doesn’t match that retrieved via rfxReferenceCode, error is returned.
+  3. RfX (with internal identifier provided or that retrieved by reference code) is then loaded and all updates act on such element (if RfX not found or if retrieved object doesn’t belong to calling instance web service is called on, error is returned).
+hash: sha256:9e6a69445589bfec265010e41ddf121bfbb47c4467084ddb5431e539feb11a6a
+words: 108
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Existing RfX selection
+  section_path: 2.1.2.1
+  page: 6
+  lang: en
+  prev: U.DOC0171.0276
+  next: U.DOC0171.0278
+steps:
+  - if rfxReferenceCode is provided but reference code service is not available, error is prepared to be returned.
+  - "Otherwise an RfX internal identifier matching such rfxReferenceCode is looked for: if no existing RfX can be found with such reference code or if rfxId value has been provided but such value doesn’t match that retrieved via rfxReferenceCode, error is returned."
+  - RfX (with internal identifier provided or that retrieved by reference code) is then loaded and all updates act on such element (if RfX not found or if retrieved object doesn’t belong to calling instance web service is called on, error is returned).
+procedure:
+  title: When updating an existing RfX

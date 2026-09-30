@@ -1,0 +1,47 @@
+id: U.DOC0171.0204
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: defaultValue | Mandatory (Y/N): N | Description: Default value to be set on the additional column. According to column type, possible values are:
+  BOOLEAN: TRUE or 1 for true value, any other value means false
+  NOTE, MULTILINE OR TEXT: any string
+  NUMERIC: a string representing a number
+  COMBO: any value among allowed ones
+  DATE [22.02.00] Note: format is yyyy-MM-dd
+hash: sha256:ba2725eb18784a5cc44846827f1c7b457fe558e7c35dc13433784d339fb6775c
+words: 60
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: Section additional column [Import/Update RfX method]"
+  section_path: 2.1.1.16
+  page: 6
+  lang: en
+  prev: U.DOC0171.0203
+  next: U.DOC0171.0205
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - defaultValue
+    - N
+    - |-
+      Default value to be set on the additional column. According to column type, possible values are:
+      BOOLEAN: TRUE or 1 for true value, any other value means false
+      NOTE, MULTILINE OR TEXT: any string
+      NUMERIC: a string representing a number
+      COMBO: any value among allowed ones
+      DATE [22.02.00] Note: format is yyyy-MM-dd
+    - ""
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

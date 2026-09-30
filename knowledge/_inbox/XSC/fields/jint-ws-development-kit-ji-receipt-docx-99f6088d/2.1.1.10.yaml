@@ -1,0 +1,54 @@
+document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+scope: XSC
+section: 2.1.1.10
+section_title: PurchaseOrder [Import]
+genre: tecnica
+rows:
+  - label: poNumber
+    technical_name: poNumber
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Number of the PO associated with the receipt.
+    section: 2.1.1.10
+    source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.10#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+  - label: externalPOID
+    technical_name: externalPOID
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: External identifier of the PO associated with the receipt.
+    section: 2.1.1.10
+    source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.10#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+  - label: createDateTime
+    technical_name: createDateTime
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date and time the PO associated with the receipt was generated,
+    section: 2.1.1.10
+    source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.10#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+  - label: purchaseOrderLine
+    technical_name: purchaseOrderLine
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Information about the line of the Purchase Order associated to the
+      receipt.
+
+      See section “PurchaseOrderLine [Import]” below.
+    section: 2.1.1.10
+    source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.10#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-receipt-docx-99f6088d

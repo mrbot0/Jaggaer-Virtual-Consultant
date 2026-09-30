@@ -1,0 +1,96 @@
+id: S.STD.XSC.DOC.0183
+type: DOC
+title: JINT Development Kit- JI Receipt web-service
+summary: 'Documento spec-integrazione (tecnica, origine vendor) "JINT
+  Development Kit- JI Receipt web-service": 252 unità, 136 tabelle, 14 tabelle
+  di campi; scope P2P, XSC, ADM; affidabilità 0.72.'
+facets:
+  F1: spec-integrazione-prosa
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2021-12-16
+    release: ignota
+  F15: tecnica
+sources:
+  - file: JAGGAER WS/JINT WS Development_Kit_JI Receipt.docx
+    sha256: sha256:7b094a973b11b1529c2852036cc67a8e6386584b7ed2fabad5927ad549699943
+kind: spec-integrazione
+genre: tecnica
+origin: vendor
+version: null
+dated: 2021-12-16
+covers_release: null
+languages:
+  - en
+scopes:
+  - P2P
+  - XSC
+  - ADM
+source:
+  path: JAGGAER WS/JINT WS Development_Kit_JI Receipt.docx
+  sha256: sha256:7b094a973b11b1529c2852036cc67a8e6386584b7ed2fabad5927ad549699943
+  size: 293298
+  format: docx
+  doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+  doc_key: jint-ws-development-kit-ji-receipt.docx
+structure:
+  pages: 18
+  chapters: 3
+  sections: 151
+  tables: 136
+  figures: 1
+  field_tables: 14
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 252
+  by_type:
+    testo: 31
+    tabella: 127
+    definizione: 1
+    procedura: 3
+    passo: 22
+    riga-tabella-campi: 59
+    regola: 3
+    esempio: 2
+    riferimento: 3
+    nota: 1
+reliability:
+  base_by_kind: 0.9
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.72
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: tabelle annidate appiattite nel testo della cella
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 252
+  items_produced: 68
+  residue:
+    irrelevant: 3
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.27
+  last_run: 2026-09-30
+  estimated_tokens: 21747
+  sessions_planned: 1

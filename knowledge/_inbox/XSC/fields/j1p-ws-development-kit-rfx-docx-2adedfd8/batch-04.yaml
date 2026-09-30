@@ -1,0 +1,922 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-04
+section: 2.1.1.3
+section_title: Rfx Setting (header information) [Import/Update RfX method]
+part: 2
+parts: 2
+rows:
+  - key: tech:AUTOPUBLISHDATE
+    label: autopublishDate
+    labels:
+      - autopublishDate
+    technical_name: AUTOPUBLISHDATE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Auto-publishing date
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r29
+        genre: tecnica
+        label: autopublishDate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TASKINFO
+    label: taskInfo
+    labels:
+      - taskInfo
+    technical_name: TASKINFO
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Reference to the task (external code –taskName field- or JA internal id
+      –taskId field). The tender must have a workflow with this task associated.
+      The task must be running.
+
+      Only for create operations: when updating an existing RfX, this field is
+      ignored.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r30
+        genre: tecnica
+        label: taskInfo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RFXTYPE
+    label: rfxType
+    labels:
+      - rfxType
+    technical_name: RFXTYPE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: RfX Typology external code.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r31
+        genre: tecnica
+        label: rfxType
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:QUALENVELOPEDIGITALSIGNATURE
+    label: qualEnvelopeDigitalSignature
+    labels:
+      - qualEnvelopeDigitalSignature
+    technical_name: QUALENVELOPEDIGITALSIGNATURE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Qualification envelope digital signature configuration:
+      NOT_MANDATORY/YES/1
+      NO/0
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r32
+        genre: tecnica
+        label: qualEnvelopeDigitalSignature
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TECHENVELOPEDIGITALSIGNATURE
+    label: techEnvelopeDigitalSignature
+    labels:
+      - techEnvelopeDigitalSignature
+    technical_name: TECHENVELOPEDIGITALSIGNATURE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Technical envelope digital signature configuration:
+      NOT_MANDATORY/YES/1
+      NO/0
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r33
+        genre: tecnica
+        label: techEnvelopeDigitalSignature
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMENVELOPEDIGITALSIGNATURE
+    label: commEnvelopeDigitalSignature
+    labels:
+      - commEnvelopeDigitalSignature
+    technical_name: COMMENVELOPEDIGITALSIGNATURE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Commercial envelope digital signature configuration:
+      NOT_MANDATORY/YES/1
+      NO/0
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r34
+        genre: tecnica
+        label: commEnvelopeDigitalSignature
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:AUTOCREATETENDER
+    label: autoCreateTender
+    labels:
+      - autoCreateTender
+    technical_name: AUTOCREATETENDER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag to force the auto-creation of the tender:
+
+      0 = not create a tender (valid tenderCode or tenderReferenceCode must be
+      provided)
+
+      1 = create automatically a tender for independent Rfq
+
+      2 = create automatically a tender for Rfq multilot.
+
+      Default = 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r35
+        genre: tecnica
+        label: autoCreateTender
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TCOHEADER
+    label: tcoHeader
+    labels:
+      - tcoHeader
+    technical_name: TCOHEADER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Redefined header for TCO additional column
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r36
+        genre: tecnica
+        label: tcoHeader
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TCOVISIBLETOSUPPLIERS
+    label: tcoVisibleToSuppliers
+    labels:
+      - tcoVisibleToSuppliers
+    technical_name: TCOVISIBLETOSUPPLIERS
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Visibility of TCO additional column:
+      0 = not visible to suppliers
+      1 = visible to suppliers
+      Default is 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r37
+        genre: tecnica
+        label: tcoVisibleToSuppliers
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CONSORTIUMAVAILABLE
+    label: consortiumAvailable
+    labels:
+      - consortiumAvailable
+    technical_name: CONSORTIUMAVAILABLE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag to allow suppliers to respond by consortium:
+
+      0 = No
+
+      1 = Yes
+
+      If omitted, it is conditioned by the existence of the qualification
+      envelope
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r38
+        genre: tecnica
+        label: consortiumAvailable
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMSCORINGALGORITHM
+    label: commScoringAlgorithm
+    labels:
+      - commScoringAlgorithm
+    technical_name: COMMSCORINGALGORITHM
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Scoring algorithm to calculate the score.
+      Possible values:
+      PROPORTIONAL_VS_BEST = Proportional vs Best
+      BETTER_ABOVE_AVERAGE_DISCOUNT = Better Above Average Discount
+      DIFFERENTIAL_VS_BASE_PRICE = Differential vs Base Price
+      LINEAR = Linear (Worst=0)
+      COPY_TCO = Copy of TCO
+      NO_FORMULA = No formula
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r39
+        genre: tecnica
+        label: commScoringAlgorithm
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMALGORITHMINPUTDATA
+    label: commAlgorithmInputData
+    labels:
+      - commAlgorithmInputData
+    technical_name: COMMALGORITHMINPUTDATA
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: >-
+      Source for Scoring algorithm.
+
+      Required for all possible values of commScoringAlgorithm except for these
+      following values:
+
+      COPY_TCO
+
+      NO_FORMULA
+
+      Possible values:
+
+      PRICE
+
+      TCO
+
+      Default value: PRICE
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r40
+        genre: tecnica
+        label: commAlgorithmInputData
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:COMMALGORITHMVALUESSTRATEGY
+    label: commAlgorithmValuesStrategy
+    labels:
+      - commAlgorithmValuesStrategy
+    technical_name: COMMALGORITHMVALUESSTRATEGY
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Price values strategy.
+
+      Required for all possible values of commScoringAlgorithm except for this
+      following value:
+
+      NO_FORMULA
+
+      Possible values:
+
+      REVERSE = lower price preferred
+
+      DIRECT = higher price preferred
+
+      Default value: REVERSE
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r41
+        genre: tecnica
+        label: commAlgorithmValuesStrategy
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMALGORITHMBASEVALUE
+    label: commAlgorithmBaseValue
+    labels:
+      - commAlgorithmBaseValue
+    technical_name: COMMALGORITHMBASEVALUE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Base value for scoring algorithm.
+      Required when commScoringAlgorithm is set on these following values:
+      BETTER_ABOVE_AVERAGE_DISCOUNT
+      DIFFERENTIAL_VS_BASE_PRICE.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r42
+        genre: tecnica
+        label: commAlgorithmBaseValue
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMALGORITHMXPARAM
+    label: commAlgorithmXParam
+    labels:
+      - commAlgorithmXParam
+    technical_name: COMMALGORITHMXPARAM
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      X parameter between 0 and 1. Required when commScoringAlgorithm is set on
+      this following value:
+
+      BETTER_ABOVE_AVERAGE_DISCOUNT.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r43
+        genre: tecnica
+        label: commAlgorithmXParam
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:HIDEVALUEFROMSUPPLIER
+    label: hideValueFromSupplier
+    labels:
+      - hideValueFromSupplier
+    technical_name: HIDEVALUEFROMSUPPLIER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Hide value from supplier’s flag:
+      0 = value visible to suppliers
+      1 = value not visible to suppliers
+      Default is 1.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r44
+        genre: tecnica
+        label: hideValueFromSupplier
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RESERVEDPRICE
+    label: reservedPrice
+    labels:
+      - reservedPrice
+    technical_name: RESERVEDPRICE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Reserved price
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r45
+        genre: tecnica
+        label: reservedPrice
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ENABLEOPENINGCOMMITTEES
+    label: enableOpeningCommittees
+    labels:
+      - enableOpeningCommittees
+    technical_name: ENABLEOPENINGCOMMITTEES
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Enable opening committees flag:
+      0 = disable opening committees
+      1 = enable opening committees
+      Default is 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r46
+        genre: tecnica
+        label: enableOpeningCommittees
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ENDDATEBUYERREPLYMESSAGES
+    label: endDateBuyerReplyMessages
+    labels:
+      - endDateBuyerReplyMessages
+    technical_name: ENDDATEBUYERREPLYMESSAGES
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: End date and time for buyer replies to messages
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r47
+        genre: tecnica
+        label: endDateBuyerReplyMessages
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:MAXSCOREVISIBLETOSUPPLIERS
+    label: maxScoreVisibleToSuppliers
+    labels:
+      - maxScoreVisibleToSuppliers
+    technical_name: MAXSCOREVISIBLETOSUPPLIERS
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Max score visible to supplier’s flag. Available only when supplier
+      response ranking is BEST_TECHNICAL_SCORE (Best Technical Score) or
+
+      MOST_ECONOMICAL_ADVANTAGEOUS (Best Score).
+
+      Possible values:
+
+      0 = No
+
+      1 = Envelope Level Only
+
+      2 = Including Section and Question Level
+
+      Default is 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r48
+        genre: tecnica
+        label: maxScoreVisibleToSuppliers
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:MULTICURRENCYBIDS
+    label: multicurrencyBids
+    labels:
+      - multicurrencyBids
+    technical_name: MULTICURRENCYBIDS
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Multicurrency bidding flag:
+      0 = disable multicurrency bidding
+      1 = enable multicurrency bidding
+      Default 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r49
+        genre: tecnica
+        label: multicurrencyBids
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:MULTICURRENCYTCO
+    label: multicurrencyTCO
+    labels:
+      - multicurrencyTCO
+    technical_name: MULTICURRENCYTCO
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Flag to apply currency conversion to TCO:
+      0 = not apply currency conversion to TCO
+      1 = apply currency conversion to TCO
+      Default 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r50
+        genre: tecnica
+        label: multicurrencyTCO
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RFQMLOTBEHAVIOUR
+    label: rfqMlotBehaviour
+    labels:
+      - rfqMlotBehaviour
+    technical_name: RFQMLOTBEHAVIOUR
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Rfq behavior in project. Visible in case of multi lot tender.
+      • 1 = qualification only;
+      • 0 = technical/ commercial;
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r51
+        genre: tecnica
+        label: rfqMlotBehaviour
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RFXAWARDINGTYPE
+    label: rfxAwardingType
+    labels:
+      - rfxAwardingType
+    technical_name: RFXAWARDINGTYPE
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: RfX Awarding Typology external code
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r52
+        genre: tecnica
+        label: rfxAwardingType
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:VISIBILITYEGCOMMENTS
+    label: visibilityEGComments
+    labels:
+      - visibilityEGComments
+    technical_name: VISIBILITYEGCOMMENTS
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Blind evaluation comments for evaluation groups. Values:
+      0 – Always visible
+      1 – Blind behaviour
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r53
+        genre: tecnica
+        label: visibilityEGComments
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ASSIGNOWNERDIVISION
+    label: assignOwnerDivision
+    labels:
+      - assignOwnerDivision
+    technical_name: ASSIGNOWNERDIVISION
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag that indicates if in case of change of owner, the RfX division must
+      be replaced with the one the new owner belongs to. Values:
+
+      0 – Not change RfX division
+
+      1 – Change RfX division
+
+      Default value 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r54
+        genre: tecnica
+        label: assignOwnerDivision
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMENTONCHANGEOWNER
+    label: commentOnChangeOwner
+    labels:
+      - commentOnChangeOwner
+    technical_name: COMMENTONCHANGEOWNER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Comment on changing owner user.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r55
+        genre: tecnica
+        label: commentOnChangeOwner
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMALGORITHMEXPPARAM
+    label: commAlgorithmExpParam
+    labels:
+      - commAlgorithmExpParam
+    technical_name: COMMALGORITHMEXPPARAM
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: |-
+      Exponential parameter between 0,1 and 4.
+      Required when commScoringAlgorithm is set on this following value:
+      DIFFERENTIAL_VS_BASE_PRICE.
+      Default value is: 1
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+        row_ref: t0.r56
+        genre: tecnica
+        label: commAlgorithmExpParam
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 5991

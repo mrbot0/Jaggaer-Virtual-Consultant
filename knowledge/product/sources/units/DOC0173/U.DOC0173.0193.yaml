@@ -1,0 +1,118 @@
+id: U.DOC0173.0193
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: 'Colonne: Attribute | Description | Available from version Attribute: name | Description: Name of the data element Attribute: type | Description: Data element type; 0: text 1: number 2: date 3: boolean 4: attachment 5: single choice 6: multiple choice 7: signed attachment Attribute: defaultLabel | Description: Data element label in the default locale | Available from version: 12_1_03 Attribute: defaultLabelLocale | Description: Default locale (the locale of the data element label above, built up from language and country codes. E.g.: “en_GB” or “it_IT”) | Available from version: 12_1_03 Attribute: values/value | Description: Value of the Data Element (eVM answer) According to data element type, values can be: 0: text 1: number formatted in the default locale without grouping separator 2: date string in the format "yyyy-MM-dd". It is possible to configure a different format for date (example: "yyyy-MM-dd"). In this case the same format will be applied to import, export and data element condition filter. 3: 0 for false, 1 for true 4 and 7: attachment filename 5 and 6: Choice Label in default language, as it appears in the choice list Attribute: values/value/@id | Description: In case of attachment, it is the Internal identifier of the attachment, to be used for calling attachments web service to download it.'
+hash: sha256:d6da9e83df23daf5d15439b09e6457bd9e053a0e601acdaae77d24389b0ca272
+words: 210
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Data Element [Export of Company and Users Data]
+  section_path: 4.2.4.4
+  page: 7
+  lang: en
+  prev: U.DOC0173.0192
+  next: U.DOC0173.0194
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - name
+      - Name of the data element
+      - ""
+    - - type
+      - |-
+        Data element type;
+        0: text
+        1: number
+        2: date
+        3: boolean
+        4: attachment
+        5: single choice
+        6: multiple choice
+        7: signed attachment
+      - ""
+    - - defaultLabel
+      - Data element label in the default locale
+      - 12_1_03
+    - - defaultLabelLocale
+      - "Default locale (the locale of the data element label above, built up from language and country codes. E.g.: “en_GB” or “it_IT”)"
+      - 12_1_03
+    - - values/value
+      - |-
+        Value of the Data Element (eVM answer)
+        According to data element type, values can be:
+        0: text
+        1: number formatted in the default locale without grouping separator
+        2: date string in the format "yyyy-MM-dd". It is possible to configure a different format for date (example: "yyyy-MM-dd"). In this case the same format will be applied to import, export and data element condition filter.
+        3: 0 for false, 1 for true
+        4 and 7: attachment filename
+        5 and 6: Choice Label in default language, as it appears in the choice list
+      - ""
+    - - values/value/@id
+      - |-
+        In case of attachment, it is the Internal identifier of the attachment, to be used for calling attachments web service to download it.
+        In case of choice/multichoice the id of the choice
+      - ""
+    - - values/value/@secureToken
+      - In case of attachment, it is the secure token to be used for calling attachments web service to download the attachment file.
+      - BA_17_01
+    - - attachmentExpiryDate
+      - Expiring date (without time) for data element type 4 and 7.
+      - 12_3_01
+    - - attachmentExpiryDateManagedBy
+      - |-
+        It indicates who can manage the expiring date:
+        BUYER (only the buyer)
+        BUYER_SELLER (buyer and seller)
+      - 12_3_01
+    - - attachmentExpiryDateLastUpdateUser
+      - |-
+        Last user who changed the expiring date:
+        id: user internal identifier
+        code: user external code
+        name: user full name
+        company:
+        id: company internal identifier
+        code: company external code
+        name: company name
+      - 12_3_01
+    - - attachmentExpiryDateLastUpdateDate
+      - Last update date of the expiring date
+      - 12_3_01
+    - - lastAnswerDate
+      - Date and time of the last answer
+      - 12_4_0_00
+    - - lastAnswerUser
+      - |-
+        User performing last answer.
+        Complex type:
+        id = user internal identifier
+        code = user external code
+        name = user name and surname
+        company:
+        id: company internal identifier
+        code: company external code
+        name: company name
+        profile:
+        id = profile internal identifier
+        name = profile name
+        division:
+        id = division internal identifier
+        name = user division name
+        In case of Data-element “seller side”, profile and division will be omitted.
+        In case of Data-element “system side” this field will be omitted.
+      - 12_4_0_00
+    - - lastConfirmedDate
+      - Last confirmed date and time on data element answer
+      - BA_18_00
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

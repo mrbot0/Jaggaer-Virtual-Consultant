@@ -1,0 +1,508 @@
+doc: S.STD.XSC.DOC.0113
+scope: XSC
+extracted_at: 2026-09-30T04:30:49.399Z
+tier: T0
+stats:
+  units: 13
+  extracted_units: 11
+  document_candidates: 6
+  needs_llm: 6
+  t0_complete: 11
+  by_candidate:
+    FLD: 11
+    CFG: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 18000
+  sessions:
+    - n: 1
+      tokens: 18000
+      batches: 3
+      items: 6
+      batch_items:
+        - - R.DOC0113.C001
+          - R.DOC0113.C002
+        - - R.DOC0113.C003
+          - R.DOC0113.C004
+        - - R.DOC0113.C005
+          - R.DOC0113.C006
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0113.0003
+    source_unit: U.DOC0113.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Instructions
+      technical_name: Instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=Use this form to order all the parts required to build a red wagon. This form can be used to order the entire wagon kit or specific parts. · id=10000 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0113.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 71
+  - raw_id: R.DOC0113.0004
+    source_unit: U.DOC0113.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: WagonImage
+      technical_name: WagonImage
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=0; UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/61640.jpg; UserDefinedFieldParamImageTitle=red wagon · id=10002 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0113.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 65
+  - raw_id: R.DOC0113.0005
+    source_unit: U.DOC0113.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi —
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "100"
+      technical_name: "100"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=100 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0113.0005
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0113.0006
+    source_unit: U.DOC0113.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi —
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Wagon Main Body (Red)
+      technical_name: Painted Body
+      type: FlatRateService
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParam_CatalogNumber=48-0192; UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=24.95; UserDefinedFieldParam_DescriptionLabel=Wagon Body (Red); UserDefinedFieldParam_Quantity=1; UserDefinedFieldParam_ShowCatalogNumber=true · id=10005 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0113.0006
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 104
+  - raw_id: R.DOC0113.0007
+    source_unit: U.DOC0113.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi —
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Wheels (4 Required)
+      technical_name: Wheels
+      type: FlatRateService
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParam_CatalogNumber=43-1234; UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=4.95; UserDefinedFieldParam_DescriptionLabel=Wheels (4 Required); UserDefinedFieldParam_Quantity=4; UserDefinedFieldParam_ShowCatalogNumber=true · id=10003 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0113.0007
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 102
+  - raw_id: R.DOC0113.0008
+    source_unit: U.DOC0113.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: RearAxelAssy
+      technical_name: RearAxelAssy
+      type: FlatRateService
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParam_CatalogNumber=48-7162; UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=12.35; UserDefinedFieldParam_DescriptionLabel=Rear Axle Assembly; UserDefinedFieldParam_Quantity=1; UserDefinedFieldParam_ShowCatalogNumber=true · id=10006 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0113.0008
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 97
+  - raw_id: R.DOC0113.0009
+    source_unit: U.DOC0113.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: FrontAxlAssly
+      technical_name: FrontAxlAssly
+      type: FlatRateService
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParam_CatalogNumber=48-7192; UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=14.95; UserDefinedFieldParam_DescriptionLabel=Front Axle Assembly; UserDefinedFieldParam_Quantity=1; UserDefinedFieldParam_ShowCatalogNumber=true · id=10007 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0113.0009
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 97
+  - raw_id: R.DOC0113.0010
+    source_unit: U.DOC0113.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: PullHandle
+      technical_name: PullHandle
+      type: FlatRateService
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParam_CatalogNumber=43-0122; UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=7.95; UserDefinedFieldParam_DescriptionLabel=Pull Handle; UserDefinedFieldParam_Quantity=1; UserDefinedFieldParam_ShowCatalogNumber=true · id=10008 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0113.0010
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 94
+  - raw_id: R.DOC0113.0011
+    source_unit: U.DOC0113.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "105"
+      technical_name: "105"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=105 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0113.0011
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0113.0012
+    source_unit: U.DOC0113.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "113"
+      technical_name: "113"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=113 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0113.0012
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0113.0013
+    source_unit: U.DOC0113.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0113
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Unit Price
+      technical_name: Unit Price
+      type: Price
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10001 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0113.0013
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0113
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0113.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0113
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0113.0001
+    facets: &a12
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: VersionDescription
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0113.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0113
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0113.0001
+    facets: *a12
+    extraction:
+      parameter: AdditionalInformation
+      current_state:
+        value: This form is setup to order a wagon kit or any replacement parts.
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0113.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0113
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0113.0001
+    facets: *a12
+    extraction:
+      parameter: SearchableKeyword
+      current_state:
+        value: red wagon kit form
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0113.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0113
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0113.0001
+    facets: *a12
+    extraction:
+      parameter: Title
+      current_state:
+        value: Red Wagon Kit
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0113.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0113
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0113.0001
+    facets: *a12
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Procurement Requests
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0113.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0113
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0113.0001
+    facets: *a12
+    extraction:
+      parameter: LimitSupplierSelection
+      current_state:
+        value: "true"
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

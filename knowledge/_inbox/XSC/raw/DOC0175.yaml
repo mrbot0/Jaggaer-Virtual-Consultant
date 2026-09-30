@@ -1,0 +1,706 @@
+doc: S.STD.XSC.DOC.0175
+scope: XSC
+extracted_at: 2026-09-30T04:32:15.478Z
+tier: T0
+stats:
+  units: 78
+  extracted_units: 18
+  document_candidates: 1
+  needs_llm: 9
+  t0_complete: 10
+  by_candidate:
+    FLD: 8
+    FLW: 3
+    residuo: 1
+    GLS: 6
+    INT: 1
+  residue_marked: 1
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 6438
+  sessions:
+    - n: 1
+      tokens: 6438
+      batches: 1
+      items: 9
+      batch_items:
+        - - R.DOC0175.0012
+          - R.DOC0175.0016
+          - R.DOC0175.0017
+          - R.DOC0175.0019
+          - R.DOC0175.0027
+          - R.DOC0175.0031
+          - R.DOC0175.0044
+          - R.DOC0175.0066
+          - R.DOC0175.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0175.0012
+    source_unit: U.DOC0175.0012
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0175
+    section: Executive Summary
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0175.0012
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 95
+  - raw_id: R.DOC0175.0016
+    source_unit: U.DOC0175.0016
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0175
+    section: Overview
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0175.0016
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0175.0017
+    source_unit: U.DOC0175.0017
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0175
+    section: Overview
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: the
+          oggetto: required JINT dataflow must support the “push” based communication (please refer to the JINT Web Services Library and Activation request document)
+          valore: push
+        - n: 2
+          verbo: the
+          oggetto: customer/partner must be able to expose a service to receive the message sent by the JINT and in the JINT format (see 2.3-Message format) and provide back a response in a timely manner
+          valore: null
+        - n: 3
+          verbo: the
+          oggetto: service must run on an URL exposed on the internet via HTTPS
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0175.0017
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 106
+  - raw_id: R.DOC0175.0019
+    source_unit: U.DOC0175.0019
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0175
+    section: Overview
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0175.0019
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 87
+  - raw_id: R.DOC0175.0027
+    source_unit: U.DOC0175.0027
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0175
+    section: Asynchronous data exchange
+    page: 12
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    residue:
+      class: ambiguous
+      reason: modalità deontica non determinata (obbligo-possibile, obbligo solo possibile)
+    candidates: []
+    type_hint:
+      candidates: []
+      outcome: null
+      score: null
+    extraction:
+      subject: null
+      modality: ambiguo
+      condition: the external system processes the message
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: residue
+      confidence: 0.3
+      signals:
+        - obbligo-possibile
+        - obbligo solo possibile
+      source_unit: U.DOC0175.0027
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 43
+  - raw_id: R.DOC0175.0031
+    source_unit: U.DOC0175.0031
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0175
+    section: Push message
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: header
+          oggetto: Header
+          valore: null
+        - n: 2
+          verbo: "timestamp:"
+          oggetto: the time the message was generated
+          valore: the time the message was generated
+        - n: 3
+          verbo: "messageid:"
+          oggetto: unique identified of the push message
+          valore: unique identified of the push message
+        - n: 4
+          verbo: "objecttype:"
+          oggetto: the type of the Jaggaer One object included in the push message
+          valore: the type of the Jaggaer One object included in the push message
+        - n: 5
+          verbo: "objectid:"
+          oggetto: the ID of the Jaggaer One object included in the push message
+          valore: the ID of the Jaggaer One object included in the push message
+        - n: 6
+          verbo: requestattributelist
+          oggetto: "(available in XML and SOAP format only): list of configured attributes and related value extracted from the message payload; every attribute contains:"
+          valore: "list of configured attributes and related value extracted from the message payload; every attribute contains:"
+        - n: 7
+          verbo: "name:"
+          oggetto: name of the attribute
+          valore: name of the attribute
+        - n: 8
+          verbo: "value:"
+          oggetto: value of the attribute
+          valore: value of the attribute
+        - n: 9
+          verbo: payload
+          oggetto: Payload
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0175.0031
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 132
+  - raw_id: R.DOC0175.0034
+    source_unit: U.DOC0175.0034
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0175
+    section: JSON Format
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - GLS
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Below
+      definition: a sample message in JSON format related to a purchase order.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0175.0034
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0175.0041
+    source_unit: U.DOC0175.0041
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0175
+    section: XML Format
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - GLS
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Below
+      definition: a sample message in XML format related to a purchase order.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0175.0041
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0175.0044
+    source_unit: U.DOC0175.0044
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0175
+    section: SOAP FORMAT
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0175.0044
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 37
+  - raw_id: R.DOC0175.0045
+    source_unit: U.DOC0175.0045
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0175
+    section: SOAP FORMAT
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - GLS
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This
+      definition: a sample message in SOAP format related to a purchase order.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0175.0045
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0175.0050
+    source_unit: U.DOC0175.0050
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0175
+    section: Push message response
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: server component exposed by the partner/customer
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0175.0050
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0175.0051
+    source_unit: U.DOC0175.0051
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0175
+    section: Push message response
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: content type
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0175.0051
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0175.0052
+    source_unit: U.DOC0175.0052
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0175
+    section: Push message response
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: response message
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0175.0052
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0175.0056
+    source_unit: U.DOC0175.0056
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0175
+    section: JSON Response message
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - GLS
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This
+      definition: an example of JSON Response (with positive response)
+      aliases: []
+      lang: en
+      source_unit: U.DOC0175.0056
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0175.0058
+    source_unit: U.DOC0175.0058
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0175
+    section: XML Response message
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a14
+      - GLS
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This
+      definition: an example of XML Response (with negative response)
+      aliases: []
+      lang: en
+      source_unit: U.DOC0175.0058
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0175.0060
+    source_unit: U.DOC0175.0060
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0175
+    section: XML Response message
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a15
+      - GLS
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: SOAP Response message This
+      definition: an example of SOAP Response (with positive response)
+      aliases: []
+      lang: en
+      source_unit: U.DOC0175.0060
+    needs_llm: false
+    tokens: 21
+  - raw_id: R.DOC0175.0066
+    source_unit: U.DOC0175.0066
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0175
+    section: XML Response message
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a16
+      - FLW
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: http
+          oggetto: "Basic [segreto]: each HTTP message pushed by JINT to the external system contains username/password defined during the setup of the integration"
+          valore: each HTTP message pushed by JINT to the external system contains username/password defined during the setup of the integration
+        - n: 2
+          verbo: signed
+          oggetto: "JWT: each HTTP message pushed by JINT to the external system contains a bearer token representing a signed JWT"
+          valore: each HTTP message pushed by JINT to the external system contains a bearer token representing a signed JWT
+        - n: 3
+          verbo: ssl
+          oggetto: "mutual authentication (not yet available): the external system during the SSL handshake requires JINT to provide a client certificate to prove its identity"
+          valore: the external system during the SSL handshake requires JINT to provide a client certificate to prove its identity
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0175.0066
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 114
+  - raw_id: R.DOC0175.0068
+    source_unit: U.DOC0175.0068
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0175
+    section: XML Response message
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: To enable and configure a push service it
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0175.0068
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0175.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0175
+    section: null
+    source_unit: U.DOC0175.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: JINT Development Kit-
+      protocol:
+        - REST
+        - SOAP
+        - JSON
+        - XML
+      endpoints:
+        - http://host.bs.com/common/service/push/
+        - https://validation.service.com
+        - https://export.service.com
+      operations: []
+      mappings: []
+      error_catalog:
+        - code: "200"
+          description: Message has been processed with success
+          source_unit: U.DOC0175.0055
+        - code: "200"
+          description: Message has been processed with negative result (“description” field should be used to describe the reason for the error an inform users about possible corrective actions)
+          source_unit: U.DOC0175.0055
+        - code: ≠ 200
+          description: Message has not been processed due unexpected errors
+          source_unit: U.DOC0175.0055
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+    tokens: 2650

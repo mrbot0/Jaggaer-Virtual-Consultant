@@ -1,0 +1,35 @@
+id: U.DOC0034.0027
+doc: S.STD.XSC.DOC.0034
+doc_id: ji-plt-2303-handout-workflowsyntax-docx-2e2da47b
+type: procedura
+text: "Let's take a look at each line 1. <Activity name=\"Missing Distribution\"> : The activity starts off with the name. This displays in SelectSite in the activity section. 2. <ActivityType>manual</ActivityType> : This activity is manual. This indicates that an approver from the organization must approve this step in order for the document to move on to the next step. 3. <StepRef name=\"Missing Distribution\" /> : This line shows the Workflow step that is tied to this activity. This activity will cause the step in this field to be triggered. 4. <FolderRef name=\"Missing Distribution\" /> : This line indicates the Shared Workflow folder that is tied to the activity, which defines the users that are able to approve the workflow step. In this case the Missing Distribution folder contains the users with approval powers. 5. <Rule><![CDATA[ Document.HasInvalidDistribution() == true ]]></Rule> : This section defines the rule for the activity. Rules will always be contained within the <![CDATA[ ]> element. 6. In this case the rule is Document.HasInvalidDistribution() == true. 7. The prefix of this rule is Document. This means that the rule evaluation is for the entire document. Alternately, if a rule contains the prefix \"DocLine.\" the rule evaluates individual line items on the document. 8. The suffix of this rule defines the \"object\" that is being triggered for the evaluation, in this case HasInvalidDistribution(). This object checks to see if the document is missing distribution information or if it is somehow invalid. 9. The last part of this rule == true says that if the Document.HasInvalidDistribution() evaluation is true that the document will stop at the associated step. If this rule read == false instead, then the document would not stop here. 10. NOTE: Use of double equals signs (==) is required for this type of evaluation."
+hash: sha256:b5a50340538b97dd84bef060aba1d939b9df7da2ffed6f12e4633d58a72664dd
+words: 296
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0034
+  chapter: ji-plt-2303-handout-workflowsyntax-docx-2e2da47b
+  section: </Activity>
+  section_path: 0.1.1.3.2.7
+  page: 4
+  lang: en
+  prev: U.DOC0034.0026
+  next: U.DOC0034.0028
+steps:
+  - '<Activity name="Missing Distribution"> : The activity starts off with the name. This displays in SelectSite in the activity section.'
+  - "<ActivityType>manual</ActivityType> : This activity is manual. This indicates that an approver from the organization must approve this step in order for the document to move on to the next step."
+  - '<StepRef name="Missing Distribution" /> : This line shows the Workflow step that is tied to this activity. This activity will cause the step in this field to be triggered.'
+  - '<FolderRef name="Missing Distribution" /> : This line indicates the Shared Workflow folder that is tied to the activity, which defines the users that are able to approve the workflow step. In this case the Missing Distribution folder contains the users with approval powers.'
+  - "<Rule><![CDATA[ Document.HasInvalidDistribution() == true ]]></Rule> : This section defines the rule for the activity. Rules will always be contained within the <![CDATA[ ]> element."
+  - In this case the rule is Document.HasInvalidDistribution() == true.
+  - The prefix of this rule is Document. This means that the rule evaluation is for the entire document. Alternately, if a rule contains the prefix "DocLine." the rule evaluates individual line items on the document.
+  - The suffix of this rule defines the "object" that is being triggered for the evaluation, in this case HasInvalidDistribution(). This object checks to see if the document is missing distribution information or if it is somehow invalid.
+  - The last part of this rule == true says that if the Document.HasInvalidDistribution() evaluation is true that the document will stop at the associated step. If this rule read == false instead, then the document would not stop here.
+  - "NOTE: Use of double equals signs (==) is required for this type of evaluation. A single equal sign (=) will not work."
+  - "<FolderSelectionRule>ExplicitFolder</FolderSelectionRule> : This line indicates the folder that the type of folder being used for approvals is an Explicit Folder. In other words, this rule uses a Shared Workflow folder, which is populated with approvers that have the ability to advance the document to the next step in workflow."
+  - "</Activity> : Each activity must end with this element. This indicates that the activity stops here."
+procedure:
+  title: Let's take a look at each line
+part:
+  n: 1
+  of: 2

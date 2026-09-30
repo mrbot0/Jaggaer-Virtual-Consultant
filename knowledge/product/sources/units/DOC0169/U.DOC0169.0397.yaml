@@ -1,0 +1,39 @@
+id: U.DOC0169.0397
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: statusCode | Description: Validation response result code.
+  200 - The request was processed successfully.
+  400 - The request could not be understood due to syntax errors.
+  500 - The request could not be processed due to a transient error.
+  Attribute: statusText | Description: General validation response result description.
+hash: sha256:8fa959f6d6caa44617137b1d8289b5ed3cfc3b3ac9050a1d9ced97f058a442db
+words: 53
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: ValidateStatus [PR Validate]
+  section_path: 2.4.3.2
+  page: 96
+  lang: en
+  prev: U.DOC0169.0396
+  next: U.DOC0169.0398
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - statusCode
+      - |-
+        Validation response result code.
+        200 - The request was processed successfully.
+        400 - The request could not be understood due to syntax errors.
+        500 - The request could not be processed due to a transient error.
+    - - statusText
+      - General validation response result description.
+  block: 1
+  blocks: 1

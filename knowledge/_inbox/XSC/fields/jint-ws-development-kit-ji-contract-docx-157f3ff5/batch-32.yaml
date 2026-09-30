@@ -1,0 +1,68 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-32
+section: 2.2.1.29
+section_title: BusinessUnitFee [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:BUSINESSUNIT
+    label: businessUnit
+    labels:
+      - businessUnit
+    technical_name: BUSINESSUNIT
+    section: 2.2.1.29
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Business unit that adds a fee to purchases for this contract.
+      See section “BusinessUnit [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.29
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.29#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: businessUnit
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FEE
+    label: fee
+    labels:
+      - fee
+    technical_name: FEE
+    section: 2.2.1.29
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Administrative fee that this business unit adds to purchases for this
+      contract
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.29
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.29#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: fee
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 856

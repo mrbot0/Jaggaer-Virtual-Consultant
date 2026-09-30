@@ -1,0 +1,17 @@
+id: U.DOC0138.0002
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: <Activity name="Dept-Chemistry"> <ActivityType>manual</ActivityType> <StepRef name="Department" /> <FolderRef name="Chemistry Approvals" /> <Rule><![CDATA[ Owner.Department = "Chemistry" && [Product.Radioactive = true] ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>
+hash: sha256:bf0b51c146bd0a8b5588aea4fdf92f0087a1f42cefc17aa309b17ce7e91a7ae9
+words: 21
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: MULTIPLE ELEMENT STATIC WORKFLOW
+  section: MULTIPLE ELEMENT STATIC WORKFLOW
+  section_path: "1"
+  page: null
+  lang: en
+  prev: U.DOC0138.0001
+  next: U.DOC0138.0003

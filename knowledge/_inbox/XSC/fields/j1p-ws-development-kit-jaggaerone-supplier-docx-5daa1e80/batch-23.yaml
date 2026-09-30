@@ -1,0 +1,38 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-23
+section: 2.1.1.23
+section_title: J1Supplier/JISupplierData/secondaryNaicsList
+part: 1
+parts: 1
+rows:
+  - key: tech:SECONDARYNAICS
+    label: secondaryNaics
+    labels:
+      - secondaryNaics
+    technical_name: SECONDARYNAICS
+    section: 2.1.1.23
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Secondary North American Industry Classification System supplier
+      reference number.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.23
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.23#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: secondaryNaics
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 683

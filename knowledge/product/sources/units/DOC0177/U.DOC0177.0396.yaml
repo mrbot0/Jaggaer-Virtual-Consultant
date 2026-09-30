@@ -1,0 +1,39 @@
+id: U.DOC0177.0396
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: erpNumber | Mandatory (Y/N): N | Description: Current, unique ERP number associated with the account. | Mapping on Jaggaer One data model and notes: This field is second in priority, after “oldERPNumber”, when the JAGGAER ONE solution is searching for an account.
+  If “oldERPNumber” is present, the JAGGAER ONE solution uses “erpNumber” to update the accounts payable information.
+hash: sha256:d733ee4edc4b6921045bc96c2d8182b6cda66ac2a6b6146c459caec660970a0a
+words: 59
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable
+  section_path: 2.1.1.103
+  page: 75
+  lang: en
+  prev: U.DOC0177.0395
+  next: U.DOC0177.0397
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - erpNumber
+    - N
+    - Current, unique ERP number associated with the account.
+    - |-
+      This field is second in priority, after “oldERPNumber”, when the JAGGAER ONE solution is searching for an account.
+      If “oldERPNumber” is present, the JAGGAER ONE solution uses “erpNumber” to update the accounts payable information.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

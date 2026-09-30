@@ -1,0 +1,43 @@
+id: U.DOC0168.0163
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: riga-tabella-campi
+text: |-
+  Attribute: operationCode | Mandatory (Y/N): Y | Description: Indicates whether the PO is new, an update, or is being cancelled. The default operation is new
+  Possible value (case sensitive):
+  new
+  update
+  cancel
+hash: sha256:fc4b1a27dae27efa0855ae806072ed4ce4898a0b11bed5d9db43d8bfc3720c57
+words: 32
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: Header [Import JIOrder method]
+  section_path: 2.3.1.2
+  page: 64
+  lang: en
+  prev: U.DOC0168.0162
+  next: U.DOC0168.0164
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - operationCode
+    - Y
+    - |-
+      Indicates whether the PO is new, an update, or is being cancelled. The default operation is new
+      Possible value (case sensitive):
+      new
+      update
+      cancel
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

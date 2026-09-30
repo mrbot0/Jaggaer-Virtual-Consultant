@@ -1,0 +1,2336 @@
+doc: S.STD.XSC.DOC.0147
+scope: XSC
+extracted_at: 2026-09-30T04:31:09.609Z
+tier: T0
+stats:
+  units: 248
+  extracted_units: 54
+  document_candidates: 0
+  needs_llm: 36
+  t0_complete: 18
+  by_candidate:
+    CFP: 17
+    FLW: 12
+    FLD: 12
+    INV: 5
+    CFG: 8
+  residue_marked: 8
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 14328
+  sessions:
+    - n: 1
+      tokens: 14328
+      batches: 2
+      items: 36
+      batch_items:
+        - - R.DOC0147.0007
+          - R.DOC0147.0011
+          - R.DOC0147.0020
+          - R.DOC0147.0021
+          - R.DOC0147.0025
+          - R.DOC0147.0034
+          - R.DOC0147.0038
+          - R.DOC0147.0049
+          - R.DOC0147.0056
+          - R.DOC0147.0061
+          - R.DOC0147.0071
+          - R.DOC0147.0078
+          - R.DOC0147.0081
+          - R.DOC0147.0093
+          - R.DOC0147.0111
+          - R.DOC0147.0131
+          - R.DOC0147.0134
+          - R.DOC0147.0137
+          - R.DOC0147.0139
+          - R.DOC0147.0143
+        - - R.DOC0147.0145
+          - R.DOC0147.0150
+          - R.DOC0147.0153
+          - R.DOC0147.0156
+          - R.DOC0147.0159
+          - R.DOC0147.0171
+          - R.DOC0147.0175
+          - R.DOC0147.0178
+          - R.DOC0147.0179
+          - R.DOC0147.0198
+          - R.DOC0147.0215
+          - R.DOC0147.0219
+          - R.DOC0147.0226
+          - R.DOC0147.0228
+          - R.DOC0147.0235
+          - R.DOC0147.0246
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0147.0007
+    source_unit: U.DOC0147.0007
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Administering
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: a business unit and department
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: user roles and profiles
+          valore: null
+        - n: 3
+          verbo: set
+          oggetto: up trade-ins and shared carts
+          valore: null
+        - n: 4
+          verbo: configure
+          oggetto: and pay with a PCard
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a custom field and add it to documents
+          valore: null
+        - n: 6
+          verbo: configure
+          oggetto: a change request
+          valore: null
+        - n: 7
+          verbo: configure
+          oggetto: system emails
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0007
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 67
+  - raw_id: R.DOC0147.0011
+    source_unit: U.DOC0147.0011
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "What We’ll Discuss in this Lesson:"
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a business unit
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: departments
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0011
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 14
+  - raw_id: R.DOC0147.0020
+    source_unit: U.DOC0147.0020
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Multiple Business Units in eProcurement
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: separate divisions of the same environment
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: a different user experience for separate parts of a large organization
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0020
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 44
+  - raw_id: R.DOC0147.0021
+    source_unit: U.DOC0147.0021
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: Multiple Business Units in eProcurement
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0021
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 25
+  - raw_id: R.DOC0147.0025
+    source_unit: U.DOC0147.0025
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Configuring Business Units
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the new business unit
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: the language, country, currency, and timezone
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: the options available for managing business units
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0025
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0147.0030
+    source_unit: U.DOC0147.0030
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: Departments
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - INV
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: custom
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0147.0030
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0147.0034
+    source_unit: U.DOC0147.0034
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Configuring Departments
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: to department settings
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: the Asia business unit
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: the new department to the business unit
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: others if you like
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0034
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 42
+  - raw_id: R.DOC0147.0038
+    source_unit: U.DOC0147.0038
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "What We’ll Discuss in this Lesson:"
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: settings on user profiles and roles
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up a shopping persona
+          valore: null
+        - n: 3
+          verbo: assign
+          oggetto: a prepared-for user to a document
+          valore: null
+        - n: 4
+          verbo: create
+          oggetto: an Admin role for a BU
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0038
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 42
+  - raw_id: R.DOC0147.0049
+    source_unit: U.DOC0147.0049
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: Common Shopping User Roles
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - INV
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0147.0049
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0147.0056
+    source_unit: U.DOC0147.0056
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Configuring Shopping User Roles
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the role, Shopper - Asia , as a child of the End User role
+          valore: null
+        - n: 2
+          verbo: assign
+          oggetto: it to the Asia business unit
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: the permi ssions and settings
+          valore: null
+        - n: 4
+          verbo: assign
+          oggetto: a user to this role
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0056
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 54
+  - raw_id: R.DOC0147.0061
+    source_unit: U.DOC0147.0061
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: find
+          oggetto: a user with the Sho pper role and open their profile
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: assignees
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0061
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 24
+  - raw_id: R.DOC0147.0065
+    source_unit: U.DOC0147.0065
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Requisitioner
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0065
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0147.0066
+    source_unit: U.DOC0147.0066
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Prepared for and Prepared by fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0066
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 21
+  - raw_id: R.DOC0147.0070
+    source_unit: U.DOC0147.0070
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: Automating PR Population based on Prepared-for User
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Scenario: You"
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0070
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0147.0071
+    source_unit: U.DOC0147.0071
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Automating PR Population based on Prepared-for User
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a15
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: pick
+          oggetto: a user to create the PR for. Set default accounting codes and addresses in the user profile of that user
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: the setting that will update custom field and address values based on the prepared-for user
+          valore: null
+        - n: 3
+          verbo: put
+          oggetto: an item in a cart and check out
+          valore: null
+        - n: 4
+          verbo: change
+          oggetto: the Prepared-for fiel d on the requisition to that of the user you are purchasing on behalf of
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0071
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 104
+  - raw_id: R.DOC0147.0075
+    source_unit: U.DOC0147.0075
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Requisitioner Role: Shopping Personas"
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • A requisitioner
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0075
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0147.0078
+    source_unit: U.DOC0147.0078
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Requisitioner Role: Shopping Personas"
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a17
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: personas
+          valore: null
+        - n: 2
+          verbo: provide
+          oggetto: access
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: personas
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0078
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 24
+  - raw_id: R.DOC0147.0081
+    source_unit: U.DOC0147.0081
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a18
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: personas for business units
+          valore: null
+        - n: 2
+          verbo: give
+          oggetto: your user access to the Europe business unit
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: a Europe BU persona
+          valore: null
+        - n: 4
+          verbo: assume
+          oggetto: the Europe BU persona and search for items from Education Lab Supplies
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0081
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 56
+  - raw_id: R.DOC0147.0087
+    source_unit: U.DOC0147.0087
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0147
+    section: "Approvers: Approval Limits"
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a19
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: "Managing Users: What Is Usually Managed Where?"
+      subject: "Managing Users: What"
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0147.0087
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0147.0093
+    source_unit: U.DOC0147.0093
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Role vs. Profile: Purchasing and Approval Limits"
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a20
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: Approvers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: purchasing limits on shopping roles
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: approval limits on Approvers
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0093
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 33
+  - raw_id: R.DOC0147.0095
+    source_unit: U.DOC0147.0095
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Role vs. Profile: Punchout Access"
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Each currency
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0095
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0147.0099
+    source_unit: U.DOC0147.0099
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Role vs. Profile: Permissions"
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Creates a
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0099
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0147.0101
+    source_unit: U.DOC0147.0101
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Role vs. Profile: Permissions"
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Overriding permissions at the user level
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0147.0101
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0147.0107
+    source_unit: U.DOC0147.0107
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0147
+    section: "Role vs. Profile: Custom Field Value Defaults"
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a24
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: • Other custom fields value defaults are usually managed at the role level Updating Custom Fields Usually managed through an inte gration or through user import
+      subject: • Other custom fields value defaults
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0147.0107
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0147.0109
+    source_unit: U.DOC0147.0109
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0147
+    section: "Role vs. Profile: Default Addresses"
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a25
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: • Default addresses are usually managed in user profile
+      subject: • Default addresses
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0147.0109
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0147.0111
+    source_unit: U.DOC0147.0111
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Role vs. Profile: Default Addresses"
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0111
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0147.0117
+    source_unit: U.DOC0147.0117
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0147
+    section: "Quiz: What Is Usually Managed Where?"
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a27
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: "Quiz: What Is Usually Managed Where?"
+      subject: "Quiz: What"
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0147.0117
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0147.0120
+    source_unit: U.DOC0147.0120
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0147
+    section: "Quiz: What Is Usually Managed Where?"
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a28
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: "Quiz: What Is Usually Managed Where?"
+      subject: "Quiz: What"
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0147.0120
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0147.0123
+    source_unit: U.DOC0147.0123
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0147
+    section: "Quiz: What Is Usually Managed Where?"
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a29
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: "Quiz: What Is Usually Managed Where?"
+      subject: "Quiz: What"
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0147.0123
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0147.0126
+    source_unit: U.DOC0147.0126
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0147
+    section: "Quiz: What Is Usually Managed Where?"
+    page: 32
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a30
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: "Quiz: What Is Usually Managed Where?"
+      subject: "Quiz: What"
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0147.0126
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0147.0131
+    source_unit: U.DOC0147.0131
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a31
+      - FLW
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: users_import.txt from your class files in Excel and review the contents
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a user to the Asia business unit
+          valore: null
+        - n: 3
+          verbo: make
+          oggetto: any other modifications you would like to explore
+          valore: null
+        - n: 4
+          verbo: validate
+          oggetto: the file, address any issues, and import the file
+          valore: null
+        - n: 5
+          verbo: review
+          oggetto: the new users in your site via user search
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0131
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 79
+  - raw_id: R.DOC0147.0134
+    source_unit: U.DOC0147.0134
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a32
+      - FLW
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the accounting code defaults for Sam Shopper and Brock Lee
+          valore: null
+        - n: 2
+          verbo: export
+          oggetto: Sam Shopper’s data for re-import
+          valore: null
+        - n: 3
+          verbo: in
+          oggetto: the custom field export file, substitute blee as the user
+          valore: null
+        - n: 4
+          verbo: change
+          oggetto: some of the values and defaults
+          valore: null
+        - n: 5
+          verbo: validate
+          oggetto: and import the new file
+          valore: null
+        - n: 6
+          verbo: check
+          oggetto: Brock’s profile
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0134
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 76
+  - raw_id: R.DOC0147.0137
+    source_unit: U.DOC0147.0137
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "User Administration: Deleting a User"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a33
+      - INV
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0147.0137
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 5
+  - raw_id: R.DOC0147.0139
+    source_unit: U.DOC0147.0139
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "User Administration: Deleting a User"
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a34
+      - FLW
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: a user profile
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a comment in a section of their profile
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: the comment in the user profile history. Use the search filter
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0139
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0147.0143
+    source_unit: U.DOC0147.0143
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "What We’ll Discuss in this Lesson:"
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a35
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: trade-ins
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up shared carts
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0143
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 14
+  - raw_id: R.DOC0147.0145
+    source_unit: U.DOC0147.0145
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "What We’ll Discuss in this Lesson:"
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a36
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: and configure a new custom field
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: change requests
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0145
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 27
+  - raw_id: R.DOC0147.0150
+    source_unit: U.DOC0147.0150
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Configuring Trade-Ins
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a37
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: and configure trade-ins
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: Grainger to allow trade-ins
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: the Add/Edit Trade-ins permission to the Advanced Shopper role
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: the Advanced Shopper role to your user
+          valore: null
+        - n: 5
+          verbo: add
+          oggetto: a new desk from Grainger to your cart, and trade in the one you have
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0150
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 73
+  - raw_id: R.DOC0147.0153
+    source_unit: U.DOC0147.0153
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a38
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: make
+          oggetto: sure shared carts are enabled
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: shared cart permissions and notifications for relevant user roles
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: a shared cart group and add users
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: the Share cart field to the requisition configuration in the General section
+          valore: null
+        - n: 5
+          verbo: search
+          oggetto: for an item, put it in the cart, rename it, share it, and unlock it
+          valore: null
+        - n: 6
+          verbo: log
+          oggetto: in as a user who is in the Operations department and has the Advanced Shopper role, view the shared cart notification, open the shared cart, add items to it
+          valore: null
+        - n: 7
+          verbo: log
+          oggetto: back in as your config user, navigate to the shared cart, lock the cart to proceed to checkout, review the requisition history and the Share cart field, and submit
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0153
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 171
+  - raw_id: R.DOC0147.0156
+    source_unit: U.DOC0147.0156
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a39
+      - FLW
+    type_hint:
+      candidates: *a39
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the PCard on your user profile
+          valore: null
+        - n: 2
+          verbo: shop
+          oggetto: for items. Exceed the PCard limit on your profile
+          valore: null
+        - n: 3
+          verbo: in
+          oggetto: checkout, edit the requisition to pay via credit card
+          valore: null
+        - n: 4
+          verbo: submit
+          oggetto: the requisition. Does exceeding your PCard limit trigger a workflow step?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0156
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 66
+  - raw_id: R.DOC0147.0159
+    source_unit: U.DOC0147.0159
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Quick Review:"
+    page: 43
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0159
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 8
+  - raw_id: R.DOC0147.0171
+    source_unit: U.DOC0147.0171
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 47
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a41
+      - FLW
+    type_hint:
+      candidates: *a41
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "a custom field called Delivery Variables "
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: three or more values
+          valore: null
+        - n: 3
+          verbo: specify
+          oggetto: that this field can appear in the Delivery section of Documents
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0171
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0147.0175
+    source_unit: U.DOC0147.0175
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Custom Fields as Seen by End Users
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a42
+      - FLW
+    type_hint:
+      candidates: *a42
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: place
+          oggetto: the field on the PR and PO documents
+          valore: null
+        - n: 2
+          verbo: give
+          oggetto: the base role permission to see Delivery Variables and edit from the org-wide list
+          valore: null
+        - n: 3
+          verbo: make
+          oggetto: No Special Needs the default
+          valore: null
+        - n: 4
+          verbo: test
+          oggetto: it
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0175
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 56
+  - raw_id: R.DOC0147.0178
+    source_unit: U.DOC0147.0178
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: Custom Fields as Seen by End Users
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo-condizionale
+      condition: it's assigned to them?
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0178
+      mandatory:
+        kind: conditional
+        when: it's assigned to them?
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 21
+  - raw_id: R.DOC0147.0179
+    source_unit: U.DOC0147.0179
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: Custom Fields as Seen by End Users
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0147.0179
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 9
+  - raw_id: R.DOC0147.0193
+    source_unit: U.DOC0147.0193
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Be Aware:"
+    page: 53
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a45
+      - INV
+    type_hint:
+      candidates: *a45
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • A PO
+      modality: divieto
+      condition: there is already a CR in a draf t or pending state for the PO
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0147.0193
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0147.0198
+    source_unit: U.DOC0147.0198
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Change Request Permissions
+    page: 54
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a46
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a46
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: verify
+          oggetto: that change reques ts are enabled on your site
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: the CR document
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: PO revision and chan ge request permissions to the appropriate shoppe r and requisitioner roles
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: appropriate change re quest notifications to shopper, requisitioner, and approver roles
+          valore: null
+        - n: 5
+          verbo: find
+          oggetto: a PO to change, make the change, and submit the request
+          valore: null
+        - n: 6
+          verbo: view
+          oggetto: the approval status of the CR
+          valore: null
+        - n: 7
+          verbo: approve
+          oggetto: the CR
+          valore: null
+        - n: 8
+          verbo: view
+          oggetto: the revised PO
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0198
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 116
+  - raw_id: R.DOC0147.0215
+    source_unit: U.DOC0147.0215
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: New Email Logs (What Went Out?)
+    page: 60
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a47
+      - FLW
+    type_hint:
+      candidates: *a47
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: examine
+          oggetto: the Org default email address
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: system emails
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: emails related to ePro
+          valore: null
+        - n: 4
+          verbo: edit
+          oggetto: a system email and preview your changes
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: History
+          valore: null
+        - n: 6
+          verbo: view
+          oggetto: Logs
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0215
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 53
+  - raw_id: R.DOC0147.0217
+    source_unit: U.DOC0147.0217
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0147
+    section: "Managing Older Email: Field Management and Site Settings"
+    page: 61
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a48
+      - INV
+    type_hint:
+      candidates: *a48
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: If you
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0147.0217
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 21
+  - raw_id: R.DOC0147.0219
+    source_unit: U.DOC0147.0219
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Old Email Configuration: Site Settings"
+    page: 62
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a49
+      - FLW
+    type_hint:
+      candidates: *a49
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: edit
+          oggetto: a system em ail notification
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: "system email settings and addresses "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0219
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 31
+  - raw_id: R.DOC0147.0226
+    source_unit: U.DOC0147.0226
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Review
+    page: 63
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a50
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a50
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: a business unit and department
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: user roles and profiles
+          valore: null
+        - n: 3
+          verbo: set
+          oggetto: up trade-ins and shared carts
+          valore: null
+        - n: 4
+          verbo: configure
+          oggetto: and pay with a PCard
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a custom field and add it to documents
+          valore: null
+        - n: 6
+          verbo: configure
+          oggetto: a change request
+          valore: null
+        - n: 7
+          verbo: configure
+          oggetto: system emails
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0226
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 65
+  - raw_id: R.DOC0147.0228
+    source_unit: U.DOC0147.0228
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 64
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a51
+      - FLW
+    type_hint:
+      candidates: *a51
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: and configure a business unit for Asia
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: Product Manageme nt department to the Asia business unit
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0228
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0147.0235
+    source_unit: U.DOC0147.0235
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: "Guided Activity:"
+    page: 64
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a52
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a52
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: a business unit and department
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: user roles and profiles
+          valore: null
+        - n: 3
+          verbo: set
+          oggetto: up trade-ins and shared carts
+          valore: null
+        - n: 4
+          verbo: configure
+          oggetto: and pay with a PCard
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a custom field and add it to documents
+          valore: null
+        - n: 6
+          verbo: configure
+          oggetto: a change request
+          valore: null
+        - n: 7
+          verbo: configure
+          oggetto: system emails
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0235
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 67
+  - raw_id: R.DOC0147.0237
+    source_unit: U.DOC0147.0237
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0147
+    section: Configuring Shopping User Roles
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a53
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a53
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      kind: tacita
+      text: "Managing Users: What Is Usually Managed Where?"
+      subject: "Managing Users: What"
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0147.0237
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0147.0246
+    source_unit: U.DOC0147.0246
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0147
+    section: Class Goals
+    page: 66
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a54
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a54
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: a business unit and department
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: user roles and profiles
+          valore: null
+        - n: 3
+          verbo: set
+          oggetto: up trade-ins and shared carts
+          valore: null
+        - n: 4
+          verbo: configure
+          oggetto: and pay with a PCard
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a custom field and add it to documents
+          valore: null
+        - n: 6
+          verbo: configure
+          oggetto: a change request
+          valore: null
+        - n: 7
+          verbo: configure
+          oggetto: system emails
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0147.0246
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 66

@@ -1,0 +1,47 @@
+id: U.DOC0173.0094
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: operationCode | Mandatory (Y/N): N | Description: Code of requested operation | Mapping on JA data model and notes: Code of the operation. It accepts following value:
+  009, INSERT or CREATE
+  004 or UPDATE
+  003 or DELETE [DEPRECATED]
+  010 or DISABLE
+  011 or ENABLE
+hash: sha256:f6c5a5eff65a7bca93263ef51342d66ca223370ab2ff9bcb828c997eaa4b84ae
+words: 45
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Sub User Import Request structure [Import/update of Company and Users Data]
+  section_path: 4.1.1.5
+  page: 6
+  lang: en
+  prev: U.DOC0173.0093
+  next: U.DOC0173.0095
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - operationCode
+    - N
+    - Code of requested operation
+    - |-
+      Code of the operation. It accepts following value:
+      009, INSERT or CREATE
+      004 or UPDATE
+      003 or DELETE [DEPRECATED]
+      010 or DISABLE
+      011 or ENABLE
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

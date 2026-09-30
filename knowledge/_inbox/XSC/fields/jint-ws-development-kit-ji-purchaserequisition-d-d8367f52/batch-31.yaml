@@ -1,0 +1,43 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+batch: batch-31
+section: 2.2.1.1
+section_title: Main request structure [PR Update]
+part: 1
+parts: 1
+rows:
+  - key: tech:UPDATEDATA
+    label: updateData
+    labels:
+      - updateData
+    technical_name: UPDATEDATA
+    section: 2.2.1.1
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Object containing the information to be used to update the purchase
+      requisition.
+
+      Used only with operationCode=update.
+
+      See section “UpdateData [PR Update]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.2.1.1
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.2.1.1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: updateData
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 698

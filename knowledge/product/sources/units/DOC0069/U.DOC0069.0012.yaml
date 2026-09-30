@@ -1,0 +1,47 @@
+id: U.DOC0069.0012
+doc: S.STD.XSC.DOC.0069
+doc_id: sc-perspective-unofficial-implementation-conside-4cb385be
+type: procedura
+text: |-
+  sc-perspective-unofficial-implementation-conside-4cb385be
+  1. Form Requests – popular in demos
+  2. For the most part, custom fields are not included, but the check-request does include them.
+  3. Result in single line only
+  4. They have their own workflow – separate from requisition workflow
+  5. Conditionality is possible with these.
+  6. Legacy Forms – used a lot for shopping
+  7. Need to be added to a shopping cart to be used – added to requisition workflow.
+  8. More comments
+  9. All customers receive access to form requests, and they can be used for generic purposes (report issue with the site), supplier onboarding requests, contract creation requests, etc. or they can be used to procurement purposes or non-PO invoice generation/payment requests.
+  10. Legacy forms have a clunky, grid-based design. Questions/fields cannot be configured with conditionality – e.g. one question only showing up if another is answered in a particular way.
+  11. Form requests have a newer design, visually, that aligns more closely with our sourcing and contract modules and can have this conditionality built in so a single form can be configured to serve multiple purposes.
+  12. However, form requests are currently in a place where many features and possibilities, especially in the workflow space, are not available to them. If possible, try to use legacy forms for customers with requisition manager.
+  13. Specific to payment requests: payments to employees or students can be tricky. Payments often require address data and this is sensitive information for individuals. It is recommended that connections to student/employee addresses are made at the ERP level by making a connection between an employee or student ID and their own internal records, to avoid the possibility of sensitive information being exposed in JAGGAER.
+hash: sha256:fb2cc2986037366b389c29d8f27b75e8fb32bcca3ec3a345d138f580e96acfa2
+words: 283
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0069
+  chapter: sc-perspective-unofficial-implementation-conside-4cb385be
+  section: sc-perspective-unofficial-implementation-conside-4cb385be
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0069.0011
+  next: U.DOC0069.0013
+steps:
+  - Form Requests – popular in demos
+  - For the most part, custom fields are not included, but the check-request does include them.
+  - Result in single line only
+  - They have their own workflow – separate from requisition workflow
+  - Conditionality is possible with these.
+  - Legacy Forms – used a lot for shopping
+  - Need to be added to a shopping cart to be used – added to requisition workflow.
+  - More comments
+  - All customers receive access to form requests, and they can be used for generic purposes (report issue with the site), supplier onboarding requests, contract creation requests, etc. or they can be used to procurement purposes or non-PO invoice generation/payment requests.
+  - Legacy forms have a clunky, grid-based design. Questions/fields cannot be configured with conditionality – e.g. one question only showing up if another is answered in a particular way.
+  - Form requests have a newer design, visually, that aligns more closely with our sourcing and contract modules and can have this conditionality built in so a single form can be configured to serve multiple purposes.
+  - However, form requests are currently in a place where many features and possibilities, especially in the workflow space, are not available to them. If possible, try to use legacy forms for customers with requisition manager.
+  - "Specific to payment requests: payments to employees or students can be tricky. Payments often require address data and this is sensitive information for individuals. It is recommended that connections to student/employee addresses are made at the ERP level by making a connection between an employee or student ID and their own internal records, to avoid the possibility of sensitive information being exposed in JAGGAER."
+procedure:
+  title: sc-perspective-unofficial-implementation-conside-4cb385be

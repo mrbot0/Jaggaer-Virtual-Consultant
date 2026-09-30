@@ -1,0 +1,42 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.36
+section_title: User Data [PR Import]
+genre: tecnica
+rows:
+  - label: extCode
+    technical_name: extCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: User external code. Is the JA user external code, it used to identify the
+      user when the login is not provided
+    section: 2.1.1.36
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.36#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: login
+    technical_name: login
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Username of the person who originally requested the PR import
+      The username must exist in your system.
+    section: 2.1.1.36
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.36#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: businessUnit
+    technical_name: businessUnit
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Business unit internal name
+    section: 2.1.1.36
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.36#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

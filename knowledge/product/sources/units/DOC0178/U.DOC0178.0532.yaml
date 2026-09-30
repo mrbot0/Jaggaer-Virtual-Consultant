@@ -1,0 +1,53 @@
+id: U.DOC0178.0532
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: URL | /esop/jint/api/public/ji/v1/contracts/{id}
+  URL: Http Method | /esop/jint/api/public/ji/v1/contracts/{id}: GET
+  URL: Header Parameters | /esop/jint/api/public/ji/v1/contracts/{id}: Authorization (see “JINT WS Development_Kit – Web Services Overview” document)
+  URL: Path Parameters | /esop/jint/api/public/ji/v1/contracts/{id}: Param Name | Reference | Format
+  id | Jaggaer internal id of the contarct | String
+  URL: Response format | /esop/jint/api/public/ji/v1/contracts/{id}: JSON string representing the configuration data. See “export data format” chapter in this doc related to the specific module
+  URL: Return Codes | /esop/jint/api/public/ji/v1/contracts/{id}: 200 query successfully executed
+  400 wrong or missing data in the request
+  404 the object with the provided id does not exist
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:500fa2f9aaec66313c8000a076b4ec7021c802dcb9d64fac6c87d3a98660f667
+words: 109
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Retrieve single Contract [export Contract]
+  section_path: 2.6.1.2
+  page: 131
+  lang: en
+  prev: U.DOC0178.0531
+  next: U.DOC0178.0533
+table:
+  table: 0
+  headers:
+    - URL
+    - /esop/jint/api/public/ji/v1/contracts/{id}
+  rows:
+    - - Http Method
+      - GET
+    - - Header Parameters
+      - Authorization (see “JINT WS Development_Kit – Web Services Overview” document)
+    - - Path Parameters
+      - |-
+        Param Name | Reference | Format
+        id | Jaggaer internal id of the contarct | String
+    - - Response format
+      - JSON string representing the configuration data. See “export data format” chapter in this doc related to the specific module
+    - - Return Codes
+      - |-
+        200 query successfully executed
+        400 wrong or missing data in the request
+        404 the object with the provided id does not exist
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

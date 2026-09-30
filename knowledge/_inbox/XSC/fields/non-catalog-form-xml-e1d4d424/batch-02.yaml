@@ -1,0 +1,434 @@
+document: non-catalog-form-xml-e1d4d424
+scope: XSC
+batch: batch-02
+section: campi-2
+section_title: Campi — General Info
+part: 1
+parts: 1
+rows:
+  - key: tech:112
+    label: "112"
+    labels:
+      - "112"
+    technical_name: "112"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=112 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "112"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:104
+    label: "104"
+    labels:
+      - "104"
+    technical_name: "104"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=104 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "104"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:111
+    label: "111"
+    labels:
+      - "111"
+    technical_name: "111"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=111 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "111"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:105
+    label: "105"
+    labels:
+      - "105"
+    technical_name: "105"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=105 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: "105"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:103
+    label: "103"
+    labels:
+      - "103"
+    technical_name: "103"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=103 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: "103"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ESTIMATED_PRICE
+    label: Estimated Price
+    labels:
+      - Estimated Price
+    technical_name: ESTIMATED_PRICE
+    section: campi-2
+    type: Price
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10000 · tipo=userdefined
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: Estimated Price
+        type: Price
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:110
+    label: "110"
+    labels:
+      - "110"
+    technical_name: "110"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=110 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: "110"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:102
+    label: "102"
+    labels:
+      - "102"
+    technical_name: "102"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=102 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: "102"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:106
+    label: "106"
+    labels:
+      - "106"
+    technical_name: "106"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=106 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: "106"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:107
+    label: "107"
+    labels:
+      - "107"
+    technical_name: "107"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=107 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: "107"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:108
+    label: "108"
+    labels:
+      - "108"
+    technical_name: "108"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=108 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: "108"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:101
+    label: "101"
+    labels:
+      - "101"
+    technical_name: "101"
+    section: campi-2
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=101 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: "101"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLEXTEXT1
+    label: Flex Text 1
+    labels:
+      - Flex Text 1
+    technical_name: FLEXTEXT1
+    section: campi-2
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=20;
+      UserDefinedFieldParamTextBoxMaxLength=30 · id=10001 · tipo=userdefined
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: Flex Text 1
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLEXTEXT2
+    label: Flex Text 2
+    labels:
+      - Flex Text 2
+    technical_name: FLEXTEXT2
+    section: campi-2
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=20;
+      UserDefinedFieldParamTextBoxMaxLength=30 · id=10002 · tipo=userdefined
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: Flex Text 2
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:GENERALNOTES
+    label: Notes
+    labels:
+      - Notes
+    technical_name: GENERALNOTES
+    section: campi-2
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=false;
+      UserDefinedFieldParamTextAreaRows=5;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=50 · id=10003 · tipo=userdefined
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-2
+        source_unit: non-catalog-form-xml-e1d4d424/campi-2#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: Notes
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: CL-FLD-001
+      functional_section: intestazione
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2818

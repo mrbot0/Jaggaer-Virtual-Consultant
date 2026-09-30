@@ -1,0 +1,160 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+batch: batch-04
+section: campi-4
+section_title: Campi — Department Information
+part: 1
+parts: 1
+rows:
+  - key: tech:DEPARTMENT
+    label: Department
+    labels:
+      - Department
+    technical_name: DEPARTMENT
+    section: campi-4
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Name of the department requesting the item. ·
+      UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10036 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-4
+        source_unit: capital-expense-form-xml-272b13f7/campi-4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Department
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:DEPARTMENT_TECHNICAL_CONTACT_NAME
+    label: Department Technical Contact Name
+    labels:
+      - Department Technical Contact Name
+    technical_name: DEPARTMENT_TECHNICAL_CONTACT_NAME
+    section: campi-4
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: The name of the university department contact person who will answer
+      technical questions (e.g. setting up equipment, equipment functionality,
+      etc.) about the equipment. · UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10032 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-4
+        source_unit: capital-expense-form-xml-272b13f7/campi-4#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Department Technical Contact Name
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:DEPARTMENT_CONTACT_PHONE
+    label: Department Contact Phone
+    labels:
+      - Department Contact Phone
+    technical_name: DEPARTMENT_CONTACT_PHONE
+    section: campi-4
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: The department contact's phone number. ·
+      UserDefinedFieldParamTextBoxSize=15;
+      UserDefinedFieldParamTextBoxMaxLength=15 · id=10033 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-4
+        source_unit: capital-expense-form-xml-272b13f7/campi-4#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Department Contact Phone
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:DEPARTMENT_CONTACT_EMAIL
+    label: Department Contact Email
+    labels:
+      - Department Contact Email
+    technical_name: DEPARTMENT_CONTACT_EMAIL
+    section: campi-4
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The department contact's email address. ·
+      UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10034 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-4
+        source_unit: capital-expense-form-xml-272b13f7/campi-4#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Department Contact Email
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BUILDING_AND_ROOM
+    label: "Building and Room #"
+    labels:
+      - "Building and Room #"
+    technical_name: BUILDING_AND_ROOM
+    section: campi-4
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: Please add the building and room number where the capital asset will be
+      located. · UserDefinedFieldParamTextBoxSize=15;
+      UserDefinedFieldParamTextBoxMaxLength=15 · id=10044 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-4
+        source_unit: capital-expense-form-xml-272b13f7/campi-4#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: "Building and Room #"
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1544

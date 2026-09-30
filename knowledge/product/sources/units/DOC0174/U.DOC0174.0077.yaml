@@ -1,0 +1,45 @@
+id: U.DOC0174.0077
+doc: S.STD.XSC.DOC.0174
+doc_id: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+type: tabella
+text: |-
+  Colonne: Field | Description
+  Field: FILE_NAME | Description: Full path on the FTP server of the file containing the error
+  Field: FILE_ROW | Description: File row in which the error has been found
+  Field: RETURN_CODE | Description: Always 1 to signal a warning in file data, or 2 to signal an error in data value
+  Field: RETURN MESSAGE | Description: Description of the error that was found:
+  "Invalid header found." = Header doesn’t contain expected field
+  "Mandatory XXX column not specified"
+  "Error parsing XXX column value (<value read from file>)"
+hash: sha256:28d1fe73edb759c8083674718816f022067ff359a992cac1ecf88f421db6e2bb
+words: 90
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0174
+  chapter: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0174.0076
+  next: U.DOC0174.0078
+table:
+  table: 11
+  headers:
+    - Field
+    - Description
+  rows:
+    - - FILE_NAME
+      - Full path on the FTP server of the file containing the error
+    - - FILE_ROW
+      - File row in which the error has been found
+    - - RETURN_CODE
+      - Always 1 to signal a warning in file data, or 2 to signal an error in data value
+    - - RETURN MESSAGE
+      - |-
+        Description of the error that was found:
+        "Invalid header found." = Header doesn’t contain expected field
+        "Mandatory XXX column not specified"
+        "Error parsing XXX column value (<value read from file>)"
+  block: 1
+  blocks: 1

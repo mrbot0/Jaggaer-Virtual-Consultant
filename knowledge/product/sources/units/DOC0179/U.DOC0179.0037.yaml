@@ -1,0 +1,43 @@
+id: U.DOC0179.0037
+doc: S.STD.XSC.DOC.0179
+doc_id: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+type: riga-tabella-campi
+text: |-
+  Attribute: workflowType | Mandatory (Y/N): Y | Description: Indicates the type of workflow for which the user is an approver.
+  Allowed values:
+  requisition
+  po
+  invoice
+hash: sha256:a72cce143fd0c82ded22d077548f050f5dedee59c5d87668c9b72882961cb324
+words: 25
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0179
+  chapter: JI Custom Field web-service
+  section: Approvers [Custom Field Import method]
+  section_path: 2.1.1.4
+  page: 5
+  lang: en
+  prev: U.DOC0179.0036
+  next: U.DOC0179.0038
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - workflowType
+    - Y
+    - |-
+      Indicates the type of workflow for which the user is an approver.
+      Allowed values:
+      requisition
+      po
+      invoice
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

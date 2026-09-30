@@ -1,0 +1,41 @@
+id: U.DOC0178.0263
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: grantAccessViaDeptAndRole | Description: Indicates whether access to this contact is (true) or is not (false) to be granted using roles, departments, and business units.
+  To grant access to all users, set this field to true, and set the role, department, and businessUnit fields to all (or leave them blank).
+  To limit access based on role, department, or business unit, set this field to true, and specify the limiting criteria in the role, department, and businessUnit fields.
+  To limit access to only specific users, set this field to false, and specify the users in the user field.
+hash: sha256:4f43b71c14d1b73455eb6a0cd4499fee38f402cfc8233ba8f212296edae02201
+words: 97
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: AppliesTo [Import]
+  section_path: 2.2.1.32
+  page: 52
+  lang: en
+  prev: U.DOC0178.0262
+  next: U.DOC0178.0264
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - grantAccessViaDeptAndRole
+    - ""
+    - |-
+      Indicates whether access to this contact is (true) or is not (false) to be granted using roles, departments, and business units.
+      To grant access to all users, set this field to true, and set the role, department, and businessUnit fields to all (or leave them blank).
+      To limit access based on role, department, or business unit, set this field to true, and specify the limiting criteria in the role, department, and businessUnit fields.
+      To limit access to only specific users, set this field to false, and specify the users in the user field.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,34 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.1
+section_title: Main request structure [PR Import]
+genre: tecnica
+rows:
+  - label: operationCode
+    technical_name: operationCode
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Code of the operation. It accepts following value:
+      CREATE: a new object is created.
+    section: 2.1.1.1
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: purchaseRequisition
+    technical_name: purchaseRequisition
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      PR data container (for header, rows, attachments and additional
+      information to be imported).
+
+      See section “Purchase Requisition data container [PR Import]” below.
+    section: 2.1.1.1
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

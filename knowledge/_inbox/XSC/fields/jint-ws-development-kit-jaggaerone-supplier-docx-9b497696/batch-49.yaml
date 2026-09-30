@@ -1,0 +1,153 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-49
+section: 2.1.1.75
+section_title: J1Supplier/JISupplierData/locationList/location/shipping/surchargeConfiguration/fee
+part: 1
+parts: 1
+rows:
+  - key: tech:FEETYPE
+    label: feetype
+    labels:
+      - feetype
+    technical_name: FEETYPE
+    section: 2.1.1.75
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Type of fee.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.75
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.75#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: feetype
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.78
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.78#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: feetype
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PERCENTAGE
+    label: percentage
+    labels:
+      - percentage
+    technical_name: PERCENTAGE
+    section: 2.1.1.75
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Fee percentage.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.75
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.75#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: percentage
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.78
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.78#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: percentage
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:AMOUNT
+    label: amount
+    labels:
+      - amount
+    technical_name: AMOUNT
+    section: 2.1.1.75
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Amount of the flat fee.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.75
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.75#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: amount
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.78
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.78#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: amount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FEESCOPE
+    label: feeScope
+    labels:
+      - feeScope
+    technical_name: FEESCOPE
+    section: 2.1.1.75
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates how shipping estimates are to be calculated.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.75
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.75#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: feeScope
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.78
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.78#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: feeScope
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1430

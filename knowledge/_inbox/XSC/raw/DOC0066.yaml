@@ -1,0 +1,375 @@
+doc: S.STD.XSC.DOC.0066
+scope: XSC
+extracted_at: 2026-09-30T04:30:20.846Z
+tier: T0
+stats:
+  units: 59
+  extracted_units: 7
+  document_candidates: 0
+  needs_llm: 6
+  t0_complete: 1
+  by_candidate:
+    FLD: 1
+    FLW: 3
+    CFP: 2
+    CFG: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2600
+  sessions:
+    - n: 1
+      tokens: 2600
+      batches: 1
+      items: 6
+      batch_items:
+        - - R.DOC0066.0004
+          - R.DOC0066.0026
+          - R.DOC0066.0038
+          - R.DOC0066.0041
+          - R.DOC0066.0044
+          - R.DOC0066.0046
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0066.0004
+    source_unit: U.DOC0066.0004
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0066
+    section: Platform Configuration
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0066.0004
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 52
+  - raw_id: R.DOC0066.0026
+    source_unit: U.DOC0066.0026
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0066
+    section: Org Structure & Settings
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: email
+          oggetto: Approvals - Setup > Workflow Setup > General Workflow Settings
+          valore: null
+        - n: 2
+          verbo: trade-ins
+          oggetto: Trade-Ins
+          valore: null
+        - n: 3
+          verbo: shared
+          oggetto: Cart – Setup > Configure Documents > General Document Config Settings
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0066.0026
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 84
+  - raw_id: R.DOC0066.0038
+    source_unit: U.DOC0066.0038
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0066
+    section: Document Configuration (ePro and AP)
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: logo
+          oggetto: Logo
+          valore: null
+        - n: 2
+          verbo: approval
+          oggetto: Image
+          valore: null
+        - n: 3
+          verbo: letterhead
+          oggetto: Text
+          valore: null
+        - n: 4
+          verbo: vendor
+          oggetto: Contact
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0066.0038
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 25
+  - raw_id: R.DOC0066.0041
+    source_unit: U.DOC0066.0041
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0066
+    section: Document Configuration (ePro and AP)
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: work
+          oggetto: with client to determine what information will appear and how it will be arranged on each document
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up any Custom Fields that need to be added to existing system fields
+          valore: null
+        - n: 3
+          verbo: import
+          oggetto: XML or use templates for initial document
+          valore: null
+        - n: 4
+          verbo: set
+          oggetto: behaviors for key fields
+          valore: null
+        - n: 5
+          verbo: if
+          oggetto: using Contract Compliance Tracker, set contract settings for each document (whether to check and enforce budget and other contract requirements)
+          valore: null
+        - n: 6
+          verbo: finalize
+          oggetto: and Activate the document
+          valore: null
+      risultato_atteso: Work with client to determine what information will appear and how it will be arranged on each document
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0066.0041
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 129
+  - raw_id: R.DOC0066.0044
+    source_unit: U.DOC0066.0044
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0066
+    section: Workflow
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: sourcing
+          oggetto: Event Approval Workflow
+          valore: null
+        - n: 2
+          verbo: sourcing
+          oggetto: Event Evaluation Workflow
+          valore: null
+        - n: 3
+          verbo: requisition
+          oggetto: Workflow
+          valore: null
+        - n: 4
+          verbo: purchase
+          oggetto: Order Workflow
+          valore: null
+        - n: 5
+          verbo: invoice
+          oggetto: Workflow
+          valore: null
+        - n: 6
+          verbo: supplier
+          oggetto: Registration Workflow
+          valore: null
+        - n: 7
+          verbo: supplier
+          oggetto: Review Workflow
+          valore: null
+        - n: 8
+          verbo: form
+          oggetto: Request Workflow
+          valore: null
+        - n: 9
+          verbo: contract
+          oggetto: Workflow
+          valore: null
+        - n: 10
+          verbo: savings
+          oggetto: Initiative Workflow
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0066.0044
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 130
+  - raw_id: R.DOC0066.0046
+    source_unit: U.DOC0066.0046
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0066
+    section: Workflow
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: work
+          oggetto: with client to determine needs
+          valore: null
+        - n: 2
+          verbo: diagram
+          oggetto: the workflow
+          valore: null
+        - n: 3
+          verbo: import
+          oggetto: Shared and Internal Folders XML file
+          valore: null
+        - n: 4
+          verbo: set
+          oggetto: up any necessary Rule Groups
+          valore: null
+        - n: 5
+          verbo: begin
+          oggetto: with an appropriate sample and modify the Workflow Definitions XML
+          valore: null
+        - n: 6
+          verbo: import
+          oggetto: Workflow Definitions XML file
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0066.0046
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 80
+  - raw_id: R.DOC0066.0051
+    source_unit: U.DOC0066.0051
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0066
+    section: '"Configuration" page'
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      kind: nota
+      text: "Note: IF the client will need any of the Field Management emails and notifications modified, be sure to do that!"
+      subject: client will need any of the
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0066.0051
+    needs_llm: false
+    tokens: 28

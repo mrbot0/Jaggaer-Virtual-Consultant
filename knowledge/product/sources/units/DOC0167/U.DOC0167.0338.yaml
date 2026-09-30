@@ -1,0 +1,39 @@
+id: U.DOC0167.0338
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: active | Mandatory (Y/N): N | Mapping on Jaggaer One data model and notes: Indicates whether the specified distribution type is (true) or is not (false) active.
+  Note: Make only one distribution method active. Make all other methods inactive. Making more than one distribution type active might result in suppliers being sent multiple times
+hash: sha256:1b8e1d86d35c4d040859d435f6238be49a89831ea9673b865c63b9173dc3d8f4
+words: 55
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/orderDistributionList/distributionMethod
+  section_path: 2.1.1.85
+  page: 5
+  lang: en
+  prev: U.DOC0167.0337
+  next: U.DOC0167.0339
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - active
+    - N
+    - ""
+    - |-
+      Indicates whether the specified distribution type is (true) or is not (false) active.
+      Note: Make only one distribution method active. Make all other methods inactive. Making more than one distribution type active might result in suppliers being sent multiple times
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

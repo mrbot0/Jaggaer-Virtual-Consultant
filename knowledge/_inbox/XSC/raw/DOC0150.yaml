@@ -1,0 +1,1789 @@
+doc: S.STD.XSC.DOC.0150
+scope: XSC
+extracted_at: 2026-09-30T04:31:12.141Z
+tier: T0
+stats:
+  units: 192
+  extracted_units: 42
+  document_candidates: 0
+  needs_llm: 36
+  t0_complete: 6
+  by_candidate:
+    FLD: 11
+    FLW: 26
+    CFP: 5
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 14817
+  sessions:
+    - n: 1
+      tokens: 14817
+      batches: 2
+      items: 36
+      batch_items:
+        - - R.DOC0150.0015
+          - R.DOC0150.0029
+          - R.DOC0150.0037
+          - R.DOC0150.0054
+          - R.DOC0150.0058
+          - R.DOC0150.0061
+          - R.DOC0150.0064
+          - R.DOC0150.0073
+          - R.DOC0150.0077
+          - R.DOC0150.0097
+          - R.DOC0150.0098
+          - R.DOC0150.0100
+          - R.DOC0150.0102
+          - R.DOC0150.0104
+          - R.DOC0150.0112
+          - R.DOC0150.0114
+          - R.DOC0150.0116
+          - R.DOC0150.0124
+          - R.DOC0150.0125
+        - - R.DOC0150.0131
+          - R.DOC0150.0134
+          - R.DOC0150.0139
+          - R.DOC0150.0144
+          - R.DOC0150.0150
+          - R.DOC0150.0152
+          - R.DOC0150.0154
+          - R.DOC0150.0162
+          - R.DOC0150.0164
+          - R.DOC0150.0166
+          - R.DOC0150.0169
+          - R.DOC0150.0176
+          - R.DOC0150.0178
+          - R.DOC0150.0180
+          - R.DOC0150.0183
+          - R.DOC0150.0185
+          - R.DOC0150.0192
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0150.0002
+    source_unit: U.DOC0150.0002
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: Prerequisites You
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0150.0002
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0150.0005
+    source_unit: U.DOC0150.0005
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: To bring these items into ePro, CORTECH
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0150.0005
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0150.0015
+    source_unit: U.DOC0150.0015
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: "CORTECH as a manufacturer:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to the manufacturers list either for item master or contract items: Contracts > Item Master Management > Add/Configure Manufacturers > manufacturers Contracts > Contracts > Contract Items >manufacturers > manufacturers"
+          valore: Contracts > Item Master Management > Add/Configure Manufacturers > manufacturers Contracts > Contracts > Contract Items >manufacturers > manufacturers
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0015
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 70
+  - raw_id: R.DOC0150.0029
+    source_unit: U.DOC0150.0029
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "the item master item:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to Contracts > Item Master Manage ment > Items Master Items and click Create Item
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0029
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 41
+  - raw_id: R.DOC0150.0037
+    source_unit: U.DOC0150.0037
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: make
+          oggetto: "virtual item details visible in product search:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to Shop > Shopping Settings > Configure Product Search Results Settings And Filters > Product Search Admin
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0037
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 53
+  - raw_id: R.DOC0150.0051
+    source_unit: U.DOC0150.0051
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Duplicate items from the same supplier
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0150.0051
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0150.0052
+    source_unit: U.DOC0150.0052
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Items added to the cart
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0150.0052
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0150.0054
+    source_unit: U.DOC0150.0054
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: link
+          oggetto: "the Grainger item master item to the item in the Grainger hosted catalog:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the edit view of item master item for the toothbrush ( 1001 )
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0054
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 50
+  - raw_id: R.DOC0150.0058
+    source_unit: U.DOC0150.0058
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0150.0058
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0150.0060
+    source_unit: U.DOC0150.0060
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: linking icon
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0150.0060
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0150.0061
+    source_unit: U.DOC0150.0061
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: prioritize
+          oggetto: "the source for item detail values and price displayed in the product search results based on customer requirements:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to the Product Search Admin page: Shop > Shopping Settings > Configure Prod uct Search Results Settings And Filters > Product Search Admin"
+          valore: Shop > Shopping Settings > Configure Prod uct Search Results Settings And Filters > Product Search Admin
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0061
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 80
+  - raw_id: R.DOC0150.0064
+    source_unit: U.DOC0150.0064
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: to the item master item for the toothbrush
+          valore: null
+        - n: 2
+          verbo: clic
+          oggetto: "the icon of the linked item:"
+          valore: null
+        - n: 3
+          verbo: clic
+          oggetto: show source of blended data. The data that will be displayed in search results is highlighted
+          valore: null
+      risultato_atteso: Click show source of blended data. The data that will be displayed in search results is highlighted.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0064
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 70
+  - raw_id: R.DOC0150.0073
+    source_unit: U.DOC0150.0073
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0150.0073
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 66
+  - raw_id: R.DOC0150.0077
+    source_unit: U.DOC0150.0077
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: submit
+          oggetto: the contract for approval
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: the contract item, add the supplier and price, and associate the contract
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0077
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 40
+  - raw_id: R.DOC0150.0097
+    source_unit: U.DOC0150.0097
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: link
+          oggetto: the item master item to the contract item for the toothbrush from Grainger
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the item master item for the toothbrush
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0097
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 44
+  - raw_id: R.DOC0150.0098
+    source_unit: U.DOC0150.0098
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0150.0098
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 40
+  - raw_id: R.DOC0150.0100
+    source_unit: U.DOC0150.0100
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLW
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: link
+          oggetto: the contract item to the hosted catalog for the toothbrush from Grainger
+          valore: null
+        - n: 2
+          verbo: change
+          oggetto: "the priority for the source for item detail values and price displayed in the product search results based on customer requirements:"
+          valore: null
+        - n: 3
+          verbo: navigate
+          oggetto: to Shop > Shopping Settings > Configure Product Search Results Settings And Filters > Product Search Admin
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0100
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 96
+  - raw_id: R.DOC0150.0102
+    source_unit: U.DOC0150.0102
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - FLW
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: to the item master item for the toothbrush
+          valore: null
+        - n: 2
+          verbo: clic
+          oggetto: the icon of the linked item
+          valore: null
+        - n: 3
+          verbo: clic
+          oggetto: show source of blended data. The data that will be displayed in search results is highlighted
+          valore: null
+      risultato_atteso: Click show source of blended data. The data that will be displayed in search results is highlighted.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0102
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 69
+  - raw_id: R.DOC0150.0104
+    source_unit: U.DOC0150.0104
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: to Contract > Item Master Management > Item Master Items and click View Details for the toothbrush
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: "for the toothbrush and view the results:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0104
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 57
+  - raw_id: R.DOC0150.0112
+    source_unit: U.DOC0150.0112
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLW
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: "the price for the Asia business unit on the Grainger contract item:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the contract item for the toothbrush
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0112
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 42
+  - raw_id: R.DOC0150.0114
+    source_unit: U.DOC0150.0114
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - FLW
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: select
+          oggetto: edit for Asia and add the price
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the item prices on the Grainger contract
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0114
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 33
+  - raw_id: R.DOC0150.0116
+    source_unit: U.DOC0150.0116
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - FLW
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: "all the prices available for Grainger:"
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: return to item search results
+          valore: null
+        - n: 3
+          verbo: select
+          oggetto: View Details View Details for the toothbrush
+          valore: null
+        - n: 4
+          verbo: change
+          oggetto: the business unit of your user to Asia
+          valore: null
+        - n: 5
+          verbo: search
+          oggetto: for the toothbrush from Grainger and view the price
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0116
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 74
+  - raw_id: R.DOC0150.0124
+    source_unit: U.DOC0150.0124
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0150.0124
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 21
+  - raw_id: R.DOC0150.0125
+    source_unit: U.DOC0150.0125
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - FLW
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: expand
+          oggetto: linking details
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: "Unlink "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0125
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 21
+  - raw_id: R.DOC0150.0131
+    source_unit: U.DOC0150.0131
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a25
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: "the automated item linking engine and run a linking job for item master items:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to Contracts > Item Master Management > Link Item Master Items with Contracts and Hosted Items "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0131
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 59
+  - raw_id: R.DOC0150.0134
+    source_unit: U.DOC0150.0134
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a26
+      - FLW
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: save
+          oggetto: the change and run the linking job by selecting Add All items
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: "the item linking job in the linking queue:"
+          valore: null
+        - n: 3
+          verbo: select
+          oggetto: the manage linking queue tab
+          valore: null
+        - n: 4
+          verbo: expand
+          oggetto: the job and view the number of links made
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: "the links automatically made between the item master item and contract and hosted catalog items:"
+          valore: null
+        - n: 6
+          verbo: navigate
+          oggetto: to the link to hosted catalog and link to contract tabs and select the Linked - By System linked status
+          valore: null
+        - n: 7
+          verbo: queue
+          oggetto: "a link for contract items and run the linking job:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0134
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 134
+  - raw_id: R.DOC0150.0139
+    source_unit: U.DOC0150.0139
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a27
+      - FLW
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: to the linking configuration/rules tab
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: Save and Add All Items
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0139
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0150.0143
+    source_unit: U.DOC0150.0143
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: "Lesson 4: Linking Commodity Code s and Custom Fields to Items"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • You
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0150.0143
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0150.0144
+    source_unit: U.DOC0150.0144
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Lesson 4: Linking Commodity Code s and Custom Fields to Items"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a29
+      - FLW
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: expand
+          oggetto: the job and view the number of links made
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: "the links automatically made between the contract item and hosted catalog item:"
+          valore: null
+        - n: 3
+          verbo: navigate
+          oggetto: to the link to hosted catalog tab and select the Linked - By System linked status
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0144
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 75
+  - raw_id: R.DOC0150.0150
+    source_unit: U.DOC0150.0150
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Lesson 4: Linking Commodity Code s and Custom Fields to Items"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a30
+      - FLW
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: "the UNSPSC code and category on the toothbrush item master item:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the item master item for the toothbrush
+          valore: null
+        - n: 3
+          verbo: enter
+          oggetto: "the UNSPSC code: 53131503 "
+          valore: "53131503 "
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0150
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 57
+  - raw_id: R.DOC0150.0152
+    source_unit: U.DOC0150.0152
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Lesson 4: Linking Commodity Code s and Custom Fields to Items"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a31
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: "the setting to map commodity codes to the custom field value GL Code :"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to Setup > Hosted Catalog and Ordering Configuration > Category, Commodity and UOM Taxonomy Sets "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0152
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 64
+  - raw_id: R.DOC0150.0154
+    source_unit: U.DOC0150.0154
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Lesson 4: Linking Commodity Code s and Custom Fields to Items"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a32
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: "the linking of custom fields to a commodity code in item master items:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to Contracts > Item Master Management > Configure Item Master Settings "
+          valore: null
+        - n: 3
+          verbo: clic
+          oggetto: the Configuration tab
+          valore: null
+        - n: 4
+          verbo: select
+          oggetto: the Enable Custom Field / Commodity Code Link checkbox to enable the setting
+          valore: null
+        - n: 5
+          verbo: select
+          oggetto: GL Code as the custom field
+          valore: null
+        - n: 6
+          verbo: add
+          oggetto: GL Code values to the toothbrush item master item
+          valore: null
+        - n: 7
+          verbo: navigate
+          oggetto: to the toothbrush item master item. The GL Code field should now appear below the commodity code
+          valore: null
+        - n: 8
+          verbo: add
+          oggetto: a few GL Code values and set a default
+          valore: null
+        - n: 9
+          verbo: see
+          oggetto: "how these codes are brought into the requisition:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0154
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 165
+  - raw_id: R.DOC0150.0162
+    source_unit: U.DOC0150.0162
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a33
+      - FLW
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the item master ID field to the PR document configuration
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: "a contract non-catalog item to the Education Lab Supplies contract:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0162
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0150.0164
+    source_unit: U.DOC0150.0164
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a34
+      - FLW
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: for the item and add it to the cart
+          valore: null
+        - n: 2
+          verbo: go
+          oggetto: to the cart and check out
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0164
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 30
+  - raw_id: R.DOC0150.0166
+    source_unit: U.DOC0150.0166
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: new item master items are brought into ePro, any hosted catalog items that have a corresponding item master ID attribute should be automatically linked to that item master item
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0150.0166
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 69
+  - raw_id: R.DOC0150.0169
+    source_unit: U.DOC0150.0169
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a36
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: "up a custom catalog attribute IM ID for item master IDs:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to custom attribute administration page for item master items: Contracts > Item Master Management > Configure Item Master Settings"
+          valore: Contracts > Item Master Management > Configure Item Master Settings
+        - n: 3
+          verbo: create
+          oggetto: a new attribute
+          valore: null
+        - n: 4
+          verbo: complete
+          oggetto: "these fields:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0169
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 75
+  - raw_id: R.DOC0150.0176
+    source_unit: U.DOC0150.0176
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a37
+      - FLW
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: "the item master ID of the new item master item to the custom catalog attribute of the corresponding hosted catalog item part number CB5000 :"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to the hosted catalog item administration page: Setup > Hosted Catalog and Ordering Configuration > Hosted Catalog Content Administration"
+          valore: Setup > Hosted Catalog and Ordering Configuration > Hosted Catalog Content Administration
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0176
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 84
+  - raw_id: R.DOC0150.0178
+    source_unit: U.DOC0150.0178
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a38
+      - FLW
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: the item
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: the item master ID of the mop bucket item master item
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0178
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 30
+  - raw_id: R.DOC0150.0180
+    source_unit: U.DOC0150.0180
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a39
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a39
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: "and configure the automatic linking by item master ID rule and run the linking engine:"
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: "to the linking and configuration rule page for item master items: Contracts > Item Master Management > Link Item Master Items with Contracts and Hosted Items"
+          valore: Contracts > Item Master Management > Link Item Master Items with Contracts and Hosted Items
+        - n: 3
+          verbo: enable
+          oggetto: link by item master ID
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0180
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 85
+  - raw_id: R.DOC0150.0183
+    source_unit: U.DOC0150.0183
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a40
+      - FLW
+    type_hint:
+      candidates: *a40
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: the linking details for that supplier in the item master item supplier item details
+          valore: null
+        - n: 2
+          verbo: go
+          oggetto: to the item master item for the mop bucket and view how a supplier item to the Grainger item has been added and linked
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0183
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 64
+  - raw_id: R.DOC0150.0185
+    source_unit: U.DOC0150.0185
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a41
+      - FLW
+    type_hint:
+      candidates: *a41
+      outcome: ambiguo
+      score: 0.55
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: "a toothbrush from a punchout an d noncatalog supplier to the draft PR:"
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: "for the toothbrush with the part number 90001 and manufacturer name CORTECH "
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: the toothbrush from Fastenal to the cart
+          valore: null
+        - n: 4
+          verbo: fill
+          oggetto: out a noncatalog item form for a toothbrush from Veridian Dynamics and add it to the cart
+          valore: null
+        - n: 5
+          verbo: add
+          oggetto: "the item master ID for the toothbrush to each item in the PR:"
+          valore: null
+        - n: 6
+          verbo: go
+          oggetto: "to checkout and view the line items:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0185
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 116
+  - raw_id: R.DOC0150.0192
+    source_unit: U.DOC0150.0192
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0150
+    section: "Course Workbook: JAGGAER eProcurement"
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a42
+      - FLW
+    type_hint:
+      candidates: *a42
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the item master ID for the toothbrush
+          valore: null
+        - n: 2
+          verbo: note
+          oggetto: how the commodity code and GL Code are automatically populated on the PR
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0150.0192
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 42

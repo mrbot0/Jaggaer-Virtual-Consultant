@@ -1,0 +1,63 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.19
+section_title: "Commercial Envelope: default line value for section additional
+  column [Import/Update RfX method]"
+genre: tecnica
+rows:
+  - label: paramId
+    technical_name: paramId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Commercial Parameter identifier
+    section: 2.1.1.19
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.19#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: paramPos
+    technical_name: paramPos
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Commercial position of the contract row
+    section: 2.1.1.19
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.19#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: paramReference
+    technical_name: paramReference
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Commercial Identifier of the contract row
+    section: 2.1.1.19
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.19#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: paramDefaultValue
+    technical_name: paramDefaultValue
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Default value of the additional column to be redefined for the commercial
+      parameter. According to parameter type, possible values are:
+
+      BOOLEAN: TRUE or 1 for true value, any other value means false
+
+      MULTILINE OR TEXT: any string
+
+      NUMERIC: a string representing a number
+
+      COMBO: any value among allowed ones
+
+      DATE [22.02.00] Note: format is yyyy-MM-dd
+    section: 2.1.1.19
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.19#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

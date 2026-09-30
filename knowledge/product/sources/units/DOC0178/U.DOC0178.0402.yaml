@@ -1,0 +1,65 @@
+id: U.DOC0178.0402
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: ContractCreationStatus | Description: Current status of the contract in the workflow.
+  Draft
+  Internal Review
+  External Review
+  Pending Approval
+  Pending Signature
+  Executed: Future
+  Executed: In Effect
+  Executed: Expired
+  Executed: Superseded
+  Executed: Suspended
+  Complete
+  Terminated
+  Archived
+  Attribute: result | Description: Indicates whether the creation of the contract was a success or failure.
+  Attribute: ErrorList | Description: List of error encountered while updating item.
+  See section “Error [Import]” below
+hash: sha256:3ec8adea2863d5268c236bee86cc422ba079b6a512dc87f848903b334e2b22b4
+words: 71
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Contract Ref [Import]
+  section_path: 2.2.3.3
+  page: 70
+  lang: en
+  prev: U.DOC0178.0401
+  next: U.DOC0178.0403
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - ContractCreationStatus
+      - |-
+        Current status of the contract in the workflow.
+        Draft
+        Internal Review
+        External Review
+        Pending Approval
+        Pending Signature
+        Executed: Future
+        Executed: In Effect
+        Executed: Expired
+        Executed: Superseded
+        Executed: Suspended
+        Complete
+        Terminated
+        Archived
+    - - result
+      - Indicates whether the creation of the contract was a success or failure.
+    - - ErrorList
+      - |-
+        List of error encountered while updating item.
+        See section “Error [Import]” below
+  block: 1
+  blocks: 1

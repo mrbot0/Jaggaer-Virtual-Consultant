@@ -1,0 +1,65 @@
+document: office-move-request-template-xml-4f14467e
+scope: XSC
+batch: batch-03
+section: domande-3
+section_title: Domande — Page 1 / New Office Location
+part: 1
+parts: 1
+rows:
+  - key: tech:117430
+    label: Drop-off Address Lcoation
+    labels:
+      - Drop-off Address Lcoation
+    technical_name: "117430"
+    section: domande-3
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Drop-off Address Lcoation
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-3
+        source_unit: office-move-request-template-xml-4f14467e/domande-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Drop-off Address Lcoation
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:117431
+    label: Diagram of Preferred Office Layout
+    labels:
+      - Diagram of Preferred Office Layout
+    technical_name: "117431"
+    section: domande-3
+    type: File Upload
+    mandatory_text: No
+    allowed_values: []
+    notes: Diagram of Preferred Office Layout
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-3
+        source_unit: office-move-request-template-xml-4f14467e/domande-3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Diagram of Preferred Office Layout
+        type: File Upload
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: file
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 854

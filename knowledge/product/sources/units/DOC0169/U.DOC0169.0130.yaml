@@ -1,0 +1,39 @@
+id: U.DOC0169.0130
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: money | Mandatory (Y/N): N | Description: Price per unit. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  Must be a positive number or zero.
+  DEPRECATED: uses field “money” of “price” attribute
+hash: sha256:286da77718a67112486b8ed01e011ca110adc0fbdca4389171839b3c9007abec
+words: 41
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Unit Price [PR Import]
+  section_path: 2.1.1.18
+  page: 22
+  lang: en
+  prev: U.DOC0169.0129
+  next: U.DOC0169.0131
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - money
+    - N
+    - |-
+      Price per unit. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+      Must be a positive number or zero.
+      DEPRECATED: uses field “money” of “price” attribute
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

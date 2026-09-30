@@ -1,0 +1,101 @@
+id: U.DOC0125.0003
+doc: S.STD.XSC.DOC.0125
+doc_id: workflow-definition-form-request-xml-9218cd48
+type: tabella
+text: |-
+  Tabella: attività
+  Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella
+  Attività: START | Tipo: start | Selezione cartella: Dummy
+  Attività: Form - Quick Quote Approval | Tipo: manual | Passo: Form - Quick Quote Approval | Cartelle: Form - Quick Quote Approval | Regola: Document.IsQuickQuote == true | Selezione cartella: ExplicitFolder
+  Attività: Form - Check Request Approval | Tipo: manual | Passo: Form - Check Request Approval | Cartelle: Form - Check Request Approval | Regola: Document.IsCheckRequest == true | Selezione cartella: ExplicitFolder
+  Attività: Form - Generic Approval | Tipo: manual | Passo: Form - Generic Approval | Cartelle: Form - Generic Approval | Regola: Document.IsGenericRequest == true | Selezione cartella: ExplicitFolder
+  Attività: Supplier Request Approval | Tipo: manual | Passo: Supplier Request Approval | Cartelle: Supplier Request Approval | Regola: Document.IsSupplierRequest == true | Selezione cartella: ExplicitFolder
+  Attività: Form ADW Approval | Tipo: manual | Passo: Form ADW Approval | Regola: Document.RequiresRuleGroupEvaluation("Form ADW Approval") == true | Selezione cartella: MultiElementDynamic
+  Attività: Send Quick Quote Email | Tipo: automated | Passo: Send Quick Quote Email | Cartelle: Quick Quote Email Robot | Regola: Document.IsQuickQuote == true | Selezione cartella: ExplicitFolder
+  Attività: Create NonPO Invoice | Tipo: automated | Passo: Create NonPO Invoice | Cartelle: Create NonPO Invoice | Regola: Document.IsCheckRequest == true | Selezione cartella: ExplicitFolder
+  Attività: Form ADW Notification | Tipo: notification | Passo: Form ADW Notification | Regola: Document.RequiresRuleGroupEvaluation("Form ADW Notification") == true | Selezione cartella: MultiElementDynamic
+  Attività: END | Tipo: end | Selezione cartella: Dummy
+hash: sha256:5cba15bdbe6783a5e0787ef5b2c3f00f40102a5ec6516ec0cb7f544c5fe58892
+words: 253
+lang: it
+context:
+  doc: S.STD.XSC.DOC.0125
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: it
+  prev: U.DOC0125.0002
+  next: U.DOC0125.0004
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Form - Quick Quote Approval
+      - manual
+      - Form - Quick Quote Approval
+      - Form - Quick Quote Approval
+      - Document.IsQuickQuote == true
+      - ExplicitFolder
+    - - Form - Check Request Approval
+      - manual
+      - Form - Check Request Approval
+      - Form - Check Request Approval
+      - Document.IsCheckRequest == true
+      - ExplicitFolder
+    - - Form - Generic Approval
+      - manual
+      - Form - Generic Approval
+      - Form - Generic Approval
+      - Document.IsGenericRequest == true
+      - ExplicitFolder
+    - - Supplier Request Approval
+      - manual
+      - Supplier Request Approval
+      - Supplier Request Approval
+      - Document.IsSupplierRequest == true
+      - ExplicitFolder
+    - - Form ADW Approval
+      - manual
+      - Form ADW Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Form ADW Approval") == true
+      - MultiElementDynamic
+    - - Send Quick Quote Email
+      - automated
+      - Send Quick Quote Email
+      - Quick Quote Email Robot
+      - Document.IsQuickQuote == true
+      - ExplicitFolder
+    - - Create NonPO Invoice
+      - automated
+      - Create NonPO Invoice
+      - Create NonPO Invoice
+      - Document.IsCheckRequest == true
+      - ExplicitFolder
+    - - Form ADW Notification
+      - notification
+      - Form ADW Notification
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Form ADW Notification") == true
+      - MultiElementDynamic
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1

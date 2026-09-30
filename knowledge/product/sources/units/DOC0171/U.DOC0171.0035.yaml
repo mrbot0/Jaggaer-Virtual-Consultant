@@ -1,0 +1,57 @@
+id: U.DOC0171.0035
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: operationCode | Mandatory (Y/N): Y | Description: Code of requested operation | Mapping on JA data model and notes: Code of the operation. It accepts following value:
+  009 or CREATE: a new object is created, no matter main code provided
+  004 or UPDATE: it looks for an existing object having main code provided and updates it with new information.
+  005 or CREATEUPDATE: if main code provided, it searches for an existing object having such identifier; if such RfX is found it acts as an UPDATE operation. If no code provided or no item matching such code, it reverts to a CREATE operation.
+  CREATEUPDATE_RESET or UPDATE_RESET: act as CREATEUPDATE or UPDATE, but force removal of all information not listed in current request.
+  CREATE_FROM_TEMPLATE: a new object is created starting from an RfX template whose code is provided
+  CREATE_FROM_DEFAULT_TEMPLATE: a new object is created starting from the default RfX template defined in the platform
+  UPDATE_ADDINFO: it looks for an existing object having main code provided and updates only its additional info data, please refer to the Behavior section 2.1.2 for details on what rfx status can update
+  DUPLICATE: a new object is created starting from an existing RfX whose identifier is provided.
+  CHANGE_OWNER: a new owner user will be assigned to an existing RfX.
+  UPDATE_ATTACH_BUYER: it looks for an existing object having main code provided and updates only buyer side attachment, regardless of the RfX status.
+hash: sha256:619e0b3576a3682a03060b2c8f3f642d319f65675667cd479555200a954f6c36
+words: 235
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Main Request structure
+  section_path: 2.1.1.1
+  page: 6
+  lang: en
+  prev: U.DOC0171.0034
+  next: U.DOC0171.0036
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - operationCode
+    - Y
+    - Code of requested operation
+    - |-
+      Code of the operation. It accepts following value:
+      009 or CREATE: a new object is created, no matter main code provided
+      004 or UPDATE: it looks for an existing object having main code provided and updates it with new information.
+      005 or CREATEUPDATE: if main code provided, it searches for an existing object having such identifier; if such RfX is found it acts as an UPDATE operation. If no code provided or no item matching such code, it reverts to a CREATE operation.
+      CREATEUPDATE_RESET or UPDATE_RESET: act as CREATEUPDATE or UPDATE, but force removal of all information not listed in current request.
+      CREATE_FROM_TEMPLATE: a new object is created starting from an RfX template whose code is provided
+      CREATE_FROM_DEFAULT_TEMPLATE: a new object is created starting from the default RfX template defined in the platform
+      UPDATE_ADDINFO: it looks for an existing object having main code provided and updates only its additional info data, please refer to the Behavior section 2.1.2 for details on what rfx status can update
+      DUPLICATE: a new object is created starting from an existing RfX whose identifier is provided.
+      CHANGE_OWNER: a new owner user will be assigned to an existing RfX.
+      UPDATE_ATTACH_BUYER: it looks for an existing object having main code provided and updates only buyer side attachment, regardless of the RfX status.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,182 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.43
+section_title: NonCatalogItems [Import]
+genre: tecnica
+rows:
+  - label: description
+    technical_name: description
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Description of the noncatalog item that displays in product search.
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: catalogNumber
+    technical_name: catalogNumber
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Unique ID number for the item.
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Size
+    technical_name: Size
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Unit of size for the item, such as 1 mg (milligram) or 16 fl oz (fluid
+      ounces).
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Price
+    technical_name: Price
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Price of the item
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: packaging
+    technical_name: packaging
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Packaging of the item, such as 1 ea or 1 case of 12.
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: promoteInProductSearch
+    technical_name: promoteInProductSearch
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the item is (Yes) or are not (No) to be promoted to
+      shoppers who have access to the contract.
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Color
+    technical_name: Color
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Color of the item
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: commodityCode
+    technical_name: commodityCode
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Code assigned to the item, for the purposes of identifying it in
+      international commerce, or commerce in general.
+
+      CommodityCode is not a specific description of the goods or service.
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Unspsc
+    technical_name: Unspsc
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Standardized commodity code value for the contract item,
+      See section “UNSPSC [Import]” above
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: searchableKeywords
+    technical_name: searchableKeywords
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Keywords by which the item can be found in product search.
+
+      Commas are used to separate more keywords.
+
+      Appropriate keywords include commodities, products, services, and
+      categories that describe the item.
+
+      Use common product search terms that are typically used when searching for
+      products. These terms can then be searched for by users in product search.
+
+      If the list of keywords is longer than 1000 characters, it is truncated
+      and saved.
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: longDescription
+    technical_name: longDescription
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Long description of the item
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: manufacturerName
+    technical_name: manufacturerName
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Name of the manufacturer
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: manufacturerPartNumber
+    technical_name: manufacturerPartNumber
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Manufacturer’s part number (SKU code) for the item.
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: dynamicAttributeList
+    technical_name: dynamicAttributeList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      List of dynamic attributes.
+      See section “DynamicAttribute [Import]” below
+    section: 2.2.1.43
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.43#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

@@ -1,0 +1,39 @@
+id: U.DOC0175.0031
+doc: S.STD.XSC.DOC.0175
+doc_id: jint-ws-development-kit-push-services-overview-d-7b85c1d1
+type: procedura
+text: |-
+  Push message
+  1. Header
+  2. timestamp: the time the message was generated
+  3. messageId: unique identified of the push message
+  4. objectType: the type of the Jaggaer One object included in the push message
+  5. objectId: the ID of the Jaggaer One object included in the push message
+  6. requestAttributeList (available in XML and SOAP format only): list of configured attributes and related value extracted from the message payload; every attribute contains:
+  7. name: name of the attribute
+  8. value: value of the attribute
+  9. Payload
+hash: sha256:8028256476781b44c3ead21e2ce578db09e83aecfa70de68e69b954ddc547fe5
+words: 86
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0175
+  chapter: Overview
+  section: Push message
+  section_path: 2.0.3
+  page: 13
+  lang: en
+  prev: U.DOC0175.0030
+  next: U.DOC0175.0032
+steps:
+  - Header
+  - "timestamp: the time the message was generated"
+  - "messageId: unique identified of the push message"
+  - "objectType: the type of the Jaggaer One object included in the push message"
+  - "objectId: the ID of the Jaggaer One object included in the push message"
+  - "requestAttributeList (available in XML and SOAP format only): list of configured attributes and related value extracted from the message payload; every attribute contains:"
+  - "name: name of the attribute"
+  - "value: value of the attribute"
+  - Payload
+procedure:
+  title: Push message

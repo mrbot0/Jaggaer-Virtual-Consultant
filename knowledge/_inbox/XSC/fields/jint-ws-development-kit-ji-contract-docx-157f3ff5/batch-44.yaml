@@ -1,0 +1,117 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-44
+section: 2.2.1.48
+section_title: ServiceLineItem [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:REQUESTEDSERVICESTARTDATE
+    label: requestedServiceStartDate
+    labels:
+      - requestedServiceStartDate
+    technical_name: REQUESTEDSERVICESTARTDATE
+    section: 2.2.1.48
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date you would like the service to begin
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.48
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: requestedServiceStartDate
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:REQUESTEDSERVICEENDDATE
+    label: requestedServiceEndDate
+    labels:
+      - requestedServiceEndDate
+    technical_name: REQUESTEDSERVICEENDDATE
+    section: 2.2.1.48
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date you would like the service to end
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.48
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: requestedServiceEndDate
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ESTIMATEDSERVICESTARTDATE
+    label: estimatedServiceStartDate
+    labels:
+      - estimatedServiceStartDate
+    technical_name: ESTIMATEDSERVICESTARTDATE
+    section: 2.2.1.48
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date you expect the service to begin
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.48
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: estimatedServiceStartDate
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ESTIMATEDSERVICEENDDATE
+    label: estimatedServiceEndDate
+    labels:
+      - estimatedServiceEndDate
+    technical_name: ESTIMATEDSERVICEENDDATE
+    section: 2.2.1.48
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date you expect the service to end
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.48
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: estimatedServiceEndDate
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1229

@@ -1,0 +1,44 @@
+id: U.DOC0169.0399
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Code | Description
+  Code: 0 | Description: operation completed successfully
+  Code: 2 | Description: Operation was not completed due to error in provided data.
+  Code: -996 | Description: Invalid Request Object (Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+  Code: -997 | Description: Unauthorized Method (Web Service method isn’t configured to be executed)
+  Code: -998 | Description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+  Code: -999 | Description: Generic exception
+hash: sha256:a07f2a781bc53c6151bb3a0ecfa2f8bb4587d23624d703c2eae16a397497ad4c
+words: 107
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Error codes [PR Validate]
+  section_path: 2.4.3.4
+  page: 97
+  lang: en
+  prev: U.DOC0169.0398
+  next: U.DOC0169.0400
+table:
+  table: 0
+  headers:
+    - Code
+    - Description
+  rows:
+    - - "0"
+      - operation completed successfully
+    - - "2"
+      - Operation was not completed due to error in provided data.
+    - - "-996"
+      - Invalid Request Object (Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+    - - "-997"
+      - Unauthorized Method (Web Service method isn’t configured to be executed)
+    - - "-998"
+      - Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+    - - "-999"
+      - Generic exception
+  block: 1
+  blocks: 1

@@ -1,0 +1,59 @@
+id: U.DOC0177.0383
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: type | Mandatory (Y/N): N | Mapping on Jaggaer One data model and notes: Indicates the custom element type.
+  • 1 - Text Box. Freeform single-line entry area, up to 100 alphanumeric characters. Cannot be a parent custom field.
+  • 2 - Numeric Text Box. Freeform single-line entry area, numbers only. Cannot be a parent custom field.
+  • 3 - Text Area. Freeform multi-line entry area, up to 2000 alphanumeric characters. Cannot be a parent custom field.
+  • 4 - Check Box. On-Off checkbox. You can enable multiple checkboxes.
+  • 5 - Dropdown List. Predefined set of selections in drop-down list format.
+  • 6 - Radio Button Group. Predefined set of selections in radio button group format.
+  • 7 - Multi Select. Predefined set of selections. User can enter all custom field values that apply. This is the only custom field type that can accept more than one custom field value.
+  • 8 - Calendar Date. Date field, with today's date as the default selection.
+  • 9 - File Attachment. Add a file attachment.
+  • 10 - HTML Area. Freeform multi-line entry area that supports HTML tags.
+  Values: (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10)
+hash: sha256:339ed3e8f9f737bba17e7ce1b8c5cb72dca54b7abfe2158d3ed5e2805f324eb3
+words: 208
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/customElementList/customElement
+  section_path: 2.1.1.97
+  page: 70
+  lang: en
+  prev: U.DOC0177.0382
+  next: U.DOC0177.0384
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - type
+    - N
+    - ""
+    - |-
+      Indicates the custom element type.
+      • 1 - Text Box. Freeform single-line entry area, up to 100 alphanumeric characters. Cannot be a parent custom field.
+      • 2 - Numeric Text Box. Freeform single-line entry area, numbers only. Cannot be a parent custom field.
+      • 3 - Text Area. Freeform multi-line entry area, up to 2000 alphanumeric characters. Cannot be a parent custom field.
+      • 4 - Check Box. On-Off checkbox. You can enable multiple checkboxes.
+      • 5 - Dropdown List. Predefined set of selections in drop-down list format.
+      • 6 - Radio Button Group. Predefined set of selections in radio button group format.
+      • 7 - Multi Select. Predefined set of selections. User can enter all custom field values that apply. This is the only custom field type that can accept more than one custom field value.
+      • 8 - Calendar Date. Date field, with today's date as the default selection.
+      • 9 - File Attachment. Add a file attachment.
+      • 10 - HTML Area. Freeform multi-line entry area that supports HTML tags.
+      Values: (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

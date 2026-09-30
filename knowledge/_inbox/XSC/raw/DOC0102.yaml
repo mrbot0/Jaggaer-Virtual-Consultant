@@ -1,0 +1,1798 @@
+doc: S.STD.XSC.DOC.0102
+scope: XSC
+extracted_at: 2026-09-30T04:30:46.884Z
+tier: T0
+stats:
+  units: 63
+  extracted_units: 54
+  document_candidates: 6
+  needs_llm: 6
+  t0_complete: 54
+  by_candidate:
+    FLD: 54
+    CFG: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 18000
+  sessions:
+    - n: 1
+      tokens: 18000
+      batches: 3
+      items: 6
+      batch_items:
+        - - R.DOC0102.C001
+          - R.DOC0102.C002
+        - - R.DOC0102.C003
+          - R.DOC0102.C004
+        - - R.DOC0102.C005
+          - R.DOC0102.C006
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0102.0003
+    source_unit: U.DOC0102.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Supplier Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "100"
+      technical_name: "100"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=100 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0102.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0102.0004
+    source_unit: U.DOC0102.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Supplier Info
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Form Use Instructions
+      technical_name: Form Use Instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: 'UserDefinedFieldParamHTML=<P><P><P><P><P><B>Use this form to request: Food for Events (meals/refreshments), Catering*, Alcohol, Gifts, Tickets.</B><P><P><B>*</B>For <B> Catering Services</B> food purchases, use the <B>Recharge - Catering Request </B>form.<P><P><B>For F&E related questions, contact <A HREF="MAILTO: [email]">[email]</A></B><P> </B><P><B>Guides:</B><UL> <LI> <A HREF="https:://sciquest.com" TARGET="_BLANK">Food for Events (meals/refreshments)</A><LI> <A HREF="https://sciquest.com">Catering</A><LI> <A HREF="https://sciquest.com" TARGET="_BLANK">Alcohol</A> </A><LI><A HREF="https://sciquest.com" TARGET="_BLANK">Non-Cash Employee Award and Other Gifts</A></LI> </UL> <P Align ="LEFT">Note:<B> Performer </B>and <B>guest speaker </B>requests must be placed using the <B>Services </B>form.<P> <P Align ="LEFT"><B>Transportation rental/charter </B>requests must be placed using the <B>Vehicle Rental/Charter form.</B></CENTER> · id=10304 · tipo=userdefined'
+      section: campi-1
+      source_unit: U.DOC0102.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 274
+  - raw_id: R.DOC0102.0005
+    source_unit: U.DOC0102.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — General Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "104"
+      technical_name: "104"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=104 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0102.0005
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0102.0006
+    source_unit: U.DOC0102.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — General Info
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Product Description Instructions
+      technical_name: Product Description Instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=If supplier proposal/quotation is attached, enter <BR>number or date listed on the proposal in the <BR><B>Product Description</B> field.<P><P> · id=10284 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0102.0006
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 77
+  - raw_id: R.DOC0102.0007
+    source_unit: U.DOC0102.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — General Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "111"
+      technical_name: "111"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=111 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0102.0007
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0102.0008
+    source_unit: U.DOC0102.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — General Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "105"
+      technical_name: "105"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=105 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0102.0008
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0102.0009
+    source_unit: U.DOC0102.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — General Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "103"
+      technical_name: "103"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=103 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0102.0009
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0102.0010
+    source_unit: U.DOC0102.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — General Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Estimated Price
+      technical_name: Estimated Price
+      type: Price
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=10001 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0102.0010
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0102.0011
+    source_unit: U.DOC0102.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Procurement Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Is there a Supplier agreement or contract requiring review? If yes, attach.
+      technical_name: PUR_1
+      type: DropdownList
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248356 · id=10250 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0102.0011
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 67
+  - raw_id: R.DOC0102.0012
+    source_unit: U.DOC0102.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Procurement Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Deposit Requested? (Processing a deposit may take up to two weeks)
+      technical_name: PUR_2
+      type: DropdownList
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248357 · id=10252 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0102.0012
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 65
+  - raw_id: R.DOC0102.0013
+    source_unit: U.DOC0102.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Procurement Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Gift Description 2
+      technical_name: Gift Description 2
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<P>Gifts/gift certificates or awards require department head approval<BR> (Director level or above), which must be attached to the requisition. <BR>An ERF is <B> not required</B> for Gift/Award requests.<P> · id=10317 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0102.0013
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 96
+  - raw_id: R.DOC0102.0014
+    source_unit: U.DOC0102.0014
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Procurement Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Is this a Gift/Award request?
+      technical_name: PUR_3
+      type: DropdownList
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248381 · id=10274 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0102.0014
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 56
+  - raw_id: R.DOC0102.0015
+    source_unit: U.DOC0102.0015
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Procurement Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Will food be delivered to event by Supplier? (Only approved caterers can deliver to campus)
+      technical_name: PUR_4
+      type: DropdownList
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248382 · id=10254 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0102.0015
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 71
+  - raw_id: R.DOC0102.0016
+    source_unit: U.DOC0102.0016
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Procurement Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Does this request include the purchase or serving of alcohol?
+      technical_name: FAR_1
+      type: DropdownList
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248383 · id=10270 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0102.0016
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 64
+  - raw_id: R.DOC0102.0017
+    source_unit: U.DOC0102.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Procurement Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Delivery/Pick-Up Date (if applicable)
+      technical_name: Delivery/Pick-Up Date (if applicable)
+      type: Date
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10298 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0102.0017
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0102.0018
+    source_unit: U.DOC0102.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Procurement Details
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "113"
+      technical_name: "113"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=113 · tipo=static
+      section: campi-3
+      source_unit: U.DOC0102.0018
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0102.0019
+    source_unit: U.DOC0102.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event Tracking Info
+      technical_name: Event Tracking Info
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: 'UserDefinedFieldParamHTML=<TABLE WIDTH = "900" HEIGHT = "35" ALIGN = "center" BGCOLOR = "#F0F8FF" CELLPADDING = "10" BORDER= "1" BORDER-STYLE = "ridge"> <TBODY><TR><TD><Font Color = "BLACK" SIZE = "3"><B><CENTER>Expense Tracking Information</Font Color = "BLACK" SIZE = "3"></B></CENTER><P><P> An <B>Expense Tracking Number </B>is required if multiple funding transactions are used for a meal’s expenses (a requisition combined with at least one additional requisition, recharge, or reimbursement). The Expense Tracking Number is used to accurately monitor the per-person cost for any meals included in the event. The same Expense Tracking Number must be used on each transaction associated with a particular meal.<P> The <B>Expense Tracking Number </B>can be: <UL><LI>The number of the first requisition submitted for the meal (recommended if all meal expenses are orders)<CENTER><B>OR</B></CENTER> <LI>The ERF number if there are reimbursements or recharges associated with the meal <CENTER><B>OR</B></CENTER> <LI>The Meal Expense Tracker (MET) form number if you are using a MET for your event.</LI></UL> The ERF and MET forms are accessed on the Entertainment section of the Financial Affairs Dashboard. Sign in with your Gold password. </TD> </TR> </TBODY> </TABLE> <P><P><P><P> · id=10313 · tipo=userdefined'
+      section: campi-4
+      source_unit: U.DOC0102.0019
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 353
+  - raw_id: R.DOC0102.0020
+    source_unit: U.DOC0102.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Expense Tracking Number
+      technical_name: Expense Tracking Number
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=20; UserDefinedFieldParamTextBoxMaxLength=20 · id=10308 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0020
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 53
+  - raw_id: R.DOC0102.0021
+    source_unit: U.DOC0102.0021
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Tracking Number Instructions
+      technical_name: Tracking Number Instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=Enter zero<B> "0" </B>if all expenses for the meal are<BR> included on a single requisition, or if order is for Bulk food, Gift or Ticket purchase.<P><P> · id=10315 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0021
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 79
+  - raw_id: R.DOC0102.0022
+    source_unit: U.DOC0102.0022
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Top-Level Determination 2
+      technical_name: Top-Level Determination 2
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<P><P><P><P><TABLE WIDTH = "900" HEIGHT = "35" ALIGN = "center" BGCOLOR = "#F0F8FF" CELLPADDING = "10" BORDER= "1" BORDER-STYLE = "ridge"> <TBODY><TR><TD> <B><CENTER><FONT SIZE="3">Top Level Determination</CENTER></FONT Size ="3"></B><P><P><B> Events requiring top level approval </B>(see determination list directly below) <B>must</B> have the <B>approval included </B>in comments or an email attachment referencing the <B>event name or brief description</B>, the <B>event date</B> and the <B>estimated total cost.</B></P><P><P><UL> <LI> Purchase or serving of alcohol; <LI> Exceeding the per-person meal cost <A HREF="https://sciquest.com" TARGET="_BLANK">(Per-Person Meal Limits)</A>; <LI> Meals provided to a spouse, domestic partner, or family member of host/guest;<LI> Event where cash contributions are included in the cost;<LI> Meals provided to employees as part of a morale-building activity, including retirement and recognition receptions, etc.;<LI> Tickets provided to prospective donors, employees, or student appointees in connection with an entertainment event.</LI><P></UL> </FONT> </TD> </TR> </TBODY> </TABLE><P><P><P> · id=10311 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0022
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 324
+  - raw_id: R.DOC0102.0023
+    source_unit: U.DOC0102.0023
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Does this F&E order event require Top-Level approval? (See Top-Level determination list above)
+      technical_name: Top Level Question
+      type: DropdownList
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248384 · id=10297 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0023
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 69
+  - raw_id: R.DOC0102.0024
+    source_unit: U.DOC0102.0024
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Per Person Costs
+      technical_name: Per Person Costs
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<P><P><P><TABLE WIDTH = "900" HEIGHT = "35" ALIGN = "center" BGCOLOR = "#F0F8FF" CELLPADDING = "10" BORDER= "1" BORDER-STYLE = "ridge"> <TBODY><TR><TD><CENTER><B><FONT Size ="3">Per-Person Meal Costs</FONT Size ="3"></B></CENTER><P><P> The per-person meal cost is calculated by dividing the <B>TOTAL</B> cost of the meal by the number of meal attendees. If there are <B>multiple requisitions (or multiple line items on a single requisition), reimbursements or recharges</B> containing costs for a single meal, be sure to use the <B>sum of all costs</B> pertaining to each individual meal in the per-person meal cost calculation, not just the amount being submitted on this requisition line item.<P><P>The Meal Expense Tracker accessed through the <B><U><A HREF="https://sciquest.com" target="_blank">Financial Affairs Dashboard</A></u></B> provides per-person cost calculations </B></U> for your convenience. Sign in to the Meal Expense Tracker with your gold password. </FONT> </TD> </TR> </TBODY> </TABLE><P><P><P> · id=10309 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0024
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 292
+  - raw_id: R.DOC0102.0025
+    source_unit: U.DOC0102.0025
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Meal Type
+      technical_name: Meal Type
+      type: DropdownList
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248385 · id=10291 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0025
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0102.0026
+    source_unit: U.DOC0102.0026
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Per-Person Meal Cost?
+      technical_name: Per Person Cost
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=40; UserDefinedFieldParamTextBoxMaxLength=40 · id=10292 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0026
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 59
+  - raw_id: R.DOC0102.0027
+    source_unit: U.DOC0102.0027
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event Date
+      technical_name: ContractStartDate
+      type: Date
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10009 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0027
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0102.0028
+    source_unit: U.DOC0102.0028
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event Location
+      technical_name: Event Location
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=40; UserDefinedFieldParamTextBoxMaxLength=50 · id=10256 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0028
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 51
+  - raw_id: R.DOC0102.0029
+    source_unit: U.DOC0102.0029
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — Transaction Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event Purpose/Justification
+      technical_name: Event Purpose/Justification
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=60; UserDefinedFieldParamTextBoxMaxLength=1000 · id=10279 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0102.0029
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0102.0030
+    source_unit: U.DOC0102.0030
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: F&E Form Image
+      technical_name: F&E Form Image
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/48443.png · id=10302 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0102.0030
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 56
+  - raw_id: R.DOC0102.0031
+    source_unit: U.DOC0102.0031
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — F&E Documentation and Reporting Requirements
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: F&E Documentation and Reporting Requirements
+      technical_name: F&E Documentation and Reporting Requirements
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<TABLE WIDTH = "900" HEIGHT = "35" ALIGN = "center" BGCOLOR = "#F0F8FF" CELLPADDING = "10" BORDER= "1" BORDER-STYLE = "ridge"> <TBODY><TR><TD><Font Color = "BLACK" SIZE = "3"><B><CENTER>ERF, Guest Lists/Flyers and Host Certification</Font Color = "BLACK" SIZE = "3"></CENTER></B><P><P> The <B>ERF (Entertainment Reporting Form) </B>is <B>only </B>required to process out-of-pocket entertainment-related <B>reimbursements and campus recharges</B>. </B><P><P> When a F&E purchase order is used, the event Guest List or Flyer <B>must </B>be attached to the order<B> unless</B> the order is for bulk food purchases.<P><P> If the event is classified as <B>employee morale-building </B>(account code 001250), <B>entertainment </B>(account code 001271), or <B>student outreach </B>(account code 001273), <B>Host Certification must be attached </B>to the order.<P><P> </FONT> </TD> </TR> </TBODY> </TABLE> · id=10303 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0102.0031
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 269
+  - raw_id: R.DOC0102.0032
+    source_unit: U.DOC0102.0032
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: External Information and Instructions
+      technical_name: External Information and Instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10008 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0032
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0102.0033
+    source_unit: U.DOC0102.0033
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Purchasing Use Only (ATF)
+      technical_name: Purchasing Use Only (ATF)
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10013 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0033
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0102.0034
+    source_unit: U.DOC0102.0034
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Low Risk Requirements
+      technical_name: Low Risk Requirements
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10295 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0034
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 32
+  - raw_id: R.DOC0102.0035
+    source_unit: U.DOC0102.0035
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: ERF Determination
+      technical_name: ERF Determination
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10300 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0035
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0102.0036
+    source_unit: U.DOC0102.0036
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Entertainment Reporting
+      technical_name: Entertainment Reporting
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10305 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0036
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 32
+  - raw_id: R.DOC0102.0037
+    source_unit: U.DOC0102.0037
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "112"
+      technical_name: "112"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=112 · tipo=static
+      section: campi-7
+      source_unit: U.DOC0102.0037
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0102.0038
+    source_unit: U.DOC0102.0038
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "ERF # (not required for Basic F&E orders or Gifts/Awards)"
+      technical_name: "ERF # (not required for gifts or awards)"
+      type: Integer
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10267 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0038
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0102.0039
+    source_unit: U.DOC0102.0039
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Top Level Descriptions
+      technical_name: Top Level Descriptions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10268 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0039
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 32
+  - raw_id: R.DOC0102.0040
+    source_unit: U.DOC0102.0040
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Does this event cost exceed [importo]0 or require Top-Level approval?
+      technical_name: Is ERF Required?
+      type: DropdownList
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=10287 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0040
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 52
+  - raw_id: R.DOC0102.0041
+    source_unit: U.DOC0102.0041
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Entertainment Reporting 2
+      technical_name: Entertainment Reporting 2
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10306 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0041
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 33
+  - raw_id: R.DOC0102.0042
+    source_unit: U.DOC0102.0042
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event End Date
+      technical_name: ContractEndDate
+      type: Date
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=10010 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0042
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0102.0043
+    source_unit: U.DOC0102.0043
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Create an Entertainment Reporting Form (ERF)
+      technical_name: ERF Link
+      type: URL
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10285 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0043
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0102.0044
+    source_unit: U.DOC0102.0044
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: ERF requirements instructions
+      technical_name: ERF requirements instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10296 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0044
+      row_ref: t0.r12
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0102.0045
+    source_unit: U.DOC0102.0045
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "108"
+      technical_name: "108"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=108 · tipo=static
+      section: campi-7
+      source_unit: U.DOC0102.0045
+      row_ref: t0.r13
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0102.0046
+    source_unit: U.DOC0102.0046
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Gift Description
+      technical_name: Gift Description
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10272 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0046
+      row_ref: t0.r14
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0102.0047
+    source_unit: U.DOC0102.0047
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a45
+      - FLD
+    type_hint:
+      candidates: *a45
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Food Delivery Instructions
+      technical_name: Food Delivery Instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10283 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0047
+      row_ref: t0.r15
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 33
+  - raw_id: R.DOC0102.0048
+    source_unit: U.DOC0102.0048
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event/ERF Description
+      technical_name: Event/ERF Description
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10286 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0048
+      row_ref: t0.r16
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0102.0049
+    source_unit: U.DOC0102.0049
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a47
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event Name
+      technical_name: FlexText9
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=10011 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0049
+      row_ref: t0.r17
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0102.0050
+    source_unit: U.DOC0102.0050
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Host Name
+      technical_name: Host Name
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10276 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0050
+      row_ref: t0.r18
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0102.0051
+    source_unit: U.DOC0102.0051
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a49
+      - FLD
+    type_hint:
+      candidates: *a49
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event Contact
+      technical_name: Event Contact
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10280 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0051
+      row_ref: t0.r19
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0102.0052
+    source_unit: U.DOC0102.0052
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a50
+      - FLD
+    type_hint:
+      candidates: *a50
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Per-Person Calculator
+      technical_name: Per-Person Calculator
+      type: URL
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10310 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0052
+      row_ref: t0.r20
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0102.0053
+    source_unit: U.DOC0102.0053
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a51
+      - FLD
+    type_hint:
+      candidates: *a51
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Total Meal Cost For This Transaction
+      technical_name: Total Meal Cost
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10314 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0053
+      row_ref: t0.r21
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0102.0054
+    source_unit: U.DOC0102.0054
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a52
+      - FLD
+    type_hint:
+      candidates: *a52
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event Start Time
+      technical_name: Event Time
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10275 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0054
+      row_ref: t0.r22
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0102.0055
+    source_unit: U.DOC0102.0055
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a53
+      - FLD
+    type_hint:
+      candidates: *a53
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Border Line 2
+      technical_name: Border Line 2
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10294 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0055
+      row_ref: t0.r23
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0102.0056
+    source_unit: U.DOC0102.0056
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0102
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a54
+      - FLD
+    type_hint:
+      candidates: *a54
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: ERF Instructions
+      technical_name: ERF Instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10257 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0102.0056
+      row_ref: t0.r24
+      genre: tecnica
+      document: S.STD.XSC.DOC.0102
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0102.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0102
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0102.0001
+    facets: &a55
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: VersionDescription
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0102.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0102
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0102.0001
+    facets: *a55
+    extraction:
+      parameter: AdditionalInformation
+      current_state:
+        value: "This form is to request business meals, entertainment and other social event expenditures while conducting substantiated and bona fide University business.<br /> <br /> Examples: Catered food, meeting food and drinks to be picked up or delivered, flowers, awards, etc."
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0102.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0102
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0102.0001
+    facets: *a55
+    extraction:
+      parameter: SearchableKeyword
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0102.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0102
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0102.0001
+    facets: *a55
+    extraction:
+      parameter: Title
+      current_state:
+        value: Food & Entertainment Request
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0102.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0102
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0102.0001
+    facets: *a55
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Entertainment
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0102.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0102
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0102.0001
+    facets: *a55
+    extraction:
+      parameter: LimitSupplierSelection
+      current_state:
+        value: "false"
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

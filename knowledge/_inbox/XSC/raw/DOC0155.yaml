@@ -1,0 +1,642 @@
+doc: S.STD.XSC.DOC.0155
+scope: XSC
+extracted_at: 2026-09-30T04:31:26.571Z
+tier: T0
+stats:
+  units: 403
+  extracted_units: 17
+  document_candidates: 0
+  needs_llm: 10
+  t0_complete: 7
+  by_candidate:
+    FLD: 13
+    CFG: 2
+    FLW: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 3720
+  sessions:
+    - n: 1
+      tokens: 3720
+      batches: 1
+      items: 10
+      batch_items:
+        - - R.DOC0155.0095
+          - R.DOC0155.0104
+          - R.DOC0155.0172
+          - R.DOC0155.0190
+          - R.DOC0155.0192
+          - R.DOC0155.0318
+          - R.DOC0155.0319
+          - R.DOC0155.0337
+          - R.DOC0155.0365
+          - R.DOC0155.0391
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0155.0014
+    source_unit: U.DOC0155.0014
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: Class Objectives
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: By the end of this session, you
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0155.0014
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0155.0093
+    source_unit: U.DOC0155.0093
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: Quick Review
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Some things
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0155.0093
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0155.0095
+    source_unit: U.DOC0155.0095
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: Quick Review
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0155.0095
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 15
+  - raw_id: R.DOC0155.0104
+    source_unit: U.DOC0155.0104
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0155
+    section: "Look & Learn:"
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Note: Roles might conflict"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0155.0104
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0155.0161
+    source_unit: U.DOC0155.0161
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: Editing or Deleting Users
+    page: 48
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Either
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0155.0161
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0155.0172
+    source_unit: U.DOC0155.0172
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: "Take it to the Next Level:"
+    page: 51
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0155.0172
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0155.0190
+    source_unit: U.DOC0155.0190
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0155
+    section: "Exercise:"
+    page: 58
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: make
+          oggetto: some edits/additions to your file and re-save (still as a .txt file!)
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: “Add/Update Users” and then “Validate” from the dropdowns in the box on the
+          valore: Add/Update Users
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0155.0190
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 54
+  - raw_id: R.DOC0155.0192
+    source_unit: U.DOC0155.0192
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0155
+    section: "Exercise:"
+    page: 58
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: a description and choose the file from your computer, then “Submit”
+          valore: Submit
+        - n: 2
+          verbo: watch
+          oggetto: the “ Recent Activity ” box on the right and “refresh” as needed until completion
+          valore: " Recent Activity "
+        - n: 3
+          verbo: resolve
+          oggetto: errors if necessary and try again
+          valore: null
+        - n: 4
+          verbo: after
+          oggetto: successful Validation, “ Click to Import ”
+          valore: " Click to Import "
+        - n: 5
+          verbo: go
+          oggetto: admire your new or updated users!
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0155.0192
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 78
+  - raw_id: R.DOC0155.0197
+    source_unit: U.DOC0155.0197
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0155
+    section: Data Formats Vary
+    page: 60
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Remember: Data Import Pages in JI are Similar"
+      subject: "Remember: Data Import Pages in JI"
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0155.0197
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0155.0266
+    source_unit: U.DOC0155.0266
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: "The Supplier Portal: Put Your Answers in the Chat"
+    page: 87
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0155.0266
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0155.0318
+    source_unit: U.DOC0155.0318
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: "Take it to the Next Level:"
+    page: 104
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0155.0318
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 17
+  - raw_id: R.DOC0155.0319
+    source_unit: U.DOC0155.0319
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: "Take it to the Next Level:"
+    page: 104
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: you want
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0155.0319
+      mandatory:
+        kind: never
+        when: you want
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 22
+  - raw_id: R.DOC0155.0337
+    source_unit: U.DOC0155.0337
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: "Guided Activity:"
+    page: 111
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0155.0337
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 8
+  - raw_id: R.DOC0155.0365
+    source_unit: U.DOC0155.0365
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: "Best Practice:"
+    page: 123
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0155.0365
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 4
+  - raw_id: R.DOC0155.0369
+    source_unit: U.DOC0155.0369
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: "Best Practice:"
+    page: 123
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: punchout suppliers, Supplier Integrations
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0155.0369
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0155.0372
+    source_unit: U.DOC0155.0372
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: Who Should Be Enabled First?
+    page: 124
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Who
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0155.0372
+    needs_llm: false
+    tokens: 7
+  - raw_id: R.DOC0155.0391
+    source_unit: U.DOC0155.0391
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0155
+    section: In Network?
+    page: 125
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0155.0391
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3

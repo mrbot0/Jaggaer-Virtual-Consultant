@@ -1,0 +1,66 @@
+id: U.DOC0183.0140
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: id | Description: JI internal identifier of the supplier
+  Attribute: name | Description: Supplier Name
+  Attribute: supplierNumber | Description: Supplier ID that the organization has provided for this supplier in the supplier profile
+  Attribute: businessUnitVendorId | Description: Vendor ID number for an organization's active business unit.
+  Attribute: DUNS | Description: Dun & Bradstreet (DUNS) number for this supplier
+  Attribute: fulfillmentAddressInternalId | Description: Internal ID for the fulfillment center
+  Attribute: fulfillmentAddressId | Description: External ID defined by the organization for this fulfillment center.
+  Attribute: fulfillmentAddressThirdPartyId | Description: External ID defined by a third party for this fulfillment center
+  Attribute: contactInfoList | Description: Contact name and information associated with this supplier.
+  See section “ContactInfo [Export]” below.
+hash: sha256:6caaaf38915266331c7b31847aa02ff4608bff924ee8852771117a8054e9787e
+words: 123
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: SupplierInfo [Export]
+  section_path: 2.2.3.20
+  page: 17
+  lang: en
+  prev: U.DOC0183.0139
+  next: U.DOC0183.0141
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - id
+      - JI internal identifier of the supplier
+      - ""
+    - - name
+      - Supplier Name
+      - ""
+    - - supplierNumber
+      - Supplier ID that the organization has provided for this supplier in the supplier profile
+      - ""
+    - - businessUnitVendorId
+      - Vendor ID number for an organization's active business unit.
+      - ""
+    - - DUNS
+      - Dun & Bradstreet (DUNS) number for this supplier
+      - ""
+    - - fulfillmentAddressInternalId
+      - Internal ID for the fulfillment center
+      - ""
+    - - fulfillmentAddressId
+      - External ID defined by the organization for this fulfillment center.
+      - ""
+    - - fulfillmentAddressThirdPartyId
+      - External ID defined by a third party for this fulfillment center
+      - ""
+    - - contactInfoList
+      - |-
+        Contact name and information associated with this supplier.
+        See section “ContactInfo [Export]” below.
+      - ""
+  block: 1
+  blocks: 1

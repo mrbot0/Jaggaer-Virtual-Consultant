@@ -1,0 +1,96 @@
+id: S.STD.XSC.DOC.0168
+type: DOC
+title: J1P Development Kit- JI Order web-service
+summary: 'Documento spec-integrazione (tecnica, origine vendor) "J1P Development
+  Kit- JI Order web-service": 552 unità, 210 tabelle, 56 tabelle di campi; scope
+  P2P, XSC, ADM, VEN; affidabilità 0.72.'
+facets:
+  F1: spec-integrazione-prosa
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2022-10-03
+    release: ignota
+  F15: tecnica
+sources:
+  - file: JAGGAER WS/J1P WS Development_Kit_JI Order.docx
+    sha256: sha256:7ef3e6a686c4b7b4ac60e7d700356322919f718e197f13f8b8d0db7b3eaeacf0
+kind: spec-integrazione
+genre: tecnica
+origin: vendor
+version: null
+dated: 2022-10-03
+covers_release: null
+languages:
+  - en
+scopes:
+  - P2P
+  - XSC
+  - ADM
+  - VEN
+source:
+  path: JAGGAER WS/J1P WS Development_Kit_JI Order.docx
+  sha256: sha256:7ef3e6a686c4b7b4ac60e7d700356322919f718e197f13f8b8d0db7b3eaeacf0
+  size: 361286
+  format: docx
+  doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+  doc_key: j1p-ws-development-kit-ji-order.docx
+structure:
+  pages: 136
+  chapters: 3
+  sections: 234
+  tables: 210
+  figures: 1
+  field_tables: 56
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 552
+  by_type:
+    testo: 67
+    tabella: 168
+    definizione: 1
+    procedura: 4
+    passo: 17
+    regola: 7
+    esempio: 4
+    riga-tabella-campi: 283
+    riferimento: 1
+reliability:
+  base_by_kind: 0.9
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.72
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: tabelle annidate appiattite nel testo della cella
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 552
+  items_produced: 295
+  residue:
+    irrelevant: 6
+    duplicate: 0
+    ambiguous: 1
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.53
+  last_run: 2026-09-30
+  estimated_tokens: 75974
+  sessions_planned: 1

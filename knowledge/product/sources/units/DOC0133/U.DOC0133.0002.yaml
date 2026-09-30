@@ -1,0 +1,72 @@
+id: U.DOC0133.0002
+doc: S.STD.XSC.DOC.0133
+doc_id: workflow-definition-pr-xml-activities-samples-tx-fb46d373
+type: tabella
+text: |-
+  Tabella: passi
+  Colonne: Passo | Attributi
+  Passo: Return 1 | Attributi: wfActivityHelp: Help for Return 1.
+  Passo: Return 2 | Attributi: wfActivityHelp: Help for Return 2.
+  Passo: Initial Fiscal Year End | Attributi: wfActivityHelp: Help for Initial Fiscal Year End.
+  Passo: Form Approval | Attributi: wfActivityHelp: Help for Approval 1
+  Passo: Financial Approval | Attributi: wfActivityHelp: Financial approval by account code
+  Passo: Buyer Assignment | Attributi: wfActivityHelp: buyer assignment
+  Passo: Buyer Review | Attributi: wfActivityHelp: buyer review
+  Passo: Contract Review | Attributi: wfActivityHelp: make sure large purchases have a contract or are reviewed
+  Passo: Special Approval | Attributi: wfActivityHelp: Purchases over a certain amount need account manager approval
+  Passo: EHS Check | Attributi: wfActivityHelp: Help for EHS Check
+  Passo: EHS Notification | Attributi: wfActivityHelp: Notification for EHS Check
+  Passo: CFO Approval | Attributi: wfActivityHelp: For really big purchases
+  Passo: Missing Approver Catch | Attributi: wfActivityHelp: Your requisition contains an item which requires approval before your requisition moves to the next step and no approver exists.
+  Passo: Final Fiscal Year End | Attributi: wfActivityHelp: Help for Final Fiscal Year End.
+  Passo: Create PO | Attributi: wfActivityHelp: System step to generate Purchase Order
+hash: sha256:dc9ea371c4fd19b64dd2352d21bc0736681e4d2c23c2b88cc3164b19fc032dbd
+words: 191
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0133
+  chapter: Passi (Step)
+  section: Passi (Step)
+  section_path: passi
+  page: null
+  lang: en
+  prev: U.DOC0133.0001
+  next: U.DOC0133.0003
+table:
+  table: 0
+  headers:
+    - Passo
+    - Attributi
+  rows:
+    - - Return 1
+      - "wfActivityHelp: Help for Return 1."
+    - - Return 2
+      - "wfActivityHelp: Help for Return 2."
+    - - Initial Fiscal Year End
+      - "wfActivityHelp: Help for Initial Fiscal Year End."
+    - - Form Approval
+      - "wfActivityHelp: Help for Approval 1"
+    - - Financial Approval
+      - "wfActivityHelp: Financial approval by account code"
+    - - Buyer Assignment
+      - "wfActivityHelp: buyer assignment"
+    - - Buyer Review
+      - "wfActivityHelp: buyer review"
+    - - Contract Review
+      - "wfActivityHelp: make sure large purchases have a contract or are reviewed"
+    - - Special Approval
+      - "wfActivityHelp: Purchases over a certain amount need account manager approval"
+    - - EHS Check
+      - "wfActivityHelp: Help for EHS Check"
+    - - EHS Notification
+      - "wfActivityHelp: Notification for EHS Check"
+    - - CFO Approval
+      - "wfActivityHelp: For really big purchases"
+    - - Missing Approver Catch
+      - "wfActivityHelp: Your requisition contains an item which requires approval before your requisition moves to the next step and no approver exists."
+    - - Final Fiscal Year End
+      - "wfActivityHelp: Help for Final Fiscal Year End."
+    - - Create PO
+      - "wfActivityHelp: System step to generate Purchase Order"
+  block: 1
+  blocks: 1

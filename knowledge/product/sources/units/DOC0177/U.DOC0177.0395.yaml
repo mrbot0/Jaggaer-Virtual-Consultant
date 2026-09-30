@@ -1,0 +1,41 @@
+id: U.DOC0177.0395
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: type | Mandatory (Y/N): Y | Description: Indicates the payment type for the account. | Mapping on Jaggaer One data model and notes: Required if AccountsPayable element is provided.
+  Values:
+  (DirectDeposit | Check | Credit | WireTransfer | ePayable | PayMode)
+hash: sha256:72e295c7c167ac49e5b0ee1b08d3ce8fc5deba7d462f96217f74ff111ddff517
+words: 42
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable
+  section_path: 2.1.1.103
+  page: 75
+  lang: en
+  prev: U.DOC0177.0394
+  next: U.DOC0177.0396
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - type
+    - Y
+    - Indicates the payment type for the account.
+    - |-
+      Required if AccountsPayable element is provided.
+      Values:
+      (DirectDeposit | Check | Credit | WireTransfer | ePayable | PayMode)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

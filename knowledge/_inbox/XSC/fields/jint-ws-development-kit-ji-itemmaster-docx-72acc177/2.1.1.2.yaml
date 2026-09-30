@@ -1,0 +1,327 @@
+document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+scope: XSC
+section: 2.1.1.2
+section_title: ItemMasterItem [Item Master Import method]
+genre: tecnica
+rows:
+  - label: active
+    technical_name: active
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Indicates whether the item is (true) or is not (false) active.
+      The default setting is true.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: action
+    technical_name: action
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Indicates whether item header and line data associated with this item are
+      to be updated or replaced.
+
+      Possible value:
+
+      Replace
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: itemMasterId
+    technical_name: itemMasterId
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Identifier for the item master. Together with the ManufacturerID and
+      ManufacturerPartNumber, uniquely identifies the item.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: description
+    technical_name: description
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates description of the item that will be displayed in product search.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: longDescription
+    technical_name: longDescription
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates long description of the item.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: size
+    technical_name: size
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates unit size of the item, such as mg (milligram) or oz (ounce).
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: color
+    technical_name: color
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates color of the item
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: controlledSubstance
+    technical_name: controlledSubstance
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a controlled
+      substance.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: recycled
+    technical_name: recycled
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a recycled item.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: hazardousMaterial
+    technical_name: hazardousMaterial
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a hazardous
+      material.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: radioActive
+    technical_name: radioActive
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a radioactive
+      substance.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: radioNuclide
+    technical_name: radioNuclide
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Number to identify RadioNuclides. Valid only if Radioactive element is
+      set to true.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: radMinor
+    technical_name: radMinor
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a minor
+      radioactive substance.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: selectAgent
+    technical_name: selectAgent
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a select agent.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: toxin
+    technical_name: toxin
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a toxin.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: energyStar
+    technical_name: energyStar
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) EnergyStar
+      -certified.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: green
+    technical_name: green
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a green product as
+      defined by the NAEP (National Association of Educational Procurement).
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: categoryName
+    technical_name: categoryName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates name of category associated with the item.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: searchableKeywords
+    technical_name: searchableKeywords
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Keywords by which the item can be found in product search.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: unspsc
+    technical_name: unspsc
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Standardized commodity code value for the item.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r19
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: commodityCode
+    technical_name: commodityCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Code assigned to a product, or a group of products, for the purposes of
+      identifying it in international commerce, or commerce in general.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r20
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: customField
+    technical_name: customField
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or max one CustomField.
+      See section CustomField [Item Master Import method]
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r21
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: imageUrl
+    technical_name: imageUrl
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Valid URL of an image associated with the item. The URL must point to an
+      actual image file (such as a .jpg, .gif, .bmp, or .png).
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r22
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: manufacturer
+    technical_name: manufacturer
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: See section Manufacturer [Item Master Import method]
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r23
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: manufacturerPartNumber
+    technical_name: manufacturerPartNumber
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Manufacturer's part number (SKU code) for the item.
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r24
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: itemAttribute
+    technical_name: itemAttribute
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or more ItemAttribute
+      See section ItemAttribute [Item Master Import method]
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r25
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: supplierItem
+    technical_name: supplierItem
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      One or more SupplierItem.
+      See section SupplierItem [Item Master Import method]
+    section: 2.1.1.2
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.2#part-1
+    row_ref: t0.r26
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177

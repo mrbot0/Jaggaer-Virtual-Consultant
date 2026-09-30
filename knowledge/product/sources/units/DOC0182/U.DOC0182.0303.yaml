@@ -1,0 +1,85 @@
+id: U.DOC0182.0303
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: name | Description: Internal name of the custom field value.
+  Attribute: splitIndex | Description: Split sequence number
+  Attribute: decDistributionValue | Description: Distribution value for the split. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  Must be a positive number or zero.
+  According to specific distribution type, it represents
+  AmountOfQuantity: the portion of the quantity to be split.
+  AmountOfPrice: the monetary amount to be split.
+  PercentOfQuantity and PercentOfPrice: the percentage of the split. For these values, the total of all distribution values must equal 100%
+  Attribute: decSplitAmount | Description: Amount to be split for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  For AmountOfPrice splits, the distributionvalue and splitAmount attributes are calculated identically and will always match each other.
+  Attribute: decShippingSplitAmount | Description: Amount to be split for shipping for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+  Attribute: decHandlingSplitAmount | Description: Amount to be split for handling for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+  Attribute: decTax1SplitAmount | Description: Amount to be split for tax 1 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+  Attribute: decTax2SplitAmount | Description: Amount to be split for tax 2 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+  Attribute: value | Description: Value of the custom field.
+  Attribute: Description | Description: Description of the custom field.
+  Attribute: columnIndex | Description: Column index number | Available from version: JA_19_04
+hash: sha256:60fa85b3833c3768c82ad987537d138a78c9823ba38d351285995f8d56d1c8f2
+words: 298
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: CustomFieldValue [PR Export]
+  section_path: 2.3.3.14
+  page: 26
+  lang: en
+  prev: U.DOC0182.0302
+  next: U.DOC0182.0304
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - name
+      - Internal name of the custom field value.
+      - ""
+    - - splitIndex
+      - Split sequence number
+      - ""
+    - - decDistributionValue
+      - |-
+        Distribution value for the split. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+        Must be a positive number or zero.
+        According to specific distribution type, it represents
+        AmountOfQuantity: the portion of the quantity to be split.
+        AmountOfPrice: the monetary amount to be split.
+        PercentOfQuantity and PercentOfPrice: the percentage of the split. For these values, the total of all distribution values must equal 100%
+      - ""
+    - - decSplitAmount
+      - |-
+        Amount to be split for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+        For AmountOfPrice splits, the distributionvalue and splitAmount attributes are calculated identically and will always match each other.
+      - ""
+    - - decShippingSplitAmount
+      - Amount to be split for shipping for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      - ""
+    - - decHandlingSplitAmount
+      - Amount to be split for handling for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      - ""
+    - - decTax1SplitAmount
+      - Amount to be split for tax 1 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      - ""
+    - - decTax2SplitAmount
+      - Amount to be split for tax 2 for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      - ""
+    - - value
+      - Value of the custom field.
+      - ""
+    - - Description
+      - Description of the custom field.
+      - ""
+    - - columnIndex
+      - Column index number
+      - JA_19_04
+  block: 1
+  blocks: 1

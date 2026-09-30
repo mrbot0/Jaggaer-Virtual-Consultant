@@ -1,0 +1,241 @@
+document: food-and-entertainment-form-xml-75bc4337
+scope: XSC
+batch: batch-03
+section: campi-3
+section_title: Campi — Procurement Details
+part: 1
+parts: 1
+rows:
+  - key: tech:PUR_1
+    label: Is there a Supplier agreement or contract requiring review? If yes, attach.
+    labels:
+      - Is there a Supplier agreement or contract requiring review? If yes,
+        attach.
+    technical_name: PUR_1
+    section: campi-3
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248356 · id=10250 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-3
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Is there a Supplier agreement or contract requiring review? If yes,
+          attach.
+        type: DropdownList
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:PUR_2
+    label: Deposit Requested? (Processing a deposit may take up to two weeks)
+    labels:
+      - Deposit Requested? (Processing a deposit may take up to two weeks)
+    technical_name: PUR_2
+    section: campi-3
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248357 · id=10252 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-3
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Deposit Requested? (Processing a deposit may take up to two weeks)
+        type: DropdownList
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:GIFT_DESCRIPTION_2
+    label: Gift Description 2
+    labels:
+      - Gift Description 2
+    technical_name: GIFT_DESCRIPTION_2
+    section: campi-3
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<P>Gifts/gift certificates or awards require
+      department head approval<BR> (Director level or above), which must be
+      attached to the requisition. <BR>An ERF is <B> not required</B> for
+      Gift/Award requests.<P> · id=10317 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-3
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Gift Description 2
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PUR_3
+    label: Is this a Gift/Award request?
+    labels:
+      - Is this a Gift/Award request?
+    technical_name: PUR_3
+    section: campi-3
+    type: DropdownList
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248381 · id=10274 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-3
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-3#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Is this a Gift/Award request?
+        type: DropdownList
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PUR_4
+    label: Will food be delivered to event by Supplier? (Only approved caterers can
+      deliver to campus)
+    labels:
+      - Will food be delivered to event by Supplier? (Only approved caterers can
+        deliver to campus)
+    technical_name: PUR_4
+    section: campi-3
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248382 · id=10254 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-3
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-3#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Will food be delivered to event by Supplier? (Only approved caterers can
+          deliver to campus)
+        type: DropdownList
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FAR_1
+    label: Does this request include the purchase or serving of alcohol?
+    labels:
+      - Does this request include the purchase or serving of alcohol?
+    technical_name: FAR_1
+    section: campi-3
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248383 · id=10270 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-3
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-3#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: Does this request include the purchase or serving of alcohol?
+        type: DropdownList
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:DELIVERY_PICK_UP_DATE_IF_APPLICABLE
+    label: Delivery/Pick-Up Date (if applicable)
+    labels:
+      - Delivery/Pick-Up Date (if applicable)
+    technical_name: DELIVERY_PICK_UP_DATE_IF_APPLICABLE
+    section: campi-3
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10298 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-3
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-3#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: Delivery/Pick-Up Date (if applicable)
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:113
+    label: "113"
+    labels:
+      - "113"
+    technical_name: "113"
+    section: campi-3
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=113 · tipo=static
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-3
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-3#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: "113"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2107

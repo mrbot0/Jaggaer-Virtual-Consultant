@@ -1,0 +1,79 @@
+document: food-and-entertainment-form-xml-75bc4337
+scope: XSC
+batch: batch-01
+section: campi-1
+section_title: Campi — Supplier Info
+part: 1
+parts: 1
+rows:
+  - key: tech:100
+    label: "100"
+    labels:
+      - "100"
+    technical_name: "100"
+    section: campi-1
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=100 · tipo=static
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-1
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "100"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FORM_USE_INSTRUCTIONS
+    label: Form Use Instructions
+    labels:
+      - Form Use Instructions
+    technical_name: FORM_USE_INSTRUCTIONS
+    section: campi-1
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: 'UserDefinedFieldParamHTML=<P><P><P><P><P><B>Use this form to request:
+      Food for Events (meals/refreshments), Catering*, Alcohol, Gifts,
+      Tickets.</B><P><P><B>*</B>For <B> Catering Services</B> food purchases,
+      use the <B>Recharge - Catering Request </B>form.<P><P><B>For F&E related
+      questions, contact <A HREF="MAILTO: [email]">[email]</A></B><P>
+      </B><P><B>Guides:</B><UL> <LI> <A HREF="https:://sciquest.com"
+      TARGET="_BLANK">Food for Events (meals/refreshments)</A><LI> <A
+      HREF="https://sciquest.com">Catering</A><LI> <A
+      HREF="https://sciquest.com" TARGET="_BLANK">Alcohol</A> </A><LI><A
+      HREF="https://sciquest.com" TARGET="_BLANK">Non-Cash Employee Award and
+      Other Gifts</A></LI> </UL> <P Align ="LEFT">Note:<B> Performer </B>and
+      <B>guest speaker </B>requests must be placed using the <B>Services
+      </B>form.<P> <P Align ="LEFT"><B>Transportation rental/charter
+      </B>requests must be placed using the <B>Vehicle Rental/Charter
+      form.</B></CENTER> · id=10304 · tipo=userdefined'
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-1
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Form Use Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1072

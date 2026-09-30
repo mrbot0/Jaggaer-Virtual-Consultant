@@ -1,0 +1,17 @@
+id: U.DOC0138.0077
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: <Activity name="Auto Invoice"> <ActivityType>automated</ActivityType> <StepRef name="Auto Invoice" /> <FolderRef name="Create Invoice" /> <Rule><![CDATA[[Document.RequiresRuleGroupEvaluation("Auto Invoice") == true]]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>
+hash: sha256:4885137a8da2ede937af3536c98f3f06e71b0208e423cf155ab2e4daf5c0ac0e
+words: 18
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: AUTO INVOICE
+  section: AUTO INVOICE
+  section_path: "21"
+  page: null
+  lang: en
+  prev: U.DOC0138.0076
+  next: null

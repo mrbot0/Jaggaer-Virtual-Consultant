@@ -1,0 +1,52 @@
+id: U.DOC0178.0431
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: reviewDate | Description: For an approved contract, date on which the next review notification for the contract is to be sent
+  Attribute: reviewTerm | Description: Number of days, months, or years (defined by the reviewTermType attribute) between review notifications for the contract.
+  Attribute: reviewTermType | Description: Review period for the reviewTerm element.
+  Valid values:
+  Days
+  Months
+  Years
+  Attribute: reviewsRemaining | Description: Number of reviews remaining for the contract.
+hash: sha256:66269a627d8877682ec6afb030fd4e6efbe14c47d5e65824c214b46f5a0f11fe
+words: 77
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ContractReview [Export]
+  section_path: 2.3.3.5
+  page: 87
+  lang: en
+  prev: U.DOC0178.0430
+  next: U.DOC0178.0432
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - reviewDate
+      - For an approved contract, date on which the next review notification for the contract is to be sent
+      - ""
+    - - reviewTerm
+      - Number of days, months, or years (defined by the reviewTermType attribute) between review notifications for the contract.
+      - ""
+    - - reviewTermType
+      - |-
+        Review period for the reviewTerm element.
+        Valid values:
+        Days
+        Months
+        Years
+      - ""
+    - - reviewsRemaining
+      - Number of reviews remaining for the contract.
+      - ""
+  block: 1
+  blocks: 1

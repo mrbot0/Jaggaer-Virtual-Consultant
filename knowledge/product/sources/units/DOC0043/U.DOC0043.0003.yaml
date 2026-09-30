@@ -1,0 +1,66 @@
+id: U.DOC0043.0003
+doc: S.STD.XSC.DOC.0043
+doc_id: ji-plt-2303-receiptwfdefinition-withaddedstep-xm-aec7e480
+type: tabella
+text: |-
+  Tabella: attività
+  Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella
+  Attività: START | Tipo: start | Selezione cartella: Dummy
+  Attività: CostCheck | Tipo: manual | Passo: Cost Check | Regola: Document.RequiresRuleGroupEvaluation("Cost Based Approvals") == true | Selezione cartella: MultiElementDynamic
+  Attività: SpecialItems | Tipo: manual | Passo: Special Items | Regola: Document.RequiresRuleGroupEvaluation("Special Item Approvals") == true | Selezione cartella: MultiElementDynamic
+  Attività: Create Inventory | Tipo: automated | Passo: Create Inventory Receipts | Cartelle: Create Inventory | Regola: true | Selezione cartella: ExplicitFolder
+  Attività: END | Tipo: end | Selezione cartella: Dummy
+hash: sha256:aacf17a9cca447fa8ff381f84eb3c182a855a7790b79516034c2ca263b68b6e7
+words: 95
+lang: it
+context:
+  doc: S.STD.XSC.DOC.0043
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: it
+  prev: U.DOC0043.0002
+  next: U.DOC0043.0004
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - CostCheck
+      - manual
+      - Cost Check
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Cost Based Approvals") == true
+      - MultiElementDynamic
+    - - SpecialItems
+      - manual
+      - Special Items
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Special Item Approvals") == true
+      - MultiElementDynamic
+    - - Create Inventory
+      - automated
+      - Create Inventory Receipts
+      - Create Inventory
+      - "true"
+      - ExplicitFolder
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1

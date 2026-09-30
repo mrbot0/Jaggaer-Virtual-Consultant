@@ -1,0 +1,93 @@
+id: U.DOC0182.0356
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: formType | Description: Mechanism for grouping form requests | Available from version: JA_19_04 Attribute: formTitle | Description: Caption given to the form request for easy understanding | Available from version: JA_19_04 Attribute: catalogNumber | Description: Catalog number of the form request | Available from version: JA_19_04 Attribute: description | Description: Description of the form request | Available from version: JA_19_04 Attribute: productSizeList | Description: Container for description of the size of the item. See section “ProductSize [PR Export]” above. | Available from version: JA_19_04 Attribute: quantity | Description: Number of items | Available from version: JA_19_04 Attribute: productUnitOfMeasureList | Description: Container for description of the unit of measure of the item See section “ProductUnitOfMeasure [PR Export]” above | Available from version: JA_19_04 Attribute: unspsc | Description: Standardized commodity code value for the item, as specified by http://www.unspsc.org (for example, 43191501 – Mobile phones). | Available from version: JA_19_04 Attribute: productClassificationList | Description: Container of item classification. See section “ProductClassification [PR Export]” above. | Available from version: JA_19_04 Attribute: manufacturerInfo | Description: Manufacturer information. See section “ManufacturerInfo [PR Export]” above. | Available from version: JA_19_04 Attribute: commoditycode | Description: Code assigned to a product, or a group of products, for the purposes of identifying it in international commerce, or commerce in general."
+hash: sha256:c30a8278ef1f9357886f08f51781c633d3f5ae2756785c18e7c23cb58613fbc2
+words: 220
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: FormRequest [PR Export]
+  section_path: 2.3.3.62
+  page: 26
+  lang: en
+  prev: U.DOC0182.0355
+  next: U.DOC0182.0357
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - formType
+      - Mechanism for grouping form requests
+      - JA_19_04
+    - - formTitle
+      - Caption given to the form request for easy understanding
+      - JA_19_04
+    - - catalogNumber
+      - Catalog number of the form request
+      - JA_19_04
+    - - description
+      - Description of the form request
+      - JA_19_04
+    - - productSizeList
+      - |-
+        Container for description of the size of the item.
+        See section “ProductSize [PR Export]” above.
+      - JA_19_04
+    - - quantity
+      - Number of items
+      - JA_19_04
+    - - productUnitOfMeasureList
+      - |-
+        Container for description of the unit of measure of the item
+        See section “ProductUnitOfMeasure [PR Export]” above
+      - JA_19_04
+    - - unspsc
+      - Standardized commodity code value for the item, as specified by http://www.unspsc.org (for example, 43191501 – Mobile phones).
+      - JA_19_04
+    - - productClassificationList
+      - |-
+        Container of item classification.
+        See section “ProductClassification [PR Export]” above.
+      - JA_19_04
+    - - manufacturerInfo
+      - |-
+        Manufacturer information.
+        See section “ManufacturerInfo [PR Export]” above.
+      - JA_19_04
+    - - commoditycode
+      - Code assigned to a product, or a group of products, for the purposes of identifying it in international commerce, or commerce in general. CommodityCode is not a specific description of the goods or service.
+      - JA_19_04
+    - - contractNumber
+      - Contract number against which the item was purchased.
+      - JA_19_04
+    - - capitalExpense
+      - Indicates whether the item is (true) or is not (false) a capital expense.
+      - JA_19_04
+    - - taxable
+      - Indicates whether the manufacturer is (true) or is not (false) taxable.
+      - JA_19_04
+    - - templateId
+      - ID of the template to be used to create the form request
+      - JA_19_04
+    - - formRequestFields
+      - |-
+        Container for form request fields.
+        See section “FormRequestFields [PR Export]” below
+      - JA_19_04
+    - - formRequestID
+      - ID of the form request.
+      - JA_19_04
+    - - formRequestLineItem
+      - Internal reference number for the form request question, or for a user-defined item on the form request.
+      - JA_19_04
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

@@ -1,0 +1,103 @@
+id: U.DOC0178.0473
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: description | Description: Description of the noncatalog item that displays in product search.
+  Attribute: catalogNumber | Description: Unique ID number for the item.
+  Attribute: Size | Description: Unit of size for the item, such as 1 mg (milligram) or 16 fl oz (fluid ounces).
+  Attribute: Price | Description: Price of the item
+  Attribute: packaging | Description: Packaging of the item, such as 1 ea or 1 case of 12.
+  Attribute: promoteInProductSearch | Description: Indicates whether the item is (Yes) or are not (No) to be promoted to shoppers who have access to the contract.
+  Attribute: Color | Description: Color of the item
+  Attribute: commodityCode | Description: Code assigned to the item, for the purposes of identifying it in international commerce, or commerce in general.
+  CommodityCode is not a specific description of the goods or service.
+  Attribute: Unspsc | Description: Standardized commodity code value for the contract item,
+  See section “UNSPSC [Export]” above
+  Attribute: searchableKeywords | Description: Keywords by which the item can be found in product search.
+  Commas are used to separate more keywords.
+  Attribute: longDescription | Description: Long description of the item
+  Attribute: manufacturerName | Description: Name of the manufacturer
+  Attribute: manufacturerPartNumber | Description: Manufacturer’s part number (SKU code) for the item.
+  Attribute: dynamicAttributeList | Description: List of dynamic attributes.
+  See section “DynamicAttribute [Export]” below
+  Attribute: internalItemId | Description: Unique internal identifier for the contract item. | Available from version: JINT_20_03_00
+  Attribute: itemMasterId | Description: Unique user visible identifier for the item. | Available from version: JINT_20_03_00
+hash: sha256:fbf303b4b30e00c4854cd26e8f71b82fd87aa758f5ef4a186203116f4204d48f
+words: 257
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: NonCatalogItems [Export]
+  section_path: 2.3.3.43
+  page: 108
+  lang: en
+  prev: U.DOC0178.0472
+  next: U.DOC0178.0474
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - description
+      - Description of the noncatalog item that displays in product search.
+      - ""
+    - - catalogNumber
+      - Unique ID number for the item.
+      - ""
+    - - Size
+      - Unit of size for the item, such as 1 mg (milligram) or 16 fl oz (fluid ounces).
+      - ""
+    - - Price
+      - Price of the item
+      - ""
+    - - packaging
+      - Packaging of the item, such as 1 ea or 1 case of 12.
+      - ""
+    - - promoteInProductSearch
+      - Indicates whether the item is (Yes) or are not (No) to be promoted to shoppers who have access to the contract.
+      - ""
+    - - Color
+      - Color of the item
+      - ""
+    - - commodityCode
+      - |-
+        Code assigned to the item, for the purposes of identifying it in international commerce, or commerce in general.
+        CommodityCode is not a specific description of the goods or service.
+      - ""
+    - - Unspsc
+      - |-
+        Standardized commodity code value for the contract item,
+        See section “UNSPSC [Export]” above
+      - ""
+    - - searchableKeywords
+      - |-
+        Keywords by which the item can be found in product search.
+        Commas are used to separate more keywords.
+      - ""
+    - - longDescription
+      - Long description of the item
+      - ""
+    - - manufacturerName
+      - Name of the manufacturer
+      - ""
+    - - manufacturerPartNumber
+      - Manufacturer’s part number (SKU code) for the item.
+      - ""
+    - - dynamicAttributeList
+      - |-
+        List of dynamic attributes.
+        See section “DynamicAttribute [Export]” below
+      - ""
+    - - internalItemId
+      - Unique internal identifier for the contract item.
+      - JINT_20_03_00
+    - - itemMasterId
+      - Unique user visible identifier for the item.
+      - JINT_20_03_00
+  block: 1
+  blocks: 1

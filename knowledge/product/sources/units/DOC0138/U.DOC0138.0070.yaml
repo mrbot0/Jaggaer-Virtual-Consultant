@@ -1,0 +1,17 @@
+id: U.DOC0138.0070
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: Next is Static workflow activity which stops requests with no valid distribution address for an order. <Activity name="Missing Distribution"> <ActivityType>manual</ActivityType> <StepRef name="Missing Distribution" /> <FolderRef name="Missing Distribution" /> <Rule><![CDATA[ Document.HasInvalidDistribution() == true ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>
+hash: sha256:3c94e6d724c386e58acab5a453fd3a5c7296554bf471bbbceb26015145ddbd7a
+words: 35
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: INVALID OR MISSING DISTRIBUTION
+  section: INVALID OR MISSING DISTRIBUTION
+  section_path: "18"
+  page: null
+  lang: en
+  prev: U.DOC0138.0069
+  next: U.DOC0138.0071

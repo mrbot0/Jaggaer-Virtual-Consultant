@@ -1,0 +1,44 @@
+id: U.DOC0171.0168
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: Reference | Mandatory (Y/N): N | Description: Identifier of the contract row.
+  [12.3.01] If the parameter type is NOTE, it is the Title of the note. | Mapping on JA data model and notes: Id of the contract row.
+  In case of operation regarding an existing section, if this field is not empty and no value is provided in the id field, an attempt is made to find out an existing parameter having this same value of reference. If such a parameter is found, it is updated; otherwise a new parameter is created.
+  [12.3.01] It is mandatory for type NOTE and it is the Title of the note.
+hash: sha256:89ce2baf8ba4b87aac3e7b38d34fdeae37cf4cfc42e2de97bdbc2b840c308313
+words: 109
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: economical parameter [Import/Update RfX method]"
+  section_path: 2.1.1.13
+  page: 6
+  lang: en
+  prev: U.DOC0171.0167
+  next: U.DOC0171.0169
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - Reference
+    - N
+    - |-
+      Identifier of the contract row.
+      [12.3.01] If the parameter type is NOTE, it is the Title of the note.
+    - |-
+      Id of the contract row.
+      In case of operation regarding an existing section, if this field is not empty and no value is provided in the id field, an attempt is made to find out an existing parameter having this same value of reference. If such a parameter is found, it is updated; otherwise a new parameter is created.
+      [12.3.01] It is mandatory for type NOTE and it is the Title of the note.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

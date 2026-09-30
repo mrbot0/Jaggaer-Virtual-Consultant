@@ -1,0 +1,50 @@
+id: U.DOC0167.0514
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Dataset | Min/max occurrences | Description | Available from version
+  Dataset: returnCode | Min/max occurrences: 1/1 | Description: Operation result. Possible codes are listed in the table included in paragraph 2.1.7.
+  Dataset: returnMessage | Min/max occurrences: 1/1 | Description: “OK” if data are available, otherwise there is a description of errors or reasons for data unavailability (again refer to paragraph 2.1.7 for error codes and descriptions).
+  Dataset: nextStartAt | Min/max occurrences: 1/1 | Description: Value for startAt parameter to be included in request call for next page. -1 if no more data are available.
+  Dataset: j1SupplierList | Min/max occurrences: 0/1 | Description: List of suppliers (J1Supplier)
+hash: sha256:32434a369c7e8908fe0c5c41859b5d8840e9555346b14e45a0d924eb55b38a83
+words: 107
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: Export data format [Export of Company Data]
+  section_path: 2.2.4
+  page: 7
+  lang: en
+  prev: U.DOC0167.0513
+  next: U.DOC0167.0515
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrences
+    - Description
+    - Available from version
+  rows:
+    - - returnCode
+      - 1/1
+      - Operation result. Possible codes are listed in the table included in paragraph 2.1.7.
+      - ""
+    - - returnMessage
+      - 1/1
+      - “OK” if data are available, otherwise there is a description of errors or reasons for data unavailability (again refer to paragraph 2.1.7 for error codes and descriptions).
+      - ""
+    - - nextStartAt
+      - 1/1
+      - Value for startAt parameter to be included in request call for next page. -1 if no more data are available.
+      - ""
+    - - j1SupplierList
+      - 0/1
+      - List of suppliers (J1Supplier)
+      - ""
+  block: 1
+  blocks: 1
+refs_out:
+  - U.DOC0167.0481

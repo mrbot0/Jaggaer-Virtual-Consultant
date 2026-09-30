@@ -1,0 +1,40 @@
+id: U.DOC0178.0449
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: sendNotificationType | Description: Type of notification to be sent to the first party owner, first party stakeholder, and second party stakeholder:
+  Advance Notice – Sent prior to the obligation due date, based on advanceNoticeList settings, to inform the owner or stakeholder that the obligation is coming due.
+  Due Date – Sent on the due date of the obligation.
+  Past Due Notice – Sent after the obligation has passed its due date without being met.
+  Completed – Sent when an obligation has been marked Complete. This type of notification is not sent to second party stakeholder
+hash: sha256:b575797b99cdeaf1c8328639aafacaf7b44764d5f760cec416eb82f68783991d
+words: 104
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: SendNotification [Export]
+  section_path: 2.3.3.21
+  page: 99
+  lang: en
+  prev: U.DOC0178.0448
+  next: U.DOC0178.0450
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - sendNotificationType
+      - |-
+        Type of notification to be sent to the first party owner, first party stakeholder, and second party stakeholder:
+        Advance Notice – Sent prior to the obligation due date, based on advanceNoticeList settings, to inform the owner or stakeholder that the obligation is coming due.
+        Due Date – Sent on the due date of the obligation.
+        Past Due Notice – Sent after the obligation has passed its due date without being met.
+        Completed – Sent when an obligation has been marked Complete. This type of notification is not sent to second party stakeholder
+      - ""
+  block: 1
+  blocks: 1

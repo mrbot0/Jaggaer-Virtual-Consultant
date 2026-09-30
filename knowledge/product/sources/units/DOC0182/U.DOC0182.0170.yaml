@@ -1,0 +1,37 @@
+id: U.DOC0182.0170
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: handlingSplitAmount | Mandatory (Y/N): N | Description: Amount to be split for handling for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+  DEPRECATED: uses “decHandlingSplitAmount” field
+hash: sha256:b9ede099a5eff26d1dea68a5bdebcf3b0a57d27aa0b404a9cb9c919c25b92906
+words: 38
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Custom Field Value [PR Import]
+  section_path: 2.1.1.24
+  page: 24
+  lang: en
+  prev: U.DOC0182.0169
+  next: U.DOC0182.0171
+row:
+  table: 0
+  row: 5
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - handlingSplitAmount
+    - N
+    - |-
+      Amount to be split for handling for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places
+      DEPRECATED: uses “decHandlingSplitAmount” field
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

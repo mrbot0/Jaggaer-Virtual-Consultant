@@ -1,0 +1,17 @@
+id: U.DOC0138.0016
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: <Activity name="PO Distribution"> <ActivityType>automated</ActivityType> <StepRef name="PO Distribution" /> <FolderRef name="Distribute PO" /> <Rule><![CDATA[ !(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) && !(Document.CustomFieldValues("Order Category") in {"2 - Confirming - Do Not Distribute"}) ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>
+hash: sha256:966e3224a12548769752e95eb34cb9c8fbe8d62e3c20c1721124b42cc2f703b3
+words: 32
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: AUTOMATED STEP THAT REQUIRES MULTIPLE RULE EVALUATIONS
+  section: AUTOMATED STEP THAT REQUIRES MULTIPLE RULE EVALUATIONS
+  section_path: "3"
+  page: null
+  lang: en
+  prev: U.DOC0138.0015
+  next: U.DOC0138.0017

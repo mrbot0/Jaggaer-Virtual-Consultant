@@ -1,0 +1,37 @@
+document: document-config-goldsitecreditmemo-xml-8f119075
+scope: XSC
+batch: batch-04
+section: campi-4
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:7
+    label: "7"
+    labels:
+      - "7"
+    technical_name: "7"
+    section: campi-4
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=7 · tipo=static
+    sources:
+      - document: document-config-goldsitecreditmemo-xml-8f119075
+        section: campi-4
+        source_unit: document-config-goldsitecreditmemo-xml-8f119075/campi-4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "7"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 648

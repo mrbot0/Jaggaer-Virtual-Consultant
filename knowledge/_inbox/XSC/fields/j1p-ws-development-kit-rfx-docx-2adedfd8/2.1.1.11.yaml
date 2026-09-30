@@ -1,0 +1,206 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.11
+section_title: "Qualification and Technical envelope: parameter [Import/Update RfX method]"
+genre: tecnica
+rows:
+  - label: id
+    technical_name: id
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Parameter identifier
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: paramPos
+    technical_name: paramPos
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Parameter position inside the section
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Name
+    technical_name: Name
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Question title
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Description
+    technical_name: Description
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Question description
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Question type:
+      Valid value:
+      BOOLEAN
+      NOTE
+      TEXT
+      DATE
+      NUMERIC
+      ATTACH
+      SATTACH
+      COMBO
+      MCHOICE
+      GLBLIST
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: allowedValues
+    technical_name: allowedValues
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      In case of choice/multi-choice list of allowed values to be defined.
+      Not used for other type
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: dataElementId
+    technical_name: dataElementId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: In case of eVm question, the id of related data element
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: mandatory
+    technical_name: mandatory
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Mandatory technical/qualification parameter flag:
+      1 = parameter is mandatory
+      0 = parameter is optional
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: showUrlAsClickableLink
+    technical_name: showUrlAsClickableLink
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      TEXT AS URL – technical/qualification/
+      commercial
+      parameter flag:
+      1 = parameter is true
+      0 = parameter is false
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: instruction/fileName
+    technical_name: instruction/fileName
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment file name
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: instruction/fileDescription
+    technical_name: instruction/fileDescription
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment description
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: instruction/fileBase64
+    technical_name: instruction/fileBase64
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment body
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: globalist/id
+    technical_name: globalist/id
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Internal identifier of the global list in case of parameter type GLBLIST
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: globalist/name
+    technical_name: globalist/name
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Name of the global list in case of parameter type GLBLIST
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: globalist/title
+    technical_name: globalist/title
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Title of the global list in case of parameter type GLBLIST
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: linkedCondition
+    technical_name: linkedCondition
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Complex type that contains the conditions that make the section visible.
+      See section “Linked Condition (Conditional sections)”
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.11#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

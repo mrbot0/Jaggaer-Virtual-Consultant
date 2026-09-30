@@ -1,0 +1,41 @@
+id: U.DOC0178.0016
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: procedura
+text: This paragraph specifies which fields are mandatory and those that can be omitted.
+hash: sha256:41e71f246dc9ade2f184cf0f195e0530f7b0b029c474c03077af445a11d00c3e
+words: 13
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 11
+  lang: en
+  prev: U.DOC0178.0015
+  next: U.DOC0178.0017
+steps:
+  - "ImportSpend:"
+  - "Request data format [ImportSpend]: describes the possible operations on import and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted."
+  - "Behavior [ImportSpend]: describes how the web service processes the data passed in input, in case of some particular processes."
+  - "Response Data Format [ImportSpend]: describes the structure of the web service response and contains the list of possible error codes."
+  - "Import:"
+  - "Request data format [Import]: describes the structure of the import request."
+  - "Behavior [Import]: describes how the web service processes the data passed in input, in case of some processes"
+  - "Response data format [Import]: describes the structure of the web service response and contains the list of possible error codes"
+  - "Export:"
+  - "Component filters [Export]: describes which sections of a contract can be exported. The use of a component filter increments the number of sections in the response to every contract exported."
+  - "Condition filters [Export]: describes which fields can be used to filter the contract to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of contract extracted."
+  - "Export data format [Export]: describes the structure of the response in terms of exported fields and sections."
+  - "Error codes [Export]: contains a list of possible error codes"
+  - "Validate:"
+  - "Request data format [Validate]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted."
+procedure:
+  title: The structure of the current document is the following
+  part: 1
+  parts: 2
+  first_step: 1
+part:
+  n: 2
+  of: 2

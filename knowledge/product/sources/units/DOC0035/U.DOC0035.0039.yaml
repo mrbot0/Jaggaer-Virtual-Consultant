@@ -1,0 +1,17 @@
+id: U.DOC0035.0039
+doc: S.STD.XSC.DOC.0035
+doc_id: ji-plt-2303-handout-workflowsyntax-pdf-36176c48
+type: testo
+text: 'Next let’s look at an example that uses an Advanced Dynamic Workflow rule evaluation (only new concepts will be explained in detail): <Activity name="Director Approval"> <ActivityType>manual</ActivityType> <StepRef name="Director Approval" /> <Rule><![CDATA[ Document.RequiresRuleGroupEvaluation("Director Approval") == true ]]></Rule> <FolderSelectionRule>MultiElementDyna mic</FolderSelectionRule> <Attribute name="RuleGroupInternalName"> <AttrValue lang="default">Director Approval</AttrValue> </Attribute> </Activity>'
+hash: sha256:12b38700afe0e66e42fb3f0b7c9265e1c42c12f151545c1d55312db478af748b
+words: 45
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0035
+  chapter: Spend Director Specialization For Solutions Consultants
+  section: Spend Director Specialization For Solutions Consultants
+  section_path: p4
+  page: 4
+  lang: en
+  prev: U.DOC0035.0038
+  next: U.DOC0035.0040

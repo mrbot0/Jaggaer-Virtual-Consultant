@@ -1,0 +1,99 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+batch: batch-04
+section: campi-4
+section_title: Campi — 4. Instructions For Supplier
+part: 1
+parts: 1
+rows:
+  - key: tech:FLDEXTERNALNOTESINST
+    label: fldExternalNotesInst
+    labels:
+      - fldExternalNotesInst
+    technical_name: FLDEXTERNALNOTESINST
+    section: campi-4
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br><i>You may add additional notes or
+      instructions to be sent with your order in the text box below - or - by
+      clicking the <b>{add attachment...}</b> link and attaching a
+      document.</i><br><br> · id=10009 · tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-4
+        source_unit: consulting-service-form-xml-d4861794/campi-4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fldExternalNotesInst
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLDEXTERNALNOTES
+    label: Comments
+    labels:
+      - Comments
+    technical_name: FLDEXTERNALNOTES
+    section: campi-4
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=8;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=50 · id=10008 · tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-4
+        source_unit: consulting-service-form-xml-d4861794/campi-4#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Comments
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:114
+    label: "114"
+    labels:
+      - "114"
+    technical_name: "114"
+    section: campi-4
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=114 · tipo=static
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-4
+        source_unit: consulting-service-form-xml-d4861794/campi-4#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "114"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-006
+      functional_section: riferimento-fornitore
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1089

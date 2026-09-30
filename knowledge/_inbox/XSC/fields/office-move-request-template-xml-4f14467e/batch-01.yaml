@@ -1,0 +1,121 @@
+document: office-move-request-template-xml-4f14467e
+scope: XSC
+batch: batch-01
+section: domande-1
+section_title: Domande — Page 1 / Contact Information
+part: 1
+parts: 1
+rows:
+  - key: tech:117425
+    label: Name of Employee
+    labels:
+      - Name of Employee
+    technical_name: "117425"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Name of Employee
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-1
+        source_unit: office-move-request-template-xml-4f14467e/domande-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Name of Employee
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:117426
+    label: Phone Number
+    labels:
+      - Phone Number
+    technical_name: "117426"
+    section: domande-1
+    type: Numeric Text Box
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Phone Number
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-1
+        source_unit: office-move-request-template-xml-4f14467e/domande-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Phone Number
+        type: Numeric Text Box
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:117427
+    label: Email Address
+    labels:
+      - Email Address
+    technical_name: "117427"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Email Address
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-1
+        source_unit: office-move-request-template-xml-4f14467e/domande-1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Email Address
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:117390
+    label: Department
+    labels:
+      - Department
+    technical_name: "117390"
+    section: domande-1
+    type: Multiple Choice (Pick One)
+    mandatory_text: No
+    allowed_values: []
+    notes: Department
+    sources:
+      - document: office-move-request-template-xml-4f14467e
+        section: domande-1
+        source_unit: office-move-request-template-xml-4f14467e/domande-1#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Department
+        type: Multiple Choice (Pick One)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1152

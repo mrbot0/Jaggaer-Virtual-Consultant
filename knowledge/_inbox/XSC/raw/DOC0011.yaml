@@ -1,0 +1,1322 @@
+doc: S.STD.XSC.DOC.0011
+scope: XSC
+extracted_at: 2026-09-30T04:27:02.102Z
+tier: T0
+stats:
+  units: 203
+  extracted_units: 38
+  document_candidates: 1
+  needs_llm: 12
+  t0_complete: 27
+  by_candidate:
+    GLS: 12
+    FLD: 18
+    FLW: 6
+    INV: 1
+    CFG: 1
+    INT: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 7203
+  sessions:
+    - n: 1
+      tokens: 7203
+      batches: 1
+      items: 12
+      batch_items:
+        - - R.DOC0011.0051
+          - R.DOC0011.0078
+          - R.DOC0011.0085
+          - R.DOC0011.0086
+          - R.DOC0011.0113
+          - R.DOC0011.0151
+          - R.DOC0011.0154
+          - R.DOC0011.0157
+          - R.DOC0011.0159
+          - R.DOC0011.0169
+          - R.DOC0011.0191
+          - R.DOC0011.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0011.0023
+    source_unit: U.DOC0011.0023
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Approval matrices
+      definition: the mechanisms used to route specific objects such as RFQs, RFIs, Contracts and Auctions through the approval process
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0023
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0011.0025
+    source_unit: U.DOC0011.0025
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Program Manager
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0011.0025
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0011.0027
+    source_unit: U.DOC0011.0027
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - GLS
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Approval matrices
+      definition: the mechanisms used to route specific objects such as RFQs, RFIs, Contracts and Auctions through the approval process
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0027
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0011.0029
+    source_unit: U.DOC0011.0029
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Program Manager
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0011.0029
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0011.0039
+    source_unit: U.DOC0011.0039
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Approval Matrix Configuration"
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Approval Types
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0011.0039
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0011.0051
+    source_unit: U.DOC0011.0051
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0011
+    section: "Exercise:"
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: approvers
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: an Approval Type – Parallel Approval
+          valore: null
+        - n: 2
+          verbo: download
+          oggetto: template for RFQ Awarding
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: Rose and Sophia as approvers
+          valore: null
+        - n: 4
+          verbo: import
+          oggetto: template
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0011.0051
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 38
+  - raw_id: R.DOC0011.0052
+    source_unit: U.DOC0011.0052
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - GLS
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Approval matrices
+      definition: the mechanisms used to route specific objects such as RFQs, RFIs, Contracts and Auctions through the approval process
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0052
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0011.0054
+    source_unit: U.DOC0011.0054
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Program Manager
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0011.0054
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0011.0066
+    source_unit: U.DOC0011.0066
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Program Management Configuration"
+    page: 21
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Tasks
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0011.0066
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0011.0071
+    source_unit: U.DOC0011.0071
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Key Terms:"
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Child - Activities which
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0011.0071
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0011.0073
+    source_unit: U.DOC0011.0073
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Key Terms:"
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - INV
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Dependencies - Tasks that
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0011.0073
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0011.0074
+    source_unit: U.DOC0011.0074
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Key Terms:"
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Prerequisites - Tasks that
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0011.0074
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0011.0075
+    source_unit: U.DOC0011.0075
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Key Terms:"
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Conditional – Tasks that
+      modality: facolta
+      condition: not required
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0011.0075
+      mandatory:
+        kind: never
+        when: not required
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0011.0078
+    source_unit: U.DOC0011.0078
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0011
+    section: "Exercise:"
+    page: 23
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a Locked Project Template
+          valore: null
+        - n: 2
+          verbo: edit
+          oggetto: "the Process Tab to Include:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0011.0078
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 21
+  - raw_id: R.DOC0011.0080
+    source_unit: U.DOC0011.0080
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 24
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a15
+      - GLS
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Approval matrices
+      definition: the mechanisms used to route specific objects such as RFQs, RFIs, Contracts and Auctions through the approval process
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0080
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0011.0082
+    source_unit: U.DOC0011.0082
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 24
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Program Manager
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0011.0082
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0011.0085
+    source_unit: U.DOC0011.0085
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Assessment Workflow Transitions"
+    page: 25
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0011.0085
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 38
+  - raw_id: R.DOC0011.0086
+    source_unit: U.DOC0011.0086
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Assessment Workflow Transitions"
+    page: 25
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0011.0086
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 41
+  - raw_id: R.DOC0011.0109
+    source_unit: U.DOC0011.0109
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: JAGGAER One Implementations
+    page: 32
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Instances
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0011.0109
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0011.0110
+    source_unit: U.DOC0011.0110
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: JAGGAER One Implementations
+    page: 32
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Users
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0011.0110
+    needs_llm: false
+    tokens: 7
+  - raw_id: R.DOC0011.0111
+    source_unit: U.DOC0011.0111
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: JAGGAER One Implementations
+    page: 32
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Suppliers
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0011.0111
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0011.0113
+    source_unit: U.DOC0011.0113
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0011
+    section: What Connections are Possible?
+    page: 33
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a22
+      - FLW
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: sso
+          oggetto: for internal users (2 -way)
+          valore: null
+        - n: 2
+          verbo: internal
+          oggetto: User Synchronization
+          valore: null
+        - n: 3
+          verbo: supplier
+          oggetto: Synchronization
+          valore: null
+        - n: 4
+          verbo: pr
+          oggetto: to Draft RFQ
+          valore: null
+        - n: 5
+          verbo: awarded
+          oggetto: RFQ to PR
+          valore: null
+        - n: 6
+          verbo: awarded
+          oggetto: RFQ/Auction to Draft Contract
+          valore: null
+        - n: 7
+          verbo: contract
+          oggetto: to Contract Synchronization
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0011.0113
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 62
+  - raw_id: R.DOC0011.0120
+    source_unit: U.DOC0011.0120
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Integrations: 3"
+    page: 36
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: SoW document
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0011.0120
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0011.0130
+    source_unit: U.DOC0011.0130
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Integrations: 3"
+    page: 39
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: SoW document
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0011.0130
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0011.0140
+    source_unit: U.DOC0011.0140
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 43
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a25
+      - GLS
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Datamart
+      definition: a data aggregation hub where chart - based reports, as well as detailed summary tables for individual metrics, may be displayed.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0140
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0011.0143
+    source_unit: U.DOC0011.0143
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 43
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a26
+      - GLS
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Analytics
+      definition: an interactive data exploration, visualization, and presentation solution that transforms your data into directives based on actionable intelligence.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0143
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0011.0145
+    source_unit: U.DOC0011.0145
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 44
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a27
+      - GLS
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Datamart
+      definition: a data aggregation hub where chart - based reports, as well as detailed summary tables for individual metrics, can be configured by client users and generated ad hoc on the site.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0145
+    needs_llm: false
+    tokens: 48
+  - raw_id: R.DOC0011.0147
+    source_unit: U.DOC0011.0147
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Automation: Solutions Available in JA"
+    page: 44
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a28
+      - GLS
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Analytics
+      definition: an interactive data exploration, visualization, and presentation solution that transforms your data into directives based on actionable intelligence .
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0147
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0011.0151
+    source_unit: U.DOC0011.0151
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Reporting: Datamart Administration"
+    page: 46
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0011.0151
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 44
+  - raw_id: R.DOC0011.0154
+    source_unit: U.DOC0011.0154
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0011
+    section: "Reporting: Datamart Reporting"
+    page: 47
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a30
+      - FLW
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: upload
+          oggetto: Report
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: Report
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0011.0154
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 16
+  - raw_id: R.DOC0011.0157
+    source_unit: U.DOC0011.0157
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0011
+    section: "Exercise:"
+    page: 48
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a31
+      - FLW
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: "& Activate all available Standard Reports"
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: "Two Report Profiles:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0011.0157
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 23
+  - raw_id: R.DOC0011.0159
+    source_unit: U.DOC0011.0159
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0011
+    section: "Exercise:"
+    page: 48
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a32
+      - FLW
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the appropriate reports to each profile
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: at least one user to each profile
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0011.0159
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 25
+  - raw_id: R.DOC0011.0160
+    source_unit: U.DOC0011.0160
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Reporting: Solutions Available in JA"
+    page: 49
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a33
+      - GLS
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Datamart
+      definition: a data aggregation hub where chart - based reports, as well as detailed summary tables for individual metrics, can be configured by client users and generated ad hoc on the site.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0160
+    needs_llm: false
+    tokens: 48
+  - raw_id: R.DOC0011.0162
+    source_unit: U.DOC0011.0162
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Reporting: Solutions Available in JA"
+    page: 49
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a34
+      - GLS
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Analytics
+      definition: an interactive data exploration, visualization, and presentation solution that transforms your data into directives based on actionable intelligence.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0162
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0011.0169
+    source_unit: U.DOC0011.0169
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0011
+    section: "Reporting: Analytics Tools"
+    page: 51
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0011.0169
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 32
+  - raw_id: R.DOC0011.0176
+    source_unit: U.DOC0011.0176
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Reporting: Solutions Available in JA"
+    page: 54
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a36
+      - GLS
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Datamart
+      definition: a data aggregation hub where chart - based reports, as well as detailed summary tables for individual metrics, can be configured by client users and generated ad hoc on the site.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0176
+    needs_llm: false
+    tokens: 48
+  - raw_id: R.DOC0011.0178
+    source_unit: U.DOC0011.0178
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0011
+    section: "Reporting: Solutions Available in JA"
+    page: 54
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a37
+      - GLS
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Analytics
+      definition: an interactive data exploration, visualization, and presentation solution that transforms your data into directives based on actionable intelligence.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0011.0178
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0011.0191
+    source_unit: U.DOC0011.0191
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0011
+    section: "Support: Additional Services"
+    page: 63
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a38
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Note: These services only apply if listed in the SoW"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0011.0191
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0011.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0011
+    section: null
+    source_unit: U.DOC0011.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: JAGGAER Advantage
+      protocol:
+        - REST
+        - SOAP
+        - FTP
+      endpoints: []
+      operations: []
+      mappings: []
+      error_catalog: []
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+      - error_catalog
+    tokens: 2650

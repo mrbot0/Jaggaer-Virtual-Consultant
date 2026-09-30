@@ -1,0 +1,71 @@
+id: U.DOC0171.0553
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: Field | Attribute: UI default label (EN)
+  Attribute: evaluationUser/Id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: evaluationUser/code | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: evaluationUser/name | Attribute: User Name | Datatype: VARCHAR2(257 CHAR)
+  Attribute: evaluationUser/login | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: active | Attribute: Status | Datatype: NUMBER(1)
+  Attribute: permissionList/comments | Attribute: Edit Comments | Datatype: NUMBER(1)
+  Attribute: permissionList/evaluation | Attribute: Edit Evaluation | Datatype: NUMBER(1)
+  Attribute: permissionList/freeze | Attribute: Freeze Evaluation | Datatype: NUMBER(1)
+  Attribute: permissionList/forceRfxVisibility | Attribute: Object Visibility | Datatype: NUMBER(1)
+  Attribute: permissionList/forceSensitiveDataVisibility | Attribute: View Sensitive Data | Datatype: NUMBER(1)
+hash: sha256:00ed9cd7e50ba5ad0dd301e1d537653a14cc345796362252fe7eb8caad33a318
+words: 104
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Evaluation Member
+  section_path: 2.5.11.1
+  page: 8
+  lang: en
+  prev: U.DOC0171.0552
+  next: U.DOC0171.0554
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - Field
+      - UI default label (EN)
+      - ""
+    - - evaluationUser/Id
+      - "-"
+      - NUMBER(38)
+    - - evaluationUser/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - evaluationUser/name
+      - User Name
+      - VARCHAR2(257 CHAR)
+    - - evaluationUser/login
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - active
+      - Status
+      - NUMBER(1)
+    - - permissionList/comments
+      - Edit Comments
+      - NUMBER(1)
+    - - permissionList/evaluation
+      - Edit Evaluation
+      - NUMBER(1)
+    - - permissionList/freeze
+      - Freeze Evaluation
+      - NUMBER(1)
+    - - permissionList/forceRfxVisibility
+      - Object Visibility
+      - NUMBER(1)
+    - - permissionList/forceSensitiveDataVisibility
+      - View Sensitive Data
+      - NUMBER(1)
+  block: 1
+  blocks: 1

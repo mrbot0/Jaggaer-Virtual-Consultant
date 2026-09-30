@@ -1,0 +1,93 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-54
+section: 2.1.1.83
+section_title: J1Supplier/JISupplierData/locationList/location/termsAndCondition/paymentTerms/customPaymentTerm
+part: 1
+parts: 1
+rows:
+  - key: tech:USECUSTOMPAYMENTTERM
+    label: useCustomPaymentTerm
+    labels:
+      - useCustomPaymentTerm
+    technical_name: USECUSTOMPAYMENTTERM
+    section: 2.1.1.83
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.83
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.83#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: useCustomPaymentTerm
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ID
+    label: id
+    labels:
+      - id
+    technical_name: ID
+    section: 2.1.1.83
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Unique ID of the custom payment terms file.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.83
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.83#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: id
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CUSTOMPAYMENTTEXT
+    label: customPaymentText
+    labels:
+      - customPaymentText
+    technical_name: CUSTOMPAYMENTTEXT
+    section: 2.1.1.83
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.83
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.83#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: customPaymentText
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1008

@@ -1,0 +1,31 @@
+id: U.DOC0034.0031
+doc: S.STD.XSC.DOC.0034
+doc_id: ji-plt-2303-handout-workflowsyntax-docx-2e2da47b
+type: procedura
+text: |-
+  This rule shows some new concepts
+  1. <Rule><![CDATA[ Document.RequiresRuleGroupEvaluation("Director Approval") == true ]]></Rule>: This line shows an ADW rule.
+  2. Document. indicates that this evaluates the entire document.
+  3. RequiresRuleGroupEvaluation shows that an ADW rule is being evaluated. In this case the rule being evaluated is Director Approval. This rule can be found in the Advanced Dynamic Workflow section of workflow configuration. There many rules can be configured under ADW. A document stops here if any one of the ADW rules in the group are true.
+  4. <Attribute name="RuleGroupInternalName">: The attribute name line will display in SelectSite and makes it easy to see which ADW rule group is evaluated in this activity.
+  5. <AttrValue lang="default">Director Approval</AttrValue> : This shows the rule group name itself.
+hash: sha256:b5922b2d8377d5fe98e4030828dc1068f9d259c2cfd805c22676b70f47534607
+words: 124
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0034
+  chapter: ji-plt-2303-handout-workflowsyntax-docx-2e2da47b
+  section: </Activity>
+  section_path: 0.1.1.3.2.16
+  page: 5
+  lang: en
+  prev: U.DOC0034.0030
+  next: U.DOC0034.0032
+steps:
+  - '<Rule><![CDATA[ Document.RequiresRuleGroupEvaluation("Director Approval") == true ]]></Rule>: This line shows an ADW rule.'
+  - Document. indicates that this evaluates the entire document.
+  - RequiresRuleGroupEvaluation shows that an ADW rule is being evaluated. In this case the rule being evaluated is Director Approval. This rule can be found in the Advanced Dynamic Workflow section of workflow configuration. There many rules can be configured under ADW. A document stops here if any one of the ADW rules in the group are true.
+  - '<Attribute name="RuleGroupInternalName">: The attribute name line will display in SelectSite and makes it easy to see which ADW rule group is evaluated in this activity.'
+  - '<AttrValue lang="default">Director Approval</AttrValue> : This shows the rule group name itself.'
+procedure:
+  title: This rule shows some new concepts

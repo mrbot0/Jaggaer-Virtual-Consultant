@@ -1,0 +1,29 @@
+id: U.DOC0171.0281
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  When creating a new RfX, the web service tries to identify RfX owner as follows
+  1. If companyData.id field is provided, it uses this account identifier to find out buyer company
+  2. If companyData.code field has been provided, it is used as the external code of the company to be found
+  3. if both field provided, it checks company retrieved via external code has the same identifier as companyData.code.
+  4. If no ownerUser data provided, the owner is retrieved company super user; otherwise it searches for the user in provided company having internal identifier or external code or login equal to ownerUser.id or ownerUser.code or ownerUser.login (if all three are provided, they must identify the same user)
+hash: sha256:52f3bb2a36b385909e1f77bf6ef040b2a9607963e78a15b71092020ab2e04f8c
+words: 117
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Creator/Updater Account Id Selection
+  section_path: 2.1.2.2
+  page: 6
+  lang: en
+  prev: U.DOC0171.0280
+  next: U.DOC0171.0282
+steps:
+  - If companyData.id field is provided, it uses this account identifier to find out buyer company
+  - If companyData.code field has been provided, it is used as the external code of the company to be found
+  - if both field provided, it checks company retrieved via external code has the same identifier as companyData.code.
+  - If no ownerUser data provided, the owner is retrieved company super user; otherwise it searches for the user in provided company having internal identifier or external code or login equal to ownerUser.id or ownerUser.code or ownerUser.login (if all three are provided, they must identify the same user)
+procedure:
+  title: When creating a new RfX, the web service tries to identify RfX owner as follows

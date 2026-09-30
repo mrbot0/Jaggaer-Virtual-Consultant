@@ -1,0 +1,96 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+batch: batch-30
+section: 2.1.1.36
+section_title: User Data [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:EXTCODE
+    label: extCode
+    labels:
+      - extCode
+    technical_name: EXTCODE
+    section: 2.1.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: User external code. Is the JA user external code, it used to identify the
+      user when the login is not provided
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.36
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.36#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: extCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LOGIN
+    label: login
+    labels:
+      - login
+    technical_name: LOGIN
+    section: 2.1.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Username of the person who originally requested the PR import
+      The username must exist in your system.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.36
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.36#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: login
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BUSINESSUNIT
+    label: businessUnit
+    labels:
+      - businessUnit
+    technical_name: BUSINESSUNIT
+    section: 2.1.1.36
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Business unit internal name
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.36
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.36#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: businessUnit
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1038

@@ -1,0 +1,97 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.4
+section_title: Requestor [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: username
+    technical_name: username
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Username of the person who originally requested the PO export.
+    section: 2.3.1.4
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: eMail
+    technical_name: eMail
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Email address of the requestor
+    section: 2.3.1.4
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: businessUnit
+    technical_name: businessUnit
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique internal name of the business unit with which the requestor is
+      associated
+    section: 2.3.1.4
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: department
+    technical_name: department
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Department of the requestor, from his or her profile.
+    section: 2.3.1.4
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: firstName
+    technical_name: firstName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: First name of the requestor.
+    section: 2.3.1.4
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: lastName
+    technical_name: lastName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Last name of the requestor.
+    section: 2.3.1.4
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: phone
+    technical_name: phone
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Telephone number of the requestor.
+      See section “TelephoneNumber [Import JIOrder method]” below.
+    section: 2.3.1.4
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: position
+    technical_name: position
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Position of the requestor within the department, from his or her profile.
+    section: 2.3.1.4
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.4#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

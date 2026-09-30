@@ -1,0 +1,90 @@
+id: S.STD.XSC.DOC.0172
+type: DOC
+title: J1P Development Kit- Supplier User web-service
+summary: 'Documento spec-integrazione (tecnica, origine vendor) "J1P Development
+  Kit- Supplier User web-service": 48 unità, 12 tabelle, 3 tabelle di campi;
+  scope ADM, VEN, XSC; affidabilità 0.72.'
+facets:
+  F1: spec-integrazione-prosa
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2023-03-10
+    release: ignota
+  F15: tecnica
+sources:
+  - file: JAGGAER WS/J1P WS Development_Kit_Supplier User.docx
+    sha256: sha256:c883f044d32a204d64582eb076e18a296dc7620d6031138968d4d4e0c847b98d
+kind: spec-integrazione
+genre: tecnica
+origin: vendor
+version: null
+dated: 2023-03-10
+covers_release: null
+languages:
+  - en
+scopes:
+  - ADM
+  - VEN
+  - XSC
+source:
+  path: JAGGAER WS/J1P WS Development_Kit_Supplier User.docx
+  sha256: sha256:c883f044d32a204d64582eb076e18a296dc7620d6031138968d4d4e0c847b98d
+  size: 144658
+  format: docx
+  doc_id: j1p-ws-development-kit-supplier-user-docx-305b9bed
+  doc_key: j1p-ws-development-kit-supplier-user.docx
+structure:
+  pages: 14
+  chapters: 3
+  sections: 22
+  tables: 12
+  figures: 1
+  field_tables: 3
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 48
+  by_type:
+    testo: 20
+    tabella: 9
+    definizione: 1
+    procedura: 1
+    riga-tabella-campi: 12
+    riferimento: 3
+    regola: 2
+reliability:
+  base_by_kind: 0.9
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.72
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 48
+  items_produced: 17
+  residue:
+    irrelevant: 4
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.33
+  last_run: 2026-09-30
+  estimated_tokens: 6884
+  sessions_planned: 1

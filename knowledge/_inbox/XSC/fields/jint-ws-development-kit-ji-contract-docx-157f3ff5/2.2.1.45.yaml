@@ -1,0 +1,137 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.45
+section_title: PaymentTerms [Import]
+genre: tecnica
+rows:
+  - label: discount
+    technical_name: discount
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Discount for the prescribed period, to be used instead of the payment
+      terms on the invoice.
+
+      Valid only if:
+
+      • All lines on the invoice are for the same contract.
+
+      • These payment terms differ from those on the invoice
+    section: 2.2.1.45
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.45#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: unit
+    technical_name: unit
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the discount is a percentage (percent) or a fixed
+      amount (amount).
+    section: 2.2.1.45
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.45#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Days
+    technical_name: Days
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Number of days after the invoice date that the discount can be applied to
+      the invoice.
+
+      That is, if payment is received within the specified number of days of the
+      invoice date, the discount is applied.
+    section: 2.2.1.45
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.45#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Net
+    technical_name: Net
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Number of days after the invoice date that the invoice is due.
+
+      Note: A Net payment terms type can be specified using either the Net
+      element or the combination of the PaymentTermsType element set to Net and
+      the PaymentTermsDaysAfter element.
+
+      Note: If Net is provided in an import message, the PaymentTermsType and
+      StandardPaymentTermsCode elements cannot have values.
+    section: 2.2.1.45
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.45#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: paymentTermsType
+    technical_name: paymentTermsType
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Used in conjunction with the PaymentTermsDaysAfter element to determine
+      the invoice due date. Possible values:
+
+      Net: Invoice due date = Invoice date + PaymentTermsDaysAfter
+
+      EOM (End of Month): Invoice due date = Last day of the month of the
+      invoice date + PaymentTermsDaysAfter.
+
+      MFI (Month Following Invoice): Invoice due date = First day of the month
+      after the invoice date + PaymentTermsDaysAfter.
+
+      EOQ (End of Quarter): Invoice due date = Last day of the quarter of the
+      invoice date + PaymentTermsDaysAfter.
+
+      Manual: The invoice due date is not set based on payment terms but is
+      entered manually by the user.
+
+      Note: If PaymentTermsType is provided in an import message, the Net and
+      StandardPaymentTermsCode elements cannot have values.
+    section: 2.2.1.45
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.45#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: paymentTermsDaysAfter
+    technical_name: paymentTermsDaysAfter
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Used in conjunction with the PaymentTermsType element to compute the
+      invoice due date when an invoice or credit memo is created or when payment
+      terms are updated.
+    section: 2.2.1.45
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.45#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: standardPaymentTermsCode
+    technical_name: standardPaymentTermsCode
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Uniquely identifies a specific preconfigured combination of payment terms.
+
+      If StandardPaymentTermsCode is provided in an import message,
+      PaymentTermsType, PaymentTermsDaysAfter, and Discount are populated based
+      on the code.
+
+      If both StandardPaymentTermsCode and Discount are provided, the value for
+      Discount is used.
+
+      Note: If StandardPaymentTermsCode is provided in an import message, the
+      Net and PaymentTermsType elements cannot have values.
+    section: 2.2.1.45
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.45#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

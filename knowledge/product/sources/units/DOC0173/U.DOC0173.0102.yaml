@@ -1,0 +1,43 @@
+id: U.DOC0173.0102
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: division | Mandatory (Y/N): Y
+  for CREATE
+  N
+  for UPDATE | Description: User division name
+hash: sha256:29872c15778add4f7ce83bb8bec4734574fcbbae96c85f8556ae42f1037e95d3
+words: 16
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: SubUserInfo [Import/update of Company and Users Data]
+  section_path: 4.1.1.6
+  page: 6
+  lang: en
+  prev: U.DOC0173.0101
+  next: U.DOC0173.0103
+row:
+  table: 0
+  row: 5
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - division
+    - |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    - User division name
+    - ""
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

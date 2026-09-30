@@ -1,0 +1,39 @@
+id: U.DOC0167.0322
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: net | Mandatory (Y/N): N | Description: Number of days after the invoice date that the invoice is due. | Mapping on Jaggaer One data model and notes: A Net payment terms type can be specified using either the Net element or the combination of the TermsType element set to Net and the DaysAfter element.
+  If Net is provided the StandardPaymentTermsCode and TermsType elements cannot have values.
+hash: sha256:cc7cd41b59130806e3edc8ad92c86350f4768679a02adb5aa1ae28b6bf7bfea3
+words: 68
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/termsAndCondition/paymentTerms
+  section_path: 2.1.1.81
+  page: 5
+  lang: en
+  prev: U.DOC0167.0321
+  next: U.DOC0167.0323
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - net
+    - N
+    - Number of days after the invoice date that the invoice is due.
+    - |-
+      A Net payment terms type can be specified using either the Net element or the combination of the TermsType element set to Net and the DaysAfter element.
+      If Net is provided the StandardPaymentTermsCode and TermsType elements cannot have values.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

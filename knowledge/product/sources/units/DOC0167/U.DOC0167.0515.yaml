@@ -1,0 +1,53 @@
+id: U.DOC0167.0515
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Dataset | Min/max occurrences | Description | Available from version
+  Dataset: J1Data | Min/max occurrences: 1/1 | Description: Company data shared by all subsystems
+  Dataset: JAData | Min/max occurrences: 0/1 | Description: Specific data for JA System. When JI is Principal SM, this section will not be exported.
+  Dataset: JIData | Min/max occurrences: 0/1 | Description: Specific data for JI System. When JI is Principal SM, this section is always sent.
+  Dataset: JDData | Min/max occurrences: 0/1 | Description: Specific data for JD System. For future use, currently not supported
+  Dataset: JCSData | Min/max occurrences: 0/1 | Description: Specific data for JCS System. When JI is Principal SM, this section is always sent, if JCS Core App is activated.
+hash: sha256:58108c94990b3bda0a64a51bc4e8978323e3c9d224ce5bac3df00dd2372acfe7
+words: 120
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier
+  section_path: 2.2.4.1
+  page: 7
+  lang: en
+  prev: U.DOC0167.0514
+  next: U.DOC0167.0516
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrences
+    - Description
+    - Available from version
+  rows:
+    - - J1Data
+      - 1/1
+      - Company data shared by all subsystems
+      - ""
+    - - JAData
+      - 0/1
+      - Specific data for JA System. When JI is Principal SM, this section will not be exported.
+      - ""
+    - - JIData
+      - 0/1
+      - Specific data for JI System. When JI is Principal SM, this section is always sent.
+      - ""
+    - - JDData
+      - 0/1
+      - Specific data for JD System. For future use, currently not supported
+      - ""
+    - - JCSData
+      - 0/1
+      - Specific data for JCS System. When JI is Principal SM, this section is always sent, if JCS Core App is activated.
+      - ""
+  block: 1
+  blocks: 1

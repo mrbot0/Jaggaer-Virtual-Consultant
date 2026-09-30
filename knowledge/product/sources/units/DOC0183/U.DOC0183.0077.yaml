@@ -1,0 +1,51 @@
+id: U.DOC0183.0077
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: riga-tabella-campi
+text: |-
+  Attribute: receiptLineStatus | Mandatory (Y/N): Y | Description: Final status of the receipt line.
+  Cost Received
+  Cost Cancelled
+  Received
+  Cancelled
+  Returned
+  Received / Returned
+  Cost Received and Cost Cancelled are valid only for Cost receipts.
+  Received, Cancelled, Returned, and Received / Returned are valid only for Quantity receipts.
+hash: sha256:1bfca197034a200a1f7a8b4ac06b5a128ff4d842842b24cfd8c9ee20ccd9598e
+words: 48
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Line [Import]
+  section_path: 2.1.1.9
+  page: 16
+  lang: en
+  prev: U.DOC0183.0076
+  next: U.DOC0183.0078
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - receiptLineStatus
+    - Y
+    - |-
+      Final status of the receipt line.
+      Cost Received
+      Cost Cancelled
+      Received
+      Cancelled
+      Returned
+      Received / Returned
+      Cost Received and Cost Cancelled are valid only for Cost receipts.
+      Received, Cancelled, Returned, and Received / Returned are valid only for Quantity receipts.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

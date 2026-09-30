@@ -1,0 +1,47 @@
+id: U.DOC0167.0403
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: directDepositFormat | Mandatory (Y/N): N | Description: Direct deposit format used by the bank. | Mapping on Jaggaer One data model and notes: • DirectDepositFormat_ACH - Automated Clearing House
+  • DirectDepositFormat_CCD - ACH Corporate Credit or Debit Entry
+  • DirectDepositFormat_CTX - ACH corporate trade exchange
+  • Valid only if the “type” field on the AccountsPayable element is set to DirectDeposit.
+  • Must be blank if the “type” field on the AccountsPayable element is set to WireTransfer, Check, Credit, ePayable, or PayMode.
+  Values: (DirectDepositFormat_ACH | DirectDepositFormat_CCD | DirectDepositFormat_CTX)
+hash: sha256:305e1297a982891cdf9721fb524d121372c1698396c60678d5bd26149e83353f
+words: 88
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 5
+  lang: en
+  prev: U.DOC0167.0402
+  next: U.DOC0167.0404
+row:
+  table: 0
+  row: 7
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - directDepositFormat
+    - N
+    - Direct deposit format used by the bank.
+    - |-
+      • DirectDepositFormat_ACH - Automated Clearing House
+      • DirectDepositFormat_CCD - ACH Corporate Credit or Debit Entry
+      • DirectDepositFormat_CTX - ACH corporate trade exchange
+      • Valid only if the “type” field on the AccountsPayable element is set to DirectDeposit.
+      • Must be blank if the “type” field on the AccountsPayable element is set to WireTransfer, Check, Credit, ePayable, or PayMode.
+      Values: (DirectDepositFormat_ACH | DirectDepositFormat_CCD | DirectDepositFormat_CTX)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

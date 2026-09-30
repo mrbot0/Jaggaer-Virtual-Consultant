@@ -1,0 +1,64 @@
+document: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3
+scope: XSC
+batch: batch-05
+section: campi-5
+section_title: Campi — Internal Notes and Attachments
+part: 1
+parts: 1
+rows:
+  - key: tech:7
+    label: "7"
+    labels:
+      - "7"
+    technical_name: "7"
+    section: campi-5
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=7 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3
+        section: campi-5
+        source_unit: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3/campi-5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "7"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:9
+    label: "9"
+    labels:
+      - "9"
+    technical_name: "9"
+    section: campi-5
+    type: static
+    mandatory_text: ""
+    allowed_values: []
+    notes: id=9 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3
+        section: campi-5
+        source_unit: ji-plt-2302-goldsiteprconfiguration-xml-fe7038d3/campi-5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "9"
+        type: static
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 800

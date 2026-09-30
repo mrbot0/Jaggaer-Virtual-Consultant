@@ -1,0 +1,30 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.1.1.3
+section_title: ContractSpend [ImportSpend]
+genre: tecnica
+rows:
+  - label: contractId
+    technical_name: contractId
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: ID of the contract in JI to be updated with spend information.
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.1.1.3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: spendData
+    technical_name: spendData
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Spend data to be applied.
+      See section “SpendData [ImportSpend]” below
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.1.1.3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

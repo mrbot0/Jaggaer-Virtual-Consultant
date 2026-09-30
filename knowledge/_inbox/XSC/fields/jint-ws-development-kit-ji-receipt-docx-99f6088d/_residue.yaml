@@ -1,0 +1,29 @@
+document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+scope: XSC
+ambiguous:
+  - key: tech:HEADER
+    label: header
+    mandatory_text: ""
+    sources:
+      - jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.2#part-1
+  - key: tech:LINELIST
+    label: lineList
+    mandatory_text: ""
+    sources:
+      - jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.2#part-1
+  - key: tech:COST
+    label: cost
+    mandatory_text: Y/N
+    sources:
+      - jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+  - key: tech:CURRENCY
+    label: currency
+    mandatory_text: Y/N
+    sources:
+      - jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+  - key: tech:QUANTITY
+    label: quantity
+    mandatory_text: Y/N
+    sources:
+      - jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.9#part-1
+over_unit_budget: []

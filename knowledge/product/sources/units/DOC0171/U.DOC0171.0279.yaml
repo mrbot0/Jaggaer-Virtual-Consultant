@@ -1,0 +1,27 @@
+id: U.DOC0171.0279
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  When creating a new RfX
+  1. rfxId field is never used;
+  2. if reference code service state reference code must manually be provided by user), a not empty value must be provided for rfxReferenceCode and this not-trimmed value must be unique over all the negotiation (deleted ones included), otherwise error is returned to caller.
+  3. If reference code service isn’t active or reference code is automatic, rfxReferenceCode value isn’t used.
+hash: sha256:cef326c3a471c74d84e6700d44fb88a3851ea46e988834f3d38287a486276db0
+words: 70
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Existing RfX selection
+  section_path: 2.1.2.1
+  page: 6
+  lang: en
+  prev: U.DOC0171.0278
+  next: U.DOC0171.0280
+steps:
+  - rfxId field is never used;
+  - if reference code service state reference code must manually be provided by user), a not empty value must be provided for rfxReferenceCode and this not-trimmed value must be unique over all the negotiation (deleted ones included), otherwise error is returned to caller.
+  - If reference code service isn’t active or reference code is automatic, rfxReferenceCode value isn’t used.
+procedure:
+  title: When creating a new RfX

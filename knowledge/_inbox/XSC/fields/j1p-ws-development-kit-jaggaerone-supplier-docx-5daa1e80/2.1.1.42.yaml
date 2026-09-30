@@ -1,0 +1,50 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+section: 2.1.1.42
+section_title: J1Supplier/JISupplierData/contactList/contact/tollFreePhone/telephoneNumber
+genre: tecnica
+rows:
+  - label: countryCode
+    technical_name: countryCode
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Code to access the specific country.
+    section: 2.1.1.42
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.42#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: areaCode
+    technical_name: areaCode
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Area code for the toll-free phone number.
+    section: 2.1.1.42
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.42#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: number
+    technical_name: number
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Toll-free Phone number for the address.
+    section: 2.1.1.42
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.42#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: extension
+    technical_name: extension
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Toll-free Phone extension for the address
+    section: 2.1.1.42
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.42#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80

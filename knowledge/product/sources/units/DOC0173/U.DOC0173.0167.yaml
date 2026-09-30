@@ -1,0 +1,182 @@
+id: U.DOC0173.0167
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: "The check is applied on all the company profile and it is not linked to the Component filter Filter Name: COMPANYLASTMODTIME | Filter Values: Date in YYYYMMDD format Or timestamp in yyyy-MM-dd HH:mm:ss.SSS Z format | Filter Description: Defines the extraction of all the companies with registration data updated after the received date."
+hash: sha256:ec90fd3aab09f70ea1f991b2ef5223ead8f1932df8bebfe4179d53242ed0db5c
+words: 53
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: MAIN Condition filters
+  section_path: 4.2.1.1
+  page: 7
+  lang: en
+  prev: U.DOC0173.0166
+  next: U.DOC0173.0168
+table:
+  table: 0
+  headers:
+    - Filter Name
+    - Filter Values
+    - Filter Description
+  rows:
+    - - TYPE
+      - BUYER, SELLER, GURU, SUPER, MBBSELLER, MBSSELLER
+      - |-
+        Defines the extraction rule according to the company type.
+        It is possible to filter with multiple values (e.g. BUYER, SELLER)
+    - - BRAVOID
+      - JA internal identifier
+      - Extracts only the company identified by the given identifier
+    - - EXTERNALCODE
+      - Company code in string format
+      - Defines the extraction rule according to the company External Code field
+    - - FISCALCODE
+      - |-
+        Company fiscal code in string format
+        Allowed values: “NULL”, “NOT NULL” or a valid fiscal code
+      - Defines the extraction rule according to the company fiscal Code field
+    - - AWARDED
+      - |-
+        YES
+        NO
+        YES_INCLUDE_OFFLINE
+        NO_INCLUDE_OFFLINE
+      - |-
+        YES if a supplier has been successful in at least one negotiation on the platform (offline negotiation EXCLUDED).
+        NO if a supplier has not been successful in any negotiation (offline negotiation EXCLUDED).
+        YES_INCLUDE_OFFLINE if a supplier has been successful in at least one negotiation on the platform (offline negotiation INCLUDED).
+        NO_INCLUDE_OFFLINE if a supplier has not been successful in any negotiation (offline negotiation INCLUDED).
+    - - LASTMODTIME
+      - |-
+        Date in YYYYMMDD format
+        Or timestamp in yyyy-MM-dd HH:mm:ss.SSS Z format
+      - Defines the extraction of all the companies updated in at least one component after the received date. The check is applied on all the company profile and it is not linked to the Component filter
+    - - STATUS
+      - |-
+        DELETED = Deleted
+        KILLED = Deactivated
+        REGISTERED = Registered
+        ENABLED = Active
+        Use an asterisk (*) to avoid filtering and retrieve all companies no matter their state
+      - "Filters companies according to their status in the JA platform (NOTE: if this filter is not specified only REGISTERED and ENABLED companies are exported)"
+    - - STATUSEXT
+      - Valid extended status (ext code)
+      - Filters suppliers according to their extended-status
+    - - INVITED
+      - RFX, AUC, AT_LEAST_ONE, NONE
+      - |-
+        Allows to extract suppliers according to theirs invites to negotiations.
+        Allowed values are:
+        RFX: only suppliers invited to at least one published RFX
+        AUC: only suppliers invited to at least one published Auction
+        AT_LEAST_ONE: only suppliers invited to at least one published Auction or RFX
+        NONE: only suppliers never invited to published RFX/Auction
+    - - DELETEDSTATUS
+      - |-
+        NOT-DELETED, DELETED, ALL
+        empty
+      - |-
+        Allows to extract profile according to their deletion status.
+        Allowed values are:
+        Undefined: behaves like NOT-DELETED (default behaviour even if condition filter isn’t expressed) NOT-DELETED: export only not deleted profile
+        DELETED: export only deleted profile
+        ALL: export both deleted and not deleted profile.
+        If this condition filter is expressed, exported CompanyData CompanyInfos will be enriched with a new field (deleted) reporting the deletion status of the specific profile
+    - - VAT
+      - |-
+        Company VAT in string format
+        Allowed values: “NULL”, “NOT NULL” or a valid VAT
+      - Defines the extraction rule according to the company VAT field
+    - - SUBUSERLOGIN
+      - Sub-user login (user alias).
+      - |-
+        Extracts only the sub-user identified by the value specified and only the company belonging to.
+        Filters SUBUSERLOGIN, SUPERUSERLOGIN and USERLOGIN are exclusive, they can be used only one at a time.
+    - - SUPERUSERLOGIN
+      - Super-user login (user alias).
+      - |-
+        Extracts only the super-user identified by the value specified and all the sub-users belonging to it.
+        Filters SUBUSERLOGIN, SUPERUSERLOGIN and USERLOGIN are exclusive, they can be used only one at a time.
+    - - USERLOGIN
+      - Sub-user or super- user login (user alias).
+      - |-
+        Extracts only the user identified by the value specified. Either sub-user or super-user could be extracted. In case of super-user, it is possible to achieve the extraction of only the super-user information (while sub-users’ information will be hidden) by enabling a configuration parameter.
+        Filters SUBUSERLOGIN, SUPERUSERLOGIN and USERLOGIN are exclusive, they can be used only one at a time.
+    - - USERLASTMODTIME
+      - |-
+        Date in YYYYMMDD format
+        Or timestamp in yyyy-MM-dd HH:mm:ss.SSS Z format
+      - Defines the extraction of all the companies with super-user data updated after the received date. The check is applied on all the company profile and it is not linked to the Component filter
+    - - COMPANYLASTMODTIME
+      - |-
+        Date in YYYYMMDD format
+        Or timestamp in yyyy-MM-dd HH:mm:ss.SSS Z format
+      - Defines the extraction of all the companies with registration data updated after the received date. The check is applied on all the company profile and it is not linked to the Component filter
+    - - companyName
+      - Company Name in string format
+      - Defines the extraction rule according to the company name field
+    - - zip
+      - Company Postal Code in string format
+      - Defines the extraction rule according to the company zip field
+    - - city
+      - Company City in string format
+      - Defines the extraction rule according to the company city field
+    - - province
+      - Company Province (Region/State)
+      - Defines the extraction rule according to the company province field
+    - - address
+      - Company Address
+      - Defines the extraction rule according to the company address field
+    - - DANDBCODE
+      - Dun and Bradstreet Code
+      - Defines the extraction rule according to the company Dun and Bradstreet code field
+    - - isoCountry
+      - ISO Country
+      - Defines the extraction rule according to the ISO country field
+    - - isoProvince
+      - ISO Province
+      - Defines the extraction rule according to the ISO province field
+    - - zip2
+      - Alternative Company Postal Code in string format
+      - Defines the extraction rule according to the alternative company zip field
+    - - city2
+      - Alternative Company City in string format
+      - Defines the extraction rule according to the alternative company city field
+    - - province2
+      - Alternative Company Province (Region/State)
+      - Defines the extraction rule according to the alternative company province field
+    - - address2
+      - Alternative Company Address
+      - Defines the extraction rule according to the alternative company address field
+    - - isoCountry2
+      - Alternative ISO Country
+      - Defines the extraction rule according to the alternative ISO country field
+    - - isoProvince2
+      - Alternative ISO Province
+      - Defines the extraction rule according to the alternative ISO province field
+    - - bizEmail
+      - Company email
+      - |-
+        Defines the extraction of all the companies with email containing the value passed.
+        Since bizEmail can contain multiple email addresses, this filter applies the operator CONTAINS.
+    - - userEmail
+      - Super User email
+      - |-
+        Defines the extraction of all the companies with the super-user email containing the value passed.
+        Since userEmail can contain multiple email addresses, this filter applies the operator CONTAINS.
+    - - _companyName_
+      - String to search in Company Name
+      - Defines the extraction rule according to the company name field. This filter applies the operator CONTAINS.
+    - - euVat
+      - |-
+        Company EUVAT in string format
+        Allowed values: “NULL”, “NOT NULL” or a valid EUVAT
+      - Defines the extraction rule according to the company EUVAT field
+  block: 1
+  blocks: 1
+part:
+  n: 4
+  of: 7

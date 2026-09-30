@@ -1,0 +1,47 @@
+id: U.DOC0173.0197
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Error Code | Error Message | Error Description
+  Error Code: ERRMSG_INTERNAL_ERROR | Error Message: 100 | Error Description: Generic error
+  Error Code: ERRMSG_NODATA | Error Message: 111 | Error Description: No Data Found applying requested filtering condition or no data provided to fully specify condition to apply
+  Error Code: ERRMSG_INVALID_PARAM_SYNTAX | Error Message: 124 | Error Description: Unrecognized value provided in request for filter to apply (unknown filter or invalid data provided)
+  Error Code: ERRMSG_FORMAT_EXCEPTION | Error Message: 122 | Error Description: Value to be used in filter expressed in erroneous format
+  Error Code: ERRMSG_OPCODE_UNEXPECTED | Error Message: 129 | Error Description: Operation code not valid: some information has been requested to be exported but they are inconsistent with global request (e.g.: basic data element information without asking to export supplier)
+hash: sha256:e5fe726d69b89c5bb189b3fb8e3eb4ff99b38f9420beddbb28c090e76e069b00
+words: 132
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Error Codes
+  section_path: 4.2.6.1
+  page: 7
+  lang: en
+  prev: U.DOC0173.0196
+  next: U.DOC0173.0198
+table:
+  table: 0
+  headers:
+    - Error Code
+    - Error Message
+    - Error Description
+  rows:
+    - - ERRMSG_INTERNAL_ERROR
+      - "100"
+      - Generic error
+    - - ERRMSG_NODATA
+      - "111"
+      - No Data Found applying requested filtering condition or no data provided to fully specify condition to apply
+    - - ERRMSG_INVALID_PARAM_SYNTAX
+      - "124"
+      - Unrecognized value provided in request for filter to apply (unknown filter or invalid data provided)
+    - - ERRMSG_FORMAT_EXCEPTION
+      - "122"
+      - Value to be used in filter expressed in erroneous format
+    - - ERRMSG_OPCODE_UNEXPECTED
+      - "129"
+      - "Operation code not valid: some information has been requested to be exported but they are inconsistent with global request (e.g.: basic data element information without asking to export supplier)"
+  block: 1
+  blocks: 1

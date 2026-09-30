@@ -1,0 +1,76 @@
+id: U.DOC0178.0485
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: message | Description: Notification email to be sent to users who are configured to receive the notification in their notification preferences
+  Attribute: type | Description: Type of notification to be sent:
+  BudgetExceeded – The budget on the contract has been exceeded
+  PercentageTiers- The percentage tiers on the contract have been exceeded
+  AmountTiers- The amount tiers on the contract have been exceeded
+  DateEffLead- The lead time for the effective date of the contract has been reached
+  DateEff- The effective date of the contract has been reached
+  DateExpLead- The lead time for the expiration date of the contract has been reached
+  DateExp- The expiration date of the contract has been reached
+  DateRenewLead- The lead time for the renewal date of the contract has been reached.
+  DateRenew- The renewal date of the contract has been reached
+  ReviewDatePasse- The review date for the contract has been passed
+  Attribute: contractManagers | Description: Indicates whether the notification is (true) or is not (false) to be sent to contract managers associated with the contract
+  Attribute: contractManagersOnProject | Description: Indicates whether the notification is (true) or is not (false) to be sent to contract managers who are associated with the contract and are on the work group.
+  Attribute: stakeHolders | Description: Indicates whether the notification is (true) or is not (false) to be sent to stakeholders associated with the contract
+  Attribute: stakeHoldersOnProject | Description: Indicates whether the notification is (true) or is not (false) to be sent to stakeholders who are associated with the contract and are on the work group.
+  Attribute: externalContacts | Description: Indicates whether the notification is (true) or is not (false) to be sent to external contacts associated with the contract.
+hash: sha256:a85d5e19a71d3abee7a75ddf388e40adcea4dda16687e5def106c335addc6c6f
+words: 286
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Notification [Export]
+  section_path: 2.3.3.55
+  page: 115
+  lang: en
+  prev: U.DOC0178.0484
+  next: U.DOC0178.0486
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - message
+      - Notification email to be sent to users who are configured to receive the notification in their notification preferences
+      - ""
+    - - type
+      - |-
+        Type of notification to be sent:
+        BudgetExceeded – The budget on the contract has been exceeded
+        PercentageTiers- The percentage tiers on the contract have been exceeded
+        AmountTiers- The amount tiers on the contract have been exceeded
+        DateEffLead- The lead time for the effective date of the contract has been reached
+        DateEff- The effective date of the contract has been reached
+        DateExpLead- The lead time for the expiration date of the contract has been reached
+        DateExp- The expiration date of the contract has been reached
+        DateRenewLead- The lead time for the renewal date of the contract has been reached.
+        DateRenew- The renewal date of the contract has been reached
+        ReviewDatePasse- The review date for the contract has been passed
+      - ""
+    - - contractManagers
+      - Indicates whether the notification is (true) or is not (false) to be sent to contract managers associated with the contract
+      - ""
+    - - contractManagersOnProject
+      - Indicates whether the notification is (true) or is not (false) to be sent to contract managers who are associated with the contract and are on the work group.
+      - ""
+    - - stakeHolders
+      - Indicates whether the notification is (true) or is not (false) to be sent to stakeholders associated with the contract
+      - ""
+    - - stakeHoldersOnProject
+      - Indicates whether the notification is (true) or is not (false) to be sent to stakeholders who are associated with the contract and are on the work group.
+      - ""
+    - - externalContacts
+      - Indicates whether the notification is (true) or is not (false) to be sent to external contacts associated with the contract.
+      - ""
+  block: 1
+  blocks: 1

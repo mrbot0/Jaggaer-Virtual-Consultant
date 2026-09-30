@@ -1,0 +1,48 @@
+id: U.DOC0168.0492
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: URL | /j1p/api/public/ji/v1/orders/status
+  URL: Http Method | /j1p/api/public/ji/v1/orders/status: POST
+  URL: Header Parameters | /j1p/api/public/ji/v1/orders/status: Authorization (see “J1P WS Development_Kit - Web Services Overview” document)
+  URL: Body | /j1p/api/public/ji/v1/orders/status: JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+  URL: Response format | /j1p/api/public/ji/v1/orders/status: JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+  URL: Return Codes | /j1p/api/public/ji/v1/orders/status: 200 operation processed. See response content for results
+  400 wrong or missing data in the request
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:711b37743c83b5e99e9790264e4eb3c51402008825be411ee0ee276052734362
+words: 110
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: Import Order [Order Status Import]
+  section_path: 2.5.1.4
+  page: 113
+  lang: en
+  prev: U.DOC0168.0491
+  next: U.DOC0168.0493
+table:
+  table: 0
+  headers:
+    - URL
+    - /j1p/api/public/ji/v1/orders/status
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization (see “J1P WS Development_Kit - Web Services Overview” document)
+    - - Body
+      - JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+    - - Response format
+      - JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+    - - Return Codes
+      - |-
+        200 operation processed. See response content for results
+        400 wrong or missing data in the request
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

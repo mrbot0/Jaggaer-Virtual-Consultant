@@ -1,0 +1,39 @@
+id: U.DOC0172.0047
+doc: S.STD.XSC.DOC.0172
+doc_id: j1p-ws-development-kit-supplier-user-docx-305b9bed
+type: tabella
+text: |-
+  Colonne: ASO Attribute | Request Attribute | Description
+  ASO Attribute: j1userId | Request Attribute: j1p_uid | Description: IDM user reference
+  ASO Attribute: username | Request Attribute: idm/email | Description: User name
+  ASO Attribute: name | Request Attribute: idm/firstName + “ “ + idm/lastName | Description: Name of user
+hash: sha256:e3215668e60dab50a1ed22816d77368d75cac902668921ef105df8113b4fd571
+words: 48
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0172
+  chapter: Supplier user web-service
+  section: Mapping table for ASO
+  section_path: 2.3.3
+  page: 14
+  lang: en
+  prev: U.DOC0172.0046
+  next: U.DOC0172.0048
+table:
+  table: 0
+  headers:
+    - ASO Attribute
+    - Request Attribute
+    - Description
+  rows:
+    - - j1userId
+      - j1p_uid
+      - IDM user reference
+    - - username
+      - idm/email
+      - User name
+    - - name
+      - idm/firstName + “ “ + idm/lastName
+      - Name of user
+  block: 1
+  blocks: 1

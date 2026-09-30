@@ -1,0 +1,68 @@
+id: U.DOC0128.0004
+doc: S.STD.XSC.DOC.0128
+doc_id: workflow-definition-pr-no-validation-xml-7c1501f4
+type: tabella
+text: |-
+  Tabella: transizioni
+  Colonne: Da | A | Condizione
+  Da: START | A: Return1
+  Da: Return1 | A: Return2
+  Da: Return2 | A: InitialFiscalYearEnd
+  Da: InitialFiscalYearEnd | A: Approval-1
+  Da: Approval-1 | A: Approval-2
+  Da: Approval-2 | A: Approval-3
+  Da: Approval-3 | A: Approval-4
+  Da: Approval-4 | A: FinalFiscalYearEnd
+  Da: FinalFiscalYearEnd | A: CreatePO
+  Da: CreatePO | A: END
+hash: sha256:fbf1b7a2a2be1e5cde14a6c1b838cc28807b56e452dd293956ef03c5d2e1eadf
+words: 58
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0128
+  chapter: Transizioni (ActivityRelationship)
+  section: Transizioni (ActivityRelationship)
+  section_path: transizioni
+  page: null
+  lang: en
+  prev: U.DOC0128.0003
+  next: null
+table:
+  table: 0
+  headers:
+    - Da
+    - A
+    - Condizione
+  rows:
+    - - START
+      - Return1
+      - ""
+    - - Return1
+      - Return2
+      - ""
+    - - Return2
+      - InitialFiscalYearEnd
+      - ""
+    - - InitialFiscalYearEnd
+      - Approval-1
+      - ""
+    - - Approval-1
+      - Approval-2
+      - ""
+    - - Approval-2
+      - Approval-3
+      - ""
+    - - Approval-3
+      - Approval-4
+      - ""
+    - - Approval-4
+      - FinalFiscalYearEnd
+      - ""
+    - - FinalFiscalYearEnd
+      - CreatePO
+      - ""
+    - - CreatePO
+      - END
+      - ""
+  block: 1
+  blocks: 1

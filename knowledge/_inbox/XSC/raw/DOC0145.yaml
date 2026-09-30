@@ -1,0 +1,673 @@
+doc: S.STD.XSC.DOC.0145
+scope: XSC
+extracted_at: 2026-09-30T04:31:07.544Z
+tier: T0
+stats:
+  units: 144
+  extracted_units: 15
+  document_candidates: 0
+  needs_llm: 13
+  t0_complete: 2
+  by_candidate:
+    CFP: 8
+    FLW: 5
+    FLD: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 5182
+  sessions:
+    - n: 1
+      tokens: 5182
+      batches: 1
+      items: 13
+      batch_items:
+        - - R.DOC0145.0006
+          - R.DOC0145.0027
+          - R.DOC0145.0037
+          - R.DOC0145.0042
+          - R.DOC0145.0044
+          - R.DOC0145.0049
+          - R.DOC0145.0055
+          - R.DOC0145.0066
+          - R.DOC0145.0069
+          - R.DOC0145.0079
+          - R.DOC0145.0090
+          - R.DOC0145.0114
+          - R.DOC0145.0139
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0145.0006
+    source_unit: U.DOC0145.0006
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: and assign a supplier class
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: ordering settings for suppliers
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0006
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 31
+  - raw_id: R.DOC0145.0027
+    source_unit: U.DOC0145.0027
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: a PCard
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up PO terms
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0027
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 21
+  - raw_id: R.DOC0145.0037
+    source_unit: U.DOC0145.0037
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a new supplier class
+          valore: null
+        - n: 2
+          verbo: open
+          oggetto: the profile for a supplier and apply the class to that supplier
+          valore: null
+        - n: 3
+          verbo: in
+          oggetto: supplier search, se arch for the supplier using the Supplier Class filter
+          valore: null
+        - n: 4
+          verbo: in
+          oggetto: advanced item sear ch, search for items from that supplier and view the supplier class filter option
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0037
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 84
+  - raw_id: R.DOC0145.0042
+    source_unit: U.DOC0145.0042
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: punchouts
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up punchout types
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0042
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 22
+  - raw_id: R.DOC0145.0044
+    source_unit: U.DOC0145.0044
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: find
+          oggetto: an active hosted and punchout supplier
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the supplier setti ngs in the supplier profile
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0044
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 37
+  - raw_id: R.DOC0145.0049
+    source_unit: U.DOC0145.0049
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: the profile of an active non-catalog supplier, navigate to the addresses
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a physical, fulfillment, and remittance address using the Address Wizard
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: the active fulfillment and remittance addresses in the fulfillment center
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0049
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 72
+  - raw_id: R.DOC0145.0055
+    source_unit: U.DOC0145.0055
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: the order distribution default settings at the site level
+          valore: null
+        - n: 2
+          verbo: in
+          oggetto: the non-catalog supplier’s profile, review the setting that enables non- catalog items
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: the order distribution method for this supplier
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0055
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 66
+  - raw_id: R.DOC0145.0063
+    source_unit: U.DOC0145.0063
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • You
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0145.0063
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0145.0066
+    source_unit: U.DOC0145.0066
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: Buyer
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: buyer
+          oggetto: org must set up an acco unt with and get configuration details from bank
+          valore: null
+        - n: 2
+          verbo: org
+          oggetto: provides config details, an d JAGGAER turns vCard payments on
+          valore: null
+        - n: 3
+          verbo: jaggaer
+          oggetto: adds step to PO workflo w to communicate with bank to acquire the single-use credit card number
+          valore: null
+        - n: 4
+          verbo: org
+          oggetto: admin assigns card to user and supplier
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0066
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 88
+  - raw_id: R.DOC0145.0069
+    source_unit: U.DOC0145.0069
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: the PCard at the site level
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the profile of a non-catalog supplier and review its PCard settings
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0069
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 41
+  - raw_id: R.DOC0145.0079
+    source_unit: U.DOC0145.0079
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: up new PO clause
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: terms and conditions at the site level
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: the results on the profile of your non-catalog supplier
+          valore: null
+        - n: 4
+          verbo: apply
+          oggetto: the PO clause you created to that supplier
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0079
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 58
+  - raw_id: R.DOC0145.0090
+    source_unit: U.DOC0145.0090
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: error
+          oggetto: notification
+          valore: null
+        - n: 2
+          verbo: identify
+          oggetto: the problem
+          valore: null
+        - n: 3
+          verbo: address
+          oggetto: the order that triggered the step
+          valore: null
+        - n: 4
+          verbo: figure
+          oggetto: out how to prevent future orders from triggering the step
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0090
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 52
+  - raw_id: R.DOC0145.0102
+    source_unit: U.DOC0145.0102
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 32
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Org
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0145.0102
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0145.0114
+    source_unit: U.DOC0145.0114
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a14
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: and assign a supplier class
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: ordering settings for suppliers
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0114
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 31
+  - raw_id: R.DOC0145.0139
+    source_unit: U.DOC0145.0139
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0145
+    section: Managing Suppliers and Configuring Orders
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a15
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: site defaults
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: an Invalid Distribution step into PO workflow
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0145.0139
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 29

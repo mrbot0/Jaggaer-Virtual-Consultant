@@ -1,0 +1,187 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+batch: batch-20
+section: 2.1.1.22
+section_title: Attachment [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:FILEID
+    label: fileId
+    labels:
+      - fileId
+    technical_name: FILEID
+    section: 2.1.1.22
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal attachment identifier
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.22#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fileId
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FILETYPE
+    label: fileType
+    labels:
+      - fileType
+    technical_name: FILETYPE
+    section: 2.1.1.22
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Type of attachment. Possible values:
+
+      File
+
+      URL
+
+      NO MORE USED, type automatically assigned according to file information
+      (fileBase64 or fileUrl) used.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.22#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: fileType
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FILENAME
+    label: fileName
+    labels:
+      - fileName
+    technical_name: FILENAME
+    section: 2.1.1.22
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the attachment
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.22#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: fileName
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.2.1.5
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.2.1.5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fileName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:FILEURL
+    label: fileUrl
+    labels:
+      - fileUrl
+    technical_name: FILEURL
+    section: 2.1.1.22
+    type: null
+    mandatory_text: At least one between fileUrl and fileBase64 must be defined
+    allowed_values: []
+    notes: >-
+      URL of the attachment.
+
+      If no data is provided in fileBase64 field, it is used to define an URL
+      based Attachment.
+
+      File Type assigned is URL.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.22#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: fileUrl
+        type: null
+        mandatory_text: At least one between fileUrl and fileBase64 must be defined
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.9
+      mandatory:
+        kind: always
+  - key: tech:FILEBASE64
+    label: fileBase64
+    labels:
+      - fileBase64
+    technical_name: FILEBASE64
+    section: 2.1.1.22
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      File content to be used to define attachment.
+
+      If not provided, the field fileUrl is used.
+
+      If the fileUrl field is provided, it is used to define the URL information
+      of the attachment.
+
+      File Type assigned is File
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.22
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.22#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: fileBase64
+        type: null
+        mandatory_text: ""
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.2.1.5
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.2.1.5#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: fileBase64
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1594

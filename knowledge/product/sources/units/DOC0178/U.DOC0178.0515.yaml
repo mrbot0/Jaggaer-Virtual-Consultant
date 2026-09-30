@@ -1,0 +1,45 @@
+id: U.DOC0178.0515
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: statusCode | Description: Validation response result code.
+  200 – The request was processed successfully.
+  400 – The request could not be understood due to syntax errors.
+  403 – system understood the request, but server is refusing to fulfill it for some reason.
+  408 – The server timed out while waiting for the request
+  412 – The precondition given in one or more of the request-header fields evaluated to false when it was tested on the server
+  500 – The request could not be processed due to a transient error.
+  Attribute: statusText | Description: General validation response result description.
+hash: sha256:bc16a408b7a4aaa2d2b9b923205f6be292e20882cac7237f77e7616d94cff20a
+words: 103
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ValidateStatus [Validate]
+  section_path: 2.4.3.2
+  page: 124
+  lang: en
+  prev: U.DOC0178.0514
+  next: U.DOC0178.0516
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - statusCode
+      - |-
+        Validation response result code.
+        200 – The request was processed successfully.
+        400 – The request could not be understood due to syntax errors.
+        403 – system understood the request, but server is refusing to fulfill it for some reason.
+        408 – The server timed out while waiting for the request
+        412 – The precondition given in one or more of the request-header fields evaluated to false when it was tested on the server
+        500 – The request could not be processed due to a transient error.
+    - - statusText
+      - General validation response result description.
+  block: 1
+  blocks: 1

@@ -1,0 +1,57 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+section: campi-3
+section_title: Campi — 3. Onsite Contact Information
+genre: tecnica
+rows:
+  - label: fldExternalNotesInst1
+    technical_name: fldExternalNotesInst1
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br> <i><b>IMPORTANT:</b><br> Enter the contact
+      information of the Charles River representative whom the visiting supplier
+      should meet on arrival. Be sure to include a phone number and location
+      information such as building, floor, etc.</i><br><br> · id=10003 ·
+      tipo=userdefined
+    section: campi-3
+    source_unit: consulting-service-form-xml-d4861794/campi-3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: Onsite Contact Name
+    technical_name: fldContactName
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=35;
+      UserDefinedFieldParamTextBoxMaxLength=35 · id=10017 · tipo=userdefined
+    section: campi-3
+    source_unit: consulting-service-form-xml-d4861794/campi-3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: Onsite Contact Phone
+    technical_name: fldContactPhone
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=35;
+      UserDefinedFieldParamTextBoxMaxLength=35 · id=10018 · tipo=userdefined
+    section: campi-3
+    source_unit: consulting-service-form-xml-d4861794/campi-3#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: Onsite Contact Location
+    technical_name: fldContactLocation
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=35;
+      UserDefinedFieldParamTextBoxMaxLength=35 · id=10019 · tipo=userdefined
+    section: campi-3
+    source_unit: consulting-service-form-xml-d4861794/campi-3#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794

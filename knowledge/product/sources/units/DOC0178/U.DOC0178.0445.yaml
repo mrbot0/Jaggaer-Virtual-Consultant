@@ -1,0 +1,80 @@
+id: U.DOC0178.0445
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: jiId | Description: Internal JI identifier of the file Attribute: version | Description: Current revision number of the attachment (for contract attachment only). Attribute: fileSize | Description: Attachment size (in byte) (for contract attachment only). Attribute: dateUploaded | Description: Date the attachment was initially uploaded (for contract attachment only). Attribute: displayName | Description: Display name of the attachment (for contract attachment only). Attribute: fileName | Description: File name Attribute: type | Description: Identifies the type of attachment (for contract attachment only). MainDocument – The attachment is the main contract document SignedDocument – The attachment is a signed document CompiledDocument- The attachment is a compilation of multiple attachments Attachment- The attachment is a normal attachment, not a main, signed, or compiled document. PreviousSignedDocument- The attachment is a previously signed document. Attribute: printWithFullContract | Description: Indicates whether the attachment is (true) or is not (false) to be printed when the full contract is printed (for contract attachment only). Attribute: shareWithSecondParties | Description: Indicates whether the attachment can (true) or cannot (false) be shared with second parties (for contract attachment only). Attribute: contractSummaryVisibility | Description: Indicates the visibility setting for the contract summary (for contract attachment only). UseSummaryConfigVisibility- Use the visibility settings on the Contract Info tab on the Summary Configuration screen AdminOrManagerVisibility- The contract summary is only visible to contract administrators and contract managers Attribute: fileId | Description: Internal identifier of the attachment, to be used for calling attachments web service to download it Attribute: secureToken | Description: It is the secure token to be used for calling attachments web service to download the attachment file."
+hash: sha256:90aa2b325aab7f8e0f087f310b18bd912015a28d0ebb2b1b2c813be94a0ed092
+words: 273
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Attachment [Export]
+  section_path: 2.3.3.18
+  page: 97
+  lang: en
+  prev: U.DOC0178.0444
+  next: U.DOC0178.0446
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - jiId
+      - Internal JI identifier of the file
+      - ""
+    - - version
+      - Current revision number of the attachment (for contract attachment only).
+      - ""
+    - - fileSize
+      - Attachment size (in byte) (for contract attachment only).
+      - ""
+    - - dateUploaded
+      - Date the attachment was initially uploaded (for contract attachment only).
+      - ""
+    - - displayName
+      - Display name of the attachment (for contract attachment only).
+      - ""
+    - - fileName
+      - File name
+      - ""
+    - - type
+      - |-
+        Identifies the type of attachment (for contract attachment only).
+        MainDocument – The attachment is the main contract document
+        SignedDocument – The attachment is a signed document
+        CompiledDocument- The attachment is a compilation of multiple attachments
+        Attachment- The attachment is a normal attachment, not a main, signed, or compiled document.
+        PreviousSignedDocument- The attachment is a previously signed document.
+      - ""
+    - - printWithFullContract
+      - Indicates whether the attachment is (true) or is not (false) to be printed when the full contract is printed (for contract attachment only).
+      - ""
+    - - shareWithSecondParties
+      - Indicates whether the attachment can (true) or cannot (false) be shared with second parties (for contract attachment only).
+      - ""
+    - - contractSummaryVisibility
+      - |-
+        Indicates the visibility setting for the contract summary (for contract attachment only).
+        UseSummaryConfigVisibility- Use the visibility settings on the Contract Info tab on the Summary Configuration screen
+        AdminOrManagerVisibility- The contract summary is only visible to contract administrators and contract managers
+      - ""
+    - - fileId
+      - Internal identifier of the attachment, to be used for calling attachments web service to download it
+      - ""
+    - - secureToken
+      - It is the secure token to be used for calling attachments web service to download the attachment file.
+      - ""
+    - - attachmentURL
+      - URL of the attachment (for contract attachment of type link only).
+      - JA 19 03
+    - - mainDocument
+      - Indicates whether the attachment is (true) or is not (false) the main contract document (for contract attachment of type link only).
+      - JA 19 03
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

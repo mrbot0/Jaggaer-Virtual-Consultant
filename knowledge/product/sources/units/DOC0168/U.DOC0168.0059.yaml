@@ -1,0 +1,62 @@
+id: U.DOC0168.0059
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: username | Description: Username of the person who originally requested the PO export.
+  Attribute: eMail | Description: Email address of the requestor
+  Attribute: businessUnit | Description: Unique internal name of the business unit with which the requestor is associated
+  Attribute: department | Description: Department of the requestor, from his or her profile.
+  Attribute: firstName | Description: First name of the requestor. | Available from version: JA_19_06
+  Attribute: lastName | Description: Last name of the requestor. | Available from version: JA_19_06
+  Attribute: phone | Description: Telephone number of the requestor.
+  See section “TelephoneNumber [Export JIOrder method]” below. | Available from version: JA_19_06
+  Attribute: position | Description: Position of the requestor within the department, from his or her profile. | Available from version: JA_19_06
+hash: sha256:5b05a371d0011bb558cdfa84c2fb9193310f734f7f1dfd4899a302cfbd45b6fb
+words: 131
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: Requestor [Export JIOrder method]
+  section_path: 2.1.3.3
+  page: 28
+  lang: en
+  prev: U.DOC0168.0058
+  next: U.DOC0168.0060
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - username
+      - Username of the person who originally requested the PO export.
+      - ""
+    - - eMail
+      - Email address of the requestor
+      - ""
+    - - businessUnit
+      - Unique internal name of the business unit with which the requestor is associated
+      - ""
+    - - department
+      - Department of the requestor, from his or her profile.
+      - ""
+    - - firstName
+      - First name of the requestor.
+      - JA_19_06
+    - - lastName
+      - Last name of the requestor.
+      - JA_19_06
+    - - phone
+      - |-
+        Telephone number of the requestor.
+        See section “TelephoneNumber [Export JIOrder method]” below.
+      - JA_19_06
+    - - position
+      - Position of the requestor within the department, from his or her profile.
+      - JA_19_06
+  block: 1
+  blocks: 1

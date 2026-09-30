@@ -1,0 +1,68 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-14
+section: 2.3.1.9
+section_title: Attachment [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:FILEID
+    label: fileId
+    labels:
+      - fileId
+    technical_name: FILEID
+    section: 2.3.1.9
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: User-defined ID of the attachment
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.9
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.9#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: fileId
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ATTACHMENTURL
+    label: attachmentURL
+    labels:
+      - attachmentURL
+    technical_name: ATTACHMENTURL
+    section: 2.3.1.9
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      URL of the attachment.
+
+      Used only if no data is provided in fileBase64 field to define an URL
+      based Attachment.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.9
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.9#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: attachmentURL
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 841

@@ -1,0 +1,70 @@
+id: U.DOC0171.0471
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: user/Id | Description: Recipient user Internal identifier
+  Attribute: user/code | Description: Recipient user External code
+  Attribute: user/name | Description: Recipient user full-name
+  Attribute: user/login | Description: Recipient user login (if configured to be exported) | Available from version: JINT_20_02_00
+  Attribute: email | Description: Recipient user e-mail
+  Attribute: division | Description: Recipient user division name
+  Attribute: profile | Description: Recipient user profile name
+  Attribute: objectVisibility | Description: 1 = user can view the RfX
+  0 = user cannot view the RfX
+  Attribute: divisionId | Description: Internal identifier of user division | Available from version: JINT_20_02_00
+  Attribute: profileId | Description: Internal identifier of user profile | Available from version: JINT_20_02_00
+hash: sha256:61df10bdbb1970f453e07da4fd9f69a0cb624e6f0dbec13496ddd4bc9413a725
+words: 117
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: E-mail Recipient [Export RfX method]
+  section_path: 2.3.4.30
+  page: 7
+  lang: en
+  prev: U.DOC0171.0470
+  next: U.DOC0171.0472
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - user/Id
+      - Recipient user Internal identifier
+      - ""
+    - - user/code
+      - Recipient user External code
+      - ""
+    - - user/name
+      - Recipient user full-name
+      - ""
+    - - user/login
+      - Recipient user login (if configured to be exported)
+      - JINT_20_02_00
+    - - email
+      - Recipient user e-mail
+      - ""
+    - - division
+      - Recipient user division name
+      - ""
+    - - profile
+      - Recipient user profile name
+      - ""
+    - - objectVisibility
+      - |-
+        1 = user can view the RfX
+        0 = user cannot view the RfX
+      - ""
+    - - divisionId
+      - Internal identifier of user division
+      - JINT_20_02_00
+    - - profileId
+      - Internal identifier of user profile
+      - JINT_20_02_00
+  block: 1
+  blocks: 1

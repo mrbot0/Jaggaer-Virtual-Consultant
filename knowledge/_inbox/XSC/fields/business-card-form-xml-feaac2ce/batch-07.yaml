@@ -1,0 +1,37 @@
+document: business-card-form-xml-feaac2ce
+scope: XSC
+batch: batch-07
+section: campi-7
+section_title: Campi — senza-sezione
+part: 1
+parts: 1
+rows:
+  - key: tech:113
+    label: "113"
+    labels:
+      - "113"
+    technical_name: "113"
+    section: campi-7
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=113 · tipo=static
+    sources:
+      - document: business-card-form-xml-feaac2ce
+        section: campi-7
+        source_unit: business-card-form-xml-feaac2ce/campi-7#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "113"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 643

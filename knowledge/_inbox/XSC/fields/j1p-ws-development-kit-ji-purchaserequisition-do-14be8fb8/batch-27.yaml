@@ -1,0 +1,287 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+batch: batch-27
+section: 2.1.1.30
+section_title: Address [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:TEMPLATENAME
+    label: templateName
+    labels:
+      - templateName
+    technical_name: TEMPLATENAME
+    section: 2.1.1.30
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Name of the template to be called by this label type.
+
+      Note: The eProcurement solution uses NickName. The XML message uses
+      TemplateName
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.30#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: templateName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ADDRESSCODE
+    label: addressCode
+    labels:
+      - addressCode
+    technical_name: ADDRESSCODE
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Address code associated with this address. Use this field to link the
+      current address to the one stored in ERP system.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.30#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: addressCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CONTACT
+    label: contact
+    labels:
+      - contact
+    technical_name: CONTACT
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Contact [PR Import]” below
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.30#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: contact
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.31
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.31#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: contact
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDRESSLINE
+    label: addressLine
+    labels:
+      - addressLine
+    technical_name: ADDRESSLINE
+    section: 2.1.1.30
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: See section “Address Line [PR Import]” below
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.30#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: addressLine
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.32
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.32#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: addressLine
+        type: null
+        mandatory_text: N
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - Y
+          - N
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:CITY
+    label: city
+    labels:
+      - city
+    technical_name: CITY
+    section: 2.1.1.30
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: City.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.30#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: city
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:STATE
+    label: state
+    labels:
+      - state
+    technical_name: STATE
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: State.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.30#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: state
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:POSTALCODE
+    label: postalCode
+    labels:
+      - postalCode
+    technical_name: POSTALCODE
+    section: 2.1.1.30
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Postal code.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.30#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: postalCode
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:COUNTRY
+    label: country
+    labels:
+      - country
+    technical_name: COUNTRY
+    section: 2.1.1.30
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Long name of the country.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.30#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: country
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ISOCOUNTRYCODE
+    label: isoCountryCode
+    labels:
+      - isoCountryCode
+    technical_name: ISOCOUNTRYCODE
+    section: 2.1.1.30
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: 2-letter ISO country code of the country this address refers to.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.30#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: isoCountryCode
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 2225

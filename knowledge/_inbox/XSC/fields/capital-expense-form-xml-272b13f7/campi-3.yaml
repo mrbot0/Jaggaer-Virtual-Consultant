@@ -1,0 +1,38 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+section: campi-3
+section_title: Campi — Installation & Warranty Details
+genre: tecnica
+rows:
+  - label: Additional Installation Information
+    technical_name: Additional Installation Information
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: Specify any relevant installation information such as the installation
+      duration, special requirements needed by vendor, etc. ·
+      UserDefinedFieldParamTextAreaRows=3;
+      UserDefinedFieldParamTextBoxMaxLength=250;
+      UserDefinedFieldParamTextAreaCols=35 · id=10007 · tipo=userdefined
+    section: campi-3
+    source_unit: capital-expense-form-xml-272b13f7/campi-3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Additional Warranty Information
+    technical_name: Additional Warranty Information
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: Specify general warranty provisions such as warranty period, usually
+      expressed in a number of days, e.g., 90 days (calendar days unless
+      otherwise stated) and coverage (e.g., parts, labor and travel). ·
+      UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=3;
+      UserDefinedFieldParamTextBoxMaxLength=250;
+      UserDefinedFieldParamTextAreaCols=35 · id=10031 · tipo=userdefined
+    section: campi-3
+    source_unit: capital-expense-form-xml-272b13f7/campi-3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7

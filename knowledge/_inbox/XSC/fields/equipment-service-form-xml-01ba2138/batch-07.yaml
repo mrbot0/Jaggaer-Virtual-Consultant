@@ -1,0 +1,149 @@
+document: equipment-service-form-xml-01ba2138
+scope: XSC
+batch: batch-07
+section: campi-7
+section_title: Campi — senza-sezione
+part: 1
+parts: 1
+rows:
+  - key: tech:103
+    label: "103"
+    labels:
+      - "103"
+    technical_name: "103"
+    section: campi-7
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=103 · tipo=static
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-7
+        source_unit: equipment-service-form-xml-01ba2138/campi-7#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "103"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:INSTRUCTIONS
+    label: Instructions
+    labels:
+      - Instructions
+    technical_name: INSTRUCTIONS
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10001 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-7
+        source_unit: equipment-service-form-xml-01ba2138/campi-7#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TO_DATE
+    label: "To Date:"
+    labels:
+      - "To Date:"
+    technical_name: TO_DATE
+    section: campi-7
+    type: Date
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10006 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-7
+        source_unit: equipment-service-form-xml-01ba2138/campi-7#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "To Date:"
+        type: Date
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:LINE_ITEM
+    label: Line item
+    labels:
+      - Line item
+    technical_name: LINE_ITEM
+    section: campi-7
+    type: ItemList
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10007 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-7
+        source_unit: equipment-service-form-xml-01ba2138/campi-7#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Line item
+        type: ItemList
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PROVIDE_DETAILS_OF_AGREEMENT
+    label: Provide details of agreement
+    labels:
+      - Provide details of agreement
+    technical_name: PROVIDE_DETAILS_OF_AGREEMENT
+    section: campi-7
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10250 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-7
+        source_unit: equipment-service-form-xml-01ba2138/campi-7#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Provide details of agreement
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1285

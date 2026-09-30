@@ -1,0 +1,72 @@
+id: U.DOC0171.0388
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique: Technical position of the score row name: score | N: score | N: Y | Section name: The technical envelope score the provide supplier | Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique: The technical envelope score the provide supplier | Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique: Numbers with up to 3 digits of decimal precision(Example 12.345)"
+hash: sha256:d69e07698d56fb56e999102a7df539777ea57dae5b4d108af429472a0d13ffeb
+words: 113
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Technical Envelope Scoring [ImportScore method]
+  section_path: 2.2.1.1
+  page: 7
+  lang: en
+  prev: U.DOC0171.0387
+  next: U.DOC0171.0389
+table:
+  table: 1
+  headers:
+    - name
+    - N
+    - N
+    - Section name
+    - Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique
+    - Section number or Name of an existing technical section to update. See §Behavior, section “Envelope Management”. sectionPos is preferred. Section name is not enforced to be unique
+  rows:
+    - - sectionPos
+      - Y
+      - Y
+      - Section position
+      - ""
+      - ""
+    - - parameterList
+      - Y
+      - Y
+      - Container object for a list of parameters
+      - ""
+      - ""
+    - - parameter
+      - Y (one of the two)
+      - Y (one of the two)
+      - Technical Parameter identifier. id or paramPos can be provided. id is preferred
+      - ""
+      - ""
+    - - id
+      - id
+      - Y (one of the two)
+      - Technical Parameter identifier. id or paramPos can be provided. id is preferred
+      - Technical Parameter identifier. id or paramPos can be provided. id is preferred
+      - |-
+        JA internal identifier of an existing commercial parameter.
+        If provided and the section doesn’t contain a parameter with such identifier, no score is updated.
+        Position of the score row.
+        Used only if no value is provided in id field. It represents the position of the parameter.
+    - - paramPos
+      - paramPos
+      - ""
+      - Technical position of the score row
+      - Technical position of the score row
+      - ""
+    - - score
+      - score
+      - Y
+      - The technical envelope score the provide supplier
+      - The technical envelope score the provide supplier
+      - Numbers with up to 3 digits of decimal precision(Example 12.345)
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

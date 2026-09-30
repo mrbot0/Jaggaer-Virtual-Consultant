@@ -1,0 +1,68 @@
+id: U.DOC0171.0467
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: name | Description: Organisation name
+  Attribute: fiscalCode | Description: Organisation fiscal code
+  Attribute: vat | Description: Organisation VAT
+  Attribute: address | Description: Organisation address
+  Attribute: participationSharePerc | Description: Percentage of share participation of the lobaliston in the consortium
+  Attribute: representativeLegal | Description: Legal representative of the organisation
+  Attribute: notes | Description: Notes
+  Attribute: regSupplier | Description: In case of registered supplier, it contains the supplier identifiers:
+  id: supplier internal identifier
+  code: supplier external code
+  name: supplier name
+  extUniqueCode: supplier external unique code | Available from version: JINT_20_01_02
+hash: sha256:efa33429fcd787d44a2a523fb5acb984bdc300bdfba823c30e70fdac11ba5599
+words: 96
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Suppliers Offer: Organisation [Export RfX method]"
+  section_path: 2.3.4.26
+  page: 7
+  lang: en
+  prev: U.DOC0171.0466
+  next: U.DOC0171.0468
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - name
+      - Organisation name
+      - ""
+    - - fiscalCode
+      - Organisation fiscal code
+      - ""
+    - - vat
+      - Organisation VAT
+      - ""
+    - - address
+      - Organisation address
+      - ""
+    - - participationSharePerc
+      - Percentage of share participation of the lobaliston in the consortium
+      - ""
+    - - representativeLegal
+      - Legal representative of the organisation
+      - ""
+    - - notes
+      - Notes
+      - ""
+    - - regSupplier
+      - |-
+        In case of registered supplier, it contains the supplier identifiers:
+        id: supplier internal identifier
+        code: supplier external code
+        name: supplier name
+        extUniqueCode: supplier external unique code
+      - JINT_20_01_02
+  block: 1
+  blocks: 1

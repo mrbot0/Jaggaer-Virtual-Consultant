@@ -1,0 +1,532 @@
+doc: S.STD.XSC.DOC.0174
+scope: XSC
+extracted_at: 2026-09-30T04:32:14.768Z
+tier: T0
+stats:
+  units: 79
+  extracted_units: 13
+  document_candidates: 1
+  needs_llm: 8
+  t0_complete: 6
+  by_candidate:
+    FLD: 5
+    GLS: 1
+    FLW: 4
+    CFG: 1
+    INV: 2
+    INT: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 5699
+  sessions:
+    - n: 1
+      tokens: 5699
+      batches: 1
+      items: 8
+      batch_items:
+        - - R.DOC0174.0010
+          - R.DOC0174.0014
+          - R.DOC0174.0020
+          - R.DOC0174.0021
+          - R.DOC0174.0022
+          - R.DOC0174.0031
+          - R.DOC0174.0047
+          - R.DOC0174.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0174.0005
+    source_unit: U.DOC0174.0005
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: you
+      modality: raccomandazione
+      condition: you are not a named addressee
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0174.0005
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0174.0008
+    source_unit: U.DOC0174.0008
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: any printed copy of this document
+      modality: obbligo-condizionale
+      condition: not under the continuing control and supervision of a person with authorized access to such material
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0174.0008
+      mandatory:
+        kind: conditional
+        when: not under the continuing control and supervision of a person with authorized access to such material
+    needs_llm: false
+    tokens: 50
+  - raw_id: R.DOC0174.0009
+    source_unit: U.DOC0174.0009
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Handling, storage, and reproduction
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0174.0009
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0174.0010
+    source_unit: U.DOC0174.0010
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0174.0010
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 23
+  - raw_id: R.DOC0174.0012
+    source_unit: U.DOC0174.0012
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - GLS
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      term: JI CUSTOM FIELD Service
+      definition: the software component that has been defined for the implementation of the JAGGAER Indirect Solution via FTP for custom fields.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0174.0012
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0174.0014
+    source_unit: U.DOC0174.0014
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: csv
+          oggetto: Import Service
+          valore: null
+        - n: 2
+          verbo: import
+          oggetto: "Data Format: Describes the list of files required to perform proper import functionality"
+          valore: Describes the list of files required to perform proper import functionality
+        - n: 3
+          verbo: import
+          oggetto: "Result Response: Describes the structure of the CSV file generated with operation responses"
+          valore: Describes the structure of the CSV file generated with operation responses
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0174.0014
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 71
+  - raw_id: R.DOC0174.0019
+    source_unit: U.DOC0174.0019
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: These operations
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0174.0019
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0174.0020
+    source_unit: U.DOC0174.0020
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: delete
+          oggetto: Custom Field Relationship
+          valore: null
+        - n: 2
+          verbo: delete
+          oggetto: Custom Field Value
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0174.0020
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0174.0021
+    source_unit: U.DOC0174.0021
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Note: If a relationship exists for the value, you must delete the relationship before you can delete the value."
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0174.0021
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 28
+  - raw_id: R.DOC0174.0022
+    source_unit: U.DOC0174.0022
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: modify
+          oggetto: Custom Field Value
+          valore: null
+        - n: 2
+          verbo: modify/delete
+          oggetto: WF Dynamic Rule
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: Custom Field Relationship
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0174.0022
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 38
+  - raw_id: R.DOC0174.0031
+    source_unit: U.DOC0174.0031
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - INV
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: nota
+      text: "Note: In the following tables, the names of mandatory fields are bold."
+      subject: null
+      rules:
+        - text: "Note: In the following tables, the names of mandatory fields are bold."
+          modality: obbligo
+          consequence: FLD.mandatory
+          mandatory:
+            kind: always
+      author: null
+      date: null
+      source_unit: U.DOC0174.0031
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 18
+  - raw_id: R.DOC0174.0038
+    source_unit: U.DOC0174.0038
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - INV
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: nota
+      text: "Note: Whatever the component of the custom field you want to update, if the custom field value has an existing business unit associated with it, this file must always be provided; otherwise, the existing business unit will be removed."
+      subject: component of the custom
+      rules:
+        - text: "Note: Whatever the component of the custom field you want to update, if the custom field value has an existing business unit associated with it, this file must always be provided;"
+          modality: obbligo-condizionale
+          consequence: FLD.mandatory
+          mandatory:
+            kind: conditional
+            when: the custom field value has an existing business unit associated with it
+      author: null
+      date: null
+      source_unit: U.DOC0174.0038
+    needs_llm: false
+    tokens: 59
+  - raw_id: R.DOC0174.0047
+    source_unit: U.DOC0174.0047
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0174
+    section: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: error
+          oggetto: Encountered while Parsing Source File
+          valore: null
+        - n: 2
+          verbo: error
+          oggetto: Found while Executing Import
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0174.0047
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 39
+  - raw_id: R.DOC0174.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0174
+    section: null
+    source_unit: U.DOC0174.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: jint-ftp-service-ji-custom-field-development-kit-fb14f1a3
+      protocol:
+        - FTP
+      endpoints: []
+      operations: []
+      mappings: []
+      error_catalog: []
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+      - error_catalog
+    tokens: 2650

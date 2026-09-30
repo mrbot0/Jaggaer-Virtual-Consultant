@@ -1,0 +1,507 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.2
+section_title: JIContract [Import]
+genre: tecnica
+rows:
+  - label: contractId
+    technical_name: contractId
+    type: null
+    mandatory_text: Y for update
+    allowed_values: []
+    notes: >-
+      Unique Internal identifier of the contract to be updated
+
+      If you do not provide a contract ID, the CLM solution assumes that you
+      want to create a new contract and verifies that the contractNumber is new
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractName
+    technical_name: contractName
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: Name of the contract.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractNumber
+    technical_name: contractNumber
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: >-
+      Number used by your organization and by the supplier as the reference
+      number for the contract.
+
+      Must be unique by supplier.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractType
+    technical_name: contractType
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: Internal name for a type of contract, such as a commodity, product, or
+      service.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractTemplate
+    technical_name: contractTemplate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Contract template information.
+      See section “ContractTemplate [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractLanguage
+    technical_name: contractLanguage
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: Language in which the contract is written
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: project
+    technical_name: project
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: Work group code associated with the contract
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: jurisdictionCode
+    technical_name: jurisdictionCode
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Code for the jurisdiction associated with the contract. The jurisdiction
+      is the geographical location in which the terms and conditions of the
+      contract are upheld.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Currency
+    technical_name: Currency
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Exchangeable currency code,
+
+      If you omit this field, the contract will use your organization’s default
+      currency.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Status
+    technical_name: Status
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates the actual status of the contract (that is, where the contract
+      is in the workflow process).
+
+      Valid only if you are creating a new contract.
+
+      Possible values:
+
+      Draft
+
+      Executed
+
+      The default status is Draft.
+
+      If the status is Executed, then the specified startDate and endDate
+      elements determine which executed status applies:
+
+      Executed: Future Contract- The contract is being created before the
+      StartDate.
+
+      Executed: In Effect Contract- The contract is being created between the
+      StartDate and EndDate.
+
+      Completed Contract- The contract is being created after the EndDate.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractStatus
+    technical_name: contractStatus
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates the customer-defined status of the contract.
+      Must match a status defined in the organization
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: archive
+    technical_name: archive
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates whether contract is (true) or is not (false) to be archived.
+      Archived contracts are not included in search results.
+      Valid only for contracts that are Complete, Superseded, or Terminated.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Summary
+    technical_name: Summary
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Description of the contract
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractValue
+    technical_name: contractValue
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Value of the contract
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractTotalValue
+    technical_name: contractTotalValue
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Total value of all contracts in the contract family
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: shareContractWithSecondParties
+    technical_name: shareContractWithSecondParties
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the contract can (true) or cannot (false) be shared
+      with second parties.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractDates
+    technical_name: contractDates
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of peculiar contract dates.
+      See section “ContractDates [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractPartiesList
+    technical_name: contractPartiesList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Information about first and secondary parties of the contract.
+      See section “ContractPartiesList [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: customfieldList
+    technical_name: customfieldList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for contract custom field information.
+      See section “CustomFieldList [Import]” below.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationList
+    technical_name: obligationList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for Obligation information.
+      See section “Obligation [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r19
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: eProcurement
+    technical_name: eProcurement
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for E-Procurement information.
+      See section “EProcurement [Import]” below.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r20
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: isConfidential
+    technical_name: isConfidential
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether access to this contract is (true) or is not (false)
+      limited to those individuals explicitly listed on the contract.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r21
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: productLineItemList
+    technical_name: productLineItemList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Product line items associated with this contract
+      See section “ProductLineItem [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r22
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: serviceLineItemList
+    technical_name: serviceLineItemList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Service line items associated with this contract
+      See section “ServiceLineItem [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r23
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: managerList
+    technical_name: managerList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      List of Contract manager assigned to this contract
+      See section “ManagerList [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r24
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: stakeholderList
+    technical_name: stakeholderList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      List of Contract stakeholder assigned to this contract
+      See section “StakeholderList [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r25
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: invoiceApproversList
+    technical_name: invoiceApproversList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      List of users that are authorized to approve invoices or invoice line
+      items that are assigned to the contract.
+
+      See section “User [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r26
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractManagerVisibility
+    technical_name: contractManagerVisibility
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Visibility setting for the contract summary for a user who can access the
+      contract and who has the Contract Manager permission.
+
+      Full – All contract details are visible to the user, including links to
+      the actual contract files.
+
+      Partial- Only some of the contract details are visible to the user.
+
+      None- No contract information is visible to the user, unless he or she has
+      access to buy against the contract. A user who has access to buy against
+      the contract can see the contract summary.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r27
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: allOtherUsersVisibility
+    technical_name: allOtherUsersVisibility
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Visibility setting for the contract summary for a regular user who can
+      access the contract.
+
+      Full – All contract details are visible to the user, including links to
+      the actual contract files.
+
+      Partial- Only some of the contract details are visible to the user.
+
+      None- No contract information is visible to the user, unless he or she has
+      access to buy against the contract. A user who has access to buy against
+      the contract can see the contract summary.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r28
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: additionalDetails
+    technical_name: additionalDetails
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Additional details.
+      See section “AdditionalDetails [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r29
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: notificationList
+    technical_name: notificationList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of contract notifications information
+      See section “NotificationList [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r30
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractFamily
+    technical_name: contractFamily
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for relationship of this contract and other contract.
+      See section “ContractFamily [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r31
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: consortiumSettings
+    technical_name: consortiumSettings
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Consortium information container.
+      See section “ConsortiumSettings [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r32
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: attachmentList
+    technical_name: attachmentList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Contract attachment container.
+      See section “Attachment [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r33
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractCommodityCodesList
+    technical_name: contractCommodityCodesList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for contract commodities information.
+      See section “ContractCommodityCode [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r34
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: SalesForceFields
+    technical_name: SalesForceFields
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      SalesForce Fields information.
+      See section “SalesForceFields [Import]” below
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+    row_ref: t0.r35
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

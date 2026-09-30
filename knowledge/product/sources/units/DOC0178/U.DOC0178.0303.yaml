@@ -1,0 +1,41 @@
+id: U.DOC0178.0303
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: discount | Description: Discount for the prescribed period, to be used instead of the payment terms on the invoice.
+  Valid only if:
+  • All lines on the invoice are for the same contract.
+  • These payment terms differ from those on the invoice
+hash: sha256:84ab1ed6813572034688b00ee711eff58b745fe544e5baaf9fc6d404854ddd24
+words: 44
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: PaymentTerms [Import]
+  section_path: 2.2.1.45
+  page: 56
+  lang: en
+  prev: U.DOC0178.0302
+  next: U.DOC0178.0304
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - discount
+    - ""
+    - |-
+      Discount for the prescribed period, to be used instead of the payment terms on the invoice.
+      Valid only if:
+      • All lines on the invoice are for the same contract.
+      • These payment terms differ from those on the invoice
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

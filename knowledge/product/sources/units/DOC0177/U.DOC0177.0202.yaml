@@ -1,0 +1,35 @@
+id: U.DOC0177.0202
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: "Attribute: oldERPNumber | Mandatory (Y/N): N | Description: Old, unique ERP number associated with the contact. | Mapping on Jaggaer One data model and notes: Include this field only if the ERP number associated with the contact is changing. This field is first in priority when the JAGGAER ONE Supplier Management solution is searching for a contact. If this field is populated but the JAGGAER ONE Supplier Management solution cannot find a match, the JAGGAER ONE Supplier Management solution creates a new contact."
+hash: sha256:1b384515cb5b851adf8d2ef9f403937054f30a8343aae67eb57c6706419ee7c8
+words: 83
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/contactList/contact
+  section_path: 2.1.1.38
+  page: 37
+  lang: en
+  prev: U.DOC0177.0201
+  next: U.DOC0177.0203
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - oldERPNumber
+    - N
+    - Old, unique ERP number associated with the contact.
+    - Include this field only if the ERP number associated with the contact is changing. This field is first in priority when the JAGGAER ONE Supplier Management solution is searching for a contact. If this field is populated but the JAGGAER ONE Supplier Management solution cannot find a match, the JAGGAER ONE Supplier Management solution creates a new contact.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

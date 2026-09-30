@@ -1,0 +1,39 @@
+id: U.DOC0169.0185
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: note | Mandatory (Y/N): N | Description: External note.
+  If the internal note is longer than 1000 characters, it is truncated and saved.
+  Note: If the Note field is empty, the existing note is not overwritten. Only a populated Note field can overwrite the existing note.
+hash: sha256:d6ed57a4087e1204dc14682d630e9334f78c00d2bd795a336c4ce0ecf9df4f15
+words: 47
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Internal Info [PR Import]
+  section_path: 2.1.1.28
+  page: 35
+  lang: en
+  prev: U.DOC0169.0184
+  next: U.DOC0169.0186
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - note
+    - N
+    - |-
+      External note.
+      If the internal note is longer than 1000 characters, it is truncated and saved.
+      Note: If the Note field is empty, the existing note is not overwritten. Only a populated Note field can overwrite the existing note.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

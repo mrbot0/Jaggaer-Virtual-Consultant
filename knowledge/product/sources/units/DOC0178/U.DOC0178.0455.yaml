@@ -1,0 +1,51 @@
+id: U.DOC0178.0455
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: distributionType | Description: Manner in which the funds are to be distributed to each split for the accounting codes defaults for the invoice custom fields:
+  AmountOfQuantity – funds are distributed based on a user-specified portion of the quantity
+  AmountOfPrice – funds are distributed based on a user-specified portion of the quantity.
+  PercentOfQuantity – funds are distributed based on a user-specified percentage of the quantity
+  PercentOfPrice – funds are distributed based on a user-specified percentage of the price
+  Attribute: codesGroupName | Description: Name of the accounting codes group
+  Attribute: codesGroupSplit | Description: Container for distribution for the split for the accounting codes group.
+  See section “CodesGroupSplit [Export]” below
+hash: sha256:0690333fe81d4dcded2f43291a20a2e7014edfd303baba53c6c14563d32c2664
+words: 116
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: CodesGroup [Export]
+  section_path: 2.3.3.25
+  page: 103
+  lang: en
+  prev: U.DOC0178.0454
+  next: U.DOC0178.0456
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - distributionType
+      - |-
+        Manner in which the funds are to be distributed to each split for the accounting codes defaults for the invoice custom fields:
+        AmountOfQuantity – funds are distributed based on a user-specified portion of the quantity
+        AmountOfPrice – funds are distributed based on a user-specified portion of the quantity.
+        PercentOfQuantity – funds are distributed based on a user-specified percentage of the quantity
+        PercentOfPrice – funds are distributed based on a user-specified percentage of the price
+      - ""
+    - - codesGroupName
+      - Name of the accounting codes group
+      - ""
+    - - codesGroupSplit
+      - |-
+        Container for distribution for the split for the accounting codes group.
+        See section “CodesGroupSplit [Export]” below
+      - ""
+  block: 1
+  blocks: 1

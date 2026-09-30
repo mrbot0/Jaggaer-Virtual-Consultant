@@ -1,0 +1,50 @@
+id: U.DOC0182.0237
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: requisitionName | Description: Name of the PR.
+  Attribute: requisitionId | Description: Unique requisition number typically used only by JAGGAER.
+  Attribute: username | Description: Username of the requestor, the person who originally requested the PR export. The username must exist in your system.
+  Attribute: requisitionPosition | Description: Position of the line item in the PR document.
+  Attribute: requisitionCreationStatus | Description: See section “Requisition Creation Status [PR Import]” below
+  Attribute: error | Description: List of error found, if any.
+  See section “Error [PR Import]” below
+  Attribute: requisitionSupplierGroupRef | Description: See section “Requisition Supplier Group Ref [PR Import]” below
+hash: sha256:52422a07d64358dd6ec31dcc6946b5c7b35d9d81111e7c5d8d2d42dfbd58160b
+words: 101
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Requisition Ref [PR Import]
+  section_path: 2.1.3.5
+  page: 24
+  lang: en
+  prev: U.DOC0182.0236
+  next: U.DOC0182.0238
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - requisitionName
+      - Name of the PR.
+    - - requisitionId
+      - Unique requisition number typically used only by JAGGAER.
+    - - username
+      - Username of the requestor, the person who originally requested the PR export. The username must exist in your system.
+    - - requisitionPosition
+      - Position of the line item in the PR document.
+    - - requisitionCreationStatus
+      - See section “Requisition Creation Status [PR Import]” below
+    - - error
+      - |-
+        List of error found, if any.
+        See section “Error [PR Import]” below
+    - - requisitionSupplierGroupRef
+      - See section “Requisition Supplier Group Ref [PR Import]” below
+  block: 1
+  blocks: 1

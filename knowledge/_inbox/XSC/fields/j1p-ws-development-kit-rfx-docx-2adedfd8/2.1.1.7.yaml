@@ -1,0 +1,61 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.7
+section_title: Buyer and Seller Attachments [Import/Update RfX method]
+genre: tecnica
+rows:
+  - label: fileName
+    technical_name: fileName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Attachment file name
+    section: 2.1.1.7
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.7#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: fileDescription
+    technical_name: fileDescription
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Attachment description
+    section: 2.1.1.7
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.7#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: fileBase64
+    technical_name: fileBase64
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Attachment content
+    section: 2.1.1.7
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.7#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: filePath
+    technical_name: filePath
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Attachment full path
+    section: 2.1.1.7
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.7#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: tagList
+    technical_name: tagList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Optional object aimed to contain additional attachment metadata.
+    section: 2.1.1.7
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.7#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

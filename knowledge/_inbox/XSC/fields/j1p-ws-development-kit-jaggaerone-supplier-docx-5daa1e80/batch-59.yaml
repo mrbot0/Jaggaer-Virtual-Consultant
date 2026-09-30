@@ -1,0 +1,81 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-59
+section: 2.1.1.97
+section_title: J1Supplier/JISupplierData/locationList/location/customElementList/customElement
+part: 1
+parts: 1
+rows:
+  - key: tech:CUSTOMELEMENTIDENTIFIER
+    label: customElementIdentifier
+    labels:
+      - customElementIdentifier
+    technical_name: CUSTOMELEMENTIDENTIFIER
+    section: 2.1.1.97
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.97
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.97#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: customElementIdentifier
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.100
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.100#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: customElementIdentifier
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMELEMENTVALUELIST
+    label: customElementValueList
+    labels:
+      - customElementValueList
+    technical_name: CUSTOMELEMENTVALUELIST
+    section: 2.1.1.97
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.97
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.97#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: customElementValueList
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.100
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.100#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: customElementValueList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 999

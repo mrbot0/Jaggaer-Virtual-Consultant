@@ -1,0 +1,87 @@
+id: U.DOC0167.0717
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: insuranceInformation/type | Datatype: VARCHAR2(100 CHAR)
+  Attribute: insuranceInformation/policyNumber | Datatype: VARCHAR2(100 CHAR)
+  Attribute: insuranceInformation/insuranceLimit | Datatype: VARCHAR2(100 CHAR)
+  Attribute: insuranceInformation/expirationDate | Datatype: DATE
+  Attribute: insuranceInformation/insuranceProvider | Datatype: VARCHAR2(100 CHAR)
+  Attribute: insuranceInformation/agent | Datatype: VARCHAR2(100 CHAR)
+  Attribute: insuranceInformation/insuranceProviderTelephone/telephoneNumber/countryCode | Datatype: VARCHAR2(4 CHAR)
+  Attribute: insuranceInformation/insuranceProviderTelephone/telephoneNumber/areaCode | Datatype: VARCHAR2(5 CHAR)
+  Attribute: insuranceInformation/insuranceProviderTelephone/telephoneNumber/number | Datatype: VARCHAR2(10 CHAR)
+  Attribute: insuranceInformation/insuranceProviderTelephone/telephoneNumber/extension | Datatype: VARCHAR2(5 CHAR)
+  Attribute: insuranceInformation/insuranceCertificate
+  Attribute: insuranceInformation/otherTypeName | Datatype: VARCHAR2(100 CHAR)
+  Attribute: @isChanged | Datatype: VARCHAR2(3 CHAR)
+  Attribute: insuranceInformation@isChanged | Datatype: VARCHAR2(3 CHAR)
+hash: sha256:9249c5599fbdb3045dacf156f69760a1d5120224453c4a69d78185e190070bfc
+words: 94
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: supplier/JIData/insuranceInformationList
+  section_path: 2.5.46
+  page: 7
+  lang: en
+  prev: U.DOC0167.0716
+  next: U.DOC0167.0718
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - insuranceInformation/type
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - insuranceInformation/policyNumber
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - insuranceInformation/insuranceLimit
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - insuranceInformation/expirationDate
+      - ""
+      - DATE
+    - - insuranceInformation/insuranceProvider
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - insuranceInformation/agent
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - insuranceInformation/insuranceProviderTelephone/telephoneNumber/countryCode
+      - ""
+      - VARCHAR2(4 CHAR)
+    - - insuranceInformation/insuranceProviderTelephone/telephoneNumber/areaCode
+      - ""
+      - VARCHAR2(5 CHAR)
+    - - insuranceInformation/insuranceProviderTelephone/telephoneNumber/number
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - insuranceInformation/insuranceProviderTelephone/telephoneNumber/extension
+      - ""
+      - VARCHAR2(5 CHAR)
+    - - insuranceInformation/insuranceCertificate
+      - ""
+      - ""
+    - - insuranceInformation/otherTypeName
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - "@isChanged"
+      - ""
+      - VARCHAR2(3 CHAR)
+    - - insuranceInformation@isChanged
+      - ""
+      - VARCHAR2(3 CHAR)
+  block: 1
+  blocks: 1

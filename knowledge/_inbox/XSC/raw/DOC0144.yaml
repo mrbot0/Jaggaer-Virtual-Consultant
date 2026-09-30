@@ -1,0 +1,723 @@
+doc: S.STD.XSC.DOC.0144
+scope: XSC
+extracted_at: 2026-09-30T04:31:06.765Z
+tier: T0
+stats:
+  units: 142
+  extracted_units: 16
+  document_candidates: 0
+  needs_llm: 13
+  t0_complete: 3
+  by_candidate:
+    CFP: 3
+    FLD: 3
+    INV: 4
+    FLW: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 5019
+  sessions:
+    - n: 1
+      tokens: 5019
+      batches: 1
+      items: 13
+      batch_items:
+        - - R.DOC0144.0007
+          - R.DOC0144.0014
+          - R.DOC0144.0018
+          - R.DOC0144.0022
+          - R.DOC0144.0028
+          - R.DOC0144.0036
+          - R.DOC0144.0068
+          - R.DOC0144.0071
+          - R.DOC0144.0073
+          - R.DOC0144.0089
+          - R.DOC0144.0108
+          - R.DOC0144.0117
+          - R.DOC0144.0121
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0144.0007
+    source_unit: U.DOC0144.0007
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: complete
+          oggetto: a non-catalog item form, forms and requests
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: the non-catalog item form
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: an “classic” form
+          valore: classic
+        - n: 4
+          verbo: configure
+          oggetto: a request template
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0144.0007
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 51
+  - raw_id: R.DOC0144.0014
+    source_unit: U.DOC0144.0014
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: the non-catalog item form
+          valore: null
+        - n: 2
+          verbo: complete
+          oggetto: some forms
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0144.0014
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 18
+  - raw_id: R.DOC0144.0018
+    source_unit: U.DOC0144.0018
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0144.0018
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0144.0022
+    source_unit: U.DOC0144.0022
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - INV
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0144.0022
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0144.0028
+    source_unit: U.DOC0144.0028
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: where the non-catalog item form can be accessed
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: the form
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: the form
+          valore: null
+        - n: 4
+          verbo: view
+          oggetto: the results of changes to configuration
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0144.0028
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 49
+  - raw_id: R.DOC0144.0036
+    source_unit: U.DOC0144.0036
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: FLW
+      score: 0.9
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: how forms and requests are accessed
+          valore: null
+        - n: 2
+          verbo: acquire
+          oggetto: "the following:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0144.0036
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 29
+  - raw_id: R.DOC0144.0064
+    source_unit: U.DOC0144.0064
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - INV
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What request templates
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0144.0064
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0144.0066
+    source_unit: U.DOC0144.0066
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - INV
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "• Example: In form request workflow"
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0144.0066
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 21
+  - raw_id: R.DOC0144.0068
+    source_unit: U.DOC0144.0068
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - INV
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0144.0068
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0144.0071
+    source_unit: U.DOC0144.0071
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: FLW
+      score: 0.9
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: build
+          oggetto: a new form from a template
+          valore: null
+        - n: 2
+          verbo: make
+          oggetto: it easy to find and select a supplier or two
+          valore: null
+        - n: 3
+          verbo: make
+          oggetto: some edits to the form layout
+          valore: null
+        - n: 4
+          verbo: make
+          oggetto: "it accessible to shoppers:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0144.0071
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 52
+  - raw_id: R.DOC0144.0073
+    source_unit: U.DOC0144.0073
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: FLW
+      score: 0.9
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: it to Favorites
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: it to the Showcase
+          valore: null
+        - n: 3
+          verbo: access
+          oggetto: the form either via search or the showcase
+          valore: null
+        - n: 4
+          verbo: fill
+          oggetto: it out and put it in a cart
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0144.0073
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 47
+  - raw_id: R.DOC0144.0089
+    source_unit: U.DOC0144.0089
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: FLW
+      score: 0.9
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: fill
+          oggetto: out and submit the two kinds of Procurement requests
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the cart
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: their corresponding request templates
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0144.0089
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 43
+  - raw_id: R.DOC0144.0108
+    source_unit: U.DOC0144.0108
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 25
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: FLW
+      score: 0.9
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the request template and select the appropriate Purpose
+          valore: null
+        - n: 2
+          verbo: complete
+          oggetto: each section
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: questions; create at least one conditional question
+          valore: null
+        - n: 4
+          verbo: use
+          oggetto: the Preview function to test it
+          valore: null
+        - n: 5
+          verbo: make
+          oggetto: it visible
+          valore: null
+        - n: 6
+          verbo: present
+          oggetto: it
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0144.0108
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 69
+  - raw_id: R.DOC0144.0111
+    source_unit: U.DOC0144.0111
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: How
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0144.0111
+    needs_llm: false
+    tokens: 11
+  - raw_id: R.DOC0144.0117
+    source_unit: U.DOC0144.0117
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0144.0117
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 20
+  - raw_id: R.DOC0144.0121
+    source_unit: U.DOC0144.0121
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0144
+    section: Creating and Managing Forms in eProcurement
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLW
+    type_hint:
+      candidates: *a16
+      outcome: FLW
+      score: 0.9
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: the XML file and try to determine what is in the form
+          valore: null
+        - n: 2
+          verbo: import
+          oggetto: the form
+          valore: null
+        - n: 3
+          verbo: address
+          oggetto: any errors
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: the form to a folder in Shared Favorites
+          valore: null
+        - n: 5
+          verbo: add
+          oggetto: a sticker to the showcase
+          valore: null
+        - n: 6
+          verbo: access
+          oggetto: the form from the showcase
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0144.0121
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 68

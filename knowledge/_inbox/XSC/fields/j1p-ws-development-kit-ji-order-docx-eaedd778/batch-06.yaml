@@ -1,0 +1,100 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-06
+section: 2.3.1.1
+section_title: Main request structure [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:HEADER
+    label: header
+    labels:
+      - header
+    technical_name: HEADER
+    section: 2.3.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Header information.
+      See section “Header [Import JIOrder method]” below
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.1
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: header
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:LINELIST
+    label: lineList
+    labels:
+      - lineList
+    technical_name: LINELIST
+    section: 2.3.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Container of Order lines.
+      At least an order line must be provided in the request
+      See section “JIOrderLine [Import JIOrder method]” beloe
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.1
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: lineList
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:COMMENTLIST
+    label: commentList
+    labels:
+      - commentList
+    technical_name: COMMENTLIST
+    section: 2.3.1.1
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of Order comments.
+      See section “Comment [Import JIOrder method]” beloe
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.1
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: commentList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1032

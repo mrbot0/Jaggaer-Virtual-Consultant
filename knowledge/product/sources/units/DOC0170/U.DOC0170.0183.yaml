@@ -1,0 +1,17 @@
+id: U.DOC0170.0183
+doc: S.STD.XSC.DOC.0170
+doc_id: j1p-ws-development-kit-paas-pdf-47cee157
+type: testo
+text: var sso_state = "" //sso_state retur ned at login time var client_id = "" //client id used for the login var iframeName= "oidcCheckIFrame" var msg = client_id + " " + sso_state; var iframe = document.getElementById('iframeName'); iframe.contentWindow.postMessage(msg, idpURL);
+hash: sha256:eaf796e3e8e4b01479495753ffb0d476de7ae94ee67a354545465c756ed3b788
+words: 38
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0170
+  chapter: J1P WS Development_Kit_PaaS Draft
+  section: J1P WS Development_Kit_PaaS Draft
+  section_path: p21
+  page: 21
+  lang: en
+  prev: U.DOC0170.0182
+  next: U.DOC0170.0184

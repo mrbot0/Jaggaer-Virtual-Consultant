@@ -1,0 +1,35 @@
+id: U.DOC0137.0030
+doc: S.STD.XSC.DOC.0137
+doc_id: workflow-po-static-and-dynamic-guidelines-pdf-982cc3b9
+type: procedura
+text: |-
+  Let's take a look at each line
+  1. <Activity name="Missing Distribution"> : The activity starts off with the name. This displays in SelectSite in the activity section.
+  2. <ActivityType>manual</ActivityType> : This activity is manual. This indicates that an approver from the organization must approve this step in order for the document to move on to the next step.
+  3. <StepRef name="Missing Distribution" /> : This line shows the Workflow step that is tied to this activity. This activity will cause the step in this field to be triggered.
+  4. <FolderRef name="Missing Distribution" /> : This line indicates the Shared Workflow folder that is tied to the activity, which defines the users that are able to approve the workfl ow step. In this case the Missing Distribution folder contains the users with approval powers.
+  5. <Rule><![CDATA[ Document.HasInvalidDistribution() == true ]]></Rule> : This section defines the rule for the activity. Rules will always be contained within the <![CDATA[ ]> element.
+  6. In this case the rule is Document.HasInvalidDistribution() == true .
+  7. The prefix of this rule is Document. This means that the rule evaluation is for the entire document. Alternately, if a rule contains the prefix "DocLine." th e rule evaluates individual line items on the document. ii. The suffix of this rule defines the "object" that is being triggered for the evaluation, in this case HasInvalidDistribution() . This object checks to see if the document is missing distribution information or if it is somehow invalid. iii. The last part of this rule == true says that if the Document.HasInvalidDistribution() evaluation is true that the document will stop at the associated step. If this rule read == false instead, then the document wo uld not stop here.
+hash: sha256:25deb78d5f1332d0ad4b282bb14221eac2634698ea5ff095992392830ff0c0a7
+words: 286
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0137
+  chapter: Spend Director Special ization For Solutions Consultants
+  section: Spend Director Special ization For Solutions Consultants
+  section_path: p3
+  page: 3
+  lang: en
+  prev: U.DOC0137.0029
+  next: U.DOC0137.0031
+steps:
+  - '<Activity name="Missing Distribution"> : The activity starts off with the name. This displays in SelectSite in the activity section.'
+  - "<ActivityType>manual</ActivityType> : This activity is manual. This indicates that an approver from the organization must approve this step in order for the document to move on to the next step."
+  - '<StepRef name="Missing Distribution" /> : This line shows the Workflow step that is tied to this activity. This activity will cause the step in this field to be triggered.'
+  - '<FolderRef name="Missing Distribution" /> : This line indicates the Shared Workflow folder that is tied to the activity, which defines the users that are able to approve the workfl ow step. In this case the Missing Distribution folder contains the users with approval powers.'
+  - "<Rule><![CDATA[ Document.HasInvalidDistribution() == true ]]></Rule> : This section defines the rule for the activity. Rules will always be contained within the <![CDATA[ ]> element."
+  - In this case the rule is Document.HasInvalidDistribution() == true .
+  - The prefix of this rule is Document. This means that the rule evaluation is for the entire document. Alternately, if a rule contains the prefix "DocLine." th e rule evaluates individual line items on the document. ii. The suffix of this rule defines the "object" that is being triggered for the evaluation, in this case HasInvalidDistribution() . This object checks to see if the document is missing distribution information or if it is somehow invalid. iii. The last part of this rule == true says that if the Document.HasInvalidDistribution() evaluation is true that the document will stop at the associated step. If this rule read == false instead, then the document wo uld not stop here.
+procedure:
+  title: Let's take a look at each line

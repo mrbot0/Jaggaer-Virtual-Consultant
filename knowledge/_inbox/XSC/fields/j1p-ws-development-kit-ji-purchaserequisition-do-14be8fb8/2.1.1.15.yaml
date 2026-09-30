@@ -1,0 +1,40 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.15
+section_title: Product Classification [PR Import]
+genre: tecnica
+rows:
+  - label: productClassification
+    technical_name: productClassification
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether a product does (true) or does not (false) have a
+      specified classification type.
+    section: 2.1.1.15
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.15#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: productClassificationType
+    technical_name: productClassificationType
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Identifies a classification type that might apply to a product.
+      Valid values are:
+      Controlled
+      Green
+      Hazardous
+      Radioactive
+      RadioactiveMinor
+      SelectAgent
+      Toxin
+      EnergyStar
+      GreenProduct
+    section: 2.1.1.15
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.15#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

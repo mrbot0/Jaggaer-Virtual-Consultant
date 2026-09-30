@@ -1,0 +1,123 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-17
+section: 2.1.1.17
+section_title: "Commercial Envelope: Formula Data for section additional column
+  [Import/Update RfX method]"
+part: 1
+parts: 1
+rows:
+  - key: tech:FORMULATCO
+    label: formulaTCO
+    labels:
+      - formulaTCO
+    technical_name: FORMULATCO
+    section: 2.1.1.17
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Indicate whether to use the formula column for TCO.
+      Valid value:
+      0 = false
+      1 = true
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.17
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.17#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: formulaTCO
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.20
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.20#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: formulaTCO
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:AGGREGATIONTYPETCO
+    label: aggregationTypeTCO
+    labels:
+      - aggregationTypeTCO
+    technical_name: AGGREGATIONTYPETCO
+    section: 2.1.1.17
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: TCO Aggregation method
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.17
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.17#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: aggregationTypeTCO
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.20
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.20#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: aggregationTypeTCO
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FORMULAVALUES
+    label: formulaValues
+    labels:
+      - formulaValues
+    technical_name: FORMULAVALUES
+    section: 2.1.1.17
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of formula values [See Formula Value, only supported for additional
+      column type of NUMERIC_FORMULA]
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.17
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.17#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: formulaValues
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.20
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.20#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: formulaValues
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1210

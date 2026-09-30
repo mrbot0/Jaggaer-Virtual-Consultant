@@ -1,0 +1,185 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.16
+section_title: "Commercial Envelope: Section additional column [Import/Update RfX method]"
+genre: tecnica
+rows:
+  - label: id
+    technical_name: id
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Additional Column parameter identifier
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Name
+    technical_name: Name
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Column title
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Type
+    technical_name: Type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Column type:
+      Valid value:
+      BOOLEAN
+      NOTE (multi line text)
+      MULTILINE (multi line text)
+      TEXT
+      NUMERIC
+      COMBO
+      NUMERIC_FORMULA
+      DATE [22.02.00] Note: format is yyyy-MM-dd
+      NUMERIC_SR_FORMULA [23.01.00]
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: allowedValues
+    technical_name: allowedValues
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: In case of COMBO, it is the list of allowed values to be defined.
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: defaultValue
+    technical_name: defaultValue
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Default value to be set on the additional column. According to column
+      type, possible values are:
+
+      BOOLEAN: TRUE or 1 for true value, any other value means false
+
+      NOTE, MULTILINE OR TEXT: any string
+
+      NUMERIC: a string representing a number
+
+      COMBO: any value among allowed ones
+
+      DATE [22.02.00] Note: format is yyyy-MM-dd
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: sellerVisibility
+    technical_name: sellerVisibility
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Visibility of the additional column to the seller
+
+      Valid value:
+
+      0 = not visible
+
+      1 = visible in read-only mode
+
+      2 = visible and writeable
+
+      If not provided, 2 is assumed.
+
+      In case of NUMERIC_FORMULA or NUMERIC_SR_FORMULA, the value 0 means
+      formula hidden to supplier, any other value means formula visible
+      (read-only) to supplier.
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: columnPos
+    technical_name: columnPos
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Progressive identifier of the additional column parameter (1-based
+      enumeration)
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Mandatory
+    technical_name: Mandatory
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Mandatory additional column parameter flag. (1-parameter is mandatory; 0
+      parameter is optional)
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: defaultLineValues
+    technical_name: defaultLineValues
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Container of defaultLineValue object representing default value for a
+      specific commercial parameter of any type except NUMERIC_FORMULA
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: formulaData
+    technical_name: formulaData
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Container of data related to the additional column when its type is
+      NUMERIC_FORMULA or NUMERIC_SR_FORMULA
+
+      [See Formula Data]
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: code
+    technical_name: code
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: It is a code that can be used by external systems to identify the column
+      and that it must be unique. It is the unique name of the column belonging
+      to the Column Library
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: columnUniqueCode
+    technical_name: columnUniqueCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: It is a code used to identify the column. Must be unique within a section
+    section: 2.1.1.16
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

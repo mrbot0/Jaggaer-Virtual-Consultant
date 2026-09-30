@@ -1,0 +1,165 @@
+doc: S.STD.XSC.DOC.0117
+scope: XSC
+extracted_at: 2026-09-30T04:30:49.909Z
+tier: T0
+stats:
+  units: 57
+  extracted_units: 4
+  document_candidates: 0
+  needs_llm: 2
+  t0_complete: 2
+  by_candidate:
+    FLD: 4
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 765
+  sessions:
+    - n: 1
+      tokens: 765
+      batches: 1
+      items: 2
+      batch_items:
+        - - R.DOC0117.0013
+          - R.DOC0117.0040
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0117.0013
+    source_unit: U.DOC0117.0013
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0117
+    section: PRODUCT SEARCH AT A GLANCE
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0117.0013
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 37
+  - raw_id: R.DOC0117.0016
+    source_unit: U.DOC0117.0016
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0117
+    section: PRODUCT SEARCH AT A GLANCE
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Exact matches
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - obbligo-negato
+      source_unit: U.DOC0117.0016
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0117.0035
+    source_unit: U.DOC0117.0035
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0117
+    section: UNDERSTANDING PRODUCT SEARCH RESULTS
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Sort
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0117.0035
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0117.0040
+    source_unit: U.DOC0117.0040
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0117
+    section: UNDERSTANDING PRODUCT SEARCH RESULTS
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: a search is performed
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0117.0040
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 28

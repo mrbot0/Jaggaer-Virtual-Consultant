@@ -1,0 +1,86 @@
+id: U.DOC0139.0010
+doc: S.STD.XSC.DOC.0139
+doc_id: workflow-typical-epro-wf-steps-guidelines-xlsx-39f47465
+type: tabella
+text: "Routes to Procurement. | Premier Invoice Workflow / AP Review Catch-all: Manual approval step which triggers if the AP Review step doesn't have an approver. | Premier Invoice Workflow / AP Review: For all invoices for AP to check. | Premier Invoice Workflow / Okay To Pay: Automated step that marks the invoice as okay to pay which triggers the export of the invoice to CostPoint for payment. | Premier Invoice Workflow / Auto-Close PO: Automated step that evaluates whether or not the PO is fully invoiced and if so closes the PO. Premier Invoice Workflow / Step Name:: Set up status: | Premier Invoice Workflow / Assign Invoice Number: (Completed) | Premier Invoice Workflow / Cancelled/Closed PO: Set up Ken and Gary as approvers (Completed) | Premier Invoice Workflow / Substitute Item Approval: Added approve/reject invoice permission to Requester role (Completed) | Premier Invoice Workflow / Recurring Invoice Review: Added step with Kim as approver (Completed) | Premier Invoice Workflow / Tax Review: Added step with Kim as approver (Completed) | Premier Invoice Workflow / Hold for Receiving: (Completed) | Premier Invoice Workflow / Matching Exceptions: Set up Ken and Gary as approvers (Completed) | Premier Invoice Workflow / AP Review Catch-all: (Completed) | Premier Invoice Workflow / AP Review: (Completed) | Premier Invoice Workflow / Okay To Pay: (Completed) | Premier Invoice Workflow / Auto-Close PO: (Completed)"
+hash: sha256:4ff4c2c949af695523590002e74978e77b38450e302b31be9f10e75329f42c3f
+words: 229
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0139
+  chapter: Invoice Workflow
+  section: Invoice Workflow
+  section_path: sheet-3
+  page: null
+  lang: en
+  prev: U.DOC0139.0009
+  next: U.DOC0139.0011
+table:
+  table: 0
+  headers:
+    - "Premier Invoice Workflow / Step Name:"
+    - Premier Invoice Workflow / Assign Invoice Number
+    - Premier Invoice Workflow / Cancelled/Closed PO
+    - Premier Invoice Workflow / Substitute Item Approval
+    - Premier Invoice Workflow / Recurring Invoice Review
+    - Premier Invoice Workflow / Tax Review
+    - Premier Invoice Workflow / Hold for Receiving
+    - Premier Invoice Workflow / Matching Exceptions
+    - Premier Invoice Workflow / AP Review Catch-all
+    - Premier Invoice Workflow / AP Review
+    - Premier Invoice Workflow / Okay To Pay
+    - Premier Invoice Workflow / Auto-Close PO
+  rows:
+    - - "Step Type:"
+      - Automated
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Automated
+      - Manual
+      - Manual
+      - Manual
+      - Automated
+      - Automated
+    - - "Location of Approver(s):"
+      - N/A
+      - Explicit Folder (Cancelled / Closed PO Exception)
+      - Requester
+      - ADW (Recurring Invoice Review)
+      - null
+      - N/A
+      - Explicit Approval Folder
+      - ADW (AP Review)
+      - ADW (AP Review)
+      - N/A
+      - N/A
+    - - "Description / Trigger(s):"
+      - Automated step that assigns an invoice number to electronic invoices.
+      - Manual approval step that triggers when an electronic invoice is received against a closed or cancelled PO.
+      - Manual approval step that triggers when a substitute items is included on an invoice.
+      - Manual approval step that triggers for specified recurring invoices.
+      - Tax over 30% of PO price
+      - Automated step that holds an invoice for a set period of time in order to wait for the receipt to be submitted.
+      - Manual approval step that triggers when an invoice isn't matched based on the matching tolerances configured. Routes to Procurement.
+      - Manual approval step which triggers if the AP Review step doesn't have an approver.
+      - For all invoices for AP to check.
+      - Automated step that marks the invoice as okay to pay which triggers the export of the invoice to CostPoint for payment.
+      - Automated step that evaluates whether or not the PO is fully invoiced and if so closes the PO.
+    - - "Set up status:"
+      - (Completed)
+      - Set up Ken and Gary as approvers (Completed)
+      - Added approve/reject invoice permission to Requester role (Completed)
+      - Added step with Kim as approver (Completed)
+      - Added step with Kim as approver (Completed)
+      - (Completed)
+      - Set up Ken and Gary as approvers (Completed)
+      - (Completed)
+      - (Completed)
+      - (Completed)
+      - (Completed)
+  block: 1
+  blocks: 1
+part:
+  n: 3
+  of: 3

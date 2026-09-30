@@ -1,0 +1,88 @@
+id: S.STD.XSC.DOC.0074
+type: DOC
+title: TSM Supplier Import Utility
+summary: "Documento manuale-utente (d'uso, origine vendor) \"TSM Supplier Import
+  Utility\": 540 unità, 0 tabelle, 0 tabelle di campi; scope VEN, XSC;
+  affidabilità 0.56."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2020-04-16
+    release: ignota
+  F15: d'uso
+sources:
+  - file: CORSI/JI-2303/XFILE - Supplier Import Utility Instructions.pdf
+    sha256: sha256:25d45fd2d7be83c2649ad84081e59f5ebf3ebfc9c2d1e78a47489e3c00487590
+kind: manuale-utente
+genre: d'uso
+origin: vendor
+version: null
+dated: 2020-04-16
+covers_release: null
+languages:
+  - en
+scopes:
+  - VEN
+  - XSC
+source:
+  path: CORSI/JI-2303/XFILE - Supplier Import Utility Instructions.pdf
+  sha256: sha256:25d45fd2d7be83c2649ad84081e59f5ebf3ebfc9c2d1e78a47489e3c00487590
+  size: 433911
+  format: pdf
+  doc_id: xfile-supplier-import-utility-instructions-pdf-460f7a89
+  doc_key: xfile-supplier-import-utility-instructions.pdf
+structure:
+  pages: 16
+  chapters: 16
+  sections: 16
+  tables: 0
+  figures: 7
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 540
+  by_type:
+    testo: 375
+    regola: 142
+    riferimento: 7
+    esempio: 1
+    nota: 9
+    definizione: 6
+reliability:
+  base_by_kind: 0.7
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.56
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 540
+  items_produced: 157
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.29
+  last_run: 2026-09-30
+  estimated_tokens: 39491
+  sessions_planned: 1

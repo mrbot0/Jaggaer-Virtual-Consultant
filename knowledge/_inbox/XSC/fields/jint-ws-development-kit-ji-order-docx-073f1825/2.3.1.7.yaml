@@ -1,0 +1,119 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.7
+section_title: ContactInfo [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Type of contact:
+      Main
+      technical
+    section: 2.3.1.7
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: eMail
+    technical_name: eMail
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Email address of the contact
+    section: 2.3.1.7
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: address
+    technical_name: address
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Contact address information.
+      See section “Error! Reference source not found.” below
+    section: 2.3.1.7
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: phone
+    technical_name: phone
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Contact phone number.
+      See section “TelephoneNumber [Import JIOrder method]” above
+    section: 2.3.1.7
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: fax
+    technical_name: fax
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Contact fax number.
+      See section “TelephoneNumber [Import JIOrder method]” above
+    section: 2.3.1.7
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: federalId
+    technical_name: federalId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Supplier’s TIN or other federal ID number.
+    section: 2.3.1.7
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: austinTetra
+    technical_name: austinTetra
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: For eProcurement solution customers, Austin-Tetra supplier reference
+      number. JAGGAER offers a diversity license based on Austin-Tetra's
+      diversity supplier certification and classification system.
+    section: 2.3.1.7
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: NAICS
+    technical_name: NAICS
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: For eProcurement solution customers, North American Industry
+      Classification System supplier reference number. Must be a valid NAICS
+      code.
+    section: 2.3.1.7
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: SIC
+    technical_name: SIC
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: For eProcurement solution customers, Standard Industrial Classification
+      supplier system reference number.
+    section: 2.3.1.7
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.7#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

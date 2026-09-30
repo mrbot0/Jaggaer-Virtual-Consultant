@@ -1,0 +1,124 @@
+document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+scope: XSC
+batch: batch-06
+section: 2.1.1.6
+section_title: WFDynamicRule [Custom Field Import method]
+part: 1
+parts: 1
+rows:
+  - key: tech:RULEMINRANGE
+    label: ruleMinRange
+    labels:
+      - ruleMinRange
+    technical_name: RULEMINRANGE
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Minimum value that triggers the workflow rule.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.6
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: ruleMinRange
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:RULEMAXRANGE
+    label: ruleMaxRange
+    labels:
+      - ruleMaxRange
+    technical_name: RULEMAXRANGE
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Maximum value that triggers the workflow rule.
+      If there is no maximum value, specify an asterisk (*).
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.6
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: ruleMaxRange
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RULECURRENCY
+    label: ruleCurrency
+    labels:
+      - ruleCurrency
+    technical_name: RULECURRENCY
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Currency type for the range amount.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.6
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: ruleCurrency
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:AUTOAPPROVE
+    label: autoApprove
+    labels:
+      - autoApprove
+    technical_name: AUTOAPPROVE
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Enables the automatic approval of the rule when the user placing the
+      order is an approver for that rule
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.6
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.6#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: autoApprove
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1218

@@ -1,0 +1,55 @@
+id: U.DOC0172.0048
+doc: S.STD.XSC.DOC.0172
+doc_id: j1p-ws-development-kit-supplier-user-docx-305b9bed
+type: tabella
+text: |-
+  Colonne: JI Attribute | Request Attribute | Description
+  JI Attribute: ERPNumber | Request Attribute: ji/erpNumber | Description: Unique identifier of supplier company
+  JI Attribute: Name | Request Attribute: idm/firstName + “ “ + idm/lastName | Description: Name of supplier user
+  JI Attribute: Firstname | Request Attribute: idm/firstName | Description: First name of supplier user
+  JI Attribute: LastName | Request Attribute: idm/lastName | Description: Last name of supplier user
+  JI Attribute: Email | Request Attribute: idm/email | Description: Supplier user email address
+  JI Attribute: Language | Request Attribute: ji/languageCode | Description: Language code
+  JI Attribute: Timezone | Request Attribute: ji/timeZone | Description: Supplier user time zone
+hash: sha256:1103e93e368830be05406f4f2588c230bc122cb9b1e7292978284e7f6412c14f
+words: 105
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0172
+  chapter: Supplier user web-service
+  section: Mapping table for JI
+  section_path: 2.3.4
+  page: 14
+  lang: en
+  prev: U.DOC0172.0047
+  next: null
+table:
+  table: 0
+  headers:
+    - JI Attribute
+    - Request Attribute
+    - Description
+  rows:
+    - - ERPNumber
+      - ji/erpNumber
+      - Unique identifier of supplier company
+    - - Name
+      - idm/firstName + “ “ + idm/lastName
+      - Name of supplier user
+    - - Firstname
+      - idm/firstName
+      - First name of supplier user
+    - - LastName
+      - idm/lastName
+      - Last name of supplier user
+    - - Email
+      - idm/email
+      - Supplier user email address
+    - - Language
+      - ji/languageCode
+      - Language code
+    - - Timezone
+      - ji/timeZone
+      - Supplier user time zone
+  block: 1
+  blocks: 1

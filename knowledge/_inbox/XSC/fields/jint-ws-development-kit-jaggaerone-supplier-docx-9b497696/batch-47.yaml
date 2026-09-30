@@ -1,0 +1,45 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-47
+section: 2.1.1.73
+section_title: J1Supplier/JISupplierData/locationList/location/shipping
+part: 1
+parts: 1
+rows:
+  - key: tech:SURCHARGECONFIGURATION
+    label: surchargeConfiguration
+    labels:
+      - surchargeConfiguration
+    technical_name: SURCHARGECONFIGURATION
+    section: 2.1.1.73
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.73
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.73#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: surchargeConfiguration
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.76
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.76#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: surchargeConfiguration
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 748

@@ -1,0 +1,51 @@
+id: U.DOC0177.0358
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: type | Mandatory (Y/N): Y | Description: Method by which the order will be delivered to the supplier. | Mapping on Jaggaer One data model and notes: Used only for non-catalog Method by which the order will be delivered to the supplier. Used only for non-catalog items.
+  • fax - Order delivered via fax.
+  • emailplain - Order delivered as plain-text email.
+  • emailbody - Order delivered as HTML in the body of an email.
+  • emailattach - Order delivered as an HTML attachment to an email.
+  • manual - Order delivered as a printed copy.
+  For email distribution, most suppliers prefer emailattach.
+  Values: (fax | emailplain | emailbody | emailattach | manual)
+hash: sha256:faabcbfcdeb791f212862773aaf83217b90fa99bae9b3e34a20e5698b2449239
+words: 114
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/orderDistributionList/distributionMethod
+  section_path: 2.1.1.85
+  page: 63
+  lang: en
+  prev: U.DOC0177.0357
+  next: U.DOC0177.0359
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - type
+    - Y
+    - Method by which the order will be delivered to the supplier.
+    - |-
+      Used only for non-catalog Method by which the order will be delivered to the supplier. Used only for non-catalog items.
+      • fax - Order delivered via fax.
+      • emailplain - Order delivered as plain-text email.
+      • emailbody - Order delivered as HTML in the body of an email.
+      • emailattach - Order delivered as an HTML attachment to an email.
+      • manual - Order delivered as a printed copy.
+      For email distribution, most suppliers prefer emailattach.
+      Values: (fax | emailplain | emailbody | emailattach | manual)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

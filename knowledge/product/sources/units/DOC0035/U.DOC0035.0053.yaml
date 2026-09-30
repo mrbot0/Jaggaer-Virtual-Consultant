@@ -1,0 +1,17 @@
+id: U.DOC0035.0053
+doc: S.STD.XSC.DOC.0035
+doc_id: ji-plt-2303-handout-workflowsyntax-pdf-36176c48
+type: testo
+text: "Finally, let's look at an activity that stops documents based on different possible rules: <Activity name=\"EH& amp;S Notification\"> <ActivityType>notification</ActivityType> <FolderRef name=\"EH&amp;S Notification\" /> <Rule><![CDATA[ [Product.Radioactive = true || Product.RadioactiveMinor = true || Product.HazMat = true || Product.Controlled = true || P roduct.Toxin = true || Product.SelectAgent = true] ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>"
+hash: sha256:a26082a5985535ca3718fb4fbac751b27c76fb16fdbef30ab54c6241b90142f7
+words: 51
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0035
+  chapter: Spend Director Specialization For Solutions Consultants
+  section: Spend Director Specialization For Solutions Consultants
+  section_path: p6
+  page: 6
+  lang: en
+  prev: U.DOC0035.0052
+  next: U.DOC0035.0054

@@ -1,0 +1,37 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-12
+section: 2.1.1.12
+section_title: J1Supplier/JISupplierData/ParentSupplier
+part: 1
+parts: 1
+rows:
+  - key: tech:APPROVEDFORERPSYNC
+    label: approvedForERPSync
+    labels:
+      - approvedForERPSync
+    technical_name: APPROVEDFORERPSYNC
+    section: 2.1.1.12
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.12
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.12#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: approvedForERPSync
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 668

@@ -1,0 +1,67 @@
+document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+scope: XSC
+batch: batch-02
+section: 2.1.1.2
+section_title: Receipt [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:HEADER
+    label: header
+    labels:
+      - header
+    technical_name: HEADER
+    section: 2.1.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Header information.
+      See section “Header [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: header
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:LINELIST
+    label: lineList
+    labels:
+      - lineList
+    technical_name: LINELIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of Receipt lines.
+      See section “Line [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-receipt-docx-99f6088d
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-ji-receipt-docx-99f6088d/2.1.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: lineList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 831

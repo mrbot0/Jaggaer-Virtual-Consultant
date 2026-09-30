@@ -1,0 +1,39 @@
+id: U.DOC0167.0411
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: state | Mandatory (Y/N): N | Description: State associated with the bank account. | Mapping on Jaggaer One data model and notes: See the Integration State-Province-Region Codes document in the JAGGAER ONE Online Help for valid state, province, and region codes for each country.
+  Must be blank if the “type” field on the AccountsPayable element is set to WireTransfer, Check, Credit, ePayable, or PayMode
+hash: sha256:71bd15868176bfe32b20b21f5344d7bbe0def5d16d4885b648d05df799ecd64f
+words: 65
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 5
+  lang: en
+  prev: U.DOC0167.0410
+  next: U.DOC0167.0412
+row:
+  table: 0
+  row: 15
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - state
+    - N
+    - State associated with the bank account.
+    - |-
+      See the Integration State-Province-Region Codes document in the JAGGAER ONE Online Help for valid state, province, and region codes for each country.
+      Must be blank if the “type” field on the AccountsPayable element is set to WireTransfer, Check, Credit, ePayable, or PayMode
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,39 @@
+id: U.DOC0168.0280
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: riga-tabella-campi
+text: |-
+  Attribute: note | Description: External note.
+  If the external note is longer than 1000 characters, it is truncated and saved.
+  Note: If the Note field is empty, the existing note in the eProcurement solution is not overwritten. Only a populated Note field can overwrite the existing note.
+hash: sha256:1266d276b18125c5e0ab787d33ef23911536cb78693e8cbd4697dfe9ea324756
+words: 47
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: ExernalInfo [Import JIOrder method]
+  section_path: 2.3.1.18
+  page: 81
+  lang: en
+  prev: U.DOC0168.0279
+  next: U.DOC0168.0281
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - note
+    - ""
+    - |-
+      External note.
+      If the external note is longer than 1000 characters, it is truncated and saved.
+      Note: If the Note field is empty, the existing note in the eProcurement solution is not overwritten. Only a populated Note field can overwrite the existing note.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

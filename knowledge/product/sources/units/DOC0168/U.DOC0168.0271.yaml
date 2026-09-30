@@ -1,0 +1,51 @@
+id: U.DOC0168.0271
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: riga-tabella-campi
+text: |-
+  Attribute: termsType | Mandatory (Y/N): N | Description: Used in conjunction with the daysAfter element to determine the invoice due date.
+  Possible values:
+  Net
+  EOM
+  MFI
+  EOQ
+  Manual
+  If TermsType is provided the StandardPaymentTermsCode element cannot have values.
+  Note: The TermsType element is supported in version 3.2 of the DTD and later. Older versions of the DTD support the Net tag.
+hash: sha256:7efda02b55315137ad22e9400a7f049aeb4f8a84e9f84ba9bd043b73f0615c55
+words: 61
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: Terms [Import JIOrder method]
+  section_path: 2.3.1.14
+  page: 79
+  lang: en
+  prev: U.DOC0168.0270
+  next: U.DOC0168.0272
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - termsType
+    - N
+    - |-
+      Used in conjunction with the daysAfter element to determine the invoice due date.
+      Possible values:
+      Net
+      EOM
+      MFI
+      EOQ
+      Manual
+      If TermsType is provided the StandardPaymentTermsCode element cannot have values.
+      Note: The TermsType element is supported in version 3.2 of the DTD and later. Older versions of the DTD support the Net tag.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

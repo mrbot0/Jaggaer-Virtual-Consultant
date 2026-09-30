@@ -1,0 +1,867 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.3
+section_title: Rfx Setting (header information) [Import/Update RfX method]
+genre: tecnica
+rows:
+  - label: rfxId
+    technical_name: rfxId
+    type: null
+    mandatory_text: |-
+      N for CREATE or CREATEUPDATE
+      Y for UPDATE
+    allowed_values: []
+    notes: JA internal identifier
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: rfxReferenceCode
+    technical_name: rfxReferenceCode
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: JA identifier (visible to user)
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: rfxExtCode
+    technical_name: rfxExtCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: External identifier of the RfX. It can be used to identify the RfX in
+      update operation (when configured).
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: dummyFlag
+    technical_name: dummyFlag
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Defines if the RfX is a dummy RfX (1=true)
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: rfiFlag
+    technical_name: rfiFlag
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Defines if the RfX is an RFI or an RFQ
+      1 = RFI
+      0 = RFQ
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: tenderCode
+    technical_name: tenderCode
+    type: null
+    mandatory_text: |-
+      Y/N for insert
+      Not used for update
+    allowed_values: []
+    notes: Code of the project/tender (JA internal identifier)
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: tenderReferenceCode
+    technical_name: tenderReferenceCode
+    type: null
+    mandatory_text: |-
+      Y/N for insert
+      Not used for update
+    allowed_values: []
+    notes: Code of the project/tender (user visible identifier)
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: templateId
+    technical_name: templateId
+    type: null
+    mandatory_text: Y/N for creation from template
+    allowed_values: []
+    notes: JA internal identifier of the RfX template to be used to create the object
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: templateReferenceCode
+    technical_name: templateReferenceCode
+    type: null
+    mandatory_text: Y/N for creation from template
+    allowed_values: []
+    notes: Reference Code (user visible identifier) of the RfX template to be used
+      to create the object
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: rfxIdFrom
+    technical_name: rfxIdFrom
+    type: null
+    mandatory_text: Y/N for duplicate
+    allowed_values: []
+    notes: JA internal identifier of the RfX to be used to create the object
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: rfxReferenceCodeFrom
+    technical_name: rfxReferenceCodeFrom
+    type: null
+    mandatory_text: Y/N for duplicate
+    allowed_values: []
+    notes: Reference Code (user visible identifier) of the RfX to be used to create
+      the object
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: shortDescription
+    technical_name: shortDescription
+    type: null
+    mandatory_text: |-
+      Y for insert
+      N for update
+    allowed_values: []
+    notes: Title of the RfX
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: longDescription
+    technical_name: longDescription
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: RfX Description
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: buyerCompany
+    technical_name: buyerCompany
+    type: null
+    mandatory_text: |-
+      Y for insert
+      Not used for update
+    allowed_values: []
+    notes: Reference to the buyer company (external code –code field- or JA internal
+      id –id field) whose superuser is used as RfX creator if no ownerUser
+      specified
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: ownerUser
+    technical_name: ownerUser
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Reference to the buyer user to be used as RfX creator:
+      id = JA internal identifier
+      code = external code
+      login = user login
+      If not specified, companyData superuser is used.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: supplierAccess
+    technical_name: supplierAccess
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Type of supplier access:
+      RFQ_TYPE_PRIVATE_WITH_ANSWER
+      RFQ_TYPE_PUBLIC_WITH_ANSWER
+      RFQ_TYPE_PRIVATE_NO_ANSWER
+      RFQ_TYPE_PUBLIC_NO_ANSWER
+      RFQ_TYPE_SIMPLIFIED
+      RFQ_TYPE_PRIVATE_PPB
+      RFQ_TYPE_PUBLIC_PPB
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: offersOpeningCriteria
+    technical_name: offersOpeningCriteria
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Envelope opening criteria:
+
+      NONE
+
+      OPEN_PARALLEL
+
+      BLIND_PARALLEL
+
+      BLIND_SEQUENTIAL
+
+      The first value is valid only if the field is not enabled for the RfX
+      profile, the others if the field is enabled, then mandatory
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: procedureType
+    technical_name: procedureType
+    type: null
+    mandatory_text: |-
+      N
+      (required for autopublish)
+    allowed_values: []
+    notes: Numeric code or full description (no matter case) of the procedure type
+      for government to be set on RfX.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: contractObject
+    technical_name: contractObject
+    type: null
+    mandatory_text: |-
+      N
+      (required for autopublish)
+    allowed_values: []
+    notes: >-
+      Numeric code or full description (no matter case) of the contract object
+      for government to be set on RfX. Accepted numeric code:
+
+      1 = works
+
+      2 = prevision of service
+
+      3 = intellectual performance
+
+      4 = supplies
+
+      0 (or any other numeric value) = not selected
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: value
+    technical_name: value
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Value of the RfX
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r19
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: valueCurrency
+    technical_name: valueCurrency
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      External code of the value currency.
+
+      If not provided:
+
+      When creating new object, the default instance currency is used
+
+      When updating object, previous value (if any) is kept or, if no value set
+      for existing item, default instance currency is used
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r20
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: bidsCurrency
+    technical_name: bidsCurrency
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      External code of the bids currency.
+
+      If not provided:
+
+      When creating a new object, value to set for value currency (as described
+      above) is used
+
+      When updating object, no changes are made
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r21
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: envelopeDigitalSignature
+    technical_name: envelopeDigitalSignature
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Envelope digital signature configuration (global for all envelopes):
+      NOT_MANDATORY/YES/1
+      NO/0
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r22
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: rankingStrategy
+    technical_name: rankingStrategy
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Ranking strategy:
+      NONE
+      NO_RANKING
+      BEST_TECHNICAL_SCORE
+      BEST_ECONOMICAL_OFFER
+      MOST_ECONOMICAL_ADVANTAGEOUS
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r23
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: qualEnvStatus
+    technical_name: qualEnvStatus
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Status of the envelope:
+      0 = not active
+      1 = active with no response attachments
+      2 = active with response attachments allowed
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r24
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: techEnvStatus
+    technical_name: techEnvStatus
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Status of the envelope:
+      0 = not active
+      1 = active with no response attachments
+      2 = active with response attachments allowed
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r25
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: commEnvStatus
+    technical_name: commEnvStatus
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Status of the envelope:
+      0 = not active
+      1 = active with no response attachments
+      2 = active with response attachments allowed
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r26
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: closeDate
+    technical_name: closeDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Last close date
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r27
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: autopublish
+    technical_name: autopublish
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Auto-publishing flag:
+
+      0 = RfX will be published manually
+
+      1 = RfX will be published automatically on date expressed in
+      autopublishDate
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-1
+    row_ref: t0.r28
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: autopublishDate
+    technical_name: autopublishDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Auto-publishing date
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r29
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: taskInfo
+    technical_name: taskInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Reference to the task (external code –taskName field- or JA internal id
+      –taskId field). The tender must have a workflow with this task associated.
+      The task must be running.
+
+      Only for create operations: when updating an existing RfX, this field is
+      ignored.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r30
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: rfxType
+    technical_name: rfxType
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: RfX Typology external code.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r31
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: qualEnvelopeDigitalSignature
+    technical_name: qualEnvelopeDigitalSignature
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Qualification envelope digital signature configuration:
+      NOT_MANDATORY/YES/1
+      NO/0
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r32
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: techEnvelopeDigitalSignature
+    technical_name: techEnvelopeDigitalSignature
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Technical envelope digital signature configuration:
+      NOT_MANDATORY/YES/1
+      NO/0
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r33
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: commEnvelopeDigitalSignature
+    technical_name: commEnvelopeDigitalSignature
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Commercial envelope digital signature configuration:
+      NOT_MANDATORY/YES/1
+      NO/0
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r34
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: autoCreateTender
+    technical_name: autoCreateTender
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag to force the auto-creation of the tender:
+
+      0 = not create a tender (valid tenderCode or tenderReferenceCode must be
+      provided)
+
+      1 = create automatically a tender for independent Rfq
+
+      2 = create automatically a tender for Rfq multilot.
+
+      Default = 0.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r35
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: tcoHeader
+    technical_name: tcoHeader
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Redefined header for TCO additional column
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r36
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: tcoVisibleToSuppliers
+    technical_name: tcoVisibleToSuppliers
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Visibility of TCO additional column:
+      0 = not visible to suppliers
+      1 = visible to suppliers
+      Default is 0.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r37
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: consortiumAvailable
+    technical_name: consortiumAvailable
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag to allow suppliers to respond by consortium:
+
+      0 = No
+
+      1 = Yes
+
+      If omitted, it is conditioned by the existence of the qualification
+      envelope
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r38
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: commScoringAlgorithm
+    technical_name: commScoringAlgorithm
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Scoring algorithm to calculate the score.
+      Possible values:
+      PROPORTIONAL_VS_BEST = Proportional vs Best
+      BETTER_ABOVE_AVERAGE_DISCOUNT = Better Above Average Discount
+      DIFFERENTIAL_VS_BASE_PRICE = Differential vs Base Price
+      LINEAR = Linear (Worst=0)
+      COPY_TCO = Copy of TCO
+      NO_FORMULA = No formula
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r39
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: commAlgorithmInputData
+    technical_name: commAlgorithmInputData
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: >-
+      Source for Scoring algorithm.
+
+      Required for all possible values of commScoringAlgorithm except for these
+      following values:
+
+      COPY_TCO
+
+      NO_FORMULA
+
+      Possible values:
+
+      PRICE
+
+      TCO
+
+      Default value: PRICE
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r40
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: commAlgorithmValuesStrategy
+    technical_name: commAlgorithmValuesStrategy
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Price values strategy.
+
+      Required for all possible values of commScoringAlgorithm except for this
+      following value:
+
+      NO_FORMULA
+
+      Possible values:
+
+      REVERSE = lower price preferred
+
+      DIRECT = higher price preferred
+
+      Default value: REVERSE
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r41
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: commAlgorithmBaseValue
+    technical_name: commAlgorithmBaseValue
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Base value for scoring algorithm.
+      Required when commScoringAlgorithm is set on these following values:
+      BETTER_ABOVE_AVERAGE_DISCOUNT
+      DIFFERENTIAL_VS_BASE_PRICE.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r42
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: commAlgorithmXParam
+    technical_name: commAlgorithmXParam
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      X parameter between 0 and 1. Required when commScoringAlgorithm is set on
+      this following value:
+
+      BETTER_ABOVE_AVERAGE_DISCOUNT.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r43
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: hideValueFromSupplier
+    technical_name: hideValueFromSupplier
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Hide value from supplier’s flag:
+      0 = value visible to suppliers
+      1 = value not visible to suppliers
+      Default is 1.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r44
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: reservedPrice
+    technical_name: reservedPrice
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Reserved price
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r45
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: enableOpeningCommittees
+    technical_name: enableOpeningCommittees
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Enable opening committees flag:
+      0 = disable opening committees
+      1 = enable opening committees
+      Default is 0.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r46
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: endDateBuyerReplyMessages
+    technical_name: endDateBuyerReplyMessages
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: End date and time for buyer replies to messages
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r47
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: maxScoreVisibleToSuppliers
+    technical_name: maxScoreVisibleToSuppliers
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Max score visible to supplier’s flag. Available only when supplier
+      response ranking is BEST_TECHNICAL_SCORE (Best Technical Score) or
+
+      MOST_ECONOMICAL_ADVANTAGEOUS (Best Score).
+
+      Possible values:
+
+      0 = No
+
+      1 = Envelope Level Only
+
+      2 = Including Section and Question Level
+
+      Default is 0.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r48
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: multicurrencyBids
+    technical_name: multicurrencyBids
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Multicurrency bidding flag:
+      0 = disable multicurrency bidding
+      1 = enable multicurrency bidding
+      Default 0.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r49
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: multicurrencyTCO
+    technical_name: multicurrencyTCO
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Flag to apply currency conversion to TCO:
+      0 = not apply currency conversion to TCO
+      1 = apply currency conversion to TCO
+      Default 0.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r50
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: rfqMlotBehaviour
+    technical_name: rfqMlotBehaviour
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Rfq behavior in project. Visible in case of multi lot tender.
+      • 1 = qualification only;
+      • 0 = technical/ commercial;
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r51
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: rfxAwardingType
+    technical_name: rfxAwardingType
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: RfX Awarding Typology external code
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r52
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: visibilityEGComments
+    technical_name: visibilityEGComments
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Blind evaluation comments for evaluation groups. Values:
+      0 – Always visible
+      1 – Blind behaviour
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r53
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: assignOwnerDivision
+    technical_name: assignOwnerDivision
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag that indicates if in case of change of owner, the RfX division must
+      be replaced with the one the new owner belongs to. Values:
+
+      0 – Not change RfX division
+
+      1 – Change RfX division
+
+      Default value 0.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r54
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: commentOnChangeOwner
+    technical_name: commentOnChangeOwner
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Comment on changing owner user.
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r55
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: commAlgorithmExpParam
+    technical_name: commAlgorithmExpParam
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: |-
+      Exponential parameter between 0,1 and 4.
+      Required when commScoringAlgorithm is set on this following value:
+      DIFFERENTIAL_VS_BASE_PRICE.
+      Default value is: 1
+    section: 2.1.1.3
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.3#part-2
+    row_ref: t0.r56
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

@@ -1,0 +1,99 @@
+doc: S.STD.XSC.DOC.0012
+scope: XSC
+extracted_at: 2026-09-30T04:27:02.627Z
+tier: T0
+stats:
+  units: 159
+  extracted_units: 2
+  document_candidates: 0
+  needs_llm: 1
+  t0_complete: 1
+  by_candidate:
+    FLW: 1
+    FLD: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 374
+  sessions:
+    - n: 1
+      tokens: 374
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0012.0059
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0012.0059
+    source_unit: U.DOC0012.0059
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0012
+    section: "Guided Activity:"
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the Supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: the Supplier’s Profile
+          valore: null
+        - n: 2
+          verbo: clic
+          oggetto: through the profile tabs and subtabs
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0012.0059
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 24
+  - raw_id: R.DOC0012.0121
+    source_unit: U.DOC0012.0121
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0012
+    section: Periodic Release Management
+    page: 51
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Administrators
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0012.0121
+    needs_llm: false
+    tokens: 6

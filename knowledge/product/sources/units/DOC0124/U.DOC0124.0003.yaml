@@ -1,0 +1,52 @@
+id: U.DOC0124.0003
+doc: S.STD.XSC.DOC.0124
+doc_id: workflow-definition-budget-manager-xml-12948a00
+type: tabella
+text: |-
+  Tabella: attività
+  Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella
+  Attività: START | Tipo: start | Selezione cartella: Dummy
+  Attività: Budget Approval | Tipo: manual | Passo: Budget Approval - ADW | Regola: Document.RequiresRuleGroupEvaluation("Budget Approval") == true | Selezione cartella: MultiElementDynamic
+  Attività: END | Tipo: end | Selezione cartella: Dummy
+hash: sha256:9928d4bc8799917f069178574417c839ff7bfdf78f907562051539932b7583ee
+words: 55
+lang: it
+context:
+  doc: S.STD.XSC.DOC.0124
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: it
+  prev: U.DOC0124.0002
+  next: U.DOC0124.0004
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Budget Approval
+      - manual
+      - Budget Approval - ADW
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Budget Approval") == true
+      - MultiElementDynamic
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1

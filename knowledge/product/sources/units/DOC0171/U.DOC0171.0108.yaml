@@ -1,0 +1,43 @@
+id: U.DOC0171.0108
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: assignOwnerDivision | Mandatory (Y/N): N | Description: Flag that indicates if in case of change of owner, the RfX division must be replaced with the one the new owner belongs to. Values:
+  0 – Not change RfX division
+  1 – Change RfX division
+  Default value 0. | Mapping on JA data model and notes: Available from JINT 20.01.01 only for operation code CHANGE_OWNER
+hash: sha256:ef9037a9403ed67281cc2fad393365681a83f1b6c8ad436fcdb47406e2226bb2
+words: 64
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0107
+  next: U.DOC0171.0109
+row:
+  table: 0
+  row: 54
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - assignOwnerDivision
+    - N
+    - |-
+      Flag that indicates if in case of change of owner, the RfX division must be replaced with the one the new owner belongs to. Values:
+      0 – Not change RfX division
+      1 – Change RfX division
+      Default value 0.
+    - Available from JINT 20.01.01 only for operation code CHANGE_OWNER
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,97 @@
+id: S.STD.XSC.DOC.0178
+type: DOC
+title: JINT Development Kit- JI Contract web-service
+summary: 'Documento spec-integrazione (tecnica, origine vendor) "JINT
+  Development Kit- JI Contract web-service": 597 unità, 235 tabelle, 73 tabelle
+  di campi; scope CON, ADM, XSC, INV; affidabilità 0.72.'
+facets:
+  F1: spec-integrazione-prosa
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2020-12-01
+    release: ignota
+  F15: tecnica
+sources:
+  - file: JAGGAER WS/JINT WS Development_Kit_JI Contract.docx
+    sha256: sha256:b44f2aa6e9417db2ad680926c710a5b41a24b68d3d6b77b7baba544b6e35d929
+kind: spec-integrazione
+genre: tecnica
+origin: vendor
+version: null
+dated: 2020-12-01
+covers_release: null
+languages:
+  - en
+scopes:
+  - CON
+  - ADM
+  - XSC
+  - INV
+source:
+  path: JAGGAER WS/JINT WS Development_Kit_JI Contract.docx
+  sha256: sha256:b44f2aa6e9417db2ad680926c710a5b41a24b68d3d6b77b7baba544b6e35d929
+  size: 382999
+  format: docx
+  doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  doc_key: jint-ws-development-kit-ji-contract.docx
+structure:
+  pages: 152
+  chapters: 3
+  sections: 253
+  tables: 235
+  figures: 1
+  field_tables: 73
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 597
+  by_type:
+    testo: 46
+    tabella: 172
+    definizione: 1
+    procedura: 4
+    passo: 26
+    riga-tabella-campi: 335
+    esempio: 5
+    regola: 4
+    riferimento: 3
+    nota: 1
+reliability:
+  base_by_kind: 0.9
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.72
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: tabelle annidate appiattite nel testo della cella
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 597
+  items_produced: 346
+  residue:
+    irrelevant: 4
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.58
+  last_run: 2026-09-30
+  estimated_tokens: 85672
+  sessions_planned: 2

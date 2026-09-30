@@ -1,0 +1,403 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+batch: batch-09
+section: campi-9
+section_title: Campi — senza-sezione
+part: 1
+parts: 1
+rows:
+  - key: tech:BLANK
+    label: blank
+    labels:
+      - blank
+    technical_name: BLANK
+    section: campi-9
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10003 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: blank
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BLANK_2
+    label: Blank 2
+    labels:
+      - Blank 2
+    technical_name: BLANK_2
+    section: campi-9
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10021 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Blank 2
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:104
+    label: "104"
+    labels:
+      - "104"
+    technical_name: "104"
+    section: campi-9
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=104 · tipo=static
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "104"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TRAINING_START_DATE_FIELD
+    label: Training Start Date
+    labels:
+      - Training Start Date
+    technical_name: TRAINING_START_DATE_FIELD
+    section: campi-9
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10023 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Training Start Date
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:JUST_HR
+    label: Just HR
+    labels:
+      - Just HR
+    technical_name: JUST_HR
+    section: campi-9
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10066 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Just HR
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:2A_SUPPLIER_NAME
+    label: Supplier Name
+    labels:
+      - Supplier Name
+    technical_name: 2A_SUPPLIER_NAME
+    section: campi-9
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10067 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: Supplier Name
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SUPPLIER_PART_NUMBER
+    label: Supplier Part Number
+    labels:
+      - Supplier Part Number
+    technical_name: SUPPLIER_PART_NUMBER
+    section: campi-9
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The supplier’s equipment model number. <br><br> Often, the Supplier Part
+      Number is be found on the vendor quote or proposal. · id=10008 ·
+      tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: Supplier Part Number
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TRAINING_END_DATE_FIELD
+    label: Training End Date
+    labels:
+      - Training End Date
+    technical_name: TRAINING_END_DATE_FIELD
+    section: campi-9
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10024 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: Training End Date
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:2A_REASONS
+    label: Reasons (select one)
+    labels:
+      - Reasons (select one)
+    technical_name: 2A_REASONS
+    section: campi-9
+    type: DropdownList
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10068 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: Reasons (select one)
+        type: DropdownList
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:2A_MODEL_NUM
+    label: Model / Cat Number
+    labels:
+      - Model / Cat Number
+    technical_name: 2A_MODEL_NUM
+    section: campi-9
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10069 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: Model / Cat Number
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDITIONAL_TRAINING_INFORMATION_FIELD
+    label: Additional Training Information
+    labels:
+      - Additional Training Information
+    technical_name: ADDITIONAL_TRAINING_INFORMATION_FIELD
+    section: campi-9
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10026 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: Additional Training Information
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PRETAX_AND_TRADE_IN_EXPLANATION
+    label: PreTax and Trade-In Explanation
+    labels:
+      - PreTax and Trade-In Explanation
+    technical_name: PRETAX_AND_TRADE_IN_EXPLANATION
+    section: campi-9
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10094 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: PreTax and Trade-In Explanation
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:103
+    label: "103"
+    labels:
+      - "103"
+    technical_name: "103"
+    section: campi-9
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=103 · tipo=static
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: "103"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:105
+    label: "105"
+    labels:
+      - "105"
+    technical_name: "105"
+    section: campi-9
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=105 · tipo=static
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-9
+        source_unit: capital-expense-form-xml-272b13f7/campi-9#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: "105"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 2754

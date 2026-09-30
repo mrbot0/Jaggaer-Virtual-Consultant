@@ -1,0 +1,32 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.4.1.2
+section_title: ValidateRequisitionLineDataList [PR Validate]
+genre: tecnica
+rows:
+  - label: requisitionId
+    technical_name: requisitionId
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal identifier of the requisition owning following provided lines
+    section: 2.4.1.2
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.4.1.2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: requisitionLine
+    technical_name: requisitionLine
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      List of one or more objects defining validation results information to be
+      applied at specific line level.
+
+      See section “ValidateRequisitionData [PR Validate]” below.
+    section: 2.4.1.2
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.4.1.2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

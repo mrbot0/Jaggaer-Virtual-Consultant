@@ -1,0 +1,31 @@
+id: U.DOC0034.0036
+doc: S.STD.XSC.DOC.0034
+doc_id: ji-plt-2303-handout-workflowsyntax-docx-2e2da47b
+type: procedura
+text: |-
+  This rule shows some interesting concepts
+  1. !(Document.CustomFieldValues("Manual Purchase Order") in {"true"})
+  2. This shows that the rule is looking at a Custom Field value at the document level.
+  3. The rule is looking to see if the value of the Manual Purchase Order Custom Field has a value of true.
+  4. Notice the ! in front of this rule. If you see ! at the beginning of any rule, then a document will only stop if that rule IS NOT true. In this case, as long as the Manual Purchase Order is not true, the document will stop here.
+  5. && - When you see two "and" symbols like this (&&) that means that the rule following the preceding rule MUST also be true. This allows customers to require several criteria in order for a document to stop. Many && can be used in a given activity.
+hash: sha256:dca272658b3a0def26c25ec2ae68e600047a37ebf78b19dc95a018a0cbec0b4f
+words: 148
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0034
+  chapter: ji-plt-2303-handout-workflowsyntax-docx-2e2da47b
+  section: </Activity>
+  section_path: 0.1.1.3.3.7
+  page: 7
+  lang: en
+  prev: U.DOC0034.0035
+  next: U.DOC0034.0037
+steps:
+  - '!(Document.CustomFieldValues("Manual Purchase Order") in {"true"})'
+  - This shows that the rule is looking at a Custom Field value at the document level.
+  - The rule is looking to see if the value of the Manual Purchase Order Custom Field has a value of true.
+  - Notice the ! in front of this rule. If you see ! at the beginning of any rule, then a document will only stop if that rule IS NOT true. In this case, as long as the Manual Purchase Order is not true, the document will stop here.
+  - '&& - When you see two "and" symbols like this (&&) that means that the rule following the preceding rule MUST also be true. This allows customers to require several criteria in order for a document to stop. Many && can be used in a given activity.'
+procedure:
+  title: This rule shows some interesting concepts

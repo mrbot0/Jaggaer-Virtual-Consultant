@@ -1,0 +1,43 @@
+id: U.DOC0167.0539
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Dataset | Min/max occurrences | Description | Available from version
+  Dataset: annualSalesYear | Min/max occurrences: 0/1 | Description: Year for which AnnualSalesAmount is being provided, in the following format: yyyy
+  Dataset: annualSalesAmount | Min/max occurrences: 0/1 | Description: Total sales (revenue) for the supplier for the specified AnnualSalesYear. This is a numeric value of up to 20 digits, including up to 4 decimal places.
+  Dataset: isoCurrencyCode | Min/max occurrences: 0/1 | Description: Currency code for the AnnualSalesAmount field.
+hash: sha256:47e3cc6c6bf3ff69b7bbcf426021e1e4777d677f0525872fc9ab59fa1ab4c904
+words: 79
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/annualSalesList/annualSales
+  section_path: 2.2.4.15
+  page: 7
+  lang: en
+  prev: U.DOC0167.0538
+  next: U.DOC0167.0540
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrences
+    - Description
+    - Available from version
+  rows:
+    - - annualSalesYear
+      - 0/1
+      - "Year for which AnnualSalesAmount is being provided, in the following format: yyyy"
+      - ""
+    - - annualSalesAmount
+      - 0/1
+      - Total sales (revenue) for the supplier for the specified AnnualSalesYear. This is a numeric value of up to 20 digits, including up to 4 decimal places.
+      - ""
+    - - isoCurrencyCode
+      - 0/1
+      - Currency code for the AnnualSalesAmount field.
+      - ""
+  block: 1
+  blocks: 1

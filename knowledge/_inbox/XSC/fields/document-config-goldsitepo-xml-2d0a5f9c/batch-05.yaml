@@ -1,0 +1,65 @@
+document: document-config-goldsitepo-xml-2d0a5f9c
+scope: XSC
+batch: batch-05
+section: campi-5
+section_title: Campi — Distribution Information
+part: 1
+parts: 1
+rows:
+  - key: tech:120
+    label: "120"
+    labels:
+      - "120"
+    technical_name: "120"
+    section: campi-5
+    type: static
+    mandatory_text: Obbligatorio in Distribution
+    allowed_values: []
+    notes: id=120 · tipo=static
+    sources:
+      - document: document-config-goldsitepo-xml-2d0a5f9c
+        section: campi-5
+        source_unit: document-config-goldsitepo-xml-2d0a5f9c/campi-5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "120"
+        type: static
+        mandatory_text: Obbligatorio in Distribution
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.9
+      mandatory:
+        kind: always
+  - key: tech:115
+    label: "115"
+    labels:
+      - "115"
+    technical_name: "115"
+    section: campi-5
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=115 · tipo=static
+    sources:
+      - document: document-config-goldsitepo-xml-2d0a5f9c
+        section: campi-5
+        source_unit: document-config-goldsitepo-xml-2d0a5f9c/campi-5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "115"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 806

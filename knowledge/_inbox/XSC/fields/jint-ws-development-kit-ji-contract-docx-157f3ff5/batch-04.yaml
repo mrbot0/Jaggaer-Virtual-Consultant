@@ -1,0 +1,120 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-04
+section: 2.1.1.4
+section_title: SpendData [ImportSpend]
+part: 1
+parts: 1
+rows:
+  - key: tech:PRSPEND
+    label: prSpend
+    labels:
+      - prSpend
+    technical_name: PRSPEND
+    section: 2.1.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Beginning PR spend amount. This is a numeric value of up to 15 digits,
+      including up to 4 decimal places.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.1.1.4
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.1.1.4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: prSpend
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r21
+        genre: tecnica
+        label: prSpend
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:POSPEND
+    label: poSpend
+    labels:
+      - poSpend
+    technical_name: POSPEND
+    section: 2.1.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Beginning PO spend amount. This is a numeric value of up to 15 digits,
+      including up to 4 decimal places.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.1.1.4
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.1.1.4#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: poSpend
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r22
+        genre: tecnica
+        label: poSpend
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INVOICESPEND
+    label: invoiceSpend
+    labels:
+      - invoiceSpend
+    technical_name: INVOICESPEND
+    section: 2.1.1.4
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Beginning invoice spend amount. This is a numeric value of up to 15
+      digits, including up to 4 decimal places.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.1.1.4
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.1.1.4#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: invoiceSpend
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.24
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.24#part-1
+        row_ref: t0.r23
+        genre: tecnica
+        label: invoiceSpend
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1238

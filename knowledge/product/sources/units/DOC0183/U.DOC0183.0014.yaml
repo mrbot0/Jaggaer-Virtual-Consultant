@@ -1,0 +1,54 @@
+id: U.DOC0183.0014
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: procedura
+text: |-
+  The structure of the current document is the following (parte 1/2)
+  1. Import:
+  2. Request data format [Import]: describes the structure of the import request.
+  3. Behavior [Import]: describes how the web service processes the data passed in input, in case of particular processes
+  4. Response data format [Import]: describes the structure of the web service response and contains the list of possible error codes
+  5. Export:
+  6. Component filters [Export]: describes which sections of a receipt can be exported. The use of a component filter increments the number of sections in the response to every receipt exported.
+  7. Condition filters [Export]: describes which fields can be used to filter the receipt to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of receipts extracted.
+  8. Export data format [Export]: describes the structure of the response in terms of exported fields and sections.
+  9. Error codes [Export]: contains a list of possible error codes
+  10. Validate:
+  11. Request data format [Validate]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted.
+  12. Behavior [Validate]: describes how the web service processes the data passed in input, in case of some particular processes
+  13. Response data format [Validate JIInvoice method]: describes the structure of the web service response and contains the list of possible error codes
+  14. SOAP INTERFACE
+  15. Available methods: contains the list of the methods provided by the web service.
+hash: sha256:8111ac5ddc6d2cbd93367da73c0d55fffac6836165157110b44ef69e18edc32d
+words: 265
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 8
+  lang: en
+  prev: U.DOC0183.0013
+  next: U.DOC0183.0015
+steps:
+  - "Import:"
+  - "Request data format [Import]: describes the structure of the import request."
+  - "Behavior [Import]: describes how the web service processes the data passed in input, in case of particular processes"
+  - "Response data format [Import]: describes the structure of the web service response and contains the list of possible error codes"
+  - "Export:"
+  - "Component filters [Export]: describes which sections of a receipt can be exported. The use of a component filter increments the number of sections in the response to every receipt exported."
+  - "Condition filters [Export]: describes which fields can be used to filter the receipt to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of receipts extracted."
+  - "Export data format [Export]: describes the structure of the response in terms of exported fields and sections."
+  - "Error codes [Export]: contains a list of possible error codes"
+  - "Validate:"
+  - "Request data format [Validate]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted."
+  - "Behavior [Validate]: describes how the web service processes the data passed in input, in case of some particular processes"
+  - "Response data format [Validate JIInvoice method]: describes the structure of the web service response and contains the list of possible error codes"
+  - SOAP INTERFACE
+  - "Available methods: contains the list of the methods provided by the web service."
+procedure:
+  title: The structure of the current document is the following
+  part: 1
+  parts: 2
+  first_step: 1

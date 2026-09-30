@@ -1,0 +1,122 @@
+id: U.DOC0178.0420
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "Colonne: Condition Filter | Description | Operators Condition Filter: lastUpdateDate | Description: Date and time requisition information was last updated | Operators: Date filtering accepts following operators: EQUAL: object last update date must be equal to provided value NOTEQUAL: any object whose last update date is different from provided value GREATER_THAN: any object whose last update date is equal or greater than provided value LESS_THAN: any object whose last update date is lower or than provided value Date value must be expressed in the form yyyy-MM-dd or yyyy-MM-dd HH:mm:ss.SSS Z eg."
+hash: sha256:069ce495d1b0e26059904f39010013e35369e613616c8ded3db2be80303ac8c8
+words: 91
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Condition filters [Export]
+  section_path: 2.3.2
+  page: 78
+  lang: en
+  prev: U.DOC0178.0419
+  next: U.DOC0178.0421
+table:
+  table: 1
+  headers:
+    - Condition Filter
+    - Description
+    - Operators
+  rows:
+    - - lastUpdateDate
+      - Date and time requisition information was last updated
+      - |-
+        Date filtering accepts following operators:
+        EQUAL: object last update date must be equal to provided value
+        NOTEQUAL: any object whose last update date is different from provided value
+        GREATER_THAN: any object whose last update date is equal or greater than provided value
+        LESS_THAN: any object whose last update date is lower or than provided value
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+    - - creationDate
+      - Date and time the contract was generated in the solution
+      - ""
+    - - startDate
+      - Date on which the contract takes effect
+      - ""
+    - - endDate
+      - Last effective date for the contract
+      - ""
+    - - terminationDate
+      - Date on which the contract is to be terminated
+      - ""
+    - - contractId
+      - Unique contract internal identifier
+      - |-
+        Internal identifier filter accepts following operators:
+        EQUAL: required field must be equal to provided value
+        NOTEQUAL: required field must be different from provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - contractName
+      - Name of the contract
+      - |-
+        These filters accept following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        ENDWITH: required field must terminate with provided value (case insensitive)
+        Except of “contractName”, all filters accept also:
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+        The “contractNumber”, “contractStatus” and “workflowStep” filters accept also the following:
+        ISNULL: required field is checked to be not valorized
+        NOTNULL: required field is required to be valorized, no matter value
+    - - contractNumber
+      - Value used as reference number of the contract
+      - ""
+    - - contractType
+      - Internal name for a type of the Contract
+      - ""
+    - - contractStatus
+      - Customer-defined status of the contract.
+      - ""
+    - - Project
+      - Work group code associated with the contract
+      - ""
+    - - workflowStep
+      - Workflow step in which the contract was when exported
+      - ""
+    - - firstParty
+      - Name of the first primary party of the Contract
+      - ""
+    - - secondParty
+      - Name of the second primary party of the Contract
+      - ""
+    - - archived
+      - |-
+        Contract archived status.
+        Possible values (case insensitive):
+        YES, TRUE, Y, 1
+        NO, FALSE, N, 0
+      - |-
+        Archive status filter accepts following operators:
+        EQUAL: required field must match exactly provided value
+        NOTEQUAL: required field must be different from provided value
+    - - validationStatus
+      - |-
+        Contract validation requirement.
+        0: Unneeded, contract was exported with no validation requirements.
+        1: Pending – contract is waiting to complete the validation process.
+        2: Completed – contract completed the validation process
+      - |-
+        Validation status filtering accepts following operation:
+        EQUAL: required field must be equal to provided value
+        NOTEQUAL: required field must be different from provided value
+        GREATER_THAN: required field must be equal to or greater than provided value
+        LESS_THAN: required field must be equal to or lower than provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 3

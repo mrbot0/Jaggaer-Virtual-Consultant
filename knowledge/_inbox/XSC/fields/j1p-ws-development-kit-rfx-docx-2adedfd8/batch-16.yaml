@@ -1,0 +1,210 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-16
+section: 2.1.1.16
+section_title: "Commercial Envelope: Section additional column [Import/Update RfX method]"
+part: 1
+parts: 1
+rows:
+  - key: tech:DEFAULTVALUE
+    label: defaultValue
+    labels:
+      - defaultValue
+    technical_name: DEFAULTVALUE
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Default value to be set on the additional column. According to column
+      type, possible values are:
+
+      BOOLEAN: TRUE or 1 for true value, any other value means false
+
+      NOTE, MULTILINE OR TEXT: any string
+
+      NUMERIC: a string representing a number
+
+      COMBO: any value among allowed ones
+
+      DATE [22.02.00] Note: format is yyyy-MM-dd
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.16
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: defaultValue
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SELLERVISIBILITY
+    label: sellerVisibility
+    labels:
+      - sellerVisibility
+    technical_name: SELLERVISIBILITY
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Visibility of the additional column to the seller
+
+      Valid value:
+
+      0 = not visible
+
+      1 = visible in read-only mode
+
+      2 = visible and writeable
+
+      If not provided, 2 is assumed.
+
+      In case of NUMERIC_FORMULA or NUMERIC_SR_FORMULA, the value 0 means
+      formula hidden to supplier, any other value means formula visible
+      (read-only) to supplier.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.16
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: sellerVisibility
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COLUMNPOS
+    label: columnPos
+    labels:
+      - columnPos
+    technical_name: COLUMNPOS
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Progressive identifier of the additional column parameter (1-based
+      enumeration)
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.16
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: columnPos
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DEFAULTLINEVALUES
+    label: defaultLineValues
+    labels:
+      - defaultLineValues
+    technical_name: DEFAULTLINEVALUES
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Container of defaultLineValue object representing default value for a
+      specific commercial parameter of any type except NUMERIC_FORMULA
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.16
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: defaultLineValues
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FORMULADATA
+    label: formulaData
+    labels:
+      - formulaData
+    technical_name: FORMULADATA
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Container of data related to the additional column when its type is
+      NUMERIC_FORMULA or NUMERIC_SR_FORMULA
+
+      [See Formula Data]
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.16
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: formulaData
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COLUMNUNIQUECODE
+    label: columnUniqueCode
+    labels:
+      - columnUniqueCode
+    technical_name: COLUMNUNIQUECODE
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: It is a code used to identify the column. Must be unique within a section
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.16
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.16#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: columnUniqueCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1712

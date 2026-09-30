@@ -1,0 +1,41 @@
+id: U.DOC0169.0148
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: fileBase64 | Description: File content to be used to define attachment.
+  If not provided, the field fileUrl is used.
+  If the fileUrl field is provided, it is used to define the URL information of the attachment.
+  File Type assigned is File
+hash: sha256:dbd96990d49f55f5165c5b46bbcb6a6a1914ba70603821677a8f50431e2e6dc2
+words: 42
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Attachment [PR Import]
+  section_path: 2.1.1.22
+  page: 24
+  lang: en
+  prev: U.DOC0169.0147
+  next: U.DOC0169.0149
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - fileBase64
+    - ""
+    - |-
+      File content to be used to define attachment.
+      If not provided, the field fileUrl is used.
+      If the fileUrl field is provided, it is used to define the URL information of the attachment.
+      File Type assigned is File
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

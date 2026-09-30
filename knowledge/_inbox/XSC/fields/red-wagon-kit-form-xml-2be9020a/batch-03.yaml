@@ -1,0 +1,169 @@
+document: red-wagon-kit-form-xml-2be9020a
+scope: XSC
+batch: batch-03
+section: campi-3
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:PAINTED_BODY
+    label: Wagon Main Body (Red)
+    labels:
+      - Wagon Main Body (Red)
+    technical_name: PAINTED_BODY
+    section: campi-3
+    type: FlatRateService
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParam_CatalogNumber=48-0192;
+      UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=24.95;
+      UserDefinedFieldParam_DescriptionLabel=Wagon Body (Red);
+      UserDefinedFieldParam_Quantity=1;
+      UserDefinedFieldParam_ShowCatalogNumber=true · id=10005 · tipo=userdefined
+    sources:
+      - document: red-wagon-kit-form-xml-2be9020a
+        section: campi-3
+        source_unit: red-wagon-kit-form-xml-2be9020a/campi-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Wagon Main Body (Red)
+        type: FlatRateService
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:WHEELS
+    label: Wheels (4 Required)
+    labels:
+      - Wheels (4 Required)
+    technical_name: WHEELS
+    section: campi-3
+    type: FlatRateService
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParam_CatalogNumber=43-1234;
+      UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=4.95;
+      UserDefinedFieldParam_DescriptionLabel=Wheels (4 Required);
+      UserDefinedFieldParam_Quantity=4;
+      UserDefinedFieldParam_ShowCatalogNumber=true · id=10003 · tipo=userdefined
+    sources:
+      - document: red-wagon-kit-form-xml-2be9020a
+        section: campi-3
+        source_unit: red-wagon-kit-form-xml-2be9020a/campi-3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Wheels (4 Required)
+        type: FlatRateService
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:REARAXELASSY
+    label: RearAxelAssy
+    labels:
+      - RearAxelAssy
+    technical_name: REARAXELASSY
+    section: campi-3
+    type: FlatRateService
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParam_CatalogNumber=48-7162;
+      UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=12.35;
+      UserDefinedFieldParam_DescriptionLabel=Rear Axle Assembly;
+      UserDefinedFieldParam_Quantity=1;
+      UserDefinedFieldParam_ShowCatalogNumber=true · id=10006 · tipo=userdefined
+    sources:
+      - document: red-wagon-kit-form-xml-2be9020a
+        section: campi-3
+        source_unit: red-wagon-kit-form-xml-2be9020a/campi-3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: RearAxelAssy
+        type: FlatRateService
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FRONTAXLASSLY
+    label: FrontAxlAssly
+    labels:
+      - FrontAxlAssly
+    technical_name: FRONTAXLASSLY
+    section: campi-3
+    type: FlatRateService
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParam_CatalogNumber=48-7192;
+      UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=14.95;
+      UserDefinedFieldParam_DescriptionLabel=Front Axle Assembly;
+      UserDefinedFieldParam_Quantity=1;
+      UserDefinedFieldParam_ShowCatalogNumber=true · id=10007 · tipo=userdefined
+    sources:
+      - document: red-wagon-kit-form-xml-2be9020a
+        section: campi-3
+        source_unit: red-wagon-kit-form-xml-2be9020a/campi-3#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: FrontAxlAssly
+        type: FlatRateService
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PULLHANDLE
+    label: PullHandle
+    labels:
+      - PullHandle
+    technical_name: PULLHANDLE
+    section: campi-3
+    type: FlatRateService
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParam_CatalogNumber=43-0122;
+      UserDefinedFieldParam_FeeReadOnly=true; UserDefinedFieldParam_Fee=7.95;
+      UserDefinedFieldParam_DescriptionLabel=Pull Handle;
+      UserDefinedFieldParam_Quantity=1;
+      UserDefinedFieldParam_ShowCatalogNumber=true · id=10008 · tipo=userdefined
+    sources:
+      - document: red-wagon-kit-form-xml-2be9020a
+        section: campi-3
+        source_unit: red-wagon-kit-form-xml-2be9020a/campi-3#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: PullHandle
+        type: FlatRateService
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1626

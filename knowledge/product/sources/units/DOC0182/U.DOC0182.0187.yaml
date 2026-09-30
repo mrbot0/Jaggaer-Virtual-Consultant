@@ -1,0 +1,47 @@
+id: U.DOC0182.0187
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: decDistributionValue | Mandatory (Y/N): N | Description: Distribution value for the split. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  According to split type, it represents:
+  AmountOfQuantity: the portion of the quantity to be split.
+  AmountOfPrice: the monetary amount to be split.
+  PercentOfQuantity and PercentOfPrice: the percentage of the split.
+  For AmountOfPrice splits, the distributionvalue and splitAmount values are calculated identically and will always match each other.
+  This information does not appear in the message if there is no split.
+hash: sha256:f499da53c493b7b1e7d0d78db7ff37284022b35758088087c16a3b73ab15c218
+words: 89
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Splittable Field Index [PR Import]
+  section_path: 2.1.1.27
+  page: 24
+  lang: en
+  prev: U.DOC0182.0186
+  next: U.DOC0182.0188
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - decDistributionValue
+    - N
+    - |-
+      Distribution value for the split. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+      According to split type, it represents:
+      AmountOfQuantity: the portion of the quantity to be split.
+      AmountOfPrice: the monetary amount to be split.
+      PercentOfQuantity and PercentOfPrice: the percentage of the split.
+      For AmountOfPrice splits, the distributionvalue and splitAmount values are calculated identically and will always match each other.
+      This information does not appear in the message if there is no split.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

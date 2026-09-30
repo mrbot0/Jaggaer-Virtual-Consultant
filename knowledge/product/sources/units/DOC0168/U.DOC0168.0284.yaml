@@ -1,0 +1,41 @@
+id: U.DOC0168.0284
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: riga-tabella-campi
+text: |-
+  Attribute: distributionType | Description: Way the funds are to be distributed to each split.
+  Possible values:
+  PercentOfQuantity: funds are distributed based on a user-specified percentage of the quantity.
+  PercentOfPrice: funds are distributed based on a user-specified percentage of the price
+hash: sha256:eb34244065d00fc34c61beefb53e25d163f340661e5ae980726936f41dcccda2
+words: 40
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: CustomFieldValueSet [Import JIOrder method]
+  section_path: 2.3.1.19
+  page: 82
+  lang: en
+  prev: U.DOC0168.0283
+  next: U.DOC0168.0285
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - distributionType
+    - ""
+    - |-
+      Way the funds are to be distributed to each split.
+      Possible values:
+      PercentOfQuantity: funds are distributed based on a user-specified percentage of the quantity.
+      PercentOfPrice: funds are distributed based on a user-specified percentage of the price
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

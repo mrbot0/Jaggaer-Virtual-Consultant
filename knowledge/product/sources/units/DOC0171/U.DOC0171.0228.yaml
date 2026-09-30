@@ -1,0 +1,46 @@
+id: U.DOC0171.0228
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: invitationModeCode | Mandatory (Y/N): N | Description: Supplier invitation mode:
+  0 = invited;
+  1 = self-invited;
+  2 = invited after close | Mapping on JA data model and notes: Supplier invitation mode.
+  If invited after close, the flag “answAfterClose” is set
+hash: sha256:7b9b0dc091f001c3c459b569e54ad5691c17418c23cb852298a6f71ff14ea011
+words: 42
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Suppliers [Import/Update RfX method]
+  section_path: 2.1.1.22
+  page: 6
+  lang: en
+  prev: U.DOC0171.0227
+  next: U.DOC0171.0229
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - invitationModeCode
+    - N
+    - |-
+      Supplier invitation mode:
+      0 = invited;
+      1 = self-invited;
+      2 = invited after close
+    - |-
+      Supplier invitation mode.
+      If invited after close, the flag “answAfterClose” is set
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

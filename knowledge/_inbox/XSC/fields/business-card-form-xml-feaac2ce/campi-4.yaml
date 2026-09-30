@@ -1,0 +1,67 @@
+document: business-card-form-xml-feaac2ce
+scope: XSC
+section: campi-4
+section_title: Campi — Personal Information
+genre: tecnica
+rows:
+  - label: Name
+    technical_name: Name
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=40 · id=10003 · tipo=userdefined
+    section: campi-4
+    source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce
+  - label: Title
+    technical_name: Title
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10004 · tipo=userdefined
+    section: campi-4
+    source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce
+  - label: Department
+    technical_name: Department
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10005 · tipo=userdefined
+    section: campi-4
+    source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce
+  - label: Address
+    technical_name: Address
+    type: TextArea
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaRows=5;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=40 · id=10006 · tipo=userdefined
+    section: campi-4
+    source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce
+  - label: email
+    technical_name: email
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10007 · tipo=userdefined
+    section: campi-4
+    source_unit: business-card-form-xml-feaac2ce/campi-4#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: business-card-form-xml-feaac2ce

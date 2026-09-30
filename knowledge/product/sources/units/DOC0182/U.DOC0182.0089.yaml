@@ -1,0 +1,37 @@
+id: U.DOC0182.0089
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: linkedToLineNumber | Mandatory (Y/N): N | Description: For a trade-in line item that is linked to a positive non-trade-in line item, position of the positive non-trade-in line item in the PR document.
+  Valid only if the item is a trade-in.
+hash: sha256:2c5ac614e5f09273c3744ceb19e262564a302ca8aa993a5a00ad826445335295
+words: 41
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Requisition Line [PR Import]
+  section_path: 2.1.1.6
+  page: 15
+  lang: en
+  prev: U.DOC0182.0088
+  next: U.DOC0182.0090
+row:
+  table: 0
+  row: 16
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - linkedToLineNumber
+    - N
+    - |-
+      For a trade-in line item that is linked to a positive non-trade-in line item, position of the positive non-trade-in line item in the PR document.
+      Valid only if the item is a trade-in.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

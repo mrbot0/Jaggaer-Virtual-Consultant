@@ -1,0 +1,50 @@
+id: U.DOC0183.0097
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: receiptName | Description: Name assigned to the receipt.
+  Attribute: receiptNumber | Description: Receipt number associated with the receipt.
+  Attribute: receiptPosition | Description: Position of the receipt in the receipt document.
+  Attribute: creationResult | Description: Indicates whether the creation of the receipt was a success or failure.
+  Attribute: receiptImportErrorList | Description: List of error encountered at header level while importing item.
+  See section “Error [Import]” below
+  Attribute: receiptLineRefList | Description: List of error encountered at line level while carrying on operation.
+  See section “ReceiptLineRef [Import]” below.
+hash: sha256:6335f42bffc5ade74131c051a4457a2a17e8c5de86b488f4ecd945db00cc3434
+words: 90
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: ReceiptRef [Import]
+  section_path: 2.1.3.3
+  page: 16
+  lang: en
+  prev: U.DOC0183.0096
+  next: U.DOC0183.0098
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - receiptName
+      - Name assigned to the receipt.
+    - - receiptNumber
+      - Receipt number associated with the receipt.
+    - - receiptPosition
+      - Position of the receipt in the receipt document.
+    - - creationResult
+      - Indicates whether the creation of the receipt was a success or failure.
+    - - receiptImportErrorList
+      - |-
+        List of error encountered at header level while importing item.
+        See section “Error [Import]” below
+    - - receiptLineRefList
+      - |-
+        List of error encountered at line level while carrying on operation.
+        See section “ReceiptLineRef [Import]” below.
+  block: 1
+  blocks: 1

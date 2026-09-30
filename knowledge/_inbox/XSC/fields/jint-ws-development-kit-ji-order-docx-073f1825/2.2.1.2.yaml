@@ -1,0 +1,56 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.2.1.2
+section_title: UpdateData [Validate JIOrder method]
+genre: tecnica
+rows:
+  - label: validationResponse
+    technical_name: validationResponse
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Validation outcome container.
+      See section “ValidationResponse [Validate JIOrder method]” below,
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: extPONumber
+    technical_name: extPONumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: New value of the PO Number to be used, in substitution of current one.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: customFieldValueList
+    technical_name: customFieldValueList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of custom field value to be set on the order.
+      See section “CustomFieldValue [Validate JIOrder method]” below.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: attachmentList
+    technical_name: attachmentList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for attachment information to be set on the order.
+      See section “Attachment [Validate JIOrder method]” below.
+    section: 2.2.1.2
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.2#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

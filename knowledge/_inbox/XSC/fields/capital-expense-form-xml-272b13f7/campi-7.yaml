@@ -1,0 +1,218 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+section: campi-7
+section_title: Campi — Selection Justification
+genre: tecnica
+rows:
+  - label: Specify any additional internal comments
+    technical_name: Specify any additional internal comments
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br><b>Specify any additional internal
+      comments. If you selected any statements above, please explain your
+      choices. Describe any unique requirement to be used and state if more than
+      one source provides same product/service.<b> · id=10101 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Additional Internal Comment
+    technical_name: Additional Internal Comment
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: Specify any additional comments, if any. <br><br> If you selected any
+      statements above, please explain your choices. Describe any unique
+      requirement to be used and state if more than one source provides same
+      product/service. · UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=4;
+      UserDefinedFieldParamTextBoxMaxLength=1500;
+      UserDefinedFieldParamTextAreaCols=60 · id=10060 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: If other suppliers are not acceptable, indicate if any of the statements
+      below apply.
+    technical_name: If other suppliers are not acceptable, indicate if any of the
+      statements below apply.
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<b>If other suppliers are not acceptable,
+      indicate if any of the statements below apply. </b> · id=10078 ·
+      tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Commitment under Systemwide Agreement/Campus Contract
+    technical_name: Commitment under Systemwide Agreement/Campus Contract
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The supplier is under a University of California Office of the President
+      (UCOP) agreement or a UCSF campus agreement/contract. · id=10080 ·
+      tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Funding source for purchase does not allow use of any other
+      suppliers/products
+    technical_name: Funding source for purchase does not allow use of any other
+      suppliers/products
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The funding source (i.e. grant) used for the product does not allow the
+      purchase of other comparable products or purchasing the product through
+      another supplier. · id=10081 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Manufacturer’s sole authorized distributor
+    technical_name: Manufacturer’s sole authorized distributor
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The manufacturer only authorizes one supplier to sell and distribute the
+      product/service. · id=10082 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Manufacturer sells products/service on direct basis only
+    technical_name: Manufacturer sells products/service on direct basis only
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The manufacturer is the only supplier that sells and distributes the
+      product/service. · id=10083 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Department's only known supplier after conducting market research
+    technical_name: Department's only known supplier after conducting market resarch
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The department searched for suppliers that sells the product/service and
+      only found one supplier. · id=10084 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Only supplier capable of providing product/service within the time frame
+      required
+    technical_name: Only supplier capable of providing product/service within the
+      time frame required
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The supplier is the only one that can provide the product/service in a
+      specified time period to meet department’s needs. · id=10091 ·
+      tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: If no other comparable products/services are acceptable
+    technical_name: If no other comparable products/services are acceptable
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br><b>If no other comparable products/services
+      are acceptable, indicate if any of the statements below apply. Provide an
+      explanation for each selected statement in the Additional Internal Comment
+      section.</b> · id=10079 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Best price for product
+    technical_name: Best price for product
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The supplier is offering the product/service at the best price available
+      after comparing prices from multiple suppliers. <br><br> If you select
+      this option, you must explain the reasoning and provide the other
+      suppliers considered in the Additional Internal Comment field. · id=10086
+      · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Other products/services cannot provide proprietary/unique features, or
+      combination/configuration
+    technical_name: Other products/services cannot provide proprietary/unique
+      features, or combination/configuration
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The product/service has unique characteristics that no other comparable
+      products can provide. <br><br> If you select this option, you must explain
+      the reasoning in the Additional Internal Comment field. · id=10087 ·
+      tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Department states all other products/services and suppliers are
+      unacceptable
+    technical_name: Department states all other products/services and suppliers are
+      unacceptable
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: Other products does not meet department needs or requirements. <br><br>
+      If you select this option, you must explain the reasoning in the
+      Additional Internal Comment field. · id=10088 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Must match existing equipment
+    technical_name: Must match existing equipment
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The new product must match the product that the department currently
+      uses. <br><br>If you select this option, you must explain the reasoning in
+      the Additional Internal Comment field. · id=10089 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Research continuity
+    technical_name: Research continuity
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The product is currently used for research and the same product is
+      necessary to complete the research. <br><br> If you select this option,
+      you must explain the reasoning in the Additional Internal Comment field. ·
+      id=10090 · tipo=userdefined
+    section: campi-7
+    source_unit: capital-expense-form-xml-272b13f7/campi-7#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7

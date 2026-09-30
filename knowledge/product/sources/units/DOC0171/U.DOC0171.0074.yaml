@@ -1,0 +1,43 @@
+id: U.DOC0171.0074
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: valueCurrency | Mandatory (Y/N): N | Description: External code of the value currency.
+  If not provided:
+  When creating new object, the default instance currency is used
+  When updating object, previous value (if any) is kept or, if no value set for existing item, default instance currency is used | Mapping on JA data model and notes: External code of the value currency
+hash: sha256:3f2788600c886f211e9488a28a395c734bc623e1788cc366b2e734d0016045bc
+words: 63
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0073
+  next: U.DOC0171.0075
+row:
+  table: 0
+  row: 20
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - valueCurrency
+    - N
+    - |-
+      External code of the value currency.
+      If not provided:
+      When creating new object, the default instance currency is used
+      When updating object, previous value (if any) is kept or, if no value set for existing item, default instance currency is used
+    - External code of the value currency
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

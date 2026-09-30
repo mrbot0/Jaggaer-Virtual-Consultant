@@ -1,0 +1,50 @@
+id: U.DOC0171.0500
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: URL | /j1p/api/public/ja/v1/rfxs/scores
+  URL: Http Method | /j1p/api/public/ja/v1/rfxs/scores: POST
+  URL: Header Parameters | /j1p/api/public/ja/v1/rfxs/scores: Authorization (see “J1P WSDevelopment_Kit – Web Services Overview” document)
+  URL: Body | /j1p/api/public/ja/v1/rfxs/scores: JSON String representing the import request as defined in “2.1.1-Request data format”
+  URL: Response format | /j1p/api/public/ja/v1/rfxs/scores: JSON string representing the rfx data. See 2.2.4
+  URL: Return Codes | /j1p/api/public/ja/v1/rfxs/scores: 200 query successfully executed
+  400 wrong or missing data in the request
+  404 the object with the provided id does not exist
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:c25f0607ba95fb1af3484f81bccbec48455752c0213a9d8f6f64d1f8d327a46a
+words: 92
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Import RfX Technical Envelope Score[import RfX]
+  section_path: 2.3.6.3
+  page: 8
+  lang: en
+  prev: U.DOC0171.0499
+  next: U.DOC0171.0501
+table:
+  table: 0
+  headers:
+    - URL
+    - /j1p/api/public/ja/v1/rfxs/scores
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization (see “J1P WSDevelopment_Kit – Web Services Overview” document)
+    - - Body
+      - JSON String representing the import request as defined in “2.1.1-Request data format”
+    - - Response format
+      - JSON string representing the rfx data. See 2.2.4
+    - - Return Codes
+      - |-
+        200 query successfully executed
+        400 wrong or missing data in the request
+        404 the object with the provided id does not exist
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

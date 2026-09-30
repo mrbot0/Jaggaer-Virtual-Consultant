@@ -1,0 +1,602 @@
+document: jint-development-kit-profile-management-web-serv-35c3a7f6
+scope: XSC
+section: 4.1.1.2
+section_title: Company and super-user data [Import/update of Company and Users Data]
+genre: tecnica
+rows:
+  - label: bravoId
+    technical_name: bravoId
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: JA internal identifier
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: companyName
+    technical_name: companyName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company name
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: bizLegalStruct
+    technical_name: bizLegalStruct
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Legal structure title expressed according to company country
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: fiscalCode
+    technical_name: fiscalCode
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Fiscal code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: vat
+    technical_name: vat
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Country VAT code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: euVat
+    technical_name: euVat
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: European VAT code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: dAndBCode
+    technical_name: dAndBCode
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Dun&BradStreet code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userAlias
+    technical_name: userAlias
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Super user login
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: isoCountry
+    technical_name: isoCountry
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Company main postal address – Country (ISO code or country name)
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: extCode
+    technical_name: extCode
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Company identification code within the external system
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: bizEmail
+    technical_name: bizEmail
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main email address
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: bizPhone
+    technical_name: bizPhone
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main telephone phone number
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: bizFax
+    technical_name: bizFax
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company Fax
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: webSite
+    technical_name: webSite
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company web-site
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: address
+    technical_name: address
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main postal address
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: zip
+    technical_name: zip
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main postal address – ZIP code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: city
+    technical_name: city
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main postal address – City
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: province
+    technical_name: province
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main postal address – Province/County name as presented to user
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: address2
+    technical_name: address2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company alternative address
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: zip2
+    technical_name: zip2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company alternative postal address – ZIP code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r19
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: city2
+    technical_name: city2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company alternative postal address – City
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r20
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: province2
+    technical_name: province2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company alternative postal address – Province/County name as presented to
+      user
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r21
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: isoCountry2
+    technical_name: isoCountry2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company alternative postal address –Country (ISO code or country name)
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r22
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: postalOfficeBox
+    technical_name: postalOfficeBox
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r23
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: postalOfficeZipCode
+    technical_name: postalOfficeZipCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r24
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: status
+    technical_name: status
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Alphanumeric external code of Seller extended status (secondary supplier
+      status).
+
+      Use empty string to reset extended status.
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r25
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: paymentCondition
+    technical_name: paymentCondition
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: External (visible) payment term code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-1
+    row_ref: t0.r26
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: turnOver
+    technical_name: turnOver
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Annual Turnover
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r27
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: currency
+    technical_name: currency
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: External code of the company currency.
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r28
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: apeCode
+    technical_name: apeCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: External (visible) APE code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r29
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: password
+    technical_name: password
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user password
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r30
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: pwdQuestion
+    technical_name: pwdQuestion
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user password retrieval question
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r31
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: pwdAnswer
+    technical_name: pwdAnswer
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user password retrieval answer
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r32
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userTitle
+    technical_name: userTitle
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user title as translated in default site locale, or default title
+      value
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r33
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userSurName
+    technical_name: userSurName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super surname
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r34
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userName
+    technical_name: userName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user name
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r35
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userEmail
+    technical_name: userEmail
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user email
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r36
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userPhone
+    technical_name: userPhone
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user telephone number
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r37
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userFax
+    technical_name: userFax
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user fax number
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r38
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userMobPhone
+    technical_name: userMobPhone
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user mobile phone
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r39
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userRole
+    technical_name: userRole
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user company role (job title) code or name in current locale
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r40
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: locale
+    technical_name: locale
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: "Super user default language (built up from language and country codes.
+      E.g.: “en_GB” or “it_IT”)"
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r41
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: timezone
+    technical_name: timezone
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: "Super user time-zone identifier (e.g.: ‘Europe/Brussels’ or
+      ‘America/New_York’)"
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r42
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: prefContact
+    technical_name: prefContact
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user preferred contact mode code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r43
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: prefFolder
+    technical_name: prefFolder
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r44
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userExtCode
+    technical_name: userExtCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user identification code within the external system
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r45
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userBusinessUnitCode
+    technical_name: userBusinessUnitCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r46
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userDivisionCode
+    technical_name: userDivisionCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user division id
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r47
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: userProfileCode
+    technical_name: userProfileCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user profile code
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r48
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: extUniqueCode
+    technical_name: extUniqueCode
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: >-
+      Company unique identification code within the external system. When
+      valorized it must be unique within the companies registered and enabled in
+      the same toolkit group (companies deactivated and deleted are excluded).
+
+      Available from version 12_4_0_02.
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r49
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: accessAuctions
+    technical_name: accessAuctions
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Flag that indicates access to auctions.
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r50
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: accessRfx
+    technical_name: accessRfx
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Flag that indicates access to rfx.
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r51
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: accessFileSharing
+    technical_name: accessFileSharing
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Flag that indicates access to file sharing.
+    section: 4.1.1.2
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+    row_ref: t0.r52
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6

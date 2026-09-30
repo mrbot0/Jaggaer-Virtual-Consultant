@@ -1,0 +1,39 @@
+id: U.DOC0183.0082
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: riga-tabella-campi
+text: |-
+  Attribute: note | Mandatory (Y/N): N | Description: Text note attached to the receipt line.
+  If the note is longer than 700 characters, it is truncated and saved.
+  Note: If the Note field is empty, the existing note in the Invoicing solution is not overwritten. Only a populated Note field can overwrite the existing note
+hash: sha256:b43505a60a450dba6417c7f46979637c5f4498b0af94b1f5d9d7a73874f9cb44
+words: 55
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Line [Import]
+  section_path: 2.1.1.9
+  page: 16
+  lang: en
+  prev: U.DOC0183.0081
+  next: U.DOC0183.0083
+row:
+  table: 0
+  row: 7
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - note
+    - N
+    - |-
+      Text note attached to the receipt line.
+      If the note is longer than 700 characters, it is truncated and saved.
+      Note: If the Note field is empty, the existing note in the Invoicing solution is not overwritten. Only a populated Note field can overwrite the existing note
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,101 @@
+id: U.DOC0171.0419
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Dataset: Award attachment lists | Min/max occurrences: Zero or one | Description: Container for award attachments Dataset: Publish result document lists | Min/max occurrences: Zero or one | Description: Container for publish result documents Dataset: Qualification Envelope | Min/max occurrences: Zero or one | Description: RfX qualification envelope Dataset: Technical Envelope | Min/max occurrences: Zero or one | Description: RfX technical envelope Dataset: Commercial Envelope | Min/max occurrences: Zero or one | Description: RfX Commercial envelope Dataset: Suppliers | Min/max occurrences: Zero or one | Description: List of suppliers invited to the last run of the RfX Dataset: Supplier offers | Min/max occurrences: Zero or one | Description: Qualification, Technical and Commercial offers Dataset: Evaluation groups | Min/max occurrences: Zero or one | Description: RfX evaluation groups Dataset: E-mail recipients | Min/max occurrences: Zero or one | Description: RfX e-mail recipients Dataset: Evaluation comments | Min/max occurrences: Zero or one | Description: RfX evaluation comments Dataset: Offline Answers | Min/max occurrences: Zero or one | Description: Offline supplier answers Dataset: Supplier Response Counters | Min/max occurrences: Zero or one | Description: Counters related to the responses of the invited suppliers Dataset: Opening Committees | Min/max occurrences: Zero or one | Description: RfX opening committees Dataset: Business Units | Min/max occurrences: Zero or one | Description: List of business units [see section “Business Unit”] Dataset: Regions | Min/max occurrences: Zero or one | Description: List of regions [see section “Region”] Dataset: Award Additional Info | Min/max occurrences: Zero or more | Description: Container for additional info data elements [see section “Additional info”] Dataset: Rfx Tioc | Min/max occurrences: Zero or more | Description: Rfx tioc data [see section “Tioc”]"
+hash: sha256:4b74010001ea7d84277665ec9cf37a20a196cb9dc19f92ad680edad6183342ba
+words: 278
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Export Response data format
+  section_path: 2.3.4
+  page: 7
+  lang: en
+  prev: U.DOC0171.0418
+  next: U.DOC0171.0420
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrences
+    - Description
+  rows:
+    - - RfX setting
+      - Exactly one
+      - RfX settings
+    - - RfX planning
+      - Exactly one
+      - RfX planning information [DEPRECATED]
+    - - Categories
+      - Zero or more
+      - RfX categories
+    - - Additional Info
+      - Zero or more
+      - Container for additional info data elements
+    - - Buyer attachment list
+      - Zero or one
+      - Container for Attachments in the buyer visible file sharing area of the RfX
+    - - Seller attachment list
+      - Zero or one
+      - Container for Attachments in the seller visible file sharing area of the RfX
+    - - Instructional attachment lists
+      - Zero or one
+      - Container for Instructional attachments. Available from version 12_3_02.
+    - - Award attachment lists
+      - Zero or one
+      - Container for award attachments
+    - - Publish result document lists
+      - Zero or one
+      - Container for publish result documents
+    - - Qualification Envelope
+      - Zero or one
+      - RfX qualification envelope
+    - - Technical Envelope
+      - Zero or one
+      - RfX technical envelope
+    - - Commercial Envelope
+      - Zero or one
+      - RfX Commercial envelope
+    - - Suppliers
+      - Zero or one
+      - List of suppliers invited to the last run of the RfX
+    - - Supplier offers
+      - Zero or one
+      - Qualification, Technical and Commercial offers
+    - - Evaluation groups
+      - Zero or one
+      - RfX evaluation groups
+    - - E-mail recipients
+      - Zero or one
+      - RfX e-mail recipients
+    - - Evaluation comments
+      - Zero or one
+      - RfX evaluation comments
+    - - Offline Answers
+      - Zero or one
+      - Offline supplier answers
+    - - Supplier Response Counters
+      - Zero or one
+      - Counters related to the responses of the invited suppliers
+    - - Opening Committees
+      - Zero or one
+      - RfX opening committees
+    - - Business Units
+      - Zero or one
+      - List of business units [see section “Business Unit”]
+    - - Regions
+      - Zero or one
+      - List of regions [see section “Region”]
+    - - Award Additional Info
+      - Zero or more
+      - Container for additional info data elements [see section “Additional info”]
+    - - Rfx Tioc
+      - Zero or more
+      - Rfx tioc data [see section “Tioc”]
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

@@ -1,0 +1,55 @@
+doc: S.STD.XSC.DOC.0055
+scope: XSC
+extracted_at: 2026-09-30T04:30:12.520Z
+tier: T0
+stats:
+  units: 8
+  extracted_units: 1
+  document_candidates: 0
+  needs_llm: 0
+  t0_complete: 1
+  by_candidate:
+    FLD: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 0
+  sessions: []
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0055.0004
+    source_unit: U.DOC0055.0004
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0055
+    section: CORSI/JI-2303/JI-PLT_2304_SupplierEmailTemplate.txt
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: In order to complete the initial registration you
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0055.0004
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 45

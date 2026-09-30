@@ -1,0 +1,88 @@
+id: U.DOC0064.0056
+doc: S.STD.XSC.DOC.0064
+doc_id: sc-perspective-example-tcm-implementation-workbo-e9405319
+type: tabella
+text: |-
+  Colonne:  |  | UIT (Test Environment) | Production Environment
+  Preparation
+  1. Prepare Contract Party Import Template (for suppliers needed for contracts. Use Precise Supplier Name) | UIT (Test Environment): Small Sample | Production Environment: Complete file
+  2. Prepare Contract Import template with Precise Supplier Name; no JAGGAER ID # (yet); and, precise contract attachment name | UIT (Test Environment): Small Sample | Production Environment: Complete file
+  3. Move test sample of Contract Attachment Files to TEST FTP Site | UIT (Test Environment): Small Sample
+  4. Move Contract Attachment Files to PRODUCTION FTP Site | Production Environment: All Contract Attachments
+  Execution
+  5. Perform Contract Party Import into JAGGAER | UIT (Test Environment): Small Sample | Production Environment: Complete file
+  6. Export Suppliers from JAGGAER to obtain the JAGGAER Supplier ID# | UIT (Test Environment): Select list of Sample Suppliers | Production Environment: All Suppliers (in network with contract party type = 'supplier')
+  7. Execute a vLookup on Supplier Name from Export to pull in the JAGGAER Supplier ID# into the Contract Import Template | UIT (Test Environment): n/a | Production Environment: Y
+  8. Validate Contract Import Template | UIT (Test Environment): Y | Production Environment: Y
+  9. Correct any errors | UIT (Test Environment): Y | Production Environment: Y
+  10. Perform Contract Import | UIT (Test Environment): Y | Production Environment: Y
+hash: sha256:80ae288d26ec1631d3490de5135c975f258a86ff2938489b2ce8fcaf5f30798c
+words: 221
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0064
+  chapter: Import Steps
+  section: Import Steps
+  section_path: sheet-15
+  page: null
+  lang: en
+  prev: U.DOC0064.0055
+  next: null
+table:
+  table: 0
+  headers:
+    - ""
+    - ""
+    - UIT (Test Environment)
+    - Production Environment
+  rows:
+    - - null
+      - Preparation
+      - null
+      - null
+    - - null
+      - 1. Prepare Contract Party Import Template (for suppliers needed for contracts. Use Precise Supplier Name)
+      - Small Sample
+      - Complete file
+    - - null
+      - "2. Prepare Contract Import template with Precise Supplier Name; no JAGGAER ID # (yet); and, precise contract attachment name"
+      - Small Sample
+      - Complete file
+    - - null
+      - 3. Move test sample of Contract Attachment Files to TEST FTP Site
+      - Small Sample
+      - null
+    - - null
+      - 4. Move Contract Attachment Files to PRODUCTION FTP Site
+      - null
+      - All Contract Attachments
+    - - null
+      - Execution
+      - null
+      - null
+    - - null
+      - 5. Perform Contract Party Import into JAGGAER
+      - Small Sample
+      - Complete file
+    - - null
+      - 6. Export Suppliers from JAGGAER to obtain the JAGGAER Supplier ID#
+      - Select list of Sample Suppliers
+      - All Suppliers (in network with contract party type = 'supplier')
+    - - null
+      - 7. Execute a vLookup on Supplier Name from Export to pull in the JAGGAER Supplier ID# into the Contract Import Template
+      - n/a
+      - Y
+    - - null
+      - 8. Validate Contract Import Template
+      - Y
+      - Y
+    - - null
+      - 9. Correct any errors
+      - Y
+      - Y
+    - - null
+      - 10. Perform Contract Import
+      - Y
+      - Y
+  block: 1
+  blocks: 1

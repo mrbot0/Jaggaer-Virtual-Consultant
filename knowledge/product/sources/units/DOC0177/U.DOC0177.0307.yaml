@@ -1,0 +1,41 @@
+id: U.DOC0177.0307
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: allowFreeForm | Mandatory (Y/N): Y | Mapping on Jaggaer One data model and notes: Indicates whether users with the Edit PO Number permission can (true) or cannot (false) enter a PO number during checkout to override the default PO numbering scheme.
+  This option is not available for PCard or GE vPayment purchases.
+  Required if POPayment element is provided.
+hash: sha256:660493385daa7c1a66fa61a2d4142c317a46bf6d576d9a7a21e2e87bf79add76
+words: 59
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/paymentMethod/poPaymentMethod/poPayment
+  section_path: 2.1.1.68
+  page: 53
+  lang: en
+  prev: U.DOC0177.0306
+  next: U.DOC0177.0308
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - allowFreeForm
+    - Y
+    - ""
+    - |-
+      Indicates whether users with the Edit PO Number permission can (true) or cannot (false) enter a PO number during checkout to override the default PO numbering scheme.
+      This option is not available for PCard or GE vPayment purchases.
+      Required if POPayment element is provided.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

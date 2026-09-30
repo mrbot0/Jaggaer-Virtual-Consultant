@@ -1,0 +1,50 @@
+id: U.DOC0183.0119
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: source | Description: Indicates the source of the shopping cart.
+  manual - a user entered the cart in the Invoicing solution.
+  import- The cart was electronically imported from an ERP system.
+  Attribute: header | Description: Header information. It is always present.
+  See section “Header [Export]” below
+  Attribute: lineList | Description: Container of Receipt lines. Inserted if “LINE” component filter is specified.
+  See section “Line [Export]” below
+hash: sha256:53252b11d83118e086d07cda5e96ad8828a4364f3b0b4c196dbf6d281a496ff9
+words: 75
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Receipt [Export]
+  section_path: 2.2.3.1
+  page: 17
+  lang: en
+  prev: U.DOC0183.0118
+  next: U.DOC0183.0120
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - source
+      - |-
+        Indicates the source of the shopping cart.
+        manual - a user entered the cart in the Invoicing solution.
+        import- The cart was electronically imported from an ERP system.
+      - ""
+    - - header
+      - |-
+        Header information. It is always present.
+        See section “Header [Export]” below
+      - ""
+    - - lineList
+      - |-
+        Container of Receipt lines. Inserted if “LINE” component filter is specified.
+        See section “Line [Export]” below
+      - ""
+  block: 1
+  blocks: 1

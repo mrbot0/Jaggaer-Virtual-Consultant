@@ -1,0 +1,52 @@
+doc: S.STD.XSC.DOC.0050
+scope: XSC
+extracted_at: 2026-09-30T04:30:12.434Z
+tier: T0
+stats:
+  units: 1
+  extracted_units: 0
+  document_candidates: 1
+  needs_llm: 1
+  t0_complete: 0
+  by_candidate:
+    CFG: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 3000
+  sessions:
+    - n: 1
+      tokens: 3000
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0050.C001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0050.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0050
+    section: Parametri (span)
+    source_unit: U.DOC0050.0001
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: /span/strong
+      current_state:
+        value: The COMPANYNAMEHERE Supplier Portal provides a single interface that makes doing business with us simple and convenient
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

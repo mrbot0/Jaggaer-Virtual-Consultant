@@ -1,0 +1,95 @@
+document: travel-request-form-xml-fd57709e
+scope: XSC
+batch: batch-01
+section: campi-1
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:100
+    label: "100"
+    labels:
+      - "100"
+    technical_name: "100"
+    section: campi-1
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=100 · tipo=static
+    sources:
+      - document: travel-request-form-xml-fd57709e
+        section: campi-1
+        source_unit: travel-request-form-xml-fd57709e/campi-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "100"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:TOTAL_AMOUNT
+    label: Total Amount
+    labels:
+      - Total Amount
+    technical_name: TOTAL_AMOUNT
+    section: campi-1
+    type: Price
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Enter the total estimated cost of the travel from the completed travel
+      authorization form attached. · id=10003 · tipo=userdefined
+    sources:
+      - document: travel-request-form-xml-fd57709e
+        section: campi-1
+        source_unit: travel-request-form-xml-fd57709e/campi-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Total Amount
+        type: Price
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:MOTOR_FLEET_VEHICLE_REQUESTED
+    label: Motor Fleet Vehicle Requested?
+    labels:
+      - Motor Fleet Vehicle Requested?
+    technical_name: MOTOR_FLEET_VEHICLE_REQUESTED
+    section: campi-1
+    type: RadioButtonGroup
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Click here if you will need a motor fleet vehicle. ·
+      UserDefinedFieldParamFormListId=211365 · id=10004 · tipo=userdefined
+    sources:
+      - document: travel-request-form-xml-fd57709e
+        section: campi-1
+        source_unit: travel-request-form-xml-fd57709e/campi-1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Motor Fleet Vehicle Requested?
+        type: RadioButtonGroup
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1030

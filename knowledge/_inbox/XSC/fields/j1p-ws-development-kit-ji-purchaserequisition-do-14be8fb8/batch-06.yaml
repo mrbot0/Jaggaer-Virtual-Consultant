@@ -1,0 +1,346 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+batch: batch-06
+section: 2.1.1.6
+section_title: Requisition Line [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:LINENUMBER
+    label: lineNumber
+    labels:
+      - lineNumber
+    technical_name: LINENUMBER
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Position of the line item in the PR document.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: lineNumber
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.31
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.31#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: lineNumber
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.32
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.32#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: lineNumber
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ITEM
+    label: item
+    labels:
+      - item
+    technical_name: ITEM
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Item description.
+      See section “Item [PR Import]” below
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: item
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:QUANTITY
+    label: quantity
+    labels:
+      - quantity
+    technical_name: QUANTITY
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Number of items.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: quantity
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CAPITALEXPENSE
+    label: capitalExpense
+    labels:
+      - capitalExpense
+    technical_name: CAPITALEXPENSE
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a capital expense.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: capitalExpense
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FIXEDASSET
+    label: fixedAsset
+    labels:
+      - fixedAsset
+    technical_name: FIXEDASSET
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a fixed asset.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: fixedAsset
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAXABLE
+    label: taxable
+    labels:
+      - taxable
+    technical_name: TAXABLE
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the manufacturer is (true) or is not (false) taxable.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: taxable
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LINECHARGES
+    label: lineCharges
+    labels:
+      - lineCharges
+    technical_name: LINECHARGES
+    section: 2.1.1.6
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Line charges information.
+      See section “LineCharges [PR Import]” below
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: lineCharges
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:SUPPLIERINFO
+    label: supplierInfo
+    labels:
+      - supplierInfo
+    technical_name: SUPPLIERINFO
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Supplier information.
+      See section “Supplier Info [PR Import]” below.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: supplierInfo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DISTRIBUTIONMETHOD
+    label: distributionMethod
+    labels:
+      - distributionMethod
+    technical_name: DISTRIBUTIONMETHOD
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Distribution method information.
+      See section “Distribution Method [PR Import]” below.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: distributionMethod
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LINKEDTOLINENUMBER
+    label: linkedToLineNumber
+    labels:
+      - linkedToLineNumber
+    technical_name: LINKEDTOLINENUMBER
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      For a trade-in line item that is linked to a positive non-trade-in line
+      item, position of the positive non-trade-in line item in the PR document.
+
+      Valid only if the item is a trade-in.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: linkedToLineNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BRAND
+    label: brand
+    labels:
+      - brand
+    technical_name: BRAND
+    section: 2.1.1.6
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Brand associated with the PR line; must exist in the organization's
+      master brand list.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.6
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.6#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: brand
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2625

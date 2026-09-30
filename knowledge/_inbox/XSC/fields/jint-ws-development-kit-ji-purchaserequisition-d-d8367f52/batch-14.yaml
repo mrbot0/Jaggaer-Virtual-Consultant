@@ -1,0 +1,37 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+batch: batch-14
+section: 2.1.1.16
+section_title: Manufacturer Info [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:PARTNUMBER
+    label: partNumber
+    labels:
+      - partNumber
+    technical_name: PARTNUMBER
+    section: 2.1.1.16
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Manufacturer's part number (SKU code).
+    sources:
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.16
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.16#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: partNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 672

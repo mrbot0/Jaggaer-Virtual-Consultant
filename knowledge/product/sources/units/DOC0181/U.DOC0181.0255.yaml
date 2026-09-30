@@ -1,0 +1,39 @@
+id: U.DOC0181.0255
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: riga-tabella-campi
+text: |-
+  Attribute: daysAfter | Mandatory (Y/N): N | Description: Used in conjunction with the TermsType element to compute the invoice due date.
+  Possible values: [0 - 999]
+  Note: The DaysAfter element is supported in version 3.2 of the DTD and later. Older versions of the DTD support the Net tag.
+hash: sha256:0820da9f13fa9f694dcc7360de6f3a3db3a3ab8aa03bf4377203416a168ecb5e
+words: 49
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: Terms [Import JIOrder method]
+  section_path: 2.3.1.14
+  page: 78
+  lang: en
+  prev: U.DOC0181.0254
+  next: U.DOC0181.0256
+row:
+  table: 0
+  row: 5
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - daysAfter
+    - N
+    - |-
+      Used in conjunction with the TermsType element to compute the invoice due date.
+      Possible values: [0 - 999]
+      Note: The DaysAfter element is supported in version 3.2 of the DTD and later. Older versions of the DTD support the Net tag.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

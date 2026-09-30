@@ -1,0 +1,106 @@
+id: U.DOC0167.0516
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: "Colonne: Dataset | Min/max occurrences | Description | Available from version Dataset: id | Min/max occurrences: 0/1 | Description: JA primary system: Unique SUPPLIER company internal identifier. JI primary system: JINT internal ID Dataset: companyName | Min/max occurrences: 0/1 | Description: Company name (not sent in case of JI principal system). Dataset: fiscalCode | Min/max occurrences: 0/1 | Description: Fiscal code (not sent in case of JI principal system) Dataset: vat | Min/max occurrences: 0/1 | Description: Country (not sent in case of JI principal system) VAT code Dataset: euVat | Min/max occurrences: 0/1 | Description: European VAT code (not sent in case of JI principal system) Dataset: dAndBCode | Min/max occurrences: 0/1 | Description: Dun&BradStreet code (not sent in case of JI principal system) Dataset: webSite | Min/max occurrences: 0/1 | Description: Company web-site (not sent in case of JI principal system) Dataset: address | Min/max occurrences: 0/1 | Description: Company main postal address (not sent in case of JI principal system) Dataset: zip | Min/max occurrences: 0/1 | Description: Company main postal address – ZIP code (not sent in case of JI principal system) Dataset: city | Min/max occurrences: 0/1 | Description: Company main postal address – City (not sent in case of JI principal system) Dataset: isoProvince | Min/max occurrences: 0/1 | Description: Province/County code It can contain the province code or its code-name."
+hash: sha256:8e8ad915a42334a4afa6f29a5c941f7982aaf04449cb10a86b461954ae592f26
+words: 227
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/J1SupplierData
+  section_path: 2.2.4.2
+  page: 7
+  lang: en
+  prev: U.DOC0167.0515
+  next: U.DOC0167.0517
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrences
+    - Description
+    - Available from version
+  rows:
+    - - id
+      - 0/1
+      - |-
+        JA primary system: Unique SUPPLIER company internal identifier.
+        JI primary system: JINT internal ID
+      - ""
+    - - companyName
+      - 0/1
+      - Company name (not sent in case of JI principal system).
+      - ""
+    - - fiscalCode
+      - 0/1
+      - Fiscal code (not sent in case of JI principal system)
+      - ""
+    - - vat
+      - 0/1
+      - Country (not sent in case of JI principal system) VAT code
+      - ""
+    - - euVat
+      - 0/1
+      - European VAT code (not sent in case of JI principal system)
+      - ""
+    - - dAndBCode
+      - 0/1
+      - Dun&BradStreet code (not sent in case of JI principal system)
+      - ""
+    - - webSite
+      - 0/1
+      - Company web-site (not sent in case of JI principal system)
+      - ""
+    - - address
+      - 0/1
+      - Company main postal address (not sent in case of JI principal system)
+      - ""
+    - - zip
+      - 0/1
+      - Company main postal address – ZIP code (not sent in case of JI principal system)
+      - ""
+    - - city
+      - 0/1
+      - Company main postal address – City (not sent in case of JI principal system)
+      - ""
+    - - isoProvince
+      - 0/1
+      - |-
+        Province/County code
+        It can contain the province code or its code-name.
+        Example: for isoCountry US and county Hawaii, province can be filled indifferently with “HI” or “US-HI” (not sent in case of JI principal system)
+      - ""
+    - - isoCountry
+      - 0/1
+      - Company main postal address – Country (ISO code or country name) (not sent in case of JI principal system)
+      - ""
+    - - address2
+      - 0/1
+      - Company main postal address (not sent in case of JI principal system) (not sent in case of JI principal system)
+      - ""
+    - - zip2
+      - 0/1
+      - Company alternative postal address – ZIP code (not sent in case of JI principal system)
+      - ""
+    - - city2
+      - 0/1
+      - Company alternative postal address – City (not sent in case of JI principal system) (not sent in case of JI principal system)
+      - ""
+    - - province2
+      - 0/1
+      - |-
+        Province/County code
+        It can contain the province code or its code-name.
+        Example: for isoCountry US and county Hawaii, province can be filled indifferently with “HI” or “US-HI” (not sent in case of JI principal system)
+      - ""
+    - - isoCountry2
+      - 0/1
+      - Company alternative postal address –Country (ISO code or country name) (not sent in case of JI principal system)
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

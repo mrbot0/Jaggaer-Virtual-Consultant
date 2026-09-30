@@ -1,0 +1,73 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-26
+section: 2.3.1.23
+section_title: SplittableFieldIndexSet [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:CONTEXT
+    label: context
+    labels:
+      - context
+    technical_name: CONTEXT
+    section: 2.3.1.23
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Specifies the context of the split for the line item.
+      Line: The split applies to all contexts for the line item.
+      Discount: The split applies to the discount.
+      Shipping: The split applies to shipping.
+      Handling: The split applies to handling.
+      Tax1: The split applies to tax 1.
+      Tax2: The split applies to tax 2.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.23
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.23#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: context
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:SPLITTABLEFIELDINDEXLIST
+    label: splittableFieldIndexList
+    labels:
+      - splittableFieldIndexList
+    technical_name: SPLITTABLEFIELDINDEXLIST
+    section: 2.3.1.23
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of Splittable Field Index elements.
+      See section “SplittableFieldIndex [Import JIOrder method]” below
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.23
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.23#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: splittableFieldIndexList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 931

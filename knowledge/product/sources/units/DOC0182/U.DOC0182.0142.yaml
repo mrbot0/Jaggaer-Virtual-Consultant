@@ -1,0 +1,39 @@
+id: U.DOC0182.0142
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: currency | Mandatory (Y/N): N | Description: Exchangeable currency code. See the Integration Currency Codes document in the JAGGAER Indirect Online Help for valid currency codes.
+  Must be a currency code of an active currency.
+  DEPRECATED: uses field “currency” of “price” attribute
+hash: sha256:93fde1688c2a06dc65c714891e7f8e84d98032f1ac03bce44a1a3955de0f3e56
+words: 43
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Unit Price [PR Import]
+  section_path: 2.1.1.18
+  page: 22
+  lang: en
+  prev: U.DOC0182.0141
+  next: U.DOC0182.0143
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - currency
+    - N
+    - |-
+      Exchangeable currency code. See the Integration Currency Codes document in the JAGGAER Indirect Online Help for valid currency codes.
+      Must be a currency code of an active currency.
+      DEPRECATED: uses field “currency” of “price” attribute
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

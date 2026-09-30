@@ -1,0 +1,164 @@
+id: U.DOC0169.0317
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: "Stage Complete – For multi-stage events, the RFx has completed this stage (that is, a subsequent stage has been created). Attribute: sourcingDetail | Description: Purchase requisition sourcing detail. See section “SourcingDetail [PR Export]” below."
+hash: sha256:629530b8584cfde9015b11f9a2a1a50e84cca293adccd9543b499f7a739ebb26
+words: 34
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: RequisitionLine [PR Export]
+  section_path: 2.3.3.39
+  page: 74
+  lang: en
+  prev: U.DOC0169.0316
+  next: U.DOC0169.0318
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - requisitionLineId
+      - Unique requisition line number,
+      - ""
+    - - lineNumber
+      - Position of the line item in the PR document.
+      - ""
+    - - Item
+      - |-
+        Purchase Requisition Line item information
+        See section “Item [PR Export]” below.
+      - ""
+    - - Quantity
+      - Number of items
+      - ""
+    - - capitalExpense
+      - Indicates whether the item is (true) or is not (false) a capital expense.
+      - ""
+    - - fixedAsset
+      - Indicates whether the item is (true) or is not (false) a fixed asset.
+      - ""
+    - - Taxable
+      - Indicates whether the manufacturer is (true) or is not (false) taxable.
+      - ""
+    - - lineCharges
+      - |-
+        Purchase requisition line charges.
+        See section “LineCharges [PR Export]” below
+      - ""
+    - - deliveryInfo
+      - |-
+        Purchase requisition delivery information.
+        See section “DeliveryInfo [PR Export]” above
+      - ""
+    - - supplierInfo
+      - |-
+        Purchase requisition line supplier information.
+        See section “SupplierInfo [PR Export]” below
+      - ""
+    - - customFieldValueSetList
+      - |-
+        Container for Custom field value set information at line level.
+        See section “CustomFieldValueSet [PR Export]” above
+      - ""
+    - - splittableFieldSetGroupList
+      - |-
+        Container for Splittable field Set Group information at line level.
+        See section “SplittableFieldSetGroup [PR Export]” above
+      - ""
+    - - internalInfo
+      - |-
+        Purchase requisition line interna information.
+        See section “ExternalInfo [PR Export]” above
+      - ""
+    - - billTo
+      - |-
+        Billing information.
+        See section “BillTo [PR Export]” above
+      - ""
+    - - shipTo
+      - |-
+        Shipping information.
+        See section “ShipTo [PR Export]” above
+      - ""
+    - - paymentInfo
+      - |-
+        Payment information.
+        See section “PaymentInfo [PR Export]” above
+      - ""
+    - - linkedToLineNumber
+      - |-
+        For a trade-in line item that is linked to a positive non-trade-in line item, position of the positive non-trade-in line item in the PR document.
+        Valid only if the item is a trade-in.
+      - ""
+    - - brand
+      - Brand associated with the PR line
+      - ""
+    - - discountAmount
+      - |-
+        Line Discount amount information.
+        See section “DiscountAmount [PR Export]” above.
+      - ""
+    - - workflowStatus
+      - |-
+        Workflow status of the line item.
+        Completed: The line item has completed the workflow process.
+        Pending: The line item has not completed the workflow process.
+        Rejected: The line item has been rejected during the workflow process.
+      - ""
+    - - requestedPONumber
+      - Number of the PO associated with this PR.
+      - ""
+    - - consolidatedFrom
+      - |-
+        Consolidated from information.
+        See section “ConsolidatedInfo [PR Export]” below
+      - ""
+    - - consolidatedTo
+      - |-
+        Consolidated to information.
+        See section “ConsolidatedInfo [PR Export]” below
+      - ""
+    - - clauseList
+      - |-
+        Clause list container.
+        See section “Clause [PR Export]” above.
+      - ""
+    - - rfxStatus
+      - |-
+        Status of the RFx.
+        An RFx is a request for something:
+        Request for Information (RFI)
+        Request for Proposal (RFP)
+        Request for Quotation (RFQ)
+        Invitation to Bid (Bid)
+        Invitation to Negotiate (ITN)
+        Request for a Letter of Interest (RLI)
+        Valid RFx statuses are:
+        Draft – The RFx is being edited and has not yet been submitted for approval.
+        Pending – The RFx has been submitted for approval.
+        Approved – The RFx has been approved. Edits can no longer be made to the RFx.
+        Rejected – The RFx has been rejected during approval.
+        Released – The RFx is approved and has been posted on the external supplier portal.
+        Open – The RFx has been posted on the external supplier portal and is open for bids from suppliers.
+        Under Evaluation – The RFx is closed and is being evaluated for awarding.
+        Awarded – The RFx has been evaluated and awarded.
+        Closed Without Awarding – The RFx has been rejected during evaluation.
+        Canceled – The RFx has been canceled and will not be sent out for bid to suppliers.
+        Withdrawn – A Released or Open RFx has been canceled and will not be evaluated for awarding.
+        Stage Complete – For multi-stage events, the RFx has completed this stage (that is, a subsequent stage has been created).
+      - ""
+    - - sourcingDetail
+      - |-
+        Purchase requisition sourcing detail.
+        See section “SourcingDetail [PR Export]” below.
+      - ""
+  block: 1
+  blocks: 1
+part:
+  n: 3
+  of: 3

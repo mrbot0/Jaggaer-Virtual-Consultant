@@ -1,0 +1,709 @@
+document: food-and-entertainment-form-xml-75bc4337
+scope: XSC
+batch: batch-07
+section: campi-7
+section_title: Campi — senza-sezione
+part: 1
+parts: 1
+rows:
+  - key: tech:EXTERNAL_INFORMATION_AND_INSTRUCTIONS
+    label: External Information and Instructions
+    labels:
+      - External Information and Instructions
+    technical_name: EXTERNAL_INFORMATION_AND_INSTRUCTIONS
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10008 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: External Information and Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PURCHASING_USE_ONLY_ATF
+    label: Purchasing Use Only (ATF)
+    labels:
+      - Purchasing Use Only (ATF)
+    technical_name: PURCHASING_USE_ONLY_ATF
+    section: campi-7
+    type: CheckBox
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10013 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Purchasing Use Only (ATF)
+        type: CheckBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LOW_RISK_REQUIREMENTS
+    label: Low Risk Requirements
+    labels:
+      - Low Risk Requirements
+    technical_name: LOW_RISK_REQUIREMENTS
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10295 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Low Risk Requirements
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ERF_DETERMINATION
+    label: ERF Determination
+    labels:
+      - ERF Determination
+    technical_name: ERF_DETERMINATION
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10300 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: ERF Determination
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ENTERTAINMENT_REPORTING
+    label: Entertainment Reporting
+    labels:
+      - Entertainment Reporting
+    technical_name: ENTERTAINMENT_REPORTING
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10305 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Entertainment Reporting
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:112
+    label: "112"
+    labels:
+      - "112"
+    technical_name: "112"
+    section: campi-7
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=112 · tipo=static
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: "112"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ERF_NOT_REQUIRED_FOR_GIFTS_OR_AWARDS
+    label: "ERF # (not required for Basic F&E orders or Gifts/Awards)"
+    labels:
+      - "ERF # (not required for Basic F&E orders or Gifts/Awards)"
+    technical_name: ERF_NOT_REQUIRED_FOR_GIFTS_OR_AWARDS
+    section: campi-7
+    type: Integer
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10267 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: "ERF # (not required for Basic F&E orders or Gifts/Awards)"
+        type: Integer
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TOP_LEVEL_DESCRIPTIONS
+    label: Top Level Descriptions
+    labels:
+      - Top Level Descriptions
+    technical_name: TOP_LEVEL_DESCRIPTIONS
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10268 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: Top Level Descriptions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:IS_ERF_REQUIRED
+    label: Does this event cost exceed [importo]0 or require Top-Level approval?
+    labels:
+      - Does this event cost exceed [importo]0 or require Top-Level approval?
+    technical_name: IS_ERF_REQUIRED
+    section: campi-7
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10287 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: Does this event cost exceed [importo]0 or require Top-Level approval?
+        type: DropdownList
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ENTERTAINMENT_REPORTING_2
+    label: Entertainment Reporting 2
+    labels:
+      - Entertainment Reporting 2
+    technical_name: ENTERTAINMENT_REPORTING_2
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10306 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: Entertainment Reporting 2
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CONTRACTENDDATE
+    label: Event End Date
+    labels:
+      - Event End Date
+    technical_name: CONTRACTENDDATE
+    section: campi-7
+    type: Date
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10010 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: Event End Date
+        type: Date
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ERF_LINK
+    label: Create an Entertainment Reporting Form (ERF)
+    labels:
+      - Create an Entertainment Reporting Form (ERF)
+    technical_name: ERF_LINK
+    section: campi-7
+    type: URL
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10285 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: Create an Entertainment Reporting Form (ERF)
+        type: URL
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ERF_REQUIREMENTS_INSTRUCTIONS
+    label: ERF requirements instructions
+    labels:
+      - ERF requirements instructions
+    technical_name: ERF_REQUIREMENTS_INSTRUCTIONS
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10296 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: ERF requirements instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:108
+    label: "108"
+    labels:
+      - "108"
+    technical_name: "108"
+    section: campi-7
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=108 · tipo=static
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: "108"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:GIFT_DESCRIPTION
+    label: Gift Description
+    labels:
+      - Gift Description
+    technical_name: GIFT_DESCRIPTION
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10272 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: Gift Description
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FOOD_DELIVERY_INSTRUCTIONS
+    label: Food Delivery Instructions
+    labels:
+      - Food Delivery Instructions
+    technical_name: FOOD_DELIVERY_INSTRUCTIONS
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10283 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: Food Delivery Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EVENT_ERF_DESCRIPTION
+    label: Event/ERF Description
+    labels:
+      - Event/ERF Description
+    technical_name: EVENT_ERF_DESCRIPTION
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10286 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: Event/ERF Description
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLEXTEXT9
+    label: Event Name
+    labels:
+      - Event Name
+    technical_name: FLEXTEXT9
+    section: campi-7
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10011 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: Event Name
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:HOST_NAME
+    label: Host Name
+    labels:
+      - Host Name
+    technical_name: HOST_NAME
+    section: campi-7
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10276 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r18
+        genre: tecnica
+        label: Host Name
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EVENT_CONTACT
+    label: Event Contact
+    labels:
+      - Event Contact
+    technical_name: EVENT_CONTACT
+    section: campi-7
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10280 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r19
+        genre: tecnica
+        label: Event Contact
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PER_PERSON_CALCULATOR
+    label: Per-Person Calculator
+    labels:
+      - Per-Person Calculator
+    technical_name: PER_PERSON_CALCULATOR
+    section: campi-7
+    type: URL
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10310 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r20
+        genre: tecnica
+        label: Per-Person Calculator
+        type: URL
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TOTAL_MEAL_COST
+    label: Total Meal Cost For This Transaction
+    labels:
+      - Total Meal Cost For This Transaction
+    technical_name: TOTAL_MEAL_COST
+    section: campi-7
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10314 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r21
+        genre: tecnica
+        label: Total Meal Cost For This Transaction
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EVENT_TIME
+    label: Event Start Time
+    labels:
+      - Event Start Time
+    technical_name: EVENT_TIME
+    section: campi-7
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10275 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r22
+        genre: tecnica
+        label: Event Start Time
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BORDER_LINE_2
+    label: Border Line 2
+    labels:
+      - Border Line 2
+    technical_name: BORDER_LINE_2
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10294 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r23
+        genre: tecnica
+        label: Border Line 2
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ERF_INSTRUCTIONS
+    label: ERF Instructions
+    labels:
+      - ERF Instructions
+    technical_name: ERF_INSTRUCTIONS
+    section: campi-7
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10257 · tipo=userdefined
+    sources:
+      - document: food-and-entertainment-form-xml-75bc4337
+        section: campi-7
+        source_unit: food-and-entertainment-form-xml-75bc4337/campi-7#part-1
+        row_ref: t0.r24
+        genre: tecnica
+        label: ERF Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 4773

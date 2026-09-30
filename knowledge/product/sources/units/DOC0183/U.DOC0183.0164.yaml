@@ -1,0 +1,74 @@
+id: U.DOC0183.0164
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: catalogNumber | Description: Unique ID number for a specific stock item in the supplier inventory
+  Attribute: description | Description: Description of the product available in the receipt line. It explains basic
+  Characteristics about the product
+  Attribute: quantity | Description: Number of items stocked
+  Attribute: stockroomSupplier | Description: Stockroom supplier.
+  See section “StockroomSupplier [Export]” below.
+  Attribute: fulfillmentCenter | Description: Fulfillment center information.
+  See section “FulfillmentCenter [Export]” below.
+  Attribute: locationInternalName | Description: Custom ID that the organization has defined for the location of the item in the stockroom.
+  Attribute: unitPrice | Description: Price per unit for the item.
+  See section “Money [Export]” below.
+  Attribute: customItemAttributeList | Description: Container for Custom Item Attribute information.
+  See section “CustomItemAttribute [Export]” below.
+hash: sha256:af3e685a823c214882e3857cc64abdcff8ec3579d4c2d665f942f5fe0a48313f
+words: 125
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: StockedItem [Export]
+  section_path: 2.2.3.44
+  page: 17
+  lang: en
+  prev: U.DOC0183.0163
+  next: U.DOC0183.0165
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - catalogNumber
+      - Unique ID number for a specific stock item in the supplier inventory
+      - ""
+    - - description
+      - |-
+        Description of the product available in the receipt line. It explains basic
+        Characteristics about the product
+      - ""
+    - - quantity
+      - Number of items stocked
+      - ""
+    - - stockroomSupplier
+      - |-
+        Stockroom supplier.
+        See section “StockroomSupplier [Export]” below.
+      - ""
+    - - fulfillmentCenter
+      - |-
+        Fulfillment center information.
+        See section “FulfillmentCenter [Export]” below.
+      - ""
+    - - locationInternalName
+      - Custom ID that the organization has defined for the location of the item in the stockroom.
+      - ""
+    - - unitPrice
+      - |-
+        Price per unit for the item.
+        See section “Money [Export]” below.
+      - ""
+    - - customItemAttributeList
+      - |-
+        Container for Custom Item Attribute information.
+        See section “CustomItemAttribute [Export]” below.
+      - ""
+  block: 1
+  blocks: 1

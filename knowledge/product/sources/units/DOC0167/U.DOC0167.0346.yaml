@@ -1,0 +1,39 @@
+id: U.DOC0167.0346
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: assignedBusinessUnit | Mandatory (Y/N): N | Mapping on Jaggaer One data model and notes: Valid only if @supportsOrderFulfillment attribute for the location is set to Yes. (That is, the specified location is a fulfillment center.)
+  Repeatable.
+hash: sha256:f459df69d9811822e38f4175991c9d3b5e2d45f8b31c8db26afb5629a062cc4b
+words: 37
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/assignedBusinessUnitsList
+  section_path: 2.1.1.88
+  page: 5
+  lang: en
+  prev: U.DOC0167.0345
+  next: U.DOC0167.0347
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - assignedBusinessUnit
+    - N
+    - ""
+    - |-
+      Valid only if @supportsOrderFulfillment attribute for the location is set to Yes. (That is, the specified location is a fulfillment center.)
+      Repeatable.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

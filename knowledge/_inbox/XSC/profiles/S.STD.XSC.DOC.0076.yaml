@@ -1,0 +1,92 @@
+id: S.STD.XSC.DOC.0076
+type: DOC
+title: JAGGAER
+summary: 'Documento spec-integrazione (tecnica, origine vendor) "JAGGAER": 196
+  unità, 0 tabelle, 0 tabelle di campi; scope VEN, XSC, CAT, P2P; affidabilità
+  0.72.'
+facets:
+  F1: spec-integrazione-prosa
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-epro_3000/Class file/catalog_enabled_Supplier Integration_what
+      they do.pdf
+    sha256: sha256:b3d6ccc583e173d1258e4476563813531270da201e74651ae8c0ce3514829387
+kind: spec-integrazione
+genre: tecnica
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - VEN
+  - XSC
+  - CAT
+  - P2P
+source:
+  path: CORSI/JI-epro_3000/Class file/catalog_enabled_Supplier Integration_what
+    they do.pdf
+  sha256: sha256:b3d6ccc583e173d1258e4476563813531270da201e74651ae8c0ce3514829387
+  size: 735815
+  format: pdf
+  doc_id: catalog-enabled-supplier-integration-what-they-d-82db25c4
+  doc_key: catalog-enabled-supplier-integration-what-they-do.pdf
+structure:
+  pages: 19
+  chapters: 19
+  sections: 19
+  tables: 0
+  figures: 50
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 196
+  by_type:
+    testo: 182
+    regola: 12
+    riferimento: 2
+reliability:
+  base_by_kind: 0.9
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.72
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: 1 pagine con sole immagini (testo da OCR)
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 196
+  items_produced: 13
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 1
+    tacit: 0
+  coverage_ratio: 0.06
+  last_run: 2026-09-30
+  estimated_tokens: 5165
+  sessions_planned: 1

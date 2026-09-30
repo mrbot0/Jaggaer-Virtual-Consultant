@@ -1,0 +1,17 @@
+id: U.DOC0177.0701
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: testo
+text: When the JINT service sends the supplier export message to the external system for the first time, it sets all of the fields to isChanged="Yes". When the external system returns a success response, the solution will begin tracking changes on subsequent exports. The unchanged fields will then be set to isChanged="No", leaving only the changed fields set to isChanged="Yes".
+hash: sha256:dfea833596356e16e4bc9680e7e15cd1090f6f64848220f89c0125df8674a3ae
+words: 59
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: Is Changed
+  section_path: 2.5.3
+  page: 169
+  lang: en
+  prev: U.DOC0177.0700
+  next: U.DOC0177.0702

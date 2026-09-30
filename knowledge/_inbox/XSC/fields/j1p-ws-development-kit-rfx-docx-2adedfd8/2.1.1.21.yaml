@@ -1,0 +1,51 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.21
+section_title: "Commercial Envelope: formula values [Import/Update RfX method]"
+genre: tecnica
+rows:
+  - label: paramId
+    technical_name: paramId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Commercial Parameter identifier
+    section: 2.1.1.21
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.21#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: paramPos
+    technical_name: paramPos
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Commercial position of the contract row
+    section: 2.1.1.21
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.21#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: paramReference
+    technical_name: paramReference
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Commercial Identifier of the contract row
+    section: 2.1.1.21
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.21#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: formulaValue
+    technical_name: formulaValue
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Formula value of the additional column for the specific commercial
+      parameter.
+    section: 2.1.1.21
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.21#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

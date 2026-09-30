@@ -1,0 +1,45 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+section: campi-4
+section_title: Campi — 4. Instructions For Supplier
+genre: tecnica
+rows:
+  - label: fldExternalNotesInst
+    technical_name: fldExternalNotesInst
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br><i>You may add additional notes or
+      instructions to be sent with your order in the text box below - or - by
+      clicking the <b>{add attachment...}</b> link and attaching a
+      document.</i><br><br> · id=10009 · tipo=userdefined
+    section: campi-4
+    source_unit: consulting-service-form-xml-d4861794/campi-4#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: Comments
+    technical_name: fldExternalNotes
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=8;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=50 · id=10008 · tipo=userdefined
+    section: campi-4
+    source_unit: consulting-service-form-xml-d4861794/campi-4#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: "114"
+    technical_name: "114"
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=114 · tipo=static
+    section: campi-4
+    source_unit: consulting-service-form-xml-d4861794/campi-4#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794

@@ -1,0 +1,3533 @@
+doc: S.STD.XSC.DOC.0084
+scope: XSC
+extracted_at: 2026-09-30T04:30:40.966Z
+tier: T0
+stats:
+  units: 420
+  extracted_units: 108
+  document_candidates: 0
+  needs_llm: 80
+  t0_complete: 28
+  by_candidate:
+    residuo: 2
+    CFG: 66
+    FLD: 34
+    INV: 2
+    FLW: 4
+  residue_marked: 2
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 29461
+  sessions:
+    - n: 1
+      tokens: 29461
+      batches: 4
+      items: 80
+      batch_items:
+        - - R.DOC0084.0009
+          - R.DOC0084.0016
+          - R.DOC0084.0019
+          - R.DOC0084.0031
+          - R.DOC0084.0033
+          - R.DOC0084.0034
+          - R.DOC0084.0037
+          - R.DOC0084.0039
+          - R.DOC0084.0043
+          - R.DOC0084.0046
+          - R.DOC0084.0051
+          - R.DOC0084.0056
+          - R.DOC0084.0059
+          - R.DOC0084.0072
+          - R.DOC0084.0073
+          - R.DOC0084.0075
+          - R.DOC0084.0076
+          - R.DOC0084.0077
+          - R.DOC0084.0084
+          - R.DOC0084.0088
+        - - R.DOC0084.0091
+          - R.DOC0084.0102
+          - R.DOC0084.0103
+          - R.DOC0084.0109
+          - R.DOC0084.0112
+          - R.DOC0084.0115
+          - R.DOC0084.0117
+          - R.DOC0084.0118
+          - R.DOC0084.0121
+          - R.DOC0084.0124
+          - R.DOC0084.0136
+          - R.DOC0084.0139
+          - R.DOC0084.0145
+          - R.DOC0084.0152
+          - R.DOC0084.0157
+          - R.DOC0084.0161
+          - R.DOC0084.0172
+          - R.DOC0084.0177
+          - R.DOC0084.0182
+          - R.DOC0084.0198
+        - - R.DOC0084.0202
+          - R.DOC0084.0207
+          - R.DOC0084.0235
+          - R.DOC0084.0240
+          - R.DOC0084.0245
+          - R.DOC0084.0248
+          - R.DOC0084.0249
+          - R.DOC0084.0256
+          - R.DOC0084.0259
+          - R.DOC0084.0263
+          - R.DOC0084.0278
+          - R.DOC0084.0282
+          - R.DOC0084.0286
+          - R.DOC0084.0291
+          - R.DOC0084.0296
+          - R.DOC0084.0298
+          - R.DOC0084.0302
+          - R.DOC0084.0321
+          - R.DOC0084.0327
+          - R.DOC0084.0331
+        - - R.DOC0084.0333
+          - R.DOC0084.0334
+          - R.DOC0084.0340
+          - R.DOC0084.0346
+          - R.DOC0084.0353
+          - R.DOC0084.0355
+          - R.DOC0084.0360
+          - R.DOC0084.0366
+          - R.DOC0084.0371
+          - R.DOC0084.0374
+          - R.DOC0084.0377
+          - R.DOC0084.0382
+          - R.DOC0084.0388
+          - R.DOC0084.0393
+          - R.DOC0084.0398
+          - R.DOC0084.0405
+          - R.DOC0084.0408
+          - R.DOC0084.0413
+          - R.DOC0084.0416
+          - R.DOC0084.0420
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0084.0009
+    source_unit: U.DOC0084.0009
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Table of Contents
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: ambiguous
+      reason: modalità deontica non determinata (obbligo, facolta-in-contrasto, obbligo e facoltà in contrasto)
+    candidates: []
+    type_hint:
+      candidates: []
+      outcome: null
+      score: null
+    extraction:
+      subject: null
+      modality: ambiguo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: residue
+      confidence: 0.3
+      signals:
+        - obbligo
+        - facolta-in-contrasto
+        - obbligo e facoltà in contrasto
+      source_unit: U.DOC0084.0009
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 528
+  - raw_id: R.DOC0084.0016
+    source_unit: U.DOC0084.0016
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 1: Administrator Over view and User Management"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0016
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0019
+    source_unit: U.DOC0084.0019
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 1: Administrator Over view and User Management"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0019
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0030
+    source_unit: U.DOC0084.0030
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Roles and use of multiple roles
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • One role
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0030
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0084.0031
+    source_unit: U.DOC0084.0031
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Roles and use of multiple roles
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0084.0031
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0084.0033
+    source_unit: U.DOC0084.0033
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Roles and use of multiple roles
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0033
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0034
+    source_unit: U.DOC0084.0034
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Roles and use of multiple roles
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0084.0034
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 20
+  - raw_id: R.DOC0084.0035
+    source_unit: U.DOC0084.0035
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Roles and use of multiple roles
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: main parent role
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0084.0035
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0084.0037
+    source_unit: U.DOC0084.0037
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Roles and use of multiple roles
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0037
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0039
+    source_unit: U.DOC0084.0039
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Roles and use of multiple roles
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0039
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0043
+    source_unit: U.DOC0084.0043
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Adding new users
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0043
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0046
+    source_unit: U.DOC0084.0046
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 2: Site Messaging and Customization"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0046
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0048
+    source_unit: U.DOC0084.0048
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 2: Site Messaging and Customization"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Administrators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0048
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0084.0051
+    source_unit: U.DOC0084.0051
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 2: Site Messaging and Customization"
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0051
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0054
+    source_unit: U.DOC0084.0054
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: System Configuration
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Administrators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0054
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0084.0056
+    source_unit: U.DOC0084.0056
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: System Configuration
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0056
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0059
+    source_unit: U.DOC0084.0059
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: System Configuration
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0059
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0060
+    source_unit: U.DOC0084.0060
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: System Configuration
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Administrators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0060
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0084.0072
+    source_unit: U.DOC0084.0072
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: User Communication
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: they agr ee
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0084.0072
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 100
+  - raw_id: R.DOC0084.0073
+    source_unit: U.DOC0084.0073
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: User Communication
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0073
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0075
+    source_unit: U.DOC0084.0075
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: User Communication
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0075
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0076
+    source_unit: U.DOC0084.0076
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: User Communication
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - INV
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0084.0076
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 60
+  - raw_id: R.DOC0084.0077
+    source_unit: U.DOC0084.0077
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: User Communication
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0077
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0080
+    source_unit: U.DOC0084.0080
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Field Management
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Administrators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0080
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0084.0084
+    source_unit: U.DOC0084.0084
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Field Management
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0084
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0088
+    source_unit: U.DOC0084.0088
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Field Management
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a25
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0088
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0090
+    source_unit: U.DOC0084.0090
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Field Management
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Visible, Required, Dis play Name & Help Text
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0090
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0084.0091
+    source_unit: U.DOC0084.0091
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Field Management
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a27
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0091
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0093
+    source_unit: U.DOC0084.0093
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Making fields visible/not visible and required/optional
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Some but not all fields
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0093
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0084.0102
+    source_unit: U.DOC0084.0102
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Making fields visible/not visible and required/optional
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0102
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0084.0103
+    source_unit: U.DOC0084.0103
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Making fields visible/not visible and required/optional
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0103
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 29
+  - raw_id: R.DOC0084.0107
+    source_unit: U.DOC0084.0107
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 3: Custom Field Management"
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Administrators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0107
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0084.0109
+    source_unit: U.DOC0084.0109
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 3: Custom Field Management"
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a32
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0109
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0112
+    source_unit: U.DOC0084.0112
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 3: Custom Field Management"
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a33
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0112
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0115
+    source_unit: U.DOC0084.0115
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Determining custom field placement
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0115
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 58
+  - raw_id: R.DOC0084.0117
+    source_unit: U.DOC0084.0117
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Determining custom field placement
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0117
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0084.0118
+    source_unit: U.DOC0084.0118
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Determining custom field placement
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a36
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0118
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0121
+    source_unit: U.DOC0084.0121
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Determining custom field placement
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a37
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0121
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0124
+    source_unit: U.DOC0084.0124
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Determining custom field placement
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a38
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0124
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0130
+    source_unit: U.DOC0084.0130
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 4: Workflow Administration"
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • JAGGAER
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0130
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0084.0136
+    source_unit: U.DOC0084.0136
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Static Workflow
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a40
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0136
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0139
+    source_unit: U.DOC0084.0139
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Static Workflow
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a41
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0139
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0145
+    source_unit: U.DOC0084.0145
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Dynamic Workflow
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a42
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0145
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0146
+    source_unit: U.DOC0084.0146
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Dynamic Workflow
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • To access advanced dynamic workf low, users
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0146
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0084.0151
+    source_unit: U.DOC0084.0151
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Dynamic Workflow
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Both Document and Line Level rules
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0151
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0084.0152
+    source_unit: U.DOC0084.0152
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Dynamic Workflow
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a45
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a45
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0152
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0157
+    source_unit: U.DOC0084.0157
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Assigning approvers to Advanced Dynamic Workflow Rules
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a46
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0157
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0161
+    source_unit: U.DOC0084.0161
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Assigning approvers to Advanced Dynamic Workflow Rules
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a47
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0161
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0172
+    source_unit: U.DOC0084.0172
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Forms Design
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a48
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0172
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0177
+    source_unit: U.DOC0084.0177
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Forms Design
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a49
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a49
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0177
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0182
+    source_unit: U.DOC0084.0182
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Forms Design
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a50
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a50
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0182
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0198
+    source_unit: U.DOC0084.0198
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Updating basic supplier/information and contact information
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a51
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a51
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0198
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0202
+    source_unit: U.DOC0084.0202
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Updating basic supplier/information and contact information
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a52
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a52
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0202
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0207
+    source_unit: U.DOC0084.0207
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Updating basic supplier/information and contact information
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a53
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a53
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0207
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0218
+    source_unit: U.DOC0084.0218
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Overriding tax, shipping, and handling information for a supplier
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a54
+      - FLD
+    type_hint:
+      candidates: *a54
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Distribution information
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0218
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0084.0229
+    source_unit: U.DOC0084.0229
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Assigning supplier classes to a Supplier
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a55
+      - FLD
+    type_hint:
+      candidates: *a55
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Classes
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0229
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 88
+  - raw_id: R.DOC0084.0235
+    source_unit: U.DOC0084.0235
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Assigning supplier classes to a Supplier
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a56
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a56
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0235
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0240
+    source_unit: U.DOC0084.0240
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Assigning supplier classes to a Supplier
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a57
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a57
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0240
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0245
+    source_unit: U.DOC0084.0245
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Supplier Showcase
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a58
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a58
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0245
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0248
+    source_unit: U.DOC0084.0248
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0084
+    section: Supplier Showcase
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a59
+      - FLW
+    type_hint:
+      candidates: *a59
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "New Supplier Sticker o Select Style: Multi‐use or Punch‐out o Select Supplier o Display Supplier: Logo or Text o Select Sticker Logo o Type Caption (optional)"
+          valore: "Multi‐use or Punch‐out o Select Supplier o Display Supplier: Logo or Text o Select Sticker Logo o Type Caption (optional)"
+        - n: 2
+          verbo: select
+          oggetto: Showcase
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0084.0248
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 52
+  - raw_id: R.DOC0084.0249
+    source_unit: U.DOC0084.0249
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Supplier Showcase
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a60
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a60
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0249
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0256
+    source_unit: U.DOC0084.0256
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 7: Advanced User and Supplier Management"
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a61
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a61
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0256
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0259
+    source_unit: U.DOC0084.0259
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 7: Advanced User and Supplier Management"
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a62
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a62
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0259
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0263
+    source_unit: U.DOC0084.0263
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 7: Advanced User and Supplier Management"
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a63
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a63
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0263
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0266
+    source_unit: U.DOC0084.0266
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Product Views
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a64
+      - FLD
+    type_hint:
+      candidates: *a64
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Supplier Classes and/or Category Cl asses
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0266
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0084.0267
+    source_unit: U.DOC0084.0267
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Product Views
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a65
+      - FLD
+    type_hint:
+      candidates: *a65
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • A Product View
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0267
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0084.0272
+    source_unit: U.DOC0084.0272
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Product Views
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a66
+      - FLD
+    type_hint:
+      candidates: *a66
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • A Product View
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0272
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0084.0278
+    source_unit: U.DOC0084.0278
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Price File Review
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a67
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a67
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0278
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0282
+    source_unit: U.DOC0084.0282
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Price File Review
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a68
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a68
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0282
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0286
+    source_unit: U.DOC0084.0286
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Price File Review
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a69
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a69
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0286
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0291
+    source_unit: U.DOC0084.0291
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Price File Review
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a70
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a70
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0291
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0296
+    source_unit: U.DOC0084.0296
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Auto Approved price files
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a71
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a71
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0296
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0298
+    source_unit: U.DOC0084.0298
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Auto Approved price files
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a72
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a72
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0298
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0302
+    source_unit: U.DOC0084.0302
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Auto Approved price files
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a73
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a73
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0302
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0313
+    source_unit: U.DOC0084.0313
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 8: Controlling Catalog Attributes"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a74
+      - FLD
+    type_hint:
+      candidates: *a74
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • “Select to use category mapping functionality”
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0313
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0084.0315
+    source_unit: U.DOC0084.0315
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 8: Controlling Catalog Attributes"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a75
+      - FLD
+    type_hint:
+      candidates: *a75
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Commodity Code
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0315
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0084.0316
+    source_unit: U.DOC0084.0316
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 8: Controlling Catalog Attributes"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a76
+      - FLD
+    type_hint:
+      candidates: *a76
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Mappings
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0316
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0084.0321
+    source_unit: U.DOC0084.0321
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 8: Controlling Catalog Attributes"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a77
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a77
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0321
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0327
+    source_unit: U.DOC0084.0327
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Units of Measure
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a78
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a78
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0327
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0331
+    source_unit: U.DOC0084.0331
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 9: Order Management"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a79
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a79
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0331
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0333
+    source_unit: U.DOC0084.0333
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 9: Order Management"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a80
+      - FLW
+    type_hint:
+      candidates: *a80
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: "a Number Wheel ‐ Accessed under: Site Configuration/ General Site Settings / Configure Number Wh eel o Select “New Wheel” button, fill in information and Save"
+          valore: New Wheel
+        - n: 2
+          verbo: assign
+          oggetto: "a Default System Number Wheel ‐ Site Configuration/ Hosted Catalo g And Ordering Configuration / Default Ordering Settings: Payment Method o Override “PO Numbering Scheme” and select Number Wheel"
+          valore: PO Numbering Scheme
+        - n: 3
+          verbo: assign
+          oggetto: "a Number Wheel by Supplier ‐ o Choose a supplier: Profile > Fulfillment Addresses > Ordering > Payment Method o Override “PO Numbering Scheme” and select Number Wheel"
+          valore: PO Numbering Scheme
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0084.0333
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 145
+  - raw_id: R.DOC0084.0334
+    source_unit: U.DOC0084.0334
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 9: Order Management"
+    page: 35
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a81
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a81
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0334
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0340
+    source_unit: U.DOC0084.0340
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Defining default Order Acceptance instructions
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a82
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a82
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0340
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0344
+    source_unit: U.DOC0084.0344
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Defining default Order Acceptance instructions
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a83
+      - FLD
+    type_hint:
+      candidates: *a83
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: supplie r terms and conditions
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0084.0344
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0084.0346
+    source_unit: U.DOC0084.0346
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Defining default Order Acceptance instructions
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a84
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a84
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0346
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0353
+    source_unit: U.DOC0084.0353
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Resolving Order Failures
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a85
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a85
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0353
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0355
+    source_unit: U.DOC0084.0355
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Resolving Order Failures
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a86
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a86
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0355
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0358
+    source_unit: U.DOC0084.0358
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Monitoring PO distribution maintenance queue
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a87
+      - FLD
+    type_hint:
+      candidates: *a87
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • System Administrators
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0084.0358
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0084.0360
+    source_unit: U.DOC0084.0360
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Monitoring PO distribution maintenance queue
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a88
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a88
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0360
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0362
+    source_unit: U.DOC0084.0362
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Monitoring PO distribution maintenance queue
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a89
+      - FLD
+    type_hint:
+      candidates: *a89
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • There
+      modality: raccomandazione
+      condition: possible
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0084.0362
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0084.0364
+    source_unit: U.DOC0084.0364
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Monitoring PO distribution maintenance queue
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a90
+      - INV
+    type_hint:
+      candidates: *a90
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Credit Card Numbe rs
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0084.0364
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0084.0366
+    source_unit: U.DOC0084.0366
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Monitoring PO distribution maintenance queue
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a91
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a91
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0366
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0371
+    source_unit: U.DOC0084.0371
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Monitoring PO distribution maintenance queue
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a92
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a92
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0371
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0374
+    source_unit: U.DOC0084.0374
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Revising and Resending Orders
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: ambiguous
+      reason: modalità deontica non determinata (nessun segnale deontico)
+    candidates: []
+    type_hint:
+      candidates: []
+      outcome: null
+      score: null
+    extraction:
+      subject: null
+      modality: ambiguo
+      condition: it has been sent to a supplier. This may be necessary in the event that there is a minimum quantity required or if the price changes, etc. (This permission does not include the ability to resend a PO to a supplier)
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: residue
+      confidence: 0.3
+      signals:
+        - nessun segnale deontico
+      source_unit: U.DOC0084.0374
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 66
+  - raw_id: R.DOC0084.0377
+    source_unit: U.DOC0084.0377
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Revising and Resending Orders
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a93
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a93
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0377
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0381
+    source_unit: U.DOC0084.0381
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: Revising and Resending Orders
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a94
+      - FLD
+    type_hint:
+      candidates: *a94
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: “Revise PO” permission
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0381
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0084.0382
+    source_unit: U.DOC0084.0382
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Revising and Resending Orders
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a95
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a95
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0382
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0386
+    source_unit: U.DOC0084.0386
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 10: Report Generation"
+    page: 40
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a96
+      - FLD
+    type_hint:
+      candidates: *a96
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Administrators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0386
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0084.0388
+    source_unit: U.DOC0084.0388
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 10: Report Generation"
+    page: 40
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a97
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a97
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0388
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0391
+    source_unit: U.DOC0084.0391
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 10: Report Generation"
+    page: 40
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a98
+      - FLD
+    type_hint:
+      candidates: *a98
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Administrators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0391
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0084.0393
+    source_unit: U.DOC0084.0393
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 10: Report Generation"
+    page: 40
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a99
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a99
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0393
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0396
+    source_unit: U.DOC0084.0396
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 10: Report Generation"
+    page: 40
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a100
+      - FLD
+    type_hint:
+      candidates: *a100
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Administrators
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0084.0396
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0084.0398
+    source_unit: U.DOC0084.0398
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: "Lesson 10: Report Generation"
+    page: 40
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a101
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a101
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0398
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0405
+    source_unit: U.DOC0084.0405
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Search Exports
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a102
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a102
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0405
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0408
+    source_unit: U.DOC0084.0408
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Search Exports
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a103
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a103
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0408
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0413
+    source_unit: U.DOC0084.0413
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0084
+    section: Search Exports
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a104
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a104
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTES:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0084.0413
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0084.0416
+    source_unit: U.DOC0084.0416
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0084
+    section: Save search parameters for future use
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a105
+      - FLW
+    type_hint:
+      candidates: *a105
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: "to: Orders & Documents / Documen t Search / Search Documents"
+          valore: Orders & Documents / Documen t Search / Search Documents
+        - n: 2
+          verbo: enter
+          oggetto: your search criteria
+          valore: null
+        - n: 3
+          verbo: clic
+          oggetto: the Save Search button
+          valore: null
+        - n: 4
+          verbo: enter
+          oggetto: a nickname for the report and choose the personal or shar ed favorite folder you’d like to save it in
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0084.0416
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 72
+  - raw_id: R.DOC0084.0420
+    source_unit: U.DOC0084.0420
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0084
+    section: Save search parameters for future use
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a106
+      - FLW
+    type_hint:
+      candidates: *a106
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: "parameters can be exported after a search is performed b y selecting the “Export Search” button. NOTES:"
+          valore: Export Search
+        - n: 2
+          verbo: search
+          oggetto: "exports can be retrieved under: Orders & Documents / Document Search / Download Export Files NOTES:"
+          valore: "Orders & Documents / Document Search / Download Export Files NOTES:"
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0084.0420
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 104

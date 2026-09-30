@@ -1,0 +1,41 @@
+document: catering-form-xml-ce48f3d4
+scope: XSC
+batch: batch-05
+section: campi-5
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:FORM_INSTRUCTIONS_HEADER
+    label: Form Instructions - header
+    labels:
+      - Form Instructions - header
+    technical_name: FORM_INSTRUCTIONS_HEADER
+    section: campi-5
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=Please complete the order details shown below.
+      Select the desired caterer from the list provided.<br><br> Orders must be
+      placed by (enter time here) the previous day to ensure accurate and
+      on-time delivery. Please provide detailed location information in the
+      space provided. <br><br> · id=10002 · tipo=userdefined
+    sources:
+      - document: catering-form-xml-ce48f3d4
+        section: campi-5
+        source_unit: catering-form-xml-ce48f3d4/campi-5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Form Instructions - header
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 747

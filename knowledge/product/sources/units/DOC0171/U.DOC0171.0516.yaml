@@ -1,0 +1,175 @@
+id: U.DOC0171.0516
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Algorithm X Parameter (“Commercial Envelope” area, “Advanced Form” section) | Datatype: NUMBER Attribute: hideValueFromSupplier | Attribute: Hide Value from Suppliers | Datatype: NUMBER(1) Attribute: reservedPrice | Attribute: Reserve Price | Datatype: NUMBER Attribute: enableOpeningCommittees | Attribute: Enable Opening Committees (“Date & Time Settings” area) | Datatype: NUMBER(1) Attribute: endDateBuyerReplyMessages | Attribute: End Date for Buyer Replies to Messages (“Date & Time Settings” area) | Datatype: DATE Attribute: maxScoreVisibleToSuppliers | Attribute: Max Score Visible to Suppliers (“Awarding Strategy” area) | Datatype: NUMBER(1) Attribute: numReOpenRounds | Attribute: - | Datatype: NUMBER(5) Attribute: numUltimateOffers | Attribute: - | Datatype: NUMBER(5) Attribute: multicurrencyBids | Attribute: Multi Currency Bidding | Datatype: NUMBER(1) Attribute: multicurrencyTCO | Attribute: Apply Currency Conversion to TCO | Datatype: NUMBER(1) Attribute: rfqMlotBehaviour | Attribute: Rfq behaviour in project | Datatype: NUMBER(1) Attribute: visibilityEGComments | Attribute: Visibility of Evaluation Group Comments During Evaluation | Datatype: NUMBER(1) Attribute: rfxAwardingType | Attribute: RFQ Awarding Type | Datatype: VARCHAR2(256 CHAR) Attribute: rfxAwardingTypeDescription | Attribute: - | Datatype: VARCHAR2(256 CHAR) Attribute: assignOwnerDivision | Attribute: - | Datatype: NUMBER(1) Attribute: commentOnChangeOwner | Attribute: Comment | Datatype: VARCHAR2(2000 CHAR) Attribute: totalReferencePrice | Attribute: Total Reference Price | Datatype: NUMBER Attribute: commAlgorithmExpParam | Attribute: Exponent Parameter (“Commercial Envelope” area, “Advanced Form” section) | Datatype: NUMBER"
+hash: sha256:c7242bcf4a9e0508d95189e22a8d05b9b6663dda429c4e3419735196603f340c
+words: 206
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: RfX Setting
+  section_path: 2.5.1
+  page: 8
+  lang: en
+  prev: U.DOC0171.0515
+  next: U.DOC0171.0517
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - prDocumentType/documentTypeOwner/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - prDocumentType/documentTypeOwner/name
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - rfxType
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - rfxTypeDescription
+      - RFQ Type
+      - VARCHAR2(80 CHAR)
+    - - qualEnvelopeDigitalSignature
+      - Qualification Envelope – Require Digital Signature of Supplier Responses
+      - VARCHAR2(15 CHAR)
+    - - techEnvelopeDigitalSignature
+      - Technical Envelope – Require Digital Signature of Supplier Responses
+      - VARCHAR2(15 CHAR)
+    - - commEnvelopeDigitalSignature
+      - Commercial Envelope – Require Digital Signature of Supplier Responses
+      - VARCHAR2(15 CHAR)
+    - - supplierAgreementFeeAmount
+      - Supplier Fee Amount
+      - NUMBER
+    - - tcoHeader
+      - |-
+        New TCO Column Header
+        (“Commercial Envelope” area, “Advanced Form” section)
+      - VARCHAR2(50 CHAR)
+    - - tcoVisibleToSuppliers
+      - |-
+        TCO Visible to Suppliers
+        (“Commercial Envelope” area, “Advanced Form” section)
+      - NUMBER(1)
+    - - consortiumAvailable
+      - Allow Suppliers to Respond by Consortium
+      - NUMBER(1)
+    - - defaultScoringCalcCriteria
+      - |-
+        Default Scoring Calculation Criteria
+        (“Settings” area, “Awarding Strategy” section)
+      - VARCHAR2(9 CHAR)
+    - - scoringMethod
+      - |-
+        Scoring Method
+        (“Settings” area, “Awarding Strategy” section)
+      - VARCHAR2(1 CHAR)
+    - - maxTechScore
+      - |-
+        Maximum Technical Score
+        (“Settings” area, “Awarding Strategy” section)
+      - NUMBER(19,3)
+    - - maxCommScore
+      - |-
+        Maximum Commercial Score
+        (“Settings” area, “Awarding Strategy” section)
+      - NUMBER(19,3)
+    - - commEnvScoringMode
+      - |-
+        Envelope Scoring Mode
+        (“Commercial Envelope” area, “Advanced Form” section)
+      - NUMBER(1)
+    - - commScoringAlgorithm
+      - |-
+        Scoring Algorithm
+        (“Commercial Envelope” area, “Advanced Form” section)
+      - VARCHAR2(30 CHAR)
+    - - commAlgorithmInputData
+      - |-
+        Algorithm Input Data
+        (“Commercial Envelope” area, “Advanced Form” section)
+      - VARCHAR2(5 CHAR)
+    - - commAlgorithmValuesStrategy
+      - |-
+        Algorithm Values Strategy
+        (“Commercial Envelope” area, “Advanced Form” section)
+      - VARCHAR2(10 CHAR)
+    - - commAlgorithmBaseValue
+      - |-
+        Algorithm Base Value
+        (“Commercial Envelope” area, “Advanced Form” section)
+      - NUMBER(19,3)
+    - - commAlgorithmXParam
+      - |-
+        Algorithm X Parameter
+        (“Commercial Envelope” area, “Advanced Form” section)
+      - NUMBER
+    - - hideValueFromSupplier
+      - Hide Value from Suppliers
+      - NUMBER(1)
+    - - reservedPrice
+      - Reserve Price
+      - NUMBER
+    - - enableOpeningCommittees
+      - |-
+        Enable Opening Committees
+        (“Date & Time Settings” area)
+      - NUMBER(1)
+    - - endDateBuyerReplyMessages
+      - |-
+        End Date for Buyer Replies to Messages
+        (“Date & Time Settings” area)
+      - DATE
+    - - maxScoreVisibleToSuppliers
+      - |-
+        Max Score Visible to Suppliers
+        (“Awarding Strategy” area)
+      - NUMBER(1)
+    - - numReOpenRounds
+      - "-"
+      - NUMBER(5)
+    - - numUltimateOffers
+      - "-"
+      - NUMBER(5)
+    - - multicurrencyBids
+      - Multi Currency Bidding
+      - NUMBER(1)
+    - - multicurrencyTCO
+      - Apply Currency Conversion to TCO
+      - NUMBER(1)
+    - - rfqMlotBehaviour
+      - Rfq behaviour in project
+      - NUMBER(1)
+    - - visibilityEGComments
+      - Visibility of Evaluation Group Comments During Evaluation
+      - NUMBER(1)
+    - - rfxAwardingType
+      - RFQ Awarding Type
+      - VARCHAR2(256 CHAR)
+    - - rfxAwardingTypeDescription
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - assignOwnerDivision
+      - "-"
+      - NUMBER(1)
+    - - commentOnChangeOwner
+      - Comment
+      - VARCHAR2(2000 CHAR)
+    - - totalReferencePrice
+      - Total Reference Price
+      - NUMBER
+    - - commAlgorithmExpParam
+      - |-
+        Exponent Parameter
+        (“Commercial Envelope” area, “Advanced Form” section)
+      - NUMBER
+  block: 3
+  blocks: 3
+part:
+  n: 2
+  of: 2

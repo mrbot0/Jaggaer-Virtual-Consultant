@@ -1,0 +1,141 @@
+id: U.DOC0178.0426
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: contractDates | Description: Container of peculiar contract dates. See section “ContractDates [Export]” below Attribute: contractPartiesList | Description: Information about first and secondary parties of the contract. See section “ContractPartiesList [Export]” below Attribute: customfieldList | Description: Container for contract custom field information. See section “Custom Field [Export]” below. Attribute: signerList | Description: Container for signer information. See section “Signer [Export]” below Attribute: obligationList | Description: Container for Obligation information. See section “Obligation [Export]” below Attribute: eProcurement | Description: Container for E-Procurement information. See section “EProcurement [Export]” below. Attribute: isConfidential | Description: Indicates whether access to this contract is (true) or is not (false) limited to those individuals explicitly listed on the contract. Attribute: sourcingEvent | Description: Sourcing event associated with this contract. See section “SourcingEvent [Export]” below Attribute: productLineItemList | Description: Product line items associated with this contract See section “ProductLineItem [Export]” below Attribute: serviceLineItemList | Description: Service line items associated with this contract See section “ServiceLineItem [Export]” below Attribute: managerList | Description: List of Contract manager assigned to this contract See section “ManagerList [Export]” below Attribute: stakeholderList | Description: List of Contract stakeholder assigned to this contract See section “StakeholderList [Export]” below Attribute: invoiceApproversList | Description: List of users that are authorized to approve invoices or invoice line items that are assigned to the contract. See section “User [Export]” below Attribute: contractManagerVisibility | Description: Visibility setting for the contract summary for a user who can access the contract and who has the Contract Manager permission. Full – All contract details are visible to the user, including links to the actual contract files. Partial- Only some of the contract details are visible to the user."
+hash: sha256:6146db68675c354fcb9b73631af662aeb63615f887afa3e13e68e8da6b686cf6
+words: 283
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: JIContract [Export]
+  section_path: 2.3.3.1
+  page: 82
+  lang: en
+  prev: U.DOC0178.0425
+  next: U.DOC0178.0427
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - contractDates
+      - |-
+        Container of peculiar contract dates.
+        See section “ContractDates [Export]” below
+      - ""
+    - - contractPartiesList
+      - |-
+        Information about first and secondary parties of the contract.
+        See section “ContractPartiesList [Export]” below
+      - ""
+    - - customfieldList
+      - |-
+        Container for contract custom field information.
+        See section “Custom Field [Export]” below.
+      - ""
+    - - signerList
+      - |-
+        Container for signer information.
+        See section “Signer [Export]” below
+      - ""
+    - - obligationList
+      - |-
+        Container for Obligation information.
+        See section “Obligation [Export]” below
+      - ""
+    - - eProcurement
+      - |-
+        Container for E-Procurement information.
+        See section “EProcurement [Export]” below.
+      - ""
+    - - isConfidential
+      - Indicates whether access to this contract is (true) or is not (false) limited to those individuals explicitly listed on the contract.
+      - ""
+    - - sourcingEvent
+      - |-
+        Sourcing event associated with this contract.
+        See section “SourcingEvent [Export]” below
+      - ""
+    - - productLineItemList
+      - |-
+        Product line items associated with this contract
+        See section “ProductLineItem [Export]” below
+      - ""
+    - - serviceLineItemList
+      - |-
+        Service line items associated with this contract
+        See section “ServiceLineItem [Export]” below
+      - ""
+    - - managerList
+      - |-
+        List of Contract manager assigned to this contract
+        See section “ManagerList [Export]” below
+      - ""
+    - - stakeholderList
+      - |-
+        List of Contract stakeholder assigned to this contract
+        See section “StakeholderList [Export]” below
+      - ""
+    - - invoiceApproversList
+      - |-
+        List of users that are authorized to approve invoices or invoice line items that are assigned to the contract.
+        See section “User [Export]” below
+      - ""
+    - - contractManagerVisibility
+      - |-
+        Visibility setting for the contract summary for a user who can access the contract and who has the Contract Manager permission.
+        Full – All contract details are visible to the user, including links to the actual contract files.
+        Partial- Only some of the contract details are visible to the user.
+        None- No contract information is visible to the user, unless he or she has access to buy against the contract. A user who has access to buy against the contract can see the contract summary.
+      - ""
+    - - allOtherUsersVisibility
+      - |-
+        Visibility setting for the contract summary for a regular user who can access the contract.
+        Full – All contract details are visible to the user, including links to the actual contract files.
+        Partial- Only some of the contract details are visible to the user.
+        None- No contract information is visible to the user, unless he or she has access to buy against the contract. A user who has access to buy against the contract can see the contract summary.
+      - ""
+    - - additionalDetails
+      - |-
+        Additional details.
+        See section “AdditionalDetails [Export]” below
+      - ""
+    - - notificationList
+      - |-
+        Container of contract notifications information
+        See section “NotificationList [Export]” below
+      - ""
+    - - contractFamily
+      - |-
+        Container for relationship of this contract and other contract.
+        See section “ContractFamily [Export]” below
+      - ""
+    - - consortiumSettings
+      - |-
+        Consortium information container.
+        See section “ConsortiumSettings [Export]” below
+      - ""
+    - - attachmentList
+      - |-
+        Contract attachment container.
+        See section “Attachment [Export]” below
+      - ""
+    - - contractCommodityCodesList
+      - |-
+        Container for contract commodities information.
+        See section “ContractCommodityCode [Export]” below
+      - ""
+    - - salesForceFields
+      - |-
+        Contract SalesForce fields.
+        See section “SalesForceFields [Export]” below
+      - ""
+  block: 2
+  blocks: 2
+part:
+  n: 1
+  of: 2

@@ -1,0 +1,47 @@
+id: U.DOC0178.0307
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: paymentTermsType | Description: Used in conjunction with the PaymentTermsDaysAfter element to determine the invoice due date. Possible values:
+  Net: Invoice due date = Invoice date + PaymentTermsDaysAfter
+  EOM (End of Month): Invoice due date = Last day of the month of the invoice date + PaymentTermsDaysAfter.
+  MFI (Month Following Invoice): Invoice due date = First day of the month after the invoice date + PaymentTermsDaysAfter.
+  EOQ (End of Quarter): Invoice due date = Last day of the quarter of the invoice date + PaymentTermsDaysAfter.
+  Manual: The invoice due date is not set based on payment terms but is entered manually by the user.
+  Note: If PaymentTermsType is provided in an import message, the Net and StandardPaymentTermsCode elements cannot have values.
+hash: sha256:24bb6d8def947d5f2a97bdc6e07bd256d8111a99b919f991e31bd7a50cbb53cb
+words: 121
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: PaymentTerms [Import]
+  section_path: 2.2.1.45
+  page: 56
+  lang: en
+  prev: U.DOC0178.0306
+  next: U.DOC0178.0308
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - paymentTermsType
+    - ""
+    - |-
+      Used in conjunction with the PaymentTermsDaysAfter element to determine the invoice due date. Possible values:
+      Net: Invoice due date = Invoice date + PaymentTermsDaysAfter
+      EOM (End of Month): Invoice due date = Last day of the month of the invoice date + PaymentTermsDaysAfter.
+      MFI (Month Following Invoice): Invoice due date = First day of the month after the invoice date + PaymentTermsDaysAfter.
+      EOQ (End of Quarter): Invoice due date = Last day of the quarter of the invoice date + PaymentTermsDaysAfter.
+      Manual: The invoice due date is not set based on payment terms but is entered manually by the user.
+      Note: If PaymentTermsType is provided in an import message, the Net and StandardPaymentTermsCode elements cannot have values.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

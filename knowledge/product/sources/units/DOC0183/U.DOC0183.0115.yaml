@@ -1,0 +1,106 @@
+id: U.DOC0183.0115
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: "Colonne: Condition Filter | Description | Operators Condition Filter: lastUpdateDate | Description: Date and time receipt information was last updated | Operators: Date filtering accepts following operators: EQUAL: object last update date must be equal to provided value NOTEQUAL: any object whose last update date is different from provided value GREATER_THAN: any object whose last update date is equal or greater than provided value LESS_THAN: any object whose last update date is lower or than provided value Date value must be expressed in the form yyyy-MM-dd or yyyy-MM-dd HH:mm:ss.SSS Z eg."
+hash: sha256:f9a81edba530b68147a5b0e5e64883906235c0a7f4d895a4b33e0d3dad504fdc
+words: 91
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Condition filters [Export]
+  section_path: 2.2.2
+  page: 17
+  lang: en
+  prev: U.DOC0183.0114
+  next: U.DOC0183.0116
+table:
+  table: 1
+  headers:
+    - Condition Filter
+    - Description
+    - Operators
+  rows:
+    - - lastUpdateDate
+      - Date and time receipt information was last updated
+      - |-
+        Date filtering accepts following operators:
+        EQUAL: object last update date must be equal to provided value
+        NOTEQUAL: any object whose last update date is different from provided value
+        GREATER_THAN: any object whose last update date is equal or greater than provided value
+        LESS_THAN: any object whose last update date is lower or than provided value
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+    - - receiptDate
+      - Date and time associated with the receipt for accounting purposes
+      - ""
+    - - creationDate
+      - Date and time the receipt was generated in the solution
+      - ""
+    - - completeDate
+      - Date and time the receipt was completed
+      - ""
+    - - receiptId
+      - Unique receipt internal identifier
+      - |-
+        Internal identifier filter accepts following operators:
+        EQUAL: required field must be equal to provided value
+        NOTEQUAL: required field must be different from provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - receiptName
+      - Name of the receipt
+      - |-
+        These filters accept following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        ENDWITH: required field must terminate with provided value (case insensitive)
+        Except of “receiptName”, all filters accept also:
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+        The “receiptSource”, “trackingNumber” and “packingSlipNumber” filters accept also the following:
+        ISNULL: required field is checked to be not valorized
+        NOTNULL: required field is required to be valorized, no matter value
+    - - receiptNumber
+      - Receipt Number associated with the receipt
+      - ""
+    - - receiptType
+      - Type of the receipt
+      - ""
+    - - receiptSource
+      - Source of the shopping cart
+      - ""
+    - - trackingNumber
+      - Tracking number associated with the receipt
+      - ""
+    - - packingSlipNumber
+      - Packing Slip Number of the supplier
+      - ""
+    - - workflowStep
+      - Workflow step in which the receipt was when exported
+      - ""
+    - - validationStatus
+      - |-
+        Receipt validation requirement.
+        0: Unneeded, receipt was exported with no validation requirements.
+        1: Pending - receipt is waiting to complete the validation process.
+        2: Completed - receipt completed the validation process
+      - |-
+        Validation status filtering accepts following operation:
+        EQUAL: required field must be equal to provided value
+        NOTEQUAL: required field must be different from provided value
+        GREATER_THAN: required field must be equal to or greater than provided value
+        LESS_THAN: required field must be equal to or lower than provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 3

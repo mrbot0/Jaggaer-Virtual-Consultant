@@ -1,0 +1,17 @@
+id: U.DOC0138.0055
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: The rule in this activity says if the Supplier ID is blank, the request must be directed to someone who can correct that. Who gets it is managed via a Shared Folder called Missing Supplier Catch. <Activity name="Missing Supplier Catch"> <ActivityType>manual</ActivityType> <StepRef name="Missing Supplier Catch" /> <FolderRef name="Missing Supplier Catch" /> <Rule><![CDATA[[Supplier.ID == ""]]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> <Flag>AllowCreateSourcingEvent</Flag> <Attribute name="wfActivityHelp"> <AttrValue lang="default">No supplier is specified.
+hash: sha256:7284f16fb109001ced349fa1dae30cad1a928933bc4abc2bfc42970a8e673457
+words: 63
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: MISSING SUPPLIER CATCH
+  section: MISSING SUPPLIER CATCH
+  section_path: "13"
+  page: null
+  lang: en
+  prev: U.DOC0138.0054
+  next: U.DOC0138.0056

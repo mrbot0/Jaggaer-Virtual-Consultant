@@ -1,0 +1,45 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-60
+section: 2.1.1.98
+section_title: J1Supplier/JISupplierData/locationList/location/customElementList/customElement/customElementValueList
+part: 1
+parts: 1
+rows:
+  - key: tech:CUSTOMELEMENTVALUE
+    label: customElementValue
+    labels:
+      - customElementValue
+    technical_name: CUSTOMELEMENTVALUE
+    section: 2.1.1.98
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.98
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.98#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: customElementValue
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.101
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.101#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: customElementValue
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 743

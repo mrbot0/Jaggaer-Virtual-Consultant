@@ -1,0 +1,100 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+batch: batch-05
+section: campi-5
+section_title: Campi — 5. Internal Notes
+part: 1
+parts: 1
+rows:
+  - key: tech:FLDINTERNALNOTESINST
+    label: fldInternalNotesInst
+    labels:
+      - fldInternalNotesInst
+    technical_name: FLDINTERNALNOTESINST
+    section: campi-5
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br><i>Please include relevant quotes with your
+      request by clicking the <b>{add attachment...}</b> link below. Also
+      include any other notes or attachments that will help in processing your
+      request, such as references to past orders, or additional vendor contact
+      information.</i><br><br> · id=10011 · tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-5
+        source_unit: consulting-service-form-xml-d4861794/campi-5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fldInternalNotesInst
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-013
+      functional_section: testi-note
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FLDINTERNALNOTES
+    label: Internal Notes
+    labels:
+      - Internal Notes
+    technical_name: FLDINTERNALNOTES
+    section: campi-5
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=8;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=50 · id=10012 · tipo=userdefined
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-5
+        source_unit: consulting-service-form-xml-d4861794/campi-5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Internal Notes
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: CL-FLD-013
+      functional_section: testi-note
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:113
+    label: "113"
+    labels:
+      - "113"
+    technical_name: "113"
+    section: campi-5
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=113 · tipo=static
+    sources:
+      - document: consulting-service-form-xml-d4861794
+        section: campi-5
+        source_unit: consulting-service-form-xml-d4861794/campi-5#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "113"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-013
+      functional_section: testi-note
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1108

@@ -1,0 +1,93 @@
+id: S.STD.XSC.DOC.0179
+type: DOC
+title: JINT Development Kit-JI Custom Field web-service
+summary: 'Documento spec-integrazione (tecnica, origine vendor) "JINT
+  Development Kit-JI Custom Field web-service": 102 unità, 42 tabelle, 12
+  tabelle di campi; scope ADM, XSC; affidabilità 0.72.'
+facets:
+  F1: spec-integrazione-prosa
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2019-10-07
+    release: ignota
+  F15: tecnica
+sources:
+  - file: JAGGAER WS/JINT WS Development_Kit_JI Custom Field.docx
+    sha256: sha256:ae5f77e0a7e9ac88f7a910a3d7d498cc2ff7295538c93b8b0db0249ba3c2421d
+kind: spec-integrazione
+genre: tecnica
+origin: vendor
+version: null
+dated: 2019-10-07
+covers_release: null
+languages:
+  - en
+scopes:
+  - ADM
+  - XSC
+source:
+  path: JAGGAER WS/JINT WS Development_Kit_JI Custom Field.docx
+  sha256: sha256:ae5f77e0a7e9ac88f7a910a3d7d498cc2ff7295538c93b8b0db0249ba3c2421d
+  size: 564038
+  format: docx
+  doc_id: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+  doc_key: jint-ws-development-kit-ji-custom-field.docx
+structure:
+  pages: 7
+  chapters: 3
+  sections: 50
+  tables: 42
+  figures: 2
+  field_tables: 12
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 102
+  by_type:
+    testo: 21
+    tabella: 30
+    definizione: 1
+    procedura: 2
+    riga-tabella-campi: 44
+    nota: 1
+    riferimento: 2
+    regola: 1
+reliability:
+  base_by_kind: 0.9
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.72
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues:
+  - section: null
+    note: tabelle annidate appiattite nel testo della cella
+    status: parser
+ingestion:
+  status: extracted
+  units_processed: 102
+  items_produced: 50
+  residue:
+    irrelevant: 2
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.48
+  last_run: 2026-09-30
+  estimated_tokens: 17013
+  sessions_planned: 1

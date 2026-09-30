@@ -1,0 +1,84 @@
+id: U.DOC0171.0433
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: name | Description: Name of an existing additional info (data element) Attribute: type | Description: Type of the data-element Attribute: visibleToSupplier | Description: 0=no, 1=yes, Attribute: label | Description: Label in the default language Attribute: labelLocale | Description: default language Attribute: values/value | Description: Data-element value(s). In case of attachment data-element contains the filename. Note: In case of data element with type NUMBER, the number format has 3 decimal positions by default. It is possible to enable a ws configuration parameter to check the DECIMAL_SCALE toolkit parameter in order to align the decimal positions in the ws output with the ones shown in the platform. In case of option/multichoice data element, the value is extracted in the system default language. If the condition filter independentLocale is set, the value will be extracted in the “neutral” language. Attribute: Values/value/@id | Description: In case of attachment the Internal identifier of the attachment, to be used for calling attachments web service to download it In case of choice/multichoice the id of the choice Attribute: values/value/@secureToken | Description: In case of attachment it is the secure token to be used for calling attachments web service to download the attachment file. | Available from version: BA_17_03 Attribute: lastAnswerDate | Description: Date and time of the last answer | Available from version: 12_4_0_00 Attribute: lastAnswerUser | Description: User performing last answer."
+hash: sha256:005ffc015d0fbe700ce962b8739cc182efec449346a74885d1bea3a42ad951b0
+words: 234
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Additional Info (data element) [Export RfX method]
+  section_path: 2.3.4.4
+  page: 7
+  lang: en
+  prev: U.DOC0171.0432
+  next: U.DOC0171.0434
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - name
+      - Name of an existing additional info (data element)
+      - ""
+    - - type
+      - Type of the data-element
+      - ""
+    - - visibleToSupplier
+      - 0=no, 1=yes,
+      - ""
+    - - label
+      - Label in the default language
+      - ""
+    - - labelLocale
+      - default language
+      - ""
+    - - values/value
+      - |-
+        Data-element value(s).
+        In case of attachment data-element contains the filename.
+        Note: In case of data element with type NUMBER, the number format has 3 decimal positions by default.
+        It is possible to enable a ws configuration parameter to check the DECIMAL_SCALE toolkit parameter in order to align the decimal positions in the ws output with the ones shown in the platform.
+        In case of option/multichoice data element, the value is extracted in the system default language. If the condition filter independentLocale is set, the value will be extracted in the “neutral” language.
+      - ""
+    - - Values/value/@id
+      - |-
+        In case of attachment the Internal identifier of the attachment, to be used for calling attachments web service to download it
+        In case of choice/multichoice the id of the choice
+      - ""
+    - - values/value/@secureToken
+      - In case of attachment it is the secure token to be used for calling attachments web service to download the attachment file.
+      - BA_17_03
+    - - lastAnswerDate
+      - Date and time of the last answer
+      - 12_4_0_00
+    - - lastAnswerUser
+      - |-
+        User performing last answer.
+        Complex type:
+        id = user internal identifier
+        code = user external code
+        name = user name and surname
+        login = user alias(available from version JINT_20_02_00)
+        company:
+        id: user company internal identifier
+        code: user company external code
+        name: user company name
+        profile:
+        id = user profile internal identifier
+        name = user profile name
+        division:
+        id = user division internal identifier
+        name = user division name
+        In case of Data-element “seller side”, profile and division will be omitted.
+        In case of Data-element “system side” this field will be omitted.
+      - 12_4_0_00
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

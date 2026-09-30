@@ -1,0 +1,68 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.28
+section_title: TSHConfig [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: override
+    technical_name: override
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates whether the TSHConfig PercentageRate does (true) or does not
+      (false) override the default rate
+    section: 2.3.1.28
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.28#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: percentagRate
+    technical_name: percentagRate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Percent of the amount charged for shipping
+    section: 2.3.1.28
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.28#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: flatChargeByLine/money
+    technical_name: flatChargeByLine/money
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Shipping cost for each line.
+      See section “Money [Import JIOrder method” below
+    section: 2.3.1.28
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.28#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: flatChargeByOrder/money
+    technical_name: flatChargeByOrder/money
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Shipping cost per order.
+      See section “Money [Import JIOrder method” below
+    section: 2.3.1.28
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.28#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: freeThresholdLimit/money
+    technical_name: freeThresholdLimit/money
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Tax-free threshold limit.
+      See section “Money [Import JIOrder method]” below
+    section: 2.3.1.28
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.28#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

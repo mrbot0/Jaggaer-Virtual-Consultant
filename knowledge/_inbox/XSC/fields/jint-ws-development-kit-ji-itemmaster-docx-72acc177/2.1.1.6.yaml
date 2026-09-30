@@ -1,0 +1,66 @@
+document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+scope: XSC
+section: 2.1.1.6
+section_title: SupplierItem [Item Master Import method]
+genre: tecnica
+rows:
+  - label: unitOfMeasure
+    technical_name: unitOfMeasure
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Identifies Packaging or size unit for the supplier item, such as EA
+      (each), PK (pack), KG (kg), or LG (large).
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.6#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: supplier
+    technical_name: supplier
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or max one Supplier
+      See section Supplier [Item Master Import method]
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.6#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: supplierPartNumber
+    technical_name: supplierPartNumber
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Identifies supplier's part number (SKU code) for the item.
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.6#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: itemAttribute
+    technical_name: itemAttribute
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or more ItemAttribute
+      See section ItemAttribute [Item Master Import method]
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.6#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: pricing
+    technical_name: pricing
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: See section Pricing [Item Master Import method]
+    section: 2.1.1.6
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.6#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177

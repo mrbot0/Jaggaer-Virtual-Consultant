@@ -1,0 +1,168 @@
+id: U.DOC0168.0009
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: "Revision: 16 | Date Released: 2020-07-30 | Version: JINT 20 01 01 | Description of Change: Import JI Order Method: paragraph Behavior – Attachment added to state attachment are supported at header level only and only in case of create no update Revision: 17 | Date Released: 2020-11-11 | Version: JINT 20 03 00 | Description of Change: Export JI Order Method: Added new component filter “HEADER_OrderDistribution”. Revision: 18 | Date Released: 2020-11-23 | Version: JINT 20 03 01 | Description of Change: Import/Export JI Order Method: Managed new fields standardPaymentTermsCode, termsType, daysAfter to PaymentInfo/Terms section Revision: 19 | Date Released: 2020-11-30 | Version: JINT 20 03 01 | Description of Change: REST – Added import attachments support and related examples Revision: 20 | Date Released: 2020-12-09 | Version: JINT 20 03 01 | Description of Change: Import JIOrder method: field list verified to specify which information is valid only at header or line level Revision: 21 | Date Released: 2021-02-15 | Version: JINT 20 03 02 | Description of Change: Export JI Order Method. New header fields: GrandTotal and Subtotal New Line field: LineTotal Revision: 22 | Date Released: 2021-05-31 | Version: JINT 21 01 00 | Description of Change: Updated postman collections related to REST Interface Revision: 23 | Date Released: 2021-10-11 | Version: JINT 21 01 00 | Description of Change: Added new condition filters: businessUnit and departement Revision: 24 | Date Released: 2021-11-17 | Version: JINT 21 01 00 | Description of Change: Validate JIOrder method: field “originalRequestMessageId” marked as mandatory Revision: 25 | Date Released: 2022-05-09 | Version: JINT 22 01 00 | Description of Change: Added JI Order status import REST API"
+hash: sha256:5761a4683ea90749486838750e606d79783ff7c16487fc49da1d933fd142abdc
+words: 278
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: j1p-ws-development-kit-ji-order-docx-eaedd778
+  section: Revision History
+  section_path: "0.2"
+  page: 5
+  lang: en
+  prev: U.DOC0168.0008
+  next: U.DOC0168.0010
+table:
+  table: 0
+  headers:
+    - Revision
+    - Date Released
+    - Version
+    - Description of Change
+  rows:
+    - - "1"
+      - 2019-02
+      - JINT 18 00
+      - Release
+    - - "2"
+      - 2019-03-18
+      - JINT 19 00
+      - "PO Validation (JI V. 19.1): order validation status explicitly managed"
+    - - "3"
+      - 2019-05-08
+      - JINT 19 00
+      - "PO Validation (JI V. 19.1): checked mandatory fields (originalRequestMessageId and validationResponse)"
+    - - "4"
+      - 2019-07-30
+      - JINT 19 02
+      - |-
+        Export JIOrder method, new field “workflowStep” added.
+        New “jint” web service endpoint.
+    - - "5"
+      - 2019-09-20
+      - JINT 19 03
+      - |-
+        Export JIOrder method, new fields added:
+        “fulfillmentAddressInternalId”, “fulfillmentAddressId” and “fulfillmentAddressThirdPartyId” in SupplierInfo element.
+        “columnIndex” in CustomFieldValue
+    - - "6"
+      - 2019-10-31
+      - JINT 19 03
+      - Import attachments in POValidation
+    - - "7"
+      - 2019-11-26
+      - JINT 19 04
+      - |-
+        Export JI Order method:
+        New field “postalCode” in CreditCard data
+        new element CustomPaymentTerm added under header PaymentInfo data.
+        New fields “invoiceStatus”, “receiptStatus”, and “closeDate” added to header
+        New ExtendedItemInfo element under Item data to export information about GeneralItemInfo, InternalItemInfo, ExternalItemInfo, Form and FormRequest
+    - - "8"
+      - 2019-12-16
+      - JINT 19 05
+      - |-
+        Export JI Order method
+        Custom payment term item: “displayValue” attribute added; “termFileJIId” attribute type changed to alphanumeric.
+    - - "9"
+      - 2020-01-09
+      - JINT 19 05
+      - |-
+        Export JI Order method
+        Line Item: “itemMasterId” attribute added
+    - - "10"
+      - 2020-02-20
+      - JINT 19 06
+      - |-
+        Revised structure; JINT webservices general guidelines moved to a separate document.
+        New Import JIOrder method
+        Export JI Order Method:
+        New fields “firstName”, “lastName”, “phone” and “position” added in Requestor data
+        new “TelephoneNumber” element data added
+        New fields “userFirstName” and “userLastName” added to “HistoryEvent” data
+    - - "11"
+      - 2020-03-08
+      - JINT 20 01 00
+      - "Minor changes (no impact): new WSDL version management"
+    - - "12"
+      - 2020-03-11
+      - JINT 20 01 00
+      - |-
+        Import JIOrder method
+        Main request structure [Import JIOrder method]: element “lineList” marked as mandatory with the comment that at least an order line must be set in the request.
+        Header [Import JIOrder method]: element “supplier”, remarked it must always be provided
+        SupplierInfo [Import JIOrder method]: note added stating “You must specify either the id element, the supplierNumber field, or both.”
+        JIOrderLine [Import JIOrder method]: element “item” marked as mandatory.
+        Export and import methods: JIOrderLine “quantity” field changed from unsigned long to double value to represent decimal number, too. In case quantity is a positive whole number, it is exported with no decimal value and with no decimal separator.
+    - - "13"
+      - 2020-04-06
+      - JINT 20 01 01
+      - |-
+        Export JI Order Method:
+        New field “commodityCodeType” added in Item element.
+        New structure “TransactionDetails” (with its “TransactionDetail”, “TotalTransactionAmount”, “OverToleranceRate” and “OrderAmount” sub-structure) added in Header element
+    - - "14"
+      - 2020-04-27
+      - JINT 20 01 01
+      - "Minor changes: alignment of data types and UI default labels"
+    - - "15"
+      - 2020-07-07
+      - JINT 20 01 01
+      - |-
+        Added REST interface
+        Import JI Order Method: import of external attachments available in ExternalInfo element.
+    - - "16"
+      - 2020-07-30
+      - JINT 20 01 01
+      - "Import JI Order Method: paragraph Behavior – Attachment added to state attachment are supported at header level only and only in case of create no update"
+    - - "17"
+      - 2020-11-11
+      - JINT 20 03 00
+      - |-
+        Export JI Order Method:
+        Added new component filter “HEADER_OrderDistribution”.
+    - - "18"
+      - 2020-11-23
+      - JINT 20 03 01
+      - |-
+        Import/Export JI Order Method:
+        Managed new fields standardPaymentTermsCode, termsType, daysAfter to PaymentInfo/Terms section
+    - - "19"
+      - 2020-11-30
+      - JINT 20 03 01
+      - REST – Added import attachments support and related examples
+    - - "20"
+      - 2020-12-09
+      - JINT 20 03 01
+      - "Import JIOrder method: field list verified to specify which information is valid only at header or line level"
+    - - "21"
+      - 2021-02-15
+      - JINT 20 03 02
+      - |-
+        Export JI Order Method.
+        New header fields: GrandTotal and Subtotal
+        New Line field: LineTotal
+    - - "22"
+      - 2021-05-31
+      - JINT 21 01 00
+      - Updated postman collections related to REST Interface
+    - - "23"
+      - 2021-10-11
+      - JINT 21 01 00
+      - "Added new condition filters: businessUnit and departement"
+    - - "24"
+      - 2021-11-17
+      - JINT 21 01 00
+      - "Validate JIOrder method: field “originalRequestMessageId” marked as mandatory"
+    - - "25"
+      - 2022-05-09
+      - JINT 22 01 00
+      - Added JI Order status import REST API
+  block: 1
+  blocks: 1
+part:
+  n: 3
+  of: 3

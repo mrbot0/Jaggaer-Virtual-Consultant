@@ -1,0 +1,39 @@
+document: check-request-form-xml-d45a31ae
+scope: XSC
+section: campi-3
+section_title: Campi — Invoice Attachment and Supporting Information
+genre: tecnica
+rows:
+  - label: "115"
+    technical_name: "115"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=115 · tipo=static
+    section: campi-3
+    source_unit: check-request-form-xml-d45a31ae/campi-3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: Basis of Award
+    technical_name: FlexPull1
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248316 · id=10002 · tipo=userdefined
+    section: campi-3
+    source_unit: check-request-form-xml-d45a31ae/campi-3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: "113"
+    technical_name: "113"
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=113 · tipo=static
+    section: campi-3
+    source_unit: check-request-form-xml-d45a31ae/campi-3#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae

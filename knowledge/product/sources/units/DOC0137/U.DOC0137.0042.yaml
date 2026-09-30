@@ -1,0 +1,17 @@
+id: U.DOC0137.0042
+doc: S.STD.XSC.DOC.0137
+doc_id: workflow-po-static-and-dynamic-guidelines-pdf-982cc3b9
+type: testo
+text: 'The next activity shows an automated step that requires multiple rule evaluations: <Activity name="PO Distribution"> <ActivityType>automated</ActivityType> <StepRef name="PO Distribution" /> <FolderRef name="Distribute PO" /> <Rule><![CDATA[ !(Document.CustomFieldValues("Manual Purchase Order") in {"true"}) && !(Document.CustomFieldValues("Order Category") in {"2 - Confirming - Do Not Distribute"}) ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> </Activity>'
+hash: sha256:b5588d1c1971f780495e386f63cac5825e58fd227f5703b7f4355b4c6e844357
+words: 44
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0137
+  chapter: Spend Director Special ization For Solutions Consultants
+  section: Spend Director Special ization For Solutions Consultants
+  section_path: p5
+  page: 5
+  lang: en
+  prev: U.DOC0137.0041
+  next: U.DOC0137.0043

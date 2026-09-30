@@ -1,0 +1,627 @@
+doc: S.STD.XSC.DOC.0009
+scope: XSC
+extracted_at: 2026-09-30T04:27:00.981Z
+tier: T0
+stats:
+  units: 117
+  extracted_units: 16
+  document_candidates: 0
+  needs_llm: 7
+  t0_complete: 9
+  by_candidate:
+    FLD: 10
+    INV: 2
+    FLW: 4
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2608
+  sessions:
+    - n: 1
+      tokens: 2608
+      batches: 1
+      items: 7
+      batch_items:
+        - - R.DOC0009.0022
+          - R.DOC0009.0033
+          - R.DOC0009.0042
+          - R.DOC0009.0051
+          - R.DOC0009.0062
+          - R.DOC0009.0071
+          - R.DOC0009.0102
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0009.0007
+    source_unit: U.DOC0009.0007
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: Essential Questions for this Class
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • What other instance -wide data
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0009.0007
+    needs_llm: false
+    tokens: 20
+  - raw_id: R.DOC0009.0022
+    source_unit: U.DOC0009.0022
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: "Instance -Wide Data Configuration: Master Data"
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0009.0022
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0009.0027
+    source_unit: U.DOC0009.0027
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: "Instance -wide Data Configuration: UOM"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • All UOM used by the client
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0009.0027
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0009.0028
+    source_unit: U.DOC0009.0028
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: "Instance -wide Data Configuration: UOM"
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - INV
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • UOM
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0009.0028
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 6
+  - raw_id: R.DOC0009.0033
+    source_unit: U.DOC0009.0033
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0009
+    section: "Exercise:"
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: export
+          oggetto: the Excel Template for UOM Import to review
+          valore: null
+        - n: 2
+          verbo: locate
+          oggetto: UOM Class file
+          valore: null
+        - n: 3
+          verbo: copy
+          oggetto: and Paste UOM’s in class file to Exported Template
+          valore: null
+        - n: 4
+          verbo: import
+          oggetto: UOM’s
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0009.0033
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 41
+  - raw_id: R.DOC0009.0038
+    source_unit: U.DOC0009.0038
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: "Instance -Wide Data Configuration: Currencies"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • All Currencies used by the client
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0009.0038
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0009.0039
+    source_unit: U.DOC0009.0039
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: "Instance -Wide Data Configuration: Currencies"
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - INV
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Currencies
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0009.0039
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0009.0042
+    source_unit: U.DOC0009.0042
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0009
+    section: "Exercise:"
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the Currency ‘USD’ in the system
+          valore: null
+        - n: 2
+          verbo: download
+          oggetto: the Excel Template for Currencies Import to review
+          valore: null
+        - n: 3
+          verbo: locate
+          oggetto: "& Import Currencies Class file"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0009.0042
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 40
+  - raw_id: R.DOC0009.0048
+    source_unit: U.DOC0009.0048
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: "Be Aware:"
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • You
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0009.0048
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0009.0051
+    source_unit: U.DOC0009.0051
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0009
+    section: "Exercise:"
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: locate
+          oggetto: the Category Tree Excel File
+          valore: null
+        - n: 2
+          verbo: import
+          oggetto: the Category Tree & Publish
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: the Category Tree
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0009.0051
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 28
+  - raw_id: R.DOC0009.0055
+    source_unit: U.DOC0009.0055
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: "Instance -Wide Data Configuration: Other"
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Goods Groups & Units of Measure
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0009.0055
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0009.0062
+    source_unit: U.DOC0009.0062
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: "What We’ll Discuss in this Lesson:"
+    page: 24
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0009.0062
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0009.0071
+    source_unit: U.DOC0009.0071
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0009
+    section: "Exercise:"
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the User
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: the User Roles & Rights Excel for Reference
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: "the User Role: Super User"
+          valore: Super User
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0009.0071
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 25
+  - raw_id: R.DOC0009.0102
+    source_unit: U.DOC0009.0102
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: "Take it to the Next Level:"
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0009.0102
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0009.0112
+    source_unit: U.DOC0009.0112
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: Essential Questions for this Class
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • What
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0009.0112
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 11
+  - raw_id: R.DOC0009.0114
+    source_unit: U.DOC0009.0114
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0009
+    section: Essential Questions for this Class
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • What other instance -wide data
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0009.0114
+    needs_llm: false
+    tokens: 20

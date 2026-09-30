@@ -1,0 +1,39 @@
+id: U.DOC0167.0412
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: postalCode | Mandatory (Y/N): N | Description: Postal code associated with the bank account. | Mapping on Jaggaer One data model and notes: • If the “type” field on the AccountsPayable element is set to DirectDeposit or WireTransfer, this field is required for the countries identified in PostalCode Field (see 2.1.5 PostalCode Field). Optional for all other countries.
+  • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+hash: sha256:5d1bcd02c7c6fa0c55fa517e6a6066891a17ec63bc5dee5c5caacdc269f60f7c
+words: 79
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 5
+  lang: en
+  prev: U.DOC0167.0411
+  next: U.DOC0167.0413
+row:
+  table: 0
+  row: 16
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - postalCode
+    - N
+    - Postal code associated with the bank account.
+    - |-
+      • If the “type” field on the AccountsPayable element is set to DirectDeposit or WireTransfer, this field is required for the countries identified in PostalCode Field (see 2.1.5 PostalCode Field). Optional for all other countries.
+      • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

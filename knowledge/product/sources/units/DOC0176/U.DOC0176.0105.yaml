@@ -1,0 +1,17 @@
+id: U.DOC0176.0105
+doc: S.STD.XSC.DOC.0176
+doc_id: jint-ws-development-kit-web-services-overview-do-c57133dd
+type: testo
+text: "In particular Below a sample HTTP conversation with token issuing and usage Call to tokens endpoint POST /esop/jint/api/public/v1/tokens HTTP/1.1 Cache-Control: no-cache Host: customer01-ws01.app.jaggaer.com Content-Type: application/x-www-form-urlencoded Content-Length: 68 Connection: keep-alive client_id=username1&client_secret=pwd1&grant_type=client_credentials HTTP/1.1 200 OK Date: Thu, 12 Dec 2019 13:52:04 GMT Server: BSP-AS Content-Type: application/json; charset=UTF-8 Transfer-Encoding: chunked"
+hash: sha256:844fc232c72feda922276dba44e4c3f6c671ddea1fdd0e2e01fb2e88adf6c5a7
+words: 47
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0176
+  chapter: JINT REST API
+  section: Access Token
+  section_path: 3.5.1
+  page: 18
+  lang: en
+  prev: U.DOC0176.0104
+  next: U.DOC0176.0106

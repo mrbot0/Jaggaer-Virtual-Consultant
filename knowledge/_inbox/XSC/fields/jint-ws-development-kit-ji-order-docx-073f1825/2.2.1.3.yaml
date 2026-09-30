@@ -1,0 +1,31 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.2.1.3
+section_title: ValidationResponse [Validate JIOrder method]
+genre: tecnica
+rows:
+  - label: status
+    technical_name: status
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Validation status. It can be
+      pass: order passed validation
+      fail: order failed the validation
+    section: 2.2.1.3
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: message
+    technical_name: message
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: text to be logged to the order audit history.
+    section: 2.2.1.3
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

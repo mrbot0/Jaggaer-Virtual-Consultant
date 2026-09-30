@@ -1,0 +1,41 @@
+id: U.DOC0168.0013
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: procedura
+text: "The structure of the current document is the following (parte 1/2) 1. Export JIOrder method: 2. Component Filter [Export JIOrder method]: describes which sections of an order can be exported. The use of a component filter increments the number of sections in the response to every order exported. 3. Condition Filter [Export JIOrder method]: describes which fields can be used to filter the order to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of orders extracted 4. Export data format [Export JIOrder method]: describes the structure of the response in terms of exported fields and sections. 5. Error codes [Export JIOrder method]: contains a list of possible error codes 6. Validate JIOrder method: 7. Request data format [Validate JIOrder method]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted. 8. Behaviour [Validate JIOrder method]: describes how the web service processes the data passed in input, in case of some particular processes. 9. Response Data Format [Validate JIOrder method]: describes the structure of the web service response and contains the list of possible error codes. 10. Import JIOrder method: 11. Request data format [Import JIOrder method]: describes the structure of the import request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted 12. Behaviour [Import JIOrder method]: describes how the web service processes the data passed in input 13. Response data format [Import JIOrder method]: describes the structure of the web service response and contains the list of possible error codes 14. REST INTERFACE 15."
+hash: sha256:d1e6932dadab9913cd83ff3e29f80bde32d948935bdfe58601b91af652ce5462
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 10
+  lang: en
+  prev: U.DOC0168.0012
+  next: U.DOC0168.0014
+steps:
+  - "Export JIOrder method:"
+  - "Component Filter [Export JIOrder method]: describes which sections of an order can be exported. The use of a component filter increments the number of sections in the response to every order exported."
+  - "Condition Filter [Export JIOrder method]: describes which fields can be used to filter the order to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of orders extracted"
+  - "Export data format [Export JIOrder method]: describes the structure of the response in terms of exported fields and sections."
+  - "Error codes [Export JIOrder method]: contains a list of possible error codes"
+  - "Validate JIOrder method:"
+  - "Request data format [Validate JIOrder method]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted."
+  - "Behaviour [Validate JIOrder method]: describes how the web service processes the data passed in input, in case of some particular processes."
+  - "Response Data Format [Validate JIOrder method]: describes the structure of the web service response and contains the list of possible error codes."
+  - "Import JIOrder method:"
+  - "Request data format [Import JIOrder method]: describes the structure of the import request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted"
+  - "Behaviour [Import JIOrder method]: describes how the web service processes the data passed in input"
+  - "Response data format [Import JIOrder method]: describes the structure of the web service response and contains the list of possible error codes"
+  - REST INTERFACE
+  - "Endpoint definitionError! Reference source not found.: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods"
+procedure:
+  title: The structure of the current document is the following
+  part: 1
+  parts: 2
+  first_step: 1
+part:
+  n: 1
+  of: 2

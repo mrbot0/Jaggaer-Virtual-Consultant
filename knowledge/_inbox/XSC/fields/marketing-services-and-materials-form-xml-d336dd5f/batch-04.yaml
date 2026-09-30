@@ -1,0 +1,130 @@
+document: marketing-services-and-materials-form-xml-d336dd5f
+scope: XSC
+batch: batch-04
+section: campi-4
+section_title: Campi — Other Information
+part: 1
+parts: 1
+rows:
+  - key: tech:OTHER_INFORMATION
+    label: Other Information
+    labels:
+      - Other Information
+    technical_name: OTHER_INFORMATION
+    section: campi-4
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: Other Information · UserDefinedFieldParamHTML=<b>Please allow five
+      business days for delivery of materials. If you need materials
+      immediately, please call University Marketing Services at
+      404-727-1987.</b><P> · id=10026 · tipo=userdefined
+    sources:
+      - document: marketing-services-and-materials-form-xml-d336dd5f
+        section: campi-4
+        source_unit: marketing-services-and-materials-form-xml-d336dd5f/campi-4#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Other Information
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DEPARTMENT_CONTACT
+    label: Department Contact Person
+    labels:
+      - Department Contact Person
+    technical_name: DEPARTMENT_CONTACT
+    section: campi-4
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Please provide the Departmental Contact person and their phone number. ·
+      UserDefinedFieldParamTextBoxSize=30;
+      UserDefinedFieldParamTextBoxMaxLength=40 · id=10027 · tipo=userdefined
+    sources:
+      - document: marketing-services-and-materials-form-xml-d336dd5f
+        section: campi-4
+        source_unit: marketing-services-and-materials-form-xml-d336dd5f/campi-4#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Department Contact Person
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:DEPARTMENT_CONTACT_PHONE
+    label: Department Contact Phone
+    labels:
+      - Department Contact Phone
+    technical_name: DEPARTMENT_CONTACT_PHONE
+    section: campi-4
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Department Contact Phone · UserDefinedFieldParamTextBoxSize=30;
+      UserDefinedFieldParamTextBoxMaxLength=10 · id=10034 · tipo=userdefined
+    sources:
+      - document: marketing-services-and-materials-form-xml-d336dd5f
+        section: campi-4
+        source_unit: marketing-services-and-materials-form-xml-d336dd5f/campi-4#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Department Contact Phone
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:SPECIAL_INSTRUCTIONS
+    label: Special Instructions
+    labels:
+      - Special Instructions
+    technical_name: SPECIAL_INSTRUCTIONS
+    section: campi-4
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=3;
+      UserDefinedFieldParamTextBoxMaxLength=200;
+      UserDefinedFieldParamTextAreaCols=27 · id=10035 · tipo=userdefined
+    sources:
+      - document: marketing-services-and-materials-form-xml-d336dd5f
+        section: campi-4
+        source_unit: marketing-services-and-materials-form-xml-d336dd5f/campi-4#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Special Instructions
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1367

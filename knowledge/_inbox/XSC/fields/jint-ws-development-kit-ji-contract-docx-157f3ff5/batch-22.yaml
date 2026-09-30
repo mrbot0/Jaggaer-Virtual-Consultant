@@ -1,0 +1,266 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-22
+section: 2.2.1.19
+section_title: Attachment [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:FILESIZE
+    label: fileSize
+    labels:
+      - fileSize
+    technical_name: FILESIZE
+    section: 2.2.1.19
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment size (in byte) (for contract attachment with fileBase64 only).
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: fileSize
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:DISPLAYNAME
+    label: displayName
+    labels:
+      - displayName
+    technical_name: DISPLAYNAME
+    section: 2.2.1.19
+    type: null
+    mandatory_text: Y if attachmentURL is provided
+    allowed_values: []
+    notes: Display name of the attachment (for contract attachment only).
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: displayName
+        type: null
+        mandatory_text: Y if attachmentURL is provided
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:FILENAME
+    label: fileName
+    labels:
+      - fileName
+    technical_name: FILENAME
+    section: 2.2.1.19
+    type: null
+    mandatory_text: Y if fileBase64 is provided
+    allowed_values: []
+    notes: Attachment file name
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: fileName
+        type: null
+        mandatory_text: Y if fileBase64 is provided
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:PRINTWITHFULLCONTRACT
+    label: printWithFullContract
+    labels:
+      - printWithFullContract
+    technical_name: PRINTWITHFULLCONTRACT
+    section: 2.2.1.19
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the attachment is (true) or is not (false) to be
+      printed when the full contract is printed (for contract attachment only).
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: printWithFullContract
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SHAREWITHSECONDPARTIES
+    label: shareWithSecondParties
+    labels:
+      - shareWithSecondParties
+    technical_name: SHAREWITHSECONDPARTIES
+    section: 2.2.1.19
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the attachment can (true) or cannot (false) be shared
+      with second parties (for contract attachment only).
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: shareWithSecondParties
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTSUMMARYVISIBILITY
+    label: contractSummaryVisibility
+    labels:
+      - contractSummaryVisibility
+    technical_name: CONTRACTSUMMARYVISIBILITY
+    section: 2.2.1.19
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates the visibility setting for the contract summary (for contract
+      attachment only).
+
+      UseSummaryConfigVisibility- Use the visibility settings on the Contract
+      Info tab on the Summary Configuration screen
+
+      AdminOrManagerVisibility- The contract summary is only visible to contract
+      administrators and contract managers
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: contractSummaryVisibility
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:FILEBASE64
+    label: fileBase64
+    labels:
+      - fileBase64
+    technical_name: FILEBASE64
+    section: 2.2.1.19
+    type: null
+    mandatory_text: At least one between fileBase64 and attachmentURL must be defined
+    allowed_values: []
+    notes: Content of the file to be imported
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: fileBase64
+        type: null
+        mandatory_text: At least one between fileBase64 and attachmentURL must be defined
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: obbligo
+      confidence: 0.9
+      mandatory:
+        kind: always
+  - key: tech:ATTACHMENTURL
+    label: attachmentURL
+    labels:
+      - attachmentURL
+    technical_name: ATTACHMENTURL
+    section: 2.2.1.19
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      URL of the attachment.
+      Used only if fileBase64 is not provided.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: attachmentURL
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MAINDOCUMENT
+    label: mainDocument
+    labels:
+      - mainDocument
+    technical_name: MAINDOCUMENT
+    section: 2.2.1.19
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the attachment is (true) or is not (false) the main
+      contract document (for contract attachment with attachmentURL only).
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: mainDocument
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-008
+      functional_section: allegati
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 2243

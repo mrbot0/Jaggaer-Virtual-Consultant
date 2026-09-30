@@ -1,0 +1,44 @@
+id: U.DOC0171.0142
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: type | Mandatory (Y/N): Y (even if not used for operation) | Description: Section type:
+  TECH = technical section
+  QUAL = Qualification section | Mapping on JA data model and notes: Section type: Rfq questions or eVm questions.
+  Not used (section type is inferred directly from the TechQualEnvelope container used to generate envelope structure)
+hash: sha256:962b9967f7f6243b86185340a8b901c80b0edeaadf048ae40b66d43866938ef1
+words: 55
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Qualification and Technical envelope: Section [Import/Update RfX method]"
+  section_path: 2.1.1.10
+  page: 6
+  lang: en
+  prev: U.DOC0171.0141
+  next: U.DOC0171.0143
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - type
+    - Y (even if not used for operation)
+    - |-
+      Section type:
+      TECH = technical section
+      QUAL = Qualification section
+    - |-
+      Section type: Rfq questions or eVm questions.
+      Not used (section type is inferred directly from the TechQualEnvelope container used to generate envelope structure)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

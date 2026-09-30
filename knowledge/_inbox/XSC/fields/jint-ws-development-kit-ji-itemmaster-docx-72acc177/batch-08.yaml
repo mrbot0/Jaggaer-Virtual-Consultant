@@ -1,0 +1,36 @@
+document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+scope: XSC
+batch: batch-08
+section: 2.1.1.8
+section_title: UnitPrice [Item Master Import method]
+part: 1
+parts: 1
+rows:
+  - key: tech:CURRENCY
+    label: currency
+    labels:
+      - currency
+    technical_name: CURRENCY
+    section: 2.1.1.8
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Exchangeable currency code.
+    sources:
+      - document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+        section: 2.1.1.8
+        source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.8#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: currency
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 660

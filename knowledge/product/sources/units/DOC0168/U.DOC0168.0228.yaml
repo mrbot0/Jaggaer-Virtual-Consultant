@@ -1,0 +1,37 @@
+id: U.DOC0168.0228
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: riga-tabella-campi
+text: |-
+  Attribute: fulfillmentAddressThirdPartyId | Mandatory (Y/N): N | Description: Unique external ID defined by a third party for this fulfillment center. The fulfillment center address must be active and unique.
+  Valid only for SupplierInfo data specified at JIHeader level.
+hash: sha256:f7a2ea882676e710ca08bc75538fbfd97466c79fe585dbb985091d75d00febde
+words: 38
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: SupplierInfo [Import JIOrder method]
+  section_path: 2.3.1.6
+  page: 73
+  lang: en
+  prev: U.DOC0168.0227
+  next: U.DOC0168.0229
+row:
+  table: 0
+  row: 15
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - fulfillmentAddressThirdPartyId
+    - N
+    - |-
+      Unique external ID defined by a third party for this fulfillment center. The fulfillment center address must be active and unique.
+      Valid only for SupplierInfo data specified at JIHeader level.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

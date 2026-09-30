@@ -1,0 +1,64 @@
+document: ji-plt-2302-goldsitecreditmemoconfig-xml-eb332f24
+scope: XSC
+batch: batch-06
+section: campi-7
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:35
+    label: "35"
+    labels:
+      - "35"
+    technical_name: "35"
+    section: campi-7
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=35 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsitecreditmemoconfig-xml-eb332f24
+        section: campi-7
+        source_unit: ji-plt-2302-goldsitecreditmemoconfig-xml-eb332f24/campi-7#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "35"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:63
+    label: "63"
+    labels:
+      - "63"
+    technical_name: "63"
+    section: campi-7
+    type: static
+    mandatory_text: ""
+    allowed_values: []
+    notes: id=63 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsitecreditmemoconfig-xml-eb332f24
+        section: campi-7
+        source_unit: ji-plt-2302-goldsitecreditmemoconfig-xml-eb332f24/campi-7#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "63"
+        type: static
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 797

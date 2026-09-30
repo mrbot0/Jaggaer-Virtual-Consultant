@@ -1,0 +1,111 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+section: 2.1.1.5
+section_title: J1Supplier/JASupplierData/company
+genre: tecnica
+rows:
+  - label: extCode
+    technical_name: extCode
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Company identification code within the external system
+    section: 2.1.1.5
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.5#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: extUniqueCode
+    technical_name: extUniqueCode
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Company unique identification code within the external system. When
+      valorized it must be unique within the companies registered and enabled in
+      the same toolkit group (companies deactivated and deleted are excluded).
+    section: 2.1.1.5
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.5#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: registrationStatus
+    technical_name: registrationStatus
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.5
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.5#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: extStatus
+    technical_name: extStatus
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Alphanumeric external code of Seller extended status (secondary supplier
+      status).
+
+      Use empty string to reset extended status.
+    section: 2.1.1.5
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.5#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: buyerManaged
+    technical_name: buyerManaged
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Defines if the supplier is managed by the buyer or by the supplier
+    section: 2.1.1.5
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.5#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: bizEmail
+    technical_name: bizEmail
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main email address
+    section: 2.1.1.5
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.5#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: bizPhone
+    technical_name: bizPhone
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main telephone number
+    section: 2.1.1.5
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.5#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: bizFax
+    technical_name: bizFax
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company fax
+    section: 2.1.1.5
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.5#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: bizLegalStruct
+    technical_name: bizLegalStruct
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Legal structure title expressed according to company country
+    section: 2.1.1.5
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.5#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696

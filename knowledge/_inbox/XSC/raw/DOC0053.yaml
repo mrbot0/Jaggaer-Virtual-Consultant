@@ -1,0 +1,77 @@
+doc: S.STD.XSC.DOC.0053
+scope: XSC
+extracted_at: 2026-09-30T04:30:12.473Z
+tier: T0
+stats:
+  units: 1
+  extracted_units: 0
+  document_candidates: 2
+  needs_llm: 2
+  t0_complete: 0
+  by_candidate:
+    CFG: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 6000
+  sessions:
+    - n: 1
+      tokens: 6000
+      batches: 1
+      items: 2
+      batch_items:
+        - - R.DOC0053.C001
+          - R.DOC0053.C002
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0053.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0053
+    section: Parametri (strong)
+    source_unit: U.DOC0053.0001
+    facets: &a1
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: /strong/span
+      current_state:
+        value: '"Invoice Number"'
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0053.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0053
+    section: Parametri (strong)
+    source_unit: U.DOC0053.0001
+    facets: *a1
+    extraction:
+      parameter: /strong/span
+      current_state:
+        value: '"Total"'
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: config-export
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

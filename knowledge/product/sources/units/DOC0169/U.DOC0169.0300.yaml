@@ -1,0 +1,88 @@
+id: U.DOC0169.0300
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: supplier | Description: Supplier information.
+  See section “Supplier [PR Export]” below.
+  Attribute: pricingCode | Description: Specifies any special pricing or promotional codes with the order.
+  Attribute: discountAmount | Description: Supplier group discount amount information.
+  See section “DiscountAmount [PR Export]” above.
+  Attribute: accountCode | Description: Account code sent to the supplier with the order.
+  Attribute: shippingCharges | Description: Supplier group shipping charges information.
+  See section “ShippingCharges [PR Export]” below
+  Attribute: handlingCharges | Description: Supplier group handling charges information.
+  See section “HandlingCharges [PR Export]” below
+  Attribute: tax1 | Description: Supplier group tax 1 information.
+  See section “Tax1 [PR Export]” below
+  Attribute: tax2 | Description: Supplier group tax 2 information.
+  See section “Tax2 [PR Export]” below
+  Attribute: requestedPONumber | Description: Number of the PO associated with this PR.
+  Attribute: clauseList | Description: Clause container.
+  See section “Clause [PR Export]” above.
+hash: sha256:7c00cf472f1dd31fca09086c2c7cdd34c6ce3fec255ae708e29977f654ad6b34
+words: 146
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: RequisitionSupplierGroupInfo [PR Export]
+  section_path: 2.3.3.24
+  page: 69
+  lang: en
+  prev: U.DOC0169.0299
+  next: U.DOC0169.0301
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - supplier
+      - |-
+        Supplier information.
+        See section “Supplier [PR Export]” below.
+      - ""
+    - - pricingCode
+      - Specifies any special pricing or promotional codes with the order.
+      - ""
+    - - discountAmount
+      - |-
+        Supplier group discount amount information.
+        See section “DiscountAmount [PR Export]” above.
+      - ""
+    - - accountCode
+      - Account code sent to the supplier with the order.
+      - ""
+    - - shippingCharges
+      - |-
+        Supplier group shipping charges information.
+        See section “ShippingCharges [PR Export]” below
+      - ""
+    - - handlingCharges
+      - |-
+        Supplier group handling charges information.
+        See section “HandlingCharges [PR Export]” below
+      - ""
+    - - tax1
+      - |-
+        Supplier group tax 1 information.
+        See section “Tax1 [PR Export]” below
+      - ""
+    - - tax2
+      - |-
+        Supplier group tax 2 information.
+        See section “Tax2 [PR Export]” below
+      - ""
+    - - requestedPONumber
+      - Number of the PO associated with this PR.
+      - ""
+    - - clauseList
+      - |-
+        Clause container.
+        See section “Clause [PR Export]” above.
+      - ""
+  block: 1
+  blocks: 1

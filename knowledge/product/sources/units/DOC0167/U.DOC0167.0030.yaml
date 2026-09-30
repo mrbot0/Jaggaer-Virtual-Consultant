@@ -1,0 +1,45 @@
+id: U.DOC0167.0030
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: code | Mandatory (Y/N): Y | Description: Code of requested operation | Mapping on Jaggaer One data model and notes: Code of the operation. It accepts following value:
+  CREATE: a new supplier company is registered and automatically enabled, no matter main code provided
+  UPDATE: it looks for an existing company having main code provided and updates it with new information.
+  CREATE_UPDATE: if the company already exists then update it, otherwise creates a new one.
+  NO VALUE PROVIDED: No operation will be performed on Company: information is provided to identify the supplier other operation will be performed on
+hash: sha256:6870f9c6e7f419740e21d83e9af0d8b320f05f4f817e125dad9a1663a146f6f1
+words: 98
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/operation
+  section_path: 2.1.1.2
+  page: 5
+  lang: en
+  prev: U.DOC0167.0029
+  next: U.DOC0167.0031
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - code
+    - Y
+    - Code of requested operation
+    - |-
+      Code of the operation. It accepts following value:
+      CREATE: a new supplier company is registered and automatically enabled, no matter main code provided
+      UPDATE: it looks for an existing company having main code provided and updates it with new information.
+      CREATE_UPDATE: if the company already exists then update it, otherwise creates a new one.
+      NO VALUE PROVIDED: No operation will be performed on Company: information is provided to identify the supplier other operation will be performed on
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

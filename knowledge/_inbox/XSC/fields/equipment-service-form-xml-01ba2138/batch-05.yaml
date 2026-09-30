@@ -1,0 +1,65 @@
+document: equipment-service-form-xml-01ba2138
+scope: XSC
+batch: batch-05
+section: campi-5
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:ESTIMATED_PRICE
+    label: Estimated Price
+    labels:
+      - Estimated Price
+    technical_name: ESTIMATED_PRICE
+    section: campi-5
+    type: Price
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10252 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-5
+        source_unit: equipment-service-form-xml-01ba2138/campi-5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Estimated Price
+        type: Price
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:REQUESTED_SERVICE_BY_DATE
+    label: "Requested Service By Date:"
+    labels:
+      - "Requested Service By Date:"
+    technical_name: REQUESTED_SERVICE_BY_DATE
+    section: campi-5
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10005 · tipo=userdefined
+    sources:
+      - document: equipment-service-form-xml-01ba2138
+        section: campi-5
+        source_unit: equipment-service-form-xml-01ba2138/campi-5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "Requested Service By Date:"
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 835

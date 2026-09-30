@@ -1,0 +1,43 @@
+id: U.DOC0171.0200
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: id | Mandatory (Y/N): Y | Description: Additional Column parameter identifier | Mapping on JA data model and notes: JA internal identifier of an existing additional column parameter to update;
+  It must be specified as -1 when creating new parameter for both existing or new section;
+  If positive and the section doesn’t contain a multi column parameter with such identifier, error is returned and operation aborted.
+  See §Behavior, section “Envelope Management”.
+hash: sha256:0ffe07b1ae0bcdf660db8ba66444ffb57d9b18cc51d4699d5b6000bd3d41670f
+words: 72
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: Section additional column [Import/Update RfX method]"
+  section_path: 2.1.1.16
+  page: 6
+  lang: en
+  prev: U.DOC0171.0199
+  next: U.DOC0171.0201
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - id
+    - Y
+    - Additional Column parameter identifier
+    - |-
+      JA internal identifier of an existing additional column parameter to update;
+      It must be specified as -1 when creating new parameter for both existing or new section;
+      If positive and the section doesn’t contain a multi column parameter with such identifier, error is returned and operation aborted.
+      See §Behavior, section “Envelope Management”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

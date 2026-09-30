@@ -1,0 +1,48 @@
+id: U.DOC0183.0123
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: countryCode | Description: Code to access the specific country, not including the international dialing sequence.
+  Attribute: areaCode | Description: Area code is determined based on country code.
+  Maximum length for a US area code is 3 digits.
+  Maximum length for an International area code is 5 digits.
+  Attribute: number | Description: Telephone number of the receiver.
+  Attribute: extension | Description: Phone extension of the receiver, if applicable.
+hash: sha256:31233d12ceb68c56664634b20f57e034559587956ab45ca5f003806a828f5ac3
+words: 76
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: TelephoneNumber [Export]
+  section_path: 2.2.3.4
+  page: 17
+  lang: en
+  prev: U.DOC0183.0122
+  next: U.DOC0183.0124
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - countryCode
+      - Code to access the specific country, not including the international dialing sequence.
+      - ""
+    - - areaCode
+      - |-
+        Area code is determined based on country code.
+        Maximum length for a US area code is 3 digits.
+        Maximum length for an International area code is 5 digits.
+      - ""
+    - - number
+      - Telephone number of the receiver.
+      - ""
+    - - extension
+      - Phone extension of the receiver, if applicable.
+      - ""
+  block: 1
+  blocks: 1

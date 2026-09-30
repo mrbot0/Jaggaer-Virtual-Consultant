@@ -1,0 +1,112 @@
+id: U.DOC0171.0454
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "In case of component filter value “ONLY_CONTACT_USERS”, it is the list of users belonging to the supplier company explicitly added to the contact list in the Rfx [see section UserData] Attribute: readDetailTime | Description: Date of reading RFx detail | Available from version: JINT_20_02_00 Attribute: supplierStatus | Description: Company platform registration status code: 0: Registered 100: Active -100: Deactivated | Available from version: JINT_20_02_02 Attribute: supplierExcludedAward | Description: 0: no 1: yes If supplier is excluded in final evaluation, supplierExcludedAward is set to 1, otherwise 0 | Available from version: JINT_21_01_01"
+hash: sha256:0ba54e85fcca7aa48eddbe2c24c87230a4fca709ff2b9cee4feb619e3f483fff
+words: 91
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Suppliers [Export RfX method]
+  section_path: 2.3.4.18
+  page: 7
+  lang: en
+  prev: U.DOC0171.0453
+  next: U.DOC0171.0455
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - companyData
+      - |-
+        Complex type of the supplier company:
+        id: company internal identifier
+        code: company external code
+        name: company name
+        extUniqueCode: external unique code (BA_17_02)
+        If the component filter SUPPLIERS has the value IDENTIFIERS set, the following additional fields will be extracted:
+        fiscalCode
+        vat
+        euVat
+        dAndBCode
+      - |-
+        For extUniqueCode
+        BA_17_02
+    - - invited
+      - Invited to last run
+      - ""
+    - - status
+      - Supplier answer status label (default language)
+      - ""
+    - - statusCode
+      - |-
+        Supplier answer status:
+        -2 = rejected offer (by supplier)
+        -101= excluded at pre-evaluation phase
+        -102= excluded in qualification offer evaluation
+        -103= excluded in technical offer evaluation
+        -104= excluded in commercial offer evaluation
+        -105= excluded by Qualification Only RFQ
+        -1 = not submitted offer
+        1 = submitted offer
+        3 = winner offer
+        4 = loser offer
+        5 = response to a closed RFI
+        6 = response to a closed RFQ
+        7 = partial winner offer
+      - ""
+    - - invitationMode
+      - Supplier invitation mode label (default language)
+      - ""
+    - - invitationModeCode
+      - |-
+        Supplier invitation mode:
+        0 = invited
+        1 = self-invited
+        2 = invited after close
+      - ""
+    - - invitationDate
+      - Date-time of invitation/self-invitation
+      - ""
+    - - lateResponseAllowed
+      - |-
+        1 = late response allowed
+        0 = late response not allowed
+      - ""
+    - - supplierAgreementAccepted
+      - |-
+        1 = accepted
+        0 = rejected
+      - BA_17_02
+    - - supplierUserList
+      - |-
+        In case of component filter value “USERS”, it is the list of users that belong to the supplier company and have the rights to access the details of the Rfx (even if not explicitly added to the contact list).
+        In case of component filter value “ONLY_CONTACT_USERS”, it is the list of users belonging to the supplier company explicitly added to the contact list in the Rfx
+        [see section UserData]
+      - ""
+    - - readDetailTime
+      - Date of reading RFx detail
+      - JINT_20_02_00
+    - - supplierStatus
+      - |-
+        Company platform registration status code:
+        0: Registered
+        100: Active
+        -100: Deactivated
+      - JINT_20_02_02
+    - - supplierExcludedAward
+      - |-
+        0: no
+        1: yes
+        If supplier is excluded in final evaluation, supplierExcludedAward is set to 1, otherwise 0
+      - JINT_21_01_01
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

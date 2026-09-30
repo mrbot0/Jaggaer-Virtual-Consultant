@@ -1,0 +1,394 @@
+doc: S.STD.XSC.DOC.0004
+scope: XSC
+extracted_at: 2026-09-30T04:26:59.660Z
+tier: T0
+stats:
+  units: 77
+  extracted_units: 10
+  document_candidates: 0
+  needs_llm: 7
+  t0_complete: 3
+  by_candidate:
+    FLD: 9
+    FLW: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2742
+  sessions:
+    - n: 1
+      tokens: 2742
+      batches: 1
+      items: 7
+      batch_items:
+        - - R.DOC0004.0003
+          - R.DOC0004.0018
+          - R.DOC0004.0032
+          - R.DOC0004.0037
+          - R.DOC0004.0042
+          - R.DOC0004.0054
+          - R.DOC0004.0070
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0004.0003
+    source_unit: U.DOC0004.0003
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0004
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0004.0003
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 50
+  - raw_id: R.DOC0004.0005
+    source_unit: U.DOC0004.0005
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0004
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Some tasks
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0004.0005
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0004.0006
+    source_unit: U.DOC0004.0006
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0004
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: You
+      modality: raccomandazione
+      condition: "you see th e following formatting : This exercise task is required for your capstone. ο This exercise task is optional /recommended"
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0004.0006
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0004.0008
+    source_unit: U.DOC0004.0008
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0004
+    section: Course Workbook
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Your site
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0004.0008
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0004.0018
+    source_unit: U.DOC0004.0018
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0004
+    section: Instructions
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0004.0018
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 45
+  - raw_id: R.DOC0004.0032
+    source_unit: U.DOC0004.0032
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0004
+    section: "Class 3: 2303 – Initial Product Setup"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0004.0032
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0004.0037
+    source_unit: U.DOC0004.0037
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0004
+    section: "Class 3: 2303 – Initial Product Setup"
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0004.0037
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 76
+  - raw_id: R.DOC0004.0042
+    source_unit: U.DOC0004.0042
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0004
+    section: "Class 4: 2304 – Automation, Integrations , Reporting & Support"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: import instructions
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: data formatting Import the Excel file Review Error Report Make corrections and reupload
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0004.0042
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 48
+  - raw_id: R.DOC0004.0054
+    source_unit: U.DOC0004.0054
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0004
+    section: "Class 4: 2304 – Automation, Integrations , Reporting & Support"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0004.0054
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 17
+  - raw_id: R.DOC0004.0070
+    source_unit: U.DOC0004.0070
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0004
+    section: Build Your Own Terminology Guide
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0004.0070
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 42

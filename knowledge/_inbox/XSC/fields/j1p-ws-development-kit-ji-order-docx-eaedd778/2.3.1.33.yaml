@@ -1,0 +1,47 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.33
+section_title: OrderDistribution [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: distributionMethod
+    technical_name: distributionMethod
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Distribution method.
+      See section “DistributionMethod [Import JIOrder method]” below
+    section: 2.3.1.33
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.33#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: distributionCompletionDate
+    technical_name: distributionCompletionDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Completion date and time for distribution of the PO
+      This field is not used for imports. Valid only for exports and validations
+    section: 2.3.1.33
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.33#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: ordertAcceptanceInstructions
+    technical_name: ordertAcceptanceInstructions
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Order Acceptance Instructions that are to appear on the PO.
+
+      If the instructions are longer than 1000 characters, they are truncated
+      and saved.
+    section: 2.3.1.33
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.33#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

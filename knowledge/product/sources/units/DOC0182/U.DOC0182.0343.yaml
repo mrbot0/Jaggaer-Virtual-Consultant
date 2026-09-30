@@ -1,0 +1,62 @@
+id: U.DOC0182.0343
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: accountCode | Description: Account code sent to the supplier with the order.
+  Attribute: pricingCode | Description: Specifies any special pricing or promotional codes with the order.
+  Attribute: contractNumber | Description: Contract number sent to the supplier with the order.
+  The eProcurement solution automatically populates the contract number on the PR.
+  Attribute: note | Description: Text note for the supplier that is entered in the cart and carried over to POs and PRs.
+  If the note is longer than 1000 characters, it is truncated and saved.
+  Note: If the Note field is empty, the existing note in the eProcurement solution is not overwritten. Only a populated Note field can overwrite the existing note.
+  Attribute: attachments | Description: List of supplier attachments.
+  See section “Attachment [PR Export]” above
+  Attribute: quoteNumber | Description: Special quote number to be sent to the supplier.
+hash: sha256:8f0048fd277fcf0ce22cf6d8c20745f8002d4f4d7838ca2cef6ec5e9365c4cd9
+words: 148
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: SupplierInfo [PR Export]
+  section_path: 2.3.3.50
+  page: 26
+  lang: en
+  prev: U.DOC0182.0342
+  next: U.DOC0182.0344
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - accountCode
+      - Account code sent to the supplier with the order.
+      - ""
+    - - pricingCode
+      - Specifies any special pricing or promotional codes with the order.
+      - ""
+    - - contractNumber
+      - |-
+        Contract number sent to the supplier with the order.
+        The eProcurement solution automatically populates the contract number on the PR.
+      - ""
+    - - note
+      - |-
+        Text note for the supplier that is entered in the cart and carried over to POs and PRs.
+        If the note is longer than 1000 characters, it is truncated and saved.
+        Note: If the Note field is empty, the existing note in the eProcurement solution is not overwritten. Only a populated Note field can overwrite the existing note.
+      - ""
+    - - attachments
+      - |-
+        List of supplier attachments.
+        See section “Attachment [PR Export]” above
+      - ""
+    - - quoteNumber
+      - Special quote number to be sent to the supplier.
+      - ""
+  block: 1
+  blocks: 1

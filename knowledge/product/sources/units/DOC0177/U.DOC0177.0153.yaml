@@ -1,0 +1,35 @@
+id: U.DOC0177.0153
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: "Attribute: primaryNaics | Mandatory (Y/N): N | Description: Primary North American Industry Classification System supplier reference number. | Mapping on Jaggaer One data model and notes: Must be a valid NAICS code. You can use the data in the LegalStructure, NumberOfEmployee s, AnnualSalesAmount, and PrimaryNaics fields to determine the supplier's Small Business Enterprise classification. If you plan to include the SecondaryNaicsList element, you must also include the PrimaryNaics element."
+hash: sha256:aa878b4710aefdc4ef5924f2a7da34c4736ce7141d5deaadf57f40f4dfa96401
+words: 69
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/naicsCodes
+  section_path: 2.1.1.22
+  page: 30
+  lang: en
+  prev: U.DOC0177.0152
+  next: U.DOC0177.0154
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - primaryNaics
+    - N
+    - Primary North American Industry Classification System supplier reference number.
+    - Must be a valid NAICS code. You can use the data in the LegalStructure, NumberOfEmployee s, AnnualSalesAmount, and PrimaryNaics fields to determine the supplier's Small Business Enterprise classification. If you plan to include the SecondaryNaicsList element, you must also include the PrimaryNaics element.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,89 @@
+id: S.STD.XSC.DOC.0142
+type: DOC
+title: Using eProcurement
+summary: "Documento manuale-utente (d'uso, origine vendor) \"Using
+  eProcurement\": 296 unità, 0 tabelle, 0 tabelle di campi; scope CAT, P2P, ADM,
+  CON; affidabilità 0.56."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: d'uso
+sources:
+  - file: CORSI/JI-epro_3000/ePRO-3101_Essentials.pdf
+    sha256: sha256:4d689cf70f5f2ac672845ac36e3a8daa4f21d92f46d94f8b5138892f06132aff
+kind: manuale-utente
+genre: d'uso
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - CAT
+  - P2P
+  - ADM
+  - CON
+source:
+  path: CORSI/JI-epro_3000/ePRO-3101_Essentials.pdf
+  sha256: sha256:4d689cf70f5f2ac672845ac36e3a8daa4f21d92f46d94f8b5138892f06132aff
+  size: 7736702
+  format: pdf
+  doc_id: epro-3101-essentials-pdf-decc9871
+  doc_key: epro-3101-essentials.pdf
+structure:
+  pages: 74
+  chapters: 74
+  sections: 74
+  tables: 0
+  figures: 707
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 296
+  by_type:
+    testo: 267
+    procedura: 12
+    regola: 15
+    riferimento: 1
+    esempio: 1
+reliability:
+  base_by_kind: 0.7
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.56
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 296
+  items_produced: 27
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.09
+  last_run: 2026-09-30
+  estimated_tokens: 7273
+  sessions_planned: 1

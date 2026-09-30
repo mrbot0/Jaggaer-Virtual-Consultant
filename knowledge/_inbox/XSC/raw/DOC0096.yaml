@@ -1,0 +1,718 @@
+doc: S.STD.XSC.DOC.0096
+scope: XSC
+extracted_at: 2026-09-30T04:30:45.326Z
+tier: T0
+stats:
+  units: 21
+  extracted_units: 18
+  document_candidates: 6
+  needs_llm: 6
+  t0_complete: 18
+  by_candidate:
+    FLD: 18
+    CFG: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 18000
+  sessions:
+    - n: 1
+      tokens: 18000
+      batches: 3
+      items: 6
+      batch_items:
+        - - R.DOC0096.C001
+          - R.DOC0096.C002
+        - - R.DOC0096.C003
+          - R.DOC0096.C004
+        - - R.DOC0096.C005
+          - R.DOC0096.C006
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0096.0003
+    source_unit: U.DOC0096.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event Date
+      technical_name: Event Date
+      type: Date
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=10004 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0096.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0096.0004
+    source_unit: U.DOC0096.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Event Time
+      technical_name: Event Time
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=10; UserDefinedFieldParamTextBoxMaxLength=20 · id=10005 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0096.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 50
+  - raw_id: R.DOC0096.0005
+    source_unit: U.DOC0096.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Setup Location
+      technical_name: Setup Location
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=50; UserDefinedFieldParamTextBoxMaxLength=100 · id=10006 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0096.0005
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 51
+  - raw_id: R.DOC0096.0006
+    source_unit: U.DOC0096.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Directions
+      technical_name: Directions
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true; UserDefinedFieldParamTextAreaRows=4; UserDefinedFieldParamTextBoxMaxLength=1000; UserDefinedFieldParamTextAreaCols=50 · id=10007 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0096.0006
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 73
+  - raw_id: R.DOC0096.0007
+    source_unit: U.DOC0096.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Pick Up Options
+      technical_name: Pick Up Options
+      type: RadioButtonGroup
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248361 · id=10008 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0096.0007
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0096.0008
+    source_unit: U.DOC0096.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Waiter
+      technical_name: Waiter
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageUrl=/pics/orgimages/1940363/1517.jpg · id=10000 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0096.0008
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 53
+  - raw_id: R.DOC0096.0009
+    source_unit: U.DOC0096.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "100"
+      technical_name: "100"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=100 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0096.0009
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0096.0010
+    source_unit: U.DOC0096.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Catering Link
+      technical_name: Catering Link
+      type: URL
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamLinkUrl=http://www.google.com; UserDefinedFieldParamLinkTitle=Put link here · id=10003 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0096.0010
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0096.0011
+    source_unit: U.DOC0096.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Catering Logo
+      technical_name: Catering Logo
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=0; UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/48443.png · id=10001 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0096.0011
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0096.0012
+    source_unit: U.DOC0096.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Boxed lunch pic
+      technical_name: Boxed lunch pic
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=2; UserDefinedFieldParamImageUrl=/pics/orgimages/1940363/1518.jpg · id=10009 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0096.0012
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0096.0013
+    source_unit: U.DOC0096.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Menu text
+      technical_name: Menu text
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br><br><br>Please enter the desired quantity for each item below. <br><br>(add relevent directions here) All sandwiches include condiments, table service, Miss Vickie's Potato Chips and 2 homestyle cookies. · id=10011 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0096.0013
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 88
+  - raw_id: R.DOC0096.0014
+    source_unit: U.DOC0096.0014
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Menu Pic 2
+      technical_name: Menu Pic 2
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=0; UserDefinedFieldParamImageUrl=/pics/orgimages/1940363/1518.jpg · id=10012 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0096.0014
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0096.0015
+    source_unit: U.DOC0096.0015
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Menu Item Entry
+      technical_name: Menu Item Entry
+      type: EditableItemList
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamEditableItemList_DescSize=80; UserDefinedFieldParamEditableItemList_Size=10; UserDefinedFieldParamEditableItemList_DescMaxLength=80; UserDefinedFieldParamEditableItemList_ShowTotal=true; UserDefinedFieldParamEditableItemList_ShowQty=true · id=10014 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0096.0015
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 98
+  - raw_id: R.DOC0096.0016
+    source_unit: U.DOC0096.0016
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Special Order Instructions
+      technical_name: Special Order Instructions
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextAreaRows=4; UserDefinedFieldParamTextBoxMaxLength=1000; UserDefinedFieldParamTextAreaCols=80 · id=10013 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0096.0016
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 64
+  - raw_id: R.DOC0096.0017
+    source_unit: U.DOC0096.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Form Instructions - header
+      technical_name: Form Instructions - header
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=Please complete the order details shown below. Select the desired caterer from the list provided.<br><br> Orders must be placed by (enter time here) the previous day to ensure accurate and on-time delivery. Please provide detailed location information in the space provided. <br><br> · id=10002 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0096.0017
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 111
+  - raw_id: R.DOC0096.0018
+    source_unit: U.DOC0096.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Menu Item
+      technical_name: Menu Item
+      type: DropdownList
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10015 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0096.0018
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0096.0019
+    source_unit: U.DOC0096.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Quantity
+      technical_name: Quantity
+      type: Integer
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10016 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0096.0019
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0096.0020
+    source_unit: U.DOC0096.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0096
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Price of Item
+      technical_name: Price of Item
+      type: Integer
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10017 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0096.0020
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0096
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0096.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0096
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0096.0001
+    facets: &a19
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: VersionDescription
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0096.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0096
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0096.0001
+    facets: *a19
+    extraction:
+      parameter: AdditionalInformation
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0096.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0096
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0096.0001
+    facets: *a19
+    extraction:
+      parameter: SearchableKeyword
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0096.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0096
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0096.0001
+    facets: *a19
+    extraction:
+      parameter: Title
+      current_state:
+        value: FP - Catering/Boxed Lunch
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0096.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0096
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0096.0001
+    facets: *a19
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Services
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0096.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0096
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0096.0001
+    facets: *a19
+    extraction:
+      parameter: LimitSupplierSelection
+      current_state:
+        value: "false"
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

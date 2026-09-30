@@ -1,0 +1,334 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.13
+section_title: "Commercial Envelope: economical parameter [Import/Update RfX method]"
+genre: tecnica
+rows:
+  - label: id
+    technical_name: id
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Parameter identifier
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: paramPos
+    technical_name: paramPos
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Parameter position inside the section
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Reference
+    technical_name: Reference
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Identifier of the contract row.
+      [12.3.01] If the parameter type is NOTE, it is the Title of the note.
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Description
+    technical_name: Description
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Parameter description
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Type
+    technical_name: Type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Parameter type
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Notes
+    technical_name: Notes
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Price notes
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: showNotes
+    technical_name: showNotes
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      State if notes must be shown:
+      0 = no
+      1 = yes
+      If not expressed, 1 is assumed
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: quantity
+    technical_name: quantity
+    type: null
+    mandatory_text: Y to create a new price item
+    allowed_values: []
+    notes: Quantity
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: showQuantity
+    technical_name: showQuantity
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      State if quantity must be shown (0=no, 1=yes)
+      If not expressed, 1 is assumed
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: quantityInsertedBy
+    technical_name: quantityInsertedBy
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      State if quantity must be inserted by BUYER or SELLER. Possible values
+      are:
+
+      BUYER
+
+      SELLER
+
+      If not specified, BUYER is assumed
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: currency
+    technical_name: currency
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Currency
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: unitOfMeasure
+    technical_name: unitOfMeasure
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unit of measure external code
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: goodsGroup
+    technical_name: goodsGroup
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Goods group external code
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: priceByQuantityRanges
+    technical_name: priceByQuantityRanges
+    type: null
+    mandatory_text: |-
+      Y to create a “price by quantity” parameter
+      Not to be set to define a normal price parameter
+    allowed_values: []
+    notes: Prices ranges to be used for “price by quantity” parameter
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: Mandatory
+    technical_name: Mandatory
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Mandatory commercial parameter flag:
+      1 = parameter is mandatory
+      0 = parameter is optional
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: showUrlAsClickableLink
+    technical_name: showUrlAsClickableLink
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      textAsUrl commercial parameter flag:
+      1 = parameter is yes
+      0 = parameter is no
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: instruction/fileName
+    technical_name: instruction/fileName
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment file name
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: instruction/fileDescription
+    technical_name: instruction/fileDescription
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment description
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: instruction/fileBase64
+    technical_name: instruction/fileBase64
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Attachment body
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: referencePrice
+    technical_name: referencePrice
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Reference price
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r19
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: minValue
+    technical_name: minValue
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Minimum value
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r20
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: maxValue
+    technical_name: maxValue
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Maximum value
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r21
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: basePriceBeforeDiscount
+    technical_name: basePriceBeforeDiscount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Base price before discount
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r22
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: showBasePrice
+    technical_name: showBasePrice
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      State if “base price before discount” must be shown (0=no, 1=yes)
+      If not expressed, 0 is assumed
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r23
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: extCode
+    technical_name: extCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Identifier of the price item in the external system (field available only
+      via WS not in the user interface)
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r24
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: associatedMasterItem
+    technical_name: associatedMasterItem
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Master Item associated with the economical parameter.
+      See section “Commercial Envelope: Associated Master Item” below
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r25
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: linkedCondition
+    technical_name: linkedCondition
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Complex type that contains the conditions that make the section visible.
+      See section “Linked Condition (Conditional sections)”
+    section: 2.1.1.13
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.13#part-1
+    row_ref: t0.r26
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

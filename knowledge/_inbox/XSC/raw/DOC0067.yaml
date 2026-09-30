@@ -1,0 +1,220 @@
+doc: S.STD.XSC.DOC.0067
+scope: XSC
+extracted_at: 2026-09-30T04:30:21.005Z
+tier: T0
+stats:
+  units: 42
+  extracted_units: 4
+  document_candidates: 0
+  needs_llm: 4
+  t0_complete: 0
+  by_candidate:
+    FLD: 1
+    CFP: 3
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 1786
+  sessions:
+    - n: 1
+      tokens: 1786
+      batches: 1
+      items: 4
+      batch_items:
+        - - R.DOC0067.0004
+          - R.DOC0067.0021
+          - R.DOC0067.0031
+          - R.DOC0067.0037
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0067.0004
+    source_unit: U.DOC0067.0004
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0067
+    section: Implementation Checklist
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0067.0004
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 53
+  - raw_id: R.DOC0067.0021
+    source_unit: U.DOC0067.0021
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0067
+    section: Integrations
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: "top -level org role with all permissions and settings that will apply to any user throughout the life of the client's system ; CAUTION: Keep in mind that as products are added in the future, the settings in the top -level role will apply to EVERYONE, so for example if setting up TCM only, don't give this role permission to Manage Contracts or all users will be able to do it"
+          valore: Keep in mind that as products are added in the future, the settings in the top -level role will apply to EVERYONE, so for example if setting up TCM only, don't give this role permission to Manage Contracts or all users will be able to do it
+        - n: 2
+          verbo: configure
+          oggetto: inactive 'umbrella' roles for all the functions available in the client's org
+          valore: umbrella
+      risultato_atteso: "Configure top -level org role with all permissions and settings that will apply to any user throughout the life of the client's system ; CAUTION: Keep in mind that as products are added in the future, the settings in the top -level role will apply to EVERYONE, so for example if setting up TCM only, don't give this role permission to Manage Contracts or all users will be able to do it."
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0067.0021
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 124
+  - raw_id: R.DOC0067.0031
+    source_unit: U.DOC0067.0031
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0067
+    section: Field Management
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: work
+          oggetto: with client to determine what information will appear and how it will be arranged on each document
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up any Custom Fields that need to be added to existing system fields
+          valore: null
+        - n: 3
+          verbo: import
+          oggetto: XML or use templates for initial document
+          valore: null
+        - n: 4
+          verbo: set
+          oggetto: behaviors for key fields
+          valore: null
+        - n: 5
+          verbo: if
+          oggetto: using Contract Compliance Tracker, set contra ct settings for each document (whether to check and enforce budget and other contract requirements)
+          valore: null
+        - n: 6
+          verbo: finalize
+          oggetto: and Activate the document
+          valore: null
+      risultato_atteso: Work with client to determine what information will appear and how it will be arranged on each document
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0067.0031
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 129
+  - raw_id: R.DOC0067.0037
+    source_unit: U.DOC0067.0037
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0067
+    section: W orkflow
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: work
+          oggetto: with client to determine ne eds
+          valore: null
+        - n: 2
+          verbo: diagram
+          oggetto: the workflow
+          valore: null
+        - n: 3
+          verbo: import
+          oggetto: Shared and Internal Folders XML file
+          valore: null
+        - n: 4
+          verbo: set
+          oggetto: up any necessary Rule Groups
+          valore: null
+        - n: 5
+          verbo: begin
+          oggetto: with an appropriate sample and modify the Workflow Definitions XML
+          valore: null
+        - n: 6
+          verbo: import
+          oggetto: Workflow Definitions XML file
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0067.0037
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 80

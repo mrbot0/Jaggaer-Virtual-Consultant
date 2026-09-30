@@ -1,0 +1,843 @@
+doc: _harvest
+scope: XSC
+summary:
+  total: 201
+  by_class:
+    irrelevant: 10
+    duplicate: 35
+    ambiguous: 0
+    unsupported: 19
+    deferred: 137
+    tacit: 0
+entries:
+  - class: deferred
+    reason: "manca il sidecar OCR (boots.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/boots.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (generator.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/generator.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (greencheck.jpg.ocr.txt): l'agente deve produrre
+      il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/greencheck.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (it-services.JPG.ocr.txt): l'agente deve produrre
+      il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/it-services.JPG
+  - class: deferred
+    reason: "manca il sidecar OCR (kayaklessons.jpg.ocr.txt): l'agente deve produrre
+      il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/kayaklessons.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (kayaks.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/kayaks.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (laptop executive 2.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/laptop executive 2.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (laptop executive.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/laptop executive.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (laptop standard.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/laptop standard.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (oars.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/oars.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (server.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/server.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (shoes.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/shoes.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (baseball coaching.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/baseball coaching.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (baseball jersey.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/baseball jersey.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (baseball.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/baseball.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (bike.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/bike.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (canoe.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/canoe.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (kayak.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/kayak.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (lacross sticks.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/lacross sticks.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (lacrosse coaching.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/lacrosse coaching.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (lacrosse uniforms.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/lacrosse uniforms.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (oars.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/oars.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (soccer ball.jpg.ocr.txt): l'agente deve produrre
+      il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/soccer ball.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (soccer uniforms.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/soccer uniforms.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (tent.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/tent.jpg
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/images - items/sports items/Thumbs.db
+  - class: deferred
+    reason: "manca il sidecar OCR (yeti cooler.png.ocr.txt): l'agente deve produrre
+      il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/sports items/yeti cooler.png
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/images - items/Thumbs.db
+  - class: deferred
+    reason: "manca il sidecar OCR (wirelessaccesspoint.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images - items/wirelessaccesspoint.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (ePro-3201-DarkStarLogo.png.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/ePro-3201-DarkStarLogo.png
+  - class: deferred
+    reason: "manca il sidecar OCR (ePro-3201-FiveLandsLogo.png.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/ePro-3201-FiveLandsLogo.png
+  - class: deferred
+    reason: "manca il sidecar OCR (ePro-3201-MalinesLogo.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/ePro-3201-MalinesLogo.png
+  - class: deferred
+    reason: "manca il sidecar OCR (ePro-3201-ScienceCatalogClass.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/ePro-3201-ScienceCatalogClass.png
+  - class: deferred
+    reason: "manca il sidecar OCR (flag-a-rated vendor.gif.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/flag-a-rated vendor.gif
+  - class: deferred
+    reason: "manca il sidecar OCR (flag-emergency.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/flag-emergency.png
+  - class: deferred
+    reason: "manca il sidecar OCR (flag-mbe.gif.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/flag-mbe.gif
+  - class: deferred
+    reason: "manca il sidecar OCR (flag-portal vendor.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/flag-portal vendor.png
+  - class: deferred
+    reason: "manca il sidecar OCR (flag-services vendor.gif.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/flag-services vendor.gif
+  - class: deferred
+    reason: "manca il sidecar OCR (kaizen for showcase.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/kaizen for showcase.png
+  - class: deferred
+    reason: "manca il sidecar OCR (kaizen.png.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/kaizen.png
+  - class: deferred
+    reason: "manca il sidecar OCR (katabatic showcase punchout 30 x 70.jpg.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/images -suppliers and flags/katabatic showcase punchout 30 x
+      70.jpg
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/images -suppliers and flags/supplier class or item attribute
+      icon 18h x 20w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/images -suppliers and flags/supplier showcase logo 30h x
+      70w.snag
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/images -suppliers and flags/Thumbs.db
+  - class: deferred
+    reason: "manca il sidecar OCR (JAG_email.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAG_email.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAG_Forms.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAG_Forms.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAG_LoginLogo.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAG_LoginLogo.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAG_loginpage.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAG_loginpage.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAG_mobile1.jpg.ocr.txt): l'agente deve produrre
+      il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAG_mobile1.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAG_OrgLogo.jpg.ocr.txt): l'agente deve produrre
+      il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAG_OrgLogo.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAG_PublicSite.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAG_PublicSite.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAG_SupplierHeader.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAG_SupplierHeader.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAG_SupplierLogin.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAG_SupplierLogin.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGbrandedportalheader-black.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAGbrandedportalheader-black.png
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGbrandedportalheader.png.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAGbrandedportalheader.png
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGbrandedportallogin-black.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAGbrandedportallogin-black.png
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGbrandedportallogin.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAGbrandedportallogin.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/jaggaer images/JAG_mobile1.jpg
+    file: CORSI/JI-2303/jaggaer images/JAGGAER Nav Small Logo 30h.jpg
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/jaggaer images/JAGGAER-U BANNER.snag
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER-U SITE BANNER.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAGGAER-U SITE BANNER.png
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/jaggaer images/JAGGAER-U SITE BANNER.snag
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER-University-Logo-Stacked.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/jaggaer images/JAGGAER-University-Logo-Stacked.png
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/jaggaer images/Thumbs.db
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/biz card supplier showcase
+      icon class or item attribute icon 30h x 70w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/blank canvas - JAGGAER ONE
+      nav banner logo.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/email logo 60h x 600w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/forms image 300h x 200w.snag
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/site images - blanks in snagit/email
+      logo 60h x 600w.snag
+    file: CORSI/JI-2303/site images - blanks in snagit/jaggaer nav logo 30h x
+      230w.snag
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER ONE nav logo 30h.png.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - blanks in snagit/JAGGAER ONE nav logo 30h.png
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/JAGGAER ONE nav logo 30h.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/login page image 190h x
+      690w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/mobile logo 60h x 300w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/org fax po logo 50h x
+      115w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/organization logo banner
+      image 60h x 1300w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/public site header image 60h
+      x 1273w.snag
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images -suppliers and flags/supplier
+      class or item attribute icon 18h x 20w.snag
+    file: CORSI/JI-2303/site images - blanks in snagit/supplier class or item
+      attribute icon 18h x 20w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/supplier portal header image
+      60h x 900w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/supplier portal login image
+      100h x 800w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/supplier showcase icon class
+      or item attribute icon 30h x 70w.snag
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - blanks in snagit/supplier showcase logo 30h x
+      70w.snag
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador email logo 60h x 600w.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador email logo 60h x 600w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador forms image 300h x 200w.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador forms image 300h x 200w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador login page image 190h x
+      690w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador login page image 190h x
+      690w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador mobile logo 60h x 300w.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador mobile logo 60h x 300w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador org fax po logo 50h x 115w.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador org fax po logo 50h x 115w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador organization logo banner image 60h x
+      1300w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador organization logo banner image
+      60h x 1300w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador public site header image 60h x
+      1273w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador public site header image 60h x
+      1273w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador supplier portal header image 60h x
+      900w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador supplier portal header image
+      60h x 900w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador supplier portal login image 100h x
+      800w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador supplier portal login image
+      100h x 800w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (cazador supplier showcase logo 30h x
+      70w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/cazador supplier showcase logo 30h x
+      70w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (hunter - small.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/hunter - small.png
+  - class: deferred
+    reason: "manca il sidecar OCR (hunter-1443648_1920.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/hunter-1443648_1920.png
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER Nav Small Logo 30h x 150w.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/JAGGAER Nav Small Logo 30h x 150w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER ONE nav banner Cazador 30h.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cazador/JAGGAER ONE nav banner Cazador 30h.png
+  - class: unsupported
+    reason: "formato proprietario Snagit: esportare l'immagine in PNG (e produrne il
+      sidecar OCR)"
+    file: CORSI/JI-2303/site images - cazador/not for upload - snagit version
+      JAGGAER ONE nav banner Cazador 30h.snag
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/site images - cazador/Thumbs.db
+  - class: deferred
+    reason: "manca il sidecar OCR (CF Orig DONT DELETE.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/CF Orig DONT DELETE.png
+  - class: deferred
+    reason: "manca il sidecar OCR (CF Supplier Orig DONT DELETE.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/CF Supplier Orig DONT DELETE.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloud Email 600 x 60.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/Cloud Email 600 x 60.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloud Fax 115 x 28.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/Cloud Fax 115 x 28.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloud Login Page Image 190 x 690.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/Cloud Login Page Image 190 x
+      690.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloud Mobile 300 x 60.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/Cloud Mobile 300 x 60.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloud Org Logo banner image 60px H.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/Cloud Org Logo banner image 60px
+      H.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloud Supplier Portal Header Image 60px
+      H.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/Cloud Supplier Portal Header
+      Image 60px H.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloud Supplier Portal Login image 100h x
+      800w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/Cloud Supplier Portal Login
+      image 100h x 800w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER Nav Small Logo 30h x 150w.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/JAGGAER Nav Small Logo 30h x
+      150w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER ONE nav logo Cloud banner image 30px
+      H.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloud factory/JAGGAER ONE nav logo Cloud
+      banner image 30px H.png
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/site images - cloud factory/Thumbs.db
+  - class: deferred
+    reason: "archivio compresso (.7z): estrarlo in una cartella e rilanciare harvest
+      su quella"
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Cloverfield Craft
+      Brews.7z
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloverfield Email 600 x 60.png.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Cloverfield Email 600
+      x 60.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloverfield Fax 115 x 28.png.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Cloverfield Fax 115 x
+      28.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloverfield Login Page Image 190 x
+      690.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Cloverfield Login Page
+      Image 190 x 690.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloverfield Mobile 60 x 240.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Cloverfield Mobile 60
+      x 240.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/site images - cloverfield craft
+      brews/Cloverfield Mobile 60 x 240.png
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Cloverfield
+      Organization Banner Image 60px.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloverfield Orig DONT DELETE.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Cloverfield Orig DONT
+      DELETE.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloverfield Supplier Login 100 x
+      800.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Cloverfield Supplier
+      Login 100 x 800.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Cloverfield Supplier Portal Header 60 x
+      900.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Cloverfield Supplier
+      Portal Header 60 x 900.png
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER ONE Nav Small Logo 30h x
+      150w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - cloverfield craft brews/JAGGAER ONE Nav Small
+      Logo 30h x 150w.png
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/site images - cloverfield craft brews/Thumbs.db
+  - class: deferred
+    reason: "manca il sidecar OCR (a fivelands logo.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/a fivelands logo.png
+  - class: deferred
+    reason: "manca il sidecar OCR (fivelands email logo 60h x 600w.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/fivelands email logo 60h x 600w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (fivelands forms image 300h x 200w.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/fivelands forms image 300h x
+      200w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (fivelands login page image 190h x
+      690w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/fivelands login page image 190h x
+      690w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (fivelands mobile logo 60h x 300w.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/fivelands mobile logo 60h x 300w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (fivelands organization logo banner image 60h x
+      1300w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/fivelands organization logo banner
+      image 60h x 1300w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (fivelands public site header image 60h x
+      1273w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/fivelands public site header image
+      60h x 1273w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (fivelands supplier portal header image 60h x
+      900w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/fivelands supplier portal header
+      image 60h x 900w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (fivelands supplier portal login image 100h x
+      800w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/fivelands supplier portal login
+      image 100h x 800w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER ONE Nav Small Logo 30h.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - five lands/JAGGAER ONE Nav Small Logo 30h.png
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/site images - five lands/Thumbs.db
+  - class: deferred
+    reason: "manca il sidecar OCR (centered rectangle.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/centered rectangle.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (FreeTools.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/FreeTools.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER ONE Nav Small Logo 30h x
+      250.jpg.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/JAGGAER ONE Nav Small Logo 30h x
+      250.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (katabatic email logo 60 x 600.jpg.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/katabatic email logo 60 x 600.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (katabatic Forms Image 300 x 200.jpg.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/katabatic Forms Image 300 x 200.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (katabatic login page image 190 x
+      690.jpg.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/katabatic login page image 190 x
+      690.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (katabatic mobile logo 60 x 300.jpg.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/katabatic mobile logo 60 x 300.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (katabatic org fax 50 x 115.jpg.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/katabatic org fax 50 x 115.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/site images - katabatic/katabatic
+      mobile logo 60 x 300.jpg
+    file: CORSI/JI-2303/site images - katabatic/katabatic org logo 60 x 500.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (katabatic PO Fax 100 x 800.jpg.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/katabatic PO Fax 100 x 800.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (katabatic public site header 60 x
+      1273w.jpg.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/katabatic public site header 60 x
+      1273w.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images -suppliers and flags/katabatic
+      showcase punchout 30 x 70.jpg
+    file: CORSI/JI-2303/site images - katabatic/katabatic showcase punchout 30 x
+      70.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/site images - katabatic/katabatic
+      mobile logo 60 x 300.jpg
+    file: CORSI/JI-2303/site images - katabatic/katabatic supplier portal header 60
+      x 500.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/site images - katabatic/katabatic PO
+      Fax 100 x 800.jpg
+    file: CORSI/JI-2303/site images - katabatic/katabatic supplier portal login 100
+      x 800 - Copy.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (taller rectangle.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/taller rectangle.jpg
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/site images - katabatic/Thumbs.db
+  - class: deferred
+    reason: "manca il sidecar OCR (wide rectangle.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - katabatic/wide rectangle.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (JAGGAER ONE Nav Small Logo 30h x
+      150w.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - pisces pcs/JAGGAER ONE Nav Small Logo 30h x
+      150w.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Pisces Email 600 x 60.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - pisces pcs/Pisces Email 600 x 60.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Pisces Fax 115 x28.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - pisces pcs/Pisces Fax 115 x28.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Pisces Login 690 x 190.png.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - pisces pcs/Pisces Login 690 x 190.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Pisces Mobile 300 x 60.png.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - pisces pcs/Pisces Mobile 300 x 60.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Pisces Org Logo 60 px H.png.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - pisces pcs/Pisces Org Logo 60 px H.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Pisces PCs Supplier Login 800 x 200 not
+      stretched.png.ocr.txt): l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - pisces pcs/Pisces PCs Supplier Login 800 x 200
+      not stretched.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Pisces Supplier Banner 60 px H.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - pisces pcs/Pisces Supplier Banner 60 px H.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Pisces Supplier Login 800 x100.png.ocr.txt):
+      l'agente deve produrre il testo dell'immagine"
+    file: CORSI/JI-2303/site images - pisces pcs/Pisces Supplier Login 800 x100.png
+  - class: irrelevant
+    reason: file di sistema (miniature, impostazioni della cartella)
+    file: CORSI/JI-2303/site images - pisces pcs/Thumbs.db
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/JI-PLT_2304 SUPPLEMENTAL TSM Import
+      Template.xlsx
+    file: CORSI/JI-2303/XFILE - Supplier Import Template.xlsx
+  - class: deferred
+    reason: "archivio compresso (.zip): estrarlo in una cartella e rilanciare
+      harvest su quella"
+    file: CORSI/JI-2303/XFILES Quick Guides 2019.zip
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/JI-PLT_2302_SampleCommodityCodes.csv
+    file: CORSI/JI-epro_3000/Class file/commodity codes_flat_sample.csv
+  - class: duplicate
+    reason: stesso contenuto di
+      CORSI/JI-2303/JI-PLT_2302_SampleCCodesCategoryMapping.csv
+    file: CORSI/JI-epro_3000/Class file/commodity codes-category mapping_sample.csv
+  - class: duplicate
+    reason: stesso contenuto di
+      CORSI/JI-2303/JI-PLT_2302_GoldSitePOFaxConfiguration.xml
+    file: CORSI/JI-epro_3000/Class file/document_config_GoldSitePOFax.xml
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/JI-PLT_2302_GoldSitePRConfiguration.xml
+    file: CORSI/JI-epro_3000/Class file/document_config_GoldSitePR.xml
+  - class: deferred
+    reason: "manca il sidecar OCR (gift cards.png.ocr.txt): l'agente deve produrre
+      il testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/form samples/gift cards.png
+  - class: deferred
+    reason: "manca il sidecar OCR (redwagon.jpg.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/form samples/redwagon.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (3-D printer.png.ocr.txt): l'agente deve produrre
+      il testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/3-D printer.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/boots.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/boots.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (cart.png.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/cart.png
+  - class: deferred
+    reason: "manca il sidecar OCR (chemicals 100x100.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/chemicals 100x100.png
+  - class: deferred
+    reason: "manca il sidecar OCR (chemicals 50x50.png.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/chemicals 50x50.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images -suppliers and
+      flags/ePro-3201-DarkStarLogo.png
+    file: CORSI/JI-epro_3000/Class file/item images/ePRO-3201-DarkStarLogo.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images -suppliers and
+      flags/ePro-3201-FiveLandsLogo.png
+    file: CORSI/JI-epro_3000/Class file/item images/ePRO-3201-FiveLandsLogo.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images -suppliers and flags/katabatic
+      showcase punchout 30 x 70.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/ePRO-3201-Katabatic showcase
+      logo 30 x 70.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images -suppliers and
+      flags/ePro-3201-MalinesLogo.png
+    file: CORSI/JI-epro_3000/Class file/item images/ePRO-3201-MalinesLogo.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images -suppliers and
+      flags/ePro-3201-ScienceCatalogClass.png
+    file: CORSI/JI-epro_3000/Class file/item images/ePRO-3201-ScienceCatalogClass.png
+  - class: deferred
+    reason: "manca il sidecar OCR (ePRO-3205-EnterpriseLogo.jpg.ocr.txt): l'agente
+      deve produrre il testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/ePRO-3205-EnterpriseLogo.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/kayaks.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/ePRO-3205-kenankayakslogo.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/greencheck.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/greencheck.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/kayaklessons.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/kayaklessons.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/kayaks.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/kayaks.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (lab icon.png.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/lab icon.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/laptop executive 2.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/laptop executive 2.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/laptop executive.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/laptop executive.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/laptop standard.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/laptop standard.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/oars.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/oars.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (scissors.png.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/scissors.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/server.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/server.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/shoes.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/shoes.jpg
+  - class: deferred
+    reason: "manca il sidecar OCR (A plus.png.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/small icons/A plus.png
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images -suppliers and
+      flags/flag-services vendor.gif
+    file: CORSI/JI-epro_3000/Class file/item images/small icons/bell.gif
+  - class: deferred
+    reason: "manca il sidecar OCR (creditcard.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/small icons/creditcard
+  - class: deferred
+    reason: "manca il sidecar OCR (scroll.gif.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/small icons/scroll.gif
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images -suppliers and
+      flags/flag-portal vendor.png
+    file: CORSI/JI-epro_3000/Class file/item images/small icons/shared to others.png
+  - class: deferred
+    reason: "manca il sidecar OCR (thumbsup.png.ocr.txt): l'agente deve produrre il
+      testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/small icons/thumbsup.png
+  - class: deferred
+    reason: "manca il sidecar OCR (Veridian logo.jpg.ocr.txt): l'agente deve
+      produrre il testo dell'immagine"
+    file: CORSI/JI-epro_3000/Class file/item images/Veridian logo.jpg
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/images - items/wirelessaccesspoint.jpg
+    file: CORSI/JI-epro_3000/Class file/item images/wirelessaccesspoint.jpg
+  - class: duplicate
+    reason: stesso contenuto di
+      CORSI/JI-2303/JI-PLT_2303_InitialPOWorkflowDefinition.xml
+    file: CORSI/JI-epro_3000/Class file/workflow_definition_PO_initial.xml
+  - class: duplicate
+    reason: stesso contenuto di
+      CORSI/JI-2303/JI-PLT_2303_PHASE_FOUR_RequisitionWorkflowDefinition.xml
+    file: CORSI/JI-epro_3000/Class file/workflow_definition_PR_phase 4.xml
+  - class: duplicate
+    reason: stesso contenuto di CORSI/JI-2303/JI-PLT_2303_POWorkflowFolders.xml
+    file: CORSI/JI-epro_3000/Class file/workflow_folders_PO.xml
+  - class: deferred
+    reason: "archivio compresso (.zip): estrarlo in una cartella e rilanciare
+      harvest su quella"
+    file: CORSI/JI-epro_3000/ePRO-3000 Class Files.zip
+  - class: deferred
+    reason: "archivio compresso (.zip): estrarlo in una cartella e rilanciare
+      harvest su quella"
+    file: CORSI/JI-epro_3000/ePRO-4101 Resources.zip

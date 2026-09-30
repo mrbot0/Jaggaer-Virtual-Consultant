@@ -1,0 +1,32 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.4
+section_title: Purchase Requisition Supplier Group [PR Import]
+genre: tecnica
+rows:
+  - label: requisitionSupplierGroupInfo
+    technical_name: requisitionSupplierGroupInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Group information.
+      See section “Requisition Supplier Group Info [PR Import]” below.
+    section: 2.1.1.4
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.4#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: requisitionLine
+    technical_name: requisitionLine
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Requisition line.
+      See section “Requisition Line [PR Import]” below.
+    section: 2.1.1.4
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.4#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

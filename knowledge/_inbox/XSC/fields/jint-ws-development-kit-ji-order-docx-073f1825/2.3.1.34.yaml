@@ -1,0 +1,56 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.34
+section_title: DistributionMethod [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Method by which the PO is to be delivered. Used only for non-catalog
+      items.
+
+      cxml
+
+      email
+
+      fax
+
+      html_email
+
+      html_email_attachments
+
+      manual
+    section: 2.3.1.34
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.34#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: fax
+    technical_name: fax
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Fax distribution method
+      See section “TelephoneNumber [Import JIOrder method]” above
+    section: 2.3.1.34
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.34#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: eMail
+    technical_name: eMail
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Email address of the PO, using the standard PO format (HTML, not plain
+      text).
+    section: 2.3.1.34
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.34#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

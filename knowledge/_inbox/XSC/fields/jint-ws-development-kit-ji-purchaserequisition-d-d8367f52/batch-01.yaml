@@ -1,0 +1,79 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+batch: batch-01
+section: 2.1.1.1
+section_title: Main request structure [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:OPERATIONCODE
+    label: operationCode
+    labels:
+      - operationCode
+    technical_name: OPERATIONCODE
+    section: 2.1.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Code of the operation. It accepts following value:
+      CREATE: a new object is created.
+    sources:
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.1
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: operationCode
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.2.1.1
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.2.1.1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: operationCode
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:PURCHASEREQUISITION
+    label: purchaseRequisition
+    labels:
+      - purchaseRequisition
+    technical_name: PURCHASEREQUISITION
+    section: 2.1.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      PR data container (for header, rows, attachments and additional
+      information to be imported).
+
+      See section “Purchase Requisition data container [PR Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+        section: 2.1.1.1
+        source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: purchaseRequisition
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 968

@@ -1,0 +1,146 @@
+id: U.DOC0048.0013
+doc: S.STD.XSC.DOC.0048
+doc_id: ji-plt-2304-supplemental-tsm-import-template-xls-f9b53b50
+type: tabella
+text: "This name is static and cannot be edited in your system. Required. | Max Length: 100 General / Field Name: Class Display Name | Description: Label for the supplier class. | Max Length: 100 General / Field Name: Note: If a supplier has multiple classes, please have one line per class General / Field Name: Commodity Codes General / Field Name: Field Name | Description: Description | Max Length: Max Length General / Field Name: Supplier Name | Description: Current, unique ERP number associated with the supplier. Required. | Max Length: 30 General / Field Name: Supplier/ERP Number | Description: Name of the supplier. Required. | Max Length: 100 General / Field Name: Commodity Code | Description: Code for a generic description of the group or category of goods or services provided by a supplier. The commodity code is not a specific description of the goods or service. Must exist in the site. Required. | Max Length: 100 General / Field Name: Note: If a supplier has multiple commodity codes, please have one line per commodity code General / Field Name: Contacts General / Field Name: Field Name | Description: Description | Max Length: Max Length General / Field Name: Supplier Name | Description: Current, unique ERP number associated with the supplier. Required. | Max Length: 30 General / Field Name: Supplier/ERP Number | Description: Name of the supplier. Required. | Max Length: 100 General / Field Name: Contact ID/ERP Number | Description: Current, unique ERP number associated with the contact. Required. | Max Length: 30 General / Field Name: Contact Is Active? | Description: Indicates whether the contact is (Yes) or is not (No) active. | Max Length: n/a General / Field Name: Contact Is Primary? | Description: Indicates whether the contact should be listed as the primary contact."
+hash: sha256:9bf542086cde183899d0856c07e9aa5966d1d628b436d87ed4e0cf23e6522d7b
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0048
+  chapter: FIELD DEFINITIONS
+  section: FIELD DEFINITIONS
+  section_path: sheet-1
+  page: null
+  lang: en
+  prev: U.DOC0048.0012
+  next: U.DOC0048.0014
+table:
+  table: 0
+  headers:
+    - General / Field Name
+    - Description
+    - Max Length
+  rows:
+    - - TollFree - Combined
+      - Entire Toll-free number, which is then parsed to the individual elements using the SQTools:phoneStringToSQFormat package
+      - n/a
+    - - Notes
+      - Note about the address.
+      - 700
+    - - Annual Sales
+      - null
+      - null
+    - - Field Name
+      - Description
+      - Max Length
+    - - Supplier Name
+      - Current, unique ERP number associated with the supplier. Required.
+      - 30
+    - - Supplier/ERP Number
+      - Name of the supplier. Required.
+      - 100
+    - - Annual Sales Amount
+      - Total sales (revenue) for the supplier for the specified AnnualSalesYear. This is a numeric value of up to 20 digits, including up to 4 decimal places.
+      - 20.4
+    - - Annual Sales Year
+      - "Year for which AnnualSalesAmount is being provided, in the following format: yyyy. Must be within 2 years of the current year. Required."
+      - 5
+    - - ISO Currency Code
+      - Currency code for the AnnualSalesAmount field. Must be a currency code of an active currency.
+      - 3
+    - - Classes
+      - null
+      - null
+    - - Field Name
+      - Description
+      - Max Length
+    - - Supplier Name
+      - Current, unique ERP number associated with the supplier. Required.
+      - 30
+    - - Supplier/ERP Number
+      - Name of the supplier. Required.
+      - 100
+    - - Class Internal Name
+      - Internal name for the supplier class. Must match a previously defined internal name for a supplier class. This name is static and cannot be edited in your system. Required.
+      - 100
+    - - Class Display Name
+      - Label for the supplier class.
+      - 100
+    - - "Note: If a supplier has multiple classes, please have one line per class"
+      - null
+      - null
+    - - Commodity Codes
+      - null
+      - null
+    - - Field Name
+      - Description
+      - Max Length
+    - - Supplier Name
+      - Current, unique ERP number associated with the supplier. Required.
+      - 30
+    - - Supplier/ERP Number
+      - Name of the supplier. Required.
+      - 100
+    - - Commodity Code
+      - Code for a generic description of the group or category of goods or services provided by a supplier. The commodity code is not a specific description of the goods or service. Must exist in the site. Required.
+      - 100
+    - - "Note: If a supplier has multiple commodity codes, please have one line per commodity code"
+      - null
+      - null
+    - - Contacts
+      - null
+      - null
+    - - Field Name
+      - Description
+      - Max Length
+    - - Supplier Name
+      - Current, unique ERP number associated with the supplier. Required.
+      - 30
+    - - Supplier/ERP Number
+      - Name of the supplier. Required.
+      - 100
+    - - Contact ID/ERP Number
+      - Current, unique ERP number associated with the contact. Required.
+      - 30
+    - - Contact Is Active?
+      - Indicates whether the contact is (Yes) or is not (No) active.
+      - n/a
+    - - Contact Is Primary?
+      - Indicates whether the contact should be listed as the primary contact. Note that there can only be one primary addressntact of each type per supplier. (Yes|No)
+      - n/a
+    - - Contact Name
+      - Name to be used for the contact. If blank, the Contact Type will be used.
+      - 100
+    - - Contact Third Party Reference
+      - Unique reference number or ID generated by a third-party application (that is, in addition to an ERP system) that can be used to map a contact from SelectSite to the third-party application.
+      - 30
+    - - Contact Type
+      - Indicates the type of contact. Required. (catalog | corporate | customercare | fulfillment | pofailure | remitto | sales | technical | other)
+      - n/a
+    - - First Name
+      - First name of the contact.
+      - 100
+    - - Last Name
+      - Last name of the contact.
+      - 100
+    - - E-mail Address
+      - E-mail address of the contact.
+      - 100
+    - - Associated Address ERP Number
+      - Current, unique ERP number associated with the address. Must match an existing address ERPNumber of the correct type in the Supplier's record.
+      - 30
+    - - Associated Address Type
+      - Indicates whether the address is a physical address, remittance address, or fulfillment center address. (physical | remitto | fulfillment)
+      - n/a
+    - - Title
+      - Title of the contact.
+      - 30
+    - - Phone - Country Code
+      - Code to access the specific country, not including the international dialing sequence, for the phone number.
+      - 4
+  block: 3
+  blocks: 5
+part:
+  n: 2
+  of: 3

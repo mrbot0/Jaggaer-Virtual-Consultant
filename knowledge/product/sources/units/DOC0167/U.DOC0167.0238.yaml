@@ -1,0 +1,61 @@
+id: U.DOC0167.0238
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: value | Mandatory (Y/N): Y | Description: Value of the diversity property. | Mapping on Jaggaer One data model and notes: VARIES depending on the setting of the name field.
+  certified Indicates whether the supplier is (Yes) or is not (No) certified.
+  certificationtype - Type of certification. Must be a valid type, as defined in the JAGGAER ONE Supplier Management solution.
+  certifyingagency - Agency responsible for the certification. Must be a valid agency, as defined in the JAGGAER ONE Supplier Management solution.
+  expirationdate - Date the certification expires, in the following format:
+  yyyy-mm-dd
+  certificationnumber -
+  Number listed for the certification.
+  Maximum length is 100 digits.
+  ethnicity - Ethnic group of the supplier. Must be a valid group, as defined in the JAGGAER ONE Supplier Management solution.
+  vetbizregistry - Indicates whether the supplier is (Yes) or is not (No) listed in the VetBiz registry of veteranowned businesses.
+  sbacertified - Indicates whether the supplier is (Yes) or is not (No) certified by the US Small Business Administration (SBA).
+  verificationordernumber - Verification Order Number (VON) ID. Proof of certification by the California Supplier Clearinghouse. Maximum length is 100 characters.
+hash: sha256:6c3f7d82098f8eeab47ac79052d32f59589cbb03cd1dc3bbeb61e8d7cf496327
+words: 187
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/diversityClassificationList/diversityClassification/additionalDataList/additionalData
+  section_path: 2.1.1.57
+  page: 5
+  lang: en
+  prev: U.DOC0167.0237
+  next: U.DOC0167.0239
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - value
+    - Y
+    - Value of the diversity property.
+    - |-
+      VARIES depending on the setting of the name field.
+      certified Indicates whether the supplier is (Yes) or is not (No) certified.
+      certificationtype - Type of certification. Must be a valid type, as defined in the JAGGAER ONE Supplier Management solution.
+      certifyingagency - Agency responsible for the certification. Must be a valid agency, as defined in the JAGGAER ONE Supplier Management solution.
+      expirationdate - Date the certification expires, in the following format:
+      yyyy-mm-dd
+      certificationnumber -
+      Number listed for the certification.
+      Maximum length is 100 digits.
+      ethnicity - Ethnic group of the supplier. Must be a valid group, as defined in the JAGGAER ONE Supplier Management solution.
+      vetbizregistry - Indicates whether the supplier is (Yes) or is not (No) listed in the VetBiz registry of veteranowned businesses.
+      sbacertified - Indicates whether the supplier is (Yes) or is not (No) certified by the US Small Business Administration (SBA).
+      verificationordernumber - Verification Order Number (VON) ID. Proof of certification by the California Supplier Clearinghouse. Maximum length is 100 characters.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

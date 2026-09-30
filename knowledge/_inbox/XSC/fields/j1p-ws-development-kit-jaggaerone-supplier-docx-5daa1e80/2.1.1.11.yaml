@@ -1,0 +1,398 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+section: 2.1.1.11
+section_title: J1Supplier/JISupplierData
+genre: tecnica
+rows:
+  - label: erpNumber
+    technical_name: erpNumber
+    type: null
+    mandatory_text: Y / N
+    allowed_values: []
+    notes: Current, unique ERP number associated with the supplier.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: doingBusinessAs
+    technical_name: doingBusinessAs
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Also known as DBA.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: otherNames
+    technical_name: otherNames
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Additional names by which the supplier is known, other than the legal
+      company name or DBA.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: countryOfOrigin
+    technical_name: countryOfOrigin
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: 2-letter ISO country code of the country from which the supplier
+      originates.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: parentSupplier
+    technical_name: parentSupplier
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: active
+    technical_name: active
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: null
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: businessUnitVendorNumberList
+    technical_name: businessUnitVendorNumberList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Vendor ID number for an organization's active business unit
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: legalStructure
+    technical_name: legalStructure
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Legal structure of the supplier. Must be a valid legal structure. You can
+      use the data in the LegalStructure, NumberOfEmployee s, AnnualSalesAmount,
+      and PrimaryNaics fields to determine the supplier's Small Business
+      Enterprise classification.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: taxIdentificationType
+    technical_name: taxIdentificationType
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the supplier is to be identified by his or her social
+      security number (SSN) or federal ID (FederalId).
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: exemptFromBackupWithholding
+    technical_name: exemptFromBackupWithholding
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: numberOfEmployees
+    technical_name: numberOfEmployees
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: yearEstablished
+    technical_name: yearEstablished
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: annualSalesList
+    technical_name: annualSalesList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Annual Sales List
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: serviceAreaList
+    technical_name: serviceAreaList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: null
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: commodityCodeList
+    technical_name: commodityCodeList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: brands
+    technical_name: brands
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Brand sold by the supplier.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: shoppingCommodityCode
+    technical_name: shoppingCommodityCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Shopping code for a generic description of the group or category of goods
+      or services provided by a supplier.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: austinTetra
+    technical_name: austinTetra
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Austin-Tetra supplier reference number.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: sic
+    technical_name: sic
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Standard Industrial Classification supplier system reference number.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: naicsCodes
+    technical_name: naicsCodes
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r19
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: supportedCurrencyList
+    technical_name: supportedCurrencyList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Currency that can be supported by the supplier.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r20
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: enabledCurrencyList
+    technical_name: enabledCurrencyList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Currency that can be enabled for the supplier.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r21
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: supplierKeywords
+    technical_name: supplierKeywords
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Keywords by which the supplier can be found in product search.
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r22
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: addressList
+    technical_name: addressList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Addresses
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r23
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: primaryAddressList
+    technical_name: primaryAddressList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Primary Addresses
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r24
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: contactList
+    technical_name: contactList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Contacts
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r25
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: primaryContactList
+    technical_name: primaryContactList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Primary Contacts
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r26
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: classificationList
+    technical_name: classificationList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Classifications
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r27
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: diversityClassificationList
+    technical_name: diversityClassificationList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Diversity Classifications
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r28
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: locationList
+    technical_name: locationList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Locations
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r29
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: restrictFulfillmentLocationsByBusinessUnit
+    technical_name: restrictFulfillmentLocationsByBusinessUnit
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r30
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: customElementList
+    technical_name: customElementList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Custom Elements
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r31
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: accountsPayableList
+    technical_name: accountsPayableList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Accounts Payable
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r32
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: taxInformationList
+    technical_name: taxInformationList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Tax Information
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r33
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+  - label: insuranceInformationList
+    technical_name: insuranceInformationList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Insurance Information
+    section: 2.1.1.11
+    source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.11#part-1
+    row_ref: t0.r34
+    genre: tecnica
+    document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80

@@ -1,0 +1,1165 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-11
+section: 2.1.1.11
+section_title: J1Supplier/JISupplierData
+part: 1
+parts: 1
+rows:
+  - key: tech:ERPNUMBER
+    label: erpNumber
+    labels:
+      - erpNumber
+      - ERPNumber
+    technical_name: ERPNUMBER
+    section: 2.1.1.11
+    type: null
+    mandatory_text: Y / N
+    allowed_values: []
+    notes: Current, unique ERP number associated with the supplier.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: Y / N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.12
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.12#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: ERPNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.27
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.27#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.36
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.36#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.38
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.38#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.46
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.46#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.51
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.51#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.63
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.63#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.92
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.92#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.95
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.95#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.105
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.105#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: N
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - Y / N
+          - N
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:DOINGBUSINESSAS
+    label: doingBusinessAs
+    labels:
+      - doingBusinessAs
+    technical_name: DOINGBUSINESSAS
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Also known as DBA.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: doingBusinessAs
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:OTHERNAMES
+    label: otherNames
+    labels:
+      - otherNames
+    technical_name: OTHERNAMES
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Additional names by which the supplier is known, other than the legal
+      company name or DBA.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: otherNames
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COUNTRYOFORIGIN
+    label: countryOfOrigin
+    labels:
+      - countryOfOrigin
+    technical_name: COUNTRYOFORIGIN
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: 2-letter ISO country code of the country from which the supplier
+      originates.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: countryOfOrigin
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PARENTSUPPLIER
+    label: parentSupplier
+    labels:
+      - parentSupplier
+    technical_name: PARENTSUPPLIER
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: parentSupplier
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ACTIVE
+    label: active
+    labels:
+      - active
+    technical_name: ACTIVE
+    section: 2.1.1.11
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates whether the PO payment method is (true) or is not (false) active.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.27
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.27#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.38
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.38#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.63
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.63#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.68
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.68#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.70
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.70#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.81
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.81#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.85
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.85#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.103
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.103#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: active
+        type: null
+        mandatory_text: N
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - Y
+          - N
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:BUSINESSUNITVENDORNUMBERLIST
+    label: businessUnitVendorNumberList
+    labels:
+      - businessUnitVendorNumberList
+    technical_name: BUSINESSUNITVENDORNUMBERLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Vendor ID number for an organization's active business unit
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: businessUnitVendorNumberList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LEGALSTRUCTURE
+    label: legalStructure
+    labels:
+      - legalStructure
+    technical_name: LEGALSTRUCTURE
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Legal structure of the supplier. Must be a valid legal structure. You can
+      use the data in the LegalStructure, NumberOfEmployee s, AnnualSalesAmount,
+      and PrimaryNaics fields to determine the supplier's Small Business
+      Enterprise classification.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: legalStructure
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAXIDENTIFICATIONTYPE
+    label: taxIdentificationType
+    labels:
+      - taxIdentificationType
+    technical_name: TAXIDENTIFICATIONTYPE
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the supplier is to be identified by his or her social
+      security number (SSN) or federal ID (FederalId).
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: taxIdentificationType
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EXEMPTFROMBACKUPWITHHOLDING
+    label: exemptFromBackupWithholding
+    labels:
+      - exemptFromBackupWithholding
+    technical_name: EXEMPTFROMBACKUPWITHHOLDING
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: exemptFromBackupWithholding
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:NUMBEROFEMPLOYEES
+    label: numberOfEmployees
+    labels:
+      - numberOfEmployees
+    technical_name: NUMBEROFEMPLOYEES
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: numberOfEmployees
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:YEARESTABLISHED
+    label: yearEstablished
+    labels:
+      - yearEstablished
+    technical_name: YEARESTABLISHED
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: yearEstablished
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ANNUALSALESLIST
+    label: annualSalesList
+    labels:
+      - annualSalesList
+    technical_name: ANNUALSALESLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Annual Sales List
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: annualSalesList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SERVICEAREALIST
+    label: serviceAreaList
+    labels:
+      - serviceAreaList
+    technical_name: SERVICEAREALIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: serviceAreaList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:COMMODITYCODELIST
+    label: commodityCodeList
+    labels:
+      - commodityCodeList
+    technical_name: COMMODITYCODELIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: commodityCodeList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BRANDS
+    label: brands
+    labels:
+      - brands
+    technical_name: BRANDS
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Brand sold by the supplier.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: brands
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SHOPPINGCOMMODITYCODE
+    label: shoppingCommodityCode
+    labels:
+      - shoppingCommodityCode
+    technical_name: SHOPPINGCOMMODITYCODE
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Shopping code for a generic description of the group or category of goods
+      or services provided by a supplier.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: shoppingCommodityCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:AUSTINTETRA
+    label: austinTetra
+    labels:
+      - austinTetra
+    technical_name: AUSTINTETRA
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Austin-Tetra supplier reference number.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: austinTetra
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SIC
+    label: sic
+    labels:
+      - sic
+    technical_name: SIC
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Standard Industrial Classification supplier system reference number.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r18
+        genre: tecnica
+        label: sic
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:NAICSCODES
+    label: naicsCodes
+    labels:
+      - naicsCodes
+    technical_name: NAICSCODES
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r19
+        genre: tecnica
+        label: naicsCodes
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SUPPORTEDCURRENCYLIST
+    label: supportedCurrencyList
+    labels:
+      - supportedCurrencyList
+    technical_name: SUPPORTEDCURRENCYLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Currency that can be supported by the supplier.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r20
+        genre: tecnica
+        label: supportedCurrencyList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ENABLEDCURRENCYLIST
+    label: enabledCurrencyList
+    labels:
+      - enabledCurrencyList
+    technical_name: ENABLEDCURRENCYLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Currency that can be enabled for the supplier.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r21
+        genre: tecnica
+        label: enabledCurrencyList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SUPPLIERKEYWORDS
+    label: supplierKeywords
+    labels:
+      - supplierKeywords
+    technical_name: SUPPLIERKEYWORDS
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Keywords by which the supplier can be found in product search.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r22
+        genre: tecnica
+        label: supplierKeywords
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDRESSLIST
+    label: addressList
+    labels:
+      - addressList
+    technical_name: ADDRESSLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Addresses
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r23
+        genre: tecnica
+        label: addressList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PRIMARYADDRESSLIST
+    label: primaryAddressList
+    labels:
+      - primaryAddressList
+    technical_name: PRIMARYADDRESSLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Primary Addresses
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r24
+        genre: tecnica
+        label: primaryAddressList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CONTACTLIST
+    label: contactList
+    labels:
+      - contactList
+    technical_name: CONTACTLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Contacts
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r25
+        genre: tecnica
+        label: contactList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PRIMARYCONTACTLIST
+    label: primaryContactList
+    labels:
+      - primaryContactList
+    technical_name: PRIMARYCONTACTLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Primary Contacts
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r26
+        genre: tecnica
+        label: primaryContactList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CLASSIFICATIONLIST
+    label: classificationList
+    labels:
+      - classificationList
+    technical_name: CLASSIFICATIONLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Classifications
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r27
+        genre: tecnica
+        label: classificationList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:DIVERSITYCLASSIFICATIONLIST
+    label: diversityClassificationList
+    labels:
+      - diversityClassificationList
+    technical_name: DIVERSITYCLASSIFICATIONLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Diversity Classifications
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r28
+        genre: tecnica
+        label: diversityClassificationList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LOCATIONLIST
+    label: locationList
+    labels:
+      - locationList
+    technical_name: LOCATIONLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Locations
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r29
+        genre: tecnica
+        label: locationList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RESTRICTFULFILLMENTLOCATIONSBYBUSINESSUNIT
+    label: restrictFulfillmentLocationsByBusinessUnit
+    labels:
+      - restrictFulfillmentLocationsByBusinessUnit
+    technical_name: RESTRICTFULFILLMENTLOCATIONSBYBUSINESSUNIT
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r30
+        genre: tecnica
+        label: restrictFulfillmentLocationsByBusinessUnit
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMELEMENTLIST
+    label: customElementList
+    labels:
+      - customElementList
+    technical_name: CUSTOMELEMENTLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Custom Elements
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r31
+        genre: tecnica
+        label: customElementList
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.63
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.63#part-1
+        row_ref: t0.r21
+        genre: tecnica
+        label: customElementList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ACCOUNTSPAYABLELIST
+    label: accountsPayableList
+    labels:
+      - accountsPayableList
+    technical_name: ACCOUNTSPAYABLELIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Accounts Payable
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r32
+        genre: tecnica
+        label: accountsPayableList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAXINFORMATIONLIST
+    label: taxInformationList
+    labels:
+      - taxInformationList
+    technical_name: TAXINFORMATIONLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Tax Information
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r33
+        genre: tecnica
+        label: taxInformationList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INSURANCEINFORMATIONLIST
+    label: insuranceInformationList
+    labels:
+      - insuranceInformationList
+    technical_name: INSURANCEINFORMATIONLIST
+    section: 2.1.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Insurance Information
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.11
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.11#part-1
+        row_ref: t0.r34
+        genre: tecnica
+        label: insuranceInformationList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 8076

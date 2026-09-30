@@ -1,0 +1,65 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.26
+section_title: Splittable Field Set [PR Import]
+genre: tecnica
+rows:
+  - label: distributionType
+    technical_name: distributionType
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Manner in which the funds are to be distributed to each split.
+
+      Valid values:
+
+      AmountOfQuantity: funds are distributed based on a user-specified portion
+      of the quantity
+
+      AmountOfPrice: funds are distributed based on a user-specified monetary
+      amount
+
+      PercentOfQuantity: funds are distributed based on a user-specified
+      percentage of the quantity
+
+      PercentOfPrice: funds are distributed based on a user-specified percentage
+      of the price. The amount of percentage is specified in distributionvalue
+      attribute.
+    section: 2.1.1.26
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.26#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: context
+    technical_name: context
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Specifies the context of the split for the line item.
+      Valid values:
+      Line: The split applies to all contexts for the line item.
+      Discount: The split applies to the discount.
+      Shipping: The split applies to shipping.
+      Handling: The split applies to handling.
+      Tax1: The split applies to tax 1.
+      Tax2: The split applies to tax 2.
+    section: 2.1.1.26
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.26#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: splittableFieldIndexList
+    technical_name: splittableFieldIndexList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      List of splittable field index.
+      See section “Splittable Field Index [PR Import]” below
+    section: 2.1.1.26
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.26#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

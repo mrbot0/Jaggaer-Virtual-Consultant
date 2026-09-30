@@ -1,0 +1,988 @@
+doc: S.STD.XSC.DOC.0099
+scope: XSC
+extracted_at: 2026-09-30T04:30:45.992Z
+tier: T0
+stats:
+  units: 30
+  extracted_units: 27
+  document_candidates: 6
+  needs_llm: 6
+  t0_complete: 27
+  by_candidate:
+    FLD: 27
+    CFG: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 18000
+  sessions:
+    - n: 1
+      tokens: 18000
+      batches: 3
+      items: 6
+      batch_items:
+        - - R.DOC0099.C001
+          - R.DOC0099.C002
+        - - R.DOC0099.C003
+          - R.DOC0099.C004
+        - - R.DOC0099.C005
+          - R.DOC0099.C006
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0099.0003
+    source_unit: U.DOC0099.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 1. Supplier Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: fldSupplierInst
+      technical_name: fldSupplierInst
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<i>Select a Supplier by clicking the <B>{Choose Supplier...}</B> link.</i><BR><BR> · id=10013 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0099.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 64
+  - raw_id: R.DOC0099.0004
+    source_unit: U.DOC0099.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 1. Supplier Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "100"
+      technical_name: "100"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=100 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0099.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.0005
+    source_unit: U.DOC0099.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 2. Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: fldGeneralItemInst
+      technical_name: fldGeneralItemInst
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br><i>Enter a short description of the type of the agreement in the appropriate fields below.</i><br><br> · id=10007 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0099.0005
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 72
+  - raw_id: R.DOC0099.0006
+    source_unit: U.DOC0099.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 2. Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "111"
+      technical_name: "111"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=111 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0099.0006
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.0007
+    source_unit: U.DOC0099.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 2. Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Service Category
+      technical_name: fldServiceCategory
+      type: DropdownList
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamFormListId=248344 · id=10005 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0099.0007
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 50
+  - raw_id: R.DOC0099.0008
+    source_unit: U.DOC0099.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 2. Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Service Start Date
+      technical_name: fldBeginDate
+      type: Date
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=10015 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0099.0008
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0099.0009
+    source_unit: U.DOC0099.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 2. Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Service End Date
+      technical_name: fldEndDate
+      type: Date
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10016 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0099.0009
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0099.0010
+    source_unit: U.DOC0099.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 2. Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: fldPriceInst
+      technical_name: fldPriceInst
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: "UserDefinedFieldParamHTML=<BR><I>Note: If you have not been quoted a price, enter a best-guess estimate that can be used for approval purposes. </I> · id=10006 · tipo=userdefined"
+      section: campi-2
+      source_unit: U.DOC0099.0010
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 67
+  - raw_id: R.DOC0099.0011
+    source_unit: U.DOC0099.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 2. Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "105"
+      technical_name: "105"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=105 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0099.0011
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.0012
+    source_unit: U.DOC0099.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 2. Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Estimated Price
+      technical_name: Estimated Price
+      type: Price
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=10000 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0099.0012
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0099.0013
+    source_unit: U.DOC0099.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 3. Onsite Contact Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: fldExternalNotesInst1
+      technical_name: fldExternalNotesInst1
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br> <i><b>IMPORTANT:</b><br> Enter the contact information of the Charles River representative whom the visiting supplier should meet on arrival. Be sure to include a phone number and location information such as building, floor, etc.</i><br><br> · id=10003 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0099.0013
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 108
+  - raw_id: R.DOC0099.0014
+    source_unit: U.DOC0099.0014
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 3. Onsite Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Onsite Contact Name
+      technical_name: fldContactName
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=35; UserDefinedFieldParamTextBoxMaxLength=35 · id=10017 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0099.0014
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 58
+  - raw_id: R.DOC0099.0015
+    source_unit: U.DOC0099.0015
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 3. Onsite Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Onsite Contact Phone
+      technical_name: fldContactPhone
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=35; UserDefinedFieldParamTextBoxMaxLength=35 · id=10018 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0099.0015
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 58
+  - raw_id: R.DOC0099.0016
+    source_unit: U.DOC0099.0016
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 3. Onsite Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Onsite Contact Location
+      technical_name: fldContactLocation
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=35; UserDefinedFieldParamTextBoxMaxLength=35 · id=10019 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0099.0016
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 60
+  - raw_id: R.DOC0099.0017
+    source_unit: U.DOC0099.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 4. Instructions For Supplier
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: fldExternalNotesInst
+      technical_name: fldExternalNotesInst
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br><i>You may add additional notes or instructions to be sent with your order in the text box below - or - by clicking the <b>{add attachment...}</b> link and attaching a document.</i><br><br> · id=10009 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0099.0017
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 94
+  - raw_id: R.DOC0099.0018
+    source_unit: U.DOC0099.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 4. Instructions For Supplier
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Comments
+      technical_name: fldExternalNotes
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true; UserDefinedFieldParamTextAreaRows=8; UserDefinedFieldParamTextBoxMaxLength=1000; UserDefinedFieldParamTextAreaCols=50 · id=10008 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0099.0018
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 79
+  - raw_id: R.DOC0099.0019
+    source_unit: U.DOC0099.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 4. Instructions For Supplier
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "114"
+      technical_name: "114"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=114 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0099.0019
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.0020
+    source_unit: U.DOC0099.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 5. Internal Notes
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: fldInternalNotesInst
+      technical_name: fldInternalNotesInst
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br><i>Please include relevant quotes with your request by clicking the <b>{add attachment...}</b> link below. Also include any other notes or attachments that will help in processing your request, such as references to past orders, or additional vendor contact information.</i><br><br> · id=10011 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0099.0020
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 118
+  - raw_id: R.DOC0099.0021
+    source_unit: U.DOC0099.0021
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 5. Internal Notes
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: Internal Notes
+      technical_name: fldInternalNotes
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true; UserDefinedFieldParamTextAreaRows=8; UserDefinedFieldParamTextBoxMaxLength=1000; UserDefinedFieldParamTextAreaCols=50 · id=10012 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0099.0021
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 81
+  - raw_id: R.DOC0099.0022
+    source_unit: U.DOC0099.0022
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — 5. Internal Notes
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "113"
+      technical_name: "113"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=113 · tipo=static
+      section: campi-5
+      source_unit: U.DOC0099.0022
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.0023
+    source_unit: U.DOC0099.0023
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — Instructions
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: fldFormInstructions
+      technical_name: fldFormInstructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=Use this form to submit a request for the purchase of consultant services or maintenance agreements.<br><br> <b>NOTES:</b><br> This request will be routed to your Business Unit's Purchasing Dept. for review prior to a PO being created and sent to the supplier.<br><br> For one-time service requests, use the <b>General Services Request</b> form.<br><br> Fields with <b>bold labels</b> represent required fields.<br><br> <b>When selecting a supplier...</b><br> If the supplier you are looking for is not returned in your search, search for and select <b>NEW SUPPLIER</b>. Then enter as much information as you can provide about the supplier in the Internal Notes section below.<br><br> If you don't know (or don't care) where the service is purchased from, search for and select <b>UNKNOWN SUPPLIER</B>. Purchasing will then do their best to find a source for you. · id=10014 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0099.0023
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 254
+  - raw_id: R.DOC0099.0024
+    source_unit: U.DOC0099.0024
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: consultingformlogo
+      technical_name: consultingformlogo
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=0; UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/48443.png · id=10020 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0099.0024
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 57
+  - raw_id: R.DOC0099.0025
+    source_unit: U.DOC0099.0025
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "112"
+      technical_name: "112"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=112 · tipo=static
+      section: campi-8
+      source_unit: U.DOC0099.0025
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.0026
+    source_unit: U.DOC0099.0026
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "101"
+      technical_name: "101"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=101 · tipo=static
+      section: campi-8
+      source_unit: U.DOC0099.0026
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.0027
+    source_unit: U.DOC0099.0027
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "104"
+      technical_name: "104"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=104 · tipo=static
+      section: campi-8
+      source_unit: U.DOC0099.0027
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.0028
+    source_unit: U.DOC0099.0028
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "103"
+      technical_name: "103"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=103 · tipo=static
+      section: campi-8
+      source_unit: U.DOC0099.0028
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.0029
+    source_unit: U.DOC0099.0029
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0099
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "110"
+      technical_name: "110"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=110 · tipo=static
+      section: campi-8
+      source_unit: U.DOC0099.0029
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0099
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0099.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0099
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0099.0001
+    facets: &a28
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: VersionDescription
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0099.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0099
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0099.0001
+    facets: *a28
+    extraction:
+      parameter: AdditionalInformation
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0099.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0099
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0099.0001
+    facets: *a28
+    extraction:
+      parameter: SearchableKeyword
+      current_state:
+        value: Consulting or consultant services request form
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0099.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0099
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0099.0001
+    facets: *a28
+    extraction:
+      parameter: Title
+      current_state:
+        value: Consulting/Services Request
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0099.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0099
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0099.0001
+    facets: *a28
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Services
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0099.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0099
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0099.0001
+    facets: *a28
+    extraction:
+      parameter: LimitSupplierSelection
+      current_state:
+        value: "false"
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

@@ -1,0 +1,57 @@
+id: U.DOC0171.0488
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: tiocCount | Description: Number of TIOC (=Take It or Compete) required for the RFQ. Values:
+  0 – no TIOC ever required
+  1 or greater – number of TIOCs required
+  Attribute: closeDate | Description: Date and time of current TIOC closure
+  Attribute: requiredDate | Description: Date and time when the current TIOC was required
+  Attribute: tiocUser | Description: User who requested the current TIOC
+  id = user internal identifier
+  code = user external code
+  name = user full name
+  login = user login
+hash: sha256:48fcd594c4eb04023355dfdb10455f004667b95e766af4da3d349b22a12e39f7
+words: 91
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Tioc [Export RfX method]
+  section_path: 2.3.4.47
+  page: 7
+  lang: en
+  prev: U.DOC0171.0487
+  next: U.DOC0171.0489
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - tiocCount
+      - |-
+        Number of TIOC (=Take It or Compete) required for the RFQ. Values:
+        0 – no TIOC ever required
+        1 or greater – number of TIOCs required
+      - ""
+    - - closeDate
+      - Date and time of current TIOC closure
+      - ""
+    - - requiredDate
+      - Date and time when the current TIOC was required
+      - ""
+    - - tiocUser
+      - |-
+        User who requested the current TIOC
+        id = user internal identifier
+        code = user external code
+        name = user full name
+        login = user login
+      - ""
+  block: 1
+  blocks: 1

@@ -1,0 +1,47 @@
+id: U.DOC0182.0210
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: lineNumber | Mandatory (Y/N): Y | Description: Line number of the Contact line. Contact information can be repeated up to 5 times, to define up to 5 contacts, so this value represents the order of the line in the global contact list.
+  Valid values:
+  1
+  2
+  3
+  4
+  5
+hash: sha256:0d632cf63e3acf26efd51f2ddc7ae86ec9f601300f98a2169639dff568ce4657
+words: 50
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Contact [PR Import]
+  section_path: 2.1.1.31
+  page: 24
+  lang: en
+  prev: U.DOC0182.0209
+  next: U.DOC0182.0211
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - lineNumber
+    - Y
+    - |-
+      Line number of the Contact line. Contact information can be repeated up to 5 times, to define up to 5 contacts, so this value represents the order of the line in the global contact list.
+      Valid values:
+      1
+      2
+      3
+      4
+      5
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

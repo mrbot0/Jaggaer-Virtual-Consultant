@@ -1,0 +1,1083 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-06
+section: 2.2.1.2
+section_title: JIContract [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:CONTRACTNAME
+    label: contractName
+    labels:
+      - contractName
+    technical_name: CONTRACTNAME
+    section: 2.2.1.2
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: Name of the contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: contractName
+        type: null
+        mandatory_text: Y for create
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTNUMBER
+    label: contractNumber
+    labels:
+      - contractNumber
+    technical_name: CONTRACTNUMBER
+    section: 2.2.1.2
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: >-
+      Number used by your organization and by the supplier as the reference
+      number for the contract.
+
+      Must be unique by supplier.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: contractNumber
+        type: null
+        mandatory_text: Y for create
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.60
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.60#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: contractNumber
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTTYPE
+    label: contractType
+    labels:
+      - contractType
+    technical_name: CONTRACTTYPE
+    section: 2.2.1.2
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: Internal name for a type of contract, such as a commodity, product, or
+      service.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: contractType
+        type: null
+        mandatory_text: Y for create
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTTEMPLATE
+    label: contractTemplate
+    labels:
+      - contractTemplate
+    technical_name: CONTRACTTEMPLATE
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Contract template information.
+      See section “ContractTemplate [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: contractTemplate
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTLANGUAGE
+    label: contractLanguage
+    labels:
+      - contractLanguage
+    technical_name: CONTRACTLANGUAGE
+    section: 2.2.1.2
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: Language in which the contract is written
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: contractLanguage
+        type: null
+        mandatory_text: Y for create
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:PROJECT
+    label: project
+    labels:
+      - project
+    technical_name: PROJECT
+    section: 2.2.1.2
+    type: null
+    mandatory_text: Y for create
+    allowed_values: []
+    notes: Work group code associated with the contract
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: project
+        type: null
+        mandatory_text: Y for create
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:JURISDICTIONCODE
+    label: jurisdictionCode
+    labels:
+      - jurisdictionCode
+    technical_name: JURISDICTIONCODE
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Code for the jurisdiction associated with the contract. The jurisdiction
+      is the geographical location in which the terms and conditions of the
+      contract are upheld.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: jurisdictionCode
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CURRENCY
+    label: Currency
+    labels:
+      - Currency
+    technical_name: CURRENCY
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Exchangeable currency code,
+
+      If you omit this field, the contract will use your organization’s default
+      currency.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: Currency
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:STATUS
+    label: Status
+    labels:
+      - Status
+      - status
+    technical_name: STATUS
+    section: 2.2.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Indicates the actual status of the contract (that is, where the contract
+      is in the workflow process).
+
+      Valid only if you are creating a new contract.
+
+      Possible values:
+
+      Draft
+
+      Executed
+
+      The default status is Draft.
+
+      If the status is Executed, then the specified startDate and endDate
+      elements determine which executed status applies:
+
+      Executed: Future Contract- The contract is being created before the
+      StartDate.
+
+      Executed: In Effect Contract- The contract is being created between the
+      StartDate and EndDate.
+
+      Completed Contract- The contract is being created after the EndDate.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: Status
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.4.1.1
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: status
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CONTRACTSTATUS
+    label: contractStatus
+    labels:
+      - contractStatus
+    technical_name: CONTRACTSTATUS
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates the customer-defined status of the contract.
+      Must match a status defined in the organization
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: contractStatus
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ARCHIVE
+    label: archive
+    labels:
+      - archive
+    technical_name: ARCHIVE
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Indicates whether contract is (true) or is not (false) to be archived.
+      Archived contracts are not included in search results.
+      Valid only for contracts that are Complete, Superseded, or Terminated.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: archive
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SUMMARY
+    label: Summary
+    labels:
+      - Summary
+    technical_name: SUMMARY
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Description of the contract
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: Summary
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTVALUE
+    label: contractValue
+    labels:
+      - contractValue
+    technical_name: CONTRACTVALUE
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Value of the contract
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: contractValue
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTTOTALVALUE
+    label: contractTotalValue
+    labels:
+      - contractTotalValue
+    technical_name: CONTRACTTOTALVALUE
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Total value of all contracts in the contract family
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: contractTotalValue
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SHARECONTRACTWITHSECONDPARTIES
+    label: shareContractWithSecondParties
+    labels:
+      - shareContractWithSecondParties
+    technical_name: SHARECONTRACTWITHSECONDPARTIES
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the contract can (true) or cannot (false) be shared
+      with second parties.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: shareContractWithSecondParties
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTDATES
+    label: contractDates
+    labels:
+      - contractDates
+    technical_name: CONTRACTDATES
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of peculiar contract dates.
+      See section “ContractDates [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: contractDates
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTPARTIESLIST
+    label: contractPartiesList
+    labels:
+      - contractPartiesList
+    technical_name: CONTRACTPARTIESLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Information about first and secondary parties of the contract.
+      See section “ContractPartiesList [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: contractPartiesList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CUSTOMFIELDLIST
+    label: customfieldList
+    labels:
+      - customfieldList
+      - customFieldList
+    technical_name: CUSTOMFIELDLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for contract custom field information.
+      See section “CustomFieldList [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r18
+        genre: tecnica
+        label: customfieldList
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.4.1.1
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.1#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: customFieldList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:OBLIGATIONLIST
+    label: obligationList
+    labels:
+      - obligationList
+    technical_name: OBLIGATIONLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for Obligation information.
+      See section “Obligation [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r19
+        genre: tecnica
+        label: obligationList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EPROCUREMENT
+    label: eProcurement
+    labels:
+      - eProcurement
+    technical_name: EPROCUREMENT
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for E-Procurement information.
+      See section “EProcurement [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r20
+        genre: tecnica
+        label: eProcurement
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ISCONFIDENTIAL
+    label: isConfidential
+    labels:
+      - isConfidential
+    technical_name: ISCONFIDENTIAL
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether access to this contract is (true) or is not (false)
+      limited to those individuals explicitly listed on the contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r21
+        genre: tecnica
+        label: isConfidential
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:PRODUCTLINEITEMLIST
+    label: productLineItemList
+    labels:
+      - productLineItemList
+    technical_name: PRODUCTLINEITEMLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Product line items associated with this contract
+      See section “ProductLineItem [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r22
+        genre: tecnica
+        label: productLineItemList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SERVICELINEITEMLIST
+    label: serviceLineItemList
+    labels:
+      - serviceLineItemList
+    technical_name: SERVICELINEITEMLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Service line items associated with this contract
+      See section “ServiceLineItem [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r23
+        genre: tecnica
+        label: serviceLineItemList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:MANAGERLIST
+    label: managerList
+    labels:
+      - managerList
+    technical_name: MANAGERLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      List of Contract manager assigned to this contract
+      See section “ManagerList [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r24
+        genre: tecnica
+        label: managerList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:STAKEHOLDERLIST
+    label: stakeholderList
+    labels:
+      - stakeholderList
+    technical_name: STAKEHOLDERLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      List of Contract stakeholder assigned to this contract
+      See section “StakeholderList [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r25
+        genre: tecnica
+        label: stakeholderList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:INVOICEAPPROVERSLIST
+    label: invoiceApproversList
+    labels:
+      - invoiceApproversList
+    technical_name: INVOICEAPPROVERSLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      List of users that are authorized to approve invoices or invoice line
+      items that are assigned to the contract.
+
+      See section “User [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r26
+        genre: tecnica
+        label: invoiceApproversList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTMANAGERVISIBILITY
+    label: contractManagerVisibility
+    labels:
+      - contractManagerVisibility
+    technical_name: CONTRACTMANAGERVISIBILITY
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Visibility setting for the contract summary for a user who can access the
+      contract and who has the Contract Manager permission.
+
+      Full – All contract details are visible to the user, including links to
+      the actual contract files.
+
+      Partial- Only some of the contract details are visible to the user.
+
+      None- No contract information is visible to the user, unless he or she has
+      access to buy against the contract. A user who has access to buy against
+      the contract can see the contract summary.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r27
+        genre: tecnica
+        label: contractManagerVisibility
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ALLOTHERUSERSVISIBILITY
+    label: allOtherUsersVisibility
+    labels:
+      - allOtherUsersVisibility
+    technical_name: ALLOTHERUSERSVISIBILITY
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Visibility setting for the contract summary for a regular user who can
+      access the contract.
+
+      Full – All contract details are visible to the user, including links to
+      the actual contract files.
+
+      Partial- Only some of the contract details are visible to the user.
+
+      None- No contract information is visible to the user, unless he or she has
+      access to buy against the contract. A user who has access to buy against
+      the contract can see the contract summary.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r28
+        genre: tecnica
+        label: allOtherUsersVisibility
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ADDITIONALDETAILS
+    label: additionalDetails
+    labels:
+      - additionalDetails
+    technical_name: ADDITIONALDETAILS
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Additional details.
+      See section “AdditionalDetails [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r29
+        genre: tecnica
+        label: additionalDetails
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:NOTIFICATIONLIST
+    label: notificationList
+    labels:
+      - notificationList
+    technical_name: NOTIFICATIONLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of contract notifications information
+      See section “NotificationList [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r30
+        genre: tecnica
+        label: notificationList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTFAMILY
+    label: contractFamily
+    labels:
+      - contractFamily
+    technical_name: CONTRACTFAMILY
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for relationship of this contract and other contract.
+      See section “ContractFamily [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r31
+        genre: tecnica
+        label: contractFamily
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONSORTIUMSETTINGS
+    label: consortiumSettings
+    labels:
+      - consortiumSettings
+    technical_name: CONSORTIUMSETTINGS
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Consortium information container.
+      See section “ConsortiumSettings [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r32
+        genre: tecnica
+        label: consortiumSettings
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ATTACHMENTLIST
+    label: attachmentList
+    labels:
+      - attachmentList
+    technical_name: ATTACHMENTLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Contract attachment container.
+      See section “Attachment [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r33
+        genre: tecnica
+        label: attachmentList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTCOMMODITYCODESLIST
+    label: contractCommodityCodesList
+    labels:
+      - contractCommodityCodesList
+    technical_name: CONTRACTCOMMODITYCODESLIST
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for contract commodities information.
+      See section “ContractCommodityCode [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r34
+        genre: tecnica
+        label: contractCommodityCodesList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:SALESFORCEFIELDS
+    label: SalesForceFields
+    labels:
+      - SalesForceFields
+    technical_name: SALESFORCEFIELDS
+    section: 2.2.1.2
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      SalesForce Fields information.
+      See section “SalesForceFields [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.2#part-1
+        row_ref: t0.r35
+        genre: tecnica
+        label: SalesForceFields
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 7476

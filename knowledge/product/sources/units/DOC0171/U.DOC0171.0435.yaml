@@ -1,0 +1,42 @@
+id: U.DOC0171.0435
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: attachmentCount | Description: Total number and size of attachments contained.
+  Valorized only if attachment list is requested with the “ATTACH_COUNT_ONLY” modifier. | Available from version: 12_3_02
+  Attribute: totalAttachmentSize
+  Attribute: attachment | Description: Zero or more occurrences of Attachment object. Valorized only if “ATTACH_COUNT_ONLY” modifier is not requested
+hash: sha256:475e9d981eb8aa5a6225ce8a61a0ea8a09ba5e34b1f8eb37cc8e0900cc95478f
+words: 56
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Buyer Side, Seller Side, Instrumental and Award Attachment List, Publish Results Document List [Export RfX method]
+  section_path: 2.3.4.5
+  page: 7
+  lang: en
+  prev: U.DOC0171.0434
+  next: U.DOC0171.0436
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - attachmentCount
+      - |-
+        Total number and size of attachments contained.
+        Valorized only if attachment list is requested with the “ATTACH_COUNT_ONLY” modifier.
+      - 12_3_02
+    - - totalAttachmentSize
+      - ""
+      - ""
+    - - attachment
+      - Zero or more occurrences of Attachment object. Valorized only if “ATTACH_COUNT_ONLY” modifier is not requested
+      - ""
+  block: 1
+  blocks: 1

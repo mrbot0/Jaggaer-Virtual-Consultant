@@ -1,0 +1,83 @@
+id: S.STD.XSC.DOC.0009
+type: DOC
+title: JAGGAER Advantage
+summary: 'Documento guida-admin (tecnica, origine vendor) "JAGGAER Advantage":
+  117 unità, 0 tabelle, 0 tabelle di campi; scope ADM; affidabilità 0.6.'
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JA-2300/JA-PLT-2302 Initial Site Setup.pdf
+    sha256: sha256:934683ce2b440fe9d77a697db434e19c0b559c69fb68da03014a45ff80931915
+kind: guida-admin
+genre: tecnica
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - ADM
+source:
+  path: CORSI/JA-2300/JA-PLT-2302 Initial Site Setup.pdf
+  sha256: sha256:934683ce2b440fe9d77a697db434e19c0b559c69fb68da03014a45ff80931915
+  size: 1674003
+  format: pdf
+  doc_id: ja-plt-2302-initial-site-setup-pdf-33015386
+  doc_key: ja-plt-2302-initial-site-setup.pdf
+structure:
+  pages: 44
+  chapters: 44
+  sections: 44
+  tables: 0
+  figures: 157
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 117
+  by_type:
+    testo: 101
+    regola: 12
+    procedura: 4
+reliability:
+  base_by_kind: 0.75
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.6
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 117
+  items_produced: 16
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.14
+  last_run: 2026-09-30
+  estimated_tokens: 2608
+  sessions_planned: 1

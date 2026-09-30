@@ -1,0 +1,43 @@
+id: U.DOC0173.0100
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: phoneNumber | Mandatory (Y/N): Y
+  for CREATE
+  N
+  for UPDATE | Description: User telephone
+hash: sha256:5c1617ee232d78126b54e33899e4bfb09d9a7ed13fe64c6c97fe6532f6a41fce
+words: 15
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: SubUserInfo [Import/update of Company and Users Data]
+  section_path: 4.1.1.6
+  page: 6
+  lang: en
+  prev: U.DOC0173.0099
+  next: U.DOC0173.0101
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - phoneNumber
+    - |-
+      Y
+      for CREATE
+      N
+      for UPDATE
+    - User telephone
+    - ""
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

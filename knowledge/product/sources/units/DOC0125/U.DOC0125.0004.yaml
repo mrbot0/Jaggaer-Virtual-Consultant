@@ -1,0 +1,64 @@
+id: U.DOC0125.0004
+doc: S.STD.XSC.DOC.0125
+doc_id: workflow-definition-form-request-xml-9218cd48
+type: tabella
+text: |-
+  Tabella: transizioni
+  Colonne: Da | A | Condizione
+  Da: START | A: Form - Quick Quote Approval
+  Da: Form - Quick Quote Approval | A: Form - Check Request Approval
+  Da: Form - Check Request Approval | A: Form - Generic Approval
+  Da: Form - Generic Approval | A: Supplier Request Approval
+  Da: Supplier Request Approval | A: Form ADW Approval
+  Da: Form ADW Approval | A: Send Quick Quote Email
+  Da: Send Quick Quote Email | A: Create NonPO Invoice
+  Da: Create NonPO Invoice | A: Form ADW Notification
+  Da: Form ADW Notification | A: END
+hash: sha256:92125517fb6f5b736f60158fadfa58075ca92c3fe3f1ceb8c6e323ab12f86c29
+words: 97
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0125
+  chapter: Transizioni (ActivityRelationship)
+  section: Transizioni (ActivityRelationship)
+  section_path: transizioni
+  page: null
+  lang: en
+  prev: U.DOC0125.0003
+  next: null
+table:
+  table: 0
+  headers:
+    - Da
+    - A
+    - Condizione
+  rows:
+    - - START
+      - Form - Quick Quote Approval
+      - ""
+    - - Form - Quick Quote Approval
+      - Form - Check Request Approval
+      - ""
+    - - Form - Check Request Approval
+      - Form - Generic Approval
+      - ""
+    - - Form - Generic Approval
+      - Supplier Request Approval
+      - ""
+    - - Supplier Request Approval
+      - Form ADW Approval
+      - ""
+    - - Form ADW Approval
+      - Send Quick Quote Email
+      - ""
+    - - Send Quick Quote Email
+      - Create NonPO Invoice
+      - ""
+    - - Create NonPO Invoice
+      - Form ADW Notification
+      - ""
+    - - Form ADW Notification
+      - END
+      - ""
+  block: 1
+  blocks: 1

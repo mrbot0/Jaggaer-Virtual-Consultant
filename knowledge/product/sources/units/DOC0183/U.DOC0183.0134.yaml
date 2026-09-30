@@ -1,0 +1,120 @@
+id: U.DOC0183.0134
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: catalogNumber | Description: Unique number for a product, also known as a product SKU number.
+  Attribute: description | Description: Description of the product available in the ReceiptLine.
+  It explains basic characteristics about the product
+  Attribute: unitOfMeasure | Description: Packaging description.
+  See section “UnitOfMeasure [Export]” below.
+  Attribute: productSize | Description: Unit of size for the product.
+  See section “Size [Export]” below.
+  Attribute: unspsc | Description: Standardized commodity code value for the item, as specified by http://www.unspsc.org (for example, 43191501 - Mobile phones).
+  Attribute: commodityCode | Description: Code assigned to a product, or a group of products, for the purposes of identifying it in international commerce, or commerce in general.
+  CommodityCode is not a specific description of the goods or service.
+  Attribute: productReferenceNumber | Description: Unique ID for hosted products in JAGGAER ONE, not usually needed by customers.
+  Attribute: productType | Description: Method by which the item was selected:
+  CatalogItem-
+  ContractItem- indicates a noncatalog item that is loaded directly onto a contract
+  FormItem- a
+  InventoryItem- a
+  NonCatalogItem- a
+  OrgCatalogItem- legacy product type. It has been replaced by VirtualContractItem and VirtualItemMasterItem.
+  PunchoutItem- aitem retrieved from punchout supplier
+  TradeInItem- a
+  VirtualContractItem- indicates a contract item that is linked to a hosted catalog item.
+  VirtualItemMasterItem- indicates an item master item that is linked to a contract item, a hosted catalog item, or both.
+  Attribute: productFlagList | Description: Classification types that applies to a the product.
+  See section “ProductFlag [Export]” below.
+  Attribute: supplier | Description: Item supplier information.
+  See section “SupplierInfo [Export]” below.
+  Attribute: manufacturerInfo | Description: Item manufacturer information.
+  See section “ManufacturerInfo [Export]” below.
+  Attribute: extendedItemInfo | Description: Container for extended item information.
+  See section “ExtendedItemInfo [Export]” below
+hash: sha256:d475c8d5a971ffeb0e22784b300f4a7de7310cffef5b9182cd224c1a1fb549de
+words: 282
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Item [Export]
+  section_path: 2.2.3.14
+  page: 17
+  lang: en
+  prev: U.DOC0183.0133
+  next: U.DOC0183.0135
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - catalogNumber
+      - Unique number for a product, also known as a product SKU number.
+      - ""
+    - - description
+      - |-
+        Description of the product available in the ReceiptLine.
+        It explains basic characteristics about the product
+      - ""
+    - - unitOfMeasure
+      - |-
+        Packaging description.
+        See section “UnitOfMeasure [Export]” below.
+      - ""
+    - - productSize
+      - |-
+        Unit of size for the product.
+        See section “Size [Export]” below.
+      - ""
+    - - unspsc
+      - Standardized commodity code value for the item, as specified by http://www.unspsc.org (for example, 43191501 - Mobile phones).
+      - ""
+    - - commodityCode
+      - |-
+        Code assigned to a product, or a group of products, for the purposes of identifying it in international commerce, or commerce in general.
+        CommodityCode is not a specific description of the goods or service.
+      - ""
+    - - productReferenceNumber
+      - Unique ID for hosted products in JAGGAER ONE, not usually needed by customers.
+      - ""
+    - - productType
+      - |-
+        Method by which the item was selected:
+        CatalogItem-
+        ContractItem- indicates a noncatalog item that is loaded directly onto a contract
+        FormItem- a
+        InventoryItem- a
+        NonCatalogItem- a
+        OrgCatalogItem- legacy product type. It has been replaced by VirtualContractItem and VirtualItemMasterItem.
+        PunchoutItem- aitem retrieved from punchout supplier
+        TradeInItem- a
+        VirtualContractItem- indicates a contract item that is linked to a hosted catalog item.
+        VirtualItemMasterItem- indicates an item master item that is linked to a contract item, a hosted catalog item, or both.
+      - ""
+    - - productFlagList
+      - |-
+        Classification types that applies to a the product.
+        See section “ProductFlag [Export]” below.
+      - ""
+    - - supplier
+      - |-
+        Item supplier information.
+        See section “SupplierInfo [Export]” below.
+      - ""
+    - - manufacturerInfo
+      - |-
+        Item manufacturer information.
+        See section “ManufacturerInfo [Export]” below.
+      - ""
+    - - extendedItemInfo
+      - |-
+        Container for extended item information.
+        See section “ExtendedItemInfo [Export]” below
+      - ""
+  block: 1
+  blocks: 1

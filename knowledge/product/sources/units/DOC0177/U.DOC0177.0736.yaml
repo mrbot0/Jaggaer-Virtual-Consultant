@@ -1,0 +1,83 @@
+id: U.DOC0177.0736
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: paymentTerms/active | Datatype: BOOLEAN
+  Attribute: paymentTerms/discount/discountPercent | Datatype: NUMBER(6,3)
+  Attribute: paymentTerms/discount/discountAmount | Datatype: NUMBER(15,4)
+  Attribute: paymentTerms/discount/isoCurrencyCode | Datatype: VARCHAR2(3 CHAR)
+  Attribute: paymentTerms/discount/unit | Datatype: VARCHAR2(100 CHAR)
+  Attribute: paymentTerms/days | Datatype: NUMBER(5)
+  Attribute: paymentTerms/net | Datatype: NUMBER(5)
+  Attribute: paymentTerms/fob | Datatype: VARCHAR2(100 CHAR)
+  Attribute: paymentTerms/customPaymentTerm/useCustomPaymentTerm | Datatype: BOOLEAN
+  Attribute: paymentTerms/customPaymentTerm/id | Datatype: NUMBER(19)
+  Attribute: paymentTerms/standardPaymentTermsCode | Datatype: VARCHAR2(10 CHAR)
+  Attribute: paymentTerms/termsType | Datatype: VARCHAR2(100 CHAR)
+  Attribute: paymentTerms/daysAfter | Datatype: NUMBER(3)
+hash: sha256:0af2965b38822b8b6e36277bfb51d8a999da5be60e4455f7e8aad351913acaa0
+words: 85
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: supplier/JIData/locationList/location/termsAndCondition
+  section_path: 2.6.33
+  page: 185
+  lang: en
+  prev: U.DOC0177.0735
+  next: U.DOC0177.0737
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - paymentTerms/active
+      - ""
+      - BOOLEAN
+    - - paymentTerms/discount/discountPercent
+      - ""
+      - NUMBER(6,3)
+    - - paymentTerms/discount/discountAmount
+      - ""
+      - NUMBER(15,4)
+    - - paymentTerms/discount/isoCurrencyCode
+      - ""
+      - VARCHAR2(3 CHAR)
+    - - paymentTerms/discount/unit
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - paymentTerms/days
+      - ""
+      - NUMBER(5)
+    - - paymentTerms/net
+      - ""
+      - NUMBER(5)
+    - - paymentTerms/fob
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - paymentTerms/customPaymentTerm/useCustomPaymentTerm
+      - ""
+      - BOOLEAN
+    - - paymentTerms/customPaymentTerm/id
+      - ""
+      - NUMBER(19)
+    - - paymentTerms/standardPaymentTermsCode
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - paymentTerms/termsType
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - paymentTerms/daysAfter
+      - ""
+      - NUMBER(3)
+  block: 1
+  blocks: 1

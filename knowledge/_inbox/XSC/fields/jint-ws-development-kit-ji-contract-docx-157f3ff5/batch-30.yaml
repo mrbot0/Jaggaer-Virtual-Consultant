@@ -1,0 +1,122 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-30
+section: 2.2.1.27
+section_title: CodesCustomField [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:NAME
+    label: name
+    labels:
+      - name
+    technical_name: NAME
+    section: 2.2.1.27
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal name of the account code custom fields from the organization’s
+      buyer invoice configuration document
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.27
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.27#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.30
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.30#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.33
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.33#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.35
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.35#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.36
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.36#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.38
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.38#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.47
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.47#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.48
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.48#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: name
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:VALUEDESC
+    label: valueDesc
+    labels:
+      - valueDesc
+    technical_name: VALUEDESC
+    section: 2.2.1.27
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: List of string representing the description of the custom field.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.27
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.27#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: valueDesc
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1290

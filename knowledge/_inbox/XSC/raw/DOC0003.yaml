@@ -1,0 +1,310 @@
+doc: S.STD.XSC.DOC.0003
+scope: XSC
+extracted_at: 2026-09-30T04:26:59.496Z
+tier: T0
+stats:
+  units: 56
+  extracted_units: 8
+  document_candidates: 0
+  needs_llm: 5
+  t0_complete: 3
+  by_candidate:
+    CFG: 1
+    FLD: 7
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2105
+  sessions:
+    - n: 1
+      tokens: 2105
+      batches: 1
+      items: 5
+      batch_items:
+        - - R.DOC0003.0012
+          - R.DOC0003.0018
+          - R.DOC0003.0022
+          - R.DOC0003.0029
+          - R.DOC0003.0049
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0003.0012
+    source_unit: U.DOC0003.0012
+    unit_type: decisione
+    doc: S.STD.XSC.DOC.0003
+    section: JAGGAER.com
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - CFG
+      - FLD
+      - CTR
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      decision: “Once we had assessed it against our internal development path, we decided it was exactly what we needed,” said Lynsey.
+      date: null
+      author: null
+      subject: null
+      source_unit: U.DOC0003.0012
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 30
+  - raw_id: R.DOC0003.0017
+    source_unit: U.DOC0003.0017
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0003
+    section: JAGGAER.com
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: We didn’t want to
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0003.0017
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0003.0018
+    source_unit: U.DOC0003.0018
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0003
+    section: JAGGAER.com
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0003.0018
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 75
+  - raw_id: R.DOC0003.0022
+    source_unit: U.DOC0003.0022
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0003
+    section: JAGGAER.com
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0003.0022
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 101
+  - raw_id: R.DOC0003.0027
+    source_unit: U.DOC0003.0027
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0003
+    section: JAGGAER.com
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: persistent
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0003.0027
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0003.0029
+    source_unit: U.DOC0003.0029
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0003
+    section: JAGGAER.com
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0003.0029
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 47
+  - raw_id: R.DOC0003.0040
+    source_unit: U.DOC0003.0040
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0003
+    section: JAGGAER.com
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: After all, it
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0003.0040
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 75
+  - raw_id: R.DOC0003.0049
+    source_unit: U.DOC0003.0049
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0003
+    section: JAGGAER.com
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0003.0049
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 102

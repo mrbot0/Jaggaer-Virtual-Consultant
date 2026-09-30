@@ -1,0 +1,72 @@
+id: U.DOC0182.0294
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: templateName | Description: Used in billTo information, Name of the template to be called by this label type.
+  Attribute: addressCode | Description: Used in billTo information, Address code associated with this billing address. Use the AddressCode field to link the BillTo address to the billing address stored in your ERP system.
+  Attribute: contactList | Description: Container of contact information.
+  See section “Contact [PR Export]” below.
+  Attribute: addressLineList | Description: Container of address line information.
+  See section “AddressLine [PR Export]” below.
+  Attribute: City | Description: City
+  Attribute: state | Description: For US addresses, 2-character state code.
+  For non-US addresses, name of the province, county, or region
+  Attribute: postalCode | Description: Postal code.
+  Attribute: Country | Description: Long name of the country.
+  Attribute: isoCountryCode | Description: 2-letter ISO country code of the contact’s country.
+hash: sha256:c95749383c560b70688b49cc0fc351621ed6c9247df394c83af203faf2dd40a4
+words: 141
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Address [PR Export]
+  section_path: 2.3.3.5
+  page: 26
+  lang: en
+  prev: U.DOC0182.0293
+  next: U.DOC0182.0295
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - templateName
+      - Used in billTo information, Name of the template to be called by this label type.
+      - ""
+    - - addressCode
+      - Used in billTo information, Address code associated with this billing address. Use the AddressCode field to link the BillTo address to the billing address stored in your ERP system.
+      - ""
+    - - contactList
+      - |-
+        Container of contact information.
+        See section “Contact [PR Export]” below.
+      - ""
+    - - addressLineList
+      - |-
+        Container of address line information.
+        See section “AddressLine [PR Export]” below.
+      - ""
+    - - City
+      - City
+      - ""
+    - - state
+      - |-
+        For US addresses, 2-character state code.
+        For non-US addresses, name of the province, county, or region
+      - ""
+    - - postalCode
+      - Postal code.
+      - ""
+    - - Country
+      - Long name of the country.
+      - ""
+    - - isoCountryCode
+      - 2-letter ISO country code of the contact’s country.
+      - ""
+  block: 1
+  blocks: 1

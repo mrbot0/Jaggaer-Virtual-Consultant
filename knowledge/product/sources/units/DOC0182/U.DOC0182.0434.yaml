@@ -1,0 +1,118 @@
+id: U.DOC0182.0434
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: externalRequisitionNumber | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: externalRequisitionNumber2 | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: requisitionName | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: description | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: requestor/extCode | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: requestor/login | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: requestor/businessUnit | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: preparedBy/extCode | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: preparedBy/login | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: preparedBy/busnessUnit | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: financialApprover/extCode | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: financialApprover/login | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: financialApprover/businessUnit | Datatype: VARCHAR2(100 CHAR)
+  Attribute: priority | Attribute: - | Datatype: VARCHAR2(80 CHAR)
+  Attribute: accountingDate | Attribute: - | Datatype: DATE
+  Attribute: billTo/templateName | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: billTo/addressCode | Attribute: - | Datatype: VARCHAR2(30 CHAR)
+  Attribute: billTo/city | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: billTo/state | Attribute: -
+  - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: billTo/postalCode | Datatype: VARCHAR2(100 CHAR)
+  Attribute: billTo/country | Attribute: - | Datatype: VARCHAR2(50 CHAR)
+hash: sha256:fef722d074e6ec202591c9b08c6e195d48d58e100ddb8ffc1ee134a7a3e0472e
+words: 198
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Header Section (1)
+  section_path: 2.7.0.1
+  page: 28
+  lang: en
+  prev: U.DOC0182.0433
+  next: U.DOC0182.0435
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - externalRequisitionNumber
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - externalRequisitionNumber2
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - requisitionName
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - description
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - requestor/extCode
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - requestor/login
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - requestor/businessUnit
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - preparedBy/extCode
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - preparedBy/login
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - preparedBy/busnessUnit
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - financialApprover/extCode
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - financialApprover/login
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - financialApprover/businessUnit
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - priority
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - accountingDate
+      - "-"
+      - DATE
+    - - billTo/templateName
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - billTo/addressCode
+      - "-"
+      - VARCHAR2(30 CHAR)
+    - - billTo/city
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - billTo/state
+      - |-
+        -
+        -
+      - VARCHAR2(100 CHAR)
+    - - billTo/postalCode
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - billTo/country
+      - "-"
+      - VARCHAR2(50 CHAR)
+  block: 1
+  blocks: 2

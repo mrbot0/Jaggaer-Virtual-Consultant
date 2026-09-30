@@ -1,0 +1,47 @@
+id: U.DOC0169.0155
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: distributionValue | Mandatory (Y/N): N | Description: Distribution value for the split. This is an integer numeric value.
+  Must be a positive number or zero.
+  According to specific distribution type, it represents:
+  AmountOfQuantity: the portion of the quantity to be split.
+  AmountOfPrice: the monetary amount to be split.
+  PercentOfQuantity and PercentOfPrice: the percentage of the split. For these values, the total of all distribution values must equal 100%
+  DEPRECATED: uses “decDistributionValue” field
+hash: sha256:3ecb24e5257aab28ef7d2c898cea75ab6011374a3a18134ab696bef9dbf71ba9
+words: 73
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Custom Field Value [PR Import]
+  section_path: 2.1.1.24
+  page: 25
+  lang: en
+  prev: U.DOC0169.0154
+  next: U.DOC0169.0156
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - distributionValue
+    - N
+    - |-
+      Distribution value for the split. This is an integer numeric value.
+      Must be a positive number or zero.
+      According to specific distribution type, it represents:
+      AmountOfQuantity: the portion of the quantity to be split.
+      AmountOfPrice: the monetary amount to be split.
+      PercentOfQuantity and PercentOfPrice: the percentage of the split. For these values, the total of all distribution values must equal 100%
+      DEPRECATED: uses “decDistributionValue” field
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

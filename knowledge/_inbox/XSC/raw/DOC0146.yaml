@@ -1,0 +1,1071 @@
+doc: S.STD.XSC.DOC.0146
+scope: XSC
+extracted_at: 2026-09-30T04:31:08.253Z
+tier: T0
+stats:
+  units: 125
+  extracted_units: 24
+  document_candidates: 0
+  needs_llm: 18
+  t0_complete: 6
+  by_candidate:
+    CFP: 4
+    FLW: 13
+    FLD: 7
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 7275
+  sessions:
+    - n: 1
+      tokens: 7275
+      batches: 1
+      items: 18
+      batch_items:
+        - - R.DOC0146.0025
+          - R.DOC0146.0036
+          - R.DOC0146.0043
+          - R.DOC0146.0048
+          - R.DOC0146.0052
+          - R.DOC0146.0056
+          - R.DOC0146.0066
+          - R.DOC0146.0068
+          - R.DOC0146.0072
+          - R.DOC0146.0087
+          - R.DOC0146.0090
+          - R.DOC0146.0094
+          - R.DOC0146.0096
+          - R.DOC0146.0099
+          - R.DOC0146.0106
+          - R.DOC0146.0117
+          - R.DOC0146.0120
+          - R.DOC0146.0124
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0146.0025
+    source_unit: U.DOC0146.0025
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 3
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: within contract documents
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: more sophisticated access controls through workgroups
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0025
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0146.0036
+    source_unit: U.DOC0146.0036
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 6
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: the catalog of Daigger, which has a hosted catalog associated with a contract
+          valore: null
+        - n: 2
+          verbo: open
+          oggetto: the contract summary and view its contents
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: all contracts that have been drawn up for Daigger in its supplier profile
+          valore: null
+        - n: 4
+          verbo: navigate
+          oggetto: to contract search and view the contracts with Daigge r that are active for shopping
+          valore: null
+        - n: 5
+          verbo: save
+          oggetto: and export a search
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0036
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 96
+  - raw_id: R.DOC0146.0043
+    source_unit: U.DOC0146.0043
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: up contract types
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: a new contract
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0043
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 15
+  - raw_id: R.DOC0146.0048
+    source_unit: U.DOC0146.0048
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0146.0048
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0146.0052
+    source_unit: U.DOC0146.0052
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: administrator
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the contract types
+          valore: null
+        - n: 2
+          verbo: make
+          oggetto: sure your user is a contract administrator in the parent work group
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: an Owner contract party (your client organization)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0052
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 50
+  - raw_id: R.DOC0146.0054
+    source_unit: U.DOC0146.0054
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Scenario: The organizati on"
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0146.0054
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0146.0056
+    source_unit: U.DOC0146.0056
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a new contract
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: the pages of the cont ract record in the left frame and their status
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: all the general pages that would appear in an ePro-only implementation and fill out the required and relevant fields
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0056
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 67
+  - raw_id: R.DOC0146.0066
+    source_unit: U.DOC0146.0066
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: open
+          oggetto: the contract you created with Education Lab Supplies
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up the contract for shopping
+          valore: null
+        - n: 3
+          verbo: submit
+          oggetto: the contract for approval
+          valore: null
+        - n: 4
+          verbo: verify
+          oggetto: that the contract appears in the supplier profile
+          valore: null
+        - n: 5
+          verbo: shop
+          oggetto: for an item from Education Lab Supplies and view the linked contract in the cart
+          valore: null
+        - n: 6
+          verbo: submit
+          oggetto: the requisition
+          valore: null
+      risultato_atteso: Verify that the contract appears in the supplier profile.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0066
+    needs_llm: true
+    missing:
+      - trigger
+    tokens: 87
+  - raw_id: R.DOC0146.0068
+    source_unit: U.DOC0146.0068
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: and enforce budget
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: spend limits
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0068
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 20
+  - raw_id: R.DOC0146.0072
+    source_unit: U.DOC0146.0072
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the Budget and Spend page on the Education Lab Supplies contract
+          valore: null
+        - n: 2
+          verbo: note
+          oggetto: the current spend, and set a budget amount and enforce it
+          valore: null
+        - n: 3
+          verbo: purchase
+          oggetto: items from this contract and exceed the budget
+          valore: null
+        - n: 4
+          verbo: open
+          oggetto: the contract and vi ew the changes to the budget
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0072
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 73
+  - raw_id: R.DOC0146.0076
+    source_unit: U.DOC0146.0076
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 15
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Org
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0146.0076
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0146.0081
+    source_unit: U.DOC0146.0081
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Items
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0146.0081
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 11
+  - raw_id: R.DOC0146.0082
+    source_unit: U.DOC0146.0082
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Admins
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0146.0082
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0146.0083
+    source_unit: U.DOC0146.0083
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Graphics
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0146.0083
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0146.0087
+    source_unit: U.DOC0146.0087
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: from
+          oggetto: the showcase, view items available from suppliers with non-catalog items on a contract
+          valore: null
+        - n: 2
+          verbo: open
+          oggetto: the contract summary from the contract icon in the search results and view the total number of non-catalog items managed on this contract
+          valore: null
+        - n: 3
+          verbo: watch
+          oggetto: how the non-catalog items are managed in the contract record
+          valore: null
+        - n: 4
+          verbo: watch
+          oggetto: how you can add a product to the contract
+          valore: null
+        - n: 5
+          verbo: search
+          oggetto: for that item
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0087
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 106
+  - raw_id: R.DOC0146.0090
+    source_unit: U.DOC0146.0090
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLW
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: go
+          oggetto: to the contract and import the non-catalog items from the class files
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: for the items
+          valore: null
+        - n: 3
+          verbo: on
+          oggetto: the Education Lab Supplies sticker on the showcase, enable Showcase Browse Contracts and any other relevant options
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0090
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 64
+  - raw_id: R.DOC0146.0094
+    source_unit: U.DOC0146.0094
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLW
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: for a rental car
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the instructions
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: the instructions in the contract
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0094
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0146.0096
+    source_unit: U.DOC0146.0096
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - FLW
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: instructions to the contract with Education Lab Supplies
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: for the instructions in the item search
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0096
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 37
+  - raw_id: R.DOC0146.0099
+    source_unit: U.DOC0146.0099
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: apply
+          oggetto: a PO clause to the contract with Education Lab Supplies
+          valore: null
+        - n: 2
+          verbo: purchase
+          oggetto: an item associated with that contract and view the PO clause on the PO fax
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0099
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 47
+  - raw_id: R.DOC0146.0105
+    source_unit: U.DOC0146.0105
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Scenario: The European business unit"
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0146.0105
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0146.0106
+    source_unit: U.DOC0146.0106
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - FLW
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: make
+          oggetto: sure your user is not part of the Europe BU
+          valore: null
+        - n: 2
+          verbo: limit
+          oggetto: the access to that contract
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: for the items associ ated with this contract
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0106
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0146.0117
+    source_unit: U.DOC0146.0117
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 25
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - FLW
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: to the Header section of a contract and view the Contract Status field
+          valore: null
+        - n: 2
+          verbo: hide
+          oggetto: the Contract Status field
+          valore: null
+        - n: 3
+          verbo: verify
+          oggetto: that the field is not longer visible
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0117
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 50
+  - raw_id: R.DOC0146.0120
+    source_unit: U.DOC0146.0120
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLW
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a dashboard from the system default
+          valore: null
+        - n: 2
+          verbo: name
+          oggetto: it and make it accessible to the Contract Manager role
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: and modify widgets that would be useful for a contract manager
+          valore: null
+        - n: 4
+          verbo: publish
+          oggetto: the changes
+          valore: null
+        - n: 5
+          verbo: review
+          oggetto: the dashboard
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0120
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 66
+  - raw_id: R.DOC0146.0124
+    source_unit: U.DOC0146.0124
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0146
+    section: Managing eProcurement Contracts
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - FLW
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: see
+          oggetto: the contract an item is associated with
+          valore: null
+        - n: 2
+          verbo: manage
+          oggetto: contract non-catalog items
+          valore: null
+        - n: 3
+          verbo: provide
+          oggetto: access to a contract stakeholder
+          valore: null
+        - n: 4
+          verbo: see
+          oggetto: the price set a contract is associated with
+          valore: null
+        - n: 5
+          verbo: see
+          oggetto: the PRs that have been submitted against a contract
+          valore: null
+        - n: 6
+          verbo: see
+          oggetto: the spend on a contract
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0146.0124
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 76

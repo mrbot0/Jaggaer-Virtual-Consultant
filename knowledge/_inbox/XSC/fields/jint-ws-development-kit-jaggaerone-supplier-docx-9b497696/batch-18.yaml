@@ -1,0 +1,65 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-18
+section: 2.1.1.18
+section_title: J1Supplier/JISupplierData/serviceArea
+part: 1
+parts: 1
+rows:
+  - key: tech:SERVICEAREAINTERNALNAME
+    label: serviceAreaInternalName
+    labels:
+      - serviceAreaInternalName
+    technical_name: SERVICEAREAINTERNALNAME
+    section: 2.1.1.18
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Internal name of the geographic region serviced by the supplier.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.18
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.18#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: serviceAreaInternalName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:STATESERVICEAREALIST
+    label: stateServiceAreaList
+    labels:
+      - stateServiceAreaList
+    technical_name: STATESERVICEAREALIST
+    section: 2.1.1.18
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of Sub-regions of the service area.
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.18
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.18#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: stateServiceAreaList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 869

@@ -1,0 +1,57 @@
+id: U.DOC0171.0438
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: name | Description: Section name
+  Attribute: type | Description: Section type: Rfq questions or eVm questions (TECH/QUAL)
+  [12.3.01] In TechQualSection, it is filled out with LOCAL or EVM
+  Attribute: sectionPos | Description: Progressive number of the section inside the envelope | Available from version: 12_3_02
+  Attribute: parameterList | Description: List of parameters [see section “Qualification and Technical Envlope: Parameter” below]
+  Attribute: questionType | Description: It can be LOCAL for Question section, BUYER for Evaluation section, DE_EVM_SELLER for Profile Question section | Available from version: JA_19_00
+  Attribute: linkedCondition | Description: Complex type that contains the conditions that make the section visible.
+  See section “Linked Condition (Conditional sections)” | Available from version: JINT_20_01_01
+hash: sha256:16243eaca1ec8e16ff043b3fe312c71164bf38f9c8cc098af061fe9c05de8300
+words: 120
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Qualification and Technical Envelope: Section [Export RfX method]"
+  section_path: 2.3.4.7
+  page: 7
+  lang: en
+  prev: U.DOC0171.0437
+  next: U.DOC0171.0439
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - name
+      - Section name
+      - ""
+    - - type
+      - |-
+        Section type: Rfq questions or eVm questions (TECH/QUAL)
+        [12.3.01] In TechQualSection, it is filled out with LOCAL or EVM
+      - ""
+    - - sectionPos
+      - Progressive number of the section inside the envelope
+      - 12_3_02
+    - - parameterList
+      - "List of parameters [see section “Qualification and Technical Envlope: Parameter” below]"
+      - ""
+    - - questionType
+      - It can be LOCAL for Question section, BUYER for Evaluation section, DE_EVM_SELLER for Profile Question section
+      - JA_19_00
+    - - linkedCondition
+      - |-
+        Complex type that contains the conditions that make the section visible.
+        See section “Linked Condition (Conditional sections)”
+      - JINT_20_01_01
+  block: 1
+  blocks: 1

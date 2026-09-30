@@ -1,0 +1,345 @@
+document: phone-service-request-template-xml-7d597d4b
+scope: XSC
+batch: batch-03
+section: domande-3
+section_title: Domande — New Service / New Service Information
+part: 1
+parts: 1
+rows:
+  - key: tech:285386
+    label: Building Name
+    labels:
+      - Building Name
+    technical_name: "285386"
+    section: domande-3
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Building Name
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Building Name
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285387
+    label: Building Address
+    labels:
+      - Building Address
+    technical_name: "285387"
+    section: domande-3
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Building Address
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Building Address
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285388
+    label: Room Number
+    labels:
+      - Room Number
+    technical_name: "285388"
+    section: domande-3
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Room Number
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Room Number
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285389
+    label: Jack Required?
+    labels:
+      - Jack Required?
+    technical_name: "285389"
+    section: domande-3
+    type: Yes/No
+    mandatory_text: No
+    allowed_values: []
+    notes: Jack Required?
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Jack Required?
+        type: Yes/No
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285390
+    label: "If No, Provide the Existing Jack #"
+    labels:
+      - "If No, Provide the Existing Jack #"
+    technical_name: "285390"
+    section: domande-3
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: "If No, Provide the Existing Jack #"
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: "If No, Provide the Existing Jack #"
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285391
+    label: Voicemail Required?
+    labels:
+      - Voicemail Required?
+    technical_name: "285391"
+    section: domande-3
+    type: Yes/No
+    mandatory_text: No
+    allowed_values: []
+    notes: Voicemail Required?
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: Voicemail Required?
+        type: Yes/No
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285392
+    label: Voicemail to Email Required?
+    labels:
+      - Voicemail to Email Required?
+    technical_name: "285392"
+    section: domande-3
+    type: Yes/No
+    mandatory_text: No
+    allowed_values: []
+    notes: Voicemail to Email Required?
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: Voicemail to Email Required?
+        type: Yes/No
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285393
+    label: If Yes, Provide Recipient's AccessID for Voicemail to Email
+    labels:
+      - If Yes, Provide Recipient's AccessID for Voicemail to Email
+    technical_name: "285393"
+    section: domande-3
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: If Yes, Provide Recipient's AccessID for Voicemail to Email
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: If Yes, Provide Recipient's AccessID for Voicemail to Email
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285394
+    label: Outgoing Dialing Restriction
+    labels:
+      - Outgoing Dialing Restriction
+    technical_name: "285394"
+    section: domande-3
+    type: Dropdown List (Pick One)
+    mandatory_text: No
+    allowed_values: []
+    notes: Outgoing Dialing Restriction
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: Outgoing Dialing Restriction
+        type: Dropdown List (Pick One)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285395
+    label: Type of Equipment Required
+    labels:
+      - Type of Equipment Required
+    technical_name: "285395"
+    section: domande-3
+    type: Multiple Select (Pick Many)
+    mandatory_text: No
+    allowed_values: []
+    notes: Type of Equipment Required
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: Type of Equipment Required
+        type: Multiple Select (Pick Many)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285396
+    label: Data Activation Required?
+    labels:
+      - Data Activation Required?
+    technical_name: "285396"
+    section: domande-3
+    type: Yes/No
+    mandatory_text: No
+    allowed_values: []
+    notes: Data Activation Required?
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: Data Activation Required?
+        type: Yes/No
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285397
+    label: Please Include any Additional Comments for the IT Staff
+    labels:
+      - Please Include any Additional Comments for the IT Staff
+    technical_name: "285397"
+    section: domande-3
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Please Include any Additional Comments for the IT Staff
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-3
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-3#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: Please Include any Additional Comments for the IT Staff
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2615

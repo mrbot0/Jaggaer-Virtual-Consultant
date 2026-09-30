@@ -1,0 +1,4184 @@
+doc: S.STD.XSC.DOC.0173
+scope: XSC
+extracted_at: 2026-09-30T04:32:13.952Z
+tier: T0
+stats:
+  units: 233
+  extracted_units: 107
+  document_candidates: 1
+  needs_llm: 16
+  t0_complete: 92
+  by_candidate:
+    FLW: 7
+    FLD: 93
+    GLS: 1
+    INV: 2
+    CFG: 4
+    INT: 1
+  residue_marked: 3
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 9587
+  sessions:
+    - n: 1
+      tokens: 9587
+      batches: 2
+      items: 16
+      batch_items:
+        - - R.DOC0173.0020
+          - R.DOC0173.0024
+          - R.DOC0173.0028
+          - R.DOC0173.0124
+          - R.DOC0173.0134
+          - R.DOC0173.0140
+          - R.DOC0173.0156
+          - R.DOC0173.0180
+          - R.DOC0173.0181
+          - R.DOC0173.0184
+          - R.DOC0173.0185
+          - R.DOC0173.0198
+          - R.DOC0173.0210
+          - R.DOC0173.0217
+          - R.DOC0173.0223
+        - - R.DOC0173.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0173.0020
+    source_unit: U.DOC0173.0020
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0173
+    section: Executive Summary
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: import/update
+          oggetto: of Company and Users Data
+          valore: null
+        - n: 2
+          verbo: request
+          oggetto: "data format: describes the possible operations on company (CREATE, UPDATE, CREATE_REGONLY and so on), on classification (CREATE, UPDATE, DELETE and so on), on sub-users (CREATE, UPDATE, ENABLE, DISABLE and so on) and data elements (CREATE). Then, it describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted"
+          valore: describes the possible operations on company (CREATE, UPDATE, CREATE_REGONLY and so on), on classification (CREATE, UPDATE, DELETE and so on), on sub-users (CREATE, UPDATE, ENABLE, DISABLE and so on) and data elements (CREATE). Then, it describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted
+        - n: 3
+          verbo: request
+          oggetto: "samples: includes some examples of import requests"
+          valore: includes some examples of import requests
+        - n: 4
+          verbo: "behaviour:"
+          oggetto: describes how the web service processes the data passed in input, in case of some particular processes
+          valore: describes how the web service processes the data passed in input, in case of some particular processes
+        - n: 5
+          verbo: response
+          oggetto: "data format: describes the structure of the web service response and contains the list of possible error codes"
+          valore: describes the structure of the web service response and contains the list of possible error codes
+        - n: 6
+          verbo: export
+          oggetto: of Company and Users Data
+          valore: null
+        - n: 7
+          verbo: condition
+          oggetto: "Filters: describes which fields can be used to filter the records to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of records extracted"
+          valore: describes which fields can be used to filter the records to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of records extracted
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0173.0020
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 297
+  - raw_id: R.DOC0173.0024
+    source_unit: U.DOC0173.0024
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0173
+    section: Executive Summary
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: results
+          oggetto: "pagination: describes how the results in response are paginated"
+          valore: describes how the results in response are paginated
+        - n: 2
+          verbo: export
+          oggetto: "Response Data format: describes the structure of the response in terms of exported fields and sections"
+          valore: describes the structure of the response in terms of exported fields and sections
+        - n: 3
+          verbo: request
+          oggetto: "samples: includes some examples of export requests"
+          valore: includes some examples of export requests
+        - n: 4
+          verbo: error
+          oggetto: "codes: contains a list of possible error codes"
+          valore: contains a list of possible error codes
+        - n: 5
+          verbo: "wsdl:"
+          oggetto: in this paragraph is attached the ProfileManagement.wsdl from which the web service has been created and is to be used to generate the client
+          valore: in this paragraph is attached the ProfileManagement.wsdl from which the web service has been created and is to be used to generate the client
+        - n: 6
+          verbo: available
+          oggetto: "methods: contains the list of the methods provided by the web service"
+          valore: contains the list of the methods provided by the web service
+        - n: 7
+          verbo: additional
+          oggetto: "technical information: describes specific scenarios with possible impacts on the web service response:"
+          valore: "describes specific scenarios with possible impacts on the web service response:"
+        - n: 8
+          verbo: dos
+          oggetto: attack protection
+          valore: null
+        - n: 9
+          verbo: mtom
+          oggetto: MTOM
+          valore: null
+        - n: 10
+          verbo: errors
+          oggetto: handling
+          valore: null
+        - n: 11
+          verbo: time
+          oggetto: "and Time Zone: describes the offset between the datetime fields shown in the web service, and the same ones displayed in the JaggaerAdvantage User Interface"
+          valore: describes the offset between the datetime fields shown in the web service, and the same ones displayed in the JaggaerAdvantage User Interface
+        - n: 12
+          verbo: best
+          oggetto: "Practices: provides best practices to follow when designing integrations:"
+          valore: "provides best practices to follow when designing integrations:"
+        - n: 13
+          verbo: multiple
+          oggetto: calls to the web service
+          valore: null
+        - n: 14
+          verbo: data
+          oggetto: "Types and UI Default Labels: describes the type of the fields and the corresponding label in English language in the platform with the aim to simplify the mapping between the fields visible in the platform and the fields used in the web service"
+          valore: describes the type of the fields and the corresponding label in English language in the platform with the aim to simplify the mapping between the fields visible in the platform and the fields used in the web service
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0173.0024
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 317
+  - raw_id: R.DOC0173.0028
+    source_unit: U.DOC0173.0028
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0173
+    section: Import/update of Company and Users Data
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: “insert”
+          oggetto: (create new record)
+          valore: Insert
+        - n: 2
+          verbo: “insert
+          oggetto: and enable” (create new record and automatically enable referring company)
+          valore: Insert and enable
+        - n: 3
+          verbo: “update”
+          oggetto: (update existing record)
+          valore: Update
+        - n: 4
+          verbo: “delete”
+          oggetto: (command to delete a specific record)
+          valore: Delete
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0173.0028
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 75
+  - raw_id: R.DOC0173.0033
+    source_unit: U.DOC0173.0033
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company Import Request structure
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: operationCode
+      technical_name: operationCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Code of requested operation
+      section: 4.1.1.1
+      source_unit: U.DOC0173.0033
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 191
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0034
+    source_unit: U.DOC0173.0034
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company Import Request structure
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: sendEMail
+      technical_name: sendEMail
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Flag stating if, in case of creation of a new supplier company, mail must be sent to notify the registration
+      section: 4.1.1.1
+      source_unit: U.DOC0173.0034
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 78
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0035
+    source_unit: U.DOC0173.0035
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company Import Request structure
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: companyInfo
+      technical_name: companyInfo
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Company and super user data container (for all data to be imported)
+      section: 4.1.1.1
+      source_unit: U.DOC0173.0035
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 32
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: true
+  - raw_id: R.DOC0173.0036
+    source_unit: U.DOC0173.0036
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: bravoId
+      technical_name: bravoId
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: JA internal identifier
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0036
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 70
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0037
+    source_unit: U.DOC0173.0037
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: companyName
+      technical_name: companyName
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company name
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0037
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 18
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0038
+    source_unit: U.DOC0173.0038
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: bizLegalStruct
+      technical_name: bizLegalStruct
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Legal structure title expressed according to company country
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0038
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 62
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0039
+    source_unit: U.DOC0173.0039
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: fiscalCode
+      technical_name: fiscalCode
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: Fiscal code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0039
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 68
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0040
+    source_unit: U.DOC0173.0040
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: vat
+      technical_name: vat
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: Country VAT code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0040
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 12
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0041
+    source_unit: U.DOC0173.0041
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: euVat
+      technical_name: euVat
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: European VAT code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0041
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 13
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0042
+    source_unit: U.DOC0173.0042
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: dAndBCode
+      technical_name: dAndBCode
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: Dun&BradStreet code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0042
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 14
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0043
+    source_unit: U.DOC0173.0043
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userAlias
+      technical_name: userAlias
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: Super user login
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0043
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 13
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0044
+    source_unit: U.DOC0173.0044
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: isoCountry
+      technical_name: isoCountry
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: Company main postal address – Country (ISO code or country name)
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0044
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 110
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0045
+    source_unit: U.DOC0173.0045
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.85
+    extraction:
+      label: extCode
+      technical_name: extCode
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: Company identification code within the external system
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0045
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 100
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0046
+    source_unit: U.DOC0173.0046
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: bizEmail
+      technical_name: bizEmail
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company main email address
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0046
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 43
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0047
+    source_unit: U.DOC0173.0047
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: bizPhone
+      technical_name: bizPhone
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company main telephone phone number
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0047
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 23
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0048
+    source_unit: U.DOC0173.0048
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: bizFax
+      technical_name: bizFax
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company Fax
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0048
+      row_ref: t0.r12
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 17
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0049
+    source_unit: U.DOC0173.0049
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: webSite
+      technical_name: webSite
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company web-site
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0049
+      row_ref: t0.r13
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 18
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0050
+    source_unit: U.DOC0173.0050
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: address
+      technical_name: address
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company main postal address
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0050
+      row_ref: t0.r14
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0051
+    source_unit: U.DOC0173.0051
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: zip
+      technical_name: zip
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company main postal address – ZIP code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0051
+      row_ref: t0.r15
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 23
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0052
+    source_unit: U.DOC0173.0052
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: city
+      technical_name: city
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company main postal address – City
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0052
+      row_ref: t0.r16
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 22
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0053
+    source_unit: U.DOC0173.0053
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: province
+      technical_name: province
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company main postal address – Province/County name as presented to user
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0053
+      row_ref: t0.r17
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 62
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0054
+    source_unit: U.DOC0173.0054
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: address2
+      technical_name: address2
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company alternative address
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0054
+      row_ref: t0.r18
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0055
+    source_unit: U.DOC0173.0055
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: zip2
+      technical_name: zip2
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company alternative postal address – ZIP code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0055
+      row_ref: t0.r19
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0056
+    source_unit: U.DOC0173.0056
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: city2
+      technical_name: city2
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company alternative postal address – City
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0056
+      row_ref: t0.r20
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 24
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0057
+    source_unit: U.DOC0173.0057
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: province2
+      technical_name: province2
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company alternative postal address – Province/County name as presented to user
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0057
+      row_ref: t0.r21
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 64
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0058
+    source_unit: U.DOC0173.0058
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: isoCountry2
+      technical_name: isoCountry2
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Company alternative postal address –Country (ISO code or country name)
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0058
+      row_ref: t0.r22
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 33
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0059
+    source_unit: U.DOC0173.0059
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: postalOfficeBox
+      technical_name: postalOfficeBox
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: null
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0059
+      row_ref: t0.r23
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0060
+    source_unit: U.DOC0173.0060
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: postalOfficeZipCode
+      technical_name: postalOfficeZipCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: null
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0060
+      row_ref: t0.r24
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0061
+    source_unit: U.DOC0173.0061
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: status
+      technical_name: status
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Alphanumeric external code of Seller extended status (secondary supplier status).
+        Use empty string to reset extended status.
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0061
+      row_ref: t0.r25
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 45
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0062
+    source_unit: U.DOC0173.0062
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: paymentCondition
+      technical_name: paymentCondition
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: External (visible) payment term code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0062
+      row_ref: t0.r26
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0063
+    source_unit: U.DOC0173.0063
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: turnOver
+      technical_name: turnOver
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Annual Turnover
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0063
+      row_ref: t0.r27
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 18
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0064
+    source_unit: U.DOC0173.0064
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: currency
+      technical_name: currency
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: External code of the company currency.
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0064
+      row_ref: t0.r28
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 24
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0065
+    source_unit: U.DOC0173.0065
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: apeCode
+      technical_name: apeCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: External (visible) APE code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0065
+      row_ref: t0.r29
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0066
+    source_unit: U.DOC0173.0066
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: password
+      technical_name: password
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user password
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0066
+      row_ref: t0.r30
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 19
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0067
+    source_unit: U.DOC0173.0067
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: pwdQuestion
+      technical_name: pwdQuestion
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user password retrieval question
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0067
+      row_ref: t0.r31
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0068
+    source_unit: U.DOC0173.0068
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: pwdAnswer
+      technical_name: pwdAnswer
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user password retrieval answer
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0068
+      row_ref: t0.r32
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 24
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0069
+    source_unit: U.DOC0173.0069
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userTitle
+      technical_name: userTitle
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user title as translated in default site locale, or default title value
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0069
+      row_ref: t0.r33
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 34
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0070
+    source_unit: U.DOC0173.0070
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userSurName
+      technical_name: userSurName
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super surname
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0070
+      row_ref: t0.r34
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 18
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0071
+    source_unit: U.DOC0173.0071
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userName
+      technical_name: userName
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user name
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0071
+      row_ref: t0.r35
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 18
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0072
+    source_unit: U.DOC0173.0072
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userEmail
+      technical_name: userEmail
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user email
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0072
+      row_ref: t0.r36
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 41
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0073
+    source_unit: U.DOC0173.0073
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userPhone
+      technical_name: userPhone
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user telephone number
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0073
+      row_ref: t0.r37
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0074
+    source_unit: U.DOC0173.0074
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a45
+      - FLD
+    type_hint:
+      candidates: *a45
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userFax
+      technical_name: userFax
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user fax number
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0074
+      row_ref: t0.r38
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 19
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0075
+    source_unit: U.DOC0173.0075
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userMobPhone
+      technical_name: userMobPhone
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user mobile phone
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0075
+      row_ref: t0.r39
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0076
+    source_unit: U.DOC0173.0076
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a47
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userRole
+      technical_name: userRole
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user company role (job title) code or name in current locale
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0076
+      row_ref: t0.r40
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 59
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0077
+    source_unit: U.DOC0173.0077
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: locale
+      technical_name: locale
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: "Super user default language (built up from language and country codes. E.g.: “en_GB” or “it_IT”)"
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0077
+      row_ref: t0.r41
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 79
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0078
+    source_unit: U.DOC0173.0078
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a49
+      - FLD
+    type_hint:
+      candidates: *a49
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: timezone
+      technical_name: timezone
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: "Super user time-zone identifier (e.g.: ‘Europe/Brussels’ or ‘America/New_York’)"
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0078
+      row_ref: t0.r42
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 76
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0079
+    source_unit: U.DOC0173.0079
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a50
+      - FLD
+    type_hint:
+      candidates: *a50
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: prefContact
+      technical_name: prefContact
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user preferred contact mode code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0079
+      row_ref: t0.r43
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0080
+    source_unit: U.DOC0173.0080
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a51
+      - FLD
+    type_hint:
+      candidates: *a51
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: prefFolder
+      technical_name: prefFolder
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: null
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0080
+      row_ref: t0.r44
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 11
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0081
+    source_unit: U.DOC0173.0081
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a52
+      - FLD
+    type_hint:
+      candidates: *a52
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userExtCode
+      technical_name: userExtCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user identification code within the external system
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0081
+      row_ref: t0.r45
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 29
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0082
+    source_unit: U.DOC0173.0082
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a53
+      - FLD
+    type_hint:
+      candidates: *a53
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userBusinessUnitCode
+      technical_name: userBusinessUnitCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: null
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0082
+      row_ref: t0.r46
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 13
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0083
+    source_unit: U.DOC0173.0083
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a54
+      - FLD
+    type_hint:
+      candidates: *a54
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userDivisionCode
+      technical_name: userDivisionCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user division id
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0083
+      row_ref: t0.r47
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 22
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0084
+    source_unit: U.DOC0173.0084
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a55
+      - FLD
+    type_hint:
+      candidates: *a55
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: userProfileCode
+      technical_name: userProfileCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Super user profile code
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0084
+      row_ref: t0.r48
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 22
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0085
+    source_unit: U.DOC0173.0085
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a56
+      - FLD
+    type_hint:
+      candidates: *a56
+      outcome: FLD
+      score: 0.85
+    extraction:
+      label: extUniqueCode
+      technical_name: extUniqueCode
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: |-
+        Company unique identification code within the external system. When valorized it must be unique within the companies registered and enabled in the same toolkit group (companies deactivated and deleted are excluded).
+        Available from version 12_4_0_02.
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0085
+      row_ref: t0.r49
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 175
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0086
+    source_unit: U.DOC0173.0086
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a57
+      - FLD
+    type_hint:
+      candidates: *a57
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: accessAuctions
+      technical_name: accessAuctions
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Flag that indicates access to auctions.
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0086
+      row_ref: t0.r50
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 50
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0087
+    source_unit: U.DOC0173.0087
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a58
+      - FLD
+    type_hint:
+      candidates: *a58
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: accessRfx
+      technical_name: accessRfx
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Flag that indicates access to rfx.
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0087
+      row_ref: t0.r51
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 47
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0088
+    source_unit: U.DOC0173.0088
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Company and super-user data [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a59
+      - FLD
+    type_hint:
+      candidates: *a59
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: accessFileSharing
+      technical_name: accessFileSharing
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Flag that indicates access to file sharing.
+      section: 4.1.1.2
+      source_unit: U.DOC0173.0088
+      row_ref: t0.r52
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 52
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0090
+    source_unit: U.DOC0173.0090
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Classification Import Request structure [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a60
+      - FLD
+    type_hint:
+      candidates: *a60
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: operationCode
+      technical_name: operationCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Code of requested operation
+      section: 4.1.1.3
+      source_unit: U.DOC0173.0090
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 58
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0091
+    source_unit: U.DOC0173.0091
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Classification Import Request structure [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a61
+      - FLD
+    type_hint:
+      candidates: *a61
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: categories
+      technical_name: categories
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Classification data container (for all categories to work with)
+      section: 4.1.1.3
+      source_unit: U.DOC0173.0091
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 31
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: true
+  - raw_id: R.DOC0173.0092
+    source_unit: U.DOC0173.0092
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Categoria [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a62
+      - FLD
+    type_hint:
+      candidates: *a62
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: categoryCode
+      technical_name: categoryCode
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Category reference code
+      section: 4.1.1.4
+      source_unit: U.DOC0173.0092
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: true
+  - raw_id: R.DOC0173.0094
+    source_unit: U.DOC0173.0094
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Sub User Import Request structure [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a63
+      - FLD
+    type_hint:
+      candidates: *a63
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: operationCode
+      technical_name: operationCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Code of requested operation
+      section: 4.1.1.5
+      source_unit: U.DOC0173.0094
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 68
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0095
+    source_unit: U.DOC0173.0095
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Sub User Import Request structure [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a64
+      - FLD
+    type_hint:
+      candidates: *a64
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: sendEMail
+      technical_name: sendEMail
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: For operations on sub users as CREATE, UPDATE, ENABLE, DISABLE, this flag states if a mail must be sent to notify the operation
+      section: 4.1.1.5
+      source_unit: U.DOC0173.0095
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 76
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0096
+    source_unit: U.DOC0173.0096
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Sub User Import Request structure [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a65
+      - FLD
+    type_hint:
+      candidates: *a65
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: subuser
+      technical_name: subuser
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Sub user container data
+      section: 4.1.1.5
+      source_unit: U.DOC0173.0096
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 20
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: true
+  - raw_id: R.DOC0173.0097
+    source_unit: U.DOC0173.0097
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a66
+      - FLD
+    type_hint:
+      candidates: *a66
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: name
+      technical_name: name
+      type: null
+      mandatory_text: |-
+        Y
+        for CREATE
+        N
+        for UPDATE
+      allowed_values: []
+      notes: User first name
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0097
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 23
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0098
+    source_unit: U.DOC0173.0098
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a67
+      - FLD
+    type_hint:
+      candidates: *a67
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: surName
+      technical_name: surName
+      type: null
+      mandatory_text: |-
+        Y
+        for CREATE
+        N
+        for UPDATE
+      allowed_values: []
+      notes: User last name
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0098
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 24
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0099
+    source_unit: U.DOC0173.0099
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a68
+      - FLD
+    type_hint:
+      candidates: *a68
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: email
+      technical_name: email
+      type: null
+      mandatory_text: |-
+        Y
+        for CREATE
+        N
+        for UPDATE
+      allowed_values: []
+      notes: User email address
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0099
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 47
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0100
+    source_unit: U.DOC0173.0100
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a69
+      - FLD
+    type_hint:
+      candidates: *a69
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: phoneNumber
+      technical_name: phoneNumber
+      type: null
+      mandatory_text: |-
+        Y
+        for CREATE
+        N
+        for UPDATE
+      allowed_values: []
+      notes: User telephone
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0100
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0101
+    source_unit: U.DOC0173.0101
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a70
+      - FLD
+    type_hint:
+      candidates: *a70
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: mobilePhoneNumber
+      technical_name: mobilePhoneNumber
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: User mobile phone
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0101
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0102
+    source_unit: U.DOC0173.0102
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a71
+      - FLD
+    type_hint:
+      candidates: *a71
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: division
+      technical_name: division
+      type: null
+      mandatory_text: |-
+        Y
+        for CREATE
+        N
+        for UPDATE
+      allowed_values: []
+      notes: User division name
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0102
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0103
+    source_unit: U.DOC0173.0103
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a72
+      - FLD
+    type_hint:
+      candidates: *a72
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: businessUnit
+      technical_name: businessUnit
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: User business unit name
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0103
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0104
+    source_unit: U.DOC0173.0104
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a73
+      - FLD
+    type_hint:
+      candidates: *a73
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: rightsProfile
+      technical_name: rightsProfile
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: User profile name
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0104
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 54
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0105
+    source_unit: U.DOC0173.0105
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a74
+      - FLD
+    type_hint:
+      candidates: *a74
+      outcome: FLD
+      score: 0.85
+    extraction:
+      label: login
+      technical_name: login
+      type: null
+      mandatory_text: |-
+        Y
+        for CREATE
+        N
+        for UPDATE
+      allowed_values: []
+      notes: User login
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0105
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 109
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0106
+    source_unit: U.DOC0173.0106
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a75
+      - FLD
+    type_hint:
+      candidates: *a75
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: language
+      technical_name: language
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: "User default language (built up from language and country codes. E.g.: “en_GB” or “it_IT”)"
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0106
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 58
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0107
+    source_unit: U.DOC0173.0107
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a76
+      - FLD
+    type_hint:
+      candidates: *a76
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: timeZone
+      technical_name: timeZone
+      type: null
+      mandatory_text: |-
+        Y
+        for CREATE
+        N
+        for UPDATE
+      allowed_values: []
+      notes: "User time-zone identifier (e.g.: ‘GMT’, ‘Europe/Brussels’ or ‘America/New_York’) or GMt specification (e,g,: ‘GMT’, ‘GMT + 1:00’, ‘GMT - 5:00’)"
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0107
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 56
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0108
+    source_unit: U.DOC0173.0108
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a77
+      - FLD
+    type_hint:
+      candidates: *a77
+      outcome: FLD
+      score: 0.85
+    extraction:
+      label: extCode
+      technical_name: extCode
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: User identification code within the external system
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0108
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 121
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0109
+    source_unit: U.DOC0173.0109
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: SubUserInfo [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a78
+      - FLD
+    type_hint:
+      candidates: *a78
+      outcome: FLD
+      score: 0.85
+    extraction:
+      label: userId
+      technical_name: userId
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: User internal identifier
+      section: 4.1.1.6
+      source_unit: U.DOC0173.0109
+      row_ref: t0.r12
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 77
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0111
+    source_unit: U.DOC0173.0111
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Data Element Import Request structure [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a79
+      - FLD
+    type_hint:
+      candidates: *a79
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: operationCode
+      technical_name: operationCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Code of requested operation
+      section: 4.1.1.7
+      source_unit: U.DOC0173.0111
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 50
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0112
+    source_unit: U.DOC0173.0112
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: Data Element Import Request structure [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a80
+      - FLD
+    type_hint:
+      candidates: *a80
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: dataElements
+      technical_name: dataElements
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: eVm answer container data
+      section: 4.1.1.7
+      source_unit: U.DOC0173.0112
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 118
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: true
+  - raw_id: R.DOC0173.0114
+    source_unit: U.DOC0173.0114
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0173
+    section: DeInfo (Additional Info) [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a81
+      - GLS
+    type_hint:
+      candidates: *a81
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: They
+      definition: the dynamic component of the specific data model associated to the related logical entity.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0173.0114
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0173.0116
+    source_unit: U.DOC0173.0116
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: DeInfo (Additional Info) [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a82
+      - FLD
+    type_hint:
+      candidates: *a82
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: name
+      technical_name: name
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: data element name
+      section: 4.1.1.8
+      source_unit: U.DOC0173.0116
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 46
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: true
+  - raw_id: R.DOC0173.0117
+    source_unit: U.DOC0173.0117
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: DeInfo (Additional Info) [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a83
+      - FLD
+    type_hint:
+      candidates: *a83
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: values/value
+      technical_name: values/value
+      type: null
+      mandatory_text: Y/N
+      allowed_values: []
+      notes: Value of the Data Element (eVM answer)
+      section: 4.1.1.8
+      source_unit: U.DOC0173.0117
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 180
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0118
+    source_unit: U.DOC0173.0118
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: DeInfo (Additional Info) [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a84
+      - FLD
+    type_hint:
+      candidates: *a84
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: values/value/@id
+      technical_name: values/value/@id
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: attribute used to clear the data element value
+      section: 4.1.1.8
+      source_unit: U.DOC0173.0118
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 62
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0119
+    source_unit: U.DOC0173.0119
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: DeInfo (Additional Info) [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a85
+      - FLD
+    type_hint:
+      candidates: *a85
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: attachmentValue/fileName
+      technical_name: attachmentValue/fileName
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: Attachment file name
+      section: 4.1.1.8
+      source_unit: U.DOC0173.0119
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 52
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0120
+    source_unit: U.DOC0173.0120
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: DeInfo (Additional Info) [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a86
+      - FLD
+    type_hint:
+      candidates: *a86
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: attachmentValue/fileDescription
+      technical_name: attachmentValue/fileDescription
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: Attachment description
+      section: 4.1.1.8
+      source_unit: U.DOC0173.0120
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 20
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0121
+    source_unit: U.DOC0173.0121
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: DeInfo (Additional Info) [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a87
+      - FLD
+    type_hint:
+      candidates: *a87
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: attachmentValue/fileBase64
+      technical_name: attachmentValue/fileBase64
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: Attachment body
+      section: 4.1.1.8
+      source_unit: U.DOC0173.0121
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 17
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0122
+    source_unit: U.DOC0173.0122
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0173
+    section: DeInfo (Additional Info) [Import/update of Company and Users Data]
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a88
+      - FLD
+    type_hint:
+      candidates: *a88
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: attachmentExpiryDate
+      technical_name: attachmentExpiryDate
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: Attachment expiring date (without time)
+      section: 4.1.1.8
+      source_unit: U.DOC0173.0122
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0173
+    needs_llm: false
+    tokens: 22
+    lineage:
+      required_by:
+        - ref: R.DOC0173.I001
+          mandatory_there: false
+  - raw_id: R.DOC0173.0123
+    source_unit: U.DOC0173.0123
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: Company identification strategy
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a89
+      - FLD
+    type_hint:
+      candidates: *a89
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: Web service
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0173.0123
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0173.0124
+    source_unit: U.DOC0173.0124
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: Company identification strategy
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a90
+      - FLD
+    type_hint:
+      candidates: *a90
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0173.0124
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 35
+  - raw_id: R.DOC0173.0134
+    source_unit: U.DOC0173.0134
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0173
+    section: Sub User identification strategy
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a91
+      - FLW
+    type_hint:
+      candidates: *a91
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: the user
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: if
+          oggetto: the user exists, and the field extCode is provided, it is used to update the existing external code of the user
+          valore: null
+        - n: 2
+          verbo: if
+          oggetto: "the user doesn’t exist, the system checks the extCode field:"
+          valore: null
+        - n: 3
+          verbo: if
+          oggetto: no extCode is provided the system returns an error
+          valore: null
+        - n: 4
+          verbo: if
+          oggetto: the extCode is provided and not exist user with this external code, the system returns an error
+          valore: null
+        - n: 5
+          verbo: if
+          oggetto: the extCode is provided and exists user with such external code, the system updates the login data of the user with the login provided
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0173.0134
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 144
+  - raw_id: R.DOC0173.0135
+    source_unit: U.DOC0173.0135
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: Sub User identification strategy
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a92
+      - FLD
+    type_hint:
+      candidates: *a92
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: one of the fields userId or extCode
+      modality: obbligo-condizionale
+      condition: no login field is provided
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0173.0135
+      mandatory:
+        kind: conditional
+        when: no login field is provided
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0173.0138
+    source_unit: U.DOC0173.0138
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: Sub User Profile update
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a93
+      - INV
+    type_hint:
+      candidates: *a93
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: profile assigned to a Sub User
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0173.0138
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0173.0140
+    source_unit: U.DOC0173.0140
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0173
+    section: Sub User Profile update
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a94
+      - FLW
+    type_hint:
+      candidates: *a94
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: "reset_subuser_seller_profile:"
+          oggetto: all Sub User rights are removed
+          valore: all Sub User rights are removed
+        - n: 2
+          verbo: "set_default_subuser_seller_profile:"
+          oggetto: "all Sub User rights are cleaned and the following permission are assigned:"
+          valore: "all Sub User rights are cleaned and the following permission are assigned:"
+        - n: 3
+          verbo: "set_full_subuser_seller_profile:"
+          oggetto: "all Sub User rights are cleaned and the following permission are assigned:"
+          valore: "all Sub User rights are cleaned and the following permission are assigned:"
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0173.0140
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 99
+  - raw_id: R.DOC0173.0156
+    source_unit: U.DOC0173.0156
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0173
+    section: Export of Company and Users Data
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a95
+      - FLW
+    type_hint:
+      candidates: *a95
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: conditional
+          oggetto: Filters
+          valore: null
+        - n: 2
+          verbo: component
+          oggetto: Filters
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0173.0156
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 31
+  - raw_id: R.DOC0173.0159
+    source_unit: U.DOC0173.0159
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: Export of Company and Users Data
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a96
+      - FLD
+    type_hint:
+      candidates: *a96
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: All new integrations (or upgrade to existing ones)
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0173.0159
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0173.0180
+    source_unit: U.DOC0173.0180
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0173
+    section: Results pagination
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a97
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a97
+      outcome: ambiguo
+      score: 0.2
+    extraction:
+      kind: tacita
+      text: In order to better manage performances, webservices export responses are limited to a predefined number of items that are configured on a single integration basis (usually it is defaulted to 100 objects per webservice call).
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0173.0180
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 56
+  - raw_id: R.DOC0173.0181
+    source_unit: U.DOC0173.0181
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: Results pagination
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a98
+      - FLD
+    type_hint:
+      candidates: *a98
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0173.0181
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 40
+  - raw_id: R.DOC0173.0184
+    source_unit: U.DOC0173.0184
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0173
+    section: Results pagination
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a99
+      - FLW
+    type_hint:
+      candidates: *a99
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: "totrecords:"
+          oggetto: number of objects matching the export criteria
+          valore: number of objects matching the export criteria
+        - n: 2
+          verbo: "returnedrecords:"
+          oggetto: number of objects returned in the current response
+          valore: number of objects returned in the current response
+        - n: 3
+          verbo: "startat:"
+          oggetto: index of the first item (it should be exactly what provided in the same parameter of the export request)
+          valore: index of the first item (it should be exactly what provided in the same parameter of the export request)
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0173.0184
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 67
+  - raw_id: R.DOC0173.0185
+    source_unit: U.DOC0173.0185
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: Results pagination
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a100
+      - FLD
+    type_hint:
+      candidates: *a100
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0173.0185
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 42
+  - raw_id: R.DOC0173.0198
+    source_unit: U.DOC0173.0198
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0173
+    section: WSDL
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a101
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a101
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTE:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0173.0198
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0173.0204
+    source_unit: U.DOC0173.0204
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: WSDL
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a102
+      - FLD
+    type_hint:
+      candidates: *a102
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: For this reason the WS client component
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0173.0204
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0173.0210
+    source_unit: U.DOC0173.0210
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0173
+    section: DoS attack protection
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a103
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a103
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: In the event the webservice client exceeds a preconfigured number of webservice calls per minute (usually 100), when this scenario was not previously agreed, the webservice could return an HTTP status 429 (Too Many Requests) as per RFC 6585 (https://tools.ietf.org/html/rfc6585#page-3).
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0173.0210
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 72
+  - raw_id: R.DOC0173.0211
+    source_unit: U.DOC0173.0211
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: DoS attack protection
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a104
+      - FLD
+    type_hint:
+      candidates: *a104
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: response
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0173.0211
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 32
+  - raw_id: R.DOC0173.0217
+    source_unit: U.DOC0173.0217
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0173
+    section: Time and Time Zone
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a105
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a105
+      outcome: ambiguo
+      score: 0
+    extraction:
+      kind: tacita
+      text: The web service exports all fields of type datetime in the installation reference timezone, usually UTC (Universal Time Coordinated) that corresponds to timezone GMT (Greenwich Mean Time).
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0173.0217
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 47
+  - raw_id: R.DOC0173.0223
+    source_unit: U.DOC0173.0223
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: Multiple calls to the web service
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a106
+      - FLD
+    type_hint:
+      candidates: *a106
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0173.0223
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0173.0226
+    source_unit: U.DOC0173.0226
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0173
+    section: Multiple calls to the web service
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a107
+      - INV
+    type_hint:
+      candidates: *a107
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: high number of parallel calls
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0173.0226
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0173.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0173
+    section: null
+    source_unit: U.DOC0173.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: jint-development-kit-profile-management-web-serv-35c3a7f6
+      protocol:
+        - SOAP
+        - XML
+      endpoints:
+        - https://MY-SERVER/esop/common-host/services/ProfileManagement?wsdl
+        - https://MY-SERVER/esop/common-host/services/ProfileManagement
+      operations: []
+      mappings:
+        - field_ref: R.DOC0173.0033
+          target: operationCode
+          mandatory: false
+        - field_ref: R.DOC0173.0034
+          target: sendEMail
+          mandatory: false
+        - field_ref: R.DOC0173.0035
+          target: companyInfo
+          mandatory: true
+        - field_ref: R.DOC0173.0036
+          target: bravoId
+          mandatory: false
+        - field_ref: R.DOC0173.0037
+          target: companyName
+          mandatory: false
+        - field_ref: R.DOC0173.0038
+          target: bizLegalStruct
+          mandatory: false
+        - field_ref: R.DOC0173.0039
+          target: fiscalCode
+          mandatory: false
+        - field_ref: R.DOC0173.0040
+          target: vat
+          mandatory: false
+        - field_ref: R.DOC0173.0041
+          target: euVat
+          mandatory: false
+        - field_ref: R.DOC0173.0042
+          target: dAndBCode
+          mandatory: false
+        - field_ref: R.DOC0173.0043
+          target: userAlias
+          mandatory: false
+        - field_ref: R.DOC0173.0044
+          target: isoCountry
+          mandatory: false
+        - field_ref: R.DOC0173.0045
+          target: extCode
+          mandatory: false
+        - field_ref: R.DOC0173.0046
+          target: bizEmail
+          mandatory: false
+        - field_ref: R.DOC0173.0047
+          target: bizPhone
+          mandatory: false
+        - field_ref: R.DOC0173.0048
+          target: bizFax
+          mandatory: false
+        - field_ref: R.DOC0173.0049
+          target: webSite
+          mandatory: false
+        - field_ref: R.DOC0173.0050
+          target: address
+          mandatory: false
+        - field_ref: R.DOC0173.0051
+          target: zip
+          mandatory: false
+        - field_ref: R.DOC0173.0052
+          target: city
+          mandatory: false
+        - field_ref: R.DOC0173.0053
+          target: province
+          mandatory: false
+        - field_ref: R.DOC0173.0054
+          target: address2
+          mandatory: false
+        - field_ref: R.DOC0173.0055
+          target: zip2
+          mandatory: false
+        - field_ref: R.DOC0173.0056
+          target: city2
+          mandatory: false
+        - field_ref: R.DOC0173.0057
+          target: province2
+          mandatory: false
+        - field_ref: R.DOC0173.0058
+          target: isoCountry2
+          mandatory: false
+        - field_ref: R.DOC0173.0059
+          target: postalOfficeBox
+          mandatory: false
+        - field_ref: R.DOC0173.0060
+          target: postalOfficeZipCode
+          mandatory: false
+        - field_ref: R.DOC0173.0061
+          target: status
+          mandatory: false
+        - field_ref: R.DOC0173.0062
+          target: paymentCondition
+          mandatory: false
+        - field_ref: R.DOC0173.0063
+          target: turnOver
+          mandatory: false
+        - field_ref: R.DOC0173.0064
+          target: currency
+          mandatory: false
+        - field_ref: R.DOC0173.0065
+          target: apeCode
+          mandatory: false
+        - field_ref: R.DOC0173.0066
+          target: password
+          mandatory: false
+        - field_ref: R.DOC0173.0067
+          target: pwdQuestion
+          mandatory: false
+        - field_ref: R.DOC0173.0068
+          target: pwdAnswer
+          mandatory: false
+        - field_ref: R.DOC0173.0069
+          target: userTitle
+          mandatory: false
+        - field_ref: R.DOC0173.0070
+          target: userSurName
+          mandatory: false
+        - field_ref: R.DOC0173.0071
+          target: userName
+          mandatory: false
+        - field_ref: R.DOC0173.0072
+          target: userEmail
+          mandatory: false
+        - field_ref: R.DOC0173.0073
+          target: userPhone
+          mandatory: false
+        - field_ref: R.DOC0173.0074
+          target: userFax
+          mandatory: false
+        - field_ref: R.DOC0173.0075
+          target: userMobPhone
+          mandatory: false
+        - field_ref: R.DOC0173.0076
+          target: userRole
+          mandatory: false
+        - field_ref: R.DOC0173.0077
+          target: locale
+          mandatory: false
+        - field_ref: R.DOC0173.0078
+          target: timezone
+          mandatory: false
+        - field_ref: R.DOC0173.0079
+          target: prefContact
+          mandatory: false
+        - field_ref: R.DOC0173.0080
+          target: prefFolder
+          mandatory: false
+        - field_ref: R.DOC0173.0081
+          target: userExtCode
+          mandatory: false
+        - field_ref: R.DOC0173.0082
+          target: userBusinessUnitCode
+          mandatory: false
+        - field_ref: R.DOC0173.0083
+          target: userDivisionCode
+          mandatory: false
+        - field_ref: R.DOC0173.0084
+          target: userProfileCode
+          mandatory: false
+        - field_ref: R.DOC0173.0085
+          target: extUniqueCode
+          mandatory: false
+        - field_ref: R.DOC0173.0086
+          target: accessAuctions
+          mandatory: false
+        - field_ref: R.DOC0173.0087
+          target: accessRfx
+          mandatory: false
+        - field_ref: R.DOC0173.0088
+          target: accessFileSharing
+          mandatory: false
+        - field_ref: R.DOC0173.0090
+          target: operationCode
+          mandatory: false
+        - field_ref: R.DOC0173.0091
+          target: categories
+          mandatory: true
+        - field_ref: R.DOC0173.0092
+          target: categoryCode
+          mandatory: true
+        - field_ref: R.DOC0173.0094
+          target: operationCode
+          mandatory: false
+        - field_ref: R.DOC0173.0095
+          target: sendEMail
+          mandatory: false
+        - field_ref: R.DOC0173.0096
+          target: subuser
+          mandatory: true
+        - field_ref: R.DOC0173.0097
+          target: name
+          mandatory: false
+        - field_ref: R.DOC0173.0098
+          target: surName
+          mandatory: false
+        - field_ref: R.DOC0173.0099
+          target: email
+          mandatory: false
+        - field_ref: R.DOC0173.0100
+          target: phoneNumber
+          mandatory: false
+        - field_ref: R.DOC0173.0101
+          target: mobilePhoneNumber
+          mandatory: false
+        - field_ref: R.DOC0173.0102
+          target: division
+          mandatory: false
+        - field_ref: R.DOC0173.0103
+          target: businessUnit
+          mandatory: false
+        - field_ref: R.DOC0173.0104
+          target: rightsProfile
+          mandatory: false
+        - field_ref: R.DOC0173.0105
+          target: login
+          mandatory: false
+        - field_ref: R.DOC0173.0106
+          target: language
+          mandatory: false
+        - field_ref: R.DOC0173.0107
+          target: timeZone
+          mandatory: false
+        - field_ref: R.DOC0173.0108
+          target: extCode
+          mandatory: false
+        - field_ref: R.DOC0173.0109
+          target: userId
+          mandatory: false
+        - field_ref: R.DOC0173.0111
+          target: operationCode
+          mandatory: false
+        - field_ref: R.DOC0173.0112
+          target: dataElements
+          mandatory: true
+        - field_ref: R.DOC0173.0116
+          target: name
+          mandatory: true
+        - field_ref: R.DOC0173.0117
+          target: values/value
+          mandatory: false
+        - field_ref: R.DOC0173.0118
+          target: values/value/@id
+          mandatory: false
+        - field_ref: R.DOC0173.0119
+          target: attachmentValue/fileName
+          mandatory: false
+        - field_ref: R.DOC0173.0120
+          target: attachmentValue/fileDescription
+          mandatory: false
+        - field_ref: R.DOC0173.0121
+          target: attachmentValue/fileBase64
+          mandatory: false
+        - field_ref: R.DOC0173.0122
+          target: attachmentExpiryDate
+          mandatory: false
+      error_catalog:
+        - code: "0"
+          description: operation completed successfully
+          source_unit: U.DOC0173.0150
+        - code: "1"
+          description: operation completed successfully with warnings as detailed in the returned message
+          source_unit: U.DOC0173.0150
+        - code: "2"
+          description: operation not completed due to error as detailed in the returned message (see table below “Error Codes”)
+          source_unit: U.DOC0173.0150
+        - code: "-996"
+          description: Invalid SOAP Request Object (SOAP Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+          source_unit: U.DOC0173.0150
+        - code: "-997"
+          description: Unauthorized Method (Web Service method isn’t configured to be executed)
+          source_unit: U.DOC0173.0150
+        - code: "-998"
+          description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+          source_unit: U.DOC0173.0150
+        - code: "-999"
+          description: Generic exception
+          source_unit: U.DOC0173.0150
+        - code: "0"
+          description: operation completed successfully
+          source_unit: U.DOC0173.0196
+        - code: "1"
+          description: operation completed successfully with warnings as detailed in the returned message
+          source_unit: U.DOC0173.0196
+        - code: "2"
+          description: operation not completed due to error as detailed in the returned message
+          source_unit: U.DOC0173.0196
+        - code: "-501"
+          description: Invalid additional info
+          source_unit: U.DOC0173.0196
+        - code: "-503"
+          description: Wrong value for component filter
+          source_unit: U.DOC0173.0196
+        - code: "-504"
+          description: Wrong value for condition filter
+          source_unit: U.DOC0173.0196
+        - code: "-505"
+          description: Wrong value for server side condition filter
+          source_unit: U.DOC0173.0196
+        - code: "-996"
+          description: Invalid SOAP Request Object (SOAP Request doesn’t match web service definition)
+          source_unit: U.DOC0173.0196
+        - code: "-997"
+          description: Unauthorized Method (Web Service method isn’t configured to be executed)
+          source_unit: U.DOC0173.0196
+        - code: "-998"
+          description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+          source_unit: U.DOC0173.0196
+        - code: "-999"
+          description: Generic exception
+          source_unit: U.DOC0173.0196
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+    tokens: 2650

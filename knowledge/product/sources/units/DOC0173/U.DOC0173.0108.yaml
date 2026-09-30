@@ -1,0 +1,39 @@
+id: U.DOC0173.0108
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: extCode | Mandatory (Y/N): Y/N | Description: User identification code within the external system | Mapping on JA data model and notes: It may be used in case of UPDATE, ENABLE, DISABLE to identify the user to work on, when no user alias (login) is specified and no user id is specified or when the web service has been called to update the login value.
+  It can be updated in case of UPDATE when an existing user alias (login) is specified or when the user id is specified.
+hash: sha256:04d46a88544be7c1876055add4de2ec85cb9223491747739df84b2a4a87e9962
+words: 89
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: SubUserInfo [Import/update of Company and Users Data]
+  section_path: 4.1.1.6
+  page: 6
+  lang: en
+  prev: U.DOC0173.0107
+  next: U.DOC0173.0109
+row:
+  table: 0
+  row: 11
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - extCode
+    - Y/N
+    - User identification code within the external system
+    - |-
+      It may be used in case of UPDATE, ENABLE, DISABLE to identify the user to work on, when no user alias (login) is specified and no user id is specified or when the web service has been called to update the login value.
+      It can be updated in case of UPDATE when an existing user alias (login) is specified or when the user id is specified.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

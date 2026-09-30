@@ -1,0 +1,231 @@
+doc: S.STD.XSC.DOC.0158
+scope: XSC
+extracted_at: 2026-09-30T04:31:32.009Z
+tier: T0
+stats:
+  units: 228
+  extracted_units: 6
+  document_candidates: 0
+  needs_llm: 4
+  t0_complete: 2
+  by_candidate:
+    FLD: 5
+    GLS: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 1491
+  sessions:
+    - n: 1
+      tokens: 1491
+      batches: 1
+      items: 4
+      batch_items:
+        - - R.DOC0158.0055
+          - R.DOC0158.0064
+          - R.DOC0158.0098
+          - R.DOC0158.0099
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0158.0055
+    source_unit: U.DOC0158.0055
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0158
+    section: 10/6/2020
+    page: 16
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0158.0055
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 17
+  - raw_id: R.DOC0158.0064
+    source_unit: U.DOC0158.0064
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0158
+    section: 10/6/2020
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0158.0064
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 38
+  - raw_id: R.DOC0158.0093
+    source_unit: U.DOC0158.0093
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0158
+    section: 10/6/2020
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - GLS
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Managing supplier relationships
+      definition: a priority – and a challenge
+      aliases: []
+      lang: en
+      source_unit: U.DOC0158.0093
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0158.0098
+    source_unit: U.DOC0158.0098
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0158
+    section: 10/6/2020
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0158.0098
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 18
+  - raw_id: R.DOC0158.0099
+    source_unit: U.DOC0158.0099
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0158
+    section: 10/6/2020
+    page: 29
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0158.0099
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 18
+  - raw_id: R.DOC0158.0139
+    source_unit: U.DOC0158.0139
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0158
+    section: 10/6/2020
+    page: 38
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Organizations that stock items to have “on-hand”
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0158.0139
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 23

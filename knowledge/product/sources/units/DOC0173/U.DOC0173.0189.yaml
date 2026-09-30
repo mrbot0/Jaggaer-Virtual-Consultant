@@ -1,0 +1,131 @@
+id: U.DOC0173.0189
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: userPhone | Description: Super user telephone number Attribute: userFax | Description: Super user fax number Attribute: userMobPhone | Description: Super user mobile phone Attribute: userRole | Description: Super user company role (job title) name in current locale Attribute: locale | Description: Super user default language (built up from language and country codes. E.g.: “en_GB” or “it_IT”) Attribute: timezone | Description: Super user time-zone name with GMT offset specification (e.g.: “(GMT 0:00) Western Europe Time, London, Lisbon” ) Attribute: prefContact | Description: Super user preferred contact mode description in current locale Attribute: prefFolder | Description: Default path for attachment download Attribute: userExtCode | Description: Super user identification code within the external system Attribute: userBusinessUnitCode | Description: Super user business unit code Attribute: userDivisionCode | Description: Super user division name Attribute: userProfileCode | Description: Super user profile name Attribute: registrationDate | Description: Registration date (format YYYY-MM-DD, without time). Replaced by registrationDateTime from BA_16_02 Attribute: isoProvince | Description: Company main postal address – Province/County ISO code Attribute: isoProvince2 | Description: Company alternative postal address – Province/County ISO code Attribute: buyerManaged | Description: 1 – managed by buyer, 0 managed by seller [valid only for seller] Attribute: extStatus | Description: Alphanumeric external code of Seller extended status (secondary supplier status) | Available from version: 12_1_03 Attribute: type | Description: Company account type: BUYER, SELLER, GURU, SUPER | Available from version: 12_1_03 Attribute: lastModTime | Description: Company last updated date/time (global) | Available from version: 12_1_03 Attribute: userId | Description: Super user internal identifier | Available from version: 12_1_03 Attribute: userDivisionId | Description: Super user division id | Available from version: 12_1_03 Attribute: userLoginCount | Description: Super user login count | Available from version: 12_1_03 Attribute: userLastLoginDate | Description: Super user last login date (without time)."
+hash: sha256:f5c9a9187e9b7819ae5a5d5946bea2e4fc5121000eff9f1f2f1f177142e77b79
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Company and super-user data [Export of Company and Users Data]
+  section_path: 4.2.4.1
+  page: 7
+  lang: en
+  prev: U.DOC0173.0188
+  next: U.DOC0173.0190
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - userPhone
+      - Super user telephone number
+      - ""
+    - - userFax
+      - Super user fax number
+      - ""
+    - - userMobPhone
+      - Super user mobile phone
+      - ""
+    - - userRole
+      - Super user company role (job title) name in current locale
+      - ""
+    - - locale
+      - "Super user default language (built up from language and country codes. E.g.: “en_GB” or “it_IT”)"
+      - ""
+    - - timezone
+      - "Super user time-zone name with GMT offset specification (e.g.: “(GMT 0:00) Western Europe Time, London, Lisbon” )"
+      - ""
+    - - prefContact
+      - Super user preferred contact mode description in current locale
+      - ""
+    - - prefFolder
+      - Default path for attachment download
+      - ""
+    - - userExtCode
+      - Super user identification code within the external system
+      - ""
+    - - userBusinessUnitCode
+      - Super user business unit code
+      - ""
+    - - userDivisionCode
+      - Super user division name
+      - ""
+    - - userProfileCode
+      - Super user profile name
+      - ""
+    - - registrationDate
+      - |-
+        Registration date (format YYYY-MM-DD, without time).
+        Replaced by registrationDateTime from BA_16_02
+      - ""
+    - - isoProvince
+      - Company main postal address – Province/County ISO code
+      - ""
+    - - isoProvince2
+      - Company alternative postal address – Province/County ISO code
+      - ""
+    - - buyerManaged
+      - 1 – managed by buyer, 0 managed by seller [valid only for seller]
+      - ""
+    - - extStatus
+      - Alphanumeric external code of Seller extended status (secondary supplier status)
+      - 12_1_03
+    - - type
+      - "Company account type: BUYER, SELLER, GURU, SUPER"
+      - 12_1_03
+    - - lastModTime
+      - Company last updated date/time (global)
+      - 12_1_03
+    - - userId
+      - Super user internal identifier
+      - 12_1_03
+    - - userDivisionId
+      - Super user division id
+      - 12_1_03
+    - - userLoginCount
+      - Super user login count
+      - 12_1_03
+    - - userLastLoginDate
+      - |-
+        Super user last login date (without time).
+        Replaced by userLastLoginDateTime from BA_16_02
+      - 12_1_03
+    - - deleted
+      - "Super user deletion status flag: 0 if user isn’t deleted, 1 it has been deleted. This information is inserted only if “deletedStatus” condition filter has been set (no matter value)"
+      - 12_1_03
+    - - extUniqueCode
+      - Company unique identification code within the external system. When valorized it must be unique within the companies registered and enabled in the same toolkit group (companies deactivated and deleted are excluded).
+      - 12_4_0_01
+    - - userLastModTime
+      - Super user last updated date/time
+      - BA_16_00
+    - - companyLastModTime
+      - Company registration data last updated date/time
+      - BA_16_01
+    - - registrationDateTime
+      - Registration date and time
+      - BA_16_02
+    - - userLastLoginDateTime
+      - Super user last login date and time
+      - BA_16_02
+    - - statusCode
+      - |-
+        Company platform registration status code:
+        0: Registered
+        100: Active
+        -100: Deactivated
+        -200: Deleted
+      - BA_17_00
+    - - timezoneCode
+      - 'Univocal super user time-zone identifier (e.g.: “Europe/London")'
+      - BA_17_00
+  block: 2
+  blocks: 2
+part:
+  n: 1
+  of: 2

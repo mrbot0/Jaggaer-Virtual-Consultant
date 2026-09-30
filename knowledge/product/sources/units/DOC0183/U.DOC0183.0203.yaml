@@ -1,0 +1,129 @@
+id: U.DOC0183.0203
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: URL | /esop/jint/api/public/ji/v1/receipts/
+  URL: Http Method | /esop/jint/api/public/ji/v1/receipts/: GET
+  URL: Header Parameters | /esop/jint/api/public/ji/v1/receipts/: Authorization bearer XXXX
+  URL: Response format | /esop/jint/api/public/ji/v1/receipts/: { {
+  "returnCode": 0,
+  "returnMessage": "",
+  "totRecords": 1,
+  "returnedRecords": 1,
+  "startAt": 1,
+  "receiptList": {
+  "receipt": [
+  {
+  "source": "manual",
+  "header": {
+  "originalRequestMessageId": "cef230d4d-da5c-426b-bdfc-0144221a5010",
+  "receiptId": 105150,
+  "validationStatus": "Unneeded",
+  "workflowStep": "bohStep",
+  "lastUpdate": "2020-01-15",
+  "receiptType": "1:Quantity",
+  "receiptNumber": "105150",
+  "receiptName": "Apple Ipod hifi",
+  "receiptDate": "2015-03-13T00:00:00.000Z",
+  "receiptCreateDate": "2015-03-13T00:00:00.000Z",
+  "receiptCompleteDate": "2015-09-13T00:00:00.000Z",
+  "receiver": {
+  "username": "userj",
+  "firstName": "Joe",
+  "lastName": "User",
+  "phone": {
+  "countryCode": "1",
+  "areaCode": "252",
+  "number": "3289993"
+  },
+  "department": "Academic Affairs",
+  "email": "[email]"
+  },
+  "packingSlipNumber": "1234567890",
+  "trackingNumber": "[tel]",
+  "matchStatus": "Fully Matched",
+  "exchangeRateList": {
+  "baseCurrency": "CAD",
+  "exchangeRate": []
+  }
+  }
+  }
+  ]
+  }
+  }
+  URL: Return Code | /esop/jint/api/public/ji/v1/receipts/: 200 operation processed. See response content for results
+hash: sha256:0a3352a65eb10d030561ba7aa73c97597180cb18548db51379ab2c402827efa9
+words: 123
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Export Receipts
+  section_path: 2.5.2.1
+  page: 18
+  lang: en
+  prev: U.DOC0183.0202
+  next: U.DOC0183.0204
+table:
+  table: 0
+  headers:
+    - URL
+    - /esop/jint/api/public/ji/v1/receipts/
+  rows:
+    - - Http Method
+      - GET
+    - - Header Parameters
+      - Authorization bearer XXXX
+    - - Response format
+      - |-
+        { {
+        "returnCode": 0,
+        "returnMessage": "",
+        "totRecords": 1,
+        "returnedRecords": 1,
+        "startAt": 1,
+        "receiptList": {
+        "receipt": [
+        {
+        "source": "manual",
+        "header": {
+        "originalRequestMessageId": "cef230d4d-da5c-426b-bdfc-0144221a5010",
+        "receiptId": 105150,
+        "validationStatus": "Unneeded",
+        "workflowStep": "bohStep",
+        "lastUpdate": "2020-01-15",
+        "receiptType": "1:Quantity",
+        "receiptNumber": "105150",
+        "receiptName": "Apple Ipod hifi",
+        "receiptDate": "2015-03-13T00:00:00.000Z",
+        "receiptCreateDate": "2015-03-13T00:00:00.000Z",
+        "receiptCompleteDate": "2015-09-13T00:00:00.000Z",
+        "receiver": {
+        "username": "userj",
+        "firstName": "Joe",
+        "lastName": "User",
+        "phone": {
+        "countryCode": "1",
+        "areaCode": "252",
+        "number": "3289993"
+        },
+        "department": "Academic Affairs",
+        "email": "[email]"
+        },
+        "packingSlipNumber": "1234567890",
+        "trackingNumber": "[tel]",
+        "matchStatus": "Fully Matched",
+        "exchangeRateList": {
+        "baseCurrency": "CAD",
+        "exchangeRate": []
+        }
+        }
+        }
+        ]
+        }
+        }
+    - - Return Code
+      - 200 operation processed. See response content for results
+  block: 1
+  blocks: 1

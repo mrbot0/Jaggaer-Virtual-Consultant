@@ -1,0 +1,44 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.5
+section_title: Requisition Supplier Group Info [PR Import]
+genre: tecnica
+rows:
+  - label: supplier
+    technical_name: supplier
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Supplier information.
+      See section “Supplier [PR Import]” below
+    section: 2.1.1.5
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.5#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: pricingCode
+    technical_name: pricingCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Specifies any special pricing or promotional codes associated with the
+      supplier group.
+    section: 2.1.1.5
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.5#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: discountAmount
+    technical_name: discountAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Discount information.
+      See section “Discount Amount [PR Import]” below.
+    section: 2.1.1.5
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.5#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

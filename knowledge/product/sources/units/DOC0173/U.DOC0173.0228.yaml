@@ -1,0 +1,134 @@
+id: U.DOC0173.0228
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: "VARCHAR2(256 CHAR) Attribute: password | Attribute: - | Datatype: VARCHAR2(1000 CHAR) Attribute: pwdQuestion | Attribute: User Verification Question | Datatype: VARCHAR2(1024 CHAR) Attribute: pwdAnswer | Attribute: Answer to Your User Verification Question | Datatype: VARCHAR2(1024 CHAR) Attribute: userTitle | Attribute: Title | Datatype: VARCHAR2(2000 CHAR) Attribute: userSurName | Attribute: Last Name | Datatype: VARCHAR2(128 CHAR) Attribute: userName | Attribute: First Name | Datatype: VARCHAR2(128 CHAR)"
+hash: sha256:7298e27e72434747ac78416332d83b4ce6767db2bf0c1bb625ab55f3d5459dad
+words: 65
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: CompanyInfo
+  section_path: 4.8.1
+  page: 8
+  lang: en
+  prev: U.DOC0173.0227
+  next: U.DOC0173.0229
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - bravoId
+      - "-"
+      - NUMBER(38)
+    - - companyName
+      - Organisation Name/Company Name
+      - VARCHAR2(256 CHAR)
+    - - bizLegalStruct
+      - Organisation Legal Structure
+      - VARCHAR2(256 CHAR)
+    - - fiscalCode
+      - Company Registration Number
+      - VARCHAR2(256 CHAR)
+    - - vat
+      - VAT Number
+      - VARCHAR2(256 CHAR)
+    - - euVat
+      - EU VAT Number
+      - VARCHAR2(256 CHAR)
+    - - dAndBCode
+      - Dun & Bradstreet
+      - VARCHAR2(20 CHAR)
+    - - bizEmail
+      - Organisation Email Address
+      - VARCHAR2(256 CHAR)
+    - - bizPhone
+      - Main Organisation Phone Number
+      - VARCHAR2(64 CHAR)
+    - - bizFax
+      - Organisation Fax Number
+      - VARCHAR2(64 CHAR)
+    - - webSite
+      - Web site
+      - VARCHAR2(256 CHAR)
+    - - address
+      - Address
+      - VARCHAR2(256 CHAR)
+    - - zip
+      - Postal Code
+      - VARCHAR2(50 CHAR)
+    - - city
+      - City
+      - VARCHAR2(256 CHAR)
+    - - province
+      - State/County
+      - VARCHAR2(256 CHAR)
+    - - isoCountry
+      - Country
+      - VARCHAR2(256 CHAR)
+    - - address2
+      - Address (Administrative)
+      - VARCHAR2(256 CHAR)
+    - - zip2
+      - Postal Code (Administrative)
+      - VARCHAR2(50 CHAR)
+    - - city2
+      - City (Administrative)
+      - VARCHAR2(256 CHAR)
+    - - province2
+      - State / Region (Administrative)
+      - VARCHAR2(256 CHAR)
+    - - isoCountry2
+      - Country (Administrative)
+      - VARCHAR2(256 CHAR)
+    - - status
+      - Supplier Platform Access Status
+      - VARCHAR2(100 CHAR)
+    - - paymentCondition
+      - Payment Terms
+      - VARCHAR2(100 CHAR)
+    - - turnOver
+      - Annual Turnover
+      - VARCHAR2(2000 CHAR)
+    - - currency
+      - Preferred Currency
+      - VARCHAR2(100 CHAR)
+    - - extCode
+      - External Code
+      - VARCHAR2(100 CHAR)
+    - - apeCode
+      - APE ID
+      - VARCHAR2(100 CHAR)
+    - - userAlias
+      - Username
+      - VARCHAR2(256 CHAR)
+    - - password
+      - "-"
+      - VARCHAR2(1000 CHAR)
+    - - pwdQuestion
+      - User Verification Question
+      - VARCHAR2(1024 CHAR)
+    - - pwdAnswer
+      - Answer to Your User Verification Question
+      - VARCHAR2(1024 CHAR)
+    - - userTitle
+      - Title
+      - VARCHAR2(2000 CHAR)
+    - - userSurName
+      - Last Name
+      - VARCHAR2(128 CHAR)
+    - - userName
+      - First Name
+      - VARCHAR2(128 CHAR)
+  block: 1
+  blocks: 2
+part:
+  n: 2
+  of: 2

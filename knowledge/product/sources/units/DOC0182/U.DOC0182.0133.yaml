@@ -1,0 +1,39 @@
+id: U.DOC0182.0133
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: measurementUnit | Mandatory (Y/N): N | Description: Packaging unit for the product, such as EA (each) or PK (pack).
+  We recommend that you use a standard packaging abbreviation, as defined in the JAGGAER Packaging UOM and Product Size Attributes Guidelines.
+  The default MeasurementUnit is EA.
+hash: sha256:694ac3cb658ebb80210311bf1a2c14f7748687a88fb06bd0eb0040b0b1989c00
+words: 46
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Measurement [PR Import]
+  section_path: 2.1.1.14
+  page: 21
+  lang: en
+  prev: U.DOC0182.0132
+  next: U.DOC0182.0134
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - measurementUnit
+    - N
+    - |-
+      Packaging unit for the product, such as EA (each) or PK (pack).
+      We recommend that you use a standard packaging abbreviation, as defined in the JAGGAER Packaging UOM and Product Size Attributes Guidelines.
+      The default MeasurementUnit is EA.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

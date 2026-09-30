@@ -1,0 +1,187 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-48
+section: 2.2.1.54
+section_title: Notification [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:MESSAGE
+    label: message
+    labels:
+      - message
+    technical_name: MESSAGE
+    section: 2.2.1.54
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Notification email to be sent to users who are configured to receive the
+      notification in their notification preferences
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.54
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: message
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.57
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.57#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: message
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTMANAGERS
+    label: contractManagers
+    labels:
+      - contractManagers
+    technical_name: CONTRACTMANAGERS
+    section: 2.2.1.54
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to contract managers associated with the contract
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.54
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: contractManagers
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CONTRACTMANAGERSONPROJECT
+    label: contractManagersOnProject
+    labels:
+      - contractManagersOnProject
+    technical_name: CONTRACTMANAGERSONPROJECT
+    section: 2.2.1.54
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to contract managers who are associated with the contract and are on the
+      work group.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.54
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: contractManagersOnProject
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:STAKEHOLDERS
+    label: stakeHolders
+    labels:
+      - stakeHolders
+    technical_name: STAKEHOLDERS
+    section: 2.2.1.54
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to stakeholders associated with the contract
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.54
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: stakeHolders
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:STAKEHOLDERSONPROJECT
+    label: stakeHoldersOnProject
+    labels:
+      - stakeHoldersOnProject
+    technical_name: STAKEHOLDERSONPROJECT
+    section: 2.2.1.54
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to stakeholders who are associated with the contract and are on the work
+      group.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.54
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: stakeHoldersOnProject
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:EXTERNALCONTACTS
+    label: externalContacts
+    labels:
+      - externalContacts
+    technical_name: EXTERNALCONTACTS
+    section: 2.2.1.54
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to external contacts associated with the contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.54
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: externalContacts
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1741

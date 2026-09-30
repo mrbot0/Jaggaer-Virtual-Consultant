@@ -1,0 +1,37 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+batch: batch-34
+section: 2.4.1.2
+section_title: ValidateRequisitionLineDataList [PR Validate]
+part: 1
+parts: 1
+rows:
+  - key: tech:REQUISITIONID
+    label: requisitionId
+    labels:
+      - requisitionId
+    technical_name: REQUISITIONID
+    section: 2.4.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal identifier of the requisition owning following provided lines
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.4.1.2
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: requisitionId
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 678

@@ -1,0 +1,56 @@
+id: U.DOC0139.0006
+doc: S.STD.XSC.DOC.0139
+doc_id: workflow-typical-epro-wf-steps-guidelines-xlsx-39f47465
+type: tabella
+text: "Colonne: Premier PO Workflow | Premier PO Workflow / Invalid Distribution | Premier PO Workflow / Revise PO | Premier PO Workflow / PO Distribution | Premier PO Workflow / PO Requires Cost Matching | Premier PO Workflow / Auto Invoice Premier PO Workflow: Step Type: | Premier PO Workflow / Invalid Distribution: Manual | Premier PO Workflow / Revise PO: Automated | Premier PO Workflow / PO Distribution: Automated | Premier PO Workflow / PO Requires Cost Matching: Automated | Premier PO Workflow / Auto Invoice: Automated Premier PO Workflow: Location of Approver(s): | Premier PO Workflow / Invalid Distribution: Explicit Approval Folder | Premier PO Workflow / Revise PO: N/A | Premier PO Workflow / PO Distribution: ADW (Manual PO Distribution) | Premier PO Workflow / PO Requires Cost Matching: N/A | Premier PO Workflow / Auto Invoice: N/A Premier PO Workflow: Description / Trigger(s): | Premier PO Workflow / Invalid Distribution: Manual approval step that triggers when the supplier doesn't have a valid distribution method set up. | Premier PO Workflow / Revise PO: Automated step that creates all PO distribution and export documents. | Premier PO Workflow / PO Distribution: Automated step which sends to PO out to the supplier. | Premier PO Workflow / PO Requires Cost Matching: Automated step which triggers for blanket orders. This causes the PO to be flagged as a draw-down PO. | Premier PO Workflow / Auto Invoice: Automated step that flips the PO to an invoice automatically. This is triggered for all payment requests."
+hash: sha256:b0a12e6691046d73661aa7bb9c506730cc4ad2e7a1baab6afc8659d6e8cc2918
+words: 255
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0139
+  chapter: PO Workflow
+  section: PO Workflow
+  section_path: sheet-2
+  page: null
+  lang: en
+  prev: U.DOC0139.0005
+  next: U.DOC0139.0007
+table:
+  table: 0
+  headers:
+    - Premier PO Workflow
+    - Premier PO Workflow / Invalid Distribution
+    - Premier PO Workflow / Revise PO
+    - Premier PO Workflow / PO Distribution
+    - Premier PO Workflow / PO Requires Cost Matching
+    - Premier PO Workflow / Auto Invoice
+  rows:
+    - - "Step Type:"
+      - Manual
+      - Automated
+      - Automated
+      - Automated
+      - Automated
+    - - "Location of Approver(s):"
+      - Explicit Approval Folder
+      - N/A
+      - ADW (Manual PO Distribution)
+      - N/A
+      - N/A
+    - - "Description / Trigger(s):"
+      - Manual approval step that triggers when the supplier doesn't have a valid distribution method set up.
+      - Automated step that creates all PO distribution and export documents.
+      - Automated step which sends to PO out to the supplier.
+      - Automated step which triggers for blanket orders. This causes the PO to be flagged as a draw-down PO.
+      - Automated step that flips the PO to an invoice automatically. This is triggered for all payment requests.
+    - - "Set up status:"
+      - Set up Brittany and Tim as approvers (Completed)
+      - (Completed)
+      - (Completed)
+      - (Completed)
+      - (Completed)
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

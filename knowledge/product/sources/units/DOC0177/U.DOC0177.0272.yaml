@@ -1,0 +1,39 @@
+id: U.DOC0177.0272
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: erpNumber | Mandatory (Y/N): N | Description: Current, unique ERP number associated with the location. | Mapping on Jaggaer One data model and notes: This field is second in priority, after OldERPNumber, when the JAGGAER ONE Supplier Management solution is searching for a location.
+  If OldERPNumber is present, the JAGGAER ONE Supplier Management solution uses ERPNumber to update the location.
+hash: sha256:7aa6bde0b4231707d0874a2df3702691dc33fc6180d56126216dfa1a02762cbb
+words: 61
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location
+  section_path: 2.1.1.63
+  page: 49
+  lang: en
+  prev: U.DOC0177.0271
+  next: U.DOC0177.0273
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - erpNumber
+    - N
+    - Current, unique ERP number associated with the location.
+    - |-
+      This field is second in priority, after OldERPNumber, when the JAGGAER ONE Supplier Management solution is searching for a location.
+      If OldERPNumber is present, the JAGGAER ONE Supplier Management solution uses ERPNumber to update the location.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

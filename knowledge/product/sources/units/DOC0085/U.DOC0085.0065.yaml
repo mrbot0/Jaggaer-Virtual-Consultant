@@ -1,0 +1,68 @@
+id: U.DOC0085.0065
+doc: S.STD.XSC.DOC.0085
+doc_id: commodity-codes-setup-docx-3fd557c2
+type: tabella
+text: "Colonne: | Select to use category mapping functionality | Checking this box enables mapping of organization values for categories/commodities to the JAGGAER taxonomy and exposes the “Mapping Values” section Select to use category mapping functionality: Mapping Type Select to use category mapping functionality: Category Name* | Checking this box enables mapping of organization values for categories/commodities to the JAGGAER taxonomy and exposes the “Mapping Values” section: This option maps the Commodity Code field to the JAGGAER Category Name. Mapped values can be overridden on the Category Map tab. Select to use category mapping functionality: Category UN/SPSC* | Checking this box enables mapping of organization values for categories/commodities to the JAGGAER taxonomy and exposes the “Mapping Values” section: This option maps the Commodity Code field to the JAGGAER Category UN/SPSC values. Mapped values can be overridden on the Category Map tab. (Setting for the display of UN/SPSC values are set on the UN/SPSC Settings tab.) Select to use category mapping functionality: Free-Form Value** | Checking this box enables mapping of organization values for categories/commodities to the JAGGAER taxonomy and exposes the “Mapping Values” section: This option does not map the Commodity Code field to any value by default. Mappings must be explicitly set up through the UI or by importing them. Select to use category mapping functionality: Value List** (MOST COMMON) | Checking this box enables mapping of organization values for categories/commodities to the JAGGAER taxonomy and exposes the “Mapping Values” section: This option does not map the Commodity Code field to any value by default. Mappings must be explicitly set up through the UI or by importing them."
+hash: sha256:1e1b44dfd441103a75662e930781e5fbdafeb911684594f0b04e4dfa1a9198f8
+words: 268
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0085
+  chapter: commodity-codes-setup-docx-3fd557c2
+  section: "Step 1: Commodity Code Configuration"
+  section_path: 0.5.1
+  page: 12
+  lang: en
+  prev: U.DOC0085.0064
+  next: U.DOC0085.0066
+table:
+  table: 0
+  headers:
+    - ""
+    - Select to use category mapping functionality
+    - Checking this box enables mapping of organization values for categories/commodities to the JAGGAER taxonomy and exposes the “Mapping Values” section
+  rows:
+    - - ""
+      - Mapping Type
+      - ""
+    - - ""
+      - Category Name*
+      - This option maps the Commodity Code field to the JAGGAER Category Name. Mapped values can be overridden on the Category Map tab.
+    - - ""
+      - Category UN/SPSC*
+      - This option maps the Commodity Code field to the JAGGAER Category UN/SPSC values. Mapped values can be overridden on the Category Map tab. (Setting for the display of UN/SPSC values are set on the UN/SPSC Settings tab.)
+    - - ""
+      - Free-Form Value**
+      - This option does not map the Commodity Code field to any value by default. Mappings must be explicitly set up through the UI or by importing them.
+    - - ""
+      - |-
+        Value List**
+        (MOST COMMON)
+      - This option does not map the Commodity Code field to any value by default. Mappings must be explicitly set up through the UI or by importing them. The values for mapping are those defined on the Manage Value List tab.
+    - - ""
+      - |-
+        * This option does not use inheritance for mappings, i.e., child categories do not inherit their parent's mapping value, and each category mapping must be explicitly overridden.
+        ** This option does use inheritance for mappings, i.e., child categories inherit their parent's mapping value.
+      - |-
+        * This option does not use inheritance for mappings, i.e., child categories do not inherit their parent's mapping value, and each category mapping must be explicitly overridden.
+        ** This option does use inheritance for mappings, i.e., child categories inherit their parent's mapping value.
+    - - ""
+      - Automatically populate Commodity Code values in cart
+      - If the Commodity Code field in the Shopping Cart is to be automatically populated when an item is added to the shopping cart, select this option. When selected, additional options appear to configure which rules are to be used to populate the Commodity Code field.
+    - - ""
+      - Use category mapped values
+      - |-
+        This rule, if selected, is the first one applied for populating the Commodity Code field when an item is added to the Shopping Cart.
+        For hosted catalog items, the value mapped on the Category Map tab is used. If a mapped value does not exist, the next rule is applied.
+        For PunchOut items, the system attempts to match the UN/SPSC number provided by the PunchOut vendor for the item to one of the values in the JAGGAER taxonomy. If the UN/SPSC value is found, the mapped value is used. If a mapped value does not exist or If the system cannot map the UN/SPSC value for the item the next rule is used.
+    - - ""
+      - Use supplier master commodity code values
+      - This rule, if selected, is applied after the category mapping rule (assuming it is selected.) If a category mapping does not exist, the Commodity Code value defined for the supplier in the supplier master is used. If one does not exist, the next rule is applied.
+    - - ""
+      - If no category/commodity code available, use
+      - If none of the prior rules populate the Commodity Code field, the value defined here is used.
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 3

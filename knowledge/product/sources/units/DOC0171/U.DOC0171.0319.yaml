@@ -1,0 +1,27 @@
+id: U.DOC0171.0319
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  For what concern section structure, an analogous mechanism has been implemented for parameter (and commercial envelope additional column) management. In particular, the parameter container (parameterList element) is always mandatory while commercial envelope additional column container (additionalColumnList) is optional. So
+  1. If additionalColumnList object is not defined, commercial envelope additional column structure is not changed
+  2. Nor parameter neither additional column element is provided: if operation is called in RESET mode all corresponding section information is cleared, otherwise existing parameter or multi column data structure is kept
+  3. The array contains at least one object: web service will update elements having a valid id field and will create new object for the other (if operation is called in RESET mode, all existing item not listed are removed).
+hash: sha256:cdda4615eedcd7b8efa1caebebcd6eee412632f3adb0126028b09fdc46dddd7e
+words: 126
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Envelope Management
+  section_path: 2.1.2.8
+  page: 6
+  lang: en
+  prev: U.DOC0171.0318
+  next: U.DOC0171.0320
+steps:
+  - If additionalColumnList object is not defined, commercial envelope additional column structure is not changed
+  - "Nor parameter neither additional column element is provided: if operation is called in RESET mode all corresponding section information is cleared, otherwise existing parameter or multi column data structure is kept"
+  - "The array contains at least one object: web service will update elements having a valid id field and will create new object for the other (if operation is called in RESET mode, all existing item not listed are removed)."
+procedure:
+  title: For what concern section structure, an analogous mechanism has been implemented for parameter (and commercial envelope additional column) management. In particular, the parameter container (parameterList element) is always mandatory while commercial envelope additional column container (additionalColumnList) is optional. So

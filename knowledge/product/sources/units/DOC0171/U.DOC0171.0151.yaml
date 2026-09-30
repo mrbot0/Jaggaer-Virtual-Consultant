@@ -1,0 +1,44 @@
+id: U.DOC0171.0151
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: mandatory | Mandatory (Y/N): N | Description: Mandatory technical/qualification parameter flag:
+  1 = parameter is mandatory
+  0 = parameter is optional | Mapping on JA data model and notes: Mandatory technical/qualification parameter flag.
+  If not provided, new parameters are optional while existing parameters aren’t modified
+hash: sha256:457635ec871f89a83ddc857cd7ca6678f37ac2b53cd531be9f46cf724aa62910
+words: 46
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Qualification and Technical envelope: parameter [Import/Update RfX method]"
+  section_path: 2.1.1.11
+  page: 6
+  lang: en
+  prev: U.DOC0171.0150
+  next: U.DOC0171.0152
+row:
+  table: 0
+  row: 7
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - mandatory
+    - N
+    - |-
+      Mandatory technical/qualification parameter flag:
+      1 = parameter is mandatory
+      0 = parameter is optional
+    - |-
+      Mandatory technical/qualification parameter flag.
+      If not provided, new parameters are optional while existing parameters aren’t modified
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

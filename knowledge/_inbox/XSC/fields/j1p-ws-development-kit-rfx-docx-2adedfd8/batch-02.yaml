@@ -1,0 +1,457 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-02
+section: 2.1.1.2
+section_title: RfX data container [Import/Update RfX method]
+part: 1
+parts: 1
+rows:
+  - key: tech:RFXSETTING
+    label: rfxSetting
+    labels:
+      - rfxSetting
+    technical_name: RFXSETTING
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Rfx Setting” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: rfxSetting
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RFXPLANNING
+    label: rfxPlanning
+    labels:
+      - rfxPlanning
+    technical_name: RFXPLANNING
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Rfx Planning” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: rfxPlanning
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RFXCATEGORYLIST
+    label: rfxCategoryList
+    labels:
+      - rfxCategoryList
+    technical_name: RFXCATEGORYLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Rfx Category” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: rfxCategoryList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RFXADDITIONALINFOLIST
+    label: rfxAdditionalInfoList
+    labels:
+      - rfxAdditionalInfoList
+    technical_name: RFXADDITIONALINFOLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Additional info” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: rfxAdditionalInfoList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BUYERATTACHMENTSLIST
+    label: buyerAttachmentsList
+    labels:
+      - buyerAttachmentsList
+    technical_name: BUYERATTACHMENTSLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Buyer and Seller Attachments” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: buyerAttachmentsList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SELLERATTACHMENTSLIST
+    label: sellerAttachmentsList
+    labels:
+      - sellerAttachmentsList
+    technical_name: SELLERATTACHMENTSLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Buyer and Seller Attachments” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: sellerAttachmentsList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:QUALENVELOPE
+    label: qualEnvelope
+    labels:
+      - qualEnvelope
+    technical_name: QUALENVELOPE
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See sections “Qualification and technical envelope” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: qualEnvelope
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TECHENVELOPE
+    label: techEnvelope
+    labels:
+      - techEnvelope
+    technical_name: TECHENVELOPE
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See sections “Qualification and technical envelope” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: techEnvelope
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COMMENVELOPE
+    label: commEnvelope
+    labels:
+      - commEnvelope
+    technical_name: COMMENVELOPE
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See sections “Comm envelope” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: commEnvelope
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SUPPLIERSLIST
+    label: suppliersList
+    labels:
+      - suppliersList
+    technical_name: SUPPLIERSLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Suppliers” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: suppliersList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EVALUATIONGROUPLIST
+    label: evaluationGroupList
+    labels:
+      - evaluationGroupList
+    technical_name: EVALUATIONGROUPLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See sections “Evaluation Group” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: evaluationGroupList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EMAILRECIPIENTLIST
+    label: emailRecipientList
+    labels:
+      - emailRecipientList
+    technical_name: EMAILRECIPIENTLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “E-mail Recipient” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: emailRecipientList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:OPENINGCOMMITTEELIST
+    label: openingCommitteeList
+    labels:
+      - openingCommitteeList
+    technical_name: OPENINGCOMMITTEELIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Opening Committee” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: openingCommitteeList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:BUSINESSUNITLIST
+    label: businessUnitList
+    labels:
+      - businessUnitList
+    technical_name: BUSINESSUNITLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Reference to the business units [see section “Business Unit” below].
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: businessUnitList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:REGIONLIST
+    label: regionList
+    labels:
+      - regionList
+    technical_name: REGIONLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Reference to the regions[see section “Region” below].
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: regionList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:AWARDRFXADDITIONALINFOLIST
+    label: awardRfxAdditionalInfoList
+    labels:
+      - awardRfxAdditionalInfoList
+    technical_name: AWARDRFXADDITIONALINFOLIST
+    section: 2.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: See section “Additional info” below
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.2
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.2#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: awardRfxAdditionalInfoList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 3229

@@ -1,0 +1,42 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.2.1.5
+section_title: Attachment [Validate JIOrder method]
+genre: tecnica
+rows:
+  - label: fileName
+    technical_name: fileName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Attachment file name
+    section: 2.2.1.5
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.2.1.5#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: fileBase64
+    technical_name: fileBase64
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Content of the file to be imported
+    section: 2.2.1.5
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.2.1.5#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: visibility
+    technical_name: visibility
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Visibility of the attachment. Valid values:
+      internal: attachment is to be stored in the private/internal area
+      external: attachment will be saved in the public/external area
+    section: 2.2.1.5
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.2.1.5#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

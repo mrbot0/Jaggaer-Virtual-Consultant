@@ -1,0 +1,2068 @@
+doc: S.STD.XSC.DOC.0095
+scope: XSC
+extracted_at: 2026-09-30T04:30:45.073Z
+tier: T0
+stats:
+  units: 65
+  extracted_units: 63
+  document_candidates: 6
+  needs_llm: 6
+  t0_complete: 63
+  by_candidate:
+    FLD: 63
+    CFG: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 18000
+  sessions:
+    - n: 1
+      tokens: 18000
+      batches: 3
+      items: 6
+      batch_items:
+        - - R.DOC0095.C001
+          - R.DOC0095.C002
+        - - R.DOC0095.C003
+          - R.DOC0095.C004
+        - - R.DOC0095.C005
+          - R.DOC0095.C006
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0095.0003
+    source_unit: U.DOC0095.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Instructions
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Logo
+      technical_name: Logo
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageUrl=/pics/orgimages/0/60926.jpg · id=10000 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0095.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0095.0004
+    source_unit: U.DOC0095.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Instructions
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Additonal Guidance
+      technical_name: Additonal Guidance
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: 'Before filling out this form, determine if the purchase is capital equipment or capitalized software. Verify that the: <ul> <li>Equipment or software has a normal life expectancy of more than one year, and is not expendable. Non-expendable means that the equipment is not consumed by it’s use.</li> <li>Capitalized cost will exceed [importo]. The [importo] value includes the price of the equipment and other costs needed to put the equipment into service such as required installation services, startup components, accessories, startup kits (e.g. regents), freight, handling and sales tax.</li> <li>Determine if a trade-in will be involved</li> <ul><li>If a trade-in is part of the purchase, the Department Asset Custodian must approve the release of the trade-in before the requisition is submitted.</li> <li>Establish the price for trade-in and arrangements for the supplier to receive or pick up the product.</li></ul></ul> <br> Contact <a href="mailto:[email]">Capital Accounting</a> if you have questions determining if your purchase is a capitalized asset or regarding Asset Management codes. · UserDefinedFieldParamHTML=Please see the "<b><u><a target="_blank" href="https://supplychain.ucsf.edu/buying-capital-equipment">Capital Equipment How To Guide</a></b></u>" for guidance on completing this form.<br></br> 1. Use this form to request: <ul><li><b>Capital Equipment</b> - Equipment costing [importo] or more and has a life expectancy of more than one year</li></ul> <br> For equipment and software orders under [importo], please use the Non-Catalog or Amount-based PO Forms<br></br> 2. Fill out all required fields shown in <b>bold text</b>. Please note all fields may be necessary to complete the transaction.<br><br> 3. Provide as much information as possible for any related equipment services.<br><br> 4. Attach any relevant supporting documents (i.e. vendor quote, technical specifications, warranty information, service level agreements, software licenses, etc.)<br><br> 5. If any attached documents are for both external and internal viewing, attach it <b>ONLY</b> in the External Attachments section.<br><br> 6. To order more than one piece of equipment, fill out the form and then click "Add to Cart".<br></br><br> · id=10001 · tipo=userdefined'
+      section: campi-1
+      source_unit: U.DOC0095.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 536
+  - raw_id: R.DOC0095.0005
+    source_unit: U.DOC0095.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Instructions
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Additonal Guidance
+      technical_name: Additonal Guidance
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: 'Before filling out this form, determine if the purchase is capital equipment or capitalized software. Verify that the: <ul> <li>Equipment or software has a normal life expectancy of more than one year, and is not expendable. Non-expendable means that the equipment is not consumed by it’s use.</li> <li>Capitalized cost will exceed [importo]. The [importo] value includes the price of the equipment and other costs needed to put the equipment into service such as required installation services, startup components, accessories, startup kits (e.g. regents), freight, handling and sales tax.</li> <li>Determine if a trade-in will be involved</li> <ul><li>If a trade-in is part of the purchase, the Department Asset Custodian must approve the release of the trade-in before the requisition is submitted.</li> <li>Establish the price for trade-in and arrangements for the supplier to receive or pick up the product.</li></ul></ul> <br> Contact <a href="mailto:[email]">Capital Accounting</a> if you have questions determining if your purchase is a capitalized asset or regarding Asset Management codes. · UserDefinedFieldParamHTML=Please see the "<b><u><a target="_blank" href="https://supplychain.ucsf.edu/buying-capital-equipment">Capital Equipment How To Guide</a></b></u>" for guidance on completing this form.<br></br> 1. Use this form to request: <ul><li><b>Capital Equipment</b> - Equipment costing [importo] or more and has a life expectancy of more than one year</li></ul> <br> For equipment and software orders under [importo], please use the Non-Catalog or Amount-based PO Forms<br></br> 2. Fill out all required fields shown in <b>bold text</b>. Please note all fields may be necessary to complete the transaction.<br><br> 3. Provide as much information as possible for any related equipment services.<br><br> 4. Attach any relevant supporting documents (i.e. vendor quote, technical specifications, warranty information, service level agreements, software licenses, etc.)<br><br> 5. If any attached documents are for both external and internal viewing, attach it <b>ONLY</b> in the External Attachments section.<br><br> 6. To order more than one piece of equipment, fill out the form and then click "Add to Cart".<br></br><br> · id=10001 · tipo=userdefined'
+      section: campi-1
+      source_unit: U.DOC0095.0005
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 69
+  - raw_id: R.DOC0095.0006
+    source_unit: U.DOC0095.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Instructions
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Form Instruction Details
+      technical_name: Form Instruction Details
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: "UserDefinedFieldParamHTML=<b>Commodity Code and Account</b> <br><br> This form will default a commodity code of <i>‘00330 – Inventorial Equipment >[importo]’</i>, this will make the Account default to <i>‘52603’</i>. <br><br> If the equipment purchase uses sponsored project funding sources, please specify the following Accounts for each sponsored project funding source in the Accounting Codes (chartfields) section during checkout: <ul> <li><b>51321</b> - Sponsored proj equip >[importo]K, non-comp</li> <li><b>51322</b> - Sponsored proj computer >[importo]K</li> </ul> Do not use the above Accounts for non-sponsored project funding sources. <br> · id=10102 · tipo=userdefined"
+      section: campi-1
+      source_unit: U.DOC0095.0006
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 203
+  - raw_id: R.DOC0095.0007
+    source_unit: U.DOC0095.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Instructions
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Stop Sign
+      technical_name: Stop Sign
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=0; UserDefinedFieldParamImageUrl=/pics/orgimages/30000546/6891.jpg · id=10092 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0095.0007
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 61
+  - raw_id: R.DOC0095.0008
+    source_unit: U.DOC0095.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Supplier Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "100"
+      technical_name: "100"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=100 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0095.0008
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0095.0009
+    source_unit: U.DOC0095.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Supplier Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "116"
+      technical_name: "116"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=116 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0095.0009
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0095.0010
+    source_unit: U.DOC0095.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Installation & Warranty Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Additional Installation Information
+      technical_name: Additional Installation Information
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: Specify any relevant installation information such as the installation duration, special requirements needed by vendor, etc. · UserDefinedFieldParamTextAreaRows=3; UserDefinedFieldParamTextBoxMaxLength=250; UserDefinedFieldParamTextAreaCols=35 · id=10007 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0095.0010
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 117
+  - raw_id: R.DOC0095.0011
+    source_unit: U.DOC0095.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Installation & Warranty Details
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Additional Warranty Information
+      technical_name: Additional Warranty Information
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: Specify general warranty provisions such as warranty period, usually expressed in a number of days, e.g., 90 days (calendar days unless otherwise stated) and coverage (e.g., parts, labor and travel). · UserDefinedFieldParamTextAreaPreserveLineBreaks=true; UserDefinedFieldParamTextAreaRows=3; UserDefinedFieldParamTextBoxMaxLength=250; UserDefinedFieldParamTextAreaCols=35 · id=10031 · tipo=userdefined
+      section: campi-3
+      source_unit: U.DOC0095.0011
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 147
+  - raw_id: R.DOC0095.0012
+    source_unit: U.DOC0095.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Department Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department
+      technical_name: Department
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Name of the department requesting the item. · UserDefinedFieldParamTextBoxSize=45; UserDefinedFieldParamTextBoxMaxLength=45 · id=10036 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0095.0012
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 73
+  - raw_id: R.DOC0095.0013
+    source_unit: U.DOC0095.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Department Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department Technical Contact Name
+      technical_name: Department Technical Contact Name
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: The name of the university department contact person who will answer technical questions (e.g. setting up equipment, equipment functionality, etc.) about the equipment. · UserDefinedFieldParamTextBoxSize=45; UserDefinedFieldParamTextBoxMaxLength=45 · id=10032 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0095.0013
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 116
+  - raw_id: R.DOC0095.0014
+    source_unit: U.DOC0095.0014
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Department Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department Contact Phone
+      technical_name: Department Contact Phone
+      type: TextBox
+      mandatory_text: Sì
+      allowed_values: []
+      notes: The department contact's phone number. · UserDefinedFieldParamTextBoxSize=15; UserDefinedFieldParamTextBoxMaxLength=15 · id=10033 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0095.0014
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 79
+  - raw_id: R.DOC0095.0015
+    source_unit: U.DOC0095.0015
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Department Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department Contact Email
+      technical_name: Department Contact Email
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The department contact's email address. · UserDefinedFieldParamTextBoxSize=45; UserDefinedFieldParamTextBoxMaxLength=45 · id=10034 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0095.0015
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 79
+  - raw_id: R.DOC0095.0016
+    source_unit: U.DOC0095.0016
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Department Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "Building and Room #"
+      technical_name: "Building and Room #"
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: Please add the building and room number where the capital asset will be located. · UserDefinedFieldParamTextBoxSize=15; UserDefinedFieldParamTextBoxMaxLength=15 · id=10044 · tipo=userdefined
+      section: campi-4
+      source_unit: U.DOC0095.0016
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 87
+  - raw_id: R.DOC0095.0017
+    source_unit: U.DOC0095.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Required Attachments
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "113"
+      technical_name: "113"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=113 · tipo=static
+      section: campi-5
+      source_unit: U.DOC0095.0017
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0095.0018
+    source_unit: U.DOC0095.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Required Attachments
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "114"
+      technical_name: "114"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=114 · tipo=static
+      section: campi-5
+      source_unit: U.DOC0095.0018
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 35
+  - raw_id: R.DOC0095.0019
+    source_unit: U.DOC0095.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Required Attachments
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: You have completed this form
+      technical_name: You have completed this form
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: 'UserDefinedFieldParamHTML=<br>You have now completed this form.<br></br> <b>To order more than one piece of equipment</b>: <ul> <li>Select "Add to Cart" from the Available Actions dropdown.</li> <li>Update the form and add the form again to the cart. </li></ul> <b>After adding all forms to the cart, indicate whether your equipment/software is taxable.</b> <ul> <li>If the equipment is taxable, check the Taxable checkbox for each line.</li> <li>If the equipment is not taxable, do not check the Taxable checkbox for each line.</li></ul> <b>Be sure to specify asset management codes, especially the <u><b>Custody Code</u></b></b>. <ul> <li>From the "Proceed to Checkout" page, click the Asset Management tab.</li> <li>Input the <b> Custody Code</b> and <b> Asset Location</b>.</li> <li>Input the Tag Number <b>ONLY</b> if the purchase is adding to the value of an existing piece of equipment.</li> </ul> · id=10100 · tipo=userdefined'
+      section: campi-5
+      source_unit: U.DOC0095.0019
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 277
+  - raw_id: R.DOC0095.0020
+    source_unit: U.DOC0095.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Required Attachments
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Relevant Supporting Documents
+      technical_name: Relevant Supporting Documents
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<table width="100%" border="0" cellspacing="1" cellpadding="1"> <tr> <td bgcolor="#FFFF99"> <b>Attach any relevant supporting documents (i.e. vendor quote, technical specifications, warranty information, service level agreements, etc.)</b></p></td></tr></table> · id=10099 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0095.0020
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 123
+  - raw_id: R.DOC0095.0021
+    source_unit: U.DOC0095.0021
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Delivery Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Delivery Contact Name
+      technical_name: Delivery Contact Name
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: Identifies who will receive the delivery of the item. Typically this is not the same person as the Requester or Requisition Approver of an order. · UserDefinedFieldParamTextBoxSize=30; UserDefinedFieldParamTextBoxMaxLength=50 · id=10046 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0095.0021
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 105
+  - raw_id: R.DOC0095.0022
+    source_unit: U.DOC0095.0022
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Delivery Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Delivery Contact Phone
+      technical_name: Delivery Contact Phone
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: Phone number of the person receiving the delivery of the item. · UserDefinedFieldParamTextBoxSize=16; UserDefinedFieldParamTextBoxMaxLength=16 · id=10049 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0095.0022
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 85
+  - raw_id: R.DOC0095.0023
+    source_unit: U.DOC0095.0023
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Delivery Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Delivery Contact Email
+      technical_name: Delivery Contact Email
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: Email address of the person receiving the delivery of the item. · UserDefinedFieldParamTextBoxSize=30; UserDefinedFieldParamTextBoxMaxLength=50 · id=10077 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0095.0023
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 85
+  - raw_id: R.DOC0095.0024
+    source_unit: U.DOC0095.0024
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Delivery Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Special Handling Explanation
+      technical_name: Special Handling Explanation
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br>Enter any special handling information for this item. If this is a RUSH order, please specify this and enter a Desired Delivery Date. · id=10098 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0095.0024
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 92
+  - raw_id: R.DOC0095.0025
+    source_unit: U.DOC0095.0025
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Delivery Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Special Handling
+      technical_name: Special Handling
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: Specify any special handling instructions for the supplier, such as a rush order. If this is rush order, specify the date that you wish the item to be delivered in the Desired Delivery Date field. · UserDefinedFieldParamTextAreaPreserveLineBreaks=true; UserDefinedFieldParamTextAreaRows=3; UserDefinedFieldParamTextBoxMaxLength=250; UserDefinedFieldParamTextAreaCols=45 · id=10055 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0095.0025
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 139
+  - raw_id: R.DOC0095.0026
+    source_unit: U.DOC0095.0026
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Delivery Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Desired Deilvery Date
+      technical_name: Desired Deilvery Date
+      type: Date
+      mandatory_text: No
+      allowed_values: []
+      notes: Requested date for equipment delivery. · id=10097 · tipo=userdefined
+      section: campi-6
+      source_unit: U.DOC0095.0026
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 57
+  - raw_id: R.DOC0095.0027
+    source_unit: U.DOC0095.0027
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Specify any additional internal comments
+      technical_name: Specify any additional internal comments
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br><b>Specify any additional internal comments. If you selected any statements above, please explain your choices. Describe any unique requirement to be used and state if more than one source provides same product/service.<b> · id=10101 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0027
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 110
+  - raw_id: R.DOC0095.0028
+    source_unit: U.DOC0095.0028
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Additional Internal Comment
+      technical_name: Additional Internal Comment
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: Specify any additional comments, if any. <br><br> If you selected any statements above, please explain your choices. Describe any unique requirement to be used and state if more than one source provides same product/service. · UserDefinedFieldParamTextAreaPreserveLineBreaks=true; UserDefinedFieldParamTextAreaRows=4; UserDefinedFieldParamTextBoxMaxLength=1500; UserDefinedFieldParamTextAreaCols=60 · id=10060 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0028
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 153
+  - raw_id: R.DOC0095.0029
+    source_unit: U.DOC0095.0029
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: If other suppliers are not acceptable, indicate if any of the statements below apply.
+      technical_name: If other suppliers are not acceptable, indicate if any of the statements below apply.
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<b>If other suppliers are not acceptable, indicate if any of the statements below apply. </b> · id=10078 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0029
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 126
+  - raw_id: R.DOC0095.0030
+    source_unit: U.DOC0095.0030
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Commitment under Systemwide Agreement/Campus Contract
+      technical_name: Commitment under Systemwide Agreement/Campus Contract
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The supplier is under a University of California Office of the President (UCOP) agreement or a UCSF campus agreement/contract. · id=10080 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0030
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 113
+  - raw_id: R.DOC0095.0031
+    source_unit: U.DOC0095.0031
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Funding source for purchase does not allow use of any other suppliers/products
+      technical_name: Funding source for purchase does not allow use of any other suppliers/products
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The funding source (i.e. grant) used for the product does not allow the purchase of other comparable products or purchasing the product through another supplier. · id=10081 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0031
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 134
+  - raw_id: R.DOC0095.0032
+    source_unit: U.DOC0095.0032
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Manufacturer’s sole authorized distributor
+      technical_name: Manufacturer’s sole authorized distributor
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The manufacturer only authorizes one supplier to sell and distribute the product/service. · id=10082 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0032
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 98
+  - raw_id: R.DOC0095.0033
+    source_unit: U.DOC0095.0033
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Manufacturer sells products/service on direct basis only
+      technical_name: Manufacturer sells products/service on direct basis only
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The manufacturer is the only supplier that sells and distributes the product/service. · id=10083 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0033
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 104
+  - raw_id: R.DOC0095.0034
+    source_unit: U.DOC0095.0034
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department's only known supplier after conducting market research
+      technical_name: Department's only known supplier after conducting market resarch
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The department searched for suppliers that sells the product/service and only found one supplier. · id=10084 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0034
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 111
+  - raw_id: R.DOC0095.0035
+    source_unit: U.DOC0095.0035
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Only supplier capable of providing product/service within the time frame required
+      technical_name: Only supplier capable of providing product/service within the time frame required
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The supplier is the only one that can provide the product/service in a specified time period to meet department’s needs. · id=10091 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0035
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 125
+  - raw_id: R.DOC0095.0036
+    source_unit: U.DOC0095.0036
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: If no other comparable products/services are acceptable
+      technical_name: If no other comparable products/services are acceptable
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<br><b>If no other comparable products/services are acceptable, indicate if any of the statements below apply. Provide an explanation for each selected statement in the Additional Internal Comment section.</b> · id=10079 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0036
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 143
+  - raw_id: R.DOC0095.0037
+    source_unit: U.DOC0095.0037
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Best price for product
+      technical_name: Best price for product
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The supplier is offering the product/service at the best price available after comparing prices from multiple suppliers. <br><br> If you select this option, you must explain the reasoning and provide the other suppliers considered in the Additional Internal Comment field. · id=10086 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0037
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 137
+  - raw_id: R.DOC0095.0038
+    source_unit: U.DOC0095.0038
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Other products/services cannot provide proprietary/unique features, or combination/configuration
+      technical_name: Other products/services cannot provide proprietary/unique features, or combination/configuration
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The product/service has unique characteristics that no other comparable products can provide. <br><br> If you select this option, you must explain the reasoning in the Additional Internal Comment field. · id=10087 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0038
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 156
+  - raw_id: R.DOC0095.0039
+    source_unit: U.DOC0095.0039
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department states all other products/services and suppliers are unacceptable
+      technical_name: Department states all other products/services and suppliers are unacceptable
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: Other products does not meet department needs or requirements. <br><br> If you select this option, you must explain the reasoning in the Additional Internal Comment field. · id=10088 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0039
+      row_ref: t0.r12
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 138
+  - raw_id: R.DOC0095.0040
+    source_unit: U.DOC0095.0040
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Must match existing equipment
+      technical_name: Must match existing equipment
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The new product must match the product that the department currently uses. <br><br>If you select this option, you must explain the reasoning in the Additional Internal Comment field. · id=10089 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0040
+      row_ref: t0.r13
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 118
+  - raw_id: R.DOC0095.0041
+    source_unit: U.DOC0095.0041
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Selection Justification
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Research continuity
+      technical_name: Research continuity
+      type: CheckBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The product is currently used for research and the same product is necessary to complete the research. <br><br> If you select this option, you must explain the reasoning in the Additional Internal Comment field. · id=10090 · tipo=userdefined
+      section: campi-7
+      source_unit: U.DOC0095.0041
+      row_ref: t0.r14
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 120
+  - raw_id: R.DOC0095.0042
+    source_unit: U.DOC0095.0042
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Description and Price/Est. Price
+      technical_name: Description and Price/Est. Price
+      type: ActivityRateService
+      mandatory_text: Sì
+      allowed_values: []
+      notes: UserDefinedFieldParam_DescriptionRequired=true; UserDefinedFieldParam_DescriptionLabel=Description · id=10108 · tipo=userdefined
+      section: campi-8
+      source_unit: U.DOC0095.0042
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 74
+  - raw_id: R.DOC0095.0043
+    source_unit: U.DOC0095.0043
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Line 2 (if necessary)
+      technical_name: Line 2 (if necessary)
+      type: ActivityRateService
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParam_DescriptionLabel=Description · id=10109 · tipo=userdefined
+      section: campi-8
+      source_unit: U.DOC0095.0043
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 56
+  - raw_id: R.DOC0095.0044
+    source_unit: U.DOC0095.0044
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Line 3 (if necessary)
+      technical_name: Line 3
+      type: ActivityRateService
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParam_DescriptionLabel=Description · id=10110 · tipo=userdefined
+      section: campi-8
+      source_unit: U.DOC0095.0044
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 53
+  - raw_id: R.DOC0095.0045
+    source_unit: U.DOC0095.0045
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Manufacturer Name
+      technical_name: Manufacturer Name
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: Manufacturer of the equipment. <br><br> Often the Manufacturer Name is found on the vendor quote or proposal. · UserDefinedFieldParamTextBoxSize=45; UserDefinedFieldParamTextBoxMaxLength=45 · id=10009 · tipo=userdefined
+      section: campi-8
+      source_unit: U.DOC0095.0045
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 86
+  - raw_id: R.DOC0095.0046
+    source_unit: U.DOC0095.0046
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Manufacturer Model Number
+      technical_name: Manufacturer Part Number
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The manufacturer’s identification number for the equipment. This may be the same as the Supplier Part Number. <br><br> Often, the Manufacturer Part Number may be found on the vendor quote or proposal. · UserDefinedFieldParamTextBoxSize=45; UserDefinedFieldParamTextBoxMaxLength=45 · id=10010 · tipo=userdefined
+      section: campi-8
+      source_unit: U.DOC0095.0046
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 113
+  - raw_id: R.DOC0095.0047
+    source_unit: U.DOC0095.0047
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a45
+      - FLD
+    type_hint:
+      candidates: *a45
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "115"
+      technical_name: "115"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=115 · tipo=static
+      section: campi-8
+      source_unit: U.DOC0095.0047
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0095.0048
+    source_unit: U.DOC0095.0048
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Trade-In Amount
+      technical_name: Trade-In Amount
+      type: Integer
+      mandatory_text: No
+      allowed_values: []
+      notes: Specify the trade-in value. Please note that if the trade in is part of the purchase, the Department Asset Custodian must approve the release of the trade-in before the requisition is submitted. <br><br> If there is a trade-in, specify the Tag Number of the equipment to be traded-in in the Additional Internal Comment field. The Tag Number is noted on a Capital Accounting Tag placed on the equipment. · id=10073 · tipo=userdefined
+      section: campi-8
+      source_unit: U.DOC0095.0048
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 138
+  - raw_id: R.DOC0095.0049
+    source_unit: U.DOC0095.0049
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a47
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "110"
+      technical_name: "110"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=110 · tipo=static
+      section: campi-8
+      source_unit: U.DOC0095.0049
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0095.0050
+    source_unit: U.DOC0095.0050
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Asset Configuration
+      technical_name: Asset Configuration
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamTextBoxSize=50; UserDefinedFieldParamTextBoxMaxLength=250 · id=10103 · tipo=userdefined
+      section: campi-8
+      source_unit: U.DOC0095.0050
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 59
+  - raw_id: R.DOC0095.0051
+    source_unit: U.DOC0095.0051
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — Equipment Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a49
+      - FLD
+    type_hint:
+      candidates: *a49
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Asset Type Code
+      technical_name: Asset Type Code
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: This could be a drop down list or selection. · UserDefinedFieldParamTextBoxSize=100; UserDefinedFieldParamTextBoxMaxLength=250 · id=10104 · tipo=userdefined
+      section: campi-8
+      source_unit: U.DOC0095.0051
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 69
+  - raw_id: R.DOC0095.0052
+    source_unit: U.DOC0095.0052
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a50
+      - FLD
+    type_hint:
+      candidates: *a50
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: blank
+      technical_name: blank
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10003 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0052
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0095.0053
+    source_unit: U.DOC0095.0053
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a51
+      - FLD
+    type_hint:
+      candidates: *a51
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Blank 2
+      technical_name: Blank 2
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10021 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0053
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0095.0054
+    source_unit: U.DOC0095.0054
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a52
+      - FLD
+    type_hint:
+      candidates: *a52
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "104"
+      technical_name: "104"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=104 · tipo=static
+      section: campi-9
+      source_unit: U.DOC0095.0054
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0095.0055
+    source_unit: U.DOC0095.0055
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a53
+      - FLD
+    type_hint:
+      candidates: *a53
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Training Start Date
+      technical_name: Training Start Date Field
+      type: Date
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10023 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0055
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0095.0056
+    source_unit: U.DOC0095.0056
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a54
+      - FLD
+    type_hint:
+      candidates: *a54
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Just HR
+      technical_name: Just HR
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10066 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0056
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0095.0057
+    source_unit: U.DOC0095.0057
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a55
+      - FLD
+    type_hint:
+      candidates: *a55
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Supplier Name
+      technical_name: 2A Supplier Name
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10067 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0057
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0095.0058
+    source_unit: U.DOC0095.0058
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a56
+      - FLD
+    type_hint:
+      candidates: *a56
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Supplier Part Number
+      technical_name: Supplier Part Number
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: The supplier’s equipment model number. <br><br> Often, the Supplier Part Number is be found on the vendor quote or proposal. · id=10008 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0058
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 71
+  - raw_id: R.DOC0095.0059
+    source_unit: U.DOC0095.0059
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a57
+      - FLD
+    type_hint:
+      candidates: *a57
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Training End Date
+      technical_name: Training End Date Field
+      type: Date
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10024 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0059
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0095.0060
+    source_unit: U.DOC0095.0060
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a58
+      - FLD
+    type_hint:
+      candidates: *a58
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Reasons (select one)
+      technical_name: 2A Reasons
+      type: DropdownList
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10068 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0060
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0095.0061
+    source_unit: U.DOC0095.0061
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a59
+      - FLD
+    type_hint:
+      candidates: *a59
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Model / Cat Number
+      technical_name: 2A Model Num
+      type: TextBox
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10069 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0061
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0095.0062
+    source_unit: U.DOC0095.0062
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a60
+      - FLD
+    type_hint:
+      candidates: *a60
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Additional Training Information
+      technical_name: Additional Training Information Field
+      type: TextArea
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10026 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0062
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0095.0063
+    source_unit: U.DOC0095.0063
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a61
+      - FLD
+    type_hint:
+      candidates: *a61
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: PreTax and Trade-In Explanation
+      technical_name: PreTax and Trade-In Explanation
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: id=10094 · tipo=userdefined
+      section: campi-9
+      source_unit: U.DOC0095.0063
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0095.0064
+    source_unit: U.DOC0095.0064
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a62
+      - FLD
+    type_hint:
+      candidates: *a62
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "103"
+      technical_name: "103"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=103 · tipo=static
+      section: campi-9
+      source_unit: U.DOC0095.0064
+      row_ref: t0.r12
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0095.0065
+    source_unit: U.DOC0095.0065
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0095
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a63
+      - FLD
+    type_hint:
+      candidates: *a63
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "105"
+      technical_name: "105"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=105 · tipo=static
+      section: campi-9
+      source_unit: U.DOC0095.0065
+      row_ref: t0.r13
+      genre: tecnica
+      document: S.STD.XSC.DOC.0095
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0095.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0095
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0095.0001
+    facets: &a64
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: VersionDescription
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0095.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0095
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0095.0001
+    facets: *a64
+    extraction:
+      parameter: AdditionalInformation
+      current_state:
+        value: Use this form for all requests for equipment or capitalized software over [importo]0.
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0095.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0095
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0095.0001
+    facets: *a64
+    extraction:
+      parameter: SearchableKeyword
+      current_state:
+        value: Capital Equipment, Capital Expenditure, Capital Asset
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0095.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0095
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0095.0001
+    facets: *a64
+    extraction:
+      parameter: Title
+      current_state:
+        value: Capital Equipment
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0095.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0095
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0095.0001
+    facets: *a64
+    extraction:
+      parameter: FormType
+      current_state:
+        value: CapEx
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0095.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0095
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0095.0001
+    facets: *a64
+    extraction:
+      parameter: LimitSupplierSelection
+      current_state:
+        value: "false"
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

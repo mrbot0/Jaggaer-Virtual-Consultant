@@ -1,0 +1,1246 @@
+doc: S.STD.XSC.DOC.0059
+scope: XSC
+extracted_at: 2026-09-30T04:30:16.010Z
+tier: T0
+stats:
+  units: 124
+  extracted_units: 26
+  document_candidates: 0
+  needs_llm: 22
+  t0_complete: 4
+  by_candidate:
+    FLD: 2
+    FLW: 22
+    GLS: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 10155
+  sessions:
+    - n: 1
+      tokens: 10155
+      batches: 2
+      items: 22
+      batch_items:
+        - - R.DOC0059.0009
+          - R.DOC0059.0011
+          - R.DOC0059.0038
+          - R.DOC0059.0041
+          - R.DOC0059.0060
+          - R.DOC0059.0062
+          - R.DOC0059.0066
+          - R.DOC0059.0072
+          - R.DOC0059.0077
+          - R.DOC0059.0080
+          - R.DOC0059.0083
+          - R.DOC0059.0085
+          - R.DOC0059.0089
+          - R.DOC0059.0091
+          - R.DOC0059.0094
+          - R.DOC0059.0098
+          - R.DOC0059.0102
+        - - R.DOC0059.0106
+          - R.DOC0059.0108
+          - R.DOC0059.0110
+          - R.DOC0059.0112
+          - R.DOC0059.0115
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0059.0004
+    source_unit: U.DOC0059.0004
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: This document
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0059.0004
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0059.0009
+    source_unit: U.DOC0059.0009
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: please
+          oggetto: describe how you register a supplier today
+          valore: null
+        - n: 2
+          verbo: do
+          oggetto: you intake cold-calls or by invitation only?
+          valore: null
+        - n: 3
+          verbo: describe
+          oggetto: the review process for a supplier record after submission
+          valore: null
+        - n: 4
+          verbo: how
+          oggetto: do you intend this process to change by implementing TSM?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0009
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 73
+  - raw_id: R.DOC0059.0011
+    source_unit: U.DOC0059.0011
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: for
+          oggetto: suppliers that your organization wants to do business with, describe how the supplier is on-boarded. Will this process change after implementing TSM?
+          valore: null
+        - n: 2
+          verbo: for
+          oggetto: example, describe how you collect accounts payable information (ACH vs. check) or tax information (W9, 1099, State Forms, etc.) for suppliers with whom you want to do business
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0011
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 98
+  - raw_id: R.DOC0059.0038
+    source_unit: U.DOC0059.0038
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: please
+          oggetto: "the event types that your organization uses below, with a short acronym for each (3 – 7 letters), and if they include the options listed below:"
+          valore: null
+        - n: 2
+          verbo: could
+          oggetto: you briefly describe what tools and processes you currently use to evaluate submissions and make awards?
+          valore: null
+        - n: 3
+          verbo: describe
+          oggetto: "goals in implementing Sourcing Director: How do you hope to improve your processes described above and how will you measure success?"
+          valore: How do you hope to improve your processes described above and how will you measure success?
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0038
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 116
+  - raw_id: R.DOC0059.0041
+    source_unit: U.DOC0059.0041
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: supplier
+          oggetto: Portal Login Image
+          valore: null
+        - n: 2
+          verbo: logo
+          oggetto: shown to suppliers on the login page
+          valore: null
+        - n: 3
+          verbo: recommended
+          oggetto: size limit is 100px H by 800px W
+          valore: null
+        - n: 4
+          verbo: supplier
+          oggetto: Portal Header Image
+          valore: null
+        - n: 5
+          verbo: logo
+          oggetto: shown to suppliers at the top of the page while logged in
+          valore: null
+        - n: 6
+          verbo: recommended
+          oggetto: size limit is 60px H by any size W
+          valore: null
+        - n: 7
+          verbo: login
+          oggetto: Page Image
+          valore: null
+        - n: 8
+          verbo: logo
+          oggetto: shown to internal users on the login page
+          valore: null
+        - n: 9
+          verbo: recommended
+          oggetto: size limit is 190px H by 690px W
+          valore: null
+        - n: 10
+          verbo: organization
+          oggetto: Logo
+          valore: null
+        - n: 11
+          verbo: logo
+          oggetto: shown to internal users at the top of the page while logged in
+          valore: null
+        - n: 12
+          verbo: recommended
+          oggetto: size limit is 60px H by any size W
+          valore: null
+        - n: 13
+          verbo: please
+          oggetto: provide the name you would like Sourcing Director to display that will represent your organization
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0041
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 174
+  - raw_id: R.DOC0059.0054
+    source_unit: U.DOC0059.0054
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Please describe any
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0059.0054
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0059.0057
+    source_unit: U.DOC0059.0057
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - GLS
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Contract types
+      definition: a key component of the application, since the properties of the contract type are inherited by every contract created from them.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0059.0057
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0059.0060
+    source_unit: U.DOC0059.0060
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: revenue
+          oggetto: based
+          valore: null
+        - n: 2
+          verbo: revenue-based
+          oggetto: Revenue-based
+          valore: null
+        - n: 3
+          verbo: expenditure-based
+          oggetto: Expenditure-based
+          valore: null
+        - n: 4
+          verbo: non-monetary
+          oggetto: type agreements
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0060
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 41
+  - raw_id: R.DOC0059.0062
+    source_unit: U.DOC0059.0062
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: master/sub-contracts
+          oggetto: (Parent/Child)
+          valore: null
+        - n: 2
+          verbo: contracts
+          oggetto: with both buy and sell components
+          valore: null
+        - n: 3
+          verbo: zero
+          oggetto: dollar value contracts
+          valore: null
+        - n: 4
+          verbo: intellectual
+          oggetto: property
+          valore: null
+        - n: 5
+          verbo: nda
+          oggetto: NDA
+          valore: null
+        - n: 6
+          verbo: please
+          oggetto: "list the various Contract Types that your organization uses:"
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0062
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 63
+  - raw_id: R.DOC0059.0066
+    source_unit: U.DOC0059.0066
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: text
+          oggetto: (single line or multiple)
+          valore: null
+        - n: 2
+          verbo: numeric
+          oggetto: Numeric
+          valore: null
+        - n: 3
+          verbo: yes/no
+          oggetto: Yes/No
+          valore: null
+        - n: 4
+          verbo: dropdown
+          oggetto: options (select one)
+          valore: null
+        - n: 5
+          verbo: multiple
+          oggetto: choice (select one)
+          valore: null
+        - n: 6
+          verbo: multiple
+          oggetto: select (select many)
+          valore: null
+        - n: 7
+          verbo: date
+          oggetto: Date
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0066
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 108
+  - raw_id: R.DOC0059.0072
+    source_unit: U.DOC0059.0072
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: no
+          oggetto: = No action
+          valore: null
+        - n: 2
+          verbo: yes
+          oggetto: = requires user add detail notes in a text box that is triggered when selecting Yes
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0072
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 40
+  - raw_id: R.DOC0059.0077
+    source_unit: U.DOC0059.0077
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: the
+          oggetto: layout of the standard fields cannot be changed but can be hidden
+          valore: null
+        - n: 2
+          verbo: custom
+          oggetto: fields cannot be added to the standard sections/header
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0077
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 39
+  - raw_id: R.DOC0059.0080
+    source_unit: U.DOC0059.0080
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: in
+          oggetto: the table above, please enter in any custom fields that will be needed for your organization. When filling in this information, follow the guidelines listed below
+          valore: null
+        - n: 2
+          verbo: identify
+          oggetto: a logical grouping/category for the new field (Financials, Protections, Contract Request Checklist, General Information, Vendor Information, etc.)
+          valore: null
+        - n: 3
+          verbo: enter
+          oggetto: the Field Label of the additional field needed
+          valore: null
+        - n: 4
+          verbo: enter
+          oggetto: the Response Type for the Custom Field (text, numeric, yes/no, etc.)
+          valore: null
+      risultato_atteso: In the table above, please enter in any custom fields that will be needed for your organization. When filling in this information, follow the guidelines listed below.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0080
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 128
+  - raw_id: R.DOC0059.0082
+    source_unit: U.DOC0059.0082
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a14
+      - GLS
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: contract template
+      definition: a structured document consisting boiler plate language with data elements and additional predetermined settings based on a contract type.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0059.0082
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0059.0083
+    source_unit: U.DOC0059.0083
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: how
+          oggetto: many templates are in use at your organization today?
+          valore: null
+        - n: 2
+          verbo: does
+          oggetto: your organization currently have a clause library where users can see and use a list of specific clause types (e.g. a library of warranty clauses)?
+          valore: null
+        - n: 3
+          verbo: are
+          oggetto: there any clauses with multiple versions (try first one, then second one, and then third one)?
+          valore: null
+        - n: 4
+          verbo: are
+          oggetto: there any clauses that should be triggered based on a field in the contract header that the contract creator fills out?
+          valore: null
+        - n: 5
+          verbo: are
+          oggetto: there any clauses with multiple versions (try first one, then second one, and then third one)?
+          valore: null
+        - n: 6
+          verbo: is
+          oggetto: there currently a template approval process in place when new templates or modifications are done? If so, briefly describe this process
+          valore: null
+        - n: 7
+          verbo: please
+          oggetto: attach any contract templates and examples of completed templates as attachments
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0083
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 208
+  - raw_id: R.DOC0059.0085
+    source_unit: U.DOC0059.0085
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a16
+      - FLW
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: who
+          oggetto: is your eSignature provider?
+          valore: null
+        - n: 2
+          verbo: what
+          oggetto: is the start/stop date of your fiscal year?
+          valore: null
+        - n: 3
+          verbo: what
+          oggetto: version of Microsoft Word does your organization use?
+          valore: null
+        - n: 4
+          verbo: what
+          oggetto: browsers (including versions) does your organization use?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0085
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 66
+  - raw_id: R.DOC0059.0089
+    source_unit: U.DOC0059.0089
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a17
+      - FLW
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: how
+          oggetto: many users do you anticipate will use SciQuest SelectSite in the future?
+          valore: null
+        - n: 2
+          verbo: is
+          oggetto: your organization tax exempt on any or all purchases?
+          valore: null
+        - n: 3
+          verbo: please
+          oggetto: provide an estimate of the number of active contracts with suppliers that will be used in SelectSite
+          valore: null
+      risultato_atteso: Please provide an estimate of the number of active contracts with suppliers that will be used in SelectSite.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0089
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 75
+  - raw_id: R.DOC0059.0091
+    source_unit: U.DOC0059.0091
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a18
+      - FLW
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: are
+          oggetto: there any key dates where the various resources will not be available for project work? (Holidays, Vacations, Other projects, Year End, Etc.)
+          valore: null
+        - n: 2
+          verbo: do
+          oggetto: you have any concurrent or near term projects that may impact the implementation of your SciQuest solution?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0091
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 78
+  - raw_id: R.DOC0059.0094
+    source_unit: U.DOC0059.0094
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: what
+          oggetto: is the fully qualified account code string used by your general ledger? For example, Company, Division, GL, Department (xxx-xxx-xxxxxxx-xxx)
+          valore: null
+        - n: 2
+          verbo: please
+          oggetto: "list each segment below:"
+          valore: null
+        - n: 3
+          verbo: are
+          oggetto: any of the above segments associated with the other segments? For example, Segment 1 has a specific set of Segment 2 values that apply. In this instance, SciQuest would refer to Segment 1 as the Parent and Segment 2 as the Child. Please identify any parent/child relationships with your accounting elements and if the relationship is one to one (one unique parent to one unique child), one to many (one unique parent to many children), or many to one (many parents to one unique child)
+          valore: null
+        - n: 4
+          verbo: please
+          oggetto: provide a sample file that contains at least a subset of all values for each field listed above and relationships noted
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0094
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 215
+  - raw_id: R.DOC0059.0098
+    source_unit: U.DOC0059.0098
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a20
+      - FLW
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: briefly
+          oggetto: explain how Business Units and Departments are used in your organization
+          valore: null
+        - n: 2
+          verbo: is
+          oggetto: there a requirement to restrict visibility of orders among departments? For example, will a user associated with department A be able to see orders for department B?
+          valore: null
+        - n: 3
+          verbo: can
+          oggetto: users be assigned to a single Business Unit and/or Department? Is the information easily available such that it can be included with a user extract?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0098
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 116
+  - raw_id: R.DOC0059.0102
+    source_unit: U.DOC0059.0102
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a21
+      - FLW
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: do
+          oggetto: you have experience extracting chart field data (accounting data), users, and suppliers from you ERP/HR systems into a flat file?
+          valore: null
+        - n: 2
+          verbo: do
+          oggetto: you have experience with importing financial documents (purchase requisitions, purchase orders, invoices) into your ERP system?
+          valore: null
+        - n: 3
+          verbo: do
+          oggetto: you have experience scripting ERP imports/exports mentioned in items 1 and 2?
+          valore: null
+        - n: 4
+          verbo: have
+          oggetto: you identified an authentication technology (SAML, LDAP, etc.)?
+          valore: null
+        - n: 5
+          verbo: is
+          oggetto: the supplier information in your ERP accurate (addresses, order delivery information)?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0102
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 142
+  - raw_id: R.DOC0059.0106
+    source_unit: U.DOC0059.0106
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a22
+      - FLW
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: please
+          oggetto: complete the table below which contains the roles and responsibilities that will be involved in the Spend Radar implementation
+          valore: null
+        - n: 2
+          verbo: briefly
+          oggetto: describe your user community or user groups
+          valore: null
+        - n: 3
+          verbo: what
+          oggetto: information are they looking for?
+          valore: null
+        - n: 4
+          verbo: are
+          oggetto: there different types of users that desire different information?
+          valore: null
+        - n: 5
+          verbo: does
+          oggetto: anyone in the core project team have previous Spend Analytics Experience?
+          valore: null
+        - n: 6
+          verbo: are
+          oggetto: there any key dates where the various resources will not be available for project work? (Holidays, vacations, other projects, year-end, etc.)
+          valore: null
+      risultato_atteso: Please complete the table below which contains the roles and responsibilities that will be involved in the Spend Radar implementation.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0106
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 147
+  - raw_id: R.DOC0059.0108
+    source_unit: U.DOC0059.0108
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a23
+      - FLW
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: are
+          oggetto: you able to provide flat, delimited text files or Excel files?
+          valore: null
+        - n: 2
+          verbo: how
+          oggetto: often are the supplier files submitted?
+          valore: null
+        - n: 3
+          verbo: for
+          oggetto: the detailed files that are submitted for all suppliers, what is the approximate annual total count of all lines?
+          valore: null
+        - n: 4
+          verbo: customers
+          oggetto: will often times use ancillary (lookup) files to reference or display additional information within reporting. Examples include diversity information, product lookups, etc. Does your organization plan on providing any supplemental files in addition to the spend files?
+          valore: null
+        - n: 5
+          verbo: if
+          oggetto: you will be providing lookup files, are you going to be providing a date range where the lookup value would be joined to your spend (see below example)?
+          valore: null
+      risultato_atteso: If you will be providing lookup files, are you going to be providing a date range where the lookup value would be joined to your spend (see below example)?
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0108
+    needs_llm: true
+    missing:
+      - trigger
+    tokens: 182
+  - raw_id: R.DOC0059.0110
+    source_unit: U.DOC0059.0110
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a24
+      - FLW
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: do
+          oggetto: you require any currency conversions? Which currencies will you be converting to?
+          valore: null
+        - n: 2
+          verbo: will
+          oggetto: you be providing a PCard extract? Will it have Level 3 (transaction line detail)?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0110
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 163
+  - raw_id: R.DOC0059.0112
+    source_unit: U.DOC0059.0112
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a25
+      - FLW
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: are
+          oggetto: there specific reporting capabilities that your organization is hoping to gain with the implementation of Spend Radar?
+          valore: null
+        - n: 2
+          verbo: please
+          oggetto: list out the core goals of this product
+          valore: null
+        - n: 3
+          verbo: please
+          oggetto: provide descriptions or samples of reports that are currently being used, or desired reports within Spend Radar
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0112
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 87
+  - raw_id: R.DOC0059.0115
+    source_unit: U.DOC0059.0115
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0059
+    section: ji-plt-2305-jaggaer-full-suite-ppq-docx-8e533abc
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a26
+      - FLW
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: please
+          oggetto: send your organizational logo (based upon specifications below) and RGB code
+          valore: null
+        - n: 2
+          verbo: standard
+          oggetto: reporting logo size is 220 x 50 pixels
+          valore: null
+        - n: 3
+          verbo: standard
+          oggetto: login page logo size is 350 x 140 pixels
+          valore: null
+        - n: 4
+          verbo: a
+          oggetto: larger-sized logo is preferable as it can be scaled to desired size
+          valore: null
+        - n: 5
+          verbo: preferred
+          oggetto: formatting is .gif, but other formats can be converted
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0059.0115
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 96

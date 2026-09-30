@@ -1,0 +1,37 @@
+id: U.DOC0178.0120
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: doesNotExpire | Description: Indicates whether the contract is (true) or is not (false) to expire automatically when the endDate occurs.
+  If set to false, notifications prior to the end date enable a contract manager to amend or renew the contract
+hash: sha256:48da2ca1c6b5f8332d06aa1ceae04c734b73b0b814bf19a1e74b14242bde3a58
+words: 41
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ContractDates [Import]
+  section_path: 2.2.1.4
+  page: 25
+  lang: en
+  prev: U.DOC0178.0119
+  next: U.DOC0178.0121
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - doesNotExpire
+    - ""
+    - |-
+      Indicates whether the contract is (true) or is not (false) to expire automatically when the endDate occurs.
+      If set to false, notifications prior to the end date enable a contract manager to amend or renew the contract
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

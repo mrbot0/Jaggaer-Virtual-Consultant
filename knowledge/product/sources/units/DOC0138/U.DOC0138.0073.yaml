@@ -1,0 +1,17 @@
+id: U.DOC0138.0073
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: It does NOT do that if a “NonPO” form type was used. <Activity name="Create PO"> <ActivityType>automated</ActivityType> <StepRef name="Create PO" /> <FolderRef name="Create PO" /> <Rule><![CDATA[![Product.FormType ~ "/NonPO/"]]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> <Flag>NoBypass</Flag> <Attribute name="wfActivitySupportNote"> <AttrValue lang="default">Do not create a PO for internal forms (formtype starts with I)</AttrValue> </Attribute> <Attribute name="wfActivityHelp"> <AttrValue lang="default">This is a system step that creates a JAGGAER PO.</AttrValue> </Attribute> </Activity>
+hash: sha256:496a775dbb65388b53f0ec564d0395573ce14bc4ced456f4594e066b56c42dac
+words: 60
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: CREATE PO
+  section: CREATE PO
+  section_path: "19"
+  page: null
+  lang: en
+  prev: U.DOC0138.0072
+  next: U.DOC0138.0074

@@ -1,0 +1,38 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-24
+section: 2.3.1.21
+section_title: CustomAttribute [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:CUSTOMATTRIBUTE
+    label: customAttribute
+    labels:
+      - customAttribute
+    technical_name: CUSTOMATTRIBUTE
+    section: 2.3.1.21
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Name of the custom attribute to be mapped to the custom code or field in
+      your ERP system.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.21
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.21#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: customAttribute
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 686

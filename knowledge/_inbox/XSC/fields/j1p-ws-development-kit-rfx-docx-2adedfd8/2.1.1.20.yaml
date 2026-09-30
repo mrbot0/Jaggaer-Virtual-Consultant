@@ -1,0 +1,64 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.20
+section_title: "Commercial Envelope: formula data for additional column
+  [Import/Update RfX method]"
+genre: tecnica
+rows:
+  - label: formulaTCO
+    technical_name: formulaTCO
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      0 = numeric formula or numeric single row formula (generic)
+
+      1 = use TCO formula
+
+      Default is 0.
+
+      Note:
+
+      If there is already an additional column in the price section with title
+      being TCO and formulaTCO flag being 1, and the import request is trying to
+      create another additional column in the same section with title being TCO
+      and formulaTCO flag being 1, then the existing TCO column’s formulaTCO
+      flag will be set to 0 while keeping its title.
+
+      If more than one new additional columns are to be created in the price
+      section with title being TCO and formulaTCO flag being 1, then only the
+      first TCO column will have formulaTCO flag will be set to 1 and the rest
+      will automatically set to 0 because only one of these columns is allowed
+      to have value of 1.
+    section: 2.1.1.20
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.20#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: aggregationTypeTCO
+    technical_name: aggregationTypeTCO
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      In case of TCO formula, it indicates the aggregation type:
+      SUM
+      AVG
+      Default is SUM.
+    section: 2.1.1.20
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.20#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: formulaValues
+    technical_name: formulaValues
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Container of formula values related to the commercial parameters. [See
+      section “Formula values” below].
+    section: 2.1.1.20
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.20#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

@@ -1,0 +1,44 @@
+document: business-card-form-xml-feaac2ce
+scope: XSC
+batch: batch-06
+section: campi-6
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:INSTRUCTIONS
+    label: Instructions
+    labels:
+      - Instructions
+    technical_name: INSTRUCTIONS
+    section: campi-6
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<strong>Business Card Policy</strong><br><br>
+      The following personnel are eligible for business cards:<br> <ul>
+      <li>executive and manager-level employees <li>professional staff (exempt)
+      <li>sales executives and account managers </ul> <strong>Identification and
+      Title</strong><br><br> On business cards, individuals should be identified
+      by the official title assigned to them upon being hired. Variations on
+      titles are permissible at the department head's discretion and with the
+      approval of the appropriate dean.<br><br> · id=10000 · tipo=userdefined
+    sources:
+      - document: business-card-form-xml-feaac2ce
+        section: campi-6
+        source_unit: business-card-form-xml-feaac2ce/campi-6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 792

@@ -1,0 +1,101 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+batch: batch-33
+section: 2.4.1.1
+section_title: Main request structure [PR Validate]
+part: 1
+parts: 1
+rows:
+  - key: tech:ORIGINALREQUESTMESSAGEID
+    label: originalRequestMessageId
+    labels:
+      - originalRequestMessageId
+    technical_name: ORIGINALREQUESTMESSAGEID
+    section: 2.4.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Unique identifier for the Purchase Requisition export message with which
+      requisition was saved
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.4.1.1
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: originalRequestMessageId
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:REQUISITIONHEADER
+    label: requisitionHeader
+    labels:
+      - requisitionHeader
+    technical_name: REQUISITIONHEADER
+    section: 2.4.1.1
+    type: null
+    mandatory_text: |-
+      Y
+      Only one between such elements can be provided
+    allowed_values: []
+    notes: |-
+      Object defining validation result to be applied at global header level.
+      See section “ValidateRequisitionData [PR Validate]” below.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.4.1.1
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: requisitionHeader
+        type: null
+        mandatory_text: |-
+          Y
+          Only one between such elements can be provided
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:REQUISITIONLINELIST
+    label: requisitionLineList
+    labels:
+      - requisitionLineList
+    technical_name: REQUISITIONLINELIST
+    section: 2.4.1.1
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container of validation information to be applied at line level.
+      See section “ValidateRequisitionLineDataList [PR Validate]” below.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.4.1.1
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.4.1.1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: requisitionLineList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1118

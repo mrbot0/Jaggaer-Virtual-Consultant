@@ -1,0 +1,41 @@
+document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+scope: XSC
+section: 2.1.1.3
+section_title: CustomField [Item Master Import method]
+genre: tecnica
+rows:
+  - label: internalName
+    technical_name: internalName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal identifier of the custom field
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: customFieldValue
+    technical_name: customFieldValue
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Zero or more CustomFieldValue
+      See section CustomFieldValue [Item Master Import method]
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177
+  - label: defaultCustomFieldValue
+    technical_name: defaultCustomFieldValue
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Default value of the custom field.
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-ji-itemmaster-docx-72acc177/2.1.1.3#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-itemmaster-docx-72acc177

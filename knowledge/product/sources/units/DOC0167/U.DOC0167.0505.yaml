@@ -1,0 +1,96 @@
+id: U.DOC0167.0505
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Attribute name | Value | Description
+  Attribute name: KEY | Value: Name of the dataelement | Description: Contains the name (defined by GURU) of the data-element to search for
+  Attribute name: OPERATOR | Value: STARTWITH
+  CONTAINS
+  EQUAL
+  NOTEQUAL
+  IN
+  NOT_IN
+  GREATER_THAN
+  LESS_THAN
+  ISNULL
+  NOTNULL
+  AT_LEAST_ONE
+  ISEXPIRED
+  NOTEXPIRED | Description: Operation of the filter.
+  According to the data-type of the data element, the following values are allowed:
+  Text: STARTWITH, CONTAINS, EQUAL
+  Numeric: EQUAL, GREATER_THAN, LESS_THAN
+  Date: EQUAL, GREATER_THAN, LESS_THAN
+  Yes/No: EQUAL, NOTEQUAL
+  Choice: EQUAL, NOTEQUAL
+  Multi Choice: IN, NOT_IN, AT_LEAST_ONE
+  Attachment/Signed Attachment: ISEXPIRED, NOTEXPIRED
+  All datatypes: ISNULL and NOTNULL
+  Attribute name: VALUES | Description: Value of the filter, according to operation.
+  Date values can be expressed in format
+  “yyyyMMdd” (e.g. 20150624)
+  or
+  "yyyy-MM-dd HH:mm:ss.SSS Z" (e.g. 2015-06-24 14:34:16.535 +0100).
+  It is possible to configure a different format for date value (example: "yyyy-MM-dd"). In this case the same format will be applied to import, export and data element condition filter.
+  For Attachment, the operators ISEXPIRED and NOTEXPIRED can be used with a specific date as value (format “yyyyMMdd” or the one set in configuration parameter deShortDateFormat). If omitted, the default date will be the current date.
+hash: sha256:986530f7824afd57160bcc2106654a2274780be60a0c34156a759b54e8d0bdc4
+words: 195
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: Data Element Condition Filter
+  section_path: 2.2.2.2
+  page: 7
+  lang: en
+  prev: U.DOC0167.0504
+  next: U.DOC0167.0506
+table:
+  table: 0
+  headers:
+    - Attribute name
+    - Value
+    - Description
+  rows:
+    - - KEY
+      - Name of the dataelement
+      - Contains the name (defined by GURU) of the data-element to search for
+    - - OPERATOR
+      - |-
+        STARTWITH
+        CONTAINS
+        EQUAL
+        NOTEQUAL
+        IN
+        NOT_IN
+        GREATER_THAN
+        LESS_THAN
+        ISNULL
+        NOTNULL
+        AT_LEAST_ONE
+        ISEXPIRED
+        NOTEXPIRED
+      - |-
+        Operation of the filter.
+        According to the data-type of the data element, the following values are allowed:
+        Text: STARTWITH, CONTAINS, EQUAL
+        Numeric: EQUAL, GREATER_THAN, LESS_THAN
+        Date: EQUAL, GREATER_THAN, LESS_THAN
+        Yes/No: EQUAL, NOTEQUAL
+        Choice: EQUAL, NOTEQUAL
+        Multi Choice: IN, NOT_IN, AT_LEAST_ONE
+        Attachment/Signed Attachment: ISEXPIRED, NOTEXPIRED
+        All datatypes: ISNULL and NOTNULL
+    - - VALUES
+      - ""
+      - |-
+        Value of the filter, according to operation.
+        Date values can be expressed in format
+        “yyyyMMdd” (e.g. 20150624)
+        or
+        "yyyy-MM-dd HH:mm:ss.SSS Z" (e.g. 2015-06-24 14:34:16.535 +0100).
+        It is possible to configure a different format for date value (example: "yyyy-MM-dd"). In this case the same format will be applied to import, export and data element condition filter.
+        For Attachment, the operators ISEXPIRED and NOTEXPIRED can be used with a specific date as value (format “yyyyMMdd” or the one set in configuration parameter deShortDateFormat). If omitted, the default date will be the current date.
+  block: 1
+  blocks: 1

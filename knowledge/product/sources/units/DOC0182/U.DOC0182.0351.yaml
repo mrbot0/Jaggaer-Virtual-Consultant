@@ -1,0 +1,49 @@
+id: U.DOC0182.0351
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: contractStartDate | Description: Start date of the contract. | Available from version: JA_19_04
+  Attribute: contractEndDate | Description: End date of the contract | Available from version: JA_19_04
+  Attribute: note | Description: External note to the corresponding buyer or supplier to whom the requisition must be sent.
+  If the external note is longer than 1000 characters, it is truncated and saved. | Available from version: JA_19_04
+  Attribute: itemInfoFieldList | Description: Container for item external information fields.
+  See section “ItemInfoField [PR Export]” above. | Available from version: JA_19_04
+hash: sha256:d394d40d91cef073061884263885e22eb41b44a0462faa737259297ddc535e7e
+words: 95
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: ExternalItemInfo [PR Export]
+  section_path: 2.3.3.58
+  page: 26
+  lang: en
+  prev: U.DOC0182.0350
+  next: U.DOC0182.0352
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - contractStartDate
+      - Start date of the contract.
+      - JA_19_04
+    - - contractEndDate
+      - End date of the contract
+      - JA_19_04
+    - - note
+      - |-
+        External note to the corresponding buyer or supplier to whom the requisition must be sent.
+        If the external note is longer than 1000 characters, it is truncated and saved.
+      - JA_19_04
+    - - itemInfoFieldList
+      - |-
+        Container for item external information fields.
+        See section “ItemInfoField [PR Export]” above.
+      - JA_19_04
+  block: 1
+  blocks: 1

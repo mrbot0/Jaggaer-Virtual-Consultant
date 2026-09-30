@@ -1,0 +1,37 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-27
+section: 2.3.1.24
+section_title: SplittableFieldIndex [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:DISCOUNTSPLITAMOUNT
+    label: discountSplitAmount
+    labels:
+      - discountSplitAmount
+    technical_name: DISCOUNTSPLITAMOUNT
+    section: 2.3.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Discount split amount
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.3.1.24
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.24#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: discountSplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 673

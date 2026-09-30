@@ -1,0 +1,27 @@
+id: U.DOC0171.0312
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  Attachment Management
+  1. if the RFX is in DRAFT status, the attachment is added or replaced according to the name (if an attachment with the same filename exists the uploaded one replaces the existing one)
+  2. if the RFX status is RUNNING (or following status) only new attachments are allowed, and so if an attachment with the same name already exists an error is returned.
+  3. Seller Attachments cannot be added to an Rfq in a state after RUNNING state.
+hash: sha256:0aa89de82aa3f05de0c90f7b9f1e227b86b71a4ed34ec173a153af5addcaa455
+words: 80
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Attachment Management
+  section_path: 2.1.2.7
+  page: 6
+  lang: en
+  prev: U.DOC0171.0311
+  next: U.DOC0171.0313
+steps:
+  - if the RFX is in DRAFT status, the attachment is added or replaced according to the name (if an attachment with the same filename exists the uploaded one replaces the existing one)
+  - if the RFX status is RUNNING (or following status) only new attachments are allowed, and so if an attachment with the same name already exists an error is returned.
+  - Seller Attachments cannot be added to an Rfq in a state after RUNNING state.
+procedure:
+  title: Attachment Management

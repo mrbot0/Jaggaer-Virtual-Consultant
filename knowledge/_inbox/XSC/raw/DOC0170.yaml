@@ -1,0 +1,1893 @@
+doc: S.STD.XSC.DOC.0170
+scope: XSC
+extracted_at: 2026-09-30T04:32:03.834Z
+tier: T0
+stats:
+  units: 208
+  extracted_units: 51
+  document_candidates: 1
+  needs_llm: 34
+  t0_complete: 18
+  by_candidate:
+    INV: 24
+    FLD: 23
+    GLS: 4
+    INT: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 16357
+  sessions:
+    - n: 1
+      tokens: 16357
+      batches: 3
+      items: 34
+      batch_items:
+        - - R.DOC0170.0001
+          - R.DOC0170.0005
+          - R.DOC0170.0009
+          - R.DOC0170.0013
+          - R.DOC0170.0017
+          - R.DOC0170.0023
+          - R.DOC0170.0030
+          - R.DOC0170.0036
+          - R.DOC0170.0046
+          - R.DOC0170.0050
+          - R.DOC0170.0057
+          - R.DOC0170.0062
+          - R.DOC0170.0075
+          - R.DOC0170.0078
+          - R.DOC0170.0085
+          - R.DOC0170.0093
+          - R.DOC0170.0098
+          - R.DOC0170.0104
+          - R.DOC0170.0106
+        - - R.DOC0170.0110
+          - R.DOC0170.0114
+          - R.DOC0170.0117
+          - R.DOC0170.0126
+          - R.DOC0170.0135
+          - R.DOC0170.0150
+          - R.DOC0170.0163
+          - R.DOC0170.0172
+          - R.DOC0170.0187
+          - R.DOC0170.0192
+          - R.DOC0170.0194
+          - R.DOC0170.0199
+          - R.DOC0170.0202
+          - R.DOC0170.0207
+        - - R.DOC0170.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0170.0001
+    source_unit: U.DOC0170.0001
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS
+    page: 1
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - INV
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0001
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0005
+    source_unit: U.DOC0170.0005
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 2
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - INV
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0005
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0009
+    source_unit: U.DOC0170.0009
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 3
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - INV
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0009
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0013
+    source_unit: U.DOC0170.0013
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 4
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - INV
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0013
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0017
+    source_unit: U.DOC0170.0017
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 2 Executive Summary
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - INV
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0017
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0020
+    source_unit: U.DOC0170.0020
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 2 Executive Summary
+    page: 5
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: In some cases, users
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0020
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0170.0023
+    source_unit: U.DOC0170.0023
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 3 JAGGAER Integration Framework
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - INV
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0023
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0025
+    source_unit: U.DOC0170.0025
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0170
+    section: 3 JAGGAER Integration Framework
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - GLS
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: JAGGAER ONE Platform
+      definition: a centralized set of JAGGAER services that offers indu stry -standard methods to make seamless connections between JAGGAER ONE , customers, suppliers, custom applications, and cloud -based service providers.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0170.0025
+    needs_llm: false
+    tokens: 59
+  - raw_id: R.DOC0170.0030
+    source_unit: U.DOC0170.0030
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 4 PaaS Integration Overview
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - INV
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0030
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0033
+    source_unit: U.DOC0170.0033
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 4 PaaS Integration Overview
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Depending on the functionality required, several capabilities
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0033
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 52
+  - raw_id: R.DOC0170.0036
+    source_unit: U.DOC0170.0036
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 4 PaaS Integration Overview
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0036
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 106
+  - raw_id: R.DOC0170.0039
+    source_unit: U.DOC0170.0039
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 4 PaaS Integration Overview
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The custom application
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0039
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0170.0040
+    source_unit: U.DOC0170.0040
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 4 PaaS Integration Overview
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The c ustom application
+      modality: raccomandazione
+      condition: outside of the Jaggaer core app
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0170.0040
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0170.0042
+    source_unit: U.DOC0170.0042
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 4 PaaS Integration Overview
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: partner
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0170.0042
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0170.0046
+    source_unit: U.DOC0170.0046
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a15
+      - INV
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0046
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0050
+    source_unit: U.DOC0170.0050
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 8
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0050
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 51
+  - raw_id: R.DOC0170.0057
+    source_unit: U.DOC0170.0057
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a17
+      - INV
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0057
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0060
+    source_unit: U.DOC0170.0060
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Partner -developed Webhook Integrations
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0060
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0170.0062
+    source_unit: U.DOC0170.0062
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 5 Setup and Execution of Webhoo ks
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a19
+      - INV
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0062
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0066
+    source_unit: U.DOC0170.0066
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 5 Setup and Execution of Webhoo ks
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: implementation partner
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0066
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0170.0068
+    source_unit: U.DOC0170.0068
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 5 Setup and Execution of Webhoo ks
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: For each webhook, the implementer
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0068
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0170.0075
+    source_unit: U.DOC0170.0075
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 5 Setup and Execution of Webhoo ks
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: a user enters a core app page with Webhooks capability, the core app page interacts with the J1P Function service to determine whether any webhooks should be displayed , based on user, tenant, context, and context tags
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0170.0075
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 71
+  - raw_id: R.DOC0170.0078
+    source_unit: U.DOC0170.0078
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 5 Setup and Execution of Webhoo ks
+    page: 10
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0078
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0085
+    source_unit: U.DOC0170.0085
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a24
+      - INV
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0085
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0093
+    source_unit: U.DOC0170.0093
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 12
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a25
+      - INV
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0093
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0095
+    source_unit: U.DOC0170.0095
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 12
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a26
+      - GLS
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      term: Below
+      definition: "a sample HTTP conversation with token issuing and usage Call to “Token” endpoint POST /auth/realms/J1p -integrations/protocol/openid -connect/token HTTP/1.1 Cache -Control: no-cache Host: prep -reg01.api.jaggaer.com Content-Type: application/x -www -form -urlencoded Content-Length: 68 Connection: keep-alive client_id=username1&client_secret=pwd1&grant_type=client_credentials"
+      aliases: []
+      lang: en
+      source_unit: U.DOC0170.0095
+    needs_llm: false
+    tokens: 97
+  - raw_id: R.DOC0170.0098
+    source_unit: U.DOC0170.0098
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a27
+      - INV
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0098
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0104
+    source_unit: U.DOC0170.0104
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a28
+      - INV
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0104
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0106
+    source_unit: U.DOC0170.0106
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0106
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 58
+  - raw_id: R.DOC0170.0108
+    source_unit: U.DOC0170.0108
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: "Note : the custom application"
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0108
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0170.0110
+    source_unit: U.DOC0170.0110
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a31
+      - INV
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0110
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0114
+    source_unit: U.DOC0170.0114
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 6 PaaS IDM
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a32
+      - INV
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0114
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0117
+    source_unit: U.DOC0170.0117
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 6 PaaS IDM
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0117
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 37
+  - raw_id: R.DOC0170.0126
+    source_unit: U.DOC0170.0126
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 17
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a34
+      - INV
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0126
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0135
+    source_unit: U.DOC0170.0135
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a35
+      - INV
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0135
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0138
+    source_unit: U.DOC0170.0138
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: RP
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0138
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 32
+  - raw_id: R.DOC0170.0140
+    source_unit: U.DOC0170.0140
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a37
+      - GLS
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: authorization code
+      definition: an intermediate credential, which encodes the authorization obtained at step 1 .
+      aliases: []
+      lang: en
+      source_unit: U.DOC0170.0140
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0170.0142
+    source_unit: U.DOC0170.0142
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: To retrieve the ID token , the RP
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0142
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0170.0150
+    source_unit: U.DOC0170.0150
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 19
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a39
+      - INV
+    type_hint:
+      candidates: *a39
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0150
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0152
+    source_unit: U.DOC0170.0152
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 19
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: On success , the OP
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0170.0152
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0170.0156
+    source_unit: U.DOC0170.0156
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 19
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: ID token
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0156
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0170.0159
+    source_unit: U.DOC0170.0159
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 19
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a42
+      - GLS
+    type_hint:
+      candidates: *a42
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Below
+      definition: the two examples that show the content of the IDToken (one token is related to a supplier and the other one is related to a buyer user).
+      aliases: []
+      lang: en
+      source_unit: U.DOC0170.0159
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0170.0163
+    source_unit: U.DOC0170.0163
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 20
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a43
+      - INV
+    type_hint:
+      candidates: *a43
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0163
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0170
+    source_unit: U.DOC0170.0170
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 20
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Its value
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0170
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0170.0172
+    source_unit: U.DOC0170.0172
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 21
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a45
+      - INV
+    type_hint:
+      candidates: *a45
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0172
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0187
+    source_unit: U.DOC0170.0187
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a46
+      - INV
+    type_hint:
+      candidates: *a46
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0187
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0192
+    source_unit: U.DOC0170.0192
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 7 PaaS Activation Process
+    page: 23
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a47
+      - INV
+    type_hint:
+      candidates: *a47
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0192
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0194
+    source_unit: U.DOC0170.0194
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: 7 PaaS Activation Process
+    page: 23
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0194
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 29
+  - raw_id: R.DOC0170.0199
+    source_unit: U.DOC0170.0199
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 24
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a49
+      - INV
+    type_hint:
+      candidates: *a49
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0170.0199
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 57
+  - raw_id: R.DOC0170.0202
+    source_unit: U.DOC0170.0202
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 24
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a50
+      - FLD
+    type_hint:
+      candidates: *a50
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0202
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0170.0207
+    source_unit: U.DOC0170.0207
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0170
+    section: J1P WS Development_Kit_PaaS Draft
+    page: 24
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a51
+      - FLD
+    type_hint:
+      candidates: *a51
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0170.0207
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 16
+  - raw_id: R.DOC0170.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0170
+    section: null
+    source_unit: U.DOC0170.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: J1P WS Development_Kit_PaaS
+      protocol:
+        - REST
+        - JSON
+      endpoints:
+        - /j1p/api/public/j1/v1
+      operations: []
+      mappings: []
+      error_catalog: []
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+      - error_catalog
+    tokens: 2650

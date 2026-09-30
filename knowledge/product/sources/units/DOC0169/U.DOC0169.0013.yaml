@@ -1,0 +1,41 @@
+id: U.DOC0169.0013
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: procedura
+text: The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted.
+hash: sha256:9240875c91441701a4ee7ffc42cad89404f870a6036b50c74ea53abe6f109610
+words: 29
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 10
+  lang: en
+  prev: U.DOC0169.0012
+  next: U.DOC0169.0014
+steps:
+  - "PR Import:"
+  - "Request data format [PR Import]: describes the possible operations on import and describes the structure of the request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory depending on the operation you want to perform and those that can be omitted."
+  - "Behavior [PR Import]: describes how the web service processes the data passed in input, in case of some particular processes."
+  - "Response Data Format [PR Import]: describes the structure of the web service response and contains the list of possible error codes."
+  - "PR Update:"
+  - "Request data format [PR Update]: describes the structure of the update request."
+  - "Behavior [PR Update]: describes how the web service processes the data passed in input, in case of some particular processes"
+  - "Response data format [PR Update]: describes the structure of the web service response and contains the list of possible error codes"
+  - "PR Export:"
+  - "Component filters [PR Export]: describes which sections of a purchase requisition can be exported. The use of a component filter increments the number of sections in the response to every purchase requisition exported."
+  - "Condition filters [PR Export]: describes which fields can be used to filter the purchase requisition to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of purchase requisition extracted."
+  - "Export data format [PR Export]: describes the structure of the response in terms of exported fields and sections."
+  - "Error codes [PR Export]: contains a list of possible error codes"
+  - "PR Validate:"
+  - "Request data format [PR Validate]: describes the structure of the validation request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted."
+procedure:
+  title: The structure of the current document is the following
+  part: 1
+  parts: 2
+  first_step: 1
+part:
+  n: 2
+  of: 2

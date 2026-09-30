@@ -1,0 +1,44 @@
+id: U.DOC0171.0238
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: permissionList/
+  freeze | Mandatory (Y/N): N | Description: 1 = evaluation user can freeze the envelope
+  0 = evaluation user cannot freeze the envelope
+  Default is 0. | Mapping on JA data model and notes: Evaluation group, envelope freezing available
+hash: sha256:914df5be28696ed046d1af5fd58ca8722e9a60abd1a8121eeec7f88c0bd65a79
+words: 41
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Evaluation Group Member [Import/Update RfX method]
+  section_path: 2.1.1.24
+  page: 6
+  lang: en
+  prev: U.DOC0171.0237
+  next: U.DOC0171.0239
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - |-
+      permissionList/
+      freeze
+    - N
+    - |-
+      1 = evaluation user can freeze the envelope
+      0 = evaluation user cannot freeze the envelope
+      Default is 0.
+    - Evaluation group, envelope freezing available
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

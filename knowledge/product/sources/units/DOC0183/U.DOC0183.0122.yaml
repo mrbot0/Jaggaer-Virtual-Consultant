@@ -1,0 +1,69 @@
+id: U.DOC0183.0122
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: userName | Description: Basic [segreto] username of the user who created the receipt.
+  Attribute: title | Description: Title of the user who created the receipt.
+  Attribute: firstName | Description: First name of the user who created the receipt.
+  Attribute: lastName | Description: Last name of the user who created the receipt.
+  Attribute: eMail | Description: Email of the user who created the receipt.
+  Attribute: phone | Description: Telephone of the user who created the receipt.
+  See section “TelephoneNumber [Export]” below.
+  Attribute: businessUnit | Description: Business unit with which the user is associated. Must be an active business unit.
+  See section “BusinessUnit [Export]” below.
+  Attribute: department | Description: Department of the user, from his or her profile.
+  Attribute: position | Description: Position of the user within the department, from his or her profile
+hash: sha256:71cd1b5378d3264499678a83c4f8751d120d44e87501cd2d280f59fe45429234
+words: 141
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: UserProfile [Export]
+  section_path: 2.2.3.3
+  page: 17
+  lang: en
+  prev: U.DOC0183.0121
+  next: U.DOC0183.0123
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - userName
+      - Basic [segreto] username of the user who created the receipt.
+      - ""
+    - - title
+      - Title of the user who created the receipt.
+      - ""
+    - - firstName
+      - First name of the user who created the receipt.
+      - ""
+    - - lastName
+      - Last name of the user who created the receipt.
+      - ""
+    - - eMail
+      - Email of the user who created the receipt.
+      - ""
+    - - phone
+      - |-
+        Telephone of the user who created the receipt.
+        See section “TelephoneNumber [Export]” below.
+      - ""
+    - - businessUnit
+      - |-
+        Business unit with which the user is associated. Must be an active business unit.
+        See section “BusinessUnit [Export]” below.
+      - ""
+    - - department
+      - Department of the user, from his or her profile.
+      - ""
+    - - position
+      - Position of the user within the department, from his or her profile
+      - ""
+  block: 1
+  blocks: 1

@@ -1,0 +1,25 @@
+id: U.DOC0067.0021
+doc: S.STD.XSC.DOC.0067
+doc_id: sc-perspective-jaggaer-platform-implementation-c-4029c05a
+type: procedura
+text: |-
+  Integrations
+  1. Configure top -level org role with all permissions and settings that will apply to any user throughout the life of the client's system ; CAUTION: Keep in mind that as products are added in the future, the settings in the top -level role will apply to EVERYONE, so for example if setting up TCM only, don't give this role permission to Manage Contracts or all users will be able to do it.
+  2. Configure inactive 'umbrella' roles for all the functions available in the client's org
+hash: sha256:44dcbd9b77c71afc3e0ed6d29095b809602a1dfed159f2d6839fb44faea19e03
+words: 88
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0067
+  chapter: Integrations
+  section: Integrations
+  section_path: p2
+  page: 2
+  lang: en
+  prev: U.DOC0067.0020
+  next: U.DOC0067.0022
+steps:
+  - "Configure top -level org role with all permissions and settings that will apply to any user throughout the life of the client's system ; CAUTION: Keep in mind that as products are added in the future, the settings in the top -level role will apply to EVERYONE, so for example if setting up TCM only, don't give this role permission to Manage Contracts or all users will be able to do it."
+  - Configure inactive 'umbrella' roles for all the functions available in the client's org
+procedure:
+  title: Integrations

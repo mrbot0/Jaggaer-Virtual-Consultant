@@ -1,0 +1,71 @@
+id: U.DOC0171.0458
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: parameterId | Description: Id if the qualification/technical field
+  Attribute: parameterType | Description: Type of the qualification/technical field
+  Attribute: value | Description: Response value (s).
+  Filename in case of attachment parameter.
+  Global list item (row values concatenated) in case of global list parameter (GLBLIST).
+  Attribute: Value/@id | Description: Id of the attachment in case of attachment parameter.
+  Id of the global list item in case of global list parameter.
+  Attribute: Value/@itemCode | Description: Item code of the global list in case of parameter type GLBLIST | Available from version: JINT_20_02_00
+  Attribute: Attachment | Description: Offer attachment [see section “Suppliers Offer: Attachments to offer” below]
+  Attribute: signedAttachment | Description: Offer signed attachment [see section “Suppliers Offer: Attachments to offer” below]
+  Attribute: questionType | Description: It can be LOCAL for parameter belonging to Question section, BUYER for for parameter belonging to Evaluation section, DE_EVM_SELLER for for parameter belonging to Profile Question section | Available from version: JA_19_00
+  Attribute: score | Description: Score for the technical field (only show when rankingStrategy is not NONE/NO_RANKING) | Available from version: JINT_22_02_00
+hash: sha256:d80ff1fda0094261f3866da867f619ed57d463ad9ede071d5521da97e492a506
+words: 184
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Suppliers Offer: Response to technical and qualification parameters [Export RfX method]"
+  section_path: 2.3.4.20
+  page: 7
+  lang: en
+  prev: U.DOC0171.0457
+  next: U.DOC0171.0459
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - parameterId
+      - Id if the qualification/technical field
+      - ""
+    - - parameterType
+      - Type of the qualification/technical field
+      - ""
+    - - value
+      - |-
+        Response value (s).
+        Filename in case of attachment parameter.
+        Global list item (row values concatenated) in case of global list parameter (GLBLIST).
+      - ""
+    - - Value/@id
+      - |-
+        Id of the attachment in case of attachment parameter.
+        Id of the global list item in case of global list parameter.
+      - ""
+    - - Value/@itemCode
+      - Item code of the global list in case of parameter type GLBLIST
+      - JINT_20_02_00
+    - - Attachment
+      - "Offer attachment [see section “Suppliers Offer: Attachments to offer” below]"
+      - ""
+    - - signedAttachment
+      - "Offer signed attachment [see section “Suppliers Offer: Attachments to offer” below]"
+      - ""
+    - - questionType
+      - It can be LOCAL for parameter belonging to Question section, BUYER for for parameter belonging to Evaluation section, DE_EVM_SELLER for for parameter belonging to Profile Question section
+      - JA_19_00
+    - - score
+      - Score for the technical field (only show when rankingStrategy is not NONE/NO_RANKING)
+      - JINT_22_02_00
+  block: 1
+  blocks: 1

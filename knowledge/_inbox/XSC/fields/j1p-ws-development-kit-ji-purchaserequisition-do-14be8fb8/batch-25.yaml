@@ -1,0 +1,39 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+batch: batch-25
+section: 2.1.1.27
+section_title: Splittable Field Index [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:DISCOUNTSPLITAMOUNT
+    label: discountSplitAmount
+    labels:
+      - discountSplitAmount
+    technical_name: DISCOUNTSPLITAMOUNT
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Discount split amount. This is a numeric value of up to 15 digits,
+      including up to 4 decimal places. This information does not appear in the
+      message if there is no split.
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: discountSplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 716

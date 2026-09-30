@@ -1,0 +1,49 @@
+id: U.DOC0171.0205
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: sellerVisibility | Mandatory (Y/N): N | Description: Visibility of the additional column to the seller
+  Valid value:
+  0 = not visible
+  1 = visible in read-only mode
+  2 = visible and writeable
+  If not provided, 2 is assumed.
+  In case of NUMERIC_FORMULA or NUMERIC_SR_FORMULA, the value 0 means formula hidden to supplier, any other value means formula visible (read-only) to supplier. | Mapping on JA data model and notes: Visibility of the additional column to the seller
+hash: sha256:badce66bd38dfeeaf4b6ad22d61cc35de7ef2bfb04cf4df9489144cb1ed5dd78
+words: 78
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Commercial Envelope: Section additional column [Import/Update RfX method]"
+  section_path: 2.1.1.16
+  page: 6
+  lang: en
+  prev: U.DOC0171.0204
+  next: U.DOC0171.0206
+row:
+  table: 0
+  row: 5
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - sellerVisibility
+    - N
+    - |-
+      Visibility of the additional column to the seller
+      Valid value:
+      0 = not visible
+      1 = visible in read-only mode
+      2 = visible and writeable
+      If not provided, 2 is assumed.
+      In case of NUMERIC_FORMULA or NUMERIC_SR_FORMULA, the value 0 means formula hidden to supplier, any other value means formula visible (read-only) to supplier.
+    - Visibility of the additional column to the seller
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

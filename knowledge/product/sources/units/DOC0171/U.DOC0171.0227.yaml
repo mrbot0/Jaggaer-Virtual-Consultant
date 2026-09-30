@@ -1,0 +1,53 @@
+id: U.DOC0171.0227
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: companyData/id
+  companyData/code
+  companyData/extUniqueCode | Mandatory (Y/N): N | Description: Reference to the supplier company:
+  id = JA internal identifier
+  code = external code
+  extUniqueCode = external unique code | Mapping on JA data model and notes: Supplier code.
+  System looks for a supplier with provided code and, if such object is found, supplier is set as invited to RfX.
+  See §Behavior, section “Supplier Management”.
+hash: sha256:ebbbb0a496a39747cd2bf9e2e28135065f0f1c6df2ec33966b6d5b05d3ec0f88
+words: 65
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Suppliers [Import/Update RfX method]
+  section_path: 2.1.1.22
+  page: 6
+  lang: en
+  prev: U.DOC0171.0226
+  next: U.DOC0171.0228
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - |-
+      companyData/id
+      companyData/code
+      companyData/extUniqueCode
+    - N
+    - |-
+      Reference to the supplier company:
+      id = JA internal identifier
+      code = external code
+      extUniqueCode = external unique code
+    - |-
+      Supplier code.
+      System looks for a supplier with provided code and, if such object is found, supplier is set as invited to RfX.
+      See §Behavior, section “Supplier Management”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

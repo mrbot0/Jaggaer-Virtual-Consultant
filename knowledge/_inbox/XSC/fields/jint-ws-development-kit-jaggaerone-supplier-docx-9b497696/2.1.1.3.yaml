@@ -1,0 +1,194 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+section: 2.1.1.3
+section_title: J1Supplier/J1SupplierData
+genre: tecnica
+rows:
+  - label: companyName
+    technical_name: companyName
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company name
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: fiscalCode
+    technical_name: fiscalCode
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Fiscal code
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: vat
+    technical_name: vat
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Country VAT code
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: euVat
+    technical_name: euVat
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: European VAT code
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: dAndBCode
+    technical_name: dAndBCode
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Dun&BradStreet code
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: webSite
+    technical_name: webSite
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company web-site
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: address
+    technical_name: address
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main postal address
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: zip
+    technical_name: zip
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main postal address – ZIP code
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: city
+    technical_name: city
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main postal address – City
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: isoProvince
+    technical_name: isoProvince
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Province/County code
+
+      It can contain the province code or its code-name.
+
+      Example: for isoCountry US and county Hawaii, province can be filled
+      indifferently with “HI” or “US-HI”
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: isoCountry
+    technical_name: isoCountry
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Company main postal address – Country (ISO code or country name)
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: address2
+    technical_name: address2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company main postal address
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: zip2
+    technical_name: zip2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company alternative postal address – ZIP code
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: city2
+    technical_name: city2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company alternative postal address – City
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: province2
+    technical_name: province2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Province/County code
+
+      It can contain the province code or its code-name.
+
+      Example: for isoCountry US and county Hawaii, province can be filled
+      indifferently with “HI” or “US-HI”
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: isoCountry2
+    technical_name: isoCountry2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Company alternative postal address –Country (ISO code or country name)
+    section: 2.1.1.3
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.3#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696

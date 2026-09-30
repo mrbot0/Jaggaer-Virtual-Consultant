@@ -1,0 +1,90 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.18
+section_title: ObligationOccurrence [Import]
+genre: tecnica
+rows:
+  - label: cancelled
+    technical_name: cancelled
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the occurrence has (true) or has not (false) been
+      cancelled.
+    section: 2.2.1.18
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.18#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: occurrenceIteration
+    technical_name: occurrenceIteration
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Iteration number for the occurrence (number of times the obligation has
+      recurred).
+
+      One (1) indicates the first occurrence of the obligation.
+    section: 2.2.1.18
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.18#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: occurrenceCompletedDate
+    technical_name: occurrenceCompletedDate
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Date and time the occurrence was actually completed
+    section: 2.2.1.18
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.18#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: occurrenceDueDate
+    technical_name: occurrenceDueDate
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Date and time the occurrence is due, as specified by the user
+    section: 2.2.1.18
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.18#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: occurrenceNotes
+    technical_name: occurrenceNotes
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Freeform text field providing additional details about the occurrence
+    section: 2.2.1.18
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.18#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: occurrenceCompletedByUser
+    technical_name: occurrenceCompletedByUser
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Username of the user who marked the obligation as Complete
+    section: 2.2.1.18
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.18#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationAttachmentList
+    technical_name: obligationAttachmentList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation attachments.
+      See section “Attachment [Import]” below
+    section: 2.2.1.18
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.18#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

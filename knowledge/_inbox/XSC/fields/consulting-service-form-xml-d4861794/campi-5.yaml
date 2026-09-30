@@ -1,0 +1,46 @@
+document: consulting-service-form-xml-d4861794
+scope: XSC
+section: campi-5
+section_title: Campi — 5. Internal Notes
+genre: tecnica
+rows:
+  - label: fldInternalNotesInst
+    technical_name: fldInternalNotesInst
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<br><i>Please include relevant quotes with your
+      request by clicking the <b>{add attachment...}</b> link below. Also
+      include any other notes or attachments that will help in processing your
+      request, such as references to past orders, or additional vendor contact
+      information.</i><br><br> · id=10011 · tipo=userdefined
+    section: campi-5
+    source_unit: consulting-service-form-xml-d4861794/campi-5#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: Internal Notes
+    technical_name: fldInternalNotes
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=8;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=50 · id=10012 · tipo=userdefined
+    section: campi-5
+    source_unit: consulting-service-form-xml-d4861794/campi-5#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794
+  - label: "113"
+    technical_name: "113"
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=113 · tipo=static
+    section: campi-5
+    source_unit: consulting-service-form-xml-d4861794/campi-5#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: consulting-service-form-xml-d4861794

@@ -1,0 +1,59 @@
+id: U.DOC0030.0003
+doc: S.STD.XSC.DOC.0030
+doc_id: ji-plt-2303-contractwfdefinition-xml-0869be00
+type: tabella
+text: |-
+  Tabella: attività
+  Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella
+  Attività: START | Tipo: start | Selezione cartella: Dummy
+  Attività: Compile File | Tipo: automated | Passo: Compile File | Cartelle: Compile File | Regola: true | Selezione cartella: ExplicitFolder
+  Attività: ADW Approval | Tipo: manual | Passo: ADW Approval | Regola: Document.RequiresRuleGroupEvaluation("ADW Approval") == true | Selezione cartella: MultiElementDynamic
+  Attività: END | Tipo: end | Selezione cartella: Dummy
+hash: sha256:70186f441bb57377eaa9e5de9158daf88b5c687417b642ad59155e6749d95b3e
+words: 74
+lang: it
+context:
+  doc: S.STD.XSC.DOC.0030
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: it
+  prev: U.DOC0030.0002
+  next: U.DOC0030.0004
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Compile File
+      - automated
+      - Compile File
+      - Compile File
+      - "true"
+      - ExplicitFolder
+    - - ADW Approval
+      - manual
+      - ADW Approval
+      - ""
+      - Document.RequiresRuleGroupEvaluation("ADW Approval") == true
+      - MultiElementDynamic
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1

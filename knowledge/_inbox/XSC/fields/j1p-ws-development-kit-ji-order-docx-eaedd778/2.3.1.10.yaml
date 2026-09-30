@@ -1,0 +1,43 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.10
+section_title: Contact [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: label
+    technical_name: label
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Label of the Contact line, if applicable.
+
+      This attribute is not used for imports. Valid only for exports and
+      validations.
+    section: 2.3.1.10
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.10#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: lineNumber
+    technical_name: lineNumber
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Line number of the Contact line
+    section: 2.3.1.10
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.10#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: contact
+    technical_name: contact
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Contact name and information associated with this billing address
+    section: 2.3.1.10
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.10#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

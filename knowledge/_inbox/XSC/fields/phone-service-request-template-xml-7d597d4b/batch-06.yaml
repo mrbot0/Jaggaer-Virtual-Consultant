@@ -1,0 +1,205 @@
+document: phone-service-request-template-xml-7d597d4b
+scope: XSC
+batch: batch-06
+section: domande-6
+section_title: Domande — Remove Service / Remove Service Information
+part: 1
+parts: 1
+rows:
+  - key: tech:285417
+    label: Service Telephone Number
+    labels:
+      - Service Telephone Number
+    technical_name: "285417"
+    section: domande-6
+    type: Numeric Text Box
+    mandatory_text: No
+    allowed_values: []
+    notes: Service Telephone Number
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-6
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-6#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Service Telephone Number
+        type: Numeric Text Box
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285418
+    label: Building Name
+    labels:
+      - Building Name
+    technical_name: "285418"
+    section: domande-6
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Building Name
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-6
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-6#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Building Name
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285419
+    label: Building Address (Including Room#)
+    labels:
+      - Building Address (Including Room#)
+    technical_name: "285419"
+    section: domande-6
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Building Address (Including Room#)
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-6
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-6#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Building Address (Including Room#)
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285420
+    label: Jack Number
+    labels:
+      - Jack Number
+    technical_name: "285420"
+    section: domande-6
+    type: Numeric Text Box
+    mandatory_text: No
+    allowed_values: []
+    notes: Jack Number
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-6
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-6#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Jack Number
+        type: Numeric Text Box
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285421
+    label: Reason for removal of service?
+    labels:
+      - Reason for removal of service?
+    technical_name: "285421"
+    section: domande-6
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Reason for removal of service?
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-6
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-6#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Reason for removal of service?
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285422
+    label: Equipment to be removed
+    labels:
+      - Equipment to be removed
+    technical_name: "285422"
+    section: domande-6
+    type: Dropdown List (Pick One)
+    mandatory_text: No
+    allowed_values: []
+    notes: Equipment to be removed
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-6
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-6#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: Equipment to be removed
+        type: Dropdown List (Pick One)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: list
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:285423
+    label: Please specify any Additional Comments for the IT Staff
+    labels:
+      - Please specify any Additional Comments for the IT Staff
+    technical_name: "285423"
+    section: domande-6
+    type: Text (Multi-Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: Please specify any Additional Comments for the IT Staff
+    sources:
+      - document: phone-service-request-template-xml-7d597d4b
+        section: domande-6
+        source_unit: phone-service-request-template-xml-7d597d4b/domande-6#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: Please specify any Additional Comments for the IT Staff
+        type: Text (Multi-Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1743

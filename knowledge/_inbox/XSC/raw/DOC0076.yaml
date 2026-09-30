@@ -1,0 +1,488 @@
+doc: S.STD.XSC.DOC.0076
+scope: XSC
+extracted_at: 2026-09-30T04:30:35.613Z
+tier: T0
+stats:
+  units: 196
+  extracted_units: 12
+  document_candidates: 1
+  needs_llm: 7
+  t0_complete: 6
+  by_candidate:
+    FLD: 10
+    INV: 2
+    INT: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 5165
+  sessions:
+    - n: 1
+      tokens: 5165
+      batches: 1
+      items: 7
+      batch_items:
+        - - R.DOC0076.0023
+          - R.DOC0076.0037
+          - R.DOC0076.0077
+          - R.DOC0076.0125
+          - R.DOC0076.0130
+          - R.DOC0076.0143
+          - R.DOC0076.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0076.0023
+    source_unit: U.DOC0076.0023
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: What We Do •
+    page: 6
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0076.0023
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 9
+  - raw_id: R.DOC0076.0035
+    source_unit: U.DOC0076.0035
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Out of Scope •
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • JAGGAER
+      modality: raccomandazione
+      condition: clients wish
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0076.0035
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0076.0037
+    source_unit: U.DOC0076.0037
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Out of Scope •
+    page: 7
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - INV
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0076.0037
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0076.0077
+    source_unit: U.DOC0076.0077
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Meet the JAGGAER Supplier Integrations Team •
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0076.0077
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 8
+  - raw_id: R.DOC0076.0092
+    source_unit: U.DOC0076.0092
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Value Positioning • Supplier Technical Nuances
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: pCards, then cXML
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0076.0092
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0076.0094
+    source_unit: U.DOC0076.0094
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Value Positioning • Supplier Technical Nuances
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Jaggaer
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0076.0094
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0076.0108
+    source_unit: U.DOC0076.0108
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Value Positioning • Supplier Technical Nuances
+    page: 15
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - INV
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Suppliers have in house resources but they
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0076.0108
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0076.0125
+    source_unit: U.DOC0076.0125
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Value Positioning • Supplier Mergers
+    page: 16
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0076.0125
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0076.0130
+    source_unit: U.DOC0076.0130
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Value Positioning • Ongoing Support
+    page: 17
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0076.0130
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0076.0140
+    source_unit: U.DOC0076.0140
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Value Positioning • Ongoing Support
+    page: 17
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Configuration updates and testing
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0076.0140
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0076.0143
+    source_unit: U.DOC0076.0143
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Value Positioning • Ongoing Support
+    page: 17
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0076.0143
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 21
+  - raw_id: R.DOC0076.0164
+    source_unit: U.DOC0076.0164
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0076
+    section: Value Positioning • Supplier Business Process Changes and Maintenance
+    page: 18
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Often this training
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0076.0164
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0076.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0076
+    section: null
+    source_unit: U.DOC0076.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: JAGGAER
+      protocol:
+        - cXML
+      endpoints: []
+      operations: []
+      mappings: []
+      error_catalog: []
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+      - error_catalog
+    tokens: 2650

@@ -1,0 +1,46 @@
+id: U.DOC0171.0239
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: permissionList/
+  forceRfxVisibility | Mandatory (Y/N): N | Description: Flag to force the Rfx visibility for the user:
+  1 = redefine the permission by assigning the visibility on the Rfx for the evaluation user. If the permission is already present in the standard permissions, no redefinition is performed.
+  0 = not redefine the permission for the evaluation user
+  Default is 0. | Mapping on JA data model and notes: Bit in the permission mask of the Rfx.
+hash: sha256:334b0b35b10f1dffcc834490d9f662feeee3fac9ba582fb7d594e57cdeee6738
+words: 77
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Evaluation Group Member [Import/Update RfX method]
+  section_path: 2.1.1.24
+  page: 6
+  lang: en
+  prev: U.DOC0171.0238
+  next: U.DOC0171.0240
+row:
+  table: 0
+  row: 5
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - |-
+      permissionList/
+      forceRfxVisibility
+    - N
+    - |-
+      Flag to force the Rfx visibility for the user:
+      1 = redefine the permission by assigning the visibility on the Rfx for the evaluation user. If the permission is already present in the standard permissions, no redefinition is performed.
+      0 = not redefine the permission for the evaluation user
+      Default is 0.
+    - Bit in the permission mask of the Rfx.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

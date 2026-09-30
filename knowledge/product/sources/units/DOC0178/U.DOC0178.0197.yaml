@@ -1,0 +1,45 @@
+id: U.DOC0178.0197
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: type | Description: Identifies the type of attachment (for contract attachment with fileBase64 only).
+  MainDocument – The attachment is the main contract document
+  SignedDocument – The attachment is a signed document
+  CompiledDocument- The attachment is a compilation of multiple attachments
+  Attachment- The attachment is a normal attachment, not a main, signed, or compiled document.
+  PreviousSignedDocument- The attachment is a previously signed document.
+hash: sha256:b799cd8349a02b4745446528c588dffb1551f689ce381e6499847f6396a90682
+words: 63
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Attachment [Import]
+  section_path: 2.2.1.19
+  page: 40
+  lang: en
+  prev: U.DOC0178.0196
+  next: U.DOC0178.0198
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - type
+    - ""
+    - |-
+      Identifies the type of attachment (for contract attachment with fileBase64 only).
+      MainDocument – The attachment is the main contract document
+      SignedDocument – The attachment is a signed document
+      CompiledDocument- The attachment is a compilation of multiple attachments
+      Attachment- The attachment is a normal attachment, not a main, signed, or compiled document.
+      PreviousSignedDocument- The attachment is a previously signed document.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

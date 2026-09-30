@@ -1,0 +1,43 @@
+id: U.DOC0179.0041
+doc: S.STD.XSC.DOC.0179
+doc_id: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+type: riga-tabella-campi
+text: |-
+  Attribute: workflowType | Mandatory (Y/N): Y | Description: Type of workflow. Must be a valid workflow type licensed to your organization.
+  Allowed values:
+  requisition
+  po
+  invoice
+hash: sha256:f911db2f3382b826f3e2df608d14901db50c612677635c9b0e134e47b6cf7984
+words: 26
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0179
+  chapter: JI Custom Field web-service
+  section: WFDynamicRule [Custom Field Import method]
+  section_path: 2.1.1.6
+  page: 5
+  lang: en
+  prev: U.DOC0179.0040
+  next: U.DOC0179.0042
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - workflowType
+    - Y
+    - |-
+      Type of workflow. Must be a valid workflow type licensed to your organization.
+      Allowed values:
+      requisition
+      po
+      invoice
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

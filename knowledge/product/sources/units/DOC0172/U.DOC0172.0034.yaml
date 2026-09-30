@@ -1,0 +1,45 @@
+id: U.DOC0172.0034
+doc: S.STD.XSC.DOC.0172
+doc_id: j1p-ws-development-kit-supplier-user-docx-305b9bed
+type: tabella
+text: |-
+  Colonne: URL | /j1p/api/public/j1/v1/supusr
+  URL: Http Method | /j1p/api/public/j1/v1/supusr: POST
+  URL: Header Parameters | /j1p/api/public/j1/v1/supusr: Authorization (see “REST API HowTo” document)
+  URL: Response format | /j1p/api/public/j1/v1/supusr: JSON string representing the export response.
+  URL: Return Codes | /j1p/api/public/j1/v1/supusr: 0 Operation completed successfully
+  1 Operation completed successfully with warnings as detailed in the returned message
+  2 Operation not completed due to error as detailed in the returned message
+  -999 Generic exception
+hash: sha256:a341467d83e0250cfa684e1ba65d07bdac96527cb61861aee4ad2feb0f902e17
+words: 69
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0172
+  chapter: Supplier user web-service
+  section: Upsert Supplier User
+  section_path: 2.2.1.1
+  page: 13
+  lang: en
+  prev: U.DOC0172.0033
+  next: U.DOC0172.0035
+table:
+  table: 0
+  headers:
+    - URL
+    - /j1p/api/public/j1/v1/supusr
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization (see “REST API HowTo” document)
+    - - Response format
+      - JSON string representing the export response.
+    - - Return Codes
+      - |-
+        0 Operation completed successfully
+        1 Operation completed successfully with warnings as detailed in the returned message
+        2 Operation not completed due to error as detailed in the returned message
+        -999 Generic exception
+  block: 1
+  blocks: 1

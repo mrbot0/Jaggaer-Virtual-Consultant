@@ -1,0 +1,50 @@
+id: U.DOC0171.0394
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Code | Description
+  Code: 0 | Description: operation completed successfully
+  Code: 1 | Description: operation completed successfully with warnings as detailed in the returned message
+  Code: -514 | Description: Error Unable to update Rfx Score
+  Code: -996 | Description: Invalid Request Object (Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission).
+  NOTE: This generic error code can show in the error message the sub-code 132(Attach.fileBase64). This means that in the platform there is an existing version of the same attachment you are trying to import in the Rfx request and it cannot be overwritten, or you are trying to perform an UPDATE_RESET operation. Generally, this occurs because the Rfx is already running. Instead, when the Rfx is “to be published” all the attachments can be overwritten or it is a seller attachment and seller attachments are not allowed in that Rfq state.
+  Code: -997 | Description: Unauthorized Method (Web Service method isn’t configured to be executed)
+  Code: -998 | Description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+  Code: -999 | Description: Generic exception
+hash: sha256:a3afb56c1f2246c6d5538ec725af2c41e8691ff79859993aa0aff985e4ee721f
+words: 209
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Error codes
+  section_path: 2.2.3.1
+  page: 7
+  lang: en
+  prev: U.DOC0171.0393
+  next: U.DOC0171.0395
+table:
+  table: 0
+  headers:
+    - Code
+    - Description
+  rows:
+    - - "0"
+      - operation completed successfully
+    - - "1"
+      - operation completed successfully with warnings as detailed in the returned message
+    - - "-514"
+      - Error Unable to update Rfx Score
+    - - "-996"
+      - |-
+        Invalid Request Object (Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission).
+        NOTE: This generic error code can show in the error message the sub-code 132(Attach.fileBase64). This means that in the platform there is an existing version of the same attachment you are trying to import in the Rfx request and it cannot be overwritten, or you are trying to perform an UPDATE_RESET operation. Generally, this occurs because the Rfx is already running. Instead, when the Rfx is “to be published” all the attachments can be overwritten or it is a seller attachment and seller attachments are not allowed in that Rfq state.
+    - - "-997"
+      - Unauthorized Method (Web Service method isn’t configured to be executed)
+    - - "-998"
+      - Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+    - - "-999"
+      - Generic exception
+  block: 1
+  blocks: 1

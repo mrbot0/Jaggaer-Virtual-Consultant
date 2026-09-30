@@ -1,0 +1,63 @@
+document: ji-plt-2302-goldsitepofaxconfiguration-xml-b6b3c7fc
+scope: XSC
+batch: batch-07
+section: campi-7
+section_title: Campi — Billing Address
+part: 1
+parts: 1
+rows:
+  - key: tech:117
+    label: "117"
+    labels:
+      - "117"
+    technical_name: "117"
+    section: campi-7
+    type: static
+    mandatory_text: ""
+    allowed_values: []
+    notes: id=117 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsitepofaxconfiguration-xml-b6b3c7fc
+        section: campi-7
+        source_unit: ji-plt-2302-goldsitepofaxconfiguration-xml-b6b3c7fc/campi-7#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "117"
+        type: static
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:15
+    label: "15"
+    labels:
+      - "15"
+    technical_name: "15"
+    section: campi-7
+    type: static
+    mandatory_text: ""
+    allowed_values: []
+    notes: id=15 · tipo=static
+    sources:
+      - document: ji-plt-2302-goldsitepofaxconfiguration-xml-b6b3c7fc
+        section: campi-7
+        source_unit: ji-plt-2302-goldsitepofaxconfiguration-xml-b6b3c7fc/campi-7#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "15"
+        type: static
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 805

@@ -1,0 +1,45 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.17
+section_title: "Commercial Envelope: Formula Data for section additional column
+  [Import/Update RfX method]"
+genre: tecnica
+rows:
+  - label: formulaTCO
+    technical_name: formulaTCO
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Indicate whether to use the formula column for TCO.
+      Valid value:
+      0 = false
+      1 = true
+    section: 2.1.1.17
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.17#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: aggregationTypeTCO
+    technical_name: aggregationTypeTCO
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: TCO Aggregation method
+    section: 2.1.1.17
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.17#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8
+  - label: formulaValues
+    technical_name: formulaValues
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: List of formula values [See Formula Value, only supported for additional
+      column type of NUMERIC_FORMULA]
+    section: 2.1.1.17
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.17#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

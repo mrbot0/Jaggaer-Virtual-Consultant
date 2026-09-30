@@ -1,0 +1,278 @@
+id: U.DOC0065.0008
+doc: S.STD.XSC.DOC.0065
+doc_id: sc-perspective-golive-checklist-xlsx-75ea4c0f
+type: tabella
+text: "| Owner: SC | Due Date: 40431 | Status: Pending | Comments: Might involve PR and PO for budget auth / PO create steps."
+hash: sha256:a32ea189861f8df87b343e5745b154358bb764ebd96c8740498f62a80ffd3e18
+words: 24
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0065
+  chapter: Sheet1
+  section: Sheet1
+  section_path: sheet-1
+  page: null
+  lang: en
+  prev: U.DOC0065.0007
+  next: U.DOC0065.0009
+table:
+  table: 0
+  headers:
+    - ""
+    - "#"
+    - Activity
+    - Manual / OrgCopy
+    - Dependencies
+    - Owner
+    - Due Date
+    - Status
+    - Comments
+  rows:
+    - - Migration Activities
+      - 28
+      - Create integration point shared secrets
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - Migration Activities
+      - 21
+      - Create Document integration point connections
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - Depends on how to run UAT, these could be the QA ERP URL's
+    - - Migration Activities
+      - null
+      - Check Authentication Integration Points
+      - null
+      - null
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - Migration Activities
+      - 22
+      - Modify PR/PO Workflow for QA/Prod connections
+      - Manual
+      - null
+      - SC
+      - 40424
+      - Pending
+      - Might involve PR and PO for budget auth / PO create steps.
+    - - Migration Activities
+      - 23
+      - Create integration point schedules
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - Migration Activities
+      - 24
+      - Create integration point triggers
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - Migration Activities
+      - 34
+      - Import Non Catalog Supplier template
+      - Manual
+      - 4,11
+      - SC
+      - 40424
+      - Pending
+      - null
+    - - Migration Activities
+      - 25
+      - Import Advanced Dynamic Workflow Rules
+      - Manual
+      - 11,12
+      - Customer
+      - 40424
+      - Pending
+      - null
+    - - Migration Activities
+      - 26
+      - Add Shared Workflow Approvers to folders
+      - Manual
+      - 11,13
+      - Customer
+      - 40424
+      - Pending
+      - null
+    - - Migration Activities
+      - 27
+      - Import PR/PO/Invoice Workflow
+      - Manual
+      - 11,19,20
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - Migration Activities
+      - null
+      - Verify Pending Approval Document Reminder
+      - null
+      - null
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - Migration Activities
+      - 28
+      - Add email notification "from" addresses
+      - Manual
+      - 11,12
+      - Customer
+      - 40424
+      - Pending
+      - Under Organization Setup -> System -> Configuration -> Email
+    - - SC Validation
+      - 40
+      - Verify Supplier Classes migrated successfully
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - They do not migrate as part of Org Copy
+    - - SC Validation
+      - 29
+      - Verify enabled suppliers have ERP Supplier ID
+      - Manual
+      - null
+      - SC
+      - 40424
+      - Pending
+      - null
+    - - SC Validation
+      - 30
+      - Verify Field Management migrated successfully
+      - OrgCopy
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - SC Validation
+      - 31
+      - Verify Document Configurations migrated successfully
+      - OrgCopy
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - SC Validation
+      - 32
+      - Verify that Distribute POs from org is turned OFF
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - Site Profile -> Org Classification -> Distribute Pos from org
+    - - SC Validation
+      - 45
+      - Verify that the Org Phase is set to "Implementation"
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - Site Profile -> Org Classification -> Org Phase
+    - - SC Validation
+      - 33
+      - Verify that HR Config (roles) migrated successfully
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - SC Validation
+      - 34
+      - Run Org Compare tool to identify any other missed items
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Complete
+      - null
+    - - SC Validation
+      - 35
+      - Validate ERP Prod - SciQuest ERP connections
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Pending
+      - null
+    - - SC Validation
+      - 36
+      - Validate Supplier, Custom Field synch in Production
+      - Manual
+      - "11"
+      - SC
+      - 40424
+      - Pending
+      - null
+    - - Go-Live
+      - 50
+      - Modify PR/PO Workflow for Prod connections
+      - null
+      - null
+      - SC
+      - 40431
+      - Pending
+      - Might involve PR and PO for budget auth / PO create steps.
+    - - Go-Live
+      - 37
+      - Verify that Distribute POs from org is turned ON
+      - null
+      - null
+      - SC
+      - 40434
+      - Pending
+      - Site Profile -> Org Classification -> Distribute Pos from org
+    - - Go-Live
+      - 38
+      - Verify that the Org Phase is set to "Live"
+      - null
+      - null
+      - SC
+      - 40434
+      - Pending
+      - Site Profile -> Org Classification -> Org Phase
+    - - Go-Live
+      - 39
+      - Solution Acceptance Signed
+      - null
+      - null
+      - IM
+      - 40429
+      - Pending
+      - null
+    - - Go-Live
+      - 40
+      - Live Order Testing
+      - null
+      - null
+      - SE
+      - 40434
+      - Pending
+      - null
+  block: 2
+  blocks: 2
+part:
+  n: 4
+  of: 5

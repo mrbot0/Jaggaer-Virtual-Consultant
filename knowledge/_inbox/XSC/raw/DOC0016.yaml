@@ -1,0 +1,482 @@
+doc: S.STD.XSC.DOC.0016
+scope: XSC
+extracted_at: 2026-09-30T04:27:04.873Z
+tier: T0
+stats:
+  units: 223
+  extracted_units: 13
+  document_candidates: 0
+  needs_llm: 10
+  t0_complete: 3
+  by_candidate:
+    FLD: 4
+    LCY: 7
+    GLS: 1
+    INV: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 3705
+  sessions:
+    - n: 1
+      tokens: 3705
+      batches: 1
+      items: 10
+      batch_items:
+        - - R.DOC0016.0038
+          - R.DOC0016.0125
+          - R.DOC0016.0159
+          - R.DOC0016.0160
+          - R.DOC0016.0162
+          - R.DOC0016.0168
+          - R.DOC0016.0170
+          - R.DOC0016.0171
+          - R.DOC0016.0172
+          - R.DOC0016.0218
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0016.0038
+    source_unit: U.DOC0016.0038
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: YETI Hopper TWO Portable Cooler
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0016.0038
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 23
+  - raw_id: R.DOC0016.0125
+    source_unit: U.DOC0016.0125
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: Read reviews that mention
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - LCY
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: immutabilita
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: LCY.immutable_fields_after
+      confidence: 0.85
+      signals:
+        - immutabilita
+      source_unit: U.DOC0016.0125
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 33
+  - raw_id: R.DOC0016.0130
+    source_unit: U.DOC0016.0130
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - GLS
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This
+      definition: a very well constructed cooler and is good looking.
+      aliases: []
+      lang: en
+      source_unit: U.DOC0016.0130
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0016.0132
+    source_unit: U.DOC0016.0132
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - INV
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: While it
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0016.0132
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0016.0134
+    source_unit: U.DOC0016.0134
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Yeti
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0016.0134
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0016.0159
+    source_unit: U.DOC0016.0159
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - LCY
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: immutabilita
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: LCY.immutable_fields_after
+      confidence: 0.85
+      signals:
+        - immutabilita
+      source_unit: U.DOC0016.0159
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 32
+  - raw_id: R.DOC0016.0160
+    source_unit: U.DOC0016.0160
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - LCY
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: immutabilita
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: LCY.immutable_fields_after
+      confidence: 0.85
+      signals:
+        - immutabilita
+      source_unit: U.DOC0016.0160
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 22
+  - raw_id: R.DOC0016.0162
+    source_unit: U.DOC0016.0162
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - LCY
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: immutabilita
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: LCY.immutable_fields_after
+      confidence: 0.85
+      signals:
+        - immutabilita
+      source_unit: U.DOC0016.0162
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 16
+  - raw_id: R.DOC0016.0168
+    source_unit: U.DOC0016.0168
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0016.0168
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 23
+  - raw_id: R.DOC0016.0170
+    source_unit: U.DOC0016.0170
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - LCY
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: immutabilita
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: LCY.immutable_fields_after
+      confidence: 0.85
+      signals:
+        - immutabilita
+      source_unit: U.DOC0016.0170
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 18
+  - raw_id: R.DOC0016.0171
+    source_unit: U.DOC0016.0171
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - LCY
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: immutabilita
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: LCY.immutable_fields_after
+      confidence: 0.85
+      signals:
+        - immutabilita
+      source_unit: U.DOC0016.0171
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0016.0172
+    source_unit: U.DOC0016.0172
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: There was a problem filtering reviews right now. Please try again later.
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - LCY
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: immutabilita
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: LCY.immutable_fields_after
+      confidence: 0.85
+      signals:
+        - immutabilita
+      source_unit: U.DOC0016.0172
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 19
+  - raw_id: R.DOC0016.0218
+    source_unit: U.DOC0016.0218
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0016
+    section: Customers who viewed this item also viewed
+    page: null
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0016.0218
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 5

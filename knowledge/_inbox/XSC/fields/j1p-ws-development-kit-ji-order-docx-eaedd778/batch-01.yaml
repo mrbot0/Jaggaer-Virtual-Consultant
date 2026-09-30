@@ -1,0 +1,95 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+batch: batch-01
+section: 2.2.1.1
+section_title: Main request structure [Validate JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:ORIGINALREQUESTMESSAGEID
+    label: originalRequestMessageId
+    labels:
+      - originalRequestMessageId
+    technical_name: ORIGINALREQUESTMESSAGEID
+    section: 2.2.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Unique identifier for the PO export message with which PO was saved
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.2.1.1
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.2.1.1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: originalRequestMessageId
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:ORDERID
+    label: orderId
+    labels:
+      - orderId
+    technical_name: ORDERID
+    section: 2.2.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal identifier of the Order on which operation is to be executed
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.2.1.1
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.2.1.1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: orderId
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:UPDATEDATA
+    label: updateData
+    labels:
+      - updateData
+    technical_name: UPDATEDATA
+    section: 2.2.1.1
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Object containing the information to be used to update the purchase order.
+      See section “UpdateData [Validate JIOrder method]” below.
+    sources:
+      - document: j1p-ws-development-kit-ji-order-docx-eaedd778
+        section: 2.2.1.1
+        source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.2.1.1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: updateData
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1033

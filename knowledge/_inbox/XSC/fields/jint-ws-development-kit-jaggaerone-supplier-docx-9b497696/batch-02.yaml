@@ -1,0 +1,91 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-02
+section: 2.1.1.2
+section_title: J1Supplier/operation
+part: 1
+parts: 1
+rows:
+  - key: tech:CODE
+    label: code
+    labels:
+      - code
+    technical_name: CODE
+    section: 2.1.1.2
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Code of requested operation
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: code
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:IDENTIFICATIONFIELD
+    label: identificationField
+    labels:
+      - identificationField
+    technical_name: IDENTIFICATIONFIELD
+    section: 2.1.1.2
+    type: null
+    mandatory_text: Y / N
+    allowed_values: []
+    notes: Name of the field to be used for Company identification
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: identificationField
+        type: null
+        mandatory_text: Y / N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:IDENTIFICATIONVALUE
+    label: identificationValue
+    labels:
+      - identificationValue
+    technical_name: IDENTIFICATIONVALUE
+    section: 2.1.1.2
+    type: null
+    mandatory_text: Y / N
+    allowed_values: []
+    notes: Value for the field to be used for Company identification
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.2
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: identificationValue
+        type: null
+        mandatory_text: Y / N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1019

@@ -1,0 +1,37 @@
+id: U.DOC0181.0209
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: riga-tabella-campi
+text: |-
+  Attribute: fulfillmentAddressInternalId | Mandatory (Y/N): N | Description: Internal ID for the fulfillment center. The fulfillment center address must be active and unique.
+  Valid only for SupplierInfo data specified at JIHeader level.
+hash: sha256:a2bbf93c0f022991d5c60ee5fcd148e3708b1bbadaf64e5b68fc1b4da223f556
+words: 32
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: SupplierInfo [Import JIOrder method]
+  section_path: 2.3.1.6
+  page: 72
+  lang: en
+  prev: U.DOC0181.0208
+  next: U.DOC0181.0210
+row:
+  table: 0
+  row: 13
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - fulfillmentAddressInternalId
+    - N
+    - |-
+      Internal ID for the fulfillment center. The fulfillment center address must be active and unique.
+      Valid only for SupplierInfo data specified at JIHeader level.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

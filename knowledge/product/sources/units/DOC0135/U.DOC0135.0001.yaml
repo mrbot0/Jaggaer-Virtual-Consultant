@@ -1,0 +1,134 @@
+id: U.DOC0135.0001
+doc: S.STD.XSC.DOC.0135
+doc_id: workflow-folders-pr-squfs-site-xml-66f0fdd9
+type: tabella
+text: |-
+  Tabella: cartelle
+  Colonne: Cartella | Tipo | Workflow | Robot
+  Cartella: ERP Budget Authorization | Tipo: shared | Workflow: requisition
+  Cartella: New Supplier Approval | Tipo: shared | Workflow: requisition
+  Cartella: Banner Budget Authorization | Tipo: automated | Workflow: requisition | Robot: SCTPRBudgetAuthRobot
+  Cartella: SendToSourcingMgr | Tipo: automated | Workflow: requisition | Robot: ReqExportRobot
+  Cartella: Budget Auth | Tipo: automated | Workflow: requisition | Robot: SCTPRBudgetAuthRobot
+  Cartella: WaitForPRApprovals | Tipo: shared | Workflow: requisition
+  Cartella: PRValidation | Tipo: automated | Workflow: requisition | Robot: PRValidationRobotAsynchronous
+  Cartella: Account Code Response | Tipo: shared | Workflow: requisition
+  Cartella: Purchasing Approval | Tipo: shared | Workflow: requisition
+  Cartella: PR Validation | Tipo: shared | Workflow: requisition
+  Cartella: Restrict Withdrawal | Tipo: automated | Workflow: requisition | Robot: RestrictPRWithdrawalRobot
+  Cartella: Auto-Reject | Tipo: automated | Workflow: requisition | Robot: RejectRequisitionRobot
+  Cartella: Missing Supplier Catch | Tipo: shared | Workflow: requisition
+  Cartella: Auto-Return | Tipo: automated | Workflow: requisition | Robot: ReturnRequisitionRobot
+  Cartella: EH&S Approval | Tipo: shared | Workflow: requisition
+  Cartella: Create PO | Tipo: automated | Workflow: requisition | Robot: CreatePORobot
+  Cartella: PCard Reject | Tipo: automated | Workflow: requisition | Robot: RejectRequisitionRobot
+  Cartella: Account Code Validation | Tipo: automated | Workflow: requisition | Robot: PRValidationRobotAsynchronous
+  Cartella: Banner Budget Authorization 2 | Tipo: automated | Workflow: requisition | Robot: SCTPRBudgetAuthRobot
+  Cartella: Missing Approver Catch | Tipo: shared | Workflow: requisition
+  Cartella: BidReview | Tipo: shared | Workflow: requisition
+hash: sha256:355a1636862ce88631990c1065504d85c7f7023cfb11354c57ae7dbf0074bf95
+words: 235
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0135
+  chapter: Cartelle del workflow
+  section: Cartelle del workflow
+  section_path: cartelle
+  page: null
+  lang: en
+  prev: null
+  next: null
+table:
+  table: 0
+  headers:
+    - Cartella
+    - Tipo
+    - Workflow
+    - Robot
+  rows:
+    - - ERP Budget Authorization
+      - shared
+      - requisition
+      - ""
+    - - New Supplier Approval
+      - shared
+      - requisition
+      - ""
+    - - Banner Budget Authorization
+      - automated
+      - requisition
+      - SCTPRBudgetAuthRobot
+    - - SendToSourcingMgr
+      - automated
+      - requisition
+      - ReqExportRobot
+    - - Budget Auth
+      - automated
+      - requisition
+      - SCTPRBudgetAuthRobot
+    - - WaitForPRApprovals
+      - shared
+      - requisition
+      - ""
+    - - PRValidation
+      - automated
+      - requisition
+      - PRValidationRobotAsynchronous
+    - - Account Code Response
+      - shared
+      - requisition
+      - ""
+    - - Purchasing Approval
+      - shared
+      - requisition
+      - ""
+    - - PR Validation
+      - shared
+      - requisition
+      - ""
+    - - Restrict Withdrawal
+      - automated
+      - requisition
+      - RestrictPRWithdrawalRobot
+    - - Auto-Reject
+      - automated
+      - requisition
+      - RejectRequisitionRobot
+    - - Missing Supplier Catch
+      - shared
+      - requisition
+      - ""
+    - - Auto-Return
+      - automated
+      - requisition
+      - ReturnRequisitionRobot
+    - - EH&S Approval
+      - shared
+      - requisition
+      - ""
+    - - Create PO
+      - automated
+      - requisition
+      - CreatePORobot
+    - - PCard Reject
+      - automated
+      - requisition
+      - RejectRequisitionRobot
+    - - Account Code Validation
+      - automated
+      - requisition
+      - PRValidationRobotAsynchronous
+    - - Banner Budget Authorization 2
+      - automated
+      - requisition
+      - SCTPRBudgetAuthRobot
+    - - Missing Approver Catch
+      - shared
+      - requisition
+      - ""
+    - - BidReview
+      - shared
+      - requisition
+      - ""
+  block: 1
+  blocks: 1

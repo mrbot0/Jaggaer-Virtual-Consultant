@@ -1,0 +1,258 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.36
+section_title: JIOrderLine [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: lineOperationCode
+    technical_name: lineOperationCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Indicates whether the PO Line is new, an update, or is being cancelled.
+      The default operation is new
+
+      Possible value (case sensitive):
+
+      new
+
+      update
+
+      cancel
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: lineId
+    technical_name: lineId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique ID of the PO line
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: lineNumber
+    technical_name: lineNumber
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Position of the line item in the PO document
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: supplierStatus
+    technical_name: supplierStatus
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Supplier status of the line item.
+      See section “SupplierStatus [Import JIOrder method]” above
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: item
+    technical_name: item
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Order Line item information.
+      See section “Item [Import JIOrder method]” below
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: quantity
+    technical_name: quantity
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Number of items
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: capitalExpense
+    technical_name: capitalExpense
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a capital expense.
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: fixedAsset
+    technical_name: fixedAsset
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) a fixed asset.
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: taxable
+    technical_name: taxable
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the manufacturer is (true) or is not (false) taxable.
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: lineCharges
+    technical_name: lineCharges
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Order line charges.
+      See section “LineCharges [Import JIOrder method]” below.
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: deliveryInfo
+    technical_name: deliveryInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Order line delivery information
+      See section “DeliveryInfo [Import JIOrder method]” below
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: supplierInfo
+    technical_name: supplierInfo
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Order line Supplier Information
+      See section “SupplierInfo [Import JIOrder method]” above
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: customFieldValueSetList
+    technical_name: customFieldValueSetList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for Custom field value set information at line level.
+      See section “CustomFieldValueSet [Import JIOrder method]” above
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r12
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: splittableFieldSetGroupList
+    technical_name: splittableFieldSetGroupList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for Splittable field Set Group information at line level.
+      See section “SplittableFieldSetGroup [Import JIOrder method]” above
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r13
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: requisitionLineRefId
+    technical_name: requisitionLineRefId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique requisition line number
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r14
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: orderLineclauseList
+    technical_name: orderLineclauseList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for clause applied to the order at line level.
+      See section “OrderClause [Import JIOrder method]” above
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r15
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: lineLevelInternalNote
+    technical_name: lineLevelInternalNote
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Internal note for the requisition line
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r16
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: linkedToLineNumber
+    technical_name: linkedToLineNumber
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      For a trade-in line item that is linked to a positive non-trade-in line
+      item, position of the positive non-trade-in line item in the PO document.
+
+      Valid only if the item is a trade-in
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r17
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: brand
+    technical_name: brand
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Brand associated with the PO line
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r18
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: additionalNotes
+    technical_name: additionalNotes
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Line Order additional notes.
+      See section “AdditionalNote [Import JIOrder method]” below
+    section: 2.3.1.36
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.36#part-1
+    row_ref: t0.r19
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

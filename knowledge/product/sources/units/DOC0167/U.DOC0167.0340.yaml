@@ -1,0 +1,39 @@
+id: U.DOC0167.0340
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: email | Mandatory (Y/N): N | Mapping on Jaggaer One data model and notes: Email address of the supplier to which orders are to be delivered.
+  Required if the distribution method “type” field is set to “emailplain”, “emailbody” or “emailattach”.
+hash: sha256:157727f5c56748fbf58fa8ae7d4e2ade418d0d90d1d735200c32411595e96977
+words: 41
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/orderDistributionList/distributionMethod
+  section_path: 2.1.1.85
+  page: 5
+  lang: en
+  prev: U.DOC0167.0339
+  next: U.DOC0167.0341
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - email
+    - N
+    - ""
+    - |-
+      Email address of the supplier to which orders are to be delivered.
+      Required if the distribution method “type” field is set to “emailplain”, “emailbody” or “emailattach”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

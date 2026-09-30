@@ -1,0 +1,39 @@
+id: U.DOC0177.0214
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: notes | Mandatory (Y/N): N | Description: Note about the contact. | Mapping on Jaggaer One data model and notes: If the note is longer than 700 characters, it is truncated and saved.
+  Note: If the Notes field is empty, the existing note in the JAGGAER ONE Supplier Management solution is not overwritten. Only a populated Notes field can overwrite the existing note.
+hash: sha256:b9e475e23abcb7820e3371b0a158afd69b8589103b713b298740ceaa90c7a1f5
+words: 64
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/contactList/contact
+  section_path: 2.1.1.38
+  page: 37
+  lang: en
+  prev: U.DOC0177.0213
+  next: U.DOC0177.0215
+row:
+  table: 0
+  row: 14
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - notes
+    - N
+    - Note about the contact.
+    - |-
+      If the note is longer than 700 characters, it is truncated and saved.
+      Note: If the Notes field is empty, the existing note in the JAGGAER ONE Supplier Management solution is not overwritten. Only a populated Notes field can overwrite the existing note.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

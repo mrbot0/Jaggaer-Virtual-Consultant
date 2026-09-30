@@ -1,0 +1,37 @@
+id: U.DOC0182.0174
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: decSplitAmount | Mandatory (Y/N): N | Description: Amount to be split for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  For AmountOfPrice splits, the distributionvalue and splitAmount attributes are calculated identically and will always match each other.
+hash: sha256:4301d64bfa88f2d2241c327c125aa88cde5d197ff2d6e640685c6f93577abfb2
+words: 49
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Custom Field Value [PR Import]
+  section_path: 2.1.1.24
+  page: 24
+  lang: en
+  prev: U.DOC0182.0173
+  next: U.DOC0182.0175
+row:
+  table: 0
+  row: 9
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - decSplitAmount
+    - N
+    - |-
+      Amount to be split for the line item. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+      For AmountOfPrice splits, the distributionvalue and splitAmount attributes are calculated identically and will always match each other.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

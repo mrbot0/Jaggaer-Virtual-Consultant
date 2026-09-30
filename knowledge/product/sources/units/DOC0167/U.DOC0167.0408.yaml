@@ -1,0 +1,35 @@
+id: U.DOC0167.0408
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: "Attribute: addressLine2 | Mandatory (Y/N): N | Description: Second line of address associated with the bank account. | Mapping on Jaggaer One data model and notes: Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode."
+hash: sha256:72a0fb6bd7fd08cd0924519e881b079d4674238ca4c464627928df56e6dd8117
+words: 45
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 5
+  lang: en
+  prev: U.DOC0167.0407
+  next: U.DOC0167.0409
+row:
+  table: 0
+  row: 12
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - addressLine2
+    - N
+    - Second line of address associated with the bank account.
+    - Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

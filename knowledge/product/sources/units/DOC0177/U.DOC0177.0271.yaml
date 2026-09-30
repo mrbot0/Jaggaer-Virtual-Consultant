@@ -1,0 +1,39 @@
+id: U.DOC0177.0271
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: supportsOrderFulfillment | Mandatory (Y/N): N | Description: Indicates whether the specified location is a fulfillment center (Yes) or some other type of location (No). | Mapping on Jaggaer One data model and notes: If you omit this attribute for a location, the JAGGAER ONE Supplier Management solution ignores all fulfillment-related fields.
+  (Yes | No)
+hash: sha256:965d55f2f2e1328452ce693811e4a3da929b82d28761de1dbab6927f3ec48433
+words: 55
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location
+  section_path: 2.1.1.63
+  page: 49
+  lang: en
+  prev: U.DOC0177.0270
+  next: U.DOC0177.0272
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - supportsOrderFulfillment
+    - N
+    - Indicates whether the specified location is a fulfillment center (Yes) or some other type of location (No).
+    - |-
+      If you omit this attribute for a location, the JAGGAER ONE Supplier Management solution ignores all fulfillment-related fields.
+      (Yes | No)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

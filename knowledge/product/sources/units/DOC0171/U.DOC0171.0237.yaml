@@ -1,0 +1,44 @@
+id: U.DOC0171.0237
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: permissionList/
+  evaluation | Mandatory (Y/N): N | Description: 1 = evaluation user can insert evaluation
+  0 = evaluation user cannot insert evaluation
+  Default is 0. | Mapping on JA data model and notes: Evaluation group, evaluation available
+hash: sha256:eb58beba04fcc0e3093d114a02fb544c9bcdd9cadbc6994e5053cf3f813eacf7
+words: 38
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Evaluation Group Member [Import/Update RfX method]
+  section_path: 2.1.1.24
+  page: 6
+  lang: en
+  prev: U.DOC0171.0236
+  next: U.DOC0171.0238
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - |-
+      permissionList/
+      evaluation
+    - N
+    - |-
+      1 = evaluation user can insert evaluation
+      0 = evaluation user cannot insert evaluation
+      Default is 0.
+    - Evaluation group, evaluation available
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

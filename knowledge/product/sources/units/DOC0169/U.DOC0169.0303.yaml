@@ -1,0 +1,46 @@
+id: U.DOC0169.0303
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: option | Description: Indicates whether the supplier’s discount is to be applied before (beforetax) or after (aftertax) tax is applied to the PR.
+  Attribute: Type | Description: Indicates whether the supplier’s discount is a percentage (percent) or a fixed amount (amount).
+  Attribute: pecentageRate | Description: Percent of the supplier’s discount for the PR line. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  Attribute: Discount | Description: Monetary information about discount.
+  See section “Money [PR Export]” below.
+hash: sha256:9f25ed3b02cbe9224d97093557445864ddad578f91d55f2a508a96331213ebe7
+words: 93
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: DiscountAmount [PR Export]
+  section_path: 2.3.3.27
+  page: 71
+  lang: en
+  prev: U.DOC0169.0302
+  next: U.DOC0169.0304
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - option
+      - Indicates whether the supplier’s discount is to be applied before (beforetax) or after (aftertax) tax is applied to the PR.
+      - ""
+    - - Type
+      - Indicates whether the supplier’s discount is a percentage (percent) or a fixed amount (amount).
+      - ""
+    - - pecentageRate
+      - Percent of the supplier’s discount for the PR line. This is a numeric value of up to 15 digits, including up to 4 decimal places.
+      - ""
+    - - Discount
+      - |-
+        Monetary information about discount.
+        See section “Money [PR Export]” below.
+      - ""
+  block: 1
+  blocks: 1

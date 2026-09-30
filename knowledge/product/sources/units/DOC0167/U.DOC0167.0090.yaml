@@ -1,0 +1,35 @@
+id: U.DOC0167.0090
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: "Attribute: taxIdentificationType | Mandatory (Y/N): N | Description: Indicates whether the supplier is to be identified by his or her social security number (SSN) or federal ID (FederalId). | Mapping on Jaggaer One data model and notes: Valid only if LegalStructure field is set to IndividualSoleProp rietor. If so, then this field is required. (FederalId | SSN)"
+hash: sha256:99db2f167d8f889f69687b353efe669cc6983706618d156d243a86d5d7fc8467
+words: 57
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData
+  section_path: 2.1.1.11
+  page: 5
+  lang: en
+  prev: U.DOC0167.0089
+  next: U.DOC0167.0091
+row:
+  table: 0
+  row: 8
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - taxIdentificationType
+    - N
+    - Indicates whether the supplier is to be identified by his or her social security number (SSN) or federal ID (FederalId).
+    - Valid only if LegalStructure field is set to IndividualSoleProp rietor. If so, then this field is required. (FederalId | SSN)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

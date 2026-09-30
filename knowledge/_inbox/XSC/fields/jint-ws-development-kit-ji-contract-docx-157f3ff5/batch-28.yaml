@@ -1,0 +1,101 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-28
+section: 2.2.1.25
+section_title: CodesGroup [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:DISTRIBUTIONTYPE
+    label: distributionType
+    labels:
+      - distributionType
+    technical_name: DISTRIBUTIONTYPE
+    section: 2.2.1.25
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Manner in which the funds are to be distributed to each split for the
+      accounting codes defaults for the invoice custom fields:
+
+      PercentOfQuantity – funds are distributed based on a user-specified
+      percentage of the quantity
+
+      PercentOfPrice – funds are distributed based on a user-specified
+      percentage of the price
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.25
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.25#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: distributionType
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CODESGROUPNAME
+    label: codesGroupName
+    labels:
+      - codesGroupName
+    technical_name: CODESGROUPNAME
+    section: 2.2.1.25
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the accounting codes group
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.25
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.25#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: codesGroupName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CODESGROUPSPLIT
+    label: codesGroupSplit
+    labels:
+      - codesGroupSplit
+    technical_name: CODESGROUPSPLIT
+    section: 2.2.1.25
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for distribution for the split for the accounting codes group.
+      See section “CodesGroupSplit [Import]CodesGroupSplit [Export]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.25
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.25#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: codesGroupSplit
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 1110

@@ -1,0 +1,614 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-24
+section: 2.1.1.27
+section_title: J1Supplier/JISupplierData/addressList/address
+part: 1
+parts: 1
+rows:
+  - key: tech:OLDERPNUMBER
+    label: oldERPNumber
+    labels:
+      - oldERPNumber
+    technical_name: OLDERPNUMBER
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Old, unique ERP number associated with the address.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: oldERPNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.38
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.38#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: oldERPNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.63
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.63#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: oldERPNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.103
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.103#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: oldERPNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INTERNALID
+    label: internalId
+    labels:
+      - internalId
+    technical_name: INTERNALID
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique JAGGAER One Internal Id associated with the address.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.36
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.36#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.38
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.38#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.46
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.46#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.51
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.51#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.63
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.63#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.92
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.92#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.95
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.95#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.103
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.103#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.105
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.105#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: internalId
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:THIRDPARTYREFNUMBER
+    label: ThirdPartyRefNumber
+    labels:
+      - ThirdPartyRefNumber
+      - thirdPartyRefNumber
+    technical_name: THIRDPARTYREFNUMBER
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique reference number or ID generated by a third party solution.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: ThirdPartyRefNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.38
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.38#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: thirdPartyRefNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.63
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.63#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: thirdPartyRefNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.92
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.92#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: thirdPartyRefNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.95
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.95#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: thirdPartyRefNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.103
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.103#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: thirdPartyRefNumber
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.105
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.105#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: thirdPartyRefNumber
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDRESSLINE1
+    label: addressLine1
+    labels:
+      - addressLine1
+    technical_name: ADDRESSLINE1
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: First line of the address.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: addressLine1
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.106
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.106#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: addressLine1
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDRESSLINE2
+    label: addressLine2
+    labels:
+      - addressLine2
+    technical_name: ADDRESSLINE2
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Second line of the address.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: addressLine2
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.106
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.106#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: addressLine2
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDRESSLINE3
+    label: addressLine3
+    labels:
+      - addressLine3
+    technical_name: ADDRESSLINE3
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Third line of the address.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: addressLine3
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.106
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.106#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: addressLine3
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:STATE
+    label: state
+    labels:
+      - state
+    technical_name: STATE
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: State associated with the bank account.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: state
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.106
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.106#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: state
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:POSTALCODE
+    label: postalCode
+    labels:
+      - postalCode
+    technical_name: POSTALCODE
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Postal code associated with the bank account.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: postalCode
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.106
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.106#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: postalCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ISOCOUNTRYCODE
+    label: isoCountryCode
+    labels:
+      - isoCountryCode
+    technical_name: ISOCOUNTRYCODE
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Country associated with the bank account.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: isoCountryCode
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.106
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.106#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: isoCountryCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PHONE
+    label: phone
+    labels:
+      - phone
+    technical_name: PHONE
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: phone
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.38
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.38#part-1
+        row_ref: t0.r11
+        genre: tecnica
+        label: phone
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TOLLFREEPHONE
+    label: tollFreePhone
+    labels:
+      - tollFreePhone
+    technical_name: TOLLFREEPHONE
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r15
+        genre: tecnica
+        label: tollFreePhone
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.38
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.38#part-1
+        row_ref: t0.r12
+        genre: tecnica
+        label: tollFreePhone
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FAX
+    label: fax
+    labels:
+      - fax
+    technical_name: FAX
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r16
+        genre: tecnica
+        label: fax
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.38
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.38#part-1
+        row_ref: t0.r13
+        genre: tecnica
+        label: fax
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.64
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.64#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: fax
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.85
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.85#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: fax
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:NOTES
+    label: notes
+    labels:
+      - notes
+    technical_name: NOTES
+    section: 2.1.1.27
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Note about the address.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.27
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.27#part-1
+        row_ref: t0.r17
+        genre: tecnica
+        label: notes
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.38
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.38#part-1
+        row_ref: t0.r14
+        genre: tecnica
+        label: notes
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-005
+      functional_section: logistica
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 4753

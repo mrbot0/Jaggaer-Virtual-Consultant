@@ -1,0 +1,177 @@
+document: education-reimbursement-request-template-xml-6930386a
+scope: XSC
+batch: batch-01
+section: domande-1
+section_title: Domande — Page 1 / Course or Curriculum Information
+part: 1
+parts: 1
+rows:
+  - key: tech:222610
+    label: Course or Curriculum Name
+    labels:
+      - Course or Curriculum Name
+    technical_name: "222610"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Course or Curriculum Name
+    sources:
+      - document: education-reimbursement-request-template-xml-6930386a
+        section: domande-1
+        source_unit: education-reimbursement-request-template-xml-6930386a/domande-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Course or Curriculum Name
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:222630
+    label: Learning institution or organization
+    labels:
+      - Learning institution or organization
+    technical_name: "222630"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Learning institution or organization
+    sources:
+      - document: education-reimbursement-request-template-xml-6930386a
+        section: domande-1
+        source_unit: education-reimbursement-request-template-xml-6930386a/domande-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Learning institution or organization
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:222580
+    label: Description of course, curriculum or workshop
+    labels:
+      - Description of course, curriculum or workshop
+    technical_name: "222580"
+    section: domande-1
+    type: Text (Multi-Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Description of course, curriculum or workshop
+    sources:
+      - document: education-reimbursement-request-template-xml-6930386a
+        section: domande-1
+        source_unit: education-reimbursement-request-template-xml-6930386a/domande-1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Description of course, curriculum or workshop
+        type: Text (Multi-Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:222611
+    label: Reimbursement amount
+    labels:
+      - Reimbursement amount
+    technical_name: "222611"
+    section: domande-1
+    type: Numeric Text Box
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Reimbursement amount
+    sources:
+      - document: education-reimbursement-request-template-xml-6930386a
+        section: domande-1
+        source_unit: education-reimbursement-request-template-xml-6930386a/domande-1#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Reimbursement amount
+        type: Numeric Text Box
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:222581
+    label: Was this pre-approved?
+    labels:
+      - Was this pre-approved?
+    technical_name: "222581"
+    section: domande-1
+    type: Yes/No
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Was this pre-approved?
+    sources:
+      - document: education-reimbursement-request-template-xml-6930386a
+        section: domande-1
+        source_unit: education-reimbursement-request-template-xml-6930386a/domande-1#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Was this pre-approved?
+        type: Yes/No
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:222629
+    label: If so, provide the request approval number.
+    labels:
+      - If so, provide the request approval number.
+    technical_name: "222629"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: No
+    allowed_values: []
+    notes: If so, provide the request approval number.
+    sources:
+      - document: education-reimbursement-request-template-xml-6930386a
+        section: domande-1
+        source_unit: education-reimbursement-request-template-xml-6930386a/domande-1#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: If so, provide the request approval number.
+        type: Text (Single Line)
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1617

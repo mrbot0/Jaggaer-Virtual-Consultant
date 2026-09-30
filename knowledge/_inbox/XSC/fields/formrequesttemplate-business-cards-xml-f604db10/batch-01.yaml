@@ -1,0 +1,181 @@
+document: formrequesttemplate-business-cards-xml-f604db10
+scope: XSC
+batch: batch-01
+section: domande-1
+section_title: Domande — Page 1 / Personal Information
+part: 1
+parts: 1
+rows:
+  - key: tech:1169654
+    label: Name
+    labels:
+      - Name
+    technical_name: "1169654"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Name
+    sources:
+      - document: formrequesttemplate-business-cards-xml-f604db10
+        section: domande-1
+        source_unit: formrequesttemplate-business-cards-xml-f604db10/domande-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Name
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:1169655
+    label: Title
+    labels:
+      - Title
+    technical_name: "1169655"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Title
+    sources:
+      - document: formrequesttemplate-business-cards-xml-f604db10
+        section: domande-1
+        source_unit: formrequesttemplate-business-cards-xml-f604db10/domande-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Title
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:1169656
+    label: Email Address for Card
+    labels:
+      - Email Address for Card
+    technical_name: "1169656"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Email Address for Card
+    sources:
+      - document: formrequesttemplate-business-cards-xml-f604db10
+        section: domande-1
+        source_unit: formrequesttemplate-business-cards-xml-f604db10/domande-1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Email Address for Card
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:1169657
+    label: Phone Number
+    labels:
+      - Phone Number
+    technical_name: "1169657"
+    section: domande-1
+    type: Text (Single Line)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Phone Number
+    sources:
+      - document: formrequesttemplate-business-cards-xml-f604db10
+        section: domande-1
+        source_unit: formrequesttemplate-business-cards-xml-f604db10/domande-1#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Phone Number
+        type: Text (Single Line)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:1169698
+    label: Motivational Quotation
+    labels:
+      - Motivational Quotation
+    technical_name: "1169698"
+    section: domande-1
+    type: Multiple Choice (Pick One)
+    mandatory_text: Sì
+    allowed_values: []
+    notes: Motivational Quotation
+    sources:
+      - document: formrequesttemplate-business-cards-xml-f604db10
+        section: domande-1
+        source_unit: formrequesttemplate-business-cards-xml-f604db10/domande-1#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Motivational Quotation
+        type: Multiple Choice (Pick One)
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:1169699
+    label: That's probably the worst quotation. Are you sure you don't want to pick
+      another one?
+    labels:
+      - That's probably the worst quotation. Are you sure you don't want to pick
+        another one?
+    technical_name: "1169699"
+    section: domande-1
+    type: Yes/No
+    mandatory_text: Sì
+    allowed_values: []
+    notes: That's probably the worst quotation. Are you sure you don't want to pick
+      another one?
+    sources:
+      - document: formrequesttemplate-business-cards-xml-f604db10
+        section: domande-1
+        source_unit: formrequesttemplate-business-cards-xml-f604db10/domande-1#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: That's probably the worst quotation. Are you sure you don't want to pick
+          another one?
+        type: Yes/No
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: flag
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1566

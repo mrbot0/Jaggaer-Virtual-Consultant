@@ -1,0 +1,35 @@
+id: U.DOC0069.0003
+doc: S.STD.XSC.DOC.0069
+doc_id: sc-perspective-unofficial-implementation-conside-4cb385be
+type: procedura
+text: "Some items and processes within JAGGAER do not support custom fields, or only support them in a limited fashion. Examples include: forms, contracts, sourcing events, supplier registration. Typically these will have a custom field equivalent but not always, and the workflow options available to custom fields are not always present here. While custom fields present great opportunities for creativity in workflow and for reporting enhancement, try to limit their usage to critical needs to avoid the customer developing the opinion that a custom field can solve all of their problems. 7. Multiple Business Unit (MBU) Functionality 8. Not everything can be differentiated according to business unit (BU). Familiarize yourselves with what can and can’t be customized by BU and document it. If the client has the MBU license or is interested it, or if you identify a solution to a problem that requires MBU functionality, be prepared to speak to limitations. 9. Document Visibility is controlled through Department/Business Unit, but NOT accounting elements. 10. More comments: 11. We have some other options, but they’re a little more complicated. 12. It is best to get ahead of this quickly and try to drive toward department-based visibility, or user-based (user could only see his/her documents). Department is better but the client needs a way to define a user’s department, so it needs to come in when the log in via a single sign-on, or through a user import, or if they log in locally they should require it to be entered during user registration, or they need to be prepared to maintain this manually."
+hash: sha256:b50508e0330b38796c02a96468a949746f32179a2cf0d035693c6c059695b971
+words: 262
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0069
+  chapter: sc-perspective-unofficial-implementation-conside-4cb385be
+  section: sc-perspective-unofficial-implementation-conside-4cb385be
+  section_path: "0"
+  page: 1
+  lang: en
+  prev: U.DOC0069.0002
+  next: U.DOC0069.0004
+steps:
+  - NUMBER ONE priority/concern/recommendation is to consult strongly on every topic, to try to drive the customer to the simplest possible solution. This can avoid even getting into some of the more difficult topics.
+  - Custom Fields and Account Codes – we use custom fields for account codes. The two are the same in the JAGGAER solution.
+  - Defining the customer’s account code string is a high priority week one task. Technical limitations often inform the direction of the setup in JAGGAER. For instance, we have no in-application validation process to ensure account code validity – we rely largely on an outbound integration with the customer ERP (PR Validation) or on parent-child relationships in which we expect the ERP to send us valid combinations.
+  - Parent-child relationship works well, but some customers’ account codes do not work well with this. We support one parent to many children. If you map a parent value, like an organization code, to a child value, like a department code, then when that organization is selected the list of children is limited to those you’ve mapped, like that aforementioned department code. This is the only relationship we really check – no other codes in the string in combination with this value. Additionally, the codes themselves are individual values and not a single string, though they can be transformed via integrations if needed.
+  - The UI behind custom field selection is different in JAGGAER than in many ERP solutions as well, so that’s worth covering. Some ERPs or other purchasing software uses type-ahead matching, where a user starts typing their code and it will auto-complete with potential matches. We use either a drop-down of all values (if below a certain threshold) or a search interface, allowing users to search by value or description.
+  - "Some items and processes within JAGGAER do not support custom fields, or only support them in a limited fashion. Examples include: forms, contracts, sourcing events, supplier registration. Typically these will have a custom field equivalent but not always, and the workflow options available to custom fields are not always present here. While custom fields present great opportunities for creativity in workflow and for reporting enhancement, try to limit their usage to critical needs to avoid the customer developing the opinion that a custom field can solve all of their problems."
+  - Multiple Business Unit (MBU) Functionality
+  - Not everything can be differentiated according to business unit (BU). Familiarize yourselves with what can and can’t be customized by BU and document it. If the client has the MBU license or is interested it, or if you identify a solution to a problem that requires MBU functionality, be prepared to speak to limitations.
+  - Document Visibility is controlled through Department/Business Unit, but NOT accounting elements.
+  - "More comments:"
+  - We have some other options, but they’re a little more complicated.
+  - It is best to get ahead of this quickly and try to drive toward department-based visibility, or user-based (user could only see his/her documents). Department is better but the client needs a way to define a user’s department, so it needs to come in when the log in via a single sign-on, or through a user import, or if they log in locally they should require it to be entered during user registration, or they need to be prepared to maintain this manually.
+procedure:
+  title: sc-perspective-unofficial-implementation-conside-4cb385be
+part:
+  n: 2
+  of: 2

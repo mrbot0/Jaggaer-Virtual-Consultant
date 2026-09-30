@@ -1,0 +1,45 @@
+id: U.DOC0171.0152
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: showUrlAsClickableLink | Mandatory (Y/N): N | Description: TEXT AS URL – technical/qualification/
+  commercial
+  parameter flag:
+  1 = parameter is true
+  0 = parameter is false | Mapping on JA data model and notes: In the dropdown there are two options, yes or no. In case if we set as yes, it will be true (1 in response). In other case if we set to no, it will be false (0 in response).
+hash: sha256:962ccace5590467488e25fee6e63e2986e6ce99f2dab3da27132cde32f3e6541
+words: 73
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Qualification and Technical envelope: parameter [Import/Update RfX method]"
+  section_path: 2.1.1.11
+  page: 6
+  lang: en
+  prev: U.DOC0171.0151
+  next: U.DOC0171.0153
+row:
+  table: 0
+  row: 8
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - showUrlAsClickableLink
+    - N
+    - |-
+      TEXT AS URL – technical/qualification/
+      commercial
+      parameter flag:
+      1 = parameter is true
+      0 = parameter is false
+    - In the dropdown there are two options, yes or no. In case if we set as yes, it will be true (1 in response). In other case if we set to no, it will be false (0 in response).
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

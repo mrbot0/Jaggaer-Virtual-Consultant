@@ -1,0 +1,98 @@
+document: check-request-form-xml-d45a31ae
+scope: XSC
+section: campi-2
+section_title: Campi — Expense Info
+genre: tecnica
+rows:
+  - label: Instructions
+    technical_name: GeneralInstructions
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=Use this form to request a check be prepared
+      for a previous expenditure. Complete this form, select the supplier above,
+      and attach scanned image of required documentation. Alternately, send
+      documentation to Accounts Payable referencing the submitted requisition
+      number. · id=10000 · tipo=userdefined
+    section: campi-2
+    source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: "111"
+    technical_name: "111"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=111 · tipo=static
+    section: campi-2
+    source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: "105"
+    technical_name: "105"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=105 · tipo=static
+    section: campi-2
+    source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: "103"
+    technical_name: "103"
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=103 · tipo=static
+    section: campi-2
+    source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: Unit Price
+    technical_name: Unit Price
+    type: Price
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10250 · tipo=userdefined
+    section: campi-2
+    source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: "117"
+    technical_name: "117"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=117 · tipo=static
+    section: campi-2
+    source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: "118"
+    technical_name: "118"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=118 · tipo=static
+    section: campi-2
+    source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae
+  - label: "119"
+    technical_name: "119"
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=119 · tipo=static
+    section: campi-2
+    source_unit: check-request-form-xml-d45a31ae/campi-2#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: check-request-form-xml-d45a31ae

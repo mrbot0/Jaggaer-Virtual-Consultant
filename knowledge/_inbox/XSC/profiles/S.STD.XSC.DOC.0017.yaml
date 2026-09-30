@@ -1,0 +1,85 @@
+id: S.STD.XSC.DOC.0017
+type: DOC
+title: CORSI/JI-2303/images - items/sports items/zjuindians sports contract export.csv
+summary: 'Documento dati-import (tecnica, origine vendor) "CORSI/JI-2303/images
+  - items/sports items/zjuindians sports contract export.csv": 88 unità, 1
+  tabelle, 0 tabelle di campi; scope CON, VEN; affidabilità 0.48.'
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-2303/images - items/sports items/zjuindians sports contract
+      export.csv
+    sha256: sha256:0a25141dcc1f8f4a932230f74a31bec4418a3736d0c441007f70ad8ab03df033
+kind: dati-import
+genre: tecnica
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - CON
+  - VEN
+source:
+  path: CORSI/JI-2303/images - items/sports items/zjuindians sports contract
+    export.csv
+  sha256: sha256:0a25141dcc1f8f4a932230f74a31bec4418a3736d0c441007f70ad8ab03df033
+  size: 107013
+  format: csv
+  doc_id: zjuindians-sports-contract-export-csv-9b80d394
+  doc_key: zjuindians-sports-contract-export.csv
+structure:
+  pages: null
+  chapters: 1
+  sections: 1
+  tables: 1
+  figures: 0
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 88
+  by_type:
+    tabella: 88
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 88
+  items_produced: 0
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0
+  last_run: 2026-09-30
+  estimated_tokens: 0
+  sessions_planned: 0

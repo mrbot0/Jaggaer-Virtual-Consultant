@@ -1,0 +1,162 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+section: 2.1.1.27
+section_title: Splittable Field Index [PR Import]
+genre: tecnica
+rows:
+  - label: distributionValue
+    technical_name: distributionValue
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Distribution value for the split. This is an integer value.
+      DEPRECATED: uses “decDistributionValue” field
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: decDistributionValue
+    technical_name: decDistributionValue
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Distribution value for the split. This is a numeric value of up to 15
+      digits, including up to 4 decimal places.
+
+      According to split type, it represents:
+
+      AmountOfQuantity: the portion of the quantity to be split.
+
+      AmountOfPrice: the monetary amount to be split.
+
+      PercentOfQuantity and PercentOfPrice: the percentage of the split.
+
+      For AmountOfPrice splits, the distributionvalue and splitAmount values are
+      calculated identically and will always match each other.
+
+      This information does not appear in the message if there is no split.
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: splitIndex
+    technical_name: splitIndex
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Split sequence number.
+
+      It must be a positive number from 0 to n-1, where n is the number of
+      CustomFieldValue elements in the CustomFieldValueSet element.
+
+      For example, given a CustomFieldValueSet element with four
+      CustomFieldValue elements, the splitIndex attributes are numbered 0 to 3.
+      The default split index is zero (0).
+
+      This information does not appear in the message if there is no split.
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: splitAmount
+    technical_name: splitAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Amount to be split for the line item. This is a numeric value of up to 15
+      digits, including up to 4 decimal places.
+
+      For AmountOfPrice splits, the distributionvalue and splitAmount values are
+      calculated identically and will always match each other.
+
+      This information does not appear in the message if there is no split.
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: shippingSplitAmount
+    technical_name: shippingSplitAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Amount to be split for shipping for the line item. This is a numeric
+      value of up to 15 digits, including up to 4 decimal places. This
+      information does not appear in the message if there is no split.
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: handlingSplitAmount
+    technical_name: handlingSplitAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Amount to be split for handling for the line item. This is a numeric
+      value of up to 15 digits, including up to 4 decimal places. This
+      information does not appear in the message if there is no split.
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: tax1SplitAmount
+    technical_name: tax1SplitAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Amount to be split for tax 1 for the line item. This is a numeric value
+      of up to 15 digits, including up to 4 decimal places. This information
+      does not appear in the message if there is no split.
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: tax2SplitAmount
+    technical_name: tax2SplitAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Amount to be split for tax 2 for the line item. This is a numeric value
+      of up to 15 digits, including up to 4 decimal places. This information
+      does not appear in the message if there is no split.
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: discountSplitAmount
+    technical_name: discountSplitAmount
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Discount split amount. This is a numeric value of up to 15 digits,
+      including up to 4 decimal places. This information does not appear in the
+      message if there is no split.
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  - label: customFieldValueList
+    technical_name: customFieldValueList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      List of Custom Field Value.
+      See section “Custom Field Value [PR Import]” above.
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.27#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8

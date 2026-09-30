@@ -1,0 +1,27 @@
+id: U.DOC0167.0015
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: procedura
+text: |-
+  Example
+  1. Condition filters [Export of Company Data]Condition filters : describes which fields can be used to filter the invoice to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of suppliers extracted.
+  2. Result Pagination [Export of Company Data]: describes how the results in response are paginated
+  3. In order to get the proper subset of results the webservice client can set in the webservice call the parameter startAt (default is 1). Information about the availability of more objects is given by the response parameter nextStartAt. This parameter contains the value to be used for the value of startAt parameter in subsequent request. If there are no available for another request, the response parameter nextStartAt will have the value -1.
+hash: sha256:94bb01784db5c5eb432a52199144043c294f5ea20c5515816de2e260229ce925
+words: 129
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: Executive Summary
+  section: Executive Summary
+  section_path: "1"
+  page: 4
+  lang: en
+  prev: U.DOC0167.0014
+  next: U.DOC0167.0016
+steps:
+  - "Condition filters [Export of Company Data]Condition filters : describes which fields can be used to filter the invoice to be extracted on specific conditions. So, the use of a condition filter allows to decrease the number of suppliers extracted."
+  - "Result Pagination [Export of Company Data]: describes how the results in response are paginated"
+  - In order to get the proper subset of results the webservice client can set in the webservice call the parameter startAt (default is 1). Information about the availability of more objects is given by the response parameter nextStartAt. This parameter contains the value to be used for the value of startAt parameter in subsequent request. If there are no available for another request, the response parameter nextStartAt will have the value -1.
+procedure:
+  title: Example

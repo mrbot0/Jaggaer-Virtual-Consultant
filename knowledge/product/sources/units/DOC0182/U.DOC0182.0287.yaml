@@ -1,0 +1,56 @@
+id: U.DOC0182.0287
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Dataset | Min/max occurrencies | Description | Available from version
+  Dataset: header | Min/max occurrencies: One | Description: Header information.
+  It is always present.
+  See section “Header [PR Export]” below.
+  Dataset: purchaseRequisitionSupplierGroupList | Min/max occurrencies: Zero or one | Description: Container of requisition supplier group information.
+  Inserted if at least one of “GROUPINFO” or “LINE” component filter is required.
+  See section “PurchaseRequisitionSupplierGroup [PR Export]” below.
+  Dataset: historyEventList | Min/max occurrencies: Zero or one | Description: Container for history information about Order. Inserted if “HISTORY” component filter is specified.
+  See section “HistoryEventList [PR Export]” below.
+hash: sha256:f8590f73735fb47d75c8770974f9b575fe8cbbca592fc12b91ccfb0fc813510e
+words: 95
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Export data format [PR Export]
+  section_path: 2.3.3
+  page: 26
+  lang: en
+  prev: U.DOC0182.0286
+  next: U.DOC0182.0288
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrencies
+    - Description
+    - Available from version
+  rows:
+    - - header
+      - One
+      - |-
+        Header information.
+        It is always present.
+        See section “Header [PR Export]” below.
+      - ""
+    - - purchaseRequisitionSupplierGroupList
+      - Zero or one
+      - |-
+        Container of requisition supplier group information.
+        Inserted if at least one of “GROUPINFO” or “LINE” component filter is required.
+        See section “PurchaseRequisitionSupplierGroup [PR Export]” below.
+      - ""
+    - - historyEventList
+      - Zero or one
+      - |-
+        Container for history information about Order. Inserted if “HISTORY” component filter is specified.
+        See section “HistoryEventList [PR Export]” below.
+      - ""
+  block: 1
+  blocks: 1

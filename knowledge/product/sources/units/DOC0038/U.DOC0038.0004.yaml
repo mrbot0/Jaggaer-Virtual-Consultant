@@ -1,0 +1,68 @@
+id: U.DOC0038.0004
+doc: S.STD.XSC.DOC.0038
+doc_id: ji-plt-2303-phase-four-requisitionworkflowdefini-fba79867
+type: tabella
+text: |-
+  Tabella: transizioni
+  Colonne: Da | A | Condizione
+  Da: START | A: Return1
+  Da: Return1 | A: Return2
+  Da: Return2 | A: InitialFiscalYearEnd
+  Da: InitialFiscalYearEnd | A: Approval-1
+  Da: Approval-1 | A: SpecialApproval
+  Da: SpecialApproval | A: DepartmentApproval
+  Da: DepartmentApproval | A: EHSCheck
+  Da: EHSCheck | A: FinalFiscalYearEnd
+  Da: FinalFiscalYearEnd | A: CreatePO
+  Da: CreatePO | A: END
+hash: sha256:bb22428bd369d24d72205b399becf981a06d6b7e7f81736819018a1d35a1e5b8
+words: 58
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0038
+  chapter: Transizioni (ActivityRelationship)
+  section: Transizioni (ActivityRelationship)
+  section_path: transizioni
+  page: null
+  lang: en
+  prev: U.DOC0038.0003
+  next: null
+table:
+  table: 0
+  headers:
+    - Da
+    - A
+    - Condizione
+  rows:
+    - - START
+      - Return1
+      - ""
+    - - Return1
+      - Return2
+      - ""
+    - - Return2
+      - InitialFiscalYearEnd
+      - ""
+    - - InitialFiscalYearEnd
+      - Approval-1
+      - ""
+    - - Approval-1
+      - SpecialApproval
+      - ""
+    - - SpecialApproval
+      - DepartmentApproval
+      - ""
+    - - DepartmentApproval
+      - EHSCheck
+      - ""
+    - - EHSCheck
+      - FinalFiscalYearEnd
+      - ""
+    - - FinalFiscalYearEnd
+      - CreatePO
+      - ""
+    - - CreatePO
+      - END
+      - ""
+  block: 1
+  blocks: 1

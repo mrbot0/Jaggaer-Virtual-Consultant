@@ -1,0 +1,25 @@
+id: U.DOC0138.0021
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: procedura
+text: |-
+  Let's take a look at the rule itself
+  1. <Rule><![CDATA[ [Product.Radioactive = true || Product.RadioactiveMinor = true || Product.HazMat = true || Product.Controlled = true || Product.Toxin = true || Product.SelectAgent = true] ]]></Rule>:
+  2. Notice the || between each rule evaluation; this represents an OR. This means that a document will stop if any one of these rules is true. Unlike the && found in the above example, all of these rules do not have to be true for the rule to be triggered. This allows an activity to be triggered based on separate and distinct criteria. b. The rules in this activity are looking at the products contained in the document. This is indicated by the “Product (dot)” prefix. Each product here contains different product attribute flags. This allows customers to stop documents that contain any product they want that contains any one of these attribute flags.
+hash: sha256:f3c2c4140a26fe1a4f6d3c193f315e689312e993891e9704b331fd7e0e45d53c
+words: 149
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: "NOTIFICATION MANAGED THROUGH STATIC WORKFLOW:"
+  section: "NOTIFICATION MANAGED THROUGH STATIC WORKFLOW:"
+  section_path: "4"
+  page: null
+  lang: en
+  prev: U.DOC0138.0020
+  next: U.DOC0138.0022
+steps:
+  - "<Rule><![CDATA[ [Product.Radioactive = true || Product.RadioactiveMinor = true || Product.HazMat = true || Product.Controlled = true || Product.Toxin = true || Product.SelectAgent = true] ]]></Rule>:"
+  - Notice the || between each rule evaluation; this represents an OR. This means that a document will stop if any one of these rules is true. Unlike the && found in the above example, all of these rules do not have to be true for the rule to be triggered. This allows an activity to be triggered based on separate and distinct criteria. b. The rules in this activity are looking at the products contained in the document. This is indicated by the “Product (dot)” prefix. Each product here contains different product attribute flags. This allows customers to stop documents that contain any product they want that contains any one of these attribute flags.
+procedure:
+  title: Let's take a look at the rule itself

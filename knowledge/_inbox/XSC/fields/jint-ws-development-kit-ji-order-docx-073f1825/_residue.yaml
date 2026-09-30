@@ -1,0 +1,49 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+ambiguous:
+  - key: tech:ID
+    label: id
+    mandatory_text: |-
+      Y/N
+      See description
+    sources:
+      - jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.6#part-1
+  - key: tech:SUPPLIERNUMBER
+    label: supplierNumber
+    mandatory_text: |-
+      Y/N
+      See description
+    sources:
+      - jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.6#part-1
+  - key: tech:CONTACTINFOLIST
+    label: contactInfoList
+    mandatory_text: ""
+    sources:
+      - jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.6#part-1
+  - key: tech:ATTACHMENTURL
+    label: attachmentURL
+    mandatory_text: ""
+    sources:
+      - jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.9#part-1
+  - key: tech:PAYMENTTYPE
+    label: paymentType
+    mandatory_text: ""
+    sources:
+      - jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+  - key: tech:CUSTOMPAYMENTTERM
+    label: customPaymentTerm
+    mandatory_text: ""
+    sources:
+      - jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.12#part-1
+  - key: tech:CUSTOMATTRIBUTELIST
+    label: customAttributeList
+    mandatory_text: ""
+    sources:
+      - jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.19#part-1
+      - jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.26#part-1
+  - key: tech:SPLITTABLEFIELDINDEXLIST
+    label: splittableFieldIndexList
+    mandatory_text: ""
+    sources:
+      - jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.23#part-1
+over_unit_budget: []

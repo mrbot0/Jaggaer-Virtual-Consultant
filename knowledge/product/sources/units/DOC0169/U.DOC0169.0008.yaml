@@ -1,0 +1,137 @@
+id: U.DOC0169.0008
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: "RequisitionSupplierGroup: RequisitionSupplierGroupInfo node made optional Revision: 15 | Date Released: 2021-01-15 | Version: JINT 20 01 01 | Description of Change: PR Validate: ValidateRequisitionData: “externalRequisitionNumber” and “externalRequisitionNumber2” fields has been added Revision: 16 | Date Released: 2021-05-31 | Version: JINT 21 01 00 | Description of Change: Updated postman collections related to REST Interface Revision: 17 | Date Released: 2021-10-13 | Version: JINT 21 03 00 | Description of Change: JI Purchase Requisition Webservice Enhancement Condition filter is added (department and businessUnit)"
+hash: sha256:8532c7e2e1563ca249e29939fab0113dccc9114dfedbd45a99930ecce7601a39
+words: 82
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+  section: Revision History
+  section_path: "0.2"
+  page: 5
+  lang: en
+  prev: U.DOC0169.0007
+  next: U.DOC0169.0009
+table:
+  table: 0
+  headers:
+    - Revision
+    - Date Released
+    - Version
+    - Description of Change
+  rows:
+    - - "0"
+      - 2018-09-03
+      - JINT 18 00
+      - First release
+    - - "1"
+      - 2018-09-25
+      - JINT 18 00
+      - WSDL Amended
+    - - "2"
+      - 2018-10-10
+      - JINT 18 00
+      - Added new Update Operation
+    - - "3"
+      - 2018-10-30
+      - JINT 18 00
+      - Detailed user identification and supplier identification approaches
+    - - "4"
+      - 2019-03-05
+      - JINT 19 00
+      - Added field businessUnit in userData for import method
+    - - "5"
+      - 2019-05-14
+      - JINT 19 01
+      - New “export” and “validate” operations added
+    - - "6"
+      - 2019-07-04
+      - JINT 19 02
+      - Type of “Quantity” field in Requisition Line object changed to double
+    - - "7"
+      - 2019-09-13
+      - JINT 19 03
+      - |-
+        PR Import method, new attribute “useSystemCatalogPrice” added under LineCharges.
+        PR Export method, new field “workflowStep” added.
+        New “jint” web service endpoint.
+    - - "8"
+      - 2019-09-30
+      - JINT 19 04
+      - |-
+        PR Export:
+        Line Item Info: extended item info sub-component filter to export information about GeneralItemInfo, InternalItemInfo, ExternalItemInfo, Form and FormRequest
+        CustomfieldValue: “columnIndex” field added
+    - - "9"
+      - 2019-11-21
+      - JINT 19 04
+      - PR Validate method, behavior chapter extended with note on custom field update
+    - - "10"
+      - 2019-12-12
+      - JINT 19 05
+      - |-
+        PR Export
+        Header: “BudgetDate” attribute added
+        Line Item: “itemMasterId” attribute added
+        Supplier: “FederalId” attribute added
+    - - "11"
+      - 2020-01-08
+      - JINT 19 05
+      - |-
+        PR Import
+        Header: “budgetDate” and “requisitionType” attributes added
+        Line: “budgetDate” attribute added
+        Line Item: “itemMasterId” attribute added
+    - - "12"
+      - 2020-03-08
+      - JINT 20 01 00
+      - |-
+        Minor changes (no impact): new WSDL version management
+        Revised structure: JINT webservices general guidelines moved to a separate document
+    - - "13"
+      - 2020-04-06
+      - JINT 20 01 01
+      - |-
+        PR Export:
+        New field “commodityCodeType” added in Item element.
+        PR Import:
+        “Attachment” element enhanced to provide file content and not only URL. Usage of “iletype” attribute deprecated since no more used.
+    - - "12"
+      - 2020-07-13
+      - JINT 20 01 01
+      - Added REST Interface
+    - - "13"
+      - 2020-08-06
+      - JINT 20 01 01
+      - PR Validate, Custom Field can be updated only if they have pre-populated values (free text strings are not allowed).
+    - - "14"
+      - 2020-11-27
+      - JINT 20 01 01
+      - |-
+        PR Import:
+        RequisitionLine: LineCharges node made optional;
+        RequisitionSupplierGroup: RequisitionSupplierGroupInfo node made optional
+    - - "15"
+      - 2021-01-15
+      - JINT 20 01 01
+      - |-
+        PR Validate:
+        ValidateRequisitionData: “externalRequisitionNumber” and “externalRequisitionNumber2” fields has been added
+    - - "16"
+      - 2021-05-31
+      - JINT 21 01 00
+      - Updated postman collections related to REST Interface
+    - - "17"
+      - 2021-10-13
+      - JINT 21 03 00
+      - |-
+        JI Purchase Requisition Webservice Enhancement
+        Condition filter is added (department and businessUnit)
+  block: 1
+  blocks: 1
+part:
+  n: 3
+  of: 3

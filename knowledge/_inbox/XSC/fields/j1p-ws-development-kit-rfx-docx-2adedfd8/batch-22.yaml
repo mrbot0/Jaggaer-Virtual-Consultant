@@ -1,0 +1,287 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-22
+section: 2.1.1.24
+section_title: Evaluation Group Member [Import/Update RfX method]
+part: 1
+parts: 1
+rows:
+  - key: tech:EVALUATIONUSER_ID_EVALUATIONUSER_CODE_EVALUATIONUSER_NAME_EVALUATIONUSER_LOGIN
+    label: |-
+      evaluationUser/id
+      evaluationUser/code
+      evaluationUser/name
+      evaluationUser/login
+    labels:
+      - |-
+        evaluationUser/id
+        evaluationUser/code
+        evaluationUser/name
+        evaluationUser/login
+    technical_name: EVALUATIONUSER_ID_EVALUATIONUSER_CODE_EVALUATIONUSER_NAME_EVALUATIONUSER_LOGIN
+    section: 2.1.1.24
+    type: null
+    mandatory_text: |-
+      Y
+      (only one of id/code/name/login is mandatory)
+    allowed_values: []
+    notes: |-
+      Complex type for Group Member user. Following elements are defined
+      id: user internal identifier
+      code: user external code
+      name = user name and surname
+      login: user login
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: |-
+          evaluationUser/id
+          evaluationUser/code
+          evaluationUser/name
+          evaluationUser/login
+        type: null
+        mandatory_text: |-
+          Y
+          (only one of id/code/name/login is mandatory)
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.9
+      mandatory:
+        kind: always
+  - key: tech:ACTIVE
+    label: Active
+    labels:
+      - Active
+    technical_name: ACTIVE
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      1 = evaluation user is active
+      0 = evaluation user is not active
+      Default is 1.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Active
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PERMISSIONLIST_COMMENTS
+    label: |-
+      permissionList/
+      comments
+    labels:
+      - |-
+        permissionList/
+        comments
+    technical_name: PERMISSIONLIST_COMMENTS
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      1 = evaluation user can insert comments
+      0 = evaluation user cannot insert comments
+      Default is 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: |-
+          permissionList/
+          comments
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PERMISSIONLIST_EVALUATION
+    label: |-
+      permissionList/
+      evaluation
+    labels:
+      - |-
+        permissionList/
+        evaluation
+    technical_name: PERMISSIONLIST_EVALUATION
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      1 = evaluation user can insert evaluation
+      0 = evaluation user cannot insert evaluation
+      Default is 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: |-
+          permissionList/
+          evaluation
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PERMISSIONLIST_FREEZE
+    label: |-
+      permissionList/
+      freeze
+    labels:
+      - |-
+        permissionList/
+        freeze
+    technical_name: PERMISSIONLIST_FREEZE
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      1 = evaluation user can freeze the envelope
+      0 = evaluation user cannot freeze the envelope
+      Default is 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: |-
+          permissionList/
+          freeze
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PERMISSIONLIST_FORCERFXVISIBILITY
+    label: |-
+      permissionList/
+      forceRfxVisibility
+    labels:
+      - |-
+        permissionList/
+        forceRfxVisibility
+    technical_name: PERMISSIONLIST_FORCERFXVISIBILITY
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag to force the Rfx visibility for the user:
+
+      1 = redefine the permission by assigning the visibility on the Rfx for the
+      evaluation user. If the permission is already present in the standard
+      permissions, no redefinition is performed.
+
+      0 = not redefine the permission for the evaluation user
+
+      Default is 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: |-
+          permissionList/
+          forceRfxVisibility
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PERMISSIONLIST_FORCESENSITIVEDATAVISIBILITY
+    label: |-
+      permissionList/
+      forceSensitiveDataVisibility
+    labels:
+      - |-
+        permissionList/
+        forceSensitiveDataVisibility
+    technical_name: PERMISSIONLIST_FORCESENSITIVEDATAVISIBILITY
+    section: 2.1.1.24
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Flag to force the sensitive data visibility for the user:
+
+      1 = redefine the permission by assigning the visibility of the sensitive
+      data (supplier response & buyer evaluation) on the Rfx for the evaluation
+      user. If the permission is already present in the standard permissions, no
+      redefinition is performed.
+
+      0 = not redefine the permission for the evaluation user
+
+      Default is 0.
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.24
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.24#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: |-
+          permissionList/
+          forceSensitiveDataVisibility
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2116

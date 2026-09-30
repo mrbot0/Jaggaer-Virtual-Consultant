@@ -1,0 +1,114 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.8
+section_title: Address [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: templateName
+    technical_name: templateName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Used in billTo information, Name of the template to be called by this
+      label type.
+    section: 2.3.1.8
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.8#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: addressCode
+    technical_name: addressCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Used in billTo information, Address code associated with this billing
+      address. Use the AddressCode field to link the BillTo address to the
+      billing address stored in your ERP system.
+    section: 2.3.1.8
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.8#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: contactList
+    technical_name: contactList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of contact information
+      See section “Contact [Import JIOrder method]” below
+    section: 2.3.1.8
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.8#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: addressLineList
+    technical_name: addressLineList
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container of address line information.
+      See section “AddressLine [Import JIOrder method]N” below
+    section: 2.3.1.8
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.8#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: city
+    technical_name: city
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: City
+    section: 2.3.1.8
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.8#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: state
+    technical_name: state
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      For US addresses, 2-character state code.
+      For non-US addresses, name of the province, county, or region.
+    section: 2.3.1.8
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.8#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: postalCode
+    technical_name: postalCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Postal code.
+    section: 2.3.1.8
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.8#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: country
+    technical_name: country
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Long name of the country.
+    section: 2.3.1.8
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.8#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: isoCountryCode
+    technical_name: isoCountryCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: 2-letter ISO country code of the contact's country.
+    section: 2.3.1.8
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.8#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

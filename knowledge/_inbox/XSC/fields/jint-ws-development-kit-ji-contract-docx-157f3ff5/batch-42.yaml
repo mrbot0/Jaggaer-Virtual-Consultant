@@ -1,0 +1,67 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-42
+section: 2.2.1.46
+section_title: SupplierCustomFieldSettings [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:CUSTOMFIELDENABLED
+    label: customFieldEnabled
+    labels:
+      - customFieldEnabled
+    technical_name: CUSTOMFIELDENABLED
+    section: 2.2.1.46
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether portal invoicing-enabled suppliers are (true) or are
+      not (false) allowed to complete custom fields on invoices created from the
+      contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.46
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.46#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: customFieldEnabled
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:CUSTOMFIELDREQUIRED
+    label: customFieldRequired
+    labels:
+      - customFieldRequired
+    technical_name: CUSTOMFIELDREQUIRED
+    section: 2.2.1.46
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether portal invoicing-enabled suppliers are (true) or are
+      not (false) required to complete custom fields on invoices created from
+      the contract.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.46
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.46#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: customFieldRequired
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 910

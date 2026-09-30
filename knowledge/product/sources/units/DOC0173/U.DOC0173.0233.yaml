@@ -1,0 +1,147 @@
+id: U.DOC0173.0233
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: name | Attribute: Title | Datatype: VARCHAR2(80 CHAR)
+  Attribute: type | Attribute: Type | Datatype: NUMBER(1)
+  Attribute: defaultLabel | Attribute: Label | Datatype: VARCHAR2(256 CHAR)
+  Attribute: defaultLabelLocale | Attribute: Default Language | Datatype: VARCHAR2(5 CHAR)
+  Attribute: values/value | Attribute: - | Datatype: VARCHAR2(2000 CHAR)
+  Attribute: values/value/@id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: values/value/@secureToken | Attribute: - | Datatype: VARCHAR2(32 CHAR)
+  Attribute: attachmentExpiryDate | Attribute: Expiring on/Expiring Date | Datatype: DATE
+  Attribute: attachmentExpiryDateManagedBy | Attribute: - | Datatype: VARCHAR2(12 CHAR)
+  Attribute: attachmentExpiryDateLastUpdateUser/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: attachmentExpiryDateLastUpdateUser/code | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: attachmentExpiryDateLastUpdateUser/name | Attribute: Expiry Date Last Modified by | Datatype: VARCHAR2(257 CHAR)
+  Attribute: attachmentExpiryDateLastUpdateUser/company/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: attachmentExpiryDateLastUpdateUser/company/code | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: attachmentExpiryDateLastUpdateUser/company/name | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: attachmentExpiryDateLastUpdateDate | Attribute: Expiry Date Last Modified on | Datatype: DATE
+  Attribute: deValue | Attribute: Current Response to this Question | Datatype: VARCHAR2(2000 CHAR)
+  Attribute: lastAnswerDate | Attribute: Last Modified | Datatype: DATE
+  Attribute: lastAnswerUser/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: lastAnswerUser/code | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: lastAnswerUser/name | Attribute: Last Modified by User | Datatype: VARCHAR2(257 CHAR)
+  Attribute: lastAnswerUser/company/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: lastAnswerUser/company/code | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: lastAnswerUser/company/name | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: lastAnswerUser/profile/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: lastAnswerUser/profile/name | Attribute: - | Datatype: VARCHAR2(80 CHAR)
+  Attribute: lastAnswerUser/division/id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: lastAnswerUser/division/name | Attribute: - | Datatype: VARCHAR2(80 CHAR)
+  Attribute: lastConfirmedDate | Attribute: Last Confirmed on | Datatype: DATE
+hash: sha256:932903ea1993c480c83ea6c960897a2cc8d71d90b07328b4ac9b88a9c1fc28d8
+words: 285
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: DeInfo
+  section_path: 4.8.4
+  page: 8
+  lang: en
+  prev: U.DOC0173.0232
+  next: null
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - name
+      - Title
+      - VARCHAR2(80 CHAR)
+    - - type
+      - Type
+      - NUMBER(1)
+    - - defaultLabel
+      - Label
+      - VARCHAR2(256 CHAR)
+    - - defaultLabelLocale
+      - Default Language
+      - VARCHAR2(5 CHAR)
+    - - values/value
+      - "-"
+      - VARCHAR2(2000 CHAR)
+    - - values/value/@id
+      - "-"
+      - NUMBER(38)
+    - - values/value/@secureToken
+      - "-"
+      - VARCHAR2(32 CHAR)
+    - - attachmentExpiryDate
+      - Expiring on/Expiring Date
+      - DATE
+    - - attachmentExpiryDateManagedBy
+      - "-"
+      - VARCHAR2(12 CHAR)
+    - - attachmentExpiryDateLastUpdateUser/id
+      - "-"
+      - NUMBER(38)
+    - - attachmentExpiryDateLastUpdateUser/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - attachmentExpiryDateLastUpdateUser/name
+      - Expiry Date Last Modified by
+      - VARCHAR2(257 CHAR)
+    - - attachmentExpiryDateLastUpdateUser/company/id
+      - "-"
+      - NUMBER(38)
+    - - attachmentExpiryDateLastUpdateUser/company/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - attachmentExpiryDateLastUpdateUser/company/name
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - attachmentExpiryDateLastUpdateDate
+      - Expiry Date Last Modified on
+      - DATE
+    - - deValue
+      - Current Response to this Question
+      - VARCHAR2(2000 CHAR)
+    - - lastAnswerDate
+      - Last Modified
+      - DATE
+    - - lastAnswerUser/id
+      - "-"
+      - NUMBER(38)
+    - - lastAnswerUser/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - lastAnswerUser/name
+      - Last Modified by User
+      - VARCHAR2(257 CHAR)
+    - - lastAnswerUser/company/id
+      - "-"
+      - NUMBER(38)
+    - - lastAnswerUser/company/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - lastAnswerUser/company/name
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - lastAnswerUser/profile/id
+      - "-"
+      - NUMBER(38)
+    - - lastAnswerUser/profile/name
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - lastAnswerUser/division/id
+      - "-"
+      - NUMBER(38)
+    - - lastAnswerUser/division/name
+      - "-"
+      - VARCHAR2(80 CHAR)
+    - - lastConfirmedDate
+      - Last Confirmed on
+      - DATE
+  block: 1
+  blocks: 1

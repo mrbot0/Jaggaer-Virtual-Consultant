@@ -1,0 +1,39 @@
+id: U.DOC0177.0398
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: internalId | Mandatory (Y/N): N | Description: Unique JAGGAER One Internal Id for the account. | Mapping on Jaggaer One data model and notes: The Internal Id is created by the JAGGAER ONE Supplier Management solution and cannot be modified.
+  This field is third in priority, after OldERPNumber and ERPNumber, when the JAGGAER ONE Supplier Management solution is searching for an account.
+hash: sha256:5bf4566f7504aa5a74641f268a1ee921ecb869e13b684d3b6157911c85600f9f
+words: 63
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable
+  section_path: 2.1.1.103
+  page: 75
+  lang: en
+  prev: U.DOC0177.0397
+  next: U.DOC0177.0399
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - internalId
+    - N
+    - Unique JAGGAER One Internal Id for the account.
+    - |-
+      The Internal Id is created by the JAGGAER ONE Supplier Management solution and cannot be modified.
+      This field is third in priority, after OldERPNumber and ERPNumber, when the JAGGAER ONE Supplier Management solution is searching for an account.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

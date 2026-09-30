@@ -1,0 +1,27 @@
+id: U.DOC0171.0308
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  If attachment container is provided, the underlying attachment array is verified
+  1. Attachment array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any attachment: if operation is called in RESET mode, RFx status is verified so that:
+  2. if the RFX is in DRAFT status, all existing attachments are deleted
+  3. if the RFX status is RUNNING (or following status) an error is returned
+hash: sha256:1947da3fceb9c2cb71b3bd44683d9b697b35a1487bbda9c4d4e05ac046a9c369
+words: 73
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Attachment Management
+  section_path: 2.1.2.7
+  page: 6
+  lang: en
+  prev: U.DOC0171.0307
+  next: U.DOC0171.0309
+steps:
+  - "Attachment array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any attachment: if operation is called in RESET mode, RFx status is verified so that:"
+  - if the RFX is in DRAFT status, all existing attachments are deleted
+  - if the RFX status is RUNNING (or following status) an error is returned
+procedure:
+  title: If attachment container is provided, the underlying attachment array is verified

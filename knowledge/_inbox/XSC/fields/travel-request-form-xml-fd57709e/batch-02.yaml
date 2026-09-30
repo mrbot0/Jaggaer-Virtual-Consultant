@@ -1,0 +1,48 @@
+document: travel-request-form-xml-fd57709e
+scope: XSC
+batch: batch-02
+section: campi-2
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:INSTRUCTIONS
+    label: Instructions
+    labels:
+      - Instructions
+    technical_name: INSTRUCTIONS
+    section: campi-2
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<!DOCTYPE html> <html lang="en"> <head> <meta
+      charset="utf-8"> <meta name="generator" content="CoffeeCup HTML Editor
+      (www.coffeecup.com)"> <meta name="created" content="Wed, 22 Aug 2012
+      19:50:42 GMT"> <meta name="description" content=""> <meta name="keywords"
+      content=""> <title>Viking Shoppes Travel Form</title> <style
+      type="text/css"> <!-- body { color:#000000; background-color:#FFFFFF; } a
+      { color:#0000FF; } a:visited { color:#800080; } a:hover { color:#008000; }
+      a:active { color:#FF0000; } --> </style> <!--[if IE]>
+      src="http://html5shim.googlecode.com/svn/trunk/html5.js"> <![endif]-->
+      </head> <body> This Viking Shoppes Form is used to submit the <b>WorldWide
+      Widgets Excel Travel Form</b> for electronic approval. · id=10000 ·
+      tipo=userdefined
+    sources:
+      - document: travel-request-form-xml-fd57709e
+        section: campi-2
+        source_unit: travel-request-form-xml-fd57709e/campi-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Instructions
+        type: HTML
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 849

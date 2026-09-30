@@ -1,0 +1,71 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-31
+section: 2.2.1.28
+section_title: AdministrativeFee [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:ORGANIZATIONFEE
+    label: organizationFee
+    labels:
+      - organizationFee
+    technical_name: ORGANIZATIONFEE
+    section: 2.2.1.28
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Administrative fee that your organization adds to purchases for this
+      contract.
+
+      Note: This element is mutually exclusive with the businessUnitFeeList
+      element.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.28
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.28#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: organizationFee
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:BUSINESSUNITFEELIST
+    label: businessUnitFeeList
+    labels:
+      - businessUnitFeeList
+    technical_name: BUSINESSUNITFEELIST
+    section: 2.2.1.28
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      List of business unit that add a fee to purchase for this contract.
+      See section “BusinessUnitFee [Import]” below
+      Note: This element is mutually exclusive with the organizationFee element.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.28
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.28#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: businessUnitFeeList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 915

@@ -1,0 +1,17 @@
+id: U.DOC0042.0005
+doc: S.STD.XSC.DOC.0042
+doc_id: ji-plt-2303-receipt-wf-additions-195f8173
+type: testo
+text: <Activity name="SpecialItems"> <ActivityType>manual</ActivityType> <StepRef name="Special Items" /> <Rule><![CDATA[Document.RequiresRuleGroupEvaluation("Special Item Approvals") == true]]></Rule> <FolderSelectionRule>MultiElementDynamic</FolderSelectionRule> <Attribute name="RuleGroupInternalName"> <AttrValue lang="default">Special Item Approvals</AttrValue> </Attribute> <Attribute name="wfActivitySupportNote"> <AttrValue lang="default">This is an ADW activity that checks a Rule Group called Special Item Approvals to see whether a Receipt requires approval, and by whom.
+hash: sha256:b2667795cacc72704f450c667a524d0cfbe14ad963acc80d25a9e2a7c9addb6d
+words: 47
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0042
+  chapter: CORSI/JI-2303/JI-PLT_2303_Receipt_WF_ADDITIONS
+  section: CORSI/JI-2303/JI-PLT_2303_Receipt_WF_ADDITIONS
+  section_path: "0"
+  page: null
+  lang: en
+  prev: U.DOC0042.0004
+  next: U.DOC0042.0006

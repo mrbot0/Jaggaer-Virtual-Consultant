@@ -1,0 +1,17 @@
+id: U.DOC0138.0057
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: regola
+text: This activity uses ADW. <Activity name="Missing Approver Catch"> <ActivityType>manual</ActivityType> <StepRef name="Missing Approver Catch" /> <FolderRef name="Missing Approver Catch" /> <Rule><![CDATA[[Document.RequiresCustomFieldValueApproval("acctElement10") == false ]]></Rule> <FolderSelectionRule>ExplicitFolder</FolderSelectionRule> <Flag>AllowCreateSourcingEvent</Flag> <Attribute name="wfActivityHelp"> <AttrValue lang="default">If an Account Code approver is not namaed, an admin must add approver.</AttrValue> </Attribute> </Activity>
+hash: sha256:45320876fdabb19c13b92f8e3d54645d7cc0155aa937273d1ba694e8391327e4
+words: 43
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: MISSING APPROVER CATCH
+  section: MISSING APPROVER CATCH
+  section_path: "14"
+  page: null
+  lang: en
+  prev: U.DOC0138.0056
+  next: U.DOC0138.0058

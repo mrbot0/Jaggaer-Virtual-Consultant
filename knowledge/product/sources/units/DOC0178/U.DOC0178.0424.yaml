@@ -1,0 +1,110 @@
+id: U.DOC0178.0424
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "Colonne: Attribute | Description | Available from version Attribute: originalRequestMessageId | Description: Unique identifier for the contract export message which with this PR was saved Attribute: contractId | Description: Unique Internal identifier of the contract Attribute: validationStatus | Description: Flag describing contract validation requirement: 0: Unneeded, object was exported with no validation requirements. 1: Pending – object is waiting to complete the validation process. 2: Completed – object completed the validation process Attribute: workflowStep | Description: Workflow step in which the contract was when exported Attribute: lastUpdate | Description: Date and time contract information was last updated Attribute: contractName | Description: Name of the contract Attribute: contractNumber | Description: Number used by organization and by the supplier as the reference number for the contract. Must be unique by supplier. Attribute: amendmentNumber | Description: Amendment number for the contract (number of times the contract has been amended). Zero (0) indicates the original contract. Attribute: contractType | Description: Internal name for a type of contract, such as a commodity, product, or service. Attribute: contractTemplate | Description: Contract template information. See section “Contract Template [Export]” below Attribute: contractLanguage | Description: Language in which the contract is written Attribute: project | Description: Work group code associated with the contract. Must be a valid active work group that exists in the CLM solution. Attribute: jurisdictionCode | Description: Code for the jurisdiction associated with the contract. The jurisdiction is the geographical location in which the terms and conditions of the contract are upheld. Must exist in the CLM solution. Attribute: Currency | Description: Exchangeable currency code, Attribute: status | Description: Indicates the actual status of the contract (that is, where the contract is in the workflow process). Attribute: contractStatus | Description: Indicates the customer-defined status of the contract."
+hash: sha256:12fed8086705aa074df722efad3794ebcb4706d47ad3667796a249df361a788b
+words: 292
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: JIContract [Export]
+  section_path: 2.3.3.1
+  page: 82
+  lang: en
+  prev: U.DOC0178.0423
+  next: U.DOC0178.0425
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - originalRequestMessageId
+      - Unique identifier for the contract export message which with this PR was saved
+      - ""
+    - - contractId
+      - Unique Internal identifier of the contract
+      - ""
+    - - validationStatus
+      - |-
+        Flag describing contract validation requirement:
+        0: Unneeded, object was exported with no validation requirements.
+        1: Pending – object is waiting to complete the validation process.
+        2: Completed – object completed the validation process
+      - ""
+    - - workflowStep
+      - Workflow step in which the contract was when exported
+      - ""
+    - - lastUpdate
+      - Date and time contract information was last updated
+      - ""
+    - - contractName
+      - Name of the contract
+      - ""
+    - - contractNumber
+      - |-
+        Number used by organization and by the supplier as the reference number for the contract.
+        Must be unique by supplier.
+      - ""
+    - - amendmentNumber
+      - Amendment number for the contract (number of times the contract has been amended). Zero (0) indicates the original contract.
+      - ""
+    - - contractType
+      - Internal name for a type of contract, such as a commodity, product, or service.
+      - ""
+    - - contractTemplate
+      - |-
+        Contract template information.
+        See section “Contract Template [Export]” below
+      - ""
+    - - contractLanguage
+      - Language in which the contract is written
+      - ""
+    - - project
+      - Work group code associated with the contract. Must be a valid active work group that exists in the CLM solution.
+      - ""
+    - - jurisdictionCode
+      - |-
+        Code for the jurisdiction associated with the contract. The jurisdiction is the geographical location in which the terms and conditions of the contract are upheld.
+        Must exist in the CLM solution.
+      - ""
+    - - Currency
+      - Exchangeable currency code,
+      - ""
+    - - status
+      - Indicates the actual status of the contract (that is, where the contract is in the workflow process).
+      - ""
+    - - contractStatus
+      - |-
+        Indicates the customer-defined status of the contract.
+        Must match a status defined in the organization
+      - ""
+    - - useESignature
+      - Indicates whether the contract is (true) or is not (false) configured for eSignature.
+      - ""
+    - - Archive
+      - |-
+        Indicates whether contract is (true) or is not (false) to be archived.
+        Archived contracts are not included in search results.
+        Valid only for contracts that are Complete, Superseded, or Terminated.
+      - ""
+    - - Summary
+      - Description of the contract
+      - ""
+    - - contractValue
+      - Value of the contract
+      - ""
+    - - contractTotalValue
+      - Total value of all contracts in the contract family
+      - ""
+    - - shareContractWithSecondParties
+      - Indicates whether the contract can (true) or cannot (false) be shared with second parties.
+      - ""
+  block: 1
+  blocks: 2
+part:
+  n: 1
+  of: 2

@@ -1,0 +1,95 @@
+document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+scope: XSC
+batch: batch-07
+section: 2.1.1.8
+section_title: Relationship [Custom Field Import method]
+part: 1
+parts: 1
+rows:
+  - key: tech:PARENTCFNAME
+    label: parentcfname
+    labels:
+      - parentcfname
+    technical_name: PARENTCFNAME
+    section: 2.1.1.8
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the parent custom field. Must be a valid custom field name.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.8
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.8#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: parentcfname
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CHILDCFNAME
+    label: childcfname
+    labels:
+      - childcfname
+    technical_name: CHILDCFNAME
+    section: 2.1.1.8
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the child custom field. Must be a valid custom field name.
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.8
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.8#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: childcfname
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:PARENTCUSTOMFIELDVALUEREF
+    label: parentCustomFieldValueRef
+    labels:
+      - parentCustomFieldValueRef
+    technical_name: PARENTCUSTOMFIELDVALUEREF
+    section: 2.1.1.8
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      One or more ParentCustomFieldValueRef.
+      See section ParentCustomFieldValueRef [Error! Reference source not found.]
+    sources:
+      - document: jint-ws-development-kit-ji-custom-field-docx-e39a8594
+        section: 2.1.1.8
+        source_unit: jint-ws-development-kit-ji-custom-field-docx-e39a8594/2.1.1.8#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: parentCustomFieldValueRef
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1063

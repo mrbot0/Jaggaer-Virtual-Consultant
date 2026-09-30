@@ -1,0 +1,32 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+section: 2.1.1.27
+section_title: Opening Committee Member [Import/Update RfX method]
+genre: tecnica
+rows:
+  - label: |-
+      committeeMember/id
+      committeeMember/code
+      committeeMember/name
+      committeeMember/login
+    technical_name: |-
+      committeeMember/id
+      committeeMember/code
+      committeeMember/name
+      committeeMember/login
+    type: null
+    mandatory_text: |-
+      Y
+      (only one of id/code/name/login is mandatory)
+    allowed_values: []
+    notes: |-
+      Complex type for Committee Member user. Following elements are defined
+      Id: user internal identifier
+      code: user external code
+      name: user name and surname
+      login: user login
+    section: 2.1.1.27
+    source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.27#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-rfx-docx-2adedfd8

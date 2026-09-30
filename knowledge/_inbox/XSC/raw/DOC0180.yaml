@@ -1,0 +1,2097 @@
+doc: S.STD.XSC.DOC.0180
+scope: XSC
+extracted_at: 2026-09-30T04:32:34.373Z
+tier: T0
+stats:
+  units: 100
+  extracted_units: 53
+  document_candidates: 1
+  needs_llm: 4
+  t0_complete: 50
+  by_candidate:
+    GLS: 1
+    FLW: 2
+    FLD: 49
+    CFG: 1
+    INT: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 4478
+  sessions:
+    - n: 1
+      tokens: 4478
+      batches: 1
+      items: 4
+      batch_items:
+        - - R.DOC0180.0013
+          - R.DOC0180.0077
+          - R.DOC0180.0091
+          - R.DOC0180.I001
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0180.0012
+    source_unit: U.DOC0180.0012
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0180
+    section: Executive Summary
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: structure of the current document
+      definition: "the following:"
+      aliases: []
+      lang: en
+      source_unit: U.DOC0180.0012
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0180.0013
+    source_unit: U.DOC0180.0013
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0180
+    section: Executive Summary
+    page: 9
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: item
+          oggetto: Master import method
+          valore: null
+        - n: 2
+          verbo: request
+          oggetto: "data format: describes the structure of the import request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted"
+          valore: describes the structure of the import request. The request is composed of sections and every section is composed of fields to be filled. This paragraph specifies which fields are mandatory and those that can be omitted
+        - n: 3
+          verbo: "behavior:"
+          oggetto: describes how the web service processes the data passed in input, in case of some processes
+          valore: describes how the web service processes the data passed in input, in case of some processes
+        - n: 4
+          verbo: response
+          oggetto: "data format: describes the structure of the web service response and contains the list of possible error codes"
+          valore: describes the structure of the web service response and contains the list of possible error codes
+        - n: 5
+          verbo: soap
+          oggetto: INTERFACE
+          valore: null
+        - n: 6
+          verbo: available
+          oggetto: "methods: contains the list of the methods provided by the web service"
+          valore: contains the list of the methods provided by the web service
+        - n: 7
+          verbo: "wsdl:"
+          oggetto: in this paragraph is attached the wsdl from which the SOAP web service has been created and is to be used to generate the client
+          valore: in this paragraph is attached the wsdl from which the SOAP web service has been created and is to be used to generate the client
+        - n: 8
+          verbo: "endpoints:"
+          oggetto: available webservice SOAP endpoint URLs
+          valore: available webservice SOAP endpoint URLs
+        - n: 9
+          verbo: request
+          oggetto: "samples: sample SOAP requests to invoke the webservices"
+          valore: sample SOAP requests to invoke the webservices
+        - n: 10
+          verbo: rest
+          oggetto: INTERFACE
+          valore: null
+        - n: 11
+          verbo: operation
+          oggetto: "and Endpoints: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods"
+          valore: describes REST available collections. Allowed calls with allowed parameters and supported HTTP methods
+        - n: 12
+          verbo: request
+          oggetto: "Samples: provides some call examples and a POSTMAN collection with an extensive list of runnable calls"
+          valore: provides some call examples and a POSTMAN collection with an extensive list of runnable calls
+        - n: 13
+          verbo: data
+          oggetto: "Types and UI Default Labels: describes the type of the fields and the corresponding label in English language in the platform with the aim to simplify the mapping between the fields visible in the platform and the fields used in the web service"
+          valore: describes the type of the fields and the corresponding label in English language in the platform with the aim to simplify the mapping between the fields visible in the platform and the fields used in the web service
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0180.0013
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 360
+  - raw_id: R.DOC0180.0016
+    source_unit: U.DOC0180.0016
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: Main Request structure
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: ItemMasterItem
+      technical_name: ItemMasterItem
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        One or more ItemMasterItem data defining item master data to be imported.
+        See section ItemMasterItem [Item Master Import method]
+      section: 2.1.1.1
+      source_unit: U.DOC0180.0016
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 48
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0017
+    source_unit: U.DOC0180.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: active
+      technical_name: active
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Indicates whether the item is (true) or is not (false) active.
+        The default setting is true.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0017
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 37
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0018
+    source_unit: U.DOC0180.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: action
+      technical_name: action
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Indicates whether item header and line data associated with this item are to be updated or replaced.
+        Possible value:
+        Replace
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0018
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 45
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0019
+    source_unit: U.DOC0180.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: itemMasterId
+      technical_name: itemMasterId
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Identifier for the item master. Together with the ManufacturerID and ManufacturerPartNumber, uniquely identifies the item.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0019
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 46
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0020
+    source_unit: U.DOC0180.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: description
+      technical_name: description
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Indicates description of the item that will be displayed in product search.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0020
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 34
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0021
+    source_unit: U.DOC0180.0021
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: longDescription
+      technical_name: longDescription
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates long description of the item.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0021
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0022
+    source_unit: U.DOC0180.0022
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: size
+      technical_name: size
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates unit size of the item, such as mg (milligram) or oz (ounce).
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0022
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 31
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0023
+    source_unit: U.DOC0180.0023
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: color
+      technical_name: color
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates color of the item
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0023
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 20
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0024
+    source_unit: U.DOC0180.0024
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: controlledSubstance
+      technical_name: controlledSubstance
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the item is (true) or is not (false) a controlled substance.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0024
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 37
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0025
+    source_unit: U.DOC0180.0025
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: recycled
+      technical_name: recycled
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the item is (true) or is not (false) a recycled item.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0025
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 32
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0026
+    source_unit: U.DOC0180.0026
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: hazardousMaterial
+      technical_name: hazardousMaterial
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the item is (true) or is not (false) a hazardous material.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0026
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 36
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0027
+    source_unit: U.DOC0180.0027
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: radioActive
+      technical_name: radioActive
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the item is (true) or is not (false) a radioactive substance.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0027
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 35
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0028
+    source_unit: U.DOC0180.0028
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: radioNuclide
+      technical_name: radioNuclide
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Number to identify RadioNuclides. Valid only if Radioactive element is set to true.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0028
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 36
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0029
+    source_unit: U.DOC0180.0029
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: radMinor
+      technical_name: radMinor
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the item is (true) or is not (false) a minor radioactive substance.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0029
+      row_ref: t0.r12
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 36
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0030
+    source_unit: U.DOC0180.0030
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: selectAgent
+      technical_name: selectAgent
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the item is (true) or is not (false) a select agent.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0030
+      row_ref: t0.r13
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 33
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0031
+    source_unit: U.DOC0180.0031
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: toxin
+      technical_name: toxin
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the item is (true) or is not (false) a toxin.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0031
+      row_ref: t0.r14
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 29
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0032
+    source_unit: U.DOC0180.0032
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: energyStar
+      technical_name: energyStar
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the item is (true) or is not (false) EnergyStar -certified.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0032
+      row_ref: t0.r15
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 34
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0033
+    source_unit: U.DOC0180.0033
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: green
+      technical_name: green
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates whether the item is (true) or is not (false) a green product as defined by the NAEP (National Association of Educational Procurement).
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0033
+      row_ref: t0.r16
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 50
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0034
+    source_unit: U.DOC0180.0034
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: categoryName
+      technical_name: categoryName
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates name of category associated with the item.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0034
+      row_ref: t0.r17
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 28
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0035
+    source_unit: U.DOC0180.0035
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: searchableKeywords
+      technical_name: searchableKeywords
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Keywords by which the item can be found in product search.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0035
+      row_ref: t0.r18
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 31
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0036
+    source_unit: U.DOC0180.0036
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: unspsc
+      technical_name: unspsc
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Standardized commodity code value for the item.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0036
+      row_ref: t0.r19
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0037
+    source_unit: U.DOC0180.0037
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: commodityCode
+      technical_name: commodityCode
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Code assigned to a product, or a group of products, for the purposes of identifying it in international commerce, or commerce in general.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0037
+      row_ref: t0.r20
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 50
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0038
+    source_unit: U.DOC0180.0038
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: customField
+      technical_name: customField
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or max one CustomField.
+        See section CustomField [Item Master Import method]
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0038
+      row_ref: t0.r21
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 35
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0039
+    source_unit: U.DOC0180.0039
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: imageUrl
+      technical_name: imageUrl
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Valid URL of an image associated with the item. The URL must point to an actual image file (such as a .jpg, .gif, .bmp, or .png).
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0039
+      row_ref: t0.r22
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 47
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0040
+    source_unit: U.DOC0180.0040
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: manufacturer
+      technical_name: manufacturer
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: See section Manufacturer [Item Master Import method]
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0040
+      row_ref: t0.r23
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 28
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0041
+    source_unit: U.DOC0180.0041
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: manufacturerPartNumber
+      technical_name: manufacturerPartNumber
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Manufacturer's part number (SKU code) for the item.
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0041
+      row_ref: t0.r24
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 31
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0042
+    source_unit: U.DOC0180.0042
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: itemAttribute
+      technical_name: itemAttribute
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or more ItemAttribute
+        See section ItemAttribute [Item Master Import method]
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0042
+      row_ref: t0.r25
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 36
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0043
+    source_unit: U.DOC0180.0043
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemMasterItem [Item Master Import method]
+    page: 11
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: supplierItem
+      technical_name: supplierItem
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        One or more SupplierItem.
+        See section SupplierItem [Item Master Import method]
+      section: 2.1.1.2
+      source_unit: U.DOC0180.0043
+      row_ref: t0.r26
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 35
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0044
+    source_unit: U.DOC0180.0044
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: CustomField [Item Master Import method]
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: internalName
+      technical_name: internalName
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Internal identifier of the custom field
+      section: 2.1.1.3
+      source_unit: U.DOC0180.0044
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 25
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0045
+    source_unit: U.DOC0180.0045
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: CustomField [Item Master Import method]
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: customFieldValue
+      technical_name: customFieldValue
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or more CustomFieldValue
+        See section CustomFieldValue [Item Master Import method]
+      section: 2.1.1.3
+      source_unit: U.DOC0180.0045
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 38
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0046
+    source_unit: U.DOC0180.0046
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: CustomField [Item Master Import method]
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: defaultCustomFieldValue
+      technical_name: defaultCustomFieldValue
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Default value of the custom field.
+      section: 2.1.1.3
+      source_unit: U.DOC0180.0046
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 27
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0047
+    source_unit: U.DOC0180.0047
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: CustomFieldValue [Item Master Import method]
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: value
+      technical_name: value
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Value of the custom field.
+      section: 2.1.1.4
+      source_unit: U.DOC0180.0047
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 20
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0048
+    source_unit: U.DOC0180.0048
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemAttribute [Item Master Import method]
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: value
+      technical_name: value
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Identifies Custom Catalog Attribute (CCA) associated with the supplier item
+      section: 2.1.1.5
+      source_unit: U.DOC0180.0048
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 32
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0049
+    source_unit: U.DOC0180.0049
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemAttribute [Item Master Import method]
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: businessUnit
+      technical_name: businessUnit
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Identifies unique internal name of the business unit to which the CCA applies.
+      section: 2.1.1.5
+      source_unit: U.DOC0180.0049
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 35
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0050
+    source_unit: U.DOC0180.0050
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: ItemAttribute [Item Master Import method]
+    page: 13
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: name
+      technical_name: name
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Identifies internal name of CCA
+      section: 2.1.1.5
+      source_unit: U.DOC0180.0050
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 21
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0051
+    source_unit: U.DOC0180.0051
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: SupplierItem [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: unitOfMeasure
+      technical_name: unitOfMeasure
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Identifies Packaging or size unit for the supplier item, such as EA (each), PK (pack), KG (kg), or LG (large).
+      section: 2.1.1.6
+      source_unit: U.DOC0180.0051
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 43
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0052
+    source_unit: U.DOC0180.0052
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: SupplierItem [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: supplier
+      technical_name: supplier
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or max one Supplier
+        See section Supplier [Item Master Import method]
+      section: 2.1.1.6
+      source_unit: U.DOC0180.0052
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 33
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0053
+    source_unit: U.DOC0180.0053
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: SupplierItem [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: supplierPartNumber
+      technical_name: supplierPartNumber
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: Identifies supplier's part number (SKU code) for the item.
+      section: 2.1.1.6
+      source_unit: U.DOC0180.0053
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 31
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0054
+    source_unit: U.DOC0180.0054
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: SupplierItem [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: itemAttribute
+      technical_name: itemAttribute
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: |-
+        Zero or more ItemAttribute
+        See section ItemAttribute [Item Master Import method]
+      section: 2.1.1.6
+      source_unit: U.DOC0180.0054
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 36
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0055
+    source_unit: U.DOC0180.0055
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: SupplierItem [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: pricing
+      technical_name: pricing
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: See section Pricing [Item Master Import method]
+      section: 2.1.1.6
+      source_unit: U.DOC0180.0055
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 26
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0056
+    source_unit: U.DOC0180.0056
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: Pricing [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: unitPrice
+      technical_name: unitPrice
+      type: null
+      mandatory_text: Y
+      allowed_values: []
+      notes: |-
+        One or more UnitPrice of the supplier item.
+        See section UnitPrice [Item Master Import method]
+      section: 2.1.1.7
+      source_unit: U.DOC0180.0056
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 38
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: true
+  - raw_id: R.DOC0180.0057
+    source_unit: U.DOC0180.0057
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: UnitPrice [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a44
+      - FLD
+    type_hint:
+      candidates: *a44
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: value
+      technical_name: value
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Indicates price of the supplier item.
+      section: 2.1.1.8
+      source_unit: U.DOC0180.0057
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 23
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0058
+    source_unit: U.DOC0180.0058
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: UnitPrice [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a45
+      - FLD
+    type_hint:
+      candidates: *a45
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: businessUnit
+      technical_name: businessUnit
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: Identifies unique internal name of the business unit to which the unit price applies.
+      section: 2.1.1.8
+      source_unit: U.DOC0180.0058
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 31
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0059
+    source_unit: U.DOC0180.0059
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: UnitPrice [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a46
+      - FLD
+    type_hint:
+      candidates: *a46
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: currency
+      technical_name: currency
+      type: null
+      mandatory_text: ""
+      allowed_values: []
+      notes: Exchangeable currency code.
+      section: 2.1.1.8
+      source_unit: U.DOC0180.0059
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 16
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0060
+    source_unit: U.DOC0180.0060
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: Supplier [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a47
+      - FLD
+    type_hint:
+      candidates: *a47
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: supplierName
+      technical_name: supplierName
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Name of the supplier
+      section: 2.1.1.9
+      source_unit: U.DOC0180.0060
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 20
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0061
+    source_unit: U.DOC0180.0061
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: Supplier [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a48
+      - FLD
+    type_hint:
+      candidates: *a48
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: sciQuestId
+      technical_name: sciQuestId
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Unique Jaggaer internal id assigned to supplier record
+      section: 2.1.1.9
+      source_unit: U.DOC0180.0061
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 28
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0062
+    source_unit: U.DOC0180.0062
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: Supplier [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a49
+      - FLD
+    type_hint:
+      candidates: *a49
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: supplierNumber
+      technical_name: supplierNumber
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Supplier ID that your organization has provided for this supplier in supplier profile.
+      section: 2.1.1.9
+      source_unit: U.DOC0180.0062
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 37
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0063
+    source_unit: U.DOC0180.0063
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0180
+    section: Supplier [Item Master Import method]
+    page: 14
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a50
+      - FLD
+    type_hint:
+      candidates: *a50
+      outcome: FLD
+      score: 0.9
+    extraction:
+      label: thirdPartyNumber
+      technical_name: thirdPartyNumber
+      type: null
+      mandatory_text: N
+      allowed_values: []
+      notes: Unique reference number or ID generated by a third-party solution that can be used to map a supplier from Jaggaer One to the third-party solution.
+      section: 2.1.1.9
+      source_unit: U.DOC0180.0063
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0180
+    needs_llm: false
+    tokens: 53
+    lineage:
+      required_by:
+        - ref: R.DOC0180.I001
+          mandatory_there: false
+  - raw_id: R.DOC0180.0077
+    source_unit: U.DOC0180.0077
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0180
+    section: WSDL
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a51
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a51
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "NOTE:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0180.0077
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0180.0083
+    source_unit: U.DOC0180.0083
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0180
+    section: WSDL
+    page: 22
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a52
+      - FLD
+    type_hint:
+      candidates: *a52
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: For this reason, the WS client component
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0180.0083
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0180.0091
+    source_unit: U.DOC0180.0091
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0180
+    section: Postman Examples
+    page: 27
+    lang: en
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    candidates: &a53
+      - FLW
+    type_hint:
+      candidates: *a53
+      outcome: ambiguo
+      score: 0.55
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: "jinthostname:"
+          oggetto: the name of the host where your API is available, including protocol. Eg. https://customername-ws01.app.jaggaer.com
+          valore: the name of the host where your API is available, including protocol. Eg. https://customername-ws01.app.jaggaer.com
+        - n: 2
+          verbo: "client_id:"
+          oggetto: the username to retrieve an access token
+          valore: the username to retrieve an access token
+        - n: 3
+          verbo: "client_secret:"
+          oggetto: the password to retrieve an access token
+          valore: the password to retrieve an access token
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0180.0091
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 66
+  - raw_id: R.DOC0180.I001
+    candidates:
+      - INT
+    doc: S.STD.XSC.DOC.0180
+    section: null
+    source_unit: U.DOC0180.0001
+    facets:
+      F1: spec-integrazione-prosa
+      F15: tecnica
+    extraction:
+      title: JINT Development Kit-JI Item Master web-service
+      protocol:
+        - REST
+        - SOAP
+        - JSON
+      endpoints:
+        - https://MY-SERVER/esop/jint/services/JIItemMaster?wsdl
+        - https://MY-SERVER/esop/jint/services/JIItemMaster
+        - /esop/jint/api/public/ji/v1/itemsmaster
+        - https://customername-ws01.app.jaggaer.com
+      operations: []
+      mappings:
+        - field_ref: R.DOC0180.0016
+          target: ItemMasterItem
+          mandatory: true
+        - field_ref: R.DOC0180.0017
+          target: active
+          mandatory: false
+        - field_ref: R.DOC0180.0018
+          target: action
+          mandatory: false
+        - field_ref: R.DOC0180.0019
+          target: itemMasterId
+          mandatory: true
+        - field_ref: R.DOC0180.0020
+          target: description
+          mandatory: true
+        - field_ref: R.DOC0180.0021
+          target: longDescription
+          mandatory: false
+        - field_ref: R.DOC0180.0022
+          target: size
+          mandatory: false
+        - field_ref: R.DOC0180.0023
+          target: color
+          mandatory: false
+        - field_ref: R.DOC0180.0024
+          target: controlledSubstance
+          mandatory: false
+        - field_ref: R.DOC0180.0025
+          target: recycled
+          mandatory: false
+        - field_ref: R.DOC0180.0026
+          target: hazardousMaterial
+          mandatory: false
+        - field_ref: R.DOC0180.0027
+          target: radioActive
+          mandatory: false
+        - field_ref: R.DOC0180.0028
+          target: radioNuclide
+          mandatory: false
+        - field_ref: R.DOC0180.0029
+          target: radMinor
+          mandatory: false
+        - field_ref: R.DOC0180.0030
+          target: selectAgent
+          mandatory: false
+        - field_ref: R.DOC0180.0031
+          target: toxin
+          mandatory: false
+        - field_ref: R.DOC0180.0032
+          target: energyStar
+          mandatory: false
+        - field_ref: R.DOC0180.0033
+          target: green
+          mandatory: false
+        - field_ref: R.DOC0180.0034
+          target: categoryName
+          mandatory: false
+        - field_ref: R.DOC0180.0035
+          target: searchableKeywords
+          mandatory: false
+        - field_ref: R.DOC0180.0036
+          target: unspsc
+          mandatory: false
+        - field_ref: R.DOC0180.0037
+          target: commodityCode
+          mandatory: false
+        - field_ref: R.DOC0180.0038
+          target: customField
+          mandatory: false
+        - field_ref: R.DOC0180.0039
+          target: imageUrl
+          mandatory: false
+        - field_ref: R.DOC0180.0040
+          target: manufacturer
+          mandatory: true
+        - field_ref: R.DOC0180.0041
+          target: manufacturerPartNumber
+          mandatory: true
+        - field_ref: R.DOC0180.0042
+          target: itemAttribute
+          mandatory: false
+        - field_ref: R.DOC0180.0043
+          target: supplierItem
+          mandatory: false
+        - field_ref: R.DOC0180.0044
+          target: internalName
+          mandatory: true
+        - field_ref: R.DOC0180.0045
+          target: customFieldValue
+          mandatory: false
+        - field_ref: R.DOC0180.0046
+          target: defaultCustomFieldValue
+          mandatory: false
+        - field_ref: R.DOC0180.0047
+          target: value
+          mandatory: false
+        - field_ref: R.DOC0180.0048
+          target: value
+          mandatory: true
+        - field_ref: R.DOC0180.0049
+          target: businessUnit
+          mandatory: false
+        - field_ref: R.DOC0180.0050
+          target: name
+          mandatory: true
+        - field_ref: R.DOC0180.0051
+          target: unitOfMeasure
+          mandatory: true
+        - field_ref: R.DOC0180.0052
+          target: supplier
+          mandatory: false
+        - field_ref: R.DOC0180.0053
+          target: supplierPartNumber
+          mandatory: true
+        - field_ref: R.DOC0180.0054
+          target: itemAttribute
+          mandatory: false
+        - field_ref: R.DOC0180.0055
+          target: pricing
+          mandatory: true
+        - field_ref: R.DOC0180.0056
+          target: unitPrice
+          mandatory: true
+        - field_ref: R.DOC0180.0057
+          target: value
+          mandatory: false
+        - field_ref: R.DOC0180.0058
+          target: businessUnit
+          mandatory: false
+        - field_ref: R.DOC0180.0059
+          target: currency
+          mandatory: false
+        - field_ref: R.DOC0180.0060
+          target: supplierName
+          mandatory: false
+        - field_ref: R.DOC0180.0061
+          target: sciQuestId
+          mandatory: false
+        - field_ref: R.DOC0180.0062
+          target: supplierNumber
+          mandatory: false
+        - field_ref: R.DOC0180.0063
+          target: thirdPartyNumber
+          mandatory: false
+      error_catalog:
+        - code: "0"
+          description: |-
+            Provided data was successfully received and used to try creating objects.
+            That means that data is formally correct, but to know if operation really successes or failed it is necessary to analyze other response part.
+          source_unit: U.DOC0180.0074
+        - code: "2"
+          description: Operation was not completed due to error in provided data.
+          source_unit: U.DOC0180.0074
+        - code: "-996"
+          description: Invalid SOAP Request Object (SOAP Request doesn’t match web service definition or request contains information that are not compliant with instance configuration or user permission)
+          source_unit: U.DOC0180.0074
+        - code: "-997"
+          description: Unauthorized Method (Web Service method isn’t configured to be executed)
+          source_unit: U.DOC0180.0074
+        - code: "-998"
+          description: Unable to acquire lock (Web Service is configured to serialize different call coming from a same client and it hasn’t been able to acquire lock to satisfy request for configured timeout)
+          source_unit: U.DOC0180.0074
+        - code: "-999"
+          description: Generic exception
+          source_unit: U.DOC0180.0074
+    confidence: 0.8
+    needs_llm: true
+    missing:
+      - trigger
+      - mode_latency
+      - observability
+      - silence_semantics
+      - counterpart_owner
+      - test_strategy
+    tokens: 2650

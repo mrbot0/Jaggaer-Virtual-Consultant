@@ -1,0 +1,17 @@
+id: U.DOC0138.0037
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: This activity would accommodate a similar approval in a different way. It uses ADW; rules created and assigned to the “Director Approval” rule group would be evaluated to determine if the request would need to stop. Rules could be created based on a variety of triggers, and with multiple factors if needed. <Activity name="Director Approval"> <ActivityType>manual</ActivityType> <StepRef name="Director Approval" /> <Rule><![CDATA[ Document.RequiresRuleGroupEvaluation("Director Approval") == true ]]></Rule> <FolderSelectionRule>MultiElementDynamic</FolderSelectionRule> <Attribute name="RuleGroupInternalName"> <AttrValue lang="default">Director Approval</AttrValue> </Attribute> </Activity>
+hash: sha256:305c09fb0132960ca8c5e7e16a1a766645b2878255fe284c3fe8a4c47dfdea7f
+words: 74
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: DIRECTOR APPROVALS
+  section: DIRECTOR APPROVALS
+  section_path: "9"
+  page: null
+  lang: en
+  prev: U.DOC0138.0036
+  next: U.DOC0138.0038

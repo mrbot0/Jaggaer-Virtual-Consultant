@@ -1,0 +1,81 @@
+id: U.DOC0171.0480
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: supplier | Description: Supplier company who answered:
+  id = company internal identifier
+  code = company external identifier
+  name = company name
+  extUniqueCode = company external unique code (BA_17_02)
+  In case of unregistered supplier, the company name can contain several company names separated by “;”
+  Attribute: answerState | Description: Status of the offline response:
+  3 = winner
+  4 = loser
+  Attribute: price | Description: Price offered in the offline response (it can have exponential notation)
+  Attribute: lastUpdate | Description: Offline response date
+  Attribute: lastUpdateUser | Description: Buyer user who inserted the offline response:
+  id = user internal identifier
+  code = user external code
+  name = user full name
+  Attribute: notes | Description: Notes inserted by the buyer on the offline response
+  Attribute: registered | Description: 1 = supplier registered
+  0 = supplier unregistered
+hash: sha256:5612c2f393f34369cd4cbd44a5e318ec8d1f2ef6b01d099caffe2e5c8fe8e09f
+words: 141
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Offline Answer [Export RfX method]
+  section_path: 2.3.4.39
+  page: 7
+  lang: en
+  prev: U.DOC0171.0479
+  next: U.DOC0171.0481
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - supplier
+      - |-
+        Supplier company who answered:
+        id = company internal identifier
+        code = company external identifier
+        name = company name
+        extUniqueCode = company external unique code (BA_17_02)
+        In case of unregistered supplier, the company name can contain several company names separated by “;”
+      - ""
+    - - answerState
+      - |-
+        Status of the offline response:
+        3 = winner
+        4 = loser
+      - ""
+    - - price
+      - Price offered in the offline response (it can have exponential notation)
+      - ""
+    - - lastUpdate
+      - Offline response date
+      - ""
+    - - lastUpdateUser
+      - |-
+        Buyer user who inserted the offline response:
+        id = user internal identifier
+        code = user external code
+        name = user full name
+      - ""
+    - - notes
+      - Notes inserted by the buyer on the offline response
+      - ""
+    - - registered
+      - |-
+        1 = supplier registered
+        0 = supplier unregistered
+      - ""
+  block: 1
+  blocks: 1

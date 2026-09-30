@@ -1,0 +1,147 @@
+id: U.DOC0169.0415
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: supplierInfo/pricingCode | Attribute: - | Datatype: VARCHAR2(30 CHAR)
+  Attribute: supplierInfo/contractNumber | Attribute: - | Datatype: VARCHAR2(50 CHAR)
+  Attribute: supplierInfo/note | Attribute: - | Datatype: VARCHAR2(1000 CHAR)
+  Attribute: supplierInfo/quoteNumber | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: internalInfo/note | Attribute: - | Datatype: VARCHAR2(1000 CHAR)
+  Attribute: billTo/templateName | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: billTo/addressCode | Attribute: - | Datatype: VARCHAR2(30 CHAR)
+  Attribute: billTo/city | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: billTo/state | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: billTo/postalCode | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: billTo/country | Attribute: - | Datatype: VARCHAR2(50 CHAR)
+  Attribute: billTo/isoCountryCode | Attribute: - | Datatype: VARCHAR2(2 CHAR)
+  Attribute: shipTo/templateName | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: shipTo/addressCode | Attribute: - | Datatype: VARCHAR2(30 CHAR)
+  Attribute: shipTo/city | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: shipTo/state | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: shipTo/postalCode | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: shipTo/country | Attribute: - | Datatype: VARCHAR2(50 CHAR)
+  Attribute: shipTo/isoCountryCode | Attribute: - | Datatype: VARCHAR2(2 CHAR)
+  Attribute: paymentInfo/cardName | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: paymentInfo/cardNumber | Attribute: - | Datatype: NUMBER(38)
+  Attribute: paymentInfo/expirationDate | Attribute: - | Datatype: VARCHAR2(7 CHAR)
+  Attribute: paymentInfo/status | Attribute: - | Datatype: VARCHAR2(50 CHAR)
+  Attribute: linkedToLineNumber | Attribute: - | Datatype: VARCHAR2(10 CHAR)
+  Attribute: brand | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: discountAmount/option | Attribute: - | Datatype: VARCHAR2(20 CHAR)
+  Attribute: discountAmount/type | Attribute: - | Datatype: VARCHAR2(20 CHAR)
+  Attribute: discountAmount/percentageRate | Attribute: - | Datatype: NUMBER(15,4)
+  Attribute: discountAmount/money | Attribute: - | Datatype: NUMBER(15,4)
+  Attribute: discountAmount/currency | Attribute: - | Datatype: VARCHAR2(3 CHAR)
+hash: sha256:48ae7678ad894f2ffea8f26d91602b519aa6c1ee63be568323aa805546c3e967
+words: 273
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Requisition Line Section (1 to n)
+  section_path: 2.6.0.3
+  page: 105
+  lang: en
+  prev: U.DOC0169.0414
+  next: U.DOC0169.0416
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - supplierInfo/pricingCode
+      - "-"
+      - VARCHAR2(30 CHAR)
+    - - supplierInfo/contractNumber
+      - "-"
+      - VARCHAR2(50 CHAR)
+    - - supplierInfo/note
+      - "-"
+      - VARCHAR2(1000 CHAR)
+    - - supplierInfo/quoteNumber
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - internalInfo/note
+      - "-"
+      - VARCHAR2(1000 CHAR)
+    - - billTo/templateName
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - billTo/addressCode
+      - "-"
+      - VARCHAR2(30 CHAR)
+    - - billTo/city
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - billTo/state
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - billTo/postalCode
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - billTo/country
+      - "-"
+      - VARCHAR2(50 CHAR)
+    - - billTo/isoCountryCode
+      - "-"
+      - VARCHAR2(2 CHAR)
+    - - shipTo/templateName
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - shipTo/addressCode
+      - "-"
+      - VARCHAR2(30 CHAR)
+    - - shipTo/city
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - shipTo/state
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - shipTo/postalCode
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - shipTo/country
+      - "-"
+      - VARCHAR2(50 CHAR)
+    - - shipTo/isoCountryCode
+      - "-"
+      - VARCHAR2(2 CHAR)
+    - - paymentInfo/cardName
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - paymentInfo/cardNumber
+      - "-"
+      - NUMBER(38)
+    - - paymentInfo/expirationDate
+      - "-"
+      - VARCHAR2(7 CHAR)
+    - - paymentInfo/status
+      - "-"
+      - VARCHAR2(50 CHAR)
+    - - linkedToLineNumber
+      - "-"
+      - VARCHAR2(10 CHAR)
+    - - brand
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - discountAmount/option
+      - "-"
+      - VARCHAR2(20 CHAR)
+    - - discountAmount/type
+      - "-"
+      - VARCHAR2(20 CHAR)
+    - - discountAmount/percentageRate
+      - "-"
+      - NUMBER(15,4)
+    - - discountAmount/money
+      - "-"
+      - NUMBER(15,4)
+    - - discountAmount/currency
+      - "-"
+      - VARCHAR2(3 CHAR)
+  block: 2
+  blocks: 2

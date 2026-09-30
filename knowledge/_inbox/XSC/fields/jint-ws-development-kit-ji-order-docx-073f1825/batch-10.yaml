@@ -1,0 +1,127 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-10
+section: 2.3.1.5
+section_title: TelephoneNumber [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:COUNTRYCODE
+    label: countryCode
+    labels:
+      - countryCode
+    technical_name: COUNTRYCODE
+    section: 2.3.1.5
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Code to access the specific country, not including the international
+      dialing sequence.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.5
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: countryCode
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:AREACODE
+    label: areaCode
+    labels:
+      - areaCode
+    technical_name: AREACODE
+    section: 2.3.1.5
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Area code is determined based on country code. Maximum length for a US
+      area code is 3 digits. Maximum length for an International area code is 5
+      digits.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.5
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: areaCode
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:NUMBER
+    label: number
+    labels:
+      - number
+    technical_name: NUMBER
+    section: 2.3.1.5
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Telephone number.
+      Maximum length for a US number is 7 digits.
+      Maximum length for an international number is 10 digits.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.5
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.5#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: number
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:EXTENSION
+    label: extension
+    labels:
+      - extension
+    technical_name: EXTENSION
+    section: 2.3.1.5
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Phone extension, if applicable.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.5
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.5#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: extension
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 1213

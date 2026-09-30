@@ -1,0 +1,54 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.3.1.31
+section_title: DiscountAmount [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: option
+    technical_name: option
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the discount is to be applied before (beforetax) or
+      after (aftertax) tax is applied to the PO line.
+    section: 2.3.1.31
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.31#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates whether the discount is a percentage (percent) or a fixed
+      amount (amount).
+    section: 2.3.1.31
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.31#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: percentageRate
+    technical_name: percentageRate
+    type: null
+    mandatory_text: at least one of these fields must be present
+    allowed_values: []
+    notes: Percent of the discount for the PO line
+    section: 2.3.1.31
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.31#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: money
+    technical_name: money
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Monetary amount of the discount for the PO line.
+      See section “Money [Import JIOrder method]” above
+    section: 2.3.1.31
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.31#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

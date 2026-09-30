@@ -1,0 +1,44 @@
+id: U.DOC0043.0004
+doc: S.STD.XSC.DOC.0043
+doc_id: ji-plt-2303-receiptwfdefinition-withaddedstep-xm-aec7e480
+type: tabella
+text: |-
+  Tabella: transizioni
+  Colonne: Da | A | Condizione
+  Da: START | A: CostCheck
+  Da: CostCheck | A: SpecialItems
+  Da: SpecialItems | A: Create Inventory
+  Da: Create Inventory | A: END
+hash: sha256:37d332ee1ea91963c15f1d60bac1f9b760540022841a8f1ff5654063571f0580
+words: 30
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0043
+  chapter: Transizioni (ActivityRelationship)
+  section: Transizioni (ActivityRelationship)
+  section_path: transizioni
+  page: null
+  lang: en
+  prev: U.DOC0043.0003
+  next: null
+table:
+  table: 0
+  headers:
+    - Da
+    - A
+    - Condizione
+  rows:
+    - - START
+      - CostCheck
+      - ""
+    - - CostCheck
+      - SpecialItems
+      - ""
+    - - SpecialItems
+      - Create Inventory
+      - ""
+    - - Create Inventory
+      - END
+      - ""
+  block: 1
+  blocks: 1

@@ -1,0 +1,49 @@
+id: U.DOC0173.0033
+doc: S.STD.XSC.DOC.0173
+doc_id: jint-development-kit-profile-management-web-serv-35c3a7f6
+type: riga-tabella-campi
+text: |-
+  Attribute: operationCode | Mandatory (Y/N): N | Description: Code of requested operation | Mapping on JA data model and notes: Code of the operation. It accepts following value:
+  CREATE_REGONLY: a new supplier company is registered (not enabled), no matter main code provided
+  009, INSERT or CREATE: a new supplier company is registered and automatically enabled, no matter main code provided
+  004 or UPDATE: it looks for an existing company having main code provided and updates it with new information.
+  003 or DELETE: assigns the value “blocked” to the supplier status.
+  ENABLE: enables a supplier company registered.
+  NO VALUE PROVIDED: No operation will be performed on Company: information is provided to identify the cmpany other operation will be performed on
+hash: sha256:51f47de4e4731ca2fdb15a2a7b135a2c6fb3c139fcce3f9d864951496265836e
+words: 119
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0173
+  chapter: Profile Management web-service
+  section: Company Import Request structure
+  section_path: 4.1.1.1
+  page: 6
+  lang: en
+  prev: U.DOC0173.0032
+  next: U.DOC0173.0034
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - operationCode
+    - N
+    - Code of requested operation
+    - |-
+      Code of the operation. It accepts following value:
+      CREATE_REGONLY: a new supplier company is registered (not enabled), no matter main code provided
+      009, INSERT or CREATE: a new supplier company is registered and automatically enabled, no matter main code provided
+      004 or UPDATE: it looks for an existing company having main code provided and updates it with new information.
+      003 or DELETE: assigns the value “blocked” to the supplier status.
+      ENABLE: enables a supplier company registered.
+      NO VALUE PROVIDED: No operation will be performed on Company: information is provided to identify the cmpany other operation will be performed on
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

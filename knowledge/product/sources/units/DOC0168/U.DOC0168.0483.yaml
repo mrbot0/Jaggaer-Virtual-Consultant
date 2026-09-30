@@ -1,0 +1,53 @@
+id: U.DOC0168.0483
+doc: S.STD.XSC.DOC.0168
+doc_id: j1p-ws-development-kit-ji-order-docx-eaedd778
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: statusCode | Description: Import response result code.
+  200 – The request was processed successfully in its entirety with no warnings or errors.
+  201 – User data was imported successfully, but one or more warnings were generated. The warnings are included in the response.
+  Any other code indicates an import failure. For instance:
+  400 – The request could not be understood due to syntax errors.
+  403 – User import failed because authorization failed
+  408 – Request Timeout
+  500 – The request could not be processed due to a transient error.
+  Attribute: statusText | Description: Text of the status message
+  Attribute: statusImportErrorList | Description: List of generic import error information found.
+  See section “Error [JIOrder Status Import method]” below.
+hash: sha256:8047c393cf4ced9e49610da564785c7621da6e86739b4e01447d4b7e0dbdf9db
+words: 122
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0168
+  chapter: JI Order web-service
+  section: ResponseStatus [JIOrder Status Import method]
+  section_path: 2.4.3.2
+  page: 108
+  lang: en
+  prev: U.DOC0168.0482
+  next: U.DOC0168.0484
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - statusCode
+      - |-
+        Import response result code.
+        200 – The request was processed successfully in its entirety with no warnings or errors.
+        201 – User data was imported successfully, but one or more warnings were generated. The warnings are included in the response.
+        Any other code indicates an import failure. For instance:
+        400 – The request could not be understood due to syntax errors.
+        403 – User import failed because authorization failed
+        408 – Request Timeout
+        500 – The request could not be processed due to a transient error.
+    - - statusText
+      - Text of the status message
+    - - statusImportErrorList
+      - |-
+        List of generic import error information found.
+        See section “Error [JIOrder Status Import method]” below.
+  block: 1
+  blocks: 1

@@ -1,0 +1,1500 @@
+doc: S.STD.XSC.DOC.0149
+scope: XSC
+extracted_at: 2026-09-30T04:31:11.355Z
+tier: T0
+stats:
+  units: 190
+  extracted_units: 30
+  document_candidates: 0
+  needs_llm: 26
+  t0_complete: 4
+  by_candidate:
+    CFP: 16
+    FLW: 8
+    FLD: 4
+    INV: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 10855
+  sessions:
+    - n: 1
+      tokens: 10855
+      batches: 2
+      items: 26
+      batch_items:
+        - - R.DOC0149.0010
+          - R.DOC0149.0038
+          - R.DOC0149.0043
+          - R.DOC0149.0047
+          - R.DOC0149.0049
+          - R.DOC0149.0051
+          - R.DOC0149.0054
+          - R.DOC0149.0056
+          - R.DOC0149.0060
+          - R.DOC0149.0062
+          - R.DOC0149.0064
+          - R.DOC0149.0071
+          - R.DOC0149.0085
+          - R.DOC0149.0089
+          - R.DOC0149.0095
+          - R.DOC0149.0098
+          - R.DOC0149.0114
+          - R.DOC0149.0116
+          - R.DOC0149.0121
+        - - R.DOC0149.0126
+          - R.DOC0149.0130
+          - R.DOC0149.0139
+          - R.DOC0149.0148
+          - R.DOC0149.0163
+          - R.DOC0149.0173
+          - R.DOC0149.0176
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0149.0010
+    source_unit: U.DOC0149.0010
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create,
+          oggetto: shop against, and manage budgets
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up budget functionality
+          valore: null
+        - n: 3
+          verbo: set
+          oggetto: up a budget check in requisition workflow
+          valore: null
+        - n: 4
+          verbo: set
+          oggetto: up budget transfers
+          valore: null
+        - n: 5
+          verbo: update
+          oggetto: and report on budget data via import/export
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0010
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 61
+  - raw_id: R.DOC0149.0038
+    source_unit: U.DOC0149.0038
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: the existing budgets
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: and review a budget
+          valore: null
+        - n: 3
+          verbo: shop
+          oggetto: against the budget
+          valore: null
+        - n: 4
+          verbo: submit
+          oggetto: the PR and view the approvals
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: the spend in the budget
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0038
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 51
+  - raw_id: R.DOC0149.0043
+    source_unit: U.DOC0149.0043
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: set
+          oggetto: up budget functionality
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up a budget and shop against it
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0043
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 20
+  - raw_id: R.DOC0149.0047
+    source_unit: U.DOC0149.0047
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a4
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: license
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up account code configurations
+          valore: null
+        - n: 3
+          verbo: set
+          oggetto: up workflow for budget approval
+          valore: null
+        - n: 4
+          verbo: set
+          oggetto: up workflow for budget transfer approval (optional)
+          valore: null
+        - n: 5
+          verbo: set
+          oggetto: up workflow for budget check (optional)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0047
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 62
+  - raw_id: R.DOC0149.0049
+    source_unit: U.DOC0149.0049
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a5
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: license (JAGGAER)
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up account code configurations
+          valore: null
+        - n: 3
+          verbo: set
+          oggetto: up workflow for budget approval (Budget Manager workflow)
+          valore: null
+        - n: 4
+          verbo: set
+          oggetto: up workflow for budget transfer approval (Form Request workflow)
+          valore: null
+        - n: 5
+          verbo: set
+          oggetto: up requisition workflow (optional)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0049
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 73
+  - raw_id: R.DOC0149.0051
+    source_unit: U.DOC0149.0051
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a6
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: license (JAGGAER)
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up account code configurations
+          valore: null
+        - n: 3
+          verbo: set
+          oggetto: up workflow for budget approval (Budget Manager workflow)
+          valore: null
+        - n: 4
+          verbo: set
+          oggetto: up workflow for budget transfer approval (Form Request workflow)
+          valore: null
+        - n: 5
+          verbo: set
+          oggetto: up workflow for budget check (PR/PO/invoice workflow)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0051
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 77
+  - raw_id: R.DOC0149.0054
+    source_unit: U.DOC0149.0054
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a7
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: budget approvals
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: budget transfers
+          valore: null
+        - n: 3
+          verbo: grant
+          oggetto: user permissions and notifications
+          valore: null
+        - n: 4
+          verbo: expose
+          oggetto: Budget Date field (optional)
+          valore: null
+        - n: 5
+          verbo: enable
+          oggetto: budget check at checkout (optional)
+          valore: null
+        - n: 6
+          verbo: configure
+          oggetto: budget checks in procurement workflow (optional)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0054
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 74
+  - raw_id: R.DOC0149.0056
+    source_unit: U.DOC0149.0056
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a8
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: budget approvals
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: budget transfers
+          valore: null
+        - n: 3
+          verbo: grant
+          oggetto: user permissions and notifications
+          valore: null
+        - n: 4
+          verbo: expose
+          oggetto: Budget Date field (optional)
+          valore: null
+        - n: 5
+          verbo: enable
+          oggetto: budget check at checkout (optional)
+          valore: null
+        - n: 6
+          verbo: configure
+          oggetto: budget checks in procurement workflow (optional)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0056
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 74
+  - raw_id: R.DOC0149.0060
+    source_unit: U.DOC0149.0060
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a9
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: budget approvals
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: budget transfers
+          valore: null
+        - n: 3
+          verbo: grant
+          oggetto: user permissions and notifications
+          valore: null
+        - n: 4
+          verbo: expose
+          oggetto: Budget Date field (optional)
+          valore: null
+        - n: 5
+          verbo: enable
+          oggetto: budget check at checkout (optional)
+          valore: null
+        - n: 6
+          verbo: configure
+          oggetto: budget checks in procurement workflow (optional)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0060
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 74
+  - raw_id: R.DOC0149.0062
+    source_unit: U.DOC0149.0062
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a10
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: user roles with appropriate permissions and no tifications (org)
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: an account code configuration (JAGGAER/partner)
+          valore: null
+        - n: 3
+          verbo: import
+          oggetto: budget approval workflow (JAGGAER/partner)
+          valore: null
+        - n: 4
+          verbo: configure
+          oggetto: budget approval workflow step (org)
+          valore: null
+        - n: 5
+          verbo: enable
+          oggetto: budget check at checkout (org)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0062
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 80
+  - raw_id: R.DOC0149.0064
+    source_unit: U.DOC0149.0064
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 13
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a budget and submit it for approval
+          valore: null
+        - n: 2
+          verbo: approve
+          oggetto: the budget
+          valore: null
+        - n: 3
+          verbo: put
+          oggetto: items in your cart and code it to that budget
+          valore: null
+        - n: 4
+          verbo: do
+          oggetto: a budget check at checkout
+          valore: null
+        - n: 5
+          verbo: submit
+          oggetto: the PR and view the PR approvals
+          valore: null
+        - n: 6
+          verbo: view
+          oggetto: the results on the budget
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0064
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 69
+  - raw_id: R.DOC0149.0071
+    source_unit: U.DOC0149.0071
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a12
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: check
+          oggetto: budgets in requisition workflow
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up a budget check in requisition workflow
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0071
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 33
+  - raw_id: R.DOC0149.0085
+    source_unit: U.DOC0149.0085
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: determine
+          oggetto: how spend is applied to date range in your existing budget based on the current settings
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: the Budget Date field to the PR document configuration
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: a new budget and explore using the Budget Date field to associate spend to date ranges in a budget
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0085
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 79
+  - raw_id: R.DOC0149.0089
+    source_unit: U.DOC0149.0089
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a14
+      - FLD
+      - ERR
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: comportamento-sistema
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.validation
+      confidence: 0.85
+      signals:
+        - comportamento-sistema
+      source_unit: U.DOC0149.0089
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 32
+  - raw_id: R.DOC0149.0095
+    source_unit: U.DOC0149.0095
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a15
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: put
+          oggetto: an item in your cart and code it to the budget
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: and interpret the workflow
+          valore: null
+        - n: 3
+          verbo: navigate
+          oggetto: to the budget and review how the spend is applied
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0095
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 49
+  - raw_id: R.DOC0149.0098
+    source_unit: U.DOC0149.0098
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a16
+      - FLW
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the automated folder with the requisition budget check robot and the shared folder for approvals into the workflow XML folder
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: the robot and approval steps into the requisition workflow process configuration
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: an approver to the Shared Folder you identified in the budget approval step
+          valore: null
+        - n: 4
+          verbo: test
+          oggetto: the new steps
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0098
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 93
+  - raw_id: R.DOC0149.0109
+    source_unit: U.DOC0149.0109
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Source and target budget
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0149.0109
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0149.0111
+    source_unit: U.DOC0149.0111
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Source budget
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0149.0111
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0149.0112
+    source_unit: U.DOC0149.0112
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a19
+      - INV
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Source budget
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0149.0112
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0149.0114
+    source_unit: U.DOC0149.0114
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a20
+      - FLW
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: from
+          oggetto: the Search Budgets page, select an approved budget with remaining funds as the source budget
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the Date Ranges page and request a budget transfer
+          valore: null
+        - n: 3
+          verbo: fill
+          oggetto: out the request and submit it
+          valore: null
+        - n: 4
+          verbo: approve
+          oggetto: the budget transfer
+          valore: null
+        - n: 5
+          verbo: review
+          oggetto: the results in the source budget
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0114
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 81
+  - raw_id: R.DOC0149.0116
+    source_unit: U.DOC0149.0116
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a21
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the automated folder with the robot that will move the funds from one budget to another into the workflow folder
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a step in form request workflow to trigger the robot
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: an ADW rule to approve budget transfers
+          valore: null
+        - n: 4
+          verbo: enable
+          oggetto: permissions and no tifications for relevant user roles
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a budget transfer request template
+          valore: null
+        - n: 6
+          verbo: test
+          oggetto: it out
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0116
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 101
+  - raw_id: R.DOC0149.0121
+    source_unit: U.DOC0149.0121
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a22
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the automated folder with the robot that will move the funds from one budget to another into the workflow folder
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a step in form request workflow to trigger the robot
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: an ADW rule to approve budget transfers
+          valore: null
+        - n: 4
+          verbo: enable
+          oggetto: permissions and no tifications for relevant user roles
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a budget transfer request template
+          valore: null
+        - n: 6
+          verbo: test
+          oggetto: it out
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0121
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 101
+  - raw_id: R.DOC0149.0126
+    source_unit: U.DOC0149.0126
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a23
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the automated folder with the robot that will move the funds from one budget to another into the workflow folder
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a step in form request workflow to trigger the robot
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: an ADW rule to approve budget transfers
+          valore: null
+        - n: 4
+          verbo: turn
+          oggetto: on permissions and no tifications for relevant user roles
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a budget transfer request template
+          valore: null
+        - n: 6
+          verbo: test
+          oggetto: it out
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0126
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 101
+  - raw_id: R.DOC0149.0130
+    source_unit: U.DOC0149.0130
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 25
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a24
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the automated folder with the robot that will move the funds from one budget to another into the workflow folder
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a step in form request workflow to trigger the robot
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: an ADW rule to approve budget transfers
+          valore: null
+        - n: 4
+          verbo: turn
+          oggetto: on permissions and no tifications for relevant user roles
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a budget transfer request template
+          valore: null
+        - n: 6
+          verbo: test
+          oggetto: it out
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0130
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 101
+  - raw_id: R.DOC0149.0139
+    source_unit: U.DOC0149.0139
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a25
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the automated folder with the robot that will move the funds from one budget to another into the workflow folder
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a step in form request workflow to trigger the robot
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: an ADW rule to approve budget transfers
+          valore: null
+        - n: 4
+          verbo: turn
+          oggetto: on permissions and no tifications for relevant user roles
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a budget transfer request template
+          valore: null
+        - n: 6
+          verbo: test
+          oggetto: it out
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0139
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 101
+  - raw_id: R.DOC0149.0142
+    source_unit: U.DOC0149.0142
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a26
+      - INV
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Adjustment amount
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0149.0142
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0149.0148
+    source_unit: U.DOC0149.0148
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 27
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a27
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: spend adjustments
+          valore: null
+        - n: 2
+          verbo: navigate
+          oggetto: to the Spend Adjustments page and add a spend adjustment
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: the spend adjustment you just made now on that page
+          valore: null
+        - n: 4
+          verbo: navigate
+          oggetto: to the Date Ranges page and view the adjustment in the blue information icon
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: "the adjustment in the History "
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0148
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 83
+  - raw_id: R.DOC0149.0163
+    source_unit: U.DOC0149.0163
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a28
+      - FLW
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: update
+          oggetto: and report on budget data via import/export
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: the budget manager usage report
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0163
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 27
+  - raw_id: R.DOC0149.0173
+    source_unit: U.DOC0149.0173
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0149.0173
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0149.0176
+    source_unit: U.DOC0149.0176
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0149
+    section: Configuring Budgets with Budget Manager
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a30
+      - FLW
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: export
+          oggetto: a budget report and review the data in the spreadsheet
+          valore: null
+        - n: 2
+          verbo: make
+          oggetto: adjustments to your budgets using the export/import function
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0149.0176
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 44

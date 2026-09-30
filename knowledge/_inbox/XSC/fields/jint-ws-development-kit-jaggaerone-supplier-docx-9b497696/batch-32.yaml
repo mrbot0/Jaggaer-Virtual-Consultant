@@ -1,0 +1,45 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-32
+section: 2.1.1.50
+section_title: J1Supplier/JISupplierData/primaryContactList/associatedContact
+part: 1
+parts: 1
+rows:
+  - key: tech:CONTACTREF
+    label: contactRef
+    labels:
+      - contactRef
+    technical_name: CONTACTREF
+    section: 2.1.1.50
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.50
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.50#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: contactRef
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.94
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.94#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: contactRef
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 727

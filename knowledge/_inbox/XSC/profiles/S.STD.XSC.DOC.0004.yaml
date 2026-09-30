@@ -1,0 +1,88 @@
+id: S.STD.XSC.DOC.0004
+type: DOC
+title: Course Workbook
+summary: "Documento training-deck (d'uso, origine vendor) \"Course Workbook\":
+  77 unità, 0 tabelle, 0 tabelle di campi; scope ADM, VEN, ANL, SRC;
+  affidabilità 0.48."
+facets:
+  F1: doc-standard
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2026-09-30
+    release: ignota
+  F15: d'uso
+sources:
+  - file: CORSI/JA-2300/JA_PLT_2300_Course Workbook_Capstone.pdf
+    sha256: sha256:948a8e3af3de71c2ce379592e3575868e6445f452373a49575e44c082b45070f
+kind: training-deck
+genre: d'uso
+origin: vendor
+version: null
+dated: null
+covers_release: null
+languages:
+  - en
+scopes:
+  - ADM
+  - VEN
+  - ANL
+  - SRC
+source:
+  path: CORSI/JA-2300/JA_PLT_2300_Course Workbook_Capstone.pdf
+  sha256: sha256:948a8e3af3de71c2ce379592e3575868e6445f452373a49575e44c082b45070f
+  size: 209718
+  format: pdf
+  doc_id: ja-plt-2300-course-workbook-capstone-pdf-b63d1ebb
+  doc_key: ja-plt-2300-course-workbook-capstone.pdf
+structure:
+  pages: 10
+  chapters: 10
+  sections: 10
+  tables: 0
+  figures: 45
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 77
+  by_type:
+    testo: 66
+    regola: 9
+    riferimento: 1
+    procedura: 1
+reliability:
+  base_by_kind: 0.6
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.48
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 77
+  items_produced: 10
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0.13
+  last_run: 2026-09-30
+  estimated_tokens: 2742
+  sessions_planned: 1

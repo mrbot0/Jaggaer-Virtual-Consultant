@@ -1,0 +1,83 @@
+id: U.DOC0178.0011
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "Revision: 10 | Date Released: 2020-11-30 | Version: JINT 20 03 01 | Description of Change: REST - Added import attachments support and related examples"
+hash: sha256:4305cabbc40b379df142b9004ec6b1bd736aa786329b4c19b52ac0299d3d2bbb
+words: 25
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  section: Revision History
+  section_path: "0.2"
+  page: 5
+  lang: en
+  prev: U.DOC0178.0010
+  next: U.DOC0178.0012
+table:
+  table: 0
+  headers:
+    - Revision
+    - Date Released
+    - Version
+    - Description of Change
+  rows:
+    - - "0"
+      - 2018-11
+      - JINT 18 00
+      - First release
+    - - "1"
+      - 2019-07
+      - JINT 19 02
+      - New “import”, “export” and “validate” operations added. New “jint” web service endpoint
+    - - "2"
+      - 2019-11-20
+      - JINT 19 02
+      - "Export method, JIContract object: missing description for “status” exported field added."
+    - - "3"
+      - 2020-01-03
+      - JINT 19 03
+      - "Import and Export methods: new fields “attachmentURL” and “mainDocument”"
+    - - "4"
+      - 2020-03-08
+      - JINT 20 01 00
+      - |-
+        Minor changes (no impact): new WSDL version management
+        Revised structure: JINT webservices general guidelines moved to a separate document
+    - - "5"
+      - 2020-04-27
+      - JINT 20 01 00
+      - "Minor changes: alignment of data types and UI default labels"
+    - - "6"
+      - 2020-07-08
+      - JINT 20 01 00
+      - "Import methods: GoodsAndService, NonCatalogItem information marked as not supported on import"
+    - - "7"
+      - 2020-07-13
+      - JINT 20 01 00
+      - Added REST Interface
+    - - "8"
+      - 2020-11-11
+      - JINT 20 03 00
+      - |-
+        “Export” method:
+        “Obligation” element: new field “obligationUseScorecard“ and ObligationScorecard list.
+        “NonCatalogItem” element: new “internalItemId” and itemMasterId” fields added
+        “ProductLineItem” and “ServiceLineItem” elements: new field “itemMasterId” added
+    - - "9"
+      - 2020-11-24
+      - JINT 20 03 01
+      - |-
+        Import/Export method:
+        Added fields PaymentTermsType, PaymentTermsDaysAfter, StandardPaymentTermsCode to PaymentTerms element.
+        Added new element SalesForceFields to Contract element.
+    - - "10"
+      - 2020-11-30
+      - JINT 20 03 01
+      - REST - Added import attachments support and related examples
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

@@ -1,0 +1,159 @@
+id: U.DOC0177.0722
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: WSDL field | Attribute: UI default label (EN)
+  Attribute: contact/type | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: contact/erpNumber | Datatype: VARCHAR2(30 CHAR)
+  Attribute: contact/oldERPNumber
+  Attribute: contact/thirdPartyRefNumber
+  Attribute: contact/name
+  Attribute: contact/active
+  Attribute: contact/firstName
+  Attribute: contact/lastName
+  Attribute: contact/title
+  Attribute: contact/email
+  Attribute: contact/phone/telephoneNumber/countryCode | Datatype: VARCHAR2(4 CHAR)
+  Attribute: contact/phone/telephoneNumber/areaCode | Datatype: VARCHAR2(3|5 CHAR)
+  Attribute: contact/phone/telephoneNumber/number | Datatype: VARCHAR2(7|10 CHAR)
+  Attribute: contact/phone/telephoneNumber/extension | Datatype: VARCHAR2(5 CHAR)
+  Attribute: contact/tollFreePhone/telephoneNumber/countryCode | Datatype: VARCHAR2(4 CHAR)
+  Attribute: contact/tollFreePhone/telephoneNumber/areaCode | Datatype: VARCHAR2(5 CHAR)
+  Attribute: contact/tollFreePhone/telephoneNumber/number | Datatype: VARCHAR2(10 CHAR)
+  Attribute: contact/tollFreePhone/telephoneNumber/extension | Datatype: VARCHAR2(5 CHAR)
+  Attribute: contact/fax/telephoneNumber/countryCode | Datatype: VARCHAR2(4 CHAR)
+  Attribute: contact/fax/telephoneNumber/areaCode | Datatype: VARCHAR2(5 CHAR)
+  Attribute: contact/fax/telephoneNumber/number | Datatype: VARCHAR2(10 CHAR)
+  Attribute: contact/fax/telephoneNumber/extension | Datatype: VARCHAR2(5 CHAR)
+  Attribute: contact/notes | Datatype: VARCHAR2(700 CHAR)
+  Attribute: contact/associatedAddress/type | Datatype: VARCHAR2(100 CHAR)
+  Attribute: contact/associatedAddress/addressRef/erpNumber | Datatype: VARCHAR2(30 CHAR)
+  Attribute: contact/associatedAddress/addressRef/thirdPartyRefNumber | Datatype: VARCHAR2(30 CHAR)
+  Attribute: @isChanged | Datatype: VARCHAR2(3 CHAR)
+  Attribute: contact@isChanged | Datatype: VARCHAR2(3 CHAR)
+  Attribute: contact/mobilePhone/telephoneNumber/countryCode | Datatype: VARCHAR2(4 CHAR)
+  Attribute: contact/mobilePhone /telephoneNumber/areaCode | Datatype: VARCHAR2(5 CHAR)
+  Attribute: contact/mobilePhone /telephoneNumber/number | Datatype: VARCHAR2(10 CHAR)
+  Attribute: contact/ mobilePhone /telephoneNumber/extension | Datatype: VARCHAR2(5 CHAR)
+hash: sha256:097da1a8c79099aa1f7617f3e3965bddacc8fa00da82f9628313b3f79e5ead04
+words: 182
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: supplier/JIData/contactList
+  section_path: 2.6.19
+  page: 178
+  lang: en
+  prev: U.DOC0177.0721
+  next: U.DOC0177.0723
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - WSDL field
+      - UI default label (EN)
+      - ""
+    - - contact/type
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - contact/erpNumber
+      - ""
+      - VARCHAR2(30 CHAR)
+    - - contact/oldERPNumber
+      - ""
+      - ""
+    - - contact/thirdPartyRefNumber
+      - ""
+      - ""
+    - - contact/name
+      - ""
+      - ""
+    - - contact/active
+      - ""
+      - ""
+    - - contact/firstName
+      - ""
+      - ""
+    - - contact/lastName
+      - ""
+      - ""
+    - - contact/title
+      - ""
+      - ""
+    - - contact/email
+      - ""
+      - ""
+    - - contact/phone/telephoneNumber/countryCode
+      - ""
+      - VARCHAR2(4 CHAR)
+    - - contact/phone/telephoneNumber/areaCode
+      - ""
+      - VARCHAR2(3|5 CHAR)
+    - - contact/phone/telephoneNumber/number
+      - ""
+      - VARCHAR2(7|10 CHAR)
+    - - contact/phone/telephoneNumber/extension
+      - ""
+      - VARCHAR2(5 CHAR)
+    - - contact/tollFreePhone/telephoneNumber/countryCode
+      - ""
+      - VARCHAR2(4 CHAR)
+    - - contact/tollFreePhone/telephoneNumber/areaCode
+      - ""
+      - VARCHAR2(5 CHAR)
+    - - contact/tollFreePhone/telephoneNumber/number
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - contact/tollFreePhone/telephoneNumber/extension
+      - ""
+      - VARCHAR2(5 CHAR)
+    - - contact/fax/telephoneNumber/countryCode
+      - ""
+      - VARCHAR2(4 CHAR)
+    - - contact/fax/telephoneNumber/areaCode
+      - ""
+      - VARCHAR2(5 CHAR)
+    - - contact/fax/telephoneNumber/number
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - contact/fax/telephoneNumber/extension
+      - ""
+      - VARCHAR2(5 CHAR)
+    - - contact/notes
+      - ""
+      - VARCHAR2(700 CHAR)
+    - - contact/associatedAddress/type
+      - ""
+      - VARCHAR2(100 CHAR)
+    - - contact/associatedAddress/addressRef/erpNumber
+      - ""
+      - VARCHAR2(30 CHAR)
+    - - contact/associatedAddress/addressRef/thirdPartyRefNumber
+      - ""
+      - VARCHAR2(30 CHAR)
+    - - "@isChanged"
+      - ""
+      - VARCHAR2(3 CHAR)
+    - - contact@isChanged
+      - ""
+      - VARCHAR2(3 CHAR)
+    - - contact/mobilePhone/telephoneNumber/countryCode
+      - ""
+      - VARCHAR2(4 CHAR)
+    - - contact/mobilePhone /telephoneNumber/areaCode
+      - ""
+      - VARCHAR2(5 CHAR)
+    - - contact/mobilePhone /telephoneNumber/number
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - contact/ mobilePhone /telephoneNumber/extension
+      - ""
+      - VARCHAR2(5 CHAR)
+  block: 1
+  blocks: 1

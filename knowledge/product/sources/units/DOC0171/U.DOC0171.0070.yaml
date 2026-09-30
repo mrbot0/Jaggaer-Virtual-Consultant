@@ -1,0 +1,47 @@
+id: U.DOC0171.0070
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: offersOpeningCriteria | Mandatory (Y/N): N | Description: Envelope opening criteria:
+  NONE
+  OPEN_PARALLEL
+  BLIND_PARALLEL
+  BLIND_SEQUENTIAL
+  The first value is valid only if the field is not enabled for the RfX profile, the others if the field is enabled, then mandatory | Mapping on JA data model and notes: Envelope opening criteria
+hash: sha256:1448921e4a922fafaa7700b7ff59ba0fe044f6928ce0e3b5c6334e87f3f16c1b
+words: 51
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0069
+  next: U.DOC0171.0071
+row:
+  table: 0
+  row: 16
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - offersOpeningCriteria
+    - N
+    - |-
+      Envelope opening criteria:
+      NONE
+      OPEN_PARALLEL
+      BLIND_PARALLEL
+      BLIND_SEQUENTIAL
+      The first value is valid only if the field is not enabled for the RfX profile, the others if the field is enabled, then mandatory
+    - Envelope opening criteria
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

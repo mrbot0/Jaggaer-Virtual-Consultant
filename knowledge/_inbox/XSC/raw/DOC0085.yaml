@@ -1,0 +1,672 @@
+doc: S.STD.XSC.DOC.0085
+scope: XSC
+extracted_at: 2026-09-30T04:30:41.474Z
+tier: T0
+stats:
+  units: 93
+  extracted_units: 17
+  document_candidates: 0
+  needs_llm: 10
+  t0_complete: 7
+  by_candidate:
+    FLW: 7
+    FLD: 8
+    CFG: 1
+    GLS: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 4106
+  sessions:
+    - n: 1
+      tokens: 4106
+      batches: 1
+      items: 10
+      batch_items:
+        - - R.DOC0085.0003
+          - R.DOC0085.0007
+          - R.DOC0085.0009
+          - R.DOC0085.0012
+          - R.DOC0085.0014
+          - R.DOC0085.0027
+          - R.DOC0085.0033
+          - R.DOC0085.0036
+          - R.DOC0085.0058
+          - R.DOC0085.0084
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0085.0003
+    source_unit: U.DOC0085.0003
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0085
+    section: eProcurement
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: industry
+          oggetto: Overview 2
+          valore: null
+        - n: 2
+          verbo: jaggaer
+          oggetto: Commodity Code Overview 2
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0085.0003
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 18
+  - raw_id: R.DOC0085.0007
+    source_unit: U.DOC0085.0007
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0085
+    section: eProcurement
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: obtain
+          oggetto: the list of Commodity Codes that he Client wants defined in ePro. 5
+          valore: null
+        - n: 2
+          verbo: determine
+          oggetto: “functionality” (if needed) for the Commodity Codes on the list. 6
+          valore: functionality
+        - n: 3
+          verbo: prepare
+          oggetto: your Commodity Code Import. 6
+          valore: null
+        - n: 4
+          verbo: validate
+          oggetto: "& Import your Commodity Codes. 8"
+          valore: null
+        - n: 5
+          verbo: verify
+          oggetto: the imported Commodity Codes. 9
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0085.0007
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 75
+  - raw_id: R.DOC0085.0009
+    source_unit: U.DOC0085.0009
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0085
+    section: eProcurement
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: commodity
+          oggetto: Code Configuration 10
+          valore: null
+        - n: 2
+          verbo: prepare
+          oggetto: your Category Map Import File 12
+          valore: null
+        - n: 3
+          verbo: import
+          oggetto: your Category Map File 13
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0085.0009
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0085.0012
+    source_unit: U.DOC0085.0012
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0085
+    section: Are Commodity Codes just a JAGGAER “thing”?
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0085.0012
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 59
+  - raw_id: R.DOC0085.0014
+    source_unit: U.DOC0085.0014
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0085
+    section: Where do these “standardized codes” come from, and how do they get assigned to goods or services?
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: FLW
+      score: 0.8
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: unspsc
+          oggetto: (United Nations Standard Products and Services Code) UNSPSC is a coding system for the classification of both products and services for use throughout the global marketplace. It is managed by the GS1 US, which is responsible for overseeing code change requests, revising the codes by interfacing with industry projects and issuing regularly scheduled updates to the code
+          valore: null
+        - n: 2
+          verbo: nigp
+          oggetto: (National Institute of Governmental Purchasing – Commodity/Services Code) The NIGP Code is a coding taxonomy used primarily to classify products and services procured by state and local governments
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0085.0014
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 172
+  - raw_id: R.DOC0085.0022
+    source_unit: U.DOC0085.0022
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0085
+    section: How do Companies decide what standard to use and how is “mapping” used?
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Since the JAGGAER Taxonomy
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0085.0022
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0085.0027
+    source_unit: U.DOC0085.0027
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0085
+    section: JAGGAER Taxonomy
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: assigned
+          oggetto: an “JAGGAER determined” UNSPSC code
+          valore: JAGGAER determined
+        - n: 2
+          verbo: assigned
+          oggetto: to a JAGGAER Vertical (unrelated to Taxonomy/Commodity Codes)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0085.0027
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 50
+  - raw_id: R.DOC0085.0032
+    source_unit: U.DOC0085.0032
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0085
+    section: How the JAGGAER Taxonomy is applied to JAGGAER ePro items
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Hosted Suppliers
+      modality: obbligo-condizionale
+      condition: loading their hosted content
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0085.0032
+      mandatory:
+        kind: conditional
+        when: loading their hosted content
+    needs_llm: false
+    tokens: 26
+  - raw_id: R.DOC0085.0033
+    source_unit: U.DOC0085.0033
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0085
+    section: How the JAGGAER Taxonomy is applied to JAGGAER ePro items
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: if
+          oggetto: the JAGGAER “Category” is given, the item will be assigned the corresponding Category Assigned UNSPSC Code
+          valore: Category
+        - n: 2
+          verbo: if
+          oggetto: the UNSPSC is given, the item will be assigned the JAGGAER “Category” for the corresponding Category Assigned UNSPSC Code
+          valore: Category
+      risultato_atteso: If the UNSPSC is given, the item will be assigned the JAGGAER “Category” for the corresponding Category Assigned UNSPSC Code.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0085.0033
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 87
+  - raw_id: R.DOC0085.0036
+    source_unit: U.DOC0085.0036
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0085
+    section: How the JAGGAER Taxonomy is applied to JAGGAER ePro items
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.35
+    extraction:
+      kind: nota
+      text: "Note:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0085.0036
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0085.0040
+    source_unit: U.DOC0085.0040
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0085
+    section: How the JAGGAER Taxonomy is applied to JAGGAER ePro items
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Commodity Codes
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0085.0040
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0085.0042
+    source_unit: U.DOC0085.0042
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0085
+    section: How the JAGGAER Taxonomy is applied to JAGGAER ePro items
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: In these cases Users
+      modality: obbligo-condizionale
+      condition: faced with a huge list
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0085.0042
+      mandatory:
+        kind: conditional
+        when: faced with a huge list
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0085.0058
+    source_unit: U.DOC0085.0058
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0085
+    section: "Step 3: Prepare your Commodity Code Import."
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: FLW
+      score: 0.8
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: familiarize
+          oggetto: "yourself with the location and layout of the Commodity Code Import Screen:"
+          valore: null
+        - n: 2
+          verbo: prepare
+          oggetto: "your CSV Import, use the template if needed, see examples below:"
+          valore: null
+        - n: 3
+          verbo: if
+          oggetto: "applicable, prepare your Commodity Code dynamic workflow import: This would be imported after the Commodity Codes have been created/import and is imported via the “CSV Workflow Rule Import/Export” tab"
+          valore: CSV Workflow Rule Import/Export
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0085.0058
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 104
+  - raw_id: R.DOC0085.0059
+    source_unit: U.DOC0085.0059
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0085
+    section: "Step 4: Validate & Import your Commodity Codes."
+    page: 10
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: You
+      modality: raccomandazione
+      condition: it is satisfactory
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0085.0059
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0085.0063
+    source_unit: U.DOC0085.0063
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0085
+    section: "Step 1: Commodity Code Configuration"
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: settings below determine the base mapping configuration, these
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0085.0063
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 27
+  - raw_id: R.DOC0085.0073
+    source_unit: U.DOC0085.0073
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0085
+    section: "Step 2: Prepare your Category Map Import File"
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - GLS
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Displayed below
+      definition: a “Category Map Export”, an export will display ALL the JAGGAER Categories and their mapped values (56,000+ rows).
+      aliases: []
+      lang: en
+      source_unit: U.DOC0085.0073
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0085.0084
+    source_unit: U.DOC0085.0084
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0085
+    section: Verify the Configuration and Mapping
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0085.0084
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7

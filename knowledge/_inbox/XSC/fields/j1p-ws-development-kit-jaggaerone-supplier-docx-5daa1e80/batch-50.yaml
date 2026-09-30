@@ -1,0 +1,205 @@
+document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+scope: XSC
+batch: batch-50
+section: 2.1.1.79
+section_title: J1Supplier/JISupplierData/locationList/location/taxInfo
+part: 1
+parts: 1
+rows:
+  - key: tech:TAXABLEBYDEFAULT
+    label: taxableByDefault
+    labels:
+      - taxableByDefault
+    technical_name: TAXABLEBYDEFAULT
+    section: 2.1.1.79
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.79
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.79#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: taxableByDefault
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-004
+      functional_section: fiscalita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX1ACTIVE
+    label: tax1Active
+    labels:
+      - tax1Active
+    technical_name: TAX1ACTIVE
+    section: 2.1.1.79
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.79
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.79#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: tax1Active
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-004
+      functional_section: fiscalita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX1
+    label: tax1
+    labels:
+      - tax1
+    technical_name: TAX1
+    section: 2.1.1.79
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Typically, the local sales tax.
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.79
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.79#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: tax1
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-004
+      functional_section: fiscalita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX2ACTIVE
+    label: tax2Active
+    labels:
+      - tax2Active
+    technical_name: TAX2ACTIVE
+    section: 2.1.1.79
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.79
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.79#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: tax2Active
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-004
+      functional_section: fiscalita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX2
+    label: tax2
+    labels:
+      - tax2
+    technical_name: TAX2
+    section: 2.1.1.79
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.79
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.79#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: tax2
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-004
+      functional_section: fiscalita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAXSHIPPING
+    label: taxShipping
+    labels:
+      - taxShipping
+    technical_name: TAXSHIPPING
+    section: 2.1.1.79
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.79
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.79#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: taxShipping
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-004
+      functional_section: fiscalita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAXHANDLING
+    label: taxHandling
+    labels:
+      - taxHandling
+    technical_name: TAXHANDLING
+    section: 2.1.1.79
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+        section: 2.1.1.79
+        source_unit: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80/2.1.1.79#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: taxHandling
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-004
+      functional_section: fiscalita
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1628

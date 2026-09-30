@@ -1,0 +1,75 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+batch: batch-03
+section: campi-3
+section_title: Campi — Installation & Warranty Details
+part: 1
+parts: 1
+rows:
+  - key: tech:ADDITIONAL_INSTALLATION_INFORMATION
+    label: Additional Installation Information
+    labels:
+      - Additional Installation Information
+    technical_name: ADDITIONAL_INSTALLATION_INFORMATION
+    section: campi-3
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: Specify any relevant installation information such as the installation
+      duration, special requirements needed by vendor, etc. ·
+      UserDefinedFieldParamTextAreaRows=3;
+      UserDefinedFieldParamTextBoxMaxLength=250;
+      UserDefinedFieldParamTextAreaCols=35 · id=10007 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-3
+        source_unit: capital-expense-form-xml-272b13f7/campi-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Additional Installation Information
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ADDITIONAL_WARRANTY_INFORMATION
+    label: Additional Warranty Information
+    labels:
+      - Additional Warranty Information
+    technical_name: ADDITIONAL_WARRANTY_INFORMATION
+    section: campi-3
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: Specify general warranty provisions such as warranty period, usually
+      expressed in a number of days, e.g., 90 days (calendar days unless
+      otherwise stated) and coverage (e.g., parts, labor and travel). ·
+      UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=3;
+      UserDefinedFieldParamTextBoxMaxLength=250;
+      UserDefinedFieldParamTextAreaCols=35 · id=10031 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-3
+        source_unit: capital-expense-form-xml-272b13f7/campi-3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Additional Warranty Information
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1023

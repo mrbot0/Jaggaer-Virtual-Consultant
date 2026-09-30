@@ -1,0 +1,154 @@
+document: catering-form-xml-ce48f3d4
+scope: XSC
+batch: batch-01
+section: campi-1
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:EVENT_DATE
+    label: Event Date
+    labels:
+      - Event Date
+    technical_name: EVENT_DATE
+    section: campi-1
+    type: Date
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10004 · tipo=userdefined
+    sources:
+      - document: catering-form-xml-ce48f3d4
+        section: campi-1
+        source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Event Date
+        type: Date
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:EVENT_TIME
+    label: Event Time
+    labels:
+      - Event Time
+    technical_name: EVENT_TIME
+    section: campi-1
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=10;
+      UserDefinedFieldParamTextBoxMaxLength=20 · id=10005 · tipo=userdefined
+    sources:
+      - document: catering-form-xml-ce48f3d4
+        section: campi-1
+        source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Event Time
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:SETUP_LOCATION
+    label: Setup Location
+    labels:
+      - Setup Location
+    technical_name: SETUP_LOCATION
+    section: campi-1
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=50;
+      UserDefinedFieldParamTextBoxMaxLength=100 · id=10006 · tipo=userdefined
+    sources:
+      - document: catering-form-xml-ce48f3d4
+        section: campi-1
+        source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Setup Location
+        type: TextBox
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:DIRECTIONS
+    label: Directions
+    labels:
+      - Directions
+    technical_name: DIRECTIONS
+    section: campi-1
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=4;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=50 · id=10007 · tipo=userdefined
+    sources:
+      - document: catering-form-xml-ce48f3d4
+        section: campi-1
+        source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Directions
+        type: TextArea
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PICK_UP_OPTIONS
+    label: Pick Up Options
+    labels:
+      - Pick Up Options
+    technical_name: PICK_UP_OPTIONS
+    section: campi-1
+    type: RadioButtonGroup
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248361 · id=10008 · tipo=userdefined
+    sources:
+      - document: catering-form-xml-ce48f3d4
+        section: campi-1
+        source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Pick Up Options
+        type: RadioButtonGroup
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1365

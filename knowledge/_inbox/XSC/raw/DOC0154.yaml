@@ -1,0 +1,1383 @@
+doc: S.STD.XSC.DOC.0154
+scope: XSC
+extracted_at: 2026-09-30T04:31:24.415Z
+tier: T0
+stats:
+  units: 551
+  extracted_units: 41
+  document_candidates: 0
+  needs_llm: 13
+  t0_complete: 28
+  by_candidate:
+    FLD: 23
+    GLS: 9
+    FLW: 3
+    INV: 2
+    CFG: 4
+  residue_marked: 1
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 4703
+  sessions:
+    - n: 1
+      tokens: 4703
+      batches: 1
+      items: 13
+      batch_items:
+        - - R.DOC0154.0064
+          - R.DOC0154.0108
+          - R.DOC0154.0233
+          - R.DOC0154.0248
+          - R.DOC0154.0251
+          - R.DOC0154.0334
+          - R.DOC0154.0406
+          - R.DOC0154.0408
+          - R.DOC0154.0423
+          - R.DOC0154.0425
+          - R.DOC0154.0469
+          - R.DOC0154.0491
+          - R.DOC0154.0525
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0154.0014
+    source_unit: U.DOC0154.0014
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Class Objectives
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: By the end of this session, you
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0154.0014
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0154.0040
+    source_unit: U.DOC0154.0040
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: What Can Be Controlled through Workflow?
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: system
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0040
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0154.0057
+    source_unit: U.DOC0154.0057
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0154
+    section: The Structure of Workflow
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - GLS
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Workflow
+      definition: a series of Steps (or
+      aliases: []
+      lang: en
+      source_unit: U.DOC0154.0057
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0154.0064
+    source_unit: U.DOC0154.0064
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: "Guided Activity:"
+    page: 23
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0064
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0154.0082
+    source_unit: U.DOC0154.0082
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Manual Approvals
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Jennifer
+      modality: obbligo-condizionale
+      condition: it's budget code 423253
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0082
+      mandatory:
+        kind: conditional
+        when: it's budget code 423253
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0154.0084
+    source_unit: U.DOC0154.0084
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Manual Approvals
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Jose or Sonali
+      modality: obbligo-condizionale
+      condition: it's hazardous chemicals
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.8
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0084
+      mandatory:
+        kind: conditional
+        when: it's hazardous chemicals
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0154.0090
+    source_unit: U.DOC0154.0090
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0154
+    section: Automated Approvals
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - GLS
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Hold the Invoice until there
+      definition: a Receipt
+      aliases: []
+      lang: en
+      source_unit: U.DOC0154.0090
+    needs_llm: false
+    tokens: 11
+  - raw_id: R.DOC0154.0093
+    source_unit: U.DOC0154.0093
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Key Terms
+    page: 32
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: activity
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0154.0093
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0154.0108
+    source_unit: U.DOC0154.0108
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Steps, Activities & Rules
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0108
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 2
+  - raw_id: R.DOC0154.0110
+    source_unit: U.DOC0154.0110
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Steps, Activities & Rules
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: that
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0110
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 3
+  - raw_id: R.DOC0154.0117
+    source_unit: U.DOC0154.0117
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0154
+    section: •
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - GLS
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: What
+      definition: the three ways a workflow rule
+      aliases: []
+      lang: en
+      source_unit: U.DOC0154.0117
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0154.0133
+    source_unit: U.DOC0154.0133
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: "ADW: XML Rules Point to Rule Groups"
+    page: 44
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: if Manual Approval
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0133
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0154.0135
+    source_unit: U.DOC0154.0135
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: "ADW: XML Rules Point to Rule Groups"
+    page: 44
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: if an Automated Action
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0154.0135
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0154.0233
+    source_unit: U.DOC0154.0233
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0154
+    section: "Take it to the Next Level:"
+    page: 72
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: Approval 5 into Activity Relationships
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: the new “Approval 5” Rule Group in the site
+          valore: Approval 5
+        - n: 3
+          verbo: import
+          oggetto: the file and observe the change
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0154.0233
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 42
+  - raw_id: R.DOC0154.0245
+    source_unit: U.DOC0154.0245
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Key Terms
+    page: 76
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - INV
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: can or
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0154.0245
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 4
+  - raw_id: R.DOC0154.0248
+    source_unit: U.DOC0154.0248
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0154
+    section: Elements of an XML Rule
+    page: 77
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLW
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: “dot”
+          oggetto: “dot”
+          valore: dot
+        - n: 2
+          verbo: “workflow
+          oggetto: Rule Object”
+          valore: Workflow Rule Object
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0154.0248
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 15
+  - raw_id: R.DOC0154.0251
+    source_unit: U.DOC0154.0251
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Elements of an XML Rule
+    page: 78
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - INV
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0154.0251
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 7
+  - raw_id: R.DOC0154.0253
+    source_unit: U.DOC0154.0253
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0154
+    section: What is the most confusing thing about
+    page: 79
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - GLS
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: What
+      definition: the most confusing thing about
+      aliases: []
+      lang: en
+      source_unit: U.DOC0154.0253
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0154.0256
+    source_unit: U.DOC0154.0256
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: What is the most confusing thing about
+    page: 79
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: discuss, or what do you
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0256
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0154.0286
+    source_unit: U.DOC0154.0286
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0154
+    section: "Exercise:"
+    page: 92
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - GLS
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Where
+      definition: the ‘explicit folder’ found? o
+      aliases: []
+      lang: en
+      source_unit: U.DOC0154.0286
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0154.0327
+    source_unit: U.DOC0154.0327
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Advanced Dynamic Workflow
+    page: 101
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: action
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0327
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 5
+  - raw_id: R.DOC0154.0334
+    source_unit: U.DOC0154.0334
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Advanced Dynamic Workflow
+    page: 101
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0334
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 13
+  - raw_id: R.DOC0154.0335
+    source_unit: U.DOC0154.0335
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Advanced Dynamic Workflow
+    page: 101
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: all
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0335
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0154.0341
+    source_unit: U.DOC0154.0341
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0154
+    section: "Exercise:"
+    page: 102
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - GLS
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: What
+      definition: the FolderSelectionRule? o
+      aliases: []
+      lang: en
+      source_unit: U.DOC0154.0341
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0154.0342
+    source_unit: U.DOC0154.0342
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0154
+    section: "Exercise:"
+    page: 102
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a25
+      - GLS
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: What
+      definition: the Rule Group that will be evaluated? o
+      aliases: []
+      lang: en
+      source_unit: U.DOC0154.0342
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0154.0343
+    source_unit: U.DOC0154.0343
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0154
+    section: "Exercise:"
+    page: 102
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a26
+      - GLS
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Where
+      definition: the rules and approvers found? o
+      aliases: []
+      lang: en
+      source_unit: U.DOC0154.0343
+    needs_llm: false
+    tokens: 11
+  - raw_id: R.DOC0154.0369
+    source_unit: U.DOC0154.0369
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: JAGGAER Indirect Workflow
+    page: 108
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: You
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0369
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 5
+  - raw_id: R.DOC0154.0371
+    source_unit: U.DOC0154.0371
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: JAGGAER Indirect Workflow
+    page: 108
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Permissions
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0371
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0154.0387
+    source_unit: U.DOC0154.0387
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: "Guided Activity:"
+    page: 111
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Write down these credentials – you
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0387
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0154.0406
+    source_unit: U.DOC0154.0406
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0154
+    section: Quick Review
+    page: 114
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a30
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Remember:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0154.0406
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0154.0408
+    source_unit: U.DOC0154.0408
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0154
+    section: Quick Review
+    page: 114
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a31
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: "Dynamic Activities usually point to: o"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0154.0408
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0154.0410
+    source_unit: U.DOC0154.0410
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0154
+    section: Quick Review
+    page: 114
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a32
+      - GLS
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This
+      definition: the only kind of workflow managed outside Workflow Setup
+      aliases: []
+      lang: en
+      source_unit: U.DOC0154.0410
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0154.0411
+    source_unit: U.DOC0154.0411
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Dynamic Workflow must be enabled to
+    page: 115
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Dynamic Workflow
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0411
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0154.0423
+    source_unit: U.DOC0154.0423
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0154
+    section: Quick Review
+    page: 118
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a34
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Remember:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0154.0423
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3
+  - raw_id: R.DOC0154.0425
+    source_unit: U.DOC0154.0425
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Quick Review
+    page: 118
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0425
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 10
+  - raw_id: R.DOC0154.0427
+    source_unit: U.DOC0154.0427
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Quick Review
+    page: 118
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: in the workflow XML
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0427
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0154.0431
+    source_unit: U.DOC0154.0431
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: Quick Review
+    page: 118
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Each one
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0431
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0154.0469
+    source_unit: U.DOC0154.0469
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0154
+    section: XML Code for Shared Workflow Folders
+    page: 129
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a38
+      - FLW
+    type_hint:
+      candidates: *a38
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: Approver
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a folder called EHS Check
+          valore: null
+        - n: 2
+          verbo: assign
+          oggetto: Annie Approver as an approver on the
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0154.0469
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 28
+  - raw_id: R.DOC0154.0482
+    source_unit: U.DOC0154.0482
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: "Guided Activity:"
+    page: 134
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Check out and view approval steps required –
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0482
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 14
+  - raw_id: R.DOC0154.0491
+    source_unit: U.DOC0154.0491
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0154
+    section: XML Code for Dynamic Workflow
+    page: 135
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0154.0491
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 11
+  - raw_id: R.DOC0154.0525
+    source_unit: U.DOC0154.0525
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0154
+    section: "Remember:"
+    page: 146
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a41
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: nota
+      text: "Remember:"
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0154.0525
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 3

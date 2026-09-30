@@ -1,0 +1,66 @@
+document: catering-form-xml-ce48f3d4
+scope: XSC
+section: campi-1
+section_title: Campi —
+genre: tecnica
+rows:
+  - label: Event Date
+    technical_name: Event Date
+    type: Date
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=10004 · tipo=userdefined
+    section: campi-1
+    source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: Event Time
+    technical_name: Event Time
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=10;
+      UserDefinedFieldParamTextBoxMaxLength=20 · id=10005 · tipo=userdefined
+    section: campi-1
+    source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: Setup Location
+    technical_name: Setup Location
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=50;
+      UserDefinedFieldParamTextBoxMaxLength=100 · id=10006 · tipo=userdefined
+    section: campi-1
+    source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: Directions
+    technical_name: Directions
+    type: TextArea
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextAreaPreserveLineBreaks=true;
+      UserDefinedFieldParamTextAreaRows=4;
+      UserDefinedFieldParamTextBoxMaxLength=1000;
+      UserDefinedFieldParamTextAreaCols=50 · id=10007 · tipo=userdefined
+    section: campi-1
+    source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4
+  - label: Pick Up Options
+    technical_name: Pick Up Options
+    type: RadioButtonGroup
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248361 · id=10008 · tipo=userdefined
+    section: campi-1
+    source_unit: catering-form-xml-ce48f3d4/campi-1#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: catering-form-xml-ce48f3d4

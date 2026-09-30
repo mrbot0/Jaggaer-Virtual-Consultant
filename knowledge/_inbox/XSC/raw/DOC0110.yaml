@@ -1,0 +1,1418 @@
+doc: S.STD.XSC.DOC.0110
+scope: XSC
+extracted_at: 2026-09-30T04:30:49.074Z
+tier: T0
+stats:
+  units: 45
+  extracted_units: 43
+  document_candidates: 4
+  needs_llm: 4
+  t0_complete: 43
+  by_candidate:
+    FLD: 43
+    CFG: 4
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 12000
+  sessions:
+    - n: 1
+      tokens: 12000
+      batches: 2
+      items: 4
+      batch_items:
+        - - R.DOC0110.C001
+          - R.DOC0110.C002
+        - - R.DOC0110.C003
+          - R.DOC0110.C004
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0110.0003
+    source_unit: U.DOC0110.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Telephone Services / Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Name
+      technical_name: "285381"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Name
+      section: domande-1
+      source_unit: U.DOC0110.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0110.0004
+    source_unit: U.DOC0110.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Telephone Services / Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Phone
+      technical_name: "285382"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Phone
+      section: domande-1
+      source_unit: U.DOC0110.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0110.0005
+    source_unit: U.DOC0110.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Telephone Services / Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department
+      technical_name: "285383"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Department
+      section: domande-1
+      source_unit: U.DOC0110.0005
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0110.0006
+    source_unit: U.DOC0110.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Telephone Services / Contact Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Address
+      technical_name: "285384"
+      type: Text (Multi-Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Address
+      section: domande-1
+      source_unit: U.DOC0110.0006
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0110.0007
+    source_unit: U.DOC0110.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Telephone Services / Type of Service?
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Type of Telephone Service Request
+      technical_name: "285385"
+      type: Dropdown List (Pick One)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Type of Telephone Service Request
+      section: domande-2
+      source_unit: U.DOC0110.0007
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 52
+  - raw_id: R.DOC0110.0008
+    source_unit: U.DOC0110.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Building Name
+      technical_name: "285386"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Building Name
+      section: domande-3
+      source_unit: U.DOC0110.0008
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0110.0009
+    source_unit: U.DOC0110.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Building Address
+      technical_name: "285387"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Building Address
+      section: domande-3
+      source_unit: U.DOC0110.0009
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 41
+  - raw_id: R.DOC0110.0010
+    source_unit: U.DOC0110.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Room Number
+      technical_name: "285388"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Room Number
+      section: domande-3
+      source_unit: U.DOC0110.0010
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 39
+  - raw_id: R.DOC0110.0011
+    source_unit: U.DOC0110.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Jack Required?
+      technical_name: "285389"
+      type: Yes/No
+      mandatory_text: No
+      allowed_values: []
+      notes: Jack Required?
+      section: domande-3
+      source_unit: U.DOC0110.0011
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0110.0012
+    source_unit: U.DOC0110.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "If No, Provide the Existing Jack #"
+      technical_name: "285390"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: "If No, Provide the Existing Jack #"
+      section: domande-3
+      source_unit: U.DOC0110.0012
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 51
+  - raw_id: R.DOC0110.0013
+    source_unit: U.DOC0110.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Voicemail Required?
+      technical_name: "285391"
+      type: Yes/No
+      mandatory_text: No
+      allowed_values: []
+      notes: Voicemail Required?
+      section: domande-3
+      source_unit: U.DOC0110.0013
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0110.0014
+    source_unit: U.DOC0110.0014
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Voicemail to Email Required?
+      technical_name: "285392"
+      type: Yes/No
+      mandatory_text: No
+      allowed_values: []
+      notes: Voicemail to Email Required?
+      section: domande-3
+      source_unit: U.DOC0110.0014
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0110.0015
+    source_unit: U.DOC0110.0015
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: If Yes, Provide Recipient's AccessID for Voicemail to Email
+      technical_name: "285393"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: If Yes, Provide Recipient's AccessID for Voicemail to Email
+      section: domande-3
+      source_unit: U.DOC0110.0015
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 63
+  - raw_id: R.DOC0110.0016
+    source_unit: U.DOC0110.0016
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Outgoing Dialing Restriction
+      technical_name: "285394"
+      type: Dropdown List (Pick One)
+      mandatory_text: No
+      allowed_values: []
+      notes: Outgoing Dialing Restriction
+      section: domande-3
+      source_unit: U.DOC0110.0016
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0110.0017
+    source_unit: U.DOC0110.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Type of Equipment Required
+      technical_name: "285395"
+      type: Multiple Select (Pick Many)
+      mandatory_text: No
+      allowed_values: []
+      notes: Type of Equipment Required
+      section: domande-3
+      source_unit: U.DOC0110.0017
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0110.0018
+    source_unit: U.DOC0110.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Data Activation Required?
+      technical_name: "285396"
+      type: Yes/No
+      mandatory_text: No
+      allowed_values: []
+      notes: Data Activation Required?
+      section: domande-3
+      source_unit: U.DOC0110.0018
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0110.0019
+    source_unit: U.DOC0110.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — New Service / New Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Please Include any Additional Comments for the IT Staff
+      technical_name: "285397"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Please Include any Additional Comments for the IT Staff
+      section: domande-3
+      source_unit: U.DOC0110.0019
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 61
+  - raw_id: R.DOC0110.0020
+    source_unit: U.DOC0110.0020
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Service Telephone Number
+      technical_name: "285398"
+      type: Numeric Text Box
+      mandatory_text: No
+      allowed_values: []
+      notes: Service Telephone Number
+      section: domande-4
+      source_unit: U.DOC0110.0020
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0110.0021
+    source_unit: U.DOC0110.0021
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Building Name
+      technical_name: "285399"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Building Name
+      section: domande-4
+      source_unit: U.DOC0110.0021
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0110.0022
+    source_unit: U.DOC0110.0022
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Building Address (Include Room#)
+      technical_name: "285400"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Building Address (Include Room#)
+      section: domande-4
+      source_unit: U.DOC0110.0022
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 51
+  - raw_id: R.DOC0110.0023
+    source_unit: U.DOC0110.0023
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Jack Number
+      technical_name: "285401"
+      type: Numeric Text Box
+      mandatory_text: No
+      allowed_values: []
+      notes: Jack Number
+      section: domande-4
+      source_unit: U.DOC0110.0023
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0110.0024
+    source_unit: U.DOC0110.0024
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Line Service Change
+      technical_name: "285402"
+      type: Multiple Choice (Pick One)
+      mandatory_text: No
+      allowed_values: []
+      notes: Line Service Change
+      section: domande-4
+      source_unit: U.DOC0110.0024
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0110.0025
+    source_unit: U.DOC0110.0025
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Line Change Reason
+      technical_name: "285403"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Line Change Reason
+      section: domande-4
+      source_unit: U.DOC0110.0025
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0110.0026
+    source_unit: U.DOC0110.0026
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Outgoing Dialing Restriction
+      technical_name: "285404"
+      type: Dropdown List (Pick One)
+      mandatory_text: No
+      allowed_values: []
+      notes: Outgoing Dialing Restriction
+      section: domande-4
+      source_unit: U.DOC0110.0026
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 51
+  - raw_id: R.DOC0110.0027
+    source_unit: U.DOC0110.0027
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Other Type of Change?
+      technical_name: "285405"
+      type: Yes/No
+      mandatory_text: No
+      allowed_values: []
+      notes: Other Type of Change?
+      section: domande-4
+      source_unit: U.DOC0110.0027
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0110.0028
+    source_unit: U.DOC0110.0028
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: If Yes, please specify change.
+      technical_name: "285406"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: If Yes, please specify change.
+      section: domande-4
+      source_unit: U.DOC0110.0028
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 50
+  - raw_id: R.DOC0110.0029
+    source_unit: U.DOC0110.0029
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Change Service / Change Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Type of Equipment Options
+      technical_name: "285407"
+      type: Dropdown List (Pick One)
+      mandatory_text: No
+      allowed_values: []
+      notes: Type of Equipment Options
+      section: domande-4
+      source_unit: U.DOC0110.0029
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 49
+  - raw_id: R.DOC0110.0030
+    source_unit: U.DOC0110.0030
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Move Service / Move Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Service Telephone Number
+      technical_name: "285408"
+      type: Numeric Text Box
+      mandatory_text: No
+      allowed_values: []
+      notes: Service Telephone Number
+      section: domande-5
+      source_unit: U.DOC0110.0030
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 46
+  - raw_id: R.DOC0110.0031
+    source_unit: U.DOC0110.0031
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Move Service / Move Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Current Building Name
+      technical_name: "285409"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Current Building Name
+      section: domande-5
+      source_unit: U.DOC0110.0031
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0110.0032
+    source_unit: U.DOC0110.0032
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Move Service / Move Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Current Building Address (Including Room#)
+      technical_name: "285410"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Current Building Address (Including Room#)
+      section: domande-5
+      source_unit: U.DOC0110.0032
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 55
+  - raw_id: R.DOC0110.0033
+    source_unit: U.DOC0110.0033
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Move Service / Move Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Current Jack Number
+      technical_name: "285411"
+      type: Numeric Text Box
+      mandatory_text: No
+      allowed_values: []
+      notes: Current Jack Number
+      section: domande-5
+      source_unit: U.DOC0110.0033
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0110.0034
+    source_unit: U.DOC0110.0034
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Move Service / Move Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: New Building Name
+      technical_name: "285412"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: New Building Name
+      section: domande-5
+      source_unit: U.DOC0110.0034
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0110.0035
+    source_unit: U.DOC0110.0035
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Move Service / Move Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: New Building Address (Including Room#)
+      technical_name: "285413"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: New Building Address (Including Room#)
+      section: domande-5
+      source_unit: U.DOC0110.0035
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 53
+  - raw_id: R.DOC0110.0036
+    source_unit: U.DOC0110.0036
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Move Service / Move Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: New Jack Required?
+      technical_name: "285414"
+      type: Yes/No
+      mandatory_text: No
+      allowed_values: []
+      notes: New Jack Required?
+      section: domande-5
+      source_unit: U.DOC0110.0036
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0110.0037
+    source_unit: U.DOC0110.0037
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Move Service / Move Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a35
+      - FLD
+    type_hint:
+      candidates: *a35
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Data Activation Required?
+      technical_name: "285415"
+      type: Yes/No
+      mandatory_text: No
+      allowed_values: []
+      notes: Data Activation Required?
+      section: domande-5
+      source_unit: U.DOC0110.0037
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0110.0038
+    source_unit: U.DOC0110.0038
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Move Service / Move Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a36
+      - FLD
+    type_hint:
+      candidates: *a36
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Please specify any Additional Comments for the IT Staff.
+      technical_name: "285416"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Please specify any Additional Comments for the IT Staff.
+      section: domande-5
+      source_unit: U.DOC0110.0038
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 62
+  - raw_id: R.DOC0110.0039
+    source_unit: U.DOC0110.0039
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Remove Service / Remove Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Service Telephone Number
+      technical_name: "285417"
+      type: Numeric Text Box
+      mandatory_text: No
+      allowed_values: []
+      notes: Service Telephone Number
+      section: domande-6
+      source_unit: U.DOC0110.0039
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0110.0040
+    source_unit: U.DOC0110.0040
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Remove Service / Remove Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a38
+      - FLD
+    type_hint:
+      candidates: *a38
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Building Name
+      technical_name: "285418"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Building Name
+      section: domande-6
+      source_unit: U.DOC0110.0040
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0110.0041
+    source_unit: U.DOC0110.0041
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Remove Service / Remove Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a39
+      - FLD
+    type_hint:
+      candidates: *a39
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Building Address (Including Room#)
+      technical_name: "285419"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Building Address (Including Room#)
+      section: domande-6
+      source_unit: U.DOC0110.0041
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 52
+  - raw_id: R.DOC0110.0042
+    source_unit: U.DOC0110.0042
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Remove Service / Remove Service Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a40
+      - FLD
+    type_hint:
+      candidates: *a40
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Jack Number
+      technical_name: "285420"
+      type: Numeric Text Box
+      mandatory_text: No
+      allowed_values: []
+      notes: Jack Number
+      section: domande-6
+      source_unit: U.DOC0110.0042
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0110.0043
+    source_unit: U.DOC0110.0043
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Remove Service / Remove Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a41
+      - FLD
+    type_hint:
+      candidates: *a41
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Reason for removal of service?
+      technical_name: "285421"
+      type: Text (Single Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Reason for removal of service?
+      section: domande-6
+      source_unit: U.DOC0110.0043
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 50
+  - raw_id: R.DOC0110.0044
+    source_unit: U.DOC0110.0044
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Remove Service / Remove Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a42
+      - FLD
+    type_hint:
+      candidates: *a42
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Equipment to be removed
+      technical_name: "285422"
+      type: Dropdown List (Pick One)
+      mandatory_text: No
+      allowed_values: []
+      notes: Equipment to be removed
+      section: domande-6
+      source_unit: U.DOC0110.0044
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 48
+  - raw_id: R.DOC0110.0045
+    source_unit: U.DOC0110.0045
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0110
+    section: Domande — Remove Service / Remove Service Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a43
+      - FLD
+    type_hint:
+      candidates: *a43
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Please specify any Additional Comments for the IT Staff
+      technical_name: "285423"
+      type: Text (Multi-Line)
+      mandatory_text: No
+      allowed_values: []
+      notes: Please specify any Additional Comments for the IT Staff
+      section: domande-6
+      source_unit: U.DOC0110.0045
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0110
+    needs_llm: false
+    tokens: 62
+  - raw_id: R.DOC0110.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0110
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0110.0002
+    facets: &a44
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: Title
+      current_state:
+        value: Phone Service FR
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0110.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0110
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0110.0002
+    facets: *a44
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Services
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0110.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0110
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0110.0002
+    facets: *a44
+    extraction:
+      parameter: SearchableKeywords
+      current_state:
+        value: Telephone, Service, Request, IT Staff
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0110.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0110
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0110.0002
+    facets: *a44
+    extraction:
+      parameter: purpose
+      current_state:
+        value: GenericRequest
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

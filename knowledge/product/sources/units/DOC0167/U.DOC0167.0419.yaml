@@ -1,0 +1,51 @@
+id: U.DOC0167.0419
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: type | Mandatory (Y/N): Y | Description: Type of tax information document. | Mapping on Jaggaer One data model and notes: • TAX_TYPE_W9 - Request for Taxpayer Identification Number and Certification
+  • TAX_TYPE_W8BEN - Certificate of Foreign Status of Beneficial Owner for United States Tax Withholding
+  • TAX_TYPE_W8ECI - Certificate of Foreign Person's Claim That Income Is Effectively Connected With the Conduct of a Trade or Business in the United States
+  • TAX_TYPE_W8EXP - Certificate of Foreign Government or Other Foreign Organization for United States Tax Withholding
+  • TAX_TYPE_W8IMY - Certificate of Foreign Intermediary, Foreign Flow-Through Entity, or Certain U.S. Branches for United States Tax Withholding
+  • TAX_TYPE_8233 - Exemption From Withholding on Compensation for Independent (and Certain Dependent) Personal Services of a Nonresident Alien Individual
+  Required if TaxInformation element is provided.
+  Values: (TAX_TYPE_W9 | TAX_TYPE_W8BEN | TAX_TYPE_W8ECI | TAX_TYPE_W8EXP | TAX_TYPE_W8IMY | TAX_TYPE_8233)
+hash: sha256:b69f95ac5c282f3bf80357d8eed7f20ed6b128374aa99334a43bd01bb08c1ff9
+words: 145
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/taxInformationList/taxInformation
+  section_path: 2.1.1.109
+  page: 5
+  lang: en
+  prev: U.DOC0167.0418
+  next: U.DOC0167.0420
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - type
+    - Y
+    - Type of tax information document.
+    - |-
+      • TAX_TYPE_W9 - Request for Taxpayer Identification Number and Certification
+      • TAX_TYPE_W8BEN - Certificate of Foreign Status of Beneficial Owner for United States Tax Withholding
+      • TAX_TYPE_W8ECI - Certificate of Foreign Person's Claim That Income Is Effectively Connected With the Conduct of a Trade or Business in the United States
+      • TAX_TYPE_W8EXP - Certificate of Foreign Government or Other Foreign Organization for United States Tax Withholding
+      • TAX_TYPE_W8IMY - Certificate of Foreign Intermediary, Foreign Flow-Through Entity, or Certain U.S. Branches for United States Tax Withholding
+      • TAX_TYPE_8233 - Exemption From Withholding on Compensation for Independent (and Certain Dependent) Personal Services of a Nonresident Alien Individual
+      Required if TaxInformation element is provided.
+      Values: (TAX_TYPE_W9 | TAX_TYPE_W8BEN | TAX_TYPE_W8ECI | TAX_TYPE_W8EXP | TAX_TYPE_W8IMY | TAX_TYPE_8233)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

@@ -1,0 +1,110 @@
+id: U.DOC0178.0425
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: "Must match a status defined in the organization Attribute: useESignature | Description: Indicates whether the contract is (true) or is not (false) configured for eSignature. Attribute: Archive | Description: Indicates whether contract is (true) or is not (false) to be archived. Archived contracts are not included in search results. Valid only for contracts that are Complete, Superseded, or Terminated. Attribute: Summary | Description: Description of the contract Attribute: contractValue | Description: Value of the contract Attribute: contractTotalValue | Description: Total value of all contracts in the contract family Attribute: shareContractWithSecondParties | Description: Indicates whether the contract can (true) or cannot (false) be shared with second parties."
+hash: sha256:cfa27239586d0233b4da50012550771634da20f35d3638cd9ab0cb5f6ea1800f
+words: 106
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: JIContract [Export]
+  section_path: 2.3.3.1
+  page: 82
+  lang: en
+  prev: U.DOC0178.0424
+  next: U.DOC0178.0426
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - originalRequestMessageId
+      - Unique identifier for the contract export message which with this PR was saved
+      - ""
+    - - contractId
+      - Unique Internal identifier of the contract
+      - ""
+    - - validationStatus
+      - |-
+        Flag describing contract validation requirement:
+        0: Unneeded, object was exported with no validation requirements.
+        1: Pending – object is waiting to complete the validation process.
+        2: Completed – object completed the validation process
+      - ""
+    - - workflowStep
+      - Workflow step in which the contract was when exported
+      - ""
+    - - lastUpdate
+      - Date and time contract information was last updated
+      - ""
+    - - contractName
+      - Name of the contract
+      - ""
+    - - contractNumber
+      - |-
+        Number used by organization and by the supplier as the reference number for the contract.
+        Must be unique by supplier.
+      - ""
+    - - amendmentNumber
+      - Amendment number for the contract (number of times the contract has been amended). Zero (0) indicates the original contract.
+      - ""
+    - - contractType
+      - Internal name for a type of contract, such as a commodity, product, or service.
+      - ""
+    - - contractTemplate
+      - |-
+        Contract template information.
+        See section “Contract Template [Export]” below
+      - ""
+    - - contractLanguage
+      - Language in which the contract is written
+      - ""
+    - - project
+      - Work group code associated with the contract. Must be a valid active work group that exists in the CLM solution.
+      - ""
+    - - jurisdictionCode
+      - |-
+        Code for the jurisdiction associated with the contract. The jurisdiction is the geographical location in which the terms and conditions of the contract are upheld.
+        Must exist in the CLM solution.
+      - ""
+    - - Currency
+      - Exchangeable currency code,
+      - ""
+    - - status
+      - Indicates the actual status of the contract (that is, where the contract is in the workflow process).
+      - ""
+    - - contractStatus
+      - |-
+        Indicates the customer-defined status of the contract.
+        Must match a status defined in the organization
+      - ""
+    - - useESignature
+      - Indicates whether the contract is (true) or is not (false) configured for eSignature.
+      - ""
+    - - Archive
+      - |-
+        Indicates whether contract is (true) or is not (false) to be archived.
+        Archived contracts are not included in search results.
+        Valid only for contracts that are Complete, Superseded, or Terminated.
+      - ""
+    - - Summary
+      - Description of the contract
+      - ""
+    - - contractValue
+      - Value of the contract
+      - ""
+    - - contractTotalValue
+      - Total value of all contracts in the contract family
+      - ""
+    - - shareContractWithSecondParties
+      - Indicates whether the contract can (true) or cannot (false) be shared with second parties.
+      - ""
+  block: 1
+  blocks: 2
+part:
+  n: 2
+  of: 2

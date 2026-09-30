@@ -1,0 +1,59 @@
+id: U.DOC0169.0310
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: override | Description: Indicates whether the TSHConfig PercentageRate does (true) or does not (false) override the default rate.
+  Attribute: percentageRate | Description: Percent of the amount charged.
+  This is a numeric value of up to 15 digits, including up to 4 decimal places.
+  Attribute: flatchargeByLine | Description: Shipping cost for each line.
+  See section “FlatChargeByLine [PR Export]” below
+  Attribute: flatchargeByOrder | Description: Shipping cost per order.
+  See section “FlatChargeByOrder [PR Export]” below
+  Attribute: freeTresholdLimit | Description: Tax-free threshold limit.
+  See section “FreeTresholdLimit [PR Export]” below
+hash: sha256:5e37ed7e3e705e7cf6b95ed9d513b978471454e93a4077d7a68b22056df84ec7
+words: 94
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: TSHConfig [PR Export]
+  section_path: 2.3.3.34
+  page: 73
+  lang: en
+  prev: U.DOC0169.0309
+  next: U.DOC0169.0311
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - override
+      - Indicates whether the TSHConfig PercentageRate does (true) or does not (false) override the default rate.
+      - ""
+    - - percentageRate
+      - |-
+        Percent of the amount charged.
+        This is a numeric value of up to 15 digits, including up to 4 decimal places.
+      - ""
+    - - flatchargeByLine
+      - |-
+        Shipping cost for each line.
+        See section “FlatChargeByLine [PR Export]” below
+      - ""
+    - - flatchargeByOrder
+      - |-
+        Shipping cost per order.
+        See section “FlatChargeByOrder [PR Export]” below
+      - ""
+    - - freeTresholdLimit
+      - |-
+        Tax-free threshold limit.
+        See section “FreeTresholdLimit [PR Export]” below
+      - ""
+  block: 1
+  blocks: 1

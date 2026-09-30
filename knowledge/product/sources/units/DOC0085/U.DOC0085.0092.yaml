@@ -1,0 +1,37 @@
+id: U.DOC0085.0092
+doc: S.STD.XSC.DOC.0085
+doc_id: commodity-codes-setup-docx-3fd557c2
+type: tabella
+text: |-
+  Colonne: Finding an Items UNSPSC, Category, Mapped Value etc. | Finding an Items UNSPSC, Category, Mapped Value etc.
+  Finding an Items UNSPSC, Category, Mapped Value etc.: Hosted Items: | Finding an Items UNSPSC, Category, Mapped Value etc.: The easiest way is to look at the item/product details by clicking on the Item description in search results:
+  Finding an Items UNSPSC, Category, Mapped Value etc.: Punch-Out Items: | Finding an Items UNSPSC, Category, Mapped Value etc.: Not so easy, since Punch-out Suppliers return their UNSPSC in the PunchOutOrderMessage (POOM) we’re going to have to use Splunk.
+  Search String:
+  index=ssuit AbstractReceivePunchoutOrderCommand <Item SKU>
+hash: sha256:bbf402064897b7e5635c42c94baa675b5ebeabf54acea78bbadc3a3ec3a8f0ae
+words: 101
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0085
+  chapter: "APPENDIX B – Debugging: Tips/Tricks & Secrets"
+  section: "APPENDIX B – Debugging: Tips/Tricks & Secrets"
+  section_path: "2"
+  page: 23
+  lang: en
+  prev: U.DOC0085.0091
+  next: U.DOC0085.0093
+table:
+  table: 0
+  headers:
+    - Finding an Items UNSPSC, Category, Mapped Value etc.
+    - Finding an Items UNSPSC, Category, Mapped Value etc.
+  rows:
+    - - "Hosted Items:"
+      - "The easiest way is to look at the item/product details by clicking on the Item description in search results:"
+    - - "Punch-Out Items:"
+      - |-
+        Not so easy, since Punch-out Suppliers return their UNSPSC in the PunchOutOrderMessage (POOM) we’re going to have to use Splunk.
+        Search String:
+        index=ssuit AbstractReceivePunchoutOrderCommand <Item SKU>
+  block: 1
+  blocks: 1

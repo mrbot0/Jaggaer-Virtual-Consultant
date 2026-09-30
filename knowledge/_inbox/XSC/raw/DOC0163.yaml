@@ -1,0 +1,413 @@
+doc: S.STD.XSC.DOC.0163
+scope: XSC
+extracted_at: 2026-09-30T04:31:38.092Z
+tier: T0
+stats:
+  units: 340
+  extracted_units: 10
+  document_candidates: 0
+  needs_llm: 4
+  t0_complete: 6
+  by_candidate:
+    GLS: 2
+    FLW: 4
+    FLD: 4
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 1569
+  sessions:
+    - n: 1
+      tokens: 1569
+      batches: 1
+      items: 4
+      batch_items:
+        - - R.DOC0163.0016
+          - R.DOC0163.0164
+          - R.DOC0163.0181
+          - R.DOC0163.0259
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0163.0014
+    source_unit: U.DOC0163.0014
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0163
+    section: "Objective: Savings on IT Setup and Service"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: WorldWide Widgets
+      definition: an opportunity to
+      aliases: []
+      lang: en
+      source_unit: U.DOC0163.0014
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0163.0016
+    source_unit: U.DOC0163.0016
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0163
+    section: "Objective: Savings on IT Setup and Service"
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: identify
+          oggetto: an opportunity to save on IT expenses
+          valore: null
+        - n: 2
+          verbo: select
+          oggetto: a group of potential suppliers
+          valore: null
+        - n: 3
+          verbo: run
+          oggetto: an RFQ to collect proposals
+          valore: null
+        - n: 4
+          verbo: negotiate
+          oggetto: a contract with the winning company
+          valore: null
+        - n: 5
+          verbo: make
+          oggetto: laptops available for purchase by the IT
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0163.0016
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 64
+  - raw_id: R.DOC0163.0084
+    source_unit: U.DOC0163.0084
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0163
+    section: "Objective: Savings on IT Setup and Service"
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: To do this, we
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0163.0084
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 7
+  - raw_id: R.DOC0163.0164
+    source_unit: U.DOC0163.0164
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0163
+    section: "Exercise:Exercise:"
+    page: 68
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: Setup pages
+          valore: null
+        - n: 2
+          verbo: complete
+          oggetto: the Event Wizard
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: elements ‘from scratch’ or from a library
+          valore: null
+        - n: 4
+          verbo: edit
+          oggetto: items
+          valore: null
+        - n: 5
+          verbo: add
+          oggetto: suppliers
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0163.0164
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 38
+  - raw_id: R.DOC0163.0181
+    source_unit: U.DOC0163.0181
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0163
+    section: "Look & Learn:Look & Learn:"
+    page: 75
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: respond
+          oggetto: to this event
+          valore: null
+        - n: 2
+          verbo: complete
+          oggetto: prerequisites, then the bid response
+          valore: null
+        - n: 3
+          verbo: submit
+          oggetto: a question
+          valore: null
+        - n: 4
+          verbo: certify
+          oggetto: and submit bid
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: the confirmation message
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0163.0181
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0163.0215
+    source_unit: U.DOC0163.0215
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0163
+    section: "Objective: Savings on IT Setup and Service"
+    page: 87
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Having decided who
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0163.0215
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0163.0259
+    source_unit: U.DOC0163.0259
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0163
+    section: "Guided Activity:Guided Activity:"
+    page: 106
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLW
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: complete
+          oggetto: the Header
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: Attachments (optional)
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0163.0259
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 22
+  - raw_id: R.DOC0163.0262
+    source_unit: U.DOC0163.0262
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0163
+    section: "Feature: Contract Users"
+    page: 108
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - GLS
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: user who
+      definition: a
+      aliases: []
+      lang: en
+      source_unit: U.DOC0163.0262
+    needs_llm: false
+    tokens: 4
+  - raw_id: R.DOC0163.0304
+    source_unit: U.DOC0163.0304
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0163
+    section: "Guided Activity:Guided Activity:"
+    page: 120
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: to see what approvals
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0163.0304
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0163.0307
+    source_unit: U.DOC0163.0307
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0163
+    section: "Key Terms:Key Terms:"
+    page: 121
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: client
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0163.0307
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 13

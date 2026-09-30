@@ -1,0 +1,39 @@
+id: U.DOC0177.0349
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: discountPercent | Mandatory (Y/N): N | Description: Percent of the discount for the prescribed period. | Mapping on Jaggaer One data model and notes: This is a numeric value of up to 6 digits, including up to 3 decimal places.
+  Required if @unit element is provided and is set to “percent”.
+hash: sha256:260f98af995810603c38fd1bfc3441c3490ae7e475c9b9a2c6ecd4f085d773eb
+words: 52
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/termsAndCondition/paymentTerms/discount
+  section_path: 2.1.1.82
+  page: 61
+  lang: en
+  prev: U.DOC0177.0348
+  next: U.DOC0177.0350
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - discountPercent
+    - N
+    - Percent of the discount for the prescribed period.
+    - |-
+      This is a numeric value of up to 6 digits, including up to 3 decimal places.
+      Required if @unit element is provided and is set to “percent”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

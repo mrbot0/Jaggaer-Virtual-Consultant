@@ -1,0 +1,54 @@
+id: U.DOC0171.0469
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: evaluationUser/Id | Description: Evaluation user Internal identifier
+  Attribute: evaluationUser/code | Description: Evaluation user External code
+  Attribute: evaluationUser/name | Description: Evaluation user full-name
+  Attribute: evaluationUser/login | Description: Evaluation user login (if configured to be exported) | Available from version: JINT_20_02_00
+  Attribute: active | Description: 1 = evaluation user is active
+  0 = evaluation user is not active
+  Attribute: Evaluation List | Description: List of Evaluations of the evaluation user [see section “Evaluation Group: Evaluation” below]
+hash: sha256:42dda2cdedb273c5ec87525a849e21da35dc8a9d923d1c5b814e73dfe777fbe6
+words: 83
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Evaluation Group: Evaluation Member [Export RfX method]"
+  section_path: 2.3.4.28
+  page: 7
+  lang: en
+  prev: U.DOC0171.0468
+  next: U.DOC0171.0470
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - evaluationUser/Id
+      - Evaluation user Internal identifier
+      - ""
+    - - evaluationUser/code
+      - Evaluation user External code
+      - ""
+    - - evaluationUser/name
+      - Evaluation user full-name
+      - ""
+    - - evaluationUser/login
+      - Evaluation user login (if configured to be exported)
+      - JINT_20_02_00
+    - - active
+      - |-
+        1 = evaluation user is active
+        0 = evaluation user is not active
+      - ""
+    - - Evaluation List
+      - "List of Evaluations of the evaluation user [see section “Evaluation Group: Evaluation” below]"
+      - ""
+  block: 1
+  blocks: 1

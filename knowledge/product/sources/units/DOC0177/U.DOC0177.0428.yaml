@@ -1,0 +1,39 @@
+id: U.DOC0177.0428
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: addressLine1 | Mandatory (Y/N): N | Description: First line of address associated with the bank account. | Mapping on Jaggaer One data model and notes: • Required if the “type” field on the AccountsPayable element is set to DirectDeposit or WireTransfer.
+  • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+hash: sha256:e2a3912e9a844439c3ca7e54d6800e876b8cbf84f2daaf93f198305160c7c0ee
+words: 62
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 79
+  lang: en
+  prev: U.DOC0177.0427
+  next: U.DOC0177.0429
+row:
+  table: 0
+  row: 11
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - addressLine1
+    - N
+    - First line of address associated with the bank account.
+    - |-
+      • Required if the “type” field on the AccountsPayable element is set to DirectDeposit or WireTransfer.
+      • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

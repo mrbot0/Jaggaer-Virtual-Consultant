@@ -1,0 +1,316 @@
+id: U.DOC0171.0405
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "2012-03-01 or 2012-03-01 12:36:42.535 +0100 | Operator: Date filtering acceptd following operation: EQUAL: Rfx content last update date must be equal to provided value NOTEQUAL: Rfx content last update date must be different from provided value GREATER_THAN: Rfx content last update date must be equal to or greater than provided value LESS_THAN: Rfx content last update date must be lower than or equal to provided value Condition filter: rfxId | Description: RfX internal identifier, as a string | Operator: All these filters accept following operators: EQUAL: required field must match exactly provided value (case sensitive) NOTEQUAL: required field must be different from provided value STARTWITH: required field must start with provided value (case insensitive) CONTAINS: required field must contain provided value (case insensitive) IN: required field must be present in provided value list NOT_IN: required field must not be present in provided value list For rfxReferenceCode, tenderCode, tenderReferenceCode and buyerCompanyCode other 2 operators can be applied: ISNULL: required field is checked to be null NOTNULL: required field is required to be valorized, no matter value For tenderCode is available the special value TENDER_TEMPLATE that identifies the RfX Templates. The following filters are equivalent: key=tenderCode operator=ISNULL and key=tenderCode operator=EQUAL value=TENDER_TEMPLATE."
+hash: sha256:9693d5e2be6ee3d4cb85adc913d58cceae8d604946d672f8b490d418484de8cb
+words: 199
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Condition Filters
+  section_path: 2.3.2
+  page: 7
+  lang: en
+  prev: U.DOC0171.0404
+  next: U.DOC0171.0406
+table:
+  table: 0
+  headers:
+    - Condition filter
+    - Description
+    - Operator
+  rows:
+    - - statusCode
+      - Status code of the RFx as a number
+      - |-
+        It accepts following operation:
+        EQUAL: status must be equal to provided value
+        NOTEQUAL: status must be different from provided value
+        GREATER_THAN: status must be equal to or greater than provided value
+        LESS_THAN: status must be lower than or equal to provided value
+        IN: any project whose status matches one of provided values
+        NOT_IN: any project whose status doesn’t match anyone of provided values
+    - - lastUpdateDate
+      - |-
+        Last update date/time of the RfX
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+      - |-
+        Date filtering acceptd following operation:
+        EQUAL: last update date must be equal to provided value
+        NOTEQUAL: last update date must be different from provided value
+        GREATER_THAN: last update date must be equal to or greater than provided value
+        LESS_THAN: last update date must be lower than or equal to provided value
+    - - rfxContentLastUpdateDate
+      - |-
+        Last update date/time of the RfX with update from suppliers considered
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+      - |-
+        Date filtering acceptd following operation:
+        EQUAL: Rfx content last update date must be equal to provided value
+        NOTEQUAL: Rfx content last update date must be different from provided value
+        GREATER_THAN: Rfx content last update date must be equal to or greater than provided value
+        LESS_THAN: Rfx content last update date must be lower than or equal to provided value
+    - - rfxId
+      - RfX internal identifier, as a string
+      - |-
+        All these filters accept following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+        For rfxReferenceCode, tenderCode, tenderReferenceCode and buyerCompanyCode other 2 operators can be applied:
+        ISNULL: required field is checked to be null
+        NOTNULL: required field is required to be valorized, no matter value
+        For tenderCode is available the special value TENDER_TEMPLATE that identifies the RfX Templates. The following filters are equivalent:
+        key=tenderCode
+        operator=ISNULL
+        and
+        key=tenderCode
+        operator=EQUAL
+        value=TENDER_TEMPLATE.
+    - - rfxReferenceCode
+      - RfX user identifier, as a string
+      - ""
+    - - tenderCode
+      - Project/Tender internal identifier, as a string
+      - ""
+    - - tenderReferenceCode
+      - Project/Tender user visible identifier, as a string
+      - ""
+    - - buyerCompanyCode
+      - Buyer company external code, as a string
+      - ""
+    - - buyerCompanyName
+      - Buyer company name, as a string
+      - ""
+    - - buyerCompanyId
+      - Buyer company internal identifier
+      - |-
+        EQUAL: required field must match exactly provided value
+        NOTEQUAL: required field must be different from provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - deletedStatus
+      - |-
+        RFx deletion status. Valid values are:
+        Undefined: behaves like NOT-DELETED (default value even if condition filter isn’t expressed)
+        NOT-DELETED: export only not deleted RFxs
+        DELETED: export only deleted RFxs
+        ALL: export both deleted and not deleted RFxs.
+        If this condition filter is expressed, exported RFx Setting will be enriched with a new field (deleted) reporting the deletion status of the specific RFx
+      - N.A.
+    - - rfxOwner
+      - RFx owner (name or surname), as a string
+      - |-
+        It accepts following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+    - - rfxOwnerId
+      - RFx Owner internal identifier
+      - |-
+        It accepts following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - rfxOwnerCode
+      - RFx Owner external code, as a string
+      - |-
+        It accepts following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+    - - supplierAccess
+      - |-
+        Type of supplier access.
+        Possible values:
+        RFQ_TYPE_PRIVATE_WITH_ANSWER = 0
+        RFQ_TYPE_PUBLIC_WITH_ANSWER = 1
+        RFQ_TYPE_PRIVATE_NO_ANSWER = 2
+        RFQ_TYPE_PUBLIC_NO_ANSWER = 3
+        RFQ_TYPE_SIMPLIFIED = 4
+        RFQ_TYPE_PRIVATE_PPB = 5
+        RFQ_TYPE_PUBLIC_PPB = 6
+        Use string or numeric value indifferently.
+        The special value ALL (or *) means all previous values.
+      - |-
+        It accepts following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - rfxExtCode
+      - RfX external identifier.
+      - |-
+        It accepts following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+        ISNULL: required field is checked to be null
+        NOTNULL: required field is required to be valorized, no matter value
+    - - divisionId
+      - Division internal identifier
+      - |-
+        It accepts following operators:
+        EQUAL: required field must match exactly provided value
+        NOTEQUAL: required field must be different from provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - divisionName
+      - Division name, as a string
+      - |-
+        It accepts following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+    - - rfxIdFrom
+      - Originating RfX internal identifier, as a string
+      - |-
+        All these filters accept following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+        ISNULL: required field is checked to be null
+        NOTNULL: required field is required to be valorized, no matter value
+    - - rfxReferenceCodeFrom
+      - Originating RfX user identifier, as a string
+      - ""
+    - - archiveStatus
+      - Archive State
+      - |-
+        EQUAL: required field must match exactly provided value
+        NOTEQUAL: required field must be different from provided value
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+        Possible values:
+        – Not archived
+        – Unarchived
+        2 – Archived
+    - - supplierUserId
+      - |-
+        Internal identifier of supplier user who can access to the RfXs.
+        This filter allows to extract the list of RfXs accessible to the supplier user.
+      - "EQUAL: required field must match exactly provided value"
+    - - supplierUserCode
+      - |-
+        External code of supplier user who can access to the RfXs.
+        This filter allows to extract the list of RfXs accessible to the supplier user.
+      - "EQUAL: required field must match exactly provided value"
+    - - supplierUserLogin
+      - |-
+        Login of supplier user who can access to the RfXs.
+        This filter allows to extract the list of RfXs accessible to the supplier user.
+      - "EQUAL: required field must match exactly provided value"
+    - - independentLocale
+      - |-
+        This filter forces the export of option/multichoice values in “neutral” language. If this filter is omitted the system default language is used.
+        Possible values:
+        YES, TRUE, Y, 1
+        NO, FALSE, N, 0
+      - EQUAL
+    - - templateId
+      - RfX template internal identifier, as a string
+      - |-
+        All these filters accept following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+        ISNULL: required field is checked to be null
+        NOTNULL: required field is required to be valorized, no matter value
+    - - templateReferenceCode
+      - RfX template user identifier, as a string
+      - ""
+    - - publishDate
+      - |-
+        Publishing date/time of the RfX
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+      - |-
+        Date filtering acceptd following operation:
+        EQUAL: last update date must be equal to provided value
+        NOTEQUAL: last update date must be different from provided value
+        GREATER_THAN: last update date must be equal to or greater than provided value
+        LESS_THAN: last update date must be lower than or equal to provided value
+    - - closeDate
+      - |-
+        Closing date/time of the RfX
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+      - |-
+        Date filtering acceptd following operation:
+        EQUAL: last update date must be equal to provided value
+        NOTEQUAL: last update date must be different from provided value
+        GREATER_THAN: last update date must be equal to or greater than provided value
+        LESS_THAN: last update date must be lower than or equal to provided value
+    - - awardDate
+      - |-
+        Awarding date/time of the RfX
+        Date value must be expressed in the form
+        yyyy-MM-dd
+        or
+        yyyy-MM-dd HH:mm:ss.SSS Z
+        eg. 2012-03-01 or 2012-03-01 12:36:42.535 +0100
+      - |-
+        Date filtering acceptd following operation:
+        EQUAL: last update date must be equal to provided value
+        NOTEQUAL: last update date must be different from provided value
+        GREATER_THAN: last update date must be equal to or greater than provided value
+        LESS_THAN: last update date must be lower than or equal to provided value
+    - - rfxType
+      - RfX Typology external code
+      - |-
+        This filter accepts following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+        ISNULL: required field is checked to be null
+        NOTNULL: required field is required to be valorized, no matter value
+    - - templateFolderName
+      - In case of RfX template, it is the folder name containing the template
+      - |-
+        This filter accepts following operators:
+        EQUAL: required field must match exactly provided value (case sensitive)
+        NOTEQUAL: required field must be different from provided value
+        STARTWITH: required field must start with provided value (case insensitive)
+        CONTAINS: required field must contain provided value (case insensitive)
+        IN: required field must be present in provided value list
+        NOT_IN: required field must not be present in provided value list
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 9

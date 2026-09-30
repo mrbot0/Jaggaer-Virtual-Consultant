@@ -1,0 +1,41 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.46
+section_title: DeliveryInfo [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: expediteValue
+    technical_name: expediteValue
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Indicates whether the item is (true) or is not (false) an expedited item
+    section: 2.3.1.46
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.46#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: shippingMethod
+    technical_name: shippingMethod
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Item shipping method information.
+      See section “ShippingMethod [Import JIOrder method]” below.
+    section: 2.3.1.46
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.46#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: requestDeliveryDate
+    technical_name: requestDeliveryDate
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Date you would like the items delivered
+    section: 2.3.1.46
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.46#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

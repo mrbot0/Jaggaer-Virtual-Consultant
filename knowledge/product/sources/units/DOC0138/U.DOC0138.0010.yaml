@@ -1,0 +1,17 @@
+id: U.DOC0138.0010
+doc: S.STD.XSC.DOC.0138
+doc_id: workflow-sample-xml-activities-guidelines-txt-a2205bb1
+type: testo
+text: 'An Example that Uses an Advanced Dynamic Workflow Rule Evaluation (only new concepts will be explained in detail): <Activity name="Director Approval"> <ActivityType>manual</ActivityType> <StepRef name="Director Approval" /> <Rule><![CDATA[ Document.RequiresRuleGroupEvaluation("Director Approval") == true ]]></Rule> <FolderSelectionRule>MultiElementDynamic</FolderSelectionRule> <Attribute name="RuleGroupInternalName"> <AttrValue lang="default">Director Approval</AttrValue> </Attribute> </Activity>'
+hash: sha256:ac0fc2d0df595fa5174ae146511eac6d43bda294e52d77e09603eae379b66631
+words: 40
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0138
+  chapter: APPROVAL BASED ON ITEMS PURCHASED
+  section: APPROVAL BASED ON ITEMS PURCHASED
+  section_path: "2"
+  page: null
+  lang: en
+  prev: U.DOC0138.0009
+  next: U.DOC0138.0011

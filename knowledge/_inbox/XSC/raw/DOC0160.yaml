@@ -1,0 +1,124 @@
+doc: S.STD.XSC.DOC.0160
+scope: XSC
+extracted_at: 2026-09-30T04:31:33.907Z
+tier: T0
+stats:
+  units: 71
+  extracted_units: 3
+  document_candidates: 0
+  needs_llm: 2
+  t0_complete: 1
+  by_candidate:
+    GLS: 1
+    FLD: 2
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 730
+  sessions:
+    - n: 1
+      tokens: 730
+      batches: 1
+      items: 2
+      batch_items:
+        - - R.DOC0160.0008
+          - R.DOC0160.0010
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0160.0004
+    source_unit: U.DOC0160.0004
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0160
+    section: JAGGAER Indirect Foundations
+    page: 1
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This course
+      definition: a cross -product immersion into the JAGGAER Indirect portfolio of solutions .
+      aliases: []
+      lang: en
+      source_unit: U.DOC0160.0004
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0160.0008
+    source_unit: U.DOC0160.0008
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0160
+    section: 2020 Edition JI-PLT -2100 – JAGGAER Indirect Configuration Certification
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0160.0008
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0160.0010
+    source_unit: U.DOC0160.0010
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0160
+    section: 2020 Edition JI-PLT -2100 – JAGGAER Indirect Configuration Certification
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0160.0010
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6

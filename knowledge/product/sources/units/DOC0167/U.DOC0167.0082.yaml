@@ -1,0 +1,39 @@
+id: U.DOC0167.0082
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: erpNumber | Mandatory (Y/N): Y / N | Description: Current, unique ERP number associated with the supplier. | Mapping on Jaggaer One data model and notes: In case of JI Principal then it will be used to save the erpNumber JI side.
+  In case of JA Principal then it will not be used then the fields extCode and extUniqueCode will be used.
+hash: sha256:e1de8861ad64c50d2431194882c486c67952a4c1f34625d10bd1fa51061b314c
+words: 63
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData
+  section_path: 2.1.1.11
+  page: 5
+  lang: en
+  prev: U.DOC0167.0081
+  next: U.DOC0167.0083
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - erpNumber
+    - Y / N
+    - Current, unique ERP number associated with the supplier.
+    - |-
+      In case of JI Principal then it will be used to save the erpNumber JI side.
+      In case of JA Principal then it will not be used then the fields extCode and extUniqueCode will be used.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

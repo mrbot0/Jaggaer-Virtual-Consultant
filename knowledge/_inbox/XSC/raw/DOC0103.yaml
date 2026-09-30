@@ -1,0 +1,489 @@
+doc: S.STD.XSC.DOC.0103
+scope: XSC
+extracted_at: 2026-09-30T04:30:47.045Z
+tier: T0
+stats:
+  units: 13
+  extracted_units: 11
+  document_candidates: 5
+  needs_llm: 6
+  t0_complete: 10
+  by_candidate:
+    FLD: 11
+    CFG: 5
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 15884
+  sessions:
+    - n: 1
+      tokens: 15884
+      batches: 3
+      items: 6
+      batch_items:
+        - - R.DOC0103.0001
+          - R.DOC0103.C001
+          - R.DOC0103.C002
+        - - R.DOC0103.C003
+          - R.DOC0103.C004
+        - - R.DOC0103.C005
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0103.0001
+    source_unit: U.DOC0103.0001
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0103
+    section: Impostazioni del modello di richiesta
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0103.0001
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 534
+  - raw_id: R.DOC0103.0004
+    source_unit: U.DOC0103.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Personal Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Name
+      technical_name: "1169654"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Name
+      section: domande-1
+      source_unit: U.DOC0103.0004
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0103.0005
+    source_unit: U.DOC0103.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Personal Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Title
+      technical_name: "1169655"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Title
+      section: domande-1
+      source_unit: U.DOC0103.0005
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 34
+  - raw_id: R.DOC0103.0006
+    source_unit: U.DOC0103.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Personal Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Email Address for Card
+      technical_name: "1169656"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Email Address for Card
+      section: domande-1
+      source_unit: U.DOC0103.0006
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 43
+  - raw_id: R.DOC0103.0007
+    source_unit: U.DOC0103.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Personal Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Phone Number
+      technical_name: "1169657"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Phone Number
+      section: domande-1
+      source_unit: U.DOC0103.0007
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0103.0008
+    source_unit: U.DOC0103.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Personal Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Motivational Quotation
+      technical_name: "1169698"
+      type: Multiple Choice (Pick One)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Motivational Quotation
+      section: domande-1
+      source_unit: U.DOC0103.0008
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0103.0009
+    source_unit: U.DOC0103.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Personal Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: That's probably the worst quotation. Are you sure you don't want to pick another one?
+      technical_name: "1169699"
+      type: Yes/No
+      mandatory_text: Sì
+      allowed_values: []
+      notes: That's probably the worst quotation. Are you sure you don't want to pick another one?
+      section: domande-1
+      source_unit: U.DOC0103.0009
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 71
+  - raw_id: R.DOC0103.0010
+    source_unit: U.DOC0103.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Order Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Order Quantity
+      technical_name: "1169660"
+      type: Dropdown List (Pick One)
+      mandatory_text: No
+      allowed_values: []
+      notes: Order Quantity
+      section: domande-2
+      source_unit: U.DOC0103.0010
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0103.0011
+    source_unit: U.DOC0103.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Order Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Choose Address
+      technical_name: "1169661"
+      type: Dropdown List (Pick One)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Choose Address
+      section: domande-2
+      source_unit: U.DOC0103.0011
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0103.0012
+    source_unit: U.DOC0103.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Order Information
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Have your ordered from us before?
+      technical_name: "1169662"
+      type: Yes/No
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Have your ordered from us before?
+      section: domande-2
+      source_unit: U.DOC0103.0012
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0103.0013
+    source_unit: U.DOC0103.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0103
+    section: Domande — Page 1 / Order Information
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: EMAIL
+      technical_name: "1169663"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Email Address
+      section: domande-2
+      source_unit: U.DOC0103.0013
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0103
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0103.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0103
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0103.0003
+    facets: &a12
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: Title
+      current_state:
+        value: Business Cards from Veridian
+        observed_at: 2020-05-19
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0103.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0103
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0103.0003
+    facets: *a12
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Sole Source
+        observed_at: 2020-05-19
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0103.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0103
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0103.0003
+    facets: *a12
+    extraction:
+      parameter: ContextType
+      current_state:
+        value: NORMAL
+        observed_at: 2020-05-19
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0103.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0103
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0103.0003
+    facets: *a12
+    extraction:
+      parameter: SearchableKeywords
+      current_state:
+        value: business cards name credentials
+        observed_at: 2020-05-19
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0103.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0103
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0103.0003
+    facets: *a12
+    extraction:
+      parameter: purpose
+      current_state:
+        value: ProcurementRequest
+        observed_at: 2020-05-19
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

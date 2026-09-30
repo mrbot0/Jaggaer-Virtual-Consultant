@@ -1,0 +1,713 @@
+doc: S.STD.XSC.DOC.0153
+scope: XSC
+extracted_at: 2026-09-30T04:31:21.450Z
+tier: T0
+stats:
+  units: 341
+  extracted_units: 20
+  document_candidates: 0
+  needs_llm: 7
+  t0_complete: 13
+  by_candidate:
+    GLS: 5
+    FLD: 5
+    INV: 3
+    FLW: 5
+    CFG: 1
+    CFP: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 2636
+  sessions:
+    - n: 1
+      tokens: 2636
+      batches: 1
+      items: 7
+      batch_items:
+        - - R.DOC0153.0075
+          - R.DOC0153.0108
+          - R.DOC0153.0240
+          - R.DOC0153.0248
+          - R.DOC0153.0250
+          - R.DOC0153.0313
+          - R.DOC0153.0315
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0153.0011
+    source_unit: U.DOC0153.0011
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0153
+    section: Essential Questions
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - GLS
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: How
+      definition: the P2P ones initially set up and placed on System Documents
+      aliases: []
+      lang: en
+      source_unit: U.DOC0153.0011
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0153.0018
+    source_unit: U.DOC0153.0018
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0153
+    section: Class Objectives
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: By the end of this session, you
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0153.0018
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0153.0075
+    source_unit: U.DOC0153.0075
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0153
+    section: P2P Custom Fields
+    page: 18
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - INV
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0153.0075
+      validation:
+        on_fail: block
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 6
+  - raw_id: R.DOC0153.0108
+    source_unit: U.DOC0153.0108
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0153
+    section: "Guided Activity:"
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a new Custom Field called Fixed Asset Category
+          valore: null
+        - n: 2
+          verbo: allow
+          oggetto: Code Splits Create a P2P Custom Field
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0153.0108
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0153.0126
+    source_unit: U.DOC0153.0126
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0153
+    section: Creating Relationships
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - GLS
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Establishing relationships
+      definition: "a two-step process: o"
+      aliases: []
+      lang: en
+      source_unit: U.DOC0153.0126
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0153.0131
+    source_unit: U.DOC0153.0131
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0153
+    section: "Look & Learn:"
+    page: 40
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0153.0131
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 16
+  - raw_id: R.DOC0153.0168
+    source_unit: U.DOC0153.0168
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0153
+    section: "Guided Activity:"
+    page: 54
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - INV
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: nota
+      text: "Note: We can’t put anything in a cart yet, but when we’re"
+      subject: "Note: We"
+      rules:
+        - text: "Note: We can’t put anything in a cart yet, but when we’re"
+          modality: divieto
+          consequence: INV
+      author: null
+      date: null
+      source_unit: U.DOC0153.0168
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0153.0202
+    source_unit: U.DOC0153.0202
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0153
+    section: Key Terms
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - GLS
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: Requisition
+      definition: the system
+      aliases: []
+      lang: en
+      source_unit: U.DOC0153.0202
+    needs_llm: false
+    tokens: 8
+  - raw_id: R.DOC0153.0205
+    source_unit: U.DOC0153.0205
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0153
+    section: Key Terms
+    page: 65
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - GLS
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: This
+      definition: the document that travels
+      aliases: []
+      lang: en
+      source_unit: U.DOC0153.0205
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0153.0210
+    source_unit: U.DOC0153.0210
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0153
+    section: Key Terms
+    page: 66
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: nota
+      text: "Note: The “Requisition” Document is configured, and those settings"
+      subject: "Note: The “Requisition” Document"
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0153.0210
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0153.0217
+    source_unit: U.DOC0153.0217
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0153
+    section: Key Terms
+    page: 68
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - INV
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      kind: nota
+      text: "Note: This Document MUST be set up and activated before orders can go to"
+      subject: "Note: This Document"
+      rules:
+        - text: "Note: This Document MUST be set up and activated before orders can go to"
+          modality: obbligo
+          consequence: FLD.mandatory
+          mandatory:
+            kind: always
+      author: null
+      date: null
+      source_unit: U.DOC0153.0217
+    needs_llm: false
+    tokens: 18
+  - raw_id: R.DOC0153.0221
+    source_unit: U.DOC0153.0221
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0153
+    section: Key Terms
+    page: 69
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Payable clients. They reflect what
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0153.0221
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0153.0240
+    source_unit: U.DOC0153.0240
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0153
+    section: "Guided Activity:"
+    page: 74
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: clic
+          oggetto: the Draft link on the left, then the Import tab
+          valore: null
+        - n: 2
+          verbo: import
+          oggetto: the provided XML class file called
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0153.0240
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 30
+  - raw_id: R.DOC0153.0248
+    source_unit: U.DOC0153.0248
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0153
+    section: "Exercise:"
+    page: 76
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: go
+          oggetto: shopping and fill a cart
+          valore: null
+        - n: 2
+          verbo: checkout
+          oggetto: Checkout
+          valore: null
+        - n: 3
+          verbo: if
+          oggetto: you see a message that Accounting Codes are
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0153.0248
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0153.0249
+    source_unit: U.DOC0153.0249
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0153
+    section: "Exercise:"
+    page: 76
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: required, edit those (you
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0153.0249
+    needs_llm: false
+    tokens: 13
+  - raw_id: R.DOC0153.0250
+    source_unit: U.DOC0153.0250
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0153
+    section: "Exercise:"
+    page: 76
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLW
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: submit
+          oggetto: Submit
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: Approval Status
+          valore: null
+        - n: 3
+          verbo: is
+          oggetto: there a PO? Why or why not?
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0153.0250
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 20
+  - raw_id: R.DOC0153.0303
+    source_unit: U.DOC0153.0303
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0153
+    section: Commodity Codes and Categories in JI
+    page: 95
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: For each item, supplier
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0153.0303
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 10
+  - raw_id: R.DOC0153.0313
+    source_unit: U.DOC0153.0313
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0153
+    section: "Guided Activity:"
+    page: 102
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: and configure Category Mapping
+          valore: null
+        - n: 2
+          verbo: make
+          oggetto: “Value List” the mapping type and enable options
+          valore: Value List
+        - n: 3
+          verbo: import
+          oggetto: a sample Commodity Code list
+          valore: null
+        - n: 4
+          verbo: manually
+          oggetto: map codes
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0153.0313
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0153.0315
+    source_unit: U.DOC0153.0315
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0153
+    section: "Guided Activity:"
+    page: 102
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: import
+          oggetto: a compatible sample Category Map
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the resulting Category Map
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0153.0315
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 21
+  - raw_id: R.DOC0153.0329
+    source_unit: U.DOC0153.0329
+    unit_type: definizione
+    doc: S.STD.XSC.DOC.0153
+    section: Quiz Time
+    page: 106
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - GLS
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      term: What
+      definition: the names of three
+      aliases: []
+      lang: en
+      source_unit: U.DOC0153.0329
+    needs_llm: false
+    tokens: 7

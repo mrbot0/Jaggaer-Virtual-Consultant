@@ -1,0 +1,200 @@
+id: U.DOC0171.0425
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "if “deletedStatus” condition filter has been set (no matter value). | Available from version: 12_1_03 Attribute: autopublish | Description: Auto-publish flag: 0 = RFx has to be published manually 1 = RFx must be published automatically on date expressed in autopublishDate | Available from version: 12_2_00 Attribute: autopublishDate | Description: Auto-publishing date."
+hash: sha256:f0dedd0ea6b439404a697e11220b48d24fc9e4e6fc7152796b8a818c7006c3e1
+words: 52
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: RfX Setting [Export RfX method]
+  section_path: 2.3.4.1
+  page: 7
+  lang: en
+  prev: U.DOC0171.0424
+  next: U.DOC0171.0426
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - rankingStrategy
+      - |-
+        Ranking strategy:
+        NONE
+        NO_RANKING
+        BEST_TECHNICAL_SCORE
+        BEST_ECONOMICAL_OFFER
+        MOST_ECONOMICAL_ADVANTAGEOUS
+      - ""
+    - - priceRankingStrategy
+      - |-
+        The strategy for the classification of prices (only for ranking strategy BEST_ECONOMICAL_OFFER):
+        REVERSE = lower price preferred
+        DIRECT = higher price preferred
+      - BA_16_02
+    - - techScoreWeight
+      - Tech score weight in percentage. If only tech, then it will be = 100, if absolute weight will be transformed in percentages.
+      - ""
+    - - comScoreWeight
+      - Commercial score weight in percentage.
+      - ""
+    - - numInvolvedSuppliers
+      - Number of suppliers associated to the RFx
+      - ""
+    - - numRespondedSuppliers
+      - Number of suppliers having submitted a valid response in the last round (regardless if then excluded during pre-evaluation or evaluation phase)
+      - ""
+    - - numExcludedSuppliers
+      - |-
+        Number of suppliers having submitted a valid response in the last round, but then excluded during pre-evaluation or evaluation phase.
+        This is a subset of the suppliers counted in numRespondedSuppliers.
+      - ""
+    - - numAwardedSuppliers
+      - |-
+        Number of suppliers having partial or full awarding flag.
+        If WS configuration parameter IncludePartialWinner is set to 1 partial awarded suppliers will be included
+      - ""
+    - - numEvaluationComments
+      - Count of evaluation comments, in any envelope and at any level
+      - "[NOT USED]"
+    - - qualEvaluationTeamSize
+      - 0 = evaluation team not defined.
+      - ""
+    - - techEvaluationTeamSize
+      - 0 = evaluation team not defined.
+      - ""
+    - - commEvaluationTeamSize
+      - 0 = evaluation team not defined.
+      - ""
+    - - tcoRanking
+      - This means that TCO was enabled and used to make a rank for score-based or price- based ranking criteria.
+      - "[NOT USED]"
+    - - qualEnvStatus
+      - |-
+        Status of the envelope:
+        0 = not active
+        1 = active with no response attachments
+        2 = active with response attachments allowed
+      - ""
+    - - techEnvStatus
+      - |-
+        Status of the envelope:
+        0 = not active
+        1 = active with no response attachments
+        2 = active with response attachments allowed
+      - ""
+    - - commEnvStatus
+      - |-
+        Status of the envelope:
+        0 = not active
+        1 = active with no response attachments
+        2 = active with response attachments allowed
+      - ""
+    - - lastUpdate
+      - RfX last update date/time
+      - ""
+    - - rfxContentLastUpdateDate
+      - RfX content last update date/time
+      - JINT_21_01_01
+    - - publishDate
+      - First date of publishing
+      - ""
+    - - closeDate
+      - Last close date
+      - ""
+    - - qualOffersOpeningDate
+      - Opening Date of Qualification Responses
+      - ""
+    - - techOffersOpeningDate
+      - Opening Date of Technical Responses
+      - ""
+    - - commOffersOpeningDate
+      - Opening Date of Commercial Responses
+      - ""
+    - - preEvaluationCloseDate
+      - Date when the preliminary evaluation is frozen
+      - ""
+    - - qualEvaluationCloseDate
+      - Date when the qualification evaluation is frozen
+      - ""
+    - - techEvaluationCloseDate
+      - Date when the technical evaluation is frozen
+      - ""
+    - - commEvaluationCloseDate
+      - Date when the commercial evaluation is frozen
+      - ""
+    - - awardDate
+      - |-
+        RfX award date.This date is filled also when the RfX reaches a final state:
+        1000 = not valid
+        200 = not approved
+        50 = offline ended
+        600 = moved to auction
+        1500 = Rfi ended
+        500 = awarded
+        700 = not awarded (cancelled)
+        1800 = moved to Rfq
+        1900 = multi-lot transfer suppliers
+        1600 = Rfq multi-awarded
+      - ""
+    - - deleted
+      - |-
+        RFx deletion status flag:
+        0 = RFx isn’t deleted
+        1 = RFx has been deleted
+        This information is inserted only if “deletedStatus” condition filter has been set (no matter value).
+      - 12_1_03
+    - - autopublish
+      - |-
+        Auto-publish flag:
+        0 = RFx has to be published manually
+        1 = RFx must be published automatically on date expressed in autopublishDate
+      - 12_2_00
+    - - autopublishDate
+      - Auto-publishing date. If RFx is auto published, it is the date when the RFx will be published. Information is inserted only if autopublish is 1 and a valid date has been inserted.
+      - 12_2_00
+    - - creationDate
+      - RfX creation date/time
+      - 12_3_03
+    - - awardingStrategy
+      - |-
+        Awarding strategy:
+        NONE
+        NO_RANKING
+        BEST_TECHNICAL_SCORE
+        BEST_ECONOMICAL_OFFER
+        MOST_ECONOMICAL_ADVANTAGEOUS
+        The strategy for the classification of supplier answers to use in the final evaluation.
+      - 12_3_03
+    - - awardingLevel
+      - |-
+        Awarding level:
+        OVERALL
+        WORKSHEET
+        ITEM
+      - 12_3_03
+    - - awardingSource
+      - |-
+        Awarding source:
+        PRICE
+        TCO
+      - 12_3_03
+    - - priceAwardingStrategy
+      - |-
+        The strategy for the classification of prices to use in the final evaluation.
+        REVERSE = the lowest price wins
+        DIRECT = the highest price wins
+      - 12_3_03
+    - - finalContractValue
+      - Value that was present as numeric type and currency for that can be USD. We can set final contract value only if the status of document is pre-awarding
+      - JINT_23_01_00
+  block: 2
+  blocks: 3
+part:
+  n: 3
+  of: 4

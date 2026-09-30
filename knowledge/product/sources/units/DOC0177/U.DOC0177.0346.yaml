@@ -1,0 +1,41 @@
+id: U.DOC0177.0346
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: standardPaymentTermsCode | Mandatory (Y/N): N | Description: Uniquely identifies a specific preconfigured combination of payment terms. | Mapping on Jaggaer One data model and notes: If provided, TermsType, DaysAfter, and Discount are populated based on the preconfigured values set in StandardPaymentTermsCode.
+  If both StandardPaymentTermsCode and Discount are provided, the value for Discount is used.
+  If StandardPaymentTermsCode is provided, the Net and TermsType elements cannot have values.
+hash: sha256:eaa3ab958f92f6201cfe051539103176268d236602ed705f3d844ce80b3e9d70
+words: 67
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/termsAndCondition/paymentTerms
+  section_path: 2.1.1.81
+  page: 60
+  lang: en
+  prev: U.DOC0177.0345
+  next: U.DOC0177.0347
+row:
+  table: 0
+  row: 6
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - standardPaymentTermsCode
+    - N
+    - Uniquely identifies a specific preconfigured combination of payment terms.
+    - |-
+      If provided, TermsType, DaysAfter, and Discount are populated based on the preconfigured values set in StandardPaymentTermsCode.
+      If both StandardPaymentTermsCode and Discount are provided, the value for Discount is used.
+      If StandardPaymentTermsCode is provided, the Net and TermsType elements cannot have values.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

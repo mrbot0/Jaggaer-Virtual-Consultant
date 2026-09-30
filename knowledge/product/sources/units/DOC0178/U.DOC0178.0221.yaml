@@ -1,0 +1,39 @@
+id: U.DOC0178.0221
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: allowSupplierEditItems | Description: Indicates whether supplier can (true) or cannot (false) edit the price on a contract noncatalog line item that has been populated from the contract on a portal invoice or credit memo.
+  This field does not apply to other non-catalog line items, only those populated from the contract on a portal invoice or credit memo.
+  Note: This field applies to price only. Suppliers cannot edit the part number, product size, packaging, or description of an item.
+hash: sha256:5f137fa66b48b483fb40728b7d9c8aca4615791a5e570928bfc8a49e395a7a4f
+words: 79
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Eprocurement [Import]
+  section_path: 2.2.1.24
+  page: 42
+  lang: en
+  prev: U.DOC0178.0220
+  next: U.DOC0178.0222
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - allowSupplierEditItems
+    - ""
+    - |-
+      Indicates whether supplier can (true) or cannot (false) edit the price on a contract noncatalog line item that has been populated from the contract on a portal invoice or credit memo.
+      This field does not apply to other non-catalog line items, only those populated from the contract on a portal invoice or credit memo.
+      Note: This field applies to price only. Suppliers cannot edit the part number, product size, packaging, or description of an item.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

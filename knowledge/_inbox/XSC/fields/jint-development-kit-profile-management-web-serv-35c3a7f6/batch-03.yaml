@@ -1,0 +1,766 @@
+document: jint-development-kit-profile-management-web-serv-35c3a7f6
+scope: XSC
+batch: batch-03
+section: 4.1.1.2
+section_title: Company and super-user data [Import/update of Company and Users Data]
+part: 2
+parts: 2
+rows:
+  - key: tech:TURNOVER
+    label: turnOver
+    labels:
+      - turnOver
+    technical_name: TURNOVER
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Annual Turnover
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r27
+        genre: tecnica
+        label: turnOver
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CURRENCY
+    label: currency
+    labels:
+      - currency
+    technical_name: CURRENCY
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: External code of the company currency.
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r28
+        genre: tecnica
+        label: currency
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:APECODE
+    label: apeCode
+    labels:
+      - apeCode
+    technical_name: APECODE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: External (visible) APE code
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r29
+        genre: tecnica
+        label: apeCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PASSWORD
+    label: password
+    labels:
+      - password
+    technical_name: PASSWORD
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user password
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r30
+        genre: tecnica
+        label: password
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PWDQUESTION
+    label: pwdQuestion
+    labels:
+      - pwdQuestion
+    technical_name: PWDQUESTION
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user password retrieval question
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r31
+        genre: tecnica
+        label: pwdQuestion
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PWDANSWER
+    label: pwdAnswer
+    labels:
+      - pwdAnswer
+    technical_name: PWDANSWER
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user password retrieval answer
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r32
+        genre: tecnica
+        label: pwdAnswer
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERTITLE
+    label: userTitle
+    labels:
+      - userTitle
+    technical_name: USERTITLE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user title as translated in default site locale, or default title
+      value
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r33
+        genre: tecnica
+        label: userTitle
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERSURNAME
+    label: userSurName
+    labels:
+      - userSurName
+    technical_name: USERSURNAME
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super surname
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r34
+        genre: tecnica
+        label: userSurName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERNAME
+    label: userName
+    labels:
+      - userName
+    technical_name: USERNAME
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user name
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r35
+        genre: tecnica
+        label: userName
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USEREMAIL
+    label: userEmail
+    labels:
+      - userEmail
+    technical_name: USEREMAIL
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user email
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r36
+        genre: tecnica
+        label: userEmail
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERPHONE
+    label: userPhone
+    labels:
+      - userPhone
+    technical_name: USERPHONE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user telephone number
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r37
+        genre: tecnica
+        label: userPhone
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERFAX
+    label: userFax
+    labels:
+      - userFax
+    technical_name: USERFAX
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user fax number
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r38
+        genre: tecnica
+        label: userFax
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERMOBPHONE
+    label: userMobPhone
+    labels:
+      - userMobPhone
+    technical_name: USERMOBPHONE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user mobile phone
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r39
+        genre: tecnica
+        label: userMobPhone
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERROLE
+    label: userRole
+    labels:
+      - userRole
+    technical_name: USERROLE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user company role (job title) code or name in current locale
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r40
+        genre: tecnica
+        label: userRole
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LOCALE
+    label: locale
+    labels:
+      - locale
+    technical_name: LOCALE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: "Super user default language (built up from language and country codes.
+      E.g.: “en_GB” or “it_IT”)"
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r41
+        genre: tecnica
+        label: locale
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TIMEZONE
+    label: timezone
+    labels:
+      - timezone
+      - timeZone
+    technical_name: TIMEZONE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: "Super user time-zone identifier (e.g.: ‘Europe/Brussels’ or
+      ‘America/New_York’)"
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r42
+        genre: tecnica
+        label: timezone
+        type: null
+        mandatory_text: N
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.6
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.6#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: timeZone
+        type: null
+        mandatory_text: |-
+          Y
+          for CREATE
+          N
+          for UPDATE
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - N
+          - |-
+            Y
+            for CREATE
+            N
+            for UPDATE
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+  - key: tech:PREFCONTACT
+    label: prefContact
+    labels:
+      - prefContact
+    technical_name: PREFCONTACT
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user preferred contact mode code
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r43
+        genre: tecnica
+        label: prefContact
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PREFFOLDER
+    label: prefFolder
+    labels:
+      - prefFolder
+    technical_name: PREFFOLDER
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r44
+        genre: tecnica
+        label: prefFolder
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USEREXTCODE
+    label: userExtCode
+    labels:
+      - userExtCode
+    technical_name: USEREXTCODE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user identification code within the external system
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r45
+        genre: tecnica
+        label: userExtCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERBUSINESSUNITCODE
+    label: userBusinessUnitCode
+    labels:
+      - userBusinessUnitCode
+    technical_name: USERBUSINESSUNITCODE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r46
+        genre: tecnica
+        label: userBusinessUnitCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERDIVISIONCODE
+    label: userDivisionCode
+    labels:
+      - userDivisionCode
+    technical_name: USERDIVISIONCODE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user division id
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r47
+        genre: tecnica
+        label: userDivisionCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:USERPROFILECODE
+    label: userProfileCode
+    labels:
+      - userProfileCode
+    technical_name: USERPROFILECODE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Super user profile code
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r48
+        genre: tecnica
+        label: userProfileCode
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EXTUNIQUECODE
+    label: extUniqueCode
+    labels:
+      - extUniqueCode
+    technical_name: EXTUNIQUECODE
+    section: 4.1.1.2
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: >-
+      Company unique identification code within the external system. When
+      valorized it must be unique within the companies registered and enabled in
+      the same toolkit group (companies deactivated and deleted are excluded).
+
+      Available from version 12_4_0_02.
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r49
+        genre: tecnica
+        label: extUniqueCode
+        type: null
+        mandatory_text: Y/N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+  - key: tech:ACCESSAUCTIONS
+    label: accessAuctions
+    labels:
+      - accessAuctions
+    technical_name: ACCESSAUCTIONS
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Flag that indicates access to auctions.
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r50
+        genre: tecnica
+        label: accessAuctions
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ACCESSRFX
+    label: accessRfx
+    labels:
+      - accessRfx
+    technical_name: ACCESSRFX
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Flag that indicates access to rfx.
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r51
+        genre: tecnica
+        label: accessRfx
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ACCESSFILESHARING
+    label: accessFileSharing
+    labels:
+      - accessFileSharing
+    technical_name: ACCESSFILESHARING
+    section: 4.1.1.2
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Flag that indicates access to file sharing.
+    sources:
+      - document: jint-development-kit-profile-management-web-serv-35c3a7f6
+        section: 4.1.1.2
+        source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.2#part-2
+        row_ref: t0.r52
+        genre: tecnica
+        label: accessFileSharing
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 5103

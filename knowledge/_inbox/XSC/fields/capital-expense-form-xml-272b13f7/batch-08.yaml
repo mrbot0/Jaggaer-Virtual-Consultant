@@ -1,0 +1,308 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+batch: batch-08
+section: campi-8
+section_title: Campi — Equipment Information
+part: 1
+parts: 1
+rows:
+  - key: tech:DESCRIPTION_AND_PRICE_EST_PRICE
+    label: Description and Price/Est. Price
+    labels:
+      - Description and Price/Est. Price
+    technical_name: DESCRIPTION_AND_PRICE_EST_PRICE
+    section: campi-8
+    type: ActivityRateService
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParam_DescriptionRequired=true;
+      UserDefinedFieldParam_DescriptionLabel=Description · id=10108 ·
+      tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Description and Price/Est. Price
+        type: ActivityRateService
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:LINE_2_IF_NECESSARY
+    label: Line 2 (if necessary)
+    labels:
+      - Line 2 (if necessary)
+    technical_name: LINE_2_IF_NECESSARY
+    section: campi-8
+    type: ActivityRateService
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParam_DescriptionLabel=Description · id=10109 ·
+      tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Line 2 (if necessary)
+        type: ActivityRateService
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:LINE_3
+    label: Line 3 (if necessary)
+    labels:
+      - Line 3 (if necessary)
+    technical_name: LINE_3
+    section: campi-8
+    type: ActivityRateService
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParam_DescriptionLabel=Description · id=10110 ·
+      tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Line 3 (if necessary)
+        type: ActivityRateService
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:MANUFACTURER_NAME
+    label: Manufacturer Name
+    labels:
+      - Manufacturer Name
+    technical_name: MANUFACTURER_NAME
+    section: campi-8
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: Manufacturer of the equipment. <br><br> Often the Manufacturer Name is
+      found on the vendor quote or proposal. ·
+      UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10009 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: Manufacturer Name
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:MANUFACTURER_PART_NUMBER
+    label: Manufacturer Model Number
+    labels:
+      - Manufacturer Model Number
+    technical_name: MANUFACTURER_PART_NUMBER
+    section: campi-8
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: The manufacturer’s identification number for the equipment. This may be
+      the same as the Supplier Part Number. <br><br> Often, the Manufacturer
+      Part Number may be found on the vendor quote or proposal. ·
+      UserDefinedFieldParamTextBoxSize=45;
+      UserDefinedFieldParamTextBoxMaxLength=45 · id=10010 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: Manufacturer Model Number
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:115
+    label: "115"
+    labels:
+      - "115"
+    technical_name: "115"
+    section: campi-8
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=115 · tipo=static
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: "115"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TRADE_IN_AMOUNT
+    label: Trade-In Amount
+    labels:
+      - Trade-In Amount
+    technical_name: TRADE_IN_AMOUNT
+    section: campi-8
+    type: Integer
+    mandatory_text: No
+    allowed_values: []
+    notes: Specify the trade-in value. Please note that if the trade in is part of
+      the purchase, the Department Asset Custodian must approve the release of
+      the trade-in before the requisition is submitted. <br><br> If there is a
+      trade-in, specify the Tag Number of the equipment to be traded-in in the
+      Additional Internal Comment field. The Tag Number is noted on a Capital
+      Accounting Tag placed on the equipment. · id=10073 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: Trade-In Amount
+        type: Integer
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: number
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:110
+    label: "110"
+    labels:
+      - "110"
+    technical_name: "110"
+    section: campi-8
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=110 · tipo=static
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: "110"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ASSET_CONFIGURATION
+    label: Asset Configuration
+    labels:
+      - Asset Configuration
+    technical_name: ASSET_CONFIGURATION
+    section: campi-8
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=50;
+      UserDefinedFieldParamTextBoxMaxLength=250 · id=10103 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: Asset Configuration
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:ASSET_TYPE_CODE
+    label: Asset Type Code
+    labels:
+      - Asset Type Code
+    technical_name: ASSET_TYPE_CODE
+    section: campi-8
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: This could be a drop down list or selection. ·
+      UserDefinedFieldParamTextBoxSize=100;
+      UserDefinedFieldParamTextBoxMaxLength=250 · id=10104 · tipo=userdefined
+    sources:
+      - document: capital-expense-form-xml-272b13f7
+        section: campi-8
+        source_unit: capital-expense-form-xml-272b13f7/campi-8#part-1
+        row_ref: t0.r9
+        genre: tecnica
+        label: Asset Type Code
+        type: TextBox
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: text
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2461

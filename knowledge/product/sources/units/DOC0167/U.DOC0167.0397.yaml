@@ -1,0 +1,39 @@
+id: U.DOC0167.0397
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: bankName | Mandatory (Y/N): N | Description: Name of the bank used by the account. | Mapping on Jaggaer One data model and notes: • Required if the “type” field on the AccountsPayable element is set to DirectDeposit or WireTransfer.
+  • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+hash: sha256:ebb774942aa33606cd170d4119d434b31b832307eec1adb3c6b9fbf30dedf6d7
+words: 61
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/accountsPayableList/accountsPayable /bankAccount
+  section_path: 2.1.1.106
+  page: 5
+  lang: en
+  prev: U.DOC0167.0396
+  next: U.DOC0167.0398
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - bankName
+    - N
+    - Name of the bank used by the account.
+    - |-
+      • Required if the “type” field on the AccountsPayable element is set to DirectDeposit or WireTransfer.
+      • Must be blank if the “type” field on the AccountsPayable element is set to Check, Credit, ePayable, or PayMode.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

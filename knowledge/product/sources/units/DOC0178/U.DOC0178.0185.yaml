@@ -1,0 +1,55 @@
+id: U.DOC0178.0185
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: obligationTimeZone | Description: Timezone that the obligation is to use:
+  Valid values:
+  US/Eastern
+  US/Central
+  US/Pacific
+  US/Mountain
+  US/Arizona
+  US/East-Indiana
+  CETUS/Hawaii
+  Europe/London
+  Valid only if useTimeZoneContract setting is set to false.
+hash: sha256:e7388aba01c42a4a7f3a5dc5bf8c503eec6360243b8526a389a36e3ec459e0ea
+words: 30
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ObligationScheduledEvent [Import]
+  section_path: 2.2.1.16
+  page: 36
+  lang: en
+  prev: U.DOC0178.0184
+  next: U.DOC0178.0186
+row:
+  table: 0
+  row: 18
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - obligationTimeZone
+    - ""
+    - |-
+      Timezone that the obligation is to use:
+      Valid values:
+      US/Eastern
+      US/Central
+      US/Pacific
+      US/Mountain
+      US/Arizona
+      US/East-Indiana
+      CETUS/Hawaii
+      Europe/London
+      Valid only if useTimeZoneContract setting is set to false.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

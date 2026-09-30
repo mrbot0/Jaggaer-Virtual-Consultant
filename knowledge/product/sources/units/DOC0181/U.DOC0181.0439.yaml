@@ -1,0 +1,45 @@
+id: U.DOC0181.0439
+doc: S.STD.XSC.DOC.0181
+doc_id: jint-ws-development-kit-ji-order-docx-073f1825
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: statusCode | Description: Import order response 3-digit HTTP result code.
+  200 - The request was processed successfully.
+  400 - The request could not be understood due to syntax errors.
+  403 - system understood the request, but server is refusing to fulfill it for some reason.
+  408 - The server timed out while waiting for the request
+  412 - The precondition given in one or more of the request-header fields evaluated to false when it was tested on the server
+  500 - The request could not be processed due to a transient error.
+  Attribute: statusMessage | Description: Text of the status message.
+hash: sha256:88b50ce651e02b29a7fdf65560381646de2dea1e9141cf9a67c47499ab739886
+words: 106
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0181
+  chapter: JI Order web-service
+  section: ImportStatus [Import JIOrder method]
+  section_path: 2.3.3.2
+  page: 100
+  lang: en
+  prev: U.DOC0181.0438
+  next: U.DOC0181.0440
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - statusCode
+      - |-
+        Import order response 3-digit HTTP result code.
+        200 - The request was processed successfully.
+        400 - The request could not be understood due to syntax errors.
+        403 - system understood the request, but server is refusing to fulfill it for some reason.
+        408 - The server timed out while waiting for the request
+        412 - The precondition given in one or more of the request-header fields evaluated to false when it was tested on the server
+        500 - The request could not be processed due to a transient error.
+    - - statusMessage
+      - Text of the status message.
+  block: 1
+  blocks: 1

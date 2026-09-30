@@ -1,0 +1,40 @@
+document: jint-development-kit-profile-management-web-serv-35c3a7f6
+scope: XSC
+section: 4.1.1.1
+section_title: Company Import Request structure
+genre: tecnica
+rows:
+  - label: operationCode
+    technical_name: operationCode
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Code of requested operation
+    section: 4.1.1.1
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: sendEMail
+    technical_name: sendEMail
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Flag stating if, in case of creation of a new supplier company, mail must
+      be sent to notify the registration
+    section: 4.1.1.1
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6
+  - label: companyInfo
+    technical_name: companyInfo
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Company and super user data container (for all data to be imported)
+    section: 4.1.1.1
+    source_unit: jint-development-kit-profile-management-web-serv-35c3a7f6/4.1.1.1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-development-kit-profile-management-web-serv-35c3a7f6

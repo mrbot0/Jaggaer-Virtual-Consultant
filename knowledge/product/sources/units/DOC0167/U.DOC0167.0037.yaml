@@ -1,0 +1,39 @@
+id: U.DOC0167.0037
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: dAndBCode | Mandatory (Y/N): Y/N | Description: Dun&BradStreet code | Mapping on Jaggaer One data model and notes: The value could be mandatory and/or unique according to configuration. If the field is defined as “unique” (in other words a key) for suppliers in instance configuration, it cannot be updated via web service.
+  Not mandatory when JI is Primary
+hash: sha256:3ecf5690b8a6adb14518ba310b6314756fa0200d78e22f51e07dfc12af5ff0b6
+words: 59
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/J1SupplierData
+  section_path: 2.1.1.3
+  page: 5
+  lang: en
+  prev: U.DOC0167.0036
+  next: U.DOC0167.0038
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - dAndBCode
+    - Y/N
+    - Dun&BradStreet code
+    - |-
+      The value could be mandatory and/or unique according to configuration. If the field is defined as “unique” (in other words a key) for suppliers in instance configuration, it cannot be updated via web service.
+      Not mandatory when JI is Primary
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

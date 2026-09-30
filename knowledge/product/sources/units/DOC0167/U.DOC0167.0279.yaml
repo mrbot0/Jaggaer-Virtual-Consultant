@@ -1,0 +1,39 @@
+id: U.DOC0167.0279
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: type | Mandatory (Y/N): N | Description: Payment option for the fulfillment center. | Mapping on Jaggaer One data model and notes: Valid only if supportsOrderFulfillment field for the location is set to Yes. (That is, the specified location is a fulfillment center.)
+  Values: (PO | GhostCard | BlanketPO)
+hash: sha256:a586c4498f221abfd7886f0f1f3140eacb6fc995d02b16b20d574bf69f26660b
+words: 50
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/paymentMethod
+  section_path: 2.1.1.66
+  page: 5
+  lang: en
+  prev: U.DOC0167.0278
+  next: U.DOC0167.0280
+row:
+  table: 0
+  row: 0
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - type
+    - N
+    - Payment option for the fulfillment center.
+    - |-
+      Valid only if supportsOrderFulfillment field for the location is set to Yes. (That is, the specified location is a fulfillment center.)
+      Values: (PO | GhostCard | BlanketPO)
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

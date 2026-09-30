@@ -1,0 +1,39 @@
+id: U.DOC0167.0370
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: displayName | Mandatory (Y/N): N | Mapping on Jaggaer One data model and notes: Label for the custom element. You can edit this name in your system.
+  We recommend that you do not include the DisplayName in the supplier import message, because if it does not match the display name in your system, the custom element is not updated. However, if you do not provide the DisplayName, you must provide the CustomElementIdentifier.
+hash: sha256:23549dc55baeed926aafc8261e24278e2bcdb0bc20ebc3397998226e0e6dcb7d
+words: 73
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/customElementList/customElement
+  section_path: 2.1.1.100
+  page: 5
+  lang: en
+  prev: U.DOC0167.0369
+  next: U.DOC0167.0371
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - displayName
+    - N
+    - ""
+    - |-
+      Label for the custom element. You can edit this name in your system.
+      We recommend that you do not include the DisplayName in the supplier import message, because if it does not match the display name in your system, the custom element is not updated. However, if you do not provide the DisplayName, you must provide the CustomElementIdentifier.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

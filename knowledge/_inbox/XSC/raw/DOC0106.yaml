@@ -1,0 +1,283 @@
+doc: S.STD.XSC.DOC.0106
+scope: XSC
+extracted_at: 2026-09-30T04:30:48.047Z
+tier: T0
+stats:
+  units: 8
+  extracted_units: 6
+  document_candidates: 3
+  needs_llm: 3
+  t0_complete: 6
+  by_candidate:
+    FLD: 6
+    CFG: 3
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 9000
+  sessions:
+    - n: 1
+      tokens: 9000
+      batches: 2
+      items: 3
+      batch_items:
+        - - R.DOC0106.C001
+          - R.DOC0106.C002
+        - - R.DOC0106.C003
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0106.0003
+    source_unit: U.DOC0106.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0106
+    section: Domande — Page 1 / Employee Details
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Employee Name
+      technical_name: "61979"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Employee Name
+      section: domande-1
+      source_unit: U.DOC0106.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0106
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0106.0004
+    source_unit: U.DOC0106.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0106
+    section: Domande — Page 1 / Employee Details
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Department
+      technical_name: "61981"
+      type: Dropdown List (Pick One)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Department
+      section: domande-1
+      source_unit: U.DOC0106.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0106
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0106.0005
+    source_unit: U.DOC0106.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0106
+    section: Domande — Page 1 / Employee Details
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Cube Location
+      technical_name: "61983"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Cube Location
+      section: domande-1
+      source_unit: U.DOC0106.0005
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0106
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0106.0006
+    source_unit: U.DOC0106.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0106
+    section: Domande — Page 1 / Employee Personal Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Home Address
+      technical_name: "61985"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Home Address
+      section: domande-2
+      source_unit: U.DOC0106.0006
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0106
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0106.0007
+    source_unit: U.DOC0106.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0106
+    section: Domande — Page 1 / Employee Personal Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Mobile Number
+      technical_name: "61986"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Mobile Number
+      section: domande-2
+      source_unit: U.DOC0106.0007
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0106
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0106.0008
+    source_unit: U.DOC0106.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0106
+    section: Domande — Page 1 / Employee Personal Info
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Emergency Contact
+      technical_name: "61987"
+      type: Text (Single Line)
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Emergency Contact
+      section: domande-2
+      source_unit: U.DOC0106.0008
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0106
+    needs_llm: false
+    tokens: 40
+  - raw_id: R.DOC0106.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0106
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0106.0002
+    facets: &a7
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: Title
+      current_state:
+        value: New Employee ID Request
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0106.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0106
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0106.0002
+    facets: *a7
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Human Resources
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0106.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0106
+    section: Impostazioni del modello di richiesta
+    source_unit: U.DOC0106.0002
+    facets: *a7
+    extraction:
+      parameter: purpose
+      current_state:
+        value: GenericRequest
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-request-template
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

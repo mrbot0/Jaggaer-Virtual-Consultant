@@ -1,0 +1,61 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+batch: batch-27
+section: 2.1.1.35
+section_title: J1Supplier/JISupplierData/primaryAddressList/associatedAddress
+part: 1
+parts: 1
+rows:
+  - key: tech:ADDRESSREF
+    label: addressRef
+    labels:
+      - addressRef
+    technical_name: ADDRESSREF
+    section: 2.1.1.35
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: null
+    sources:
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.35
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.35#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: addressRef
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.45
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.45#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: addressRef
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.91
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.91#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: addressRef
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+        section: 2.1.1.104
+        source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.104#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: addressRef
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 864

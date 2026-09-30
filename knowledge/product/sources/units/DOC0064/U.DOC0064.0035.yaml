@@ -1,0 +1,290 @@
+id: U.DOC0064.0035
+doc: S.STD.XSC.DOC.0064
+doc_id: sc-perspective-example-tcm-implementation-workbo-e9405319
+type: tabella
+text: "Colonne: Permissions | TCM Contract Stakeholder | TCM Contract Manager | TCM Contract Approver | TCM Contract Administrator | TCM Admin | | Permissions: TCM | TCM Contract Stakeholder: TCM | TCM Contract Manager: TCM | TCM Contract Approver: TCM | TCM Contract Administrator: TCM Permissions: Contracts Permissions | TCM Contract Stakeholder: Contracts Permissions | TCM Contract Manager: Contracts Permissions Permissions: Contract Configuration | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Contract Administrator | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Contract Manager | TCM Contract Manager: Y | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Administer Projects | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Manage Contract Obligations | TCM Contract Manager: Y | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Manage Custom Contract Fields | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Manage Contract Templates and Clauses | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Contract Super User | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Manage Archived Contracts | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Export Search Results | TCM Contract Stakeholder: Y | TCM Contract Manager: Y | TCM Contract Approver: Y | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Manage Company Exports | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Manage Contract Request Templates | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Contract Requester | TCM Contract Stakeholder: Y | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Edit Party Contact on Contract | TCM Contract Manager: Y | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Edit Party Address on Contract | TCM Contract Manager: Y | TCM Contract Administrator: Y | TCM Admin: Y Permissions: Extend"
+hash: sha256:b480889ab21ace976dd932f071429b03b54beabaef4929de7ca4e6ece30a15dc
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0064
+  chapter: Roles and Permissions
+  section: Roles and Permissions
+  section_path: sheet-9
+  page: null
+  lang: en
+  prev: U.DOC0064.0034
+  next: U.DOC0064.0036
+table:
+  table: 0
+  headers:
+    - Permissions
+    - TCM Contract Stakeholder
+    - TCM Contract Manager
+    - TCM Contract Approver
+    - TCM Contract Administrator
+    - TCM Admin
+    - ""
+    - ""
+  rows:
+    - - TCM
+      - TCM
+      - TCM
+      - TCM
+      - TCM
+      - null
+      - null
+      - null
+    - - Contracts Permissions
+      - Contracts Permissions
+      - Contracts Permissions
+      - null
+      - null
+      - null
+      - null
+      - null
+    - - Contract Configuration
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Contract Administrator
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Contract Manager
+      - null
+      - Y
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Administer Projects
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Manage Contract Obligations
+      - null
+      - Y
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Manage Custom Contract Fields
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Manage Contract Templates and Clauses
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Contract Super User
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Manage Archived Contracts
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Export Search Results
+      - Y
+      - Y
+      - Y
+      - Y
+      - Y
+      - null
+      - null
+    - - Manage Company Exports
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Manage Contract Request Templates
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Contract Requester
+      - Y
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Edit Party Contact on Contract
+      - null
+      - Y
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Edit Party Address on Contract
+      - null
+      - Y
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Extend Contract End Date
+      - null
+      - null
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Email from Contract
+      - null
+      - Y
+      - null
+      - Y
+      - Y
+      - null
+      - null
+    - - Administration
+      - Administration
+      - Administration
+      - null
+      - null
+      - null
+      - null
+      - null
+    - - Administration
+      - null
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - This permission is necessary to make the ADW permission effective.
+    - - View Organization Form Requests
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - null
+      - null
+    - - Manage Supplier Profiles
+      - null
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - Only TCM Admin can add/edit contract parties, but generally FSU's vendor management group will do this.
+    - - Access Addresses & Contacts
+      - null
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - null
+    - - ADW
+      - null
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - null
+    - - Field Management
+      - null
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - null
+    - - Organizational Dashboards
+      - null
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - null
+    - - System Emails
+      - null
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - null
+    - - Determine additional Admin Permissions Needed
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+    - - Edit all User Profiles/Roles/Permissions
+      - null
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - null
+    - - Shopping, Carts, & Requisitions
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+    - - Create Shared Favorites Folders
+      - null
+      - null
+      - null
+      - null
+      - Y
+      - null
+      - null
+  block: 1
+  blocks: 3
+part:
+  n: 1
+  of: 3

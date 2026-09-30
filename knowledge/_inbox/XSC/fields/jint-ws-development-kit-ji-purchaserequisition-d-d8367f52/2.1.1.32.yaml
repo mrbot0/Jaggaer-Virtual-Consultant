@@ -1,0 +1,55 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.32
+section_title: Address Line [PR Import]
+genre: tecnica
+rows:
+  - label: label
+    technical_name: label
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Label of the AddressLine element, if applicable.
+    section: 2.1.1.32
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.32#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: lineNumber
+    technical_name: lineNumber
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: >-
+      Line number of the AddressLine element. AddressLine information can be
+      repeated up to 5 times, to define up to 5 lines in the address, so this
+      value represents the order of the line in the global address.
+
+      Valid values:
+
+      1
+
+      2
+
+      3
+
+      4
+
+      5
+    section: 2.1.1.32
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.32#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: addressLine
+    technical_name: addressLine
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Address line information, usually containing the street address and other
+      address information
+    section: 2.1.1.32
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.32#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

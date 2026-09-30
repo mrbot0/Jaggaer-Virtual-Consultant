@@ -1,0 +1,41 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+section: 2.2.1.1
+section_title: Main request structure [Validate JIOrder method]
+genre: tecnica
+rows:
+  - label: originalRequestMessageId
+    technical_name: originalRequestMessageId
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Unique identifier for the PO export message with which PO was saved
+    section: 2.2.1.1
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: orderId
+    technical_name: orderId
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal identifier of the Order on which operation is to be executed
+    section: 2.2.1.1
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825
+  - label: updateData
+    technical_name: updateData
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Object containing the information to be used to update the purchase order.
+      See section “UpdateData [Validate JIOrder method]” below.
+    section: 2.2.1.1
+    source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.2.1.1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-order-docx-073f1825

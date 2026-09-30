@@ -1,0 +1,80 @@
+id: U.DOC0182.0365
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: eventDateTime | Description: Date and time the change was made
+  Attribute: eventPosition | Description: Position of the action record in the history
+  Attribute: userName | Description: Username of the user responsible for the change
+  Attribute: action/code | Description: Code for the action in the group, such as Line Item Added action code - 14
+  Attribute: action/group | Description: Type of group to which the action belongs:
+  Approval
+  Modification
+  Integration
+  Distribution
+  Attribute: action/description | Description: Description of the action.
+  Attribute: field/name | Description: Name of the field associated with the change detailed in the history.
+  Attribute: field/oldValue | Description: Original value associated with the specified field name
+  Attribute: field/newValue | Description: Updated value for the field.
+  Attribute: workflowStep | Description: Workflow step in which the change took place
+  Attribute: note | Description: Note associated with the particular record, if applicable.
+hash: sha256:ece6abbffbabb686b61c74e2dd83ec487649c410f1ca4cf71dda20c6672947a6
+words: 148
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: History Event [PR Export]
+  section_path: 2.3.3.70
+  page: 26
+  lang: en
+  prev: U.DOC0182.0364
+  next: U.DOC0182.0366
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - eventDateTime
+      - Date and time the change was made
+      - ""
+    - - eventPosition
+      - Position of the action record in the history
+      - ""
+    - - userName
+      - Username of the user responsible for the change
+      - ""
+    - - action/code
+      - Code for the action in the group, such as Line Item Added action code - 14
+      - ""
+    - - action/group
+      - |-
+        Type of group to which the action belongs:
+        Approval
+        Modification
+        Integration
+        Distribution
+      - ""
+    - - action/description
+      - Description of the action.
+      - ""
+    - - field/name
+      - Name of the field associated with the change detailed in the history.
+      - ""
+    - - field/oldValue
+      - Original value associated with the specified field name
+      - ""
+    - - field/newValue
+      - Updated value for the field.
+      - ""
+    - - workflowStep
+      - Workflow step in which the change took place
+      - ""
+    - - note
+      - Note associated with the particular record, if applicable.
+      - ""
+  block: 1
+  blocks: 1

@@ -1,0 +1,17 @@
+id: U.DOC0136.0018
+doc: S.STD.XSC.DOC.0136
+doc_id: workflow-po-invalid-distribution-setup-pdf-f76b8b8d
+type: testo
+text: <Activity name="Invalid Distribution"> <ActivityType>manual</ActivityType> <StepRef name="Invalid Distribution" /> <Rule><![CDATA[Document.HasInvalidDistribution() == true && Document.CanDistributeRevision == true && Document.Requires RuleGroupEvaluation("Invalid Distribution") == true]]></Rule> <FolderSelectionRule>MultiElementDynamic</FolderSelectionRule> <Attribute name="RuleGroupInternalName"> <AttrValue lang="default">Invalid Distribution</AttrValue> </Attribute> </Activity>
+hash: sha256:43e5007904995b23367fa68c4e171c36f2726c40c24083f28fca47dfe8ba7cba
+words: 29
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0136
+  chapter: STEPS TO IMPLEMENT
+  section: STEPS TO IMPLEMENT
+  section_path: p2
+  page: 2
+  lang: en
+  prev: U.DOC0136.0017
+  next: U.DOC0136.0019

@@ -1,0 +1,48 @@
+id: U.DOC0171.0501
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: URL | /j1p/api/public/ja/v1/rfxs/
+  URL: Http Method | /j1p/api/public/ja/v1/rfxs/: POST
+  URL: Header Parameters | /j1p/api/public/ja/v1/rfxs/: Authorization (see “J1P WSDevelopment_Kit – Web Services Overview” document)
+  URL: Body | /j1p/api/public/ja/v1/rfxs/: JSON String representing the import request as defined in “2.1.1-Request data format”
+  URL: Response format | /j1p/api/public/ja/v1/rfxs/: JSON string representing the import profiles response as defined in “2.1.3 – Response data format”
+  URL: Return Codes | /j1p/api/public/ja/v1/rfxs/: 200 operation processed. See response content for results
+  400 wrong or missing data in the request
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:cc26f42fa34c245b99e2bb46f1d243d0b34b27f2431f79cac1885451f6b30077
+words: 93
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Import/Update RfX [import RfX]
+  section_path: 2.3.6.4
+  page: 8
+  lang: en
+  prev: U.DOC0171.0500
+  next: U.DOC0171.0502
+table:
+  table: 0
+  headers:
+    - URL
+    - /j1p/api/public/ja/v1/rfxs/
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization (see “J1P WSDevelopment_Kit – Web Services Overview” document)
+    - - Body
+      - JSON String representing the import request as defined in “2.1.1-Request data format”
+    - - Response format
+      - JSON string representing the import profiles response as defined in “2.1.3 – Response data format”
+    - - Return Codes
+      - |-
+        200 operation processed. See response content for results
+        400 wrong or missing data in the request
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

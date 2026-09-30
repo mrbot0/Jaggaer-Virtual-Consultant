@@ -1,0 +1,312 @@
+document: jint-ws-development-kit-ji-order-docx-073f1825
+scope: XSC
+batch: batch-23
+section: 2.3.1.20
+section_title: CustomFieldValue [Import JIOrder method]
+part: 1
+parts: 1
+rows:
+  - key: tech:DISTRIBUTIONVALUE
+    label: distributionValue
+    labels:
+      - distributionValue
+    technical_name: DISTRIBUTIONVALUE
+    section: 2.3.1.20
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Distribution value for the split
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: distributionValue
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.24
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.24#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: distributionValue
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SPLITINDEX
+    label: splitIndex
+    labels:
+      - splitIndex
+    technical_name: SPLITINDEX
+    section: 2.3.1.20
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Split sequence number
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: splitIndex
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.24
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.24#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: splitIndex
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SPLITAMOUNT
+    label: splitAmount
+    labels:
+      - splitAmount
+    technical_name: SPLITAMOUNT
+    section: 2.3.1.20
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Amount to be split for the line item.
+      Valid only for CustomFieldValue on SplittableFieldIndex object.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: splitAmount
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.24
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.24#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: splitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:SHIPPINGSPLITAMOUNT
+    label: shippingSplitAmount
+    labels:
+      - shippingSplitAmount
+    technical_name: SHIPPINGSPLITAMOUNT
+    section: 2.3.1.20
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Amount to be split for shipping for the line item.
+      Valid only for CustomFieldValue on SplittableFieldIndex object.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: shippingSplitAmount
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.24
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.24#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: shippingSplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:HANDLINGSPLITAMOUNT
+    label: handlingSplitAmount
+    labels:
+      - handlingSplitAmount
+    technical_name: HANDLINGSPLITAMOUNT
+    section: 2.3.1.20
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Amount to be split for handling for the line item.
+      Valid only for CustomFieldValue on SplittableFieldIndex object.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: handlingSplitAmount
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.24
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.24#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: handlingSplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX1SPLITAMOUNT
+    label: tax1SplitAmount
+    labels:
+      - tax1SplitAmount
+    technical_name: TAX1SPLITAMOUNT
+    section: 2.3.1.20
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Amount to be split for tax 1 for the line item.
+      Valid only for CustomFieldValue on SplittableFieldIndex object.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: tax1SplitAmount
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.24
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.24#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: tax1SplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:TAX2SPLITAMOUNT
+    label: tax2SplitAmount
+    labels:
+      - tax2SplitAmount
+    technical_name: TAX2SPLITAMOUNT
+    section: 2.3.1.20
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Amount to be split for tax 2 for the line item.
+      Valid only for CustomFieldValue on SplittableFieldIndex object.
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: tax2SplitAmount
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.24
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.24#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: tax2SplitAmount
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:COLUMNINDEX
+    label: columnIndex
+    labels:
+      - columnIndex
+    technical_name: COLUMNINDEX
+    section: 2.3.1.20
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Column index number
+    sources:
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.20
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.20#part-1
+        row_ref: t0.r10
+        genre: tecnica
+        label: columnIndex
+        type: null
+        mandatory_text: N
+      - document: jint-ws-development-kit-ji-order-docx-073f1825
+        section: 2.3.1.26
+        source_unit: jint-ws-development-kit-ji-order-docx-073f1825/2.3.1.26#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: columnIndex
+        type: null
+        mandatory_text: Y
+    conflicts:
+      - attribute: mandatory_text
+        values:
+          - N
+          - Y
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+      contradiction: "le fonti divergono sull'obbligatorietà: candidato CTR"
+tokens_estimate: 2500

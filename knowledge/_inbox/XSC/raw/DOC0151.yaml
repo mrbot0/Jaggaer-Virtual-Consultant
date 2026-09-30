@@ -1,0 +1,1090 @@
+doc: S.STD.XSC.DOC.0151
+scope: XSC
+extracted_at: 2026-09-30T04:31:16.929Z
+tier: T0
+stats:
+  units: 331
+  extracted_units: 25
+  document_candidates: 0
+  needs_llm: 20
+  t0_complete: 5
+  by_candidate:
+    FLD: 8
+    FLW: 11
+    CFP: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 8044
+  sessions:
+    - n: 1
+      tokens: 8044
+      batches: 2
+      items: 20
+      batch_items:
+        - - R.DOC0151.0028
+          - R.DOC0151.0057
+          - R.DOC0151.0058
+          - R.DOC0151.0065
+          - R.DOC0151.0109
+          - R.DOC0151.0123
+          - R.DOC0151.0146
+          - R.DOC0151.0154
+          - R.DOC0151.0166
+          - R.DOC0151.0174
+          - R.DOC0151.0184
+          - R.DOC0151.0193
+          - R.DOC0151.0201
+          - R.DOC0151.0212
+          - R.DOC0151.0242
+          - R.DOC0151.0256
+          - R.DOC0151.0268
+          - R.DOC0151.0280
+          - R.DOC0151.0287
+        - - R.DOC0151.0329
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0151.0028
+    source_unit: U.DOC0151.0028
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 4
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0151.0028
+      mandatory:
+        kind: always
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 54
+  - raw_id: R.DOC0151.0057
+    source_unit: U.DOC0151.0057
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0151.0057
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0151.0058
+    source_unit: U.DOC0151.0058
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 9
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0151.0058
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 12
+  - raw_id: R.DOC0151.0065
+    source_unit: U.DOC0151.0065
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: for the toothbrush
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the results. o Determine the types of catalogs these items are coming from. o For the virtual item, determine the source for item data and pricing. o View the any contracts associated with the items
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0065
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 63
+  - raw_id: R.DOC0151.0109
+    source_unit: U.DOC0151.0109
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 20
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLW
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: for the toothbrush and view the results
+          valore: null
+        - n: 2
+          verbo: examine
+          oggetto: "the virtual item: o Item detail o Supplier o Pricing o Item links o Contracts"
+          valore: o Item detail o Supplier o Pricing o Item links o Contracts
+        - n: 3
+          verbo: examine
+          oggetto: the contract noncatalog item
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0109
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 49
+  - raw_id: R.DOC0151.0123
+    source_unit: U.DOC0151.0123
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: a manufacturer
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: an item master and contract items
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0123
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 27
+  - raw_id: R.DOC0151.0130
+    source_unit: U.DOC0151.0130
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: To bring these items into ePro, CORTECH
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0151.0130
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0151.0145
+    source_unit: U.DOC0151.0145
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: To bring these items into ePro, CORTECH
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0151.0145
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 25
+  - raw_id: R.DOC0151.0146
+    source_unit: U.DOC0151.0146
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 26
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLW
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: the licenses relevant to Virtual Item Master
+          valore: null
+        - n: 2
+          verbo: make
+          oggetto: sure user has the necessary permissions
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: CORTECH as a manufacturer
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0146
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 37
+  - raw_id: R.DOC0151.0154
+    source_unit: U.DOC0151.0154
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 28
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLW
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: for the toothbrush
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: the item master item
+          valore: null
+        - n: 3
+          verbo: make
+          oggetto: virtual item details visible in product search
+          valore: null
+        - n: 4
+          verbo: search
+          oggetto: for the toothbrush and view the results
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0154
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 45
+  - raw_id: R.DOC0151.0166
+    source_unit: U.DOC0151.0166
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 31
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLW
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: link
+          oggetto: the Grainger item master item to t he item in the Grainger hosted catalog
+          valore: null
+        - n: 2
+          verbo: prioritize
+          oggetto: the source for item detail val ues and price displayed in the product search results based on customer requirements
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: for the item master item and view the results
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0166
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 70
+  - raw_id: R.DOC0151.0174
+    source_unit: U.DOC0151.0174
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLW
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a contract with Grainger
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: the contract item, add the supplier and price, and associate the contract
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: for the toothbrush and view the results
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0174
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 46
+  - raw_id: R.DOC0151.0184
+    source_unit: U.DOC0151.0184
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLW
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: link
+          oggetto: the item Master item to the contract item
+          valore: null
+        - n: 2
+          verbo: change
+          oggetto: the priority for the source for item detail values and price displayed in the product search results based on customer requirements
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: for the toothbrush and view the results
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0184
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 64
+  - raw_id: R.DOC0151.0193
+    source_unit: U.DOC0151.0193
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLW
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the price for the Asia business unit on the Grainger contract item
+          valore: null
+        - n: 2
+          verbo: view
+          oggetto: the item prices on the Grainger contract
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: all the prices available for Grainger
+          valore: null
+        - n: 4
+          verbo: change
+          oggetto: the business unit of your user to Asia
+          valore: null
+        - n: 5
+          verbo: search
+          oggetto: for the toothbrush from Grainger and view the price
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0193
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 74
+  - raw_id: R.DOC0151.0201
+    source_unit: U.DOC0151.0201
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 41
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: remove
+          oggetto: manual links with the item master and contract item
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: the automated item linking engine and run a linking job for item master and contact items
+          valore: null
+        - n: 3
+          verbo: view
+          oggetto: the jobs in the linking queue
+          valore: null
+        - n: 4
+          verbo: view
+          oggetto: the links automatically made among all the items
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0201
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 69
+  - raw_id: R.DOC0151.0212
+    source_unit: U.DOC0151.0212
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 42
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a virtual item (item master, contact, hosted catalog)
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: virtual item search
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0212
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 27
+  - raw_id: R.DOC0151.0242
+    source_unit: U.DOC0151.0242
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 46
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the UNSPSC code and category on t he toothbrush item master item
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: "the setting to map commodity codes to the custom field value GL Code "
+          valore: null
+        - n: 3
+          verbo: enable
+          oggetto: the linking of custom fields to a commodity code in item master items
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: the GL Code value to the toothbrush item master item
+          valore: null
+        - n: 5
+          verbo: see
+          oggetto: how these codes are brought into the requisition
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0242
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 91
+  - raw_id: R.DOC0151.0256
+    source_unit: U.DOC0151.0256
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 49
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a18
+      - FLW
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: the item master ID field to the PR document configuration
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a contract non-catalog i tem to the Education Lab Supplies contract
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: for the item and add it to the cart. Note how commodity and GL code values are populated for that item on the PR
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0256
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 69
+  - raw_id: R.DOC0151.0259
+    source_unit: U.DOC0151.0259
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 50
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: "Requirement: When new item master items"
+      modality: raccomandazione
+      condition: new item master items are brought into ePro, any hosted catalog items that have a corresponding item master ID should be automatically linked to that item master item
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0151.0259
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0151.0267
+    source_unit: U.DOC0151.0267
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 51
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.6
+    extraction:
+      subject: "Requirement: When new item master items"
+      modality: raccomandazione
+      condition: new item master items are brought into ePro, any hosted catalog items that have a corresponding item master ID should be automatically linked to that item master item
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0151.0267
+    needs_llm: false
+    tokens: 47
+  - raw_id: R.DOC0151.0268
+    source_unit: U.DOC0151.0268
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 51
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a new item master item for a mop bucket
+          valore: null
+        - n: 2
+          verbo: set
+          oggetto: up a custom catalog attribute IM ID for item master IDs
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: "the item master ID of the new item master item to the custom catalog attribute of the corresponding hosted catalog item part number CB5000 "
+          valore: null
+        - n: 4
+          verbo: enable
+          oggetto: and configure the automatic linking by item master ID rule and run the linking engine
+          valore: null
+        - n: 5
+          verbo: view
+          oggetto: the linking details for that s upplier in the item master item supplier item details
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0268
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 116
+  - raw_id: R.DOC0151.0276
+    source_unit: U.DOC0151.0276
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 53
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: This box
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0151.0276
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0151.0280
+    source_unit: U.DOC0151.0280
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 54
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLW
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: a toothbrush from a noncatalog and punchout supplier to the draft PR
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: the item master ID for the toothbrush to each item in the PR
+          valore: null
+        - n: 3
+          verbo: note
+          oggetto: how the commodity code and GL Code are automatically populated on the PR for each item
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0280
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 63
+  - raw_id: R.DOC0151.0287
+    source_unit: U.DOC0151.0287
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 55
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a virtual item (item master, contact, hosted catalog)
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: virtual item search
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0287
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 27
+  - raw_id: R.DOC0151.0329
+    source_unit: U.DOC0151.0329
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0151
+    section: 4/15/2021
+    page: 59
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a25
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: a virtual item (item master, contact, hosted catalog)
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: virtual item search
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0151.0329
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 27

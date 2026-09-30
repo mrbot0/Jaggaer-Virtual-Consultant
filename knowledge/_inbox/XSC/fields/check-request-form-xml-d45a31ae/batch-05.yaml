@@ -1,0 +1,65 @@
+document: check-request-form-xml-d45a31ae
+scope: XSC
+batch: batch-05
+section: campi-5
+section_title: Campi — senza-sezione
+part: 1
+parts: 1
+rows:
+  - key: tech:112
+    label: "112"
+    labels:
+      - "112"
+    technical_name: "112"
+    section: campi-5
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=112 · tipo=static
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-5
+        source_unit: check-request-form-xml-d45a31ae/campi-5#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: "112"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:104
+    label: "104"
+    labels:
+      - "104"
+    technical_name: "104"
+    section: campi-5
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=104 · tipo=static
+    sources:
+      - document: check-request-form-xml-d45a31ae
+        section: campi-5
+        source_unit: check-request-form-xml-d45a31ae/campi-5#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "104"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 785

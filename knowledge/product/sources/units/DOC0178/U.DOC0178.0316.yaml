@@ -1,0 +1,41 @@
+id: U.DOC0178.0316
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: unitOfMeasure | Description: Packaging or size unit for the product line item, such as EA (each), PK (pack), KG (kg), or LG (large).
+  The supplier item is the actual purchasable item available for the shopper.
+  If the packaging or size also includes a quantity (for example, 2 per package), then include the quantity with the code (for example, “2/PK”).
+  The default unitOfMeasure is EA.
+hash: sha256:c78e4f66ce084a47e708e9b113058add1d57e410009956df0f0c25fa93543f9a
+words: 65
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ProductLineItem [Import]
+  section_path: 2.2.1.47
+  page: 58
+  lang: en
+  prev: U.DOC0178.0315
+  next: U.DOC0178.0317
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - unitOfMeasure
+    - ""
+    - |-
+      Packaging or size unit for the product line item, such as EA (each), PK (pack), KG (kg), or LG (large).
+      The supplier item is the actual purchasable item available for the shopper.
+      If the packaging or size also includes a quantity (for example, 2 per package), then include the quantity with the code (for example, “2/PK”).
+      The default unitOfMeasure is EA.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

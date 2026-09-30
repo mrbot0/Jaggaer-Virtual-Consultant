@@ -1,0 +1,51 @@
+id: U.DOC0171.0093
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: commScoringAlgorithm | Mandatory (Y/N): N | Description: Scoring algorithm to calculate the score.
+  Possible values:
+  PROPORTIONAL_VS_BEST = Proportional vs Best
+  BETTER_ABOVE_AVERAGE_DISCOUNT = Better Above Average Discount
+  DIFFERENTIAL_VS_BASE_PRICE = Differential vs Base Price
+  LINEAR = Linear (Worst=0)
+  COPY_TCO = Copy of TCO
+  NO_FORMULA = No formula
+hash: sha256:68a9defdec06c6e4ce5c36942ccf96213724ad773f2f048ba9c1c766c83f109c
+words: 46
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0092
+  next: U.DOC0171.0094
+row:
+  table: 0
+  row: 39
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - commScoringAlgorithm
+    - N
+    - |-
+      Scoring algorithm to calculate the score.
+      Possible values:
+      PROPORTIONAL_VS_BEST = Proportional vs Best
+      BETTER_ABOVE_AVERAGE_DISCOUNT = Better Above Average Discount
+      DIFFERENTIAL_VS_BASE_PRICE = Differential vs Base Price
+      LINEAR = Linear (Worst=0)
+      COPY_TCO = Copy of TCO
+      NO_FORMULA = No formula
+    - ""
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

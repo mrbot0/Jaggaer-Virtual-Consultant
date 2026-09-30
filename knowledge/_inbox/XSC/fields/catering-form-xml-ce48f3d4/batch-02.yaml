@@ -1,0 +1,96 @@
+document: catering-form-xml-ce48f3d4
+scope: XSC
+batch: batch-02
+section: campi-2
+section_title: Campi —
+part: 1
+parts: 1
+rows:
+  - key: tech:WAITER
+    label: Waiter
+    labels:
+      - Waiter
+    technical_name: WAITER
+    section: campi-2
+    type: Image
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamImageAlign=1;
+      UserDefinedFieldParamImageUrl=/pics/orgimages/1940363/1517.jpg · id=10000
+      · tipo=userdefined
+    sources:
+      - document: catering-form-xml-ce48f3d4
+        section: campi-2
+        source_unit: catering-form-xml-ce48f3d4/campi-2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Waiter
+        type: Image
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:100
+    label: "100"
+    labels:
+      - "100"
+    technical_name: "100"
+    section: campi-2
+    type: static
+    mandatory_text: Sì
+    allowed_values: []
+    notes: id=100 · tipo=static
+    sources:
+      - document: catering-form-xml-ce48f3d4
+        section: campi-2
+        source_unit: catering-form-xml-ce48f3d4/campi-2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: "100"
+        type: static
+        mandatory_text: Sì
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:CATERING_LINK
+    label: Catering Link
+    labels:
+      - Catering Link
+    technical_name: CATERING_LINK
+    section: campi-2
+    type: URL
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamLinkUrl=http://www.google.com;
+      UserDefinedFieldParamLinkTitle=Put link here · id=10003 · tipo=userdefined
+    sources:
+      - document: catering-form-xml-ce48f3d4
+        section: campi-2
+        source_unit: catering-form-xml-ce48f3d4/campi-2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: Catering Link
+        type: URL
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 987

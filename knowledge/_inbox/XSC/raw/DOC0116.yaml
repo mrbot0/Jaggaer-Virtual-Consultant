@@ -1,0 +1,388 @@
+doc: S.STD.XSC.DOC.0116
+scope: XSC
+extracted_at: 2026-09-30T04:30:49.674Z
+tier: T0
+stats:
+  units: 10
+  extracted_units: 7
+  document_candidates: 6
+  needs_llm: 6
+  t0_complete: 7
+  by_candidate:
+    FLD: 7
+    CFG: 6
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 18000
+  sessions:
+    - n: 1
+      tokens: 18000
+      batches: 3
+      items: 6
+      batch_items:
+        - - R.DOC0116.C001
+          - R.DOC0116.C002
+        - - R.DOC0116.C003
+          - R.DOC0116.C004
+        - - R.DOC0116.C005
+          - R.DOC0116.C006
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0116.0003
+    source_unit: U.DOC0116.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0116
+    section: Campi —
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "100"
+      technical_name: "100"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=100 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0116.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0116
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0116.0004
+    source_unit: U.DOC0116.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0116
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Total Amount
+      technical_name: Total Amount
+      type: Price
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Enter the total estimated cost of the travel from the completed travel authorization form attached. · id=10003 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0116.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0116
+    needs_llm: false
+    tokens: 61
+  - raw_id: R.DOC0116.0005
+    source_unit: U.DOC0116.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0116
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Motor Fleet Vehicle Requested?
+      technical_name: Motor Fleet Vehicle Requested?
+      type: RadioButtonGroup
+      mandatory_text: Sì
+      allowed_values: []
+      notes: Click here if you will need a motor fleet vehicle. · UserDefinedFieldParamFormListId=211365 · id=10004 · tipo=userdefined
+      section: campi-1
+      source_unit: U.DOC0116.0005
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0116
+    needs_llm: false
+    tokens: 70
+  - raw_id: R.DOC0116.0006
+    source_unit: U.DOC0116.0006
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0116
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Instructions
+      technical_name: Instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamHTML=<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)"> <meta name="created" content="Wed, 22 Aug 2012 19:50:42 GMT"> <meta name="description" content=""> <meta name="keywords" content=""> <title>Viking Shoppes Travel Form</title> <style type="text/css"> <!-- body { color:#000000; background-color:#FFFFFF; } a { color:#0000FF; } a:visited { color:#800080; } a:hover { color:#008000; } a:active { color:#FF0000; } --> </style> <!--[if IE]> src="http://html5shim.googlecode.com/svn/trunk/html5.js"> <![endif]--> </head> <body> This Viking Shoppes Form is used to submit the <b>WorldWide Widgets Excel Travel Form</b> for electronic approval. · id=10000 · tipo=userdefined
+      section: campi-2
+      source_unit: U.DOC0116.0006
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0116
+    needs_llm: false
+    tokens: 218
+  - raw_id: R.DOC0116.0007
+    source_unit: U.DOC0116.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0116
+    section: Campi —
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "113"
+      technical_name: "113"
+      type: static
+      mandatory_text: Sì
+      allowed_values: []
+      notes: id=113 · tipo=static
+      section: campi-3
+      source_unit: U.DOC0116.0007
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0116
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0116.0008
+    source_unit: U.DOC0116.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0116
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Step-by-Step Instructions
+      technical_name: Step-by-Step Instructions
+      type: HTML
+      mandatory_text: No
+      allowed_values: []
+      notes: "UserDefinedFieldParamHTML=<body> <p></p><b>Step 1</b> - Enter Total Amount &nbsp;&nbsp;&nbsp;<blockquote>Enter the total estimated cost of the travel in the <b>Supplier </b>section.</blockquote><p></p><b>Step 2</b> - Attach File &nbsp;&nbsp;&nbsp;<blockquote>Simply attach the completed travel form from the SQUFS website under Business and Finance Forms and Documents.</blockquote> <p></p><b>Step 3</b> - Click <b><i>Go</i></b> &nbsp;&nbsp;&nbsp;<blockquote>Click the <b>Go</b> button with the Available Action: <i>Add and go to Cart</i>. </blockquote><b>Step 4</b> - Click <b><i>Proceed to Checkout</i></b> &nbsp;&nbsp;&nbsp;<blockquote>This will create a draft requisition for your travel authorization request. </blockquote><b>Step 5</b> - Enter the accounting codes &nbsp;&nbsp;&nbsp;<blockquote>Enter the fund code and the word <i>Travel</i> for the account code. </blockquote> </body><b>Step 6</b> - Assign - Click <b>Place Order</b><blockquote>If you are not the traveler, assign the cart to the traveler. The traveler will need to place the order which will complete your request for travel authorization.</blockquote> You will receive an email from the Travel Office letting you know if the travel is authorized, rejected or if you need to make changes to the travel form and resubmit. </html> · id=10001 · tipo=userdefined"
+      section: campi-4
+      source_unit: U.DOC0116.0008
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0116
+    needs_llm: false
+    tokens: 359
+  - raw_id: R.DOC0116.0009
+    source_unit: U.DOC0116.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0116
+    section: Campi —
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: Image
+      technical_name: Image
+      type: Image
+      mandatory_text: No
+      allowed_values: []
+      notes: UserDefinedFieldParamImageAlign=1; UserDefinedFieldParamImageUrl=/pics/orgimages/30001867/48443.png · id=10002 · tipo=userdefined
+      section: campi-5
+      source_unit: U.DOC0116.0009
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0116
+    needs_llm: false
+    tokens: 53
+  - raw_id: R.DOC0116.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0116
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0116.0001
+    facets: &a8
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: VersionDescription
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0116.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0116
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0116.0001
+    facets: *a8
+    extraction:
+      parameter: AdditionalInformation
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0116.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0116
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0116.0001
+    facets: *a8
+    extraction:
+      parameter: SearchableKeyword
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0116.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0116
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0116.0001
+    facets: *a8
+    extraction:
+      parameter: Title
+      current_state:
+        value: ""
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0116.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0116
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0116.0001
+    facets: *a8
+    extraction:
+      parameter: FormType
+      current_state:
+        value: Travel Request
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0116.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0116
+    section: Impostazioni (FormConfig)
+    source_unit: U.DOC0116.0001
+    facets: *a8
+    extraction:
+      parameter: LimitSupplierSelection
+      current_state:
+        value: "true"
+        observed_at: 2019-08-22
+        source: config-export
+      export_kind: form-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

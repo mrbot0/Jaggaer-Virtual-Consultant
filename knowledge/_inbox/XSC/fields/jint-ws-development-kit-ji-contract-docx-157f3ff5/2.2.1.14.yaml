@@ -1,0 +1,160 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.14
+section_title: Obligation [Import]
+genre: tecnica
+rows:
+  - label: obligationId
+    technical_name: obligationId
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Unique identifier for the obligation.
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationName
+    technical_name: obligationName
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Name of the obligation
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationDescription
+    technical_name: obligationDescription
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Description of the obligation
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: requiresDocumentation
+    technical_name: requiresDocumentation
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether documentation is (true) or is not (false) required to
+      fulfill the obligation.
+
+      If documentation is required, the obligation cannot be marked completed
+      without an attachment.
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: Cancelled
+    technical_name: Cancelled
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Indicates whether the obligation has (true) or has not (false) been
+      cancelled.
+
+      If the obligation has been cancelled, it cannot be edited or marked as
+      complete.
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: promptToCreateInvoice
+    technical_name: promptToCreateInvoice
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the obligation is (true) or is not (false) to prompt
+      the user to create an invoice when the obligation is marked as Complete
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: useTimeZoneContract
+    technical_name: useTimeZoneContract
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the obligation is (true) or is not (false) to use the
+      contract time zone.
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationTagList
+    technical_name: obligationTagList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation tag information.
+      See section “ObligationTag [Import]” below
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationScheduledEvent
+    technical_name: obligationScheduledEvent
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Obligation scheduled event information.
+      See section “ObligationScheduledEvent [Import]” below
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationOccurrenceList
+    technical_name: obligationOccurrenceList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation occurrence information.
+      See section “ObligationOccurrence [Import]” below
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationOwnerList
+    technical_name: obligationOwnerList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation owner information.
+      See section “ObligationOwner [Import]” below
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: obligationLeadTimeList
+    technical_name: obligationLeadTimeList
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for obligation lead time information.
+      See section “ObligationLeadTime [Import]” below
+    section: 2.2.1.14
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.14#part-1
+    row_ref: t0.r11
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

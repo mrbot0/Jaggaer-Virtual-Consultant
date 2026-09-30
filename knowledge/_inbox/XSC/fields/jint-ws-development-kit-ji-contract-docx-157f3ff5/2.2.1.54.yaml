@@ -1,0 +1,115 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+section: 2.2.1.54
+section_title: Notification [Import]
+genre: tecnica
+rows:
+  - label: message
+    technical_name: message
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Notification email to be sent to users who are configured to receive the
+      notification in their notification preferences
+    section: 2.2.1.54
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: >-
+      Type of notification to be sent:
+
+      BudgetExceeded – The budget on the contract has been exceeded
+
+      PercentageTiers- The percentage tiers on the contract have been exceeded
+
+      AmountTiers- The amount tiers on the contract have been exceeded
+
+      DateEffLead- The lead time for the effective date of the contract has been
+      reached
+
+      DateEff- The effective date of the contract has been reached
+
+      DateExpLead- The lead time for the expiration date of the contract has
+      been reached
+
+      DateExp- The expiration date of the contract has been reached
+
+      DateRenewLead- The lead time for the renewal date of the contract has been
+      reached.
+
+      DateRenew- The renewal date of the contract has been reached
+
+      ReviewDatePasse- The review date for the contract has been passed
+    section: 2.2.1.54
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractManagers
+    technical_name: contractManagers
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to contract managers associated with the contract
+    section: 2.2.1.54
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: contractManagersOnProject
+    technical_name: contractManagersOnProject
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to contract managers who are associated with the contract and are on the
+      work group.
+    section: 2.2.1.54
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: stakeHolders
+    technical_name: stakeHolders
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to stakeholders associated with the contract
+    section: 2.2.1.54
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: stakeHoldersOnProject
+    technical_name: stakeHoldersOnProject
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to stakeholders who are associated with the contract and are on the work
+      group.
+    section: 2.2.1.54
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+  - label: externalContacts
+    technical_name: externalContacts
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: Indicates whether the notification is (true) or is not (false) to be sent
+      to external contacts associated with the contract.
+    section: 2.2.1.54
+    source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: jint-ws-development-kit-ji-contract-docx-157f3ff5

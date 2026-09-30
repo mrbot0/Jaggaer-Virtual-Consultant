@@ -1,0 +1,93 @@
+document: non-catalog-form-xml-e1d4d424
+scope: XSC
+batch: batch-03
+section: campi-3
+section_title: Campi — External Info
+part: 1
+parts: 1
+rows:
+  - key: tech:CONTRACTSTARTDATE
+    label: Contract Start Date
+    labels:
+      - Contract Start Date
+    technical_name: CONTRACTSTARTDATE
+    section: campi-3
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10004 · tipo=userdefined
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-3
+        source_unit: non-catalog-form-xml-e1d4d424/campi-3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: Contract Start Date
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CONTRACTENDDATE
+    label: Contract End Date
+    labels:
+      - Contract End Date
+    technical_name: CONTRACTENDDATE
+    section: campi-3
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10005 · tipo=userdefined
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-3
+        source_unit: non-catalog-form-xml-e1d4d424/campi-3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Contract End Date
+        type: Date
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: date
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:114
+    label: "114"
+    labels:
+      - "114"
+    technical_name: "114"
+    section: campi-3
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=114 · tipo=static
+    sources:
+      - document: non-catalog-form-xml-e1d4d424
+        section: campi-3
+        source_unit: non-catalog-form-xml-e1d4d424/campi-3#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: "114"
+        type: static
+        mandatory_text: No
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 962

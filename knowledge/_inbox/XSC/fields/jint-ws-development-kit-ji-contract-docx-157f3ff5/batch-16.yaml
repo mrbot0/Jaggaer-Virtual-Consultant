@@ -1,0 +1,62 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-16
+section: 2.2.1.12
+section_title: CustomFieldValue [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:VALUE
+    label: value
+    labels:
+      - value
+      - Value
+    technical_name: VALUE
+    section: 2.2.1.12
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Value of the contract custom field
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.12
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.12#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: value
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.27
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.27#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: value
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.44
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.44#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Value
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.4.1.3
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: value
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 852

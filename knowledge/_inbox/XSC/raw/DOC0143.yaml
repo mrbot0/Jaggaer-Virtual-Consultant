@@ -1,0 +1,1593 @@
+doc: S.STD.XSC.DOC.0143
+scope: XSC
+extracted_at: 2026-09-30T04:31:05.875Z
+tier: T0
+stats:
+  units: 392
+  extracted_units: 37
+  document_candidates: 0
+  needs_llm: 25
+  t0_complete: 12
+  by_candidate:
+    CFP: 8
+    FLW: 13
+    FLD: 14
+    CFG: 1
+    INV: 1
+  residue_marked: 2
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 10013
+  sessions:
+    - n: 1
+      tokens: 10013
+      batches: 2
+      items: 25
+      batch_items:
+        - - R.DOC0143.0009
+          - R.DOC0143.0024
+          - R.DOC0143.0042
+          - R.DOC0143.0046
+          - R.DOC0143.0060
+          - R.DOC0143.0081
+          - R.DOC0143.0181
+          - R.DOC0143.0186
+          - R.DOC0143.0192
+          - R.DOC0143.0202
+          - R.DOC0143.0209
+          - R.DOC0143.0213
+          - R.DOC0143.0252
+          - R.DOC0143.0279
+          - R.DOC0143.0286
+          - R.DOC0143.0314
+          - R.DOC0143.0316
+          - R.DOC0143.0320
+          - R.DOC0143.0324
+          - R.DOC0143.0326
+        - - R.DOC0143.0329
+          - R.DOC0143.0333
+          - R.DOC0143.0350
+          - R.DOC0143.0353
+          - R.DOC0143.0356
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0143.0009
+    source_unit: U.DOC0143.0009
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: configure
+          oggetto: a shopping dashboard and showcase
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: search results
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: and approve hosted catalog price sets
+          valore: null
+        - n: 4
+          verbo: configure
+          oggetto: commodity codes and units of measure
+          valore: null
+        - n: 5
+          verbo: create
+          oggetto: a custom catalog attribute
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0009
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 57
+  - raw_id: R.DOC0143.0024
+    source_unit: U.DOC0143.0024
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 7
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLW
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.4
+    extraction:
+      attore: buyer
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: punches
+          oggetto: out from ePro to supplier’s customized web site
+          valore: null
+        - n: 2
+          verbo: site
+          oggetto: experience is managed by supplier and configured based on contract negotiated between buyer and supplier
+          valore: null
+        - n: 3
+          verbo: items
+          oggetto: placed into cart and submitted
+          valore: null
+        - n: 4
+          verbo: return
+          oggetto: to JAGGAER cart
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0024
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 65
+  - raw_id: R.DOC0143.0027
+    source_unit: U.DOC0143.0027
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 8
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • User
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0143.0027
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0143.0042
+    source_unit: U.DOC0143.0042
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 11
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLW
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: supplier
+          oggetto: uploads item content and prices to JSN
+          valore: null
+        - n: 2
+          verbo: customer
+          oggetto: admin approves supplier changes
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0042
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 29
+  - raw_id: R.DOC0143.0046
+    source_unit: U.DOC0143.0046
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - facolta
+      source_unit: U.DOC0143.0046
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 45
+  - raw_id: R.DOC0143.0060
+    source_unit: U.DOC0143.0060
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 14
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a6
+      - FLW
+    type_hint:
+      candidates: *a6
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: for items from punchout and hosted catalog suppliers
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: some items to your cart from the product search results and from a punchout site
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: for suppliers with hosted and punchout catalogs
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0060
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 58
+  - raw_id: R.DOC0143.0077
+    source_unit: U.DOC0143.0077
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Items
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0143.0077
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 11
+  - raw_id: R.DOC0143.0078
+    source_unit: U.DOC0143.0078
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Admins
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0143.0078
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 15
+  - raw_id: R.DOC0143.0079
+    source_unit: U.DOC0143.0079
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • Graphics
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0143.0079
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0143.0081
+    source_unit: U.DOC0143.0081
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 17
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0143.0081
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0143.0101
+    source_unit: U.DOC0143.0101
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 19
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: customer
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0143.0101
+    needs_llm: false
+    tokens: 36
+  - raw_id: R.DOC0143.0133
+    source_unit: U.DOC0143.0133
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The supplier
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - obbligo-negato
+      source_unit: U.DOC0143.0133
+      mandatory:
+        kind: never
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0143.0135
+    source_unit: U.DOC0143.0135
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 21
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The customer
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0143.0135
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 19
+  - raw_id: R.DOC0143.0138
+    source_unit: U.DOC0143.0138
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 22
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Organizations that stock items to have “on-hand”
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0143.0138
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0143.0166
+    source_unit: U.DOC0143.0166
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 30
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • User
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0143.0166
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 17
+  - raw_id: R.DOC0143.0181
+    source_unit: U.DOC0143.0181
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0143.0181
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 14
+  - raw_id: R.DOC0143.0183
+    source_unit: U.DOC0143.0183
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 33
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: ambiguo
+      score: 0.55
+    extraction:
+      subject: what function
+      modality: raccomandazione
+      condition: a customer needs to manage some of their item data in their ERP and they want to make the items shoppable in ePro
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0143.0183
+    needs_llm: false
+    tokens: 37
+  - raw_id: R.DOC0143.0186
+    source_unit: U.DOC0143.0186
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a18
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: ambiguo
+      score: 0.05
+    extraction:
+      kind: tacita
+      text: • Orgs usually in healthcare and manufacturing verticals, especially in EU and APAC
+      subject: null
+      rules: []
+      author: null
+      date: null
+      source_unit: U.DOC0143.0186
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 21
+  - raw_id: R.DOC0143.0192
+    source_unit: U.DOC0143.0192
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 34
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a19
+      - FLW
+    type_hint:
+      candidates: *a19
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: shared favorites and expose them on the showcase
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: for items and configure search results
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0192
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0143.0202
+    source_unit: U.DOC0143.0202
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 36
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a20
+      - FLW
+    type_hint:
+      candidates: *a20
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the shopping dashboard
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: a dashboard to serve as the home page for that org that links to the shopping dashboard
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0202
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 38
+  - raw_id: R.DOC0143.0209
+    source_unit: U.DOC0143.0209
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 37
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a21
+      - FLW
+    type_hint:
+      candidates: *a21
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: showcases
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: stickers
+          valore: null
+        - n: 3
+          verbo: add
+          oggetto: logos, background colors, and images to supplier stickers
+          valore: null
+        - n: 4
+          verbo: activate
+          oggetto: showcase changes
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0209
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 37
+  - raw_id: R.DOC0143.0213
+    source_unit: U.DOC0143.0213
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 39
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a22
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a22
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: for items using the Shop widget and Advanced Search
+          valore: null
+        - n: 2
+          verbo: configure
+          oggetto: item search and view the results
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0213
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0143.0252
+    source_unit: U.DOC0143.0252
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 46
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a23
+      - FLW
+    type_hint:
+      candidates: *a23
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: Admin
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: the Catalog Manager role under the Administration role
+          valore: null
+        - n: 2
+          verbo: grant
+          oggetto: the role appropriate permissions
+          valore: null
+        - n: 3
+          verbo: assign
+          oggetto: the Catalog Manager role to a regular user who is NOT already a Catalog Admin or System Admin
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0252
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 58
+  - raw_id: R.DOC0143.0279
+    source_unit: U.DOC0143.0279
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 51
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a24
+      - FLW
+    type_hint:
+      candidates: *a24
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: the unreviewed price sets at the site level
+          valore: null
+        - n: 2
+          verbo: search
+          oggetto: for products from either of these suppliers
+          valore: null
+        - n: 3
+          verbo: request
+          oggetto: a price extract for Education Lab Supplies
+          valore: null
+        - n: 4
+          verbo: review
+          oggetto: the extract
+          valore: null
+        - n: 5
+          verbo: approve
+          oggetto: the price set
+          valore: null
+        - n: 6
+          verbo: add
+          oggetto: Education Lab Supplies to the showcase
+          valore: null
+        - n: 7
+          verbo: search
+          oggetto: for items from this supplier
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0279
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 79
+  - raw_id: R.DOC0143.0286
+    source_unit: U.DOC0143.0286
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 52
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a25
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a25
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: and map a commodity code
+          valore: null
+        - n: 2
+          verbo: add
+          oggetto: a commodity code tree
+          valore: null
+        - n: 3
+          verbo: configure
+          oggetto: UOMs
+          valore: null
+        - n: 4
+          verbo: create
+          oggetto: a custom catalog attribute
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0286
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 32
+  - raw_id: R.DOC0143.0310
+    source_unit: U.DOC0143.0310
+    unit_type: nota
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 58
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    residue:
+      class: tacit
+      reason: 'conoscenza tacita ("di solito facciamo così"): candidato L a 0.60 e domanda di apprendimento'
+    candidates: &a26
+      - INV
+      - CFG
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: ambiguo
+      score: 0.2
+    extraction:
+      kind: tacita
+      text: • Commodity codes are usually part of an integration, but can be imported via CSV file.
+      subject: • Commodity codes
+      rules:
+        - text: • Commodity codes are usually part of an integration, but can be imported via CSV file.
+          modality: facolta
+          consequence: FLD.mandatory
+          mandatory:
+            kind: never
+      author: null
+      date: null
+      source_unit: U.DOC0143.0310
+    needs_llm: false
+    tokens: 22
+  - raw_id: R.DOC0143.0314
+    source_unit: U.DOC0143.0314
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 59
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a27
+      - FLW
+    type_hint:
+      candidates: *a27
+      outcome: ambiguo
+      score: 0.3
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: review
+          oggetto: the configuration settings
+          valore: null
+        - n: 2
+          verbo: review
+          oggetto: the organization commodity codes in the site
+          valore: null
+        - n: 3
+          verbo: review
+          oggetto: the mappings of system categories to commodity codes
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0314
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 44
+  - raw_id: R.DOC0143.0316
+    source_unit: U.DOC0143.0316
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 60
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a28
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a28
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: and configure category mapping
+          valore: null
+        - n: 2
+          verbo: import
+          oggetto: the commodity code list
+          valore: null
+        - n: 3
+          verbo: import
+          oggetto: the category map
+          valore: null
+        - n: 4
+          verbo: add
+          oggetto: the text “NO COMMODITY CODE ASSIGNED” for categories without a corresponding commodity code
+          valore: NO COMMODITY CODE ASSIGNED
+        - n: 5
+          verbo: view
+          oggetto: the category-commodity code mappings
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0316
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 67
+  - raw_id: R.DOC0143.0320
+    source_unit: U.DOC0143.0320
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 61
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a29
+      - FLW
+    type_hint:
+      candidates: *a29
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: add
+          oggetto: CLEANING SERVICES to your existing list of commodity codes
+          valore: null
+        - n: 2
+          verbo: map
+          oggetto: this value to the corresponding UNSPSC code
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0320
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 34
+  - raw_id: R.DOC0143.0324
+    source_unit: U.DOC0143.0324
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 62
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a30
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a30
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: the commodity code Tree Structure setting
+          valore: null
+        - n: 2
+          verbo: export
+          oggetto: the existing commodity code list as group levels
+          valore: null
+        - n: 3
+          verbo: create
+          oggetto: the tree structure in the export file
+          valore: null
+        - n: 4
+          verbo: import
+          oggetto: the file
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0324
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 50
+  - raw_id: R.DOC0143.0326
+    source_unit: U.DOC0143.0326
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 63
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a31
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a31
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: view
+          oggetto: the current flat commodity code list in Advanced Search
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: the commodity code tree structure setting
+          valore: null
+        - n: 3
+          verbo: export
+          oggetto: the existing flat commodity code list
+          valore: null
+        - n: 4
+          verbo: create
+          oggetto: the commodity code tree
+          valore: null
+        - n: 5
+          verbo: validate
+          oggetto: and import the file
+          valore: null
+        - n: 6
+          verbo: test
+          oggetto: the commodity code tree in Advanced Search and on a requisition
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0326
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 82
+  - raw_id: R.DOC0143.0329
+    source_unit: U.DOC0143.0329
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 64
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a32
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a32
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: enable
+          oggetto: UOM mapping
+          valore: null
+        - n: 2
+          verbo: modify
+          oggetto: how package UOMs appear in the interface
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0329
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 23
+  - raw_id: R.DOC0143.0333
+    source_unit: U.DOC0143.0333
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 66
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a33
+      - FLW
+    type_hint:
+      candidates: *a33
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: create
+          oggetto: an Emergency Supplies custom catalog attribute
+          valore: null
+        - n: 2
+          verbo: assign
+          oggetto: the attribute to specific items
+          valore: null
+        - n: 3
+          verbo: filter
+          oggetto: "on the custom catalog attribute in item administration "
+          valore: null
+        - n: 4
+          verbo: see
+          oggetto: how the attribute appears as a search filter in Advanced Search and how it can be used as a filter search results
+          valore: null
+        - n: 5
+          verbo: highlight
+          oggetto: the items with the custom attribute offered by a specific supplier on showcase sticker
+          valore: null
+      risultato_atteso: See how the attribute appears as a search filter in Advanced Search and how it can be used as a filter search results.
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0333
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+    tokens: 102
+  - raw_id: R.DOC0143.0350
+    source_unit: U.DOC0143.0350
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 73
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a34
+      - FLW
+    type_hint:
+      candidates: *a34
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: define
+          oggetto: a category class for lab and medical supplies
+          valore: null
+        - n: 2
+          verbo: create
+          oggetto: "two product views: Standard and Lab Research "
+          valore: "Standard and Lab Research "
+        - n: 3
+          verbo: create
+          oggetto: a new Researcher user role and assign product views to the appropriate user roles
+          valore: null
+        - n: 4
+          verbo: view
+          oggetto: the suppliers and product categories your user now has access to
+          valore: null
+        - n: 5
+          verbo: apply
+          oggetto: the Researcher user role to your user and view the product views your user has access to
+          valore: null
+        - n: 6
+          verbo: return
+          oggetto: visibility of Customer Base Role to all products
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0350
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 115
+  - raw_id: R.DOC0143.0353
+    source_unit: U.DOC0143.0353
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 74
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a35
+      - FLW
+    type_hint:
+      candidates: *a35
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: search
+          oggetto: for “degreaser” in the item search. Note the total number of results and the number for each supplier
+          valore: degreaser
+        - n: 2
+          verbo: disallow
+          oggetto: the Cleaning Equipment and Supplies product category
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: again for “degreaser” , and again note the total number of results and the number for each supplier
+          valore: degreaser
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0353
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 77
+  - raw_id: R.DOC0143.0356
+    source_unit: U.DOC0143.0356
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 75
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a36
+      - CFP
+      - FLW
+    type_hint:
+      candidates: *a36
+      outcome: ambiguo
+      score: 0.25
+    extraction:
+      attore: the supplier
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: do
+          oggetto: a supplier search fo r the supplier and open the Category Review/Selection
+          valore: null
+        - n: 2
+          verbo: enable
+          oggetto: the Cleaning Equipment and Supplies category
+          valore: null
+        - n: 3
+          verbo: search
+          oggetto: for degreaser, and note the number of results for that supplier
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0143.0356
+    needs_llm: true
+    missing:
+      - trigger
+      - risultato_atteso
+    tokens: 58
+  - raw_id: R.DOC0143.0360
+    source_unit: U.DOC0143.0360
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0143
+    section: Managing Catalogs
+    page: 76
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a37
+      - FLD
+    type_hint:
+      candidates: *a37
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: You
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0143.0360
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 30

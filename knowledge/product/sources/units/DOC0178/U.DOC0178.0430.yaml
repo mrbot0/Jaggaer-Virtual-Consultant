@@ -1,0 +1,68 @@
+id: U.DOC0178.0430
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: autoRenew | Description: Indicates whether the contract is (true) or is not (false) to be renewed automatically on the EffectiveEndDate.
+  Attribute: autoApplyPriceFile | Description: If the contract is associated with a hosted price file, indicates whether that same price file will (true) or will not (false) apply when the contract is automatically renewed.
+  Attribute: renewalNumber | Description: Renewal number for the contract
+  Attribute: renewalTerm | Description: Number of days, months, or years (defined by renewalTermType) for which the contract will be automatically renewed.
+  Attribute: renewalTermType | Description: Renewal period for the renewalTerm element.
+  Valid values:
+  Days
+  Months
+  Years
+  Attribute: renewalsRemaining | Description: Number of automatic renewals allowed for the contract.
+  Attribute: renewalDate | Description: Date on which the contract is to be renewed
+  Attribute: autoRenewalLeadDays | Description: Number of days prior to the end date of a contract when the contract will auto renew
+hash: sha256:309f8fedb7fadd0b97cc6ee68f94a23204e0fca4c0b9bbfc8c01b699f9b5358d
+words: 153
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: ContractRenewal [Export]
+  section_path: 2.3.3.4
+  page: 86
+  lang: en
+  prev: U.DOC0178.0429
+  next: U.DOC0178.0431
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - autoRenew
+      - Indicates whether the contract is (true) or is not (false) to be renewed automatically on the EffectiveEndDate.
+      - ""
+    - - autoApplyPriceFile
+      - If the contract is associated with a hosted price file, indicates whether that same price file will (true) or will not (false) apply when the contract is automatically renewed.
+      - ""
+    - - renewalNumber
+      - Renewal number for the contract
+      - ""
+    - - renewalTerm
+      - Number of days, months, or years (defined by renewalTermType) for which the contract will be automatically renewed.
+      - ""
+    - - renewalTermType
+      - |-
+        Renewal period for the renewalTerm element.
+        Valid values:
+        Days
+        Months
+        Years
+      - ""
+    - - renewalsRemaining
+      - Number of automatic renewals allowed for the contract.
+      - ""
+    - - renewalDate
+      - Date on which the contract is to be renewed
+      - ""
+    - - autoRenewalLeadDays
+      - Number of days prior to the end date of a contract when the contract will auto renew
+      - ""
+  block: 1
+  blocks: 1

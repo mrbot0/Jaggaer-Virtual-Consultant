@@ -1,0 +1,39 @@
+id: U.DOC0178.0504
+doc: S.STD.XSC.DOC.0178
+doc_id: jint-ws-development-kit-ji-contract-docx-157f3ff5
+type: riga-tabella-campi
+text: |-
+  Attribute: Note | Mandatory (Y/N): N | Description: Note about the workflow step status. Stored in the Note column of the ContractAuditTrail table.
+  If the note is longer than 1000 characters, it is truncated and saved.
+  If not provided or empty, existing notes are not overwritten.
+hash: sha256:c64f6d9f61187fbb02f2bda9e6f0a9db878459ad967323e5a1e7e65b9acbab37
+words: 46
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0178
+  chapter: JI Contract web-service
+  section: Main request structure [Validate]
+  section_path: 2.4.1.1
+  page: 123
+  lang: en
+  prev: U.DOC0178.0503
+  next: U.DOC0178.0505
+row:
+  table: 0
+  row: 2
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - Note
+    - N
+    - |-
+      Note about the workflow step status. Stored in the Note column of the ContractAuditTrail table.
+      If the note is longer than 1000 characters, it is truncated and saved.
+      If not provided or empty, existing notes are not overwritten.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

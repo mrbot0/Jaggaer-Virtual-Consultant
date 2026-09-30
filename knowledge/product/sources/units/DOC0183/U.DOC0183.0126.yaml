@@ -1,0 +1,72 @@
+id: U.DOC0183.0126
+doc: S.STD.XSC.DOC.0183
+doc_id: jint-ws-development-kit-ji-receipt-docx-99f6088d
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: templateName | Description: Name of the template to be called by this address.
+  Attribute: addressCode | Description: Address code associated with this address.
+  Used to link the receipt address to the receipt address stored in an external ERP system.
+  Attribute: contactList | Description: Contact name and information associated with this address.
+  See section “Contact [Export]” below.
+  Attribute: addressLineList | Description: Receipt addresses line information.
+  See section “AddressLine [Export]” below.
+  Attribute: city | Description: Receipt address city
+  Attribute: state | Description: Receipt address state
+  Attribute: postalCode | Description: Receipt address postal code
+  Attribute: country | Description: Long name of the receipt address country.
+  Attribute: isoCountryCode | Description: 2-letter ISO country code of the receipt address country
+hash: sha256:a3fbf104b86b4afcc53f9bd998867369594ed94a3946626c346c38d358120575
+words: 124
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0183
+  chapter: JI Receipt web-service
+  section: Address [Export]
+  section_path: 2.2.3.7
+  page: 17
+  lang: en
+  prev: U.DOC0183.0125
+  next: U.DOC0183.0127
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - templateName
+      - Name of the template to be called by this address.
+      - ""
+    - - addressCode
+      - |-
+        Address code associated with this address.
+        Used to link the receipt address to the receipt address stored in an external ERP system.
+      - ""
+    - - contactList
+      - |-
+        Contact name and information associated with this address.
+        See section “Contact [Export]” below.
+      - ""
+    - - addressLineList
+      - |-
+        Receipt addresses line information.
+        See section “AddressLine [Export]” below.
+      - ""
+    - - city
+      - Receipt address city
+      - ""
+    - - state
+      - Receipt address state
+      - ""
+    - - postalCode
+      - Receipt address postal code
+      - ""
+    - - country
+      - Long name of the receipt address country.
+      - ""
+    - - isoCountryCode
+      - 2-letter ISO country code of the receipt address country
+      - ""
+  block: 1
+  blocks: 1

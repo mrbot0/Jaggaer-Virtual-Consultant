@@ -1,0 +1,177 @@
+document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+scope: XSC
+batch: batch-08
+section: 2.1.1.8
+section_title: Contact Info [PR Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:TYPE
+    label: type
+    labels:
+      - type
+    technical_name: TYPE
+    section: 2.1.1.8
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Type of contact.
+      Valid values are:
+      main
+      technical
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.8
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.8#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.9
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.9#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.12
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.12#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.13
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.13#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.34
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.34#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:PHONE
+    label: phone
+    labels:
+      - phone
+    technical_name: PHONE
+    section: 2.1.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Contact phone.
+      See section “Phone [PR Import]” below
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.8
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.8#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: phone
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FAX
+    label: fax
+    labels:
+      - fax
+    technical_name: FAX
+    section: 2.1.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Contact fax.
+      See section “” below
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.8
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.8#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: fax
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.34
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.34#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: fax
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:EMAIL
+    label: email
+    labels:
+      - email
+    technical_name: EMAIL
+    section: 2.1.1.8
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Email address of the contract
+    sources:
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.8
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.8#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: email
+        type: null
+        mandatory_text: N
+      - document: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+        section: 2.1.1.34
+        source_unit: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8/2.1.1.34#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: email
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 1560

@@ -1,0 +1,49 @@
+id: U.DOC0182.0376
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: status | Mandatory (Y/N): Y | Description: Status of the validation request.
+  When structure is defined at global header level, it can assume following value:
+  Approved: all requisition elements passed validation
+  Rejected: all requisition elements failed validation
+  Returned: one or more requisition elements failed the validation, but at least one element or field succeeded
+  When structure is defined at line level, it can assume following value:
+  Approved: requisition line passed validation
+  Rejected: requisition line failed validation
+hash: sha256:9fbe2de5dd8ee27317960cab760bad4bd63db07bae58a98e7dfeab721dc48ba9
+words: 77
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: ValidateRequisitionData [PR Validate]
+  section_path: 2.4.1.3
+  page: 27
+  lang: en
+  prev: U.DOC0182.0375
+  next: U.DOC0182.0377
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - status
+    - Y
+    - |-
+      Status of the validation request.
+      When structure is defined at global header level, it can assume following value:
+      Approved: all requisition elements passed validation
+      Rejected: all requisition elements failed validation
+      Returned: one or more requisition elements failed the validation, but at least one element or field succeeded
+      When structure is defined at line level, it can assume following value:
+      Approved: requisition line passed validation
+      Rejected: requisition line failed validation
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

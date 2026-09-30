@@ -1,0 +1,17 @@
+id: U.DOC0072.0004
+doc: S.STD.XSC.DOC.0072
+doc_id: xdoc-commodity-code-mapping-pdf-dcc2ec1b
+type: testo
+text: In a Spend Director licensed organization, a mapping set defines how the organization wants to classify products on documents like carts, requisitions, purchase orders, invoices and receipts. In a non-spend director organization, the mapping set is only used for creating a list of commodity codes that can be used to classify suppliers, contracts or sourcing event data. Products from hosted catalogs generally have something called a identifier UN/SPSC which is used internationally to classify products and services. At JAGGAER, we classify products into a category that has a tree hierarchy. Then we map the UNSPSC numbers to these categories. An organization can choose to use the JAGGAER category to UN/SPSC mapping by default or they can choose to map the JAGGAER categories to a commodity code value. Commodity code values are generally used by the customer ERP systems for reporting purposes. If the customer wishes to map their ERP commodity code values to the JAGGAER categories for purposes of classifying spend data, then this interface is where that task is accomplished. If the customer wishes to map their ERP's standard abbreviations for units of measure to the JAGGAER abbreviations for units of measure, then this is where that task is performed. The mappings defined in a mapping set are used when sending or receiving messages with an ERP system (Enterprise Resource Planning= ERP. Examples are PeopleSoft, Oracle, SAP, Lawson, Banner Finance).
+hash: sha256:41607b3f01590b84a53d0d020920740ba105954a6bc4beda9cdc5b89bdad80d2
+words: 231
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0072
+  chapter: Category,Commodity Code, UN/SPSC and UOM Mapping
+  section: Category,Commodity Code, UN/SPSC and UOM Mapping
+  section_path: p1
+  page: 1
+  lang: en
+  prev: U.DOC0072.0003
+  next: U.DOC0072.0005

@@ -1,0 +1,72 @@
+id: U.DOC0126.0004
+doc: S.STD.XSC.DOC.0126
+doc_id: workflow-definition-pr-ehs-notification-xml-6e8304f6
+type: tabella
+text: |-
+  Tabella: transizioni
+  Colonne: Da | A | Condizione
+  Da: START | A: Return1
+  Da: Return1 | A: Return2
+  Da: Return2 | A: InitialFiscalYearEnd
+  Da: InitialFiscalYearEnd | A: Approval-1
+  Da: Approval-1 | A: SpecialApproval
+  Da: SpecialApproval | A: DepartmentApproval
+  Da: DepartmentApproval | A: EHSCheck
+  Da: EHSCheck | A: EHS Notification
+  Da: EHS Notification | A: FinalFiscalYearEnd
+  Da: FinalFiscalYearEnd | A: CreatePO
+  Da: CreatePO | A: END
+hash: sha256:c28770c7cff631b3e553c6f6112c8f4006af45dde14653139eb768a057535b67
+words: 65
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0126
+  chapter: Transizioni (ActivityRelationship)
+  section: Transizioni (ActivityRelationship)
+  section_path: transizioni
+  page: null
+  lang: en
+  prev: U.DOC0126.0003
+  next: null
+table:
+  table: 0
+  headers:
+    - Da
+    - A
+    - Condizione
+  rows:
+    - - START
+      - Return1
+      - ""
+    - - Return1
+      - Return2
+      - ""
+    - - Return2
+      - InitialFiscalYearEnd
+      - ""
+    - - InitialFiscalYearEnd
+      - Approval-1
+      - ""
+    - - Approval-1
+      - SpecialApproval
+      - ""
+    - - SpecialApproval
+      - DepartmentApproval
+      - ""
+    - - DepartmentApproval
+      - EHSCheck
+      - ""
+    - - EHSCheck
+      - EHS Notification
+      - ""
+    - - EHS Notification
+      - FinalFiscalYearEnd
+      - ""
+    - - FinalFiscalYearEnd
+      - CreatePO
+      - ""
+    - - CreatePO
+      - END
+      - ""
+  block: 1
+  blocks: 1

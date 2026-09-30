@@ -1,0 +1,63 @@
+id: U.DOC0167.0604
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: tabella
+text: |-
+  Colonne: Dataset | Min/max occurrences | Description | Available from version
+  Dataset: taxableByDefault | Min/max occurrences: 0/1 | Description: Indicates whether to mark all items for this supplier as taxable (true) or not (false).
+  Dataset: tax1Active | Min/max occurrences: 0/1 | Description: Indicates whether Tax1 rates are (true) or are not (false) to be used for estimating taxes.
+  Dataset: tax1 | Min/max occurrences: 0/1 | Description: Typically, the local sales tax.
+  Dataset: tax2Active | Min/max occurrences: 0/1 | Description: Indicates whether Tax2 rates are (true) or are not (false) to be used for estimating taxes.
+  Dataset: tax2 | Min/max occurrences: 0/1 | Description: Typically, provincial or federal tax.
+  Dataset: taxShipping | Min/max occurrences: 0/1 | Description: Indicates whether shipping charges are taxable (true) or not (false).
+  Dataset: taxHandling | Min/max occurrences: 0/1 | Description: Indicates whether handling charges are taxable (true) or not (false).
+hash: sha256:7f1f94a78b980fbc6de34a4ba669f9253fa88c4da4cd287e5c3e4bccab780b18
+words: 144
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/taxInfo
+  section_path: 2.2.4.76
+  page: 7
+  lang: en
+  prev: U.DOC0167.0603
+  next: U.DOC0167.0605
+table:
+  table: 0
+  headers:
+    - Dataset
+    - Min/max occurrences
+    - Description
+    - Available from version
+  rows:
+    - - taxableByDefault
+      - 0/1
+      - Indicates whether to mark all items for this supplier as taxable (true) or not (false).
+      - ""
+    - - tax1Active
+      - 0/1
+      - Indicates whether Tax1 rates are (true) or are not (false) to be used for estimating taxes.
+      - ""
+    - - tax1
+      - 0/1
+      - Typically, the local sales tax.
+      - ""
+    - - tax2Active
+      - 0/1
+      - Indicates whether Tax2 rates are (true) or are not (false) to be used for estimating taxes.
+      - ""
+    - - tax2
+      - 0/1
+      - Typically, provincial or federal tax.
+      - ""
+    - - taxShipping
+      - 0/1
+      - Indicates whether shipping charges are taxable (true) or not (false).
+      - ""
+    - - taxHandling
+      - 0/1
+      - Indicates whether handling charges are taxable (true) or not (false).
+      - ""
+  block: 1
+  blocks: 1

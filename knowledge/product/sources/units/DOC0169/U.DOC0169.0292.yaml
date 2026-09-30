@@ -1,0 +1,66 @@
+id: U.DOC0169.0292
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: distributionType | Description: Manner in which the funds are to be distributed to each split.
+  Valid values:
+  AmountOfQuantity: funds are distributed based on a user-specified portion of the quantity
+  AmountOfPrice: funds are distributed based on a user-specified monetary amount
+  PercentOfQuantity: funds are distributed based on a user-specified percentage of the quantity
+  PercentOfPrice: funds are distributed based on a user-specified percentage of the price. The amount of percentage is specified in distribution value attribute.
+  Attribute: Context | Description: Specifies the context of the split.
+  Line: The split applies to all contexts for the line item.
+  Discount: The split applies to the discount.
+  Shipping: The split applies to shipping.
+  Handling: The split applies to handling.
+  Tax1: The split applies to tax 1.
+  Tax2: The split applies to tax 2.
+  Attribute: splittableFieldIndexList | Description: Container of Splittable Field Index elements.
+  See section “SplittableFieldIndex [PR Export]” below.
+hash: sha256:5bf2ba41d6f4f2cad8d98380b72ccd9e43a4ba94b79b874b3aba270a652c65ae
+words: 152
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: SplittableFieldIndexSet [PR Export]
+  section_path: 2.3.3.17
+  page: 66
+  lang: en
+  prev: U.DOC0169.0291
+  next: U.DOC0169.0293
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - distributionType
+      - |-
+        Manner in which the funds are to be distributed to each split.
+        Valid values:
+        AmountOfQuantity: funds are distributed based on a user-specified portion of the quantity
+        AmountOfPrice: funds are distributed based on a user-specified monetary amount
+        PercentOfQuantity: funds are distributed based on a user-specified percentage of the quantity
+        PercentOfPrice: funds are distributed based on a user-specified percentage of the price. The amount of percentage is specified in distribution value attribute.
+      - ""
+    - - Context
+      - |-
+        Specifies the context of the split.
+        Line: The split applies to all contexts for the line item.
+        Discount: The split applies to the discount.
+        Shipping: The split applies to shipping.
+        Handling: The split applies to handling.
+        Tax1: The split applies to tax 1.
+        Tax2: The split applies to tax 2.
+      - ""
+    - - splittableFieldIndexList
+      - |-
+        Container of Splittable Field Index elements.
+        See section “SplittableFieldIndex [PR Export]” below.
+      - ""
+  block: 1
+  blocks: 1

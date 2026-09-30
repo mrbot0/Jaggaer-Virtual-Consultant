@@ -1,0 +1,62 @@
+document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+scope: XSC
+section: 2.1.1.1
+section_title: J1Supplier
+genre: tecnica
+rows:
+  - label: operation
+    technical_name: operation
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Code of requested operation
+    section: 2.1.1.1
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: J1SupplierData
+    technical_name: J1SupplierData
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Company data shared by all subsystems
+    section: 2.1.1.1
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: JASupplierData
+    technical_name: JASupplierData
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Specific data for JA System, mandatory in case JA is the primary system,
+      not used in case JI is the primary system.
+    section: 2.1.1.1
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: JISupplierData
+    technical_name: JISupplierData
+    type: null
+    mandatory_text: Y/N
+    allowed_values: []
+    notes: Specific data for JI System, mandatory in case JI is the primary system
+    section: 2.1.1.1
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+  - label: JDSupplierData
+    technical_name: JDSupplierData
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Specific data for JD System
+    section: 2.1.1.1
+    source_unit: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696/2.1.1.1#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696

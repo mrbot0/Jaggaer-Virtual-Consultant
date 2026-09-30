@@ -1,0 +1,84 @@
+id: S.STD.XSC.DOC.0124
+type: DOC
+title: Simple ADW Budget Workflow
+summary: 'Documento config-export (tecnica, origine vendor) "Simple ADW Budget
+  Workflow": 4 unità, 4 tabelle, 0 tabelle di campi; scope P2P, ADM;
+  affidabilità 0.76.'
+facets:
+  F1: esecuzione-config
+  F4: profilo
+  F5: saas-core
+  F6: []
+  F7: nessuno
+  F8: universale
+  F9: una-tantum
+  F10: R0
+  F11: deterministico
+  F12: grezzo
+  F13:
+    verified_at: 2019-08-22
+    release: ignota
+  F15: tecnica
+sources:
+  - file: CORSI/JI-epro_3000/Class file/workflow_definition_Budget Manager.xml
+    sha256: sha256:9d082c793270a9b69d67c5e9730820fb5750556236c44e02f03a0344fb1aa186
+kind: config-export
+genre: tecnica
+origin: vendor
+version: null
+dated: 2019-08-22
+covers_release: null
+languages:
+  - en
+  - it
+scopes:
+  - P2P
+  - ADM
+source:
+  path: CORSI/JI-epro_3000/Class file/workflow_definition_Budget Manager.xml
+  sha256: sha256:9d082c793270a9b69d67c5e9730820fb5750556236c44e02f03a0344fb1aa186
+  size: 1666
+  format: xml
+  doc_id: workflow-definition-budget-manager-xml-12948a00
+  doc_key: workflow-definition-budget-manager.xml
+structure:
+  pages: null
+  chapters: 4
+  sections: 4
+  tables: 4
+  figures: 0
+  field_tables: 0
+  hidden_sheets: 0
+  revisions: 0
+  comments: 0
+  scanned: false
+units:
+  total: 4
+  by_type:
+    tabella: 4
+reliability:
+  base_by_kind: 0.95
+  freshness: 0.8
+  authorship: 1
+  internal_consistency: 1
+  corroboration: 1
+  score: 0.76
+  notes:
+    - "release coperta o corrente ignota: freschezza neutra"
+    - corroborazione non ancora misurata (neutra)
+known_issues: []
+ingestion:
+  status: extracted
+  units_processed: 4
+  items_produced: 5
+  residue:
+    irrelevant: 0
+    duplicate: 0
+    ambiguous: 0
+    unsupported: 0
+    deferred: 0
+    tacit: 0
+  coverage_ratio: 0
+  last_run: 2026-09-30
+  estimated_tokens: 15000
+  sessions_planned: 1

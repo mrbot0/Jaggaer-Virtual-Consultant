@@ -1,0 +1,69 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.3
+section_title: SupplierStatus [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: status
+    technical_name: status
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      General status of the order.
+      NewOrder
+      SentToSupplier
+      SupplierProcessing
+      Cancelled
+    section: 2.3.1.3
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.3#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: hasBackorderedItem
+    technical_name: hasBackorderedItem
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Set to true if items in this PO are not available at the supplier.
+      Otherwise false
+    section: 2.3.1.3
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.3#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: hasCancelledItems
+    technical_name: hasCancelledItems
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Set to true if items in this PO are cancelled by the supplier. Otherwise
+      false.
+    section: 2.3.1.3
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.3#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: hasSupplierEdits
+    technical_name: hasSupplierEdits
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Set to true if items in this PO were updated by the supplier. Otherwise
+      false
+    section: 2.3.1.3
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.3#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: hasShippedItems
+    technical_name: hasShippedItems
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Set to true if in this PO are shipped by the supplier. Otherwise false.
+    section: 2.3.1.3
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.3#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

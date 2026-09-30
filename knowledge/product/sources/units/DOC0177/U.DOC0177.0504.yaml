@@ -1,0 +1,62 @@
+id: U.DOC0177.0504
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: tabella
+text: |-
+  Colonne: Attribute | Description | Available from version
+  Attribute: returnCode | Description: Operation result. Possible codes are listed in the table below
+  Attribute: returnMessage | Description: Operation result description for each data classes (Company Data, Classification, Users and Data Elements) web service has been called for. If operation on a certain data class completes successfully, it is “OK”, otherwise it is a brief explanation of mismatches found (see “Error Codes” for detail)
+  Attribute: id | Description: JA principal system: company account id (internal identifier) of newly created or updated company
+  JI principal system: new JINT internal id and for those already created with the JA to JI process flow it will be used the account id
+  Attribute: messages | Description: List of messages (warnings and errors)
+  Attribute: messages/message/subsystem | Description: JaggaerOne subsystem which is generating the message
+  Attribute: messages/message/dataModel | Description: Object related to the message
+  Attribute: messages/message/severity | Description: Message severity: ERROR, WARNING, INFO
+  Attribute: messages/message/text | Description: Text of the message
+hash: sha256:1b2d7176e5afd28ec6d7849347a28aef45ad01c4cc1d368eee9bc3862ed91d1b
+words: 163
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: Response data format
+  section_path: 2.1.7
+  page: 102
+  lang: en
+  prev: U.DOC0177.0503
+  next: U.DOC0177.0505
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - returnCode
+      - Operation result. Possible codes are listed in the table below
+      - ""
+    - - returnMessage
+      - Operation result description for each data classes (Company Data, Classification, Users and Data Elements) web service has been called for. If operation on a certain data class completes successfully, it is “OK”, otherwise it is a brief explanation of mismatches found (see “Error Codes” for detail)
+      - ""
+    - - id
+      - |-
+        JA principal system: company account id (internal identifier) of newly created or updated company
+        JI principal system: new JINT internal id and for those already created with the JA to JI process flow it will be used the account id
+      - ""
+    - - messages
+      - List of messages (warnings and errors)
+      - ""
+    - - messages/message/subsystem
+      - JaggaerOne subsystem which is generating the message
+      - ""
+    - - messages/message/dataModel
+      - Object related to the message
+      - ""
+    - - messages/message/severity
+      - "Message severity: ERROR, WARNING, INFO"
+      - ""
+    - - messages/message/text
+      - Text of the message
+      - ""
+  block: 1
+  blocks: 1

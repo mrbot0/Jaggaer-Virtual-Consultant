@@ -1,0 +1,162 @@
+id: U.DOC0139.0001
+doc: S.STD.XSC.DOC.0139
+doc_id: workflow-typical-epro-wf-steps-guidelines-xlsx-39f47465
+type: tabella
+text: "Colonne: Premier Requisition Workflow / Step Name: | Premier Requisition Workflow / Multiple Companies Used | Premier Requisition Workflow / Work Order Missing - Direct | Premier Requisition Workflow / Work Order Missing - Blanket | Premier Requisition Workflow / Requisition Validation | Premier Requisition Workflow / Manager Approval | Premier Requisition Workflow / Commodity Approval | Premier Requisition Workflow / Project Mgr Catch All | Premier Requisition Workflow / Project Manager Approval | Premier Requisition Workflow / AP Review Catch-all | Premier Requisition Workflow / Department Head | Premier Requisition Workflow / C Suite Approval | Premier Requisition Workflow / CEO Approval | Premier Requisition Workflow / Procurement Approval | Premier Requisition Workflow / AP Review | Premier Requisition Workflow / PO Change Order Update | Premier Requisition Workflow / Create PO Premier Requisition Workflow / Step Name:: Step Type: | Premier Requisition Workflow / Multiple Companies Used: Automated | Premier Requisition Workflow / Work Order Missing - Direct: Automated | Premier Requisition Workflow / Work Order Missing - Blanket: Automated | Premier Requisition Workflow / Requisition Validation: Automated | Premier Requisition Workflow / Manager Approval: Manual | Premier Requisition Workflow / Commodity Approval: Manual | Premier Requisition Workflow / Project Mgr Catch All: Manual | Premier Requisition Workflow / Project Manager Approval: Manual | Premier Requisition Workflow / AP Review Catch-all: Manual | Premier Requisition Workflow / Department Head: Manual | Premier Requisition Workflow / C Suite Approval: Manual | Premier Requisition Workflow / CEO Approval: Manual | Premier Requisition Workflow / Procurement Approval: Manual | Premier Requisition Workflow / AP Review: Manual | Premier Requisition Workflow / PO Change Order Update: Manual | Premier Requisition Workflow / Create PO: Automated Premier Requisition Workflow / Step Name:: Location of Approver(s): | Premier Requisition Workflow / Multiple Companies Used:"
+hash: sha256:7ed10e60854b50a688d1e4df6d11d97f154a17011c264b368911c4940dfb9582
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0139
+  chapter: Requisition Workflow
+  section: Requisition Workflow
+  section_path: sheet-1
+  page: null
+  lang: en
+  prev: null
+  next: U.DOC0139.0002
+table:
+  table: 0
+  headers:
+    - "Premier Requisition Workflow / Step Name:"
+    - Premier Requisition Workflow / Multiple Companies Used
+    - Premier Requisition Workflow / Work Order Missing - Direct
+    - Premier Requisition Workflow / Work Order Missing - Blanket
+    - Premier Requisition Workflow / Requisition Validation
+    - Premier Requisition Workflow / Manager Approval
+    - Premier Requisition Workflow / Commodity Approval
+    - Premier Requisition Workflow / Project Mgr Catch All
+    - Premier Requisition Workflow / Project Manager Approval
+    - Premier Requisition Workflow / AP Review Catch-all
+    - Premier Requisition Workflow / Department Head
+    - Premier Requisition Workflow / C Suite Approval
+    - Premier Requisition Workflow / CEO Approval
+    - Premier Requisition Workflow / Procurement Approval
+    - Premier Requisition Workflow / AP Review
+    - Premier Requisition Workflow / PO Change Order Update
+    - Premier Requisition Workflow / Create PO
+  rows:
+    - - "Step Type:"
+      - Automated
+      - Automated
+      - Automated
+      - Automated
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Automated
+    - - "Location of Approver(s):"
+      - N/A
+      - N/A
+      - N/A
+      - ADW (Enable PR Validation)
+      - Reports To
+      - ADW (Commodity Code Approval)
+      - Custom Field (Project Code)
+      - Custom Field (Project Code)
+      - ADW (AP Review)
+      - ADW (Department Head)
+      - ADW (C Suite Approval)
+      - ADW (CEO Approval)
+      - ADW (Procurement Approval)
+      - ADW (AP Review)
+      - ADW (PO Change Order Update)
+      - ADW (Omit from Create PO)
+    - - "Managed:"
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - User Import
+      - N/A
+      - Manual
+      - Custom Field Sync
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - Manual
+      - null
+    - - "Description / Trigger(s):"
+      - Automated step that returns the requisition back to the user if there's more than one Company specified.
+      - Automated step that returns the requisition back to the user if it's a direct order and they do not have an attachment.
+      - Automated step that returns the requisition back to the user if it's a blanket order and they do not have an attachment.
+      - Automated step that sends the requisition to CostPoint to confirm that valid chart fields are being used.
+      - Manual approval step which triggers for all Indirect requisitions. Approver is based on Reports To.
+      - Manual approval step which triggers for all Indirect requisitions for certain commodities. Approval is based on the commodity code(s) used.
+      - Manual approval step which triggers for all Direct requisitions for all dollar amounts when there is no approver for the given Project. Routes to system admins.
+      - Manual approval step which triggers for all Direct requisitions for all dollar amounts. Approval is based on the Project code(s) used. Enable Automatic Approvals.
+      - Manual approval step which triggers if the AP Review step doesn't have an approver.
+      - Manual approval step which triggers for all Indirect requisitions over [importo]k. Approvers are based on the Org code(s) used. For direct would be for non-reimbursable PRs (based on Org) only regardless of dollar amount.
+      - Manual approval step which triggers for all Indirect requisitions over [importo]k. Approvers are based on the Org code(s) used. ADW by Approver (about 4 approvers)
+      - Manual approval step which triggers for all Indirect requisitions over [importo]k.
+      - Manual approval step which triggers for all non-catalog orders over [importo]k or for all direct orders.
+      - For all requisitions to check accounting structure.
+      - Manual approval step which triggers for all PO change order requests. Routes to Procurement who can then update the PO.
+      - Automated step that turns the Requisition into a Purchase Order, moving it into PO workflow. Does not trigger for PO Change Order Requests.
+    - - Direct - Reimbursable
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+    - - Direct - Non-Reimbursable
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+    - - Indirect
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+      - null
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 5

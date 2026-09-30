@@ -1,0 +1,134 @@
+doc: S.STD.XSC.DOC.0121
+scope: XSC
+extracted_at: 2026-09-30T04:30:50.257Z
+tier: T0
+stats:
+  units: 31
+  extracted_units: 3
+  document_candidates: 0
+  needs_llm: 1
+  t0_complete: 2
+  by_candidate:
+    FLD: 2
+    INV: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 374
+  sessions:
+    - n: 1
+      tokens: 374
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0121.0021
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0121.0019
+    source_unit: U.DOC0121.0019
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0121
+    section: • Select “Ghost Card”, under the Or dering > Payment Method tab, a nd enter Card Details.
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.45
+    extraction:
+      subject: • ADW
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0121.0019
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 31
+  - raw_id: R.DOC0121.0021
+    source_unit: U.DOC0121.0021
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0121
+    section: • Select “Ghost Card”, under the Or dering > Payment Method tab, a nd enter Card Details.
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: null
+      modality: facolta
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.85
+      signals:
+        - obbligo-negato
+      source_unit: U.DOC0121.0021
+      mandatory:
+        kind: never
+    needs_llm: true
+    missing:
+      - subject
+    tokens: 24
+  - raw_id: R.DOC0121.0022
+    source_unit: U.DOC0121.0022
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0121
+    section: • Select “Ghost Card”, under the Or dering > Payment Method tab, a nd enter Card Details.
+    page: 5
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: tecnica
+    candidates: &a3
+      - INV
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Some organizations
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0121.0022
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 11

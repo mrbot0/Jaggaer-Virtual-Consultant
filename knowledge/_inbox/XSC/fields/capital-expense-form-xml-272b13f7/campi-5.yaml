@@ -1,0 +1,66 @@
+document: capital-expense-form-xml-272b13f7
+scope: XSC
+section: campi-5
+section_title: Campi — Required Attachments
+genre: tecnica
+rows:
+  - label: "113"
+    technical_name: "113"
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=113 · tipo=static
+    section: campi-5
+    source_unit: capital-expense-form-xml-272b13f7/campi-5#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: "114"
+    technical_name: "114"
+    type: static
+    mandatory_text: No
+    allowed_values: []
+    notes: id=114 · tipo=static
+    section: campi-5
+    source_unit: capital-expense-form-xml-272b13f7/campi-5#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: You have completed this form
+    technical_name: You have completed this form
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: 'UserDefinedFieldParamHTML=<br>You have now completed this form.<br></br>
+      <b>To order more than one piece of equipment</b>: <ul> <li>Select "Add to
+      Cart" from the Available Actions dropdown.</li> <li>Update the form and
+      add the form again to the cart. </li></ul> <b>After adding all forms to
+      the cart, indicate whether your equipment/software is taxable.</b> <ul>
+      <li>If the equipment is taxable, check the Taxable checkbox for each
+      line.</li> <li>If the equipment is not taxable, do not check the Taxable
+      checkbox for each line.</li></ul> <b>Be sure to specify asset management
+      codes, especially the <u><b>Custody Code</u></b></b>. <ul> <li>From the
+      "Proceed to Checkout" page, click the Asset Management tab.</li> <li>Input
+      the <b> Custody Code</b> and <b> Asset Location</b>.</li> <li>Input the
+      Tag Number <b>ONLY</b> if the purchase is adding to the value of an
+      existing piece of equipment.</li> </ul> · id=10100 · tipo=userdefined'
+    section: campi-5
+    source_unit: capital-expense-form-xml-272b13f7/campi-5#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7
+  - label: Relevant Supporting Documents
+    technical_name: Relevant Supporting Documents
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<table width="100%" border="0" cellspacing="1"
+      cellpadding="1"> <tr> <td bgcolor="#FFFF99"> <b>Attach any relevant
+      supporting documents (i.e. vendor quote, technical specifications,
+      warranty information, service level agreements,
+      etc.)</b></p></td></tr></table> · id=10099 · tipo=userdefined
+    section: campi-5
+    source_unit: capital-expense-form-xml-272b13f7/campi-5#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: capital-expense-form-xml-272b13f7

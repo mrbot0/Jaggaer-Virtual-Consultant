@@ -1,0 +1,148 @@
+id: U.DOC0171.0513
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Colonne: Attribute | Attribute | Datatype Attribute: priceRankingStrategy | Attribute: Commercial Envelope Strategy (“Settings” area, “Awarding Strategy” section) | Datatype: VARCHAR2(10 CHAR) Attribute: techScoreWeight | Attribute: Technical Score Weight | Datatype: NUMBER(19,3) Attribute: comScoreWeight | Attribute: Commercial Score Weight | Datatype: NUMBER(19,3) Attribute: numInvolvedSuppliers | Attribute: - | Datatype: NUMBER Attribute: numRespondedSuppliers | Attribute: - | Datatype: NUMBER Attribute: numExcludedSuppliers | Attribute: - | Datatype: NUMBER Attribute: numAwardedSuppliers | Attribute: - | Datatype: NUMBER Attribute: qualEvaluationTeamSize | Attribute: Active Evaluators | Datatype: NUMBER Attribute: techEvaluationTeamSize | Attribute: Active Evaluators | Datatype: NUMBER Attribute: commEvaluationTeamSize | Attribute: Active Evaluators | Datatype: NUMBER Attribute: qualEnvStatus | Attribute: Qualification Envelope | Datatype: NUMBER(1) Attribute: techEnvStatus | Attribute: Technical Envelope | Datatype: NUMBER(1) Attribute: commEnvStatus | Attribute: Commercial Envelope | Datatype: NUMBER(1) Attribute: lastUpdate | Attribute: RFQ Latest Change-Date | Datatype: DATE Attribute: rfxContentLastUpdateDate | Attribute: RFQ Latest Change-Date with update from suppliers considered also | Datatype: DATE Attribute: publishDate | Attribute: RFQ Publication-Date | Datatype: DATE Attribute: closeDate | Attribute: Closing Date | Datatype: DATE Attribute: qualOffersOpeningDate | Attribute: Date Opened | Datatype: DATE Attribute: techOffersOpeningDate | Attribute: Date Opened | Datatype: DATE Attribute: commOffersOpeningDate | Attribute: Date Opened | Datatype: DATE Attribute: preEvaluationCloseDate | Attribute: - | Datatype: DATE Attribute: qualEvaluationCloseDate | Attribute: Evaluation Frozen Date | Datatype: DATE Attribute: techEvaluationCloseDate | Attribute: Evaluation Frozen Date | Datatype: DATE Attribute: commEvaluationCloseDate | Attribute: Evaluation Frozen Date | Datatype: DATE Attribute: awardDate | Attribute: - | Datatype: DATE Attribute: deleted | Attribute: - | Datatype: NUMBER(1) Attribute: autopublish | Attribute: Automatic Publication | Datatype: NUMBER(1) Attribute: autopublishDate | Attribute: Automatic Publication Date | Datatype: DATE Attribute: creationDate | Attribute: Date of Creation | Datatype: DATE Attribute: awardingStrategy | Attribute: Response Ranking Level Current Awarding Level (in “Complete” area, “Final Supplier Ranking”) | Datatype:"
+hash: sha256:b27da2172c703a894db6161d398f8d23f12991bd1f3176d0cbeb1bd8a9ed4cc1
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: RfX Setting
+  section_path: 2.5.1
+  page: 8
+  lang: en
+  prev: U.DOC0171.0512
+  next: U.DOC0171.0514
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - priceRankingStrategy
+      - |-
+        Commercial Envelope Strategy
+        (“Settings” area, “Awarding Strategy” section)
+      - VARCHAR2(10 CHAR)
+    - - techScoreWeight
+      - Technical Score Weight
+      - NUMBER(19,3)
+    - - comScoreWeight
+      - Commercial Score Weight
+      - NUMBER(19,3)
+    - - numInvolvedSuppliers
+      - "-"
+      - NUMBER
+    - - numRespondedSuppliers
+      - "-"
+      - NUMBER
+    - - numExcludedSuppliers
+      - "-"
+      - NUMBER
+    - - numAwardedSuppliers
+      - "-"
+      - NUMBER
+    - - qualEvaluationTeamSize
+      - Active Evaluators
+      - NUMBER
+    - - techEvaluationTeamSize
+      - Active Evaluators
+      - NUMBER
+    - - commEvaluationTeamSize
+      - Active Evaluators
+      - NUMBER
+    - - qualEnvStatus
+      - Qualification Envelope
+      - NUMBER(1)
+    - - techEnvStatus
+      - Technical Envelope
+      - NUMBER(1)
+    - - commEnvStatus
+      - Commercial Envelope
+      - NUMBER(1)
+    - - lastUpdate
+      - RFQ Latest Change-Date
+      - DATE
+    - - rfxContentLastUpdateDate
+      - RFQ Latest Change-Date with update from suppliers considered also
+      - DATE
+    - - publishDate
+      - RFQ Publication-Date
+      - DATE
+    - - closeDate
+      - Closing Date
+      - DATE
+    - - qualOffersOpeningDate
+      - Date Opened
+      - DATE
+    - - techOffersOpeningDate
+      - Date Opened
+      - DATE
+    - - commOffersOpeningDate
+      - Date Opened
+      - DATE
+    - - preEvaluationCloseDate
+      - "-"
+      - DATE
+    - - qualEvaluationCloseDate
+      - Evaluation Frozen Date
+      - DATE
+    - - techEvaluationCloseDate
+      - Evaluation Frozen Date
+      - DATE
+    - - commEvaluationCloseDate
+      - Evaluation Frozen Date
+      - DATE
+    - - awardDate
+      - "-"
+      - DATE
+    - - deleted
+      - "-"
+      - NUMBER(1)
+    - - autopublish
+      - Automatic Publication
+      - NUMBER(1)
+    - - autopublishDate
+      - Automatic Publication Date
+      - DATE
+    - - creationDate
+      - Date of Creation
+      - DATE
+    - - awardingStrategy
+      - |-
+        Response Ranking Level
+        Current Awarding Level
+        (in “Complete” area, “Final Supplier Ranking”)
+      - VARCHAR2(30 CHAR)
+    - - awardingLevel
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - awardingSource
+      - ""
+      - VARCHAR2(5 CHAR)
+    - - priceAwardingStrategy
+      - ""
+      - VARCHAR2(10 CHAR)
+    - - finalContractValue
+      - ""
+      - NUMERIC(38)
+    - - prDocumentType/documentTypeId
+      - "-"
+      - NUMBER(38)
+    - - prDocumentType/shortDescription
+      - Document type
+      - VARCHAR2(256 CHAR)
+    - - prDocumentType/detailedDescription
+      - ""
+      - VARCHAR2(2000 CHAR)
+    - - prDocumentType/documentTypeOwner/id
+      - "-"
+      - NUMBER(38)
+  block: 2
+  blocks: 3
+part:
+  n: 1
+  of: 2

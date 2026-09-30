@@ -1,0 +1,183 @@
+document: food-and-entertainment-form-xml-75bc4337
+scope: XSC
+section: campi-4
+section_title: Campi — Transaction Details
+genre: tecnica
+rows:
+  - label: Event Tracking Info
+    technical_name: Event Tracking Info
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: 'UserDefinedFieldParamHTML=<TABLE WIDTH = "900" HEIGHT = "35" ALIGN =
+      "center" BGCOLOR = "#F0F8FF" CELLPADDING = "10" BORDER= "1" BORDER-STYLE =
+      "ridge"> <TBODY><TR><TD><Font Color = "BLACK" SIZE =
+      "3"><B><CENTER>Expense Tracking Information</Font Color = "BLACK" SIZE =
+      "3"></B></CENTER><P><P> An <B>Expense Tracking Number </B>is required if
+      multiple funding transactions are used for a meal’s expenses (a
+      requisition combined with at least one additional requisition, recharge,
+      or reimbursement). The Expense Tracking Number is used to accurately
+      monitor the per-person cost for any meals included in the event. The same
+      Expense Tracking Number must be used on each transaction associated with a
+      particular meal.<P> The <B>Expense Tracking Number </B>can be: <UL><LI>The
+      number of the first requisition submitted for the meal (recommended if all
+      meal expenses are orders)<CENTER><B>OR</B></CENTER> <LI>The ERF number if
+      there are reimbursements or recharges associated with the meal
+      <CENTER><B>OR</B></CENTER> <LI>The Meal Expense Tracker (MET) form number
+      if you are using a MET for your event.</LI></UL> The ERF and MET forms are
+      accessed on the Entertainment section of the Financial Affairs Dashboard.
+      Sign in with your Gold password. </TD> </TR> </TBODY> </TABLE>
+      <P><P><P><P> · id=10313 · tipo=userdefined'
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Expense Tracking Number
+    technical_name: Expense Tracking Number
+    type: TextBox
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=20;
+      UserDefinedFieldParamTextBoxMaxLength=20 · id=10308 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Tracking Number Instructions
+    technical_name: Tracking Number Instructions
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=Enter zero<B> "0" </B>if all expenses for the
+      meal are<BR> included on a single requisition, or if order is for Bulk
+      food, Gift or Ticket purchase.<P><P> · id=10315 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r2
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Top-Level Determination 2
+    technical_name: Top-Level Determination 2
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<P><P><P><P><TABLE WIDTH = "900" HEIGHT = "35"
+      ALIGN = "center" BGCOLOR = "#F0F8FF" CELLPADDING = "10" BORDER= "1"
+      BORDER-STYLE = "ridge"> <TBODY><TR><TD> <B><CENTER><FONT SIZE="3">Top
+      Level Determination</CENTER></FONT Size ="3"></B><P><P><B> Events
+      requiring top level approval </B>(see determination list directly below)
+      <B>must</B> have the <B>approval included </B>in comments or an email
+      attachment referencing the <B>event name or brief description</B>, the
+      <B>event date</B> and the <B>estimated total cost.</B></P><P><P><UL> <LI>
+      Purchase or serving of alcohol; <LI> Exceeding the per-person meal cost <A
+      HREF="https://sciquest.com" TARGET="_BLANK">(Per-Person Meal Limits)</A>;
+      <LI> Meals provided to a spouse, domestic partner, or family member of
+      host/guest;<LI> Event where cash contributions are included in the
+      cost;<LI> Meals provided to employees as part of a morale-building
+      activity, including retirement and recognition receptions, etc.;<LI>
+      Tickets provided to prospective donors, employees, or student appointees
+      in connection with an entertainment event.</LI><P></UL> </FONT> </TD>
+      </TR> </TBODY> </TABLE><P><P><P> · id=10311 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r3
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Does this F&E order event require Top-Level approval? (See Top-Level
+      determination list above)
+    technical_name: Top Level Question
+    type: DropdownList
+    mandatory_text: Sì
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248384 · id=10297 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r4
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Per Person Costs
+    technical_name: Per Person Costs
+    type: HTML
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamHTML=<P><P><P><TABLE WIDTH = "900" HEIGHT = "35"
+      ALIGN = "center" BGCOLOR = "#F0F8FF" CELLPADDING = "10" BORDER= "1"
+      BORDER-STYLE = "ridge"> <TBODY><TR><TD><CENTER><B><FONT Size
+      ="3">Per-Person Meal Costs</FONT Size ="3"></B></CENTER><P><P> The
+      per-person meal cost is calculated by dividing the <B>TOTAL</B> cost of
+      the meal by the number of meal attendees. If there are <B>multiple
+      requisitions (or multiple line items on a single requisition),
+      reimbursements or recharges</B> containing costs for a single meal, be
+      sure to use the <B>sum of all costs</B> pertaining to each individual meal
+      in the per-person meal cost calculation, not just the amount being
+      submitted on this requisition line item.<P><P>The Meal Expense Tracker
+      accessed through the <B><U><A HREF="https://sciquest.com"
+      target="_blank">Financial Affairs Dashboard</A></u></B> provides
+      per-person cost calculations </B></U> for your convenience. Sign in to the
+      Meal Expense Tracker with your gold password. </FONT> </TD> </TR> </TBODY>
+      </TABLE><P><P><P> · id=10309 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r5
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Meal Type
+    technical_name: Meal Type
+    type: DropdownList
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamFormListId=248385 · id=10291 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r6
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Per-Person Meal Cost?
+    technical_name: Per Person Cost
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=40;
+      UserDefinedFieldParamTextBoxMaxLength=40 · id=10292 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r7
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Event Date
+    technical_name: ContractStartDate
+    type: Date
+    mandatory_text: No
+    allowed_values: []
+    notes: id=10009 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r8
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Event Location
+    technical_name: Event Location
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=40;
+      UserDefinedFieldParamTextBoxMaxLength=50 · id=10256 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r9
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337
+  - label: Event Purpose/Justification
+    technical_name: Event Purpose/Justification
+    type: TextBox
+    mandatory_text: No
+    allowed_values: []
+    notes: UserDefinedFieldParamTextBoxSize=60;
+      UserDefinedFieldParamTextBoxMaxLength=1000 · id=10279 · tipo=userdefined
+    section: campi-4
+    source_unit: food-and-entertainment-form-xml-75bc4337/campi-4#part-1
+    row_ref: t0.r10
+    genre: tecnica
+    document: food-and-entertainment-form-xml-75bc4337

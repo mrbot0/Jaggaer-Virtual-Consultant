@@ -1,0 +1,1598 @@
+doc: S.STD.XSC.DOC.0026
+scope: XSC
+extracted_at: 2026-09-30T04:28:18.356Z
+tier: T0
+stats:
+  units: 71
+  extracted_units: 34
+  document_candidates: 22
+  needs_llm: 22
+  t0_complete: 34
+  by_candidate:
+    FLD: 34
+    CFG: 22
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 66000
+  sessions:
+    - n: 1
+      tokens: 66000
+      batches: 11
+      items: 22
+      batch_items:
+        - - R.DOC0026.C001
+          - R.DOC0026.C002
+        - - R.DOC0026.C003
+          - R.DOC0026.C004
+        - - R.DOC0026.C005
+          - R.DOC0026.C006
+        - - R.DOC0026.C007
+          - R.DOC0026.C008
+        - - R.DOC0026.C009
+          - R.DOC0026.C010
+        - - R.DOC0026.C011
+          - R.DOC0026.C012
+        - - R.DOC0026.C013
+          - R.DOC0026.C014
+        - - R.DOC0026.C015
+          - R.DOC0026.C016
+        - - R.DOC0026.C017
+          - R.DOC0026.C018
+        - - R.DOC0026.C019
+          - R.DOC0026.C020
+        - - R.DOC0026.C021
+          - R.DOC0026.C022
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0026.0003
+    source_unit: U.DOC0026.0003
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "21"
+      technical_name: "21"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=21 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0003
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0026.0004
+    source_unit: U.DOC0026.0004
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "20"
+      technical_name: "20"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=20 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0004
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0026.0005
+    source_unit: U.DOC0026.0005
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a3
+      - FLD
+    type_hint:
+      candidates: *a3
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "30"
+      technical_name: "30"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=30 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0005
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0026.0007
+    source_unit: U.DOC0026.0007
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "32"
+      technical_name: "32"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=32 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0007
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 45
+  - raw_id: R.DOC0026.0008
+    source_unit: U.DOC0026.0008
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a5
+      - FLD
+    type_hint:
+      candidates: *a5
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "33"
+      technical_name: "33"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=33 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0008
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 38
+  - raw_id: R.DOC0026.0009
+    source_unit: U.DOC0026.0009
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a6
+      - FLD
+    type_hint:
+      candidates: *a6
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "35"
+      technical_name: "35"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=35 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0009
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0026.0010
+    source_unit: U.DOC0026.0010
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a7
+      - FLD
+    type_hint:
+      candidates: *a7
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "34"
+      technical_name: "34"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=34 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0010
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0026.0011
+    source_unit: U.DOC0026.0011
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a8
+      - FLD
+    type_hint:
+      candidates: *a8
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "36"
+      technical_name: "36"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=36 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0011
+      row_ref: t0.r8
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0026.0012
+    source_unit: U.DOC0026.0012
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a9
+      - FLD
+    type_hint:
+      candidates: *a9
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "1"
+      technical_name: "1"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=1 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0012
+      row_ref: t0.r9
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0026.0013
+    source_unit: U.DOC0026.0013
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a10
+      - FLD
+    type_hint:
+      candidates: *a10
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "12"
+      technical_name: "12"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=12 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0013
+      row_ref: t0.r10
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0026.0014
+    source_unit: U.DOC0026.0014
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a11
+      - FLD
+    type_hint:
+      candidates: *a11
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "13"
+      technical_name: "13"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=13 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0014
+      row_ref: t0.r11
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0026.0015
+    source_unit: U.DOC0026.0015
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a12
+      - FLD
+    type_hint:
+      candidates: *a12
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "31"
+      technical_name: "31"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=31 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0015
+      row_ref: t0.r12
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0026.0017
+    source_unit: U.DOC0026.0017
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a13
+      - FLD
+    type_hint:
+      candidates: *a13
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "6"
+      technical_name: "6"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=6 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0017
+      row_ref: t0.r14
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 23
+  - raw_id: R.DOC0026.0018
+    source_unit: U.DOC0026.0018
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a14
+      - FLD
+    type_hint:
+      candidates: *a14
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "14"
+      technical_name: "14"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=14 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0018
+      row_ref: t0.r15
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 52
+  - raw_id: R.DOC0026.0019
+    source_unit: U.DOC0026.0019
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a15
+      - FLD
+    type_hint:
+      candidates: *a15
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "23"
+      technical_name: "23"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=23 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0019
+      row_ref: t0.r16
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0026.0022
+    source_unit: U.DOC0026.0022
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a16
+      - FLD
+    type_hint:
+      candidates: *a16
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "22"
+      technical_name: "22"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=22 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0022
+      row_ref: t0.r19
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0026.0026
+    source_unit: U.DOC0026.0026
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a17
+      - FLD
+    type_hint:
+      candidates: *a17
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "24"
+      technical_name: "24"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=24 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0026
+      row_ref: t0.r23
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 42
+  - raw_id: R.DOC0026.0030
+    source_unit: U.DOC0026.0030
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — senza-sezione
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a18
+      - FLD
+    type_hint:
+      candidates: *a18
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "38"
+      technical_name: "38"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=38 · tipo=static
+      section: campi-1
+      source_unit: U.DOC0026.0030
+      row_ref: t0.r27
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 24
+  - raw_id: R.DOC0026.0051
+    source_unit: U.DOC0026.0051
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — Shipping
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a19
+      - FLD
+    type_hint:
+      candidates: *a19
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "11"
+      technical_name: "11"
+      type: static
+      mandatory_text: Obbligatorio in Checkout
+      allowed_values: []
+      notes: id=11 · tipo=static
+      section: campi-2
+      source_unit: U.DOC0026.0051
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0026.0052
+    source_unit: U.DOC0026.0052
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — Billing
+    page: null
+    lang: en
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a20
+      - FLD
+    type_hint:
+      candidates: *a20
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "15"
+      technical_name: "15"
+      type: static
+      mandatory_text: Obbligatorio in Checkout
+      allowed_values: []
+      notes: id=15 · tipo=static
+      section: campi-3
+      source_unit: U.DOC0026.0052
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 54
+  - raw_id: R.DOC0026.0053
+    source_unit: U.DOC0026.0053
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — Billing
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a21
+      - FLD
+    type_hint:
+      candidates: *a21
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "17"
+      technical_name: "17"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=17 · tipo=static
+      section: campi-3
+      source_unit: U.DOC0026.0053
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0026.0054
+    source_unit: U.DOC0026.0054
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — Billing
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a22
+      - FLD
+    type_hint:
+      candidates: *a22
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "16"
+      technical_name: "16"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=16 · tipo=static
+      section: campi-3
+      source_unit: U.DOC0026.0054
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0026.0055
+    source_unit: U.DOC0026.0055
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — General
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a23
+      - FLD
+    type_hint:
+      candidates: *a23
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "39"
+      technical_name: "39"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=39 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0026.0055
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0026.0056
+    source_unit: U.DOC0026.0056
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — General
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a24
+      - FLD
+    type_hint:
+      candidates: *a24
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "40"
+      technical_name: "40"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=40 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0026.0056
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0026.0057
+    source_unit: U.DOC0026.0057
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — General
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a25
+      - FLD
+    type_hint:
+      candidates: *a25
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "2"
+      technical_name: "2"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=2 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0026.0057
+      row_ref: t0.r2
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 46
+  - raw_id: R.DOC0026.0058
+    source_unit: U.DOC0026.0058
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — General
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a26
+      - FLD
+    type_hint:
+      candidates: *a26
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "3"
+      technical_name: "3"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=3 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0026.0058
+      row_ref: t0.r3
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 33
+  - raw_id: R.DOC0026.0059
+    source_unit: U.DOC0026.0059
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — General
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a27
+      - FLD
+    type_hint:
+      candidates: *a27
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "4"
+      technical_name: "4"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=4 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0026.0059
+      row_ref: t0.r4
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0026.0060
+    source_unit: U.DOC0026.0060
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — General
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a28
+      - FLD
+    type_hint:
+      candidates: *a28
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "5"
+      technical_name: "5"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=5 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0026.0060
+      row_ref: t0.r5
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0026.0061
+    source_unit: U.DOC0026.0061
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — General
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a29
+      - FLD
+    type_hint:
+      candidates: *a29
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "42"
+      technical_name: "42"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=42 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0026.0061
+      row_ref: t0.r6
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0026.0062
+    source_unit: U.DOC0026.0062
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — General
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a30
+      - FLD
+    type_hint:
+      candidates: *a30
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "44"
+      technical_name: "44"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=44 · tipo=static
+      section: campi-4
+      source_unit: U.DOC0026.0062
+      row_ref: t0.r7
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 28
+  - raw_id: R.DOC0026.0065
+    source_unit: U.DOC0026.0065
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — Internal Notes and Attachments
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a31
+      - FLD
+    type_hint:
+      candidates: *a31
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "7"
+      technical_name: "7"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=7 · tipo=static
+      section: campi-5
+      source_unit: U.DOC0026.0065
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0026.0066
+    source_unit: U.DOC0026.0066
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — Internal Notes and Attachments
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a32
+      - FLD
+    type_hint:
+      candidates: *a32
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "9"
+      technical_name: "9"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=9 · tipo=static
+      section: campi-5
+      source_unit: U.DOC0026.0066
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 29
+  - raw_id: R.DOC0026.0067
+    source_unit: U.DOC0026.0067
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — External Notes and Attachments
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a33
+      - FLD
+    type_hint:
+      candidates: *a33
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "8"
+      technical_name: "8"
+      type: static
+      mandatory_text: No
+      allowed_values: []
+      notes: id=8 · tipo=static
+      section: campi-6
+      source_unit: U.DOC0026.0067
+      row_ref: t0.r0
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0026.0068
+    source_unit: U.DOC0026.0068
+    unit_type: riga-tabella-campi
+    doc: S.STD.XSC.DOC.0026
+    section: Campi — External Notes and Attachments
+    page: null
+    lang: it
+    facets:
+      F1: esecuzione-config
+      F15: tecnica
+    candidates: &a34
+      - FLD
+    type_hint:
+      candidates: *a34
+      outcome: FLD
+      score: 0.8
+    extraction:
+      label: "10"
+      technical_name: "10"
+      type: static
+      mandatory_text: ""
+      allowed_values: []
+      notes: id=10 · tipo=static
+      section: campi-6
+      source_unit: U.DOC0026.0068
+      row_ref: t0.r1
+      genre: tecnica
+      document: S.STD.XSC.DOC.0026
+    needs_llm: false
+    tokens: 30
+  - raw_id: R.DOC0026.C001
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: &a35
+      F1: esecuzione-config
+      F15: tecnica
+    extraction:
+      parameter: VersionDescription
+      current_state:
+        value: Initial PartCertGold PR Document
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C002
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: AllowedCartViews
+      current_state:
+        value: BasicAndDetailed
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C003
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: InitialCartView
+      current_state:
+        value: Basic
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C004
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: AllowHideLineDetailsInReview
+      current_state:
+        value: "false"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C005
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: AllowHideHeaderInReview
+      current_state:
+        value: "false"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C006
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: FCAddressVisibility
+      current_state:
+        value: ShowIfMultiple
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C007
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: FCNameVisibility
+      current_state:
+        value: ShowIfMultiple
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C008
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: HideHeaderValuesWhenChangedByLine
+      current_state:
+        value: "true"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C009
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: AllowEmptyHeaderCFValues
+      current_state:
+        value: "true"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C010
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: ShowLineNumbers
+      current_state:
+        value: "true"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C011
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: NumberOfProductAttributes
+      current_state:
+        value: "4"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C012
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: NumberOfNoteCharacters
+      current_state:
+        value: "100"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C013
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: AllowCopyNotesToOtherLines
+      current_state:
+        value: "true"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C014
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: PrePopulateAccountingDate
+      current_state:
+        value: "false"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C015
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: ShowApprovalsTab
+      current_state:
+        value: "true"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C016
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: ShowPOPreviewTab
+      current_state:
+        value: "true"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C017
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: TopNavCartInfoShowsSumOfQuantities
+      current_state:
+        value: "true"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C018
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: OneSupplierPerPR
+      current_state:
+        value: "false"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C019
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: OneCurrencyPerPR
+      current_state:
+        value: "false"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C020
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: OnePOPerPR
+      current_state:
+        value: "false"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C021
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: PreventMixedCart
+      current_state:
+        value: "false"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650
+  - raw_id: R.DOC0026.C022
+    candidates:
+      - CFG
+    doc: S.STD.XSC.DOC.0026
+    section: Impostazioni (ReqConfig)
+    source_unit: U.DOC0026.0001
+    facets: *a35
+    extraction:
+      parameter: MaxNumberOfLines
+      current_state:
+        value: "999"
+        observed_at: 2019-10-21
+        source: config-export
+      export_kind: document-config
+    confidence: 0.95
+    needs_llm: true
+    missing:
+      - location
+      - options
+      - dependencies
+      - impacts
+      - risk
+      - rollback
+    tokens: 2650

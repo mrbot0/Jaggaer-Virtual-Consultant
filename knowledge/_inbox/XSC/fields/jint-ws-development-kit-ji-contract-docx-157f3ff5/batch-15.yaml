@@ -1,0 +1,225 @@
+document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+scope: XSC
+batch: batch-15
+section: 2.2.1.11
+section_title: CustomField [Import]
+part: 1
+parts: 1
+rows:
+  - key: tech:INTERNALNAME
+    label: internalName
+    labels:
+      - internalName
+    technical_name: INTERNALNAME
+    section: 2.2.1.11
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Internal name of the custom field value.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.11
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.11#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: internalName
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.15
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.15#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: internalName
+        type: null
+        mandatory_text: Y
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.44
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.44#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: internalName
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.4.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.2#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: internalName
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:TYPE
+    label: Type
+    labels:
+      - Type
+      - type
+    technical_name: TYPE
+    section: 2.2.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: >-
+      Contract custom field type
+
+      Text (Single Line) – Freeform single-line entry area, up to 100
+      alphanumeric characters. Cannot be a parent custom field.
+
+      Text (Multi-Line) – Freeform multi-line entry area, up to 2000
+      alphanumeric characters. Cannot be a parent custom field.
+
+      Numeric Text Box – Freeform single-line entry area, numbers only. Cannot
+      be a parent custom field.
+
+      Yes/No – Yes-No checkbox. You can enable multiple checkboxes.
+
+      Dropdown List (Pick One) – Predefined set of selections in dropdown list
+      format.
+
+      Multiple Choice (Pick One) – Also known as a Radio Button Group.
+      Predefined set of selections in radio button group format.
+
+      Multiple Select (Pick Many) – Predefined set of selections. User can enter
+      all custom field values that apply. This is the only custom field type
+      that can accept more than one custom field value.
+
+      File Upload – Add a file attachment.
+
+      Date – Date field, with today’s date as the default selection.
+
+      Table – Create a table composed of other custom fields.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.11
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.11#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: Type
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.19
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.19#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.42
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.42#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.54
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.54#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.63
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.63#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.4.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.2#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: type
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMFIELDVALUELIST
+    label: customFieldValueList
+    labels:
+      - customFieldValueList
+    technical_name: CUSTOMFIELDVALUELIST
+    section: 2.2.1.11
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Container for custom field values.
+      See section “CustomFieldValue [Import]” below.
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.11
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.11#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: customFieldValueList
+        type: null
+        mandatory_text: ""
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.4.1.2
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.4.1.2#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: customFieldValueList
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:CUSTOMFIELDTABLEROWLIST
+    label: customFieldTableRowList
+    labels:
+      - customFieldTableRowList
+    technical_name: CUSTOMFIELDTABLEROWLIST
+    section: 2.2.1.11
+    type: null
+    mandatory_text: ""
+    allowed_values: []
+    notes: |-
+      Container for custom field table rows.
+      See section “CustomFieldTableRow [Import]” below
+    sources:
+      - document: jint-ws-development-kit-ji-contract-docx-157f3ff5
+        section: 2.2.1.11
+        source_unit: jint-ws-development-kit-ji-contract-docx-157f3ff5/2.2.1.11#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: customFieldTableRowList
+        type: null
+        mandatory_text: ""
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-011
+      functional_section: custom-cliente
+      modality: ambiguo
+      confidence: 0.3
+      residue: ambiguous
+tokens_estimate: 2031

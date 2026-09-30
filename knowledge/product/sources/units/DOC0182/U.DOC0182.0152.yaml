@@ -1,0 +1,39 @@
+id: U.DOC0182.0152
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: riga-tabella-campi
+text: |-
+  Attribute: note | Mandatory (Y/N): N | Description: Text note for the supplier that is entered in the cart and carried over to POs and PRs.
+  If the note is longer than 1000 characters, it is truncated and saved.
+  Note: If the Note field is empty, the existing note in the eProcurement solution is not overwritten. Only a populated Note field can overwrite the existing note.
+hash: sha256:3290f202c1a763c9fc5a257fd9ca3eaf412c23ef5c37f6b5216ff0f6fff8cfe9
+words: 66
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Supplier Info [PR Import]
+  section_path: 2.1.1.21
+  page: 23
+  lang: en
+  prev: U.DOC0182.0151
+  next: U.DOC0182.0153
+row:
+  table: 0
+  row: 3
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - note
+    - N
+    - |-
+      Text note for the supplier that is entered in the cart and carried over to POs and PRs.
+      If the note is longer than 1000 characters, it is truncated and saved.
+      Note: If the Note field is empty, the existing note in the eProcurement solution is not overwritten. Only a populated Note field can overwrite the existing note.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

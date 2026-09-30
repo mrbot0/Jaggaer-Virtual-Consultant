@@ -1,0 +1,89 @@
+doc: S.STD.XSC.DOC.0161
+scope: XSC
+extracted_at: 2026-09-30T04:31:34.014Z
+tier: T0
+stats:
+  units: 25
+  extracted_units: 2
+  document_candidates: 0
+  needs_llm: 0
+  t0_complete: 2
+  by_candidate:
+    INV: 1
+    FLD: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 0
+  sessions: []
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0161.0016
+    source_unit: U.DOC0161.0016
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0161
+    section: JAGGAER Indirect Foundations Task List
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - INV
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: Because we
+      modality: divieto
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: INV
+      confidence: 0.85
+      signals:
+        - divieto
+      source_unit: U.DOC0161.0016
+      validation:
+        on_fail: block
+    needs_llm: false
+    tokens: 44
+  - raw_id: R.DOC0161.0017
+    source_unit: U.DOC0161.0017
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0161
+    section: JAGGAER Indirect Foundations Task List
+    page: 2
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: You
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0161.0017
+    needs_llm: false
+    tokens: 11

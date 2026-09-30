@@ -1,0 +1,294 @@
+document: j1p-ws-development-kit-rfx-docx-2adedfd8
+scope: XSC
+batch: batch-26
+section: 2.1.1.30
+section_title: Additional terms [Import/Update RfX method]
+part: 1
+parts: 1
+rows:
+  - key: tech:DELIVERYDATE
+    label: deliveryDate
+    labels:
+      - deliveryDate
+    technical_name: DELIVERYDATE
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Delivery date
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.30#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: deliveryDate
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PAYMENTTERMS
+    label: paymentTerms
+    labels:
+      - paymentTerms
+    technical_name: PAYMENTTERMS
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Payment terms description
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.30#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: paymentTerms
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:RETURNS
+    label: returns
+    labels:
+      - returns
+    technical_name: RETURNS
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Returns policy description
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.30#part-1
+        row_ref: t0.r2
+        genre: tecnica
+        label: returns
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:PACKAGING
+    label: packaging
+    labels:
+      - packaging
+    technical_name: PACKAGING
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Packaging
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.30#part-1
+        row_ref: t0.r3
+        genre: tecnica
+        label: packaging
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:FREIGHTBILLING
+    label: freightBilling
+    labels:
+      - freightBilling
+    technical_name: FREIGHTBILLING
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Freight charging option flag
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.30#part-1
+        row_ref: t0.r4
+        genre: tecnica
+        label: freightBilling
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INCOTERMS
+    label: incoterms
+    labels:
+      - incoterms
+    technical_name: INCOTERMS
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Incoterms numeric value. Possible values:
+      0 = not selected
+      1 = CFR – Cost And Freight
+      2 = CIF – Cost, Insurance And Freight
+      3 = CIP – Carriage And Insurance Paid To
+      4 = CPT – Carriage Paid To
+      5 = DAF – Delivered At Frontier
+      6 = DDP – Delivered Duty Paid
+      7 = DDU – Delivered Duty Unpaid
+      8 = DEQ – Delivered Ex Quay
+      9 = DES – Delivered Ex Ship
+      10 = EXW – Ex Works
+      11 = FAS – Free Alongside Ship
+      12 = FCA – Free Carrier
+      13 = FOB – Free On Board
+      14 = DAT – Delivered At Terminal
+      15 = DAP – Delivered At Place
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.30#part-1
+        row_ref: t0.r5
+        genre: tecnica
+        label: incoterms
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:INCOTERMSDESCRIPTION
+    label: incotermsDescription
+    labels:
+      - incotermsDescription
+    technical_name: INCOTERMSDESCRIPTION
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: |-
+      Incoterms description. Possible values:
+      incotermsCfr = CFR – Cost And Freight
+      incotermsCif = CIF – Cost, Insurance And Freight
+      incotermsCip = CIP – Carriage And Insurance Paid To
+      incotermsCpt = CPT – Carriage Paid To
+      incotermsDaf = DAF – Delivered At Frontier
+      incotermsDdp = DDP – Delivered Duty Paid
+      incotermsDdu = DDU – Delivered Duty Unpaid
+      incotermsDeq = DEQ – Delivered Ex Quay
+      incotermsDes = DES – Delivered Ex Ship
+      incotermsExw = EXW – Ex Works
+      incotermsFas = FAS – Free Alongside Ship
+      incotermsFca = FCA – Free Carrier
+      incotermsFob = FOB – Free On Board
+      incotermsDat = DAT – Delivered At Terminal
+      incotermsDap = DAP – Delivered At Place
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.30#part-1
+        row_ref: t0.r6
+        genre: tecnica
+        label: incotermsDescription
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:OTHERTERMS
+    label: otherTerms
+    labels:
+      - otherTerms
+    technical_name: OTHERTERMS
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Other terms description
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.30#part-1
+        row_ref: t0.r7
+        genre: tecnica
+        label: otherTerms
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+  - key: tech:MOCINFO
+    label: mocInfo
+    labels:
+      - mocInfo
+    technical_name: MOCINFO
+    section: 2.1.1.30
+    type: null
+    mandatory_text: N
+    allowed_values: []
+    notes: Further information
+    sources:
+      - document: j1p-ws-development-kit-rfx-docx-2adedfd8
+        section: 2.1.1.30
+        source_unit: j1p-ws-development-kit-rfx-docx-2adedfd8/2.1.1.30#part-1
+        row_ref: t0.r8
+        genre: tecnica
+        label: mocInfo
+        type: null
+        mandatory_text: N
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: CL-FLD-007
+      functional_section: prezzi-valute
+      modality: facolta
+      confidence: 0.85
+      mandatory:
+        kind: never
+tokens_estimate: 2223

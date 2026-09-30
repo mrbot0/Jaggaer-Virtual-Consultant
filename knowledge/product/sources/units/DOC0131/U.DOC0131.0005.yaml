@@ -1,0 +1,128 @@
+id: U.DOC0131.0005
+doc: S.STD.XSC.DOC.0131
+doc_id: workflow-definition-pr-squfs-site-xml-defa4232
+type: tabella
+text: 'Approval | Regola: ([Product.Radioactive = true] || [Product.RadioactiveMinor = true] || [Product.Hazardous = true] || [Product.Controlled = true] || [Product.SelectAgent = true] || [Product.Toxin = true]) && [DocLine.CreditCardNumber = ""] | Selezione cartella: ExplicitFolder Attività: Form Approval | Tipo: manual | Passo: Form Approval | Regola: Document.RequiresFormTypeApproval() == true && [DocLine.CreditCardNumber = ""] | Selezione cartella: FormType Attività: Missing Approver Catch | Tipo: manual | Passo: Missing Approver Catch | Cartelle: Missing Approver Catch | Regola: [Document.RequiresCustomFieldValueApproval("acctElement10") == false ] && [DocLine.CreditCardNumber = ""] && [Document.RequiresRuleGroupEvaluation("Omit from all but form approval") == false] | Selezione cartella: ExplicitFolder Attività: Create PO | Tipo: automated | Passo: Create PO | Cartelle: Create PO | Regola: ![Product.FormType ~ "/NonPO/"] | Selezione cartella: ExplicitFolder Attività: END | Tipo: end | Selezione cartella: Dummy'
+hash: sha256:c2dc7bdbbaa21e7e0db192323f433593be16fe80c7c8d0be9090ee5106b12ffc
+words: 129
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0131
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: en
+  prev: U.DOC0131.0004
+  next: U.DOC0131.0006
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Return1
+      - automated
+      - Return 1
+      - Auto-Return
+      - Document.RequiresRuleGroupEvaluation("Return 1") == true
+      - ExplicitFolder
+    - - pCard Limit Check
+      - automated
+      - pCard Limit Check
+      - Auto-Reject
+      - '[DocLine.CreditCardNumber != ""] && Document.Total >= Owner.UserLimit("WfLimitLpoReqLine")'
+      - ExplicitFolder
+    - - Mixed Order Auto-Return
+      - automated
+      - Mixed Order Auto-Return
+      - Auto-Return
+      - ([Product.FormType ~ "/NonPO/"] && [Product.FormType !~ "/NonPO/"]) || ([Product.FormType ~ "/NoDistro/"] && [Product.FormType !~ "/NoDistro/"]) || ([Product.FormType ~ "/AutoInv/"] && [Product.FormType !~ "/AutoInv/"])
+      - ExplicitFolder
+    - - Missing Supplier Catch
+      - manual
+      - Missing Supplier Catch
+      - Missing Supplier Catch
+      - '[Supplier.ID == ""]'
+      - ExplicitFolder
+    - - New Supplier Approval
+      - manual
+      - New Supplier Approval
+      - New Supplier Approval
+      - '[Product.FormType = "New Supplier Request"]'
+      - ExplicitFolder
+    - - Financial Approval
+      - manual
+      - Financial Approval
+      - ""
+      - Document.RequiresCustomFieldValueApproval("acctElement10") == true && [DocLine.CreditCardNumber = ""] && [Document.RequiresRuleGroupEvaluation("Omit from all but form approval") == false]
+      - CustomFieldValue
+    - - Buyer Assignment
+      - manual
+      - Buyer Assignment
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Buyer Assignment") == true
+      - MultiElementDynamic
+    - - Buyer Review
+      - manual
+      - Buyer Review
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Buyer Review") == true
+      - MultiElementDynamic
+    - - Contract Review
+      - manual
+      - Contract Review
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Contract Review") == true
+      - MultiElementDynamic
+    - - Special Circumstance Approval
+      - manual
+      - Special Circumstance Approval
+      - ""
+      - (Document.RequiresRuleGroupEvaluation("Special Circumstance Approval") == true)
+      - MultiElementDynamic
+    - - EH&S Approval
+      - manual
+      - EH&S Approval
+      - EH&S Approval
+      - ([Product.Radioactive = true] || [Product.RadioactiveMinor = true] || [Product.Hazardous = true] || [Product.Controlled = true] || [Product.SelectAgent = true] || [Product.Toxin = true]) && [DocLine.CreditCardNumber = ""]
+      - ExplicitFolder
+    - - Form Approval
+      - manual
+      - Form Approval
+      - ""
+      - Document.RequiresFormTypeApproval() == true && [DocLine.CreditCardNumber = ""]
+      - FormType
+    - - Missing Approver Catch
+      - manual
+      - Missing Approver Catch
+      - Missing Approver Catch
+      - '[Document.RequiresCustomFieldValueApproval("acctElement10") == false ] && [DocLine.CreditCardNumber = ""] && [Document.RequiresRuleGroupEvaluation("Omit from all but form approval") == false]'
+      - ExplicitFolder
+    - - Create PO
+      - automated
+      - Create PO
+      - Create PO
+      - '![Product.FormType ~ "/NonPO/"]'
+      - ExplicitFolder
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 2

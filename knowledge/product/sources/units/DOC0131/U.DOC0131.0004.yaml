@@ -1,0 +1,128 @@
+id: U.DOC0131.0004
+doc: S.STD.XSC.DOC.0131
+doc_id: workflow-definition-pr-squfs-site-xml-defa4232
+type: tabella
+text: 'Tabella: attività Colonne: Attività | Tipo | Passo | Cartelle | Regola | Selezione cartella Attività: START | Tipo: start | Selezione cartella: Dummy Attività: Return1 | Tipo: automated | Passo: Return 1 | Cartelle: Auto-Return | Regola: Document.RequiresRuleGroupEvaluation("Return 1") == true | Selezione cartella: ExplicitFolder Attività: pCard Limit Check | Tipo: automated | Passo: pCard Limit Check | Cartelle: Auto-Reject | Regola: [DocLine.CreditCardNumber != ""] && Document.Total >= Owner.UserLimit("WfLimitLpoReqLine") | Selezione cartella: ExplicitFolder Attività: Mixed Order Auto-Return | Tipo: automated | Passo: Mixed Order Auto-Return | Cartelle: Auto-Return | Regola: ([Product.FormType ~ "/NonPO/"] && [Product.FormType !~ "/NonPO/"]) || ([Product.FormType ~ "/NoDistro/"] && [Product.FormType !~ "/NoDistro/"]) || ([Product.FormType ~ "/AutoInv/"] && [Product.FormType !~ "/AutoInv/"]) | Selezione cartella: ExplicitFolder Attività: Missing Supplier Catch | Tipo: manual | Passo: Missing Supplier Catch | Cartelle: Missing Supplier Catch | Regola: [Supplier.ID == ""] | Selezione cartella: ExplicitFolder Attività: New Supplier Approval | Tipo: manual | Passo: New Supplier Approval | Cartelle: New Supplier Approval | Regola: [Product.FormType = "New Supplier Request"] | Selezione cartella: ExplicitFolder Attività: Financial Approval | Tipo: manual | Passo: Financial Approval | Regola: Document.RequiresCustomFieldValueApproval("acctElement10") == true && [DocLine.CreditCardNumber = ""] && [Document.RequiresRuleGroupEvaluation("Omit from all but form approval") == false] | Selezione cartella: CustomFieldValue Attività: Buyer Assignment | Tipo: manual | Passo: Buyer Assignment | Regola: Document.RequiresRuleGroupEvaluation("Buyer Assignment") == true | Selezione cartella: MultiElementDynamic Attività: Buyer Review | Tipo: manual | Passo: Buyer Review | Regola: Document.RequiresRuleGroupEvaluation("Buyer Review") == true | Selezione cartella: MultiElementDynamic Attività: Contract Review | Tipo: manual | Passo: Contract Review | Regola: Document.RequiresRuleGroupEvaluation("Contract Review") == true | Selezione cartella: MultiElementDynamic Attività: Special Circumstance Approval | Tipo: manual | Passo: Special Circumstance Approval | Regola: (Document.RequiresRuleGroupEvaluation("Special Circumstance Approval") == true) | Selezione cartella: MultiElementDynamic Attività: EH&S Approval | Tipo: manual | Passo: EH&S Approval | Cartelle: EH&S'
+hash: sha256:1f6f42cfd90524443f272f0881e6be5ed012fc4711e4e86d490aa153fd5e0867
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0131
+  chapter: Attività (Activity)
+  section: Attività (Activity)
+  section_path: attivita
+  page: null
+  lang: en
+  prev: U.DOC0131.0003
+  next: U.DOC0131.0005
+table:
+  table: 0
+  headers:
+    - Attività
+    - Tipo
+    - Passo
+    - Cartelle
+    - Regola
+    - Selezione cartella
+  rows:
+    - - START
+      - start
+      - ""
+      - ""
+      - ""
+      - Dummy
+    - - Return1
+      - automated
+      - Return 1
+      - Auto-Return
+      - Document.RequiresRuleGroupEvaluation("Return 1") == true
+      - ExplicitFolder
+    - - pCard Limit Check
+      - automated
+      - pCard Limit Check
+      - Auto-Reject
+      - '[DocLine.CreditCardNumber != ""] && Document.Total >= Owner.UserLimit("WfLimitLpoReqLine")'
+      - ExplicitFolder
+    - - Mixed Order Auto-Return
+      - automated
+      - Mixed Order Auto-Return
+      - Auto-Return
+      - ([Product.FormType ~ "/NonPO/"] && [Product.FormType !~ "/NonPO/"]) || ([Product.FormType ~ "/NoDistro/"] && [Product.FormType !~ "/NoDistro/"]) || ([Product.FormType ~ "/AutoInv/"] && [Product.FormType !~ "/AutoInv/"])
+      - ExplicitFolder
+    - - Missing Supplier Catch
+      - manual
+      - Missing Supplier Catch
+      - Missing Supplier Catch
+      - '[Supplier.ID == ""]'
+      - ExplicitFolder
+    - - New Supplier Approval
+      - manual
+      - New Supplier Approval
+      - New Supplier Approval
+      - '[Product.FormType = "New Supplier Request"]'
+      - ExplicitFolder
+    - - Financial Approval
+      - manual
+      - Financial Approval
+      - ""
+      - Document.RequiresCustomFieldValueApproval("acctElement10") == true && [DocLine.CreditCardNumber = ""] && [Document.RequiresRuleGroupEvaluation("Omit from all but form approval") == false]
+      - CustomFieldValue
+    - - Buyer Assignment
+      - manual
+      - Buyer Assignment
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Buyer Assignment") == true
+      - MultiElementDynamic
+    - - Buyer Review
+      - manual
+      - Buyer Review
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Buyer Review") == true
+      - MultiElementDynamic
+    - - Contract Review
+      - manual
+      - Contract Review
+      - ""
+      - Document.RequiresRuleGroupEvaluation("Contract Review") == true
+      - MultiElementDynamic
+    - - Special Circumstance Approval
+      - manual
+      - Special Circumstance Approval
+      - ""
+      - (Document.RequiresRuleGroupEvaluation("Special Circumstance Approval") == true)
+      - MultiElementDynamic
+    - - EH&S Approval
+      - manual
+      - EH&S Approval
+      - EH&S Approval
+      - ([Product.Radioactive = true] || [Product.RadioactiveMinor = true] || [Product.Hazardous = true] || [Product.Controlled = true] || [Product.SelectAgent = true] || [Product.Toxin = true]) && [DocLine.CreditCardNumber = ""]
+      - ExplicitFolder
+    - - Form Approval
+      - manual
+      - Form Approval
+      - ""
+      - Document.RequiresFormTypeApproval() == true && [DocLine.CreditCardNumber = ""]
+      - FormType
+    - - Missing Approver Catch
+      - manual
+      - Missing Approver Catch
+      - Missing Approver Catch
+      - '[Document.RequiresCustomFieldValueApproval("acctElement10") == false ] && [DocLine.CreditCardNumber = ""] && [Document.RequiresRuleGroupEvaluation("Omit from all but form approval") == false]'
+      - ExplicitFolder
+    - - Create PO
+      - automated
+      - Create PO
+      - Create PO
+      - '![Product.FormType ~ "/NonPO/"]'
+      - ExplicitFolder
+    - - END
+      - end
+      - ""
+      - ""
+      - ""
+      - Dummy
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

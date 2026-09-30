@@ -1,0 +1,56 @@
+id: U.DOC0131.0002
+doc: S.STD.XSC.DOC.0131
+doc_id: workflow-definition-pr-squfs-site-xml-defa4232
+type: tabella
+text: "Tabella: passi Colonne: Passo | Attributi Passo: Return 1 | Attributi: wfActivityHelp: Flexible step for ongoing rules that would prompt an auto return. Passo: pCard Limit Check | Attributi: wfActivityHelp: The requisition total is greater than the user's pCard order limit. The requisition will be automatically rejected. Passo: Mixed Order Auto-Return | Attributi: wfActivityHelp: Items that do not create POs cannot be mixed with items that do not create POs. Items that do not distribute to supplier cannot be mixed with items that distribute to suppliers. Items that auto-invoice cannot be mixed with items that do not auto-invoice. Passo: Missing Supplier Catch | Attributi: wfActivityHelp: A supplier must be selected. Passo: New Supplier Approval | Attributi: wfActivityHelp: Your requisition contains a new supplier form which requires approval before your requisition moves to the next step. Passo: Financial Approval | Attributi: wfActivityHelp: Your requisition contains an item which requires approval before your requisition moves to the next step. Passo: Buyer Assignment | Attributi: wfActivityHelp: If no commodity code is included for non-cat item over 5000, one must be assigned Passo: Buyer Review | Attributi: wfActivityHelp: Non-cat items over 5000 must be reviewed by commodity code manager. Passo: Contract Review | Attributi: wfActivityHelp: If no commodity code is included for non-cat item over 5000, one must be assigned Passo: Special Circumstance Approval | Attributi: wfActivityHelp: This is a manual step to allow for approvals required under special circumstances. This is a manual step to allow for approvals required under special circumstances. Passo: EH&S Approval | Attributi: wfActivityHelp: Your requisition contains an item which requires approval before your requisition moves to the next step. Passo: Form Approval | Attributi: wfActivityHelp: Your requisition contains a special form which requires approval before your requisition moves to the next step."
+hash: sha256:7bf82c687e40991d8857efe749d50e2f4e32216b67d82133c2c618a8b745a367
+words: 294
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0131
+  chapter: Passi (Step)
+  section: Passi (Step)
+  section_path: passi
+  page: null
+  lang: en
+  prev: U.DOC0131.0001
+  next: U.DOC0131.0003
+table:
+  table: 0
+  headers:
+    - Passo
+    - Attributi
+  rows:
+    - - Return 1
+      - "wfActivityHelp: Flexible step for ongoing rules that would prompt an auto return."
+    - - pCard Limit Check
+      - "wfActivityHelp: The requisition total is greater than the user's pCard order limit. The requisition will be automatically rejected."
+    - - Mixed Order Auto-Return
+      - "wfActivityHelp: Items that do not create POs cannot be mixed with items that do not create POs. Items that do not distribute to supplier cannot be mixed with items that distribute to suppliers. Items that auto-invoice cannot be mixed with items that do not auto-invoice."
+    - - Missing Supplier Catch
+      - "wfActivityHelp: A supplier must be selected."
+    - - New Supplier Approval
+      - "wfActivityHelp: Your requisition contains a new supplier form which requires approval before your requisition moves to the next step."
+    - - Financial Approval
+      - "wfActivityHelp: Your requisition contains an item which requires approval before your requisition moves to the next step."
+    - - Buyer Assignment
+      - "wfActivityHelp: If no commodity code is included for non-cat item over 5000, one must be assigned"
+    - - Buyer Review
+      - "wfActivityHelp: Non-cat items over 5000 must be reviewed by commodity code manager."
+    - - Contract Review
+      - "wfActivityHelp: If no commodity code is included for non-cat item over 5000, one must be assigned"
+    - - Special Circumstance Approval
+      - "wfActivityHelp: This is a manual step to allow for approvals required under special circumstances. This is a manual step to allow for approvals required under special circumstances."
+    - - EH&S Approval
+      - "wfActivityHelp: Your requisition contains an item which requires approval before your requisition moves to the next step."
+    - - Form Approval
+      - "wfActivityHelp: Your requisition contains a special form which requires approval before your requisition moves to the next step."
+    - - Missing Approver Catch
+      - "wfActivityHelp: Your requisition contains an item which requires approval before your requisition moves to the next step and no approver exists."
+    - - Create PO
+      - "wfActivityHelp: System step to generate Purchase Order"
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 2

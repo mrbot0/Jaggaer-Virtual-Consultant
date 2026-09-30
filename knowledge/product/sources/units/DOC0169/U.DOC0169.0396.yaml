@@ -1,0 +1,47 @@
+id: U.DOC0169.0396
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: messageId | Description: Purchase Requisition validation message identifier provided in request
+  Attribute: timestamp | Description: Response timestamp in the format
+  yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  Attribute: validateStatus | Description: Validation response result.
+  See section “ValidateStatus [PR Validate]” below
+  Attribute: validateObjectErrors | Description: Container of validation error information
+  See section “ValidateError [PR Validate]” below
+hash: sha256:8aeb3454cd24e243525fbe138c7eddc036ba3aac579567675b7f6a5873f5791f
+words: 54
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: ValidateResponseMessage [PR Validate]
+  section_path: 2.4.3.1
+  page: 96
+  lang: en
+  prev: U.DOC0169.0395
+  next: U.DOC0169.0397
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - messageId
+      - Purchase Requisition validation message identifier provided in request
+    - - timestamp
+      - |-
+        Response timestamp in the format
+        yyyy-MM-dd'T'HH:mm:ss.SSSZ
+    - - validateStatus
+      - |-
+        Validation response result.
+        See section “ValidateStatus [PR Validate]” below
+    - - validateObjectErrors
+      - |-
+        Container of validation error information
+        See section “ValidateError [PR Validate]” below
+  block: 1
+  blocks: 1

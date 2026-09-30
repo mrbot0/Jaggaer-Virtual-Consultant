@@ -1,0 +1,156 @@
+id: U.DOC0171.0456
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: "Attribute: sellerRejectReason | Description: Seller reason for not sending an offer Attribute: preEvalStatus | Description: 0 = offer accepted in pre-evaluation 1 = offer rejected in pre-evaluation (visible only for value PRE_EVALUATION_INFO of the component filter OFFERS) Attribute: preEvalBuyerComments | Description: Buyer comments on offer in pre-evaluation (visible only for value PRE_EVALUATION_INFO of the component filter OFFERS) Attribute: qualStatus | Description: 0=qualification offer valid 1= qualification offer not valid Attribute: qualBuyerComments | Description: Buyer comments on qualification offer Attribute: techStatus | Description: 0 = technical offer valid 1 = technical offer not valid Attribute: techBuyerComments | Description: Buyer comments on technical offer Attribute: commStatus | Description: 0 = commercial offer valid 1 = commercial offer not valid Attribute: commBuyerComments | Description: Buyer comments on commercial offer Attribute: lastUpdateDate | Description: Offer last update date Attribute: techPoints | Description: Technical total points Attribute: commPoints | Description: Commercial total points Attribute: totPoints | Description: total points Attribute: confirmedAmount | Description: Buyer confirmed total offer amount (it can have exponential notation) Attribute: ranking | Description: Original ranking Attribute: qualOffer | Description: Response to qualification parameters [see section “Suppliers Offer: Response to technical and qualification parameters” below] Attribute: techOffer | Description: Response to technical parameters [see section “Suppliers Offer: Response to technical and qualification parameters” below] Attribute: commOffer | Description: Response to commercial parameters [see section “Suppliers Offer: Response to commercial parameters” below] Attribute: consortium | Description: Consortium [see section “Suppliers Offer: Consortium” below] Attribute: awardingRanking | Description: Awarding Ranking | Available from version: BA_17_04 Attribute: answerUserId | Description: Internal identifier of answer user. | Available from version: JINT_20_02_00 Attribute: answerRound | Description: Round to which this version of offer refers. | Available from version: JINT_20_02_02 Attribute: answerVersion | Description: Answer version number | Available from version: JINT_20_03_01 Attribute: tcoValue | Description: TCO value"
+hash: sha256:fc4e6ffabb3b19a9bd95268cdfd6ce20a28e4ca574d388301f180fb2235240f7
+words: 300
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: "Suppliers Offer: Main Offer data [Export RfX method]"
+  section_path: 2.3.4.19
+  page: 7
+  lang: en
+  prev: U.DOC0171.0455
+  next: U.DOC0171.0457
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+    - Available from version
+  rows:
+    - - supplierId
+      - Supplier JA Internal identifier
+      - ""
+    - - offerState
+      - |-
+        Status of the offer:
+        -2 = rejected offer
+        -101= excluded at pre-evaluation phase
+        -102= excluded in qualification offer evaluation
+        -103= excluded in technical offer evaluation
+        -104= excluded in commercial offer evaluation
+        -105= excluded by Qualification Only RFQ
+        -106= excluded in final evaluation
+        -1 = not submitted offer
+        1 = submitted offer
+        3 = winner offer
+        4 = loser offer
+        5 = response to a closed RFI
+        6 = response to a closed RFQ
+        7 = partial winner offer
+      - ""
+    - - isWinner
+      - |-
+        0 = no
+        1 = yes
+        If WS configuration parameter IncludePartialWinner is set to 1 the supplier will be shown as winner even if he is only a partial winner.
+      - ""
+    - - sellerRejectReason
+      - Seller reason for not sending an offer
+      - ""
+    - - preEvalStatus
+      - |-
+        0 = offer accepted in pre-evaluation
+        1 = offer rejected in pre-evaluation (visible only for value PRE_EVALUATION_INFO of the component filter OFFERS)
+      - ""
+    - - preEvalBuyerComments
+      - Buyer comments on offer in pre-evaluation (visible only for value PRE_EVALUATION_INFO of the component filter OFFERS)
+      - ""
+    - - qualStatus
+      - |-
+        0=qualification offer valid
+        1= qualification offer not valid
+      - ""
+    - - qualBuyerComments
+      - Buyer comments on qualification offer
+      - ""
+    - - techStatus
+      - |-
+        0 = technical offer valid
+        1 = technical offer not valid
+      - ""
+    - - techBuyerComments
+      - Buyer comments on technical offer
+      - ""
+    - - commStatus
+      - |-
+        0 = commercial offer valid
+        1 = commercial offer not valid
+      - ""
+    - - commBuyerComments
+      - Buyer comments on commercial offer
+      - ""
+    - - lastUpdateDate
+      - Offer last update date
+      - ""
+    - - techPoints
+      - Technical total points
+      - ""
+    - - commPoints
+      - Commercial total points
+      - ""
+    - - totPoints
+      - total points
+      - ""
+    - - confirmedAmount
+      - |-
+        Buyer confirmed total offer amount
+        (it can have exponential notation)
+      - ""
+    - - ranking
+      - Original ranking
+      - ""
+    - - qualOffer
+      - "Response to qualification parameters [see section “Suppliers Offer: Response to technical and qualification parameters” below]"
+      - ""
+    - - techOffer
+      - "Response to technical parameters [see section “Suppliers Offer: Response to technical and qualification parameters” below]"
+      - ""
+    - - commOffer
+      - "Response to commercial parameters [see section “Suppliers Offer: Response to commercial parameters” below]"
+      - ""
+    - - consortium
+      - "Consortium [see section “Suppliers Offer: Consortium” below]"
+      - ""
+    - - awardingRanking
+      - Awarding Ranking
+      - BA_17_04
+    - - answerUserId
+      - Internal identifier of answer user.
+      - JINT_20_02_00
+    - - answerRound
+      - Round to which this version of offer refers.
+      - JINT_20_02_02
+    - - answerVersion
+      - Answer version number
+      - JINT_20_03_01
+    - - tcoValue
+      - TCO value (it can have exponential notation)
+      - JINT_20_03_01
+    - - tiocFlag
+      - |-
+        Flag to identify a TIOC answer:
+        -1 = TIOC offer not requested
+        0 = no TIOC
+        1 = TIOC offer requested
+        2 = TIOC offer done
+        3 = TIOC offer rejected
+      - JINT_20_03_01
+    - - openQualDate
+      - Date of the first access to Qualification Envelope
+      - JINT_20_03_02
+    - - openTechDate
+      - Date of the first access to Technical Envelope
+      - JINT_20_03_02
+    - - openPriceDate
+      - Date of the first access to Commercial Envelope
+      - JINT_20_03_02
+  block: 1
+  blocks: 1
+part:
+  n: 2
+  of: 3

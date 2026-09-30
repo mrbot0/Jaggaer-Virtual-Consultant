@@ -1,0 +1,71 @@
+document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+scope: XSC
+batch: batch-03
+section: 2.1.1.3
+section_title: JiSupplierUser
+part: 1
+parts: 1
+rows:
+  - key: tech:ERPNUMBER
+    label: erpNumber
+    labels:
+      - erpNumber
+    technical_name: ERPNUMBER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Current, unique ERP number associated with the supplier.
+      This field identifies supplier company in which add the supplier user.
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.3#part-1
+        row_ref: t0.r0
+        genre: tecnica
+        label: erpNumber
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+  - key: tech:MAINUSER
+    label: mainUser
+    labels:
+      - mainUser
+    technical_name: MAINUSER
+    section: 2.1.1.3
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Flag to identify if the supplier user is a main user(true) or not (false).
+      Possible values:
+      true
+      false
+    sources:
+      - document: j1p-ws-development-kit-supplier-user-docx-305b9bed
+        section: 2.1.1.3
+        source_unit: j1p-ws-development-kit-supplier-user-docx-305b9bed/2.1.1.3#part-1
+        row_ref: t0.r1
+        genre: tecnica
+        label: mainUser
+        type: null
+        mandatory_text: Y
+    conflicts: []
+    suggested:
+      field_type: null
+      cluster: null
+      functional_section: null
+      modality: obbligo
+      confidence: 0.85
+      mandatory:
+        kind: always
+tokens_estimate: 861

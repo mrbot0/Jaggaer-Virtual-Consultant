@@ -1,0 +1,39 @@
+document: j1p-ws-development-kit-ji-order-docx-eaedd778
+scope: XSC
+section: 2.3.1.41
+section_title: ProductClassification [Import JIOrder method]
+genre: tecnica
+rows:
+  - label: type
+    technical_name: type
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: |-
+      Identifies a classification type that might apply to a product.
+      Controlled
+      Green
+      Hazardous
+      Radioactive
+      RadioactiveMinor
+      SelectAgent
+      Toxin
+      EnergyStar
+      GreenProduct
+    section: 2.3.1.41
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.41#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778
+  - label: classified
+    technical_name: classified
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Indicates whether a product does (true) or does not (false) have a
+      specified classification type
+    section: 2.3.1.41
+    source_unit: j1p-ws-development-kit-ji-order-docx-eaedd778/2.3.1.41#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: j1p-ws-development-kit-ji-order-docx-eaedd778

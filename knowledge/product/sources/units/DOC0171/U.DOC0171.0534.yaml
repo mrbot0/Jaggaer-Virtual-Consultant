@@ -1,0 +1,103 @@
+id: U.DOC0171.0534
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: tabella
+text: |-
+  Colonne: Attribute | Attribute | Datatype
+  Attribute: Field | Attribute: UI default label (EN)
+  Attribute: companyData/Id | Attribute: - | Datatype: NUMBER(38)
+  Attribute: companyData/code | Attribute: - | Datatype: VARCHAR2(100 CHAR)
+  Attribute: companyData/name | Attribute: Supplier/ Organisation Name | Datatype: VARCHAR2(256 CHAR)
+  Attribute: companyData/extUniqueCode | Attribute: - | Datatype: VARCHAR2(256 CHAR)
+  Attribute: companyData/fiscalCode | Attribute: Company Registration Number | Datatype: VARCHAR2(256 CHAR)
+  Attribute: companyData/vat | Attribute: VAT Number | Datatype: VARCHAR2(256 CHAR)
+  Attribute: companyData/euVat | Attribute: EU VAT Number | Datatype: VARCHAR2(256 CHAR)
+  Attribute: companyData/dAndBCode | Attribute: Dun & Bradstreet | Datatype: VARCHAR2(20 CHAR)
+  Attribute: invited | Attribute: - | Datatype: NUMBER(1)
+  Attribute: status | Attribute: Response Status | Datatype: VARCHAR2(128 CHAR)
+  Attribute: statusCode | Attribute: - | Datatype: NUMBER
+  Attribute: invitationMode | Attribute: - | Datatype: VARCHAR2(128 CHAR)
+  Attribute: invitationModeCode | Attribute: - | Datatype: NUMBER(1)
+  Attribute: invitationDate | Attribute: - | Datatype: DATE
+  Attribute: lateResponseAllowed | Attribute: - | Datatype: NUMBER(1)
+  Attribute: supplierAgreementAccepted | Attribute: - | Datatype: NUMBER(1)
+  Attribute: readDetailTime | Attribute: - | Datatype: DATE
+  Attribute: supplierStatus | Attribute: - | Datatype: NUMBER(5)
+hash: sha256:045eff8c56c67d3513f5cb204ae1685c82867cf2442e4ce99eecbb5ffc825528
+words: 177
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Suppliers
+  section_path: 2.5.9
+  page: 8
+  lang: en
+  prev: U.DOC0171.0533
+  next: U.DOC0171.0535
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Attribute
+    - Datatype
+  rows:
+    - - Field
+      - UI default label (EN)
+      - ""
+    - - companyData/Id
+      - "-"
+      - NUMBER(38)
+    - - companyData/code
+      - "-"
+      - VARCHAR2(100 CHAR)
+    - - companyData/name
+      - Supplier/ Organisation Name
+      - VARCHAR2(256 CHAR)
+    - - companyData/extUniqueCode
+      - "-"
+      - VARCHAR2(256 CHAR)
+    - - companyData/fiscalCode
+      - Company Registration Number
+      - VARCHAR2(256 CHAR)
+    - - companyData/vat
+      - VAT Number
+      - VARCHAR2(256 CHAR)
+    - - companyData/euVat
+      - EU VAT Number
+      - VARCHAR2(256 CHAR)
+    - - companyData/dAndBCode
+      - Dun & Bradstreet
+      - VARCHAR2(20 CHAR)
+    - - invited
+      - "-"
+      - NUMBER(1)
+    - - status
+      - Response Status
+      - VARCHAR2(128 CHAR)
+    - - statusCode
+      - "-"
+      - NUMBER
+    - - invitationMode
+      - "-"
+      - VARCHAR2(128 CHAR)
+    - - invitationModeCode
+      - "-"
+      - NUMBER(1)
+    - - invitationDate
+      - "-"
+      - DATE
+    - - lateResponseAllowed
+      - "-"
+      - NUMBER(1)
+    - - supplierAgreementAccepted
+      - "-"
+      - NUMBER(1)
+    - - readDetailTime
+      - "-"
+      - DATE
+    - - supplierStatus
+      - "-"
+      - NUMBER(5)
+  block: 1
+  blocks: 1

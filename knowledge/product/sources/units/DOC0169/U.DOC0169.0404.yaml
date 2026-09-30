@@ -1,0 +1,48 @@
+id: U.DOC0169.0404
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: tabella
+text: |-
+  Colonne: URL | / j1p/api/public/ji/v1/purchaserequests/
+  URL: Http Method | / j1p/api/public/ji/v1/purchaserequests/: POST
+  URL: Header Parameters | / j1p/api/public/ji/v1/purchaserequests/: Authorization (see “J1P WS Development_Kit – Web Services Overview” document)
+  URL: Body | / j1p/api/public/ji/v1/purchaserequests/: JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+  URL: Response format | / j1p/api/public/ji/v1/purchaserequests/: JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+  URL: Return Codes | / j1p/api/public/ji/v1/purchaserequests/: 200 operation processed. See response content for results
+  400 wrong or missing data in the request
+  401 Unauthorized request (i.e. the provided credentials are invalid)
+  500 internal error
+hash: sha256:ca8af912fa746da45e7ccf65ab2abcb4e23ba841275cfce70851eea4aa985042
+words: 116
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Import Purchase Request [PR Import]
+  section_path: 2.5.1.3
+  page: 101
+  lang: en
+  prev: U.DOC0169.0403
+  next: U.DOC0169.0405
+table:
+  table: 0
+  headers:
+    - URL
+    - / j1p/api/public/ji/v1/purchaserequests/
+  rows:
+    - - Http Method
+      - POST
+    - - Header Parameters
+      - Authorization (see “J1P WS Development_Kit – Web Services Overview” document)
+    - - Body
+      - JSON String representing the import request as defined in “request data format” chapter in this doc related to the specific module
+    - - Response format
+      - JSON string representing the import profiles response as defined in “export data format” chapter in this doc related to the specific module
+    - - Return Codes
+      - |-
+        200 operation processed. See response content for results
+        400 wrong or missing data in the request
+        401 Unauthorized request (i.e. the provided credentials are invalid)
+        500 internal error
+  block: 1
+  blocks: 1

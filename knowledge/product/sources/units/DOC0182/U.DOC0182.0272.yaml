@@ -1,0 +1,144 @@
+id: U.DOC0182.0272
+doc: S.STD.XSC.DOC.0182
+doc_id: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+type: tabella
+text: "Colonne: Component Filter | Description | Possible values Component Filter: HEADER_BILLTO | Description: Extract Requisition billing information. | Possible values: N.A. Component Filter: HEADER_SHIPTO | Description: Extract Requisition shipping information. | Possible values: N.A. Component Filter: HEADER_PAYMENTINFO | Description: Extract Requisition payment information. | Possible values: N.A. Component Filter: HEADER_INTERNALINFO | Description: Extract Requisition internal information defined at header level. | Possible values: N.A. Component Filter: HEADER_EXTERNALINFO | Description: Extract Requisition external information defined at header level. | Possible values: N.A. Component Filter: HEADER_CUSTOMFIELDVALUE | Description: Extract Requisition custom field value information defined at header level. | Possible values: N.A. Component Filter: HEADER_SPLITTABLEFIELDGROUP | Description: Extract main Requisition splittable field group information. | Possible values: N.A. Component Filter: HEADER_DELIVERYINFO | Description: Extract main requisition Delivery information. | Possible values: N.A. Component Filter: HEADER_ORDERCLAUSE | Description: Extract Order Clause information defined at header level. | Possible values: N.A. Component Filter: GROUPINFO | Description: Extract group information data | Possible values: N.A. It must be specified to enable retrieval of all other “GROUPINFO” components Component Filter: GROUPINFO_SUPPLIERCONTACTINFO | Description: Extract Supplier Contact Information List defined at group info level. | Possible values: N.A. Component Filter: GROUPINFO_DISCOUNTAMOUNT | Description: Extract Group Info Discount Amount information. | Possible values: N.A. Component Filter: GROUPINFO_SHIPPINGCHARGES | Description: Extract Group Info shipping charges information. | Possible values: N.A. Component Filter: GROUPINFO_HANDLINGCHARGES | Description: Extract Group Info handling charges information. | Possible values: N.A. Component Filter: GROUPINFO_TAX1 | Description: Extract Group Info tax 1 information. | Possible values: N.A. Component Filter: GROUPINFO_TAX2 | Description: Extract Group Info tax 2 information. | Possible values: N.A. Component Filter: GROUPINFO_ORDERCLAUSE | Description: Extract Order Clause information defined at Group Info level. | Possible values: N.A. Component Filter: LINE | Description: Extract Line base information. | Possible values: N.A."
+hash: sha256:76b9f270ce44e4f103feeb1bd1085e53a47800fe1274a0ff2a4c5f6d99a6a555
+words: 297
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0182
+  chapter: Purchase Requisition web-service
+  section: Component filters [PR Export]
+  section_path: 2.3.1
+  page: 26
+  lang: en
+  prev: U.DOC0182.0271
+  next: U.DOC0182.0273
+table:
+  table: 0
+  headers:
+    - Component Filter
+    - Description
+    - Possible values
+  rows:
+    - - HEADER_BILLTO
+      - Extract Requisition billing information.
+      - N.A.
+    - - HEADER_SHIPTO
+      - Extract Requisition shipping information.
+      - N.A.
+    - - HEADER_PAYMENTINFO
+      - Extract Requisition payment information.
+      - N.A.
+    - - HEADER_INTERNALINFO
+      - Extract Requisition internal information defined at header level.
+      - N.A.
+    - - HEADER_EXTERNALINFO
+      - Extract Requisition external information defined at header level.
+      - N.A.
+    - - HEADER_CUSTOMFIELDVALUE
+      - Extract Requisition custom field value information defined at header level.
+      - N.A.
+    - - HEADER_SPLITTABLEFIELDGROUP
+      - Extract main Requisition splittable field group information.
+      - N.A.
+    - - HEADER_DELIVERYINFO
+      - Extract main requisition Delivery information.
+      - N.A.
+    - - HEADER_ORDERCLAUSE
+      - Extract Order Clause information defined at header level.
+      - N.A.
+    - - GROUPINFO
+      - Extract group information data
+      - |-
+        N.A.
+        It must be specified to enable retrieval of all other “GROUPINFO” components
+    - - GROUPINFO_SUPPLIERCONTACTINFO
+      - Extract Supplier Contact Information List defined at group info level.
+      - N.A.
+    - - GROUPINFO_DISCOUNTAMOUNT
+      - Extract Group Info Discount Amount information.
+      - N.A.
+    - - GROUPINFO_SHIPPINGCHARGES
+      - Extract Group Info shipping charges information.
+      - N.A.
+    - - GROUPINFO_HANDLINGCHARGES
+      - Extract Group Info handling charges information.
+      - N.A.
+    - - GROUPINFO_TAX1
+      - Extract Group Info tax 1 information.
+      - N.A.
+    - - GROUPINFO_TAX2
+      - Extract Group Info tax 2 information.
+      - N.A.
+    - - GROUPINFO_ORDERCLAUSE
+      - Extract Order Clause information defined at Group Info level.
+      - N.A.
+    - - LINE
+      - Extract Line base information.
+      - |-
+        N.A.
+        It must be specified to enable retrieval of all other “LINE” components
+    - - LINE_ITEMINFO
+      - Extract Line item information.
+      - |-
+        Allowed values:
+        GENERAL: retrieve data from general line item section.
+        INTERNAL: retrieve data from internal line item section
+        EXTERNAL: retrieve data from external line item section
+        FORM: retrieve line item form section information.
+        FORMREQUEST: retrieve line item form request section information.
+    - - LINE_SHIPPINGCHARGES
+      - Extract Line shipping charges information.
+      - N.A.
+    - - LINE_HANDLINGCHARGES
+      - Extract Line handling charges information.
+      - N.A.
+    - - LINE_TAX1
+      - Extract Line tax 1 information.
+      - N.A.
+    - - LINE_TAX2
+      - Extract Line tax 2 information.
+      - N.A.
+    - - LINE_DISCOUNTAMOUNT
+      - Extract Line Discount Amount information.
+      - N.A.
+    - - LINE_DELIVERYINFO
+      - Extract Line Delivery information.
+      - N.A.
+    - - LINE_SUPPLIERINFO
+      - Extract Line Supplier information.
+      - N.A.
+    - - LINE_CUSTOMFIELDVALUE
+      - Extract requisition custom field value information defined at line level.
+      - N.A.
+    - - LINE_SPLITTABLEFIELDGROUP
+      - Extract Requisition Line splittable field group information.
+      - N.A.
+    - - LINE_INTERNALINFO
+      - Extract Requisition internal information defined at line level.
+      - N.A.
+    - - LINE_BILLTO
+      - Extract Requisition billing information defined at line level.
+      - N.A.
+    - - LINE_SHIPTO
+      - Extract Requisition shipping information defined at line level.
+      - N.A.
+    - - LINE_PAYMENTINFO
+      - Extract requisition payment information defined at line level.
+      - N.A.
+    - - LINE_ORDERCLAUSE
+      - Extract Order Clause information defined at line level.
+      - N.A.
+    - - LINE_SOURCINGDETAIL
+      - Extract line sourcing detail.
+      - N.A.
+    - - HISTORY
+      - Extract History event information.
+      - N.A.
+  block: 1
+  blocks: 1
+part:
+  n: 1
+  of: 3

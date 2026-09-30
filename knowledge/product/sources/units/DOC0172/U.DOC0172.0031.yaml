@@ -1,0 +1,35 @@
+id: U.DOC0172.0031
+doc: S.STD.XSC.DOC.0172
+doc_id: j1p-ws-development-kit-supplier-user-docx-305b9bed
+type: tabella
+text: |-
+  Colonne: Attribute | Description
+  Attribute: returnCode | Description: Operation result. Possible code are listed in the table below
+  Attribute: returnMessage | Description: Operation result description. If operation completed successfully, it is “OK”, otherwise it is a brief explanation of mismatches found
+  Attribute: data | Description: Blank in the case of success, filled with warnings in case of success with warnings, filled with error log in case of operation not completed.
+hash: sha256:eecf07cd74a568278500869f215a484598987d39f58040722cca7fff3e855d3c
+words: 70
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0172
+  chapter: Supplier user web-service
+  section: Response data format
+  section_path: 2.1.2
+  page: 11
+  lang: en
+  prev: U.DOC0172.0030
+  next: U.DOC0172.0032
+table:
+  table: 0
+  headers:
+    - Attribute
+    - Description
+  rows:
+    - - returnCode
+      - Operation result. Possible code are listed in the table below
+    - - returnMessage
+      - Operation result description. If operation completed successfully, it is “OK”, otherwise it is a brief explanation of mismatches found
+    - - data
+      - Blank in the case of success, filled with warnings in case of success with warnings, filled with error log in case of operation not completed.
+  block: 1
+  blocks: 1

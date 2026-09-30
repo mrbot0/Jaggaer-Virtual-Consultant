@@ -1,0 +1,41 @@
+id: U.DOC0167.0232
+doc: S.STD.XSC.DOC.0167
+doc_id: j1p-ws-development-kit-jaggaerone-supplier-docx-5daa1e80
+type: riga-tabella-campi
+text: |-
+  Attribute: displayName | Mandatory (Y/N): N | Description: Display name of the supplier diversity class. | Mapping on Jaggaer One data model and notes: You can edit this name in your system.
+  Valid only for supplier exports. However, if it is included in a supplier import, it does not cause an error, it is simply ignored.
+  See Internal Names and Display Names for Diversity Classification for the full list of valid display names.
+hash: sha256:7094e5df6bc72ef6f3899a4859a28a7a691f70f0e07462396c7742f08c2e9b96
+words: 73
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0167
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/diversityClassificationList/diversityClassification
+  section_path: 2.1.1.55
+  page: 5
+  lang: en
+  prev: U.DOC0167.0231
+  next: U.DOC0167.0233
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - displayName
+    - N
+    - Display name of the supplier diversity class.
+    - |-
+      You can edit this name in your system.
+      Valid only for supplier exports. However, if it is included in a supplier import, it does not cause an error, it is simply ignored.
+      See Internal Names and Display Names for Diversity Classification for the full list of valid display names.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

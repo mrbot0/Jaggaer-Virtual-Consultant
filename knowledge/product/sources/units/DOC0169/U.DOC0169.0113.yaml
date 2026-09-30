@@ -1,0 +1,39 @@
+id: U.DOC0169.0113
+doc: S.STD.XSC.DOC.0169
+doc_id: j1p-ws-development-kit-ji-purchaserequisition-do-14be8fb8
+type: riga-tabella-campi
+text: |-
+  Attribute: radioNuclide | Mandatory (Y/N): N | Description: RadioNuclide number to identify RadioNuclides.
+  Valid only if ProductClassification type="Radioactive" is set to true.
+  RadioNuclide is case-sensitive. For example, Barium is entered as "133Ba".
+hash: sha256:7d602bdcfc344b94b57e2fd08e98aa6ed547dd707ade84dbb08a4e517998436f
+words: 32
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0169
+  chapter: Purchase Requisition web-service
+  section: Item [PR Import]
+  section_path: 2.1.1.11
+  page: 18
+  lang: en
+  prev: U.DOC0169.0112
+  next: U.DOC0169.0114
+row:
+  table: 0
+  row: 11
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+  cells:
+    - radioNuclide
+    - N
+    - |-
+      RadioNuclide number to identify RadioNuclides.
+      Valid only if ProductClassification type="Radioactive" is set to true.
+      RadioNuclide is case-sensitive. For example, Barium is entered as "133Ba".
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

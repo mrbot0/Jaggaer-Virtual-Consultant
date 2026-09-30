@@ -1,0 +1,170 @@
+doc: S.STD.XSC.DOC.0162
+scope: XSC
+extracted_at: 2026-09-30T04:31:36.035Z
+tier: T0
+stats:
+  units: 368
+  extracted_units: 4
+  document_candidates: 0
+  needs_llm: 1
+  t0_complete: 3
+  by_candidate:
+    FLD: 3
+    FLW: 1
+  residue_marked: 0
+llm_plan:
+  budget: 80000
+  unit_budget: 3000
+  estimated_tokens: 369
+  sessions:
+    - n: 1
+      tokens: 369
+      batches: 1
+      items: 1
+      batch_items:
+        - - R.DOC0162.0263
+  over_unit_budget: []
+items:
+  - raw_id: R.DOC0162.0036
+    source_unit: U.DOC0162.0036
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0162
+    section: Class Objectives (as seen in the Blueprint):Class Objectives (as seen in the Blueprint)
+    page: 12
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a1
+      - FLD
+    type_hint:
+      candidates: *a1
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: By the end of this class you
+      modality: raccomandazione
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.notes
+      confidence: 0.85
+      signals:
+        - raccomandazione
+      source_unit: U.DOC0162.0036
+    needs_llm: false
+    tokens: 12
+  - raw_id: R.DOC0162.0179
+    source_unit: U.DOC0162.0179
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0162
+    section: "Key Concept: Flexible Workflow"
+    page: 78
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a2
+      - FLD
+    type_hint:
+      candidates: *a2
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: • The system
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0162.0179
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 9
+  - raw_id: R.DOC0162.0263
+    source_unit: U.DOC0162.0263
+    unit_type: procedura
+    doc: S.STD.XSC.DOC.0162
+    section: "Try It Yourself:Try It Yourself:"
+    page: 120
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a3
+      - FLW
+    type_hint:
+      candidates: *a3
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      attore: null
+      trigger: null
+      precondizioni: []
+      passi:
+        - n: 1
+          verbo: navigate
+          oggetto: around the portal
+          valore: null
+        - n: 2
+          verbo: update
+          oggetto: the profile
+          valore: null
+      risultato_atteso: null
+      eccezioni: []
+      figure: []
+      oggetti_toccati: []
+      source_unit: U.DOC0162.0263
+    needs_llm: true
+    missing:
+      - attore
+      - trigger
+      - risultato_atteso
+    tokens: 19
+  - raw_id: R.DOC0162.0286
+    source_unit: U.DOC0162.0286
+    unit_type: regola
+    doc: S.STD.XSC.DOC.0162
+    section: "Write It Out:"
+    page: 130
+    lang: en
+    facets:
+      F1: doc-standard
+      F15: d'uso
+    candidates: &a4
+      - FLD
+    type_hint:
+      candidates: *a4
+      outcome: ambiguo
+      score: 0.5
+    extraction:
+      subject: What would
+      modality: obbligo
+      condition: null
+      exception: null
+      scope_qualifiers:
+        companies: []
+        roles: []
+        states: []
+        categories: []
+      consequence: FLD.mandatory
+      confidence: 0.9
+      signals:
+        - obbligo
+      source_unit: U.DOC0162.0286
+      mandatory:
+        kind: always
+    needs_llm: false
+    tokens: 6

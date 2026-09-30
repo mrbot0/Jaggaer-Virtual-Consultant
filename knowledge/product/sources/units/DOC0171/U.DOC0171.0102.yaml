@@ -1,0 +1,49 @@
+id: U.DOC0171.0102
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: maxScoreVisibleToSuppliers | Mandatory (Y/N): N | Description: Max score visible to supplier’s flag. Available only when supplier response ranking is BEST_TECHNICAL_SCORE (Best Technical Score) or
+  MOST_ECONOMICAL_ADVANTAGEOUS (Best Score).
+  Possible values:
+  0 = No
+  1 = Envelope Level Only
+  2 = Including Section and Question Level
+  Default is 0. | Mapping on JA data model and notes: Available from BA 16 04.
+hash: sha256:6cfe91893b2826e5203c680d1a4dea90e6d45ca18b101ce2e157077ed761f294
+words: 62
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0101
+  next: U.DOC0171.0103
+row:
+  table: 0
+  row: 48
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - maxScoreVisibleToSuppliers
+    - N
+    - |-
+      Max score visible to supplier’s flag. Available only when supplier response ranking is BEST_TECHNICAL_SCORE (Best Technical Score) or
+      MOST_ECONOMICAL_ADVANTAGEOUS (Best Score).
+      Possible values:
+      0 = No
+      1 = Envelope Level Only
+      2 = Including Section and Question Level
+      Default is 0.
+    - Available from BA 16 04.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

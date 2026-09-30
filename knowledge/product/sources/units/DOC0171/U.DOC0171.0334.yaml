@@ -1,0 +1,25 @@
+id: U.DOC0171.0334
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: procedura
+text: |-
+  If this element is provided, the underlying evaluation group array is verified
+  1. EvaluationGroup array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any evaluation group: if operation is called in RESET mode, all previously evaluation groups are removed, otherwise no operation is performed.
+  2. EvaluationGroup array contains at least one element: newly listed evaluation groups are inserted and, if operation is called in RESET mode, not listed evaluation groups are removed.
+hash: sha256:326beed39e411b6cea33e06ccafee4e3b6fcc556451d4e541936d950a8fcda74
+words: 81
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Evaluation Group Management
+  section_path: 2.1.2.10
+  page: 6
+  lang: en
+  prev: U.DOC0171.0333
+  next: U.DOC0171.0335
+steps:
+  - "EvaluationGroup array hasn’t been defined (null value) or it has been defined (not null value) but it doesn’t contain any evaluation group: if operation is called in RESET mode, all previously evaluation groups are removed, otherwise no operation is performed."
+  - "EvaluationGroup array contains at least one element: newly listed evaluation groups are inserted and, if operation is called in RESET mode, not listed evaluation groups are removed."
+procedure:
+  title: If this element is provided, the underlying evaluation group array is verified

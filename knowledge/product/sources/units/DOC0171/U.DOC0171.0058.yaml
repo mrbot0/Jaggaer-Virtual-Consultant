@@ -1,0 +1,44 @@
+id: U.DOC0171.0058
+doc: S.STD.XSC.DOC.0171
+doc_id: j1p-ws-development-kit-rfx-docx-2adedfd8
+type: riga-tabella-campi
+text: |-
+  Attribute: rfiFlag | Mandatory (Y/N): N | Description: Defines if the RfX is an RFI or an RFQ
+  1 = RFI
+  0 = RFQ | Mapping on JA data model and notes: RFI/RFQ type
+  Default 0=RFQ
+hash: sha256:08ddfa93ef328591ae5bfb1a65f21a995c7c79e6cc3033c6c2d4a1880387be1c
+words: 36
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0171
+  chapter: RfX web-service
+  section: Rfx Setting (header information) [Import/Update RfX method]
+  section_path: 2.1.1.3
+  page: 6
+  lang: en
+  prev: U.DOC0171.0057
+  next: U.DOC0171.0059
+row:
+  table: 0
+  row: 4
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on JA data model and notes
+  cells:
+    - rfiFlag
+    - N
+    - |-
+      Defines if the RfX is an RFI or an RFQ
+      1 = RFI
+      0 = RFQ
+    - |-
+      RFI/RFQ type
+      Default 0=RFQ
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0

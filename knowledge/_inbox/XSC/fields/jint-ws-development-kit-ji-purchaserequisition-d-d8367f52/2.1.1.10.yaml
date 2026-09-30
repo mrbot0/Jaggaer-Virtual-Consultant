@@ -1,0 +1,30 @@
+document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+scope: XSC
+section: 2.1.1.10
+section_title: Money [PR Import]
+genre: tecnica
+rows:
+  - label: currency
+    technical_name: currency
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Exchangeable currency code. See the Integration Currency Codes document
+      in the JAGGAER Indirect Online Help for valid currency codes.
+    section: 2.1.1.10
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.10#part-1
+    row_ref: t0.r0
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52
+  - label: money
+    technical_name: money
+    type: null
+    mandatory_text: Y
+    allowed_values: []
+    notes: Monetary amount. This is a numeric value of up to 15 digits, including up
+      to 4 decimal places.
+    section: 2.1.1.10
+    source_unit: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52/2.1.1.10#part-1
+    row_ref: t0.r1
+    genre: tecnica
+    document: jint-ws-development-kit-ji-purchaserequisition-d-d8367f52

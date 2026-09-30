@@ -1,0 +1,39 @@
+id: U.DOC0177.0314
+doc: S.STD.XSC.DOC.0177
+doc_id: jint-ws-development-kit-jaggaerone-supplier-docx-9b497696
+type: riga-tabella-campi
+text: |-
+  Attribute: numberWheel | Mandatory (Y/N): N | Mapping on Jaggaer One data model and notes: Preferred number wheel choice. Must be an existing number wheel choice for your organization in the JAGGAER ONE Supplier Management solution.
+  Valid only if the PONumberSelection type field for the PO payment method is set to “wheel”.
+hash: sha256:8aa97475973f3321f8132eb3ad01ff9be1dda70607d990c95f73e5f1bdc4d623
+words: 52
+lang: en
+context:
+  doc: S.STD.XSC.DOC.0177
+  chapter: J1 Supplier web-service
+  section: J1Supplier/JISupplierData/locationList/location/paymentMethod/poPaymentMethod/pCardPayment/poNumberSelection
+  section_path: 2.1.1.71
+  page: 55
+  lang: en
+  prev: U.DOC0177.0313
+  next: U.DOC0177.0315
+row:
+  table: 0
+  row: 1
+  headers:
+    - Attribute
+    - Mandatory (Y/N)
+    - Description
+    - Mapping on Jaggaer One data model and notes
+  cells:
+    - numberWheel
+    - N
+    - ""
+    - |-
+      Preferred number wheel choice. Must be an existing number wheel choice for your organization in the JAGGAER ONE Supplier Management solution.
+      Valid only if the PONumberSelection type field for the PO payment method is set to “wheel”.
+  columns:
+    technical_name: 0
+    mandatory: 1
+    notes: 2
+    label: 0
