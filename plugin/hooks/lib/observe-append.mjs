@@ -24,6 +24,7 @@ import { resolveSel, atlasIndex, atlasMatch, fieldSensitivity } from "../../scri
 import { detectErrors } from "../../scripts/chrome/errors.mjs";
 import { profileFor, redactText, freeText } from "../../scripts/chrome/redact.mjs";
 import { toYaml } from "../../scripts/lib/yaml-lite.mjs";
+import { pageRecord, clickRecord, appendAtlasLog, atlasLogFile } from "./atlas-log.mjs";
 
 const SNAPSHOT_OPS = new Set(["take_snapshot", "read_page", "get_page_text", "find", "browser_snapshot", "browser_find"]);
 const SCREENSHOT_OPS = new Set(["take_screenshot", "browser_take_screenshot", "upload_image"]);
@@ -210,7 +211,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
       refs[String(e.ref)] = page.formatMismatch || unbound(String(e.ref)) ? null : atlasMatch(atlas, e)?.code ?? null;
     }
   }
-  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names };
+  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page };
 }
 
 // Nuovo stato del legame ref ↔ SEL in session.browser e della storia dei ref dopo la chiamata (puro: copie).
@@ -326,6 +327,9 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   let state;
   try { state = responseState(resp); } catch { state = "unknown"; }
   const warn = [];
+  // soluzione A: stato PRIMA di questa chiamata (nome del bersaglio di un click, pagina di partenza)
+  const prevSnap = st.session.browser?.snapshot ?? null;
+  const prevSig = st.session.ledger?.observe?.last_page_sig ?? null;
 
   // 1. origine osservata (prima di tutto: è ciò che leggono i guard)
   if (st.session.env) {
@@ -343,7 +347,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   }
 
   // 2. osservazione
-  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
+  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
   const { code, errs, payload } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
   const dir = join(st.ws, "customers", st.customer, "observations");
   mkdirSync(dir, { recursive: true });
@@ -394,6 +398,21 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   try {
     appendFileSync(join(sessionDir(st.ws, st.customer, st.sid), "observations.jsonl"), `${JSON.stringify({ kind: obsKindForLedger, page_sig: doc.page_signature, obs: code, ts: doc.ts })}\n`);
   } catch { /* il registro jsonl è di comodo per self-check --observations */ }
+
+  // 4. soluzione A (spec §A1): registro di sola struttura per atlas-build — fail-open, mai un blocco
+  try {
+    const file = atlasLogFile(st.ws, st.customer, st.sid);
+    let full = false;
+    if (state === "ok" && mode === "complete" && pageUrl && page) {
+      full = appendAtlasLog(file, pageRecord(page, { pageSig: doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts })) === "full";
+    }
+    const clicked = state === "ok" ? (call.actions ?? [call]).filter((a) => a.kind === "click" && !a.submits && Array.isArray(a.targets) && a.targets.length) : [];
+    for (const a of clicked) {
+      const name = prevSnap?.names?.[String(a.targets[0])];
+      if (name) full = appendAtlasLog(file, clickRecord({ fromSig: prevSig, name, ts: doc.ts })) === "full" || full;
+    }
+    if (full) warn.push("registro dell'esplorazione pieno (20 MB): pagine non registrate");
+  } catch (err) { warn.push(`registro dell'esplorazione non scritto (${String(err?.message ?? err).slice(0, 80)})`); }
 
   const errTag = errs.length ? errs.map((e) => e.code ?? e.raw_id).join(",") : "—";
   const line = `OBS ${code} · surprise:${doc.surprise} novelty:${doc.novelty} · ERR:${errTag}${waste ? " · spreco: snapshot ripetuto della stessa pagina senza azione" : ""}`;
