@@ -205,7 +205,7 @@ Richiesta dell'utente: esplorare un sistema JAGGAER, memorizzarlo, poi creare or
 - [x] Istruzioni per `scope-expert` e `agent-manager`, comandi `ops esplora` e `use mode esplorazione`
 - [x] Guida [GUIDA-PRIMO-USO.md](GUIDA-PRIMO-USO.md)
 - [ ] Prova dal vivo sul tenant del cliente (prima esplorazione, primo ordine)
-- [ ] Soluzione A (mappa costruita da script dagli snapshot): da valutare dopo le prove
+- [x] Soluzione A (registro automatico dell'esplorazione, `kb atlas-build`, `compose-plan`): sul ramo `feature/soluzione-a-atlas`, merge a cura dell'utente
 
 ## Stato per pacchetto di lavoro
 

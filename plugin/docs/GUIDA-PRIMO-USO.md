@@ -61,7 +61,7 @@ ora per installazione, login e primi aggiustamenti. Il plugin non è ancora stat
 
 Cosa fa: clicca menu, schede, link, record e apre i moduli "Nuovo/Crea", apre le tendine per leggerne i valori. **Non
 preme mai** Salva, Invia, Conferma, Approva, Elimina…, né scrive nei campi: i guard lo negano. Ogni pagina viene
-memorizzata con `kb atlas-write` in `customers/<CODICE>/kb/scopes/<SCOPE>/selectors|fields/` (scope P2P per gli
+registrata da sola e, a fine giro, trasformata in mappa con `kb atlas-build` in `customers/<CODICE>/kb/scopes/<SCOPE>/selectors|fields/` (scope P2P per gli
 ordini, CON per i contratti). Per vedere cosa ha imparato: `/jaggaer-virtual-consultant:kb find --type SEL --scope P2P --customer <CODICE>`.
 
 Esplora un modulo alla volta (ordini, poi contratti): il budget di un agente è limitato.
@@ -70,7 +70,8 @@ Esplora un modulo alla volta (ordini, poi contratti): il budget di un agente è 
 
 1. Torna in modalità operativa: `/jaggaer-virtual-consultant:use mode ops`
 2. `/jaggaer-virtual-consultant:ops crea ordine fornitore <…>, articolo <…>, quantità <…>, centro di costo <…>`
-3. L'agente compone il piano dalla memoria e te lo mostra (campi e valori, come annullarlo). Se va bene scrivi
+3. L'agente compone il piano dalla memoria e te lo mostra (campi e valori, come annullarlo); se mancano dati
+   obbligatori te li chiede prima. Se va bene scrivi
    `APPROVO PIANO <codice del piano>`.
 4. Compila da solo, passo per passo, controllando ogni pagina. Prima dell'invio finale ti chiede conferma: rispondi
    `sì`.

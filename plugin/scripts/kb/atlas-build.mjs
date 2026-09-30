@@ -32,10 +32,12 @@ export function buildDrafts(lines) {
     if (pendingClick?.from_sig && pendingClick.from_sig !== l.page_sig) edges.push({ from: pendingClick.from_sig, to: l.page_sig, name: pendingClick.target?.name });
     pendingClick = null;
     const first = !pages.has(l.page_sig);
-    pages.set(l.page_sig, { title: l.title, url_path: l.url_path, elements: l.elements ?? [] });
-    if (!first) continue;
     const els = l.elements ?? [];
+    // nome della pagina = titolo principale (h1), come il document dei suoi FLD: il percorso "Percorso: <nome>" e i campi
+    // devono coincidere perché compose-plan li trovi insieme (il titolo della scheda ha spesso il nome del tenant)
     const document = els.find((e) => e.role === "heading" && e.level === 1 && e.name)?.name ?? l.title ?? l.page_sig;
+    pages.set(l.page_sig, { title: l.title, document, url_path: l.url_path, elements: els });
+    if (!first) continue;
     const sectionOf = (e) => {
       let p = e.parent;
       for (let hop = 0; p != null && hop < 200; hop++) { const a = els[p]; if (!a) break; if (SECTION_ROLES.has(a.role) && a.name) return a.name; p = a.parent; }
@@ -63,7 +65,7 @@ export function buildDrafts(lines) {
       if (!e) continue;
       const chain = [];
       for (let x = e; x; x = prev.get(x.from)) chain.unshift(x);
-      routes.push({ page_sig: sig, title: pages.get(sig)?.title ?? sig, steps: [{ kind: "navigate", url_path: pages.get(entry)?.url_path ?? "/", sig: entry },
+      routes.push({ page_sig: sig, title: pages.get(sig)?.document ?? sig, steps: [{ kind: "navigate", url_path: pages.get(entry)?.url_path ?? "/", sig: entry },
         ...chain.map((c) => ({ kind: "click", name: c.name, role: (pages.get(c.from)?.elements ?? []).find((el) => normLabel(el.name) === normLabel(c.name))?.role ?? "link", from_sig: c.from, to_sig: c.to }))] });
     }
   }

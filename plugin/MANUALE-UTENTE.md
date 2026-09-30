@@ -285,7 +285,7 @@ Tutti iniziano con `/jaggaer-virtual-consultant:`. Sono otto famiglie.
 | `fields --doc <documento>` · `identity <campo>` | I campi di un documento con i loro obblighi; la carta d'identità di un dato |
 | `precedents` · `epistemic` · `impact` · `coverage` | Decisioni passate; quanto si sa di un argomento; cosa tocca una modifica; copertura |
 | `graph` · `scopes` · `handoffs` · `clusters` · `contradictions` | Registri e coerenza della conoscenza |
-| `atlas-write` | Lo usano gli agenti per memorizzare ciò che vedono (non serve chiamarlo a mano) |
+| `atlas-build` · `atlas-write` | Li usano gli agenti: il primo trasforma le pagine registrate durante l'esplorazione in mappa, il secondo corregge a mano (non serve chiamarli) |
 | `reindex` · `migrate` | Manutenzione dell'indice e del database |
 
 ### `nrt` — collaudo (Non-Regression Test)
@@ -460,7 +460,7 @@ Le frasi che aumentano la protezione valgono subito; quelle che la riducono dopo
 | Vuoi… | Scrivi | Cosa succede |
 |---|---|---|
 | Imparare com'è fatto un modulo | `ESPLORA PREPROD` → `use mode esplorazione` → `ops esplora ordini` | scope-expert naviga, apre moduli e tendine, memorizza pagine, pulsanti e campi; non salva mai |
-| Creare un ordine | `use mode ops` → `ops crea ordine fornitore …, articolo …, quantità …` | Piano dalla memoria → `APPROVO PIANO …` → compilazione automatica → `sì` prima dell'invio → procedura memorizzata |
+| Creare un ordine | `use mode ops` → `ops crea ordine fornitore …, articolo …, quantità …` | Piano dalla memoria (se mancano dati obbligatori te li chiede prima) → `APPROVO PIANO …` → compilazione automatica → `sì` prima dell'invio → procedura memorizzata |
 | Sapere perché un documento è fermo | *"Su ACME produzione, perché l'ordine 4500012345 è fermo?"* | Diagnosi in sola lettura, con evidenze |
 | Collaudare una release | `nrt release-check R25.3` | Piano dal delta, esecuzione per scope, triage, Defect, Xray, report |
 | Cambiare una configurazione | `cfg design "rendi obbligatorio Codice progetto sopra 10.000 €"` → `cfg apply <PLAN>` | Progetto con rischio e rollback, poi applicazione con le approvazioni del livello |
