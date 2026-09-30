@@ -29,12 +29,14 @@ Modalità Operativa e Analytics (§56.6, §29, §20.5). `<C>` è il cliente atti
 
 - `esplora <modulo>` — esplora e **memorizza** un modulo (menu, pagine, pulsanti, campi, tendine) nella conoscenza
   del cliente: `Agent(scope-expert, sonnet)` in modalità `esplorazione` (l'utente l'ha aperta con `ESPLORA SANDBOX` o
-  `ESPLORA PREPROD`, poi `/use mode esplorazione`); l'agente scrive con `kb atlas-write`. In pre-produzione solo click
+  `ESPLORA PREPROD`, poi `/use mode esplorazione`); le pagine si registrano da sole e a fine giro l'agente le trasforma
+  in mappa con `kb atlas-build`. In pre-produzione solo click
   senza effetto. Mai prod.
 - `crea <richiesta|ordine|fornitore|evento|contratto> …` — crea **in bozza** con compensazione registrata prima del
   passo: `Agent(scope-expert, sonnet)` in modalità ops. Sandbox e preprod; **mai prod**. Si ferma allo stato più
   conservativo (bozza) se l'utente non dice "fin dove". Nessuna approvazione per la sola bozza in sandbox (piano mostrato).
-  Il piano si compone dalla memoria (procedura FLW già imparata, oppure SEL/FLD dell'esplorazione); in pre-produzione
+  Il piano lo compone `compose-plan` dalla memoria (procedura FLW già imparata, oppure percorso e campi dell'esplorazione);
+  se mancano dati obbligatori li chiede all'utente prima del piano; in pre-produzione
   l'utente scrive `APPROVO PIANO <PLAN>` e poi `sì` prima dell'invio finale. Se mancano pagine, prima `esplora`. A esito
   verde l'agente memorizza la procedura (`kb atlas-write --from-plan`): la volta dopo cambiano solo i dati.
 - `approva · chiudi · pubblica <riferimento>` — azioni R2: `Agent(scope-expert, sonnet)` in modalità ops, con

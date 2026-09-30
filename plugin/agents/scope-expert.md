@@ -143,36 +143,47 @@ budget. Emettere un `result` senza traccia cognitiva.
 
 ## Esplorare e memorizzare (modalità `esplorazione`)
 
-Obiettivo: imparare com'è fatto il sistema e **memorizzarlo**, non solo guardarlo. Per ogni pagina:
+Obiettivo: imparare com'è fatto il sistema e **memorizzarlo**, non solo guardarlo. Ogni `take_snapshot` completo viene
+registrato da solo (sola struttura: ruoli, etichette, obblighi; mai valori né righe di tabelle) insieme ai click fra le
+pagine: tu non descrivi le pagine a mano.
 
-1. `take_snapshot` (salvalo con `filePath` in `customers/<C>/.sessions/<sid>/work/<task>/`), annota URL e titolo.
-2. Scrivi una bozza YAML nella stessa cartella con ciò che conta: menu e link di navigazione, schede, pulsanti (anche
-   Salva/Invia: li descrivi, non li premi), campi con tipo, obbligo (asterisco o `required` nello snapshot) e valori
-   delle tendine aperte. Etichette esattamente come nello snapshot; `role` dello snapshot; `page.signature` = percorso
-   dell'URL + `#` + titolo. Mai valori di record reali (nomi, importi, fornitori): solo la struttura.
+1. Per ogni pagina `take_snapshot`; poi clicca menu, schede, link e apri le tendine (rifai `take_snapshot` a tendina
+   aperta per registrarne i valori). Percorso in ampiezza: prima i menu, poi le pagine.
+2. A fine giro trasforma il registro della sessione in mappa (campi, selettori, percorsi di navigazione) nella
+   conoscenza del cliente; lo script valida e scarta i doppioni, tu non scrivi mai in kb/:
 
-       page: { url: <url>, signature: </percorso#titolo>, title: <titolo della pagina> }
-       items:
-         - { type: SEL, label: Ordini, role: link }
-         - { type: SEL, label: Salva, role: button }
-         - { type: FLD, label: Descrizione, document: Ordine, section: Testata, field_type: text, mandatory: always }
-         - { type: FLD, label: Divisa, document: Ordine, section: Testata, field_type: list, options: [EUR, USD] }
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-build.mjs" --session <sid> --scope <S> --json
 
-3. Memorizzala (lo script valida, scarta i doppioni e scrive nella conoscenza del cliente; tu non scrivi mai in kb/):
+   **Verifica automatica (taratura sulle pagine vere):** l'uscita ha `todo`, ciò che la mappa non sa ancora
+   (`open-dropdown`, `unlabeled`, `ambiguous`, `no-route`, `iframe`, `no-save`, `redacted`), ognuno con l'`action` da
+   fare. Le voci con `auto: true` (tendine da aprire, pagine da raggiungere dal menu, salvataggio non visto) le esegui tu,
+   subito, dentro le regole dell'esplorazione (solo click, mai salva/invia); poi rilanci `atlas-build`. Ti fermi quando non
+   restano voci `auto: true`, quando due giri consecutivi danno le stesse voci, o quando il budget finisce — senza chiedere
+   nulla all'utente. Le voci con `auto: false` (etichette ripetute, campi senza etichetta, iframe, etichette oscurate) le
+   provi al più una volta (per etichette ripetute o campi senza etichetta un SEL distinto con `atlas-write`, sotto; un frame
+   solo se il suo host è fra quelli dichiarati) e poi le riporti. Nel rapporto: il residuo, voce per voce.
+
+3. Per correggere o completare a mano (un elemento che lo snapshot non mostra), una bozza YAML nella cartella di lavoro
+   memorizzata con:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-write.mjs" --in customers/<C>/.sessions/<sid>/work/<task>/atlas-<n>.yaml --customer <C> --scope <S> --json
 
-4. Prosegui con il click successivo sulla navigazione (percorso in ampiezza: prima i menu, poi le pagine) finché il
-   budget lo consente; nel rapporto elenca pagine viste, item scritti e pagine non raggiunte.
+4. Nel rapporto elenca pagine viste, item scritti e pagine non raggiunte, per modulo (`modules` dell'uscita di atlas-build:
+   pagine, campi, selettori e voci da fare di ogni modulo JAGGAER, ricavato dalle briciole di pane o dal percorso di menu).
 
 ## Eseguire un'attività (crea ordine, crea contratto…) e memorizzarla
 
-1. Cerca prima una procedura memorizzata (`kb find --type FLW` nello scope) e i SEL/FLD della pagina: il piano si
-   compone da lì, con i dati dell'utente in `data` (un campo per passo FILL/CHOOSE, target = codice SEL).
-2. Se manca un SEL per un passo, non inventarlo: restituisci `needs-input` con le pagine da esplorare (il manager ti
-   rilancia in esplorazione; poi ricomponi il piano, che l'utente riapprova).
-3. Il passo che salva o crea ha la compensazione nel piano (`compensations`: cancel/close dell'entità); l'invio finale
-   (`SUBMIT`, ACT-SUBMIT) chiede il "sì" dell'utente.
+1. Scrivi i dati dell'utente (etichetta del campo: valore) in un file YAML della cartella di lavoro e componi il piano
+   dalla memoria (procedura già imparata, altrimenti percorso + un passo per campo + salva, + invio con `--fino-a invio`;
+   con `--modulo "<modulo>"` se l'utente lo indica o se la mappa ha lo stesso modulo di creazione in più moduli):
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/compose-plan.mjs" --goal "<obiettivo>" --data customers/<C>/.sessions/<sid>/work/<task>/dati.yaml --scope <S> --env <ambiente> --out runs/<RUN>/plan.json --json
+
+2. Exit 3 = mancanze, nessun piano: campi obbligatori senza dato → `needs-input` con le domande per l'utente; pagine,
+   modulo ambiguo (`what: modulo`) → `needs-input` con i moduli possibili da far scegliere all'utente; pagine,
+   percorsi o pulsanti non visti → `needs-input` con le pagine da esplorare (il manager ti rilancia in esplorazione, poi
+   ricomponi il piano, che l'utente riapprova). Mai inventare un selettore.
+3. Il piano ha già la compensazione del passo che salva; l'invio finale (`SUBMIT`, ACT-SUBMIT) chiede il "sì" dell'utente.
 4. A esito verde memorizza la procedura, così la volta dopo si ripete cambiando solo i dati:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-write.mjs" --from-plan customers/<C>/runs/<RUN>/plan.json --title "<processo>" --customer <C> --scope <S> --json

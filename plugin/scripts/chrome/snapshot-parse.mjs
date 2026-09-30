@@ -62,6 +62,9 @@ function finish(out, nodes) {
   }
   // WP07 giro 2 (I-1): i ref di TUTTI i nodi (anche testo, generic, label, RootWebArea) per i duplicati
   out.allRefs = nodes.map((n) => n.ref).filter((r) => r != null).map(String);
+  // soluzione A (registro dell'esplorazione): l'albero dei nodi (id, genitore, ruolo, ref) per sapere a quale tabella,
+  // gruppo o tendina appartiene un elemento; gli altri consumatori lo ignorano
+  out.nodes = nodes.map((n) => ({ id: n.id, parent: n.parent ?? null, role: n.role, ref: n.ref ?? null }));
   return out;
 }
 
@@ -270,7 +273,8 @@ export function mainHeading(page) {
 }
 // WP07 giro 1 (spec I3): il titolo si redige (profilo) PRIMA dello slug — dopo, la redazione non lo riconosce più.
 export function pageSignature(page, { profile = "strict" } = {}) {
-  const p = page?.url ? normalizePath(page.url) : null;
+  // seconda revisione (soluzione A): anche il percorso si redige (un'e-mail o un codice nel percorso non entra nella firma)
+  const p = page?.url ? redact(normalizePath(page.url), { profile }) : null;
   const raw = mainHeading(page);
   const h = raw ? redact(raw, { profile }) : null;
   if (p == null && !h) return null;

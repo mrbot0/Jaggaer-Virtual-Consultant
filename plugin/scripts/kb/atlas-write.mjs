@@ -33,6 +33,8 @@ import { confineInputs } from "../lib/text-file.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 
+// Campo la cui etichetta compare più volte nella stessa pagina (soluzione A): compose-plan non sceglie, chiede.
+export const AMBIGUOUS_NOTE = "ambiguo: etichetta ripetuta nella pagina";
 export class AtlasWriteError extends Error { constructor(code, m) { super(m); this.code = code; } }
 const E1 = (m) => new AtlasWriteError(1, m);
 const ROLES = new Set(["button", "link", "menuitem", "tab", "textbox", "combobox", "listbox", "option", "checkbox", "radio", "searchbox", "search_box", "row", "cell", "heading", "img", "switch", "treeitem", "spinbutton", "dialog"]);
@@ -69,7 +71,7 @@ function buildSel(it, draft) {
   ];
   return (code) => ({
     id: code, type: "SEL", title: clip(`Selettore ${label}`, 140), summary: clip(`${role} "${label}" osservato in esplorazione${draft.page?.title ? ` nella pagina ${draft.page.title}` : ""}.`, 400),
-    concept: clip(it.concept ?? label, 120), label, role, effect, strategies, stability: it.stability ?? "medium",
+    concept: clip(it.concept ?? label, 120), label, role, effect, strategies, stability: it.stability ?? "medium", ...(it.module ? { module: clip(red(String(it.module)), 120) } : {}),
     ...(draft.page?.signature ? { page: String(draft.page.signature) } : {}), ...(it.field ? { field: String(it.field) } : {}),
     facets: facets("comportamento-ui"), sources: sourcesOf(draft),
   });
@@ -86,10 +88,10 @@ function buildFld(it, draft) {
   const options = Array.isArray(it.options) ? it.options.map((o) => clip(red(String(o)), 80)).filter(Boolean).slice(0, 100) : [];
   return (code) => ({
     id: code, type: "FLD", title: clip(`Campo ${label} (${document})`, 140), summary: clip(`Campo ${ft} "${label}" del documento ${document}, osservato in esplorazione.`, 400),
-    document, label: { it: label }, section: clip(it.section ?? "principale", 80), field_type: ft,
+    document, label: { it: label }, section: clip(it.section ?? "principale", 80), field_type: ft, ...(it.module ? { module: clip(red(String(it.module)), 120) } : {}),
     ...(it.technical_name ? { technical_name: String(it.technical_name) } : {}),
     mandatory: { kind: it.mandatory ?? "undocumented" },
-    ...(options.length ? { notes: `valori osservati: ${options.join(" · ")}` } : {}),
+    ...((it.ambiguous || options.length) ? { notes: [it.ambiguous ? AMBIGUOUS_NOTE : null, options.length ? `valori osservati: ${options.join(" · ")}` : null].filter(Boolean).join(" · ") } : {}),
     facets: facets("struttura-dati"), sources: sourcesOf(draft),
   });
 }
@@ -113,23 +115,27 @@ function buildFlw(it, draft) {
   return (code) => ({
     id: code, type: "FLW", title, summary: clip(it.summary ?? `Procedura "${title}" (${steps.length} passi) ${draft.run ? `memorizzata dall'esecuzione riuscita ${draft.run}` : "osservata in esplorazione"}.`, 400),
     ...(it.document ? { document: String(it.document) } : {}), ...(it.trigger ? { trigger: String(it.trigger) } : {}),
-    steps, ...(it.compensation ? { compensation: it.compensation } : {}),
+    steps, ...(it.compensation ? { compensation: it.compensation } : {}), ...(it.module ? { module: clip(red(String(it.module)), 120) } : {}),
     facets: facets("procedura"), sources: sourcesOf(draft),
   });
 }
 
-function existingFld(ws, customer, scope, label, document) {
+function existingFld(ws, customer, scope, label, document, module = null) {
   const dir = join(ws, "customers", customer, "kb", "scopes", scope, "fields");
   let files = [];
   try { files = readdirSync(dir).filter((f) => f.endsWith(".yaml")); } catch { return null; }
   const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "").replace(/[\s:*]+$/g, "").trim();
+  const same = [];
   for (const f of files) {
     try {
       const o = YAML.parse(readFileSync(join(dir, f), "utf8"));
-      if (norm(o?.label?.it) === norm(label) && norm(o?.document) === norm(document)) return o.id;
+      if (norm(o?.label?.it) === norm(label) && norm(o?.document) === norm(document)) same.push(o);
     } catch { /* file illeggibile: non è un doppione */ }
   }
-  return null;
+  // stesso campo = stessa etichetta e documento; con i moduli: prima lo stesso modulo, poi un campo senza modulo
+  // (item precedenti); un campo di un altro modulo non è un doppione
+  const hit = same.find((o) => (o.module ?? null) === (module ?? null)) ?? same.find((o) => !o.module) ?? (!module ? same.find((o) => o.module) : null);
+  return hit?.id ?? null;
 }
 
 // → { written: [{code, type, label}], skipped: [{type, label, existing}] }
@@ -149,15 +155,17 @@ export function writeDraft({ ws, customer, scope, draft }) {
     if (type === "SEL") {
       const b = buildSel(it, draft);
       const probe = { role: String(it.role).toLowerCase(), name: clip(it.label, 120) };
-      const hit = atlasMatch(atlas, probe);
+      const hits = atlas.filter((a) => atlasMatch([a], probe));
+      const hit = hits.find((h) => (h.page ?? null) === (draft.page?.signature ?? null)) ?? null;
       const k = `SEL|${probe.role}|${probe.name.toLowerCase()}|${draft.page?.signature ?? ""}`;
-      if ((hit && (!draft.page?.signature || !hit.page || hit.page === draft.page.signature)) || seen.has(k)) { skipped.push({ type, label: probe.name, existing: hit?.code ?? "nella bozza" }); continue; }
+      if (hit || seen.has(k)) { skipped.push({ type, label: probe.name, existing: hit?.code ?? "nella bozza" }); continue; }
       seen.add(k); builders.push({ type, label: probe.name, b });
     } else if (type === "FLD") {
       const b = buildFld(it, draft);
       const doc = clip(it.document ?? draft.page?.title ?? "", 80);
-      const ex = existingFld(ws, customer, scope, it.label, doc);
-      const k = `FLD|${clip(it.label, 120).toLowerCase()}|${doc.toLowerCase()}`;
+      const mod = it.module ? clip(red(String(it.module)), 120) : null;   // confronto sul valore che si memorizza
+      const ex = existingFld(ws, customer, scope, it.label, doc, mod);
+      const k = `FLD|${clip(it.label, 120).toLowerCase()}|${doc.toLowerCase()}|${mod ?? ""}`;
       if (ex || seen.has(k)) { skipped.push({ type, label: clip(it.label, 120), existing: ex ?? "nella bozza" }); continue; }
       seen.add(k); builders.push({ type, label: clip(it.label, 120), b });
     } else if (type === "FLW") {
@@ -182,6 +190,37 @@ export function writeDraft({ ws, customer, scope, draft }) {
     for (const w of written) { mkdirSync(dirname(w.file), { recursive: true }); writeFileSync(w.file, w.text); }
     return { written: written.map(({ code, type, label }) => ({ code, type, label })), skipped };
   } finally { db.close(); }
+}
+
+// Un FLD già memorizzato si arricchisce (sessioni successive dell'esplorazione): opzioni unite, obbligo "always" se visto.
+// Validato e reindicizzato come un item nuovo; mai altri campi. → true se il file è cambiato
+export function enrichField({ ws, customer, scope, code, options = [], mandatory = null, ambiguous = false }) {
+  // seconda revisione: solo un FLD del cliente attivo e dello scope, nel file che porta il suo codice
+  if (!/^[A-Z0-9]{4}$/.test(String(customer)) || !SCOPES.has(scope)) return false;
+  if (!new RegExp("^C\\." + customer + "\\." + scope + "\\.FLD\\.\\d{4}$").test(String(code))) return false;
+  const file = itemFile(ws, code, customer);
+  if (!file || !existsSync(file)) return false;
+  const cur = YAML.parse(readFileSync(file, "utf8"));
+  if (cur?.id !== code) return false;
+  const next = structuredClone(cur);
+  let notes = String(cur.notes ?? "");
+  // un'ambiguità vista in una sessione successiva si registra: compose-plan chiederà invece di scegliere
+  if (ambiguous && !notes.includes(AMBIGUOUS_NOTE)) { notes = [AMBIGUOUS_NOTE, notes || null].filter(Boolean).join(" · "); next.notes = notes; }
+  const seen = /valori osservati: (.*)$/.exec(notes)?.[1]?.split(" · ").filter(Boolean) ?? [];
+  const add = options.map((o) => clip(red(String(o)), 80)).filter((o) => o && !seen.includes(o));
+  if (add.length) {
+    const all = [...seen, ...add].slice(0, 100);
+    const head = notes.replace(/(?: · )?valori osservati: .*$/, "");
+    next.notes = [head || null, `valori osservati: ${all.join(" · ")}`].filter(Boolean).join(" · ");
+  }
+  if (mandatory === "always" && next.mandatory?.kind !== "always") next.mandatory = { kind: "always" };
+  if (JSON.stringify(next) === JSON.stringify(cur)) return false;
+  const v = validateItem(next);
+  if (!v.ok) throw E1(`${code} non valido dopo l'arricchimento: ${v.errors.slice(0, 3).join("; ")}`);
+  const text = YAML.stringify(next, { lineWidth: 0 });
+  const db = openDb(join(ws, "customers", customer, "knowledge.db"));
+  try { db.transaction(() => { indexItemFile(db, join(ws, "customers", customer), file, text); writeFileSync(file, text); })(); } finally { db.close(); }
+  return true;
 }
 
 // Piano di un'esecuzione riuscita → bozza con una FLW

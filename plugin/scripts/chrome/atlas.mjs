@@ -26,7 +26,7 @@ export function parseSelText(text) {
     const top = /^([A-Za-z_][\w]*):\s*(.*)$/.exec(line);
     if (top) {
       inStrat = top[1] === "strategies";
-      if (["id", "role", "effect", "label", "field", "stability", "title"].includes(top[1]) && !(top[1] in out)) out[top[1]] = scalar(top[2]);
+      if (["id", "role", "effect", "label", "field", "stability", "title", "page"].includes(top[1]) && !(top[1] in out)) out[top[1]] = scalar(top[2]);
       if (inStrat && top[2].trim().startsWith("[")) {
         for (const m of top[2].matchAll(/\{([^}]*)\}/g)) {
           const o = {};
@@ -65,7 +65,7 @@ function toEntry(code, doc) {
   const s = doc.strategies ?? [];
   const label = doc.label ?? s.find((x) => x.name)?.name ?? s.find((x) => x.kind === "label")?.value ?? s.find((x) => x.kind === "text")?.value ?? null;
   const role = doc.role ?? s.find((x) => x.kind === "role")?.value ?? null;
-  return { code, role, label, effect: doc.effect ?? null, field: doc.field ?? null, stability: doc.stability ?? null, strategies: s };
+  return { code, role, label, effect: doc.effect ?? null, field: doc.field ?? null, stability: doc.stability ?? null, page: doc.page ?? null, strategies: s };
 }
 
 // → { code, role, label, effect, field, stability, strategies } | null
@@ -107,11 +107,16 @@ const ROLE_GROUP = {
 };
 export const roleCompatible = (a, b) => !a || !b || a === b || (ROLE_GROUP[a] && ROLE_GROUP[a] === ROLE_GROUP[b]);
 
-// Voce dell'Atlas che corrisponde a un elemento osservato (etichetta uguale, ruolo compatibile).
-export function atlasMatch(atlas, el) {
+// Voce dell'Atlas che corrisponde a un elemento osservato (etichetta uguale, ruolo compatibile). Con la firma della pagina
+// (soluzione A: la stessa etichetta può stare su più pagine) preferisce la voce di quella pagina, poi una senza pagina.
+export function atlasMatch(atlas, el, { page = null } = {}) {
   const n = normLabel(el.name);
   if (!n) return null;
-  return (atlas ?? []).find((a) => a.label && normLabel(a.label) === n && roleCompatible(a.role, el.role)) ?? null;
+  const hits = (atlas ?? []).filter((a) => a.label && normLabel(a.label) === n && roleCompatible(a.role, el.role));
+  if (!hits.length) return null;
+  // con la pagina nota, una voce di un'altra pagina non si lega mai (seconda revisione: più stretto, fail-closed)
+  if (page) return hits.find((a) => a.page === page) ?? hits.find((a) => !a.page) ?? null;
+  return hits[0];
 }
 
 // Sensibilità di un FLD (§19.20, identity.sensitivity): pii, commercial o redact_in_evidence ⇒ il valore

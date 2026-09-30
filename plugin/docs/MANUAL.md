@@ -302,8 +302,8 @@ al nome del file, nessun codice rivendicato da due file), `kb/lifecycle.mjs --he
 
 | Azione | Cosa fa | Ambienti · Chi |
 |--------|---------|----------------|
-| `esplora <modulo>` | Esplora e memorizza menu, pagine, pulsanti, campi (`kb atlas-write`); in preprod solo click senza effetto ([guida](GUIDA-PRIMO-USO.md)) | sandbox (`ESPLORA SANDBOX`), preprod (`ESPLORA PREPROD`) — **mai prod** · `scope-expert` |
-| `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza con compensazione; piano dalla memoria, a esito verde la procedura si memorizza | sandbox, preprod — **mai prod** (rifiutato prima di ogni dispatch) · `scope-expert` |
+| `esplora <modulo>` | Esplora e memorizza menu, pagine, pulsanti, campi (pagine registrate da sole, mappa con `kb atlas-build`); in preprod solo click senza effetto ([guida](GUIDA-PRIMO-USO.md)) | sandbox (`ESPLORA SANDBOX`), preprod (`ESPLORA PREPROD`) — **mai prod** · `scope-expert` |
+| `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza con compensazione; piano da `compose-plan` (se mancano dati obbligatori li chiede), a esito verde la procedura si memorizza | sandbox, preprod — **mai prod** (rifiutato prima di ogni dispatch) · `scope-expert` |
 | `approva · chiudi · pubblica …` | R2 con approvazione (`sì`) | sandbox, preprod (il referente è un avviso, non un blocco: §55.1.2) · `scope-expert` |
 | `query "<domanda>"` · `tables` · `learn-analytics` | Analytics | tutti (sola lettura) · `analytics-learner` |
 

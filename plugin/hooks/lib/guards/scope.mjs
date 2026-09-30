@@ -63,6 +63,7 @@ const WRITE_DENY = [
   ["customers/*/.sessions/*/control-scan.json", "l'offset di scansione del transcript lo scrivono solo gli hook del plugin (conferma dei controlli dell'utente)"],
   ["customers/*/.sessions/*/workflow.jsonl", "il workflow lo scrive solo workflow.mjs (script del plugin)"],
   ["customers/*/.sessions/*/observations.jsonl", "le osservazioni le registra solo l'hook observe-append"],
+  ["customers/*/.sessions/*/atlas/**", "il registro dell'esplorazione lo scrive solo l'hook observe-append (soluzione A)"],
   ["customers/*/.sessions/*/manager-usage.json", "l'uso di token del manager lo registra solo l'hook stop-integrity"],
   [".jvc/**", "lo stato di sessione si modifica solo con /use e con gli hook del plugin"],
   ["**/session.json", "session.json si modifica solo con /use e con gli hook del plugin"],
@@ -100,7 +101,7 @@ function handoffRefusal(ctx) {
 // la promozione a S vuole APPROVO PROMOZIONE (T9, §22.2). Gli script del plugin
 // (node <plugin>/scripts/…) non sono bersagli di scrittura della shell.
 const MAIN_SHELL_DENY = WRITE_DENY.filter(([a]) => ["product/**", "customers/*/kb/**", ".jvc/**", "**/session.json", "customers/*/.sessions/*/invocations.jsonl", "customers/*/.sessions/*/approvals.jsonl", ".claude/**", ".mcp.json",
-  "customers/*/.sessions/*/control.jsonl", "customers/*/.sessions/*/control-scan.json", "customers/*/.sessions/*/agents/**", "customers/*/.sessions/*/workflow.jsonl", "customers/*/.sessions/*/observations.jsonl", "customers/*/.sessions/*/manager-usage.json", "customers/*/audit/**", "customers/*/.sessions/**/blackboard/**"].includes(a));
+  "customers/*/.sessions/*/control.jsonl", "customers/*/.sessions/*/control-scan.json", "customers/*/.sessions/*/agents/**", "customers/*/.sessions/*/workflow.jsonl", "customers/*/.sessions/*/observations.jsonl", "customers/*/.sessions/*/atlas/**", "customers/*/.sessions/*/manager-usage.json", "customers/*/audit/**", "customers/*/.sessions/**/blackboard/**"].includes(a));
 // Bersagli-cartella (rm/mv di una cartella, cp/mv dentro una cartella — fix
 // round 3): conta tutto ciò che la cartella contiene, cioè ogni antenato di un
 // file protetto è protetto. `**/session.json` qui diventa il session.json reale
