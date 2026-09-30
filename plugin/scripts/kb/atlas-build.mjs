@@ -6,7 +6,7 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import YAML from "yaml";
-import { writeDraft, AtlasWriteError } from "./atlas-write.mjs";
+import { writeDraft, enrichField, AtlasWriteError } from "./atlas-write.mjs";
 import { SCOPES } from "./codes.mjs";
 import { isSafeSessionId } from "../../hooks/lib/workspace.mjs";
 import { EFFECT_LABEL } from "../../hooks/lib/guards/config-scope.mjs";
@@ -25,6 +25,12 @@ export function readLog(file) {
 
 const INPUT_ROLES = new Set(["textbox", "searchbox", "spinbutton", "combobox", "textarea", "listbox"]);
 const groupOf = (role) => (INPUT_ROLES.has(role) ? "input" : role);
+// valori di una tendina: solo se aperta (≥ 2 opzioni) e mai per elenchi di persone (dati, non struttura)
+const PERSON_LABEL = /\b(richiedente|utente|user|buyer|acquirente|approvatore|approver|requester|owner|proprietario|assegnatario|assignee|referente|contatto|contact|responsabile|creato da|created by)\b/i;
+const CREATE_DOC = /\b(crea\w*|nuov[oaie]|new|create)\b/i;
+const SAVE_LABEL = /\b(salva|save)\b/i;
+const SEND_LABEL = /\b(invia|inoltra|trasmetti|submit|send|conferma|confirm|approva|approve|pubblica|publish|place order)\b/i;
+const MASK = /\[[a-z][a-z.-]*\]/i;
 
 // Revisione finale (I3, I6, I7): tutte le visite di una pagina si uniscono (opzioni e obbligo visti in una visita
 // qualsiasi); un'etichetta ripetuta nella stessa visita con lo stesso gruppo di ruolo è ambigua (nessun SEL, FLD marcato:
@@ -43,8 +49,11 @@ export function buildDrafts(lines) {
     // nome della pagina = titolo principale (h1), come il document dei suoi FLD: il percorso "Percorso: <nome>" e i campi
     // devono coincidere perché compose-plan li trovi insieme (il titolo della scheda ha spesso il nome del tenant)
     const document = els.find((e) => e.role === "heading" && e.level === 1 && e.name)?.name ?? l.title ?? l.page_sig;
-    const p = pages.get(l.page_sig) ?? { title: l.title, document, url_path: l.url_path, visits: [] };
+    const p = pages.get(l.page_sig) ?? { title: l.title, document, url_path: l.url_path, visits: [], unlabeled: 0, iframes: 0, masked: false };
     p.visits.push(els);
+    p.unlabeled = Math.max(p.unlabeled, els.filter((e) => FIELD_TYPE[e.role] && !e.name).length);
+    p.iframes = Math.max(p.iframes, Number(l.iframes) || 0);
+    p.masked ||= els.some((e) => MASK.test(String(e.name ?? "")));
     pages.set(l.page_sig, p);
   }
   const fields = [];
@@ -79,7 +88,7 @@ export function buildDrafts(lines) {
       }
     }
     for (const [k, f] of fmap) {
-      if (!f.options.length) delete f.options;
+      if (PERSON_LABEL.test(f.label)) { f.person_list = true; delete f.options; } else if (f.options.length < 2) delete f.options;
       if (ambiguous.has(k)) f.ambiguous = true;
       fields.push(f);
     }
@@ -122,9 +131,16 @@ export function atlasBuild({ ws, customer, scope, sid }) {
   const written = [];
   const skipped = [];
   const add = (r) => { written.push(...r.written); skipped.push(...r.skipped); };
+  const updated = [];
   for (const sig of new Set(d.fields.map((f) => f.page_sig))) {
-    const items = d.fields.filter((f) => f.page_sig === sig).map(({ page_sig, ...f }) => f);
-    add(writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items } }));
+    const items = d.fields.filter((f) => f.page_sig === sig).map(({ page_sig, person_list, ...f }) => f);
+    const r = writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items } });
+    add(r);
+    // un campo già memorizzato (sessione precedente) si arricchisce con ciò che questa sessione ha visto in più
+    for (const sk of r.skipped.filter((x) => x.type === "FLD" && /\.FLD\.\d{4}/.test(String(x.existing)))) {
+      const it = items.find((i) => i.label === sk.label);
+      if (it && enrichField({ ws, customer, code: sk.existing, options: it.options ?? [], mandatory: it.mandatory })) updated.push(sk.existing);
+    }
   }
   const flds = scopeItems(ws, customer, scope, "fields");
   const fldCode = (label, document) => flds.find((f) => normLabel(f.label?.it) === normLabel(label) && normLabel(f.document) === normLabel(document))?.id;
@@ -156,14 +172,40 @@ export function atlasBuild({ ws, customer, scope, sid }) {
     else skipped.push({ type: "FLW", label: title, existing: "passo senza selettore" });
   }
   if (flws.length) add(writeDraft({ ws, customer, scope, draft: { items: flws } }));
-  return { pages: d.pages.size, written, skipped };
+  return { pages: d.pages.size, written, skipped, updated, todo: atlasTodo(d) };
+}
+
+// Verifica automatica della mappa (taratura sulle pagine vere): ciò che la mappa non sa ancora, come azioni che l'agente
+// esegue da solo durante l'esplorazione (poi rilancia atlas-build finché l'elenco è vuoto o il budget finisce).
+export function atlasTodo(d) {
+  const todo = [];
+  const entry = [...d.pages.keys()][0];
+  const routed = new Set(d.routes.map((r) => r.page_sig));
+  for (const [sig, p] of d.pages) {
+    const page = p.document;
+    const fields = d.fields.filter((f) => f.page_sig === sig);
+    for (const f of fields) {
+      if (f.field_type === "list" && !f.options && !f.person_list) todo.push({ kind: "open-dropdown", page, what: f.label, action: `apri la tendina «${f.label}» nella pagina «${page}» e rifai take_snapshot a tendina aperta` });
+      if (f.ambiguous) todo.push({ kind: "ambiguous", page, what: f.label, action: `l'etichetta «${f.label}» compare più volte in «${page}»: completa con atlas-write un SEL distinto (testid o css) per ciascuno, con la sezione` });
+    }
+    if (p.unlabeled) todo.push({ kind: "unlabeled", page, what: String(p.unlabeled), action: `${p.unlabeled} campi senza etichetta in «${page}»: identificali (tooltip, etichetta vicina, segnaposto) e completali con atlas-write` });
+    if (sig !== entry && !routed.has(sig)) todo.push({ kind: "no-route", page, action: `raggiungi «${page}» cliccando dal menu (non aprendo l'indirizzo), così il percorso si memorizza` });
+    if (p.iframes) todo.push({ kind: "iframe", page, what: String(p.iframes), action: `«${page}» contiene ${p.iframes} iframe non letti: apri il contenuto del frame (navigate all'indirizzo del frame, stesso host) e rifai take_snapshot, oppure segnalalo` });
+    if (fields.length && CREATE_DOC.test(page) && !d.sels.some((s) => s.page_sig === sig && SAVE_LABEL.test(s.label) && !SEND_LABEL.test(s.label))) {
+      todo.push({ kind: "no-save", page, action: `pulsante di solo salvataggio non visto in «${page}»: scorri o espandi la pagina (sezioni chiuse, barra in fondo) e rifai take_snapshot` });
+    }
+    if (p.masked) todo.push({ kind: "redacted", page, action: `in «${page}» alcune etichette contenevano dati personali (oscurati): non usarle come riferimento e segnalalo nel rapporto` });
+  }
+  return todo;
 }
 
 export const HELP = `uso: kb atlas-build --session <sid> [--scope <S>] [--customer <C>] [--workspace <dir>] [--json]
 
 Dal registro dell'esplorazione della sessione (scritto da observe-append) alla mappa nella conoscenza del cliente:
 FLD (tipo, obbligo, sezione, valori delle tendine), SEL (legati ai campi, effetto dall'etichetta) e percorsi di
-navigazione "Percorso: <pagina>" (FLW). Doppioni scartati; seconda esecuzione sulla stessa sessione senza item nuovi.
+navigazione "Percorso: <pagina>" (FLW). Doppioni scartati; seconda esecuzione sulla stessa sessione senza item nuovi;
+campi già memorizzati arricchiti (valori, obbligo). Restituisce l'elenco "todo" di ciò che la mappa non sa ancora
+(tendine da aprire, campi senza etichetta, etichette ripetute, pagine senza percorso, iframe, salvataggio non visto).
 
 Exit code: 0 ok · 1 uso o registro assente · 2 sistema · 3 cliente diverso dalla sessione.`;
 
@@ -185,7 +227,7 @@ export async function main(argv, env = process.env) {
     if (session?.customer && customer !== session.customer) return fail(asJson, 3, `--customer ${customer} diverso dal cliente della sessione (${session.customer})`);
     const scope = String(opts.scope ?? session?.scope ?? "").toUpperCase();
     const r = atlasBuild({ ws, customer, scope, sid: String(sid) });
-    console.log(JSON.stringify({ ok: true, customer, scope, pages: r.pages, written: r.written.length, skipped: r.skipped.length, ...(asJson ? r : {}) }));
+    console.log(JSON.stringify({ ok: true, customer, scope, pages: r.pages, written: r.written.length, skipped: r.skipped.length, updated: r.updated.length, todo: r.todo, ...(asJson ? { written_items: r.written, skipped_items: r.skipped } : {}) }));
     return 0;
   } catch (err) {
     if (err instanceof AtlasWriteError) return fail(asJson, err.code, err.message);

@@ -24,7 +24,7 @@ import { resolveSel, atlasIndex, atlasMatch, fieldSensitivity } from "../../scri
 import { detectErrors } from "../../scripts/chrome/errors.mjs";
 import { profileFor, redactText, freeText } from "../../scripts/chrome/redact.mjs";
 import { toYaml } from "../../scripts/lib/yaml-lite.mjs";
-import { pageRecord, clickRecord, appendAtlasLog, atlasLogFile, recordRefs } from "./atlas-log.mjs";
+import { pageRecord, clickRecord, appendAtlasLog, atlasLogFile, recordRefs, fullWarningOnce } from "./atlas-log.mjs";
 
 const SNAPSHOT_OPS = new Set(["take_snapshot", "read_page", "get_page_text", "find", "browser_snapshot", "browser_find"]);
 const SCREENSHOT_OPS = new Set(["take_screenshot", "browser_take_screenshot", "upload_image"]);
@@ -420,7 +420,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       full = appendAtlasLog(file, pageRecord(page, { pageSig: doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts })) === "full" || full;
       writeFileAtomic(lastPage, JSON.stringify({ record_refs: recordRefs(page) }));
     }
-    if (full) warn.push("registro dell'esplorazione pieno (20 MB): pagine non registrate");
+    if (full && fullWarningOnce(dirname(file))) warn.push("registro dell'esplorazione pieno (20 MB): pagine non registrate da qui in poi");
   } catch (err) { warn.push(`registro dell'esplorazione non scritto (${String(err?.message ?? err).slice(0, 80)})`); }
 
   const errTag = errs.length ? errs.map((e) => e.code ?? e.raw_id).join(",") : "—";

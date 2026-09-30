@@ -21,7 +21,8 @@ const OBJECTS = [
   ["fornitore", /\b(fornitore|supplier|vendor)\b/i, ["fornitore", "supplier", "vendor"]],
   ["evento", /\b(evento|event)\b/i, ["evento", "event"]],
 ];
-const CREATE = /(crea|nuov|new|create)/i;
+// verbi di creazione con confini di parola ("renew" non è creare); il modulo preferito comincia con verbo + oggetto
+const CREATE = /\b(crea\w*|nuov[oaie]|new|create)\b/i;
 const SAVE = /\b(salva|save)\b/i;
 const DRAFT = /(bozza|draft)/i;
 const SUBMIT = /\b(invia|submit|conferma|place order)\b/i;
@@ -53,7 +54,16 @@ export function composePlan({ ws, customer, scope, env, goal, data = {}, until =
   const proc = flws.find((f) => !String(f.title).startsWith("Percorso:") && CREATE.test(f.title) && has(f.title));
   const pageFields = proc
     ? flds.filter((f) => (proc.steps ?? []).some((s) => selsForField(f.id).some((x) => x.id === s.target)))
-    : flds.filter((f) => CREATE.test(f.document ?? "") && has(f.document ?? ""));
+    : (() => {
+      // un solo modulo: fra i documenti che corrispondono, quello che comincia con verbo + oggetto ("Nuovo ordine");
+      // più documenti ugualmente buoni ⇒ ambiguo (nessuna scelta a caso)
+      const docs = [...new Set(flds.filter((f) => CREATE.test(f.document ?? "") && has(f.document ?? "")).map((f) => f.document))];
+      const exact = docs.filter((d) => syn.some((w) => new RegExp("^(crea\\w*|nuov[oaie]|new|create)\\s+" + w + "$", "i").test(normLabel(d))));
+      const chosen = exact.length === 1 ? exact : docs.length === 1 ? docs : [];
+      if (!chosen.length && docs.length > 1) gaps.push({ kind: "ambiguous", what: "modulo", hint: `più moduli possibili: ${docs.join(", ")}` });
+      return flds.filter((f) => chosen.includes(f.document));
+    })();
+  if (gaps.some((g) => g.what === "modulo")) return { gaps };
   if (!pageFields.length) return { gaps: [{ kind: "no-form", what: object, hint: `nessuna pagina "nuovo ${object}" nella mappa: esplora il modulo` }] };
   const keyFor = (f) => dataKeys.find((k) => normLabel(k) === normLabel(f.label?.it));
   for (const k of dataKeys) if (!pageFields.some((f) => normLabel(f.label?.it) === normLabel(k))) gaps.push({ kind: "unknown-field", what: k, hint: "nessun campo con questa etichetta nel modulo" });
@@ -121,6 +131,13 @@ export function composePlan({ ws, customer, scope, env, goal, data = {}, until =
   return { plan };
 }
 
+// Un piano già scritto non si sovrascrive mai (il suo hash lega l'approvazione A1 e il piano attivo): un RUN nuovo.
+export function writePlanFile(file, plan) {
+  if (existsSync(file)) throw new Error(`il piano ${file} esiste già: usa un RUN nuovo (un piano approvato non si riscrive)`);
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, JSON.stringify(plan, null, 2), { flag: "wx" });
+}
+
 export const HELP = `uso: compose-plan --goal "<obiettivo>" --data <dati.yaml> --scope <S> --env <id> [--fino-a bozza|invio] --out runs/<RUN>/plan.json [--customer C] [--workspace <dir>] [--json]
 
 Compone il piano di un'attività (crea ordine, contratto, richiesta, fornitore, evento) dalla mappa del cliente:
@@ -157,8 +174,7 @@ export async function main(argv, env = process.env) {
     const r = composePlan({ ws, customer, scope: String(opts.scope).toUpperCase(), env: { id: e.id, type: e.type }, goal: String(opts.goal), data, until: opts["fino-a"] === "invio" ? "invio" : "bozza", planId });
     if (r.gaps) { console.log(JSON.stringify({ ok: false, gaps: r.gaps })); return 3; }
     const file = join(ws, "customers", customer, String(opts.out));
-    mkdirSync(dirname(file), { recursive: true });
-    writeFileSync(file, JSON.stringify(r.plan, null, 2));
+    try { writePlanFile(file, r.plan); } catch (e) { return fail(asJson, 1, e.message); }
     console.log(JSON.stringify({ ok: true, plan_id: planId, file: String(opts.out), steps: r.plan.steps.length, ...(asJson ? { plan: r.plan } : {}) }));
     return 0;
   } catch (err) {

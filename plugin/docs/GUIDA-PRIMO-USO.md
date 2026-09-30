@@ -64,6 +64,10 @@ preme mai** Salva, Invia, Conferma, Approva, Elimina…, né scrive nei campi: i
 registrata da sola e, a fine giro, trasformata in mappa con `kb atlas-build` in `customers/<CODICE>/kb/scopes/<SCOPE>/selectors|fields/` (scope P2P per gli
 ordini, CON per i contratti). Per vedere cosa ha imparato: `/jaggaer-virtual-consultant:kb find --type SEL --scope P2P --customer <CODICE>`.
 
+La mappa si verifica da sola sulle pagine vere: dopo ogni giro l'agente controlla cosa manca ancora (tendine mai
+aperte, campi senza etichetta, etichette ripetute, pagine raggiunte senza percorso, iframe, pulsante di salvataggio non
+visto) e lo completa da solo, finché non manca più nulla o finisce il budget; ti riporta solo ciò che resta.
+
 Esplora un modulo alla volta (ordini, poi contratti): il budget di un agente è limitato.
 
 ## 4. Creare un ordine o un contratto

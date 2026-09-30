@@ -154,6 +154,13 @@ pagine: tu non descrivi le pagine a mano.
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-build.mjs" --session <sid> --scope <S> --json
 
+   **Verifica automatica (taratura sulle pagine vere):** l'uscita ha `todo`, ciò che la mappa non sa ancora
+   (`open-dropdown`, `unlabeled`, `ambiguous`, `no-route`, `iframe`, `no-save`, `redacted`), ognuno con l'`action` da
+   fare. Eseguile tu, subito, dentro le regole dell'esplorazione (solo click, mai salva/invia): apri le tendine, raggiungi
+   le pagine dal menu, espandi le sezioni chiuse, apri i frame dello stesso host; per etichette ripetute o campi senza
+   etichetta completa con `atlas-write` (sotto). Poi rilancia `atlas-build`: ripeti finché `todo` è vuoto o il budget
+   finisce, senza chiedere nulla all'utente. Nel rapporto riporta solo il residuo, voce per voce.
+
 3. Per correggere o completare a mano (un elemento che lo snapshot non mostra), una bozza YAML nella cartella di lavoro
    memorizzata con:
 

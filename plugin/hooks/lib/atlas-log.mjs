@@ -3,7 +3,7 @@
 // salvo le intestazioni di colonna), URL senza query. Lo scrive solo observe-append (guard-scope lo protegge).
 //   pageRecord(page, { pageSig, profile, env, ts }) · clickRecord({ fromSig, name, ts })
 //   appendAtlasLog(file, rec, { maxBytes }) → "written" | "full" · atlasLogFile(ws, customer, sid)
-import { appendFileSync, mkdirSync, statSync } from "node:fs";
+import { appendFileSync, mkdirSync, statSync, existsSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { redactText } from "../../scripts/chrome/redact.mjs";
 
@@ -62,7 +62,10 @@ export function pageRecord(page, { pageSig, profile = "strict", env = process.en
     index.set(keyOf(e), kept.length);
     kept.push(rec);
   }
-  return { kind: "page", ts, url_path: urlPath(page?.url, profile, env), page_sig: pageSig ?? null, title: page?.title ? clean(redactText(page.title, { profile, env }).text) : null, elements: kept };
+  // iframe senza contenuto nello snapshot: la pagina ha parti che il registro non vede (verifica di atlas-build)
+  const hasChild = new Set(nodes.map((n) => String(n.parent)));
+  const iframes = nodes.filter((n) => /^iframe$/i.test(String(n.role)) && !hasChild.has(String(n.id))).length;
+  return { kind: "page", ts, url_path: urlPath(page?.url, profile, env), ...(iframes ? { iframes } : {}), page_sig: pageSig ?? null, title: page?.title ? clean(redactText(page.title, { profile, env }).text) : null, elements: kept };
 }
 
 export function clickRecord({ fromSig, name, ts = new Date().toISOString() }) {
@@ -95,4 +98,13 @@ export function recordRefs(page) {
     }
   }
   return out;
+}
+
+// Avviso "registro pieno" una sola volta per sessione (marcatore nella cartella del registro). → true se va dato ora
+export function fullWarningOnce(dir) {
+  const marker = join(dir, "full-warned");
+  if (existsSync(marker)) return false;
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(marker, new Date().toISOString());
+  return true;
 }

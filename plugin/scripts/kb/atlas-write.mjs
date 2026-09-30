@@ -187,6 +187,31 @@ export function writeDraft({ ws, customer, scope, draft }) {
   } finally { db.close(); }
 }
 
+// Un FLD già memorizzato si arricchisce (sessioni successive dell'esplorazione): opzioni unite, obbligo "always" se visto.
+// Validato e reindicizzato come un item nuovo; mai altri campi. → true se il file è cambiato
+export function enrichField({ ws, customer, code, options = [], mandatory = null }) {
+  const file = itemFile(ws, code, customer);
+  if (!file || !existsSync(file)) return false;
+  const cur = YAML.parse(readFileSync(file, "utf8"));
+  const next = structuredClone(cur);
+  const notes = String(cur.notes ?? "");
+  const seen = /valori osservati: (.*)$/.exec(notes)?.[1]?.split(" · ").filter(Boolean) ?? [];
+  const add = options.map((o) => clip(red(String(o)), 80)).filter((o) => o && !seen.includes(o));
+  if (add.length) {
+    const all = [...seen, ...add].slice(0, 100);
+    const head = notes.replace(/(?: · )?valori osservati: .*$/, "");
+    next.notes = [head || null, `valori osservati: ${all.join(" · ")}`].filter(Boolean).join(" · ");
+  }
+  if (mandatory === "always" && next.mandatory?.kind !== "always") next.mandatory = { kind: "always" };
+  if (JSON.stringify(next) === JSON.stringify(cur)) return false;
+  const v = validateItem(next);
+  if (!v.ok) throw E1(`${code} non valido dopo l'arricchimento: ${v.errors.slice(0, 3).join("; ")}`);
+  const text = YAML.stringify(next, { lineWidth: 0 });
+  const db = openDb(join(ws, "customers", customer, "knowledge.db"));
+  try { db.transaction(() => { indexItemFile(db, join(ws, "customers", customer), file, text); writeFileSync(file, text); })(); } finally { db.close(); }
+  return true;
+}
+
 // Piano di un'esecuzione riuscita → bozza con una FLW
 export function draftFromPlan({ ws, customer, planFile, title, run = null }) {
   const plan = JSON.parse(readFileSync(planFile, "utf8"));

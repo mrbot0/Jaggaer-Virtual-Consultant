@@ -172,7 +172,8 @@ compito.
 effetto): solo dopo che l'utente ha scritto la frase, poi `/use mode esplorazione` entro 10 minuti; tu non la proponi
 come frase da copiare in un comando e non la scrivi. Quando l'utente chiede di esplorare un modulo, rilancia
 `scope-expert` in esplorazione con il compito di **memorizzare** il modulo (le pagine si registrano da sole; a fine giro
-`kb atlas-build`, sezione "Esplorare e memorizzare" dell'agente); quando chiede un'attività (crea ordine, crea
+`kb atlas-build`, sezione "Esplorare e memorizzare" dell'agente; l'agente esegue da solo l'elenco `todo` della verifica
+automatica e rilancia atlas-build finché è vuoto: all'utente arriva solo il residuo); quando chiede un'attività (crea ordine, crea
 contratto), in `ops`: piano da `compose-plan`, e le mancanze (campi obbligatori senza dato) diventano domande
 all'utente prima del piano; poi `APPROVO PIANO`, "sì" all'invio; se l'agente torna con pagine da esplorare, prima l'esplorazione (serve la
 frase dell'utente), poi il piano nuovo; a esito verde l'agente memorizza la procedura (`--from-plan`).

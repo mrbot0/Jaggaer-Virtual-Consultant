@@ -285,7 +285,7 @@ Tutti iniziano con `/jaggaer-virtual-consultant:`. Sono otto famiglie.
 | `fields --doc <documento>` · `identity <campo>` | I campi di un documento con i loro obblighi; la carta d'identità di un dato |
 | `precedents` · `epistemic` · `impact` · `coverage` | Decisioni passate; quanto si sa di un argomento; cosa tocca una modifica; copertura |
 | `graph` · `scopes` · `handoffs` · `clusters` · `contradictions` | Registri e coerenza della conoscenza |
-| `atlas-build` · `atlas-write` | Li usano gli agenti: il primo trasforma le pagine registrate durante l'esplorazione in mappa, il secondo corregge a mano (non serve chiamarli) |
+| `atlas-build` · `atlas-write` | Li usano gli agenti: il primo trasforma le pagine registrate durante l'esplorazione in mappa e dice cosa manca ancora (tendine da aprire, campi senza etichetta, pagine senza percorso…), che l'agente completa da solo; il secondo corregge a mano (non serve chiamarli) |
 | `reindex` · `migrate` | Manutenzione dell'indice e del database |
 
 ### `nrt` — collaudo (Non-Regression Test)
