@@ -11,6 +11,7 @@ Perché sono separate: il plugin installato è un pacchetto protetto (integrità
 cartella del plugin, copia nella cache di Claude Code a ogni installazione). La conoscenza deve crescere fuori da esso,
 nello stesso repository.
 
+- **Manuale utente** (installazione dalla A alla Z, comandi, agenti, skill, frasi): [plugin/MANUALE-UTENTE.md](plugin/MANUALE-UTENTE.md)
 - Primo uso su un tenant reale: [plugin/docs/GUIDA-PRIMO-USO.md](plugin/docs/GUIDA-PRIMO-USO.md)
 - Manuale: [plugin/docs/MANUAL.md](plugin/docs/MANUAL.md) · Stato dello sviluppo: [plugin/docs/IMPLEMENTATION-CHECKLIST.md](plugin/docs/IMPLEMENTATION-CHECKLIST.md)
 

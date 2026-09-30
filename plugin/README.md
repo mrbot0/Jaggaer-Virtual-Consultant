@@ -48,6 +48,8 @@ Da sapere prima di installare:
 
 ## Installazione
 
+**Manuale utente completo** (installazione del plugin e del workspace della conoscenza, comandi, agenti, skill, frasi): [MANUALE-UTENTE.md](MANUALE-UTENTE.md).
+
 Primo uso su un tenant reale (esplorare e memorizzare, poi creare ordini e contratti): [guida passo passo](docs/GUIDA-PRIMO-USO.md).
 
 ```
