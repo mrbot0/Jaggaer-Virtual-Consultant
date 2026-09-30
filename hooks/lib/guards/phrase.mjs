@@ -7,7 +7,7 @@
 // Percorso veloce: si cercano le frasi negli input PRIMA di leggere lo stato;
 // solo se ce n'è una si carica il contesto (workspace, audit).
 // WP09d: anche le frasi amministrative (APPROVO PURGE <ID> DA <Nome>, APPROVO PROMOZIONE <codice>, APPROVO RETENTION <ID>).
-export const PHRASES = /APPROVO\s+(PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)|ESPLORA\s+SANDBOX/i;
+export const PHRASES = /APPROVO\s+(PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)|ESPLORA\s+(SANDBOX|PREPROD)/i;
 // WP10d: le frasi di controllo dell'utente sugli agenti (PAUSA/RIPRENDI/FERMA AGENTE|TUTTI, PASSO PASSO, SBLOCCA SCOPE,
 // LIMITI DISPATCH), MAIUSCOLE come le cattura approval-capture: il testo minuscolo "passo passo" di un documento non
 // è una frase e non si nega.
@@ -36,5 +36,5 @@ export async function decide(input, env = process.env) {
   const ctx = guardContext(input, env);
   if (!ctx.jvc) return null;
   if (!approval) return denyAudited(ctx, "guard-phrase", "l'input dello strumento contiene una frase di controllo degli agenti (PAUSA/RIPRENDI/FERMA AGENTE|TUTTI, PASSO PASSO, SBLOCCA SCOPE, LIMITI DISPATCH): la scrive solo l'utente, nel suo prompt, mai uno strumento");
-  return denyAudited(ctx, "guard-phrase", "l'input dello strumento contiene una frase di approvazione o di esplorazione (APPROVO PIANO/PROVA/PASSO/PURGE/PROMOZIONE/RETENTION, ESPLORA SANDBOX): la scrive solo l'utente, nel suo prompt, mai uno strumento");
+  return denyAudited(ctx, "guard-phrase", "l'input dello strumento contiene una frase di approvazione o di esplorazione (APPROVO PIANO/PROVA/PASSO/PURGE/PROMOZIONE/RETENTION, ESPLORA SANDBOX/PREPROD): la scrive solo l'utente, nel suo prompt, mai uno strumento");
 }

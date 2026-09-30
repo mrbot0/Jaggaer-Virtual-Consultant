@@ -86,19 +86,46 @@ export function snapshotCovers(entry, step) {
 // negata in ogni ambiente. Unica eccezione la modalità `esplorazione` (use mode),
 // solo in sandbox: click e input consentiti e in audit; invio, salvataggio,
 // upload, conferma di dialog, script e strumenti non classificati mai.
+// Soluzione B (30/09/2026, richiesta dell'utente): in pre-produzione, con ESPLORA PREPROD, solo click e solo su
+// elementi dell'ultimo snapshot completo della pagina corrente il cui nome non è un'azione con effetto.
+export const EFFECT_LABEL = /\b(salva|salvare|salvataggio|memorizza|registra|invia|inviare|inoltra|trasmetti|conferma|confermare|approva|approvare|autorizza|rifiuta|respingi|pubblica|pubblicare|firma|assegna|aggiudica|emetti|chiudi|annulla|revoca|ritira|attiva|disattiva|sospendi|blocca|sblocca|importa|carica|genera|esegui|applica|completa|finalizza|procedi|avanti|termina|save|submit|send|forward|transmit|confirm|approve|authori[sz]e|reject|decline|publish|sign|assign|award|issue|close|cancel|revoke|withdraw|activate|deactivate|suspend|lock|unlock|import|upload|generate|execute|run|apply|complete|finali[sz]e|finish|proceed|place\s+order|checkout|ok)\b/i;
+function preprodClickRefusal(ctx) {
+  const snap = ctx.session?.browser?.snapshot;
+  for (const a of ctx.actions.filter(isEffectful)) {
+    if (a.kind !== "click" || a.submits) return `esplorazione in pre-produzione: consentiti solo click, mai input, invio, salvataggio, upload, conferma di dialog, script (${a.op ?? a.tool ?? ctx.tool})`;
+    const refs = Array.isArray(a.targets) ? a.targets : [];
+    if (!refs.length || a.untargeted) return `esplorazione in pre-produzione: click senza uid dell'ultimo snapshot (${a.op ?? a.tool ?? ctx.tool})`;
+    if (!snap || !snap.names || typeof snap.names !== "object") return "esplorazione in pre-produzione: nessuno snapshot completo della pagina: esegui take_snapshot prima del click";
+    if (!ctx.session.browser.current_url || snap.url !== ctx.session.browser.current_url) return "esplorazione in pre-produzione: l'ultimo snapshot non è della pagina corrente: rifai take_snapshot";
+    if (String(snap.tab ?? "") !== String(a.tab ?? "")) return "esplorazione in pre-produzione: l'ultimo snapshot è di un'altra scheda: rifai take_snapshot";
+    for (const r of refs) {
+      const name = Object.hasOwn(snap.names, r) ? String(snap.names[r] ?? "") : null;
+      if (!name || !name.trim()) return `esplorazione in pre-produzione: l'elemento ${r} non ha un nome nell'ultimo snapshot (assente o senza etichetta): non si può verificare che sia senza effetto`;
+      if (EFFECT_LABEL.test(name)) return `esplorazione in pre-produzione: "${name}" è un'azione con effetto (salva, invia, conferma, approva…): mai senza un piano approvato`;
+    }
+  }
+  return null;
+}
+
 function noPlan(ctx, no) {
   const s = ctx.session;
   const bad = ctx.actions.filter(isEffectful).find((a) => !["click", "input"].includes(a.kind) || a.submits);
-  const explore = s.mode === "esplorazione" && s.env?.type === "sandbox";
+  const explore = s.mode === "esplorazione" && ["sandbox", "preprod"].includes(s.env?.type);
   // K5 giro 2 (N2): la modalità vale solo se l'ha aperta l'utente con ESPLORA SANDBOX
   // (record nella catena, consumato dal cambio di modalità, per questo ambiente,
   // confermato nel transcript).
   if (explore) {
     const reg = readApprovals(approvalsFile(ctx.ws, ctx.customer, ctx.sid));
-    const rec = reg.ok ? exploreRecord(reg.records, s.mode_approval, s.env.id) : null;
-    if (!rec) return no(`modalità esplorazione non aperta dall'utente: serve la sua frase \`${EXPLORE_PHRASE}\`, poi /use mode esplorazione (registro ${reg.ok ? "senza il record" : `corrotto: ${reg.reason}`})`);
+    const found = reg.ok ? exploreRecord(reg.records, s.mode_approval, s.env.id) : null;
+    const rec = found && (found.env_type ?? "sandbox") === s.env.type ? found : null;
+    const phrase = s.env.type === "preprod" ? "ESPLORA PREPROD" : EXPLORE_PHRASE;
+    if (!rec) return no(`modalità esplorazione non aperta dall'utente: serve la sua frase \`${phrase}\`, poi /use mode esplorazione (registro ${reg.ok ? "senza il record" : `corrotto: ${reg.reason}`})`);
     const conf = confirmInTranscript(ctx.input.transcript_path, [rec]);
     if (!conf.ok) return no(`modalità esplorazione non confermata dal transcript dell'utente (${conf.reason})`);
+    if (s.env.type === "preprod") {
+      const refusal = preprodClickRefusal(ctx);
+      if (refusal) return no(refusal);
+    }
   }
   if (explore && !bad) {
     try {

@@ -324,10 +324,12 @@ async function useMode(ws, sid, raw, { actor }) {
   // ESPLORA SANDBOX registrata da approval-capture (monouso, solo in sandbox).
   let approval = null;
   if (m === "esplorazione") {
-    if (before.env?.type !== "sandbox") throw new CliError(3, `la modalità esplorazione vale solo in sandbox (ambiente ${before.env ? `${before.env.id}: ${before.env.type}` : "non dichiarato"})`);
-    const { consumeExplore, approvalsFile, EXPLORE_PHRASE, EXPLORE_WINDOW_MS } = await import("./approvals.mjs");
-    const tok = consumeExplore(approvalsFile(ws, before.customer, sid), before.env.id);
-    if (!tok) throw new CliError(3, `la modalità esplorazione la sceglie l'utente: serve la sua frase \`${EXPLORE_PHRASE}\` negli ultimi ${EXPLORE_WINDOW_MS / 60000} minuti (vale per un solo cambio di modalità)`);
+    // soluzione B (30/09/2026): anche in pre-produzione, con ESPLORA PREPROD (solo click senza effetto: config-scope)
+    if (!["sandbox", "preprod"].includes(before.env?.type)) throw new CliError(3, `la modalità esplorazione vale solo in sandbox o in pre-produzione (ambiente ${before.env ? `${before.env.id}: ${before.env.type}` : "non dichiarato"})`);
+    const { consumeExplore, approvalsFile, EXPLORE_PHRASES, EXPLORE_WINDOW_MS } = await import("./approvals.mjs");
+    const phrase = EXPLORE_PHRASES[before.env.type];
+    const tok = consumeExplore(approvalsFile(ws, before.customer, sid), before.env.id, { envType: before.env.type });
+    if (!tok) throw new CliError(3, `la modalità esplorazione la sceglie l'utente: serve la sua frase \`${phrase}\` negli ultimi ${EXPLORE_WINDOW_MS / 60000} minuti (vale per un solo cambio di modalità)`);
     approval = tok.hash;
   }
   const session = updateSession(file, (s) => { s.mode = m; s.mode_approval = approval; });
