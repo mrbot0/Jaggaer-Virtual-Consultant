@@ -11,6 +11,8 @@ import { validatePlan } from "./validate-plan.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { confineInputs } from "../lib/text-file.mjs";
+import { SCOPES } from "../kb/codes.mjs";
+import { AMBIGUOUS_NOTE } from "../kb/atlas-write.mjs";
 
 const OBJECTS = [
   ["ordine", /\b(ordine|order|po)\b/i, ["ordine", "order", "purchase order"]],
@@ -23,6 +25,8 @@ const CREATE = /(crea|nuov|new|create)/i;
 const SAVE = /\b(salva|save)\b/i;
 const DRAFT = /(bozza|draft)/i;
 const SUBMIT = /\b(invia|submit|conferma|place order)\b/i;
+// revisione finale (C2): un pulsante che salva E invia/conferma/approva/pubblica non è mai il SAVE (ACT-CREATE, senza "sì")
+const SEND = /\b(invia|inoltra|trasmetti|submit|send|conferma|confirm|approva|approve|pubblica|publish|place order)\b/i;
 const RUN_OUT = /^runs\/(RUN\.[A-Z0-9]{4}\.\d{8}\.\d{4}\.[A-Z0-9]{3})\/plan\.json$/;
 const pathOf = (sig) => String(sig ?? "").split("#")[0];
 
@@ -33,6 +37,9 @@ function items(ws, customer, scope, dir) {
 }
 
 export function composePlan({ ws, customer, scope, env, goal, data = {}, until = "bozza", planId }) {
+  // revisione finale (C1): cliente e scope diventano percorsi: mai senza validazione
+  if (!/^[A-Z0-9]{4}$/.test(String(customer ?? ""))) throw new Error(`cliente non valido: ${customer}`);
+  if (!SCOPES.has(scope)) throw new Error(`scope non valido: ${scope}`);
   const obj = OBJECTS.find(([, re]) => re.test(goal));
   if (!obj) return { gaps: [{ kind: "no-form", what: goal, hint: "obiettivo non riconosciuto: ordine, contratto, richiesta, fornitore, evento" }] };
   const [object, , syn] = obj;
@@ -66,6 +73,11 @@ export function composePlan({ ws, customer, scope, env, goal, data = {}, until =
       }
       steps.push(out);
     }
+    // revisione finale (I8): "solo bozza" ⇒ la procedura si ferma all'ultimo salvataggio, mai un invio non chiesto
+    if (until !== "invio") {
+      const last = steps.map((s) => s.verb).lastIndexOf("SAVE");
+      steps = last >= 0 ? steps.slice(0, last + 1) : steps.filter((s) => s.verb !== "SUBMIT");
+    }
     const i = steps.findIndex((s) => s.verb === "SAVE");
     saveN = i >= 0 ? i + 1 : null;
   } else {
@@ -76,17 +88,23 @@ export function composePlan({ ws, customer, scope, env, goal, data = {}, until =
     for (const f of pageFields) {
       const k = keyFor(f);
       if (k === undefined) continue;
+      if (String(f.notes ?? "").includes(AMBIGUOUS_NOTE)) { gaps.push({ kind: "ambiguous", what: f.label.it, hint: "l'etichetta compare più volte nella pagina: indica quale campo" }); continue; }
       const cands = selsForField(f.id);
       if (cands.length !== 1) { gaps.push({ kind: cands.length ? "ambiguous" : "unknown-field", what: f.label.it, hint: cands.length ? "più elementi per lo stesso campo: indica quale" : "campo senza elemento nella mappa: esplora la pagina" }); continue; }
       fills.push({ verb: f.field_type === "list" ? "CHOOSE" : "FILL", action_class: "ACT-CREATE", target: cands[0].id, data: data[k], expect: { elements: [{ sel: cands[0].id, value: data[k] }] } });
     }
     const formSig = selsForField(pageFields[0].id)[0]?.page ?? null;
     const onForm = sels.filter((s) => s.page && s.page === formSig);
-    const saves = onForm.filter((s) => s.effect === "write" && SAVE.test(s.label));
-    const save = saves.find((s) => DRAFT.test(s.label)) ?? saves[0];
-    if (!save) gaps.push({ kind: "no-save", what: document, hint: "pulsante di salvataggio non visto nella pagina" });
-    const submit = until === "invio" ? onForm.find((s) => s.effect === "write" && SUBMIT.test(s.label)) : null;
-    if (until === "invio" && !submit) gaps.push({ kind: "no-submit", what: document, hint: "pulsante d'invio non visto nella pagina" });
+    const saves = onForm.filter((s) => s.effect === "write" && SAVE.test(s.label) && !SEND.test(s.label));
+    const drafts = saves.filter((s) => DRAFT.test(s.label));
+    const pick = drafts.length ? drafts : saves;
+    const save = pick.length === 1 ? pick[0] : null;
+    if (!saves.length) gaps.push({ kind: "no-save", what: document, hint: "pulsante di solo salvataggio non visto nella pagina (quelli che inviano non valgono)" });
+    else if (!save) gaps.push({ kind: "ambiguous", what: "salvataggio", hint: `più pulsanti di salvataggio: ${pick.map((s) => s.label).join(", ")}` });
+    const submits = until === "invio" ? onForm.filter((s) => s.effect === "write" && SUBMIT.test(s.label) && s.id !== save?.id) : [];
+    const submit = submits.length === 1 ? submits[0] : null;
+    if (until === "invio" && !submits.length) gaps.push({ kind: "no-submit", what: document, hint: "pulsante d'invio non visto nella pagina" });
+    else if (until === "invio" && !submit) gaps.push({ kind: "ambiguous", what: "invio", hint: `più pulsanti d'invio: ${submits.map((s) => s.label).join(", ")}` });
     if (gaps.length) return { gaps };
     steps = [...(route.steps ?? []).map((s) => ({ verb: s.verb, action_class: s.action_class ?? "ACT-OBS", target: s.target, expect: s.expect ?? { page_sig: pathOf(formSig) } })), ...fills,
       { verb: "SAVE", action_class: "ACT-CREATE", target: save.id, expect: { page_sig: pathOf(formSig) } }];
@@ -118,6 +136,7 @@ export async function main(argv, env = process.env) {
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {
     if (!opts.goal || !opts.data || !opts.scope || !opts.env || !opts.out) return fail(asJson, 1, "richiesti --goal --data --scope --env --out");
+    if (!SCOPES.has(String(opts.scope).toUpperCase())) return fail(asJson, 1, `scope non valido: ${opts.scope}`);
     const m = RUN_OUT.exec(String(opts.out));
     if (!m) return fail(asJson, 1, "--out deve essere runs/<RUN>/plan.json, relativo alla cartella del cliente");
     const bad = confineInputs(opts, ["data"], { env });

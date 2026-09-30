@@ -8,7 +8,7 @@
 // Non è un guard: fail-OPEN con avviso, mai un blocco; ma un guasto azzera l'URL corrente (mai
 // un'origine non confermata). additionalContext: `OBS <code> · surprise:<n> novelty:<n> · ERR:<code?>`.
 import { mkdirSync, appendFileSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
 import { createHash } from "node:crypto";
 import { loadHookState, sessionDir } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
@@ -24,7 +24,7 @@ import { resolveSel, atlasIndex, atlasMatch, fieldSensitivity } from "../../scri
 import { detectErrors } from "../../scripts/chrome/errors.mjs";
 import { profileFor, redactText, freeText } from "../../scripts/chrome/redact.mjs";
 import { toYaml } from "../../scripts/lib/yaml-lite.mjs";
-import { pageRecord, clickRecord, appendAtlasLog, atlasLogFile } from "./atlas-log.mjs";
+import { pageRecord, clickRecord, appendAtlasLog, atlasLogFile, recordRefs } from "./atlas-log.mjs";
 
 const SNAPSHOT_OPS = new Set(["take_snapshot", "read_page", "get_page_text", "find", "browser_snapshot", "browser_find"]);
 const SCREENSHOT_OPS = new Set(["take_screenshot", "browser_take_screenshot", "upload_image"]);
@@ -208,7 +208,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
     refs = {};
     for (const e of page.elements) {
       if (!e.ref || Object.keys(refs).length >= 300) continue;
-      refs[String(e.ref)] = page.formatMismatch || unbound(String(e.ref)) ? null : atlasMatch(atlas, e)?.code ?? null;
+      refs[String(e.ref)] = page.formatMismatch || unbound(String(e.ref)) ? null : atlasMatch(atlas, e, { page: doc.page_signature })?.code ?? null;
     }
   }
   return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page };
@@ -402,14 +402,23 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   // 4. soluzione A (spec §A1): registro di sola struttura per atlas-build — fail-open, mai un blocco
   try {
     const file = atlasLogFile(st.ws, st.customer, st.sid);
+    const lastPage = join(dirname(file), "last-page.json");
     let full = false;
-    if (state === "ok" && mode === "complete" && pageUrl && page) {
-      full = appendAtlasLog(file, pageRecord(page, { pageSig: doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts })) === "full";
-    }
+    // prima i click (si riferiscono alla pagina precedente), poi la pagina di questa risposta; revisione finale (I4): un
+    // click su un elemento dentro un record (riga, cella) della pagina precedente non si registra
     const clicked = state === "ok" ? (call.actions ?? [call]).filter((a) => a.kind === "click" && !a.submits && Array.isArray(a.targets) && a.targets.length) : [];
-    for (const a of clicked) {
-      const name = prevSnap?.names?.[String(a.targets[0])];
-      if (name) full = appendAtlasLog(file, clickRecord({ fromSig: prevSig, name, ts: doc.ts })) === "full" || full;
+    if (clicked.length) {
+      let rec = new Set();
+      try { rec = new Set(JSON.parse(readFileSync(lastPage, "utf8")).record_refs ?? []); } catch { /* nessuna pagina registrata */ }
+      for (const a of clicked) {
+        const ref = String(a.targets[0]);
+        const name = prevSnap?.names?.[ref];
+        if (name && !rec.has(ref)) full = appendAtlasLog(file, clickRecord({ fromSig: prevSig, name, ts: doc.ts })) === "full" || full;
+      }
+    }
+    if (state === "ok" && mode === "complete" && pageUrl && page) {
+      full = appendAtlasLog(file, pageRecord(page, { pageSig: doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts })) === "full" || full;
+      writeFileAtomic(lastPage, JSON.stringify({ record_refs: recordRefs(page) }));
     }
     if (full) warn.push("registro dell'esplorazione pieno (20 MB): pagine non registrate");
   } catch (err) { warn.push(`registro dell'esplorazione non scritto (${String(err?.message ?? err).slice(0, 80)})`); }

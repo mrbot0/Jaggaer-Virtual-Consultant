@@ -13,13 +13,14 @@ export const STRUCT_ROLES = new Set(["heading", "button", "link", "menuitem", "m
   "listbox", "option", "textbox", "searchbox", "spinbutton", "switch", "textarea", "group", "region", "form", "navigation", "menu", "menubar", "tablist",
   "tabpanel", "dialog", "alertdialog", "columnheader", "rowheader", "table", "grid", "treeitem"]);
 const RECORD_ROLES = new Set(["row", "cell", "gridcell"]);
-const HEADER_ROLES = new Set(["columnheader", "rowheader"]);
+// solo le intestazioni di colonna: un rowheader sta dentro una riga ed è di solito la chiave del record
+const HEADER_ROLES = new Set(["columnheader"]);
 const clean = (s) => String(s ?? "").replace(/\s+/g, " ").trim().replace(/[\s:*]+$/, "");
 
 export const atlasLogFile = (ws, customer, sid) => join(ws, "customers", customer, ".sessions", sid, "atlas", "pages.jsonl");
 
-function urlPath(url) {
-  try { return new URL(url).pathname; } catch { return null; }
+function urlPath(url, profile, env) {
+  try { return clean(redactText(new URL(url).pathname, { profile, env }).text) || "/"; } catch { return null; }
 }
 
 export function pageRecord(page, { pageSig, profile = "strict", env = process.env, ts = new Date().toISOString() } = {}) {
@@ -61,7 +62,7 @@ export function pageRecord(page, { pageSig, profile = "strict", env = process.en
     index.set(keyOf(e), kept.length);
     kept.push(rec);
   }
-  return { kind: "page", ts, url_path: urlPath(page?.url), page_sig: pageSig ?? null, title: page?.title ? clean(redactText(page.title, { profile, env }).text) : null, elements: kept };
+  return { kind: "page", ts, url_path: urlPath(page?.url, profile, env), page_sig: pageSig ?? null, title: page?.title ? clean(redactText(page.title, { profile, env }).text) : null, elements: kept };
 }
 
 export function clickRecord({ fromSig, name, ts = new Date().toISOString() }) {
@@ -75,4 +76,23 @@ export function appendAtlasLog(file, rec, { maxBytes = ATLAS_LOG_MAX_BYTES } = {
   mkdirSync(dirname(file), { recursive: true });
   appendFileSync(file, `${JSON.stringify(rec)}\n`);
   return "written";
+}
+
+// ref degli elementi che stanno dentro un record (riga, cella): un click su di essi non entra nel registro (nomi di
+// record: fornitori, persone), observe-append li legge da atlas/last-page.json scritto con la pagina
+export function recordRefs(page) {
+  const nodes = Array.isArray(page?.nodes) ? page.nodes : [];
+  const byId = new Map(nodes.map((n) => [String(n.id), n]));
+  const out = [];
+  for (const n of nodes) {
+    if (n.ref == null) continue;
+    let p = RECORD_ROLES.has(n.role) ? n.id : n.parent;
+    for (let hop = 0; p != null && hop < 200; hop++) {
+      const a = byId.get(String(p));
+      if (!a) break;
+      if (RECORD_ROLES.has(a.role)) { out.push(String(n.ref)); break; }
+      p = a.parent;
+    }
+  }
+  return out;
 }

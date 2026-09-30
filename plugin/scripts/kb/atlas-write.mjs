@@ -33,6 +33,8 @@ import { confineInputs } from "../lib/text-file.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 
+// Campo la cui etichetta compare più volte nella stessa pagina (soluzione A): compose-plan non sceglie, chiede.
+export const AMBIGUOUS_NOTE = "ambiguo: etichetta ripetuta nella pagina";
 export class AtlasWriteError extends Error { constructor(code, m) { super(m); this.code = code; } }
 const E1 = (m) => new AtlasWriteError(1, m);
 const ROLES = new Set(["button", "link", "menuitem", "tab", "textbox", "combobox", "listbox", "option", "checkbox", "radio", "searchbox", "search_box", "row", "cell", "heading", "img", "switch", "treeitem", "spinbutton", "dialog"]);
@@ -89,7 +91,7 @@ function buildFld(it, draft) {
     document, label: { it: label }, section: clip(it.section ?? "principale", 80), field_type: ft,
     ...(it.technical_name ? { technical_name: String(it.technical_name) } : {}),
     mandatory: { kind: it.mandatory ?? "undocumented" },
-    ...(options.length ? { notes: `valori osservati: ${options.join(" · ")}` } : {}),
+    ...((it.ambiguous || options.length) ? { notes: [it.ambiguous ? AMBIGUOUS_NOTE : null, options.length ? `valori osservati: ${options.join(" · ")}` : null].filter(Boolean).join(" · ") } : {}),
     facets: facets("struttura-dati"), sources: sourcesOf(draft),
   });
 }
@@ -149,9 +151,10 @@ export function writeDraft({ ws, customer, scope, draft }) {
     if (type === "SEL") {
       const b = buildSel(it, draft);
       const probe = { role: String(it.role).toLowerCase(), name: clip(it.label, 120) };
-      const hit = atlasMatch(atlas, probe);
+      const hits = atlas.filter((a) => atlasMatch([a], probe));
+      const hit = hits.find((h) => (h.page ?? null) === (draft.page?.signature ?? null)) ?? null;
       const k = `SEL|${probe.role}|${probe.name.toLowerCase()}|${draft.page?.signature ?? ""}`;
-      if ((hit && (!draft.page?.signature || !hit.page || hit.page === draft.page.signature)) || seen.has(k)) { skipped.push({ type, label: probe.name, existing: hit?.code ?? "nella bozza" }); continue; }
+      if (hit || seen.has(k)) { skipped.push({ type, label: probe.name, existing: hit?.code ?? "nella bozza" }); continue; }
       seen.add(k); builders.push({ type, label: probe.name, b });
     } else if (type === "FLD") {
       const b = buildFld(it, draft);

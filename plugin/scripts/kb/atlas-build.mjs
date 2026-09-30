@@ -7,6 +7,9 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import YAML from "yaml";
 import { writeDraft, AtlasWriteError } from "./atlas-write.mjs";
+import { SCOPES } from "./codes.mjs";
+import { isSafeSessionId } from "../../hooks/lib/workspace.mjs";
+import { EFFECT_LABEL } from "../../hooks/lib/guards/config-scope.mjs";
 import { normLabel } from "../chrome/snapshot-parse.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
@@ -20,37 +23,67 @@ export function readLog(file) {
   return readFileSync(file, "utf8").split("\n").filter((l) => l.trim()).map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
 }
 
+const INPUT_ROLES = new Set(["textbox", "searchbox", "spinbutton", "combobox", "textarea", "listbox"]);
+const groupOf = (role) => (INPUT_ROLES.has(role) ? "input" : role);
+
+// Revisione finale (I3, I6, I7): tutte le visite di una pagina si uniscono (opzioni e obbligo visti in una visita
+// qualsiasi); un'etichetta ripetuta nella stessa visita con lo stesso gruppo di ruolo è ambigua (nessun SEL, FLD marcato:
+// compose-plan chiede invece di scegliere); un click su un'etichetta con effetto non diventa un arco di percorso.
 export function buildDrafts(lines) {
   const pages = new Map();
-  const fields = [];
-  const sels = [];
   const edges = [];
   let pendingClick = null;
   for (const l of lines) {
     if (l.kind === "click") { pendingClick = l; continue; }
     if (l.kind !== "page" || !l.page_sig) continue;
-    if (pendingClick?.from_sig && pendingClick.from_sig !== l.page_sig) edges.push({ from: pendingClick.from_sig, to: l.page_sig, name: pendingClick.target?.name });
+    const name = pendingClick?.target?.name ?? "";
+    if (pendingClick?.from_sig && pendingClick.from_sig !== l.page_sig && name && !EFFECT_LABEL.test(name)) edges.push({ from: pendingClick.from_sig, to: l.page_sig, name });
     pendingClick = null;
-    const first = !pages.has(l.page_sig);
     const els = l.elements ?? [];
     // nome della pagina = titolo principale (h1), come il document dei suoi FLD: il percorso "Percorso: <nome>" e i campi
     // devono coincidere perché compose-plan li trovi insieme (il titolo della scheda ha spesso il nome del tenant)
     const document = els.find((e) => e.role === "heading" && e.level === 1 && e.name)?.name ?? l.title ?? l.page_sig;
-    pages.set(l.page_sig, { title: l.title, document, url_path: l.url_path, elements: els });
-    if (!first) continue;
-    const sectionOf = (e) => {
-      let p = e.parent;
-      for (let hop = 0; p != null && hop < 200; hop++) { const a = els[p]; if (!a) break; if (SECTION_ROLES.has(a.role) && a.name) return a.name; p = a.parent; }
-      return "principale";
-    };
-    for (const e of els) {
-      if (!e.name) continue;
-      if (FIELD_TYPE[e.role]) {
-        const options = els.filter((o) => o.parent === e.i && o.role === "option" && o.name).map((o) => o.name);
-        fields.push({ type: "FLD", page_sig: l.page_sig, label: e.name, document, section: sectionOf(e), field_type: FIELD_TYPE[e.role], mandatory: e.required ? "always" : "undocumented", ...(options.length ? { options } : {}) });
+    const p = pages.get(l.page_sig) ?? { title: l.title, document, url_path: l.url_path, visits: [] };
+    p.visits.push(els);
+    pages.set(l.page_sig, p);
+  }
+  const fields = [];
+  const sels = [];
+  for (const [sig, p] of pages) {
+    const fmap = new Map();
+    const smap = new Map();
+    const ambiguous = new Set();
+    for (const els of p.visits) {
+      const sectionOf = (e) => {
+        let q = e.parent;
+        for (let hop = 0; q != null && hop < 200; hop++) { const a = els[q]; if (!a) break; if (SECTION_ROLES.has(a.role) && a.name) return a.name; q = a.parent; }
+        return "principale";
+      };
+      const count = new Map();
+      for (const e of els) {
+        if (!e.name || (!SEL_ROLES.has(e.role) && !FIELD_TYPE[e.role])) continue;
+        const k = `${groupOf(e.role)}|${normLabel(e.name)}`;
+        count.set(k, (count.get(k) ?? 0) + 1);
       }
-      if (SEL_ROLES.has(e.role)) sels.push({ type: "SEL", page_sig: l.page_sig, label: e.name, role: e.role, ...(FIELD_TYPE[e.role] ? { fieldLabel: e.name, document } : {}) });
+      for (const [k, n] of count) if (n > 1) ambiguous.add(k);
+      for (const e of els) {
+        if (!e.name) continue;
+        const k = `${groupOf(e.role)}|${normLabel(e.name)}`;
+        if (FIELD_TYPE[e.role]) {
+          const f = fmap.get(k) ?? { type: "FLD", page_sig: sig, label: e.name, document: p.document, section: sectionOf(e), field_type: FIELD_TYPE[e.role], mandatory: "undocumented", options: [] };
+          if (e.required) f.mandatory = "always";
+          for (const o of els.filter((x) => x.parent === e.i && x.role === "option" && x.name)) if (!f.options.includes(o.name)) f.options.push(o.name);
+          fmap.set(k, f);
+        }
+        if (SEL_ROLES.has(e.role) && !smap.has(k)) smap.set(k, { type: "SEL", page_sig: sig, label: e.name, role: e.role, ...(FIELD_TYPE[e.role] ? { fieldLabel: e.name, document: p.document } : {}) });
+      }
     }
+    for (const [k, f] of fmap) {
+      if (!f.options.length) delete f.options;
+      if (ambiguous.has(k)) f.ambiguous = true;
+      fields.push(f);
+    }
+    for (const [k, sel] of smap) if (!ambiguous.has(k)) sels.push(sel);
   }
   const entry = lines.find((l) => l.kind === "page" && l.page_sig)?.page_sig ?? null;
   const routes = [];
@@ -66,7 +99,7 @@ export function buildDrafts(lines) {
       const chain = [];
       for (let x = e; x; x = prev.get(x.from)) chain.unshift(x);
       routes.push({ page_sig: sig, title: pages.get(sig)?.document ?? sig, steps: [{ kind: "navigate", url_path: pages.get(entry)?.url_path ?? "/", sig: entry },
-        ...chain.map((c) => ({ kind: "click", name: c.name, role: (pages.get(c.from)?.elements ?? []).find((el) => normLabel(el.name) === normLabel(c.name))?.role ?? "link", from_sig: c.from, to_sig: c.to }))] });
+        ...chain.map((c) => ({ kind: "click", name: c.name, role: (pages.get(c.from)?.visits ?? []).flat().find((el) => normLabel(el.name) === normLabel(c.name))?.role ?? "link", from_sig: c.from, to_sig: c.to }))] });
     }
   }
   return { pages, fields, sels, routes };
@@ -79,6 +112,10 @@ function scopeItems(ws, customer, scope, dir) {
 }
 
 export function atlasBuild({ ws, customer, scope, sid }) {
+  // revisione finale (C1): mai un percorso costruito da valori non validati (sessione, cliente, scope)
+  if (!isSafeSessionId(String(sid ?? ""))) throw new AtlasWriteError(1, `sessione non valida: ${sid}`);
+  if (!/^[A-Z0-9]{4}$/.test(String(customer ?? ""))) throw new AtlasWriteError(1, `cliente non valido: ${customer}`);
+  if (!SCOPES.has(scope)) throw new AtlasWriteError(1, `scope non valido: ${scope}`);
   const file = join(ws, "customers", customer, ".sessions", sid, "atlas", "pages.jsonl");
   if (!existsSync(file)) throw new AtlasWriteError(1, `nessun registro dell'esplorazione per la sessione ${sid}`);
   const d = buildDrafts(readLog(file));
@@ -137,6 +174,7 @@ export async function main(argv, env = process.env) {
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {
     const { resolveSessionId, loadSession } = await import("../admin/session.mjs");
+    if (opts.session != null && !isSafeSessionId(String(opts.session))) return fail(asJson, 1, `--session non valida: ${opts.session}`);
     let sid = opts.session ?? null;
     try { sid ??= resolveSessionId({ workspace: ws, arg: null, env }); } catch { /* nessuna sessione attiva */ }
     if (!sid) return fail(asJson, 1, "--session <sid> obbligatorio (nessuna sessione attiva)");
