@@ -3,64 +3,217 @@
   "$id": "sel.schema.json",
   "title": "Voce del Selector Atlas (SEL)",
   "description": "§27.1, §64: concetto → catena di strategie (≥ 2, almeno una semantica: role · label · text) in ordine DT-008 (testid → role → label → text → css), stabilità, contesto di frame, effetto. `effect` e `role` sono esattamente ciò che leggono guard-production (hooks/lib/guards/plan-step.mjs readSel: role search_box, effect read) e il legame uid↔SEL di observe-append (scripts/chrome/atlas.mjs): valori scalari semplici su una riga, in colonna 0. css è ammesso nella catena ma generate-atlas-po lo usa solo con stability: fragile.",
-  "allOf": [{ "$ref": "item.base" }, { "$ref": "#/$defs/sel" }],
+  "allOf": [
+    {
+      "$ref": "item.base"
+    },
+    {
+      "$ref": "#/$defs/sel"
+    }
+  ],
   "$defs": {
-    "code": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.[A-Z]{3}\\.\\d{4}(\\.v\\d+)?$" },
+    "code": {
+      "type": "string",
+      "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.[A-Z]{3}\\.\\d{4}(\\.v\\d+)?$"
+    },
     "role": {
       "description": "Ruolo ARIA dell'elemento (o search_box: campo di ricerca, l'unico in cui guard-production consente di scrivere in produzione).",
-      "enum": ["search_box", "searchbox", "textbox", "spinbutton", "combobox", "lookup", "textarea", "listbox", "option", "checkbox", "radio", "switch", "toggle",
-        "button", "link", "menuitem", "tab", "heading", "row", "cell", "grid", "table", "alert", "status", "toast", "alertdialog", "dialog", "img", "region", "text"]
+      "enum": [
+        "search_box",
+        "searchbox",
+        "textbox",
+        "spinbutton",
+        "combobox",
+        "lookup",
+        "textarea",
+        "listbox",
+        "option",
+        "checkbox",
+        "radio",
+        "switch",
+        "toggle",
+        "button",
+        "link",
+        "menuitem",
+        "tab",
+        "heading",
+        "row",
+        "cell",
+        "grid",
+        "table",
+        "alert",
+        "status",
+        "toast",
+        "alertdialog",
+        "dialog",
+        "img",
+        "region",
+        "text"
+      ]
     },
     "strategy": {
       "type": "object",
-      "required": ["kind", "value"],
+      "required": [
+        "kind",
+        "value"
+      ],
       "additionalProperties": false,
       "properties": {
-        "kind": { "enum": ["testid", "role", "label", "text", "css"] },
-        "value": { "type": "string", "minLength": 1 },
-        "name": { "type": "string", "minLength": 1, "description": "nome accessibile (per kind role)" },
-        "exact": { "type": "boolean" }
+        "kind": {
+          "enum": [
+            "testid",
+            "role",
+            "label",
+            "text",
+            "css"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "nome accessibile (per kind role)"
+        },
+        "exact": {
+          "type": "boolean"
+        }
       }
     },
     "sel": {
       "type": "object",
-      "required": ["type", "concept", "effect", "strategies", "stability"],
+      "required": [
+        "type",
+        "concept",
+        "effect",
+        "strategies",
+        "stability"
+      ],
       "properties": {
-        "type": { "const": "SEL" },
-        "concept": { "type": "string", "minLength": 1, "description": "concetto dell'elemento (es. 'pulsante Salva della testata RdA')" },
-        "label": { "type": "string", "minLength": 1 },
-        "role": { "$ref": "#/$defs/role" },
-        "effect": { "enum": ["read", "write"] },
-        "field": { "$ref": "#/$defs/code" },
-        "page": { "type": "string", "minLength": 1, "description": "firma della pagina (page_signature) in cui l'elemento compare" },
+        "type": {
+          "const": "SEL"
+        },
+        "concept": {
+          "type": "string",
+          "minLength": 1,
+          "description": "concetto dell'elemento (es. 'pulsante Salva della testata RdA')"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "effect": {
+          "enum": [
+            "read",
+            "write"
+          ]
+        },
+        "field": {
+          "$ref": "#/$defs/code"
+        },
+        "page": {
+          "type": "string",
+          "minLength": 1,
+          "description": "firma della pagina (page_signature) in cui l'elemento compare"
+        },
         "strategies": {
           "type": "array",
           "minItems": 2,
-          "items": { "$ref": "#/$defs/strategy" },
-          "contains": { "type": "object", "properties": { "kind": { "enum": ["role", "label", "text"] } }, "required": ["kind"] }
+          "items": {
+            "$ref": "#/$defs/strategy"
+          },
+          "contains": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "role",
+                  "label",
+                  "text"
+                ]
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
         },
-        "stability": { "enum": ["stable", "medium", "fragile"] },
-        "frame_context": {
-          "oneOf": [
-            { "type": "null" },
-            { "type": "string", "minLength": 1 },
-            { "type": "object", "additionalProperties": false, "properties": { "frame": { "type": "string" }, "shadow_host": { "type": "string" } } }
+        "stability": {
+          "enum": [
+            "stable",
+            "medium",
+            "fragile"
           ]
         },
-        "last_success": { "type": ["string", "null"], "description": "data/ora ISO dell'ultima risoluzione riuscita" },
+        "frame_context": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "frame": {
+                  "type": "string"
+                },
+                "shadow_host": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        "last_success": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "data/ora ISO dell'ultima risoluzione riuscita"
+        },
         "healing_history": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["at", "from", "to"],
+            "required": [
+              "at",
+              "from",
+              "to"
+            ],
             "properties": {
-              "at": { "type": "string" },
-              "from": { "$ref": "#/$defs/strategy" },
-              "to": { "$ref": "#/$defs/strategy" },
-              "reason": { "type": "string" },
-              "verified_by": { "type": "string", "description": "OBS o RUN che ha verificato il nuovo selettore rieseguendo il passo (§30.4)" }
+              "at": {
+                "type": "string"
+              },
+              "from": {
+                "$ref": "#/$defs/strategy"
+              },
+              "to": {
+                "$ref": "#/$defs/strategy"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "verified_by": {
+                "type": "string",
+                "description": "OBS o RUN che ha verificato il nuovo selettore rieseguendo il passo (§30.4)"
+              }
             }
           }
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Modulo JAGGAER di appartenenza (soluzione A): dalle briciole di pane o dal percorso di menu, es. \"Acquisti › Ordini\"."
         }
       }
     }

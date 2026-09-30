@@ -31,11 +31,28 @@ const CREATE_DOC = /\b(crea|creare|creazione|nuov[oaie]|new|create)\b/i;
 const SAVE_LABEL = /\b(salva|save)\b/i;
 const SEND_LABEL = /\b(invia|inoltra|trasmetti|submit|send|conferma|confirm|approva|approve|pubblica|publish|place order)\b/i;
 const MASK = /\[[a-z][a-z.-]*\]/i;
+const BREADCRUMB = /\b(breadcrumbs?|briciole|percorso|sei qui|you are here)\b/i;
+const MODULE_SEP = " › ";
+const ROOT_CRUMB = /^(home|pagina iniziale|inizio|start|dashboard)$/i;
+const clipModule = (m) => (m ? String(m).replace(/\s+/g, " ").trim().slice(0, 120) : null);
+const moduleKey = (m) => m ?? "";
+
+// Modulo di una pagina (richiesta dell'utente, 30/09/2026): dalle briciole di pane dell'ultima visita (al più due livelli,
+// senza la pagina stessa), altrimenti dal percorso di menu: i click verso pagine che non sono moduli di creazione, al più due.
+function breadcrumbModule(els, document) {
+  const nav = els.find((e) => e.role === "navigation" && BREADCRUMB.test(String(e.name ?? "")));
+  if (!nav) return null;
+  const inside = (e) => { let q = e.parent; for (let hop = 0; q != null && hop < 200; hop++) { if (q === nav.i) return true; q = els[q]?.parent; } return false; };
+  // revisione del modulo: niente radice (Home…), niente livelli con numeri o dati oscurati (record, persone), mai la pagina
+  const names = els.filter((e) => e.role === "link" && e.name && inside(e)).map((e) => e.name)
+    .filter((n) => normLabel(n) !== normLabel(document) && !ROOT_CRUMB.test(String(n).trim()) && !/\d/.test(n) && !MASK.test(n));
+  return names.length ? names.slice(0, 2).join(MODULE_SEP) : null;
+}
 
 // Revisione finale (I3, I6, I7): tutte le visite di una pagina si uniscono (opzioni e obbligo visti in una visita
 // qualsiasi); un'etichetta ripetuta nella stessa visita con lo stesso gruppo di ruolo è ambigua (nessun SEL, FLD marcato:
 // compose-plan chiede invece di scegliere); un click su un'etichetta con effetto non diventa un arco di percorso.
-export function buildDrafts(lines) {
+export function buildDrafts(lines, { knownModules = new Map() } = {}) {
   const pages = new Map();
   const edges = [];
   let pendingClick = null;
@@ -56,6 +73,23 @@ export function buildDrafts(lines) {
     p.iframes = Number(l.iframes) || 0;
     p.masked = els.some((e) => MASK.test(String(e.name ?? "")));
     pages.set(l.page_sig, p);
+  }
+  // percorsi (BFS dall'ingresso) prima dei campi: servono anche per il modulo di ogni pagina
+  const entry = lines.find((l) => l.kind === "page" && l.page_sig)?.page_sig ?? null;
+  const prev = new Map(entry ? [[entry, null]] : []);
+  if (entry) {
+    const queue = [entry];
+    while (queue.length) {
+      const cur = queue.shift();
+      for (const e of edges.filter((x) => x.from === cur)) if (!prev.has(e.to)) { prev.set(e.to, e); queue.push(e.to); }
+    }
+  }
+  const chainOf = (sig) => { const chain = []; for (let x = prev.get(sig); x; x = prev.get(x.from)) chain.unshift(x); return chain; };
+  for (const [sig, p] of pages) {
+    const last = p.visits.at(-1) ?? [];
+    const menu = chainOf(sig).filter((c) => !CREATE_DOC.test(pages.get(c.to)?.document ?? "")).map((c) => c.name).slice(0, 2);
+    // il modulo è della PAGINA, non della strada fatta: quello già memorizzato per questa firma vince (revisione del modulo)
+    p.module = clipModule(knownModules.get(sig) ?? breadcrumbModule(last, p.document) ?? (menu.length ? menu.join(MODULE_SEP) : null));
   }
   const fields = [];
   const sels = [];
@@ -80,12 +114,12 @@ export function buildDrafts(lines) {
         if (!e.name) continue;
         const k = `${groupOf(e.role)}|${normLabel(e.name)}`;
         if (FIELD_TYPE[e.role]) {
-          const f = fmap.get(k) ?? { type: "FLD", page_sig: sig, label: e.name, document: p.document, section: sectionOf(e), field_type: FIELD_TYPE[e.role], mandatory: "undocumented", options: [] };
+          const f = fmap.get(k) ?? { type: "FLD", page_sig: sig, label: e.name, document: p.document, section: sectionOf(e), field_type: FIELD_TYPE[e.role], mandatory: "undocumented", options: [], ...(p.module ? { module: p.module } : {}) };
           if (e.required) f.mandatory = "always";
           for (const o of els.filter((x) => x.parent === e.i && x.role === "option" && x.name)) if (!f.options.includes(o.name)) f.options.push(o.name);
           fmap.set(k, f);
         }
-        if (SEL_ROLES.has(e.role) && !smap.has(k)) smap.set(k, { type: "SEL", page_sig: sig, label: e.name, role: e.role, ...(FIELD_TYPE[e.role] ? { fieldLabel: e.name, document: p.document } : {}) });
+        if (SEL_ROLES.has(e.role) && !smap.has(k)) smap.set(k, { type: "SEL", page_sig: sig, label: e.name, role: e.role, ...(p.module ? { module: p.module } : {}), ...(FIELD_TYPE[e.role] ? { fieldLabel: e.name, document: p.document } : {}) });
       }
     }
     for (const [k, f] of fmap) {
@@ -95,20 +129,12 @@ export function buildDrafts(lines) {
     }
     for (const [k, sel] of smap) if (!ambiguous.has(k)) sels.push(sel);
   }
-  const entry = lines.find((l) => l.kind === "page" && l.page_sig)?.page_sig ?? null;
   const routes = [];
   if (entry) {
-    const prev = new Map([[entry, null]]);
-    const queue = [entry];
-    while (queue.length) {
-      const cur = queue.shift();
-      for (const e of edges.filter((x) => x.from === cur)) if (!prev.has(e.to)) { prev.set(e.to, e); queue.push(e.to); }
-    }
     for (const [sig, e] of prev) {
       if (!e) continue;
-      const chain = [];
-      for (let x = e; x; x = prev.get(x.from)) chain.unshift(x);
-      routes.push({ page_sig: sig, title: pages.get(sig)?.document ?? sig, steps: [{ kind: "navigate", url_path: pages.get(entry)?.url_path ?? "/", sig: entry },
+      const chain = chainOf(sig);
+      routes.push({ page_sig: sig, title: pages.get(sig)?.document ?? sig, module: pages.get(sig)?.module ?? null, steps: [{ kind: "navigate", url_path: pages.get(entry)?.url_path ?? "/", sig: entry },
         ...chain.map((c) => ({ kind: "click", name: c.name, role: (pages.get(c.from)?.visits ?? []).flat().find((el) => normLabel(el.name) === normLabel(c.name))?.role ?? "link", from_sig: c.from, to_sig: c.to }))] });
     }
   }
@@ -128,7 +154,9 @@ export function atlasBuild({ ws, customer, scope, sid }) {
   if (!SCOPES.has(scope)) throw new AtlasWriteError(1, `scope non valido: ${scope}`);
   const file = join(ws, "customers", customer, ".sessions", sid, "atlas", "pages.jsonl");
   if (!existsSync(file)) throw new AtlasWriteError(1, `nessun registro dell'esplorazione per la sessione ${sid}`);
-  const d = buildDrafts(readLog(file));
+  // moduli già memorizzati per pagina (dai SEL esistenti): una pagina raggiunta per un'altra strada non cambia modulo
+  const knownModules = new Map(scopeItems(ws, customer, scope, "selectors").filter((s) => s.page && s.module).map((s) => [s.page, s.module]));
+  const d = buildDrafts(readLog(file), { knownModules });
   const written = [];
   const skipped = [];
   const add = (r) => { written.push(...r.written); skipped.push(...r.skipped); };
@@ -144,21 +172,26 @@ export function atlasBuild({ ws, customer, scope, sid }) {
     }
   }
   const flds = scopeItems(ws, customer, scope, "fields");
-  const fldCode = (label, document) => flds.find((f) => normLabel(f.label?.it) === normLabel(label) && normLabel(f.document) === normLabel(document))?.id;
+  // stesso campo = stessa etichetta, stesso documento e stesso modulo (un campo senza modulo vale per ogni modulo)
+  const fldCode = (label, document, module) => {
+    const same = flds.filter((f) => normLabel(f.label?.it) === normLabel(label) && normLabel(f.document) === normLabel(document));
+    // prima lo stesso modulo, poi un campo senza modulo (item precedenti), mai il campo di un altro modulo
+    return (same.find((f) => (f.module ?? null) === (module ?? null)) ?? same.find((f) => !f.module) ?? (!module ? same[0] : null))?.id;
+  };
   for (const sig of new Set(d.sels.map((s) => s.page_sig))) {
     const items = d.sels.filter((s) => s.page_sig === sig).map(({ page_sig, fieldLabel, document, ...s }) => {
-      const code = fieldLabel ? fldCode(fieldLabel, document) : null;
+      const code = fieldLabel ? fldCode(fieldLabel, document, s.module) : null;
       return code ? { ...s, field: code } : s;
     });
     add(writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items } }));
   }
   const sels = scopeItems(ws, customer, scope, "selectors");
   const selCode = (name, sig) => sels.find((s) => normLabel(s.label) === normLabel(name) && (!s.page || s.page === sig))?.id;
-  const haveTitles = new Set(scopeItems(ws, customer, scope, "flows").map((f) => f.title));
+  const haveTitles = new Set(scopeItems(ws, customer, scope, "flows").map((f) => `${f.title}|${moduleKey(f.module)}`));
   const flws = [];
   for (const r of d.routes) {
     const title = `Percorso: ${r.title}`.slice(0, 140);
-    if (haveTitles.has(title)) { skipped.push({ type: "FLW", label: title, existing: "stesso titolo" }); continue; }
+    if (haveTitles.has(`${title}|${moduleKey(r.module)}`)) { skipped.push({ type: "FLW", label: title, existing: "stesso titolo e modulo" }); continue; }
     const steps = [];
     let ok = true;
     for (const s of r.steps) {
@@ -169,11 +202,12 @@ export function atlasBuild({ ws, customer, scope, sid }) {
         steps.push({ verb: "CLICK", action_class: "ACT-OBS", target: code, expect: { page_sig: sigPath(s.to_sig) } });
       }
     }
-    if (ok) flws.push({ type: "FLW", title, trigger: "navigazione", steps });
+    if (ok) flws.push({ type: "FLW", title, trigger: "navigazione", steps, ...(r.module ? { module: r.module } : {}) });
     else skipped.push({ type: "FLW", label: title, existing: "passo senza selettore" });
   }
   if (flws.length) add(writeDraft({ ws, customer, scope, draft: { items: flws } }));
-  return { pages: d.pages.size, written, skipped, updated, todo: atlasTodo(d) };
+  const todo = atlasTodo(d);
+  return { pages: d.pages.size, written, skipped, updated, todo, modules: moduleSummary(d, todo) };
 }
 
 // Verifica automatica della mappa (taratura sulle pagine vere): ciò che la mappa non sa ancora, come azioni che l'agente
@@ -184,20 +218,36 @@ export function atlasTodo(d) {
   const routed = new Set(d.routes.map((r) => r.page_sig));
   for (const [sig, p] of d.pages) {
     const page = p.document;
+    const add = (t) => todo.push({ ...t, module: p.module ?? null });
     const fields = d.fields.filter((f) => f.page_sig === sig);
     for (const f of fields) {
-      if (f.field_type === "list" && !f.options && !f.person_list) todo.push({ kind: "open-dropdown", auto: true, page, what: f.label, action: `apri la tendina «${f.label}» nella pagina «${page}» e rifai take_snapshot a tendina aperta` });
-      if (f.ambiguous) todo.push({ kind: "ambiguous", auto: false, page, what: f.label, action: `l'etichetta «${f.label}» compare più volte in «${page}»: completa con atlas-write un SEL distinto (testid o css) per ciascuno, con la sezione` });
+      if (f.field_type === "list" && !f.options && !f.person_list) add({ kind: "open-dropdown", auto: true, page, what: f.label, action: `apri la tendina «${f.label}» nella pagina «${page}» e rifai take_snapshot a tendina aperta` });
+      if (f.ambiguous) add({ kind: "ambiguous", auto: false, page, what: f.label, action: `l'etichetta «${f.label}» compare più volte in «${page}»: completa con atlas-write un SEL distinto (testid o css) per ciascuno, con la sezione` });
     }
-    if (p.unlabeled) todo.push({ kind: "unlabeled", auto: false, page, what: String(p.unlabeled), action: `${p.unlabeled} campi senza etichetta in «${page}»: identificali (tooltip, etichetta vicina, segnaposto) e completali con atlas-write` });
-    if (sig !== entry && !routed.has(sig)) todo.push({ kind: "no-route", auto: true, page, action: `raggiungi «${page}» cliccando dal menu (non aprendo l'indirizzo), così il percorso si memorizza` });
-    if (p.iframes) todo.push({ kind: "iframe", auto: false, page, what: String(p.iframes), action: `«${page}» contiene ${p.iframes} iframe non letti: apri il contenuto del frame solo se il suo host è fra quelli dichiarati (navigate all'indirizzo del frame, poi take_snapshot); altrimenti segnalalo` });
+    if (p.unlabeled) add({ kind: "unlabeled", auto: false, page, what: String(p.unlabeled), action: `${p.unlabeled} campi senza etichetta in «${page}»: identificali (tooltip, etichetta vicina, segnaposto) e completali con atlas-write` });
+    if (sig !== entry && !routed.has(sig)) add({ kind: "no-route", auto: true, page, action: `raggiungi «${page}» cliccando dal menu (non aprendo l'indirizzo), così il percorso si memorizza` });
+    if (p.iframes) add({ kind: "iframe", auto: false, page, what: String(p.iframes), action: `«${page}» contiene ${p.iframes} iframe non letti: apri il contenuto del frame solo se il suo host è fra quelli dichiarati (navigate all'indirizzo del frame, poi take_snapshot); altrimenti segnalalo` });
     if (fields.length && CREATE_DOC.test(page) && !d.sels.some((s) => s.page_sig === sig && SAVE_LABEL.test(s.label) && !SEND_LABEL.test(s.label))) {
-      todo.push({ kind: "no-save", auto: true, page, action: `pulsante di solo salvataggio non visto in «${page}»: scorri o espandi la pagina (sezioni chiuse, barra in fondo) e rifai take_snapshot` });
+      add({ kind: "no-save", auto: true, page, action: `pulsante di solo salvataggio non visto in «${page}»: scorri o espandi la pagina (sezioni chiuse, barra in fondo) e rifai take_snapshot` });
     }
-    if (p.masked) todo.push({ kind: "redacted", auto: false, page, action: `in «${page}» alcune etichette contenevano dati personali (oscurati): non usarle come riferimento e segnalalo nel rapporto` });
+    if (p.masked) add({ kind: "redacted", auto: false, page, action: `in «${page}» alcune etichette contenevano dati personali (oscurati): non usarle come riferimento e segnalalo nel rapporto` });
   }
   return todo;
+}
+
+// Copertura per modulo: pagine, campi, selettori e voci "da fare" di ogni modulo ("(senza modulo)" per l'ingresso e le
+// pagine non ancora collocate)
+export function moduleSummary(d, todo) {
+  const out = {};
+  const bucket = (m) => (out[m ?? "(senza modulo)"] ??= { pages: 0, fields: 0, selectors: 0, todo: 0 });
+  for (const [sig, p] of d.pages) {
+    const b = bucket(p.module);
+    b.pages++;
+    b.fields += d.fields.filter((f) => f.page_sig === sig).length;
+    b.selectors += d.sels.filter((x) => x.page_sig === sig).length;
+  }
+  for (const t of todo) bucket(t.module).todo++;
+  return out;
 }
 
 export const HELP = `uso: kb atlas-build --session <sid> [--scope <S>] [--customer <C>] [--workspace <dir>] [--json]
@@ -228,7 +278,7 @@ export async function main(argv, env = process.env) {
     if (session?.customer && customer !== session.customer) return fail(asJson, 3, `--customer ${customer} diverso dal cliente della sessione (${session.customer})`);
     const scope = String(opts.scope ?? session?.scope ?? "").toUpperCase();
     const r = atlasBuild({ ws, customer, scope, sid: String(sid) });
-    console.log(JSON.stringify({ ok: true, customer, scope, pages: r.pages, written: r.written.length, skipped: r.skipped.length, updated: r.updated.length, todo: r.todo, ...(asJson ? { written_items: r.written, skipped_items: r.skipped } : {}) }));
+    console.log(JSON.stringify({ ok: true, customer, scope, pages: r.pages, written: r.written.length, skipped: r.skipped.length, updated: r.updated.length, modules: r.modules, todo: r.todo, ...(asJson ? { written_items: r.written, skipped_items: r.skipped } : {}) }));
     return 0;
   } catch (err) {
     if (err instanceof AtlasWriteError) return fail(asJson, err.code, err.message);

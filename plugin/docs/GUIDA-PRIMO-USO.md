@@ -74,6 +74,8 @@ Esplora un modulo alla volta (ordini, poi contratti): il budget di un agente è 
 
 1. Torna in modalità operativa: `/jaggaer-virtual-consultant:use mode ops`
 2. `/jaggaer-virtual-consultant:ops crea ordine fornitore <…>, articolo <…>, quantità <…>, centro di costo <…>`
+   (se lo stesso modulo di creazione esiste in più moduli JAGGAER, aggiungi «nel modulo <nome>»: la mappa è organizzata
+   per modulo, ricavato dalle briciole di pane o dal percorso di menu)
 3. L'agente compone il piano dalla memoria e te lo mostra (campi e valori, come annullarlo); se mancano dati
    obbligatori te li chiede prima. Se va bene scrivi
    `APPROVO PIANO <codice del piano>`.

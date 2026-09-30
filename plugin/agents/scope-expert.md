@@ -168,16 +168,19 @@ pagine: tu non descrivi le pagine a mano.
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-write.mjs" --in customers/<C>/.sessions/<sid>/work/<task>/atlas-<n>.yaml --customer <C> --scope <S> --json
 
-4. Nel rapporto elenca pagine viste, item scritti e pagine non raggiunte.
+4. Nel rapporto elenca pagine viste, item scritti e pagine non raggiunte, per modulo (`modules` dell'uscita di atlas-build:
+   pagine, campi, selettori e voci da fare di ogni modulo JAGGAER, ricavato dalle briciole di pane o dal percorso di menu).
 
 ## Eseguire un'attività (crea ordine, crea contratto…) e memorizzarla
 
 1. Scrivi i dati dell'utente (etichetta del campo: valore) in un file YAML della cartella di lavoro e componi il piano
-   dalla memoria (procedura già imparata, altrimenti percorso + un passo per campo + salva, + invio con `--fino-a invio`):
+   dalla memoria (procedura già imparata, altrimenti percorso + un passo per campo + salva, + invio con `--fino-a invio`;
+   con `--modulo "<modulo>"` se l'utente lo indica o se la mappa ha lo stesso modulo di creazione in più moduli):
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/compose-plan.mjs" --goal "<obiettivo>" --data customers/<C>/.sessions/<sid>/work/<task>/dati.yaml --scope <S> --env <ambiente> --out runs/<RUN>/plan.json --json
 
 2. Exit 3 = mancanze, nessun piano: campi obbligatori senza dato → `needs-input` con le domande per l'utente; pagine,
+   modulo ambiguo (`what: modulo`) → `needs-input` con i moduli possibili da far scegliere all'utente; pagine,
    percorsi o pulsanti non visti → `needs-input` con le pagine da esplorare (il manager ti rilancia in esplorazione, poi
    ricomponi il piano, che l'utente riapprova). Mai inventare un selettore.
 3. Il piano ha già la compensazione del passo che salva; l'invio finale (`SUBMIT`, ACT-SUBMIT) chiede il "sì" dell'utente.

@@ -71,7 +71,7 @@ function buildSel(it, draft) {
   ];
   return (code) => ({
     id: code, type: "SEL", title: clip(`Selettore ${label}`, 140), summary: clip(`${role} "${label}" osservato in esplorazione${draft.page?.title ? ` nella pagina ${draft.page.title}` : ""}.`, 400),
-    concept: clip(it.concept ?? label, 120), label, role, effect, strategies, stability: it.stability ?? "medium",
+    concept: clip(it.concept ?? label, 120), label, role, effect, strategies, stability: it.stability ?? "medium", ...(it.module ? { module: clip(red(String(it.module)), 120) } : {}),
     ...(draft.page?.signature ? { page: String(draft.page.signature) } : {}), ...(it.field ? { field: String(it.field) } : {}),
     facets: facets("comportamento-ui"), sources: sourcesOf(draft),
   });
@@ -88,7 +88,7 @@ function buildFld(it, draft) {
   const options = Array.isArray(it.options) ? it.options.map((o) => clip(red(String(o)), 80)).filter(Boolean).slice(0, 100) : [];
   return (code) => ({
     id: code, type: "FLD", title: clip(`Campo ${label} (${document})`, 140), summary: clip(`Campo ${ft} "${label}" del documento ${document}, osservato in esplorazione.`, 400),
-    document, label: { it: label }, section: clip(it.section ?? "principale", 80), field_type: ft,
+    document, label: { it: label }, section: clip(it.section ?? "principale", 80), field_type: ft, ...(it.module ? { module: clip(red(String(it.module)), 120) } : {}),
     ...(it.technical_name ? { technical_name: String(it.technical_name) } : {}),
     mandatory: { kind: it.mandatory ?? "undocumented" },
     ...((it.ambiguous || options.length) ? { notes: [it.ambiguous ? AMBIGUOUS_NOTE : null, options.length ? `valori osservati: ${options.join(" · ")}` : null].filter(Boolean).join(" · ") } : {}),
@@ -115,23 +115,27 @@ function buildFlw(it, draft) {
   return (code) => ({
     id: code, type: "FLW", title, summary: clip(it.summary ?? `Procedura "${title}" (${steps.length} passi) ${draft.run ? `memorizzata dall'esecuzione riuscita ${draft.run}` : "osservata in esplorazione"}.`, 400),
     ...(it.document ? { document: String(it.document) } : {}), ...(it.trigger ? { trigger: String(it.trigger) } : {}),
-    steps, ...(it.compensation ? { compensation: it.compensation } : {}),
+    steps, ...(it.compensation ? { compensation: it.compensation } : {}), ...(it.module ? { module: clip(red(String(it.module)), 120) } : {}),
     facets: facets("procedura"), sources: sourcesOf(draft),
   });
 }
 
-function existingFld(ws, customer, scope, label, document) {
+function existingFld(ws, customer, scope, label, document, module = null) {
   const dir = join(ws, "customers", customer, "kb", "scopes", scope, "fields");
   let files = [];
   try { files = readdirSync(dir).filter((f) => f.endsWith(".yaml")); } catch { return null; }
   const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "").replace(/[\s:*]+$/g, "").trim();
+  const same = [];
   for (const f of files) {
     try {
       const o = YAML.parse(readFileSync(join(dir, f), "utf8"));
-      if (norm(o?.label?.it) === norm(label) && norm(o?.document) === norm(document)) return o.id;
+      if (norm(o?.label?.it) === norm(label) && norm(o?.document) === norm(document)) same.push(o);
     } catch { /* file illeggibile: non è un doppione */ }
   }
-  return null;
+  // stesso campo = stessa etichetta e documento; con i moduli: prima lo stesso modulo, poi un campo senza modulo
+  // (item precedenti); un campo di un altro modulo non è un doppione
+  const hit = same.find((o) => (o.module ?? null) === (module ?? null)) ?? same.find((o) => !o.module) ?? (!module ? same.find((o) => o.module) : null);
+  return hit?.id ?? null;
 }
 
 // → { written: [{code, type, label}], skipped: [{type, label, existing}] }
@@ -159,8 +163,9 @@ export function writeDraft({ ws, customer, scope, draft }) {
     } else if (type === "FLD") {
       const b = buildFld(it, draft);
       const doc = clip(it.document ?? draft.page?.title ?? "", 80);
-      const ex = existingFld(ws, customer, scope, it.label, doc);
-      const k = `FLD|${clip(it.label, 120).toLowerCase()}|${doc.toLowerCase()}`;
+      const mod = it.module ? clip(red(String(it.module)), 120) : null;   // confronto sul valore che si memorizza
+      const ex = existingFld(ws, customer, scope, it.label, doc, mod);
+      const k = `FLD|${clip(it.label, 120).toLowerCase()}|${doc.toLowerCase()}|${mod ?? ""}`;
       if (ex || seen.has(k)) { skipped.push({ type, label: clip(it.label, 120), existing: ex ?? "nella bozza" }); continue; }
       seen.add(k); builders.push({ type, label: clip(it.label, 120), b });
     } else if (type === "FLW") {
