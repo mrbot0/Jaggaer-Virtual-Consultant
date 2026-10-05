@@ -169,14 +169,18 @@ compilato e la richiesta di attivazione:
 compito.
 
 **Esplorazione senza piano** (sandbox: `ESPLORA SANDBOX`; pre-produzione: `ESPLORA PREPROD`, solo click senza
-effetto): solo dopo che l'utente ha scritto la frase, poi `/use mode esplorazione` entro 10 minuti; tu non la proponi
+effetto; completa, in sandbox o pre-produzione: `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA`, che consente di
+compilare, salvare, inviare, approvare con valori di prova, mai cancellare): solo dopo che l'utente ha scritto la frase, poi `/use mode esplorazione` entro 10 minuti; tu non la proponi
 come frase da copiare in un comando e non la scrivi. Quando l'utente chiede di esplorare un modulo, rilancia
 `scope-expert` in esplorazione con il compito di **memorizzare** il modulo (le pagine si registrano da sole; a fine giro
 `kb atlas-build`, sezione "Esplorare e memorizzare" dell'agente; l'agente esegue da solo l'elenco `todo` della verifica
 automatica e rilancia atlas-build finché è vuoto: all'utente arriva solo il residuo); quando chiede un'attività (crea ordine, crea
 contratto), in `ops`: piano da `compose-plan`, e le mancanze (campi obbligatori senza dato, modulo JAGGAER ambiguo)
 diventano domande all'utente prima del piano; poi `APPROVO PIANO`, "sì" all'invio; se l'agente torna con pagine da esplorare, prima l'esplorazione (serve la
-frase dell'utente), poi il piano nuovo; a esito verde l'agente memorizza la procedura (`--from-plan`).
+frase dell'utente), poi il piano nuovo; a esito verde l'agente memorizza la procedura (`--from-plan`). In esplorazione
+non ci sono tetti per agente (200 azioni/30 minuti): un'esplorazione lunga si spezza in dispatch successivi (dopo circa 2
+ore il dispatch scade), ognuno riparte dal registro della sessione. Alla fine di un'esplorazione completa mostra
+all'utente l'elenco `effects` (documenti creati o modificati) e chiedigli se annullarne qualcuno con le azioni `ops`.
 
 ## 7. Casi speciali dei ruoli
 

@@ -60,7 +60,8 @@ test("click su un record di tabella ⇒ nessuna riga di click; click sulla navig
   const TABLE = `## Latest page snapshot\nuid=2_0 RootWebArea "Ordini - ACME SBX" url="${URL}"\n  uid=2_1 heading "Ordini" level="1"\n  uid=2_2 link "Nuovo ordine"\n  uid=2_3 table "Elenco"\n    uid=2_4 row\n      uid=2_5 cell "x"\n        uid=2_6 link "Bianchi Srl"\n`;
   post(ws, `${DT}take_snapshot`, { pageId: 1 }, T(TABLE));
   post(ws, `${DT}click`, { uid: "2_6", pageId: 1 }, T("Successfully clicked on the element"));
-  assert.ok(!JSON.stringify(log(ws)).includes("Bianchi"), JSON.stringify(log(ws)));
+  // esplorazione completa (05/10/2026): il click su un record si registra marcato record (mai percorso né selettore)
+  assert.equal(log(ws).find((x) => x.kind === "click" && x.target?.name === "Bianchi Srl")?.record, true, JSON.stringify(log(ws)));
   post(ws, `${DT}take_snapshot`, { pageId: 1 }, T(TABLE));
   post(ws, `${DT}click`, { uid: "2_2", pageId: 1 }, T("Successfully clicked on the element"));
   assert.equal(log(ws).at(-1).target?.name, "Nuovo ordine");

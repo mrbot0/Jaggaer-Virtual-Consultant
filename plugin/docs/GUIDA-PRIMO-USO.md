@@ -54,13 +54,18 @@ ora per installazione, login e primi aggiustamenti. Il plugin non è ancora stat
 
 ## 3. Esplorare e memorizzare
 
-1. Scrivi tu, da sola nel messaggio: `ESPLORA PREPROD`
+1. Scrivi tu, da sola nel messaggio: `ESPLORA PREPROD` (solo click), oppure `ESPLORA PREPROD COMPLETA` per imparare tutto:
+   compila con valori di prova, salva, invia, approva — mai cancellare. Con la completa verifica prima col cliente che
+   la pre-produzione non invii davvero e-mail ai fornitori o dati all'ERP.
 2. Entro 10 minuti: `/jaggaer-virtual-consultant:use mode esplorazione`
 3. Poi, per esempio: `/jaggaer-virtual-consultant:ops esplora ordini` (oppure a parole: "esplora il modulo ordini e
    memorizza pagine, pulsanti e campi del nuovo ordine").
 
-Cosa fa: clicca menu, schede, link, record e apre i moduli "Nuovo/Crea", apre le tendine per leggerne i valori. **Non
-preme mai** Salva, Invia, Conferma, Approva, Elimina…, né scrive nei campi: i guard lo negano. Ogni pagina viene
+Cosa fa: clicca menu, schede, link, record e apre i moduli "Nuovo/Crea", apre le tendine per leggerne i valori. Con
+`ESPLORA PREPROD` **non preme mai** Salva, Invia, Conferma, Approva, né scrive nei campi; con la completa sì, sempre con
+valori di prova, e a fine giro ti mostra l'elenco di ciò che ha creato o modificato (puoi chiedere di annullarlo).
+Elimina e affini restano sempre vietati. Registra struttura, valori di esempio dei campi e fino a 20 righe per tabella,
+con e-mail, codici e altri dati riconoscibili oscurati. Ogni pagina viene
 registrata da sola e, a fine giro, trasformata in mappa con `kb atlas-build` in `customers/<CODICE>/kb/scopes/<SCOPE>/selectors|fields/` (scope P2P per gli
 ordini, CON per i contratti). Per vedere cosa ha imparato: `/jaggaer-virtual-consultant:kb find --type SEL --scope P2P --customer <CODICE>`.
 
@@ -68,7 +73,8 @@ La mappa si verifica da sola sulle pagine vere: dopo ogni giro l'agente controll
 aperte, campi senza etichetta, etichette ripetute, pagine raggiunte senza percorso, iframe, pulsante di salvataggio non
 visto) e lo completa da solo, finché non manca più nulla o finisce il budget; ti riporta solo ciò che resta.
 
-Esplora un modulo alla volta (ordini, poi contratti): il budget di un agente è limitato.
+In esplorazione l'agente non ha tetti di azioni o di durata: va avanti finché c'è da imparare e finché c'è budget di
+token nella sessione (`use budget` per alzarlo; `PAUSA TUTTI` / `FERMA TUTTI` per fermarlo).
 
 ## 4. Creare un ordine o un contratto
 

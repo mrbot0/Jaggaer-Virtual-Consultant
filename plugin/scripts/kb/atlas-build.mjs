@@ -52,16 +52,42 @@ function breadcrumbModule(els, document) {
 // Revisione finale (I3, I6, I7): tutte le visite di una pagina si uniscono (opzioni e obbligo visti in una visita
 // qualsiasi); un'etichetta ripetuta nella stessa visita con lo stesso gruppo di ruolo è ambigua (nessun SEL, FLD marcato:
 // compose-plan chiede invece di scegliere); un click su un'etichetta con effetto non diventa un arco di percorso.
+// tipo di un campo di testo dagli indizi della pagina (05/10/2026): data o numero da nome, aiuto, segnaposto o valore
+const DATE_HINT = /(gg\/mm|dd\/mm|mm\/dd|\bdata\b|\bdate\b)/i;
+const DATE_VALUE = /^\d{1,2}[/.-]\d{1,2}[/.-]\d{2,4}$|^\d{4}-\d{2}-\d{2}$/;
+const NUMBER_HINT = /(quantit|importo|prezzo|amount|qty|quantity|price|valore|totale|total)/i;
+function fieldTypeOf(e) {
+  const base = FIELD_TYPE[e.role];
+  if (base !== "text" || e.multiline) return base;
+  const hints = `${e.name ?? ""} ${e.help ?? ""} ${e.placeholder ?? ""}`;
+  if (DATE_HINT.test(hints) || DATE_VALUE.test(String(e.sample ?? ""))) return "date";
+  // il numero solo dagli indizi: un valore numerico da solo (codici, CAP, numeri d'ordine) non fa di un campo un numero
+  if (NUMBER_HINT.test(hints)) return "number";
+  return base;
+}
+
 export function buildDrafts(lines, { knownModules = new Map() } = {}) {
   const pages = new Map();
   const edges = [];
+  const effects = [];
   let pendingClick = null;
+  // revisione 05/10/2026 (I5): ogni azione con effetto entra subito nell'elenco; la pagina successiva ne completa il
+  // risultato (anche di più azioni di fila); quelle in coda restano con risultato null
+  let openEffects = [];
   for (const l of lines) {
-    if (l.kind === "click") { pendingClick = l; continue; }
+    if (l.kind === "click") {
+      if (l.effect) { const e = { from: l.from_sig ?? null, to: null, action: l.target?.name ?? "", ts: l.ts ?? null, ...(l.uncertain ? { uncertain: true } : {}) }; effects.push(e); openEffects.push(e); }
+      // un click su un record (riga, cella) non diventa mai un arco di percorso: è un dato, non la navigazione (e chiude
+      // l'arco di un click precedente)
+      pendingClick = l.record ? null : l;
+      continue;
+    }
     if (l.kind !== "page" || !l.page_sig) continue;
     const name = pendingClick?.target?.name ?? "";
     if (pendingClick?.from_sig && pendingClick.from_sig !== l.page_sig && name && !EFFECT_LABEL.test(name)) edges.push({ from: pendingClick.from_sig, to: l.page_sig, name });
+    for (const e of openEffects) e.to = l.page_sig;
     pendingClick = null;
+    openEffects = [];
     const els = l.elements ?? [];
     // nome della pagina = titolo principale (h1), come il document dei suoi FLD: il percorso "Percorso: <nome>" e i campi
     // devono coincidere perché compose-plan li trovi insieme (il titolo della scheda ha spesso il nome del tenant)
@@ -105,17 +131,22 @@ export function buildDrafts(lines, { knownModules = new Map() } = {}) {
       };
       const count = new Map();
       for (const e of els) {
-        if (!e.name || (!SEL_ROLES.has(e.role) && !FIELD_TYPE[e.role])) continue;
+        if (e.record || !e.name || (!SEL_ROLES.has(e.role) && !FIELD_TYPE[e.role])) continue;
         const k = `${groupOf(e.role)}|${normLabel(e.name)}`;
         count.set(k, (count.get(k) ?? 0) + 1);
       }
       for (const [k, n] of count) if (n > 1) ambiguous.add(k);
       for (const e of els) {
-        if (!e.name) continue;
+        if (!e.name || e.record) continue;
         const k = `${groupOf(e.role)}|${normLabel(e.name)}`;
         if (FIELD_TYPE[e.role]) {
-          const f = fmap.get(k) ?? { type: "FLD", page_sig: sig, label: e.name, document: p.document, section: sectionOf(e), field_type: FIELD_TYPE[e.role], mandatory: "undocumented", options: [], ...(p.module ? { module: p.module } : {}) };
+          const f = fmap.get(k) ?? { type: "FLD", page_sig: sig, label: e.name, document: p.document, section: sectionOf(e), field_type: fieldTypeOf(e), mandatory: "undocumented", options: [], samples: [], ...(p.module ? { module: p.module } : {}) };
           if (e.required) f.mandatory = "always";
+          if (e.sample && !f.samples.includes(e.sample) && f.samples.length < 5) f.samples.push(e.sample);
+          if (e.help && !f.help) f.help = e.help;
+          if (e.placeholder && !f.placeholder) f.placeholder = e.placeholder;
+          if (e.readonly) f.readonly = true;
+          if (f.field_type === "text" && fieldTypeOf(e) !== "text") f.field_type = fieldTypeOf(e);
           for (const o of els.filter((x) => x.parent === e.i && x.role === "option" && x.name)) if (!f.options.includes(o.name)) f.options.push(o.name);
           fmap.set(k, f);
         }
@@ -123,11 +154,23 @@ export function buildDrafts(lines, { knownModules = new Map() } = {}) {
       }
     }
     for (const [k, f] of fmap) {
-      if (PERSON_LABEL.test(f.label)) { f.person_list = true; delete f.options; } else if (f.options.length < 2) delete f.options;
+      // elenchi di persone: né opzioni né valori di esempio (nomi di persone)
+      if (PERSON_LABEL.test(f.label)) { f.person_list = true; delete f.options; delete f.samples; } else if (f.options.length < 2) delete f.options;
+      if (f.samples && !f.samples.length) delete f.samples;
       if (ambiguous.has(k)) f.ambiguous = true;
       fields.push(f);
     }
     for (const [k, sel] of smap) if (!ambiguous.has(k)) sels.push(sel);
+    // tabelle (05/10/2026): un SEL per tabella con nome, con le colonne e fino a 5 righe di esempio dell'ultima visita
+    const last = p.visits.at(-1) ?? [];
+    const under = (e, t) => { let q = e.parent; for (let hop = 0; q != null && hop < 200; hop++) { if (q === t.i) return true; q = last[q]?.parent; } return false; };
+    for (const t of last.filter((e) => (e.role === "table" || e.role === "grid") && e.name)) {
+      const columns = last.filter((e) => e.role === "columnheader" && e.name && under(e, t)).map((e) => e.name);
+      const sample_rows = last.filter((e) => e.role === "row" && under(e, t))
+        .map((r) => last.filter((c) => (c.role === "cell" || c.role === "gridcell") && c.name && c.parent === r.i).map((c) => c.name))
+        .filter((r) => r.length).slice(0, 5);
+      sels.push({ type: "SEL", page_sig: sig, label: t.name, role: t.role, ...(p.module ? { module: p.module } : {}), ...(columns.length ? { columns } : {}), ...(sample_rows.length ? { sample_rows } : {}) });
+    }
   }
   const routes = [];
   if (entry) {
@@ -138,7 +181,8 @@ export function buildDrafts(lines, { knownModules = new Map() } = {}) {
         ...chain.map((c) => ({ kind: "click", name: c.name, role: (pages.get(c.from)?.visits ?? []).flat().find((el) => normLabel(el.name) === normLabel(c.name))?.role ?? "link", from_sig: c.from, to_sig: c.to }))] });
     }
   }
-  return { pages, fields, sels, routes };
+  const doc = (s) => pages.get(s)?.document ?? s;
+  return { pages, fields, sels, routes, effects: effects.map((e) => ({ page: e.from ? doc(e.from) : null, action: e.action, result: e.to ? doc(e.to) : null, result_sig: e.to, module: pages.get(e.from)?.module ?? null, ts: e.ts, ...(e.uncertain ? { uncertain: true } : {}) })) };
 }
 
 function scopeItems(ws, customer, scope, dir) {
@@ -207,7 +251,7 @@ export function atlasBuild({ ws, customer, scope, sid }) {
   }
   if (flws.length) add(writeDraft({ ws, customer, scope, draft: { items: flws } }));
   const todo = atlasTodo(d);
-  return { pages: d.pages.size, written, skipped, updated, todo, modules: moduleSummary(d, todo) };
+  return { pages: d.pages.size, written, skipped, updated, todo, modules: moduleSummary(d, todo), effects: d.effects };
 }
 
 // Verifica automatica della mappa (taratura sulle pagine vere): ciò che la mappa non sa ancora, come azioni che l'agente
@@ -278,7 +322,7 @@ export async function main(argv, env = process.env) {
     if (session?.customer && customer !== session.customer) return fail(asJson, 3, `--customer ${customer} diverso dal cliente della sessione (${session.customer})`);
     const scope = String(opts.scope ?? session?.scope ?? "").toUpperCase();
     const r = atlasBuild({ ws, customer, scope, sid: String(sid) });
-    console.log(JSON.stringify({ ok: true, customer, scope, pages: r.pages, written: r.written.length, skipped: r.skipped.length, updated: r.updated.length, modules: r.modules, todo: r.todo, ...(asJson ? { written_items: r.written, skipped_items: r.skipped } : {}) }));
+    console.log(JSON.stringify({ ok: true, customer, scope, pages: r.pages, written: r.written.length, skipped: r.skipped.length, updated: r.updated.length, modules: r.modules, effects: r.effects, todo: r.todo, ...(asJson ? { written_items: r.written, skipped_items: r.skipped } : {}) }));
     return 0;
   } catch (err) {
     if (err instanceof AtlasWriteError) return fail(asJson, err.code, err.message);

@@ -7,7 +7,7 @@
 // Percorso veloce: si cercano le frasi negli input PRIMA di leggere lo stato;
 // solo se ce n'è una si carica il contesto (workspace, audit).
 // WP09d: anche le frasi amministrative (APPROVO PURGE <ID> DA <Nome>, APPROVO PROMOZIONE <codice>, APPROVO RETENTION <ID>).
-export const PHRASES = /APPROVO\s+(PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)|ESPLORA\s+(SANDBOX|PREPROD)/i;
+export const PHRASES = /APPROVO\s+(PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)|ESPLORA\s+(SANDBOX|PREPROD)(\s+COMPLETA)?/i;
 // WP10d: le frasi di controllo dell'utente sugli agenti (PAUSA/RIPRENDI/FERMA AGENTE|TUTTI, PASSO PASSO, SBLOCCA SCOPE,
 // LIMITI DISPATCH), MAIUSCOLE come le cattura approval-capture: il testo minuscolo "passo passo" di un documento non
 // è una frase e non si nega.

@@ -34,7 +34,9 @@ di templates/workflow.md), scope, modalità, budget usato/totale, pendenze. Rego
   con effetto sono negate; `mode esplorazione` (in audit) in sandbox consente click e input, mai
   invio, salvataggio, upload o conferma di dialog; in pre-produzione **solo click** su elementi senza
   effetto (mai salva, invia, conferma, approva…). La sceglie solo l'utente: serve che abbia appena
-  scritto `ESPLORA SANDBOX` (sandbox) o `ESPLORA PREPROD` (pre-produzione) (frase registrata da
+  scritto `ESPLORA SANDBOX` (sandbox) o `ESPLORA PREPROD` (pre-produzione), oppure la variante completa
+  `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA` (compila, salva, invia, approva con valori di prova; mai
+  cancellazioni, upload o script; nessun tetto di azioni per agente) (frase registrata da
   approval-capture, vale per un solo cambio di modalità entro 10 minuti); altrimenti exit 3 — riportalo
   e attendi, non scrivere tu la frase.
 - exit 1: mostra l'errore e la sintassi corretta (`customer <ID> [--new]`, `env <id>`, `scope <ID>`,

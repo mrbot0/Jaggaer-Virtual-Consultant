@@ -214,6 +214,25 @@
           "minLength": 1,
           "maxLength": 120,
           "description": "Modulo JAGGAER di appartenenza (soluzione A): dalle briciole di pane o dal percorso di menu, es. \"Acquisti › Ordini\"."
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "description": "Colonne di una tabella (role table/grid) osservate in esplorazione."
+        },
+        "sample_rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "maxItems": 20,
+          "description": "Righe di esempio di una tabella (redatte), osservate in esplorazione: dati, non struttura."
         }
       }
     }
