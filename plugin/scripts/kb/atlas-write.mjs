@@ -37,7 +37,7 @@ import { isMain } from "../lib/is-main.mjs";
 export const AMBIGUOUS_NOTE = "ambiguo: etichetta ripetuta nella pagina";
 export class AtlasWriteError extends Error { constructor(code, m) { super(m); this.code = code; } }
 const E1 = (m) => new AtlasWriteError(1, m);
-const ROLES = new Set(["button", "link", "menuitem", "tab", "textbox", "combobox", "listbox", "option", "checkbox", "radio", "searchbox", "search_box", "row", "cell", "heading", "img", "switch", "treeitem", "spinbutton", "dialog"]);
+const ROLES = new Set(["button", "link", "menuitem", "tab", "textbox", "combobox", "listbox", "option", "checkbox", "radio", "searchbox", "search_box", "row", "cell", "heading", "img", "switch", "treeitem", "spinbutton", "dialog", "table", "grid"]);
 const FIELD_TYPES = new Set(["text", "number", "date", "lookup", "list", "flag", "file", "table"]);
 const MANDATORY = new Set(["always", "conditional", "never", "undocumented"]);
 const today = () => new Date().toISOString().slice(0, 10);
@@ -73,6 +73,8 @@ function buildSel(it, draft) {
     id: code, type: "SEL", title: clip(`Selettore ${label}`, 140), summary: clip(`${role} "${label}" osservato in esplorazione${draft.page?.title ? ` nella pagina ${draft.page.title}` : ""}.`, 400),
     concept: clip(it.concept ?? label, 120), label, role, effect, strategies, stability: it.stability ?? "medium", ...(it.module ? { module: clip(red(String(it.module)), 120) } : {}),
     ...(draft.page?.signature ? { page: String(draft.page.signature) } : {}), ...(it.field ? { field: String(it.field) } : {}),
+    ...(Array.isArray(it.columns) && it.columns.length ? { columns: it.columns.map((c) => clip(red(String(c)), 80)).filter(Boolean).slice(0, 100) } : {}),
+    ...(Array.isArray(it.sample_rows) && it.sample_rows.length ? { sample_rows: it.sample_rows.slice(0, 20).map((r) => (Array.isArray(r) ? r : [r]).map((c) => clip(red(String(c)), 80))) } : {}),
     facets: facets("comportamento-ui"), sources: sourcesOf(draft),
   });
 }
@@ -86,12 +88,17 @@ function buildFld(it, draft) {
   const document = clip(it.document ?? draft.page?.title ?? "", 80);
   if (!document) throw E1(`FLD "${label}": manca document (il documento JAGGAER: ordine, contratto, richiesta…)`);
   const options = Array.isArray(it.options) ? it.options.map((o) => clip(red(String(o)), 80)).filter(Boolean).slice(0, 100) : [];
+  // registro più ricco (05/10/2026): aiuto, segnaposto, sola lettura e valori di esempio (redatti) nelle note del campo;
+  // "valori osservati" (le opzioni) resta l'ultimo segmento (enrichField lo aggiorna)
+  const samples = Array.isArray(it.samples) ? [...new Set(it.samples.map((v) => clip(red(String(v)), 80)).filter(Boolean))].slice(0, 5) : [];
+  const extra = [it.help ? `aiuto: ${clip(red(String(it.help)), 200)}` : null, it.placeholder ? `segnaposto: ${clip(red(String(it.placeholder)), 120)}` : null,
+    it.readonly ? "sola lettura" : null, samples.length ? `valori di esempio: ${samples.join(" · ")}` : null].filter(Boolean);
   return (code) => ({
     id: code, type: "FLD", title: clip(`Campo ${label} (${document})`, 140), summary: clip(`Campo ${ft} "${label}" del documento ${document}, osservato in esplorazione.`, 400),
     document, label: { it: label }, section: clip(it.section ?? "principale", 80), field_type: ft, ...(it.module ? { module: clip(red(String(it.module)), 120) } : {}),
     ...(it.technical_name ? { technical_name: String(it.technical_name) } : {}),
     mandatory: { kind: it.mandatory ?? "undocumented" },
-    ...((it.ambiguous || options.length) ? { notes: [it.ambiguous ? AMBIGUOUS_NOTE : null, options.length ? `valori osservati: ${options.join(" · ")}` : null].filter(Boolean).join(" · ") } : {}),
+    ...((it.ambiguous || options.length || extra.length) ? { notes: [it.ambiguous ? AMBIGUOUS_NOTE : null, ...extra, options.length ? `valori osservati: ${options.join(" · ")}` : null].filter(Boolean).join(" · ") } : {}),
     facets: facets("struttura-dati"), sources: sourcesOf(draft),
   });
 }

@@ -58,6 +58,9 @@ export const EXPLORE_PHRASE = "ESPLORA SANDBOX";
 // (config-scope, noPlan). Ogni frase vale solo per il suo tipo di ambiente.
 export const EXPLORE_PREPROD_PHRASE = "ESPLORA PREPROD";
 export const EXPLORE_PHRASES = Object.freeze({ sandbox: EXPLORE_PHRASE, preprod: EXPLORE_PREPROD_PHRASE });
+// Esplorazione completa (richiesta dell'utente, 05/10/2026): clicca tutto, compila con valori di prova, salva, invia, approva,
+// conferma i dialoghi — mai Elimina, upload o script (config-scope). Frase distinta, per tipo di ambiente.
+export const EXPLORE_FULL_SUFFIX = " COMPLETA";
 export const EXPLORE_WINDOW_MS = 10 * 60000;
 const ATTEMPT = /^(ok|okay|va bene|vabbene|vabene|approvo|approvato|approvata|confermo|confermato|procedi|autorizzo|d'accordo|certo|sì|si|yes)(?=$|[\s,.;:!?])/iu;
 const normSpaces = (s) => s.replace(/\s+/gu, " ").trim();
@@ -80,12 +83,14 @@ export function parseApprovalPrompt(prompt) {
   if (RE_YES.test(bare)) return { kind: "yes" };
   if (bare === EXPLORE_PHRASE) return { kind: "explore", env_type: "sandbox" };
   if (bare === EXPLORE_PREPROD_PHRASE) return { kind: "explore", env_type: "preprod" };
+  if (bare === EXPLORE_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "sandbox", full: true };
+  if (bare === EXPLORE_PREPROD_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "preprod", full: true };
   if (/\bESPLORA\b/iu.test(s)) return { kind: "attempt" };
   if (/APPROV/iu.test(s) || (ATTEMPT.test(s) && s.length <= 30)) return { kind: "attempt" };
   return null;
 }
 
-export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : r.kind === "explore" ? (EXPLORE_PHRASES[r.env_type] ?? EXPLORE_PHRASE)
+export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : r.kind === "explore" ? (EXPLORE_PHRASES[r.env_type] ?? EXPLORE_PHRASE) + (r.full ? EXPLORE_FULL_SUFFIX : "")
   : r.kind === "purge" ? `APPROVO PURGE ${r.target} DA <Nome Cognome>` : r.kind === "promote" ? `APPROVO PROMOZIONE ${r.target}` : r.kind === "retention" ? `APPROVO RETENTION ${r.target}` : "");
 
 // ---- approvazioni amministrative (WP09d: purge, promozione, retention) ----
@@ -206,8 +211,10 @@ export function consumeExplore(file, envId, { now = Date.now(), date = new Date(
     const cur = readApprovals(file);
     if (!cur.ok) return null;
     const used = new Set(cur.records.filter((r) => r.kind === "consume").map((r) => r.ref));
-    const tok = cur.records.findLast((r) => r.kind === "explore" && r.env === envId && (r.env_type ?? "sandbox") === envType && !used.has(r.hash) && now - Date.parse(r.ts) <= EXPLORE_WINDOW_MS && now >= Date.parse(r.ts) - 5000);
-    if (!tok) return null;
+    // revisione 05/10/2026 (I3): vale solo l'ULTIMA frase di esplorazione detta per questo ambiente — dopo
+    // "… COMPLETA" seguita dalla frase semplice, la completa non si recupera più
+    const tok = cur.records.findLast((r) => r.kind === "explore" && r.env === envId);
+    if (!tok || (tok.env_type ?? "sandbox") !== envType || used.has(tok.hash) || !(now - Date.parse(tok.ts) <= EXPLORE_WINDOW_MS && now >= Date.parse(tok.ts) - 5000)) return null;
     appendLocked(file, { kind: "consume", ref: tok.hash, consumed_kind: "explore" }, date);
     return tok;
   });
@@ -391,12 +398,12 @@ export async function capture(input, env = process.env) {
   let removeMatch;
   if (p.kind === "explore") {
     // K5 giro 2 (N2): la modalità esplorazione la sceglie l'utente, solo in sandbox.
-    const want = EXPLORE_PHRASES[p.env_type] ?? EXPLORE_PHRASE;
+    const want = (EXPLORE_PHRASES[p.env_type] ?? EXPLORE_PHRASE) + (p.full ? EXPLORE_FULL_SUFFIX : "");
     if (!s.env) return reject([want], "nessun ambiente dichiarato: /use env <id> prima");
     if (!Object.hasOwn(EXPLORE_PHRASES, s.env.type)) return reject([], `l'esplorazione senza piano vale solo in sandbox o in pre-produzione (ambiente ${s.env.id}: ${s.env.type})`);
     if (s.env.type !== p.env_type) return reject([EXPLORE_PHRASES[s.env.type]], `la frase ${want} non vale per l'ambiente ${s.env.id} (${s.env.type})`);
     if (!reg.ok) return reject([want], `registro delle approvazioni corrotto (${reg.reason})`);
-    rec = { kind: "explore", env: s.env.id, env_type: s.env.type };
+    rec = { kind: "explore", env: s.env.id, env_type: s.env.type, ...(p.full ? { full: true } : {}) };
     removeMatch = () => false;
   } else if (GRANT_KINDS.includes(p.kind)) {
     // WP09d: approvazioni amministrative, fuori dai piani. Il record nasce solo qui, dal prompt dell'utente.
@@ -461,7 +468,7 @@ export async function capture(input, env = process.env) {
   rec.session = st.sid;
   // Prima il registro (la fonte dei guard); poi lo specchio e l'audit.
   const ev = appendApproval(file, rec);
-  const label = ev.kind === "explore" ? `esplorazione ${ev.env} (vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
+  const label = ev.kind === "explore" ? `esplorazione${ev.full ? " completa" : ""} ${ev.env} (vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
     : GRANT_KINDS.includes(ev.kind) ? `${ev.kind} ${ev.target}${ev.approver_declared ? ` (${ev.approver_declared})` : ""} — token ${ev.hash.slice(0, 16)} (monouso, valido ${Math.round(GRANT_WINDOW_MS[ev.kind] / 60000)} minuti)`
     : `${ev.kind} ${ev.plan}${ev.step ? ` passo ${ev.step}` : ""}${ev.approver_declared ? ` (${ev.approver_declared})` : ""}`;
   let warn = "";

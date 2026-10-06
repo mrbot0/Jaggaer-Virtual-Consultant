@@ -244,8 +244,8 @@ export async function decide(input, env = process.env) {
   if (t.paused) return denyA(st, input, `sub-agente ${label} in pausa per volontà dell'utente (PAUSA ${t.paused.target === ALL ? "TUTTI" : `AGENTE ${t.paused.target}`} alle ${t.paused.ts})${amb}: nessuno strumento finché l'utente non scrive ${t.paused.target === ALL ? "RIPRENDI TUTTI" : `RIPRENDI AGENTE ${t.paused.target}`}; se non puoi attendere, restituisci il rapporto needs-input con l'output parziale`, { task: a.task_id });
   // limiti per dispatch
   const inv = Number.isInteger(a.inv_seq) ? readJsonl(invocationsFile(st.ws, st.customer, st.sid))[a.inv_seq] ?? null : null;
-  const lim = state.limits;
-  const minutes = Math.min(lim.minutes, typeof inv?.minutes === "number" && inv.minutes > 0 ? inv.minutes : Infinity);
+  const lim = effectiveLimits(state.limits, st.session, inv);
+  const minutes = lim.minutes;
   const start = Date.parse(inv?.ts ?? a.first_ts);
   if ((a.calls ?? 0) >= lim.calls) return denyA(st, input, `limite del dispatch superato: ${lim.calls} chiamate di strumento (${a.calls} eseguite) — restituisci subito il rapporto con status partial e l'output parziale; il limite lo cambia solo l'utente (LIMITI DISPATCH <chiamate> <minuti>)`, { task: a.task_id });
   if (Number.isFinite(start) && now - start > minutes * 60000) return denyA(st, input, `limite del dispatch superato: ${minutes} minuti dal dispatch (${Math.round((now - start) / 60000)} trascorsi) — restituisci subito il rapporto con status partial e l'output parziale; il limite lo cambia solo l'utente (LIMITI DISPATCH <chiamate> <minuti>)`, { task: a.task_id });
@@ -256,4 +256,13 @@ export async function decide(input, env = process.env) {
   }
   countCall(f, now);
   return null;
+}
+
+// Limiti di un dispatch (richiesta dell'utente, 05/10/2026): in modalità esplorazione nessun tetto predefinito di chiamate
+// e durata (si impara il più possibile; resta il budget di token della sessione, PAUSA/FERMA dell'utente); i limiti
+// dichiarati dall'utente con LIMITI DISPATCH valgono sempre; fuori esplorazione i predefiniti e i minuti dell'header.
+export function effectiveLimits(limits, session, inv) {
+  if (session?.mode === "esplorazione" && !limits?.set_at) return { calls: Infinity, minutes: Infinity };
+  const headerMin = typeof inv?.minutes === "number" && inv.minutes > 0 ? inv.minutes : Infinity;
+  return { calls: limits.calls, minutes: Math.min(limits.minutes, headerMin) };
 }

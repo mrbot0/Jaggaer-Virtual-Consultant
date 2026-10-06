@@ -70,7 +70,8 @@ test("I3: 'Descrizione' in Testata e in Righe ⇒ compose-plan restituisce ambig
 test("I4/I5: rowheader dentro le righe escluso; url_path redatto", () => {
   const snap = `uid=1_0 RootWebArea "X" url="https://h/p2p/users/mario.rossi@acme.it/orders"\n  uid=1_1 table "T"\n    uid=1_2 row\n      uid=1_3 columnheader "Ordine"\n    uid=1_4 row\n      uid=1_5 rowheader "PO-123 Giuseppe Verdi"\n`;
   const r = pageRecord(parseSnapshot(snap), { pageSig: "x", profile: "strict", env: {} });
-  assert.ok(!JSON.stringify(r).includes("Giuseppe"), JSON.stringify(r));
+  // esplorazione completa (05/10/2026): l'intestazione di riga di un record si registra marcata record
+  assert.equal(r.elements.find((e) => /Giuseppe/.test(e.name))?.record, true, JSON.stringify(r));
   assert.ok(r.elements.some((e) => e.name === "Ordine"));
   assert.ok(!r.url_path.includes("mario.rossi"), r.url_path);
 });

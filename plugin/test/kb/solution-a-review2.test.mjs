@@ -28,7 +28,9 @@ test("R2-1: tabella mostrata dalla risposta di un click ⇒ il click successivo 
   post(`${DT}click`, { uid: "1_2", pageId: 1 }, `Successfully clicked on the element\n## Latest page snapshot\nuid=2_0 RootWebArea "Ordini" url="${URL}"\n  uid=2_1 heading "Ordini" level="1"\n  uid=2_3 table "Elenco"\n    uid=2_4 row\n      uid=2_5 cell "x"\n        uid=2_6 link "Mario Rossi"\n`);
   post(`${DT}click`, { uid: "2_6", pageId: 1 }, "Successfully clicked on the element");
   const f = join(ws, "customers/ACME/.sessions/sess-1/atlas/pages.jsonl");
-  assert.ok(!existsSync(f) || !readFileSync(f, "utf8").includes("Mario Rossi"), existsSync(f) ? readFileSync(f, "utf8") : "");
+  // esplorazione completa (05/10/2026): il click sulla riga si registra marcato record (snapshot di risposta a un click)
+  const clicks = readFileSync(f, "utf8").trim().split(/\r?\n/).map((l) => JSON.parse(l)).filter((x) => x.kind === "click" && x.target?.name === "Mario Rossi");
+  assert.ok(clicks.length && clicks.every((c) => c.record === true), readFileSync(f, "utf8"));
 });
 
 // Important 2 — l'elenco "da fare" deve potersi svuotare: conteggi dall'ultima visita; voci solo da riportare marcate

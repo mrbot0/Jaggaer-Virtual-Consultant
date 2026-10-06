@@ -92,7 +92,7 @@ Le frasi che il plugin riconosce si scrivono **come unico testo del messaggio**;
 
 - Approvazioni: `sì` (un'azione R2 in attesa) · `APPROVO PIANO <PLAN>` · `APPROVO PROVA <PLAN>` ·
   `APPROVO PASSO <n> <PLAN>` (in produzione con `DA <Nome Cognome>`, la prova da una persona diversa) ·
-  `ESPLORA SANDBOX` · `ESPLORA PREPROD` · `APPROVO PROMOZIONE <codice>` · `APPROVO RETENTION <C>` ·
+  `ESPLORA SANDBOX` · `ESPLORA PREPROD` · `ESPLORA SANDBOX COMPLETA` · `ESPLORA PREPROD COMPLETA` · `APPROVO PROMOZIONE <codice>` · `APPROVO RETENTION <C>` ·
   `APPROVO PURGE <ID> DA <Nome Cognome>` (due persone diverse).
 - Controllo degli agenti: `PAUSA AGENTE <task_id>` · `PAUSA TUTTI` · `RIPRENDI AGENTE <task_id>` · `RIPRENDI TUTTI` ·
   `FERMA AGENTE <task_id>` · `FERMA TUTTI` (solo gli agenti in corso in quel momento) · `PASSO PASSO <task_id|TUTTI>`

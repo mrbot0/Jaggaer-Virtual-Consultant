@@ -23,53 +23,105 @@ function urlPath(url, profile, env) {
   try { return clean(redactText(new URL(url).pathname, { profile, env }).text) || "/"; } catch { return null; }
 }
 
+const FIELD_ROLES = new Set(["textbox", "searchbox", "spinbutton", "combobox", "listbox", "textarea", "checkbox", "radio", "switch"]);
+const ROWS_PER_TABLE = 20;
+const clip = (s, n) => String(s ?? "").slice(0, n);
+// revisione 05/10/2026 (I4): nessun valore di esempio per campi segreti né per valori che sembrano chiavi o token
+const SECRET_HINT = /password|passwd|secret|segret|token|chiave|api.?key|\bpin\b|\botp\b|credenz|pwd/i;
+const TOKEN_LIKE = (v) => /^\S{16,}$/.test(v) && /[a-z]/i.test(v) && /\d/.test(v);
+const sampleOk = (e) => !SECRET_HINT.test(`${e.name ?? ""} ${e.description ?? ""} ${e.placeholder ?? ""}`) && !TOKEN_LIKE(String(e.value).trim());
+
+// Registro più ricco (richiesta dell'utente, 05/10/2026): prima la STRUTTURA (ruoli, nomi, obblighi, aiuto, segnaposto,
+// sola lettura, non valido, testo lungo, destinazione dei link, valori di esempio dei campi), poi — nello spazio che
+// resta fino a 300 elementi — le RIGHE delle tabelle (al più 20 per tabella), marcate record: dati, non struttura.
+// Tutti i testi passano dalla redazione del profilo dell'ambiente (e-mail, codici fiscali, IBAN, telefoni, codici cliente…).
 export function pageRecord(page, { pageSig, profile = "strict", env = process.env, ts = new Date().toISOString() } = {}) {
   const els = Array.isArray(page?.elements) ? page.elements : [];
-  // albero dei nodi del parser (page.nodes: id, parent, role, ref); senza albero nessun antenato è noto
   const nodes = Array.isArray(page?.nodes) ? page.nodes : [];
   const byId = new Map(nodes.map((n) => [String(n.id), n]));
   const idOfRef = new Map(nodes.filter((n) => n.ref != null).map((n) => [String(n.ref), String(n.id)]));
   const nodeOf = (e) => (e.ref != null && idOfRef.has(String(e.ref)) ? byId.get(idOfRef.get(String(e.ref))) : null);
   const keyOf = (e) => String(nodeOf(e)?.id ?? e.ref);
-  const inRecord = (e) => {
+  const red = (t) => clean(redactText(clean(t), { profile, env }).text);
+  const ancestor = (e, roles) => {
     let p = nodeOf(e)?.parent ?? null;
     for (let hop = 0; p != null && hop < 200; hop++) {
       const a = byId.get(String(p));
       if (!a) break;
-      if (RECORD_ROLES.has(a.role)) return true;
+      if (roles.has(a.role)) return a;
       p = a.parent;
     }
-    return false;
+    return null;
   };
+  const inRecord = (e) => !!ancestor(e, RECORD_ROLES);
   const kept = [];
   const index = new Map();
-  for (const e of els) {
-    if (kept.length >= MAX_ELEMENTS) break;
-    if (!STRUCT_ROLES.has(e.role)) continue;
-    if (!HEADER_ROLES.has(e.role) && inRecord(e)) continue;
-    const name = clean(redactText(clean(e.name), { profile, env }).text);
+  const parentOf = (e) => {
     let p = nodeOf(e)?.parent ?? null;
-    let parent = null;
     for (let hop = 0; p != null && hop < 200; hop++) {
-      if (index.has(String(p))) { parent = index.get(String(p)); break; }
+      if (index.has(String(p))) return index.get(String(p));
       p = byId.get(String(p))?.parent ?? null;
     }
-    const rec = { i: kept.length, parent, role: e.role, name };
+    return null;
+  };
+  const push = (e, extra = {}) => {
+    const rec = { i: kept.length, parent: parentOf(e), role: e.role, name: red(e.name), ...extra };
     if (e.required) rec.required = true;
     if (e.disabled) rec.disabled = true;
     if (e.checked !== undefined) rec.checked = e.checked;
     if (e.level !== undefined) rec.level = e.level;
+    if (e.description) rec.help = clip(red(e.description), 200);
+    if (e.placeholder) rec.placeholder = clip(red(e.placeholder), 120);
+    if (e.readonly) rec.readonly = true;
+    if (e.invalid) rec.invalid = true;
+    if (e.multiline) rec.multiline = true;
+    // parametri di matrice (";jsessionid=…") fuori dal percorso: sono di sessione
+    if (e.url) { try { rec.href = red(new URL(e.url).pathname.replace(/;[^/]*/g, "")); } catch { /* indirizzo non valido */ } }
+    if (FIELD_ROLES.has(e.role) && e.value !== undefined && String(e.value).trim() && sampleOk(e)) rec.sample = clip(red(e.value), 80);
     index.set(keyOf(e), kept.length);
     kept.push(rec);
+  };
+  // 1. struttura
+  for (const e of els) {
+    if (kept.length >= MAX_ELEMENTS) break;
+    if (!STRUCT_ROLES.has(e.role)) continue;
+    if (!HEADER_ROLES.has(e.role) && inRecord(e)) continue;
+    push(e);
   }
-  // iframe senza contenuto nello snapshot: la pagina ha parti che il registro non vede (verifica di atlas-build)
+  // 2. righe delle tabelle (record), nello spazio che resta, al più ROWS_PER_TABLE per tabella
+  const ROW = new Set(["row"]);
+  const TABLES = new Set(["table", "grid", "treegrid"]);
+  const rowsOf = new Map();
+  const skippedRows = new Set();
+  // la riga delle intestazioni (contiene columnheader) non è un record e non conta fra le 20: le intestazioni ci sono già
+  const headerRows = new Set(els.filter((e) => HEADER_ROLES.has(e.role)).map((e) => ancestor(e, ROW)?.id).filter((x) => x != null).map(String));
+  for (const e of els) {
+    if (kept.length >= MAX_ELEMENTS) break;
+    if (HEADER_ROLES.has(e.role)) continue;
+    const isRow = e.role === "row";
+    if (!isRow && !inRecord(e)) continue;
+    const row = isRow ? nodeOf(e) : ancestor(e, ROW);
+    if (row && (skippedRows.has(String(row.id)) || headerRows.has(String(row.id)))) continue;
+    if (isRow) {
+      const k = String(ancestor(e, TABLES)?.id ?? "");
+      const n = (rowsOf.get(k) ?? 0) + 1;
+      rowsOf.set(k, n);
+      if (n > ROWS_PER_TABLE) { skippedRows.add(String(nodeOf(e)?.id ?? e.ref)); continue; }
+      push(e, { record: true });
+      continue;
+    }
+    if (!e.name || !String(e.name).trim()) continue;
+    push(e, { record: true });
+  }
   const hasChild = new Set(nodes.map((n) => String(n.parent)));
   const iframes = nodes.filter((n) => /^iframe$/i.test(String(n.role)) && !hasChild.has(String(n.id))).length;
-  return { kind: "page", ts, url_path: urlPath(page?.url, profile, env), ...(iframes ? { iframes } : {}), page_sig: pageSig ?? null, title: page?.title ? clean(redactText(page.title, { profile, env }).text) : null, elements: kept };
+  const messages = (page?.messages ?? []).map((m) => clip(red(m.text), 200)).filter(Boolean).slice(0, 20);
+  return { kind: "page", ts, url_path: urlPath(page?.url, profile, env), ...(iframes ? { iframes } : {}), page_sig: pageSig ?? null,
+    title: page?.title ? red(page.title) : null, elements: kept, ...(messages.length ? { messages } : {}) };
 }
 
-export function clickRecord({ fromSig, name, ts = new Date().toISOString() }) {
-  return { kind: "click", ts, from_sig: fromSig ?? null, target: { name: clean(name) } };
+export function clickRecord({ fromSig, name, ts = new Date().toISOString(), effect = false, record = false, uncertain = false }) {
+  return { kind: "click", ts, from_sig: fromSig ?? null, target: { name: clean(name) }, ...(effect ? { effect: true } : {}), ...(record ? { record: true } : {}), ...(uncertain ? { uncertain: true } : {}) };
 }
 
 export function appendAtlasLog(file, rec, { maxBytes = ATLAS_LOG_MAX_BYTES } = {}) {

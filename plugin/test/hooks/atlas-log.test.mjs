@@ -34,7 +34,9 @@ test("pageRecord: solo struttura — niente valori, niente righe di tabella salv
   const names = r.elements.map((e) => e.name);
   assert.ok(names.includes("Ordini") && names.includes("Salva bozza") && names.includes("Fornitore"), JSON.stringify(names));
   assert.ok(names.includes("EUR") && names.includes("USD"), "opzioni della tendina");
-  assert.ok(!names.some((n) => /Arredi|PO-45/.test(n)), "record della tabella esclusi");
+  // esplorazione completa (05/10/2026, scelta dell'utente): le righe si registrano, marcate record (dati, non struttura)
+  assert.ok(r.elements.filter((e) => /Arredi|PO-45/.test(e.name)).every((e) => e.record === true), "record della tabella marcati");
+  assert.ok(r.elements.filter((e) => ["Ordini", "Salva bozza", "Fornitore"].includes(e.name)).every((e) => !e.record), "struttura non marcata");
   assert.ok(!JSON.stringify(r).includes("mario.rossi"), "nessun valore");
   assert.ok(r.elements.every((e) => !("value" in e)));
   assert.equal(r.elements.find((e) => e.name === "Descrizione").required, true);

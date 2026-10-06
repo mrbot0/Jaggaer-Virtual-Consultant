@@ -45,13 +45,22 @@ export const OPEN_TTL_MS = 2 * 60 * 60 * 1000;
 // cliente (#8). TTL = max(2 h, limite). Lettura semplice di control.jsonl (l'ultimo record limits confermato): un errore
 // di lettura lascia le 2 h; un TTL più lungo è la direzione prudente (più sotto-compiti restano aperti).
 export const ttlFor = (minutes) => Math.max(OPEN_TTL_MS, Number.isFinite(Number(minutes)) && Number(minutes) > 0 ? Number(minutes) * 60000 : 0);
+// Esplorazione completa, revisione 05/10/2026 (I2): in esplorazione senza limiti dichiarati dall'utente non ci sono tetti
+// di durata per agente (guards/control.mjs effectiveLimits): il TTL sale a EXPLORE_TTL_MS, così un'esplorazione lunga
+// non "scade" dopo 2 ore riaprendo il cambio di scope o di cliente.
+export const EXPLORE_TTL_MS = 12 * 60 * 60 * 1000;
+function exploreTtl(sessionDirPath) {
+  let mode = null;
+  try { mode = JSON.parse(readFileSync(join(sessionDirPath, "session.json"), "utf8"))?.mode ?? null; } catch { /* illeggibile: 2 h */ }
+  return mode === "esplorazione" ? EXPLORE_TTL_MS : OPEN_TTL_MS;
+}
 export function sessionTtlMs(sessionDirPath) {
   let text;
-  try { text = readFileSync(join(sessionDirPath, "control.jsonl"), "utf8"); } catch { return OPEN_TTL_MS; }
+  try { text = readFileSync(join(sessionDirPath, "control.jsonl"), "utf8"); } catch { return exploreTtl(sessionDirPath); }
   const recs = text.split("\n").filter((l) => l.trim()).flatMap((l) => { try { return [JSON.parse(l)]; } catch { return []; } });
   const conf = new Set(recs.filter((r) => r?.kind === "confirm").map((r) => r.ref));
   const lim = recs.filter((r) => r?.kind === "limits" && conf.has(r.hash)).at(-1);
-  return ttlFor(lim?.minutes);
+  return lim ? ttlFor(lim.minutes) : exploreTtl(sessionDirPath);
 }
 
 const expired = (inv, now, ttlMs) => {

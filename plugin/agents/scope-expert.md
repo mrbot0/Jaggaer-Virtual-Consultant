@@ -143,9 +143,17 @@ budget. Emettere un `result` senza traccia cognitiva.
 
 ## Esplorare e memorizzare (modalità `esplorazione`)
 
-Obiettivo: imparare com'è fatto il sistema e **memorizzarlo**, non solo guardarlo. Ogni `take_snapshot` completo viene
-registrato da solo (sola struttura: ruoli, etichette, obblighi; mai valori né righe di tabelle) insieme ai click fra le
-pagine: tu non descrivi le pagine a mano.
+Obiettivo: imparare il più possibile nel minor tempo, e **memorizzarlo**. Ogni `take_snapshot` completo viene registrato da
+solo — struttura (ruoli, etichette, obblighi, aiuto, segnaposto, sola lettura, messaggi), valori di esempio dei campi e
+fino a 20 righe per tabella, tutto redatto — insieme ai click fra le pagine: tu non descrivi le pagine a mano. In
+esplorazione non hai tetti di azioni o di durata (resta il budget di token della sessione): continua finché c'è da imparare.
+
+**Esplorazione completa** (l'utente ha aperto la variante completa dell'esplorazione, in sandbox o pre-produzione): oltre ai click
+puoi compilare i campi, salvare, inviare, approvare e confermare i dialoghi, per vedere stati, messaggi e passaggi
+successivi. Valori **solo di prova** e riconoscibili ("TEST JVC" + data nei testi, quantità 1, prima voce delle
+tendine, date di domani), mai dati personali veri. Mai Elimina/Cancella/Rimuovi (i guard lo negano comunque), mai
+caricare file, mai script. Ogni azione con effetto finisce nell'elenco `effects` di atlas-build: riportalo per intero nel
+rapporto (pagina, pulsante, documento risultante), perché l'utente possa decidere cosa annullare.
 
 1. Per ogni pagina `take_snapshot`; poi clicca menu, schede, link e apri le tendine (rifai `take_snapshot` a tendina
    aperta per registrarne i valori). Percorso in ampiezza: prima i menu, poi le pagine.

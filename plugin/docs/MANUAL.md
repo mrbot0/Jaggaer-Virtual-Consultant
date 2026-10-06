@@ -251,7 +251,7 @@ al nome del file, nessun codice rivendicato da due file), `kb/lifecycle.mjs --he
 | `customer <ID> [--new]` | Attiva un cliente (crea la struttura con `--new`) | Rifiuta il cambio se il cliente precedente ha compensazioni pendenti o sotto-compiti aperti |
 | `env <sandbox\|preprod\|prod>` | Dichiara l'ambiente da `environments.yaml`; poi il plugin ne verifica l'impronta (env-check) | Obbligatorio prima di qualunque azione sul browser; cambiarlo azzera la verifica |
 | `scope <ID>` | Cella attiva (CAT SRC VEN CON P2P INV QLT ANL ADM XSC) | Ricalcola i percorsi ammessi |
-| `mode <nrt\|config\|ops\|diag\|esplorazione>` | Modalità | L'intento la deduce; il comando la forza. `esplorazione`: in sandbox click e input senza piano (mai invio o salvataggio), dopo la frase `ESPLORA SANDBOX`; in pre-produzione solo click su elementi senza effetto, dopo `ESPLORA PREPROD` |
+| `mode <nrt\|config\|ops\|diag\|esplorazione>` | Modalità | L'intento la deduce; il comando la forza. `esplorazione`: in sandbox click e input senza piano (mai invio o salvataggio), dopo la frase `ESPLORA SANDBOX`; in pre-produzione solo click su elementi senza effetto, dopo `ESPLORA PREPROD`; completa (compila, salva, invia, approva con valori di prova; mai cancellazioni, upload, script; nessun tetto di azioni per agente) dopo `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA` |
 | `budget <n>` | Budget di sessione in token (es. `200k`) | Registrato in audit; l'unico modo per alzarlo, solo su richiesta dell'utente |
 | `show` | Stato corrente della sessione | Sola lettura |
 | `close-stale` | Chiude a mano i sotto-compiti rimasti aperti (dispatch mai chiusi) | Solo su richiesta; senza, scadono da soli dopo 2 ore, o dopo il limite di dispatch confermato (`LIMITI DISPATCH`) se è più lungo |
@@ -371,6 +371,7 @@ queste frasi in ogni input di strumento. Una frase diversa, un piano sbagliato o
 | **Produzione, qualunque configurazione** | le tre frasi, entro la finestra (60 minuti dalla A1), con `DA <Nome Cognome>` in coda: la A2 (`APPROVO PROVA <PLAN> DA <Nome Cognome>`) da una persona diversa dalla A1 |
 | Esplorazione senza piano (sandbox) | `ESPLORA SANDBOX`, poi `/jaggaer-virtual-consultant:use mode esplorazione` entro 10 minuti |
 | Esplorazione senza piano (pre-produzione: solo click senza effetto; memoria con `kb atlas-write`, [guida](GUIDA-PRIMO-USO.md)) | `ESPLORA PREPROD`, poi `/jaggaer-virtual-consultant:use mode esplorazione` entro 10 minuti |
+| Esplorazione completa (sandbox o pre-produzione: compila, salva, invia, approva con valori di prova; mai cancellazioni; elenco delle azioni con effetto a fine giro) | `ESPLORA SANDBOX COMPLETA` · `ESPLORA PREPROD COMPLETA`, poi `/jaggaer-virtual-consultant:use mode esplorazione` entro 10 minuti |
 | Promozione di un item a S (`learn promote`) | `APPROVO PROMOZIONE <codice>` (valida 24 ore, monouso) |
 | Retention (`admin retention --apply`) | `APPROVO RETENTION <C>` (valida 60 minuti, monouso) |
 | Cancellazione di un cliente (`admin customer purge`) | `APPROVO PURGE <ID> DA <Nome Cognome>`, due volte, da due persone diverse, nella sessione di quel cliente (60 minuti) |
@@ -378,7 +379,7 @@ queste frasi in ogni input di strumento. Una frase diversa, un piano sbagliato o
 | Compensare a fine sessione | `compensa tutto` · `lascia <entità>` (risposta alla domanda del manager sulle compensazioni pendenti) |
 
 Le frasi di approvazione riconosciute sono quindi: `APPROVO PIANO`, `APPROVO PROVA`, `APPROVO PASSO`, `APPROVO
-PROMOZIONE`, `APPROVO RETENTION`, `APPROVO PURGE` (con `DA <Nome Cognome>` dove serve), `sì`, `ESPLORA SANDBOX`, `ESPLORA PREPROD`.
+PROMOZIONE`, `APPROVO RETENTION`, `APPROVO PURGE` (con `DA <Nome Cognome>` dove serve), `sì`, `ESPLORA SANDBOX`, `ESPLORA PREPROD`, `ESPLORA SANDBOX COMPLETA`, `ESPLORA PREPROD COMPLETA`.
 Per le approvazioni amministrative l'hook risponde con un **token** (le prime 16 cifre esadecimali dell'hash del
 record): il manager lo usa nella riga di comando; non va copiato né inventato altrove.
 
@@ -433,7 +434,8 @@ valgono subito; quelle che la **riducono** valgono dopo la conferma nel transcri
 - `SBLOCCA SCOPE <S>` — azzera la vigilanza dello scope: dopo tre compiti consecutivi fermati per sorprese lo scope è
   bloccato ("il modello di questo scope va rifatto prima di continuare"); si sblocca solo così, dopo il giro di
   osservazioni proposto. Vale dopo la conferma.
-- `LIMITI DISPATCH <chiamate> <minuti>` — cambia i limiti per dispatch (default 200 chiamate di strumento e 30 minuti;
+- `LIMITI DISPATCH <chiamate> <minuti>` — cambia i limiti per dispatch (default 200 chiamate di strumento e 30 minuti, che
+  in modalità esplorazione non si applicano: vale solo il budget di token della sessione, salvo limiti dichiarati con questa frase;
   al più 5000 e 480). Vale dopo la conferma.
 
 ### 57.6 Le skill: come ragionano il manager e gli agenti

@@ -57,7 +57,7 @@ function finish(out, nodes) {
     if (n.role === "heading" && n.name) out.headings.push({ text: n.name, level: n.level ?? null });
     if (TEXT_ROLES.has(n.role) || n.role === "RootWebArea" || n.role === "label") continue;
     const e = { role: n.role, name: n.name ?? "", ref: n.ref ?? null };
-    for (const k of ["required", "disabled", "checked", "value", "level", "box"]) if (n[k] !== undefined) e[k] = n[k];
+    for (const k of ["required", "disabled", "checked", "value", "level", "box", "description", "placeholder", "readonly", "invalid", "multiline", "url"]) if (n[k] !== undefined) e[k] = n[k];
     out.elements.push(e);
   }
   // WP07 giro 2 (I-1): i ref di TUTTI i nodi (anche testo, generic, label, RootWebArea) per i duplicati
@@ -107,6 +107,13 @@ function parseDevtools(text) {
     if ("checked" in attrs) n.checked = attrs.checked === "mixed" ? "mixed" : boolAttr(attrs.checked);
     if ("value" in attrs) n.value = attrs.value;
     if ("level" in attrs) n.level = Number(attrs.level);
+    // registro dell'esplorazione (05/10/2026): aiuto, segnaposto, sola lettura, non valido, testo lungo, destinazione dei link
+    if (attrs.description) n.description = attrs.description;
+    if (attrs.placeholder) n.placeholder = attrs.placeholder;
+    if ("readonly" in attrs) n.readonly = boolAttr(attrs.readonly);
+    if ("invalid" in attrs) n.invalid = attrs.invalid !== "false";
+    if ("multiline" in attrs) n.multiline = boolAttr(attrs.multiline);
+    if (attrs.url && role !== "RootWebArea") n.url = attrs.url;
     nodes.push(n);
     stack.push({ depth, id: uid });
   }

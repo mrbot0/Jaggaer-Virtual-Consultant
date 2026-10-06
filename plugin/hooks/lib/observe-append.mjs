@@ -25,6 +25,7 @@ import { detectErrors } from "../../scripts/chrome/errors.mjs";
 import { profileFor, redactText, freeText } from "../../scripts/chrome/redact.mjs";
 import { toYaml } from "../../scripts/lib/yaml-lite.mjs";
 import { pageRecord, clickRecord, appendAtlasLog, atlasLogFile, recordRefs, fullWarningOnce } from "./atlas-log.mjs";
+import { EFFECT_LABEL } from "./effect-labels.mjs";
 
 const SNAPSHOT_OPS = new Set(["take_snapshot", "read_page", "get_page_text", "find", "browser_snapshot", "browser_find"]);
 const SCREENSHOT_OPS = new Set(["take_screenshot", "browser_take_screenshot", "upload_image"]);
@@ -181,7 +182,9 @@ export async function buildObservation({ ws, customer, session, call, state, res
   if (page && state === "ok") {
     for (const e of page.elements ?? []) {
       if (e.ref == null || e.ref === "" || Object.keys(names).length >= 300) continue;
-      if (typeof e.name === "string" && e.name.trim()) names[String(e.ref)] = ft(e.name).slice(0, 80);
+      // revisione 05/10/2026 (C1): nome redatto ma non troncato a 40 caratteri (un "… - Elimina" in coda deve restare
+      // visibile ai guard); oltre 200 caratteri si tengono inizio e fine
+      if (typeof e.name === "string" && e.name.trim()) { const t = redactText(e.name, { profile, env }).text ?? ""; names[String(e.ref)] = t.length > 200 ? `${t.slice(0, 100)}…${t.slice(-99)}` : t; }
     }
   }
   const binds = mode === "complete" || (mode === null && call.family !== "claude-browser");
@@ -406,9 +409,14 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     let full = false;
     // prima i click (si riferiscono alla pagina precedente), poi la pagina di questa risposta; revisione finale (I4): un
     // click su un elemento dentro un record (riga, cella) della pagina precedente non si registra
-    const clicked = state === "ok" ? (call.actions ?? [call]).filter((a) => a.kind === "click" && !a.submits && Array.isArray(a.targets) && a.targets.length) : [];
-    // seconda revisione: il click si registra solo se i ref dei record sono quelli dello STESSO snapshot che ha dato il
-    // nome (last-page.json con l'OBS di prevSnap); altrimenti non si sa se il bersaglio è un record ⇒ non si registra
+    // revisione 05/10/2026 (I5): con una risposta d'errore o non riconosciuta l'azione con effetto potrebbe essere
+    // avvenuta comunque: si registra marcata uncertain (solo quelle con effetto; i click di navigazione no)
+    const ok = state === "ok";
+    const acts = call.actions ?? [call];
+    const clicked = acts.filter((a) => a.kind === "click" && !a.submits && Array.isArray(a.targets) && a.targets.length);
+    // esplorazione completa (05/10/2026): ogni click si registra; un click su un record (riga, cella) è marcato record —
+    // dato, mai percorso né selettore — e lo è anche quando non si sa (ref dei record di un altro snapshot); un click su
+    // un'etichetta con effetto, un Invio o la conferma di un dialogo sono marcati effect (elenco delle azioni con effetto)
     if (clicked.length) {
       let lp = null;
       try { lp = JSON.parse(readFileSync(lastPage, "utf8")); } catch { lp = null; }
@@ -417,8 +425,14 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       for (const a of clicked) {
         const ref = String(a.targets[0]);
         const name = prevSnap?.names?.[ref];
-        if (same && name && !rec.has(ref)) full = appendAtlasLog(file, clickRecord({ fromSig: prevSig, name, ts: doc.ts })) === "full" || full;
+        if (!name) continue;
+        const effect = EFFECT_LABEL.test(name);
+        if (!ok && !effect) continue;
+        full = appendAtlasLog(file, clickRecord({ fromSig: prevSig, name, ts: doc.ts, record: !same || rec.has(ref), effect, uncertain: !ok })) === "full" || full;
       }
+    }
+    for (const a of acts.filter((x) => x.submits)) {
+      full = appendAtlasLog(file, clickRecord({ fromSig: prevSig, name: a.kind === "dialog" ? "(conferma del dialogo)" : "(Invio)", ts: doc.ts, effect: true, uncertain: !ok })) === "full" || full;
     }
     if (state === "ok" && mode === "complete" && pageUrl && page) {
       full = appendAtlasLog(file, pageRecord(page, { pageSig: doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts })) === "full" || full;

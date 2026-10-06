@@ -88,7 +88,8 @@ export function snapshotCovers(entry, step) {
 // upload, conferma di dialog, script e strumenti non classificati mai.
 // Soluzione B (30/09/2026, richiesta dell'utente): in pre-produzione, con ESPLORA PREPROD, solo click e solo su
 // elementi dell'ultimo snapshot completo della pagina corrente il cui nome non è un'azione con effetto.
-export const EFFECT_LABEL = /\b(salva|salvare|salvataggio|memorizza|registra|invia|inviare|inoltra|trasmetti|conferma|confermare|approva|approvare|autorizza|rifiuta|respingi|pubblica|pubblicare|firma|assegna|aggiudica|emetti|chiudi|annulla|revoca|ritira|attiva|disattiva|sospendi|blocca|sblocca|importa|carica|genera|esegui|applica|completa|finalizza|procedi|avanti|termina|save|submit|send|forward|transmit|confirm|approve|authori[sz]e|reject|decline|publish|sign|assign|award|issue|close|cancel|revoke|withdraw|activate|deactivate|suspend|lock|unlock|import|upload|generate|execute|run|apply|complete|finali[sz]e|finish|proceed|place\s+order|checkout|ok)\b/i;
+import { EFFECT_LABEL, DELETE_LABEL, isDeleteLabel, isDeleteQuestion } from "../effect-labels.mjs";
+export { EFFECT_LABEL, DELETE_LABEL };
 function preprodClickRefusal(ctx) {
   const snap = ctx.session?.browser?.snapshot;
   for (const a of ctx.actions.filter(isEffectful)) {
@@ -107,6 +108,48 @@ function preprodClickRefusal(ctx) {
   return null;
 }
 
+// Esplorazione completa (ESPLORA <AMBIENTE> COMPLETA, sandbox e pre-produzione): click, input (valori di prova), invio,
+// salvataggio, conferma dei dialoghi; MAI cancellazioni (etichetta dell'ultimo snapshot), upload di file, script o
+// strumenti non classificati. Un click deve avere un uid con nome nell'ultimo snapshot della pagina corrente (un'icona
+// senza nome potrebbe essere un cestino).
+// Revisione di sicurezza (05/10/2026): C1 nomi completi normalizzati, anche dei campi compilati e trascinati; I1 testo
+// del dialogo e finestre di conferma di una cancellazione; I6 osservazioni del browser non registrate ⇒ nessuna azione.
+const YES = /^\s*(s[iì]|yes|ok)\s*$/i;
+const SAFE_EXIT = /^\s*(annulla|no|chiudi|indietro|cancel|close|back|x)\s*$/i;
+function fullExploreRefusal(ctx) {
+  const b = ctx.session?.browser ?? {};
+  const snap = b.snapshot;
+  const names = snap?.names && typeof snap.names === "object" ? snap.names : null;
+  const deleteQuestion = names ? Object.values(names).some((n) => isDeleteQuestion(n)) : false;
+  for (const a of ctx.actions.filter(isEffectful)) {
+    if (["upload", "script", "other"].includes(a.kind)) return `esplorazione completa: ${a.kind === "upload" ? "il caricamento di file" : a.kind === "script" ? "gli script nella pagina" : "gli strumenti non classificati"} restano vietati (${a.op ?? a.tool ?? ctx.tool})`;
+    ctx.pendingFile ??= loadPending(pendingFile(join(ctx.ws, "customers", ctx.customer, ".sessions")));
+    const pend = pendingRefusal(mergedPending(b, ctx.pendingFile), a.family ?? ctx.call?.family, a.tab);
+    if (pend) return `esplorazione completa: ${pend}`;
+    if (a.kind === "dialog") {
+      if (isDeleteLabel(ctx.ti?.promptText)) return "esplorazione completa: il testo del dialogo conferma una cancellazione: vietato";
+      if (a.submits && deleteQuestion) return "esplorazione completa: la pagina chiede di confermare una cancellazione: non si accetta il dialogo";
+      continue;
+    }
+    if (a.kind === "input" && a.submits && deleteQuestion) return "esplorazione completa: la pagina chiede di confermare una cancellazione: niente Invio";
+    if (a.kind !== "click" && a.kind !== "input") continue;
+    const refs = Array.isArray(a.targets) ? a.targets : [];
+    if (a.kind === "click") {
+      if (!refs.length || a.untargeted) return `esplorazione completa: click senza uid dell'ultimo snapshot (${a.op ?? a.tool ?? ctx.tool})`;
+      if (!names) return "esplorazione completa: nessuno snapshot completo della pagina: esegui take_snapshot prima del click";
+      if (!b.current_url || snap.url !== b.current_url) return "esplorazione completa: l'ultimo snapshot non è della pagina corrente: rifai take_snapshot";
+      if (String(snap.tab ?? "") !== String(a.tab ?? "")) return "esplorazione completa: l'ultimo snapshot è di un'altra scheda: rifai take_snapshot";
+    }
+    for (const r of refs) {
+      const name = names && Object.hasOwn(names, r) ? String(names[r] ?? "") : null;
+      if (a.kind === "click" && (!name || !name.trim())) return `esplorazione completa: l'elemento ${r} non ha un nome nell'ultimo snapshot: potrebbe essere un'icona di cancellazione, non si clicca`;
+      if (name && isDeleteLabel(name)) return `esplorazione completa: "${name}" è una cancellazione: vietata anche in esplorazione completa`;
+      if (a.kind === "click" && deleteQuestion && name && !SAFE_EXIT.test(name) && (EFFECT_LABEL.test(name) || YES.test(name))) return `esplorazione completa: la pagina chiede di confermare una cancellazione: "${name}" non si preme (usa Annulla o chiudi)`;
+    }
+  }
+  return null;
+}
+
 function noPlan(ctx, no) {
   const s = ctx.session;
   const bad = ctx.actions.filter(isEffectful).find((a) => !["click", "input"].includes(a.kind) || a.submits);
@@ -118,10 +161,19 @@ function noPlan(ctx, no) {
     const reg = readApprovals(approvalsFile(ctx.ws, ctx.customer, ctx.sid));
     const found = reg.ok ? exploreRecord(reg.records, s.mode_approval, s.env.id) : null;
     const rec = found && (found.env_type ?? "sandbox") === s.env.type ? found : null;
-    const phrase = s.env.type === "preprod" ? "ESPLORA PREPROD" : EXPLORE_PHRASE;
+    const phrase = `${s.env.type === "preprod" ? "ESPLORA PREPROD" : EXPLORE_PHRASE}[ COMPLETA]`;
     if (!rec) return no(`modalità esplorazione non aperta dall'utente: serve la sua frase \`${phrase}\`, poi /use mode esplorazione (registro ${reg.ok ? "senza il record" : `corrotto: ${reg.reason}`})`);
     const conf = confirmInTranscript(ctx.input.transcript_path, [rec]);
     if (!conf.ok) return no(`modalità esplorazione non confermata dal transcript dell'utente (${conf.reason})`);
+    if (rec.full === true) {
+      const refusal = fullExploreRefusal(ctx);
+      if (refusal) return no(refusal);
+      try {
+        appendAudit(ctx.ws, { session: ctx.sid, customer: ctx.customer, scope: s.scope ?? null, kind: "decision", actor: `hook:${G}`,
+          payload: { decision: "allow", mode: "esplorazione-completa", tool: ctx.tool, kinds: ctx.actions.map((a) => a.kind) } });
+      } catch { /* l'audit non cambia la decisione */ }
+      return null;
+    }
     if (s.env.type === "preprod") {
       const refusal = preprodClickRefusal(ctx);
       if (refusal) return no(refusal);

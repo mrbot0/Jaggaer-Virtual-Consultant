@@ -76,8 +76,8 @@ viene copiato da Claude Code nella sua cache: la conoscenza deve crescere fuori 
 
 | Ambiente | Leggere | Esplorare cliccando | Creare / modificare dati | Configurare |
 |---|---|---|---|---|
-| **sandbox** | sì | sì (`ESPLORA SANDBOX`) | sì, con piano | sì, approvazioni per rischio |
-| **pre-produzione** | sì | solo click senza effetto (`ESPLORA PREPROD`) | sì, con `APPROVO PIANO` e `sì` all'invio | sì, approvazioni per rischio |
+| **sandbox** | sì | sì (`ESPLORA SANDBOX`); tutto tranne cancellare (`ESPLORA SANDBOX COMPLETA`) | sì, con piano | sì, approvazioni per rischio |
+| **pre-produzione** | sì | solo click senza effetto (`ESPLORA PREPROD`); tutto tranne cancellare, con valori di prova (`ESPLORA PREPROD COMPLETA`) | sì, con `APPROVO PIANO` e `sì` all'invio | sì, approvazioni per rischio |
 | **produzione** | sì | no | **mai** | solo con tre approvazioni, una da una seconda persona |
 
 Prima di agire il plugin **verifica** di essere davvero nell'ambiente dichiarato (almeno due segnali sulla pagina:
@@ -421,6 +421,7 @@ Scritte da te, **da sole nel messaggio**, in maiuscolo (un punto finale è tolle
 | `APPROVO PIANO <PLAN>` | Per attivare un piano fuori dalla sandbox (per esempio "crea ordine" in pre-produzione) o una configurazione |
 | `APPROVO PASSO <n> <PLAN>` · `APPROVO PROVA <PLAN>` | Configurazioni gialle e rosse; in produzione tutte e tre, con `DA <Nome Cognome>`, la prova da una seconda persona |
 | `ESPLORA SANDBOX` · `ESPLORA PREPROD` | Aprire l'esplorazione (poi `use mode esplorazione` entro 10 minuti) |
+| `ESPLORA SANDBOX COMPLETA` · `ESPLORA PREPROD COMPLETA` | Esplorazione completa: compila, salva, invia, approva con valori di prova, mai cancellare; a fine giro l'elenco di ciò che ha creato o modificato |
 | `APPROVO PROMOZIONE <codice>` · `APPROVO RETENTION <C>` · `APPROVO PURGE <ID> DA <Nome Cognome>` | Operazioni amministrative |
 | `compensa tutto` · `lascia <entità>` | A fine sessione: annullare o tenere ciò che è stato creato |
 
@@ -432,7 +433,7 @@ Scritte da te, **da sole nel messaggio**, in maiuscolo (un punto finale è tolle
 | `FERMA AGENTE <task_id>` · `FERMA TUTTI` | Interrompe definitivamente (subito) |
 | `PASSO PASSO <task_id\|TUTTI>` · `PASSO PASSO OFF` | Ogni azione con effetto aspetta il tuo `sì` |
 | `SBLOCCA SCOPE <S>` | Sblocca un'area dopo tre compiti fermati da sorprese |
-| `LIMITI DISPATCH <chiamate> <minuti>` | Cambia i limiti di ogni agente (predefiniti: 200 azioni, 30 minuti) |
+| `LIMITI DISPATCH <chiamate> <minuti>` | Cambia i limiti di ogni agente (predefiniti: 200 azioni, 30 minuti; in esplorazione nessun tetto, salvo quelli che imposti tu) |
 
 Le frasi che aumentano la protezione valgono subito; quelle che la riducono dopo la conferma.
 
@@ -459,7 +460,7 @@ Le frasi che aumentano la protezione valgono subito; quelle che la riducono dopo
 
 | Vuoi… | Scrivi | Cosa succede |
 |---|---|---|
-| Imparare com'è fatto un modulo | `ESPLORA PREPROD` → `use mode esplorazione` → `ops esplora ordini` | scope-expert naviga, apre moduli e tendine, memorizza pagine, pulsanti e campi; non salva mai |
+| Imparare com'è fatto un modulo | `ESPLORA PREPROD` (o `ESPLORA PREPROD COMPLETA` per provare anche salvataggi e invii) → `use mode esplorazione` → `ops esplora ordini` | scope-expert naviga, apre moduli e tendine, memorizza pagine, pulsanti e campi; non salva mai |
 | Creare un ordine | `use mode ops` → `ops crea ordine fornitore …, articolo …, quantità …` | Piano dalla memoria (se mancano dati obbligatori te li chiede prima; se lo stesso modulo esiste in più moduli JAGGAER ti chiede quale, o scrivi «nel modulo …») → `APPROVO PIANO …` → compilazione automatica → `sì` prima dell'invio → procedura memorizzata |
 | Sapere perché un documento è fermo | *"Su ACME produzione, perché l'ordine 4500012345 è fermo?"* | Diagnosi in sola lettura, con evidenze |
 | Collaudare una release | `nrt release-check R25.3` | Piano dal delta, esecuzione per scope, triage, Defect, Xray, report |

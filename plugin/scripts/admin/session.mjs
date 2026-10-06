@@ -329,7 +329,7 @@ async function useMode(ws, sid, raw, { actor }) {
     const { consumeExplore, approvalsFile, EXPLORE_PHRASES, EXPLORE_WINDOW_MS } = await import("./approvals.mjs");
     const phrase = EXPLORE_PHRASES[before.env.type];
     const tok = consumeExplore(approvalsFile(ws, before.customer, sid), before.env.id, { envType: before.env.type });
-    if (!tok) throw new CliError(3, `la modalità esplorazione la sceglie l'utente: serve la sua frase \`${phrase}\` negli ultimi ${EXPLORE_WINDOW_MS / 60000} minuti (vale per un solo cambio di modalità)`);
+    if (!tok) throw new CliError(3, `la modalità esplorazione la sceglie l'utente: serve la sua frase \`${phrase}\` o \`${phrase} COMPLETA\` (vale l'ultima detta) negli ultimi ${EXPLORE_WINDOW_MS / 60000} minuti (vale per un solo cambio di modalità)`);
     approval = tok.hash;
   }
   const session = updateSession(file, (s) => { s.mode = m; s.mode_approval = approval; });
