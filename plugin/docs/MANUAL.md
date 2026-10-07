@@ -253,7 +253,7 @@ al nome del file, nessun codice rivendicato da due file), `kb/lifecycle.mjs --he
 | `scope <ID>` | Cella attiva (CAT SRC VEN CON P2P INV QLT ANL ADM XSC) | Ricalcola i percorsi ammessi |
 | `mode <nrt\|config\|ops\|diag\|esplorazione>` | Modalità | L'intento la deduce; il comando la forza. `esplorazione`: in sandbox click e input senza piano (mai invio o salvataggio), dopo la frase `ESPLORA SANDBOX`; in pre-produzione solo click su elementi senza effetto, dopo `ESPLORA PREPROD`; completa (compila, salva, invia, approva con valori di prova; mai cancellazioni, upload, script; nessun tetto di azioni per agente) dopo `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA` |
 | `budget <n>` | Budget di sessione in token (es. `200k`) | Registrato in audit; l'unico modo per alzarlo, solo su richiesta dell'utente |
-| `show` | Stato corrente della sessione | Sola lettura |
+| `show` | Stato corrente della sessione, compreso il **livello di autonomia** (campo `autonomy`: effettivo, scelto, fonte, tetto dell'ambiente) | Sola lettura. Il livello non si imposta con `use`: lo sceglie l'utente con `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA` o con `default:` in `customers/<C>/config/autonomy.yaml` (§57.2) |
 | `close-stale` | Chiude a mano i sotto-compiti rimasti aperti (dispatch mai chiusi) | Solo su richiesta; senza, scadono da soli dopo 2 ore, o dopo il limite di dispatch confermato (`LIMITI DISPATCH`) se è più lungo |
 
 ### 56.3 `kb` — conoscenza
@@ -304,8 +304,8 @@ al nome del file, nessun codice rivendicato da due file), `kb/lifecycle.mjs --he
 | Azione | Cosa fa | Ambienti · Chi |
 |--------|---------|----------------|
 | `esplora <modulo>` | Esplora e memorizza menu, pagine, pulsanti, campi (pagine registrate da sole, mappa con `kb atlas-build`); in preprod solo click senza effetto ([guida](GUIDA-PRIMO-USO.md)) | sandbox (`ESPLORA SANDBOX`), preprod (`ESPLORA PREPROD`) — **mai prod** · `scope-expert` |
-| `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza con compensazione; piano da `compose-plan` (se mancano dati obbligatori li chiede), a esito verde la procedura si memorizza | sandbox, preprod; prod solo con `write_data: true` e approvazione per passo · `scope-expert` |
-| `approva · chiudi · pubblica …` | R2 con approvazione (`sì`) | sandbox, preprod (il referente è un avviso, non un blocco: §55.1.2); prod con `write_data: true` e approvazione per passo · `scope-expert` |
+| `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza con compensazione; piano da `compose-plan` (se mancano dati obbligatori li chiede; i campi di una pagina in un solo passo `fill_form`), a esito verde la procedura si memorizza. **Import massivo**: se per l'oggetto esiste un `TPL`, `crea N <oggetto>` usa la via massiva (`kb template-learn` con template dell'utente o scaricato dal tenant → `template-fill` → `compose-plan --filled` → caricamento del solo file del run con sha256 → `import-result` → reimport delle sole righe fallite, al massimo 2 volte) | sandbox, preprod; prod solo con `write_data: true` e approvazione per passo (anche del caricamento) · `scope-expert` |
+| `approva · chiudi · pubblica …` | R2 con le approvazioni del livello di autonomia (`sì` per passo solo con autonomia bassa; in produzione `APPROVO PASSO`) | sandbox, preprod (il referente è un avviso, non un blocco: §55.1.2); prod con `write_data: true` e approvazione per passo · `scope-expert` |
 | `query "<domanda>"` · `tables` · `learn-analytics` | Analytics | tutti (sola lettura) · `analytics-learner` |
 
 ### 56.7 `learn` — apprendimento
@@ -380,10 +380,13 @@ queste frasi in ogni input di strumento. Una frase diversa, un piano sbagliato o
 
 | Situazione | Cosa scrivere |
 |-----------|---------------|
-| Azione R2 in sandbox/preprod | `sì` (oppure `si`, `yes`) alla domanda del workflow, che mostra importo, stato di arrivo, compensazione; vale per UNA azione in attesa |
+| Azione R2 in sandbox/preprod **con autonomia bassa** | `sì` (oppure `si`, `yes`) alla domanda del workflow, che mostra importo, stato di arrivo, compensazione; vale per UNA azione in attesa. Con autonomia alta o media non si chiede; in produzione `sì` è rifiutato |
+| Livello di autonomia (per la sessione) | `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA` (valgono finché non se ne scrive un'altra). Alternativa: `default: alto\|medio\|basso` in `customers/<C>/config/autonomy.yaml`, scritto dall'utente; predefinito alto; tetto medio in produzione; file illeggibile o valore non valido ⇒ basso. Vedi la tabella sotto |
+| Pre-produzione con autonomia media o bassa; piani con invii, configurazione o cancellazioni | `APPROVO PIANO <PLAN>` (con autonomia alta un piano di sola creazione o import parte senza frase) |
 | Configurazione verde | `APPROVO PIANO <PLAN>` |
 | Configurazione giallo | `APPROVO PIANO <PLAN>` poi `APPROVO PASSO <n> <PLAN>` |
 | Configurazione rosso | `APPROVO PIANO <PLAN>` · `APPROVO PROVA <PLAN>` · `APPROVO PASSO <n> <PLAN>` |
+| **Produzione, scrittura di dati o import** (con `write_data: true`) | `APPROVO PIANO <PLAN>`, poi `APPROVO PASSO <n> <PLAN>` prima di **ogni** passo che modifica o carica (monouso, legata al piano); `APPROVO PROVA <PLAN> DA <Nome Cognome>` da una persona diversa se `second_approver_required` (preimpostato in produzione). Prima di ogni passo il manager mostra file, righe e oggetti toccati |
 | **Produzione, qualunque configurazione** | le tre frasi, entro la finestra (60 minuti dalla A1), con `DA <Nome Cognome>` in coda: la A2 (`APPROVO PROVA <PLAN> DA <Nome Cognome>`) da una persona diversa dalla A1 |
 | Esplorazione senza piano (sandbox) | `ESPLORA SANDBOX`, poi `/jaggaer-virtual-consultant:use mode esplorazione` entro 10 minuti |
 | Esplorazione senza piano (pre-produzione: solo click senza effetto; memoria con `kb atlas-write`, [guida](GUIDA-PRIMO-USO.md)) | `ESPLORA PREPROD`, poi `/jaggaer-virtual-consultant:use mode esplorazione` entro 10 minuti |
@@ -394,7 +397,32 @@ queste frasi in ogni input di strumento. Una frase diversa, un piano sbagliato o
 | Alzare il budget | `/jaggaer-virtual-consultant:use budget <n>` |
 | Compensare a fine sessione | `compensa tutto` · `lascia <entità>` (risposta alla domanda del manager sulle compensazioni pendenti) |
 
-Le frasi di approvazione riconosciute sono quindi: `APPROVO PIANO`, `APPROVO PROVA`, `APPROVO PASSO`, `APPROVO
+Cosa si chiede, per livello e ambiente (spec 2026-10-06 §2.2; produzione con tetto medio):
+
+| | sandbox | pre-produzione | produzione (tetto medio) |
+|---|---|---|---|
+| creare, aggiornare (R1) | nulla | alto: nulla · medio/basso: `APPROVO PIANO` | `APPROVO PIANO` + `APPROVO PASSO <n>` prima di ogni passo che modifica |
+| inviare, approvare, trasmettere, pubblicare, chiudere, caricare (R2) | alto/medio: nulla · basso: `sì` per passo | alto/medio: coperti da `APPROVO PIANO` · basso: `sì` per passo | `APPROVO PIANO` + `APPROVO PASSO <n>` |
+| configurazione (`ACT-CFG-CHANGE`) | alto: `APPROVO PIANO` · medio/basso: per policy (A1/A3/A2) | idem | `APPROVO PIANO` + `APPROVO PASSO <n>` (+ istantanea prima) |
+| import massivi (`ACT-BULK`) | alto: nulla · medio/basso: `APPROVO PIANO` + `APPROVO PASSO <n>` | idem | `APPROVO PIANO` + `APPROVO PASSO <n>` prima del caricamento |
+| cancellare (`ACT-DELETE`) | alto: coperte da `APPROVO PIANO` · medio/basso: + `APPROVO PASSO <n>` | idem | **mai** |
+
+Resta a ogni livello: `APPROVO PROVA` da una persona diversa quando l'ambiente ha `second_approver_required`; compensazione
+registrata prima di creare, aggiornare, inviare, importare; per configurazioni e cancellazioni la lettura completa (istantanea)
+degli oggetti toccati salvata prima; ogni click legato al SEL del passo; nessuno script nella pagina; elenco finale di ciò
+che è stato creato, modificato, importato o cancellato con il livello applicato. In produzione le scritture di dati richiedono
+inoltre `policy.write_data: true` per quell'ambiente (interruttore dell'utente); le configurazioni in produzione sono
+regolate dalle approvazioni, non da `write_data`; un caricamento è ammesso solo in un passo approvato col verbo `UPLOAD`;
+letture e navigazione restano libere.
+
+**Cancellazioni** (solo sandbox e pre-produzione): ammesse solo dentro un passo `DELETE` di classe `ACT-DELETE`, un
+elemento per passo (elemento ambiguo o seconda cancellazione nello stesso passo ⇒ negato); prima del passo la lettura
+completa dell'oggetto in `runs/<RUN>/evidence/` e la compensazione `restore` che la richiama; i pulsanti di massa (elimina
+tutti, svuota, purge…) sono sempre negati e l'esplorazione non cancella mai; la finestra di conferma nella pagina è un passo
+`CLICK` a parte, di classe `ACT-DELETE`, legato al SEL del pulsante di conferma (i dialoghi nativi passano da
+`handle_dialog`).
+
+Le frasi di approvazione riconosciute sono quindi: `AUTONOMIA ALTA`, `AUTONOMIA MEDIA`, `AUTONOMIA BASSA`, `APPROVO PIANO`, `APPROVO PROVA`, `APPROVO PASSO`, `APPROVO
 PROMOZIONE`, `APPROVO RETENTION`, `APPROVO PURGE` (con `DA <Nome Cognome>` dove serve), `sì`, `ESPLORA SANDBOX`, `ESPLORA PREPROD`, `ESPLORA SANDBOX COMPLETA`, `ESPLORA PREPROD COMPLETA`.
 Per le approvazioni amministrative l'hook risponde con un **token** (le prime 16 cifre esadecimali dell'hash del
 record): il manager lo usa nella riga di comando; non va copiato né inventato altrove.
@@ -405,7 +433,7 @@ Il blocco in fondo alla conversazione ha sempre: intestazione (sessione, cliente
 modalità, budget usato/totale), una riga per passo (agente, classe di azione, descrizione, stato ▶ in corso · ✓ fatto ·
 ⏸ attende · ✗ fermato · · pianificato, evidenza), e una riga di totali (sorprese, errori, evidenze). Una riga ⏸ è sempre
 seguita dalla domanda. Una riga ✗ è sempre seguita dal motivo e da cosa serve per riprendere. In produzione il banner è
-`⚠ PRODUZIONE — sola lettura sui dati`, con lo stato della 3A. Da un'altra finestra:
+`⚠ PRODUZIONE — sola lettura sui dati` (testo invariato: le scritture, quando `write_data` è attivo, passano solo dai passi approvati), con lo stato della 3A. Da un'altra finestra:
 `/jaggaer-virtual-consultant:vc watch <SES.C.AAAAMMGG.NNN>`.
 
 ### 57.4 Leggere i report
@@ -489,7 +517,9 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
 | "Nessun ambiente dichiarato" | `/use env` mancante | Dichiararlo, o includerlo nell'intento |
 | "Ambiente non riconosciuto (1 segnale su 2)" | Impronta cambiata (nuova release, banner diverso) | `doctor`; aggiornare `fingerprint` con il referente; **non** forzare |
 | "Host non in allow-list" | Redirect SSO o CDN non dichiarati | Aggiungere l'host in `environments.yaml` fuori sessione |
-| "Azione negata: produzione" | Si sta chiedendo una scrittura in prod senza `write_data: true`, o una cancellazione | È corretto: attivare `write_data` (a cura dell'utente) o usare sandbox/preprod |
+| "Azione negata: produzione" | Scrittura in prod senza `write_data: true` o fuori da un passo di piano approvato (piano e passo), cancellazione, caricamento fuori da un passo `UPLOAD` | È corretto: attivare `write_data` (a cura dell'utente) e approvare piano e passo, oppure usare sandbox/preprod; la cancellazione in produzione non esiste |
+| Il plugin chiede approvazioni che prima non chiedeva, o non ne chiede | Livello di autonomia diverso da quello atteso (frase di sessione, `autonomy.yaml`, tetto medio in produzione, file illeggibile ⇒ basso) | `use show` mostra livello, fonte e tetto; `AUTONOMIA ALTA`/`MEDIA`/`BASSA` lo cambia (la scrive l'utente) |
+| Import: "errore di formato" · righe fallite | Template del tenant cambiato; dati non validi | Riscarica e reimpara il template (`kb template-learn`), ricompila una volta; righe fallite: correggi e reimporta solo quelle (al massimo 2 volte) |
 | "Approvazione non valida" | Frase diversa da quella richiesta, o finestra scaduta | Scrivere la frase esatta (§57.2); se scaduta, ripartire da A1 |
 | "Budget esaurito" | Compito più costoso del previsto | `use budget` se giustificato; altrimenti ridisegnare il compito (meno passi, più replay) |
 | "Risultato respinto: traccia cognitiva mancante" | Il sub-agente ha saltato il ciclo | Automatico: il sub-agente completa; se persiste, `learn lessons --session` e segnalare |
@@ -548,6 +578,7 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
 
  AMBIENTI             dichiarato + rilevato (≥ 2 segnali) + verificato a ogni origine · host sconosciuto = negato
                       produzione: scritture solo con write_data: true e approvazione per passo (spec 2026-10-06 §3.6) · cancellazioni mai · configurazioni con 3 approvazioni (piano · prova · passo)
+                      autonomia (alto · medio · basso): AUTONOMIA ALTA|MEDIA|BASSA o autonomy.yaml · predefinito alto · tetto medio in produzione · tabella §57.2 · import massivi con template · cancellazioni in sandbox/preprod dentro un passo DELETE
                       qualità parametrica Q (16 parametri, decadimento per tipo) → classe d'uso → cosa si può fare con un'informazione
 
  ACQUISIRE            profilo del DOC (affidabilità calcolata) → parsing per formato → unità di significato tipizzate
@@ -661,15 +692,17 @@ esecuzione dei test.
 | "Quali campi sono obbligatori per inviare una RdA in ACME, e perché?" | conoscenza · P2P | nessuna (solo `kb`) | — | nessuna | 12 `FLD` con `mandatory.reason`, in 20 parole ciascuno |
 | "Su ACME pre-produzione rendi obbligatorio il Codice progetto sopra 10.000 €" | configurazione · ADM (handoff da P2P) | `ACT-CFG-CHANGE` R2 | preprod | 2 (piano, passo) | `CFP` composta, dry-run, esecuzione, `NRT.*.CFG`, `RPT` |
 | "Su ACME produzione attiva la notifica di sollecito approvazioni" | configurazione · ADM | `ACT-CFG-CHANGE` verde | **prod** | **3 (3A)** | Piano → prova in preprod + a vuoto in prod → passi approvati → verifica |
-| "Su ACME produzione crea un ordine di test" | — | `ACT-CREATE` | **rifiutato** | — | "In produzione non si scrivono dati; posso farlo in sandbox o pre-produzione" |
+| "Su ACME produzione crea un ordine di test" | operativa · P2P | `ACT-CREATE` | **prod con `write_data: true`**; altrimenti rifiutato | piano + passo (mostra-piano) | Con `write_data: false`: "in produzione i dati si scrivono solo con write_data: true; posso farlo in sandbox o pre-produzione"; con `true`: piano da approvare, ogni passo approvato prima |
 | "Quanti ordini sopra 50k€ ha fatto ACME negli ultimi 90 giorni?" | Analytics · ANL | `ACT-QRY` | tutti | nessuna | Query eseguita con LIMIT, risultato, `QRY` salvata se coerente |
 | "Impara le tabelle di Analytics di ACME" | apprendimento · ANL | `ACT-OBS` | tutti | nessuna | `TBL` enumerate, join inferiti, `DIN` aggiornati |
 | "Cosa sappiamo poco dello scope Sourcing di ACME?" | conoscenza · SRC | nessuna | — | nessuna | Report di copertura epistemica + piano di osservazioni R0 |
 | "Confronta la configurazione ADM di ACME con la baseline di giugno" | audit · ADM | `ACT-CFG-READ` | tutti | nessuna | Deriva rilevata, `RUL` violate |
-| "Cancella la RdA NRT-…-REQ-001" | — | `ACT-DELETE` | **rifiutato ovunque** | — | "Non cancello: posso annullarla (compensazione `cancel`)" |
+| "Cancella la RdA NRT-…-REQ-001" | operativa · P2P | `ACT-DELETE` | sandbox, preprod (dentro un piano); **rifiutato in produzione** | alto: coperta dal piano · medio/basso: + passo | Lettura completa salvata, compensazione `restore`, un elemento per passo; in produzione: "In produzione non si cancella mai; in sandbox e pre-produzione sì, dentro un piano" |
 
 Regole trasversali visibili negli esempi: l'ambiente è sempre nell'intento o attivo in sessione; le scritture partono
-da sole solo se ≤ R1 in sandbox; la produzione è sola lettura sui dati; il verbo "cancella" non esiste.
+da sole quando al livello di autonomia in corso nulla richiede approvazione (`avvia`), altrimenti si mostra il piano
+(`mostra-piano`: ogni scrittura in produzione); la produzione è sola lettura sui dati salvo `write_data: true` con piano e
+ogni passo approvati; "cancella" è ammesso in sandbox e pre-produzione dentro un piano e rifiutato in produzione.
 
 ---
 

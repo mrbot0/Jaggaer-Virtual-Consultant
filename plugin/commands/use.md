@@ -10,7 +10,8 @@ Contesto di sessione (§56.2). Esegui con lo strumento Bash, senza modificare gl
     node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/session.mjs" use $ARGUMENTS --session "${CLAUDE_SESSION_ID}" --json
 
 Poi riporta all'utente, in al massimo sei righe, lo stato risultante: cliente, ambiente (con il banner
-di templates/workflow.md), scope, modalità, budget usato/totale, pendenze. Regole:
+di templates/workflow.md), scope, modalità, **livello di autonomia** (campo `autonomy` di `show`: effettivo, scelto, fonte,
+tetto dell'ambiente), budget usato/totale, pendenze. Regole:
 
 - exit 3 con `pending_compensations` (compensazioni pendenti del cliente precedente): elenca i
   codici restituiti e chiedi come chiuderle; non cambiare cliente per altra via.
@@ -27,7 +28,8 @@ di templates/workflow.md), scope, modalità, budget usato/totale, pendenze. Rego
   3. exit 0 = verificato (≥ 2 segnali); exit 3 = `unknown` o rifiutato: riporta segnali e motivo
      (§58 "Ambiente non riconosciuto"), **non forzare** e non ripetere con un altro snapshot.
   Cambiare ambiente azzera la verifica. exit 3 su `use env` = environments.yaml viola le regole di
-  produzione (es. `type: prod` con `write_data: true`): si corregge il file fuori sessione.
+  produzione (es. `type: prod` con tre approvazioni mancanti o con il livello rosso in `config_levels`; `write_data` in
+  produzione è un interruttore dell'utente, vero o falso, e non dà exit 3): si corregge il file fuori sessione.
 - Sul browser (giro di correzione 1): prima di ogni click o input serve una navigate verso un host
   dichiarato (l'origine viene registrata; cambiare scheda o pagina la azzera); gli script nella pagina
   sono negati ovunque: si legge con snapshot, read_page, get_page_text. Senza piano attivo le azioni
@@ -46,3 +48,7 @@ di templates/workflow.md), scope, modalità, budget usato/totale, pendenze. Rego
 - Il file di stato non si modifica a mano: solo tramite questo comando e gli hook del plugin.
 - Le approvazioni (3A, §52.2) non si danno con questo comando né con altri: le scrive l'utente con le
   frasi esatte (`APPROVO PIANO <PLAN>` …) e le registra l'hook approval-capture.
+- Il **livello di autonomia** (alto, medio, basso) non si imposta con questo comando: lo sceglie l'utente con
+  `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA` (per la sessione) o con `default:` in
+  `customers/<C>/config/autonomy.yaml`; predefinito alto, in produzione al massimo medio; file illeggibile o valore non
+  valido ⇒ basso. `use show` lo mostra.

@@ -82,7 +82,9 @@ Impara un template di import (foglio, riga d'intestazione, colonne, obbligatori 
 valori dalle convalide) e lo salva come voce `TPL` in `customers/<C>/kb/scopes/<S>/templates/<codice>.yaml`, con il file
 vuoto in `templates/files/<codice>.xlsx`. `--file` è un percorso del workspace (es. `customers/<C>/templates-in/…`); `--fonte`
 dice se il template l'ha dato l'utente (`utente`, predefinito) o è stato scaricato dal tenant (`tenant`); `--page` è la firma
-della pagina di import. Lo stesso oggetto aggiorna la voce esistente. Riporta codice, colonne e obbligatori; exit 1 = errore
+della pagina di import. Se l'utente non ha un template, lo scarica l'agente dal tenant (click su "scarica template", poi `get_network_request` con
+`responseFilePath` nella cartella della sessione) e lo si impara con `--fonte tenant`; i template dell'utente hanno la precedenza.
+Dopo l'apprendimento si compila con `template-fill` e si importa (vedi `/ops`: `compose-plan --filled`, `import-result`). Lo stesso oggetto aggiorna la voce esistente. Riporta codice, colonne e obbligatori; exit 1 = errore
 d'uso (file non leggibile come template, scope o cliente non validi), exit 2 = errore di sistema.
 
 ## `reindex [--all]` e `migrate` — indice e migrazioni (script diretti)

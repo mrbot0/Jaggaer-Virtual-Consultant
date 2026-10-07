@@ -35,12 +35,14 @@ chiede la frase esatta `APPROVO PASSO <n> <PLAN.id>`. Le frasi valide (§57.2):
 
 | Situazione | Frase dell'utente |
 |---|---|
-| Azione R2 in sandbox/preprod | `sì` alla domanda del workflow (una sola richiesta aperta) |
+| Azione R2 in sandbox/preprod con autonomia bassa | `sì` alla domanda del workflow (una sola richiesta aperta); con autonomia alta o media non si chiede |
+| Cambiare livello di autonomia | `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA` (per la sessione; in produzione al massimo medio) |
 | Configurazione verde | `APPROVO PIANO <PLAN>` |
 | Configurazione giallo | `APPROVO PIANO <PLAN>` poi `APPROVO PASSO <n> <PLAN>` |
 | Configurazione rosso | `APPROVO PIANO` · `APPROVO PROVA` · `APPROVO PASSO <n>` |
 | Esplorare senza piano (solo sandbox) | `ESPLORA SANDBOX`, poi `/use mode esplorazione` |
 | Produzione, qualunque configurazione | le tre frasi entro la finestra (default 60 min da A1), A2 `DA <Nome Cognome>` di una persona diversa da A1 se `second_approver_required` |
+| Produzione, scrittura di dati o import (con `write_data: true`) | `APPROVO PIANO <PLAN>`, poi `APPROVO PASSO <n> <PLAN>` prima di **ogni** passo che modifica o carica (mai `sì`); la prova da una seconda persona se `second_approver_required` (preimpostato in produzione) |
 
 Un "ok", un "va bene" o una frase con piano o passo sbagliati non valgono: l'hook `approval-capture`
 non registra nulla e il manager lo dice e attende. Il token di un passo vale una volta sola.
@@ -52,7 +54,8 @@ non registra nulla e il manager lo dice e attende. Il token di un passo vale una
 | `nessun ambiente dichiarato` | Serve `/use env <id>` (o l'ambiente nell'intento) |
 | `ambiente … non verificato` | Esegui env-check sulla pagina di base_url; non forzare |
 | `host non dichiarato` | Redirect SSO o CDN non dichiarati: l'host va aggiunto in environments.yaml fuori sessione |
-| `In produzione non si scrivono dati` | È corretto: si può fare in sandbox o pre-produzione |
+| `In produzione si scrive solo dentro un passo di piano approvato … e con policy.write_data: true` · `scritture spente in produzione` | È corretto: in produzione si scrive solo con `write_data: true` (interruttore dell'utente in environments.yaml, spento di serie) e dentro un passo di un piano approvato; in alternativa sandbox o pre-produzione |
+| `In produzione non si cancella mai` | È corretto: in produzione non si cancella; in sandbox e pre-produzione sì, dentro un piano; altrimenti si annulla con la compensazione `cancel` |
 | `Approvazione non valida` / `finestra 3A scaduta` | Scrivere la frase esatta; se scaduta, ripartire da A1 |
 
 ## Rendering (K6.5)
