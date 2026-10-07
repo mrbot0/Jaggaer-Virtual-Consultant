@@ -25,7 +25,7 @@
 // senza metacaratteri di shell. Rischio residuo documentato: un interprete che
 // costruisce il nome del file a runtime (node -e con stringhe calcolate) sfugge
 // all'analisi; per questo il token vale solo se la frase è anche nel transcript.
-import { dirname, resolve, join, basename, sep } from "node:path";
+import { dirname, resolve, join, basename, sep, isAbsolute } from "node:path";
 import { readFileSync, statSync, realpathSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { intersects, resolveTarget, bases, PathPolicyError } from "../paths.mjs";
@@ -221,7 +221,10 @@ function uploadRefusal(ctx, step, ap, a) {
   const files = Array.isArray(a.files) ? a.files : [];
   if (files.length !== 1 || typeof files[0] !== "string" || !files[0]) return "un caricamento alla volta, del solo file del passo (percorso mancante o non classificato)";
   let real; let realExpected; let realRun;
-  try { real = realpathSync(resolve(ctx.cwd ?? ctx.ws, files[0])); } catch { return `file da caricare inesistente: ${files[0]}`; }
+  // il server MCP del browser risolve i percorsi relativi nella SUA cartella corrente, non in quella di Claude: il guard
+  // calcolerebbe l'impronta di un file e il server ne caricherebbe un altro. Solo percorsi assoluti.
+  if (!isAbsolute(files[0]) || (WIN && !/^([A-Za-z]:[\\/]|[\\/]{2})/.test(files[0]))) return `percorso relativo non ammesso (${files[0]}): il server del browser lo risolverebbe in una cartella diversa; usa il percorso assoluto del file del run`;
+  try { real = realpathSync(files[0]); } catch { return `file da caricare inesistente: ${files[0]}`; }
   try { realExpected = realpathSync(expected); realRun = realpathSync(runDir); } catch { return "il file compilato del passo non esiste nel run attivo"; }
   if (!inside(realExpected, realRun)) return "il file del passo (dopo la risoluzione dei collegamenti) esce dal run attivo";
   if (fold(real) !== fold(realExpected)) return `si carica solo ${step.file.path} (fuori dal run o file diverso: ${files[0]})`;
@@ -314,7 +317,9 @@ async function browserDecideCore(ctx, no) {
   const bind = bindingRefusal(ctx, step);
   if (bind) return no(`${at0}: ${bind}`);
   // spec 2026-10-06 §3.8: ogni upload (in ogni ambiente) solo del file del run attivo con l'impronta del passo UPLOAD
-  for (const a of ctx.actions.filter((x) => x.kind === "upload")) { const u = uploadRefusal(ctx, step, ap, a); if (u) return no(`${at0}: ${u}`); }
+  const ups = ctx.actions.filter((x) => x.kind === "upload");
+  if (ups.length > 1) return no(`${at0}: più di un upload nella stessa chiamata (${ups.length}): un caricamento alla volta, del solo file del passo`);
+  for (const a of ups) { const u = uploadRefusal(ctx, step, ap, a); if (u) return no(`${at0}: ${u}`); }
   // spec 2026-10-06 §3.7: un click su un'etichetta di cancellazione vale solo dentro un passo DELETE del piano
   // (verbo DELETE, classe ACT-DELETE; il legame al SEL del passo l'ha già verificato bindingRefusal)
   if (cls === "ACT-DELETE" && step.verb === "DELETE") {

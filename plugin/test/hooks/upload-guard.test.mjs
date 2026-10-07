@@ -4,7 +4,7 @@
 // dei file, ogni upload resta negato.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { join } from "node:path";
+import { join, dirname, sep } from "node:path";
 import { createHash } from "node:crypto";
 import { writeFileSync, mkdirSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -18,13 +18,15 @@ const SEL_UP = "C.ACME.ADM.SEL.0140";
 const REL = `runs/${RUN}/import/de.xlsx`;
 const PLAN = "PLAN.ACME.UP.0001";
 const URL_ = "https://acme-sbx.jaggaer.com/setup/import-profiles";
+const CB = "mcp__claude-in-chrome__file_upload";
+const PW = "mcp__plugin_playwright_playwright__browser_file_upload";
 const denied = (r) => decisionOf(r) === "deny";
 const silent = (r) => r.status === 0 && r.stdout.trim() === "";
 const sha = (buf) => createHash("sha256").update(buf).digest("hex");
 const CONTENT = Buffer.from("PK\x03\x04 cliente;paese\nACME;DE\nACME;AT\n");
 
 // ws sandbox ADM, autonomia alta; file compilato scritto nel run; piano con un solo passo, attivo e sigillato
-function setup({ verb = "UPLOAD", cls = "ACT-BULK", file = undefined } = {}) {
+function setup({ verb = "UPLOAD", cls = "ACT-BULK", file = undefined, tab = "1" } = {}) {
   const ws = envWs({ env: "sandbox", scope: "ADM", autonomy: "alto" });
   writeSel(ws, SEL_UP, { role: "button", effect: "write", label: "Carica file" });
   const abs = join(ws, "customers/ACME", REL);
@@ -37,7 +39,7 @@ function setup({ verb = "UPLOAD", cls = "ACT-BULK", file = undefined } = {}) {
     repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [1] },
   }, RUN);
   patchSession(ws, (s) => { s.active_plan = { plan_id: PLAN, file: planFile, step: 1, run: RUN }; s.pending.compensations = [{ plan: PLAN, step: 1, kind: "cancel", entity: "import di prova" }]; });
-  sealActivePlan(ws, { url: URL_, tab: "1", refs: { "1_7": SEL_UP } });
+  sealActivePlan(ws, { url: URL_, tab, refs: { "1_7": SEL_UP } });
   return { ws, abs, up: (ti) => browserCall("guard-config-scope", ws, DT + "upload_file", { uid: "1_7", pageId: 1, ...ti }) };
 }
 
@@ -84,27 +86,68 @@ test("5. upload sotto un passo SAVE ⇒ deny (UPLOAD)", () => {
   assert.match(reasonOf(r), /UPLOAD/);
 });
 
-test("6. percorso con maiuscole diverse (Windows) o con segmenti ridondanti verso lo stesso file ⇒ consentito (realpath)", () => {
+test("6. stesso file raggiunto con segmenti ridondanti o maiuscole diverse (Windows) ⇒ consentito (realpath)", () => {
   const { abs, up } = setup();
-  const redundant = abs.replace(/import[\/]de\.xlsx$/, "import/../import/./de.xlsx");
-  assert.ok(silent(up({ filePath: redundant })), "segmenti ridondanti");
+  const redundant = [dirname(abs), "..", "import", ".", "de.xlsx"].join(sep);   // join() normalizzerebbe: si compone a mano
+  const raw = `${dirname(abs)}/../import/./de.xlsx`;
+  for (const v of [redundant, raw]) {
+    assert.notEqual(v, abs, "il percorso equivalente deve differire testualmente");
+    assert.ok(silent(up({ filePath: v })), v);
+  }
   if (process.platform === "win32") {
+    assert.notEqual(abs.toUpperCase(), abs);
     assert.ok(silent(up({ filePath: abs.toUpperCase() })), "maiuscole diverse");
   }
 });
 
-test("7. zero o due file nella stessa chiamata, o strumento senza file classificati ⇒ deny", () => {
-  const { abs, up } = setup();
-  assert.ok(denied(up({ filePath: undefined })), "nessun file");
-  assert.ok(denied(up({ filePath: "" })), "percorso vuoto");
-  const pw = browserCall("guard-config-scope", setup().ws, "mcp__plugin_playwright_playwright__browser_file_upload", { paths: [abs, abs] });
-  assert.ok(denied(pw), pw.stdout);
-  const none = browserCall("guard-config-scope", setup().ws, "mcp__plugin_playwright_playwright__browser_file_upload", {});
-  assert.ok(denied(none), none.stdout);
-  // upload_image del browser di Claude non porta percorsi: resta negato
-  const { ws } = setup();
-  const img = browserCall("guard-config-scope", ws, "mcp__claude-in-chrome__upload_image", { imageId: "i1", ref: "1_7", tabId: 1 });
+test("7. zero file, percorso vuoto, upload_image senza percorsi ⇒ deny con il motivo del conteggio/classificazione", () => {
+  const { up } = setup();
+  for (const ti of [{ filePath: undefined }, { filePath: "" }]) {
+    const r = up(ti);
+    assert.ok(denied(r), r.stdout);
+    assert.match(reasonOf(r), /un caricamento alla volta/);
+  }
+  // upload_image del browser di Claude non porta percorsi (imageId): senza files ⇒ negato per lo stesso motivo
+  const { ws } = setup({ tab: "101" });
+  const img = browserCall("guard-config-scope", ws, "mcp__claude-in-chrome__upload_image", { imageId: "i1", ref: "1_7", tabId: 101 });
   assert.ok(denied(img), img.stdout);
+  assert.match(reasonOf(img), /un caricamento alla volta/);
+  // Playwright senza paths: negato (senza ref, il legame al SEL nega prima)
+  const none = browserCall("guard-config-scope", setup().ws, PW, {});
+  assert.ok(denied(none), none.stdout);
+});
+
+test("7b. due file nella stessa chiamata (Claude in Chrome, ref legato al SEL, sandbox) ⇒ deny per il conteggio; uno solo ⇒ consentito", () => {
+  const { ws, abs } = setup({ tab: "101" });
+  const cb = (paths) => browserCall("guard-config-scope", ws, CB, { paths, ref: "1_7", tabId: 101 });
+  assert.ok(silent(cb([abs])), "controllo: un file solo è consentito");
+  const two = cb([abs, abs]);
+  assert.ok(denied(two), two.stdout);
+  assert.match(reasonOf(two), /un caricamento alla volta/);
+  const zero = cb([]);
+  assert.ok(denied(zero), zero.stdout);
+  assert.match(reasonOf(zero), /un caricamento alla volta/);
+});
+
+test("7c. percorso relativo ⇒ deny (il server MCP lo risolverebbe nella sua cartella), anche se nella cartella corrente c'è un file con la stessa impronta", () => {
+  const { ws, abs, up } = setup();
+  writeFileSync(join(ws, "de.xlsx"), CONTENT);
+  for (const rel of ["de.xlsx", `customers/ACME/${REL}`, "./de.xlsx"]) {
+    const r = up({ filePath: rel });
+    assert.ok(denied(r), `${rel}: ${r.stdout}`);
+    assert.match(reasonOf(r), /relativo/);
+  }
+  assert.ok(silent(up({ filePath: abs })), "controllo: l'assoluto resta consentito");
+});
+
+test("7d. più di un upload nella stessa chiamata (browser_batch) ⇒ deny; un upload solo nel batch ⇒ consentito", () => {
+  const { ws, abs } = setup({ tab: "101" });
+  const act = { name: "file_upload", input: { paths: [abs], ref: "1_7", tabId: 101 } };
+  const batch = (actions) => browserCall("guard-config-scope", ws, "mcp__claude-in-chrome__browser_batch", { actions });
+  const two = batch([act, act]);
+  assert.ok(denied(two), two.stdout);
+  assert.match(reasonOf(two), /più di un upload/);
+  assert.ok(silent(batch([act])), "un upload solo nel batch");
 });
 
 test("8. classificazione: i percorsi finiscono in files (DevTools filePath, Playwright e Claude in Chrome paths); upload_image non ne porta", () => {
