@@ -51,6 +51,11 @@
       }
     },
     {
+      "description": "Difesa in profondità (Ops veloce, spec 2026-10-06 §3.3): una classe che scrive dati (effect write) non è mai libera in produzione — solo con approvazione o mai.",
+      "if": { "properties": { "effect": { "const": "write" } }, "required": ["effect"] },
+      "then": { "properties": { "environments": { "properties": { "prod": { "enum": ["approval", "never"] } } } } }
+    },
+    {
       "description": "Il verbo DELETE appartiene solo ad ACT-DELETE (spec 2026-10-06 §3.7).",
       "if": { "properties": { "code": { "not": { "const": "ACT-DELETE" } } }, "required": ["code"] },
       "then": { "properties": { "verbs_allowed": { "items": { "not": { "const": "DELETE" } } } } }

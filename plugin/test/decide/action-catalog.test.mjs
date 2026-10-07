@@ -52,6 +52,24 @@ test("act.schema: un ACT senza campi di §29.4 o con valori fuori vocabolario è
   assert.equal(validateItem({ ...structuredClone(it), verbs_allowed: ["TELEPORT"] }).ok, false, "verbo fuori vocabolario");
 });
 
+test("act.schema (difesa in profondità): una classe con effect write non può essere libera in produzione (solo approval o never)", () => {
+  const files = readdirSync(DIR).filter((f) => f.endsWith(".yaml"));
+  const items = files.map((f) => YAML.parse(readFileSync(join(DIR, f), "utf8")));
+  const create = items.find((i) => i.code === "ACT-CREATE");
+  assert.equal(create.effect, "write");
+  assert.equal(validateItem(structuredClone(create)).ok, true);
+  for (const prod of ["allowed", "referent", "3A"]) {
+    const bad = structuredClone(create); bad.environments.prod = prod;
+    assert.equal(validateItem(bad).ok, false, `un effect write con prod ${prod} non passa la validazione`);
+  }
+  const never = structuredClone(create); never.environments.prod = "never";
+  assert.equal(validateItem(never).ok, true);
+  for (const i of items.filter((x) => x.effect === "write")) assert.ok(["approval", "never"].includes(i.environments.prod), i.code);
+  const read = structuredClone(items.find((i) => i.code === "ACT-OBS"));
+  assert.equal(read.environments.prod, "allowed");
+  assert.equal(validateItem(read).ok, true, "le letture restano libere in produzione");
+});
+
 test("catalogo: produzione = letture libere, scritture e configurazione con approvazione, ACT-DELETE mai (spec 2026-10-06 §3.3)", () => {
   const cat = loadCatalog();
   assert.equal(cat.size, 15);

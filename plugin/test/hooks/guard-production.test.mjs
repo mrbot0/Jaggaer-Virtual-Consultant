@@ -1,9 +1,10 @@
 // K5.5 — guard-production (PreToolUse sugli strumenti MCP del browser, FAIL-CLOSED,
 // attivo con session.env.type = prod). §52.1 strato 3: in prod solo navigazione e
 // lettura; input solo su un SEL `search_box` del passo attivo; click solo su un SEL
-// `effect: read`; upload, dialog accettati, invio (Enter), script ⇒ deny;
+// `effect: read`; script ⇒ deny; upload, dialog accettati e invio (Enter) solo dentro un passo di scrittura
+// approvato (Ops veloce, spec 2026-10-06 §3.6: le scritture sui dati hanno i loro test in prod-writes.test.mjs);
 // configurazione solo in un passo ACT-CFG-CHANGE con finestra 3A valida e token
-// del passo. Criterio M6: 100 casi avversi generati → 100/100 deny.
+// del passo. Criterio M6: 100 casi avversi generati → 100/100 deny (con write_data spento).
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { join } from "node:path";
@@ -138,7 +139,7 @@ test("input solo sul search_box del passo attivo (anche SEL standard); click sol
   assert.ok(silent(browserCall(G, ws, `${CB}form_input`, { ref: "r", value: "4500012345" })));
   assert.ok(silent(browserCall(G, ws, `${PW}browser_type`, { ref: "e", text: "4500012345" })));
   const enter = browserCall(G, ws, `${DT}type_text`, { text: "4500012345", submitKey: "Enter" });
-  assert.ok(denied(enter)); assert.match(reasonOf(enter), /In produzione non si scrivono dati/);
+  assert.ok(denied(enter)); assert.match(reasonOf(enter), /fuori da un passo di scrittura approvato/);
   assert.ok(denied(browserCall(G, ws, `${DT}click`, { uid: "1" })), "click sul search_box: il passo è di input");
   set(step(1, "FILL", "ACT-OBS", SEL.std));
   assert.ok(silent(browserCall(G, ws, `${DT}fill`, { uid: "1_5", value: "x" })), "search_box standard in product/kb");
@@ -174,7 +175,8 @@ test("configurazione in prod: consentita solo con 3A valida (A1, A2 da persona d
   const ok = browserCall(G, ws, `${DT}click`, { uid: "1_4" }, { transcript_path: tr });
   assert.ok(silent(ok), ok.stdout);
   assert.ok(denied(browserCall(G, ws, `${DT}click`, { uid: "1_4" }, { transcript_path: transcript(["APPROVO PIANO PLAN.0077 DA Mario Rossi"]) })), "frasi assenti dal transcript");
-  assert.ok(denied(browserCall(G, ws, `${DT}upload_file`, { uid: "1", filePath: "x" }, { transcript_path: tr })), "upload mai");
+  // Ops veloce: dentro un passo di scrittura approvato (qui ACT-CFG-CHANGE con 3A) il caricamento è ammesso; fuori da un passo di scrittura mai (prod-writes.test.mjs)
+  assert.ok(silent(browserCall(G, ws, `${DT}upload_file`, { uid: "1", filePath: "x" }, { transcript_path: tr })), "upload dentro il passo approvato");
   assert.ok(denied(browserCall(G, ws, `${DT}evaluate_script`, { function: "() => 1" }, { transcript_path: tr })), "script mai");
   appendFileSync(tr, "");
 });

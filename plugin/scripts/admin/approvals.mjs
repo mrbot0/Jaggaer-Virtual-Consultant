@@ -259,6 +259,26 @@ export function threeAState(records, plan, n, envPolicy = {}, now = Date.now(), 
   return { ok: true, reason: null, used: [w.a1, w.a2, tok] };
 }
 
+// Ops veloce (spec 2026-10-06 §3.6): approvazione di un passo che scrive in produzione — A1 (finestra) + token del
+// passo; A2 solo se l'ambiente richiede il secondo approvatore. Il consumo monouso lo fa guard-config-scope (grazia 30 s).
+// Con second_approver_required delega a threeAState (A1 + A2 da persona diversa + token del passo).
+// → { ok, reason, used: [record…] }
+export function prodStepApproval(records, plan, n, envPolicy = {}, now = Date.now(), { graceMs = 30000 } = {}) {
+  if (envPolicy?.second_approver_required) return threeAState(records, plan, n, envPolicy, now, { graceMs });
+  const w = windowState(null, plan, envPolicy, now, { records });
+  if (!w.a1) return { ok: false, reason: `manca A1: \`APPROVO PIANO ${plan}\``, used: [] };
+  if (w.expired) return { ok: false, reason: `finestra scaduta: si riparte da \`APPROVO PIANO ${plan}\``, used: [] };
+  let tok = w.tokenForStep(n);
+  if (!tok) {
+    const all = records.filter((r) => r.plan === plan);
+    const t1 = Date.parse(w.a1.ts);
+    const recent = new Set(all.filter((r) => r.kind === "consume" && r.step === n && now - Date.parse(r.ts) <= graceMs).map((r) => r.ref));
+    tok = all.find((r) => r.kind === "A3" && r.step === n && recent.has(r.hash) && Date.parse(r.ts) >= t1) ?? null;
+  }
+  if (!tok) return { ok: false, reason: `manca l'approvazione del passo: \`APPROVO PASSO ${n} ${plan}\``, used: [] };
+  return { ok: true, reason: null, used: [w.a1, tok] };
+}
+
 // ---- conferma nel transcript (difesa in profondità) ----
 // Un record vale solo se nel transcript c'è un PROMPT VERO DELL'UTENTE (giro di
 // correzione 1, I3):
