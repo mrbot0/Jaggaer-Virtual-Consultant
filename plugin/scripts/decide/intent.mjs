@@ -9,13 +9,13 @@ import { readdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { ACT, envColumn } from "../../hooks/lib/act-classes.mjs";
 import { LEVELS, autonomyLevel, minLevel, capFor } from "../../hooks/lib/autonomy.mjs";
+import { requiredApprovals } from "../../hooks/lib/guards/config-scope.mjs";
 import { evaluate, loadTable } from "./dt-eval.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { readTextFile, inputBase } from "../lib/text-file.mjs";
 
 const RISK_RANK = { R0: 0, R1: 1, R2: 2, R3: 3 };
-export const PROD_REFUSAL = "In produzione non si scrivono dati; posso farlo in sandbox o pre-produzione (§52.1)";
 // Ops veloce (spec 2026-10-06 §3.3, §3.6): ACT-DELETE è negato solo in produzione; in sandbox e pre-produzione entra in un piano.
 export const DELETE_REFUSAL = "In produzione non si cancella mai; in sandbox e pre-produzione sì, dentro un piano (posso anche annullare con la compensazione cancel)";
 
@@ -44,6 +44,8 @@ const VERBS = [
   ["ACT-PUBLISH", /\b(pubblica(la|lo|re)?|publish)\b/g],
   ["ACT-CLOSE", /\b(annull(a|ala|alo|are)|chiudi(la|lo)?|cancel|close)\b/g],
   ["ACT-TRANSMIT", /\b(trasmetti(la|lo)?|transmit)\b/g],
+  // revisione finale (I3): l'import massivo (template) è ACT-BULK, prima di "carica" (ACT-UPLOAD, un allegato)
+  ["ACT-BULK", /\b(importa(re|li|le|lo|la)?|import|bulk( import| upload)?|caric(a|are|ali|ale) in massa|caricamento massivo|in massa|massiv[oaie])\b/g],
   ["ACT-UPLOAD", /\b(caric(a|ala|alo)|alleg(a|ala|alo)|upload|attach)\b/g],
   ["ACT-CFG-CHANGE", /\b(configur(a|are)|rendi obbligatori[oa]|make (it )?mandatory|attiv(a|are)|disattiv(a|are)|imposta|enable|disable|configure)\b/g],
   ["ACT-CFG-READ", /\b(confronta (la )?configurazione|baseline|compare (the )?configuration)\b/g],
@@ -140,6 +142,8 @@ export function parseIntent(text, { customers = [], session = null, autonomy = n
   if (actions.includes("ACT-CFG-READ")) actions = actions.filter((a) => a !== "ACT-OBS");
   if (/\bperch[eé](?![a-zà-ù])|\bwhy\b/.test(t) && actions.includes("ACT-OBS") && !actions.includes("ACT-QRY")) actions.splice(actions.indexOf("ACT-OBS") + 1, 0, "ACT-QRY");
   if (actions.includes("ACT-CREATE") && /\bda catalogo\b|\bcerca\b|\bricerca\b|\bfrom (the )?catalog\b/.test(t) && !actions.includes("ACT-OBS")) actions.unshift("ACT-OBS");
+  // l'import massivo carica il file compilato e crea i record: un solo ACT-BULK (come il piano di compose-plan)
+  if (actions.includes("ACT-BULK")) actions = actions.filter((a) => a !== "ACT-UPLOAD" && a !== "ACT-CREATE");
   if (actions.includes("ACT-DELETE")) actions = ["ACT-DELETE"];
 
   // scope: primario + gli altri (handoff); ambiguità esplicita ("un contratto o un ordine") ⇒ chiedi
@@ -205,12 +209,16 @@ export function parseIntent(text, { customers = [], session = null, autonomy = n
   const isDelete = actions.includes("ACT-DELETE");
   const critical = missing.includes("env") || missing.includes("customer") || missing.includes("scope") || missing.includes("action");
   const lvl = minLevel(LEVELS.includes(autonomy) ? autonomy : "alto", capFor(env));
-  // Il piano chiede almeno un'approvazione col livello attuale (a grandi linee, come requiredApprovals/planApproval):
-  // prod sempre; pre-produzione se il livello non è alto; config e cancellazioni sempre; massivi se non alto;
-  // pre-produzione con passi R2/R3 (invio, approvazione, pubblicazione…); la corsia guidata dei collaudi (nrt-run) mostra sempre il piano.
-  const needsApproval = env === "prod" || task === "nrt-run" || (env === "preprod" && lvl !== "alto")
-    || actions.some((a) => a === "ACT-CFG-CHANGE" || a === "ACT-DELETE" || (a === "ACT-BULK" && lvl !== "alto")
-      || (env === "preprod" && /R2|R3/.test(ACT[a]?.risk ?? "")));
+  // Il piano chiede almeno un'approvazione col livello attuale, con la stessa regola di step-check (planNeedsApproval):
+  // prod sempre; pre-produzione se il livello non è alto; altrimenti un passo della classe che chiede A1/A2/A3 secondo
+  // requiredApprovals (config e cancellazioni sempre; massivi se non alto; R2 in pre-produzione) — revisione finale (I3):
+  // niente formula duplicata a mano. La corsia guidata dei collaudi (nrt-run) mostra sempre il piano.
+  const stepNeeds = (a) => {
+    if (!ACT[a]) return false;
+    const r = requiredApprovals(a, { action_class: a }, { type: env ?? "prod", policy: {} }, a === "ACT-CFG-CHANGE" ? "rosso" : null, lvl);
+    return r.a1 || r.a2 || r.a3;
+  };
+  const needsApproval = env === "prod" || task === "nrt-run" || (env === "preprod" && lvl !== "alto") || actions.some(stepNeeds);
   const dt = evaluate(loadTable("DT-026"), {
     critical_missing: critical,
     action_class_allowed: notAllowed.length === 0 || !env,
@@ -270,8 +278,9 @@ export async function run(argv, env = process.env) {
         const { resolveSessionId } = await import("../admin/session.mjs");
         const { readApprovals, approvalsFile } = await import("../admin/approvals.mjs");
         const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
-        const records = sid ? readApprovals(approvalsFile(ws, r.customer, sid)) : [];
-        const a = autonomyLevel({ ws, customer: r.customer, records, envType: r.env });
+        // revisione finale (I3): i RECORD del registro (readApprovals restituisce { ok, records }); registro corrotto ⇒ nessuna frase
+        const reg = sid ? readApprovals(approvalsFile(ws, r.customer, sid)) : null;
+        const a = autonomyLevel({ ws, customer: r.customer, records: reg?.ok ? reg.records : [], envType: r.env });
         r = parseIntent(text, { customers, session, autonomy: a.level });
       } catch { /* senza registro vale alto (poi il tetto dell'ambiente) */ }
     }

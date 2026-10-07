@@ -25,3 +25,38 @@ test("intento: i motivi dicono il livello e l'ambiente; la cancellazione in prod
 test("intento: senza opzione autonomy vale alto (nessuna sessione)", () => {
   assert.equal(parseIntent("su ACME pre-produzione crea un ordine di 3 sedie", { customers: ["ACME"] }).outcome, "avvia");
 });
+
+// Revisione finale (I3): run() passa a autonomyLevel i RECORD del registro (non l'oggetto di readApprovals): la frase
+// AUTONOMIA BASSA della sessione vale anche per l'intento.
+import { join as joinPath } from "node:path";
+import { writeFileSync as wf, mkdtempSync as mkd, appendFileSync as af } from "node:fs";
+import { tmpdir as tmp } from "node:os";
+import { spawnSync as sp } from "node:child_process";
+import { envWs } from "../helpers/env-fixture.mjs";
+import { runHook, ROOT, cleanEnv } from "../helpers/hook-env.mjs";
+
+const sayIt = (ws, tr, prompt) => { af(tr, `${JSON.stringify({ type: "user", isSidechain: false, userType: "external", message: { role: "user", content: prompt }, timestamp: new Date().toISOString() })}\n`); return runHook("approval-capture", { session_id: "sess-1", cwd: ws, hook_event_name: "UserPromptSubmit", prompt, transcript_path: tr }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT }); };
+const cli = (ws, text) => JSON.parse(sp(process.execPath, [joinPath(ROOT, "scripts/decide/intent.mjs"), "--text", text, "--workspace", ws, "--session", "sess-1", "--json"], { encoding: "utf8", env: cleanEnv({ JVC_WORKSPACE: ws }) }).stdout);
+
+test("intento run(): AUTONOMIA BASSA nella sessione ⇒ crea in pre-produzione è mostra-piano (senza frase: avvia)", () => {
+  const ws = envWs({ env: "preprod", scope: "P2P", autonomy: null });
+  const tr = joinPath(mkd(joinPath(tmp(), "ai-")), "t.jsonl"); wf(tr, "");
+  assert.equal(cli(ws, "su ACME pre-produzione crea un ordine di 3 sedie").outcome, "avvia");
+  sayIt(ws, tr, "AUTONOMIA BASSA");
+  const r = cli(ws, "su ACME pre-produzione crea un ordine di 3 sedie");
+  assert.equal(r.outcome, "mostra-piano", JSON.stringify(r));
+  assert.match(r.reason, /autonomia basso/);
+});
+
+test("intento: import massivo in pre-produzione ad alto non chiede approvazioni (come step-check: ACT-BULK ad alto nessuna)", () => {
+  const p = (text, autonomy) => parseIntent(text, { customers: ["ACME"], autonomy });
+  const a = p("su ACME pre-produzione importa 50 fornitori con il template", "alto");
+  assert.deepEqual(a.actions, ["ACT-BULK"]);
+  assert.equal(a.outcome, "avvia", a.reason);
+  assert.equal(p("su ACME pre-produzione carica in massa 50 fornitori", "alto").outcome, "avvia");
+  assert.equal(p("su ACME pre-produzione importa 50 fornitori con il template", "medio").outcome, "mostra-piano");
+  assert.equal(p("su ACME sandbox importa 50 fornitori con il template", "medio").outcome, "mostra-piano");
+  assert.equal(p("su ACME produzione importa 50 fornitori con il template", "medio").outcome, "mostra-piano");
+  // un allegato singolo resta ACT-UPLOAD (R2): in pre-produzione chiede l'approvazione del piano
+  assert.equal(p("su ACME pre-produzione allega il preventivo alla RdA 10045", "alto").outcome, "mostra-piano");
+});
