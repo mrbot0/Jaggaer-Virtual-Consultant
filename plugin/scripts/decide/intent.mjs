@@ -3,11 +3,12 @@
 // elemento critico manca o è ambiguo (nessun ambiente, due scope plausibili senza un primario, nessun
 // cliente) l'esito è `chiedi`.
 //
-//   parseIntent(text, { customers, session }) → { customer, env, scopes[], mode, task, actions: [ACT-*],
+//   parseIntent(text, { customers, session, autonomy }) → { customer, env, scopes[], mode, task, actions: [ACT-*],
 //     entities[], data{}, stop_at, risk_max, missing[], outcome, reason, dt }
 import { readdirSync } from "node:fs";
 import { join, resolve as resolvePath } from "node:path";
 import { ACT, envColumn } from "../../hooks/lib/act-classes.mjs";
+import { LEVELS, autonomyLevel, minLevel, capFor } from "../../hooks/lib/autonomy.mjs";
 import { evaluate, loadTable } from "./dt-eval.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
@@ -15,7 +16,8 @@ import { readTextFile, inputBase } from "../lib/text-file.mjs";
 
 const RISK_RANK = { R0: 0, R1: 1, R2: 2, R3: 3 };
 export const PROD_REFUSAL = "In produzione non si scrivono dati; posso farlo in sandbox o pre-produzione (§52.1)";
-export const DELETE_REFUSAL = "Non cancello: posso annullarla (compensazione cancel)";
+// Ops veloce (spec 2026-10-06 §3.3, §3.6): ACT-DELETE è negato solo in produzione; in sandbox e pre-produzione entra in un piano.
+export const DELETE_REFUSAL = "In produzione non si cancella mai; in sandbox e pre-produzione sì, dentro un piano (posso anche annullare con la compensazione cancel)";
 
 const norm = (s) => String(s ?? "").toLowerCase().replace(/[’`]/g, "'").replace(/\s+/g, " ");
 
@@ -111,7 +113,9 @@ function extractData(text, t) {
 const ENTITY = [["requisition", /\b(rda|richiest[ae] d'acquisto|requisition)\b/], ["purchase_order", /\b(ordin[ei]|order)\b/], ["catalog", /\bcatalog/],
   ["supplier", /\b(fornitor|supplier)/], ["contract", /\bcontratt/], ["invoice", /\bfattur/], ["sourcing_event", /\b(gar[ae]|evento|rdo|asta)\b/], ["user", /\butent[ei]\b/], ["notification", /\bnotific/]];
 
-export function parseIntent(text, { customers = [], session = null } = {}) {
+// `autonomy`: livello effettivo (basso|medio|alto) che il chiamante ha calcolato con autonomyLevel; assente ⇒ alto
+// (il tetto dell'ambiente si applica qui: in produzione al massimo medio).
+export function parseIntent(text, { customers = [], session = null, autonomy = null } = {}) {
   const raw = String(text ?? "").trim();
   const t = norm(raw);
   const missing = [];
@@ -179,7 +183,7 @@ export function parseIntent(text, { customers = [], session = null } = {}) {
 
   // rischio
   const riskOf = (cls) => (cls === "ACT-CFG-CHANGE" ? "R2" : String(ACT[cls]?.risk ?? "R3").split("/").pop());
-  const risks = actions.filter((a) => a !== "ACT-DELETE").map(riskOf);
+  const risks = actions.map(riskOf);   // ACT-DELETE conta R3: in sandbox e pre-produzione entra in un piano da approvare
   if (task === "nrt-run") risks.push("R2");   // la corsia guidata esegue piani con passi R2 (§27.4): piano mostrato
   const risk_max = risks.length ? risks.reduce((a, b) => (RISK_RANK[b] > RISK_RANK[a] ? b : a)) : "R0";
 
@@ -195,21 +199,29 @@ export function parseIntent(text, { customers = [], session = null } = {}) {
   if (actions.includes("ACT-CREATE") && scopes[0] === "P2P" && data.quantity == null) missing.push("data:quantity");
   const entities = ENTITY.filter(([, re]) => re.test(t)).map(([type]) => ({ type, ...(type === "requisition" && data.ref ? { ref: data.ref } : {}), ...(type === "purchase_order" && data.document ? { ref: data.document } : {}) }));
 
-  // esito (DT-026)
+  // esito (DT-026), spec 2026-10-06 §3.5, §3.6: dipende dal livello di autonomia e dall'ambiente
   const col = envColumn(env ?? "prod");
   const notAllowed = actions.filter((a) => ACT[a]?.[col] === "never" || !ACT[a]);
   const isDelete = actions.includes("ACT-DELETE");
-  const critical = !isDelete && (missing.includes("env") || missing.includes("customer") || missing.includes("scope") || missing.includes("action"));
+  const critical = missing.includes("env") || missing.includes("customer") || missing.includes("scope") || missing.includes("action");
+  const lvl = minLevel(LEVELS.includes(autonomy) ? autonomy : "alto", capFor(env));
+  // Il piano chiede almeno un'approvazione col livello attuale (a grandi linee, come requiredApprovals/planApproval):
+  // prod sempre; pre-produzione se il livello non è alto; config e cancellazioni sempre; massivi se non alto;
+  // pre-produzione con passi R2/R3 (invio, approvazione, pubblicazione…); la corsia guidata dei collaudi (nrt-run) mostra sempre il piano.
+  const needsApproval = env === "prod" || task === "nrt-run" || (env === "preprod" && lvl !== "alto")
+    || actions.some((a) => a === "ACT-CFG-CHANGE" || a === "ACT-DELETE" || (a === "ACT-BULK" && lvl !== "alto")
+      || (env === "preprod" && /R2|R3/.test(ACT[a]?.risk ?? "")));
   const dt = evaluate(loadTable("DT-026"), {
     critical_missing: critical,
-    action_class_allowed: isDelete ? false : notAllowed.length === 0 || !env,
+    action_class_allowed: notAllowed.length === 0 || !env,
     config_change: actions.includes("ACT-CFG-CHANGE"),
     max_risk: risk_max,
     environment: env ?? "prod",
+    needs_approval: needsApproval,
   });
   const outcome = dt.outcome;
   let reason;
-  if (isDelete) reason = DELETE_REFUSAL;
+  if (isDelete && env === "prod") reason = DELETE_REFUSAL;
   else if (outcome === "chiedi") {
     const ask = [];
     if (missing.includes("env")) ask.push("in quale ambiente (sandbox, pre-produzione, produzione)?");
@@ -217,10 +229,9 @@ export function parseIntent(text, { customers = [], session = null } = {}) {
     if (missing.includes("action")) ask.push("che cosa devo fare (crea, modifica, invia, approva, annulla, mostra, …)?");
     if (missing.includes("scope")) ask.push(`su quale oggetto (${uniq.join(" o ")})?`);
     reason = `Serve un chiarimento prima di qualunque passo (§29.5): ${ask.join(" ")}`;
-  } else if (outcome === "rifiuta") reason = env === "prod" && notAllowed.some((a) => ACT[a]?.effect === "write") ? PROD_REFUSAL : `${notAllowed.join(", ")} non è ammessa in ${env} (§29.4)`;
-  else if (outcome === "approvazione-3A") reason = "Configurazione in produzione: piano, prova e passi con tripla approvazione (§52.2)";
-  else if (outcome === "mostra-piano") reason = `Rischio ${risk_max} in ${env}: il piano si mostra e si attende la conferma (§29.5)`;
-  else reason = `Parte subito: ${risk_max === "R0" ? "R0 (osservazione e lettura) ovunque" : `≤ R1 in ${env}`} (§29.5)`;
+  } else if (outcome === "rifiuta") reason = `${notAllowed.join(", ")} non è ammessa in ${env} (§29.4)`;
+  else if (outcome === "mostra-piano") reason = `Piano da approvare in ${env} (autonomia ${lvl})`;
+  else reason = `Parte subito con autonomia ${lvl} in ${env ?? "nessun ambiente"}${risk_max === "R0" ? " (R0: osservazione e lettura)" : ""}`;
 
   return { customer, env, scopes, mode, task, actions, entities, data, stop_at, risk_max, missing, outcome, reason,
     dt: { table: dt.table, version: dt.table_version, outcome: dt.outcome, score: dt.score, rule: dt.rule } };
@@ -229,7 +240,7 @@ export function parseIntent(text, { customers = [], session = null } = {}) {
 const HELP = `uso: node scripts/decide/intent.mjs (--text "<intento>" | --text-file <file>) [--customers ACME,BETA] [--session <id>] [--workspace <dir>] [--json]
 
 Estrae cliente, ambiente, scope, classi d'azione, dati e decide con DT-026: avvia · mostra-piano ·
-approvazione-3A · rifiuta · chiedi. I clienti noti: --customers, altrimenti le cartelle customers/ del
+rifiuta · chiedi. Il livello di autonomia (frase, file del cliente, alto) decide se il piano parte da solo. I clienti noti: --customers, altrimenti le cartelle customers/ del
 workspace; cliente e ambiente attivi in sessione valgono se l'intento non li nomina. --text-file: il testo dell'utente da
 un file (relativo al workspace, ≤ 64 KB) — la forma dei comandi del plugin (i guard negano virgole, accenti, ? in linea).
 Exit: 0 esito prodotto · 1 argomenti · 2 errore di sistema.`;
@@ -252,7 +263,18 @@ export async function run(argv, env = process.env) {
       const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
       if (sid) session = loadSession(ws, sid).session;
     } catch { session = null; }
-    const r = parseIntent(text, { customers, session });
+    let r = parseIntent(text, { customers, session });
+    // Livello di autonomia dalla sessione (frase nel registro > file del cliente > alto), col tetto dell'ambiente.
+    if (session && r.customer && r.env) {
+      try {
+        const { resolveSessionId } = await import("../admin/session.mjs");
+        const { readApprovals, approvalsFile } = await import("../admin/approvals.mjs");
+        const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
+        const records = sid ? readApprovals(approvalsFile(ws, r.customer, sid)) : [];
+        const a = autonomyLevel({ ws, customer: r.customer, records, envType: r.env });
+        r = parseIntent(text, { customers, session, autonomy: a.level });
+      } catch { /* senza registro vale alto (poi il tetto dell'ambiente) */ }
+    }
     console.log(asJson ? JSON.stringify(r) : `${r.outcome} — ${r.reason}\n${r.customer ?? "?"} · ${r.env ?? "?"} · ${r.scopes.join("+") || "?"} · ${r.actions.join(" → ") || r.task || "—"}`);
     return 0;
   } catch (err) { return fail(asJson, 2, `errore di sistema: ${err?.message ?? err}`); }

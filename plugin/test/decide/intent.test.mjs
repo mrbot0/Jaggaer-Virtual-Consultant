@@ -10,7 +10,7 @@ import { parseIntent } from "../../scripts/decide/intent.mjs";
 
 const G = YAML.parse(readFileSync(join(ROOT, "test/golden/intent/cases.yaml"), "utf8"));
 
-test("intent: 33 intenti golden (le 16 righe di §61, 14 casi limite, 3 fuori vocabolario) → 33/33", { todo: "Task 8" }, () => {
+test("intent: 33 intenti golden (le 16 righe di §61, 14 casi limite, 3 fuori vocabolario) → 33/33", () => {
   assert.equal(G.cases.length, 33);
   const failures = [];
   for (const c of G.cases) {
@@ -38,6 +38,6 @@ test("intent: il DT-026 decide l'esito (tabella e punteggio nel risultato); CLI 
   assert.equal(r.dt.table, "DT-026"); assert.equal(r.dt.outcome, r.outcome);
   const cli = spawnSync(process.execPath, [join(ROOT, "scripts/decide/intent.mjs"), "--text", "Su ACME produzione crea un ordine di test", "--customers", "ACME,BETA", "--json"], { encoding: "utf8", env: cleanEnv() });
   assert.equal(cli.status, 0, cli.stderr);
-  assert.equal(JSON.parse(cli.stdout).outcome, "rifiuta");
+  assert.equal(JSON.parse(cli.stdout).outcome, "mostra-piano");   // prod: scrittura = piano da approvare (spec 2026-10-06 §3.6)
   assert.equal(spawnSync(process.execPath, [join(ROOT, "scripts/decide/intent.mjs"), "--json"], { encoding: "utf8", env: cleanEnv() }).status, 1);
 });

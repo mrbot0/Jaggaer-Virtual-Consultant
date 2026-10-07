@@ -1,13 +1,14 @@
 id: DT-026
-version: 1
+version: 2
 title: Classificazione dell'intento
-decision: "Dagli elementi estratti dall'intento (cliente, ambiente, scope, classi d'azione, dati) decidere se avviare da solo, mostrare il piano, seguire la tripla approvazione, rifiutare o chiedere"
-description: "Esiti dalle regole dell'avvio automatico (§29.5) e dal catalogo degli intenti (§61): parte da solo solo ≤ R1 in sandbox o R0 ovunque; R2 mostra il piano e attende; R3 e produzione seguono §52; elemento critico mancante o ambiguo → chiedi; classe d'azione non ammessa nell'ambiente (scrittura in prod, ACT-DELETE) → rifiuta."
+decision: "Dagli elementi estratti dall'intento (cliente, ambiente, scope, classi d'azione, dati) e dal livello di autonomia decidere se avviare da solo, mostrare il piano da approvare, rifiutare o chiedere"
+description: "Esiti dalle regole dell'avvio automatico (§29.5), dal catalogo degli intenti (§61) e da ops veloce (spec 2026-10-06 §3.3, §3.5, §3.6): R0 parte ovunque; se il piano non chiede approvazioni col livello di autonomia attuale (needs_approval: false) parte da solo; produzione e R3 mostrano il piano da approvare; elemento critico mancante o ambiguo → chiedi; ACT-DELETE in produzione → rifiuta (in sandbox e pre-produzione entra in un piano)."
 inputs:
   - { name: critical_missing, label: "Elemento critico mancante o ambiguo (nessun ambiente, due scope plausibili)", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
   - { name: action_class_allowed, label: "Tutte le classi d'azione sono ammesse nell'ambiente (§29.4)", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
   - { name: config_change, label: "Contiene ACT-CFG-CHANGE", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
   - { name: max_risk, label: "Rischio massimo delle classi d'azione", weight: 0.60, domain: { enum: { R0: 0, R1: 0.2, R2: 0.6, R3: 1 } } }
+  - { name: needs_approval, label: "Il piano chiede almeno un'approvazione col livello di autonomia attuale (spec 2026-10-06 §3.5)", weight: 0, domain: { boolean: { true: 0, false: 0 } } }
   - { name: environment, label: "Ambiente dichiarato", weight: 0.40, domain: { enum: { sandbox: 0, preprod: 0.5, prod: 1 } } }
 priors: []
 scoring: weighted_sum
@@ -16,13 +17,13 @@ thresholds:
   - { from: 0.25, to: 1, outcome: mostra-piano }
 overrides:
   - { when: { critical_missing: true }, outcome: chiedi, source: "§29.5: se un elemento critico manca o è ambiguo, l'esito è chiedi" }
-  - { when: { action_class_allowed: false }, outcome: rifiuta, source: "§61: 'Su ACME produzione crea un ordine di test' · 'Cancella la RdA' → rifiutato" }
+  - { when: { action_class_allowed: false }, outcome: rifiuta, source: "§29.4 aggiornato (spec 2026-10-06 §3.3): ACT-DELETE in produzione" }
   - { when: { max_risk: R0 }, outcome: avvia, source: "§29.5: R0 ovunque" }
-  - { when: { environment: prod, config_change: true }, outcome: approvazione-3A, source: "§29.5, §52.2: configurazioni in produzione solo con tre approvazioni" }
-  - { when: { environment: prod }, outcome: rifiuta, source: "§52.1: in produzione non si scrivono dati, mai (resta solo R0, già avviato sopra)" }
-  - { when: { max_risk: R3 }, outcome: approvazione-3A, source: "§29.5: R3 e produzione seguono §52" }
-outcomes: [avvia, mostra-piano, approvazione-3A, rifiuta, chiedi]
-null_policy: { critical_missing: error, action_class_allowed: error, config_change: "default:false", max_risk: error, environment: error }
+  - { when: { needs_approval: false }, outcome: avvia, source: "spec 2026-10-06 §3.5: nessuna approvazione col livello attuale" }
+  - { when: { environment: prod }, outcome: mostra-piano, source: "spec 2026-10-06 §3.6: in produzione piano + approvazione per passo" }
+  - { when: { max_risk: R3 }, outcome: mostra-piano, source: "spec 2026-10-06 §2.2" }
+outcomes: [avvia, mostra-piano, rifiuta, chiedi]
+null_policy: { critical_missing: error, action_class_allowed: error, config_change: "default:false", max_risk: error, needs_approval: "default:true", environment: error }
 log_as: DEC
 calibration: bootstrap
-sources: ["§29.5", "§29.4", "§52", "§61"]
+sources: ["§29.5", "§29.4", "§61", "spec 2026-10-06 §3.3, §3.5, §3.6"]
