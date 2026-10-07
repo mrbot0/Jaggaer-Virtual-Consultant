@@ -104,3 +104,58 @@ test("import-result: CLI missing required input", async () => {
   const exitCode = await main(argv, {});
   assert.equal(exitCode, 1);
 });
+
+// Revisione finale (I4): un messaggio di riga che comincia con una parola di successo ma porta un qualificatore d'errore
+// è una riga fallita; testo senza righe né codici ⇒ unrecognized; con le righe attese ⇒ missing.
+test("import-result: successo con qualificatore d'errore ⇒ failed", () => {
+  const r = importResult({ text: [
+    "Riga 1: completata con errori",
+    "Riga 2: OK, ma il codice esiste già",
+    "Riga 3: created with warnings",
+    "Riga 4: importata con avvisi",
+    "Riga 5: OK but skipped",
+    "Riga 6: completed, 2 fields rejected",
+    "Riga 7: importata, valore scartato",
+    "Riga 8: creato; workflow fallito",
+    "Riga 9: success - save failed",
+    "Riga 10: importata correttamente",
+  ].join("\n") });
+  assert.deepEqual(r.ok_rows, [10]);
+  assert.deepEqual(r.failed.map((f) => f.row), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  assert.equal(r.failed[0].message, "completata con errori");
+  assert.equal(r.unrecognized, false);
+  // anche nel log a colonne: stato OK con un messaggio d'avviso non è una riga riuscita
+  const t = importResult({ table: { headers: ["Row", "Status", "Message"], rows: [[1, "OK", "created with warnings"], [2, "OK", ""]] } });
+  assert.deepEqual(t.ok_rows, [2]); assert.deepEqual(t.failed, [{ row: 1, message: "created with warnings" }]);
+});
+
+test("import-result: nessuna riga riconosciuta né codici ⇒ unrecognized; righe attese ⇒ missing", () => {
+  const u = importResult({ text: "Elaborazione in corso…\nAttendere" });
+  assert.equal(u.unrecognized, true); assert.deepEqual(u.ok_rows, []); assert.deepEqual(u.failed, []);
+  assert.equal(importResult({ text: "Creati: DE_001" }).unrecognized, false);
+  assert.equal(importResult({ text: "Il file non corrisponde al template: intestazione mancante" }).unrecognized, false);
+  const m = importResult({ text: "Riga 1: OK\nRiga 3: valore non valido", expected: 4 });
+  assert.deepEqual(m.missing, [2, 4]);
+  assert.deepEqual(importResult({ text: "Elaborazione in corso", expected: 2 }).missing, [1, 2]);
+  assert.equal(importResult({ text: "Riga 1: OK" }).missing, undefined);
+});
+
+test("import-result: CLI --righe N ⇒ missing; testo non riconosciuto ⇒ exit 0 con unrecognized; --righe non valido ⇒ 1", async () => {
+  const testDir = join(import.meta.dirname, "..", "..", ".sessions");
+  mkdirSync(testDir, { recursive: true });
+  const testFile = join(testDir, `test-import-u-${Date.now()}.txt`);
+  const out = [];
+  const log = console.log;
+  try {
+    console.log = (x) => out.push(String(x));
+    writeFileSync(testFile, "Elaborazione in corso");
+    assert.equal(await main(["--text-file", testFile, "--righe", "3"], { JVC_WORKSPACE: join(import.meta.dirname, "../..") }), 0);
+    const r = JSON.parse(out.at(-1));
+    assert.equal(r.unrecognized, true); assert.deepEqual(r.missing, [1, 2, 3]);
+    assert.equal(await main(["--text-file", testFile, "--righe", "0"], { JVC_WORKSPACE: join(import.meta.dirname, "../..") }), 1);
+    assert.equal(await main(["--text-file", testFile, "--righe", "x"], { JVC_WORKSPACE: join(import.meta.dirname, "../..") }), 1);
+  } finally {
+    console.log = log;
+    try { rmSync(testFile); } catch { }
+  }
+});
