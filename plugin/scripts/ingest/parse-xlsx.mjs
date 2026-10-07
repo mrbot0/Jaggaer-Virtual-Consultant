@@ -2,7 +2,8 @@
 //
 //   parseXlsx(buffer, { id, title?, source? }) → parsed-doc
 //     - una sezione per foglio (path "sheet-<n>", titolo = nome del foglio), una tabella per foglio:
-//       intestazione = prima riga non vuota, righe = le successive (vuote finali tolte);
+//       intestazione = prima riga non vuota (table.start_row = la sua riga 1-based, solo se non è la 1), righe = le
+//       successive (vuote finali tolte); celle inlineStr (<is><t> o <is><r><t>) lette come le shared strings;
 //     - fogli nascosti (state hidden/veryHidden) → sections[].hidden = true;
 //     - convalide di cella di tipo lista → sections[].validations[] { sqref, type, values[] | source }
 //       (vocabolari chiusi); le liste che puntano a un intervallo sono risolte se il foglio è nel file;
@@ -191,6 +192,9 @@ function parseXlsxInner(buffer, { id, title, source = null, limits: lim = {} } =
     }
     const table = { headers: headers.map((h) => oneLine(h)), rows: body };
     if (headerRows > 1) table.header_rows = headerRows;
+    // riga 1-based dell'intestazione nel foglio (spec 2026-10-06 §3.8: il template riparte da lì); assente = riga 1,
+    // così i documenti con l'intestazione in prima riga (e i loro golden) restano identici
+    if (first > 0) table.start_row = first + 1;
     sec.tables.push(table);
   });
   return finishDoc(doc);

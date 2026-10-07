@@ -13,7 +13,7 @@ const manual = readFileSync(join(ROOT, "docs/MANUAL.md"), "utf8");
 const EXPECTED = {
   vc: ["status", "agents", "doctor", "watch", "why"],
   use: ["customer", "env", "scope", "mode", "budget", "show", "close-stale"],
-  kb: ["ingest", "digest", "review", "find", "fields", "identity", "resolve", "precedents", "epistemic", "impact", "graph", "scopes", "handoffs", "clusters", "contradictions", "coverage", "reindex", "migrate"],
+  kb: ["ingest", "digest", "review", "find", "fields", "identity", "resolve", "precedents", "epistemic", "impact", "graph", "scopes", "handoffs", "clusters", "contradictions", "coverage", "template-learn", "reindex", "migrate"],
   nrt: ["plan", "run", "compile", "integration", "explore", "triage", "heal", "evidence", "push-xray", "report", "release-check", "author"],
   cfg: ["design", "apply", "verify", "audit", "coverage", "impact"],
   ops: ["esplora", "crea", "approva", "chiudi", "pubblica", "query", "tables", "learn-analytics"],

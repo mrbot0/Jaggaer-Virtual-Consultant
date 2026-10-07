@@ -1,7 +1,7 @@
 ---
 name: kb
 description: Conoscenza JAGGAER — ingestione e digestione dei documenti (sub-agenti di contesto), revisione umana, ricerca, campi, impatto, registri, indice e migrazioni (kb)
-argument-hint: ingest <path> [--scope <S>] [--genre <genere>] [--kind <tipo>] | digest [--scope <S>] [--fields <documento>] | review [--scope <S>] [--only <strato>] | find [--scope <S>] [--type <T>] [--status <s>] [--cluster <CL>] [--facet <K=V>] [--top <n>] | fields [--doc <documento>] [--mandatory-in <stato>] [--chain <CL>] [--custom] [--reason <r>] | identity <FLD> | identity --doc <documento> --missing <blocco> | resolve "<domanda>" | precedents <soggetto> [--top <n>] | epistemic <soggetto> | epistemic --scope <S> [--plan] | impact <codice> [--if "<modifica>"] | graph [--scope <S>] | scopes | handoffs [--validate] | clusters | contradictions [--open] | coverage [--scope <S>] | reindex [--all] | migrate
+argument-hint: ingest <path> [--scope <S>] [--genre <genere>] [--kind <tipo>] | digest [--scope <S>] [--fields <documento>] | review [--scope <S>] [--only <strato>] | find [--scope <S>] [--type <T>] [--status <s>] [--cluster <CL>] [--facet <K=V>] [--top <n>] | fields [--doc <documento>] [--mandatory-in <stato>] [--chain <CL>] [--custom] [--reason <r>] | identity <FLD> | identity --doc <documento> --missing <blocco> | resolve "<domanda>" | precedents <soggetto> [--top <n>] | epistemic <soggetto> | epistemic --scope <S> [--plan] | impact <codice> [--if "<modifica>"] | graph [--scope <S>] | scopes | handoffs [--validate] | clusters | contradictions [--open] | coverage [--scope <S>] | template-learn --file <xlsx> --object "<oggetto>" --scope <S> [--page <sig>] [--modulo <M>] [--fonte utente|tenant] | reindex [--all] | migrate
 allowed-tools: Bash(node *), Read
 ---
 
@@ -73,6 +73,17 @@ Non accettare né rifiutare nulla di tua iniziativa. `stats` dà il tasso di acc
 
   poi un `Agent(scope-digester, opus)` per lotto. Exit 3 = budget del documento raggiunto: si riprende alla sessione
   successiva con `--resume <cursore>` (riportalo all'utente).
+
+## `template-learn --file <xlsx> --object "<oggetto>" --scope <S>` — template di caricamento massivo (script diretto)
+
+    node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/template-learn.mjs" $ARGUMENTS --json
+
+Impara un template di import (foglio, riga d'intestazione, colonne, obbligatori marcati con `*` o `(obbligatorio)`, liste di
+valori dalle convalide) e lo salva come voce `TPL` in `customers/<C>/kb/scopes/<S>/templates/<codice>.yaml`, con il file
+vuoto in `templates/files/<codice>.xlsx`. `--file` è un percorso del workspace (es. `customers/<C>/templates-in/…`); `--fonte`
+dice se il template l'ha dato l'utente (`utente`, predefinito) o è stato scaricato dal tenant (`tenant`); `--page` è la firma
+della pagina di import. Lo stesso oggetto aggiorna la voce esistente. Riporta codice, colonne e obbligatori; exit 1 = errore
+d'uso (file non leggibile come template, scope o cliente non validi), exit 2 = errore di sistema.
 
 ## `reindex [--all]` e `migrate` — indice e migrazioni (script diretti)
 

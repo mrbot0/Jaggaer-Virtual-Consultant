@@ -232,3 +232,16 @@ test("detectFormat: archivi, Office 97-2003 non Excel, Snagit, file di sistema â
   assert.equal(detectFormat("x/blob.bin", Buffer.from([1, 0, 2, 0])).residue.class, "unsupported");
   assert.equal(detectFormat("x/creditcard", Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 16, 0, 0, 0, 0, 0, 0, 0])).parser, "image", "immagine senza estensione dai byte iniziali");
 });
+
+test("parse-xlsx: celle inlineStr (<is><t> e <is><r><t>) lette; table.start_row = riga 1-based dell'intestazione, assente se Ã¨ la 1", () => {
+  const wbXml = `<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="S" sheetId="1" r:id="rId1"/></sheets></workbook>`;
+  const rels = `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Target="worksheets/sheet1.xml"/></Relationships>`;
+  const mk = (rows) => parseXlsx(makeZip([{ name: "xl/workbook.xml", data: wbXml }, { name: "xl/_rels/workbook.xml.rels", data: rels },
+    { name: "xl/worksheets/sheet1.xml", data: `<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>${rows}</sheetData></worksheet>` }]), { id: "t" });
+  const top = mk(`<row r="1"><c r="A1" t="inlineStr"><is><t>Codice</t></is></c><c r="B1" t="inlineStr"><is><r><t>Nome</t></r><r><t> esteso</t></r></is></c></row><row r="2"><c r="A2" t="inlineStr"><is><t>X1</t></is></c></row>`).sections[0].tables[0];
+  assert.deepEqual(top.headers, ["Codice", "Nome esteso"]);
+  assert.equal(top.rows[0][0], "X1");
+  assert.equal("start_row" in top, false, "intestazione in riga 1: nessun start_row (golden invariati)");
+  const low = mk(`<row r="3"><c r="A3" t="inlineStr"><is><t>Codice</t></is></c></row><row r="4"><c r="A4" t="inlineStr"><is><t>X1</t></is></c></row>`).sections[0].tables[0];
+  assert.equal(low.start_row, 3);
+});

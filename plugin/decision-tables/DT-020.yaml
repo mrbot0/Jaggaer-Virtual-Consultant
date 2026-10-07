@@ -10,7 +10,7 @@ inputs:
     domain:
       enum: { CAP: 0, FLW: 0, KEY: 0, LCY: 0, FLD: 0, INT: 0, CFG: 0, CFP: 0, SEL: 0, HND: 0, INV: 0, GLS: 0, PMP: 0, PRF: 0, TBL: 0, QRY: 0,
               CHK: 0, STR: 0, OBS: 0, CTR: 0, EVD: 0, LSN: 0, CLS: 0, DT: 0, DEC: 0, EPI: 0, DOC: 0, UNT: 0, DIN: 0, USR: 0, PSP: 0,
-              ERR: 0, ACT: 0, RPT: 0, ENV: 0, PAT: 0, PBK: 0, BRF: 0, RUL: 0 }
+              ERR: 0, ACT: 0, RPT: 0, ENV: 0, PAT: 0, PBK: 0, BRF: 0, RUL: 0, TPL: 0 }
   - { name: position, label: "Posizione nel documento concorde (Setup → CFG, Procedure → FLW, tabella campi → FLD)", weight: 0.30, domain: { boolean: { true: 1, false: 0 } } }
   - { name: unit_form, label: "Forma dell'unità concorde (passi numerati → FLW, frase deontica → KEY/LCY/INV, tracciato → INT)", weight: 0.25, domain: { boolean: { true: 1, false: 0 } } }
   - { name: lexicon, label: "Lessico concorde (verbi di configurazione vs d'uso)", weight: 0.20, domain: { boolean: { true: 1, false: 0 } } }
@@ -28,7 +28,7 @@ thresholds:
   - { from: 0, to: 0.70, outcome: ambiguo }
   - { from: 0.70, to: 1, outcome_from: candidate_type }
 outcomes: [CAP, FLW, KEY, LCY, FLD, INT, CFG, CFP, SEL, HND, INV, GLS, PMP, PRF, TBL, QRY, CHK, STR, OBS, CTR, EVD, LSN, CLS, DT, DEC,
-  EPI, DOC, UNT, DIN, USR, PSP, ERR, ACT, RPT, ENV, PAT, PBK, BRF, RUL, ambiguo]
+  EPI, DOC, UNT, DIN, USR, PSP, ERR, ACT, RPT, ENV, PAT, PBK, BRF, RUL, TPL, ambiguo]
 null_policy: { candidate_type: error, position: "default:false", unit_form: "default:false", lexicon: "default:false", technical_name: "default:false", external_ref: "default:false" }
 log_as: DEC
 calibration: bootstrap

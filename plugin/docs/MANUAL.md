@@ -273,6 +273,7 @@ al nome del file, nessun codice rivendicato da due file), `kb/lifecycle.mjs --he
 | `graph [--scope]` | Coerenza, handoff mancanti | script |
 | `scopes · handoffs [--validate] · clusters · contradictions [--open]` | Registri | script |
 | `coverage [--scope]` | Copertura per tipo, forma epistemica, identità dei dati | script `kb/coverage.mjs` |
+| `template-learn --file <xlsx> --object <oggetto> --scope <S> [--page <sig>] [--modulo <M>] [--fonte utente\|tenant]` | Impara un template di caricamento massivo (colonne, obbligatori, liste di valori) e lo salva come voce `TPL` del cliente con il file vuoto | script `kb/template-learn.mjs` |
 | `reindex [--all]` · `migrate` | Indice (del cliente; `--all` anche prodotto e ogni cliente) e migrazioni | script `kb/reindex.mjs`, `kb migrate` |
 
 ### 56.4 `nrt` — collaudo
