@@ -29,6 +29,7 @@ import { updateSessionFile } from "../../hooks/lib/session-state.mjs";
 import { sessionFile as sessionFilePath } from "../../hooks/lib/workspace.mjs";
 import { appendAudit } from "../../hooks/lib/audit.mjs";
 import { ACT, stepLevel, stepRisk } from "../../hooks/lib/act-classes.mjs";
+import { autonomyLevel } from "../../hooks/lib/autonomy.mjs";
 import { requiredApprovals, COMMIT_VERBS } from "../../hooks/lib/guards/config-scope.mjs";
 import { loadPlanFile, approvalsFile, readApprovals, windowState } from "../admin/approvals.mjs";
 import { loadSession, resolveSessionId } from "../admin/session.mjs";
@@ -70,7 +71,7 @@ function phrase(r, planId, second) {
 }
 
 // Il passo n può partire? Compensazione dichiarata, approvazioni richieste e già date.
-export function gateStep({ plan, step, env, records, now, planFile }) {
+export function gateStep({ plan, step, env, records, now, planFile, autonomy = "basso" }) {
   const out = { step: step.n, status: "ok", compensation: null, pending: [], ask: null, reason: null };
   const cls = step.action_class;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"})`;
@@ -81,7 +82,7 @@ export function gateStep({ plan, step, env, records, now, planFile }) {
     out.compensation = { plan: plan.plan_id, step: step.n, kind: c.kind, ...(c.entity ? { entity: c.entity } : {}), ...(c.action ? { action: c.action } : {}), ...(c.ref ? { ref: c.ref } : {}), status: "pending" };
   }
   const level = cls === "ACT-CFG-CHANGE" ? stepLevel(step) : null;
-  const req = requiredApprovals(cls, step, env, level);
+  const req = requiredApprovals(cls, step, env, level, autonomy);
   const second = env.policy?.second_approver_required ?? env.type === "prod";
   const w = windowState(null, plan.plan_id, { ...env.policy, second_approver_required: second }, now.getTime(), { records });
   const need = [];
@@ -203,6 +204,8 @@ export async function check(opts) {
   const cpDir = join(runDir, "checkpoints");
   const reg = readApprovals(approvalsFile(ws, customer, sid));
   if (!reg.ok) return deny(`registro delle approvazioni corrotto (${reg.reason})`);
+  // Ops veloce (spec 2026-10-06 §3.1): il livello di autonomia (frase > cliente > alto, tetto per ambiente) decide le approvazioni dei passi
+  const aut = autonomyLevel({ ws, customer, records: reg.records, envType: session.env.type });
   const observation = session.ledger?.observe?.last_obs ?? null;
   const profile = profileFor({ envType: session.env.type });
   const noEffect = { divergences: [], novelties: [], checkpoint: null, observation };
@@ -229,7 +232,7 @@ export async function check(opts) {
   // revisione finale (minore B#7): markDenied — il gate del passo SUCCESSIVO a uno appena verificato è negato: il piano
   // resta sul passo verificato ma marcato gate_denied, così i guard non concedono più azioni legate a quel passo.
   const activate = (s, extraMutate, { markDenied = false } = {}) => {
-    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile });
+    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile, autonomy: aut.level });
     if (g.status === "denied") {
       if (extraMutate || markDenied) updateSessionFile(sFile, (x) => {
         extraMutate?.(x);

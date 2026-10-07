@@ -33,6 +33,7 @@ import { activeStep } from "./plan-step.mjs";
 import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
 import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf, exploreRecord, EXPLORE_PHRASE } from "../../../scripts/admin/approvals.mjs";
 import { appendAudit } from "../audit.mjs";
+import { autonomyLevel } from "../autonomy.mjs";
 import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
 import { pendingRefusal, mergedPending, loadPending, pendingFile } from "../ref-history.mjs";
 import { simpleNodeCall } from "../exact-argv.mjs";
@@ -47,15 +48,27 @@ export const isEffectful = (a) => ["input", "click", "upload", "script", "other"
 
 // Approvazioni richieste per il passo → { a1, a2, a3, action }. Esportata per step-check (K6.1),
 // che chiede le approvazioni (pending.approvals) PRIMA del passo con la stessa regola del guard.
-export function requiredApprovals(cls, step, env, level) {
+// Ops veloce (spec 2026-10-06 §2.2, §3.4): dipende dal livello di autonomia; senza livello vale "basso" (= regole di prima).
+export function requiredApprovals(cls, step, env, level, autonomy = "basso") {
+  const none = { a1: false, a2: false, a3: false, action: false };
+  if (env.type === "prod") {
+    if (ACT[cls]?.prod !== "approval") return none;
+    const second = env.policy?.second_approver_required ?? true;
+    return { a1: true, a2: second, a3: true, action: false };
+  }
+  const sandbox = env.type !== "preprod";
   if (cls === "ACT-CFG-CHANGE") {
-    if (env.type === "prod") return { a1: true, a2: true, a3: true, action: false };
+    if (autonomy === "alto") return { ...none, a1: true, a2: !!env.policy?.second_approver_required };
     const n = env.policy?.approvals?.[`config_${level}`] ?? 3;
     return { a1: n >= 1, a2: n >= 3, a3: n >= 2, action: false };
   }
-  if (cls === "ACT-BULK") return { a1: true, a2: false, a3: true, action: false };
-  if (R2_DATA.has(cls) && ["R2", "R3"].includes(stepRisk(step))) return { a1: false, a2: false, a3: false, action: true };
-  return { a1: false, a2: false, a3: false, action: false };
+  if (cls === "ACT-BULK") return autonomy === "alto" ? none : { ...none, a1: true, a3: true };
+  if (cls === "ACT-DELETE") return autonomy === "alto" ? { ...none, a1: true } : { ...none, a1: true, a3: true };
+  if (R2_DATA.has(cls) && ["R2", "R3"].includes(stepRisk(step))) {
+    if (autonomy === "basso") return { ...none, action: true };
+    return sandbox ? none : { ...none, a1: true };
+  }
+  return none;
 }
 
 // WP09b: oggetti governati di un passo di configurazione (config.object + config.governs, senza duplicati).
@@ -244,7 +257,7 @@ async function browserDecide(ctx, no) {
   if (!env) return no(reason);
   const info = ACT[cls];
   if (!info) return no(`${at}: classe di azione fuori catalogo`);
-  if (info.effect === "write" && env.type === "prod") return no(`${at}: in produzione non si scrivono dati; posso farlo in sandbox o pre-produzione (§52.1)`);
+  if (env.type === "prod" && info.effect !== "read" && env.policy?.write_data !== true) return no(`${at}: in produzione le scritture sono spente per l'ambiente ${env.id} (policy.write_data: false in environments.yaml)`);
   if (info[envColumn(env.type)] === "never") return no(`${at}: ${cls} non è ammessa in ${env.type} (§29.4)`);
 
   // (c) perimetro
@@ -285,11 +298,17 @@ async function browserDecide(ctx, no) {
     }
   }
   // (d) approvazioni
-  const req = requiredApprovals(cls, step, env, level);
-  if (!req.a1 && !req.a2 && !req.a3 && !req.action) return null;
   const file = approvalsFile(ctx.ws, ctx.customer, ctx.sid);
   const reg = readApprovals(file);
   if (!reg.ok) return no(`registro delle approvazioni corrotto (${reg.reason}): nessuna approvazione è valida`);
+  const aut = autonomyLevel({ ws: ctx.ws, customer: ctx.customer, records: reg.records, envType: env.type });
+  const req = requiredApprovals(cls, step, env, level, aut.level);
+  if (!req.a1 && !req.a2 && !req.a3 && !req.action) {
+    if (GUARDED_CLASSES.has(cls)) {
+      try { appendAudit(ctx.ws, { session: ctx.sid, customer: ctx.customer, scope: s.scope ?? null, kind: "decision", actor: `hook:${G}`, payload: { decision: "allow", tool: ctx.tool, plan: ap.plan_id, step: step.n, autonomy: aut.level, autonomy_source: aut.source } }); } catch { /* l'audit non cambia la decisione */ }
+    }
+    return null;
+  }
   const second = env.policy?.second_approver_required ?? env.type === "prod";
   const envPolicy = { ...env.policy, second_approver_required: second };
   const w = windowState(null, ap.plan_id, envPolicy, now, { records: reg.records });
@@ -302,7 +321,7 @@ async function browserDecide(ctx, no) {
   }
   if (req.a2 && !w.a2) return no(`${at}: manca A2 — l'utente deve scrivere \`APPROVO PROVA ${P}${who}\`${second ? " (persona diversa da A1)" : ""} (§52.2)`);
   const tok = req.a3 ? w.tokenForStep(step.n) : null;
-  if (req.a3 && !tok) return no(`${at}: manca il token del passo (monouso) — l'utente deve scrivere \`APPROVO PASSO ${step.n} ${P}\``);
+  if (req.a3 && !tok) return no(`${at}: manca il token del passo (monouso) — l'utente deve scrivere \`APPROVO PASSO ${step.n} ${P}\`${env.type === "prod" ? " (in produzione ogni passo che modifica o carica si approva prima)" : ""}`);
   const act = req.action ? w.actionFor(step.n) : null;
   if (req.action && !act) return no(`${at}: azione R2 senza approvazione — il manager mostra importo, stato di arrivo e compensazione e l'utente risponde \`sì\` (§57.2)`);
   const recs = [req.a1 ? w.a1 : null, req.a2 ? w.a2 : null, tok, act].filter(Boolean);
