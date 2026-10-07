@@ -60,6 +60,15 @@ test("policy/deny-rules.yaml: ogni regola ha id, severity (hard-deny|confirm), r
   const core = [rule("DR-SHELL-001", "shell", "text"), rule("DR-SHELL-003", "shell", "text"), rule("DR-WRITE-001", "write", "content"), rule("DR-WRITE-003", "write", "content"), rule("DR-BROWSER-002", "browser", "label")];
   const ok = await loadRules(bad("ok.yaml", `rules:\n${core.join("\n")}\n`));
   assert.equal(ok.rules.length, 5);
+  // spec 2026-10-06 §3.7: allow_in_delete_step solo su regole del browser con on: label (mai shell o scritture) e solo true
+  const withKey = (id, extra) => bad("k.yaml", ["rules:", ...core.map((x) => (x.includes(id) ? x.replace(" }", `, ${extra} }`) : x))].join("\n") + "\n");
+  await assert.rejects(loadRules(withKey("DR-SHELL-001", "allow_in_delete_step: true")), "su una regola shell");
+  await assert.rejects(loadRules(withKey("DR-WRITE-001", "allow_in_delete_step: true")), "su una regola di scrittura");
+  await assert.rejects(loadRules(withKey("DR-BROWSER-002", "allow_in_delete_step: 1")), "valore non true");
+  assert.equal((await loadRules(withKey("DR-BROWSER-002", "allow_in_delete_step: true"))).rules.find((r) => r.id === "DR-BROWSER-002").allow_in_delete_step, true);
+  // DR-BROWSER-002 è l'unica regola con l'eccezione, e il suo testo dice dove vale
+  assert.deepEqual(doc.rules.filter((r) => r.allow_in_delete_step).map((r) => r.id), ["DR-BROWSER-002"]);
+  assert.match(doc.rules.find((r) => r.id === "DR-BROWSER-002").reason, /passo DELETE/);
 });
 
 test("policy cambiata senza rigenerare: il guard applica il YAML (la copia compilata vale solo con la stessa impronta)", async () => {

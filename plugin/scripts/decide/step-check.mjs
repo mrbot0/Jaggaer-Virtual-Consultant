@@ -17,8 +17,8 @@
 //    (2ª ⇒ tier_up, 3ª ⇒ escalate, §13.3), DEC se il DB del cliente esiste, checkpoint atomico; se si
 //    procede, attivazione del passo successivo (o piano completato ⇒ active_plan = null);
 //  - --resume n: le letture (READ) da fare prima di ripetere i passi con effetto dopo l'ultimo checkpoint.
-import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
-import { join, resolve as resolvePath } from "node:path";
+import { readFileSync, readdirSync, existsSync, mkdirSync, statSync } from "node:fs";
+import { join, dirname, sep, resolve as resolvePath } from "node:path";
 import YAML from "yaml";
 import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { canonical } from "../../hooks/lib/audit.mjs";
@@ -44,8 +44,10 @@ import { writeCompensations } from "../lib/compensations-store.mjs";
 import { confineInputs } from "../lib/text-file.mjs";
 
 export const STATUSES = ["ok", "surprise", "novelty", "approval_required", "denied"];
-const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
-const EFFECT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
+const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT", "ACT-BULK", "ACT-DELETE"]);
+const EFFECT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD", "DELETE"]);
+
+const fileNotEmpty = (p) => { try { const s = statSync(p); return s.isFile() && s.size > 0; } catch { return false; } };
 
 export class StepCheckError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 
@@ -84,7 +86,9 @@ function phrase(r, planId, second) {
 }
 
 // Il passo n può partire? Compensazione dichiarata, approvazioni richieste e già date.
-export function gateStep({ plan, step, env, records, now, planFile, autonomy = "basso" }) {
+// custDir: cartella assoluta del cliente (customers/<C>), da cui si risolve il ref della lettura salvata di un passo DELETE;
+// assente, si risale di due livelli dal file del piano (customers/<C>/runs/<RUN>/plan.json).
+export function gateStep({ plan, step, env, records, now, planFile, autonomy = "basso", custDir: custDirOpt = null }) {
   const out = { step: step.n, status: "ok", compensation: null, pending: [], ask: null, reason: null };
   const cls = step.action_class;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"})`;
@@ -93,6 +97,18 @@ export function gateStep({ plan, step, env, records, now, planFile, autonomy = "
     const c = (Array.isArray(plan.compensations) ? plan.compensations : []).find((x) => x && x.step === step.n);
     if (!c) return { ...out, status: "denied", reason: `${at}: nessuna compensazione dichiarata nel piano (close · cancel · deactivate · restore): va registrata prima del passo che crea, modifica o invia (§29.6)` };
     out.compensation = { plan: plan.plan_id, step: step.n, kind: c.kind, ...(c.entity ? { entity: c.entity } : {}), ...(c.action ? { action: c.action } : {}), ...(c.ref ? { ref: c.ref } : {}), status: "pending" };
+  }
+  // spec 2026-10-06 §3.7: prima di cancellare serve la lettura completa dell'oggetto, salvata nel run (restore con ref
+  // a runs/<RUN>/evidence/…, file presente sotto customers/<C>/runs/): è la copia da cui si ricostruisce ciò che si cancella
+  if (cls === "ACT-DELETE") {
+    const c = (Array.isArray(plan.compensations) ? plan.compensations : []).find((x) => x && x.step === step.n);
+    const ref = c?.kind === "restore" && typeof c.ref === "string" ? c.ref : null;
+    const custDir = custDirOpt ?? (planFile ? resolvePath(dirname(planFile), "..", "..") : null);
+    const abs = ref && custDir ? resolvePath(custDir, ref) : null;
+    // il ref è DENTRO evidence/ del run anche dopo la normalizzazione (niente `..`), e punta a un file non vuoto
+    const evDir = ref ? join(custDir ?? "", "runs", ref.split("/")[1] ?? "", "evidence") : null;
+    const ok = !!abs && /^runs\/RUN\.[A-Z0-9]{4}\.\d{8}\.\d{4}\.[A-Z0-9]{3}\/evidence\/[^\\]+$/.test(ref) && abs.startsWith(`${evDir}${sep}`) && fileNotEmpty(abs);
+    if (!ok) return { ...out, status: "denied", reason: `${at}: prima di cancellare serve la lettura completa dell'oggetto in runs/<RUN>/evidence/ (compensazione restore con ref)` };
   }
   const level = cls === "ACT-CFG-CHANGE" ? stepLevel(step) : null;
   const req = requiredApprovals(cls, step, env, level, autonomy);
@@ -244,7 +260,7 @@ export async function check(opts) {
   // revisione finale (minore B#7): markDenied — il gate del passo SUCCESSIVO a uno appena verificato è negato: il piano
   // resta sul passo verificato ma marcato gate_denied, così i guard non concedono più azioni legate a quel passo.
   const activate = (s, extraMutate, { markDenied = false } = {}) => {
-    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile, autonomy: aut.level });
+    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile, autonomy: aut.level, custDir: join(ws, "customers", customer) });
     if (g.status === "denied") {
       if (extraMutate || markDenied) updateSessionFile(sFile, (x) => {
         extraMutate?.(x);

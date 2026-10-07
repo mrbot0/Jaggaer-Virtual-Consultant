@@ -1,14 +1,15 @@
 // guard-config-scope (PreToolUse, FAIL-CLOSED) — §28.1, §29.6, §52.2, §44.4.
 //
 // Strumenti MCP del browser: attivo quando il passo attivo del piano ha verbo
-// SAVE|SUBMIT|TOGGLE|UPLOAD o classe ACT-CFG-CHANGE|SUBMIT|APPROVE|TRANSMIT|
-// PUBLISH|BULK|CREATE|UPDATE|CLOSE|UPLOAD e la chiamata ha un effetto (input,
+// SAVE|SUBMIT|TOGGLE|UPLOAD|DELETE o classe ACT-CFG-CHANGE|SUBMIT|APPROVE|TRANSMIT|
+// PUBLISH|BULK|CREATE|UPDATE|CLOSE|UPLOAD|DELETE e la chiamata ha un effetto (input,
 // click, upload, invio, dialog accettato; script e strumenti non classificati
 // durante un passo con effetto ⇒ deny). Richiede, nell'ordine:
 //   (c) perimetro (ACT-CFG-CHANGE): livello DT-007 del passo in config_levels
 //       dell'ambiente (rosso in prod solo per oggetti in prod_allowed_red) e
 //       oggetto/area elencati in remediation-scope.yaml a quel livello;
-//   (a) compensazione registrata per i passi CREATE/UPDATE/SUBMIT che salvano (§29.6);
+//   (a) compensazione registrata per i passi CREATE/UPDATE/SUBMIT/BULK/DELETE che salvano o cancellano (§29.6); per
+//       ACT-DELETE deve essere un restore con ref alla lettura completa dell'oggetto salvata nel run (spec 2026-10-06 §3.7);
 //   (b) ACT-CFG-CHANGE: snapshot degli oggetti governati negli ultimi 60 s;
 //   (d) approvazioni per livello e ambiente — sandbox/preprod: verde 1 (A1) ·
 //       giallo 2 (A1 + A3 del passo, §57.2) · rosso 3 (A1 + A2 + A3); prod: sempre
@@ -39,9 +40,9 @@ import { pendingRefusal, mergedPending, loadPending, pendingFile } from "../ref-
 import { simpleNodeCall } from "../exact-argv.mjs";
 
 const G = "guard-config-scope";
-export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
-export const GUARDED_CLASSES = new Set(["ACT-CFG-CHANGE", "ACT-SUBMIT", "ACT-APPROVE", "ACT-TRANSMIT", "ACT-PUBLISH", "ACT-BULK", "ACT-CREATE", "ACT-UPDATE", "ACT-CLOSE", "ACT-UPLOAD"]);
-const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
+export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD", "DELETE"]);
+export const GUARDED_CLASSES = new Set(["ACT-CFG-CHANGE", "ACT-SUBMIT", "ACT-APPROVE", "ACT-TRANSMIT", "ACT-PUBLISH", "ACT-BULK", "ACT-CREATE", "ACT-UPDATE", "ACT-CLOSE", "ACT-UPLOAD", "ACT-DELETE"]);
+const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT", "ACT-BULK", "ACT-DELETE"]);
 const R2_DATA = new Set(["ACT-SUBMIT", "ACT-APPROVE", "ACT-TRANSMIT", "ACT-PUBLISH", "ACT-UPLOAD", "ACT-CLOSE"]);
 const SNAPSHOT_MS = 60000;
 export const isEffectful = (a) => ["input", "click", "upload", "script", "other"].includes(a.kind) || (a.kind === "dialog" && a.submits) || a.submits === true;
@@ -250,6 +251,17 @@ async function browserDecide(ctx, no) {
   // corrente, l'elemento del SEL del passo attivo (mappa di observe-append: ref → atlas_match)
   const bind = bindingRefusal(ctx, step);
   if (bind) return no(`${at0}: ${bind}`);
+  // spec 2026-10-06 §3.7: un click su un'etichetta di cancellazione vale solo dentro un passo DELETE del piano
+  // (verbo DELETE, classe ACT-DELETE; il legame al SEL del passo l'ha già verificato bindingRefusal)
+  if (!(cls === "ACT-DELETE" && step.verb === "DELETE")) {
+    const names = s.browser?.snapshot?.names && typeof s.browser.snapshot.names === "object" ? s.browser.snapshot.names : {};
+    for (const a of ctx.actions.filter((x) => x.kind === "click" || x.kind === "input")) {
+      for (const r of Array.isArray(a.targets) ? a.targets : []) {
+        const name = Object.hasOwn(names, r) ? String(names[r] ?? "") : "";
+        if (name && isDeleteLabel(name)) return no(`${at0}: "${name}" è una cancellazione: solo dentro un passo DELETE del piano`);
+      }
+    }
+  }
   if (!COMMIT_VERBS.has(step.verb) && !GUARDED_CLASSES.has(cls)) return null;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"}) del piano ${ap.plan_id}`;
   if (ctx.actions.some((a) => a.kind === "script" || a.kind === "other")) return no(`script o strumento non classificato durante il ${at}: non verificabile, negato`);
@@ -281,7 +293,10 @@ async function browserDecide(ctx, no) {
   if (COMP_CLASSES.has(cls) && COMMIT_VERBS.has(step.verb)) {
     const comps = Array.isArray(s.pending?.compensations) ? s.pending.compensations : [];
     if (!comps.some((c) => c && typeof c === "object" && c.plan === ap.plan_id && c.step === step.n)) {
-      return no(`${at}: compensazione non registrata (close/cancel/deactivate/restore) prima del passo che crea, modifica o invia (§29.6)`);
+      return no(`${at}: compensazione non registrata (close/cancel/deactivate/restore) prima del passo che crea, modifica, invia o cancella (§29.6)`);
+    }
+    if (cls === "ACT-DELETE" && !comps.some((c) => c?.plan === ap.plan_id && c.step === step.n && c.kind === "restore" && c.ref)) {
+      return no(`${at}: prima di cancellare serve la lettura completa dell'oggetto salvata nel run (compensazione restore con ref)`);
     }
   }
   const now = Date.now();

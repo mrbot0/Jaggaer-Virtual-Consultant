@@ -1,6 +1,6 @@
 // GENERATO da scripts/admin/build-deny-rules.mjs a partire da policy/deny-rules.yaml: non modificare.
 export default {
-  "sha256": "085192c865492818cbf17d0f8381eab47adfd3666dbfe3a93ef16ea8365543c2",
+  "sha256": "19209a2805e6cb7a57354afccf5eb337964669f85c5e076d12997ad9b6188d35",
   "version": 1,
   "sanctioned": [
     {
@@ -901,7 +901,7 @@ export default {
     {
       "id": "DR-BROWSER-002",
       "severity": "hard-deny",
-      "reason": "ACT-DELETE: cancellare non esiste nel vocabolario dei piani (§29.4, ADR-06); usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano",
+      "reason": "ACT-DELETE: cancellare vale solo dentro un passo DELETE del piano attivo, in sandbox o pre-produzione, e solo sull'elemento del SEL di quel passo (spec 2026-10-06 §3.7, che supera ADR-06 in sandbox/pre-produzione; in produzione mai); altrove usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano",
       "applies_to": [
         "browser"
       ],
@@ -919,7 +919,8 @@ export default {
           "re": "\\b(delete|remove)\\s+all\\b",
           "flags": "iu"
         }
-      ]
+      ],
+      "allow_in_delete_step": true
     },
     {
       "id": "DR-BROWSER-003",

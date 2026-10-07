@@ -42,6 +42,12 @@ export function normalizeDoc(doc) {
     const out = { id: r.id, severity: r.severity, reason: r.reason.trim(), applies_to: r.applies_to, on: r.on, patterns };
     for (const k of ["when_step_class", "unless_step_class", "supersedes"]) { const v = list(k); if (v) out[k] = v; }
     if (r.trusted_labels_only === true) out.trusted_labels_only = true;
+    // spec 2026-10-06 §3.7: la regola non scatta per un click legato al SEL di un passo DELETE (ACT-DELETE) del piano attivo
+    // (sandbox/preprod); solo per regole del browser, mai per shell e scritture
+    if (r.allow_in_delete_step !== undefined) {
+      if (r.allow_in_delete_step !== true || !r.applies_to.every((a) => a === "browser") || r.on !== "label") throw new Error(`${at}: allow_in_delete_step vale solo per regole browser su label`);
+      out.allow_in_delete_step = true;
+    }
     if (r.on === "glob") out.samples = patterns.map((p) => p.sample);
     // WP10a giro 1 (I1): on: first_arg — patterns sul primo argomento dopo uno degli script (nomi di file) in `scripts`,
     // letto dopo lo scioglimento della shell (hooks/lib/exact-argv.mjs shellCommands)

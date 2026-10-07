@@ -2,7 +2,9 @@
 //
 //   lintCase(caso, { previous? }) → violations[{ rule, at, message }]
 //     L-EXPECT       ogni passo ha un expect (dichiarato o ereditato da from_flow)
-//     L-DELETE       nessun DELETE: verbo, compensazione delete, azione che cancella (ADR-06: close/cancel)
+//     L-DELETE       compensazione delete o azione che cancella (la compensazione è close/cancel/deactivate/restore); il verbo
+//                    DELETE e la classe ACT-DELETE solo in un piano di produzione (spec 2026-10-06 §3.7: ammessi in sandbox e
+//                    pre-produzione, in produzione mai — ADR-06 resta lì)
 //     L-COMP         ogni passo che crea, modifica o invia ha la sua compensazione (§29.6)
 //     L-DERIVATION   derivation (from + risk_mode) e boundary (stop_at_step + does_not_assert) presenti (§27.1)
 //     L-ANALYTIC     nessun codice del dominio analitico (PAT PBK BRF RUL, §1.1)
@@ -31,13 +33,15 @@ const stepsOfCase = (c) => (Array.isArray(c?.composition?.steps) ? c.composition
 const stepsOfPlan = (p) => (Array.isArray(p?.steps) ? p.steps : []);
 const isPlan = (x) => typeof x?.plan_id === "string";
 
-function commonRules(steps, compensations, out) {
+// env: ambiente del piano ("prod" ⇒ DELETE/ACT-DELETE vietati); un caso non ha ambiente (il validate-plan lo nega in prod)
+function commonRules(steps, compensations, out, { env = null } = {}) {
+  const prod = env === "prod";
   for (const s of steps) {
     const at = `passo ${s?.n ?? "?"}`;
     if (!s?.expect && !s?.from_flow) out.push(v("L-EXPECT", at, `${at} (${s?.verb}) senza expect: ogni passo dichiara ciò che si osserva dopo (§46.3)`));
     else if (s?.expect && typeof s.expect === "object" && !Object.keys(s.expect).length) out.push(v("L-EXPECT", at, `${at}: expect vuoto`));
-    if (s?.verb === "DELETE") out.push(v("L-DELETE", at, `${at}: il verbo DELETE non esiste (ADR-06: close/cancel)`));
-    if (s?.action_class === "ACT-DELETE") out.push(v("L-DELETE", at, `${at}: ACT-DELETE non è ammessa`));
+    if (prod && s?.verb === "DELETE") out.push(v("L-DELETE", at, `${at}: il verbo DELETE non esiste in produzione (ammesso solo in sandbox e pre-produzione, spec 2026-10-06 §3.7; ADR-06: close/cancel)`));
+    if (prod && s?.action_class === "ACT-DELETE") out.push(v("L-DELETE", at, `${at}: ACT-DELETE non è ammessa in produzione`));
     if (s && isCreating(s, classOf(s)) && !compensations.some((c) => c?.step === s.n)) out.push(v("L-COMP", at, `${at} (${s.verb}) crea o modifica senza compensazione registrata prima (§29.6)`));
   }
   for (const c of compensations) {
@@ -133,7 +137,7 @@ export function lintPlan(plan, { previous = null } = {}) {
   const out = [];
   const a = analyticCodes(plan);
   if (a.length) out.push(v("L-ANALYTIC", "piano", `cita il dominio analitico: ${a.join(", ")} (§1.1)`));
-  commonRules(stepsOfPlan(plan), asArr(plan?.compensations), out);
+  commonRules(stepsOfPlan(plan), asArr(plan?.compensations), out, { env: typeof plan?.env === "string" ? plan.env : null });
   if (previous) out.push(...weakening(previous, plan));
   return out;
 }
