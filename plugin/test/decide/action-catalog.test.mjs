@@ -125,7 +125,7 @@ test("validatePlan: in prod ammesse tutte le classi tranne ACT-DELETE (colonna \
   for (const a of cat.values()) {
     if (a.code === "ACT-CFG-CHANGE" || a.code === "ACT-DELETE") continue;
     const verb = a.verbs_allowed.includes("CLICK") ? "CLICK" : a.verbs_allowed[0];
-    const r = validatePlan(plan("prod", [step(1, verb, a.code, a.code === "ACT-BULK" || a.code === "ACT-UPLOAD" ? { file: { path: "runs/RUN.ACME.20261007.1000.P2P/x.xlsx", sha256: "a".repeat(64), rows: 1 } } : {})]), { env: ENV.prod });
+    const r = validatePlan(plan("prod", [step(1, verb, a.code, a.code === "ACT-BULK" || a.code === "ACT-UPLOAD" ? { file: { path: "runs/RUN.ACME.20261007.1000.P2P/import/x.xlsx", sha256: "a".repeat(64), rows: 1 } } : {})]), { env: ENV.prod });
     assert.equal(r.ok, a.environments.prod !== "never", `${a.code}: ${r.errors.join("; ")}`);
     assert.equal(r.warnings.length > 0, a.environments.prod === "approval", a.code);
   }

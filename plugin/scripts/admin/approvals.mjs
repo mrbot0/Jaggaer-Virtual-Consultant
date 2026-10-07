@@ -91,7 +91,14 @@ export function parseApprovalPrompt(prompt) {
   if (bare === EXPLORE_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "sandbox", full: true };
   if (bare === EXPLORE_PREPROD_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "preprod", full: true };
   if (/\bESPLORA\b/iu.test(s)) return { kind: "attempt" };
-  if (/\bAUTONOMIA\b/iu.test(s)) return { kind: "attempt" };
+  // revisione finale (minore): una frase d'autonomia scritta male ("autonomia bassa", "Autonomia Alta per favore") è un
+  // tentativo d'autonomia: la risposta indica la frase esatta (il livello riconosciuto, o le tre), anche senza piani in attesa
+  // (una domanda lunga che nomina l'autonomia senza un livello non è un tentativo: nessuna risposta)
+  if (/\bAUTONOMIA\b/iu.test(s)) {
+    const lv = /\bautonomia\s+(alta|media|bassa)\b/iu.exec(s);
+    if (lv || s.length <= 40) return { kind: "attempt", autonomy: lv ? lv[1].toUpperCase() : "?" };
+    return /APPROV/iu.test(s) ? { kind: "attempt" } : null;
+  }
   if (/APPROV/iu.test(s) || (ATTEMPT.test(s) && s.length <= 30)) return { kind: "attempt" };
   return null;
 }
@@ -418,6 +425,10 @@ export async function capture(input, env = process.env) {
     return [`APPROVO PROVA ${pl}${second ? " DA <Nome Cognome>" : ""}`, `APPROVO PASSO <n> ${pl}`];
   };
 
+  if (p.kind === "attempt" && p.autonomy) {
+    const want = p.autonomy === "?" ? ["AUTONOMIA ALTA", "AUTONOMIA MEDIA", "AUTONOMIA BASSA"] : [`AUTONOMIA ${p.autonomy}`];
+    return reject(want, "il livello di autonomia si cambia con la frase esatta, in maiuscolo e da sola nel messaggio");
+  }
   if (p.kind === "attempt") return known.size ? reject(expectedFor(null), "la frase non è quella richiesta") : null;
 
   let rec;
@@ -461,7 +472,15 @@ export async function capture(input, env = process.env) {
     if (!pending.length) return null;
     // WP10d (D8): la conferma passo-passo di un'azione di un sub-agente non approva dati in produzione (guard-production
     // e gli altri guard valutano comunque l'azione): vale in ogni ambiente
-    if (s.env?.type === "prod" && !(acts.length === 1 && acts[0].step_mode)) return reject(expectedFor(null), "in produzione non si approvano azioni sui dati: non si scrivono dati, mai (§52.1)");
+    // spec 2026-10-06 §3.6: in produzione ogni passo che scrive si approva con APPROVO PASSO (dopo APPROVO PIANO), mai con un sì
+    if (s.env?.type === "prod" && !(acts.length === 1 && acts[0].step_mode)) {
+      const who = second ? " DA <Nome Cognome>" : "";
+      const want = acts.length ? acts.flatMap((a) => {
+        const w = reg.ok ? windowState(null, a.plan, envPolicy, now, { records: reg.records }) : null;
+        return [...(!w?.a1 || w.expired ? [`APPROVO PIANO ${a.plan}${who}`] : []), `APPROVO PASSO ${a.step} ${a.plan}`];
+      }) : expectedFor(null);
+      return reject(want, "in produzione un «sì» non approva un passo: ogni passo che modifica o carica si approva con APPROVO PASSO <n> <PLAN> (dopo APPROVO PIANO)");
+    }
     if (acts.length !== 1) return reject(expectedFor(null), acts.length ? `un sì vale solo con UNA richiesta aperta (ce ne sono ${acts.length})` : "nessuna azione in attesa di un sì");
     rec = { kind: "action", plan: acts[0].plan, step: acts[0].step, approver_declared: null, ...(acts[0].step_mode ? { step_mode: true, action_sha: acts[0].action_sha ?? null, task_id: acts[0].task_id ?? null } : {}) };
     removeMatch = (r) => r.kind === "action" && r.plan === rec.plan && r.step === rec.step;

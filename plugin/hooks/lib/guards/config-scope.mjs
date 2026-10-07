@@ -35,7 +35,7 @@ import { activeStep } from "./plan-step.mjs";
 import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
 import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf, exploreRecord, EXPLORE_PHRASE } from "../../../scripts/admin/approvals.mjs";
 import { appendAudit } from "../audit.mjs";
-import { autonomyLevel } from "../autonomy.mjs";
+import { confirmedAutonomyLevel } from "../autonomy.mjs";
 import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
 import { pendingRefusal, mergedPending, loadPending, pendingFile } from "../ref-history.mjs";
 import { simpleNodeCall } from "../exact-argv.mjs";
@@ -334,6 +334,13 @@ async function browserDecideCore(ctx, no) {
   if ((!ACT[cls] || ACT[cls].effect === "read") && ctx.actions.some((a) => a.submits === true || (a.kind === "dialog" && a.submits))) {
     return no(`${at0}: invio (Enter/submit) o conferma di un dialog sotto un passo di classe di lettura: negato in ogni ambiente`);
   }
+  // revisione finale (minore): fuori da un passo ACT-DELETE un dialog non si accetta se il suo testo (promptText) è una
+  // cancellazione o se la pagina chiede di confermare una cancellazione (come l'esplorazione completa) — in ogni ambiente
+  if (cls !== "ACT-DELETE" && ctx.actions.some((a) => a.kind === "dialog" && a.submits)) {
+    const names = s.browser?.snapshot?.names && typeof s.browser.snapshot.names === "object" ? Object.values(s.browser.snapshot.names) : [];
+    if (isDeleteLabel(ctx.ti?.promptText)) return no(`${at0}: il testo del dialogo conferma una cancellazione: solo dentro un passo ACT-DELETE del piano`);
+    if (names.some((n) => isDeleteQuestion(n))) return no(`${at0}: la pagina chiede di confermare una cancellazione: il dialogo non si accetta fuori da un passo ACT-DELETE del piano (usa Annulla)`);
+  }
   // WP07 giro 1 (C2 c): ogni uid/ref di input, click e upload deve essere, nell'ultimo snapshot osservato della pagina
   // corrente, l'elemento del SEL del passo attivo (mappa di observe-append: ref → atlas_match)
   const bind = bindingRefusal(ctx, step);
@@ -373,6 +380,9 @@ async function browserDecideCore(ctx, no) {
   if (!info) return no(`${at}: classe di azione fuori catalogo`);
   if (env.type === "prod" && info.effect === "write" && env.policy?.write_data !== true) return no(`${at}: in produzione le scritture sono spente per l'ambiente ${env.id} (policy.write_data: false in environments.yaml)`);
   if (info[envColumn(env.type)] === "never") return no(`${at}: ${cls} non è ammessa in ${env.type} (§29.4)`);
+  // revisione finale (Ruling F6): con policy.write_data false, in QUALUNQUE ambiente (es. una pre-produzione copia dei dati
+  // reali), niente import massivi né cancellazioni
+  if ((cls === "ACT-BULK" || cls === "ACT-DELETE") && env.policy?.write_data === false) return no(`${at}: l'ambiente ${env.id} ha policy.write_data: false (environments.yaml): niente import massivi né cancellazioni finché l'utente non accende write_data`);
 
   // (c) perimetro
   let level = null;
@@ -400,6 +410,11 @@ async function browserDecideCore(ctx, no) {
     if (cls === "ACT-DELETE" && !comps.some((c) => c?.plan === ap.plan_id && c.step === step.n && c.kind === "restore" && c.ref)) {
       return no(`${at}: prima di cancellare serve la lettura completa dell'oggetto salvata nel run (compensazione restore con ref)`);
     }
+    // revisione finale (Ruling F1): in produzione un import di configurazione (config_import non false) vuole la restore
+    // con l'istantanea dei dati attuali, registrata da step-check dopo averla verificata nel run
+    if (env.type === "prod" && cls === "ACT-BULK" && st.plan?.config_import !== false && !comps.some((c) => c?.plan === ap.plan_id && c.step === step.n && c.kind === "restore" && c.ref)) {
+      return no(`${at}: in produzione un import di configurazione richiede l'istantanea dei dati attuali nel run (compensazione restore con ref; compose-plan --istantanea)`);
+    }
   }
   const now = Date.now();
   // (b) snapshot — WP09b: UNO snapshot degli ultimi 60 s che copra TUTTI gli oggetti governati del passo (config.object
@@ -418,7 +433,10 @@ async function browserDecideCore(ctx, no) {
   const file = approvalsFile(ctx.ws, ctx.customer, ctx.sid);
   const reg = readApprovals(file);
   if (!reg.ok) return no(`registro delle approvazioni corrotto (${reg.reason}): nessuna approvazione è valida`);
-  const aut = autonomyLevel({ ws: ctx.ws, customer: ctx.customer, records: reg.records, envType: env.type });
+  // revisione finale (Ruling F5): una frase d'autonomia che ALZA il livello vale solo se è nel transcript (prompt vero
+  // dell'utente), come ogni altra approvazione; altrimenti vale il livello del cliente o il predefinito
+  const aut = confirmedAutonomyLevel({ ws: ctx.ws, customer: ctx.customer, records: reg.records, envType: env.type,
+    confirm: (rec) => confirmInTranscript(ctx.input.transcript_path, [rec]).ok });
   const req = requiredApprovals(cls, step, env, level, aut.level);
   if (!req.a1 && !req.a2 && !req.a3 && !req.action) {
     if (GUARDED_CLASSES.has(cls)) {

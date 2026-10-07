@@ -21,6 +21,21 @@ function customerLevel(ws, customer) {
   return { level: "basso", warning: `customers/${customer}/config/autonomy.yaml illeggibile o con un valore fuori elenco (alto, medio, basso): vale basso` };
 }
 
+// Revisione finale (Ruling F5, I7): il livello da usare nei guard. Una frase che ALZA il livello effettivo rispetto a quello
+// senza frase (file del cliente o predefinito, dopo il tetto dell'ambiente) vale solo se `confirm(record)` la conferma (il
+// guard: confirmInTranscript, il prompt vero dell'utente); altrimenti vale il livello senza frase (unconfirmed = livello
+// scartato). Una frase che abbassa o lascia uguale vale sempre (fail-closed). Resta pura: la conferma la passa il chiamante.
+export function confirmedAutonomyLevel({ ws, customer, records = [], envType, confirm }) {
+  const full = autonomyLevel({ ws, customer, records, envType });
+  if (full.source !== "frase") return full;
+  const base = autonomyLevel({ ws, customer, records: [], envType });
+  if (rank(full.level) <= rank(base.level)) return full;
+  const rec = records.filter((r) => r && r.kind === "autonomy" && LEVELS.includes(r.level)).at(-1);
+  let ok = false;
+  try { ok = typeof confirm === "function" && confirm(rec) === true; } catch { ok = false; }
+  return ok ? full : { ...base, unconfirmed: full.level };
+}
+
 export function autonomyLevel({ ws, customer, records = [], envType }) {
   const phrase = (Array.isArray(records) ? records : []).filter((r) => r && r.kind === "autonomy" && LEVELS.includes(r.level)).at(-1);
   let chosen; let source; let warning = null;
