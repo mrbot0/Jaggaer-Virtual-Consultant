@@ -11,6 +11,7 @@ import YAML from "yaml";
 import { openZip } from "../ingest/lib/zip.mjs";
 import { makeZip } from "../ingest/lib/zip-write.mjs";
 import { parseXlsx } from "../ingest/parse-xlsx.mjs";
+import { sheetPathOf, stripRowsBelow } from "../ingest/lib/xlsx-sheet.mjs";
 import { templatesDir } from "../kb/template-learn.mjs";
 import { SCOPES } from "../kb/codes.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
@@ -20,8 +21,6 @@ import { confineInputs, DATA_FILE_MAX } from "../lib/text-file.mjs";
 const OUT = /^runs\/RUN\.[A-Z0-9]{4}\.\d{8}\.\d{4}\.[A-Z0-9]{3}\/import\/[A-Za-z0-9._-]+\.xlsx$/;
 const TPL = /^C\.[A-Z0-9]{4}\.[A-Z0-9]{3}\.TPL\.\d{4}$/;
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const unesc = (s) => String(s).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
-const attr = (tag, name) => new RegExp(`\\b${name}="([^"]*)"`).exec(tag)?.[1];
 const colName = (c) => { let s = ""; for (let n = c + 1; n > 0; n = Math.floor((n - 1) / 26)) s = String.fromCharCode(65 + ((n - 1) % 26)) + s; return s; };
 // i caratteri di controllo non ammessi in XML 1.0 si tolgono (un valore con \u0000 renderebbe il file illeggibile)
 // eslint-disable-next-line no-control-regex
@@ -89,15 +88,10 @@ export function fillTemplate({ ws, customer, scope, tpl, rows, out }) {
   const zip = openZip(readFileSync(join(dir, "..", item.file)));
   const headerRow = item.header_row ?? 1;
   // foglio dell'item: nome in workbook.xml → r:id → Target in workbook.xml.rels; nessun ripiego su sheet1.xml
-  const wb = zip.text("xl/workbook.xml");
-  const sheetTag = [...wb.matchAll(/<(?:\w+:)?sheet\b[^>]*>/g)].map((m) => m[0]).find((t) => unesc(attr(t, "name") ?? "") === item.sheet);
-  const rid = sheetTag && /\br:id="([^"]+)"/.exec(sheetTag)?.[1];
-  const rels = zip.has("xl/_rels/workbook.xml.rels") ? zip.text("xl/_rels/workbook.xml.rels") : "";
-  const relTag = rid && [...rels.matchAll(/<(?:\w+:)?Relationship\b[^>]*>/g)].map((m) => m[0]).find((t) => attr(t, "Id") === rid);
-  const target = relTag && attr(relTag, "Target");
-  if (!target) throw new Error(`foglio "${item.sheet}" non risolto nel file vuoto del template (nome o relazione mancante)`);
-  const sheetPath = target.startsWith("/") ? target.slice(1) : `xl/${target.replace(/^\.\//, "")}`;
-  if (!zip.has(sheetPath)) throw new Error(`foglio "${item.sheet}" non trovato nel file vuoto del template (${sheetPath})`);
+  const sp = sheetPathOf(zip, item.sheet);
+  if (sp.error === "unresolved") throw new Error(`foglio "${item.sheet}" non risolto nel file vuoto del template (nome o relazione mancante)`);
+  if (sp.error) throw new Error(`foglio "${item.sheet}" non trovato nel file vuoto del template (${sp.path})`);
+  const sheetPath = sp.path;
   let xml = zip.text(sheetPath);
   // prefisso di namespace del foglio (<x:sheetData>, <x:row>…): le celle nuove lo riprendono
   const sd = /<((?:\w+:)?)sheetData\b[^>]*?(\/)?>/.exec(xml);
@@ -118,8 +112,8 @@ export function fillTemplate({ ws, customer, scope, tpl, rows, out }) {
   // riga-sentinella numerica, solo per la verifica: impedisce a parseXlsx di leggere la prima riga di dati come seconda riga d'intestazione
   const sentinel = `<${px}row r="${first}"><${px}c r="A${first}"><${px}v>0</${px}v></${px}c></${px}row>`;
   // le righe d'esempio sotto l'intestazione si tolgono (anche vuote o senza r=); quelle fino all'intestazione restano
-  let prev = 0;
-  xml = xml.replace(/<(?:\w+:)?row\b([^>]*?)(?:\/>|>[\s\S]*?<\/(?:\w+:)?row>)/g, (m, attrs) => { const n = Number(attr(attrs, "r") ?? prev + 1); prev = n; return n > headerRow ? "" : m; });
+  // (helper condiviso con template-learn, che salva il file già ripulito: revisione finale I5)
+  xml = stripRowsBelow(xml, headerRow);
   // i valori entrano con sostituzioni a funzione: "$&", "$'" e "$$" nei dati non sono pattern
   const withBody = (body) => xml.replace(/<((?:\w+:)?)sheetData\b[^>]*?(\/)?>(?:[\s\S]*?<\/(?:\w+:)?sheetData>)?/, (m, p, selfClosed) => {
     const open = m.slice(0, m.indexOf(">") + 1).replace(/\/>$/, ">");

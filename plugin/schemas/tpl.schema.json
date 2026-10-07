@@ -9,6 +9,7 @@
     "id": { "type": "string", "pattern": "^[SC]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.TPL\\.\\d{4}$" },
     "type": { "const": "TPL" },
     "object": { "type": "string", "minLength": 1, "description": "oggetto che il template carica (es. \"data element\", \"workflow\")" },
+    "kind": { "enum": ["config", "data"], "description": "revisione finale (Ruling F1): config = oggetti di configurazione (in produzione l'import chiede l'istantanea dei dati attuali e compensazioni restore), data = record di business. Assente nelle voci vecchie ⇒ config (fail-closed)." },
     "module": { "type": ["string", "null"] },
     "page": { "type": ["string", "null"], "description": "firma della pagina di import (page_signature)" },
     "source": { "enum": ["utente", "tenant"] },
@@ -28,7 +29,7 @@
           "required": { "type": "boolean" },
           "type": { "enum": ["text", "number", "list"] },
           "values": { "type": ["array", "null"], "items": { "type": "string" } },
-          "example": { "type": ["string", "number", "boolean", "null"] }
+          "example": { "type": ["string", "number", "boolean", "null"], "description": "sempre null nelle voci nuove (Ruling F3: nessun valore di cella del cliente nella knowledge)" }
         }
       }
     },

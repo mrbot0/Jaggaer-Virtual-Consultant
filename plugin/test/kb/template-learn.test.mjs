@@ -36,7 +36,8 @@ test("template-learn: intestazione non in riga 1 ⇒ header_row; la voce valida 
   const f = join(ws, "w.xlsx"); writeFileSync(f, makeZip([{ name: "xl/workbook.xml", data: wb }, { name: "xl/_rels/workbook.xml.rels", data: rels }, { name: "xl/worksheets/sheet1.xml", data: sheet }]));
   const a = learnTemplate({ ws, customer: "ACME", scope: "ADM", file: f, object: "workflow", module: "Admin", page: "sig-1" });
   assert.equal(a.item.header_row, 3);
-  assert.deepEqual(a.item.columns.map((c) => [c.name, c.required, c.type, c.example]), [["Nome", true, "text", "x"], ["Quantità", false, "number", 5]]);
+  // revisione finale (Ruling F3): example non salva valori di celle; il tipo si deduce ancora dal primo valore
+  assert.deepEqual(a.item.columns.map((c) => [c.name, c.required, c.type, c.example]), [["Nome", true, "text", null], ["Quantità", false, "number", null]]);
   assert.ok(validateItem(a.item).ok, validateItem(a.item).errors.join("; "));
   assert.equal(validateItem({ ...a.item, header_row: 0 }).ok, false);
   assert.equal(validateItem({ ...a.item, columns: [{ name: "x", required: true, type: "date" }] }).ok, false);
