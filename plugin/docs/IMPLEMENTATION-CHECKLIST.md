@@ -7,7 +7,7 @@ Ultimo aggiornamento: 29/09/2026 22:45 — **sviluppo completato: tutti i 17 pac
 
 ## Avanzamento complessivo
 
-> **Ops veloce** (autonomia, import con template, produzione, cancellazioni): 14 task su 15 = **93 %**, vedi la sezione dedicata più sotto. Le percentuali di questa sezione e la tabella dei pacchetti riguardano lo sviluppo originale (17 pacchetti) e non cambiano.
+> **Ops veloce** (autonomia, import con template, produzione, cancellazioni): 15 task su 15 = **100 %**, vedi la sezione dedicata più sotto. Le percentuali di questa sezione e la tabella dei pacchetti riguardano lo sviluppo originale (17 pacchetti) e non cambiano.
 
 **100 % dello sviluppo** (stima pesata sullo sforzo) · 17 pacchetti su 17 chiusi, review finale inclusa.
 
@@ -240,7 +240,7 @@ Richiesta dell'utente 06–07/10/2026; specifica [`superpowers/specs/2026-10-06-
 piano [`superpowers/plans/2026-10-07-ops-veloce.md`](superpowers/plans/2026-10-07-ops-veloce.md) (15 task, esecuzione con subagenti e review a ogni task).
 Cambia tre decisioni dell'architettura v8.0 per scelta esplicita dell'utente: §52.1 (in produzione si scrive, con approvazione per passo), §29.4 (massivi in pre-produzione e produzione, cancellazioni in sandbox e pre-produzione), ADR-06 (verbo `DELETE`). Il merge su `main` lo fa l'utente.
 
-**Avanzamento: 14 task su 15 = 93 %** (restano: verifica finale del ramo, Task 15; la prova dal vivo sul tenant è a parte).
+**Avanzamento: 15 task su 15 = 100 %** (suite intera 1312/1312 col corpus, `test:timing` 5/5, review finale del ramo con correzioni; la prova dal vivo sul tenant è a parte).
 
 | Task | Contenuto | Stato |
 |---|---|---|
@@ -253,7 +253,7 @@ Cambia tre decisioni dell'architettura v8.0 per scelta esplicita dell'utente: §
 | 10–12 | Template: `kb template-learn` (voce `TPL`), `template-fill`, `import-result` | ✅ |
 | 13 | `compose-plan`: via massiva preferita con un `TPL`; campi della pagina in un solo passo `FILL` (`fill_form`) | ✅ |
 | 14 | Istruzioni agli agenti e documenti (`ops`, `scope-expert`, `agent-manager`, manuali, guida, README) | ✅ |
-| 15 | Verifica finale (suite intera, corpus, `test:timing`) | ⬜ |
+| 15 | Verifica finale (suite intera, corpus, `test:timing`), review del ramo e correzioni: istantanea per import di configurazione in prod, niente righe spuntate prima di un DELETE, `write_data: false` blocca massivi e cancellazioni, template salvati senza dati, autonomia alzata solo se confermata | ✅ |
 
 Da sapere: con autonomia alta in pre-produzione import in blocco e cancellazioni non chiedono nulla o quasi (rischio dichiarato nei manuali; per un cliente prudente `default: medio`); in produzione le scritture restano spente finché l'utente non porta `write_data` a `true` nell'ambiente.
 
