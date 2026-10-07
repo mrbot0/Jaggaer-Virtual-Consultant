@@ -469,7 +469,11 @@ export async function run(argv, env = process.env) {
     // `use show`: commands/use.md antepone sempre `use` agli argomenti (#10).
     if (action === "show" || (action === "use" && what === "show")) {
       const { pointer, session } = loadOrExplain(ws, sid);
-      result = { session_id: sid, pointer, session };
+      const { autonomyLevel } = await import("../../hooks/lib/autonomy.mjs");
+      const { readApprovals, approvalsFile } = await import("./approvals.mjs");
+      const reg = readApprovals(approvalsFile(ws, session.customer, sid));
+      const autonomy = autonomyLevel({ ws, customer: session.customer, records: reg.ok ? reg.records : [], envType: session.env?.type ?? "sandbox" });
+      result = { session_id: sid, pointer, session, autonomy };
     } else if (action === "use" && what === "customer") result = await useCustomer(ws, sid, value, { create: !!opts.new, actor });
     else if (action === "use" && what === "scope") result = useScope(ws, sid, value, { actor });
     else if (action === "use" && what === "mode") result = await useMode(ws, sid, value, { actor });

@@ -41,6 +41,10 @@ const RE_A1 = new RegExp(`^APPROVO PIANO (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_A2 = new RegExp(`^APPROVO PROVA (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_A3 = new RegExp(`^APPROVO PASSO ([1-9]\\d{0,3}) (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_YES = /^(sì|si|yes)$/iu;
+// Autonomia di ops (spec 2026-10-06 §3.2): vale per la sessione finché l'utente non ne scrive un'altra.
+const RE_AUTONOMY = /^AUTONOMIA (ALTA|MEDIA|BASSA)$/u;
+const AUTONOMY_LEVEL = { ALTA: "alto", MEDIA: "medio", BASSA: "basso" };
+const AUTONOMY_WORD = { alto: "ALTA", medio: "MEDIA", basso: "BASSA" };
 // WP09d: approvazioni amministrative (non legate a un piano). Il bersaglio è nel record (target); purge richiede il
 // nome dichiarato (due approvazioni con frase, da due nomi diversi: §54.4, §56.8); promozione a product/ (§22.2, §29.6)
 // e retention (§54.4, 1 approvazione) lo accettano facoltativo.
@@ -80,17 +84,19 @@ export function parseApprovalPrompt(prompt) {
   if ((m = RE_PURGE.exec(bare))) return { kind: "purge", target: m[1], approver: m[2] ? normSpaces(m[2]) : null };
   if ((m = RE_PROMO.exec(bare))) return { kind: "promote", target: m[1], approver: m[2] ? normSpaces(m[2]) : null };
   if ((m = RE_RETENTION.exec(bare))) return { kind: "retention", target: m[1], approver: m[2] ? normSpaces(m[2]) : null };
+  if ((m = RE_AUTONOMY.exec(bare))) return { kind: "autonomy", level: AUTONOMY_LEVEL[m[1]] };
   if (RE_YES.test(bare)) return { kind: "yes" };
   if (bare === EXPLORE_PHRASE) return { kind: "explore", env_type: "sandbox" };
   if (bare === EXPLORE_PREPROD_PHRASE) return { kind: "explore", env_type: "preprod" };
   if (bare === EXPLORE_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "sandbox", full: true };
   if (bare === EXPLORE_PREPROD_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "preprod", full: true };
   if (/\bESPLORA\b/iu.test(s)) return { kind: "attempt" };
+  if (/\bAUTONOMIA\b/iu.test(s)) return { kind: "attempt" };
   if (/APPROV/iu.test(s) || (ATTEMPT.test(s) && s.length <= 30)) return { kind: "attempt" };
   return null;
 }
 
-export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : r.kind === "explore" ? (EXPLORE_PHRASES[r.env_type] ?? EXPLORE_PHRASE) + (r.full ? EXPLORE_FULL_SUFFIX : "")
+export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : r.kind === "autonomy" ? `AUTONOMIA ${AUTONOMY_WORD[r.level] ?? ""}` : r.kind === "explore" ? (EXPLORE_PHRASES[r.env_type] ?? EXPLORE_PHRASE) + (r.full ? EXPLORE_FULL_SUFFIX : "")
   : r.kind === "purge" ? `APPROVO PURGE ${r.target} DA <Nome Cognome>` : r.kind === "promote" ? `APPROVO PROMOZIONE ${r.target}` : r.kind === "retention" ? `APPROVO RETENTION ${r.target}` : "");
 
 // ---- approvazioni amministrative (WP09d: purge, promozione, retention) ----
@@ -396,7 +402,12 @@ export async function capture(input, env = process.env) {
 
   let rec;
   let removeMatch;
-  if (p.kind === "explore") {
+  if (p.kind === "autonomy") {
+    // spec 2026-10-06 §3.2: il livello di autonomia lo sceglie solo l'utente, con la frase nel prompt.
+    if (!reg.ok) return reject([phraseOf(p)], `registro delle approvazioni corrotto (${reg.reason})`);
+    rec = { kind: "autonomy", level: p.level };
+    removeMatch = () => false;
+  } else if (p.kind === "explore") {
     // K5 giro 2 (N2): la modalità esplorazione la sceglie l'utente, solo in sandbox.
     const want = (EXPLORE_PHRASES[p.env_type] ?? EXPLORE_PHRASE) + (p.full ? EXPLORE_FULL_SUFFIX : "");
     if (!s.env) return reject([want], "nessun ambiente dichiarato: /use env <id> prima");
@@ -468,7 +479,8 @@ export async function capture(input, env = process.env) {
   rec.session = st.sid;
   // Prima il registro (la fonte dei guard); poi lo specchio e l'audit.
   const ev = appendApproval(file, rec);
-  const label = ev.kind === "explore" ? `esplorazione${ev.full ? " completa" : ""} ${ev.env} (vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
+  const label = ev.kind === "autonomy" ? `Autonomia ${ev.level} per questa sessione${s.env?.type === "prod" ? " (in produzione al massimo medio)" : ""}`
+    : ev.kind === "explore" ? `esplorazione${ev.full ? " completa" : ""} ${ev.env} (vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
     : GRANT_KINDS.includes(ev.kind) ? `${ev.kind} ${ev.target}${ev.approver_declared ? ` (${ev.approver_declared})` : ""} — token ${ev.hash.slice(0, 16)} (monouso, valido ${Math.round(GRANT_WINDOW_MS[ev.kind] / 60000)} minuti)`
     : `${ev.kind} ${ev.plan}${ev.step ? ` passo ${ev.step}` : ""}${ev.approver_declared ? ` (${ev.approver_declared})` : ""}`;
   let warn = "";
