@@ -41,8 +41,6 @@ function setup({ env = "prod", level = "giallo", step = 2, pending = [], plan } 
   const file = writePlan(ws, plan ?? cfgPlan(env, level));
   patchSession(ws, (s) => {
     s.active_plan = { plan_id: PLAN, file, step };
-    // Ops veloce (spec 2026-10-06 §3.6): in produzione il guard scrive solo con l'interruttore dell'utente policy.write_data: true
-    if (s.env?.type === "prod") s.env.policy = { ...s.env.policy, write_data: true };
     s.pending.approvals = pending;
     s.snapshots = [{ objects: ["C.ACME.ADM.CFG.0019", "C.ACME.ADM.CFG.0031"], ts: new Date().toISOString(), source: "kb-snapshot", obs: ["L.ACME.ADM.OBS.0001", "L.ACME.ADM.OBS.0002"] }];
   });
@@ -314,12 +312,21 @@ test("CLI approvals status|verify (sola lettura): catena verificata, stato della
   assert.equal(cli(["approve", "--plan", PLAN]).status, 1, "nessun comando crea token");
 });
 
-test("guard-config-scope: prod con policy.write_data spento ⇒ deny anche con 3A (interruttore dell'utente, spec 2026-10-06 §3.6)", () => {
-  const { ws, tr } = setup({ env: "prod", level: "giallo" });
-  patchSession(ws, (s) => { s.env.policy.write_data = false; });
+// Ops veloce (spec 2026-10-06 §3.6): policy.write_data governa in prod solo i dati (effetto "write"); la configurazione resta alle approvazioni.
+test("guard-config-scope: prod con write_data spento ⇒ un passo sui dati (ACT-CREATE SAVE) è negato per write_data", () => {
+  const plan = { ...cfgPlan("prod"), steps: [S(1, "NAVIGATE", "ACT-OBS"), S(2, "SAVE", "ACT-CREATE")] };
+  const { ws, tr } = setup({ env: "prod", plan });
+  assert.equal(readSession(ws).env.policy.write_data, false);
   say(ws, tr, "APPROVO PIANO PLAN.0042 DA Mario Rossi");
   say(ws, tr, "APPROVO PROVA PLAN.0042 DA Luca Bianchi");
   say(ws, tr, "APPROVO PASSO 2 PLAN.0042");
   const r = click(ws, tr);
   assert.ok(denied(r)); assert.match(reasonOf(r), /write_data/);
+});
+
+test("guard-config-scope: prod con write_data spento ⇒ ACT-CFG-CHANGE non è negato da write_data (passa alle approvazioni)", () => {
+  const { ws, tr } = setup({ env: "prod", level: "giallo" });
+  assert.equal(readSession(ws).env.policy.write_data, false);
+  const r = click(ws, tr);   // senza approvazioni: negato, ma dal controllo delle approvazioni, non da write_data
+  assert.ok(denied(r)); assert.doesNotMatch(reasonOf(r), /write_data/); assert.match(reasonOf(r), /A1|APPROVO PIANO/);
 });

@@ -257,7 +257,7 @@ async function browserDecide(ctx, no) {
   if (!env) return no(reason);
   const info = ACT[cls];
   if (!info) return no(`${at}: classe di azione fuori catalogo`);
-  if (env.type === "prod" && info.effect !== "read" && env.policy?.write_data !== true) return no(`${at}: in produzione le scritture sono spente per l'ambiente ${env.id} (policy.write_data: false in environments.yaml)`);
+  if (env.type === "prod" && info.effect === "write" && env.policy?.write_data !== true) return no(`${at}: in produzione le scritture sono spente per l'ambiente ${env.id} (policy.write_data: false in environments.yaml)`);
   if (info[envColumn(env.type)] === "never") return no(`${at}: ${cls} non è ammessa in ${env.type} (§29.4)`);
 
   // (c) perimetro
