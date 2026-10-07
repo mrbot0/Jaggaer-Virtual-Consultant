@@ -30,6 +30,7 @@ test("esplorazione simulata → atlas-build → compose-plan: piano valido per c
   const env = readSession(ws).env;
   const r = composePlan({ ws, customer: "ACME", scope: "P2P", env: { id: env.id, type: env.type }, goal: "crea ordine", data: { Descrizione: "Sedie", "Centro di costo": "IT-0442" }, planId: "PLAN.ACME.E2E.0001" });
   assert.ok(r.plan, JSON.stringify(r.gaps));
-  assert.deepEqual(r.plan.steps.map((s) => s.verb), ["NAVIGATE", "CLICK", "CLICK", "FILL", "FILL", "SAVE"]);
+  assert.deepEqual(r.plan.steps.map((s) => s.verb), ["NAVIGATE", "CLICK", "CLICK", "FILL", "SAVE"]);
+  assert.equal(r.plan.steps.find((s) => s.verb === "FILL").fields.length, 2);
   assert.deepEqual(validatePlan(r.plan, { env: { id: env.id, type: env.type } }).errors, []);
 });

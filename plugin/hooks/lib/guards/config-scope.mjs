@@ -257,9 +257,9 @@ export function bindingRefusal(ctx, step) {
     const al = allowedSels(step);
     if (al.err) return al.err;
     if (!al.allowed) return "il passo non ha come target un SEL dell'Atlas: input, click e upload non si possono legare al passo";
-    const shown = al.multi ? `uno dei SEL di fields del passo (${al.allowed.join(", ")})` : `il SEL del passo ${step.target}`;
+    const shown = al.multi ? `a uno dei SEL del passo (fields: ${al.allowed.join(", ")})` : `al SEL del passo ${step.target}`;
     const refs = Array.isArray(a.targets) ? a.targets : [];
-    if (!refs.length || a.untargeted) return `azione senza uid/ref (${a.op ?? a.tool}): non si può legare a ${shown}; usa l'uid o il ref dell'ultimo snapshot`;
+    if (!refs.length || a.untargeted) return `azione senza uid/ref (${a.op ?? a.tool}): non si può legare ${shown}; usa l'uid o il ref dell'ultimo snapshot`;
     // WP07 giro 5 (I-A', regola 5): una chiamata precedente su questa scheda che observe-append non ha registrato
     // (fallito, scaduto) ⇒ la storia dei ref della scheda è inaffidabile: nessun legame finché la scheda non naviga
     // WP08: anche il marcatore del cliente (customers/<C>/.sessions/ref-pending.json), che sopravvive alla sessione
@@ -272,7 +272,7 @@ export function bindingRefusal(ctx, step) {
     if ((snap.tab ?? null) !== (a.tab ?? null)) return "l'ultimo snapshot osservato è di un'altra scheda: rifai lo snapshot in questa scheda";
     for (const r of refs) {
       const sel = Object.hasOwn(snap.refs, r) ? snap.refs[r] : undefined;
-      if (typeof sel !== "string" || !al.allowed.includes(sel)) return `l'elemento ${r} non corrisponde a ${shown} (nell'ultimo snapshot: ${Object.hasOwn(snap.refs, r) ? snap.refs[r] ?? "nessuna voce dell'Atlas" : "assente"})`;
+      if (typeof sel !== "string" || !al.allowed.includes(sel)) return `l'elemento ${r} non corrisponde ${shown} (nell'ultimo snapshot: ${Object.hasOwn(snap.refs, r) ? snap.refs[r] ?? "nessuna voce dell'Atlas" : "assente"})`;
       if (al.multi) {
         bound.set(sel, (bound.get(sel) ?? 0) + 1);
         if (bound.get(sel) > 1) return `più di un elemento della chiamata legato allo stesso campo ${sel} dei fields del passo: ogni campo si compila una sola volta per chiamata`;
