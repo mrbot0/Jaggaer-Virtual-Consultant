@@ -61,6 +61,19 @@ export { RUN_RE, runRefusal };
 export const checkpointSha = (cp) => createHash("sha256").update(canonical(cp)).digest("hex");
 const stepsOf = (plan) => (Array.isArray(plan?.steps) ? [...plan.steps].sort((a, b) => a.n - b.n) : []);
 
+// Ops veloce (spec 2026-10-06 §3.5): serve APPROVO PIANO all'attivazione? Produzione sempre; basso come prima (fuori
+// sandbox sì); medio fuori sandbox sì; alto solo se un passo chiede A1/A2/A3 (il "sì" di un passo R2 resta per passo).
+export function planNeedsApproval(plan, env, autonomy) {
+  const sandbox = ["sandbox", "dev"].includes(env.type);
+  if (env.type === "prod") return true;
+  if (autonomy === "basso") return !sandbox;
+  if (!sandbox && autonomy !== "alto") return true;
+  return stepsOf(plan).some((s) => {
+    const r = requiredApprovals(s.action_class, s, env, s.action_class === "ACT-CFG-CHANGE" ? stepLevel(s) : null, autonomy);
+    return r.a1 || r.a2 || r.a3;
+  });
+}
+
 // Frasi che l'utente deve scrivere (§57.2) per le richieste aperte.
 function phrase(r, planId, second) {
   const who = second ? " DA <Nome Cognome>" : "";
@@ -212,14 +225,13 @@ export async function check(opts) {
 
   // WP07 giro 1 (C2 a): fuori sandbox un piano si attiva solo dopo APPROVO PIANO <id> dell'utente (A1 registrato da
   // approval-capture, con l'impronta di QUESTO file). Senza: richiesta aperta in pending.approvals, active_plan intatto.
-  const sandbox = ["sandbox", "dev"].includes(session.env.type);
   const second = session.env.policy?.second_approver_required ?? session.env.type === "prod";
   const planApproved = () => {
     const a1 = reg.records.filter((r) => r.kind === "A1" && r.plan === plan.plan_id).at(-1);
     return !!a1 && a1.plan_sha256 === info.sha256;
   };
   const planApproval = () => {
-    if (active || sandbox || planApproved()) return null;
+    if (active || !planNeedsApproval(plan, session.env, aut.level) || planApproved()) return null;
     const req = { kind: "A1", plan: plan.plan_id, file: planFile };
     updateSessionFile(sFile, (x) => { x.pending.approvals = dedupePending(Array.isArray(x.pending.approvals) ? x.pending.approvals : [], [req]); });
     audit(ws, sid, customer, session.scope, { action: "activate", plan: plan.plan_id, status: "approval_required", reason: "plan-approval" });
