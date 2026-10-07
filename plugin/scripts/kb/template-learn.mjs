@@ -32,7 +32,7 @@ export function learnTemplate({ ws, customer, scope, file, object, page = null, 
   const columns = t.headers.map((h, c) => {
     const values = listFor(c);
     const example = t.rows.find((r) => r[c] != null)?.[c] ?? null;
-    return { name: String(h).replace(REQ, "").trim(), required: REQ.test(h), type: values ? "list" : typeof example === "number" ? "number" : "text", values, example };
+    return { name: String(h).replace(REQ, "").trim(), col: c, required: REQ.test(h), type: values ? "list" : typeof example === "number" ? "number" : "text", values, example };
   }).filter((c) => c.name);
   const d = templatesDir(ws, customer, scope);
   mkdirSync(join(d, "files"), { recursive: true });

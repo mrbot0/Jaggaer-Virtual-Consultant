@@ -10,6 +10,7 @@ import { createHash } from "node:crypto";
 import YAML from "yaml";
 import { openZip } from "../ingest/lib/zip.mjs";
 import { makeZip } from "../ingest/lib/zip-write.mjs";
+import { parseXlsx } from "../ingest/parse-xlsx.mjs";
 import { templatesDir } from "../kb/template-learn.mjs";
 import { SCOPES } from "../kb/codes.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
@@ -24,7 +25,34 @@ const attr = (tag, name) => new RegExp(`\\b${name}="([^"]*)"`).exec(tag)?.[1];
 const colName = (c) => { let s = ""; for (let n = c + 1; n > 0; n = Math.floor((n - 1) / 26)) s = String.fromCharCode(65 + ((n - 1) % 26)) + s; return s; };
 // i caratteri di controllo non ammessi in XML 1.0 si tolgono (un valore con \u0000 renderebbe il file illeggibile)
 // eslint-disable-next-line no-control-regex
-const xmlText = (v) => esc(String(v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, ""));
+const sanitize = (v) => String(v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF]/g, "");
+const xmlText = (v) => esc(sanitize(v));
+const same = (a, b) => String(a).replace(/\r\n?/g, "\n").trim() === String(b).replace(/\r\n?/g, "\n").trim();
+
+// Ultima difesa: il file scritto si rilegge con parseXlsx e ogni valore deve essere nella riga e nella colonna attese;
+// il suo sha256 è quello che la guardia d'upload considera valido, quindi un file monco non deve mai uscire.
+// Se parseXlsx scambia la prima riga di dati per una seconda intestazione (euristica sui fogli con colonne vuote nell'intestazione),
+// si rilegge una copia con una riga-sentinella numerica sotto l'intestazione: stesse celle, righe slittate di una.
+function verifyFilled(buf, item, rows, headerRow, withSentinel) {
+  const read = (b) => { try { return parseXlsx(b, { id: "verify" }).sections.find((s) => s.title === item.sheet)?.tables?.[0]; } catch (err) { throw new Error(`file compilato non rileggibile: ${err.message}`); } };
+  let table = read(buf), skip = 0;
+  if (table?.header_rows > 1) { table = read(withSentinel()); skip = 1; }
+  const blank = (r) => item.columns.every((c) => r[c.name] == null || String(r[c.name]).trim() === "");
+  let expected = rows.length;
+  while (expected > 0 && blank(rows[expected - 1])) expected--;
+  const got = (table?.rows ?? []).slice(skip);
+  const fail = (why) => { throw new Error(`verifica del file compilato fallita: ${why}`); };
+  if (!table || (table.start_row ?? 1) !== headerRow || table.header_rows > 1) fail("intestazione non rilevata dove atteso");
+  if (got.length !== expected) fail(`righe rilette ${got.length}, attese ${expected}`);
+  item.columns.forEach((c, k) => {
+    const col = c.col ?? k;
+    for (let i = 0; i < expected; i++) {
+      const v = rows[i][c.name], a = got[i][col] ?? null;
+      const empty = v == null || String(v).trim() === "";
+      if (empty ? a != null : (c.type === "number" ? Number(a) !== Number(v) : !same(a, sanitize(v)))) fail(`riga ${i + 1}, colonna "${c.name}": riletto ${JSON.stringify(a)}`);
+    }
+  });
+}
 
 export function checkRows(item, rows) {
   const errors = [];
@@ -60,34 +88,51 @@ export function fillTemplate({ ws, customer, scope, tpl, rows, out }) {
   // item.file è "templates/files/<codice>.xlsx", relativo a scopes/<S>/ (la cartella che contiene templates/ = `dir`)
   const zip = openZip(readFileSync(join(dir, "..", item.file)));
   const headerRow = item.header_row ?? 1;
-  // foglio dell'item: nome in workbook.xml → r:id → Target in workbook.xml.rels
+  // foglio dell'item: nome in workbook.xml → r:id → Target in workbook.xml.rels; nessun ripiego su sheet1.xml
   const wb = zip.text("xl/workbook.xml");
-  const sheetTag = [...wb.matchAll(/<sheet\b[^>]*>/g)].map((m) => m[0]).find((t) => unesc(attr(t, "name") ?? "") === item.sheet);
+  const sheetTag = [...wb.matchAll(/<(?:\w+:)?sheet\b[^>]*>/g)].map((m) => m[0]).find((t) => unesc(attr(t, "name") ?? "") === item.sheet);
   const rid = sheetTag && /\br:id="([^"]+)"/.exec(sheetTag)?.[1];
-  const relTag = rid && [...zip.text("xl/_rels/workbook.xml.rels").matchAll(/<Relationship\b[^>]*>/g)].map((m) => m[0]).find((t) => attr(t, "Id") === rid);
+  const rels = zip.has("xl/_rels/workbook.xml.rels") ? zip.text("xl/_rels/workbook.xml.rels") : "";
+  const relTag = rid && [...rels.matchAll(/<(?:\w+:)?Relationship\b[^>]*>/g)].map((m) => m[0]).find((t) => attr(t, "Id") === rid);
   const target = relTag && attr(relTag, "Target");
-  const sheetPath = target ? (target.startsWith("/") ? target.slice(1) : `xl/${target.replace(/^\.\//, "")}`) : "xl/worksheets/sheet1.xml";
-  if (!zip.has(sheetPath)) throw new Error(`foglio "${item.sheet}" non trovato nel file vuoto del template`);
+  if (!target) throw new Error(`foglio "${item.sheet}" non risolto nel file vuoto del template (nome o relazione mancante)`);
+  const sheetPath = target.startsWith("/") ? target.slice(1) : `xl/${target.replace(/^\.\//, "")}`;
+  if (!zip.has(sheetPath)) throw new Error(`foglio "${item.sheet}" non trovato nel file vuoto del template (${sheetPath})`);
+  let xml = zip.text(sheetPath);
+  // prefisso di namespace del foglio (<x:sheetData>, <x:row>…): le celle nuove lo riprendono
+  const sd = /<((?:\w+:)?)sheetData\b[^>]*?(\/)?>/.exec(xml);
+  if (!sd) throw new Error("foglio senza <sheetData>: file vuoto del template non valido");
+  const px = sd[1];
   const first = headerRow + 1;
-  const body = rows.map((r, i) => {
-    const n = first + i;
+  const colOf = (c, k) => c.col ?? k;
+  const bodyOf = (shift) => rows.map((r, i) => {
+    const n = first + shift + i;
     const cells = item.columns.map((c, k) => {
       const v = r[c.name];
       if (v == null || String(v).trim() === "") return "";
-      return c.type === "number" ? `<c r="${colName(k)}${n}"><v>${Number(v)}</v></c>` : `<c r="${colName(k)}${n}" t="inlineStr"><is><t xml:space="preserve">${xmlText(v)}</t></is></c>`;
+      const ref = `${colName(colOf(c, k))}${n}`;
+      return c.type === "number" ? `<${px}c r="${ref}"><${px}v>${Number(v)}</${px}v></${px}c>` : `<${px}c r="${ref}" t="inlineStr"><${px}is><${px}t xml:space="preserve">${xmlText(v)}</${px}t></${px}is></${px}c>`;
     }).join("");
-    return `<row r="${n}">${cells}</row>`;
+    return `<${px}row r="${n}">${cells}</${px}row>`;
   }).join("");
-  let xml = zip.text(sheetPath);
+  // riga-sentinella numerica, solo per la verifica: impedisce a parseXlsx di leggere la prima riga di dati come seconda riga d'intestazione
+  const sentinel = `<${px}row r="${first}"><${px}c r="A${first}"><${px}v>0</${px}v></${px}c></${px}row>`;
   // le righe d'esempio sotto l'intestazione si tolgono (anche vuote o senza r=); quelle fino all'intestazione restano
   let prev = 0;
-  xml = xml.replace(/<row\b([^>]*?)(?:\/>|>[\s\S]*?<\/row>)/g, (m, attrs) => { const n = Number(attr(attrs, "r") ?? prev + 1); prev = n; return n > headerRow ? "" : m; });
-  xml = /<sheetData\s*\/>/.test(xml) ? xml.replace(/<sheetData\s*\/>/, `<sheetData>${body}</sheetData>`) : xml.replace("</sheetData>", `${body}</sheetData>`);
-  const last = first + rows.length - 1;
-  xml = xml.replace(/<dimension ref="([A-Z]+)(\d+)(?::[A-Z]+\d+)?"\s*\/>/, (_, c1, r1) => `<dimension ref="${c1}${r1}:${colName(item.columns.length - 1)}${Math.max(last, headerRow)}"/>`);
-  const buf = makeZip(zip.names.map((name) => ({ name, data: name === sheetPath ? Buffer.from(xml, "utf8") : zip.read(name) })));
+  xml = xml.replace(/<(?:\w+:)?row\b([^>]*?)(?:\/>|>[\s\S]*?<\/(?:\w+:)?row>)/g, (m, attrs) => { const n = Number(attr(attrs, "r") ?? prev + 1); prev = n; return n > headerRow ? "" : m; });
+  // i valori entrano con sostituzioni a funzione: "$&", "$'" e "$$" nei dati non sono pattern
+  const withBody = (body) => xml.replace(/<((?:\w+:)?)sheetData\b[^>]*?(\/)?>(?:[\s\S]*?<\/(?:\w+:)?sheetData>)?/, (m, p, selfClosed) => {
+    const open = m.slice(0, m.indexOf(">") + 1).replace(/\/>$/, ">");
+    const inner = selfClosed ? "" : m.slice(open.length, m.lastIndexOf("</"));
+    return open + inner + body + `</${p}sheetData>`;
+  });
+  const lastCol = colName(Math.max(...item.columns.map(colOf)));
+  const withDim = (x, extra) => x.replace(/<((?:\w+:)?)dimension ref="([A-Z]+)(\d+)(?::[A-Z]+\d+)?"\s*\/>/, (_, p, c1, r1) => `<${p}dimension ref="${c1}${r1}:${lastCol}${Math.max(first + extra + rows.length - 1, headerRow)}"/>`);
+  const bufOf = (x) => makeZip(zip.names.map((name) => ({ name, data: name === sheetPath ? Buffer.from(x, "utf8") : zip.read(name) })));
+  const buf = bufOf(withDim(withBody(bodyOf(0)), 0));
+  verifyFilled(buf, item, rows, headerRow, () => bufOf(withDim(withBody(sentinel + bodyOf(1)), 1)));
   mkdirSync(dirname(abs), { recursive: true });
-  writeFileSync(abs, buf, { flag: "wx" });
+  try { writeFileSync(abs, buf, { flag: "wx" }); } catch (err) { if (err?.code === "EEXIST") throw new Error(`${out} esiste già: il file legato a un piano non si riscrive (usa un nome nuovo)`); throw err; }
   return { ok: true, path: out, sha256: createHash("sha256").update(buf).digest("hex"), rows: rows.length };
 }
 
@@ -130,7 +175,7 @@ export async function main(argv, env = process.env) {
   } catch (err) {
     const m = String(err?.message ?? err);
     // errori d'uso (argomenti, template assente, file già esistente) → 1; il resto è di sistema → 2
-    return /^(cliente non valido|scope non valido|codice TPL non valido|l'uscita deve stare|--data:|template .* non trovato|.* esiste già|foglio ".*" non trovato)/.test(m) ? fail(asJson, 1, m) : fail(asJson, 2, `errore di sistema: ${m}`);
+    return /^(cliente non valido|scope non valido|codice TPL non valido|l'uscita deve stare|--data:|template .* non trovato|.* esiste già|foglio ".*" non (trovato|risolto)|foglio senza|file compilato non rileggibile|verifica del file compilato)/.test(m) ? fail(asJson, 1, m) : fail(asJson, 2, `errore di sistema: ${m}`);
   }
 }
 

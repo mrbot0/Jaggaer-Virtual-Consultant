@@ -24,6 +24,7 @@
         "required": ["name", "required", "type"],
         "properties": {
           "name": { "type": "string", "minLength": 1 },
+          "col": { "type": "integer", "minimum": 0, "description": "indice 0-based della colonna nel foglio (le intestazioni vuote sono saltate, le colonne seguenti non scalano); assente nelle voci vecchie = posizione nell'elenco" },
           "required": { "type": "boolean" },
           "type": { "enum": ["text", "number", "list"] },
           "values": { "type": ["array", "null"], "items": { "type": "string" } },
