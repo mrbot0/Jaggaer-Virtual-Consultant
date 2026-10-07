@@ -103,7 +103,7 @@
       ]
     },
     "prodPolicy": {
-      "description": "§52.1 superato (spec 2026-10-06 §3.6): in produzione si scrive solo con write_data: true (interruttore dell'utente) e approvazione per passo; ogni configurazione con tre approvazioni; il rosso solo per oggetto in prod_allowed_red.",
+      "description": "§52.1 superato (spec 2026-10-06 §3.6): in produzione si scrive solo con write_data: true (interruttore dell'utente) e approvazione per passo; ogni configurazione con A1 + approvazione del passo, più A2 se è richiesto il secondo approvatore (second_approver_required, predefinito); il rosso solo per oggetto in prod_allowed_red.",
       "type": "object",
       "properties": {
         "write_data": { "type": "boolean" },

@@ -31,7 +31,7 @@ const hhmm = (ts) => (typeof ts === "string" && ts.length >= 16 ? ts.slice(11, 1
 export function banner(env) {
   if (!env) return "⚠ AMBIENTE NON DICHIARATO — nessuna azione sul browser: /use env <id>";
   if (!env.verified) return `${env.label ?? env.id} (${env.id}) — NON VERIFICATO: solo navigazione e lettura finché env-check non riconosce ≥ 2 segnali`;
-  if (env.type === "prod") return "⚠ PRODUZIONE — scritture solo con write_data e approvazione di ogni passo";
+  if (env.type === "prod") return "⚠ PRODUZIONE — ogni passo che scrive si approva; dati e import solo con write_data";
   if (env.type === "preprod") return "PRE-PROD";
   return "SANDBOX";
 }

@@ -273,7 +273,7 @@ al nome del file, nessun codice rivendicato da due file), `kb/lifecycle.mjs --he
 | `graph [--scope]` | Coerenza, handoff mancanti | script |
 | `scopes · handoffs [--validate] · clusters · contradictions [--open]` | Registri | script |
 | `coverage [--scope]` | Copertura per tipo, forma epistemica, identità dei dati | script `kb/coverage.mjs` |
-| `template-learn --file <xlsx> --object <oggetto> --scope <S> [--page <sig>] [--modulo <M>] [--fonte utente\|tenant]` | Impara un template di caricamento massivo (colonne, obbligatori, liste di valori) e lo salva come voce `TPL` del cliente con il file vuoto | script `kb/template-learn.mjs` |
+| `template-learn --file <xlsx> --object <oggetto> --scope <S> --page <sig> [--tipo config\|dati] [--modulo <M>] [--fonte utente\|tenant]` | Impara un template di caricamento massivo (colonne, obbligatori, liste di valori) e lo salva come voce `TPL` del cliente con il file vuoto: sempre ripulito delle righe sotto l'intestazione, nessun valore di cella nella voce (`example` null); `--page` obbligatorio; `--tipo config` (predefinito, oggetti di configurazione: in produzione l'import chiede l'istantanea) o `dati`; intestazione su più righe ⇒ rifiutato (exit 1) | script `kb/template-learn.mjs` |
 | `reindex [--all]` · `migrate` | Indice (del cliente; `--all` anche prodotto e ogni cliente) e migrazioni | script `kb/reindex.mjs`, `kb migrate` |
 
 ### 56.4 `nrt` — collaudo
@@ -304,7 +304,7 @@ al nome del file, nessun codice rivendicato da due file), `kb/lifecycle.mjs --he
 | Azione | Cosa fa | Ambienti · Chi |
 |--------|---------|----------------|
 | `esplora <modulo>` | Esplora e memorizza menu, pagine, pulsanti, campi (pagine registrate da sole, mappa con `kb atlas-build`); in preprod solo click senza effetto ([guida](GUIDA-PRIMO-USO.md)) | sandbox (`ESPLORA SANDBOX`), preprod (`ESPLORA PREPROD`) — **mai prod** · `scope-expert` |
-| `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza con compensazione; piano da `compose-plan` (se mancano dati obbligatori li chiede; i campi di una pagina in un solo passo `fill_form`), a esito verde la procedura si memorizza. **Import massivo**: se per l'oggetto esiste un `TPL`, `crea N <oggetto>` usa la via massiva (`kb template-learn` con template dell'utente o scaricato dal tenant → `template-fill` → `compose-plan --filled` → caricamento del solo file del run con sha256 → `import-result` → reimport delle sole righe fallite, al massimo 2 volte) | sandbox, preprod; prod solo con `write_data: true` e approvazione per passo (anche del caricamento) · `scope-expert` |
+| `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza con compensazione; piano da `compose-plan` (se mancano dati obbligatori li chiede; i campi di una pagina in un solo passo `fill_form`), a esito verde la procedura si memorizza. **Import massivo**: se per l'oggetto esiste un `TPL`, `crea N <oggetto>` usa la via massiva (`kb template-learn` con template dell'utente o scaricato dal tenant → `template-fill` → `compose-plan --filled` (in produzione, per un `TPL` di configurazione, anche `--istantanea runs/<RUN>/evidence/<file>`: compensazioni `restore`) → caricamento del solo file del run (`runs/<RUN>/import/`) con sha256 → `import-result [--righe N]` (righe riuscite «con errori/avvisi» = fallite; `unrecognized` se nessuna riga è riconosciuta; `missing` = righe senza esito) → reimport delle sole righe fallite, al massimo 2 volte). Con `write_data: false` in qualunque ambiente import massivi e cancellazioni sono negati | sandbox, preprod; prod solo con `write_data: true` e approvazione per passo (anche del caricamento) · `scope-expert` |
 | `approva · chiudi · pubblica …` | R2 con le approvazioni del livello di autonomia (`sì` per passo solo con autonomia bassa; in produzione `APPROVO PASSO`) | sandbox, preprod (il referente è un avviso, non un blocco: §55.1.2); prod con `write_data: true` e approvazione per passo · `scope-expert` |
 | `query "<domanda>"` · `tables` · `learn-analytics` | Analytics | tutti (sola lettura) · `analytics-learner` |
 
@@ -387,7 +387,7 @@ queste frasi in ogni input di strumento. Una frase diversa, un piano sbagliato o
 | Configurazione giallo | `APPROVO PIANO <PLAN>` poi `APPROVO PASSO <n> <PLAN>` |
 | Configurazione rosso | `APPROVO PIANO <PLAN>` · `APPROVO PROVA <PLAN>` · `APPROVO PASSO <n> <PLAN>` |
 | **Produzione, scrittura di dati o import** (con `write_data: true`) | `APPROVO PIANO <PLAN>`, poi `APPROVO PASSO <n> <PLAN>` prima di **ogni** passo che modifica o carica (monouso, legata al piano); `APPROVO PROVA <PLAN> DA <Nome Cognome>` da una persona diversa se `second_approver_required` (preimpostato in produzione). Prima di ogni passo il manager mostra file, righe e oggetti toccati |
-| **Produzione, qualunque configurazione** | le tre frasi, entro la finestra (60 minuti dalla A1), con `DA <Nome Cognome>` in coda: la A2 (`APPROVO PROVA <PLAN> DA <Nome Cognome>`) da una persona diversa dalla A1 |
+| **Produzione, qualunque configurazione** | A1 + passo (`APPROVO PIANO <PLAN>`, `APPROVO PASSO <n> <PLAN>`) entro la finestra (60 minuti dalla A1), più A2 (`APPROVO PROVA <PLAN> DA <Nome Cognome>`, da una persona diversa dalla A1, con `DA <Nome Cognome>` anche in A1) se è richiesto il secondo approvatore (`second_approver_required`, preimpostato in produzione) |
 | Esplorazione senza piano (sandbox) | `ESPLORA SANDBOX`, poi `/jaggaer-virtual-consultant:use mode esplorazione` entro 10 minuti |
 | Esplorazione senza piano (pre-produzione: solo click senza effetto; memoria con `kb atlas-write`, [guida](GUIDA-PRIMO-USO.md)) | `ESPLORA PREPROD`, poi `/jaggaer-virtual-consultant:use mode esplorazione` entro 10 minuti |
 | Esplorazione completa (sandbox o pre-produzione: compila, salva, invia, approva con valori di prova; mai cancellazioni; elenco delle azioni con effetto a fine giro) | `ESPLORA SANDBOX COMPLETA` · `ESPLORA PREPROD COMPLETA`, poi `/jaggaer-virtual-consultant:use mode esplorazione` entro 10 minuti |
@@ -404,7 +404,7 @@ Cosa si chiede, per livello e ambiente (spec 2026-10-06 §2.2; produzione con te
 | creare, aggiornare (R1) | nulla | alto: nulla · medio/basso: `APPROVO PIANO` | `APPROVO PIANO` + `APPROVO PASSO <n>` prima di ogni passo che modifica |
 | inviare, approvare, trasmettere, pubblicare, chiudere, caricare (R2) | alto/medio: nulla · basso: `sì` per passo | alto/medio: coperti da `APPROVO PIANO` · basso: `sì` per passo | `APPROVO PIANO` + `APPROVO PASSO <n>` |
 | configurazione (`ACT-CFG-CHANGE`) | alto: `APPROVO PIANO` · medio/basso: per policy (A1/A3/A2) | idem | `APPROVO PIANO` + `APPROVO PASSO <n>` (+ istantanea prima) |
-| import massivi (`ACT-BULK`) | alto: nulla · medio/basso: `APPROVO PIANO` + `APPROVO PASSO <n>` | idem | `APPROVO PIANO` + `APPROVO PASSO <n>` prima del caricamento |
+| import massivi (`ACT-BULK`) | alto: nulla · medio/basso: `APPROVO PIANO` + `APPROVO PASSO <n>` | idem | `APPROVO PIANO` + `APPROVO PASSO <n>` prima del caricamento; oggetti di configurazione: anche l'istantanea dei dati attuali (`compose-plan --istantanea`) |
 | cancellare (`ACT-DELETE`) | alto: coperte da `APPROVO PIANO` · medio/basso: + `APPROVO PASSO <n>` | idem | **mai** |
 
 Resta a ogni livello: `APPROVO PROVA` da una persona diversa quando l'ambiente ha `second_approver_required`; compensazione
@@ -413,14 +413,18 @@ degli oggetti toccati salvata prima; ogni click legato al SEL del passo; nessuno
 che è stato creato, modificato, importato o cancellato con il livello applicato. In produzione le scritture di dati richiedono
 inoltre `policy.write_data: true` per quell'ambiente (interruttore dell'utente); le configurazioni in produzione sono
 regolate dalle approvazioni, non da `write_data`; un caricamento è ammesso solo in un passo approvato col verbo `UPLOAD`;
-letture e navigazione restano libere.
+letture e navigazione restano libere. Con `policy.write_data: false` in **qualunque** ambiente (anche sandbox o una
+pre-produzione copia della produzione) import massivi e cancellazioni sono negati da step-check e da guard-config-scope.
 
 **Cancellazioni** (solo sandbox e pre-produzione): ammesse solo dentro un passo `DELETE` di classe `ACT-DELETE`, un
 elemento per passo (elemento ambiguo o seconda cancellazione nello stesso passo ⇒ negato); prima del passo la lettura
 completa dell'oggetto in `runs/<RUN>/evidence/` e la compensazione `restore` che la richiama; i pulsanti di massa (elimina
 tutti, svuota, purge…) sono sempre negati e l'esplorazione non cancella mai; la finestra di conferma nella pagina è un passo
 `CLICK` a parte, di classe `ACT-DELETE`, legato al SEL del pulsante di conferma (i dialoghi nativi passano da
-`handle_dialog`).
+`handle_dialog`; fuori da un passo `ACT-DELETE` un dialogo che conferma una cancellazione — testo del dialogo o domanda
+nella pagina — è negato in ogni ambiente). Un piano di cancellazione non spunta righe prima: un passo `ACT-BULK`,
+`TOGGLE`/`SELECT` o un `CLICK` su un SEL di ruolo checkbox (o non risolto) prima del passo `DELETE` ⇒ step-check nega il
+`DELETE` (più righe ⇒ più passi `DELETE`).
 
 Le frasi di approvazione riconosciute sono quindi: `AUTONOMIA ALTA`, `AUTONOMIA MEDIA`, `AUTONOMIA BASSA`, `APPROVO PIANO`, `APPROVO PROVA`, `APPROVO PASSO`, `APPROVO
 PROMOZIONE`, `APPROVO RETENTION`, `APPROVO PURGE` (con `DA <Nome Cognome>` dove serve), `sì`, `ESPLORA SANDBOX`, `ESPLORA PREPROD`, `ESPLORA SANDBOX COMPLETA`, `ESPLORA PREPROD COMPLETA`.
@@ -433,7 +437,7 @@ Il blocco in fondo alla conversazione ha sempre: intestazione (sessione, cliente
 modalità, budget usato/totale), una riga per passo (agente, classe di azione, descrizione, stato ▶ in corso · ✓ fatto ·
 ⏸ attende · ✗ fermato · · pianificato, evidenza), e una riga di totali (sorprese, errori, evidenze). Una riga ⏸ è sempre
 seguita dalla domanda. Una riga ✗ è sempre seguita dal motivo e da cosa serve per riprendere. In produzione il banner è
-`⚠ PRODUZIONE — scritture solo con write_data e approvazione di ogni passo`, con lo stato della 3A. Da un'altra finestra:
+`⚠ PRODUZIONE — ogni passo che scrive si approva; dati e import solo con write_data`, con lo stato della 3A. Da un'altra finestra:
 `/jaggaer-virtual-consultant:vc watch <SES.C.AAAAMMGG.NNN>`.
 
 ### 57.4 Leggere i report
@@ -520,6 +524,10 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
 | "Azione negata: produzione" | Scrittura in prod senza `write_data: true` o fuori da un passo di piano approvato (piano e passo), cancellazione, caricamento fuori da un passo `UPLOAD` | È corretto: attivare `write_data` (a cura dell'utente) e approvare piano e passo, oppure usare sandbox/preprod; la cancellazione in produzione non esiste |
 | Il plugin chiede approvazioni che prima non chiedeva, o non ne chiede | Livello di autonomia diverso da quello atteso (frase di sessione, `autonomy.yaml`, tetto medio in produzione, file illeggibile ⇒ basso) | `use show` mostra livello, fonte e tetto; `AUTONOMIA ALTA`/`MEDIA`/`BASSA` lo cambia (la scrive l'utente) |
 | Import: "errore di formato" · righe fallite | Template del tenant cambiato; dati non validi | Riscarica e reimpara il template (`kb template-learn`), ricompila una volta; righe fallite: correggi e reimporta solo quelle (al massimo 2 volte) |
+| Import: `unrecognized` · `missing` | Nessuna riga né codice riconosciuti nel testo dell'esito; righe del file (`--righe`) senza esito | Non è un successo: rileggi la pagina o scarica il log (`--in`); le righe mancanti vanno verificate |
+| Import di configurazione in prod: `config-snapshot` | Manca l'istantanea dei dati attuali | Scarica l'export dell'oggetto in `runs/<RUN>/evidence/` e ripassa `compose-plan --istantanea` |
+| `tpl-no-page` · template "intestazione su più righe" | Voce `TPL` senza pagina di import; template con gruppi sopra le colonne | Reimpara con `--page <firma>`; semplifica l'intestazione a una riga |
+| "write_data: false … niente import massivi né cancellazioni" | L'ambiente (anche sandbox o pre-produzione) ha le scritture spente | Decisione dell'utente: accendere `write_data` in `environments.yaml` |
 | "Approvazione non valida" | Frase diversa da quella richiesta, o finestra scaduta | Scrivere la frase esatta (§57.2); se scaduta, ripartire da A1 |
 | "Budget esaurito" | Compito più costoso del previsto | `use budget` se giustificato; altrimenti ridisegnare il compito (meno passi, più replay) |
 | "Risultato respinto: traccia cognitiva mancante" | Il sub-agente ha saltato il ciclo | Automatico: il sub-agente completa; se persiste, `learn lessons --session` e segnalare |
@@ -577,7 +585,7 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
                       ogni azione → RPT · esito: SUCCESS · EXPECTED-ERROR-AS-SUCCESS · ERROR-AS-LESSON · ERROR-BLOCKING …
 
  AMBIENTI             dichiarato + rilevato (≥ 2 segnali) + verificato a ogni origine · host sconosciuto = negato
-                      produzione: scritture solo con write_data: true e approvazione per passo (spec 2026-10-06 §3.6) · cancellazioni mai · configurazioni con 3 approvazioni (piano · prova · passo)
+                      produzione: scritture solo con write_data: true e approvazione per passo (spec 2026-10-06 §3.6) · cancellazioni mai · configurazioni con piano + passo (+ prova da una seconda persona se second_approver_required)
                       autonomia (alto · medio · basso): AUTONOMIA ALTA|MEDIA|BASSA o autonomy.yaml · predefinito alto · tetto medio in produzione · tabella §57.2 · import massivi con template · cancellazioni in sandbox/preprod dentro un passo DELETE
                       qualità parametrica Q (16 parametri, decadimento per tipo) → classe d'uso → cosa si può fare con un'informazione
 

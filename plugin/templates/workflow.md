@@ -19,7 +19,7 @@ in produzione compare su ogni aggiornamento.
 | dichiarato, `verified: false` | `{label} ({id}) — NON VERIFICATO: solo navigazione e lettura finché env-check non riconosce ≥ 2 segnali` | grigio |
 | `type: sandbox` o `dev`, verificato | `SANDBOX` | giallo |
 | `type: preprod`, verificato | `PRE-PROD` (per ACT-APPROVE/TRANSMIT/PUBLISH: `con referente`) | arancione |
-| `type: prod`, verificato | `⚠ PRODUZIONE — scritture solo con write_data e approvazione di ogni passo` | rosso |
+| `type: prod`, verificato | `⚠ PRODUZIONE — ogni passo che scrive si approva; dati e import solo con write_data` | rosso |
 
 ## Produzione con configurazione in corso (§52.4)
 
@@ -27,7 +27,7 @@ Alla riga di intestazione si aggiunge lo stato 3A letto da
 `node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/approvals.mjs" status --json` (sola lettura):
 
 ```
-┌ WORKFLOW · ACME · ⚠ PRODUZIONE — scritture solo con write_data e approvazione di ogni passo · configurazione 3A: A1 ✓ 10:02 · A2 ✓ 10:19 (M. Rossi) · A3 passo 4/7 ⏸ ┐
+┌ WORKFLOW · ACME · ⚠ PRODUZIONE — ogni passo che scrive si approva; dati e import solo con write_data · configurazione 3A: A1 ✓ 10:02 · A2 ✓ 10:19 (M. Rossi) · A3 passo 4/7 ⏸ ┐
 ```
 
 Prima di ogni A3 il manager ripete in una riga cosa sta per cambiare e come si torna indietro, poi
@@ -41,7 +41,7 @@ chiede la frase esatta `APPROVO PASSO <n> <PLAN.id>`. Le frasi valide (§57.2):
 | Configurazione giallo | `APPROVO PIANO <PLAN>` poi `APPROVO PASSO <n> <PLAN>` |
 | Configurazione rosso | `APPROVO PIANO` · `APPROVO PROVA` · `APPROVO PASSO <n>` |
 | Esplorare senza piano (solo sandbox) | `ESPLORA SANDBOX`, poi `/use mode esplorazione` |
-| Produzione, qualunque configurazione | le tre frasi entro la finestra (default 60 min da A1), A2 `DA <Nome Cognome>` di una persona diversa da A1 se `second_approver_required` |
+| Produzione, qualunque configurazione | A1 + passo (`APPROVO PIANO <PLAN>`, `APPROVO PASSO <n> <PLAN>`) entro la finestra (default 60 min da A1), più A2 (`APPROVO PROVA <PLAN> DA <Nome Cognome>`, persona diversa da A1) se è richiesto il secondo approvatore (`second_approver_required`, predefinito in produzione) |
 | Produzione, scrittura di dati o import (con `write_data: true`) | `APPROVO PIANO <PLAN>`, poi `APPROVO PASSO <n> <PLAN>` prima di **ogni** passo che modifica o carica (mai `sì`); la prova da una seconda persona se `second_approver_required` (preimpostato in produzione) |
 
 Un "ok", un "va bene" o una frase con piano o passo sbagliati non valgono: l'hook `approval-capture`

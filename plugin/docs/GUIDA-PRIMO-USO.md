@@ -101,7 +101,7 @@ fermano in qualsiasi momento.
 Per "crea 30 data element" il plugin non compila 30 maschere: usa il template di caricamento massivo dell'oggetto.
 
 1. Se hai un template, mettilo in `customers/<CODICE>/templates-in/` e imparalo:
-   `/jaggaer-virtual-consultant:kb template-learn --file customers/<CODICE>/templates-in/<file>.xlsx --object "<oggetto>" --scope <SCOPE> --fonte utente`.
+   `/jaggaer-virtual-consultant:kb template-learn --file customers/<CODICE>/templates-in/<file>.xlsx --object "<oggetto>" --scope <SCOPE> --page <firma della pagina di import> --tipo config --fonte utente` (`--tipo dati` per record di business).
    Se non ce l'hai, l'agente lo scarica dal tenant (pulsante "scarica template") e lo impara da solo.
 2. Chiedi a parole: *"crea 30 data element …"* con i dati (o un file di righe). L'agente compila il file controllando
    ogni riga prima (obbligatori, valori ammessi, numeri); se ci sono errori te li riporta e non carica nulla.

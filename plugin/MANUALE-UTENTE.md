@@ -78,7 +78,7 @@ viene copiato da Claude Code nella sua cache: la conoscenza deve crescere fuori 
 |---|---|---|---|---|
 | **sandbox** | sì | sì (`ESPLORA SANDBOX`); tutto tranne cancellare (`ESPLORA SANDBOX COMPLETA`) | sì, con piano; anche import in blocco e cancellazioni (dentro un piano) | sì, approvazioni per rischio |
 | **pre-produzione** | sì | solo click senza effetto (`ESPLORA PREPROD`); tutto tranne cancellare, con valori di prova (`ESPLORA PREPROD COMPLETA`) | sì, con piano; import in blocco e cancellazioni (dentro un piano); le approvazioni dipendono dal livello di autonomia | sì, approvazioni per rischio |
-| **produzione** | sì | no | **solo se attivi `write_data: true`** per quell'ambiente: poi `APPROVO PIANO` e `APPROVO PASSO <n>` prima di ogni passo che modifica o carica; cancellare mai | solo con tre approvazioni, una da una seconda persona |
+| **produzione** | sì | no | **solo se attivi `write_data: true`** per quell'ambiente: poi `APPROVO PIANO` e `APPROVO PASSO <n>` prima di ogni passo che modifica o carica; cancellare mai | `APPROVO PIANO` + `APPROVO PASSO <n>`, più `APPROVO PROVA` da una seconda persona se è richiesto il secondo approvatore (di serie in produzione) |
 
 Prima di agire il plugin **verifica** di essere davvero nell'ambiente dichiarato (almeno due segnali sulla pagina:
 titolo, banner, id del tenant). Finché non è verificato può solo navigare e leggere.
@@ -101,7 +101,7 @@ Cosa ti chiede, per ambiente (il plugin applica la tabella da solo):
 | creare, aggiornare | nulla | alto: nulla · medio/basso: `APPROVO PIANO` | `APPROVO PIANO` + `APPROVO PASSO <n>` prima di ogni passo che modifica |
 | inviare, approvare, pubblicare, chiudere, caricare | alto/medio: nulla · basso: `sì` per passo | alto/medio: coperti da `APPROVO PIANO` · basso: `sì` per passo | `APPROVO PIANO` + `APPROVO PASSO <n>` |
 | configurare | alto: `APPROVO PIANO` · medio/basso: per rischio | idem | piano + ogni passo (+ istantanea prima) |
-| import in blocco con template | alto: nulla · medio/basso: piano + ogni passo | idem | piano + ogni passo, prima del caricamento |
+| import in blocco con template | alto: nulla · medio/basso: piano + ogni passo | idem | piano + ogni passo, prima del caricamento; oggetti di configurazione: anche l'istantanea dei dati attuali |
 | cancellare | alto: coperte da `APPROVO PIANO` · medio/basso: + ogni passo | idem | **mai** |
 
 In produzione `sì` non basta mai: ogni passo si approva con `APPROVO PASSO <n> <PLAN>`, valida una volta sola e legata a
@@ -113,6 +113,17 @@ fine lavoro ricevi l'elenco di ciò che è stato creato, modificato, importato o
 e-mail ai fornitori e dati verso l'ERP possono partire davvero. Se il cliente non vuole sorprese, imposta `default: medio`
 (o `basso`) nel suo `autonomy.yaml`. Le cancellazioni sono irreversibili nel tenant: la lettura salvata prima permette di
 ricreare l'oggetto, non di ripristinarne identificativi e storico.
+
+**Import e cancellazioni, regole fisse** (qualunque livello):
+- con `write_data: false` per un ambiente — **qualunque** ambiente, anche una pre-produzione copia dei dati reali —
+  import in blocco e cancellazioni sono negati finché non lo accendi tu;
+- un import di **oggetti di configurazione** in produzione parte solo con l'istantanea dei dati attuali salvata nel run
+  (l'export scaricato prima): se qualcosa va storto si reimporta quella;
+- un piano di cancellazione non spunta righe prima del passo "Elimina" (niente "seleziona tutti" né caselle di
+  selezione): ogni riga è un passo a parte; fuori da un passo di cancellazione il plugin non conferma mai un dialogo
+  che chiede di eliminare;
+- l'esito di un import si legge con uno script: una riga "completata con errori" o "con avvisi" conta come fallita, e
+  se nella pagina non si riconosce nessuna riga l'esito resta "non riconosciuto", mai "tutto ok".
 
 ### Modalità
 
@@ -317,7 +328,7 @@ Tutti iniziano con `/jaggaer-virtual-consultant:`. Sono otto famiglie.
 | `ingest <cartella> [--scope <S>]` | Carica documenti (manuali, specifiche, export): li legge, li spezza in unità, toglie i dati personali |
 | `digest` · `review` | Gli agenti trasformano il materiale in conoscenza codificata; tu la rivedi (accetti, correggi, rifiuti) |
 | `find` · `resolve "<domanda>"` | Cerca nella conoscenza |
-| `template-learn --file <xlsx> --object "<oggetto>" --scope <S> [--fonte utente\|tenant]` | Impara un template di caricamento massivo (colonne, obbligatori, liste di valori) da un file tuo (`customers/<C>/templates-in/`) o scaricato dal tenant |
+| `template-learn --file <xlsx> --object "<oggetto>" --scope <S> --page <sig> [--tipo config\|dati] [--fonte utente\|tenant]` | Impara un template di caricamento massivo (colonne, obbligatori, liste di valori) da un file tuo (`customers/<C>/templates-in/`) o scaricato dal tenant. `--page` (la pagina di import) è obbligatorio; `--tipo config` (predefinito) per oggetti di configurazione, `dati` per record di business. Il file salvato è sempre senza righe di dati (anche se il tuo era già compilato) e la voce non conserva valori; un'intestazione su più righe è rifiutata: semplificala a una riga |
 | `fields --doc <documento>` · `identity <campo>` | I campi di un documento con i loro obblighi; la carta d'identità di un dato |
 | `precedents` · `epistemic` · `impact` · `coverage` | Decisioni passate; quanto si sa di un argomento; cosa tocca una modifica; copertura |
 | `graph` · `scopes` · `handoffs` · `clusters` · `contradictions` | Registri e coerenza della conoscenza |
@@ -547,6 +558,10 @@ aggiornamento una sessione aperta si ripara con `/jaggaer-virtual-consultant:use
 | "il modello di questo scope va rifatto" | Tre compiti fermati per sorprese: segui il giro di osservazioni proposto, poi `SBLOCCA SCOPE <S>` |
 | "Approvazione non valida" | La frase non è esatta o è scaduta: il messaggio mostra quella attesa. In produzione `sì` non vale: serve `APPROVO PASSO <n> <PLAN>` |
 | "scritture spente in produzione" | L'ambiente ha `write_data: false`: è la tua scelta; per scrivere in produzione portalo a `true` con un editor, fuori da Claude Code |
+| "niente import massivi né cancellazioni" (sandbox o pre-produzione) | Anche lì l'ambiente ha `write_data: false`: import in blocco e cancellazioni restano spenti finché non lo porti a `true` |
+| Import di configurazione in produzione: "istantanea" | Serve prima l'export dei dati attuali dell'oggetto nel run (`runs/<RUN>/evidence/`): il plugin lo scarica e lo passa al piano |
+| Esito dell'import "non riconosciuto" o righe "mancanti" | La pagina non mostrava un esito leggibile: il plugin rilegge pagina o log; le righe senza esito vanno verificate, non sono riuscite |
+| Template rifiutato: "intestazione su più righe" | Lascia una sola riga d'intestazione (niente gruppi sopra le colonne) e reimpara il template |
 | Chiede più approvazioni del solito | Il livello di autonomia è medio o basso (o il file `autonomy.yaml` è illeggibile): `use show` lo dice; `AUTONOMIA ALTA` lo cambia in sandbox e pre-produzione |
 | Il plugin rifiuta di creare il workspace | Stai usando una cartella dentro `plugin/`: usa `knowledge/` o una cartella esterna |
 

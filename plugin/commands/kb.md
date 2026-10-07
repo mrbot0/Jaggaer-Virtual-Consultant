@@ -1,7 +1,7 @@
 ---
 name: kb
 description: Conoscenza JAGGAER — ingestione e digestione dei documenti (sub-agenti di contesto), revisione umana, ricerca, campi, impatto, registri, indice e migrazioni (kb)
-argument-hint: ingest <path> [--scope <S>] [--genre <genere>] [--kind <tipo>] | digest [--scope <S>] [--fields <documento>] | review [--scope <S>] [--only <strato>] | find [--scope <S>] [--type <T>] [--status <s>] [--cluster <CL>] [--facet <K=V>] [--top <n>] | fields [--doc <documento>] [--mandatory-in <stato>] [--chain <CL>] [--custom] [--reason <r>] | identity <FLD> | identity --doc <documento> --missing <blocco> | resolve "<domanda>" | precedents <soggetto> [--top <n>] | epistemic <soggetto> | epistemic --scope <S> [--plan] | impact <codice> [--if "<modifica>"] | graph [--scope <S>] | scopes | handoffs [--validate] | clusters | contradictions [--open] | coverage [--scope <S>] | template-learn --file <xlsx> --object "<oggetto>" --scope <S> [--page <sig>] [--modulo <M>] [--fonte utente|tenant] | reindex [--all] | migrate
+argument-hint: ingest <path> [--scope <S>] [--genre <genere>] [--kind <tipo>] | digest [--scope <S>] [--fields <documento>] | review [--scope <S>] [--only <strato>] | find [--scope <S>] [--type <T>] [--status <s>] [--cluster <CL>] [--facet <K=V>] [--top <n>] | fields [--doc <documento>] [--mandatory-in <stato>] [--chain <CL>] [--custom] [--reason <r>] | identity <FLD> | identity --doc <documento> --missing <blocco> | resolve "<domanda>" | precedents <soggetto> [--top <n>] | epistemic <soggetto> | epistemic --scope <S> [--plan] | impact <codice> [--if "<modifica>"] | graph [--scope <S>] | scopes | handoffs [--validate] | clusters | contradictions [--open] | coverage [--scope <S>] | template-learn --file <xlsx> --object "<oggetto>" --scope <S> --page <sig> [--tipo config|dati] [--modulo <M>] [--fonte utente|tenant] | reindex [--all] | migrate
 allowed-tools: Bash(node *), Read
 ---
 
@@ -74,7 +74,7 @@ Non accettare né rifiutare nulla di tua iniziativa. `stats` dà il tasso di acc
   poi un `Agent(scope-digester, opus)` per lotto. Exit 3 = budget del documento raggiunto: si riprende alla sessione
   successiva con `--resume <cursore>` (riportalo all'utente).
 
-## `template-learn --file <xlsx> --object "<oggetto>" --scope <S>` — template di caricamento massivo (script diretto)
+## `template-learn --file <xlsx> --object "<oggetto>" --scope <S> --page <sig>` — template di caricamento massivo (script diretto)
 
     node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/template-learn.mjs" $ARGUMENTS --json
 
@@ -82,10 +82,16 @@ Impara un template di import (foglio, riga d'intestazione, colonne, obbligatori 
 valori dalle convalide) e lo salva come voce `TPL` in `customers/<C>/kb/scopes/<S>/templates/<codice>.yaml`, con il file
 vuoto in `templates/files/<codice>.xlsx`. `--file` è un percorso del workspace (es. `customers/<C>/templates-in/…`); `--fonte`
 dice se il template l'ha dato l'utente (`utente`, predefinito) o è stato scaricato dal tenant (`tenant`); `--page` è la firma
-della pagina di import. Se l'utente non ha un template, lo scarica l'agente dal tenant (click su "scarica template", poi `get_network_request` con
+della pagina di import ed è **obbligatorio** (senza, `compose-plan` non trova percorso e pulsanti; una voce vecchia senza
+pagina dà la mancanza `tpl-no-page`); `--tipo config|dati` dice se l'oggetto è di configurazione (`config`,
+predefinito: in produzione l'import chiede l'istantanea dei dati attuali, `compose-plan --istantanea`) o un record di
+business (`dati`). Il file salvato è sempre **ripulito delle righe sotto l'intestazione** (anche un template già compilato:
+nessun dato del cliente nella knowledge) e la voce non conserva valori delle celle; un template con l'**intestazione su
+più righe è rifiutato** (exit 1): va semplificato a una riga. Se l'utente non ha un template, lo scarica l'agente dal tenant (click su "scarica template", poi `get_network_request` con
 `responseFilePath` nella cartella della sessione) e lo si impara con `--fonte tenant`; i template dell'utente hanno la precedenza.
 Dopo l'apprendimento si compila con `template-fill` e si importa (vedi `/ops`: `compose-plan --filled`, `import-result`). Lo stesso oggetto aggiorna la voce esistente. Riporta codice, colonne e obbligatori; exit 1 = errore
-d'uso (file non leggibile come template, scope o cliente non validi), exit 2 = errore di sistema.
+d'uso (file non leggibile come template, intestazione su più righe, `--page` mancante, `--tipo` sbagliato, scope o
+cliente non validi), exit 2 = errore di sistema, exit 3 = cliente diverso da quello della sessione.
 
 ## `reindex [--all]` e `migrate` — indice e migrazioni (script diretti)
 

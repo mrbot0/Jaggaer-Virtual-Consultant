@@ -46,9 +46,12 @@ Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-l
   `take_snapshot`; per vedere una tendina cliccala e rileggi; non digitare mai nei campi.
 - Il **livello di autonomia** (alto, medio, basso) lo sceglie l'utente con la sua frase di autonomia in sessione o con il
   file di configurazione del cliente; in produzione non supera il medio. Tu non lo scegli, non lo proponi e non lo
-  cambi: lo applica `step-check`, che ti dice quando serve un'approvazione. Con il livello alto, in sandbox e in pre-produzione, creazioni,
-  aggiornamenti, invii e import non chiedono nulla; configurazione e cancellazioni chiedono comunque l'approvazione del
-  piano (anche in sandbox), e in pre-produzione anche i piani con invii.
+  cambi: lo applica `step-check`, che ti dice quando serve un'approvazione. Con il livello alto: in sandbox creazioni,
+  aggiornamenti, invii e import non chiedono nulla; in pre-produzione creazioni, aggiornamenti e import non chiedono
+  nulla, mentre i piani con invii, approvazioni, pubblicazioni o caricamenti chiedono l'approvazione del piano;
+  configurazione e cancellazioni chiedono sempre l'approvazione del piano (anche in sandbox).
+- Con `write_data: false` per l'ambiente (in qualunque ambiente, anche una pre-produzione copia dei dati reali) import
+  massivi e cancellazioni sono negati da `step-check` e dal guard: non proporli, dillo nel rapporto.
 - **Produzione**: leggere e navigare restano liberi; scrivere dati richiede `write_data` attivo per quell'ambiente
   (interruttore dell'utente) e, per ogni passo che modifica o carica, piano e passo approvati (il semplice assenso lì è
   rifiutato); una configurazione in produzione dipende invece dalle approvazioni. Un file si carica solo in un passo
@@ -224,7 +227,12 @@ corrispondono. Per imparare un template:
 
 1. **Dall'utente**: i template forniti dall'utente hanno la precedenza (`customers/<C>/templates-in/`):
 
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" template-learn --file customers/<C>/templates-in/<file>.xlsx --object "<oggetto>" --scope <S> --page <firma-pagina> --fonte utente --db customers/<C>/knowledge.db --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/template-learn.mjs" --file customers/<C>/templates-in/<file>.xlsx --object "<oggetto>" --scope <S> --page <firma-pagina> --tipo config --fonte utente --json
+
+   `--page` (la firma della pagina di import) è obbligatorio. `--tipo`: `config` (predefinito, come sopra) per oggetti di
+   configurazione, `dati` per record di business (fornitori, articoli…); nel dubbio resta `config`. Il file salvato
+   viene sempre ripulito delle righe sotto l'intestazione e la voce non conserva valori delle celle. Un template con
+   l'intestazione su più righe è rifiutato: chiedi all'utente un template con una sola riga d'intestazione.
 
 2. **Dal tenant**, se manca: sulla pagina di import clicca "scarica template" (anche in esplorazione) e leggi la risposta
    con `get_network_request` indicando `responseFilePath` dentro la cartella della sessione; poi lo stesso comando con
@@ -237,15 +245,21 @@ corrispondono. Per imparare un template:
 
    Stampa percorso, sha256 e numero di righe. Un file già scritto non si riscrive: nome nuovo.
 4. **Piano**: `compose-plan --goal "crea N <oggetto>" … --filled <percorso>:<sha256>:<righe>`. Senza `--filled` torna la
-   mancanza `fill-template`: compila e ripassa.
+   mancanza `fill-template`: compila e ripassa. `tpl-no-page`: la voce non ha la pagina di import, reimpara il template
+   con `--page`. **Configurazione in produzione**: prima scarica l'export dei dati attuali dell'oggetto in
+   `runs/<RUN>/evidence/<file>` (stesso RUN del piano) e passa `--istantanea runs/<RUN>/evidence/<file>`; senza, torna la
+   mancanza `config-snapshot`. Con l'istantanea i passi d'import hanno la compensazione `restore` su quel file.
 5. **Caricamento**: solo quel file, con percorso assoluto dentro il run attivo, sha256 del piano, **un file per chiamata**
    (ogni altro file è negato dal guard). In produzione solo nel passo approvato col verbo di caricamento.
 6. **Esito**: salva il testo della pagina (o il log scaricato) e leggilo con lo script, non a occhio:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/import-result.mjs" --text-file customers/<C>/.sessions/<sid>/work/<task>/esito.txt --json
 
-   (oppure `--in <log.xlsx>`) → `ok_rows`, `failed`, `created`, `format_error`. Correggi e reimporta **solo le righe
-   fallite**, al massimo 2 volte, poi rapporto. I codici in `created` vanno nell'`output` del rapporto.
+   (oppure `--in <log.xlsx>`; aggiungi `--righe <N>` con le righe del file caricato) → `ok_rows`, `failed`, `created`,
+   `format_error`, `unrecognized`, `missing`. Una riga "riuscita" con errori o avvisi è in `failed`. Con
+   `unrecognized: true` l'esito non si legge: **non** è un successo, rileggi la pagina o il log e riprova; le righe in
+   `missing` non hanno esito: trattale come da verificare. Correggi e reimporta **solo le righe fallite**, al massimo 2
+   volte, poi rapporto. I codici in `created` vanno nell'`output` del rapporto.
 
 ## Cancellazioni (solo sandbox e pre-produzione)
 
@@ -254,6 +268,10 @@ più): fuori da quel passo il guard nega ogni click di cancellazione, esplorazio
 
 - **Un elemento per passo**: elemento ambiguo (più corrispondenze) ⇒ negato; una seconda cancellazione nello stesso passo
   ⇒ negata. I pulsanti di massa (elimina tutti, svuota, purge…) sono sempre negati.
+- **Niente righe spuntate prima**: un piano con un passo DELETE non può avere, prima di quel passo, passi massivi, passi
+  `TOGGLE`/`SELECT` o click su caselle di selezione (anche "seleziona tutti"): `step-check` nega il DELETE. Più
+  righe da cancellare ⇒ più passi DELETE, uno per riga.
+- **Dialoghi**: fuori da un passo ACT-DELETE un dialogo che conferma una cancellazione non si accetta (negato).
 - **Prima del passo**: leggi l'oggetto per intero (snapshot o lettura del record) e salvalo in
   `runs/<RUN attivo>/evidence/`; registra la compensazione `restore` con riferimento a quel file
   (`runs/<RUN>/evidence/<file>`, `compensation.mjs add`): serve a ricrearlo, non a ripristinare identificativi e storico.

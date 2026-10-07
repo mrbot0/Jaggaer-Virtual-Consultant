@@ -159,7 +159,7 @@ l'attivazione di un piano che non è attivo né approvato. Quando lo scope-exper
 compilato e la richiesta di attivazione:
 
 - **in sandbox o dev** (step-check tratta i due ambienti allo stesso modo) il piano si attiva subito (nessuna A1) quando, a
-  quel livello di autonomia, non chiede nulla (creazioni e aggiornamenti; con livello alto anche import e invii; mai configurazioni e cancellazioni): lo attivi
+  quel livello di autonomia, non chiede nulla (creazioni, aggiornamenti e invii a ogni livello — con livello basso ogni invio chiede poi il `sì` del suo passo —; con livello alto anche gli import; mai configurazioni e cancellazioni): lo attivi
   tu con la riga sotto, poi ridispacci lo scope-expert con `reply_to: <task_id>`. I piani di configurazione e di cancellazione (anche con livello alto), e con livello
   medio o basso gli import, chiedono prima `APPROVO PIANO <id>` anche lì;
 - **fuori da sandbox e dev** l'attivazione richiede che l'utente abbia scritto `APPROVO PIANO <id>` **prima** che lo

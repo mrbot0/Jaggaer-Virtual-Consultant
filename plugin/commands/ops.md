@@ -24,7 +24,9 @@ Modalità Operativa e Analytics (§56.6, §29, §20.5). `<C>` è il cliente atti
    con piano approvato e approvazione di ogni passo**; le configurazioni in produzione dipendono invece dalle
    approvazioni (piano, prova, passo), non da `write_data`; le cancellazioni in produzione non esistono. Con
    `write_data: false` rispondi "in produzione i dati si scrivono solo con write_data: true; posso farlo in sandbox
-   o pre-produzione" (§52.1, rivisto dalla spec 2026-10-06 §3.6).
+   o pre-produzione" (§52.1, rivisto dalla spec 2026-10-06 §3.6). Con `write_data: false` in **qualunque** ambiente
+   (anche sandbox, o una pre-produzione copia dei dati reali) import massivi e cancellazioni sono negati (step-check e
+   guard): dillo all'utente, che può accendere `write_data` per quell'ambiente.
 3. Intento e dati (DT-026: avvia · mostra-piano · chiedi · rifiuta): scrivi il testo della richiesta dell'utente, così
    com'è, in `customers/<C>/.sessions/<sessione>/intento.txt` (il testo libero non va mai in linea: virgole, accenti e
    punti interrogativi rendono il comando non semplice e i guard lo negano), poi:
@@ -44,7 +46,7 @@ Le frasi le scrive solo l'utente; tu le descrivi e **mostri la frase esatta nel 
 | creare, aggiornare (R1) | nulla | alto: nulla · medio/basso: approvazione del piano | approvazione del piano **e** di ogni passo che modifica |
 | inviare, approvare, trasmettere, pubblicare, chiudere, caricare (R2) | alto/medio: nulla · basso: `sì` per passo | alto/medio: coperti dall'approvazione del piano · basso: `sì` per passo | approvazione del piano e di ogni passo |
 | configurazione (ACT-CFG-CHANGE) | alto: approvazione del piano · medio/basso: per policy | alto: approvazione del piano · medio/basso: per policy | piano + ogni passo (+ istantanea prima) |
-| import massivi (ACT-BULK) | alto: nulla · medio/basso: piano + ogni passo | alto: nulla · medio/basso: piano + ogni passo | piano + ogni passo, prima del caricamento |
+| import massivi (ACT-BULK) | alto: nulla · medio/basso: piano + ogni passo | alto: nulla · medio/basso: piano + ogni passo | piano + ogni passo, prima del caricamento; oggetti di configurazione: anche l'istantanea dei dati attuali (`--istantanea`) |
 | cancellare (ACT-DELETE) | alto: coperte dall'approvazione del piano · medio/basso: + ogni passo | idem | **mai** |
 
 In produzione `sì` non vale: l'approvazione del passo è la frase del passo, monouso e legata al piano. Quando
@@ -76,19 +78,28 @@ all'utente e attendi (skill `agent-manager`, sez. 6). Prima di chiedere l'approv
 - `crea` in blocco (`crea N <oggetto>`) — **import massivo con template** (data element, workflow, articoli…): quando per l'oggetto esiste
   un template (`TPL`), la via massiva è sempre preferita a N maschere, anche per un solo record. Ordine:
   1. **Template**: prima quelli dati dall'utente (`customers/<C>/templates-in/`):
-     `kb template-learn --file <xlsx> --object "<oggetto>" --scope <S> [--page <sig>] --fonte utente`. Se non c'è,
-     l'agente lo scarica dal tenant (click su "scarica template", poi `get_network_request` con `responseFilePath` nella
-     cartella della sessione) e lo impara con `--fonte tenant`.
+     `kb template-learn --file <xlsx> --object "<oggetto>" --scope <S> --page <sig> [--tipo config|dati] --fonte utente`
+     (`--page` obbligatorio; `--tipo`: `config`, predefinito, per oggetti di configurazione · `dati` per record di
+     business). Il file salvato è sempre senza righe di dati e la voce non conserva valori delle celle; un template con
+     l'intestazione su più righe è rifiutato. Se non c'è, l'agente lo scarica dal tenant (click su "scarica template",
+     poi `get_network_request` con `responseFilePath` nella cartella della sessione) e lo impara con `--fonte tenant`.
   2. **Compilazione**: `template-fill --tpl <codice> --data <righe.json|yaml> --out runs/<RUN>/import/<file>.xlsx --scope <S>`
      (script `decide/template-fill.mjs`). Controlla ogni riga prima di scrivere (obbligatori, valori ammessi, numeri):
      con errori esce 3 e li elenca, senza toccare il tenant. Stampa percorso, sha256 e righe.
   3. **Piano**: `compose-plan --goal "crea N <oggetto>" … --filled <percorso>:<sha256>:<righe>` (senza `--filled` torna
-     la mancanza `fill-template`). Passi: pagina di import → caricamento → conferma → lettura dell'esito.
+     la mancanza `fill-template`; `tpl-no-page` ⇒ reimpara il template con `--page`). Passi: pagina di import →
+     caricamento → conferma → lettura dell'esito. **Configurazione in produzione** (`TPL` di tipo `config`, anche le
+     voci vecchie senza tipo): prima l'export dei dati attuali in `runs/<RUN>/evidence/<file>` (stesso RUN del piano),
+     poi `--istantanea runs/<RUN>/evidence/<file>` (senza: mancanza `config-snapshot`); i passi d'import hanno la
+     compensazione `restore` su quel file e step-check la verifica prima di ogni passo. In sandbox e pre-produzione
+     l'istantanea è facoltativa.
   4. **Esecuzione**: si carica **solo** quel file (percorso assoluto dentro il run attivo, sha256 del piano, un file per
      chiamata); ogni altro file è negato. In produzione il caricamento è ammesso solo in un passo approvato col verbo
      di caricamento.
-  5. **Esito**: `import-result (--text-file <file> | --in <log.xlsx>)` (script `decide/import-result.mjs`) →
-     `ok_rows`, `failed`, `created`, `format_error`. Righe fallite: si correggono e si reimportano **solo quelle**, al
+  5. **Esito**: `import-result (--text-file <file> | --in <log.xlsx>) [--righe <N>]` (script `decide/import-result.mjs`) →
+     `ok_rows`, `failed`, `created`, `format_error`, `unrecognized`, `missing`. Una riga "riuscita" con errori,
+     avvisi o "ma …" è in `failed`; `unrecognized: true` = nessuna riga né codice riconosciuti: l'esito **non** è un
+     successo (rileggi la pagina o il log); `missing` = righe del file (`--righe`) senza esito, da verificare. Righe fallite: si correggono e si reimportano **solo quelle**, al
      massimo 2 volte, poi rapporto. `format_error`: si riscarica il template, lo si reimpara e si ricompila **una volta**,
      poi si chiede all'utente.
   I codici creati entrano nell'elenco finale delle modifiche.
@@ -98,7 +109,10 @@ all'utente e attendi (skill `agent-manager`, sez. 6). Prima di chiedere l'approv
   in `runs/<RUN attivo>/evidence/` e compensazione `{ kind: restore, ref: runs/<RUN>/evidence/<file> }`. I pulsanti di
   cancellazione di massa (elimina tutti, svuota, purge…) sono sempre negati; l'esplorazione non cancella mai. Se dopo il
   click compare una finestra di conferma nella pagina, è un passo di click a parte, della stessa classe, legato al SEL
-  del pulsante di conferma; i dialoghi nativi passano da `handle_dialog`.
+  del pulsante di conferma; i dialoghi nativi passano da `handle_dialog` (fuori da un passo ACT-DELETE un dialogo
+  che conferma una cancellazione è negato). Un piano di cancellazione **non spunta righe prima**: passi massivi,
+  `TOGGLE`/`SELECT` o click su caselle di selezione prima del passo DELETE ⇒ step-check lo nega (più righe ⇒ più
+  passi DELETE). Con `write_data: false` per l'ambiente le cancellazioni sono negate.
 - `query "<domanda>"` · `tables` · `learn-analytics` — Analytics in **sola lettura**, in tutti gli ambienti (anche prod):
   `Agent(analytics-learner, sonnet)`. Le query passano da `scripts/analytics/query-guard.mjs` (una SELECT con LIMIT,
   testo SQL sempre da file, mai in linea; consegnabile solo se coerente, DT-015); `tables` elenca le TBL note;
