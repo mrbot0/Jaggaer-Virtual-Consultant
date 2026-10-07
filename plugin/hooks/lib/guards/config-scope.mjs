@@ -25,8 +25,9 @@
 // senza metacaratteri di shell. Rischio residuo documentato: un interprete che
 // costruisce il nome del file a runtime (node -e con stringhe calcolate) sfugge
 // all'analisi; per questo il token vale solo se la frase è anche nel transcript.
-import { dirname, resolve, join, basename } from "node:path";
-import { readFileSync, statSync } from "node:fs";
+import { dirname, resolve, join, basename, sep } from "node:path";
+import { readFileSync, statSync, realpathSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { intersects, resolveTarget, bases, PathPolicyError } from "../paths.mjs";
 import { guarded, denyAudited, targetsOf, allRels, shellWriteTargets, subtree, SHELL_TOOLS } from "./common.mjs";
 import { browserGuarded, declaredEnv, claudeEffectRefusal } from "./browser.mjs";
@@ -204,6 +205,32 @@ function noPlan(ctx, no) {
   return no(`nessun piano attivo: ogni azione con effetto sul browser richiede un piano attivo (step-check)${s.mode === "esplorazione" ? "; la modalità esplorazione vale solo in sandbox" : "; per esplorare in sandbox: /use mode esplorazione"}`);
 }
 
+// spec 2026-10-06 §3.8: si carica solo il file compilato del run attivo, con l'impronta dichiarata nel passo UPLOAD.
+// Fail-closed: passo diverso da UPLOAD, file mancante/non classificato, più di un file, percorso fuori dal run (anche via
+// .. o symlink: si confronta il realpath), non file regolare, impronta diversa ⇒ rifiuto. Limite noto: fra questo controllo
+// e la lettura del browser il file potrebbe cambiare (TOCTOU); il run è scrivibile solo da Claude sotto i guard di scrittura.
+const WIN = process.platform === "win32";
+const fold = (p) => (WIN ? p.toLowerCase() : p);
+const inside = (child, dir) => fold(child).startsWith(fold(dir.endsWith(sep) ? dir : dir + sep));
+function uploadRefusal(ctx, step, ap, a) {
+  if (step.verb !== "UPLOAD" || !step.file || typeof step.file.path !== "string" || !/^[0-9a-f]{64}$/i.test(String(step.file.sha256))) return "caricamento di file solo in un passo UPLOAD con file { path, sha256 } nel piano";
+  if (typeof ap.run !== "string" || !ap.run) return "il piano attivo non ha un run: il file da caricare dev'essere del run attivo";
+  const runDir = resolve(ctx.ws, "customers", ctx.customer, "runs", ap.run);
+  const expected = resolve(ctx.ws, "customers", ctx.customer, step.file.path);
+  if (!inside(expected, runDir)) return "il file del passo non è nel run attivo";
+  const files = Array.isArray(a.files) ? a.files : [];
+  if (files.length !== 1 || typeof files[0] !== "string" || !files[0]) return "un caricamento alla volta, del solo file del passo (percorso mancante o non classificato)";
+  let real; let realExpected; let realRun;
+  try { real = realpathSync(resolve(ctx.cwd ?? ctx.ws, files[0])); } catch { return `file da caricare inesistente: ${files[0]}`; }
+  try { realExpected = realpathSync(expected); realRun = realpathSync(runDir); } catch { return "il file compilato del passo non esiste nel run attivo"; }
+  if (!inside(realExpected, realRun)) return "il file del passo (dopo la risoluzione dei collegamenti) esce dal run attivo";
+  if (fold(real) !== fold(realExpected)) return `si carica solo ${step.file.path} (fuori dal run o file diverso: ${files[0]})`;
+  let buf;
+  try { if (!statSync(real).isFile()) return "il file da caricare non è un file regolare"; buf = readFileSync(real); } catch { return "file da caricare illeggibile"; }
+  if (createHash("sha256").update(buf).digest("hex") !== String(step.file.sha256).toLowerCase()) return "il file è cambiato dopo il piano (impronta diversa): ricompila il file e ricomponi il piano";
+  return null;
+}
+
 const TARGETED = new Set(["input", "click", "upload"]);
 const SEL_CODE = /^[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.SEL\.\d{4}(\.v\d+)?$/;
 export function bindingRefusal(ctx, step) {
@@ -286,6 +313,8 @@ async function browserDecideCore(ctx, no) {
   // corrente, l'elemento del SEL del passo attivo (mappa di observe-append: ref → atlas_match)
   const bind = bindingRefusal(ctx, step);
   if (bind) return no(`${at0}: ${bind}`);
+  // spec 2026-10-06 §3.8: ogni upload (in ogni ambiente) solo del file del run attivo con l'impronta del passo UPLOAD
+  for (const a of ctx.actions.filter((x) => x.kind === "upload")) { const u = uploadRefusal(ctx, step, ap, a); if (u) return no(`${at0}: ${u}`); }
   // spec 2026-10-06 §3.7: un click su un'etichetta di cancellazione vale solo dentro un passo DELETE del piano
   // (verbo DELETE, classe ACT-DELETE; il legame al SEL del passo l'ha già verificato bindingRefusal)
   if (cls === "ACT-DELETE" && step.verb === "DELETE") {
