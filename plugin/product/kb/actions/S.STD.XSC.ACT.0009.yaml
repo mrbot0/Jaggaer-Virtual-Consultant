@@ -4,16 +4,16 @@ type: ACT
 code: ACT-TRANSMIT
 name: Trasmettere (integrazione)
 title: Trasmettere un documento verso un sistema integrato
-summary: Trasmettere un documento verso un sistema integrato; un'approvazione più handoff XSC, in pre-produzione con referente. In produzione mai.
+summary: "Trasmettere un documento verso un sistema integrato; un'approvazione più handoff XSC, in pre-produzione con referente. In produzione solo con write_data: true e approvazione per passo (due approvazioni, spec 2026-10-06 §3.3)."
 risk: R2
 environments:
   sandbox: allowed
   preprod: referent
-  prod: never
+  prod: approval
 approvals:
   sandbox: 1
   preprod: 1
-  prod: null
+  prod: 2
 approvals_note: 1 approvazione + handoff XSC
 evidence_min:
   - integration
@@ -59,3 +59,5 @@ sources:
     section: "29.4"
   - doc: jaggaer-virtual-consultant-architettura.md
     section: "52.1"
+  - doc: docs/superpowers/specs/2026-10-06-autonomia-ops-design.md
+    section: "3.3"

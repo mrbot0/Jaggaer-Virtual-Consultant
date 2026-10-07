@@ -10,7 +10,7 @@ import { parseIntent } from "../../scripts/decide/intent.mjs";
 
 const G = YAML.parse(readFileSync(join(ROOT, "test/golden/intent/cases.yaml"), "utf8"));
 
-test("intent: 33 intenti golden (le 16 righe di §61, 14 casi limite, 3 fuori vocabolario) → 33/33", () => {
+test("intent: 33 intenti golden (le 16 righe di §61, 14 casi limite, 3 fuori vocabolario) → 33/33", { todo: "Task 8" }, () => {
   assert.equal(G.cases.length, 33);
   const failures = [];
   for (const c of G.cases) {

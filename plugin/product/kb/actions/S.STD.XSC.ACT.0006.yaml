@@ -4,12 +4,12 @@ type: ACT
 code: ACT-UPLOAD
 name: Caricare file o allegato
 title: Caricare un file o un allegato
-summary: Caricare un file o un allegato; R2 richiede un'approvazione, in pre-produzione solo caricamenti R1. In produzione mai.
+summary: "Caricare un file o un allegato; R2 richiede un'approvazione, in pre-produzione solo caricamenti R1. In produzione solo con write_data: true e approvazione per passo (due approvazioni, spec 2026-10-06 §3.3)."
 risk: R1/R2
 environments:
   sandbox: allowed
   preprod: allowed
-  prod: never
+  prod: approval
 approvals:
   sandbox:
     R1: 0
@@ -17,7 +17,7 @@ approvals:
   preprod:
     R1: 0
     R2: 1
-  prod: null
+  prod: 2
 approvals_note: "R2: 1 approvazione; in pre-produzione solo caricamenti R1 (§29.4)"
 evidence_min:
   - input
@@ -62,3 +62,5 @@ sources:
     section: "29.4"
   - doc: jaggaer-virtual-consultant-architettura.md
     section: "52.1"
+  - doc: docs/superpowers/specs/2026-10-06-autonomia-ops-design.md
+    section: "3.3"

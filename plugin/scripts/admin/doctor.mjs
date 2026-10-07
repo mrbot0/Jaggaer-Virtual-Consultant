@@ -138,7 +138,7 @@ async function loadEnvDoc(ws, c) {
 export async function checkEnvironments(ws, c, envDoc) {
   const id = `environments:${c}`;
   if (envDoc.missing) return C(id, "yellow", "environments.yaml assente: nessun ambiente dichiarato (default deny, §53.5)", `compilare customers/${c}/config/environments.yaml fuori sessione, con il referente (§51.1)`);
-  if (envDoc.error) return C(id, "red", String(envDoc.error.message).slice(0, 300), envDoc.error.code === 3 ? "correggere il file: in produzione write_data: false, 3 approvazioni, niente rosso (§52.1)" : "correggere lo YAML secondo schemas/environments.schema.json");
+  if (envDoc.error) return C(id, "red", String(envDoc.error.message).slice(0, 300), envDoc.error.code === 3 ? "correggere il file: in produzione write_data booleano, 3 approvazioni, niente rosso (§52.1, spec 2026-10-06 §3.6)" : "correggere lo YAML secondo schemas/environments.schema.json");
   return C(id, "green", `valido: ${envDoc.doc.environments.map((e) => `${e.id} (${e.type})`).join(", ")}`);
 }
 

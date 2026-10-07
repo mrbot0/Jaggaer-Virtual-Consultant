@@ -103,7 +103,7 @@ const HELP = `uso: node scripts/kb/validate-env.mjs <environments.yaml> [--json]
      node scripts/kb/validate-env.mjs --customer <C> [--workspace <dir>] [--json]
 
 Valida gli ambienti del cliente contro schemas/environments.schema.json (§51.1).
-In produzione lo schema impone write_data: false, 3 approvazioni per livello e
+In produzione lo schema impone write_data booleano (si scrive solo con true, spec 2026-10-06 §3.6), 3 approvazioni per livello e
 nessun rosso in config_levels: una violazione è di policy, non un avviso.
 
 Exit code: 0 valido · 1 malformato (YAML, schema, regex, host) · 2 errore di sistema · 3 violazione di policy (§52.1).`;

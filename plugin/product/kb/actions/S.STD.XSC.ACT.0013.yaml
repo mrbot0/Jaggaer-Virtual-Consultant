@@ -4,12 +4,12 @@ type: ACT
 code: ACT-CFG-CHANGE
 name: Modificare configurazione
 title: Modificare la configurazione (perimetro DT-007)
-summary: "Modificare la configurazione dopo snapshot, con approvazioni per perimetro DT-007: verde 1, giallo 2, rosso 3 passo per passo. In produzione solo con tripla approvazione."
+summary: "Modificare la configurazione dopo snapshot, con approvazioni per perimetro DT-007: verde 1, giallo 2, rosso 3 passo per passo. In produzione con tripla approvazione per passo."
 risk: R2/R3
 environments:
   sandbox: approval
   preprod: approval
-  prod: 3A
+  prod: approval
 approvals:
   sandbox:
     verde: 1
@@ -19,8 +19,8 @@ approvals:
     verde: 1
     giallo: 2
     rosso: 3
-  prod: 3A
-approvals_note: verde 1 · giallo 2 · rosso 3 (passo per passo); in produzione sempre 3A, rosso solo per oggetti in prod_allowed_red
+  prod: 3
+approvals_note: verde 1 · giallo 2 · rosso 3 (passo per passo); in produzione sempre 3 per passo, rosso solo per oggetti in prod_allowed_red
 evidence_min:
   - assertion
   - assertion
@@ -69,3 +69,5 @@ sources:
     section: "29.4"
   - doc: jaggaer-virtual-consultant-architettura.md
     section: "52.1"
+  - doc: docs/superpowers/specs/2026-10-06-autonomia-ops-design.md
+    section: "3.3"

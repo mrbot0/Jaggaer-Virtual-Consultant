@@ -303,8 +303,8 @@ al nome del file, nessun codice rivendicato da due file), `kb/lifecycle.mjs --he
 | Azione | Cosa fa | Ambienti · Chi |
 |--------|---------|----------------|
 | `esplora <modulo>` | Esplora e memorizza menu, pagine, pulsanti, campi (pagine registrate da sole, mappa con `kb atlas-build`); in preprod solo click senza effetto ([guida](GUIDA-PRIMO-USO.md)) | sandbox (`ESPLORA SANDBOX`), preprod (`ESPLORA PREPROD`) — **mai prod** · `scope-expert` |
-| `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza con compensazione; piano da `compose-plan` (se mancano dati obbligatori li chiede), a esito verde la procedura si memorizza | sandbox, preprod — **mai prod** (rifiutato prima di ogni dispatch) · `scope-expert` |
-| `approva · chiudi · pubblica …` | R2 con approvazione (`sì`) | sandbox, preprod (il referente è un avviso, non un blocco: §55.1.2) · `scope-expert` |
+| `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza con compensazione; piano da `compose-plan` (se mancano dati obbligatori li chiede), a esito verde la procedura si memorizza | sandbox, preprod; prod solo con `write_data: true` e approvazione per passo · `scope-expert` |
+| `approva · chiudi · pubblica …` | R2 con approvazione (`sì`) | sandbox, preprod (il referente è un avviso, non un blocco: §55.1.2); prod con `write_data: true` e approvazione per passo · `scope-expert` |
 | `query "<domanda>"` · `tables` · `learn-analytics` | Analytics | tutti (sola lettura) · `analytics-learner` |
 
 ### 56.7 `learn` — apprendimento
@@ -351,8 +351,23 @@ Esempi:
   approvazioni (giallo) → esecuzione.
 - *"Su ACME produzione, dimmi perché l'ordine 4500012345 è fermo."* → `ACT-OBS`/`ACT-QRY` in prod, sola lettura,
   diagnosi, fascicolo di evidenze strict.
-- *"Su ACME produzione, crea un ordine di test."* → **rifiutato** dal catalogo: "in produzione non si scrivono dati;
-  posso farlo in sandbox o pre-produzione".
+- *"Su ACME produzione, crea un ordine di test."* → ammesso dal catalogo **solo** se l'ambiente ha `write_data: true`
+  (interruttore dell'utente in `environments.yaml`) e con approvazione per ogni passo; con `write_data: false` il
+  plugin risponde "in produzione i dati si scrivono solo con write_data: true; posso farlo in sandbox o pre-produzione".
+
+#### Il catalogo delle azioni per ambiente (§29.4, rivisto da spec 2026-10-06 §3.3)
+| Classe | Sandbox | Pre-produzione | Produzione |
+|---|---|---|---|
+| `ACT-OBS` · `ACT-READ` · `ACT-QRY` · `ACT-CFG-READ` | libera | libera | libera |
+| `ACT-CREATE` · `ACT-UPDATE` · `ACT-UPLOAD` · `ACT-SUBMIT` · `ACT-CLOSE` | libera | libera | con approvazione per passo (`write_data: true`) |
+| `ACT-APPROVE` · `ACT-TRANSMIT` · `ACT-PUBLISH` | libera | con referente | con approvazione per passo (`write_data: true`) |
+| `ACT-CFG-CHANGE` | con approvazione | con approvazione | con approvazione, tre per passo; rosso solo per oggetti in `prod_allowed_red` |
+| `ACT-BULK` (import, massivi: file compilato del run, verbo `UPLOAD`) | con approvazione | con approvazione | con approvazione, tre per passo |
+| `ACT-DELETE` (verbo `DELETE`) | con approvazione | con approvazione | **mai** |
+
+In produzione si scrive solo con `write_data: true` e approvazione per passo; il rosso solo per oggetto in
+`prod_allowed_red` (§52.1 superato dalla spec 2026-10-06 §3.6). La cancellazione esiste in sandbox e pre-produzione:
+l'ADR-06 («mai delete») vale ora solo per la produzione, dove si compensa con `close`/`cancel`.
 
 ### 57.2 Le frasi di approvazione
 
@@ -473,7 +488,7 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
 | "Nessun ambiente dichiarato" | `/use env` mancante | Dichiararlo, o includerlo nell'intento |
 | "Ambiente non riconosciuto (1 segnale su 2)" | Impronta cambiata (nuova release, banner diverso) | `doctor`; aggiornare `fingerprint` con il referente; **non** forzare |
 | "Host non in allow-list" | Redirect SSO o CDN non dichiarati | Aggiungere l'host in `environments.yaml` fuori sessione |
-| "Azione negata: produzione" | Si sta chiedendo una scrittura in prod | È corretto: usare sandbox/preprod |
+| "Azione negata: produzione" | Si sta chiedendo una scrittura in prod senza `write_data: true`, o una cancellazione | È corretto: attivare `write_data` (a cura dell'utente) o usare sandbox/preprod |
 | "Approvazione non valida" | Frase diversa da quella richiesta, o finestra scaduta | Scrivere la frase esatta (§57.2); se scaduta, ripartire da A1 |
 | "Budget esaurito" | Compito più costoso del previsto | `use budget` se giustificato; altrimenti ridisegnare il compito (meno passi, più replay) |
 | "Risultato respinto: traccia cognitiva mancante" | Il sub-agente ha saltato il ciclo | Automatico: il sub-agente completa; se persiste, `learn lessons --session` e segnalare |
@@ -531,7 +546,7 @@ Le skill sono nel perimetro dell'integrità del pacchetto (`integrity.json`): mo
                       ogni azione → RPT · esito: SUCCESS · EXPECTED-ERROR-AS-SUCCESS · ERROR-AS-LESSON · ERROR-BLOCKING …
 
  AMBIENTI             dichiarato + rilevato (≥ 2 segnali) + verificato a ogni origine · host sconosciuto = negato
-                      produzione: NESSUNA scrittura di dati, mai · configurazioni solo con 3 approvazioni (piano · prova · passo)
+                      produzione: scritture solo con write_data: true e approvazione per passo (spec 2026-10-06 §3.6) · cancellazioni mai · configurazioni con 3 approvazioni (piano · prova · passo)
                       qualità parametrica Q (16 parametri, decadimento per tipo) → classe d'uso → cosa si può fare con un'informazione
 
  ACQUISIRE            profilo del DOC (affidabilità calcolata) → parsing per formato → unità di significato tipizzate

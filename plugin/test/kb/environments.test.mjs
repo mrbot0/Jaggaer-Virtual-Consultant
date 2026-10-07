@@ -24,9 +24,12 @@ test("l'esempio di §51.1 è valido", () => {
   assert.equal(r.ok, true);
 });
 
-test("RF2 (Review Focus 2): type prod + write_data true → rifiuto dello schema, violazione di policy", () => {
+test("RF2 superato (spec 2026-10-06 §3.6): type prod + write_data true è valido (interruttore dell'utente); write_data non booleano → rifiuto, violazione di policy", () => {
+  const ok = load();
+  env(ok, "prod").policy.write_data = true;
+  assert.deepEqual(validateEnvironments(ok).errors, []);
   const doc = load();
-  env(doc, "prod").policy.write_data = true;
+  env(doc, "prod").policy.write_data = "sì";
   const r = validateEnvironments(doc);
   assert.equal(r.ok, false);
   assert.ok(r.policy.length > 0, "è una violazione di policy, non un file malformato");
@@ -92,7 +95,7 @@ test("normalizeEnvironment: prod_allowed_red default [], finestra 60, secondo ap
 
 test("CLI validate-env: 0 valido · 3 violazione di policy (RF2) · 1 malformato · --help", () => {
   assert.equal(cli([tmpYaml(load()), "--json"]).status, 0);
-  const rf2 = load(); env(rf2, "prod").policy.write_data = true;
+  const rf2 = load(); env(rf2, "prod").policy.write_data = "sì";
   const r3 = cli([tmpYaml(rf2), "--json"]);
   assert.equal(r3.status, 3, r3.stdout + r3.stderr);
   assert.equal(JSON.parse(r3.stdout).ok, false);

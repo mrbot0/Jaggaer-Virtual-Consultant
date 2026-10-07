@@ -2,14 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "act.schema.json",
   "title": "ACT — classe di azione del catalogo (§29.4)",
-  "description": "Parte specifica degli item ACT (oltre a item.base): la classe decide rischio, ambienti ammessi, approvazioni, evidenze minime, report, scritture nel DB, budget e verbi. Un'azione fuori catalogo non esiste per il plugin: validate-plan rifiuta il piano. ACT-DELETE esiste solo perché guard-destructive possa nominarla: mai in nessun ambiente, nessun verbo.",
+  "description": "Parte specifica degli item ACT (oltre a item.base): la classe decide rischio, ambienti ammessi, approvazioni, evidenze minime, report, scritture nel DB, budget e verbi. Un'azione fuori catalogo non esiste per il plugin: validate-plan rifiuta il piano. ACT-DELETE (spec 2026-10-06 §3.7) è ammessa solo in sandbox e pre-produzione, con approvazione, e mai in produzione; è l'unica classe col verbo DELETE.",
   "type": "object",
   "required": ["code", "name", "risk", "environments", "approvals", "evidence_min", "report_kind", "db_writes", "budget_tokens", "verbs_allowed", "effect"],
   "properties": {
     "type": { "const": "ACT" },
     "code": { "type": "string", "pattern": "^ACT-[A-Z]+(-[A-Z]+)*$" },
     "name": { "type": "string", "minLength": 3 },
-    "risk": { "description": "R0–R3; R1/R2 e R2/R3 = dipende dall'istanza (§29.4); null per ACT-DELETE (non eseguibile).", "enum": ["R0", "R1", "R2", "R3", "R1/R2", "R2/R3", null] },
+    "risk": { "description": "R0–R3; R1/R2 e R2/R3 = dipende dall'istanza (§29.4).", "enum": ["R0", "R1", "R2", "R3", "R1/R2", "R2/R3"] },
     "environments": {
       "type": "object",
       "required": ["sandbox", "preprod", "prod"],
@@ -36,7 +36,7 @@
     "db_writes": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z]{3}$" } },
     "budget_tokens": { "type": ["integer", "null"], "minimum": 0 },
     "budget_tokens_rosso": { "type": "integer", "minimum": 0 },
-    "verbs_allowed": { "type": "array", "uniqueItems": true, "items": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "WAIT", "VERIFY", "READ", "CAPTURE", "ASK"] } },
+    "verbs_allowed": { "type": "array", "uniqueItems": true, "items": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "WAIT", "VERIFY", "READ", "CAPTURE", "ASK", "DELETE"] } },
     "effect": { "enum": ["read", "write", "config", "none"] },
     "handoff": { "type": "string" }
   },
@@ -45,14 +45,15 @@
       "if": { "properties": { "code": { "const": "ACT-DELETE" } }, "required": ["code"] },
       "then": {
         "properties": {
-          "environments": { "properties": { "sandbox": { "const": "never" }, "preprod": { "const": "never" }, "prod": { "const": "never" } } },
-          "verbs_allowed": { "maxItems": 0 }
+          "environments": { "properties": { "sandbox": { "const": "approval" }, "preprod": { "const": "approval" }, "prod": { "const": "never" } } },
+          "verbs_allowed": { "contains": { "const": "DELETE" } }
         }
       }
     },
     {
-      "if": { "properties": { "effect": { "const": "write" } }, "required": ["effect"] },
-      "then": { "properties": { "environments": { "properties": { "prod": { "const": "never" } } } } }
+      "description": "Il verbo DELETE appartiene solo ad ACT-DELETE (spec 2026-10-06 §3.7).",
+      "if": { "properties": { "code": { "not": { "const": "ACT-DELETE" } } }, "required": ["code"] },
+      "then": { "properties": { "verbs_allowed": { "items": { "not": { "const": "DELETE" } } } } }
     }
   ],
   "$defs": {

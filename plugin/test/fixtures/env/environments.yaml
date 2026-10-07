@@ -44,7 +44,7 @@ environments:
     fingerprint: { title_pattern: "^ACME$|^ACME Procurement", banner: null, tenant_id: { value: "acme" },
                    absence_required: ["SANDBOX", "PRE-PROD", "TEST"] }
     policy:
-      write_data: false                         # ← NON MODIFICABILE: lo schema rifiuta true per type: prod
+      write_data: false                         # interruttore dell'utente (spec 2026-10-06 §3.6): true = in produzione si scrive, con approvazione per passo
       config_levels: [verde, giallo]            # il rosso in produzione è vietato salvo prod_allowed_red esplicito
       approvals: { config_verde: 3, config_giallo: 3 }      # ← sempre tre, qualunque livello
       prod_allowed_red: []                      # oggetti rossi configurabili in prod: nessuno per default

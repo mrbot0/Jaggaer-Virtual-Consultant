@@ -4,16 +4,16 @@ type: ACT
 code: ACT-UPDATE
 name: Modificare bozza
 title: Modificare un documento in bozza
-summary: Modificare una bozza esistente in sandbox o pre-produzione, con compensazione registrata prima. In produzione mai.
+summary: "Modificare una bozza esistente in sandbox o pre-produzione, con compensazione registrata prima. In produzione solo con write_data: true e approvazione per passo (due approvazioni, spec 2026-10-06 §3.3)."
 risk: R1
 environments:
   sandbox: allowed
   preprod: allowed
-  prod: never
+  prod: approval
 approvals:
   sandbox: 0
   preprod: 0
-  prod: null
+  prod: 2
 evidence_min:
   - input
 report_kind: action
@@ -56,3 +56,5 @@ sources:
     section: "29.4"
   - doc: jaggaer-virtual-consultant-architettura.md
     section: "52.1"
+  - doc: docs/superpowers/specs/2026-10-06-autonomia-ops-design.md
+    section: "3.3"
