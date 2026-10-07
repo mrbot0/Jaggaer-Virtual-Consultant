@@ -30,6 +30,9 @@ const SUBMIT = /\b(invia|submit|conferma|place order)\b/i;
 const SEND = /\b(invia|inoltra|trasmetti|submit|send|conferma|confirm|approva|approve|pubblica|publish|place order)\b/i;
 const RUN_OUT = /^runs\/(RUN\.[A-Z0-9]{4}\.\d{8}\.\d{4}\.[A-Z0-9]{3})\/plan\.json$/;
 const pathOf = (sig) => String(sig ?? "").split("#")[0];
+const reEsc = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const UPLOAD_LABEL = /\b(carica|upload|sfoglia|browse|scegli file|choose file|seleziona file)\b/i;
+const START_LABEL = /\b(importa|import|avvia|start|conferma|confirm|carica|upload)\b/i;
 
 function items(ws, customer, scope, dir) {
   const d = join(ws, "customers", customer, "kb", "scopes", scope, dir);
@@ -37,10 +40,39 @@ function items(ws, customer, scope, dir) {
   return readdirSync(d).filter((f) => f.endsWith(".yaml")).map((f) => { try { return YAML.parse(readFileSync(join(d, f), "utf8")); } catch { return null; } }).filter(Boolean);
 }
 
-export function composePlan({ ws, customer, scope, env, goal, data = {}, until = "bozza", planId, module = null }) {
+// spec 2026-10-06 §3.8: import massivo di un oggetto con template (TPL): percorso verso la pagina di import + UPLOAD del file
+// compilato + SUBMIT + READ dell'esito. Una compensazione deactivate per OGNI passo ACT-BULK di commit (UPLOAD e SUBMIT:
+// gateStep la pretende per entrambi). La READ finale è ACT-READ: nessuna approvazione.
+function bulkPlan({ tpl, sels, flws, filled, planId, customer, env, goal }) {
+  if (!filled) return { gaps: [{ kind: "fill-template", what: tpl.id, hint: `compila con template-fill --tpl ${tpl.id} e ripassa --filled <path>:<sha256>:<righe>` }] };
+  const gaps = [];
+  const page = tpl.page;
+  const route = page ? flws.find((f) => String((f.steps ?? []).at(-1)?.expect?.page_sig ?? "") === pathOf(page)) : null;
+  const onPage = sels.filter((s) => s.page === page);
+  const upload = onPage.find((s) => UPLOAD_LABEL.test(s.label));
+  const start = onPage.find((s) => s.effect === "write" && START_LABEL.test(s.label) && s.id !== upload?.id);
+  if (!route) gaps.push({ kind: "no-route", what: tpl.object, hint: "pagina di import non ancora vista: esplora fino all'import massivo" });
+  if (!upload) gaps.push({ kind: "no-upload", what: tpl.object, hint: "campo di caricamento del file non visto nella pagina di import" });
+  if (!start) gaps.push({ kind: "no-submit", what: tpl.object, hint: "pulsante che avvia l'import non visto" });
+  if (gaps.length) return { gaps };
+  const steps = [...(route.steps ?? []).map((s) => ({ verb: s.verb, action_class: s.action_class ?? "ACT-OBS", target: s.target, expect: s.expect ?? { page_sig: pathOf(page) } })),
+    { verb: "UPLOAD", action_class: "ACT-BULK", target: upload.id, file: filled, expect: { elements: [{ sel: upload.id }] } },
+    { verb: "SUBMIT", action_class: "ACT-BULK", target: start.id, expect: { page_sig: pathOf(page) } },
+    { verb: "READ", action_class: "ACT-READ", target: start.id, expect: { messages: "esito dell'import" } }].map((s, i) => ({ n: i + 1, ...s }));
+  const compensations = steps.filter((s) => s.action_class === "ACT-BULK").map((s) => ({ step: s.n, kind: "deactivate", entity: tpl.object, action: `${tpl.object}.deactivate` }));
+  const plan = { plan_id: planId, customer, env: env.id, goal, steps, compensations, repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } };
+  const v = validatePlan(plan, { env });
+  if (!v.ok) throw new Error(`piano composto non valido (bug del compositore): ${v.errors.join("; ")}`);
+  return { plan };
+}
+
+export function composePlan({ ws, customer, scope, env, goal, data = {}, until = "bozza", planId, module = null, filled = null }) {
   // revisione finale (C1): cliente e scope diventano percorsi: mai senza validazione
   if (!/^[A-Z0-9]{4}$/.test(String(customer ?? ""))) throw new Error(`cliente non valido: ${customer}`);
   if (!SCOPES.has(scope)) throw new Error(`scope non valido: ${scope}`);
+  // spec 2026-10-06 §3.8: con un template di caricamento per l'oggetto la via massiva è sempre preferita, anche per un record
+  const tpl = items(ws, customer, scope, "templates").find((t) => t.object && new RegExp(`\\b${reEsc(String(t.object)).replace(/\s+/g, "\\s*")}\\b`, "i").test(goal));
+  if (tpl) return bulkPlan({ tpl, sels: items(ws, customer, scope, "selectors"), flws: items(ws, customer, scope, "flows"), filled, planId, customer, env, goal });
   const obj = OBJECTS.find(([, re]) => re.test(goal));
   if (!obj) return { gaps: [{ kind: "no-form", what: goal, hint: "obiettivo non riconosciuto: ordine, contratto, richiesta, fornitore, evento" }] };
   const [object, , syn] = obj;
@@ -128,7 +160,7 @@ export function composePlan({ ws, customer, scope, env, goal, data = {}, until =
     if (until === "invio" && !submits.length) gaps.push({ kind: "no-submit", what: document, hint: "pulsante d'invio non visto nella pagina" });
     else if (until === "invio" && !submit) gaps.push({ kind: "ambiguous", what: "invio", hint: `più pulsanti d'invio: ${submits.map((s) => s.label).join(", ")}` });
     if (gaps.length) return { gaps };
-    steps = [...(route.steps ?? []).map((s) => ({ verb: s.verb, action_class: s.action_class ?? "ACT-OBS", target: s.target, expect: s.expect ?? { page_sig: pathOf(formSig) } })), ...fills,
+    steps = [...(route.steps ?? []).map((s) => ({ verb: s.verb, action_class: s.action_class ?? "ACT-OBS", target: s.target, expect: s.expect ?? { page_sig: pathOf(formSig) } })), ...(fills.length > 1 ? [{ verb: "FILL", action_class: "ACT-CREATE", fields: fills.map((f) => ({ target: f.target, value: f.data })), expect: { elements: fills.map((f) => ({ sel: f.target, value: f.data })) } }] : fills),
       { verb: "SAVE", action_class: "ACT-CREATE", target: save.id, expect: { page_sig: pathOf(formSig) } }];
     saveN = steps.length;
     if (submit) steps.push({ verb: "SUBMIT", action_class: "ACT-SUBMIT", target: submit.id, expect: { page_sig: pathOf(formSig) } });
@@ -150,10 +182,12 @@ export function writePlanFile(file, plan) {
   writeFileSync(file, JSON.stringify(plan, null, 2), { flag: "wx" });
 }
 
-export const HELP = `uso: compose-plan --goal "<obiettivo>" --data <dati.yaml> --scope <S> --env <id> [--fino-a bozza|invio] [--modulo "<modulo>"] --out runs/<RUN>/plan.json [--customer C] [--workspace <dir>] [--json]
+export const HELP = `uso: compose-plan --goal "<obiettivo>" --data <dati.yaml> --scope <S> --env <id> [--fino-a bozza|invio] [--modulo "<modulo>"] [--filled <percorso>:<sha256>:<righe>] --out runs/<RUN>/plan.json [--customer C] [--workspace <dir>] [--json]
 
 Compone il piano di un'attività (crea ordine, contratto, richiesta, fornitore, evento) dalla mappa del cliente:
 procedura memorizzata se esiste, altrimenti percorso + un passo per campo (dati per etichetta) + salva (+ invio).
+Con un template di caricamento (TPL) per l'oggetto la via massiva è sempre preferita: senza --filled elenca la mancanza
+"fill-template"; con --filled (file di template-fill) compone percorso + UPLOAD + SUBMIT + READ dell'esito.
 Se manca qualcosa non scrive nessun piano ed elenca le mancanze. Il piano va poi approvato e attivato come sempre.
 
 Exit code: 0 piano scritto · 1 uso · 2 sistema · 3 mancanze.`;
@@ -164,11 +198,18 @@ export async function main(argv, env = process.env) {
   if (opts.help) { console.log(HELP); return 0; }
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {
-    if (!opts.goal || !opts.data || !opts.scope || !opts.env || !opts.out) return fail(asJson, 1, "richiesti --goal --data --scope --env --out");
+    if (!opts.goal || !opts.scope || !opts.env || !opts.out) return fail(asJson, 1, "richiesti --goal --scope --env --out (e --data, salvo per l'import massivo)");
+    // --filled <percorso>:<sha256>:<righe> (spec 2026-10-06 §3.8): il file compilato da template-fill, del run di --out
+    let filled = null;
+    if (opts.filled !== undefined) {
+      const fm = /^(runs\/RUN\.[A-Z0-9]{4}\.\d{8}\.\d{4}\.[A-Z0-9]{3}\/[^:]+):([0-9a-fA-F]{64}):(\d+)$/.exec(String(opts.filled));
+      if (!fm || fm[1].split("/").some((x) => x === ".." || x === ".")) return fail(asJson, 1, "--filled: <runs/RUN…/file>:<sha256 di 64 cifre>:<righe>");
+      filled = { path: fm[1], sha256: fm[2].toLowerCase(), rows: Number(fm[3]) };
+    }
     if (!SCOPES.has(String(opts.scope).toUpperCase())) return fail(asJson, 1, `scope non valido: ${opts.scope}`);
     const m = RUN_OUT.exec(String(opts.out));
     if (!m) return fail(asJson, 1, "--out deve essere runs/<RUN>/plan.json, relativo alla cartella del cliente");
-    const bad = confineInputs(opts, ["data"], { env });
+    const bad = opts.data ? confineInputs(opts, ["data"], { env }) : null;
     if (bad) return fail(asJson, 1, bad);
     const { resolveSessionId, loadSession } = await import("../admin/session.mjs");
     let session = null;
@@ -180,10 +221,10 @@ export async function main(argv, env = process.env) {
     const envs = YAML.parse(readFileSync(join(ws, "customers", customer, "config", "environments.yaml"), "utf8"))?.environments ?? [];
     const e = envs.find((x) => x.id === opts.env);
     if (!e) return fail(asJson, 1, `ambiente ${opts.env} non dichiarato in environments.yaml`);
-    const data = YAML.parse(readFileSync(opts.data, "utf8")) ?? {};
+    const data = opts.data ? YAML.parse(readFileSync(opts.data, "utf8")) ?? {} : {};
     if (typeof data !== "object" || Array.isArray(data)) return fail(asJson, 1, "--data: un file YAML con etichetta: valore");
     const planId = `PLAN.${customer}.${m[1].slice(4)}`;
-    const r = composePlan({ ws, customer, scope: String(opts.scope).toUpperCase(), env: { id: e.id, type: e.type }, goal: String(opts.goal), data, until: opts["fino-a"] === "invio" ? "invio" : "bozza", planId, module: opts.modulo ? String(opts.modulo) : null });
+    const r = composePlan({ ws, customer, scope: String(opts.scope).toUpperCase(), env: { id: e.id, type: e.type }, goal: String(opts.goal), data, until: opts["fino-a"] === "invio" ? "invio" : "bozza", planId, module: opts.modulo ? String(opts.modulo) : null, filled });
     if (r.gaps) { console.log(JSON.stringify({ ok: false, gaps: r.gaps })); return 3; }
     const file = join(ws, "customers", customer, String(opts.out));
     try { writePlanFile(file, r.plan); } catch (e) { return fail(asJson, 1, e.message); }

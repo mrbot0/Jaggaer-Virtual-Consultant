@@ -236,13 +236,30 @@ function uploadRefusal(ctx, step, ap, a) {
 
 const TARGETED = new Set(["input", "click", "upload"]);
 const SEL_CODE = /^[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.SEL\.\d{4}(\.v\d+)?$/;
+// spec 2026-10-06 §3.8: un passo FILL con fields: [{ target, value }] compila più campi della pagina in una chiamata (fill_form).
+// L'insieme ammesso è l'elenco dei SEL di fields (tutti SEL dell'Atlas, senza ripetizioni, almeno uno); ogni ref della chiamata
+// deve legarsi a uno di essi e ciascun SEL di fields si lega al più UNA volta nella chiamata (due elementi dello stesso SEL,
+// o lo stesso ref due volte, riempirebbero due volte lo stesso campo). Un `fields` presente ma malformato ⇒ rifiuto.
+function allowedSels(step) {
+  if (step.fields === undefined) return { allowed: typeof step.target === "string" && SEL_CODE.test(step.target) ? [step.target] : null, multi: false };
+  const f = step.fields;
+  if (!Array.isArray(f) || !f.length) return { err: "il passo ha fields vuoto o non valido: input, click e upload non si possono legare al passo" };
+  const t = f.map((x) => x?.target);
+  if (t.some((x) => typeof x !== "string" || !SEL_CODE.test(x))) return { err: "i fields del passo non hanno tutti come target un SEL dell'Atlas: input, click e upload non si possono legare al passo" };
+  if (new Set(t).size !== t.length) return { err: "i fields del passo ripetono lo stesso SEL: input, click e upload non si possono legare al passo" };
+  return { allowed: t, multi: true };
+}
 export function bindingRefusal(ctx, step) {
   const b = ctx.session?.browser ?? {};
+  const bound = new Map();   // SEL di fields → quante volte legato nella chiamata
   for (const a of ctx.actions) {
     if (!TARGETED.has(a.kind)) continue;
-    if (typeof step.target !== "string" || !SEL_CODE.test(step.target)) return "il passo non ha come target un SEL dell'Atlas: input, click e upload non si possono legare al passo";
+    const al = allowedSels(step);
+    if (al.err) return al.err;
+    if (!al.allowed) return "il passo non ha come target un SEL dell'Atlas: input, click e upload non si possono legare al passo";
+    const shown = al.multi ? `uno dei SEL di fields del passo (${al.allowed.join(", ")})` : `il SEL del passo ${step.target}`;
     const refs = Array.isArray(a.targets) ? a.targets : [];
-    if (!refs.length || a.untargeted) return `azione senza uid/ref (${a.op ?? a.tool}): non si può legare al SEL del passo ${step.target}; usa l'uid o il ref dell'ultimo snapshot`;
+    if (!refs.length || a.untargeted) return `azione senza uid/ref (${a.op ?? a.tool}): non si può legare a ${shown}; usa l'uid o il ref dell'ultimo snapshot`;
     // WP07 giro 5 (I-A', regola 5): una chiamata precedente su questa scheda che observe-append non ha registrato
     // (fallito, scaduto) ⇒ la storia dei ref della scheda è inaffidabile: nessun legame finché la scheda non naviga
     // WP08: anche il marcatore del cliente (customers/<C>/.sessions/ref-pending.json), che sopravvive alla sessione
@@ -254,7 +271,12 @@ export function bindingRefusal(ctx, step) {
     if (!b.current_url || snap.url !== b.current_url) return "l'ultimo snapshot osservato non è della pagina corrente: rifai lo snapshot";
     if ((snap.tab ?? null) !== (a.tab ?? null)) return "l'ultimo snapshot osservato è di un'altra scheda: rifai lo snapshot in questa scheda";
     for (const r of refs) {
-      if (!Object.hasOwn(snap.refs, r) || snap.refs[r] !== step.target) return `l'elemento ${r} non corrisponde al SEL del passo ${step.target} (nell'ultimo snapshot: ${Object.hasOwn(snap.refs, r) ? snap.refs[r] ?? "nessuna voce dell'Atlas" : "assente"})`;
+      const sel = Object.hasOwn(snap.refs, r) ? snap.refs[r] : undefined;
+      if (typeof sel !== "string" || !al.allowed.includes(sel)) return `l'elemento ${r} non corrisponde a ${shown} (nell'ultimo snapshot: ${Object.hasOwn(snap.refs, r) ? snap.refs[r] ?? "nessuna voce dell'Atlas" : "assente"})`;
+      if (al.multi) {
+        bound.set(sel, (bound.get(sel) ?? 0) + 1);
+        if (bound.get(sel) > 1) return `più di un elemento della chiamata legato allo stesso campo ${sel} dei fields del passo: ogni campo si compila una sola volta per chiamata`;
+      }
     }
   }
   return null;
