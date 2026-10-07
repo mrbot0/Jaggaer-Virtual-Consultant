@@ -402,9 +402,18 @@ rules:
     allow_in_delete_step: true
     reason: "ACT-DELETE: cancellare vale solo dentro un passo DELETE del piano attivo, in sandbox o pre-produzione, e solo sull'elemento del SEL di quel passo (spec 2026-10-06 §3.7, che supera ADR-06 in sandbox/pre-produzione; in produzione mai); altrove usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano"
     patterns:
-      - '\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|svuota|svuotare|distruggi|purge|delete|remove|erase|destroy|wipe)\b'
-      - '\b(elimina|cancella|rimuovi)\s+tutt[oi]\b'
-      - '\b(delete|remove)\s+all\b'
+      - '\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|distruggi|delete|remove|erase|destroy)\b'
+  # Cancellazioni massive (svuota, purge, wipe, "elimina tutti", "delete all"): SENZA allow_in_delete_step — un passo DELETE vale
+  # una cancellazione di un elemento (spec 2026-10-06 §3.7), mai una massiva; restano negate in ogni caso, anche dentro un DELETE.
+  - id: DR-BROWSER-006
+    severity: hard-deny
+    applies_to: [browser]
+    on: label
+    reason: "ACT-DELETE massiva (svuota, purge, wipe, elimina/cancella/rimuovi tutto, delete all): mai, nemmeno dentro un passo DELETE (un passo DELETE cancella UN elemento, spec 2026-10-06 §3.7); usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano"
+    patterns:
+      - '\b(svuota|svuotare|purge|wipe)\b'
+      - '\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|distruggi)\s+tutt[aeio]\b'
+      - '\b(delete|remove|erase|destroy)\s+all\b'
   - id: DR-BROWSER-003
     severity: hard-deny
     applies_to: [browser]

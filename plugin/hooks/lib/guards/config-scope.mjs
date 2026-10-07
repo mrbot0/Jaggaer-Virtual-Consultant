@@ -230,7 +230,42 @@ export function bindingRefusal(ctx, step) {
   return null;
 }
 
+// Un passo DELETE vale UNA cancellazione di UN elemento (spec 2026-10-06 §3.7): il legame al SEL è per etichetta/ruolo, quindi
+// in una lista ogni riga ha lo stesso "Elimina" con lo stesso SEL. Istanza ambigua (più di un uid dell'ultimo snapshot
+// legato al SEL del passo) o più di un click nella stessa chiamata ⇒ rifiuto. Usata anche da guard-destructive (deleteStepSel).
+export function deleteInstanceRefusal(ctx, step, clicks = (ctx.actions ?? []).filter((x) => x.kind === "click")) {
+  if (clicks.length > 1) return "più click nella stessa chiamata: un passo DELETE cancella un solo elemento";
+  const refs = ctx.session?.browser?.snapshot?.refs;
+  if (!refs || typeof refs !== "object") return "nessuno snapshot osservato: non si può verificare l'istanza da cancellare";
+  const n = Object.values(refs).filter((v) => v === step.target).length;
+  if (n !== 1) return `istanza ambigua: ${n} elementi dell'ultimo snapshot corrispondono al SEL ${step.target} (una cancellazione vale per UN elemento: usa uno snapshot in cui il SEL è un solo elemento)`;
+  return null;
+}
+
+// Cancellazione eseguita: il marcatore active_plan.delete_done = { plan_id, step } vale solo per quel passo (step-check lo
+// riscrive a ogni attivazione di un altro passo). Si registra solo quando il guard consente, atomicamente sotto il lock di
+// session.json (due chiamate parallele: una sola vince).
+function claimDelete(ctx, claim) {
+  let won = false;
+  try {
+    updateSessionFast(ctx.sessionFile, (x) => {
+      const ap = x.active_plan;
+      if (!ap || ap.plan_id !== claim.plan_id || ap.step !== claim.step) return;
+      if (ap.delete_done?.plan_id === claim.plan_id && ap.delete_done?.step === claim.step) return;
+      ap.delete_done = { plan_id: claim.plan_id, step: claim.step, at: new Date().toISOString() };
+      won = true;
+    });
+  } catch { return false; }
+  return won;
+}
+
 async function browserDecide(ctx, no) {
+  const r = await browserDecideCore(ctx, no);
+  if (r !== null || !ctx.deleteClaim) return r;
+  return claimDelete(ctx, ctx.deleteClaim) ? null : no("passo DELETE: la cancellazione di questo passo è già stata eseguita (una sola per passo)");
+}
+
+async function browserDecideCore(ctx, no) {
   if (!ctx.actions.some(isEffectful)) return null;
   const s = ctx.session;
   if (!s) return null;   // senza sessione guard-environment nega già ogni strumento del browser
@@ -253,7 +288,18 @@ async function browserDecide(ctx, no) {
   if (bind) return no(`${at0}: ${bind}`);
   // spec 2026-10-06 §3.7: un click su un'etichetta di cancellazione vale solo dentro un passo DELETE del piano
   // (verbo DELETE, classe ACT-DELETE; il legame al SEL del passo l'ha già verificato bindingRefusal)
-  if (!(cls === "ACT-DELETE" && step.verb === "DELETE")) {
+  if (cls === "ACT-DELETE" && step.verb === "DELETE") {
+    // un passo DELETE vale UNA cancellazione di UN elemento: istanza non ambigua e un solo click, una sola volta
+    const clicks = ctx.actions.filter((x) => x.kind === "click");
+    if (clicks.length) {
+      const amb = deleteInstanceRefusal(ctx, step, clicks);
+      if (amb) return no(`${at0}: ${amb}`);
+      if (s.active_plan.delete_done?.plan_id === ap.plan_id && s.active_plan.delete_done?.step === step.n) {
+        return no(`${at0}: la cancellazione di questo passo è già stata eseguita (un passo DELETE vale una sola cancellazione): per un'altra serve un altro passo`);
+      }
+      ctx.deleteClaim = { plan_id: ap.plan_id, step: step.n };
+    }
+  } else {
     const names = s.browser?.snapshot?.names && typeof s.browser.snapshot.names === "object" ? s.browser.snapshot.names : {};
     for (const a of ctx.actions.filter((x) => x.kind === "click" || x.kind === "input")) {
       for (const r of Array.isArray(a.targets) ? a.targets : []) {

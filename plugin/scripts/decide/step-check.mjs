@@ -17,8 +17,8 @@
 //    (2ª ⇒ tier_up, 3ª ⇒ escalate, §13.3), DEC se il DB del cliente esiste, checkpoint atomico; se si
 //    procede, attivazione del passo successivo (o piano completato ⇒ active_plan = null);
 //  - --resume n: le letture (READ) da fare prima di ripetere i passi con effetto dopo l'ultimo checkpoint.
-import { readFileSync, readdirSync, existsSync, mkdirSync, statSync } from "node:fs";
-import { join, dirname, sep, resolve as resolvePath } from "node:path";
+import { readFileSync, readdirSync, existsSync, mkdirSync, statSync, realpathSync } from "node:fs";
+import { join, sep, resolve as resolvePath } from "node:path";
 import YAML from "yaml";
 import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { canonical } from "../../hooks/lib/audit.mjs";
@@ -86,9 +86,25 @@ function phrase(r, planId, second) {
 }
 
 // Il passo n può partire? Compensazione dichiarata, approvazioni richieste e già date.
-// custDir: cartella assoluta del cliente (customers/<C>), da cui si risolve il ref della lettura salvata di un passo DELETE;
-// assente, si risale di due livelli dal file del piano (customers/<C>/runs/<RUN>/plan.json).
-export function gateStep({ plan, step, env, records, now, planFile, autonomy = "basso", custDir: custDirOpt = null }) {
+// La lettura salvata di un passo DELETE (restore con ref): runs/<RUN ATTIVO>/evidence/<file> (RUN = il codice RUN del run
+// del piano, scripts/lib/run-code.mjs), file regolare non vuoto che, dopo realpath, sta davvero sotto customers/<C>/runs/<RUN>/
+// evidence/ (un link o una giunzione verso l'esterno ⇒ no). Run, cartella del cliente o ref mancanti ⇒ false (fail-closed).
+export function restoreEvidenceOk(ref, run, custDir) {
+  if (typeof ref !== "string" || typeof run !== "string" || !RUN_RE.test(run) || !custDir) return false;
+  const parts = ref.split("/");
+  if (parts.length < 4 || parts[0] !== "runs" || parts[1] !== run || parts[2] !== "evidence" || parts.slice(3).some((p) => !p || p === "." || p === ".." || p.includes("\\"))) return false;
+  try {
+    const realCust = realpathSync.native(custDir);
+    const evDir = join(realCust, "runs", run, "evidence");
+    if (realpathSync.native(join(custDir, "runs", run, "evidence")) !== evDir) return false;
+    const real = realpathSync.native(join(custDir, ref));
+    return real.startsWith(`${evDir}${sep}`) && fileNotEmpty(real);
+  } catch { return false; }
+}
+
+// custDir: cartella assoluta del cliente (customers/<C>) e run: il run attivo del piano, da cui si risolve il ref della lettura
+// salvata di un passo DELETE; senza uno dei due un passo DELETE non parte (fail-closed).
+export function gateStep({ plan, step, env, records, now, planFile, autonomy = "basso", custDir = null, run = null }) {
   const out = { step: step.n, status: "ok", compensation: null, pending: [], ask: null, reason: null };
   const cls = step.action_class;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"})`;
@@ -103,11 +119,7 @@ export function gateStep({ plan, step, env, records, now, planFile, autonomy = "
   if (cls === "ACT-DELETE") {
     const c = (Array.isArray(plan.compensations) ? plan.compensations : []).find((x) => x && x.step === step.n);
     const ref = c?.kind === "restore" && typeof c.ref === "string" ? c.ref : null;
-    const custDir = custDirOpt ?? (planFile ? resolvePath(dirname(planFile), "..", "..") : null);
-    const abs = ref && custDir ? resolvePath(custDir, ref) : null;
-    // il ref è DENTRO evidence/ del run anche dopo la normalizzazione (niente `..`), e punta a un file non vuoto
-    const evDir = ref ? join(custDir ?? "", "runs", ref.split("/")[1] ?? "", "evidence") : null;
-    const ok = !!abs && /^runs\/RUN\.[A-Z0-9]{4}\.\d{8}\.\d{4}\.[A-Z0-9]{3}\/evidence\/[^\\]+$/.test(ref) && abs.startsWith(`${evDir}${sep}`) && fileNotEmpty(abs);
+    const ok = restoreEvidenceOk(ref, run, custDir);
     if (!ok) return { ...out, status: "denied", reason: `${at}: prima di cancellare serve la lettura completa dell'oggetto in runs/<RUN>/evidence/ (compensazione restore con ref)` };
   }
   const level = cls === "ACT-CFG-CHANGE" ? stepLevel(step) : null;
@@ -260,7 +272,7 @@ export async function check(opts) {
   // revisione finale (minore B#7): markDenied — il gate del passo SUCCESSIVO a uno appena verificato è negato: il piano
   // resta sul passo verificato ma marcato gate_denied, così i guard non concedono più azioni legate a quel passo.
   const activate = (s, extraMutate, { markDenied = false } = {}) => {
-    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile, autonomy: aut.level, custDir: join(ws, "customers", customer) });
+    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile, autonomy: aut.level, custDir: join(ws, "customers", customer), run });
     if (g.status === "denied") {
       if (extraMutate || markDenied) updateSessionFile(sFile, (x) => {
         extraMutate?.(x);
@@ -275,7 +287,10 @@ export async function check(opts) {
       const pa = x.active_plan;
       const keep = pa && pa.plan_id === plan.plan_id && pa.plan_sha256 === info.sha256 && pa.run === run && Number.isInteger(pa.last_verified_step)
         ? { last_verified_step: pa.last_verified_step, checkpoint_sha256: pa.checkpoint_sha256 } : {};
-      x.active_plan = { plan_id: plan.plan_id, file: planFile, step: s.n, run, plan_sha256: info.sha256, ...keep };
+      // la cancellazione già eseguita in questo passo (guard-config-scope: delete_done) non si azzera riattivando lo stesso passo
+      const sameStep = pa && pa.plan_id === plan.plan_id && pa.plan_sha256 === info.sha256 && pa.run === run && pa.step === s.n;
+      const done = sameStep && pa.delete_done && pa.delete_done.plan_id === plan.plan_id && pa.delete_done.step === s.n ? { delete_done: pa.delete_done } : {};
+      x.active_plan = { plan_id: plan.plan_id, file: planFile, step: s.n, run, plan_sha256: info.sha256, ...keep, ...done };
       if (g.compensation) {
         const comps = Array.isArray(x.pending.compensations) ? x.pending.compensations : [];
         if (!comps.some((c) => c && typeof c === "object" && c.plan === plan.plan_id && c.step === s.n)) comps.push(g.compensation);

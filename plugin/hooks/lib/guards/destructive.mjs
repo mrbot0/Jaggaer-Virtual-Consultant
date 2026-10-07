@@ -393,7 +393,7 @@ function labelTexts(ctx, a) {
 // Eccezione di DR-BROWSER-002 (spec 2026-10-06 §3.7): vale solo se, in sandbox o pre-produzione, il passo attivo del piano
 // è un DELETE di classe ACT-DELETE (piano valido, impronta, passo leggibili) e l'azione è un click, senza invio, i cui
 // uid/ref sono TUTTI l'elemento del SEL di quel passo nell'ultimo snapshot osservato (legame verificato con la stessa
-// funzione di guard-config-scope). Ogni dubbio ⇒ false ⇒ la regola nega: fail-closed.
+// funzione di guard-config-scope) e quell'elemento è l'UNICO dello snapshot legato al SEL (nessuna istanza ambigua). Ogni dubbio ⇒ false ⇒ la regola nega: fail-closed.
 async function deleteStepSel(ctx, call, a) {
   if (a.kind !== "click" || a.submits === true || a.untargeted) return false;
   if (!["sandbox", "preprod"].includes(ctx.session?.env?.type)) return false;
@@ -401,8 +401,10 @@ async function deleteStepSel(ctx, call, a) {
   const { activeStep } = await import("./plan-step.mjs");
   const st = await activeStep(ctx);
   if (st.reason || !st.step || st.step.verb !== "DELETE" || st.step.action_class !== "ACT-DELETE") return false;
-  const { bindingRefusal } = await import("./config-scope.mjs");
-  return bindingRefusal({ ...ctx, call, actions: [a] }, st.step) === null;
+  const { bindingRefusal, deleteInstanceRefusal } = await import("./config-scope.mjs");
+  const one = { ...ctx, call, actions: [a] };
+  // un passo DELETE vale UN elemento: più uid dello snapshot legati allo stesso SEL (righe di una lista) ⇒ istanza ambigua ⇒ deny
+  return bindingRefusal(one, st.step) === null && deleteInstanceRefusal(one, st.step, [a]) === null;
 }
 
 async function browserMatches(ctx, rules) {

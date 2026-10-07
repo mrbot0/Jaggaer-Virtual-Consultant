@@ -1,6 +1,6 @@
 // GENERATO da scripts/admin/build-deny-rules.mjs a partire da policy/deny-rules.yaml: non modificare.
 export default {
-  "sha256": "19209a2805e6cb7a57354afccf5eb337964669f85c5e076d12997ad9b6188d35",
+  "sha256": "b9ffd7d3c661b36578a2cb00f05427bd2b36f454a4c54da2bf89bbc9525bc2f5",
   "version": 1,
   "sanctioned": [
     {
@@ -908,19 +908,34 @@ export default {
       "on": "label",
       "patterns": [
         {
-          "re": "\\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|svuota|svuotare|distruggi|purge|delete|remove|erase|destroy|wipe)\\b",
-          "flags": "iu"
-        },
-        {
-          "re": "\\b(elimina|cancella|rimuovi)\\s+tutt[oi]\\b",
-          "flags": "iu"
-        },
-        {
-          "re": "\\b(delete|remove)\\s+all\\b",
+          "re": "\\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|distruggi|delete|remove|erase|destroy)\\b",
           "flags": "iu"
         }
       ],
       "allow_in_delete_step": true
+    },
+    {
+      "id": "DR-BROWSER-006",
+      "severity": "hard-deny",
+      "reason": "ACT-DELETE massiva (svuota, purge, wipe, elimina/cancella/rimuovi tutto, delete all): mai, nemmeno dentro un passo DELETE (un passo DELETE cancella UN elemento, spec 2026-10-06 §3.7); usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano",
+      "applies_to": [
+        "browser"
+      ],
+      "on": "label",
+      "patterns": [
+        {
+          "re": "\\b(svuota|svuotare|purge|wipe)\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|distruggi)\\s+tutt[aeio]\\b",
+          "flags": "iu"
+        },
+        {
+          "re": "\\b(delete|remove|erase|destroy)\\s+all\\b",
+          "flags": "iu"
+        }
+      ]
     },
     {
       "id": "DR-BROWSER-003",
