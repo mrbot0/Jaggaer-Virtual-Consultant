@@ -25,12 +25,12 @@ const READ_CLASSES = new Set(Object.entries(ACT).filter(([, a]) => a.prod === "a
 const INPUT_VERBS = new Set(["FILL", "CHOOSE", "SELECT"]);
 const CLICK_VERBS = new Set(["CLICK", "NAVIGATE", "READ", "SELECT", "CHOOSE", "VERIFY", "CAPTURE", "WAIT"]);
 
-// Sempre negato, in ogni passo. Upload, invio (Enter/submit) e dialog accettato sono ammessi solo dentro un passo di
-// scrittura (vedi decide): lì li autorizza prodWrite.
+// Sempre negato, in ogni passo. Fanno eccezione (vedi decide) solo l'invio da input/dialog e il caricamento dentro un passo
+// di scrittura, che poi autorizza prodWrite; il caricamento solo nel passo di verbo UPLOAD.
 function alwaysDenied(a, env) {
   if (a.kind === "other") return `strumento del browser non classificato (${a.tool}${a.action ? ` action=${a.action}` : ""}): in produzione negato. ${PROD_NO_WRITE}`;
   if (a.kind === "script") return `in produzione non si eseguono script nella pagina. ${PROD_NO_WRITE}`;
-  if (a.kind === "upload") return `caricamento di file in produzione fuori da un passo di scrittura approvato. ${PROD_NO_WRITE}`;
+  if (a.kind === "upload") return `caricamento di file in produzione solo dentro un passo di scrittura approvato con verbo UPLOAD. ${PROD_NO_WRITE}`;
   if (a.kind === "dialog" && a.submits) return `conferma di una finestra di dialogo in produzione fuori da un passo di scrittura approvato. ${PROD_NO_WRITE}`;
   if (a.submits) return `invio (Enter/submit) in produzione fuori da un passo di scrittura approvato. ${PROD_NO_WRITE}`;
   if (a.emulation) return `emulazione di rete o intestazioni (userAgent, extraHttpHeaders, networkConditions) in produzione. ${PROD_NO_WRITE}`;
@@ -60,17 +60,23 @@ export const decide = browserGuarded(G, async (ctx, no) => {
   const { env, reason } = declaredEnv(ctx);
   if (!env) return no(reason);
   if (env.type !== "prod") return no("ambiente di sessione incoerente con environments.yaml: riesegui /use env");
+  // le letture e la navigazione non toccano nulla: valgono senza guardare il piano (un piano in stato anomalo non le blocca)
+  const touches = ctx.actions.filter((a) => a.kind === "input" || a.kind === "click" || a.kind === "upload" || a.submits);
+  if (!touches.length) {
+    for (const a of ctx.actions) { const r = alwaysDenied(a, env); if (r) return no(r); }
+    return null;
+  }
   let st = null;
   if (s.active_plan) { st = await activeStep(ctx); if (st.reason) return no(st.reason); }
   const cls = st?.step?.action_class;
   const writeStep = !!cls && ACT[cls]?.prod === "approval";
-  // upload, invio e conferma del dialogo valgono solo dentro un passo di scrittura (approvato sotto)
   for (const a of ctx.actions) {
-    if (writeStep && (a.kind === "upload" || a.submits)) continue;
+    // dentro un passo di scrittura (approvato sotto) l'invio da input/dialog e il caricamento sono ammessi — il caricamento solo
+    // nel passo di verbo UPLOAD; ogni altro tipo (script, strumento non classificato, emulazione, reload) mai
+    if (writeStep && ((a.kind === "input" || a.kind === "dialog") && a.submits)) continue;
+    if (writeStep && a.kind === "upload" && st.step.verb === "UPLOAD") continue;
     const r = alwaysDenied(a, env); if (r) return no(r);
   }
-  const touches = ctx.actions.filter((a) => a.kind === "input" || a.kind === "click" || a.kind === "upload" || a.submits);
-  if (!touches.length) return null;
   if (!st) return no(`nessun piano attivo: in produzione input, click e caricamenti solo dentro un passo di piano. ${PROD_NO_WRITE}`);
   const { step } = st;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"})`;

@@ -64,21 +64,27 @@ const save = () => step(1, "SAVE", "ACT-CREATE", SEL.write);
 test("prod con write_data spento ⇒ la scrittura sui dati è negata (write_data) anche con APPROVO PIANO e APPROVO PASSO", () => {
   const w = prodWs(save(), { write_data: false, second: false });
   w.a1("Mario Rossi"); w.a3();
-  for (const r of [click(w), call(w, "fill", { uid: "1_5", value: "x" }), call(w, "upload_file", { uid: "1", filePath: "C:/a.pdf" })]) {
+  for (const r of [click(w), call(w, "fill", { uid: "1_5", value: "x" })]) {
     assert.ok(denied(r), r.stdout); assert.match(reasonOf(r), /write_data/);
   }
+  const up = prodWs(step(1, "UPLOAD", "ACT-UPLOAD", SEL.write), { write_data: false, second: false });
+  up.a1("Mario Rossi"); up.a3();
+  const ur = call(up, "upload_file", { uid: "1", filePath: "C:/a.pdf" });
+  assert.ok(denied(ur), ur.stdout); assert.match(reasonOf(ur), /write_data/);
 });
 
-test("prod con write_data acceso e secondo approvatore spento: A1 + token del passo ⇒ consentito (click, input, caricamento, invio nel passo)", () => {
+test("prod con write_data acceso e secondo approvatore spento: A1 + token del passo ⇒ consentito (click, input, invio nel passo; il caricamento no)", () => {
   const w = prodWs(save(), { write_data: true, second: false });
   assert.ok(denied(click(w)), "senza approvazioni: negato");
   w.a1("Mario Rossi");
   const noStep = click(w);
   assert.ok(denied(noStep)); assert.match(reasonOf(noStep), /APPROVO PASSO 1/);
   w.a3();
-  for (const r of [click(w), call(w, "fill", { uid: "1_5", value: "x" }), call(w, "upload_file", { uid: "1", filePath: "C:/a.pdf" }), call(w, "press_key", { key: "Enter" })]) {
+  for (const r of [click(w), call(w, "fill", { uid: "1_5", value: "x" }), call(w, "press_key", { key: "Enter" })]) {
     assert.ok(silent(r), r.stdout);
   }
+  const noUp = call(w, "upload_file", { uid: "1", filePath: "C:/a.pdf" });
+  assert.ok(denied(noUp), "il caricamento vale solo nel passo di verbo UPLOAD"); assert.match(reasonOf(noUp), /verbo UPLOAD/);
   // script e strumenti non classificati restano negati anche dentro il passo approvato
   assert.ok(denied(call(w, "evaluate_script", { function: "() => 1" })));
   assert.ok(denied(call(w, "mystery_tool", {})));
@@ -137,4 +143,27 @@ test("ACT-CFG-CHANGE in prod non dipende da write_data (governa solo i dati): co
   w.a2("Luca Bianchi");
   const ok = click(w);
   assert.ok(silent(ok), ok.stdout);
+});
+
+test("caricamento in prod solo nel passo di verbo UPLOAD (ACT-UPLOAD, ACT-BULK) approvato; senza approvazioni o fuori dal verbo ⇒ deny", () => {
+  for (const cls of ["ACT-UPLOAD", "ACT-BULK"]) {
+    const w = prodWs(step(1, "UPLOAD", cls, SEL.write), { write_data: true, second: false });
+    assert.ok(denied(call(w, "upload_file", { uid: "1", filePath: "C:/a.pdf" })), `${cls} senza approvazioni`);
+    w.a1("Mario Rossi"); w.a3();
+    const ok = call(w, "upload_file", { uid: "1", filePath: "C:/a.pdf" });
+    assert.ok(silent(ok), `${cls}: ${ok.stdout}`);
+    assert.ok(denied(call(w, "evaluate_script", { function: "() => 1" })), "script mai");
+  }
+  const other = prodWs(step(1, "SAVE", "ACT-UPLOAD", SEL.write), { write_data: true, second: false });
+  other.a1("Mario Rossi"); other.a3();
+  assert.ok(denied(call(other, "upload_file", { uid: "1", filePath: "C:/a.pdf" })), "classe di scrittura ma verbo SAVE");
+});
+
+test("letture e navigazione in prod non dipendono dal piano attivo: con gate_denied restano libere, il click è negato", () => {
+  const w = prodWs(step(1, "SAVE", "ACT-CREATE", SEL.write), { write_data: true, second: false });
+  patchSession(w.ws, (x) => { x.active_plan.gate_denied = { step: 2, reason: "gate" }; });
+  assert.ok(silent(call(w, "take_snapshot", {})));
+  assert.ok(silent(call(w, "navigate_page", { url: "https://acme.jaggaer.com/orders/4500012345" })));
+  const r = click(w);
+  assert.ok(denied(r)); assert.match(reasonOf(r), /negato/);
 });
