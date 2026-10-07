@@ -21,12 +21,13 @@ export function envEntry(id, { verified = true, doc = DOC, text = readFileSync(E
 }
 
 // ws con cliente ACME, scope ADM, environments.yaml e (opzionale) session.env.
-export function envWs({ env = "sandbox", verified = true, extra = {}, scope = "ADM", remediation = null } = {}) {
+export function envWs({ env = "sandbox", verified = true, extra = {}, scope = "ADM", remediation = null, autonomy = "basso" } = {}) {
   const ws = mkWs();
   mkdirSync(join(ws, "customers/ACME/config"), { recursive: true });
   copyFileSync(ENV_FIXTURE, join(ws, "customers/ACME/config/environments.yaml"));
   let remediationText = null;
   if (remediation) { remediationText = YAML.stringify(remediation); writeFileSync(join(ws, "customers/ACME/config/remediation-scope.yaml"), remediationText); }
+  if (autonomy) writeFileSync(join(ws, "customers/ACME/config/autonomy.yaml"), `default: ${autonomy}\n`);
   seedSession(ws, { scope, extra: { env: env ? envEntry(env, { verified, remediation, remediationText }) : null, ...extra } });
   return ws;
 }

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "autonomy.schema.json",
+  "title": "customers/<C>/config/autonomy.yaml — livello di autonomia predefinito di ops per il cliente",
+  "description": "Spec 2026-10-06 §3.1: la frase AUTONOMIA ALTA|MEDIA|BASSA dell'utente vince per la sessione; in produzione il livello effettivo non supera medio. File scrivibile solo dall'utente (customers/*/config/**).",
+  "type": "object",
+  "required": ["default"],
+  "additionalProperties": false,
+  "properties": { "default": { "enum": ["alto", "medio", "basso"] } }
+}
