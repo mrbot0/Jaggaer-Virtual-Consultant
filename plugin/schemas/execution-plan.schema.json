@@ -13,6 +13,7 @@
     "persona": { "type": "string", "minLength": 1 },
     "storage_state": { "type": "string", "minLength": 1 },
     "goal": { "type": "string", "minLength": 1 },
+    "config_import": { "type": "boolean", "description": "Revisione finale (Ruling F1): import massivo di oggetti di configurazione (TPL kind config). In produzione ogni passo ACT-BULK di commit richiede la compensazione restore con ref all'istantanea dei dati attuali in runs/<RUN>/evidence/ (gateStep); assente in un piano di produzione con ACT-BULK = configurazione (fail-closed). compose-plan la scrive dal tipo del TPL." },
     "strategy": {
       "description": "Strategia (o catena, es. \"STR-DRY-RUN → STR-VERIFY-FIRST\") scelta da strategy-select.",
       "oneOf": [
@@ -98,7 +99,7 @@
         "file": {
           "type": "object", "required": ["path", "sha256", "rows"], "additionalProperties": false,
           "description": "UPLOAD (spec 2026-10-06 §3.8): file compilato del run; guard-config-scope carica solo questo percorso con questa impronta.",
-          "properties": { "path": { "type": "string", "pattern": "^runs/RUN\\.[A-Z0-9]{4}\\.\\d{8}\\.\\d{4}\\.[A-Z0-9]{3}/" }, "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }, "rows": { "type": "integer", "minimum": 1 } }
+          "properties": { "path": { "type": "string", "pattern": "^runs/RUN\\.[A-Z0-9]{4}\\.\\d{8}\\.\\d{4}\\.[A-Z0-9]{3}/import/(?!\\.{1,2}$)[^/\\\\]+$", "description": "revisione finale: solo un file direttamente in runs/<RUN>/import/ (dove template-fill scrive)" }, "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }, "rows": { "type": "integer", "minimum": 1 } }
         },
         "fields": {
           "type": "array", "minItems": 1, "maxItems": 100,

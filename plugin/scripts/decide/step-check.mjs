@@ -65,7 +65,7 @@ const stepsOf = (plan) => (Array.isArray(plan?.steps) ? [...plan.steps].sort((a,
 
 // Ops veloce (spec 2026-10-06 §3.5): serve APPROVO PIANO all'attivazione? Produzione sempre; basso come prima (fuori
 // sandbox sì); medio fuori sandbox sì; alto solo se un passo chiede A1/A2/A3 (il "sì" di un passo R2 resta per passo).
-export function planNeedsApproval(plan, env, autonomy) {
+export function planNeedsApproval(plan, env, autonomy = "basso") {
   const sandbox = ["sandbox", "dev"].includes(env.type);
   if (env.type === "prod") return true;
   if (autonomy === "basso") return !sandbox;
@@ -102,13 +102,42 @@ export function restoreEvidenceOk(ref, run, custDir) {
   } catch { return false; }
 }
 
+// Revisione finale (Ruling F2): un passo DELETE vale UNA riga; se prima, nello stesso piano, un passo può aver spuntato
+// righe (ACT-BULK, verbo TOGGLE/SELECT, CLICK su un SEL di ruolo checkbox o "seleziona tutti"), l'Elimina della barra
+// cancellerebbe tutte le righe spuntate. Un CLICK su un SEL che non si risolve (o senza risolutore) non si verifica ⇒ conta
+// come spunta (fail-closed). → descrizione del passo che spunta | null
+const CHECK_ROLE = /checkbox/i;
+const SELECT_ALL = /\b(seleziona tutt|deseleziona|select all|check all)/i;
+function rowSelectingStep(plan, step, resolve) {
+  for (const s of stepsOf(plan).filter((x) => x && x.n < step.n)) {
+    const at = `passo ${s.n} (${s.verb}, ${s.action_class ?? "senza classe"})`;
+    if (s.action_class === "ACT-BULK") return `${at} è un'azione massiva`;
+    if (s.verb === "TOGGLE" || s.verb === "SELECT") return `${at} può spuntare o selezionare righe`;
+    if (s.verb === "CLICK" && typeof s.target === "string") {
+      const e = typeof resolve === "function" ? resolve(s.target) : null;
+      if (!e) return `${at}: il SEL ${s.target} non si risolve nell'Atlas (potrebbe essere una casella di selezione)`;
+      if (CHECK_ROLE.test(String(e.role ?? "")) || SELECT_ALL.test(String(e.label ?? ""))) return `${at} clicca una casella di selezione (${e.role ?? "?"}${e.label ? ` "${e.label}"` : ""})`;
+    }
+  }
+  return null;
+}
+
 // custDir: cartella assoluta del cliente (customers/<C>) e run: il run attivo del piano, da cui si risolve il ref della lettura
-// salvata di un passo DELETE; senza uno dei due un passo DELETE non parte (fail-closed).
-export function gateStep({ plan, step, env, records, now, planFile, autonomy = "basso", custDir = null, run = null }) {
+// salvata di un passo DELETE (e dell'istantanea di un import di configurazione in produzione); senza uno dei due quei passi
+// non partono (fail-closed). resolve: codice SEL → voce dell'Atlas (resolveSel), per i passi che precedono un DELETE.
+export function gateStep({ plan, step, env, records, now, planFile, autonomy = "basso", custDir = null, run = null, resolve = null }) {
   const out = { step: step.n, status: "ok", compensation: null, pending: [], ask: null, reason: null };
   const cls = step.action_class;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"})`;
   if (!ACT[cls]) return { ...out, status: "denied", reason: `${at}: classe di azione fuori catalogo` };
+  // revisione finale (Ruling F6): con policy.write_data false, in QUALUNQUE ambiente, niente import massivi né cancellazioni
+  if ((cls === "ACT-BULK" || cls === "ACT-DELETE") && env.policy?.write_data === false) {
+    return { ...out, status: "denied", reason: `${at}: l'ambiente ${env.id ?? env.type} ha policy.write_data: false (environments.yaml): niente import massivi né cancellazioni finché l'utente non accende write_data` };
+  }
+  if (cls === "ACT-DELETE") {
+    const sel = rowSelectingStep(plan, step, resolve);
+    if (sel) return { ...out, status: "denied", reason: `${at}: un passo DELETE cancella una sola riga, ma prima nel piano il ${sel}: l'Elimina potrebbe cancellare più righe spuntate. Le cancellazioni di più righe si fanno con passi DELETE distinti, senza spuntare righe` };
+  }
   if (COMP_CLASSES.has(cls) && COMMIT_VERBS.has(step.verb)) {
     const c = (Array.isArray(plan.compensations) ? plan.compensations : []).find((x) => x && x.step === step.n);
     if (!c) return { ...out, status: "denied", reason: `${at}: nessuna compensazione dichiarata nel piano (close · cancel · deactivate · restore): va registrata prima del passo che crea, modifica o invia (§29.6)` };
@@ -121,6 +150,14 @@ export function gateStep({ plan, step, env, records, now, planFile, autonomy = "
     const ref = c?.kind === "restore" && typeof c.ref === "string" ? c.ref : null;
     const ok = restoreEvidenceOk(ref, run, custDir);
     if (!ok) return { ...out, status: "denied", reason: `${at}: prima di cancellare serve la lettura completa dell'oggetto in runs/<RUN>/evidence/ (compensazione restore con ref)` };
+  }
+  // revisione finale (Ruling F1, spec §3.8): in produzione un import massivo di oggetti di configurazione (config_import;
+  // assente = configurazione, fail-closed) parte solo con l'istantanea dei dati attuali salvata nel run attivo — compensazione
+  // restore con ref verificata come per DELETE (realpath sotto runs/<RUN>/evidence/, file non vuoto)
+  if (env.type === "prod" && cls === "ACT-BULK" && COMMIT_VERBS.has(step.verb) && plan.config_import !== false) {
+    const c = (Array.isArray(plan.compensations) ? plan.compensations : []).find((x) => x && x.step === step.n);
+    const ref = c?.kind === "restore" && typeof c.ref === "string" ? c.ref : null;
+    if (!restoreEvidenceOk(ref, run, custDir)) return { ...out, status: "denied", reason: `${at}: in produzione un import di configurazione richiede l'istantanea dei dati attuali in runs/<RUN>/evidence/ del run attivo (compensazione restore con ref; compose-plan --istantanea)` };
   }
   const level = cls === "ACT-CFG-CHANGE" ? stepLevel(step) : null;
   const req = requiredApprovals(cls, step, env, level, autonomy);
@@ -272,7 +309,7 @@ export async function check(opts) {
   // revisione finale (minore B#7): markDenied — il gate del passo SUCCESSIVO a uno appena verificato è negato: il piano
   // resta sul passo verificato ma marcato gate_denied, così i guard non concedono più azioni legate a quel passo.
   const activate = (s, extraMutate, { markDenied = false } = {}) => {
-    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile, autonomy: aut.level, custDir: join(ws, "customers", customer), run });
+    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile, autonomy: aut.level, custDir: join(ws, "customers", customer), run, resolve: (code) => resolveSel(ws, code, customer) });
     if (g.status === "denied") {
       if (extraMutate || markDenied) updateSessionFile(sFile, (x) => {
         extraMutate?.(x);

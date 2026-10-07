@@ -139,6 +139,8 @@ test("CLI --filled: RUN uguale a quello di --out, niente backslash; valido ⇒ p
   assert.equal(await quiet(argv(`runs/RUN.ACME.20261007.1111.ADM/import/de.xlsx:${sha}:3`)), 1, "RUN diverso da --out");
   assert.equal(await quiet(argv(`runs/RUN.ACME.20261007.1000.ADM/import\\de.xlsx:${sha}:3`)), 1, "backslash");
   assert.equal(await quiet(argv(`runs/RUN.ACME.20261007.1000.ADM/import/de.xlsx:abc:3`)), 1, "sha non valido");
+  assert.equal(await quiet(argv(`runs/RUN.ACME.20261007.1000.ADM/evidence/de.xlsx:${sha}:3`)), 1, "fuori da import/ (revisione finale)");
+  assert.equal(await quiet(argv(`runs/RUN.ACME.20261007.1000.ADM/import/sub/de.xlsx:${sha}:3`)), 1, "sotto-cartella di import/");
   assert.equal(await quiet(argv(`runs/RUN.ACME.20261007.1000.ADM/import/de.xlsx:${sha}:3`)), 0);
   const plan = JSON.parse(readFileSync(join(ws, "customers/ACME", out), "utf8"));
   assert.deepEqual(plan.steps.find((x) => x.verb === "UPLOAD").file, { path: "runs/RUN.ACME.20261007.1000.ADM/import/de.xlsx", sha256: sha, rows: 3 });

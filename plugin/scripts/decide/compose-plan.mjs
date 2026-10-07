@@ -56,9 +56,20 @@ function items(ws, customer, scope, dir) {
 }
 
 // spec 2026-10-06 §3.8: import massivo di un oggetto con template (TPL): percorso verso la pagina di import + UPLOAD del file
-// compilato + SUBMIT + READ dell'esito. Una compensazione deactivate per OGNI passo ACT-BULK di commit (UPLOAD e SUBMIT:
-// gateStep la pretende per entrambi). La READ finale è ACT-READ: nessuna approvazione.
-function bulkPlan({ tpl, sels, flws, filled, planId, customer, env, goal }) {
+// compilato + SUBMIT + READ dell'esito. Una compensazione per OGNI passo ACT-BULK di commit (UPLOAD e SUBMIT: gateStep la
+// pretende per entrambi): deactivate, oppure restore con l'istantanea per un import di configurazione che la dichiara.
+// La READ finale è ACT-READ: nessuna approvazione.
+// Revisione finale (Ruling F1, spec §3.8 "ACT-CFG-CHANGE se l'oggetto è di configurazione"): un TPL di configurazione
+// (kind config, o assente nelle voci vecchie: fail-closed) in PRODUZIONE richiede l'istantanea dei dati attuali
+// (runs/<RUN>/evidence/<file>, es. l'export scaricato prima) ⇒ compensazioni restore con quel ref, piano config_import: true,
+// che gateStep verifica come per DELETE. In sandbox e pre-produzione l'istantanea è facoltativa.
+function bulkPlan({ ws, tpl, sels, flws, filled, planId, customer, env, goal, snapshot = null }) {
+  // minore della revisione finale: senza la pagina di import il TPL non porta a percorso e pulsanti (gap preciso)
+  if (typeof tpl.page !== "string" || !tpl.page.trim()) return { gaps: [{ kind: "tpl-no-page", what: tpl.id, hint: `la voce ${tpl.id} non ha la pagina di import: reimpara il template con kb template-learn --file <xlsx> --object "${tpl.object}" --scope <S> --page <firma della pagina di import>` }] };
+  const isConfig = tpl.kind !== "data";
+  const SNAP_HINT = `in produzione un import di configurazione richiede l'istantanea dei dati attuali: scarica l'export in runs/<RUN>/evidence/<file> (stesso RUN del piano) e ripassa --istantanea runs/<RUN>/evidence/<file>`;
+  if (isConfig && env.type === "prod" && !snapshot) return { gaps: [{ kind: "config-snapshot", what: tpl.object, hint: SNAP_HINT }] };
+  if (snapshot && !existsSync(join(ws, "customers", customer, snapshot))) return { gaps: [{ kind: "config-snapshot", what: snapshot, hint: `istantanea non trovata: ${snapshot} — ${SNAP_HINT}` }] };
   if (!filled) return { gaps: [{ kind: "fill-template", what: tpl.id, hint: `compila con template-fill --tpl ${tpl.id} e ripassa --filled <path>:<sha256>:<righe>` }] };
   const gaps = [];
   const page = tpl.page;
@@ -78,14 +89,16 @@ function bulkPlan({ tpl, sels, flws, filled, planId, customer, env, goal }) {
     { verb: "UPLOAD", action_class: "ACT-BULK", target: upload.id, file: filled, expect: { elements: [{ sel: upload.id }] } },
     { verb: "SUBMIT", action_class: "ACT-BULK", target: start.id, expect: { page_sig: pathOf(page) } },
     { verb: "READ", action_class: "ACT-READ", target: start.id, expect: { page_sig: pathOf(page) } }].map((s, i) => ({ n: i + 1, ...s }));
-  const compensations = steps.filter((s) => s.action_class === "ACT-BULK").map((s) => ({ step: s.n, kind: "deactivate", entity: tpl.object, action: `${tpl.object}.deactivate` }));
-  const plan = { plan_id: planId, customer, env: env.id, goal, steps, compensations, repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } };
+  const compensations = steps.filter((s) => s.action_class === "ACT-BULK").map((s) => (isConfig && snapshot
+    ? { step: s.n, kind: "restore", entity: tpl.object, ref: snapshot, note: "reimporta l'istantanea dei dati di prima" }
+    : { step: s.n, kind: "deactivate", entity: tpl.object, action: `${tpl.object}.deactivate` }));
+  const plan = { plan_id: planId, customer, env: env.id, goal, config_import: isConfig, steps, compensations, repair_policy: { skip_allowed: [], substitute_allowed: [], abort_on: [] } };
   const v = validatePlan(plan, { env });
   if (!v.ok) throw new Error(`piano composto non valido (bug del compositore): ${v.errors.join("; ")}`);
   return { plan };
 }
 
-export function composePlan({ ws, customer, scope, env, goal, data = {}, until = "bozza", planId, module = null, filled = null }) {
+export function composePlan({ ws, customer, scope, env, goal, data = {}, until = "bozza", planId, module = null, filled = null, snapshot = null }) {
   // revisione finale (C1): cliente e scope diventano percorsi: mai senza validazione
   if (!/^[A-Z0-9]{4}$/.test(String(customer ?? ""))) throw new Error(`cliente non valido: ${customer}`);
   if (!SCOPES.has(scope)) throw new Error(`scope non valido: ${scope}`);
@@ -94,7 +107,7 @@ export function composePlan({ ws, customer, scope, env, goal, data = {}, until =
   const hits = items(ws, customer, scope, "templates").filter((t) => t.object && String(t.object).trim()).map((t) => ({ t, at: tplMatch(t.object, goal) })).filter((h) => h.at >= 0)
     .sort((a, b) => a.at - b.at || String(b.t.object).length - String(a.t.object).length);
   const tpl = hits[0]?.t;
-  if (tpl) return bulkPlan({ tpl, sels: items(ws, customer, scope, "selectors"), flws: items(ws, customer, scope, "flows"), filled, planId, customer, env, goal });
+  if (tpl) return bulkPlan({ ws, tpl, sels: items(ws, customer, scope, "selectors"), flws: items(ws, customer, scope, "flows"), filled, planId, customer, env, goal, snapshot });
   // con un file compilato ma nessun template per l'obiettivo non si compone di nascosto il piano a maschera
   if (filled) return { gaps: [{ kind: "no-template", what: goal, hint: "nessun template di caricamento per l'oggetto dell'obiettivo (verbo di creazione/import + oggetto del TPL): togli --filled o impara il template" }] };
   const obj = OBJECTS.find(([, re]) => re.test(goal));
@@ -206,12 +219,14 @@ export function writePlanFile(file, plan) {
   writeFileSync(file, JSON.stringify(plan, null, 2), { flag: "wx" });
 }
 
-export const HELP = `uso: compose-plan --goal "<obiettivo>" --data <dati.yaml> --scope <S> --env <id> [--fino-a bozza|invio] [--modulo "<modulo>"] [--filled <percorso>:<sha256>:<righe>] --out runs/<RUN>/plan.json [--customer C] [--workspace <dir>] [--json]
+export const HELP = `uso: compose-plan --goal "<obiettivo>" --data <dati.yaml> --scope <S> --env <id> [--fino-a bozza|invio] [--modulo "<modulo>"] [--filled <percorso>:<sha256>:<righe>] [--istantanea runs/<RUN>/evidence/<file>] --out runs/<RUN>/plan.json [--customer C] [--workspace <dir>] [--json]
 
 Compone il piano di un'attività (crea ordine, contratto, richiesta, fornitore, evento) dalla mappa del cliente:
 procedura memorizzata se esiste, altrimenti percorso + un passo per campo (dati per etichetta) + salva (+ invio).
 Con un template di caricamento (TPL) per l'oggetto la via massiva è sempre preferita: senza --filled elenca la mancanza
-"fill-template"; con --filled (file di template-fill) compone percorso + UPLOAD + SUBMIT + READ dell'esito.
+"fill-template"; con --filled (file di template-fill) compone percorso + UPLOAD + SUBMIT + READ dell'esito. Un TPL senza
+pagina di import dà la mancanza "tpl-no-page" (reimparalo con --page). Un TPL di configurazione in produzione richiede
+--istantanea (export dei dati attuali nel run, stesso RUN di --out): compensazioni restore; senza, mancanza "config-snapshot".
 Se manca qualcosa non scrive nessun piano ed elenca le mancanze. Il piano va poi approvato e attivato come sempre.
 
 Exit code: 0 piano scritto · 1 uso · 2 sistema · 3 mancanze.`;
@@ -229,10 +244,20 @@ export async function main(argv, env = process.env) {
     // --filled <percorso>:<sha256>:<righe> (spec 2026-10-06 §3.8): il file compilato da template-fill, dello STESSO run di --out
     let filled = null;
     if (opts.filled !== undefined) {
-      const fm = /^(runs\/(RUN\.[A-Z0-9]{4}\.\d{8}\.\d{4}\.[A-Z0-9]{3})\/[^:\\]+):([0-9a-fA-F]{64}):(\d+)$/.exec(String(opts.filled));
-      if (!fm || fm[1].split("/").some((x) => x === ".." || x === ".")) return fail(asJson, 1, "--filled: <runs/RUN…/file>:<sha256 di 64 cifre>:<righe> (senza backslash)");
+      // revisione finale: solo runs/<RUN>/import/<file> (lo schema del piano limita file.path alla cartella import/ del run)
+      const fm = /^(runs\/(RUN\.[A-Z0-9]{4}\.\d{8}\.\d{4}\.[A-Z0-9]{3})\/import\/[^:\\/]+):([0-9a-fA-F]{64}):(\d+)$/.exec(String(opts.filled));
+      if (!fm || fm[1].split("/").some((x) => x === ".." || x === ".")) return fail(asJson, 1, "--filled: <runs/RUN…/import/file>:<sha256 di 64 cifre>:<righe> (senza backslash)");
       if (fm[2] !== m[1]) return fail(asJson, 1, "--filled: il file dev'essere del RUN di --out");
       filled = { path: fm[1], sha256: fm[3].toLowerCase(), rows: Number(fm[4]) };
+    }
+    // --istantanea runs/<RUN>/evidence/<file> (revisione finale, Ruling F1): l'export dei dati attuali prima di un import di
+    // configurazione in produzione, dello STESSO run di --out (gateStep la verifica col realpath sotto evidence/ del run attivo)
+    let snapshot = null;
+    if (opts.istantanea !== undefined) {
+      const sm = /^runs\/(RUN\.[A-Z0-9]{4}\.\d{8}\.\d{4}\.[A-Z0-9]{3})\/evidence\/([^:\\]+)$/.exec(String(opts.istantanea));
+      if (!sm || sm[2].split("/").some((x) => !x || x === ".." || x === ".")) return fail(asJson, 1, "--istantanea: runs/<RUN>/evidence/<file> (senza backslash né risalite)");
+      if (sm[1] !== m[1]) return fail(asJson, 1, "--istantanea: il file dev'essere del RUN di --out");
+      snapshot = String(opts.istantanea);
     }
     const bad = opts.data ? confineInputs(opts, ["data"], { env }) : null;
     if (bad) return fail(asJson, 1, bad);
@@ -249,7 +274,7 @@ export async function main(argv, env = process.env) {
     const data = opts.data ? YAML.parse(readFileSync(opts.data, "utf8")) ?? {} : {};
     if (typeof data !== "object" || Array.isArray(data)) return fail(asJson, 1, "--data: un file YAML con etichetta: valore");
     const planId = `PLAN.${customer}.${m[1].slice(4)}`;
-    const r = composePlan({ ws, customer, scope: String(opts.scope).toUpperCase(), env: { id: e.id, type: e.type }, goal: String(opts.goal), data, until: opts["fino-a"] === "invio" ? "invio" : "bozza", planId, module: opts.modulo ? String(opts.modulo) : null, filled });
+    const r = composePlan({ ws, customer, scope: String(opts.scope).toUpperCase(), env: { id: e.id, type: e.type }, goal: String(opts.goal), data, until: opts["fino-a"] === "invio" ? "invio" : "bozza", planId, module: opts.modulo ? String(opts.modulo) : null, filled, snapshot });
     if (r.gaps) { console.log(JSON.stringify({ ok: false, gaps: r.gaps })); return 3; }
     const file = join(ws, "customers", customer, String(opts.out));
     try { writePlanFile(file, r.plan); } catch (e) { return fail(asJson, 1, e.message); }
