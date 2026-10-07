@@ -454,7 +454,7 @@ Scritte da te, **da sole nel messaggio**, in maiuscolo (un punto finale è tolle
 | Frase | Quando |
 |---|---|
 | `sì` | Solo con autonomia **bassa**, in sandbox e pre-produzione: conferma di un'azione che coinvolge altri (invio, approvazione, pubblicazione). In produzione è rifiutato |
-| `APPROVO PIANO <PLAN>` | Per attivare un piano quando il livello lo richiede (pre-produzione con autonomia media o bassa, o con invii, configurazione o cancellazioni; sempre in produzione) o una configurazione |
+| `APPROVO PIANO <PLAN>` | Per attivare un piano quando il livello lo richiede: in pre-produzione con autonomia media o bassa, o con invii, configurazione o cancellazioni; in sandbox con autonomia alta per configurazione e cancellazioni (con media o bassa anche per gli import); sempre in produzione |
 | `APPROVO PASSO <n> <PLAN>` · `APPROVO PROVA <PLAN>` | Configurazioni gialle e rosse; **in produzione prima di ogni passo che modifica o carica** (`APPROVO PASSO`), con `DA <Nome Cognome>`, la prova da una seconda persona se l'ambiente lo richiede (`second_approver_required`) |
 | `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA` | Cambia il livello di autonomia per la sessione (predefinito alto; in produzione vale al massimo medio) |
 | `ESPLORA SANDBOX` · `ESPLORA PREPROD` | Aprire l'esplorazione (poi `use mode esplorazione` entro 10 minuti) |

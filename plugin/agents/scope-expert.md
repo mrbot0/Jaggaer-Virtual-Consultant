@@ -46,8 +46,9 @@ Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-l
   `take_snapshot`; per vedere una tendina cliccala e rileggi; non digitare mai nei campi.
 - Il **livello di autonomia** (alto, medio, basso) lo sceglie l'utente con la sua frase di autonomia in sessione o con il
   file di configurazione del cliente; in produzione non supera il medio. Tu non lo scegli, non lo proponi e non lo
-  cambi: lo applica `step-check`, che ti dice quando serve un'approvazione. Con il livello alto in sandbox non serve
-  nulla; in pre-produzione solo i piani con invii, configurazione o cancellazioni chiedono l'approvazione del piano.
+  cambi: lo applica `step-check`, che ti dice quando serve un'approvazione. Con il livello alto, in sandbox e in pre-produzione, creazioni,
+  aggiornamenti, invii e import non chiedono nulla; configurazione e cancellazioni chiedono comunque l'approvazione del
+  piano (anche in sandbox), e in pre-produzione anche i piani con invii.
 - **Produzione**: leggere e navigare restano liberi; scrivere dati richiede `write_data` attivo per quell'ambiente
   (interruttore dell'utente) e, per ogni passo che modifica o carica, piano e passo approvati (il semplice assenso lì è
   rifiutato); una configurazione in produzione dipende invece dalle approvazioni. Un file si carica solo in un passo
@@ -124,7 +125,7 @@ Tier (§26.3): per compito (haiku T0 · sonnet T1 · opus T2) · ciclo cognitivo
 |----------|----------|----------------------------------------------------------------|
 | `nrt` | Componi da `FLW`, generi da `KEY`/`LCY`/`HND` (skill `nrt-authoring`, `integration-testing`), compili il caso, lo esegui sul browser, interpreti i risultati, evidenze (skill `evidence-and-xray`); selettori per DT-008 (skill `selector-strategy`) | `compile/negative-generator.mjs`, `compile/lint-spec.mjs`, `compile/lint-scope.mjs`, `compile/compile-case.mjs`, `run/select-suite.mjs`, `run/fixtures.mjs`, `run/integration.mjs`, `chrome/capture.mjs`, `run/teardown.mjs` |
 | `config` | Risolvi la `CFP` S+C, confronta con l'ultima `OBS`, `CHK` pre, strategia (di norma `STR-DRY-RUN` la prima volta), snapshot, approvazioni per passo se R ≥ R2, esecuzione con `step-check`, `CHK` post, verificatore `NRT.*.CFG` (skill `jaggaer-configuration`) | `compile/compile-cfp.mjs`, `run/checks-run.mjs`, `kb/snapshot.mjs`, `kb/compensation.mjs` |
-| `ops` | Risolvi il `FLW`, chiedi gli input mancanti, esegui con compensazione, evidenze. Mai in produzione una creazione | `kb/compensation.mjs`, `chrome/capture.mjs` |
+| `ops` | Risolvi il `FLW`, chiedi gli input mancanti, esegui con compensazione, evidenze. In produzione solo con `write_data` attivo e piano e passo approvati | `kb/compensation.mjs`, `chrome/capture.mjs` |
 | `diag` | Prima divergenza (skill `failure-forensics`), con `BRF` e `PBK` dello scope come contesto; nessuna azione con effetto | `kb/kb.mjs`, `decide/why.mjs` |
 
 Esempi di riga (la sintassi completa è nel `--help` di ogni script):
@@ -201,7 +202,7 @@ rapporto (pagina, pulsante, documento risultante), perché l'utente possa decide
    modulo ambiguo (`what: modulo`) → `needs-input` con i moduli possibili da far scegliere all'utente; pagine,
    percorsi o pulsanti non visti → `needs-input` con le pagine da esplorare (il manager ti rilancia in esplorazione, poi
    ricomponi il piano, che l'utente riapprova). Mai inventare un selettore.
-3. Il piano ha già la compensazione del passo che salva; l'invio finale (`SUBMIT`, ACT-SUBMIT) chiede il "sì" dell'utente.
+3. Il piano ha già la compensazione del passo che salva; l'invio finale (`SUBMIT`, ACT-SUBMIT) chiede l'approvazione prevista dal livello di autonomia (con il livello basso l'assenso semplice dell'utente; in produzione l'approvazione del passo).
 4. A esito verde memorizza la procedura, così la volta dopo si ripete cambiando solo i dati:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-write.mjs" --from-plan customers/<C>/runs/<RUN>/plan.json --title "<processo>" --customer <C> --scope <S> --json

@@ -84,8 +84,8 @@ token nella sessione (`use budget` per alzarlo; `PAUSA TUTTI` / `FERMA TUTTI` pe
    per modulo, ricavato dalle briciole di pane o dal percorso di menu)
 3. L'agente compone il piano dalla memoria e te lo mostra (campi e valori, come annullarlo); se mancano dati
    obbligatori te li chiede prima. Con **autonomia alta** (predefinita) un piano di sola creazione in pre-produzione parte
-   da solo; con autonomia media o bassa, o se il piano ha invii, configurazione o cancellazioni, scrivi
-   `APPROVO PIANO <codice del piano>`. Il livello lo scegli tu: `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA`
+   da solo (in sandbox anche con invii); con autonomia media o bassa, o se il piano ha configurazione o cancellazioni (anche
+   in sandbox) o, in pre-produzione, invii, scrivi `APPROVO PIANO <codice del piano>`. Il livello lo scegli tu: `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA`
    (per la sessione) oppure `default:` in `customers/<CODICE>/config/autonomy.yaml`; `use show` ti dice quale vale.
 4. Compila da solo, passo per passo, controllando ogni pagina (i campi della stessa pagina in un colpo solo). Con
    autonomia bassa, prima dell'invio finale ti chiede conferma: rispondi `sì`; con alta o media non te la chiede.
@@ -125,5 +125,5 @@ alla volta, dopo aver salvato la lettura completa dell'oggetto; mai in produzion
   descrive le pagine.
 - In produzione non si esplora con click; si scrive solo con `write_data: true`, piano approvato e approvazione di ogni passo
   (`APPROVO PASSO <n> <PLAN>`); `sì` non vale e non si cancella.
-- L'autonomia alta in pre-produzione non chiede nulla per creare e importare: se il cliente non vuole sorprese, imposta
+- L'autonomia alta in pre-produzione non chiede nulla per creare e importare (configurazione e cancellazioni chiedono comunque `APPROVO PIANO`, anche in sandbox): se il cliente non vuole sorprese, imposta
   `default: medio` nel suo `autonomy.yaml`.

@@ -433,7 +433,7 @@ Il blocco in fondo alla conversazione ha sempre: intestazione (sessione, cliente
 modalità, budget usato/totale), una riga per passo (agente, classe di azione, descrizione, stato ▶ in corso · ✓ fatto ·
 ⏸ attende · ✗ fermato · · pianificato, evidenza), e una riga di totali (sorprese, errori, evidenze). Una riga ⏸ è sempre
 seguita dalla domanda. Una riga ✗ è sempre seguita dal motivo e da cosa serve per riprendere. In produzione il banner è
-`⚠ PRODUZIONE — sola lettura sui dati` (testo invariato: le scritture, quando `write_data` è attivo, passano solo dai passi approvati), con lo stato della 3A. Da un'altra finestra:
+`⚠ PRODUZIONE — scritture solo con write_data e approvazione di ogni passo`, con lo stato della 3A. Da un'altra finestra:
 `/jaggaer-virtual-consultant:vc watch <SES.C.AAAAMMGG.NNN>`.
 
 ### 57.4 Leggere i report

@@ -19,7 +19,7 @@ in produzione compare su ogni aggiornamento.
 | dichiarato, `verified: false` | `{label} ({id}) — NON VERIFICATO: solo navigazione e lettura finché env-check non riconosce ≥ 2 segnali` | grigio |
 | `type: sandbox` o `dev`, verificato | `SANDBOX` | giallo |
 | `type: preprod`, verificato | `PRE-PROD` (per ACT-APPROVE/TRANSMIT/PUBLISH: `con referente`) | arancione |
-| `type: prod`, verificato | `⚠ PRODUZIONE — sola lettura sui dati` | rosso |
+| `type: prod`, verificato | `⚠ PRODUZIONE — scritture solo con write_data e approvazione di ogni passo` | rosso |
 
 ## Produzione con configurazione in corso (§52.4)
 
@@ -27,7 +27,7 @@ Alla riga di intestazione si aggiunge lo stato 3A letto da
 `node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/approvals.mjs" status --json` (sola lettura):
 
 ```
-┌ WORKFLOW · ACME · ⚠ PRODUZIONE — sola lettura sui dati · configurazione 3A: A1 ✓ 10:02 · A2 ✓ 10:19 (M. Rossi) · A3 passo 4/7 ⏸ ┐
+┌ WORKFLOW · ACME · ⚠ PRODUZIONE — scritture solo con write_data e approvazione di ogni passo · configurazione 3A: A1 ✓ 10:02 · A2 ✓ 10:19 (M. Rossi) · A3 passo 4/7 ⏸ ┐
 ```
 
 Prima di ogni A3 il manager ripete in una riga cosa sta per cambiare e come si torna indietro, poi

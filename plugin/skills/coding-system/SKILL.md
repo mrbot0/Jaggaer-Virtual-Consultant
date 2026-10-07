@@ -59,7 +59,7 @@ Per validare un item prima di consegnarlo:
 
 Una procedura di configurazione è una lista di passi con **verbi del vocabolario chiuso**:
 `NAVIGATE · CLICK · FILL · CHOOSE · TOGGLE · UPLOAD · SAVE · SUBMIT · WAIT · VERIFY · READ · CAPTURE · ASK`.
-Il verbo `DELETE` non esiste: si compensa con `close`/`cancel`/disattivazione. Ogni passo ha un `target` (codice
+Nelle procedure di configurazione il verbo `DELETE` non esiste: si compensa con `close`/`cancel`/disattivazione (nei piani operativi `DELETE` è ammesso solo in sandbox e pre-produzione, dentro un passo dedicato). Ogni passo ha un `target` (codice
 SEL dell'Atlas) e, nel piano eseguibile, un `expect`. La procedura dichiara: `governs` (i CFG che tocca), `risk`,
 `preconditions` (CHK), `verification_test` (il verificatore NRT...CFG), `rollback` (una procedura di
 disattivazione, mai un'eliminazione), `snapshot_before`, `evidence`, `sources` (con il genere della fonte).

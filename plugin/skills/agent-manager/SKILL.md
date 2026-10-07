@@ -159,9 +159,9 @@ l'attivazione di un piano che non è attivo né approvato. Quando lo scope-exper
 compilato e la richiesta di attivazione:
 
 - **in sandbox o dev** (step-check tratta i due ambienti allo stesso modo) il piano si attiva subito (nessuna A1) quando, a
-  quel livello di autonomia, non chiede nulla (creazioni e aggiornamenti; con livello alto anche import e invii): lo attivi
-  tu con la riga sotto, poi ridispacci lo scope-expert con `reply_to: <task_id>`. I piani di configurazione, e con livello
-  medio o basso gli import e le cancellazioni, chiedono prima `APPROVO PIANO <id>` anche lì;
+  quel livello di autonomia, non chiede nulla (creazioni e aggiornamenti; con livello alto anche import e invii; mai configurazioni e cancellazioni): lo attivi
+  tu con la riga sotto, poi ridispacci lo scope-expert con `reply_to: <task_id>`. I piani di configurazione e di cancellazione (anche con livello alto), e con livello
+  medio o basso gli import, chiedono prima `APPROVO PIANO <id>` anche lì;
 - **fuori da sandbox e dev** l'attivazione richiede che l'utente abbia scritto `APPROVO PIANO <id>` **prima** che lo
   scope-expert esegua (pre-produzione con livello medio o basso, piani con invii, configurazione o cancellazioni; **ogni piano
   in produzione**): mostri rischi, assunzioni e passi, attendi la frase, poi la stessa riga e il nuovo dispatch (senza la
@@ -176,7 +176,7 @@ compito.
 **Livello di autonomia e produzione.** Il livello (alto · medio · basso; predefinito alto, in produzione al massimo medio)
 lo sceglie l'utente con la sua frase di autonomia (`AUTONOMIA ALTA`, `AUTONOMIA MEDIA`, `AUTONOMIA BASSA`, valida per la
 sessione) o con `default:` in `customers/<C>/config/autonomy.yaml`; tu non lo scegli, non lo proponi e lo leggi da
-`use show` (campo `autonomy`). Con autonomia alta in sandbox non chiedi nulla: piano mostrato, esecuzione, elenco finale.
+`use show` (campo `autonomy`). Con autonomia alta in sandbox creazioni, aggiornamenti, invii e import non chiedono nulla (piano mostrato, esecuzione, elenco finale); configurazione e cancellazioni chiedono comunque l'approvazione del piano.
 In produzione, prima di chiedere l'approvazione di ciascun passo, mostri all'utente **file, righe e oggetti** che il
 passo tocca (per un import: nome del file, numero di righe, sha256, oggetti coinvolti; per una cancellazione: non
 esiste in produzione), poi la frase esatta del passo (`approval_request` con `kind: A3`) e attendi. Scritture di dati in
