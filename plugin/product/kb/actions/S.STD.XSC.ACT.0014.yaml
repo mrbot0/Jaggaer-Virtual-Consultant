@@ -4,16 +4,16 @@ type: ACT
 code: ACT-BULK
 name: Massivo (import, bulk)
 title: "Operazioni massive: import e bulk"
-summary: "Import e operazioni massive: solo in sandbox con approvazione esplicita (due approvazioni) e tutte le evidenze. In pre-produzione e produzione mai."
+summary: "Import e operazioni massive: in sandbox con due approvazioni, in pre-produzione con una, in produzione con tre (solo con write_data: true), sempre con tutte le evidenze e il file compilato del run (spec 2026-10-06 §3.3, §3.8)."
 risk: R3
 environments:
   sandbox: approval
-  preprod: never
-  prod: never
+  preprod: approval
+  prod: approval
 approvals:
   sandbox: 2
-  preprod: null
-  prod: null
+  preprod: 1
+  prod: 3
 evidence_min:
   - tutte
 report_kind: action
@@ -26,18 +26,12 @@ budget_tokens: 60000
 verbs_allowed:
   - NAVIGATE
   - CLICK
-  - FILL
-  - CHOOSE
-  - SELECT
-  - TOGGLE
-  - SAVE
+  - UPLOAD
+  - SUBMIT
   - READ
   - WAIT
   - VERIFY
   - CAPTURE
-  - ASK
-  - UPLOAD
-  - SUBMIT
 effect: write
 facets:
   F1: doc-standard
@@ -59,3 +53,5 @@ sources:
     section: "29.4"
   - doc: jaggaer-virtual-consultant-architettura.md
     section: "52.1"
+  - doc: docs/superpowers/specs/2026-10-06-autonomia-ops-design.md
+    section: "3.3"

@@ -7,7 +7,7 @@ import YAML from "yaml";
 
 export const CODE_RE = /^([SCL])\.([A-Z0-9]{3,4})\.([A-Z0-9]{3})\.([A-Z]{3})\.(\d{4})(?:\.v\d+)?$/;
 export const TYPE_DIRS = Object.freeze({ FLW: "flows", KEY: "keys", LCY: "lifecycles", INT: "integrations", CFG: "configs", CFP: "procedures",
-  SEL: "selectors", CHK: "checks", FLD: "fields", ERR: "errors", TBL: "tables", CAP: "capabilities" });
+  SEL: "selectors", CHK: "checks", FLD: "fields", ERR: "errors", TBL: "tables", CAP: "capabilities", TPL: "templates" });
 // Codici del dominio analitico: kb/ e i test non li citano (§1.1, §5.4).
 export const ANALYTIC_RE = /\b[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.(?:PAT|PBK|BRF|RUL)\.\d{4}\b/g;
 

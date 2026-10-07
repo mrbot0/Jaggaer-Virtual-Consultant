@@ -28,7 +28,7 @@ test("budget per classe = catalogo (budget_tokens) × moltiplicatore dell'ambien
   assert.equal(classBudget("ACT-CREATE", PRE), 12000);
   assert.equal(classBudget("ACT-OBS", PRD), 2500);
   assert.equal(classBudget("ACT-CFG-CHANGE", SBX, { level: "rosso" }), 60000);
-  assert.equal(classBudget("ACT-DELETE", SBX), 0);
+  assert.equal(classBudget("ACT-DELETE", SBX), 15000, "ACT-DELETE ha un budget dal 07/10/2026 (spec 2026-10-06 §3.7)");
 });
 
 test("budget per compito: somma delle azioni del piano + 20% (§29.5: OBS+CREATE+SUBMIT+READ ≈ 55k)", () => {
@@ -57,7 +57,8 @@ test("enforceClass: l'invocazione non supera il budget delle sue classi; documen
   assert.equal(enforceClass({ actions: ["ACT-OBS", "ACT-CREATE"], budget_tokens: 24000 }, SBX).ok, true);
   assert.equal(enforceClass({ actions: ["ACT-OBS", "ACT-CREATE"], budget_tokens: 24001 }, SBX).ok, false);
   assert.equal(enforceClass({ budget_tokens: 99999 }, SBX).ok, true, "senza classe dichiarata vale solo il residuo");
-  assert.equal(enforceClass({ action_class: "ACT-DELETE", budget_tokens: 1 }, SBX).ok, false);
+  assert.equal(enforceClass({ action_class: "ACT-DELETE", budget_tokens: 15000 }, SBX).ok, true);
+  assert.equal(enforceClass({ action_class: "ACT-DELETE", budget_tokens: 15001 }, SBX).ok, false);
   assert.equal(DOC_BUDGET, 80000); assert.equal(UNIT_BUDGET, 3000);
   assert.equal(checkDocument({ used: 79000, units: 2, unitTokens: [2000, 3500] }).ok, false);
   assert.equal(checkDocument({ used: 81000 }).ok, false);

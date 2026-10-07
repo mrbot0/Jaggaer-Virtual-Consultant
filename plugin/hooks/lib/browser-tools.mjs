@@ -52,6 +52,8 @@ const targetOf = (ti) => {
 };
 // WP07 giro 1 (I2): pageId solo intero (il server ignora gli altri e ricade sulla pagina selezionata).
 const tabOf = (ti) => (ti.tabId ?? (Number.isInteger(ti.pageId) ? ti.pageId : null));
+// percorsi di un caricamento: sempre un array di stringhe (un valore non-array o assente ⇒ [], che il guard nega)
+const filesOf = (v) => (Array.isArray(v) ? v.map((x) => String(x ?? "")) : []);
 const valuesText = (arr, key = "value") => (Array.isArray(arr) ? arr.map((x) => (x && typeof x === "object" ? String(x[key] ?? "") : "")).join("\n") : null);
 const outputsOf = (ti, keys) => keys.map((k) => ti[k]).filter((v) => v !== undefined);
 const R = (extra = {}) => ({ kind: "read", ...extra });
@@ -80,7 +82,7 @@ const DEVTOOLS_OPS = {
   fill_form: { keys: ["pageId", "elements", ...SNAP], fn: (ti) => ({ kind: "input", text: valuesText(ti.elements) }) },
   type_text: { keys: ["pageId", "text", "submitKey", ...SNAP], fn: (ti) => { const text = str(ti.text) ?? ""; return { kind: "input", text, submits: (typeof ti.submitKey === "string" && ENTER.test(ti.submitKey)) || (ti.submitKey != null && typeof ti.submitKey !== "string") || /[\r\n]/.test(text) }; } },
   press_key: { keys: ["pageId", "key", ...SNAP], fn: (ti) => ({ kind: "input", text: str(ti.key), submits: ENTER.test(str(ti.key) ?? "") }) },
-  upload_file: { keys: ["pageId", "uid", "filePath", ...SNAP], fn: (ti) => ({ kind: "upload", target: targetOf(ti) }) },
+  upload_file: { keys: ["pageId", "uid", "filePath", ...SNAP], fn: (ti) => ({ kind: "upload", target: targetOf(ti), files: [str(ti.filePath)].filter(Boolean) }) },
   handle_dialog: { keys: ["pageId", "action", "promptText"], fn: (ti) => ({ kind: "dialog", submits: ti.action === "accept" }) },
   evaluate_script: { keys: ["pageId", "function", "args"], fn: (ti) => ({ kind: "script", text: str(ti.function) }) },
   take_snapshot: { keys: ["pageId", "verbose", "filePath"], fn: (ti) => R({ outputs: outputsOf(ti, ["filePath"]) }) },
@@ -127,7 +129,9 @@ const CLAUDE_OPS = {
   javascript_tool: { keys: ["action", "text", ...TAB], fn: (ti) => ({ kind: "script", text: str(ti.text) }) },
   shortcuts_execute: { any: true, fn: () => ({ kind: "script", text: null }) },
   shortcuts_list: { keys: [...TAB], fn: () => R() },
-  file_upload: { keys: ["paths", "ref", "coordinate", ...TAB], fn: (ti) => ({ kind: "upload", target: targetOf(ti) }) },
+  // spec 2026-10-06 §3.8: i percorsi del caricamento sono in `files` (config-scope li confina nel run e ne verifica l'impronta);
+  // upload_image non porta percorsi (imageId): senza `files` il guard lo nega sempre
+  file_upload: { keys: ["paths", "ref", "coordinate", ...TAB], fn: (ti) => ({ kind: "upload", target: targetOf(ti), files: filesOf(ti.paths) }) },
   upload_image: { keys: ["imageId", "ref", "coordinate", "filename", ...TAB], fn: (ti) => ({ kind: "upload", target: targetOf(ti) }) },
   tabs_context: { keys: ["createIfEmpty"], fn: () => R() },
   tabs_context_mcp: { keys: ["createIfEmpty"], fn: () => R() },
@@ -162,7 +166,7 @@ const PW_OPS = {
   hover: { keys: [...EL], fn: (ti) => R({ target: targetOf(ti) }) },
   drag: { keys: ["startElement", "startRef", "endElement", "endRef"], fn: () => ({ kind: "input" }) },
   drop: { keys: [...EL, "startElement", "startRef", "endElement", "endRef"], fn: () => ({ kind: "input" }) },
-  file_upload: { keys: ["paths"], fn: () => ({ kind: "upload" }) },
+  file_upload: { keys: ["paths"], fn: (ti) => ({ kind: "upload", files: filesOf(ti.paths) }) },
   evaluate: { keys: ["function", ...EL], fn: (ti) => ({ kind: "script", text: str(ti.function) }) },
   // K6.3: boxes/depth/target sono parametri di sola lettura (riquadri per le maschere delle evidenze)
   snapshot: { keys: ["filename", "boxes", "depth", "target"], fn: (ti) => R({ outputs: outputsOf(ti, ["filename"]) }) },

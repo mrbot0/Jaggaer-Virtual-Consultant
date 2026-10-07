@@ -85,11 +85,14 @@ test("db: apribile in WAL con migrazioni applicate verde; file non SQLite rosso;
   assert.equal(await status(ws, "db:ACME"), "red");
 });
 
-test("environments: valido verde; prod con write_data: true (regola di produzione) rosso", async () => {
+test("environments: valido verde; prod con write_data: true (spec 2026-10-06 §3.6) verde; write_data non booleano rosso", async () => {
   const ws = demoWorkspace();
   assert.equal(await status(ws, "environments:ACME"), "green");
   const f = join(ws, "customers/ACME/config/environments.yaml");
-  writeFileSync(f, readFileSync(f, "utf8").replace("write_data: false", "write_data: true"));
+  const orig = readFileSync(f, "utf8");
+  writeFileSync(f, orig.replace("write_data: false", "write_data: true"));
+  assert.equal(await status(ws, "environments:ACME"), "green");
+  writeFileSync(f, orig.replace("write_data: false", "write_data: \"sì\""));
   const c = byId(await run(ws), "environments:ACME");
   assert.equal(c.status, "red");
 });

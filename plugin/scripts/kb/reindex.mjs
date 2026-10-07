@@ -146,6 +146,7 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
       const text = readFileSync(file, "utf8");
       const hash = createHash("sha256").update(text).digest("hex");
       const obj = YAML.parse(text);
+      if (obj?.type === "TPL") continue;   // template di caricamento (§3.8): voce di kb/ non indicizzata, validata da template-learn
       if (!validateItem(obj).ok) { stats.invalid++; continue; }
       const c = parseCode(obj.id); seen.add(obj.id);
       const prev = get.get(obj.id);

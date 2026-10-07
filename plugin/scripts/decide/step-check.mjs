@@ -17,8 +17,8 @@
 //    (2ª ⇒ tier_up, 3ª ⇒ escalate, §13.3), DEC se il DB del cliente esiste, checkpoint atomico; se si
 //    procede, attivazione del passo successivo (o piano completato ⇒ active_plan = null);
 //  - --resume n: le letture (READ) da fare prima di ripetere i passi con effetto dopo l'ultimo checkpoint.
-import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
-import { join, resolve as resolvePath } from "node:path";
+import { readFileSync, readdirSync, existsSync, mkdirSync, statSync, realpathSync } from "node:fs";
+import { join, sep, resolve as resolvePath } from "node:path";
 import YAML from "yaml";
 import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { canonical } from "../../hooks/lib/audit.mjs";
@@ -29,6 +29,7 @@ import { updateSessionFile } from "../../hooks/lib/session-state.mjs";
 import { sessionFile as sessionFilePath } from "../../hooks/lib/workspace.mjs";
 import { appendAudit } from "../../hooks/lib/audit.mjs";
 import { ACT, stepLevel, stepRisk } from "../../hooks/lib/act-classes.mjs";
+import { autonomyLevel } from "../../hooks/lib/autonomy.mjs";
 import { requiredApprovals, COMMIT_VERBS } from "../../hooks/lib/guards/config-scope.mjs";
 import { loadPlanFile, approvalsFile, readApprovals, windowState } from "../admin/approvals.mjs";
 import { loadSession, resolveSessionId } from "../admin/session.mjs";
@@ -43,8 +44,10 @@ import { writeCompensations } from "../lib/compensations-store.mjs";
 import { confineInputs } from "../lib/text-file.mjs";
 
 export const STATUSES = ["ok", "surprise", "novelty", "approval_required", "denied"];
-const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
-const EFFECT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
+const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT", "ACT-BULK", "ACT-DELETE"]);
+const EFFECT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD", "DELETE"]);
+
+const fileNotEmpty = (p) => { try { const s = statSync(p); return s.isFile() && s.size > 0; } catch { return false; } };
 
 export class StepCheckError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 
@@ -60,6 +63,19 @@ export { RUN_RE, runRefusal };
 export const checkpointSha = (cp) => createHash("sha256").update(canonical(cp)).digest("hex");
 const stepsOf = (plan) => (Array.isArray(plan?.steps) ? [...plan.steps].sort((a, b) => a.n - b.n) : []);
 
+// Ops veloce (spec 2026-10-06 §3.5): serve APPROVO PIANO all'attivazione? Produzione sempre; basso come prima (fuori
+// sandbox sì); medio fuori sandbox sì; alto solo se un passo chiede A1/A2/A3 (il "sì" di un passo R2 resta per passo).
+export function planNeedsApproval(plan, env, autonomy = "basso") {
+  const sandbox = ["sandbox", "dev"].includes(env.type);
+  if (env.type === "prod") return true;
+  if (autonomy === "basso") return !sandbox;
+  if (!sandbox && autonomy !== "alto") return true;
+  return stepsOf(plan).some((s) => {
+    const r = requiredApprovals(s.action_class, s, env, s.action_class === "ACT-CFG-CHANGE" ? stepLevel(s) : null, autonomy);
+    return r.a1 || r.a2 || r.a3;
+  });
+}
+
 // Frasi che l'utente deve scrivere (§57.2) per le richieste aperte.
 function phrase(r, planId, second) {
   const who = second ? " DA <Nome Cognome>" : "";
@@ -70,18 +86,81 @@ function phrase(r, planId, second) {
 }
 
 // Il passo n può partire? Compensazione dichiarata, approvazioni richieste e già date.
-export function gateStep({ plan, step, env, records, now, planFile }) {
+// La lettura salvata di un passo DELETE (restore con ref): runs/<RUN ATTIVO>/evidence/<file> (RUN = il codice RUN del run
+// del piano, scripts/lib/run-code.mjs), file regolare non vuoto che, dopo realpath, sta davvero sotto customers/<C>/runs/<RUN>/
+// evidence/ (un link o una giunzione verso l'esterno ⇒ no). Run, cartella del cliente o ref mancanti ⇒ false (fail-closed).
+export function restoreEvidenceOk(ref, run, custDir) {
+  if (typeof ref !== "string" || typeof run !== "string" || !RUN_RE.test(run) || !custDir) return false;
+  const parts = ref.split("/");
+  if (parts.length < 4 || parts[0] !== "runs" || parts[1] !== run || parts[2] !== "evidence" || parts.slice(3).some((p) => !p || p === "." || p === ".." || p.includes("\\"))) return false;
+  try {
+    const realCust = realpathSync.native(custDir);
+    const evDir = join(realCust, "runs", run, "evidence");
+    if (realpathSync.native(join(custDir, "runs", run, "evidence")) !== evDir) return false;
+    const real = realpathSync.native(join(custDir, ref));
+    return real.startsWith(`${evDir}${sep}`) && fileNotEmpty(real);
+  } catch { return false; }
+}
+
+// Revisione finale (Ruling F2): un passo DELETE vale UNA riga; se prima, nello stesso piano, un passo può aver spuntato
+// righe (ACT-BULK, verbo TOGGLE/SELECT, CLICK su un SEL di ruolo checkbox o "seleziona tutti"), l'Elimina della barra
+// cancellerebbe tutte le righe spuntate. Un CLICK su un SEL che non si risolve (o senza risolutore) non si verifica ⇒ conta
+// come spunta (fail-closed). → descrizione del passo che spunta | null
+const CHECK_ROLE = /checkbox/i;
+const SELECT_ALL = /\b(seleziona tutt|deseleziona|select all|check all)/i;
+function rowSelectingStep(plan, step, resolve) {
+  for (const s of stepsOf(plan).filter((x) => x && x.n < step.n)) {
+    const at = `passo ${s.n} (${s.verb}, ${s.action_class ?? "senza classe"})`;
+    if (s.action_class === "ACT-BULK") return `${at} è un'azione massiva`;
+    if (s.verb === "TOGGLE" || s.verb === "SELECT") return `${at} può spuntare o selezionare righe`;
+    if (s.verb === "CLICK" && typeof s.target === "string") {
+      const e = typeof resolve === "function" ? resolve(s.target) : null;
+      if (!e) return `${at}: il SEL ${s.target} non si risolve nell'Atlas (potrebbe essere una casella di selezione)`;
+      if (CHECK_ROLE.test(String(e.role ?? "")) || SELECT_ALL.test(String(e.label ?? ""))) return `${at} clicca una casella di selezione (${e.role ?? "?"}${e.label ? ` "${e.label}"` : ""})`;
+    }
+  }
+  return null;
+}
+
+// custDir: cartella assoluta del cliente (customers/<C>) e run: il run attivo del piano, da cui si risolve il ref della lettura
+// salvata di un passo DELETE (e dell'istantanea di un import di configurazione in produzione); senza uno dei due quei passi
+// non partono (fail-closed). resolve: codice SEL → voce dell'Atlas (resolveSel), per i passi che precedono un DELETE.
+export function gateStep({ plan, step, env, records, now, planFile, autonomy = "basso", custDir = null, run = null, resolve = null }) {
   const out = { step: step.n, status: "ok", compensation: null, pending: [], ask: null, reason: null };
   const cls = step.action_class;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"})`;
   if (!ACT[cls]) return { ...out, status: "denied", reason: `${at}: classe di azione fuori catalogo` };
+  // revisione finale (Ruling F6): con policy.write_data false, in QUALUNQUE ambiente, niente import massivi né cancellazioni
+  if ((cls === "ACT-BULK" || cls === "ACT-DELETE") && env.policy?.write_data === false) {
+    return { ...out, status: "denied", reason: `${at}: l'ambiente ${env.id ?? env.type} ha policy.write_data: false (environments.yaml): niente import massivi né cancellazioni finché l'utente non accende write_data` };
+  }
+  if (cls === "ACT-DELETE") {
+    const sel = rowSelectingStep(plan, step, resolve);
+    if (sel) return { ...out, status: "denied", reason: `${at}: un passo DELETE cancella una sola riga, ma prima nel piano il ${sel}: l'Elimina potrebbe cancellare più righe spuntate. Le cancellazioni di più righe si fanno con passi DELETE distinti, senza spuntare righe` };
+  }
   if (COMP_CLASSES.has(cls) && COMMIT_VERBS.has(step.verb)) {
     const c = (Array.isArray(plan.compensations) ? plan.compensations : []).find((x) => x && x.step === step.n);
     if (!c) return { ...out, status: "denied", reason: `${at}: nessuna compensazione dichiarata nel piano (close · cancel · deactivate · restore): va registrata prima del passo che crea, modifica o invia (§29.6)` };
     out.compensation = { plan: plan.plan_id, step: step.n, kind: c.kind, ...(c.entity ? { entity: c.entity } : {}), ...(c.action ? { action: c.action } : {}), ...(c.ref ? { ref: c.ref } : {}), status: "pending" };
   }
+  // spec 2026-10-06 §3.7: prima di cancellare serve la lettura completa dell'oggetto, salvata nel run (restore con ref
+  // a runs/<RUN>/evidence/…, file presente sotto customers/<C>/runs/): è la copia da cui si ricostruisce ciò che si cancella
+  if (cls === "ACT-DELETE") {
+    const c = (Array.isArray(plan.compensations) ? plan.compensations : []).find((x) => x && x.step === step.n);
+    const ref = c?.kind === "restore" && typeof c.ref === "string" ? c.ref : null;
+    const ok = restoreEvidenceOk(ref, run, custDir);
+    if (!ok) return { ...out, status: "denied", reason: `${at}: prima di cancellare serve la lettura completa dell'oggetto in runs/<RUN>/evidence/ (compensazione restore con ref)` };
+  }
+  // revisione finale (Ruling F1, spec §3.8): in produzione un import massivo di oggetti di configurazione (config_import;
+  // assente = configurazione, fail-closed) parte solo con l'istantanea dei dati attuali salvata nel run attivo — compensazione
+  // restore con ref verificata come per DELETE (realpath sotto runs/<RUN>/evidence/, file non vuoto)
+  if (env.type === "prod" && cls === "ACT-BULK" && COMMIT_VERBS.has(step.verb) && plan.config_import !== false) {
+    const c = (Array.isArray(plan.compensations) ? plan.compensations : []).find((x) => x && x.step === step.n);
+    const ref = c?.kind === "restore" && typeof c.ref === "string" ? c.ref : null;
+    if (!restoreEvidenceOk(ref, run, custDir)) return { ...out, status: "denied", reason: `${at}: in produzione un import di configurazione richiede l'istantanea dei dati attuali in runs/<RUN>/evidence/ del run attivo (compensazione restore con ref; compose-plan --istantanea)` };
+  }
   const level = cls === "ACT-CFG-CHANGE" ? stepLevel(step) : null;
-  const req = requiredApprovals(cls, step, env, level);
+  const req = requiredApprovals(cls, step, env, level, autonomy);
   const second = env.policy?.second_approver_required ?? env.type === "prod";
   const w = windowState(null, plan.plan_id, { ...env.policy, second_approver_required: second }, now.getTime(), { records });
   const need = [];
@@ -203,20 +282,21 @@ export async function check(opts) {
   const cpDir = join(runDir, "checkpoints");
   const reg = readApprovals(approvalsFile(ws, customer, sid));
   if (!reg.ok) return deny(`registro delle approvazioni corrotto (${reg.reason})`);
+  // Ops veloce (spec 2026-10-06 §3.1): il livello di autonomia (frase > cliente > alto, tetto per ambiente) decide le approvazioni dei passi
+  const aut = autonomyLevel({ ws, customer, records: reg.records, envType: session.env.type });
   const observation = session.ledger?.observe?.last_obs ?? null;
   const profile = profileFor({ envType: session.env.type });
   const noEffect = { divergences: [], novelties: [], checkpoint: null, observation };
 
   // WP07 giro 1 (C2 a): fuori sandbox un piano si attiva solo dopo APPROVO PIANO <id> dell'utente (A1 registrato da
   // approval-capture, con l'impronta di QUESTO file). Senza: richiesta aperta in pending.approvals, active_plan intatto.
-  const sandbox = ["sandbox", "dev"].includes(session.env.type);
   const second = session.env.policy?.second_approver_required ?? session.env.type === "prod";
   const planApproved = () => {
     const a1 = reg.records.filter((r) => r.kind === "A1" && r.plan === plan.plan_id).at(-1);
     return !!a1 && a1.plan_sha256 === info.sha256;
   };
   const planApproval = () => {
-    if (active || sandbox || planApproved()) return null;
+    if (active || !planNeedsApproval(plan, session.env, aut.level) || planApproved()) return null;
     const req = { kind: "A1", plan: plan.plan_id, file: planFile };
     updateSessionFile(sFile, (x) => { x.pending.approvals = dedupePending(Array.isArray(x.pending.approvals) ? x.pending.approvals : [], [req]); });
     audit(ws, sid, customer, session.scope, { action: "activate", plan: plan.plan_id, status: "approval_required", reason: "plan-approval" });
@@ -229,7 +309,7 @@ export async function check(opts) {
   // revisione finale (minore B#7): markDenied — il gate del passo SUCCESSIVO a uno appena verificato è negato: il piano
   // resta sul passo verificato ma marcato gate_denied, così i guard non concedono più azioni legate a quel passo.
   const activate = (s, extraMutate, { markDenied = false } = {}) => {
-    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile });
+    const g = gateStep({ plan, step: s, env: session.env, records: reg.records, now, planFile, autonomy: aut.level, custDir: join(ws, "customers", customer), run, resolve: (code) => resolveSel(ws, code, customer) });
     if (g.status === "denied") {
       if (extraMutate || markDenied) updateSessionFile(sFile, (x) => {
         extraMutate?.(x);
@@ -244,7 +324,10 @@ export async function check(opts) {
       const pa = x.active_plan;
       const keep = pa && pa.plan_id === plan.plan_id && pa.plan_sha256 === info.sha256 && pa.run === run && Number.isInteger(pa.last_verified_step)
         ? { last_verified_step: pa.last_verified_step, checkpoint_sha256: pa.checkpoint_sha256 } : {};
-      x.active_plan = { plan_id: plan.plan_id, file: planFile, step: s.n, run, plan_sha256: info.sha256, ...keep };
+      // la cancellazione già eseguita in questo passo (guard-config-scope: delete_done) non si azzera riattivando lo stesso passo
+      const sameStep = pa && pa.plan_id === plan.plan_id && pa.plan_sha256 === info.sha256 && pa.run === run && pa.step === s.n;
+      const done = sameStep && pa.delete_done && pa.delete_done.plan_id === plan.plan_id && pa.delete_done.step === s.n ? { delete_done: pa.delete_done } : {};
+      x.active_plan = { plan_id: plan.plan_id, file: planFile, step: s.n, run, plan_sha256: info.sha256, ...keep, ...done };
       if (g.compensation) {
         const comps = Array.isArray(x.pending.compensations) ? x.pending.compensations : [];
         if (!comps.some((c) => c && typeof c === "object" && c.plan === plan.plan_id && c.step === s.n)) comps.push(g.compensation);

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "execution-plan.schema.json",
   "title": "Piano di esecuzione come traccia attesa (§46.3, §10.5)",
-  "description": "Eseguito dall'agente sugli strumenti MCP del browser, un passo alla volta; dopo ogni passo step-check confronta lo snapshot con `expect`. Ogni passo dichiara ciò che si aspetta di osservare (controllo 4 esteso del self-check). Vocabolario dei verbi: §5.5 (NAVIGATE · CLICK · FILL · CHOOSE · TOGGLE · UPLOAD · SAVE · SUBMIT · WAIT · VERIFY · READ · CAPTURE · ASK) più SELECT, che §5.5 usa negli esempi (S.STD.ADM.CFP.0014 passo 2) e §10.5 nel piano: incluso qui citando entrambe le sezioni. DELETE non esiste (ADR-06: compensazioni close/cancel); un verbo fuori vocabolario fa fallire la validazione e non arriva mai all'esecuzione.",
+  "description": "Eseguito dall'agente sugli strumenti MCP del browser, un passo alla volta; dopo ogni passo step-check confronta lo snapshot con `expect`. Ogni passo dichiara ciò che si aspetta di osservare (controllo 4 esteso del self-check). Vocabolario dei verbi: §5.5 (NAVIGATE · CLICK · FILL · CHOOSE · TOGGLE · UPLOAD · SAVE · SUBMIT · WAIT · VERIFY · READ · CAPTURE · ASK) più SELECT, che §5.5 usa negli esempi (S.STD.ADM.CFP.0014 passo 2) e §10.5 nel piano: incluso qui citando entrambe le sezioni. DELETE (spec 2026-10-06 §3.7) solo con ACT-DELETE, in sandbox e pre-produzione (ADR-06 superato lì: in produzione si compensa con close/cancel); un verbo fuori vocabolario fa fallire la validazione e non arriva mai all'esecuzione.",
   "type": "object",
   "required": ["plan_id", "customer", "env", "goal", "steps", "repair_policy"],
   "additionalProperties": false,
@@ -13,6 +13,7 @@
     "persona": { "type": "string", "minLength": 1 },
     "storage_state": { "type": "string", "minLength": 1 },
     "goal": { "type": "string", "minLength": 1 },
+    "config_import": { "type": "boolean", "description": "Revisione finale (Ruling F1): import massivo di oggetti di configurazione (TPL kind config). In produzione ogni passo ACT-BULK di commit richiede la compensazione restore con ref all'istantanea dei dati attuali in runs/<RUN>/evidence/ (gateStep); assente in un piano di produzione con ACT-BULK = configurazione (fail-closed). compose-plan la scrive dal tipo del TPL." },
     "strategy": {
       "description": "Strategia (o catena, es. \"STR-DRY-RUN → STR-VERIFY-FIRST\") scelta da strategy-select.",
       "oneOf": [
@@ -77,7 +78,7 @@
     "approvals": { "const": "3A", "description": "Protocollo di tripla approvazione (§52.2): obbligatorio per un piano con ACT-CFG-CHANGE in produzione (validate-plan)." }
   },
   "$defs": {
-    "verb": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "WAIT", "VERIFY", "READ", "CAPTURE", "ASK"] },
+    "verb": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "WAIT", "VERIFY", "READ", "CAPTURE", "ASK", "DELETE"] },
     "sel": { "type": "string", "pattern": "^[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.SEL\\.\\d{4}(\\.v\\d+)?$" },
     "target": {
       "oneOf": [
@@ -95,6 +96,16 @@
         "target": { "$ref": "#/$defs/target" },
         "check": { "type": "string", "pattern": "^(NRT\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.[A-Z]{3}\\.\\d{4}|[SCL]\\.[A-Z0-9]{3,4}\\.[A-Z0-9]{3}\\.CHK\\.\\d{4}(\\.v\\d+)?)$" },
         "data": {},
+        "file": {
+          "type": "object", "required": ["path", "sha256", "rows"], "additionalProperties": false,
+          "description": "UPLOAD (spec 2026-10-06 §3.8): file compilato del run; guard-config-scope carica solo questo percorso con questa impronta.",
+          "properties": { "path": { "type": "string", "pattern": "^runs/RUN\\.[A-Z0-9]{4}\\.\\d{8}\\.\\d{4}\\.[A-Z0-9]{3}/import/(?!\\.{1,2}$)[^/\\\\]+$", "description": "revisione finale: solo un file direttamente in runs/<RUN>/import/ (dove template-fill scrive)" }, "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }, "rows": { "type": "integer", "minimum": 1 } }
+        },
+        "fields": {
+          "type": "array", "minItems": 1, "maxItems": 100,
+          "description": "FILL in un colpo (spec §3.9): i campi della stessa pagina, ognuno col suo SEL; si esegue con fill_form.",
+          "items": { "type": "object", "required": ["target", "value"], "additionalProperties": false, "properties": { "target": { "$ref": "#/$defs/sel" }, "value": {} } }
+        },
         "risk": { "enum": ["R0", "R1", "R2", "R3"] },
         "approval": { "enum": ["required", "none"] },
         "action_class": { "type": "string", "pattern": "^ACT-[A-Z0-9-]+$" },
@@ -119,9 +130,11 @@
       },
       "allOf": [
         {
-          "if": { "properties": { "verb": { "enum": ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "READ"] } } },
+          "if": { "properties": { "verb": { "enum": ["NAVIGATE", "CLICK", "DELETE", "CHOOSE", "SELECT", "TOGGLE", "UPLOAD", "SAVE", "SUBMIT", "READ"] } } },
           "then": { "required": ["target"] }
         },
+        { "if": { "properties": { "verb": { "const": "FILL" } } }, "then": { "anyOf": [{ "required": ["target"] }, { "required": ["fields"] }] } },
+        { "if": { "properties": { "verb": { "const": "UPLOAD" } } }, "then": { "required": ["file"] } },
         {
           "if": { "properties": { "verb": { "const": "VERIFY" } } },
           "then": { "anyOf": [{ "required": ["check"] }, { "required": ["target"] }] }

@@ -52,7 +52,7 @@ test("schemi minimi: un item corretto per tipo è valido; il campo caratterizzan
   }
 });
 
-test("STR ed ENV come item: il nucleo della strategia e l'ambiente (regole di produzione comprese) sono verificati", () => {
+test("STR ed ENV come item: il nucleo della strategia e l'ambiente (regole di produzione comprese: write_data booleano, spec 2026-10-06 §3.6) sono verificati", () => {
   const strat = YAML.parse(readFileSync(new URL("../../strategies/STR-ASK-EARLY.yaml", import.meta.url), "utf8"));
   const str = item("S.STD.XSC.STR.0008", "STR", { code: strat.code, name: strat.name, applies_when: strat.applies_when, plan: strat.plan, cost: strat.cost, success_criteria: strat.success_criteria });
   assert.ok(validateItem(str).ok, validateItem(str).errors.join("; "));
@@ -60,8 +60,10 @@ test("STR ed ENV come item: il nucleo della strategia e l'ambiente (regole di pr
   const envs = YAML.parse(readFileSync(new URL("../fixtures/env/environments.yaml", import.meta.url), "utf8")).environments;
   const env = item("C.ACME.XSC.ENV.0001", "ENV", { environment: envs.find((e) => e.id === "prod") });
   assert.ok(validateItem(env).ok, validateItem(env).errors.join("; "));
-  const leaky = structuredClone(env); leaky.environment.policy.write_data = true;
-  assert.equal(validateItem(leaky).ok, false, "type prod ⇒ write_data false anche nell'item ENV");
+  const open = structuredClone(env); open.environment.policy.write_data = true;
+  assert.ok(validateItem(open).ok, "write_data true in prod è valido (spec 2026-10-06 §3.6)");
+  const leaky = structuredClone(env); leaky.environment.policy.write_data = "sì";
+  assert.equal(validateItem(leaky).ok, false, "type prod ⇒ write_data booleano anche nell'item ENV");
   assert.equal(validateItem({ ...env, environment: undefined }).ok, false);
 });
 

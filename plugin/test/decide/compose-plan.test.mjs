@@ -32,13 +32,13 @@ function atlas({ dupDescrizione = false } = {}) {
 }
 const DATA = { Descrizione: "Sedie per sala riunioni", Divisa: "EUR", "Centro di costo": "IT-0442" };
 
-test("senza procedura memorizzata: percorso + un passo per campo + salva + compensazione; valido per validate-plan", () => {
+test("senza procedura memorizzata: percorso + un solo FILL con fields[] + salva + compensazione; valido per validate-plan", () => {
   const { ws } = atlas();
   const r = composePlan({ ws, customer: "ACME", scope: "P2P", env: ENV, goal: "crea ordine per sedie", data: DATA, planId: "PLAN.ACME.PO.0001" });
   assert.ok(r.plan, JSON.stringify(r.gaps));
-  assert.deepEqual(r.plan.steps.map((s) => s.verb), ["NAVIGATE", "CLICK", "FILL", "CHOOSE", "FILL", "SAVE"]);
-  assert.equal(r.plan.steps.find((s) => s.verb === "CHOOSE").data, "EUR");
-  assert.deepEqual(r.plan.compensations, [{ step: 6, kind: "cancel", entity: "ordine", action: "ordine.cancel" }]);
+  assert.deepEqual(r.plan.steps.map((s) => s.verb), ["NAVIGATE", "CLICK", "FILL", "SAVE"]);
+  assert.deepEqual(r.plan.steps.find((s) => s.verb === "FILL").fields.map((f) => f.value), ["Sedie per sala riunioni", "EUR", "IT-0442"]);
+  assert.deepEqual(r.plan.compensations, [{ step: 4, kind: "cancel", entity: "ordine", action: "ordine.cancel" }]);
   assert.deepEqual(validatePlan(r.plan, { env: ENV }).errors, []);
 });
 

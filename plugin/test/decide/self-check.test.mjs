@@ -116,10 +116,12 @@ function ctx(over = {}) {
 }
 const failed = (r) => r.failed.map((f) => f.n);
 
-test("il piano di §10.5 valida lo schema execution-plan (§46.3); SELECT ammesso (§10.5, §5.5), DELETE e verbi ignoti no", () => {
+test("il piano di §10.5 valida lo schema execution-plan (§46.3); SELECT e DELETE ammessi (§10.5, §5.5, spec 2026-10-06 §3.7), verbi ignoti no", () => {
   assert.ok(validateWith("execution-plan.schema.json", PLAN).ok, validateWith("execution-plan.schema.json", PLAN).errors.join("; "));
   const del = structuredClone(PLAN); del.steps[3].verb = "DELETE";
-  assert.equal(validateWith("execution-plan.schema.json", del).ok, false);
+  assert.equal(validateWith("execution-plan.schema.json", del).ok, true, "DELETE è nel vocabolario dei verbi (la classe lo limita: validate-plan)");
+  const upNoFile = structuredClone(PLAN); upNoFile.steps[3].verb = "UPLOAD";
+  assert.equal(validateWith("execution-plan.schema.json", upNoFile).ok, false, "UPLOAD richiede file {path, sha256, rows}");
   const unk = structuredClone(PLAN); unk.steps[0].verb = "HOVER";
   assert.equal(validateWith("execution-plan.schema.json", unk).ok, false);
   const noExpect = structuredClone(PLAN); delete noExpect.steps[2].expect;

@@ -311,3 +311,22 @@ test("CLI approvals status|verify (sola lettura): catena verificata, stato della
   assert.equal(cli(["--help"]).status, 0);
   assert.equal(cli(["approve", "--plan", PLAN]).status, 1, "nessun comando crea token");
 });
+
+// Ops veloce (spec 2026-10-06 §3.6): policy.write_data governa in prod solo i dati (effetto "write"); la configurazione resta alle approvazioni.
+test("guard-config-scope: prod con write_data spento ⇒ un passo sui dati (ACT-CREATE SAVE) è negato per write_data", () => {
+  const plan = { ...cfgPlan("prod"), steps: [S(1, "NAVIGATE", "ACT-OBS"), S(2, "SAVE", "ACT-CREATE")] };
+  const { ws, tr } = setup({ env: "prod", plan });
+  assert.equal(readSession(ws).env.policy.write_data, false);
+  say(ws, tr, "APPROVO PIANO PLAN.0042 DA Mario Rossi");
+  say(ws, tr, "APPROVO PROVA PLAN.0042 DA Luca Bianchi");
+  say(ws, tr, "APPROVO PASSO 2 PLAN.0042");
+  const r = click(ws, tr);
+  assert.ok(denied(r)); assert.match(reasonOf(r), /write_data/);
+});
+
+test("guard-config-scope: prod con write_data spento ⇒ ACT-CFG-CHANGE non è negato da write_data (passa alle approvazioni)", () => {
+  const { ws, tr } = setup({ env: "prod", level: "giallo" });
+  assert.equal(readSession(ws).env.policy.write_data, false);
+  const r = click(ws, tr);   // senza approvazioni: negato, ma dal controllo delle approvazioni, non da write_data
+  assert.ok(denied(r)); assert.doesNotMatch(reasonOf(r), /write_data/); assert.match(reasonOf(r), /A1|APPROVO PIANO/);
+});

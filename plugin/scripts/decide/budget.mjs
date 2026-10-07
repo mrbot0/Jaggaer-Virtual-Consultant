@@ -12,7 +12,7 @@ export const ACT_BUDGET = Object.freeze({
   "ACT-OBS": { tokens: 5000 }, "ACT-READ": { tokens: 8000 }, "ACT-QRY": { tokens: 15000 }, "ACT-CREATE": { tokens: 15000 },
   "ACT-UPDATE": { tokens: 10000 }, "ACT-UPLOAD": { tokens: 10000 }, "ACT-SUBMIT": { tokens: 20000 }, "ACT-APPROVE": { tokens: 15000 },
   "ACT-TRANSMIT": { tokens: 25000 }, "ACT-CLOSE": { tokens: 10000 }, "ACT-PUBLISH": { tokens: 20000 }, "ACT-CFG-READ": { tokens: 8000 },
-  "ACT-CFG-CHANGE": { tokens: 40000, rosso: 60000 }, "ACT-BULK": { tokens: 60000 }, "ACT-DELETE": { tokens: null },
+  "ACT-CFG-CHANGE": { tokens: 40000, rosso: 60000 }, "ACT-BULK": { tokens: 60000 }, "ACT-DELETE": { tokens: 15000 },
 });
 export const TASK_MARGIN = 0.2;
 export const HAIKU_THRESHOLD = 0.8;
@@ -65,7 +65,7 @@ export function enforceClass(inv, env) {
   const classes = [...new Set([...(inv?.action_class ? [inv.action_class] : []), ...(Array.isArray(inv?.actions) ? inv.actions : [])])].filter(Boolean);
   if (!classes.length) return { ok: true, limit: null, reason: null };
   const unknown = classes.filter((c) => !ACT_BUDGET[c] || ACT_BUDGET[c].tokens == null);
-  if (unknown.length) return { ok: false, limit: 0, reason: `classe senza budget o fuori catalogo: ${unknown.join(", ")} (ACT-DELETE non esiste nei piani)` };
+  if (unknown.length) return { ok: false, limit: 0, reason: `classe senza budget o fuori catalogo: ${unknown.join(", ")}` };
   const level = inv?.level ?? null;
   const parts = classes.map((c) => classBudget(c, env, { level }));
   const limit = classes.length === 1 ? parts[0] : Math.round(parts.reduce((a, b) => a + b, 0) * (1 + TASK_MARGIN));

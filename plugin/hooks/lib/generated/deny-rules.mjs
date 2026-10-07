@@ -1,6 +1,6 @@
 // GENERATO da scripts/admin/build-deny-rules.mjs a partire da policy/deny-rules.yaml: non modificare.
 export default {
-  "sha256": "085192c865492818cbf17d0f8381eab47adfd3666dbfe3a93ef16ea8365543c2",
+  "sha256": "b9ffd7d3c661b36578a2cb00f05427bd2b36f454a4c54da2bf89bbc9525bc2f5",
   "version": 1,
   "sanctioned": [
     {
@@ -901,22 +901,38 @@ export default {
     {
       "id": "DR-BROWSER-002",
       "severity": "hard-deny",
-      "reason": "ACT-DELETE: cancellare non esiste nel vocabolario dei piani (§29.4, ADR-06); usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano",
+      "reason": "ACT-DELETE: cancellare vale solo dentro un passo DELETE del piano attivo, in sandbox o pre-produzione, e solo sull'elemento del SEL di quel passo (spec 2026-10-06 §3.7, che supera ADR-06 in sandbox/pre-produzione; in produzione mai); altrove usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano",
       "applies_to": [
         "browser"
       ],
       "on": "label",
       "patterns": [
         {
-          "re": "\\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|svuota|svuotare|distruggi|purge|delete|remove|erase|destroy|wipe)\\b",
+          "re": "\\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|distruggi|delete|remove|erase|destroy)\\b",
+          "flags": "iu"
+        }
+      ],
+      "allow_in_delete_step": true
+    },
+    {
+      "id": "DR-BROWSER-006",
+      "severity": "hard-deny",
+      "reason": "ACT-DELETE massiva (svuota, purge, wipe, elimina/cancella/rimuovi tutto, delete all): mai, nemmeno dentro un passo DELETE (un passo DELETE cancella UN elemento, spec 2026-10-06 §3.7); usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano",
+      "applies_to": [
+        "browser"
+      ],
+      "on": "label",
+      "patterns": [
+        {
+          "re": "\\b(svuota|svuotare|purge|wipe)\\b",
           "flags": "iu"
         },
         {
-          "re": "\\b(elimina|cancella|rimuovi)\\s+tutt[oi]\\b",
+          "re": "\\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|distruggi)\\s+tutt[aeio]\\b",
           "flags": "iu"
         },
         {
-          "re": "\\b(delete|remove)\\s+all\\b",
+          "re": "\\b(delete|remove|erase|destroy)\\s+all\\b",
           "flags": "iu"
         }
       ]

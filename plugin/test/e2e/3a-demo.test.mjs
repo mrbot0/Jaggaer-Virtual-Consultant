@@ -116,11 +116,11 @@ test("M6 — 3A end-to-end sul tenant demo: A1 → A2 → A3 per passo → passi
 
   // una scrittura di dati in prod resta negata anche dentro la finestra 3A
   const createPlan = { ...plan, plan_id: "PLAN.DEMO.0002", steps: [{ n: 1, verb: "SAVE", action_class: "ACT-CREATE", target: "C.ACME.ADM.SEL.0120", expect: { x: 1 } }] };
-  assert.equal(validatePlan(createPlan, { env: { id: "prod", type: "prod" } }).ok, false);
+  assert.equal(validatePlan(createPlan, { env: { id: "prod", type: "prod" } }).ok, true, "il catalogo ammette la scrittura in prod (spec 2026-10-06 §3.3); la nega a runtime guard-production (e guard-config-scope) finché policy.write_data è spento");
   patchSession(ws, (s) => { s.active_plan = { plan_id: "PLAN.DEMO.0002", file: writePlan(ws, createPlan, "RUN.ACME.20260922.1118.ADM"), step: 1 }; s.pending.compensations = [{ plan: "PLAN.DEMO.0002", step: 1, kind: "cancel" }]; });
   { const snapKeep = readSession(ws).browser.snapshot; sealActivePlan(ws); patchSession(ws, (s) => { s.browser.snapshot = snapKeep; }); }
   const w = guards("mcp__chrome-devtools__click", { uid: "9_1" });
-  assert.ok(denyOf(w).some((d) => /In produzione non si scrivono dati/.test(d)));
+  assert.ok(denyOf(w).some((d) => /write_data/.test(d)));
 
   // catena delle approvazioni e audit
   const f = approvalsFile(ws, "ACME", "sess-1");

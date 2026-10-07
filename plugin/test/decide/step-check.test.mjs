@@ -182,7 +182,7 @@ test("on_divergence onorato: valore già al target ⇒ stop 'nulla da fare' (§1
 });
 
 test("denied: piano non ammesso nell'ambiente, passo fuori sequenza, piano diverso già attivo", async () => {
-  const { ws, file } = setup(demoPlan({ env: "prod" }));
+  const { ws, file } = setup(demoPlan({ env: "prod", steps: [{ n: 1, verb: "DELETE", action_class: "ACT-DELETE", target: "C.ACME.P2P.SEL.0120", expect: { elements: [] } }], compensations: [] }));
   patchSession(ws, (s) => { s.env = { ...s.env, id: "prod", type: "prod" }; });
   const r = await at(ws, file, 1, null);
   assert.equal(r.status, "denied"); assert.match(r.reason, /produzione|prod/);

@@ -54,6 +54,6 @@ sommano già a 1.
 | DT-023 | Profondità di deliberazione | Tasso di smentita per profondità (0, calibrazione) | rapida · standard · profonda | spec |
 | DT-024 | Tipo di incertezza | — | epistemica · aleatoria · mista (bisect) | bootstrap |
 | DT-025 | Priorità di un documento nel backlog di ingestion | Guadagno realizzato / atteso (0, via affidabilità) | punteggio | spec |
-| DT-026 | Classificazione dell'intento (§29.5, fuori dal catalogo §15.2) | — | avvia · mostra-piano · approvazione-3A · rifiuta · chiedi | bootstrap |
+| DT-026 | Classificazione dell'intento (§29.5, fuori dal catalogo §15.2) | — | avvia · mostra-piano · rifiuta · chiedi | bootstrap |
 
 `quality-weights.yaml` (K0) non è una DT: sono i pesi del modello di qualità Q per tipo di decisione (§6.5).

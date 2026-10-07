@@ -52,11 +52,11 @@ test("banner di ambiente (§51.3, §52.4): assente, non verificato, sandbox, pre
   assert.match(banner({ id: "sandbox", type: "sandbox", label: "ACME Sandbox", verified: false }), /ACME Sandbox \(sandbox\) — NON VERIFICATO/);
   assert.equal(banner(SBX), "SANDBOX");
   assert.equal(banner({ ...SBX, type: "preprod" }), "PRE-PROD");
-  assert.equal(banner({ ...SBX, type: "prod" }), "⚠ PRODUZIONE — sola lettura sui dati");
+  assert.equal(banner({ ...SBX, type: "prod" }), "⚠ PRODUZIONE — ogni passo che scrive si approva; dati e import solo con write_data");
   const three = { a1: { ts: "2026-09-23T10:02:00.000Z" }, a2: { ts: "2026-09-23T10:19:00.000Z", approver_declared: "M. Rossi" }, step: 4, of: 7, a3: false };
   const text = render(EVENTS.slice(0, 1), SESSION({ ...SBX, type: "prod" }), { threeA: three });
   assert.equal(text.split("\n")[0], readFileSync(join(GOLD, "prod-3a.txt"), "utf8").split("\n")[0]);
-  assert.match(text.split("\n")[0], /⚠ PRODUZIONE — sola lettura sui dati · configurazione 3A: A1 ✓ 10:02 · A2 ✓ 10:19 \(M\. Rossi\) · A3 passo 4\/7 ⏸/);
+  assert.match(text.split("\n")[0], /⚠ PRODUZIONE — ogni passo che scrive si approva; dati e import solo con write_data · configurazione 3A: A1 ✓ 10:02 · A2 ✓ 10:19 \(M\. Rossi\) · A3 passo 4\/7 ⏸/);
 });
 
 test("CLI: event appende a workflow.jsonl (kind validato), render stampa il blocco, watch <SES> è in sola lettura", () => {

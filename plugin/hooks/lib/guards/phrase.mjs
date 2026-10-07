@@ -1,13 +1,13 @@
 // guard-phrase (PreToolUse su ogni strumento, FAIL-CLOSED) — K5 giro 2 (N5).
 // Le frasi di approvazione (APPROVO PIANO/PROVA/PASSO) e di esplorazione
-// (ESPLORA SANDBOX) le scrive solo l'utente, nel prompt: un input di strumento che
+// (ESPLORA SANDBOX) e di autonomia (AUTONOMIA ALTA|MEDIA|BASSA) le scrive solo l'utente, nel prompt: un input di strumento che
 // le contiene (mcp__* come send_message o show_widget/sendPrompt, SendMessage,
 // Agent, WebFetch, …) potrebbe farle arrivare come "prompt dell'utente". Negato
 // in ogni workspace JVC, con o senza ambiente dichiarato.
 // Percorso veloce: si cercano le frasi negli input PRIMA di leggere lo stato;
 // solo se ce n'è una si carica il contesto (workspace, audit).
 // WP09d: anche le frasi amministrative (APPROVO PURGE <ID> DA <Nome>, APPROVO PROMOZIONE <codice>, APPROVO RETENTION <ID>).
-export const PHRASES = /APPROVO\s+(PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)|ESPLORA\s+(SANDBOX|PREPROD)(\s+COMPLETA)?/i;
+export const PHRASES = /APPROVO\s+(PIANO|PROVA|PASSO|PURGE|PROMOZIONE|RETENTION)|ESPLORA\s+(SANDBOX|PREPROD)(\s+COMPLETA)?|AUTONOMIA\s+(ALTA|MEDIA|BASSA)/i;
 // WP10d: le frasi di controllo dell'utente sugli agenti (PAUSA/RIPRENDI/FERMA AGENTE|TUTTI, PASSO PASSO, SBLOCCA SCOPE,
 // LIMITI DISPATCH), MAIUSCOLE come le cattura approval-capture: il testo minuscolo "passo passo" di un documento non
 // è una frase e non si nega.

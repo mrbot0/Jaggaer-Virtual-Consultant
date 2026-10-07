@@ -6,7 +6,9 @@ moduli JAGGAER. Fa tre cose — **collaudo NRT** delle release (test determinist
 verifica e approvazione) e **operatività** a richiesta (ordini, documenti, fornitori, casi di test, query Analytics) —
 ragionando come un consulente: prima di agire richiama ciò che sa, ciò che è successo e ciò che vede sulla pagina,
 valuta quanto conosce il soggetto e ne ricava la strategia. Gli agenti agiscono direttamente su Chrome tramite gli
-strumenti MCP; sa in quale ambiente si trova e **in produzione non scrive mai dati**.
+strumenti MCP; sa in quale ambiente si trova, chiede approvazioni in base a un **livello di autonomia** scelto dall'utente
+(alto di serie, al massimo medio in produzione) e **in produzione scrive solo con `write_data: true` e con l'approvazione
+di ogni passo** (le cancellazioni mai). Per creare molti elementi insieme compila e importa i template di caricamento massivo.
 
 Tutto il resto è nel manuale integrato: [docs/MANUAL.md](docs/MANUAL.md).
 
@@ -32,6 +34,10 @@ Da sapere prima di installare:
   l'integrità e la protezione del codice).
 - Claude Code sostituisce `${CLAUDE_PLUGIN_ROOT}` con il percorso del plugin nei comandi: `vc doctor` lo verifica
   (controllo `plugin-root`, [manuale, Appendice B](docs/MANUAL.md#appendice-b--verificare-la-sostituzione-di-claude_plugin_root)).
+- **Autonomia alta in pre-produzione**: import in blocco senza frase e cancellazioni coperte da una sola approvazione; e-mail
+  ai fornitori e dati verso l'ERP possono partire davvero. Per un cliente prudente: `default: medio` in `autonomy.yaml`.
+  Le cancellazioni sono irreversibili nel tenant (la lettura salvata prima permette di ricreare, non di ripristinare
+  identificativi e storico). In produzione le scritture sono spente di serie (`write_data` è un interruttore dell'utente).
 - **Rischi residui dichiarati** ([manuale, §55.1.2](docs/MANUAL.md#5512-rischi-residui-dichiarati)): i canali che
   consegnano un vero prompt dell'utente (`sendPrompt` di un widget, `send_message` di una sessione) sono aperti finché
   non si dichiara un ambiente — negarli nelle impostazioni del workspace; il nome del secondo approvatore è dichiarato,
@@ -90,8 +96,10 @@ Otto famiglie di comandi: `vc`, `use`, `kb`, `nrt`, `cfg`, `ops`, `learn`, `admi
 
 Le frasi che il plugin riconosce si scrivono **come unico testo del messaggio**; solo l'utente può scriverle.
 
-- Approvazioni: `sì` (un'azione R2 in attesa) · `APPROVO PIANO <PLAN>` · `APPROVO PROVA <PLAN>` ·
-  `APPROVO PASSO <n> <PLAN>` (in produzione con `DA <Nome Cognome>`, la prova da una persona diversa) ·
+- Autonomia: `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA` (per la sessione; in alternativa `default:` in
+  `customers/<C>/config/autonomy.yaml`; predefinito alto, in produzione al massimo medio; file non valido ⇒ basso).
+- Approvazioni: `sì` (solo con autonomia bassa, un'azione R2 in attesa; in produzione rifiutato) · `APPROVO PIANO <PLAN>` · `APPROVO PROVA <PLAN>` ·
+  `APPROVO PASSO <n> <PLAN>` (in produzione prima di ogni passo che modifica o carica; con `DA <Nome Cognome>`, la prova da una persona diversa) ·
   `ESPLORA SANDBOX` · `ESPLORA PREPROD` · `ESPLORA SANDBOX COMPLETA` · `ESPLORA PREPROD COMPLETA` · `APPROVO PROMOZIONE <codice>` · `APPROVO RETENTION <C>` ·
   `APPROVO PURGE <ID> DA <Nome Cognome>` (due persone diverse).
 - Controllo degli agenti: `PAUSA AGENTE <task_id>` · `PAUSA TUTTI` · `RIPRENDI AGENTE <task_id>` · `RIPRENDI TUTTI` ·

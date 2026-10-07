@@ -39,7 +39,9 @@ export const TYPE_SCHEMAS = Object.freeze({ SEL: "sel.schema.json", HND: "hnd.sc
 // validano alla scrittura: LSN (lesson), CLS (cluster-rules), DT (dt-eval), RPT (build-report); UNT (unit.schema.json,
 // la forma prodotta da segmentUnits, verificata dai test di ingestion).
 export const SCHEMA_FOR_TYPE = Object.freeze({ ...TYPE_SCHEMAS, FLD: "fld.schema.json", ACT: "act.schema.json", DOC: "doc.schema.json",
-  UNT: "unit.schema.json", LSN: "lesson.schema.json", CLS: "cluster.schema.json", DT: "dt.schema.json", RPT: "rpt.schema.json" });
+  UNT: "unit.schema.json", LSN: "lesson.schema.json", CLS: "cluster.schema.json", DT: "dt.schema.json", RPT: "rpt.schema.json",
+  // TPL (spec 2026-10-06 §3.8): template di caricamento massivo, item di kb/ senza busta title/summary/facets (non indicizzato)
+  TPL: "tpl.schema.json" });
 
 // WP09d (§20.5.5): DIN e USR non conservano valori che identificano qualcuno. Oltre allo schema (values_retained: none,
 // gruppo minimo 20): nessun indirizzo email in nessun valore; nessun campo chiamato come nomi/email/codici/utenti/valori
@@ -111,6 +113,11 @@ export function validateCase(obj) {
 
 export function validateItem(obj) {
   if (obj?.type === "NRT" || /^NRT\./.test(String(obj?.id ?? ""))) return validateCase(obj);
+  if (obj?.type === "TPL") {
+    const errors = validateWith(SCHEMA_FOR_TYPE.TPL, obj).raw.filter((e) => e.keyword !== "if").map(fmtErr);
+    if (obj.id && !isValidCode(obj.id)) errors.push("id: codice non valido per livello/tipo/scope");
+    return { ok: errors.length === 0, errors };
+  }
   const errors = [];
   if (!validateBase(obj)) errors.push(...validateBase.errors.map((e) => `${e.instancePath || "/"} ${e.message}${e.params?.missingProperty ? ` (${e.params.missingProperty})` : ""}`));
   if (obj?.id && !isValidCode(obj.id)) errors.push("id: codice non valido per livello/tipo/scope");

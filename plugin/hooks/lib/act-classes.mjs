@@ -2,23 +2,26 @@
 // caldo: effetto, rischio e ammissione per colonna d'ambiente di ogni classe.
 // La fonte è product/kb/actions/S.STD.XSC.ACT.00nn.yaml: un test verifica che
 // questa tabella coincida con gli item (test/hooks/guard-production.test.mjs).
+// Ops veloce, spec 2026-10-06 §3.3, scelta dell'utente 07/10/2026: in produzione si
+// scrive con approvazione per passo (`approval`), i massivi anche in pre-produzione,
+// ACT-DELETE solo in sandbox e pre-produzione con approvazione.
 const row = (effect, risk, sandbox, preprod, prod) => ({ effect, risk, sandbox, preprod, prod });
 export const ACT = Object.freeze({
   "ACT-OBS": row("read", "R0", "allowed", "allowed", "allowed"),
   "ACT-READ": row("read", "R0", "allowed", "allowed", "allowed"),
   "ACT-QRY": row("read", "R0", "allowed", "allowed", "allowed"),
-  "ACT-CREATE": row("write", "R1", "allowed", "allowed", "never"),
-  "ACT-UPDATE": row("write", "R1", "allowed", "allowed", "never"),
-  "ACT-UPLOAD": row("write", "R1/R2", "allowed", "allowed", "never"),
-  "ACT-SUBMIT": row("write", "R2", "allowed", "allowed", "never"),
-  "ACT-APPROVE": row("write", "R2", "allowed", "referent", "never"),
-  "ACT-TRANSMIT": row("write", "R2", "allowed", "referent", "never"),
-  "ACT-CLOSE": row("write", "R1/R2", "allowed", "allowed", "never"),
-  "ACT-PUBLISH": row("write", "R2", "allowed", "referent", "never"),
+  "ACT-CREATE": row("write", "R1", "allowed", "allowed", "approval"),
+  "ACT-UPDATE": row("write", "R1", "allowed", "allowed", "approval"),
+  "ACT-UPLOAD": row("write", "R1/R2", "allowed", "allowed", "approval"),
+  "ACT-SUBMIT": row("write", "R2", "allowed", "allowed", "approval"),
+  "ACT-APPROVE": row("write", "R2", "allowed", "referent", "approval"),
+  "ACT-TRANSMIT": row("write", "R2", "allowed", "referent", "approval"),
+  "ACT-CLOSE": row("write", "R1/R2", "allowed", "allowed", "approval"),
+  "ACT-PUBLISH": row("write", "R2", "allowed", "referent", "approval"),
   "ACT-CFG-READ": row("read", "R0", "allowed", "allowed", "allowed"),
-  "ACT-CFG-CHANGE": row("config", "R2/R3", "approval", "approval", "3A"),
-  "ACT-BULK": row("write", "R3", "approval", "never", "never"),
-  "ACT-DELETE": row("write", null, "never", "never", "never"),
+  "ACT-CFG-CHANGE": row("config", "R2/R3", "approval", "approval", "approval"),
+  "ACT-BULK": row("write", "R3", "approval", "approval", "approval"),
+  "ACT-DELETE": row("write", "R3", "approval", "approval", "never"),
 });
 export const envColumn = (type) => (type === "prod" ? "prod" : type === "preprod" ? "preprod" : "sandbox");
 

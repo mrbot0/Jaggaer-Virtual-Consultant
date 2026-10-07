@@ -7,6 +7,8 @@ Ultimo aggiornamento: 29/09/2026 22:45 — **sviluppo completato: tutti i 17 pac
 
 ## Avanzamento complessivo
 
+> **Ops veloce** (autonomia, import con template, produzione, cancellazioni): 15 task su 15 = **100 %**, vedi la sezione dedicata più sotto. Le percentuali di questa sezione e la tabella dei pacchetti riguardano lo sviluppo originale (17 pacchetti) e non cambiano.
+
 **100 % dello sviluppo** (stima pesata sullo sforzo) · 17 pacchetti su 17 chiusi, review finale inclusa.
 
 | Misura | Valore | Come è calcolata |
@@ -231,6 +233,29 @@ Peso = sforzo relativo stimato (unità arbitrarie, totale 111). È una stima: va
 | WP10c | Skill `agent-manager` + 26 skill | §44.3 | 5 | 100 | ✅ | tag `skills-done` → `8801bd7`, 1092 test, 2 giri di correzione: skill agent-manager e 26 skill; ogni riga di comando di skill e agenti verificata contro i guard reali |
 | FINAL | Review dell'intero branch | — | 2 | 100 | ✅ | tag `final-fixes` → `e8a8d40`, 1126 test: review in due parti, un'ondata di correzioni (16 commit) e due correzioni mirate, 3 re-review; ultimo punto minore (nomi dei file) corretto il 30/09 |
 | **Totale** | | | **111** | **100** | | 111 unità completate |
+
+## Ops veloce — autonomia, import massivi, produzione, cancellazioni (ramo `feature/autonomia-ops`)
+
+Richiesta dell'utente 06–07/10/2026; specifica [`superpowers/specs/2026-10-06-autonomia-ops-design.md`](superpowers/specs/2026-10-06-autonomia-ops-design.md),
+piano [`superpowers/plans/2026-10-07-ops-veloce.md`](superpowers/plans/2026-10-07-ops-veloce.md) (15 task, esecuzione con subagenti e review a ogni task).
+Cambia tre decisioni dell'architettura v8.0 per scelta esplicita dell'utente: §52.1 (in produzione si scrive, con approvazione per passo), §29.4 (massivi in pre-produzione e produzione, cancellazioni in sandbox e pre-produzione), ADR-06 (verbo `DELETE`). Il merge su `main` lo fa l'utente.
+
+**Avanzamento: 15 task su 15 = 100 %** (suite intera 1312/1312 col corpus, `test:timing` 5/5, review finale del ramo con correzioni; la prova dal vivo sul tenant è a parte).
+
+| Task | Contenuto | Stato |
+|---|---|---|
+| 1–2 | Livello di autonomia (frase > `autonomy.yaml` > alto, tetto medio in produzione, file non valido ⇒ basso) e frasi `AUTONOMIA ALTA\|MEDIA\|BASSA`; `use show` col campo `autonomy` | ✅ |
+| 3–5 | Catalogo delle azioni e schemi; `requiredApprovals` (tabella unica per guard e `step-check`); attivazione del piano per livello | ✅ |
+| 6 | Produzione scrivibile (`write_data` per i dati, approvazione di piano e passo; configurazioni alle approvazioni; DELETE mai) | ✅ |
+| 7 | Cancellazioni dentro un passo `DELETE`, un elemento per passo, lettura salvata prima e compensazione `restore` | ✅ |
+| 8 | Intento (DT-026) per livello: `avvia` · `mostra-piano` · `rifiuta` | ✅ |
+| 9 | Guard dell'upload: solo il file del run attivo, con sha256 del passo | ✅ |
+| 10–12 | Template: `kb template-learn` (voce `TPL`), `template-fill`, `import-result` | ✅ |
+| 13 | `compose-plan`: via massiva preferita con un `TPL`; campi della pagina in un solo passo `FILL` (`fill_form`) | ✅ |
+| 14 | Istruzioni agli agenti e documenti (`ops`, `scope-expert`, `agent-manager`, manuali, guida, README) | ✅ |
+| 15 | Verifica finale (suite intera, corpus, `test:timing`), review del ramo e correzioni: istantanea per import di configurazione in prod, niente righe spuntate prima di un DELETE, `write_data: false` blocca massivi e cancellazioni, template salvati senza dati, autonomia alzata solo se confermata | ✅ |
+
+Da sapere: con autonomia alta in pre-produzione import in blocco e cancellazioni non chiedono nulla o quasi (rischio dichiarato nei manuali; per un cliente prudente `default: medio`); in produzione le scritture restano spente finché l'utente non porta `write_data` a `true` nell'ambiente.
 
 ## Catalogo dei componenti (spec §44)
 

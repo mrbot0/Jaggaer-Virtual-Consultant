@@ -94,9 +94,9 @@ test("use env: dichiara (verified:false, allow-list e policy dal file, hash del 
   assert.ok(readFileSync(auditFile(ws, "ACME"), "utf8").includes("use-env"));
 });
 
-test("use env: environments.yaml con RF2 → exit 3, nessun ambiente dichiarato", () => {
+test("use env: environments.yaml con violazione di policy di produzione (approvazioni di configurazione) → exit 3, nessun ambiente dichiarato", () => {
   const ws = wsWithEnv();
-  const doc = structuredClone(DOC); doc.environments.find((e) => e.id === "prod").policy.write_data = true;
+  const doc = structuredClone(DOC); doc.environments.find((e) => e.id === "prod").policy.approvals.config_giallo = 2;
   writeFileSync(join(ws, "customers/ACME/config/environments.yaml"), YAML.stringify(doc));
   const r = runSessionCli(["use", "env", "prod", "--session", "sess-1", "--json"], E(ws));
   assert.equal(r.status, 3, r.stdout);

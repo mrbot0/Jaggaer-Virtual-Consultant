@@ -1,14 +1,15 @@
 // guard-config-scope (PreToolUse, FAIL-CLOSED) — §28.1, §29.6, §52.2, §44.4.
 //
 // Strumenti MCP del browser: attivo quando il passo attivo del piano ha verbo
-// SAVE|SUBMIT|TOGGLE|UPLOAD o classe ACT-CFG-CHANGE|SUBMIT|APPROVE|TRANSMIT|
-// PUBLISH|BULK|CREATE|UPDATE|CLOSE|UPLOAD e la chiamata ha un effetto (input,
+// SAVE|SUBMIT|TOGGLE|UPLOAD|DELETE o classe ACT-CFG-CHANGE|SUBMIT|APPROVE|TRANSMIT|
+// PUBLISH|BULK|CREATE|UPDATE|CLOSE|UPLOAD|DELETE e la chiamata ha un effetto (input,
 // click, upload, invio, dialog accettato; script e strumenti non classificati
 // durante un passo con effetto ⇒ deny). Richiede, nell'ordine:
 //   (c) perimetro (ACT-CFG-CHANGE): livello DT-007 del passo in config_levels
 //       dell'ambiente (rosso in prod solo per oggetti in prod_allowed_red) e
 //       oggetto/area elencati in remediation-scope.yaml a quel livello;
-//   (a) compensazione registrata per i passi CREATE/UPDATE/SUBMIT che salvano (§29.6);
+//   (a) compensazione registrata per i passi CREATE/UPDATE/SUBMIT/BULK/DELETE che salvano o cancellano (§29.6); per
+//       ACT-DELETE deve essere un restore con ref alla lettura completa dell'oggetto salvata nel run (spec 2026-10-06 §3.7);
 //   (b) ACT-CFG-CHANGE: snapshot degli oggetti governati negli ultimi 60 s;
 //   (d) approvazioni per livello e ambiente — sandbox/preprod: verde 1 (A1) ·
 //       giallo 2 (A1 + A3 del passo, §57.2) · rosso 3 (A1 + A2 + A3); prod: sempre
@@ -24,8 +25,9 @@
 // senza metacaratteri di shell. Rischio residuo documentato: un interprete che
 // costruisce il nome del file a runtime (node -e con stringhe calcolate) sfugge
 // all'analisi; per questo il token vale solo se la frase è anche nel transcript.
-import { dirname, resolve, join, basename } from "node:path";
-import { readFileSync, statSync } from "node:fs";
+import { dirname, resolve, join, basename, sep, isAbsolute } from "node:path";
+import { readFileSync, statSync, realpathSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { intersects, resolveTarget, bases, PathPolicyError } from "../paths.mjs";
 import { guarded, denyAudited, targetsOf, allRels, shellWriteTargets, subtree, SHELL_TOOLS } from "./common.mjs";
 import { browserGuarded, declaredEnv, claudeEffectRefusal } from "./browser.mjs";
@@ -33,29 +35,42 @@ import { activeStep } from "./plan-step.mjs";
 import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
 import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf, exploreRecord, EXPLORE_PHRASE } from "../../../scripts/admin/approvals.mjs";
 import { appendAudit } from "../audit.mjs";
+import { confirmedAutonomyLevel } from "../autonomy.mjs";
 import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
 import { pendingRefusal, mergedPending, loadPending, pendingFile } from "../ref-history.mjs";
 import { simpleNodeCall } from "../exact-argv.mjs";
 
 const G = "guard-config-scope";
-export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD"]);
-export const GUARDED_CLASSES = new Set(["ACT-CFG-CHANGE", "ACT-SUBMIT", "ACT-APPROVE", "ACT-TRANSMIT", "ACT-PUBLISH", "ACT-BULK", "ACT-CREATE", "ACT-UPDATE", "ACT-CLOSE", "ACT-UPLOAD"]);
-const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
+export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD", "DELETE"]);
+export const GUARDED_CLASSES = new Set(["ACT-CFG-CHANGE", "ACT-SUBMIT", "ACT-APPROVE", "ACT-TRANSMIT", "ACT-PUBLISH", "ACT-BULK", "ACT-CREATE", "ACT-UPDATE", "ACT-CLOSE", "ACT-UPLOAD", "ACT-DELETE"]);
+const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT", "ACT-BULK", "ACT-DELETE"]);
 const R2_DATA = new Set(["ACT-SUBMIT", "ACT-APPROVE", "ACT-TRANSMIT", "ACT-PUBLISH", "ACT-UPLOAD", "ACT-CLOSE"]);
 const SNAPSHOT_MS = 60000;
 export const isEffectful = (a) => ["input", "click", "upload", "script", "other"].includes(a.kind) || (a.kind === "dialog" && a.submits) || a.submits === true;
 
 // Approvazioni richieste per il passo → { a1, a2, a3, action }. Esportata per step-check (K6.1),
 // che chiede le approvazioni (pending.approvals) PRIMA del passo con la stessa regola del guard.
-export function requiredApprovals(cls, step, env, level) {
+// Ops veloce (spec 2026-10-06 §2.2, §3.4): dipende dal livello di autonomia; senza livello vale "basso" (= regole di prima).
+export function requiredApprovals(cls, step, env, level, autonomy = "basso") {
+  const none = { a1: false, a2: false, a3: false, action: false };
+  if (env.type === "prod") {
+    if (ACT[cls]?.prod !== "approval") return none;
+    const second = env.policy?.second_approver_required ?? true;
+    return { a1: true, a2: second, a3: true, action: false };
+  }
+  const sandbox = env.type !== "preprod";
   if (cls === "ACT-CFG-CHANGE") {
-    if (env.type === "prod") return { a1: true, a2: true, a3: true, action: false };
+    if (autonomy === "alto") return { ...none, a1: true, a2: !!env.policy?.second_approver_required };
     const n = env.policy?.approvals?.[`config_${level}`] ?? 3;
     return { a1: n >= 1, a2: n >= 3, a3: n >= 2, action: false };
   }
-  if (cls === "ACT-BULK") return { a1: true, a2: false, a3: true, action: false };
-  if (R2_DATA.has(cls) && ["R2", "R3"].includes(stepRisk(step))) return { a1: false, a2: false, a3: false, action: true };
-  return { a1: false, a2: false, a3: false, action: false };
+  if (cls === "ACT-BULK") return autonomy === "alto" ? none : { ...none, a1: true, a3: true };
+  if (cls === "ACT-DELETE") return autonomy === "alto" ? { ...none, a1: true } : { ...none, a1: true, a3: true };
+  if (R2_DATA.has(cls) && ["R2", "R3"].includes(stepRisk(step))) {
+    if (autonomy === "basso") return { ...none, action: true };
+    return sandbox ? none : { ...none, a1: true };
+  }
+  return none;
 }
 
 // WP09b: oggetti governati di un passo di configurazione (config.object + config.governs, senza duplicati).
@@ -190,15 +205,61 @@ function noPlan(ctx, no) {
   return no(`nessun piano attivo: ogni azione con effetto sul browser richiede un piano attivo (step-check)${s.mode === "esplorazione" ? "; la modalità esplorazione vale solo in sandbox" : "; per esplorare in sandbox: /use mode esplorazione"}`);
 }
 
+// spec 2026-10-06 §3.8: si carica solo il file compilato del run attivo, con l'impronta dichiarata nel passo UPLOAD.
+// Fail-closed: passo diverso da UPLOAD, file mancante/non classificato, più di un file, percorso fuori dal run (anche via
+// .. o symlink: si confronta il realpath), non file regolare, impronta diversa ⇒ rifiuto. Limite noto: fra questo controllo
+// e la lettura del browser il file potrebbe cambiare (TOCTOU); il run è scrivibile solo da Claude sotto i guard di scrittura.
+const WIN = process.platform === "win32";
+const fold = (p) => (WIN ? p.toLowerCase() : p);
+const inside = (child, dir) => fold(child).startsWith(fold(dir.endsWith(sep) ? dir : dir + sep));
+function uploadRefusal(ctx, step, ap, a) {
+  if (step.verb !== "UPLOAD" || !step.file || typeof step.file.path !== "string" || !/^[0-9a-f]{64}$/i.test(String(step.file.sha256))) return "caricamento di file solo in un passo UPLOAD con file { path, sha256 } nel piano";
+  if (typeof ap.run !== "string" || !ap.run) return "il piano attivo non ha un run: il file da caricare dev'essere del run attivo";
+  const runDir = resolve(ctx.ws, "customers", ctx.customer, "runs", ap.run);
+  const expected = resolve(ctx.ws, "customers", ctx.customer, step.file.path);
+  if (!inside(expected, runDir)) return "il file del passo non è nel run attivo";
+  const files = Array.isArray(a.files) ? a.files : [];
+  if (files.length !== 1 || typeof files[0] !== "string" || !files[0]) return "un caricamento alla volta, del solo file del passo (percorso mancante o non classificato)";
+  let real; let realExpected; let realRun;
+  // il server MCP del browser risolve i percorsi relativi nella SUA cartella corrente, non in quella di Claude: il guard
+  // calcolerebbe l'impronta di un file e il server ne caricherebbe un altro. Solo percorsi assoluti.
+  if (!isAbsolute(files[0]) || (WIN && !/^([A-Za-z]:[\\/]|[\\/]{2})/.test(files[0]))) return `percorso relativo non ammesso (${files[0]}): il server del browser lo risolverebbe in una cartella diversa; usa il percorso assoluto del file del run`;
+  try { real = realpathSync(files[0]); } catch { return `file da caricare inesistente: ${files[0]}`; }
+  try { realExpected = realpathSync(expected); realRun = realpathSync(runDir); } catch { return "il file compilato del passo non esiste nel run attivo"; }
+  if (!inside(realExpected, realRun)) return "il file del passo (dopo la risoluzione dei collegamenti) esce dal run attivo";
+  if (fold(real) !== fold(realExpected)) return `si carica solo ${step.file.path} (fuori dal run o file diverso: ${files[0]})`;
+  let buf;
+  try { if (!statSync(real).isFile()) return "il file da caricare non è un file regolare"; buf = readFileSync(real); } catch { return "file da caricare illeggibile"; }
+  if (createHash("sha256").update(buf).digest("hex") !== String(step.file.sha256).toLowerCase()) return "il file è cambiato dopo il piano (impronta diversa): ricompila il file e ricomponi il piano";
+  return null;
+}
+
 const TARGETED = new Set(["input", "click", "upload"]);
 const SEL_CODE = /^[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.SEL\.\d{4}(\.v\d+)?$/;
+// spec 2026-10-06 §3.8: un passo FILL con fields: [{ target, value }] compila più campi della pagina in una chiamata (fill_form).
+// L'insieme ammesso è l'elenco dei SEL di fields (tutti SEL dell'Atlas, senza ripetizioni, almeno uno); ogni ref della chiamata
+// deve legarsi a uno di essi e ciascun SEL di fields si lega al più UNA volta nella chiamata (due elementi dello stesso SEL,
+// o lo stesso ref due volte, riempirebbero due volte lo stesso campo). Un `fields` presente ma malformato ⇒ rifiuto.
+function allowedSels(step) {
+  if (step.fields === undefined) return { allowed: typeof step.target === "string" && SEL_CODE.test(step.target) ? [step.target] : null, multi: false };
+  const f = step.fields;
+  if (!Array.isArray(f) || !f.length) return { err: "il passo ha fields vuoto o non valido: input, click e upload non si possono legare al passo" };
+  const t = f.map((x) => x?.target);
+  if (t.some((x) => typeof x !== "string" || !SEL_CODE.test(x))) return { err: "i fields del passo non hanno tutti come target un SEL dell'Atlas: input, click e upload non si possono legare al passo" };
+  if (new Set(t).size !== t.length) return { err: "i fields del passo ripetono lo stesso SEL: input, click e upload non si possono legare al passo" };
+  return { allowed: t, multi: true };
+}
 export function bindingRefusal(ctx, step) {
   const b = ctx.session?.browser ?? {};
+  const bound = new Map();   // SEL di fields → quante volte legato nella chiamata
   for (const a of ctx.actions) {
     if (!TARGETED.has(a.kind)) continue;
-    if (typeof step.target !== "string" || !SEL_CODE.test(step.target)) return "il passo non ha come target un SEL dell'Atlas: input, click e upload non si possono legare al passo";
+    const al = allowedSels(step);
+    if (al.err) return al.err;
+    if (!al.allowed) return "il passo non ha come target un SEL dell'Atlas: input, click e upload non si possono legare al passo";
+    const shown = al.multi ? `a uno dei SEL del passo (fields: ${al.allowed.join(", ")})` : `al SEL del passo ${step.target}`;
     const refs = Array.isArray(a.targets) ? a.targets : [];
-    if (!refs.length || a.untargeted) return `azione senza uid/ref (${a.op ?? a.tool}): non si può legare al SEL del passo ${step.target}; usa l'uid o il ref dell'ultimo snapshot`;
+    if (!refs.length || a.untargeted) return `azione senza uid/ref (${a.op ?? a.tool}): non si può legare ${shown}; usa l'uid o il ref dell'ultimo snapshot`;
     // WP07 giro 5 (I-A', regola 5): una chiamata precedente su questa scheda che observe-append non ha registrato
     // (fallito, scaduto) ⇒ la storia dei ref della scheda è inaffidabile: nessun legame finché la scheda non naviga
     // WP08: anche il marcatore del cliente (customers/<C>/.sessions/ref-pending.json), che sopravvive alla sessione
@@ -210,13 +271,53 @@ export function bindingRefusal(ctx, step) {
     if (!b.current_url || snap.url !== b.current_url) return "l'ultimo snapshot osservato non è della pagina corrente: rifai lo snapshot";
     if ((snap.tab ?? null) !== (a.tab ?? null)) return "l'ultimo snapshot osservato è di un'altra scheda: rifai lo snapshot in questa scheda";
     for (const r of refs) {
-      if (!Object.hasOwn(snap.refs, r) || snap.refs[r] !== step.target) return `l'elemento ${r} non corrisponde al SEL del passo ${step.target} (nell'ultimo snapshot: ${Object.hasOwn(snap.refs, r) ? snap.refs[r] ?? "nessuna voce dell'Atlas" : "assente"})`;
+      const sel = Object.hasOwn(snap.refs, r) ? snap.refs[r] : undefined;
+      if (typeof sel !== "string" || !al.allowed.includes(sel)) return `l'elemento ${r} non corrisponde ${shown} (nell'ultimo snapshot: ${Object.hasOwn(snap.refs, r) ? snap.refs[r] ?? "nessuna voce dell'Atlas" : "assente"})`;
+      if (al.multi) {
+        bound.set(sel, (bound.get(sel) ?? 0) + 1);
+        if (bound.get(sel) > 1) return `più di un elemento della chiamata legato allo stesso campo ${sel} dei fields del passo: ogni campo si compila una sola volta per chiamata`;
+      }
     }
   }
   return null;
 }
 
+// Un passo DELETE vale UNA cancellazione di UN elemento (spec 2026-10-06 §3.7): il legame al SEL è per etichetta/ruolo, quindi
+// in una lista ogni riga ha lo stesso "Elimina" con lo stesso SEL. Istanza ambigua (più di un uid dell'ultimo snapshot
+// legato al SEL del passo) o più di un click nella stessa chiamata ⇒ rifiuto. Usata anche da guard-destructive (deleteStepSel).
+export function deleteInstanceRefusal(ctx, step, clicks = (ctx.actions ?? []).filter((x) => x.kind === "click")) {
+  if (clicks.length > 1) return "più click nella stessa chiamata: un passo DELETE cancella un solo elemento";
+  const refs = ctx.session?.browser?.snapshot?.refs;
+  if (!refs || typeof refs !== "object") return "nessuno snapshot osservato: non si può verificare l'istanza da cancellare";
+  const n = Object.values(refs).filter((v) => v === step.target).length;
+  if (n !== 1) return `istanza ambigua: ${n} elementi dell'ultimo snapshot corrispondono al SEL ${step.target} (una cancellazione vale per UN elemento: usa uno snapshot in cui il SEL è un solo elemento)`;
+  return null;
+}
+
+// Cancellazione eseguita: il marcatore active_plan.delete_done = { plan_id, step } vale solo per quel passo (step-check lo
+// riscrive a ogni attivazione di un altro passo). Si registra solo quando il guard consente, atomicamente sotto il lock di
+// session.json (due chiamate parallele: una sola vince).
+function claimDelete(ctx, claim) {
+  let won = false;
+  try {
+    updateSessionFast(ctx.sessionFile, (x) => {
+      const ap = x.active_plan;
+      if (!ap || ap.plan_id !== claim.plan_id || ap.step !== claim.step) return;
+      if (ap.delete_done?.plan_id === claim.plan_id && ap.delete_done?.step === claim.step) return;
+      ap.delete_done = { plan_id: claim.plan_id, step: claim.step, at: new Date().toISOString() };
+      won = true;
+    });
+  } catch { return false; }
+  return won;
+}
+
 async function browserDecide(ctx, no) {
+  const r = await browserDecideCore(ctx, no);
+  if (r !== null || !ctx.deleteClaim) return r;
+  return claimDelete(ctx, ctx.deleteClaim) ? null : no("passo DELETE: la cancellazione di questo passo è già stata eseguita (una sola per passo)");
+}
+
+async function browserDecideCore(ctx, no) {
   if (!ctx.actions.some(isEffectful)) return null;
   const s = ctx.session;
   if (!s) return null;   // senza sessione guard-environment nega già ogni strumento del browser
@@ -233,10 +334,43 @@ async function browserDecide(ctx, no) {
   if ((!ACT[cls] || ACT[cls].effect === "read") && ctx.actions.some((a) => a.submits === true || (a.kind === "dialog" && a.submits))) {
     return no(`${at0}: invio (Enter/submit) o conferma di un dialog sotto un passo di classe di lettura: negato in ogni ambiente`);
   }
+  // revisione finale (minore): fuori da un passo ACT-DELETE un dialog non si accetta se il suo testo (promptText) è una
+  // cancellazione o se la pagina chiede di confermare una cancellazione (come l'esplorazione completa) — in ogni ambiente
+  if (cls !== "ACT-DELETE" && ctx.actions.some((a) => a.kind === "dialog" && a.submits)) {
+    const names = s.browser?.snapshot?.names && typeof s.browser.snapshot.names === "object" ? Object.values(s.browser.snapshot.names) : [];
+    if (isDeleteLabel(ctx.ti?.promptText)) return no(`${at0}: il testo del dialogo conferma una cancellazione: solo dentro un passo ACT-DELETE del piano`);
+    if (names.some((n) => isDeleteQuestion(n))) return no(`${at0}: la pagina chiede di confermare una cancellazione: il dialogo non si accetta fuori da un passo ACT-DELETE del piano (usa Annulla)`);
+  }
   // WP07 giro 1 (C2 c): ogni uid/ref di input, click e upload deve essere, nell'ultimo snapshot osservato della pagina
   // corrente, l'elemento del SEL del passo attivo (mappa di observe-append: ref → atlas_match)
   const bind = bindingRefusal(ctx, step);
   if (bind) return no(`${at0}: ${bind}`);
+  // spec 2026-10-06 §3.8: ogni upload (in ogni ambiente) solo del file del run attivo con l'impronta del passo UPLOAD
+  const ups = ctx.actions.filter((x) => x.kind === "upload");
+  if (ups.length > 1) return no(`${at0}: più di un upload nella stessa chiamata (${ups.length}): un caricamento alla volta, del solo file del passo`);
+  for (const a of ups) { const u = uploadRefusal(ctx, step, ap, a); if (u) return no(`${at0}: ${u}`); }
+  // spec 2026-10-06 §3.7: un click su un'etichetta di cancellazione vale solo dentro un passo DELETE del piano
+  // (verbo DELETE, classe ACT-DELETE; il legame al SEL del passo l'ha già verificato bindingRefusal)
+  if (cls === "ACT-DELETE" && step.verb === "DELETE") {
+    // un passo DELETE vale UNA cancellazione di UN elemento: istanza non ambigua e un solo click, una sola volta
+    const clicks = ctx.actions.filter((x) => x.kind === "click");
+    if (clicks.length) {
+      const amb = deleteInstanceRefusal(ctx, step, clicks);
+      if (amb) return no(`${at0}: ${amb}`);
+      if (s.active_plan.delete_done?.plan_id === ap.plan_id && s.active_plan.delete_done?.step === step.n) {
+        return no(`${at0}: la cancellazione di questo passo è già stata eseguita (un passo DELETE vale una sola cancellazione): per un'altra serve un altro passo`);
+      }
+      ctx.deleteClaim = { plan_id: ap.plan_id, step: step.n };
+    }
+  } else {
+    const names = s.browser?.snapshot?.names && typeof s.browser.snapshot.names === "object" ? s.browser.snapshot.names : {};
+    for (const a of ctx.actions.filter((x) => x.kind === "click" || x.kind === "input")) {
+      for (const r of Array.isArray(a.targets) ? a.targets : []) {
+        const name = Object.hasOwn(names, r) ? String(names[r] ?? "") : "";
+        if (name && isDeleteLabel(name)) return no(`${at0}: "${name}" è una cancellazione: solo dentro un passo DELETE del piano`);
+      }
+    }
+  }
   if (!COMMIT_VERBS.has(step.verb) && !GUARDED_CLASSES.has(cls)) return null;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"}) del piano ${ap.plan_id}`;
   if (ctx.actions.some((a) => a.kind === "script" || a.kind === "other")) return no(`script o strumento non classificato durante il ${at}: non verificabile, negato`);
@@ -244,8 +378,11 @@ async function browserDecide(ctx, no) {
   if (!env) return no(reason);
   const info = ACT[cls];
   if (!info) return no(`${at}: classe di azione fuori catalogo`);
-  if (info.effect === "write" && env.type === "prod") return no(`${at}: in produzione non si scrivono dati; posso farlo in sandbox o pre-produzione (§52.1)`);
+  if (env.type === "prod" && info.effect === "write" && env.policy?.write_data !== true) return no(`${at}: in produzione le scritture sono spente per l'ambiente ${env.id} (policy.write_data: false in environments.yaml)`);
   if (info[envColumn(env.type)] === "never") return no(`${at}: ${cls} non è ammessa in ${env.type} (§29.4)`);
+  // revisione finale (Ruling F6): con policy.write_data false, in QUALUNQUE ambiente (es. una pre-produzione copia dei dati
+  // reali), niente import massivi né cancellazioni
+  if ((cls === "ACT-BULK" || cls === "ACT-DELETE") && env.policy?.write_data === false) return no(`${at}: l'ambiente ${env.id} ha policy.write_data: false (environments.yaml): niente import massivi né cancellazioni finché l'utente non accende write_data`);
 
   // (c) perimetro
   let level = null;
@@ -268,7 +405,15 @@ async function browserDecide(ctx, no) {
   if (COMP_CLASSES.has(cls) && COMMIT_VERBS.has(step.verb)) {
     const comps = Array.isArray(s.pending?.compensations) ? s.pending.compensations : [];
     if (!comps.some((c) => c && typeof c === "object" && c.plan === ap.plan_id && c.step === step.n)) {
-      return no(`${at}: compensazione non registrata (close/cancel/deactivate/restore) prima del passo che crea, modifica o invia (§29.6)`);
+      return no(`${at}: compensazione non registrata (close/cancel/deactivate/restore) prima del passo che crea, modifica, invia o cancella (§29.6)`);
+    }
+    if (cls === "ACT-DELETE" && !comps.some((c) => c?.plan === ap.plan_id && c.step === step.n && c.kind === "restore" && c.ref)) {
+      return no(`${at}: prima di cancellare serve la lettura completa dell'oggetto salvata nel run (compensazione restore con ref)`);
+    }
+    // revisione finale (Ruling F1): in produzione un import di configurazione (config_import non false) vuole la restore
+    // con l'istantanea dei dati attuali, registrata da step-check dopo averla verificata nel run
+    if (env.type === "prod" && cls === "ACT-BULK" && st.plan?.config_import !== false && !comps.some((c) => c?.plan === ap.plan_id && c.step === step.n && c.kind === "restore" && c.ref)) {
+      return no(`${at}: in produzione un import di configurazione richiede l'istantanea dei dati attuali nel run (compensazione restore con ref; compose-plan --istantanea)`);
     }
   }
   const now = Date.now();
@@ -285,11 +430,20 @@ async function browserDecide(ctx, no) {
     }
   }
   // (d) approvazioni
-  const req = requiredApprovals(cls, step, env, level);
-  if (!req.a1 && !req.a2 && !req.a3 && !req.action) return null;
   const file = approvalsFile(ctx.ws, ctx.customer, ctx.sid);
   const reg = readApprovals(file);
   if (!reg.ok) return no(`registro delle approvazioni corrotto (${reg.reason}): nessuna approvazione è valida`);
+  // revisione finale (Ruling F5): una frase d'autonomia che ALZA il livello vale solo se è nel transcript (prompt vero
+  // dell'utente), come ogni altra approvazione; altrimenti vale il livello del cliente o il predefinito
+  const aut = confirmedAutonomyLevel({ ws: ctx.ws, customer: ctx.customer, records: reg.records, envType: env.type,
+    confirm: (rec) => confirmInTranscript(ctx.input.transcript_path, [rec]).ok });
+  const req = requiredApprovals(cls, step, env, level, aut.level);
+  if (!req.a1 && !req.a2 && !req.a3 && !req.action) {
+    if (GUARDED_CLASSES.has(cls)) {
+      try { appendAudit(ctx.ws, { session: ctx.sid, customer: ctx.customer, scope: s.scope ?? null, kind: "decision", actor: `hook:${G}`, payload: { decision: "allow", tool: ctx.tool, plan: ap.plan_id, step: step.n, autonomy: aut.level, autonomy_source: aut.source } }); } catch { /* l'audit non cambia la decisione */ }
+    }
+    return null;
+  }
   const second = env.policy?.second_approver_required ?? env.type === "prod";
   const envPolicy = { ...env.policy, second_approver_required: second };
   const w = windowState(null, ap.plan_id, envPolicy, now, { records: reg.records });
@@ -302,7 +456,7 @@ async function browserDecide(ctx, no) {
   }
   if (req.a2 && !w.a2) return no(`${at}: manca A2 — l'utente deve scrivere \`APPROVO PROVA ${P}${who}\`${second ? " (persona diversa da A1)" : ""} (§52.2)`);
   const tok = req.a3 ? w.tokenForStep(step.n) : null;
-  if (req.a3 && !tok) return no(`${at}: manca il token del passo (monouso) — l'utente deve scrivere \`APPROVO PASSO ${step.n} ${P}\``);
+  if (req.a3 && !tok) return no(`${at}: manca il token del passo (monouso) — l'utente deve scrivere \`APPROVO PASSO ${step.n} ${P}\`${env.type === "prod" ? " (in produzione ogni passo che modifica o carica si approva prima)" : ""}`);
   const act = req.action ? w.actionFor(step.n) : null;
   if (req.action && !act) return no(`${at}: azione R2 senza approvazione — il manager mostra importo, stato di arrivo e compensazione e l'utente risponde \`sì\` (§57.2)`);
   const recs = [req.a1 ? w.a1 : null, req.a2 ? w.a2 : null, tok, act].filter(Boolean);

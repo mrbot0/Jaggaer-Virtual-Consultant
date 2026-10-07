@@ -143,9 +143,9 @@ all'utente, mai in un input di strumento (guard-phrase la nega), né nel prompt 
 | `kind` | Frase che l'utente scrive, da sola |
 |--------|------------------------------------|
 | `A1` | `APPROVO PIANO <PLAN>` |
-| `A2` | `APPROVO PROVA <PLAN>` (in produzione, 3A, con `DA <Nome Cognome>`; persona diversa dall'A1 se richiesto) |
-| `A3` | `APPROVO PASSO <n> <PLAN>` |
-| `action` | `sì` (una sola azione in attesa) |
+| `A2` | `APPROVO PROVA <PLAN>` (con `DA <Nome Cognome>`; persona diversa dall'A1 quando l'ambiente ha `second_approver_required`, di norma in produzione) |
+| `A3` | `APPROVO PASSO <n> <PLAN>` (in produzione prima di **ogni** passo che modifica o carica: lì `sì` è rifiutato) |
+| `action` | `sì` (una sola azione in attesa; solo con autonomia bassa e mai in produzione) |
 | `promote` | `APPROVO PROMOZIONE <codice>` |
 | `retention` | `APPROVO RETENTION <C>` |
 | `purge` | `APPROVO PURGE <ID> DA <Nome Cognome>` (due approvazioni) |
@@ -158,15 +158,31 @@ riparte dall'A1.
 l'attivazione di un piano che non è attivo né approvato. Quando lo scope-expert torna `needs-input` con il piano
 compilato e la richiesta di attivazione:
 
-- **in sandbox o dev** (step-check tratta i due ambienti allo stesso modo) lo attivi subito (nessuna A1), poi ridispacci lo scope-expert con `reply_to: <task_id>`;
+- **in sandbox o dev** (step-check tratta i due ambienti allo stesso modo) il piano si attiva subito (nessuna A1) quando, a
+  quel livello di autonomia, non chiede nulla (creazioni, aggiornamenti e invii a ogni livello — con livello basso ogni invio chiede poi il `sì` del suo passo —; con livello alto anche gli import; mai configurazioni e cancellazioni): lo attivi
+  tu con la riga sotto, poi ridispacci lo scope-expert con `reply_to: <task_id>`. I piani di configurazione e di cancellazione (anche con livello alto), e con livello
+  medio o basso gli import, chiedono prima `APPROVO PIANO <id>` anche lì;
 - **fuori da sandbox e dev** l'attivazione richiede che l'utente abbia scritto `APPROVO PIANO <id>` **prima** che lo
-  scope-expert esegua: mostri rischi, assunzioni e passi, attendi la frase, poi la stessa riga e il nuovo dispatch
-  (senza la frase, step-check risponde `approval_required` e il piano resta inattivo).
+  scope-expert esegua (pre-produzione con livello medio o basso, piani con invii, configurazione o cancellazioni; **ogni piano
+  in produzione**): mostri rischi, assunzioni e passi, attendi la frase, poi la stessa riga e il nuovo dispatch (senza la
+  frase, step-check risponde `approval_required` e il piano resta inattivo). Fa eccezione la pre-produzione con livello
+  alto e un piano di sola creazione o import: step-check lo attiva senza frase.
 
       node "${CLAUDE_PLUGIN_ROOT}/scripts/decide/step-check.mjs" --plan <piano> --step 1 --run <RUN> --session "${CLAUDE_SESSION_ID}" --json
 
 `<piano>` è il file del piano relativo alla cartella del cliente, come lo riporta il rapporto; `<RUN>` il run del
 compito.
+
+**Livello di autonomia e produzione.** Il livello (alto · medio · basso; predefinito alto, in produzione al massimo medio)
+lo sceglie l'utente con la sua frase di autonomia (`AUTONOMIA ALTA`, `AUTONOMIA MEDIA`, `AUTONOMIA BASSA`, valida per la
+sessione) o con `default:` in `customers/<C>/config/autonomy.yaml`; tu non lo scegli, non lo proponi e lo leggi da
+`use show` (campo `autonomy`). Con autonomia alta in sandbox creazioni, aggiornamenti, invii e import non chiedono nulla (piano mostrato, esecuzione, elenco finale); configurazione e cancellazioni chiedono comunque l'approvazione del piano.
+In produzione, prima di chiedere l'approvazione di ciascun passo, mostri all'utente **file, righe e oggetti** che il
+passo tocca (per un import: nome del file, numero di righe, sha256, oggetti coinvolti; per una cancellazione: non
+esiste in produzione), poi la frase esatta del passo (`approval_request` con `kind: A3`) e attendi. Scritture di dati in
+produzione solo se l'ambiente ha `write_data: true` (interruttore dell'utente); altrimenti riporta il rifiuto così
+com'è. A fine lavoro l'elenco di ciò che è stato **creato, modificato, importato o cancellato**, con il livello di autonomia
+applicato (compensazioni comprese).
 
 **Esplorazione senza piano** (sandbox: `ESPLORA SANDBOX`; pre-produzione: `ESPLORA PREPROD`, solo click senza
 effetto; completa, in sandbox o pre-produzione: `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA`, che consente di
@@ -175,8 +191,8 @@ come frase da copiare in un comando e non la scrivi. Quando l'utente chiede di e
 `scope-expert` in esplorazione con il compito di **memorizzare** il modulo (le pagine si registrano da sole; a fine giro
 `kb atlas-build`, sezione "Esplorare e memorizzare" dell'agente; l'agente esegue da solo l'elenco `todo` della verifica
 automatica e rilancia atlas-build finché è vuoto: all'utente arriva solo il residuo); quando chiede un'attività (crea ordine, crea
-contratto), in `ops`: piano da `compose-plan`, e le mancanze (campi obbligatori senza dato, modulo JAGGAER ambiguo)
-diventano domande all'utente prima del piano; poi `APPROVO PIANO`, "sì" all'invio; se l'agente torna con pagine da esplorare, prima l'esplorazione (serve la
+contratto), in `ops`: piano da `compose-plan`, e le mancanze (campi obbligatori senza dato, modulo JAGGAER ambiguo,
+template di import da compilare) diventano domande all'utente prima del piano; poi le approvazioni che il livello prevede; se l'agente torna con pagine da esplorare, prima l'esplorazione (serve la
 frase dell'utente), poi il piano nuovo; a esito verde l'agente memorizza la procedura (`--from-plan`). In esplorazione
 non ci sono tetti per agente (200 azioni/30 minuti): un'esplorazione lunga si spezza in dispatch successivi (dopo circa 2
 ore il dispatch scade), ognuno riparte dal registro della sessione. Alla fine di un'esplorazione completa mostra

@@ -41,6 +41,10 @@ const RE_A1 = new RegExp(`^APPROVO PIANO (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_A2 = new RegExp(`^APPROVO PROVA (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_A3 = new RegExp(`^APPROVO PASSO ([1-9]\\d{0,3}) (${PLAN_ID})(?: DA (${NAME}))?$`, "u");
 const RE_YES = /^(sì|si|yes)$/iu;
+// Autonomia di ops (spec 2026-10-06 §3.2): vale per la sessione finché l'utente non ne scrive un'altra.
+const RE_AUTONOMY = /^AUTONOMIA (ALTA|MEDIA|BASSA)$/u;
+const AUTONOMY_LEVEL = { ALTA: "alto", MEDIA: "medio", BASSA: "basso" };
+const AUTONOMY_WORD = { alto: "ALTA", medio: "MEDIA", basso: "BASSA" };
 // WP09d: approvazioni amministrative (non legate a un piano). Il bersaglio è nel record (target); purge richiede il
 // nome dichiarato (due approvazioni con frase, da due nomi diversi: §54.4, §56.8); promozione a product/ (§22.2, §29.6)
 // e retention (§54.4, 1 approvazione) lo accettano facoltativo.
@@ -80,17 +84,26 @@ export function parseApprovalPrompt(prompt) {
   if ((m = RE_PURGE.exec(bare))) return { kind: "purge", target: m[1], approver: m[2] ? normSpaces(m[2]) : null };
   if ((m = RE_PROMO.exec(bare))) return { kind: "promote", target: m[1], approver: m[2] ? normSpaces(m[2]) : null };
   if ((m = RE_RETENTION.exec(bare))) return { kind: "retention", target: m[1], approver: m[2] ? normSpaces(m[2]) : null };
+  if ((m = RE_AUTONOMY.exec(bare))) return { kind: "autonomy", level: AUTONOMY_LEVEL[m[1]] };
   if (RE_YES.test(bare)) return { kind: "yes" };
   if (bare === EXPLORE_PHRASE) return { kind: "explore", env_type: "sandbox" };
   if (bare === EXPLORE_PREPROD_PHRASE) return { kind: "explore", env_type: "preprod" };
   if (bare === EXPLORE_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "sandbox", full: true };
   if (bare === EXPLORE_PREPROD_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "preprod", full: true };
   if (/\bESPLORA\b/iu.test(s)) return { kind: "attempt" };
+  // revisione finale (minore): una frase d'autonomia scritta male ("autonomia bassa", "Autonomia Alta per favore") è un
+  // tentativo d'autonomia: la risposta indica la frase esatta (il livello riconosciuto, o le tre), anche senza piani in attesa
+  // (una domanda lunga che nomina l'autonomia senza un livello non è un tentativo: nessuna risposta)
+  if (/\bAUTONOMIA\b/iu.test(s)) {
+    const lv = /\bautonomia\s+(alta|media|bassa)\b/iu.exec(s);
+    if (lv || s.length <= 40) return { kind: "attempt", autonomy: lv ? lv[1].toUpperCase() : "?" };
+    return /APPROV/iu.test(s) ? { kind: "attempt" } : null;
+  }
   if (/APPROV/iu.test(s) || (ATTEMPT.test(s) && s.length <= 30)) return { kind: "attempt" };
   return null;
 }
 
-export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : r.kind === "explore" ? (EXPLORE_PHRASES[r.env_type] ?? EXPLORE_PHRASE) + (r.full ? EXPLORE_FULL_SUFFIX : "")
+export const phraseOf = (r) => (r.kind === "A1" ? `APPROVO PIANO ${r.plan}` : r.kind === "A2" ? `APPROVO PROVA ${r.plan}` : r.kind === "A3" ? `APPROVO PASSO ${r.step} ${r.plan}` : r.kind === "action" ? "sì" : r.kind === "autonomy" ? `AUTONOMIA ${AUTONOMY_WORD[r.level] ?? ""}` : r.kind === "explore" ? (EXPLORE_PHRASES[r.env_type] ?? EXPLORE_PHRASE) + (r.full ? EXPLORE_FULL_SUFFIX : "")
   : r.kind === "purge" ? `APPROVO PURGE ${r.target} DA <Nome Cognome>` : r.kind === "promote" ? `APPROVO PROMOZIONE ${r.target}` : r.kind === "retention" ? `APPROVO RETENTION ${r.target}` : "");
 
 // ---- approvazioni amministrative (WP09d: purge, promozione, retention) ----
@@ -253,6 +266,26 @@ export function threeAState(records, plan, n, envPolicy = {}, now = Date.now(), 
   return { ok: true, reason: null, used: [w.a1, w.a2, tok] };
 }
 
+// Ops veloce (spec 2026-10-06 §3.6): approvazione di un passo che scrive in produzione — A1 (finestra) + token del
+// passo; A2 solo se l'ambiente richiede il secondo approvatore. Il consumo monouso lo fa guard-config-scope (grazia 30 s).
+// Con second_approver_required delega a threeAState (A1 + A2 da persona diversa + token del passo).
+// → { ok, reason, used: [record…] }
+export function prodStepApproval(records, plan, n, envPolicy = {}, now = Date.now(), { graceMs = 30000 } = {}) {
+  if (envPolicy?.second_approver_required) return threeAState(records, plan, n, envPolicy, now, { graceMs });
+  const w = windowState(null, plan, envPolicy, now, { records });
+  if (!w.a1) return { ok: false, reason: `manca A1: \`APPROVO PIANO ${plan}\``, used: [] };
+  if (w.expired) return { ok: false, reason: `finestra scaduta: si riparte da \`APPROVO PIANO ${plan}\``, used: [] };
+  let tok = w.tokenForStep(n);
+  if (!tok) {
+    const all = records.filter((r) => r.plan === plan);
+    const t1 = Date.parse(w.a1.ts);
+    const recent = new Set(all.filter((r) => r.kind === "consume" && r.step === n && now - Date.parse(r.ts) <= graceMs).map((r) => r.ref));
+    tok = all.find((r) => r.kind === "A3" && r.step === n && recent.has(r.hash) && Date.parse(r.ts) >= t1) ?? null;
+  }
+  if (!tok) return { ok: false, reason: `manca l'approvazione del passo: \`APPROVO PASSO ${n} ${plan}\``, used: [] };
+  return { ok: true, reason: null, used: [w.a1, tok] };
+}
+
 // ---- conferma nel transcript (difesa in profondità) ----
 // Un record vale solo se nel transcript c'è un PROMPT VERO DELL'UTENTE (giro di
 // correzione 1, I3):
@@ -392,11 +425,20 @@ export async function capture(input, env = process.env) {
     return [`APPROVO PROVA ${pl}${second ? " DA <Nome Cognome>" : ""}`, `APPROVO PASSO <n> ${pl}`];
   };
 
+  if (p.kind === "attempt" && p.autonomy) {
+    const want = p.autonomy === "?" ? ["AUTONOMIA ALTA", "AUTONOMIA MEDIA", "AUTONOMIA BASSA"] : [`AUTONOMIA ${p.autonomy}`];
+    return reject(want, "il livello di autonomia si cambia con la frase esatta, in maiuscolo e da sola nel messaggio");
+  }
   if (p.kind === "attempt") return known.size ? reject(expectedFor(null), "la frase non è quella richiesta") : null;
 
   let rec;
   let removeMatch;
-  if (p.kind === "explore") {
+  if (p.kind === "autonomy") {
+    // spec 2026-10-06 §3.2: il livello di autonomia lo sceglie solo l'utente, con la frase nel prompt.
+    if (!reg.ok) return reject([phraseOf(p)], `registro delle approvazioni corrotto (${reg.reason})`);
+    rec = { kind: "autonomy", level: p.level };
+    removeMatch = () => false;
+  } else if (p.kind === "explore") {
     // K5 giro 2 (N2): la modalità esplorazione la sceglie l'utente, solo in sandbox.
     const want = (EXPLORE_PHRASES[p.env_type] ?? EXPLORE_PHRASE) + (p.full ? EXPLORE_FULL_SUFFIX : "");
     if (!s.env) return reject([want], "nessun ambiente dichiarato: /use env <id> prima");
@@ -430,7 +472,15 @@ export async function capture(input, env = process.env) {
     if (!pending.length) return null;
     // WP10d (D8): la conferma passo-passo di un'azione di un sub-agente non approva dati in produzione (guard-production
     // e gli altri guard valutano comunque l'azione): vale in ogni ambiente
-    if (s.env?.type === "prod" && !(acts.length === 1 && acts[0].step_mode)) return reject(expectedFor(null), "in produzione non si approvano azioni sui dati: non si scrivono dati, mai (§52.1)");
+    // spec 2026-10-06 §3.6: in produzione ogni passo che scrive si approva con APPROVO PASSO (dopo APPROVO PIANO), mai con un sì
+    if (s.env?.type === "prod" && !(acts.length === 1 && acts[0].step_mode)) {
+      const who = second ? " DA <Nome Cognome>" : "";
+      const want = acts.length ? acts.flatMap((a) => {
+        const w = reg.ok ? windowState(null, a.plan, envPolicy, now, { records: reg.records }) : null;
+        return [...(!w?.a1 || w.expired ? [`APPROVO PIANO ${a.plan}${who}`] : []), `APPROVO PASSO ${a.step} ${a.plan}`];
+      }) : expectedFor(null);
+      return reject(want, "in produzione un «sì» non approva un passo: ogni passo che modifica o carica si approva con APPROVO PASSO <n> <PLAN> (dopo APPROVO PIANO)");
+    }
     if (acts.length !== 1) return reject(expectedFor(null), acts.length ? `un sì vale solo con UNA richiesta aperta (ce ne sono ${acts.length})` : "nessuna azione in attesa di un sì");
     rec = { kind: "action", plan: acts[0].plan, step: acts[0].step, approver_declared: null, ...(acts[0].step_mode ? { step_mode: true, action_sha: acts[0].action_sha ?? null, task_id: acts[0].task_id ?? null } : {}) };
     removeMatch = (r) => r.kind === "action" && r.plan === rec.plan && r.step === rec.step;
@@ -468,7 +518,8 @@ export async function capture(input, env = process.env) {
   rec.session = st.sid;
   // Prima il registro (la fonte dei guard); poi lo specchio e l'audit.
   const ev = appendApproval(file, rec);
-  const label = ev.kind === "explore" ? `esplorazione${ev.full ? " completa" : ""} ${ev.env} (vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
+  const label = ev.kind === "autonomy" ? `Autonomia ${ev.level} per questa sessione${s.env?.type === "prod" ? " (in produzione al massimo medio)" : ""}`
+    : ev.kind === "explore" ? `esplorazione${ev.full ? " completa" : ""} ${ev.env} (vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
     : GRANT_KINDS.includes(ev.kind) ? `${ev.kind} ${ev.target}${ev.approver_declared ? ` (${ev.approver_declared})` : ""} — token ${ev.hash.slice(0, 16)} (monouso, valido ${Math.round(GRANT_WINDOW_MS[ev.kind] / 60000)} minuti)`
     : `${ev.kind} ${ev.plan}${ev.step ? ` passo ${ev.step}` : ""}${ev.approver_declared ? ` (${ev.approver_declared})` : ""}`;
   let warn = "";

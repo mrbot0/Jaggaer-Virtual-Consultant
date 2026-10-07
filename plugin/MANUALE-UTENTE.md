@@ -26,7 +26,7 @@ Gli si parla in tre modi:
 |---|---|---|
 | **A parole** (un intento) | *"Su ACME pre-produzione crea un ordine per 5 sedie, centro di costo IT-0442, lascialo in bozza"* | Quasi sempre: il plugin capisce cosa fare e con quale agente |
 | **Con un comando** | `/jaggaer-virtual-consultant:ops crea ordine …` | Quando vuoi essere preciso o l'azione è amministrativa |
-| **Con una frase** di approvazione o di controllo | `APPROVO PIANO PLAN.ACME.0003` · `sì` · `PAUSA TUTTI` | Quando il plugin te la chiede, o per fermare gli agenti |
+| **Con una frase** di approvazione, di autonomia o di controllo | `APPROVO PIANO PLAN.ACME.0003` · `AUTONOMIA MEDIA` · `PAUSA TUTTI` | Quando il plugin te la chiede, per cambiare quanto chiede, o per fermare gli agenti |
 
 Le frasi le scrivi **solo tu**, da sole nel messaggio, in maiuscolo: il plugin non può scriverle al posto tuo.
 
@@ -54,7 +54,7 @@ Le frasi le scrivi **solo tu**, da sole nel messaggio, in maiuscolo: il plugin n
 - **Gli agenti** fanno il lavoro. Ognuno ha un compito preciso, un modello adatto (haiku per i compiti meccanici,
   sonnet per l'operatività, opus per il ragionamento difficile) e solo gli strumenti che gli servono.
 - **I controlli di sicurezza** sono codice: negano un'azione vietata anche se un agente la tentasse (salvare in
-  produzione, uscire dal proprio cliente, premere "Elimina"…).
+  produzione senza piano e passo approvati, uscire dal proprio cliente, premere "Elimina" fuori da un passo di cancellazione…).
 - **Il monitor** registra ogni azione di ogni agente: puoi vedere in ogni momento cosa sta facendo e fermarlo.
 - **La conoscenza** sta nella cartella `knowledge/` del repository, **fuori dal plugin**: conoscenza del prodotto
   (livello **S**), di ogni cliente (livello **C**, in `customers/<CODICE>/`) e appresa sul campo (livello **L**).
@@ -76,12 +76,54 @@ viene copiato da Claude Code nella sua cache: la conoscenza deve crescere fuori 
 
 | Ambiente | Leggere | Esplorare cliccando | Creare / modificare dati | Configurare |
 |---|---|---|---|---|
-| **sandbox** | sì | sì (`ESPLORA SANDBOX`); tutto tranne cancellare (`ESPLORA SANDBOX COMPLETA`) | sì, con piano | sì, approvazioni per rischio |
-| **pre-produzione** | sì | solo click senza effetto (`ESPLORA PREPROD`); tutto tranne cancellare, con valori di prova (`ESPLORA PREPROD COMPLETA`) | sì, con `APPROVO PIANO` e `sì` all'invio | sì, approvazioni per rischio |
-| **produzione** | sì | no | **mai** | solo con tre approvazioni, una da una seconda persona |
+| **sandbox** | sì | sì (`ESPLORA SANDBOX`); tutto tranne cancellare (`ESPLORA SANDBOX COMPLETA`) | sì, con piano; anche import in blocco e cancellazioni (dentro un piano) | sì, approvazioni per rischio |
+| **pre-produzione** | sì | solo click senza effetto (`ESPLORA PREPROD`); tutto tranne cancellare, con valori di prova (`ESPLORA PREPROD COMPLETA`) | sì, con piano; import in blocco e cancellazioni (dentro un piano); le approvazioni dipendono dal livello di autonomia | sì, approvazioni per rischio |
+| **produzione** | sì | no | **solo se attivi `write_data: true`** per quell'ambiente: poi `APPROVO PIANO` e `APPROVO PASSO <n>` prima di ogni passo che modifica o carica; cancellare mai | `APPROVO PIANO` + `APPROVO PASSO <n>`, più `APPROVO PROVA` da una seconda persona se è richiesto il secondo approvatore (di serie in produzione) |
 
 Prima di agire il plugin **verifica** di essere davvero nell'ambiente dichiarato (almeno due segnali sulla pagina:
 titolo, banner, id del tenant). Finché non è verificato può solo navigare e leggere.
+
+### Livelli di autonomia: quanto ti chiede il plugin
+
+Tre livelli: **alto** (predefinito), **medio**, **basso**. Il livello che vale è il più basso fra quello scelto e il tetto
+dell'ambiente: sandbox e pre-produzione → alto; **produzione → medio**. Lo scegli tu, in due modi:
+
+- per la sessione, con la frase `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA` (da sola nel messaggio; vale finché
+  non ne scrivi un'altra);
+- per cliente, con `default: alto|medio|basso` in `knowledge/customers/<CODICE>/config/autonomy.yaml` (lo scrivi tu con un
+  editor, fuori da Claude Code). File illeggibile o valore non valido ⇒ il plugin usa **basso** e te lo dice.
+
+`/jaggaer-virtual-consultant:use show` mostra il livello effettivo, quello scelto, da dove viene e il tetto.
+Cosa ti chiede, per ambiente (il plugin applica la tabella da solo):
+
+| | sandbox | pre-produzione | produzione (tetto medio) |
+|---|---|---|---|
+| creare, aggiornare | nulla | alto: nulla · medio/basso: `APPROVO PIANO` | `APPROVO PIANO` + `APPROVO PASSO <n>` prima di ogni passo che modifica |
+| inviare, approvare, pubblicare, chiudere, caricare | alto/medio: nulla · basso: `sì` per passo | alto/medio: coperti da `APPROVO PIANO` · basso: `sì` per passo | `APPROVO PIANO` + `APPROVO PASSO <n>` |
+| configurare | alto: `APPROVO PIANO` · medio/basso: per rischio | idem | piano + ogni passo (+ istantanea prima) |
+| import in blocco con template | alto: nulla · medio/basso: piano + ogni passo | idem | piano + ogni passo, prima del caricamento; oggetti di configurazione: anche l'istantanea dei dati attuali |
+| cancellare | alto: coperte da `APPROVO PIANO` · medio/basso: + ogni passo | idem | **mai** |
+
+In produzione `sì` non basta mai: ogni passo si approva con `APPROVO PASSO <n> <PLAN>`, valida una volta sola e legata a
+quel piano. Se l'ambiente ha `second_approver_required` (in produzione di serie sì), serve anche `APPROVO PROVA` da una
+**persona diversa**. Prima di chiederti un passo in produzione il plugin ti mostra file, righe e oggetti che toccherà. A
+fine lavoro ricevi l'elenco di ciò che è stato creato, modificato, importato o cancellato, col livello applicato.
+
+**Rischi del livello alto in pre-produzione**: import in blocco senza frase, cancellazioni coperte da una sola approvazione;
+e-mail ai fornitori e dati verso l'ERP possono partire davvero. Se il cliente non vuole sorprese, imposta `default: medio`
+(o `basso`) nel suo `autonomy.yaml`. Le cancellazioni sono irreversibili nel tenant: la lettura salvata prima permette di
+ricreare l'oggetto, non di ripristinarne identificativi e storico.
+
+**Import e cancellazioni, regole fisse** (qualunque livello):
+- con `write_data: false` per un ambiente — **qualunque** ambiente, anche una pre-produzione copia dei dati reali —
+  import in blocco e cancellazioni sono negati finché non lo accendi tu;
+- un import di **oggetti di configurazione** in produzione parte solo con l'istantanea dei dati attuali salvata nel run
+  (l'export scaricato prima): se qualcosa va storto si reimporta quella;
+- un piano di cancellazione non spunta righe prima del passo "Elimina" (niente "seleziona tutti" né caselle di
+  selezione): ogni riga è un passo a parte; fuori da un passo di cancellazione il plugin non conferma mai un dialogo
+  che chiede di eliminare;
+- l'esito di un import si legge con uno script: una riga "completata con errori" o "con avvisi" conta come fallita, e
+  se nella pagina non si riconosce nessuna riga l'esito resta "non riconosciuto", mai "tutto ok".
 
 ### Modalità
 
@@ -233,7 +275,10 @@ chi sviluppa il plugin).
 
    - `allowed_hosts`: **tutti** gli host che il browser apre, compreso quello del login SSO.
    - `fingerprint`: almeno due segnali veri della pagina (apri il tenant a mano e copiali).
-   - Tipi ammessi: `sandbox`, `preprod`, `dev`, `prod`. In produzione `write_data` è sempre `false`.
+   - Tipi ammessi: `sandbox`, `preprod`, `dev`, `prod`. In produzione `write_data` è l'**interruttore dei dati**: scrivilo
+     `false` finché non vuoi scritture (così sono tutti i clienti attuali) e solo tu puoi portarlo a `true`, ambiente per ambiente; anche con `true` ogni passo che
+     modifica o carica richiede `APPROVO PIANO` e `APPROVO PASSO <n>`, e `second_approver_required` è `true` di serie. Le
+     configurazioni in produzione dipendono dalle approvazioni, non da `write_data`; le cancellazioni non esistono.
 
 3. **Dichiara l'ambiente**: `/jaggaer-virtual-consultant:use env preprod`
 4. **Fai il login**: alla prima navigazione si apre la finestra Chrome del plugin; accedi tu (SSO compreso).
@@ -266,14 +311,15 @@ Tutti iniziano con `/jaggaer-virtual-consultant:`. Sono otto famiglie.
 | `scope <ID>` | Sceglie l'area funzionale (vedi glossario) |
 | `mode <nrt\|config\|ops\|diag\|esplorazione>` | Forza la modalità |
 | `budget <n>` | Cambia il budget di token della sessione (es. `200k`) |
-| `show` · `close-stale` | Mostra lo stato; chiude i sotto-compiti rimasti aperti |
+| `show` · `close-stale` | Mostra lo stato (compreso il livello di autonomia); chiude i sotto-compiti rimasti aperti |
 
 ### `ops` — operatività quotidiana
 | Azione | A cosa serve |
 |---|---|
 | `esplora <modulo>` | Esplora un modulo (menu, pagine, pulsanti, campi, tendine) e lo **memorizza** |
 | `crea <richiesta\|ordine\|fornitore\|evento\|contratto> …` | Crea in bozza; il piano nasce dalla memoria; al primo successo la procedura si memorizza |
-| `approva` · `chiudi` · `pubblica <riferimento>` | Azioni che coinvolgono altri: sempre con il tuo `sì` |
+| `crea N <oggetto>` (in blocco) | Se esiste un template di caricamento per l'oggetto, un solo import invece di N maschere: file compilato dal plugin (righe controllate prima), caricamento, lettura dell'esito, reimport delle sole righe fallite (al massimo 2 volte) |
+| `approva` · `chiudi` · `pubblica <riferimento>` | Azioni che coinvolgono altri: con le approvazioni del tuo livello di autonomia (`sì` solo con autonomia bassa) |
 | `query "<domanda>"` · `tables` · `learn-analytics` | Domande a JAGGAER Analytics, in sola lettura (anche in produzione) |
 
 ### `kb` — la conoscenza
@@ -282,6 +328,7 @@ Tutti iniziano con `/jaggaer-virtual-consultant:`. Sono otto famiglie.
 | `ingest <cartella> [--scope <S>]` | Carica documenti (manuali, specifiche, export): li legge, li spezza in unità, toglie i dati personali |
 | `digest` · `review` | Gli agenti trasformano il materiale in conoscenza codificata; tu la rivedi (accetti, correggi, rifiuti) |
 | `find` · `resolve "<domanda>"` | Cerca nella conoscenza |
+| `template-learn --file <xlsx> --object "<oggetto>" --scope <S> --page <sig> [--tipo config\|dati] [--fonte utente\|tenant]` | Impara un template di caricamento massivo (colonne, obbligatori, liste di valori) da un file tuo (`customers/<C>/templates-in/`) o scaricato dal tenant. `--page` (la pagina di import) è obbligatorio; `--tipo config` (predefinito) per oggetti di configurazione, `dati` per record di business. Il file salvato è sempre senza righe di dati (anche se il tuo era già compilato) e la voce non conserva valori; un'intestazione su più righe è rifiutata: semplificala a una riga |
 | `fields --doc <documento>` · `identity <campo>` | I campi di un documento con i loro obblighi; la carta d'identità di un dato |
 | `precedents` · `epistemic` · `impact` · `coverage` | Decisioni passate; quanto si sa di un argomento; cosa tocca una modifica; copertura |
 | `graph` · `scopes` · `handoffs` · `clusters` · `contradictions` | Registri e coerenza della conoscenza |
@@ -417,9 +464,10 @@ Scritte da te, **da sole nel messaggio**, in maiuscolo (un punto finale è tolle
 ### Approvazioni
 | Frase | Quando |
 |---|---|
-| `sì` | Il plugin chiede conferma per un'azione che coinvolge altri (invio, approvazione, pubblicazione) |
-| `APPROVO PIANO <PLAN>` | Per attivare un piano fuori dalla sandbox (per esempio "crea ordine" in pre-produzione) o una configurazione |
-| `APPROVO PASSO <n> <PLAN>` · `APPROVO PROVA <PLAN>` | Configurazioni gialle e rosse; in produzione tutte e tre, con `DA <Nome Cognome>`, la prova da una seconda persona |
+| `sì` | Solo con autonomia **bassa**, in sandbox e pre-produzione: conferma di un'azione che coinvolge altri (invio, approvazione, pubblicazione). In produzione è rifiutato |
+| `APPROVO PIANO <PLAN>` | Per attivare un piano quando il livello lo richiede: in pre-produzione con autonomia media o bassa, o con invii, configurazione o cancellazioni; in sandbox con autonomia alta per configurazione e cancellazioni (con media o bassa anche per gli import); sempre in produzione |
+| `APPROVO PASSO <n> <PLAN>` · `APPROVO PROVA <PLAN>` | Configurazioni gialle e rosse; **in produzione prima di ogni passo che modifica o carica** (`APPROVO PASSO`), con `DA <Nome Cognome>`, la prova da una seconda persona se l'ambiente lo richiede (`second_approver_required`) |
+| `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA` | Cambia il livello di autonomia per la sessione (predefinito alto; in produzione vale al massimo medio) |
 | `ESPLORA SANDBOX` · `ESPLORA PREPROD` | Aprire l'esplorazione (poi `use mode esplorazione` entro 10 minuti) |
 | `ESPLORA SANDBOX COMPLETA` · `ESPLORA PREPROD COMPLETA` | Esplorazione completa: compila, salva, invia, approva con valori di prova, mai cancellare; a fine giro l'elenco di ciò che ha creato o modificato |
 | `APPROVO PROMOZIONE <codice>` · `APPROVO RETENTION <C>` · `APPROVO PURGE <ID> DA <Nome Cognome>` | Operazioni amministrative |
@@ -461,7 +509,10 @@ Le frasi che aumentano la protezione valgono subito; quelle che la riducono dopo
 | Vuoi… | Scrivi | Cosa succede |
 |---|---|---|
 | Imparare com'è fatto un modulo | `ESPLORA PREPROD` (o `ESPLORA PREPROD COMPLETA` per provare anche salvataggi e invii) → `use mode esplorazione` → `ops esplora ordini` | scope-expert naviga, apre moduli e tendine, memorizza pagine, pulsanti e campi; non salva mai |
-| Creare un ordine | `use mode ops` → `ops crea ordine fornitore …, articolo …, quantità …` | Piano dalla memoria (se mancano dati obbligatori te li chiede prima; se lo stesso modulo esiste in più moduli JAGGAER ti chiede quale, o scrivi «nel modulo …») → `APPROVO PIANO …` → compilazione automatica → `sì` prima dell'invio → procedura memorizzata |
+| Creare un ordine | `use mode ops` → `ops crea ordine fornitore …, articolo …, quantità …` | Piano dalla memoria (se mancano dati obbligatori te li chiede prima; se lo stesso modulo esiste in più moduli JAGGAER ti chiede quale, o scrivi «nel modulo …») → con autonomia alta in sandbox parte da solo; altrimenti `APPROVO PIANO …` (e `sì` all'invio con autonomia bassa) → compilazione automatica (più campi della pagina in un colpo) → procedura memorizzata |
+| Creare molti elementi insieme (es. 30 data element) | *"Su ACME pre-produzione crea 30 data element"* (con un template nel tenant o in `customers/ACME/templates-in/`) | Il plugin impara il template (il tuo ha la precedenza, altrimenti lo scarica dal tenant), compila il file controllando ogni riga, lo carica (solo quel file) e legge l'esito: le righe fallite si correggono e si reimportano (al massimo 2 volte); a fine lavoro l'elenco dei codici creati |
+| Scrivere in produzione | Prima `write_data: true` in `environments.yaml` (a cura tua), poi la richiesta | Piano mostrato → `APPROVO PIANO <PLAN>` → prima di ogni passo il plugin ti mostra file, righe e oggetti → `APPROVO PASSO <n> <PLAN>` (e `APPROVO PROVA` da un'altra persona) → esecuzione → elenco finale |
+| Cancellare in sandbox o pre-produzione | *"Su ACME sandbox elimina l'articolo NRT-…"* | Piano con un passo di cancellazione (un elemento per passo, mai i pulsanti di massa); prima il plugin salva la lettura completa dell'oggetto e registra la compensazione `restore`; in produzione la richiesta è rifiutata |
 | Sapere perché un documento è fermo | *"Su ACME produzione, perché l'ordine 4500012345 è fermo?"* | Diagnosi in sola lettura, con evidenze |
 | Collaudare una release | `nrt release-check R25.3` | Piano dal delta, esecuzione per scope, triage, Defect, Xray, report |
 | Cambiare una configurazione | `cfg design "rendi obbligatorio Codice progetto sopra 10.000 €"` → `cfg apply <PLAN>` | Progetto con rischio e rollback, poi applicazione con le approvazioni del livello |
@@ -505,7 +556,13 @@ aggiornamento una sessione aperta si ripara con `/jaggaer-virtual-consultant:use
 | "host non ammesso" | Aggiungi l'host (anche quello del login SSO) ad `allowed_hosts` |
 | Tutto negato a un agente | `vc agents`: può essere in pausa o oltre i limiti (`RIPRENDI AGENTE …`, `LIMITI DISPATCH …`) |
 | "il modello di questo scope va rifatto" | Tre compiti fermati per sorprese: segui il giro di osservazioni proposto, poi `SBLOCCA SCOPE <S>` |
-| "Approvazione non valida" | La frase non è esatta o è scaduta: il messaggio mostra quella attesa |
+| "Approvazione non valida" | La frase non è esatta o è scaduta: il messaggio mostra quella attesa. In produzione `sì` non vale: serve `APPROVO PASSO <n> <PLAN>` |
+| "scritture spente in produzione" | L'ambiente ha `write_data: false`: è la tua scelta; per scrivere in produzione portalo a `true` con un editor, fuori da Claude Code |
+| "niente import massivi né cancellazioni" (sandbox o pre-produzione) | Anche lì l'ambiente ha `write_data: false`: import in blocco e cancellazioni restano spenti finché non lo porti a `true` |
+| Import di configurazione in produzione: "istantanea" | Serve prima l'export dei dati attuali dell'oggetto nel run (`runs/<RUN>/evidence/`): il plugin lo scarica e lo passa al piano |
+| Esito dell'import "non riconosciuto" o righe "mancanti" | La pagina non mostrava un esito leggibile: il plugin rilegge pagina o log; le righe senza esito vanno verificate, non sono riuscite |
+| Template rifiutato: "intestazione su più righe" | Lascia una sola riga d'intestazione (niente gruppi sopra le colonne) e reimpara il template |
+| Chiede più approvazioni del solito | Il livello di autonomia è medio o basso (o il file `autonomy.yaml` è illeggibile): `use show` lo dice; `AUTONOMIA ALTA` lo cambia in sandbox e pre-produzione |
 | Il plugin rifiuta di creare il workspace | Stai usando una cartella dentro `plugin/`: usa `knowledge/` o una cartella esterna |
 
 Elenco completo: [Manuale di riferimento, §58](docs/MANUAL.md).

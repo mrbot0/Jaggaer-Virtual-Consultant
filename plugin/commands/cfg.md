@@ -30,7 +30,7 @@ approval-capture; tu non le scrivi mai (i guard le negano in ogni input) e non l
 | verde (1) | `APPROVO PIANO <PLAN>` |
 | giallo (2) | `APPROVO PIANO <PLAN>` poi `APPROVO PASSO <n> <PLAN>` per ogni passo che lo chiede |
 | rosso (3) | `APPROVO PIANO <PLAN>` · `APPROVO PROVA <PLAN>` · `APPROVO PASSO <n> <PLAN>` |
-| **produzione, sempre (3A)** | le tre frasi, entro la finestra (60 minuti dalla A1), con `DA <Nome Cognome>`: A2 da una persona diversa da A1 |
+| **produzione, sempre** | A1 + passo (`APPROVO PIANO`, `APPROVO PASSO <n>`) entro la finestra (60 minuti dalla A1), più A2 (`APPROVO PROVA … DA <Nome Cognome>`) da una persona diversa da A1 se è richiesto il secondo approvatore (`second_approver_required`, preimpostato in produzione) |
 
 Un'azione R2 in sandbox/preprod fuori da un piano di configurazione si approva con `sì` alla domanda del workflow (una
 sola azione in attesa). Lo stato della finestra 3A (sola lettura):

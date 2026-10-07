@@ -12,7 +12,8 @@
 //  - scrittura: percorso (audit, .env*, .auth/**, codice del plugin senza JVC_DEV) e contenuto (JVC_DEV);
 //  - browser: click e input il cui bersaglio (element, selettore, testo digitato, nome dell'elemento nell'ultimo
 //    snapshot osservato, nomi della voce dell'Atlas legata al ref) corrisponde a un verbo di cancellazione ⇒ deny che
-//    nomina ACT-DELETE; condizioni sul passo attivo del piano (when/unless_step_class). Il testo della pagina è un
+//    nomina ACT-DELETE (eccezione, spec 2026-10-06 §3.7: un click legato al SEL di un passo DELETE del piano attivo in
+//    sandbox/preprod; regola con allow_in_delete_step); condizioni sul passo attivo del piano (when/unless_step_class). Il testo della pagina è un
 //    dato: il guard non legge mai tool_response né il contenuto della pagina come istruzione.
 // hard-deny ⇒ deny (in audit) · confirm ⇒ ask (in audit). Nessun output quando nessuna regola scatta.
 import { readFileSync, statSync } from "node:fs";
@@ -389,6 +390,23 @@ function labelTexts(ctx, a) {
   return [...by.values()];
 }
 
+// Eccezione di DR-BROWSER-002 (spec 2026-10-06 §3.7): vale solo se, in sandbox o pre-produzione, il passo attivo del piano
+// è un DELETE di classe ACT-DELETE (piano valido, impronta, passo leggibili) e l'azione è un click, senza invio, i cui
+// uid/ref sono TUTTI l'elemento del SEL di quel passo nell'ultimo snapshot osservato (legame verificato con la stessa
+// funzione di guard-config-scope) e quell'elemento è l'UNICO dello snapshot legato al SEL (nessuna istanza ambigua). Ogni dubbio ⇒ false ⇒ la regola nega: fail-closed.
+async function deleteStepSel(ctx, call, a) {
+  if (a.kind !== "click" || a.submits === true || a.untargeted) return false;
+  if (!["sandbox", "preprod"].includes(ctx.session?.env?.type)) return false;
+  if (!ctx.session?.active_plan) return false;
+  const { activeStep } = await import("./plan-step.mjs");
+  const st = await activeStep(ctx);
+  if (st.reason || !st.step || st.step.verb !== "DELETE" || st.step.action_class !== "ACT-DELETE") return false;
+  const { bindingRefusal, deleteInstanceRefusal } = await import("./config-scope.mjs");
+  const one = { ...ctx, call, actions: [a] };
+  // un passo DELETE vale UN elemento: più uid dello snapshot legati allo stesso SEL (righe di una lista) ⇒ istanza ambigua ⇒ deny
+  return bindingRefusal(one, st.step) === null && deleteInstanceRefusal(one, st.step, [a]) === null;
+}
+
 async function browserMatches(ctx, rules) {
   const call = classify(ctx.tool, ctx.ti);
   const actions = (call.actions ?? [call]).filter((a) => a.kind === "click" || a.kind === "input");
@@ -415,6 +433,7 @@ async function browserMatches(ctx, rules) {
         if (!(testPatterns(r, l.text) ?? testPatterns(r, skeleton(l.text)))) continue;
         if (r.when_step_class && !r.when_step_class.includes(await stepClass())) continue;
         if (r.unless_step_class && r.unless_step_class.includes(await stepClass())) continue;
+        if (r.allow_in_delete_step && await deleteStepSel(ctx, call, a)) continue;
         local.push({ ...hitOf(r, l.text), label: normLabel(l.text) });
       }
     }

@@ -22,6 +22,8 @@ test("lint-spec: caso pulito; passo senza expect, DELETE, compensazione mancante
   c.compensations = [{ step: 4, kind: "delete" }, { step: 3, kind: "cancel", action: "requisition.delete" }];
   delete c.derivation; delete c.boundary; c.summary = "come S.STD.P2P.BRF.0001";
   assert.deepEqual(rules(lintCase(c)), ["L-ANALYTIC", "L-DELETE", "L-DERIVATION", "L-EXPECT"]);
+  // il verbo DELETE in sé non è più una violazione (spec 2026-10-06 §3.7): restano la compensazione delete e l'azione che cancella
+  assert.ok(lintCase(c).filter((x) => x.rule === "L-DELETE").every((x) => /^compensazione del passo/.test(x.at)), JSON.stringify(lintCase(c).filter((x) => x.rule === "L-DELETE")));
   const noComp = nrtCase(); noComp.compensations = [];
   assert.deepEqual(lintCase(noComp).map((x) => [x.rule, x.at]), [["L-COMP", "passo 3"], ["L-COMP", "passo 4"]]);
 });
@@ -69,6 +71,16 @@ test("lint-spec CLI: exit 3 su violazione con --against, 0 sul pulito; lintPlan 
   assert.deepEqual(rules(lintPlan(p2)), ["L-COMP"]);
   const p3 = structuredClone(plan); p3.steps[3].expect = { messages: [] };
   assert.ok(lintPlan(p3, { previous: plan }).some((x) => x.rule === "L-WEAKEN"));
+});
+
+test("lint-spec (spec 2026-10-06 §3.7): DELETE / ACT-DELETE in un piano di sandbox o pre-produzione ⇒ pulito; in produzione ⇒ L-DELETE; compensazione delete sempre L-DELETE", () => {
+  const step = { n: 1, verb: "DELETE", action_class: "ACT-DELETE", target: "C.ACME.P2P.SEL.0002", expect: { elements: [] } };
+  const plan = (env, compensations = [{ step: 1, kind: "restore", ref: "runs/RUN.ACME.20261007.1000.P2P/evidence/before.json" }]) => ({ plan_id: "PLAN.ACME.P2P.0001", customer: "ACME", env, steps: [step], compensations });
+  for (const env of ["sandbox", "preprod"]) assert.deepEqual(lintPlan(plan(env)), [], env);
+  const prod = lintPlan(plan("prod"));
+  assert.deepEqual(prod.map((x) => [x.rule, x.at]), [["L-DELETE", "passo 1"], ["L-DELETE", "passo 1"]]);
+  assert.ok(prod.some((x) => /DELETE/.test(x.message) && /produzione/.test(x.message)) && prod.some((x) => /ACT-DELETE/.test(x.message)));
+  assert.deepEqual(rules(lintPlan(plan("preprod", [{ step: 1, kind: "delete" }]))), ["L-DELETE"], "compensazione delete: sempre vietata");
 });
 
 test("lint-scope (ADR-32): SEL/FLW di un altro scope, creazione di un'entità di un altro scope, fixture di altro scope senza handoff ⇒ violazioni; con handoff valido ok", () => {

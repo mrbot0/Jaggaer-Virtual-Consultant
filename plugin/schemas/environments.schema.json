@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "environments.schema.json",
   "title": "customers/<C>/config/environments.yaml — ambienti del cliente (§51.1)",
-  "description": "Il plugin dichiara, rileva e verifica l'ambiente prima di ogni azione (§51.2). Le regole di produzione di §52.1 (strato 1) sono imposte QUI, come if/then: type prod ⇒ write_data false, 3 approvazioni per ogni livello, niente rosso in config_levels (solo prod_allowed_red, per oggetto). Le violazioni di $defs/prodPolicy sono violazioni di policy (validate-env exit 3), le altre errori di forma (exit 1).",
+  "description": "Il plugin dichiara, rileva e verifica l'ambiente prima di ogni azione (§51.2). Le regole di produzione di §52.1 (strato 1) sono imposte QUI, come if/then: type prod ⇒ write_data boolean (scrive solo se true, spec 2026-10-06 §3.6), 3 approvazioni per ogni livello, niente rosso in config_levels (solo prod_allowed_red, per oggetto). Le violazioni di $defs/prodPolicy sono violazioni di policy (validate-env exit 3), le altre errori di forma (exit 1).",
   "type": "object",
   "required": ["environments"],
   "additionalProperties": false,
@@ -103,10 +103,10 @@
       ]
     },
     "prodPolicy": {
-      "description": "§52.1: in produzione non si scrivono dati, mai; ogni configurazione con 3A; il rosso solo per oggetto in prod_allowed_red.",
+      "description": "§52.1 superato (spec 2026-10-06 §3.6): in produzione si scrive solo con write_data: true (interruttore dell'utente) e approvazione per passo; ogni configurazione con A1 + approvazione del passo, più A2 se è richiesto il secondo approvatore (second_approver_required, predefinito); il rosso solo per oggetto in prod_allowed_red.",
       "type": "object",
       "properties": {
-        "write_data": { "const": false },
+        "write_data": { "type": "boolean" },
         "config_levels": { "not": { "contains": { "const": "rosso" } } },
         "approvals": {
           "type": "object",

@@ -1,12 +1,11 @@
 // Validazione di un piano di esecuzione contro il catalogo delle azioni (§29.4)
-// e l'ambiente (§52.1 strato 2): "un'azione fuori catalogo non esiste per il
-// plugin; validate-schema la rifiuta nel piano".
+// e l'ambiente (§52.1 strato 2, rivisto da spec 2026-10-06 §3.3): "un'azione
+// fuori catalogo non esiste per il plugin; validate-schema la rifiuta nel piano".
 //   validatePlan(plan, { env, catalog }) → { ok, errors, policy, warnings }
-//     - schema execution-plan (verbi del vocabolario: DELETE non esiste);
+//     - schema execution-plan (verbi del vocabolario; DELETE solo con ACT-DELETE; UPLOAD con file);
 //     - ogni passo ha action_class, e la classe è in catalogo;
-//     - ACT-DELETE ⇒ invalido ovunque; colonna dell'ambiente `never` ⇒ invalido;
-//     - effect write con env.type prod ⇒ invalido;
-//     - ACT-CFG-CHANGE in prod ⇒ serve approvals: 3A nel piano;
+//     - colonna dell'ambiente `never` ⇒ invalido (ACT-DELETE in prod);
+//     - colonna `approval`/`referent` ⇒ ammessa, con avviso (l'approvazione per passo la impone guard-production);
 //     - passo di configurazione con effetto ⇒ serve `config` (oggetto/area, livello);
 //     - verbo del passo fuori da verbs_allowed della classe ⇒ invalido;
 //     - plan.env deve essere l'id dell'ambiente (se env.id è noto).
@@ -51,17 +50,14 @@ export function validatePlan(plan, { env, catalog = loadCatalog() } = {}) {
   const steps = Array.isArray(plan?.steps) ? plan.steps : [];
   for (const s of steps) {
     const at = `passo ${s?.n ?? "?"}`;
-    if (s?.verb === "DELETE") { policy.push(`${at}: il verbo DELETE non esiste nel vocabolario dei piani (ADR-06: close/cancel)`); continue; }
     const code = s?.action_class;
     if (!code) { errors.push(`${at}: action_class mancante (ogni passo appartiene a una classe del catalogo, §29.4)`); continue; }
-    if (code === "ACT-DELETE") { policy.push(`${at}: ACT-DELETE non è ammessa in nessun ambiente (§29.4, ADR-06)`); continue; }
+    if (s?.verb === "DELETE" && code !== "ACT-DELETE") { errors.push(`${at}: il verbo DELETE vale solo con la classe ACT-DELETE`); continue; }
     const act = catalog.get(code);
     if (!act) { policy.push(`${at}: classe di azione fuori catalogo: ${code}`); continue; }
     if (!type) continue;
     const adm = act.environments?.[col];
-    if (adm === "never") policy.push(`${at}: ${code} non è ammessa in ${type}${type === "prod" ? " — in produzione non si scrivono dati; posso farlo in sandbox o pre-produzione (§52.1)" : ""}`);
-    else if (act.effect === "write" && type === "prod") policy.push(`${at}: ${code} scrive dati: in prod mai (§52.1)`);
-    if (adm === "3A" && plan?.approvals !== "3A") policy.push(`${at}: ${code} in ${type} richiede il protocollo 3A: il piano deve dichiarare approvals: 3A (§52.2)`);
+    if (adm === "never") policy.push(`${at}: ${code} non è ammessa in ${type} (§29.4, spec 2026-10-06 §3.3)`);
     if (adm === "referent") warnings.push(`${at}: ${code} in ${type} solo con referente presente`);
     if (adm === "approval") warnings.push(`${at}: ${code} in ${type} solo con approvazione esplicita`);
     if (s.verb && Array.isArray(act.verbs_allowed) && !act.verbs_allowed.includes(s.verb)) errors.push(`${at}: il verbo ${s.verb} non appartiene alla classe ${code} (${act.verbs_allowed.join(" ")})`);
@@ -76,7 +72,9 @@ const HELP = `uso: node scripts/decide/validate-plan.mjs <piano.yaml|json> (--en
 
 Valida un piano di esecuzione contro schemas/execution-plan.schema.json e il
 catalogo delle azioni (product/kb/actions, §29.4): classe fuori catalogo,
-ACT-DELETE, scritture in prod, ACT-CFG-CHANGE in prod senza approvals: 3A.
+ACT-DELETE in produzione, classi non ammesse nell'ambiente (colonna never).
+Le scritture in produzione sono ammesse dal catalogo con approvazione per passo
+(spec 2026-10-06 §3.3): la imposta guard-production, qui resta un avviso.
 
 Exit code: 0 valido · 1 piano malformato · 2 errore di sistema · 3 violazione di policy (§29.4, §52).`;
 

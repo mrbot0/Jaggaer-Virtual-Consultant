@@ -38,7 +38,7 @@ const EXPECTED = {
   "DT-023": ["rapida", "standard", "profonda"],
   "DT-024": ["epistemica", "aleatoria", "mista"],
   "DT-025": ["punteggio"],
-  "DT-026": ["avvia", "mostra-piano", "approvazione-3A", "rifiuta", "chiedi"],
+  "DT-026": ["avvia", "mostra-piano", "rifiuta", "chiedi"],
 };
 const SPEC_CALIBRATED = new Set(["DT-002", "DT-003", "DT-017", "DT-018", "DT-021", "DT-023", "DT-025"]);
 const MIXED = new Set(["DT-007"]);  // rischio base per area dalla spec, correttivi progettati
@@ -177,23 +177,29 @@ test("DT-025 §19.18: guadagno epistemico atteso, formula della spec", () => {
   approx(r.score, b[1].gain_normalized);
 });
 
-test("DT-026 §29.5/§61: avvio automatico solo ≤ R1 in sandbox o R0 ovunque", () => {
+test("DT-026 §29.5/§61 + spec 2026-10-06 §3.5-§3.6: avvio se R0 o se il piano non chiede approvazioni; prod ⇒ piano; DELETE in prod ⇒ rifiuta", () => {
   const t = loadTable("DT-026");
   const base = { critical_missing: false, action_class_allowed: true, config_change: false };
-  assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "sandbox" }).outcome, "avvia");
-  assert.equal(evaluate(t, { ...base, max_risk: "R0", environment: "prod" }).outcome, "avvia");
-  assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "preprod" }).outcome, "mostra-piano");
-  assert.equal(evaluate(t, { ...base, max_risk: "R2", environment: "sandbox" }).outcome, "mostra-piano");
-  assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "prod", config_change: true }).outcome, "approvazione-3A");
-  assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "prod", action_class_allowed: false }).outcome, "rifiuta");
-  assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "sandbox", critical_missing: true }).outcome, "chiedi");
-  // produzione: mai 'mostra-piano' — configurazione → 3A (§52.2), scrittura di dati → rifiuto (§52.1)
-  assert.equal(evaluate(t, { ...base, max_risk: "R1", environment: "prod" }).outcome, "rifiuta");
-  assert.equal(evaluate(t, { ...base, max_risk: "R2", environment: "prod" }).outcome, "rifiuta");
-  assert.equal(evaluate(t, { ...base, max_risk: "R2", environment: "prod", config_change: true }).outcome, "approvazione-3A");
-  for (const risk of ["R1", "R2", "R3"]) for (const config_change of [true, false]) {
-    assert.notEqual(evaluate(t, { ...base, max_risk: risk, environment: "prod", config_change }).outcome, "mostra-piano");
-  }
+  const o = (v) => evaluate(t, { ...base, ...v }).outcome;
+  // needs_approval assente ⇒ default true (null_policy): come prima per sandbox/pre-produzione
+  assert.equal(o({ max_risk: "R1", environment: "sandbox" }), "avvia");
+  assert.equal(o({ max_risk: "R0", environment: "prod" }), "avvia");
+  assert.equal(o({ max_risk: "R1", environment: "preprod" }), "mostra-piano");
+  assert.equal(o({ max_risk: "R2", environment: "sandbox" }), "mostra-piano");
+  assert.equal(o({ max_risk: "R1", environment: "sandbox", critical_missing: true }), "chiedi");
+  // nessuna approvazione col livello attuale ⇒ avvia (anche R2 in pre-produzione)
+  assert.equal(o({ max_risk: "R1", environment: "preprod", needs_approval: false }), "avvia");
+  assert.equal(o({ max_risk: "R2", environment: "preprod", needs_approval: false }), "avvia");
+  assert.equal(o({ max_risk: "R1", environment: "preprod", needs_approval: true }), "mostra-piano");
+  // produzione: scrittura e configurazione ⇒ piano da approvare (non più rifiuto né 3A); solo ACT-DELETE è rifiutata
+  assert.equal(o({ max_risk: "R1", environment: "prod" }), "mostra-piano");
+  assert.equal(o({ max_risk: "R2", environment: "prod" }), "mostra-piano");
+  assert.equal(o({ max_risk: "R1", environment: "prod", config_change: true }), "mostra-piano");
+  assert.equal(o({ max_risk: "R2", environment: "prod", config_change: true }), "mostra-piano");
+  assert.equal(o({ max_risk: "R3", environment: "prod" }), "mostra-piano");
+  assert.equal(o({ max_risk: "R3", environment: "sandbox", needs_approval: true }), "mostra-piano");
+  assert.equal(o({ max_risk: "R1", environment: "prod", action_class_allowed: false }), "rifiuta");
+  assert.equal(o({ max_risk: "R1", environment: "prod", critical_missing: true, action_class_allowed: false }), "chiedi");
 });
 
 test("DT-023: 'rapida' solo con consolidato × R ≤ R1 × precedente confermato × 0 sorprese (§10.4)", () => {

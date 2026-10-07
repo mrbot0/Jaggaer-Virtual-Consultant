@@ -3,22 +3,34 @@ id: S.STD.XSC.ACT.0015
 type: ACT
 code: ACT-DELETE
 name: Cancellare
-title: "Cancellare (mai ammesso: solo per nominarla nei dinieghi)"
-summary: "Cancellare non è mai ammesso, in nessun ambiente: la classe esiste solo perché guard-destructive possa nominarla nel diniego. Si compensa con chiusura o annullamento (ADR-06)."
-risk: null
+title: "Cancellare (sandbox e pre-produzione, con approvazione; in produzione mai)"
+summary: "Cancellare un oggetto di prova con il verbo DELETE: solo in sandbox e pre-produzione, con approvazione per passo. In produzione mai: si compensa con chiusura o annullamento (ADR-06 superato in sandbox/pre-produzione, spec 2026-10-06 §3.7)."
+risk: R3
 environments:
-  sandbox: never
-  preprod: never
+  sandbox: approval
+  preprod: approval
   prod: never
 approvals:
-  sandbox: null
-  preprod: null
+  sandbox: 1
+  preprod: 1
   prod: null
-evidence_min: []
-report_kind: none
-db_writes: []
-budget_tokens: null
-verbs_allowed: []
+evidence_min:
+  - transition
+  - assertion
+report_kind: action
+db_writes:
+  - OBS
+  - CMP
+  - RPT
+budget_tokens: 15000
+verbs_allowed:
+  - DELETE
+  - CLICK
+  - READ
+  - VERIFY
+  - CAPTURE
+  - WAIT
+  - NAVIGATE
 effect: write
 facets:
   F1: doc-standard
@@ -40,3 +52,5 @@ sources:
     section: "29.4"
   - doc: jaggaer-virtual-consultant-architettura.md
     section: "52.1"
+  - doc: docs/superpowers/specs/2026-10-06-autonomia-ops-design.md
+    section: "3.3"

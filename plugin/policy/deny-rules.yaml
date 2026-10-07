@@ -28,6 +28,9 @@
 # on: glob (shell) — patterns sono NOMI CAMPIONE: nega ogni token con * ? [ che la shell può espandere in uno di essi.
 # trusted_labels_only (browser) — la regola vede solo le etichette affidabili (Atlas, snapshot osservato), mai
 # element/selector/testo forniti dal modello; ogni regola con supersedes è implicitamente trusted_labels_only.
+# allow_in_delete_step (browser, on: label) — la regola non scatta per un click legato al SEL di un passo DELETE (ACT-DELETE) del
+# piano attivo in sandbox/pre-produzione (spec 2026-10-06 §3.7); in ogni altro caso (nessun piano, altri passi, esplorazione,
+# produzione, uid non legato al SEL del passo) resta un deny. Il controllo è in hooks/lib/guards/destructive.mjs (deleteStepSel).
 # sanctioned — l'unica eccezione: UNA invocazione semplice `node <plugin>/<script> …` (nessuno di ( ) , @ { } $ ` ; & | < >
 # né a capo), ogni argomento validato per forma (positional, flags); le regole valgono comunque sugli argomenti;
 # require_args: opzioni sempre obbligatorie; requires_if { "--x": ["--y"] }: con --x serve anche --y (WP09d).
@@ -396,11 +399,21 @@ rules:
     severity: hard-deny
     applies_to: [browser]
     on: label
-    reason: "ACT-DELETE: cancellare non esiste nel vocabolario dei piani (§29.4, ADR-06); usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano"
+    allow_in_delete_step: true
+    reason: "ACT-DELETE: cancellare vale solo dentro un passo DELETE del piano attivo, in sandbox o pre-produzione, e solo sull'elemento del SEL di quel passo (spec 2026-10-06 §3.7, che supera ADR-06 in sandbox/pre-produzione; in produzione mai); altrove usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano"
     patterns:
-      - '\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|svuota|svuotare|distruggi|purge|delete|remove|erase|destroy|wipe)\b'
-      - '\b(elimina|cancella|rimuovi)\s+tutt[oi]\b'
-      - '\b(delete|remove)\s+all\b'
+      - '\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|distruggi|delete|remove|erase|destroy)\b'
+  # Cancellazioni massive (svuota, purge, wipe, "elimina tutti", "delete all"): SENZA allow_in_delete_step — un passo DELETE vale
+  # una cancellazione di un elemento (spec 2026-10-06 §3.7), mai una massiva; restano negate in ogni caso, anche dentro un DELETE.
+  - id: DR-BROWSER-006
+    severity: hard-deny
+    applies_to: [browser]
+    on: label
+    reason: "ACT-DELETE massiva (svuota, purge, wipe, elimina/cancella/rimuovi tutto, delete all): mai, nemmeno dentro un passo DELETE (un passo DELETE cancella UN elemento, spec 2026-10-06 §3.7); usa la compensazione close/cancel (chiudi, annulla, disattiva) prevista dal piano"
+    patterns:
+      - '\b(svuota|svuotare|purge|wipe)\b'
+      - '\b(elimina|eliminare|cancella|cancellare|rimuovi|rimuovere|distruggi)\s+tutt[aeio]\b'
+      - '\b(delete|remove|erase|destroy)\s+all\b'
   - id: DR-BROWSER-003
     severity: hard-deny
     applies_to: [browser]
