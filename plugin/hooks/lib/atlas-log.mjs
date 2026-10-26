@@ -1,14 +1,16 @@
-// Registro dell'esplorazione (soluzione A, spec 2026-09-30 §A1): per ogni pagina letta per intero, SOLA STRUTTURA —
+// Registro dell'esplorazione (soluzione A, spec 2026-09-30 §A1): per ogni pagina letta (per intero, o a pezzi marcati
+// partial: esplorazione libera, 26/10/2026), SOLA STRUTTURA —
 // ruoli, nomi redatti, obblighi — e i click fra le pagine. Mai valori dei campi, mai record di tabelle (righe e celle,
 // salvo le intestazioni di colonna), URL senza query. Lo scrive solo observe-append (guard-scope lo protegge).
-//   pageRecord(page, { pageSig, profile, env, ts }) · clickRecord({ fromSig, name, ts })
+//   pageRecord(page, { pageSig, profile, env, ts, partial }) · clickRecord({ fromSig, name, ts })
 //   appendAtlasLog(file, rec, { maxBytes }) → "written" | "full" · atlasLogFile(ws, customer, sid)
 import { appendFileSync, mkdirSync, statSync, existsSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { redactText } from "../../scripts/chrome/redact.mjs";
 
 export const ATLAS_LOG_MAX_BYTES = 20 * 1024 * 1024;
-const MAX_ELEMENTS = 300;
+// esplorazione libera (26/10/2026): nessun tetto di elementi per pagina (le pagine pesanti si registravano troncate);
+// restano il tetto del file (20 MB) e al più ROWS_PER_TABLE righe per tabella
 export const STRUCT_ROLES = new Set(["heading", "button", "link", "menuitem", "menuitemcheckbox", "menuitemradio", "tab", "checkbox", "radio", "combobox",
   "listbox", "option", "textbox", "searchbox", "spinbutton", "switch", "textarea", "group", "region", "form", "navigation", "menu", "menubar", "tablist",
   "tabpanel", "dialog", "alertdialog", "columnheader", "rowheader", "table", "grid", "treeitem"]);
@@ -32,10 +34,10 @@ const TOKEN_LIKE = (v) => /^\S{16,}$/.test(v) && /[a-z]/i.test(v) && /\d/.test(v
 const sampleOk = (e) => !SECRET_HINT.test(`${e.name ?? ""} ${e.description ?? ""} ${e.placeholder ?? ""}`) && !TOKEN_LIKE(String(e.value).trim());
 
 // Registro più ricco (richiesta dell'utente, 05/10/2026): prima la STRUTTURA (ruoli, nomi, obblighi, aiuto, segnaposto,
-// sola lettura, non valido, testo lungo, destinazione dei link, valori di esempio dei campi), poi — nello spazio che
-// resta fino a 300 elementi — le RIGHE delle tabelle (al più 20 per tabella), marcate record: dati, non struttura.
+// sola lettura, non valido, testo lungo, destinazione dei link, valori di esempio dei campi), poi le RIGHE delle tabelle
+// (al più 20 per tabella), marcate record: dati, non struttura.
 // Tutti i testi passano dalla redazione del profilo dell'ambiente (e-mail, codici fiscali, IBAN, telefoni, codici cliente…).
-export function pageRecord(page, { pageSig, profile = "strict", env = process.env, ts = new Date().toISOString() } = {}) {
+export function pageRecord(page, { pageSig, profile = "strict", env = process.env, ts = new Date().toISOString(), partial = false } = {}) {
   const els = Array.isArray(page?.elements) ? page.elements : [];
   const nodes = Array.isArray(page?.nodes) ? page.nodes : [];
   const byId = new Map(nodes.map((n) => [String(n.id), n]));
@@ -83,12 +85,11 @@ export function pageRecord(page, { pageSig, profile = "strict", env = process.en
   };
   // 1. struttura
   for (const e of els) {
-    if (kept.length >= MAX_ELEMENTS) break;
     if (!STRUCT_ROLES.has(e.role)) continue;
     if (!HEADER_ROLES.has(e.role) && inRecord(e)) continue;
     push(e);
   }
-  // 2. righe delle tabelle (record), nello spazio che resta, al più ROWS_PER_TABLE per tabella
+  // 2. righe delle tabelle (record), al più ROWS_PER_TABLE per tabella
   const ROW = new Set(["row"]);
   const TABLES = new Set(["table", "grid", "treegrid"]);
   const rowsOf = new Map();
@@ -96,7 +97,6 @@ export function pageRecord(page, { pageSig, profile = "strict", env = process.en
   // la riga delle intestazioni (contiene columnheader) non è un record e non conta fra le 20: le intestazioni ci sono già
   const headerRows = new Set(els.filter((e) => HEADER_ROLES.has(e.role)).map((e) => ancestor(e, ROW)?.id).filter((x) => x != null).map(String));
   for (const e of els) {
-    if (kept.length >= MAX_ELEMENTS) break;
     if (HEADER_ROLES.has(e.role)) continue;
     const isRow = e.role === "row";
     if (!isRow && !inRecord(e)) continue;
@@ -116,7 +116,7 @@ export function pageRecord(page, { pageSig, profile = "strict", env = process.en
   const hasChild = new Set(nodes.map((n) => String(n.parent)));
   const iframes = nodes.filter((n) => /^iframe$/i.test(String(n.role)) && !hasChild.has(String(n.id))).length;
   const messages = (page?.messages ?? []).map((m) => clip(red(m.text), 200)).filter(Boolean).slice(0, 20);
-  return { kind: "page", ts, url_path: urlPath(page?.url, profile, env), ...(iframes ? { iframes } : {}), page_sig: pageSig ?? null,
+  return { kind: "page", ts, ...(partial ? { partial: true } : {}), url_path: urlPath(page?.url, profile, env), ...(iframes ? { iframes } : {}), page_sig: pageSig ?? null,
     title: page?.title ? red(page.title) : null, elements: kept, ...(messages.length ? { messages } : {}) };
 }
 
