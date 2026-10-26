@@ -289,6 +289,8 @@ export function deleteInstanceRefusal(ctx, step, clicks = (ctx.actions ?? []).fi
   if (clicks.length > 1) return "più click nella stessa chiamata: un passo DELETE cancella un solo elemento";
   const refs = ctx.session?.browser?.snapshot?.refs;
   if (!refs || typeof refs !== "object") return "nessuno snapshot osservato: non si può verificare l'istanza da cancellare";
+  // esplorazione libera (26/10/2026): una mappa fatta di pezzi (letture parziali sommate) non mostra tutte le istanze
+  if (ctx.session.browser.snapshot.partial === true) return "la mappa della pagina viene da letture parziali (pezzi): per una cancellazione serve una lettura completa della pagina, che mostri tutte le istanze del SEL";
   const n = Object.values(refs).filter((v) => v === step.target).length;
   if (n !== 1) return `istanza ambigua: ${n} elementi dell'ultimo snapshot corrispondono al SEL ${step.target} (una cancellazione vale per UN elemento: usa uno snapshot in cui il SEL è un solo elemento)`;
   return null;

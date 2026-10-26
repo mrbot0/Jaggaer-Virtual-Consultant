@@ -150,8 +150,11 @@ export function clearedBy(call, { ok, landedTab = null, landed = () => false }) 
 }
 
 // Aggiorna la storia (copia) con gli azzeramenti e le etichette della chiamata e dice quali ref sono legabili.
-//  labels: [[ref, etichetta]] di tutta la risposta; keys: schede su cui registrarle; complete: lettura completa che lega.
-export function updateHistory(h0, { cleared = [], keys = [], labels = [], complete = false, url = null }) {
+//  labels: [[ref, etichetta]] di tutta la risposta; keys: schede su cui registrarle; complete: lettura completa che lega;
+//  firstOk: (esplorazione libera, 26/10/2026) ref di una lettura PARZIALE (ristretta, troncata) che hanno superato i
+//  controlli del legame (una sola occorrenza, fuori dai valori fra virgolette, pagina confermata): visti la prima volta
+//  si registrano con la loro etichetta, come in una lettura completa. Un find non ne ha mai (regola 4 invariata per lui).
+export function updateHistory(h0, { cleared = [], keys = [], labels = [], complete = false, firstOk = null, url = null }) {
   const h = { ...h0, tabs: { ...(h0.tabs ?? {}) } };
   for (const k of cleared) {
     if (k === "pw|*") { for (const t of Object.keys(h.tabs)) if (famOf(t) === "pw") h.tabs[t] = { l: {}, nav: true }; continue; }
@@ -177,7 +180,7 @@ export function updateHistory(h0, { cleared = [], keys = [], labels = [], comple
       const old = l[r];
       if (old === undefined) {
         if (n >= HISTORY_MAX) { full = true; continue; }
-        l[r] = complete && k !== TAINT ? k : TAINT;   // regola 4: visto la prima volta fuori da una lettura completa
+        l[r] = (complete || firstOk?.has(r)) && k !== TAINT ? k : TAINT;   // regola 4: prima volta fuori da una lettura completa o da un pezzo verificato
         n++;
       } else if (old !== k) l[r] = TAINT;             // regola 3: un'altra etichetta
     }
@@ -202,4 +205,11 @@ export function bindable(h, key, ref, label) {
     if (v === TAINT || v !== label) return false;
   }
   return own.l?.[ref] === label;
+}
+
+// Un ref già nella mappa della pagina resta legabile dopo questa chiamata? (letture a pezzi che si sommano: un pezzo
+// successivo che lo mostra con un'altra etichetta lo contamina nella storia ⇒ il legame portato dalla mappa cade)
+export function stillBound(h, key, ref) {
+  const label = h.tabs?.[key]?.l?.[ref];
+  return label !== undefined && label !== TAINT && bindable(h, key, ref, label);
 }

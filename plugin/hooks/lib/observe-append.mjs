@@ -13,7 +13,7 @@ import { createHash } from "node:crypto";
 import { loadHookState, sessionDir } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
 import { responseState, landedUrl } from "./browser-origin.mjs";
-import { tabKey, callKey, settlePending, historyFile, loadHistory, saveHistory, clearedBy, updateHistory, bindable, pendingFile, loadPending, savePending } from "./ref-history.mjs";
+import { tabKey, callKey, settlePending, historyFile, loadHistory, saveHistory, clearedBy, updateHistory, bindable, stillBound, pendingFile, loadPending, savePending } from "./ref-history.mjs";
 import { nextObserved, observedLocation } from "./observed-origin.mjs";
 import { isPageTextOp } from "./origin-markers.mjs";
 import { updateSessionFile } from "./session-state.mjs";
@@ -68,7 +68,9 @@ async function activeStep(ws, customer, ap) {
 //               nota di troncamento; take_snapshot di DevTools con sole chiavi previste; browser_snapshot di Playwright
 //               senza target né depth;
 //  "partial"  — find di Claude e di Playwright, letture ristrette o troncate, chiavi non previste, ogni browser_batch
-//               che legge l'albero: non legano MAI e azzerano la mappa della pagina;
+//               che legge l'albero. Esplorazione libera (26/10/2026): i pezzi della STESSA pagina (URL, scheda,
+//               famiglia) si sommano alla mappa con gli stessi controlli del legame; un pezzo di un'altra pagina apre una
+//               mappa nuova; un find aggiunge solo i ref coerenti con la storia della scheda (isFindRead);
 //  "nobind"   — altre chiamate di Claude (i ref di Claude si legano solo da un read_page completo);
 //  null       — nessuna lettura dell'albero: comportamento invariato (DevTools e Playwright legano dalle risposte
 //               delle azioni che riportano lo snapshot intero, come prima).
@@ -91,10 +93,16 @@ export function readMode(call, ti, text = "") {
   }
   return null;
 }
+// Lettura "find" (Claude, Playwright, o un browser_batch che ne contiene uno): risultati di una ricerca, non la pagina.
+const FIND_OPS = new Set(["find", "browser_find"]);
+export const isFindRead = (call) => (call.actions ?? [call]).some((a) => FIND_OPS.has(String(a.op ?? ""))) || FIND_OPS.has(String(call.op ?? ""));
 // Etichetta di un ref per la storia della pagina (ruolo + nome normalizzato), compatta.
 const labelKey = (e) => sha(`${e.role ?? ""}\u0001${normLabel(e.name ?? "")}`).slice(0, 16);
-const ONE_READ_ENVS = new Set(["sandbox", "dev"]);
 const LABELS_MAX = 2000;
+// ref (e nomi) di una mappa fatta di pezzi della stessa pagina: oltre, i ref nuovi non entrano (click negato: fail-closed)
+export const MERGED_REFS_MAX = 1000;
+// ambienti in cui un pezzo lega al SEL: produzione e ambiente ignoto no (i pezzi vi aggiungono solo i nomi)
+const PARTIAL_BIND_ENVS = new Set(["sandbox", "dev", "preprod"]);
 
 // Costruisce l'OBS (senza codice) dalla chiamata: pura rispetto al file system tranne Atlas e piano.
 export async function buildObservation({ ws, customer, session, call, state, resp, ti = null, env = process.env, now = new Date() }) {
@@ -187,7 +195,9 @@ export async function buildObservation({ ws, customer, session, call, state, res
       if (typeof e.name === "string" && e.name.trim()) { const t = redactText(e.name, { profile, env }).text ?? ""; names[String(e.ref)] = t.length > 200 ? `${t.slice(0, 100)}…${t.slice(-99)}` : t; }
     }
   }
-  const binds = mode === "complete" || (mode === null && call.family !== "claude-browser");
+  // esplorazione libera (26/10/2026): anche le letture parziali passano dagli stessi controlli (verified = ref che li superano)
+  const binds = mode === "complete" || mode === "partial" || (mode === null && call.family !== "claude-browser");
+  const verified = [];
   if (binds && loc?.url && (page.elements ?? []).some((e) => e.ref)) {
     pageUrl = loc.url;
     // WP07 giro 2 (I-1): un ref è legato solo se compare UNA volta fra tutti i nodi e UNA volta nel testo grezzo
@@ -211,55 +221,88 @@ export async function buildObservation({ ws, customer, session, call, state, res
     refs = {};
     for (const e of page.elements) {
       if (!e.ref || Object.keys(refs).length >= 300) continue;
-      refs[String(e.ref)] = page.formatMismatch || unbound(String(e.ref)) ? null : atlasMatch(atlas, e, { page: doc.page_signature })?.code ?? null;
+      const bad = page.formatMismatch || unbound(String(e.ref));
+      if (!bad) verified.push(String(e.ref));
+      refs[String(e.ref)] = bad ? null : atlasMatch(atlas, e, { page: doc.page_signature })?.code ?? null;
     }
   }
-  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page };
+  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find: isFindRead(call) };
 }
 
 // Nuovo stato del legame ref ↔ SEL in session.browser e della storia dei ref dopo la chiamata (puro: copie).
-// WP07 giro 4 (I-A):
-//  - lettura parziale, find, batch di lettura, navigazione o cambio di scheda di Claude ⇒ mappa della pagina azzerata
-//    ({}), catena rotta;
-//  - Claude in prod/preprod (e ambiente ignoto): un ref si lega solo se due letture complete CONSECUTIVE della stessa
-//    pagina e scheda lo associano allo stesso SEL (cand della lettura precedente); in sandbox/dev basta una lettura.
+// WP07 giro 4 (I-A): navigazione o cambio di scheda di Claude ⇒ mappa della pagina azzerata ({}).
 // WP07 giro 5 (I-A'): la storia delle etichette è PER SCHEDA e persistente (hooks/lib/ref-history.mjs), in tutte e tre
 // le famiglie: si azzera solo con un navigate a un nuovo documento o la chiusura di quella scheda; un ref visto con
-// un'altra etichetta, o la prima volta fuori da una lettura completa, non si lega più; la voce obs_pending della
-// chiamata (scritta da browser-origin) si chiude qui, nella stessa scrittura.
+// un'altra etichetta, o la prima volta in un find, non si lega più; la voce obs_pending della chiamata (scritta da
+// browser-origin) si chiude qui, nella stessa scrittura.
+// Esplorazione libera (brief del 26/10/2026, approvato dall'utente):
+//  - una lettura completa basta in ogni ambiente (tolta la catena delle due letture identiche di Claude fuori dalla
+//    sandbox: le sue azioni con effetto fuori dalla sandbox restano negate da claudeEffectRefusal, decisione WP08);
+//  - una lettura parziale (ristretta, troncata, find) della STESSA pagina (URL, scheda, famiglia della mappa) si SOMMA alla
+//    mappa: aggiunge i ref e i nomi che mostra, con gli stessi controlli (una occorrenza, fuori dalle virgolette, storia);
+//    i legami portati dalla mappa ricontrollati sulla storia aggiornata (un pezzo che mostra un ref con un'altra etichetta
+//    lo slega); un pezzo di un'altra pagina apre una mappa nuova con i soli suoi ref; la mappa è marcata partial (un
+//    passo DELETE vuole una lettura completa); un find aggiunge solo i ref coerenti con la storia; in produzione un pezzo
+//    aggiunge i nomi ma non lega al SEL (produzione invariata).
 // Firma del giro 4 nextBinding(b, opts) → browser ancora accettata (storia vuota); altrimenti → { browser, hist }.
+const joinNames = (a, b) => {
+  if (a == null || a === b) return b;
+  const t = `${a} | ${b}`;   // nomi diversi per lo stesso ref: si tengono entrambi (i guard vedono anche un "Elimina")
+  return t.length > 400 ? `${t.slice(0, 200)}…${t.slice(-199)}` : t;
+};
 export function nextBinding(b, hist, opts) {
   if (opts === undefined && hist && typeof hist === "object" && "call" in hist) return nextBinding(b, null, hist).browser;
-  const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null, names = null } = opts;
+  const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null, names = null, verified = null, find = false, sig = null } = opts;
   const out = { ...b };
   delete out.ref_labels;   // storia del giro 4 (un solo posto in session.json): sostituita dal file per scheda
   const tab = asked != null ? String(asked) : null;
+  const fam = call.family ?? null;
   const claudeNav = call.family === "claude-browser" && (call.actions ?? [call]).some((a) => a.kind === "navigate" || a.switches);
-  if (mode === "partial" || claudeNav) {
-    if (out.snapshot) out.snapshot = { obs: out.snapshot.obs, url: out.snapshot.url ?? null, tab: out.snapshot.tab ?? null, ts, refs: {}, cleared_by: String(call.op ?? call.tool ?? "") };
-  }
+  const prev = out.snapshot && typeof out.snapshot === "object" && !Array.isArray(out.snapshot) ? out.snapshot : null;
+  if (claudeNav && prev) out.snapshot = { obs: prev.obs, url: prev.url ?? null, tab: prev.tab ?? null, ts, refs: {}, cleared_by: String(call.op ?? call.tool ?? "") };
   // schede della storia: quella chiesta e quella del marcatore del server (se diverse, entrambe); nessuna ⇒ ignota
   const tabs = [...new Set([tab, labelLoc?.tab != null ? String(labelLoc.tab) : null].filter((t) => t != null))];
   const keys = tabs.length ? tabs.map((t) => tabKey(call.family, t)) : [tabKey(call.family, null)];
-  const complete = !!(refs && pageUrl);
-  const h = updateHistory(hist ?? { v: 1, tabs: {} }, { cleared: cleared.map((c) => c.key), keys, labels, complete, url: labelLoc?.url ?? null });
-  if (refs && pageUrl) {
+  const partial = mode === "partial";
+  const complete = !partial && !!(refs && pageUrl);
+  const firstOk = partial && !find && !claudeNav && refs && pageUrl ? new Set(verified ?? []) : null;
+  const h = updateHistory(hist ?? { v: 1, tabs: {} }, { cleared: cleared.map((c) => c.key), keys, labels, complete, firstOk, url: labelLoc?.url ?? null });
+  const mapOk = (m) => m && m.refs && typeof m.refs === "object" && !Array.isArray(m.refs);
+  const samePage = !claudeNav && mapOk(prev) && prev.url === pageUrl && (prev.tab ?? null) === tab && (prev.family ?? null) === fam;
+  // legami della mappa precedente ricontrollati sulla storia aggiornata, con le schede su cui erano stati legati
+  const carried = (m) => {
+    const ks = Array.isArray(m.hist_keys) && m.hist_keys.every((k) => typeof k === "string") && m.hist_keys.length ? m.hist_keys : keys;
+    return Object.fromEntries(Object.entries(m.refs).map(([r, v]) => [r, v != null && ks.every((k) => stillBound(h, k, r)) ? v : null]));
+  };
+  if (refs && pageUrl && !(partial && claudeNav)) {
     const label = new Map();
     for (const [r, k] of labels) label.set(r, label.has(r) && label.get(r) !== k ? "!" : k);
     const bound = { ...refs };
     for (const r of Object.keys(bound)) if (bound[r] != null && !keys.every((k) => bindable(h, k, r, label.get(r)))) bound[r] = null;
-    if (call.family === "claude-browser") {
-      const cand = Object.fromEntries(Object.entries(bound).filter(([, v]) => v != null));
-      if (!ONE_READ_ENVS.has(envType)) {
-        const prev = out.snapshot;
-        const chain = prev && prev.family === "claude-browser" && prev.cand && typeof prev.cand === "object" && prev.url === pageUrl && (prev.tab ?? null) === tab ? prev.cand : null;
-        for (const r of Object.keys(bound)) if (bound[r] != null && (!chain || chain[r] !== bound[r])) bound[r] = null;
+    const nm = names && typeof names === "object" ? names : {};
+    if (partial) {
+      // un find: solo i ref già visti nella scheda con la stessa etichetta (coerenti con la storia); gli altri fuori
+      if (find) for (const r of Object.keys(bound)) if (!keys.every((k) => stillBound(h, k, r))) delete bound[r];
+      const merged = samePage ? carried(prev) : {};
+      // produzione (e ambiente ignoto): un pezzo non crea legami; un ref già legato da una lettura completa resta com'è
+      if (!PARTIAL_BIND_ENVS.has(envType)) {
+        const ok = new Set(verified ?? []);
+        for (const r of Object.keys(bound)) bound[r] = Object.hasOwn(merged, r) && ok.has(r) ? merged[r] : null;
       }
-      out.snapshot = { obs, url: pageUrl, tab, ts, refs: bound, family: "claude-browser", cand };
+      const mergedNames = samePage && prev.names && typeof prev.names === "object" ? Object.fromEntries(Object.entries(prev.names).filter(([r]) => Object.hasOwn(merged, r))) : {};
+      for (const [r, v] of Object.entries(bound)) {
+        if (!Object.hasOwn(merged, r) && Object.keys(merged).length >= MERGED_REFS_MAX) continue;
+        merged[r] = v;
+        if (Object.hasOwn(nm, r)) mergedNames[r] = joinNames(mergedNames[r], nm[r]);
+      }
+      out.snapshot = { obs, url: pageUrl, tab, ts, refs: merged, family: fam, hist_keys: keys, partial: true, sig: (samePage ? prev.sig : null) ?? sig, names: mergedNames };
     } else {
-      out.snapshot = { obs, url: pageUrl, tab, ts, refs: bound };
+      out.snapshot = { obs, url: pageUrl, tab, ts, refs: bound, family: fam, hist_keys: keys, sig };
+      if (names && typeof names === "object") out.snapshot.names = Object.fromEntries(Object.entries(names).filter(([r]) => Object.hasOwn(bound, r)));
     }
-    if (names && typeof names === "object") out.snapshot.names = Object.fromEntries(Object.entries(names).filter(([r]) => Object.hasOwn(bound, r)));
+  } else if (partial && !claudeNav && mapOk(prev)) {
+    // pezzo senza ref o senza pagina confermata: la mappa resta, ma un legame che questa risposta ha contaminato cade
+    out.snapshot = { ...prev, refs: carried(prev) };
   }
   const browser = key ? settlePending(out, key, cleared.flatMap((c) => c.pend)) : out;
   return { browser, hist: h };
@@ -350,7 +393,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   }
 
   // 2. osservazione
-  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
+  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
   const { code, errs, payload } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
   const dir = join(st.ws, "customers", st.customer, "observations");
   mkdirSync(dir, { recursive: true });
@@ -359,6 +402,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
 
   // 3. registro di sessione: ultima osservazione, spreco (snapshot ripetuti senza azione)
   let waste = false;
+  let newSnap = null;
   const key = callKey(input);
   // storia del browser del cliente (sopravvive alla sessione: la mappa dei ref dell'estensione sopravvive a lei)
   const histFile = historyFile(join(st.ws, "customers", st.customer, ".sessions"));
@@ -367,6 +411,8 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   const cleared = clearedBy(call, { ok: state === "ok", landedTab: labelLoc?.tab ?? observedLocation(call.family, text, { asked, resp })?.tab ?? null,
     landed: (a) => !!landedUrl(call.family, text, { asked: a.tab ?? null, resp }) });
   const obsKindForLedger = doc.kind === "navigate" || doc.kind === "action" ? "action" : doc.kind;
+  // esplorazione libera: un pezzo della pagina porta la firma della mappa a cui si somma (i click che seguono partono da lì)
+  const pieceSig = () => (mode === "partial" && newSnap?.partial && newSnap.obs === code && typeof newSnap.sig === "string" ? newSnap.sig : null);
   updateSessionFile(st.sessionFile, (s) => {
     const o = s.ledger.observe ?? {};
     if (doc.kind === "snapshot" && doc.page_signature) {
@@ -376,13 +422,14 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       }
       o.snapshot_sig = doc.page_signature;
     } else if (obsKindForLedger === "action" || doc.kind === "error") o.snapshot_sig = null;
-    // ultimo snapshot osservato: vale solo per la pagina (URL) e la scheda su cui è stato preso (WP07 giro 4: letture
-    // parziali e find azzerano la mappa, due letture consecutive per Claude in prod/preprod); WP07 giro 5: storia dei
+    // ultimo snapshot osservato: vale solo per la pagina (URL) e la scheda su cui è stato preso (esplorazione libera:
+    // i pezzi della stessa pagina si sommano, una lettura completa basta ovunque); WP07 giro 5: storia dei
     // ref per scheda nel file della sessione, aggiornata sotto lo stesso lock di session.json, e chiusura della voce
     // obs_pending di questa chiamata (se questa scrittura non avviene, la voce resta e i guard non legano)
     // lock della storia dentro quello di session.json (stesso ordine per tutte le sessioni del cliente)
     s.browser = withFileLock(`${histFile}.lock`, () => {
-      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names });
+      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names, verified, find, sig: doc.page_signature ?? null });
+      newSnap = r.browser.snapshot ?? null;
       if (labels.length || cleared.length || labelLoc?.url) saveHistory(histFile, r.hist);
       // WP08: il marcatore del cliente si chiude qui, sotto gli stessi lock (ordine: session.json → storia → marcatore)
       withFileLock(`${pendFile}.lock`, () => {
@@ -395,7 +442,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     // WP09b giro 2: anello delle OBS di questa sessione (prova di autenticità per kb snapshot): session.json è protetto,
     // il DB no; una riga del DB vale solo se codice, page_sig, ts e sha256 del payload coincidono con una voce qui
     s.obs_ring = [...(Array.isArray(s.obs_ring) ? s.obs_ring : []), { code, page_sig: doc.page_signature ?? null, ts: doc.ts, sha256: sha(payload) }].slice(-OBS_RING_MAX);
-    s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
+    s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: pieceSig() ?? doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
     return s;
   });
   try {
@@ -437,8 +484,20 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     if (state === "ok" && mode === "complete" && pageUrl && page) {
       full = appendAtlasLog(file, pageRecord(page, { pageSig: doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts })) === "full" || full;
     }
-    // ogni snapshot che lega i ref (lettura completa o risposta di un'azione con la pagina intera) aggiorna i ref dei record
-    if (state === "ok" && page && refs && pageUrl) writeFileAtomic(lastPage, JSON.stringify({ obs: code, record_refs: recordRefs(page) }));
+    // esplorazione libera (26/10/2026): anche un pezzo della pagina (non un find: risultati di una ricerca) scrive un record
+    // marcato partial, con la firma della mappa a cui si somma; atlas-build unisce i pezzi consecutivi in una visita
+    const piece = state === "ok" && mode === "partial" && !find && pageUrl && page && newSnap?.partial && newSnap.obs === code;
+    if (piece) full = appendAtlasLog(file, pageRecord(page, { pageSig: pieceSig() ?? doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts, partial: true })) === "full" || full;
+    // ogni snapshot che lega i ref (lettura completa o risposta di un'azione con la pagina intera) aggiorna i ref dei record;
+    // un pezzo che si somma alla mappa aggiunge i suoi a quelli della mappa
+    if (state === "ok" && page && refs && pageUrl && (mode !== "partial" || newSnap?.obs === code)) {
+      let base = [];
+      const merged = mode === "partial" && newSnap?.partial && prevSnap?.obs && prevSnap.url === newSnap.url && (prevSnap.tab ?? null) === (newSnap.tab ?? null) && (prevSnap.family ?? null) === (newSnap.family ?? null);
+      if (merged) {
+        try { const lp0 = JSON.parse(readFileSync(lastPage, "utf8")); if (lp0?.obs === prevSnap.obs && prevSnap.url === newSnap.url) base = Array.isArray(lp0.record_refs) ? lp0.record_refs : []; } catch { base = []; }
+      }
+      writeFileAtomic(lastPage, JSON.stringify({ obs: code, record_refs: [...new Set([...base, ...recordRefs(page)])] }));
+    }
     if (full && fullWarningOnce(dirname(file))) warn.push("registro dell'esplorazione pieno (20 MB): pagine non registrate da qui in poi");
   } catch (err) { warn.push(`registro dell'esplorazione non scritto (${String(err?.message ?? err).slice(0, 80)})`); }
 
