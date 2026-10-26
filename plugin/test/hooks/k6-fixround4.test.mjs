@@ -137,7 +137,7 @@ test("I-A (aggiornato, esplorazione libera): una sola lettura completa lega in p
   assert.ok(allowed(clClick(ws, tr, "ref_3")), "sandbox: il click legittimo è negato");
 });
 
-test("I-A (aggiornato, esplorazione libera): letture parziali di Claude (ref_id, depth, filter interactive, troncata, in un browser_batch) e find si SOMMANO alla mappa della stessa pagina; un pezzo che mostra il ref con un'altra etichetta lo slega", async () => {
+test("I-A (aggiornato, esplorazione libera): letture parziali di Claude (ref_id, depth, filter interactive, troncata, in un browser_batch) si SOMMANO alla mappa della stessa pagina; un find (pagina mai confermata) la svuota; un pezzo che mostra il ref con un'altra etichetta lo slega", async () => {
   const PAGE = `link "Elenco richieste" [ref_3]\nbutton "Invia in approvazione" [ref_1]`;
   const partial = [
     [CL + "read_page", { tabId: 101, ref_id: "ref_3" }, PAGE],
@@ -153,6 +153,8 @@ test("I-A (aggiornato, esplorazione libera): letture parziali di Claude (ref_id,
     post(ws, CL + "read_page", { tabId: 101 }, claude(PAGE, url));
     assert.equal(refsOf(ws).ref_3, SEL, "controllo: una lettura completa lega");
     post(ws, tool, ti, claude(body, url));
+    // revisione di sicurezza (rilievo 4): il find non conferma la pagina ⇒ mappa svuotata (fail-closed)
+    if (tool.endsWith("find")) { assert.deepEqual(refsOf(ws), {}, JSON.stringify(refsOf(ws))); assert.ok(!allowed(clClick(ws, tr, "ref_3"))); continue; }
     assert.equal(refsOf(ws).ref_3, SEL, `${envId} ${tool} ${JSON.stringify(ti)}: ${JSON.stringify(refsOf(ws))}`);
     assert.equal(refsOf(ws).ref_1 ?? null, null);
     if (envId === "preprod") assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), `${tool}: click di Claude negato dalla decisione WP08`);
@@ -208,7 +210,9 @@ test("I-A (aggiornato, esplorazione libera): DevTools e Playwright — una lettu
       post(ws, DT + "take_snapshot", {}, dtPage(url));
       assert.equal(refsOf(ws)["1_5"], SEL, `${envId} DevTools completo: ${JSON.stringify(refsOf(ws))}`);
       post(ws, DT + "take_snapshot", { uid: "1_5" }, dtPage(url));
-      assert.equal(refsOf(ws)["1_5"], SEL, `${envId} DevTools ristretto: si somma`);
+      // chiavi non previste = chiamata non classificata: mappa nuova con i soli ref del pezzo (rilievo 4); in produzione
+      // un pezzo non lega
+      assert.equal(refsOf(ws)["1_5"], envId === "prod" ? null : SEL, `${envId} DevTools ristretto: ${JSON.stringify(refsOf(ws))}`);
       // le chiavi non previste azzerano l'origine osservata (regola invariata): niente click finché non si conferma
       assert.ok(!allowed(guards(ws, DT + "click", { uid: "1_5" }, { transcript_path: tr })));
       post(ws, DT + "take_snapshot", { verbose: true }, dtPage(url));
@@ -221,14 +225,9 @@ test("I-A (aggiornato, esplorazione libera): DevTools e Playwright — una lettu
       post(ws, PW + "browser_snapshot", {}, pwPage(url));
       assert.equal(refsOf(ws).e5, SEL, `${envId} Playwright completo: ${JSON.stringify(refsOf(ws))}`);
       post(ws, PW + op, ti, body(url));
+      if (op === "browser_find") { assert.deepEqual(refsOf(ws), {}, "browser_find: pagina mai confermata ⇒ mappa svuotata"); continue; }
       assert.equal(refsOf(ws).e5, SEL, `${envId} Playwright ${op} ${JSON.stringify(ti)}: ${JSON.stringify(refsOf(ws))}`);
       if (op !== "browser_find") assert.equal(readSession(ws).browser.snapshot.partial, true, `${envId} ${op}`);
-      // un ref nuovo di un find non entra (non coerente con la storia)
-      if (op === "browser_find") {
-        post(ws, PW + op, ti, `### Page\n- Page URL: ${url}\n### Result\n- button "Invia in approvazione" [ref=e9]`);
-        assert.ok(!Object.hasOwn(refsOf(ws), "e9"), JSON.stringify(refsOf(ws)));
-        assert.ok(!allowed(guards(ws, PW + "browser_click", { ref: "e9", element: "Invia in approvazione" }, { transcript_path: tr })));
-      }
     }
   }
 });

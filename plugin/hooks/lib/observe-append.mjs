@@ -198,6 +198,9 @@ export async function buildObservation({ ws, customer, session, call, state, res
   // esplorazione libera (26/10/2026): anche le letture parziali passano dagli stessi controlli (verified = ref che li superano)
   const binds = mode === "complete" || mode === "partial" || (mode === null && call.family !== "claude-browser");
   const verified = [];
+  // revisione di sicurezza (rilievo 2): un pezzo troncato (nota del server) o con un numero dispari di virgolette (un valore
+  // aperto può nascondere righe forgiate) non ha ref verificati: non aggiunge nulla alla mappa
+  const unsafePiece = mode === "partial" && (TRUNCATED.test(text) || (String(text).replace(/\\./g, "").match(/"/g) ?? []).length % 2 === 1);
   if (binds && loc?.url && (page.elements ?? []).some((e) => e.ref)) {
     pageUrl = loc.url;
     // WP07 giro 2 (I-1): un ref è legato solo se compare UNA volta fra tutti i nodi e UNA volta nel testo grezzo
@@ -222,11 +225,11 @@ export async function buildObservation({ ws, customer, session, call, state, res
     for (const e of page.elements) {
       if (!e.ref || Object.keys(refs).length >= 300) continue;
       const bad = page.formatMismatch || unbound(String(e.ref));
-      if (!bad) verified.push(String(e.ref));
+      if (!bad && !unsafePiece) verified.push(String(e.ref));
       refs[String(e.ref)] = bad ? null : atlasMatch(atlas, e, { page: doc.page_signature })?.code ?? null;
     }
   }
-  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find: isFindRead(call) };
+  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find: isFindRead(call), confirmedUrl: loc?.url ?? null };
 }
 
 // Nuovo stato del legame ref ↔ SEL in session.browser e della storia dei ref dopo la chiamata (puro: copie).
@@ -239,25 +242,29 @@ export async function buildObservation({ ws, customer, session, call, state, res
 //  - una lettura completa basta in ogni ambiente (tolta la catena delle due letture identiche di Claude fuori dalla
 //    sandbox: le sue azioni con effetto fuori dalla sandbox restano negate da claudeEffectRefusal, decisione WP08);
 //  - una lettura parziale (ristretta, troncata, find) della STESSA pagina (URL, scheda, famiglia della mappa) si SOMMA alla
-//    mappa: aggiunge i ref e i nomi che mostra, con gli stessi controlli (una occorrenza, fuori dalle virgolette, storia);
-//    i legami portati dalla mappa ricontrollati sulla storia aggiornata (un pezzo che mostra un ref con un'altra etichetta
-//    lo slega); un pezzo di un'altra pagina apre una mappa nuova con i soli suoi ref; la mappa è marcata partial (un
-//    passo DELETE vuole una lettura completa); un find aggiunge solo i ref coerenti con la storia; in produzione un pezzo
-//    aggiunge i nomi ma non lega al SEL (produzione invariata).
+//    mappa; un pezzo di un'altra pagina apre una mappa nuova con i soli suoi ref; la mappa è marcata partial (un passo
+//    DELETE vuole una lettura completa); in produzione (e ambiente ignoto) un pezzo non crea legami al SEL.
+// Revisione di sicurezza dei commit (quattro rilievi):
+//  1. un pezzo aggiunge un ref E il suo nome solo se il ref è verificato (una occorrenza, fuori dai valori fra virgolette)
+//     e coerente con la storia della scheda (stillBound); di una lettura completa i ref non verificati sono elencati in
+//     `unverified` e il guard dell'esplorazione nega click e input su di loro;
+//  2. un pezzo con nota di troncamento o con un numero dispari di virgolette non ha ref verificati (buildObservation):
+//     non aggiunge nulla, la mappa resta;
+//  3. mai nomi uniti né tagliati: un ref della mappa che la storia non conferma più (mostrato con un'altra etichetta) esce
+//     dalla mappa con il suo nome; un ref confermato prende il nome dell'ultimo pezzo (stessa etichetta normalizzata);
+//  4. pezzo di pagina non confermata (o di un'altra pagina, senza ref) ⇒ mappa svuotata; un'azione nella stessa chiamata
+//     (click, testo, upload, dialog, script, batch con effetto) ⇒ niente legami portati dalla mappa precedente.
 // Firma del giro 4 nextBinding(b, opts) → browser ancora accettata (storia vuota); altrimenti → { browser, hist }.
-const joinNames = (a, b) => {
-  if (a == null || a === b) return b;
-  const t = `${a} | ${b}`;   // nomi diversi per lo stesso ref: si tengono entrambi (i guard vedono anche un "Elimina")
-  return t.length > 400 ? `${t.slice(0, 200)}…${t.slice(-199)}` : t;
-};
+const ACT_KINDS = new Set(["click", "input", "upload", "dialog", "script", "other"]);
 export function nextBinding(b, hist, opts) {
   if (opts === undefined && hist && typeof hist === "object" && "call" in hist) return nextBinding(b, null, hist).browser;
-  const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null, names = null, verified = null, find = false, sig = null } = opts;
+  const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null, names = null, verified = null, find = false, sig = null, confirmedUrl = null } = opts;
   const out = { ...b };
   delete out.ref_labels;   // storia del giro 4 (un solo posto in session.json): sostituita dal file per scheda
   const tab = asked != null ? String(asked) : null;
   const fam = call.family ?? null;
   const claudeNav = call.family === "claude-browser" && (call.actions ?? [call]).some((a) => a.kind === "navigate" || a.switches);
+  const acted = (call.actions ?? [call]).some((a) => ACT_KINDS.has(a.kind) || a.submits === true);
   const prev = out.snapshot && typeof out.snapshot === "object" && !Array.isArray(out.snapshot) ? out.snapshot : null;
   if (claudeNav && prev) out.snapshot = { obs: prev.obs, url: prev.url ?? null, tab: prev.tab ?? null, ts, refs: {}, cleared_by: String(call.op ?? call.tool ?? "") };
   // schede della storia: quella chiesta e quella del marcatore del server (se diverse, entrambe); nessuna ⇒ ignota
@@ -265,14 +272,20 @@ export function nextBinding(b, hist, opts) {
   const keys = tabs.length ? tabs.map((t) => tabKey(call.family, t)) : [tabKey(call.family, null)];
   const partial = mode === "partial";
   const complete = !partial && !!(refs && pageUrl);
-  const firstOk = partial && !find && !claudeNav && refs && pageUrl ? new Set(verified ?? []) : null;
+  const okSet = new Set(Array.isArray(verified) ? verified : []);
+  const firstOk = partial && !find && !claudeNav && refs && pageUrl ? okSet : null;
   const h = updateHistory(hist ?? { v: 1, tabs: {} }, { cleared: cleared.map((c) => c.key), keys, labels, complete, firstOk, url: labelLoc?.url ?? null });
   const mapOk = (m) => m && m.refs && typeof m.refs === "object" && !Array.isArray(m.refs);
-  const samePage = !claudeNav && mapOk(prev) && prev.url === pageUrl && (prev.tab ?? null) === tab && (prev.family ?? null) === fam;
-  // legami della mappa precedente ricontrollati sulla storia aggiornata, con le schede su cui erano stati legati
-  const carried = (m) => {
-    const ks = Array.isArray(m.hist_keys) && m.hist_keys.every((k) => typeof k === "string") && m.hist_keys.length ? m.hist_keys : keys;
-    return Object.fromEntries(Object.entries(m.refs).map(([r, v]) => [r, v != null && ks.every((k) => stillBound(h, k, r)) ? v : null]));
+  const pieceUrl = pageUrl ?? confirmedUrl;
+  const samePage = !claudeNav && !acted && mapOk(prev) && pieceUrl != null && prev.url === pieceUrl && (prev.tab ?? null) === tab && (prev.family ?? null) === fam;
+  // la mappa precedente, ricontrollata sulla storia aggiornata (schede su cui era stata legata): un ref che la storia non
+  // conferma più esce con il suo nome
+  const kept = (m) => {
+    const ks = Array.isArray(m.hist_keys) && m.hist_keys.length && m.hist_keys.every((k) => typeof k === "string") ? m.hist_keys : keys;
+    const rs = Object.fromEntries(Object.entries(m.refs).filter(([r]) => ks.every((k) => stillBound(h, k, r))));
+    const ns = m.names && typeof m.names === "object" ? Object.fromEntries(Object.entries(m.names).filter(([r]) => Object.hasOwn(rs, r))) : {};
+    const unv = Array.isArray(m.unverified) ? m.unverified.filter((r) => Object.hasOwn(rs, r)) : [];
+    return { rs, ns, unv };
   };
   if (refs && pageUrl && !(partial && claudeNav)) {
     const label = new Map();
@@ -281,28 +294,33 @@ export function nextBinding(b, hist, opts) {
     for (const r of Object.keys(bound)) if (bound[r] != null && !keys.every((k) => bindable(h, k, r, label.get(r)))) bound[r] = null;
     const nm = names && typeof names === "object" ? names : {};
     if (partial) {
-      // un find: solo i ref già visti nella scheda con la stessa etichetta (coerenti con la storia); gli altri fuori
-      if (find) for (const r of Object.keys(bound)) if (!keys.every((k) => stillBound(h, k, r))) delete bound[r];
-      const merged = samePage ? carried(prev) : {};
-      // produzione (e ambiente ignoto): un pezzo non crea legami; un ref già legato da una lettura completa resta com'è
-      if (!PARTIAL_BIND_ENVS.has(envType)) {
-        const ok = new Set(verified ?? []);
-        for (const r of Object.keys(bound)) bound[r] = Object.hasOwn(merged, r) && ok.has(r) ? merged[r] : null;
-      }
-      const mergedNames = samePage && prev.names && typeof prev.names === "object" ? Object.fromEntries(Object.entries(prev.names).filter(([r]) => Object.hasOwn(merged, r))) : {};
+      const { rs: merged, ns: mergedNames, unv } = samePage ? kept(prev) : { rs: {}, ns: {}, unv: [] };
+      const good = (r) => okSet.has(r) && keys.every((k) => stillBound(h, k, r));
       for (const [r, v] of Object.entries(bound)) {
+        if (!good(r)) continue;
         if (!Object.hasOwn(merged, r) && Object.keys(merged).length >= MERGED_REFS_MAX) continue;
-        merged[r] = v;
-        if (Object.hasOwn(nm, r)) mergedNames[r] = joinNames(mergedNames[r], nm[r]);
+        // produzione (e ambiente ignoto): un pezzo non crea legami; un ref già legato da una lettura completa resta com'è
+        merged[r] = PARTIAL_BIND_ENVS.has(envType) ? v : Object.hasOwn(merged, r) ? merged[r] : null;
+        if (typeof nm[r] === "string") mergedNames[r] = nm[r]; else delete mergedNames[r];
+        const i = unv.indexOf(r);
+        if (i >= 0) unv.splice(i, 1);
       }
-      out.snapshot = { obs, url: pageUrl, tab, ts, refs: merged, family: fam, hist_keys: keys, partial: true, sig: (samePage ? prev.sig : null) ?? sig, names: mergedNames };
+      out.snapshot = { obs, url: pageUrl, tab, ts, refs: merged, family: fam, hist_keys: keys, partial: true, sig: (samePage ? prev.sig : null) ?? sig, names: mergedNames, ...(unv.length ? { unverified: unv } : {}) };
     } else {
       out.snapshot = { obs, url: pageUrl, tab, ts, refs: bound, family: fam, hist_keys: keys, sig };
       if (names && typeof names === "object") out.snapshot.names = Object.fromEntries(Object.entries(names).filter(([r]) => Object.hasOwn(bound, r)));
+      if (Array.isArray(verified)) {
+        const unv = Object.keys(bound).filter((r) => !okSet.has(r));
+        if (unv.length) out.snapshot.unverified = unv;
+      }
     }
   } else if (partial && !claudeNav && mapOk(prev)) {
-    // pezzo senza ref o senza pagina confermata: la mappa resta, ma un legame che questa risposta ha contaminato cade
-    out.snapshot = { ...prev, refs: carried(prev) };
+    // pezzo senza ref: sulla stessa pagina confermata, senza azioni, la mappa resta (ricontrollata); altrimenti si svuota
+    if (samePage) {
+      const { rs, ns, unv } = kept(prev);
+      const { unverified: _u, ...rest } = prev;
+      out.snapshot = { ...rest, refs: rs, names: ns, ...(unv.length ? { unverified: unv } : {}) };
+    } else out.snapshot = { obs: prev.obs, url: prev.url ?? null, tab: prev.tab ?? null, ts, refs: {}, names: {}, cleared_by: String(call.op ?? call.tool ?? "") };
   }
   const browser = key ? settlePending(out, key, cleared.flatMap((c) => c.pend)) : out;
   return { browser, hist: h };
@@ -393,7 +411,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   }
 
   // 2. osservazione
-  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
+  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find, confirmedUrl } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
   const { code, errs, payload } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
   const dir = join(st.ws, "customers", st.customer, "observations");
   mkdirSync(dir, { recursive: true });
@@ -428,7 +446,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     // obs_pending di questa chiamata (se questa scrittura non avviene, la voce resta e i guard non legano)
     // lock della storia dentro quello di session.json (stesso ordine per tutte le sessioni del cliente)
     s.browser = withFileLock(`${histFile}.lock`, () => {
-      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names, verified, find, sig: doc.page_signature ?? null });
+      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names, verified, find, sig: doc.page_signature ?? null, confirmedUrl });
       newSnap = r.browser.snapshot ?? null;
       if (labels.length || cleared.length || labelLoc?.url) saveHistory(histFile, r.hist);
       // WP08: il marcatore del cliente si chiude qui, sotto gli stessi lock (ordine: session.json → storia → marcatore)

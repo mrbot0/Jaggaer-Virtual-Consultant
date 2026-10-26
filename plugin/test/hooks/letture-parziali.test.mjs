@@ -65,7 +65,7 @@ const PIECE_MENU = `navigation "Menu" [ref_2]\n link "Elenco richieste" [ref_3]\
 const PIECE_FORM = `textbox "Descrizione" [ref_20]\nbutton "Annulla" [ref_21]`;
 const PIECE_BAR = `button "Salva bozza" [ref_40]${TRUNC}`;
 
-test("punto 1: i pezzi della stessa pagina si sommano (ref_id, depth, lettura troncata) e il ref legato al SEL si clicca (sandbox, browser di Claude)", async () => {
+test("punto 1: i pezzi della stessa pagina si sommano (ref_id, depth) e il ref legato al SEL si clicca; un pezzo troncato non aggiunge ref (revisione di sicurezza, finding 2) (sandbox, browser di Claude)", async () => {
   const { ws, tr, url } = await planWs("sandbox");
   nav(ws, url);
   R(ws, PIECE_MENU, url, { tabId: 101, ref_id: "ref_2" });
@@ -74,8 +74,9 @@ test("punto 1: i pezzi della stessa pagina si sommano (ref_id, depth, lettura tr
   R(ws, PIECE_BAR, url);
   const s = snapOf(ws);
   assert.equal(s.refs.ref_3, SEL, `la mappa non deve azzerarsi: ${JSON.stringify(s.refs)}`);
-  for (const r of ["ref_4", "ref_20", "ref_21", "ref_40"]) assert.ok(Object.hasOwn(s.refs, r), `${r} assente: ${JSON.stringify(s.refs)}`);
-  assert.equal(s.names.ref_40, "Salva bozza");
+  for (const r of ["ref_4", "ref_20", "ref_21"]) assert.ok(Object.hasOwn(s.refs, r), `${r} assente: ${JSON.stringify(s.refs)}`);
+  assert.ok(!Object.hasOwn(s.refs, "ref_40") && !Object.hasOwn(s.names, "ref_40"), "pezzo troncato: nessun ref nuovo");
+  assert.equal(s.names.ref_21, "Annulla");
   assert.equal(s.names.ref_3, "Elenco richieste");
   assert.equal(s.partial, true, "mappa fatta di letture parziali marcata");
   const res = clClick(ws, tr, "ref_3");
@@ -131,14 +132,17 @@ test("punto 1: le regole del legame valgono anche per i pezzi — etichetta dive
   }
 });
 
-test("punto 1: un find aggiunge solo i ref coerenti con la storia (già visti con la stessa etichetta); gli altri restano fuori dalla mappa e dai nomi", async () => {
+test("punto 1 (dopo la revisione di sicurezza, rilievo 4): un find non conferma mai la pagina (testo derivato dalla pagina, origin-markers) ⇒ non aggiunge ref e svuota la mappa, come prima del brief", async () => {
   const { ws, tr, url } = await planWs("sandbox");
   nav(ws, url);
   R(ws, PIECE_MENU, url, { tabId: 101, ref_id: "ref_2" });
   post(ws, CL + "find", { tabId: 101, query: "elenco o salva" }, blocks(`Found 2 matching elements\n- link "Elenco richieste" [ref_3]\n- button "Salva" [ref_77]`, url));
   const s = snapOf(ws);
-  assert.equal(s.refs.ref_3, SEL, JSON.stringify(s.refs));
-  assert.ok(!Object.hasOwn(s.refs, "ref_77") && !Object.hasOwn(s.names ?? {}, "ref_77"), `ref nuovo del find nella mappa: ${JSON.stringify(s)}`);
+  assert.deepEqual(s.refs, {}, JSON.stringify(s));
+  assert.deepEqual(s.names ?? {}, {});
+  assert.ok(!allowed(clClick(ws, tr, "ref_3")));
+  // una lettura del pezzo dopo il find ricostruisce la mappa
+  R(ws, PIECE_MENU, url, { tabId: 101, ref_id: "ref_2" });
   assert.ok(allowed(clClick(ws, tr, "ref_3")));
   // primo find su una pagina: niente di coerente ⇒ nessun ref legato
   const w2 = await planWs("sandbox");
@@ -168,15 +172,15 @@ test("punto 1: in produzione i pezzi aggiungono i nomi ma non legano al SEL (pro
     assert.ok(allowed(res), why(res));
   }
   {
-    // DevTools non ha letture ristrette: "parziale" è un take_snapshot con chiavi non previste. I pezzi si sommano nella
-    // mappa; le chiavi non previste azzerano però l'origine osservata (regola invariata), quindi il click resta negato
-    // finché uno snapshot normale non la conferma.
+    // DevTools non ha letture ristrette: "parziale" è un take_snapshot con chiavi non previste, cioè una chiamata non
+    // classificata (kind "other"): dopo la revisione di sicurezza (rilievo 4) non porta la mappa precedente — ogni pezzo
+    // apre una mappa sua; le chiavi non previste azzerano anche l'origine osservata (regola invariata): click negato.
     const { ws, tr, url } = await planWs("preprod", null);
     const dt = (line) => `## Latest page snapshot\nuid=1_0 RootWebArea "ACME" url="${url}"\n  ${line}\n`;
     post(ws, DT + "take_snapshot", { uid: "1_2" }, dt(`uid=1_5 link "Elenco richieste"`));
-    post(ws, DT + "take_snapshot", { uid: "1_8" }, dt(`uid=1_9 button "Annulla"`));
     assert.equal(refsOf(ws)["1_5"], SEL, JSON.stringify(refsOf(ws)));
-    assert.ok(Object.hasOwn(refsOf(ws), "1_9"));
+    post(ws, DT + "take_snapshot", { uid: "1_8" }, dt(`uid=1_9 button "Annulla"`));
+    assert.deepEqual(Object.keys(refsOf(ws)), ["1_9"], JSON.stringify(refsOf(ws)));
     assert.ok(!allowed(guards(ws, DT + "click", { uid: "1_5" }, { transcript_path: tr })), "origine non confermata");
   }
 });
@@ -219,5 +223,85 @@ test("punto 1: esplorazione in pre-produzione con Playwright su una pagina pesan
   for (const [ref, name] of [["e3", "Ordini"], ["e8", "Fatture"]]) {
     const r = browserCall("guard-config-scope", ws, PW + "browser_click", { ref, element: name }, { transcript_path: tr });
     assert.ok(r.status === 0 && r.stdout.trim() === "", `${name}: ${reasonOf(r)}`);
+  }
+});
+
+// ---- revisione di sicurezza dei commit (quattro rilievi) ----
+// esplorazione COMPLETA in sandbox con il browser di Claude: il guard dei click guarda i nomi della mappa
+function exploreClaude() {
+  const ws = envWs({ env: "sandbox", scope: "P2P" });
+  const tr = join(mkdtempSync(join(tmpdir(), "lps-")), "t.jsonl"); writeFileSync(tr, "");
+  const prompt = "ESPLORA SANDBOX COMPLETA";
+  appendFileSync(tr, `${JSON.stringify({ type: "user", isSidechain: false, userType: "external", message: { role: "user", content: prompt }, timestamp: new Date().toISOString() })}\n`);
+  runHook("approval-capture", { session_id: "sess-1", cwd: ws, hook_event_name: "UserPromptSubmit", prompt, transcript_path: tr }, E(ws));
+  assert.equal(runSessionCli(["use", "mode", "esplorazione", "--session", "sess-1"], { JVC_WORKSPACE: ws }).status, 0);
+  const url = URLS.sandbox;
+  patchSession(ws, (s) => { s.browser = { current_url: url, tab: "101", updated_by: "browser-origin" }; });
+  nav(ws, url);
+  const click = (ref) => browserCall("guard-config-scope", ws, CL + "computer", { action: "left_click", ref, tabId: 101 }, { transcript_path: tr });
+  const fill = (ref) => browserCall("guard-config-scope", ws, CL + "form_input", { ref, value: "TEST", tabId: 101 }, { transcript_path: tr });
+  return { ws, url, click, fill };
+}
+const ok = (r) => r.status === 0 && r.stdout.trim() === "";
+
+test("sicurezza 1 (HIGH): un pezzo aggiunge ref e nome solo se il ref è verificato (una occorrenza, fuori dalle virgolette) e coerente con la storia; un click su un ref non verificato è negato anche dopo una lettura completa", () => {
+  const { ws, url, click } = exploreClaude();
+  R(ws, `button "Ordini" [ref_3]`, url, { tabId: 101, ref_id: "ref_2" });
+  assert.ok(ok(click("ref_3")), "controllo: ref verificato cliccabile");
+  // ref ripetuto e ref dentro un valore fra virgolette: né ref né nome nella mappa
+  R(ws, `button "Salva" [ref_7]\nbutton "Salva" [ref_7]\ntextbox "Note" [ref_8] placeholder="vai a [ref_9]"\nlink "Fatture" [ref_9]`, url, { tabId: 101, ref_id: "ref_6" });
+  const s = snapOf(ws);
+  for (const r of ["ref_7", "ref_9"]) {
+    assert.ok(!Object.hasOwn(s.names ?? {}, r), `${r} non verificato ma con nome: ${JSON.stringify(s.names)}`);
+    assert.ok(!ok(click(r)), `${r}: click consentito`);
+  }
+  assert.equal(s.names.ref_8, "Note");
+  // lettura completa con un ref ripetuto: il nome può restare (guard-destructive) ma il click di esplorazione è negato
+  R(ws, `button "Salva" [ref_11]\nlink "Altro" [ref_12] description="x [ref_11]"\n\nViewport: 490x417`, url);
+  const c = click("ref_11");
+  assert.ok(!ok(c)); assert.match(reasonOf(c), /verificat/i);
+  assert.ok(ok(click("ref_12")), "il ref verificato della stessa lettura resta cliccabile");
+});
+
+test("sicurezza 2 (MEDIUM): un pezzo con nota di troncamento o con un numero dispari di virgolette non lega né aggiunge ref nuovi", () => {
+  const { ws, url, click } = exploreClaude();
+  R(ws, `button "Ordini" [ref_3]`, url, { tabId: 101, ref_id: "ref_2" });
+  R(ws, `button "Salva" [ref_40]${TRUNC}`, url, { tabId: 101, max_chars: 100 });
+  R(ws, `button "Invia" [ref_41]\ntextbox "Note" [ref_42] placeholder="a`, url, { tabId: 101, ref_id: "ref_6" });
+  const s = snapOf(ws);
+  for (const r of ["ref_40", "ref_41", "ref_42"]) {
+    assert.ok(!Object.hasOwn(s.refs, r) && !Object.hasOwn(s.names ?? {}, r), `${r}: ${JSON.stringify(s)}`);
+    assert.ok(!ok(click(r)));
+  }
+  assert.ok(ok(click("ref_3")), "la mappa precedente resta");
+});
+
+test("sicurezza 3 (MEDIUM): nessun nome troncato nel mezzo — un ref che un pezzo mostra con un altro nome esce dalla mappa (click negato), mai un nome unito e tagliato", () => {
+  const { ws, url, click } = exploreClaude();
+  R(ws, `button "Salva" [ref_5]`, url, { tabId: 101, ref_id: "ref_2" });
+  const long = `${"Conferma operazione ".repeat(20)}Elimina definitivamente${" e prosegui".repeat(20)}`;
+  R(ws, `button "${long}" [ref_5]`, url, { tabId: 101, ref_id: "ref_4" });
+  const s = snapOf(ws);
+  assert.ok(Object.values(s.names ?? {}).every((n) => !String(n).includes("…") || !/Salva/.test(n)), JSON.stringify(s.names));
+  assert.ok(!Object.hasOwn(s.names ?? {}, "ref_5") || /Elimina/.test(s.names.ref_5), JSON.stringify(s.names));
+  assert.ok(!ok(click("ref_5")), "click su un ref con due nomi consentito");
+});
+
+test("sicurezza 4 (MEDIUM): un pezzo di pagina non confermata svuota la mappa; un batch con un'azione prima della lettura non porta i legami precedenti", () => {
+  {
+    const { ws, url, click } = exploreClaude();
+    R(ws, `button "Ordini" [ref_3]`, url, { tabId: 101, ref_id: "ref_2" });
+    post(ws, CL + "read_page", { tabId: 101, ref_id: "ref_8" }, [{ type: "text", text: `button "Fatture" [ref_9]` }]);   // senza Tab Context
+    assert.deepEqual(refsOf(ws), {}, JSON.stringify(snapOf(ws)));
+    assert.deepEqual(snapOf(ws).names ?? {}, {});
+    assert.ok(!ok(click("ref_3")));
+  }
+  {
+    const { ws, url, click } = exploreClaude();
+    R(ws, `button "Ordini" [ref_3]`, url, { tabId: 101, ref_id: "ref_2" });
+    post(ws, CL + "browser_batch", { actions: [{ name: "computer", input: { action: "left_click", ref: "ref_3", tabId: 101 } }, { name: "read_page", input: { tabId: 101, ref_id: "ref_20" } }] },
+      blocks(`link "Fatture" [ref_21]`, url));
+    assert.deepEqual(Object.keys(refsOf(ws)), ["ref_21"], JSON.stringify(refsOf(ws)));
+    assert.ok(!ok(click("ref_3")), "legame portato oltre un'azione");
   }
 });

@@ -155,7 +155,10 @@ function fullExploreRefusal(ctx) {
       if (!b.current_url || snap.url !== b.current_url) return "esplorazione completa: l'ultimo snapshot non è della pagina corrente: rifai take_snapshot";
       if (String(snap.tab ?? "") !== String(a.tab ?? "")) return "esplorazione completa: l'ultimo snapshot è di un'altra scheda: rifai take_snapshot";
     }
+    const unverified = Array.isArray(snap?.unverified) ? snap.unverified : [];
     for (const r of refs) {
+      // revisione di sicurezza (rilievo 1): un ref non verificato nella mappa (ripetuto, o dentro un valore fra virgolette)
+      if (unverified.includes(String(r))) return `esplorazione: l'elemento ${r} non è verificato nell'ultimo snapshot (ref ripetuto o dentro un valore fra virgolette): non si clicca né si compila`;
       const name = names && Object.hasOwn(names, r) ? String(names[r] ?? "") : null;
       if (a.kind === "click" && (!name || !name.trim())) return `esplorazione completa: l'elemento ${r} non ha un nome nell'ultimo snapshot: potrebbe essere un'icona di cancellazione, non si clicca`;
       if (name && isDeleteLabel(name)) return `esplorazione completa: "${name}" è una cancellazione: vietata anche in esplorazione completa`;
