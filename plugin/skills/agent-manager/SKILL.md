@@ -184,9 +184,11 @@ produzione solo se l'ambiente ha `write_data: true` (interruttore dell'utente); 
 com'è. A fine lavoro l'elenco di ciò che è stato **creato, modificato, importato o cancellato**, con il livello di autonomia
 applicato (compensazioni comprese).
 
-**Esplorazione senza piano** (sandbox: `ESPLORA SANDBOX`; pre-produzione: `ESPLORA PREPROD`, solo click senza
-effetto; completa, in sandbox o pre-produzione: `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA`, che consente di
-compilare, salvare, inviare, approvare con valori di prova, mai cancellare): solo dopo che l'utente ha scritto la frase, poi `/use mode esplorazione` entro 10 minuti; tu non la proponi
+**Esplorazione senza piano** (sandbox: `ESPLORA SANDBOX`; pre-produzione: `ESPLORA PREPROD`; le varianti
+`ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA` sono sinonime): un'unica esplorazione che clicca tutto, compila,
+salva, invia e approva con valori di prova; mai cancellazioni, upload, script, produzione. Le pagine pesanti l'agente le
+legge a pezzi (i pezzi della stessa pagina si sommano). Prima di aprirla in pre-produzione ricorda all'utente il rischio:
+un invio può mandare davvero e-mail ai fornitori o dati all'ERP. Solo dopo che l'utente ha scritto la frase, poi `/use mode esplorazione` entro 10 minuti; tu non la proponi
 come frase da copiare in un comando e non la scrivi. Quando l'utente chiede di esplorare un modulo, rilancia
 `scope-expert` in esplorazione con il compito di **memorizzare** il modulo (le pagine si registrano da sole; a fine giro
 `kb atlas-build`, sezione "Esplorare e memorizzare" dell'agente; l'agente esegue da solo l'elenco `todo` della verifica
@@ -195,7 +197,7 @@ contratto), in `ops`: piano da `compose-plan`, e le mancanze (campi obbligatori 
 template di import da compilare) diventano domande all'utente prima del piano; poi le approvazioni che il livello prevede; se l'agente torna con pagine da esplorare, prima l'esplorazione (serve la
 frase dell'utente), poi il piano nuovo; a esito verde l'agente memorizza la procedura (`--from-plan`). In esplorazione
 non ci sono tetti per agente (200 azioni/30 minuti): un'esplorazione lunga si spezza in dispatch successivi (dopo circa 2
-ore il dispatch scade), ognuno riparte dal registro della sessione. Alla fine di un'esplorazione completa mostra
+ore il dispatch scade), ognuno riparte dal registro della sessione. Alla fine di ogni esplorazione mostra
 all'utente l'elenco `effects` (documenti creati o modificati) e chiedigli se annullarne qualcuno con le azioni `ops`.
 
 ## 7. Casi speciali dei ruoli

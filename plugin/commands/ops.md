@@ -58,10 +58,12 @@ all'utente e attendi (skill `agent-manager`, sez. 6). Prima di chiedere l'approv
 
 - `esplora <modulo>` — esplora e **memorizza** un modulo (menu, pagine, pulsanti, campi, tendine) nella conoscenza
   del cliente: `Agent(scope-expert, sonnet)` in modalità `esplorazione` (l'utente l'ha aperta con `ESPLORA SANDBOX` o
-  `ESPLORA PREPROD` — o le varianti `… COMPLETA`, che compilano, salvano e inviano con valori di prova —, poi
-  `/use mode esplorazione`); le pagine si registrano da sole e a fine giro l'agente le trasforma
-  in mappa con `kb atlas-build`. In pre-produzione solo click
-  senza effetto. Mai prod.
+  `ESPLORA PREPROD` — le varianti `… COMPLETA` sono sinonime —, poi `/use mode esplorazione`). Un'unica esplorazione:
+  clicca tutto, compila, salva e invia con valori di prova; mai cancellazioni, upload, script. Le pagine pesanti si
+  leggono a pezzi (i pezzi della stessa pagina si sommano). Le pagine si registrano da sole e a fine giro l'agente le
+  trasforma in mappa con `kb atlas-build`; ogni salvataggio o invio finisce nell'elenco delle azioni con effetto.
+  Prima di un'esplorazione in pre-produzione ricorda all'utente che un invio può mandare davvero e-mail ai fornitori
+  o dati all'ERP. Mai prod.
 - `crea <richiesta|ordine|fornitore|evento|contratto> …` — crea **in bozza** con compensazione registrata prima del
   passo: `Agent(scope-expert, sonnet)` in modalità ops. Sandbox, preprod e — con `write_data: true` e approvazione di
   ogni passo — prod. Si ferma allo stato più conservativo (bozza) se l'utente non dice "fin dove". Nessuna approvazione

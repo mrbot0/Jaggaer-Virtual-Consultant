@@ -33,12 +33,14 @@ tetto dell'ambiente), budget usato/totale, pendenze. Regole:
 - Sul browser (giro di correzione 1): prima di ogni click o input serve una navigate verso un host
   dichiarato (l'origine viene registrata; cambiare scheda o pagina la azzera); gli script nella pagina
   sono negati ovunque: si legge con snapshot, read_page, get_page_text. Senza piano attivo le azioni
-  con effetto sono negate; `mode esplorazione` (in audit) in sandbox consente click e input, mai
-  invio, salvataggio, upload o conferma di dialog; in pre-produzione **solo click** su elementi senza
-  effetto (mai salva, invia, conferma, approva…). La sceglie solo l'utente: serve che abbia appena
-  scritto `ESPLORA SANDBOX` (sandbox) o `ESPLORA PREPROD` (pre-produzione), oppure la variante completa
-  `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA` (compila, salva, invia, approva con valori di prova; mai
-  cancellazioni, upload o script; nessun tetto di azioni per agente) (frase registrata da
+  con effetto sono negate; `mode esplorazione` (in audit, sandbox e pre-produzione) è un'**unica
+  esplorazione**: clicca tutto, compila con valori di prova, salva, invia, approva, conferma i dialoghi; mai
+  cancellazioni, upload di file, script nella pagina, strumenti non classificati, produzione; nessun tetto di
+  azioni per agente. Le pagine pesanti ("pagina troppo grande") si leggono **a pezzi** (read_page con ref_id o
+  depth, snapshot ristretti) e i pezzi della stessa pagina si sommano. Rischio da dire all'utente: in
+  pre-produzione un invio può mandare davvero e-mail ai fornitori o dati all'ERP. La sceglie solo l'utente:
+  serve che abbia appena scritto `ESPLORA SANDBOX` (sandbox) o `ESPLORA PREPROD` (pre-produzione) — le varianti
+  `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA` sono sinonime — (frase registrata da
   approval-capture, vale per un solo cambio di modalità entro 10 minuti); altrimenti exit 3 — riportalo
   e attendi, non scrivere tu la frase.
 - exit 1: mostra l'errore e la sintassi corretta (`customer <ID> [--new]`, `env <id>`, `scope <ID>`,

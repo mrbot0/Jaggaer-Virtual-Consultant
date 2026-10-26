@@ -76,8 +76,8 @@ viene copiato da Claude Code nella sua cache: la conoscenza deve crescere fuori 
 
 | Ambiente | Leggere | Esplorare cliccando | Creare / modificare dati | Configurare |
 |---|---|---|---|---|
-| **sandbox** | sì | sì (`ESPLORA SANDBOX`); tutto tranne cancellare (`ESPLORA SANDBOX COMPLETA`) | sì, con piano; anche import in blocco e cancellazioni (dentro un piano) | sì, approvazioni per rischio |
-| **pre-produzione** | sì | solo click senza effetto (`ESPLORA PREPROD`); tutto tranne cancellare, con valori di prova (`ESPLORA PREPROD COMPLETA`) | sì, con piano; import in blocco e cancellazioni (dentro un piano); le approvazioni dipendono dal livello di autonomia | sì, approvazioni per rischio |
+| **sandbox** | sì | sì (`ESPLORA SANDBOX`): clicca, compila, salva e invia con valori di prova, mai cancellare | sì, con piano; anche import in blocco e cancellazioni (dentro un piano) | sì, approvazioni per rischio |
+| **pre-produzione** | sì | sì (`ESPLORA PREPROD`): come in sandbox, mai cancellare; attenzione, un invio può mandare davvero e-mail ai fornitori o dati all'ERP | sì, con piano; import in blocco e cancellazioni (dentro un piano); le approvazioni dipendono dal livello di autonomia | sì, approvazioni per rischio |
 | **produzione** | sì | no | **solo se attivi `write_data: true`** per quell'ambiente: poi `APPROVO PIANO` e `APPROVO PASSO <n>` prima di ogni passo che modifica o carica; cancellare mai | `APPROVO PIANO` + `APPROVO PASSO <n>`, più `APPROVO PROVA` da una seconda persona se è richiesto il secondo approvatore (di serie in produzione) |
 
 Prima di agire il plugin **verifica** di essere davvero nell'ambiente dichiarato (almeno due segnali sulla pagina:
@@ -468,8 +468,7 @@ Scritte da te, **da sole nel messaggio**, in maiuscolo (un punto finale è tolle
 | `APPROVO PIANO <PLAN>` | Per attivare un piano quando il livello lo richiede: in pre-produzione con autonomia media o bassa, o con invii, configurazione o cancellazioni; in sandbox con autonomia alta per configurazione e cancellazioni (con media o bassa anche per gli import); sempre in produzione |
 | `APPROVO PASSO <n> <PLAN>` · `APPROVO PROVA <PLAN>` | Configurazioni gialle e rosse; **in produzione prima di ogni passo che modifica o carica** (`APPROVO PASSO`), con `DA <Nome Cognome>`, la prova da una seconda persona se l'ambiente lo richiede (`second_approver_required`) |
 | `AUTONOMIA ALTA` · `AUTONOMIA MEDIA` · `AUTONOMIA BASSA` | Cambia il livello di autonomia per la sessione (predefinito alto; in produzione vale al massimo medio) |
-| `ESPLORA SANDBOX` · `ESPLORA PREPROD` | Aprire l'esplorazione (poi `use mode esplorazione` entro 10 minuti) |
-| `ESPLORA SANDBOX COMPLETA` · `ESPLORA PREPROD COMPLETA` | Esplorazione completa: compila, salva, invia, approva con valori di prova, mai cancellare; a fine giro l'elenco di ciò che ha creato o modificato |
+| `ESPLORA SANDBOX` · `ESPLORA PREPROD` (sinonimi: `ESPLORA SANDBOX COMPLETA` · `ESPLORA PREPROD COMPLETA`) | Aprire l'esplorazione (poi `use mode esplorazione` entro 10 minuti): un'unica esplorazione che clicca, compila, salva, invia e approva con valori di prova, mai cancellare, mai caricare file; a fine giro l'elenco di ciò che ha creato o modificato. Le pagine pesanti l'agente le legge a pezzi |
 | `APPROVO PROMOZIONE <codice>` · `APPROVO RETENTION <C>` · `APPROVO PURGE <ID> DA <Nome Cognome>` | Operazioni amministrative |
 | `compensa tutto` · `lascia <entità>` | A fine sessione: annullare o tenere ciò che è stato creato |
 
@@ -508,7 +507,7 @@ Le frasi che aumentano la protezione valgono subito; quelle che la riducono dopo
 
 | Vuoi… | Scrivi | Cosa succede |
 |---|---|---|
-| Imparare com'è fatto un modulo | `ESPLORA PREPROD` (o `ESPLORA PREPROD COMPLETA` per provare anche salvataggi e invii) → `use mode esplorazione` → `ops esplora ordini` | scope-expert naviga, apre moduli e tendine, memorizza pagine, pulsanti e campi; non salva mai |
+| Imparare com'è fatto un modulo | `ESPLORA PREPROD` (salva e invia anche, con valori di prova) → `use mode esplorazione` → `ops esplora ordini` | scope-expert naviga, apre moduli e tendine, memorizza pagine, pulsanti e campi; non salva mai |
 | Creare un ordine | `use mode ops` → `ops crea ordine fornitore …, articolo …, quantità …` | Piano dalla memoria (se mancano dati obbligatori te li chiede prima; se lo stesso modulo esiste in più moduli JAGGAER ti chiede quale, o scrivi «nel modulo …») → con autonomia alta in sandbox parte da solo; altrimenti `APPROVO PIANO …` (e `sì` all'invio con autonomia bassa) → compilazione automatica (più campi della pagina in un colpo) → procedura memorizzata |
 | Creare molti elementi insieme (es. 30 data element) | *"Su ACME pre-produzione crea 30 data element"* (con un template nel tenant o in `customers/ACME/templates-in/`) | Il plugin impara il template (il tuo ha la precedenza, altrimenti lo scarica dal tenant), compila il file controllando ogni riga, lo carica (solo quel file) e legge l'esito: le righe fallite si correggono e si reimportano (al massimo 2 volte); a fine lavoro l'elenco dei codici creati |
 | Scrivere in produzione | Prima `write_data: true` in `environments.yaml` (a cura tua), poi la richiesta | Piano mostrato → `APPROVO PIANO <PLAN>` → prima di ogni passo il plugin ti mostra file, righe e oggetti → `APPROVO PASSO <n> <PLAN>` (e `APPROVO PROVA` da un'altra persona) → esecuzione → elenco finale |
