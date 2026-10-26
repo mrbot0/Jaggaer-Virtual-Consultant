@@ -324,7 +324,8 @@ async function useMode(ws, sid, raw, { actor }) {
   // ESPLORA SANDBOX registrata da approval-capture (monouso, solo in sandbox).
   let approval = null;
   if (m === "esplorazione") {
-    // soluzione B (30/09/2026): anche in pre-produzione, con ESPLORA PREPROD (solo click senza effetto: config-scope)
+    // soluzione B (30/09/2026): anche in pre-produzione, con ESPLORA PREPROD; esplorazione libera (26/10/2026): stesse regole
+    // in sandbox e pre-produzione, con o senza COMPLETA (config-scope, fullExploreRefusal)
     if (!["sandbox", "preprod"].includes(before.env?.type)) throw new CliError(3, `la modalità esplorazione vale solo in sandbox o in pre-produzione (ambiente ${before.env ? `${before.env.id}: ${before.env.type}` : "non dichiarato"})`);
     const { consumeExplore, approvalsFile, EXPLORE_PHRASES, EXPLORE_WINDOW_MS } = await import("./approvals.mjs");
     const phrase = EXPLORE_PHRASES[before.env.type];
@@ -426,8 +427,10 @@ Azioni (§56.2):
                               Rifiuta il cambio se il cliente precedente ha
                               compensazioni pendenti (exit 3, le elenca).
   use scope <ID>              cella attiva (${SCOPES.join(" ")}); ricalcola allowed_paths
-  use mode <m>                nrt | config | ops | diag | esplorazione (solo sandbox:
-                              click/input senza piano, in audit; mai invio/salvataggio)
+  use mode <m>                nrt | config | ops | diag | esplorazione (sandbox o
+                              pre-produzione, dopo la frase ESPLORA SANDBOX|PREPROD
+                              dell'utente: clic, valori di prova, salvataggi e invii
+                              senza piano, in audit; mai cancellazioni, upload, script)
   use env <id>                ambiente dichiarato da customers/<C>/config/environments.yaml
                               (§51.2): verified:false finché env-check non lo verifica;
                               cambiarlo azzera la verifica. RF2 & c. ⇒ exit 3

@@ -68,10 +68,11 @@ test("I2: in esplorazione senza limiti dell'utente il TTL delle invocazioni è l
   assert.equal(sessionTtlMs(dir), 2 * 60 * 60 * 1000);
 });
 
-test("I3: dopo COMPLETA e poi la frase semplice vale solo l'ultima: nessun recupero della completa", () => {
+// esplorazione libera (brief del 26/10/2026): un'unica esplorazione, la frase semplice vale come COMPLETA: "Salva" si clicca anche con la frase semplice; resta che la frase vale una volta sola
+test("I3 (aggiornato): dopo COMPLETA e poi la frase semplice vale solo l'ultima (monouso): nessun recupero della prima", () => {
   const { ws, use, c } = full({ "1_3": "Salva" }, { phrases: ["ESPLORA PREPROD COMPLETA", "ESPLORA PREPROD"] });
   assert.equal(use.status, 0, use.stderr + use.stdout);
-  assert.ok(denied(c(`${DT}click`, { uid: "1_3", pageId: 1 })), "modalità semplice");
+  assert.ok(!denied(c(`${DT}click`, { uid: "1_3", pageId: 1 })), "la frase semplice vale come COMPLETA");
   assert.notEqual(runSessionCli(["use", "mode", "esplorazione", "--session", "sess-1"], { JVC_WORKSPACE: ws }).status, 0, "la completa precedente non si recupera");
 });
 

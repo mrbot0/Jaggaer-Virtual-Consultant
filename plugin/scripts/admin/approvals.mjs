@@ -58,12 +58,13 @@ export const GRANT_WINDOW_MS = Object.freeze({ purge: 60 * 60000, retention: 60 
 // K5 giro 2 (N2): la spec non nomina una frase per l'esplorazione; frase scelta dal
 // controller. Vale per un solo `use mode esplorazione` entro EXPLORE_WINDOW_MS.
 export const EXPLORE_PHRASE = "ESPLORA SANDBOX";
-// Soluzione B (30/09/2026, richiesta dell'utente): esplorazione in pre-produzione, solo click su elementi senza effetto
-// (config-scope, noPlan). Ogni frase vale solo per il suo tipo di ambiente.
+// Soluzione B (30/09/2026, richiesta dell'utente): esplorazione anche in pre-produzione. Ogni frase vale solo per il suo
+// tipo di ambiente. Esplorazione libera (26/10/2026): un'unica esplorazione, vedi EXPLORE_FULL_SUFFIX.
 export const EXPLORE_PREPROD_PHRASE = "ESPLORA PREPROD";
 export const EXPLORE_PHRASES = Object.freeze({ sandbox: EXPLORE_PHRASE, preprod: EXPLORE_PREPROD_PHRASE });
 // Esplorazione completa (richiesta dell'utente, 05/10/2026): clicca tutto, compila con valori di prova, salva, invia, approva,
-// conferma i dialoghi — mai Elimina, upload o script (config-scope). Frase distinta, per tipo di ambiente.
+// conferma i dialoghi — mai Elimina, upload o script (config-scope). Esplorazione libera (26/10/2026): la frase semplice vale
+// come quella con COMPLETA (sinonime, stesse regole in config-scope); il record conserva full per l'audit.
 export const EXPLORE_FULL_SUFFIX = " COMPLETA";
 export const EXPLORE_WINDOW_MS = 10 * 60000;
 const ATTEMPT = /^(ok|okay|va bene|vabbene|vabene|approvo|approvato|approvata|confermo|confermato|procedi|autorizzo|d'accordo|certo|sì|si|yes)(?=$|[\s,.;:!?])/iu;
@@ -519,7 +520,7 @@ export async function capture(input, env = process.env) {
   // Prima il registro (la fonte dei guard); poi lo specchio e l'audit.
   const ev = appendApproval(file, rec);
   const label = ev.kind === "autonomy" ? `Autonomia ${ev.level} per questa sessione${s.env?.type === "prod" ? " (in produzione al massimo medio)" : ""}`
-    : ev.kind === "explore" ? `esplorazione${ev.full ? " completa" : ""} ${ev.env} (vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
+    : ev.kind === "explore" ? `esplorazione ${ev.env} (clic, valori di prova, salvataggi e invii; mai cancellazioni, upload, script; vale per un solo \`use mode esplorazione\` entro ${EXPLORE_WINDOW_MS / 60000} minuti)`
     : GRANT_KINDS.includes(ev.kind) ? `${ev.kind} ${ev.target}${ev.approver_declared ? ` (${ev.approver_declared})` : ""} — token ${ev.hash.slice(0, 16)} (monouso, valido ${Math.round(GRANT_WINDOW_MS[ev.kind] / 60000)} minuti)`
     : `${ev.kind} ${ev.plan}${ev.step ? ` passo ${ev.step}` : ""}${ev.approver_declared ? ` (${ev.approver_declared})` : ""}`;
   let warn = "";

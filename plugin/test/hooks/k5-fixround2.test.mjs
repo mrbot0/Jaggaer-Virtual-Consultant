@@ -128,6 +128,8 @@ test("N2: use mode esplorazione solo dopo la frase dell'utente ESPLORA SANDBOX (
   assert.equal(runSessionCli(["use", "mode", "esplorazione", "--session", "sess-1", "--json"], E(ws)).status, 0);
   assert.equal(readSession(ws).mode, "esplorazione");
   const click = () => browserCall("guard-config-scope", ws, `${DT}click`, { uid: "1" }, { transcript_path: tr });
+  // esplorazione libera (brief del 26/10/2026): un'unica esplorazione, la frase semplice vale come COMPLETA: un click vuole il nome dell'elemento nella mappa della pagina corrente
+  patchSession(ws, (s) => { s.browser = { ...(s.browser ?? {}), current_url: "https://acme-sbx.jaggaer.com/home", tab: null, snapshot: { obs: "x", url: "https://acme-sbx.jaggaer.com/home", tab: null, ts: new Date().toISOString(), refs: { 1: null }, names: { 1: "Ordini" } } }; });
   assert.ok(silent(click()));
   // monouso: tornare in nrt e rientrare senza una nuova frase ⇒ exit 3
   assert.equal(runSessionCli(["use", "mode", "nrt", "--session", "sess-1"], E(ws)).status, 0);

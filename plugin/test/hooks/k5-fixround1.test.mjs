@@ -135,10 +135,13 @@ test("I2: nessun piano attivo ⇒ azioni con effetto negate in ogni ambiente; es
   appendFileSync(tr, `${JSON.stringify({ type: "user", isSidechain: false, userType: "external", message: { role: "user", content: "ESPLORA SANDBOX" }, timestamp: new Date().toISOString() })}\n`);
   runHook("approval-capture", { session_id: "sess-1", cwd: ws, hook_event_name: "UserPromptSubmit", prompt: "ESPLORA SANDBOX", transcript_path: tr }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
   assert.equal(runSessionCli(["use", "mode", "esplorazione", "--session", "sess-1"], { JVC_WORKSPACE: ws }).status, 0);
+  // esplorazione libera (brief del 26/10/2026): un'unica esplorazione, la frase semplice vale come COMPLETA: click su un elemento con nome nella mappa della pagina corrente; invio, Invio e dialoghi sì; upload no
+  assert.ok(denied(c(`${DT}click`, { uid: "1_2" })), "click senza snapshot della pagina");
+  patchSession(ws, (s) => { s.browser = { ...(s.browser ?? {}), current_url: "https://acme-sbx.jaggaer.com/home", tab: null, snapshot: { obs: "x", url: "https://acme-sbx.jaggaer.com/home", tab: null, ts: new Date().toISOString(), refs: { "1_2": null }, names: { "1_2": "Ordini" } } }; });
   assert.ok(silent(c(`${DT}click`, { uid: "1_2" })));
   assert.ok(silent(c(`${DT}fill`, { uid: "1", value: "x" })));
-  for (const [t, i] of [[`${DT}press_key`, { key: "Enter" }], [`${DT}type_text`, { text: "x", submitKey: "Enter" }], [`${DT}upload_file`, { uid: "1", filePath: "x" }],
-    [`${DT}handle_dialog`, { action: "accept" }], [`${PW}browser_type`, { ref: "e", text: "x", submit: true }]]) assert.ok(denied(c(t, i)), t);
+  for (const [t, i] of [[`${DT}press_key`, { key: "Enter" }], [`${DT}type_text`, { text: "x", submitKey: "Enter" }], [`${DT}handle_dialog`, { action: "accept" }]]) assert.ok(silent(c(t, i)), t);
+  assert.ok(denied(c(`${DT}upload_file`, { uid: "1", filePath: "x" })), "upload");
   const audit = readFileSync(auditFile(ws, "ACME"), "utf8");
   assert.match(audit, /esplorazione/);
   for (const env of ["preprod", "prod"]) {
