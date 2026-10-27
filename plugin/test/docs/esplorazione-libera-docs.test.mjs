@@ -36,3 +36,22 @@ test("agente: nessuna frase letterale dell'utente nel corpo", () => {
   const agent = read("agents/scope-expert.md").split("---").slice(2).join("---");
   assert.doesNotMatch(agent, /ESPLORA (SANDBOX|PREPROD)/);
 });
+
+// Correzioni dopo la revisione (27/10/2026): DevTools e il file dello snapshot, preprod solo con DevTools, click solo su
+// elementi con nome (mai a coordinate), limiti di uscita degli strumenti, find che non svuota la mappa.
+test("documenti (correzioni dopo la revisione): pagine pesanti con DevTools via filePath; preprod con Chrome DevTools; click su elementi con nome", () => {
+  const agent = read("agents/scope-expert.md");
+  assert.match(agent, /filePath/);
+  assert.doesNotMatch(agent, /snapshot ristretti con DevTools/i);
+  assert.doesNotMatch(agent, /un `find` svuota la mappa/);
+  for (const p of ["agents/scope-expert.md", "docs/MANUAL.md", "MANUALE-UTENTE.md", "docs/GUIDA-PRIMO-USO.md", "commands/use.md"]) {
+    const t = read(p);
+    assert.match(t, /filePath/, `${p}: filePath`);
+    assert.match(t, /Chrome DevTools/, `${p}: esplorazione in preprod con Chrome DevTools`);
+    assert.match(t, /coordinate/i, `${p}: click a coordinate negati`);
+  }
+  const manual = read("docs/MANUAL.md");
+  assert.match(manual, /MAX_MCP_OUTPUT_TOKENS/);
+  assert.match(manual, /max_chars/);
+  assert.doesNotMatch(manual, /un pezzo troncato o un find non aggiungono elementi\)/);
+});

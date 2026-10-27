@@ -36,8 +36,11 @@ tetto dell'ambiente), budget usato/totale, pendenze. Regole:
   con effetto sono negate; `mode esplorazione` (in audit, sandbox e pre-produzione) è un'**unica
   esplorazione**: clicca tutto, compila con valori di prova, salva, invia, approva, conferma i dialoghi; mai
   cancellazioni, upload di file, script nella pagina, strumenti non classificati, produzione; nessun tetto di
-  azioni per agente. Le pagine pesanti ("pagina troppo grande") si leggono **a pezzi** (read_page con ref_id o
-  depth, snapshot ristretti) e i pezzi della stessa pagina si sommano. Rischio da dire all'utente: in
+  azioni per agente. Ogni click vuole un elemento con nome dell'ultima lettura (i click a coordinate sono negati). In
+  pre-produzione si esplora con Chrome DevTools (il browser di Claude fuori dalla sandbox legge soltanto). Le pagine
+  pesanti ("pagina troppo grande") si leggono **a pezzi**: con DevTools `take_snapshot` con `filePath` nella cartella
+  della sessione (il plugin legge il file come lettura completa; l'agente lo legge a pezzi con Read); col browser di
+  Claude read_page con ref_id o depth, e i pezzi della stessa pagina si sommano. Rischio da dire all'utente: in
   pre-produzione un invio può mandare davvero e-mail ai fornitori o dati all'ERP. La sceglie solo l'utente:
   serve che abbia appena scritto `ESPLORA SANDBOX` (sandbox) o `ESPLORA PREPROD` (pre-produzione) — le varianti
   `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA` sono sinonime — (frase registrata da

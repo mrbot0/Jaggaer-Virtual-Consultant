@@ -64,8 +64,10 @@ ora per installazione, login e primi aggiustamenti. Il plugin non è ancora stat
 Cosa fa: clicca menu, schede, link, record e apre i moduli "Nuovo/Crea", apre le tendine per leggerne i valori,
 compila, salva, invia, approva e conferma i dialoghi, sempre con valori di prova, e a fine giro ti mostra l'elenco di ciò
 che ha creato o modificato (puoi chiedere di annullarlo). Elimina e affini, caricamento di file e script restano sempre
-vietati. Se lo strumento del browser risponde che la pagina è troppo grande, l'agente la legge a pezzi (una sezione alla
-volta): i pezzi della stessa pagina si sommano e non serve rileggerla tutta per cliccare. Registra struttura, valori di esempio dei campi e fino a 20 righe per tabella,
+vietati. In pre-produzione l'agente esplora con Chrome DevTools (il browser di Claude lì legge soltanto) e clicca solo
+elementi con un nome nell'ultima lettura della pagina, mai a coordinate. Se lo strumento risponde che la pagina è troppo
+grande, l'agente la legge a pezzi: con DevTools salva lo snapshot in un file della sessione (`take_snapshot` con
+`filePath`), che il plugin legge per intero, e lo scorre a pezzi; i click restano possibili su tutta la pagina. Registra struttura, valori di esempio dei campi e fino a 20 righe per tabella,
 con e-mail, codici e altri dati riconoscibili oscurati. Ogni pagina viene
 registrata da sola e, a fine giro, trasformata in mappa con `kb atlas-build` in `customers/<CODICE>/kb/scopes/<SCOPE>/selectors|fields/` (scope P2P per gli
 ordini, CON per i contratti). Per vedere cosa ha imparato: `/jaggaer-virtual-consultant:kb find --type SEL --scope P2P --customer <CODICE>`.

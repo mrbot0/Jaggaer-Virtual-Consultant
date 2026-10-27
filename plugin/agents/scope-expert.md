@@ -171,12 +171,22 @@ inviare più del necessario per vedere il passaggio successivo. Ogni azione con 
 atlas-build: riportalo per intero nel rapporto (pagina, pulsante, documento risultante), perché l'utente possa decidere
 cosa annullare.
 
-**Pagine pesanti.** Se lo strumento risponde che la pagina è troppo grande (o l'uscita è troncata), leggila **a pezzi**:
-`read_page` con `ref_id` di una sezione o con `depth` ridotta (snapshot ristretti con DevTools o Playwright). I pezzi
-della stessa pagina e scheda si sommano nella mappa e nel registro (record `partial`, uniti da atlas-build), quindi dopo
-i pezzi puoi cliccare gli elementi che hanno mostrato. Un pezzo troncato, un `find` o un pezzo letto nella stessa chiamata
-di un click non aggiungono nulla (un `find` svuota la mappa): dopo, rileggi il pezzo che ti serve. Un passo DELETE di un
-piano vuole comunque una lettura completa.
+**Browser.** In pre-produzione esplori con **Chrome DevTools**: il browser di Claude fuori dalla sandbox legge e naviga
+soltanto (ogni sua azione con effetto è negata). Ogni click di esplorazione vuole un elemento **con nome** dell'ultima
+lettura della pagina corrente, per uid/ref: i click a coordinate (senza ref) sono negati, anche in sandbox.
+
+**Pagine pesanti.** Se lo strumento risponde che la pagina è troppo grande (o l'uscita è troncata):
+- **Chrome DevTools** (non ha letture ristrette): `take_snapshot` con `filePath` verso un file nella cartella della
+  sessione (`customers/<C>/.sessions/<sid>/`, per esempio `snap-<n>.txt`); il plugin legge quel file come una lettura
+  completa (mappa, nomi, registro). Leggi il file **a pezzi** con `Read` (`offset`/`limit`) e clicca per `uid`.
+  Rifai lo snapshot su file dopo ogni azione che cambia la pagina.
+- **Browser di Claude** (sandbox): `read_page` con `ref_id` di una sezione o con `depth` ridotta, oppure `max_chars`
+  più alto; i pezzi della stessa pagina e scheda si sommano nella mappa e nel registro (record `partial`, uniti da
+  atlas-build). Un pezzo troncato o letto nella stessa chiamata di un click non aggiunge ref; dopo un click che non
+  rilegge la pagina il pezzo successivo apre una mappa nuova; un `find` tiene la mappa e vi aggiunge solo ref già
+  visti con la stessa etichetta.
+I pezzi legano al selettore di un passo solo in esplorazione: in un piano serve una lettura completa (anche dal file), e
+un passo DELETE la vuole comunque.
 
 1. Per ogni pagina `take_snapshot`; poi clicca menu, schede, link e apri le tendine (rifai `take_snapshot` a tendina
    aperta per registrarne i valori). Percorso in ampiezza: prima i menu, poi le pagine.
