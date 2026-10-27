@@ -7,8 +7,8 @@
 // Spreco (§29.10): snapshot della stessa pagina senza azione in mezzo ⇒ voce in session.ledger.waste.
 // Non è un guard: fail-OPEN con avviso, mai un blocco; ma un guasto azzera l'URL corrente (mai
 // un'origine non confermata). additionalContext: `OBS <code> · surprise:<n> novelty:<n> · ERR:<code?>`.
-import { mkdirSync, appendFileSync, readFileSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { mkdirSync, appendFileSync, readFileSync, realpathSync, statSync } from "node:fs";
+import { join, dirname, resolve, sep } from "node:path";
 import { createHash } from "node:crypto";
 import { loadHookState, sessionDir } from "./workspace.mjs";
 import { classify, isBrowserTool } from "./browser-tools.mjs";
@@ -29,7 +29,6 @@ import { EFFECT_LABEL } from "./effect-labels.mjs";
 
 const SNAPSHOT_OPS = new Set(["take_snapshot", "read_page", "get_page_text", "find", "browser_snapshot", "browser_find"]);
 const SCREENSHOT_OPS = new Set(["take_screenshot", "browser_take_screenshot", "upload_image"]);
-const MAX_ELEMENTS = 60;
 const sha = (s) => createHash("sha256").update(String(s)).digest("hex");
 // WP09b giro 2: voci dell'anello delle OBS in session.json (kb snapshot accetta al più 900 s: 200 bastano)
 export const OBS_RING_MAX = 200;
@@ -65,12 +64,13 @@ async function activeStep(ws, customer, ap) {
 
 // WP07 giro 4 (I-A): che lettura dell'albero è la chiamata, per il legame ref ↔ SEL.
 //  "complete" — lettura intera della pagina: read_page di Claude senza ref_id, depth, filter diverso da "all" e senza
-//               nota di troncamento; take_snapshot di DevTools con sole chiavi previste; browser_snapshot di Playwright
-//               senza target né depth;
+//               nota di troncamento; take_snapshot di DevTools con sole chiavi previste (con filePath: il file scritto dallo
+//               strumento, snapshotFileResponse); browser_snapshot di Playwright senza target né depth;
 //  "partial"  — find di Claude e di Playwright, letture ristrette o troncate, chiavi non previste, ogni browser_batch
 //               che legge l'albero. Esplorazione libera (26/10/2026): i pezzi della STESSA pagina (URL, scheda,
 //               famiglia) si sommano alla mappa con gli stessi controlli del legame; un pezzo di un'altra pagina apre una
-//               mappa nuova; un find aggiunge solo i ref coerenti con la storia della scheda (isFindRead);
+//               mappa nuova; i pezzi legano al SEL solo in modalità esplorazione; un find non conferma la pagina: non
+//               svuota la mappa e vi aggiunge solo i ref già legati nella storia della scheda con la stessa etichetta;
 //  "nobind"   — altre chiamate di Claude (i ref di Claude si legano solo da un read_page completo);
 //  null       — nessuna lettura dell'albero: comportamento invariato (DevTools e Playwright legano dalle risposte
 //               delle azioni che riportano lo snapshot intero, come prima).
@@ -98,11 +98,31 @@ const FIND_OPS = new Set(["find", "browser_find"]);
 export const isFindRead = (call) => (call.actions ?? [call]).some((a) => FIND_OPS.has(String(a.op ?? ""))) || FIND_OPS.has(String(call.op ?? ""));
 // Etichetta di un ref per la storia della pagina (ruolo + nome normalizzato), compatta.
 const labelKey = (e) => sha(`${e.role ?? ""}\u0001${normLabel(e.name ?? "")}`).slice(0, 16);
-const LABELS_MAX = 2000;
-// ref (e nomi) di una mappa fatta di pezzi della stessa pagina: oltre, i ref nuovi non entrano (click negato: fail-closed)
-export const MERGED_REFS_MAX = 1000;
-// ambienti in cui un pezzo lega al SEL: produzione e ambiente ignoto no (i pezzi vi aggiungono solo i nomi)
+// Correzioni dopo la revisione (27/10/2026, decisione dell'utente): nessun tetto sul numero di elementi, ref, nomi o
+// etichette di una lettura o di una mappa (restano solo i limiti in byte dei file).
+// Ambienti in cui un pezzo lega al SEL, e solo in modalità esplorazione (in un piano legano solo le letture complete):
+// produzione e ambiente ignoto mai (i pezzi vi aggiungono solo i nomi).
 const PARTIAL_BIND_ENVS = new Set(["sandbox", "dev", "preprod"]);
+
+// Conteggio esatto, in un solo passaggio, dei token di ref nei formati delle tre famiglie (uid=X preceduto da inizio o
+// da un carattere non di parola e seguito da uno che non lo è · [ref=X] · [X]): stesso risultato di tokenRe di WP07 giro 3
+// per i ref fatti di caratteri di parola (tutti quelli delle tre famiglie); gli altri usano la regex del singolo ref.
+const W = /\w/;
+function tokenCounts(str) {
+  const m = new Map();
+  const add = (k) => m.set(k, (m.get(k) ?? 0) + 1);
+  for (const x of str.matchAll(/\[([^[\]]*)\]/g)) { add(x[1]); if (x[1].startsWith("ref=")) add(x[1].slice(4)); }
+  let i = str.indexOf("uid=");
+  while (i >= 0) {
+    if (i === 0 || !W.test(str[i - 1])) {
+      let j = i + 4;
+      while (j < str.length && W.test(str[j])) j++;
+      if (j > i + 4) add(str.slice(i + 4, j));
+    }
+    i = str.indexOf("uid=", i + 1);
+  }
+  return m;
+}
 
 // Costruisce l'OBS (senza codice) dalla chiamata: pura rispetto al file system tranne Atlas e piano.
 export async function buildObservation({ ws, customer, session, call, state, resp, ti = null, env = process.env, now = new Date() }) {
@@ -136,7 +156,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
   };
   const masks = new Set();
   const ft = (s) => { const r = freeText(s, { profile, env }); r.masks.forEach((x) => masks.add(x)); return r.text; };
-  const seen = (cmp?.elements_seen ?? (hasPage ? compareExpect({ expect: {} }, page, { atlas, profile }).elements_seen : [])).slice(0, MAX_ELEMENTS).map((e) => {
+  const seen = (cmp?.elements_seen ?? (hasPage ? compareExpect({ expect: {} }, page, { atlas, profile }).elements_seen : [])).map((e) => {
     const m = e.atlas_match ? atlas.find((a) => a.code === e.atlas_match) : atlasMatch(atlas, { name: e.label, role: e.role });
     const o = { ...e, label: ft(e.label) };
     if (e.value !== undefined) {
@@ -181,7 +201,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
   let labels = [];
   let labelLoc = null;
   if (page && state === "ok") {
-    labels = (page.elements ?? []).filter((e) => e.ref != null && e.ref !== "").slice(0, LABELS_MAX).map((e) => [String(e.ref), labelKey(e)]);
+    labels = (page.elements ?? []).filter((e) => e.ref != null && e.ref !== "").map((e) => [String(e.ref), labelKey(e)]);
     if (labels.length) labelLoc = loc ?? observedLocation(call.family, text, { asked, resp });
   }
   // F0.1: nome (redatto, ≤ 80 caratteri) di ogni ref della risposta, per guard-destructive: il bersaglio di un click
@@ -189,7 +209,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
   const names = {};
   if (page && state === "ok") {
     for (const e of page.elements ?? []) {
-      if (e.ref == null || e.ref === "" || Object.keys(names).length >= 300) continue;
+      if (e.ref == null || e.ref === "") continue;
       // revisione 05/10/2026 (C1): nome redatto ma non troncato a 40 caratteri (un "… - Elimina" in coda deve restare
       // visibile ai guard); oltre 200 caratteri si tengono inizio e fine
       if (typeof e.name === "string" && e.name.trim()) { const t = redactText(e.name, { profile, env }).text ?? ""; names[String(e.ref)] = t.length > 200 ? `${t.slice(0, 100)}…${t.slice(-99)}` : t; }
@@ -201,8 +221,10 @@ export async function buildObservation({ ws, customer, session, call, state, res
   // revisione di sicurezza (rilievo 2): un pezzo troncato (nota del server) o con un numero dispari di virgolette (un valore
   // aperto può nascondere righe forgiate) non ha ref verificati: non aggiunge nulla alla mappa
   const unsafePiece = mode === "partial" && (TRUNCATED.test(text) || (String(text).replace(/\\./g, "").match(/"/g) ?? []).length % 2 === 1);
-  if (binds && loc?.url && (page.elements ?? []).some((e) => e.ref)) {
-    pageUrl = loc.url;
+  // correzione 7: un find non conferma la pagina (testo derivato dalla pagina) ma i suoi ref passano dagli stessi controlli
+  const find = isFindRead(call);
+  if (binds && (loc?.url || (find && mode === "partial" && page && state === "ok")) && (page.elements ?? []).some((e) => e.ref)) {
+    pageUrl = loc?.url ?? null;
     // WP07 giro 2 (I-1): un ref è legato solo se compare UNA volta fra tutti i nodi e UNA volta nel testo grezzo
     // (DevTools stampa nomi e valori senza escape: una riga "uid=…" iniettata in un valore la ripete)
     // WP07 giro 3 (I-A): i token si contano in TUTTI i formati (uid=X, [ref=X], [X]): la somma deve essere 1; un
@@ -216,20 +238,31 @@ export async function buildObservation({ ws, customer, session, call, state, res
     // riga per Playwright (YAML: le stringhe fra virgolette non vanno a capo; un " isolato in un testo non le accoppia)
     const QUOTED = /"((?:[^"\\]|\\.)*)"/gs;
     const quoted = (call.family === "playwright" ? text.split("\n") : [text]).flatMap((t) => [...t.matchAll(QUOTED)].map((m) => m[1]));
+    // conteggi in un passaggio (pagine di migliaia di elementi): testo intero e valori fra virgolette
+    const inText = tokenCounts(text);
+    const inQuoted = new Set();
+    for (const q of quoted) for (const k of tokenCounts(q).keys()) inQuoted.add(k);
     const unbound = (r) => {
+      if (/^\w+$/.test(r)) return Math.max(count[r] ?? 0, inText.get(r) ?? 0) !== 1 || inQuoted.has(r);
       const re = tokenRe(r);
       if (Math.max(count[r] ?? 0, (text.match(re) ?? []).length) !== 1) return true;
       return quoted.some((q) => { re.lastIndex = 0; return re.test(q); });
     };
     refs = {};
     for (const e of page.elements) {
-      if (!e.ref || Object.keys(refs).length >= 300) continue;
+      if (!e.ref) continue;
       const bad = page.formatMismatch || unbound(String(e.ref));
       if (!bad && !unsafePiece) verified.push(String(e.ref));
       refs[String(e.ref)] = bad ? null : atlasMatch(atlas, e, { page: doc.page_signature })?.code ?? null;
     }
   }
-  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find: isFindRead(call), confirmedUrl: loc?.url ?? null };
+  // correzione 5: firma di un pezzo — percorso, più l'h1 solo se il pezzo lo mostra (mai il primo titolo qualunque)
+  let pieceSig = null;
+  if (mode === "partial" && page?.url) {
+    const { pageSignature } = await import("../../scripts/chrome/snapshot-parse.mjs");
+    pieceSig = pageSignature({ ...page, headings: (page.headings ?? []).filter((h) => h.level === 1) }, { profile });
+  }
+  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find, confirmedUrl: loc?.url ?? null, pieceSig, pieceH1: !!pieceSig && pieceSig.includes("#") };
 }
 
 // Nuovo stato del legame ref ↔ SEL in session.browser e della storia dei ref dopo la chiamata (puro: copie).
@@ -254,11 +287,20 @@ export async function buildObservation({ ws, customer, session, call, state, res
 //     dalla mappa con il suo nome; un ref confermato prende il nome dell'ultimo pezzo (stessa etichetta normalizzata);
 //  4. pezzo di pagina non confermata (o di un'altra pagina, senza ref) ⇒ mappa svuotata; un'azione nella stessa chiamata
 //     (click, testo, upload, dialog, script, batch con effetto) ⇒ niente legami portati dalla mappa precedente.
+// Correzioni dopo la revisione indipendente (27/10/2026):
+//  - un'azione che non rilegge la pagina (nessuno snapshot nella risposta) marca la mappa `after_action`: il pezzo
+//    successivo, anche sullo stesso URL, apre una mappa nuova (dopo un salvataggio o un reload i ref cambiano);
+//  - un pezzo lega al SEL solo in modalità esplorazione (sandbox, dev, preprod); in un piano legano solo le letture complete;
+//  - firma di una mappa di pezzi: quella della mappa a cui si somma; una mappa nuova prende percorso + h1 se il pezzo lo
+//    mostra, altrimenti la firma dell'ultima mappa dello stesso URL (lettura completa), altrimenti il solo percorso;
+//  - un find (pagina mai confermata) non svuota la mappa: vi aggiunge solo i ref già legati nella storia della scheda con
+//    la stessa etichetta, se la mappa è della stessa scheda e famiglia e non è dopo un'azione.
 // Firma del giro 4 nextBinding(b, opts) → browser ancora accettata (storia vuota); altrimenti → { browser, hist }.
 const ACT_KINDS = new Set(["click", "input", "upload", "dialog", "script", "other"]);
 export function nextBinding(b, hist, opts) {
   if (opts === undefined && hist && typeof hist === "object" && "call" in hist) return nextBinding(b, null, hist).browser;
-  const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null, names = null, verified = null, find = false, sig = null, confirmedUrl = null } = opts;
+  const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null, names = null, verified = null, find = false, sig = null,
+    confirmedUrl = null, sessionMode = null, pieceSig = null, pieceH1 = false } = opts;
   const out = { ...b };
   delete out.ref_labels;   // storia del giro 4 (un solo posto in session.json): sostituita dal file per scheda
   const tab = asked != null ? String(asked) : null;
@@ -277,7 +319,9 @@ export function nextBinding(b, hist, opts) {
   const h = updateHistory(hist ?? { v: 1, tabs: {} }, { cleared: cleared.map((c) => c.key), keys, labels, complete, firstOk, url: labelLoc?.url ?? null });
   const mapOk = (m) => m && m.refs && typeof m.refs === "object" && !Array.isArray(m.refs);
   const pieceUrl = pageUrl ?? confirmedUrl;
-  const samePage = !claudeNav && !acted && mapOk(prev) && pieceUrl != null && prev.url === pieceUrl && (prev.tab ?? null) === tab && (prev.family ?? null) === fam;
+  const sameMap = (m) => !claudeNav && !acted && mapOk(m) && m.after_action !== true && (m.tab ?? null) === tab && (m.family ?? null) === fam;
+  const samePage = sameMap(prev) && pieceUrl != null && prev.url === pieceUrl;
+  const bindPieces = sessionMode === "esplorazione" && PARTIAL_BIND_ENVS.has(envType);
   // la mappa precedente, ricontrollata sulla storia aggiornata (schede su cui era stata legata): un ref che la storia non
   // conferma più esce con il suo nome
   const kept = (m) => {
@@ -287,25 +331,42 @@ export function nextBinding(b, hist, opts) {
     const unv = Array.isArray(m.unverified) ? m.unverified.filter((r) => Object.hasOwn(rs, r)) : [];
     return { rs, ns, unv };
   };
-  if (refs && pageUrl && !(partial && claudeNav)) {
-    const label = new Map();
-    for (const [r, k] of labels) label.set(r, label.has(r) && label.get(r) !== k ? "!" : k);
+  const nm = names && typeof names === "object" ? names : {};
+  const label = new Map();
+  for (const [r, k] of labels) label.set(r, label.has(r) && label.get(r) !== k ? "!" : k);
+  const good = (r) => okSet.has(r) && keys.every((k) => stillBound(h, k, r));
+  // somma dei ref verificati e coerenti di un pezzo (o di un find) a una mappa; in un piano, in produzione o in ambiente
+  // ignoto un pezzo non crea legami al SEL (un ref già legato da una lettura completa resta com'è)
+  const addPiece = (merged, mergedNames, unv) => {
+    for (const [r, v0] of Object.entries(refs ?? {})) {
+      if (!good(r)) continue;
+      const v = v0 != null && keys.every((k) => bindable(h, k, r, label.get(r))) ? v0 : null;
+      merged[r] = bindPieces ? v : Object.hasOwn(merged, r) ? merged[r] : null;
+      if (typeof nm[r] === "string") mergedNames[r] = nm[r]; else delete mergedNames[r];
+      const i = unv.indexOf(r);
+      if (i >= 0) unv.splice(i, 1);
+    }
+  };
+  if (find && partial && !claudeNav) {
+    // un find: la mappa resta (ricontrollata) e prende solo i ref già legati nella storia con la stessa etichetta
+    if (sameMap(prev)) {
+      const { rs, ns, unv } = kept(prev);
+      addPiece(rs, ns, unv);
+      const { unverified: _u, ...rest } = prev;
+      out.snapshot = { ...rest, refs: rs, names: ns, ...(unv.length ? { unverified: unv } : {}) };
+    } else if (mapOk(prev)) {
+      const { rs, ns, unv } = kept(prev);
+      const { unverified: _u, ...rest } = prev;
+      out.snapshot = { ...rest, refs: rs, names: ns, ...(unv.length ? { unverified: unv } : {}) };
+    }
+  } else if (refs && pageUrl && !(partial && claudeNav)) {
     const bound = { ...refs };
     for (const r of Object.keys(bound)) if (bound[r] != null && !keys.every((k) => bindable(h, k, r, label.get(r)))) bound[r] = null;
-    const nm = names && typeof names === "object" ? names : {};
     if (partial) {
       const { rs: merged, ns: mergedNames, unv } = samePage ? kept(prev) : { rs: {}, ns: {}, unv: [] };
-      const good = (r) => okSet.has(r) && keys.every((k) => stillBound(h, k, r));
-      for (const [r, v] of Object.entries(bound)) {
-        if (!good(r)) continue;
-        if (!Object.hasOwn(merged, r) && Object.keys(merged).length >= MERGED_REFS_MAX) continue;
-        // produzione (e ambiente ignoto): un pezzo non crea legami; un ref già legato da una lettura completa resta com'è
-        merged[r] = PARTIAL_BIND_ENVS.has(envType) ? v : Object.hasOwn(merged, r) ? merged[r] : null;
-        if (typeof nm[r] === "string") mergedNames[r] = nm[r]; else delete mergedNames[r];
-        const i = unv.indexOf(r);
-        if (i >= 0) unv.splice(i, 1);
-      }
-      out.snapshot = { obs, url: pageUrl, tab, ts, refs: merged, family: fam, hist_keys: keys, partial: true, sig: (samePage ? prev.sig : null) ?? sig, names: mergedNames, ...(unv.length ? { unverified: unv } : {}) };
+      addPiece(merged, mergedNames, unv);
+      const sigOut = samePage ? prev.sig ?? pieceSig : pieceH1 ? pieceSig : (prev && prev.url === pageUrl && typeof prev.sig === "string" ? prev.sig : null) ?? pieceSig ?? sig;
+      out.snapshot = { obs, url: pageUrl, tab, ts, refs: merged, family: fam, hist_keys: keys, partial: true, sig: sigOut, names: mergedNames, ...(unv.length ? { unverified: unv } : {}) };
     } else {
       out.snapshot = { obs, url: pageUrl, tab, ts, refs: bound, family: fam, hist_keys: keys, sig };
       if (names && typeof names === "object") out.snapshot.names = Object.fromEntries(Object.entries(names).filter(([r]) => Object.hasOwn(bound, r)));
@@ -321,6 +382,9 @@ export function nextBinding(b, hist, opts) {
       const { unverified: _u, ...rest } = prev;
       out.snapshot = { ...rest, refs: rs, names: ns, ...(unv.length ? { unverified: unv } : {}) };
     } else out.snapshot = { obs: prev.obs, url: prev.url ?? null, tab: prev.tab ?? null, ts, refs: {}, names: {}, cleared_by: String(call.op ?? call.tool ?? "") };
+  } else if (acted && !claudeNav && mapOk(out.snapshot) && out.snapshot === prev) {
+    // un'azione che non ha riletto la pagina: la mappa resta per i guard, ma un pezzo successivo non vi si somma
+    out.snapshot = { ...prev, after_action: true };
   }
   const browser = key ? settlePending(out, key, cleared.flatMap((c) => c.pend)) : out;
   return { browser, hist: h };
@@ -381,13 +445,49 @@ function writeErrFile(ws, e, doc, scope, now) {
   writeFileAtomic(abs, toYaml(body));
 }
 
+// Correzione 1 dopo la revisione (27/10/2026): Chrome DevTools non ha letture a pezzi; sulle pagine pesanti l'agente salva
+// lo snapshot in un file (take_snapshot { filePath }) e lo legge a pezzi con Read. observe-append legge QUEL file e lo tratta
+// come una lettura COMPLETA in linea (legame, nomi, record del registro), con le stesse regole: marcatore di pagina
+// (RootWebArea), conteggi dei ref, storia. Solo un file regolare sotto le cartelle di lavoro in cui guard-browser lascia
+// scrivere lo strumento (sessione, evidenze, run del cliente; realpath confinato, mai file di stato), scritto negli ultimi
+// minuti, entro un limite in byte. Altrimenti la risposta resta quella dello strumento (nessuna lettura, nessun legame).
+export const SNAPSHOT_FILE_MAX_BYTES = 64 * 1024 * 1024;
+const SNAPSHOT_FILE_AGE_MS = 10 * 60000;
+const WINFS = process.platform === "win32";
+const foldP = (p) => (WINFS ? p.toLowerCase() : p);
+export function snapshotFileResponse({ ws, customer, sid, cwd, call, resp, now = Date.now() }) {
+  if (call?.family !== "chrome-devtools" || call.op !== "take_snapshot" || !Array.isArray(call.outputs) || call.outputs.length !== 1) return null;
+  if (Array.isArray(call.unknownKeys) && call.unknownKeys.length) return null;
+  const raw = call.outputs[0];
+  if (typeof raw !== "string" || !raw.trim() || /[\u0000-\u001f\u007f\u0085\u2028\u2029]/.test(raw)) return null;
+  const text0 = responseText(resp);
+  if (/^## Latest page snapshot\s*$/m.test(text0)) return null;   // già in linea
+  let real;
+  try { real = realpathSync(resolve(cwd || ws, raw)); } catch { return null; }
+  const roots = [join(ws, "customers", customer, ".sessions", sid), join(ws, "customers", customer, "evidence"), join(ws, "customers", customer, "runs")]
+    .map((d) => { try { return realpathSync(d); } catch { return null; } }).filter(Boolean);
+  if (!roots.some((r) => foldP(real).startsWith(foldP(r.endsWith(sep) ? r : r + sep)))) return null;
+  if (/(^|[\\/])(session\.json|approvals\.jsonl|invocations\.jsonl|current-session|compact-summary\.md|[^\\/]*\.lock)$/i.test(real) || /[\\/]blackboard([\\/]|$)/i.test(real)) return null;
+  let st;
+  try { st = statSync(real); } catch { return null; }
+  if (!st.isFile() || st.size > SNAPSHOT_FILE_MAX_BYTES || now - st.mtimeMs > SNAPSHOT_FILE_AGE_MS || st.mtimeMs - now > 60000) return null;
+  let body;
+  try { body = readFileSync(real, "utf8"); } catch { return null; }
+  const block = { type: "text", text: `## Latest page snapshot\n${body.replace(/^\s*## Latest page snapshot\s*\n/, "")}` };
+  if (Array.isArray(resp)) return [...resp, block];
+  if (resp && typeof resp === "object" && Array.isArray(resp.content)) return { ...resp, content: [...resp.content, block] };
+  return [{ type: "text", text: text0 }, block];
+}
+
 export async function record(input, env = process.env, { now = new Date() } = {}) {
   const tool = String(input.tool_name ?? "");
   if (!isBrowserTool(tool)) return null;
   const st = loadHookState(input, env);
   if (!st.jvc || !st.session || !st.sessionFile) return null;
   const call = classify(tool, input.tool_input);
-  const resp = input.tool_response;
+  // correzione 1: take_snapshot di DevTools con filePath ⇒ il file scritto dallo strumento come lettura completa
+  let resp = input.tool_response;
+  try { resp = snapshotFileResponse({ ws: st.ws, customer: st.customer, sid: st.sid, cwd: input.cwd, call, resp, now: now.getTime() }) ?? resp; } catch { resp = input.tool_response; }
   let state;
   try { state = responseState(resp); } catch { state = "unknown"; }
   const warn = [];
@@ -411,7 +511,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   }
 
   // 2. osservazione
-  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find, confirmedUrl } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
+  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find, confirmedUrl, pieceSig: pSig, pieceH1 } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
   const { code, errs, payload } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
   const dir = join(st.ws, "customers", st.customer, "observations");
   mkdirSync(dir, { recursive: true });
@@ -446,7 +546,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     // obs_pending di questa chiamata (se questa scrittura non avviene, la voce resta e i guard non legano)
     // lock della storia dentro quello di session.json (stesso ordine per tutte le sessioni del cliente)
     s.browser = withFileLock(`${histFile}.lock`, () => {
-      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names, verified, find, sig: doc.page_signature ?? null, confirmedUrl });
+      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names, verified, find, sig: doc.page_signature ?? null, confirmedUrl, sessionMode: s.mode ?? null, pieceSig: pSig, pieceH1 });
       newSnap = r.browser.snapshot ?? null;
       if (labels.length || cleared.length || labelLoc?.url) saveHistory(histFile, r.hist);
       // WP08: il marcatore del cliente si chiude qui, sotto gli stessi lock (ordine: session.json → storia → marcatore)

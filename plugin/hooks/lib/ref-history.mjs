@@ -17,7 +17,6 @@ import { join } from "node:path";
 import { writeFileAtomic } from "./fsx.mjs";
 
 const FAM = { "claude-browser": "cl", "chrome-devtools": "dt", playwright: "pw" };
-export const HISTORY_MAX = 2000;      // ref per scheda; oltre ⇒ la scheda non lega più nulla fino a una navigazione
 export const TABS_MAX = 64;           // schede ricordate; oltre ⇒ la nuova scheda non lega (mai dimenticare le altre)
 export const OBS_DONE_MAX = 32;
 export const TAINT = "!";
@@ -174,14 +173,12 @@ export function updateHistory(h0, { cleared = [], keys = [], labels = [], comple
       t = { l: {} };
     }
     const l = { ...(t.l ?? {}) };
-    let n = Object.keys(l).length;
-    let full = !!t.full;
+    // correzioni dopo la revisione (27/10/2026): nessun tetto di ref per scheda (la storia si azzera con la navigazione)
+    const full = !!t.full;
     for (const [r, k] of now) {
       const old = l[r];
       if (old === undefined) {
-        if (n >= HISTORY_MAX) { full = true; continue; }
         l[r] = (complete || firstOk?.has(r)) && k !== TAINT ? k : TAINT;   // regola 4: prima volta fuori da una lettura completa o da un pezzo verificato
-        n++;
       } else if (old !== k) l[r] = TAINT;             // regola 3: un'altra etichetta
     }
     h.tabs[key] = { ...t, l, ...(full ? { full: true } : {}), ...(url ? { url } : {}) };

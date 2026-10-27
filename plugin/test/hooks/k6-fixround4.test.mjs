@@ -153,8 +153,7 @@ test("I-A (aggiornato, esplorazione libera): letture parziali di Claude (ref_id,
     post(ws, CL + "read_page", { tabId: 101 }, claude(PAGE, url));
     assert.equal(refsOf(ws).ref_3, SEL, "controllo: una lettura completa lega");
     post(ws, tool, ti, claude(body, url));
-    // revisione di sicurezza (rilievo 4): il find non conferma la pagina ⇒ mappa svuotata (fail-closed)
-    if (tool.endsWith("find")) { assert.deepEqual(refsOf(ws), {}, JSON.stringify(refsOf(ws))); assert.ok(!allowed(clClick(ws, tr, "ref_3"))); continue; }
+    // correzione 7 dopo la revisione (27/10/2026): un find tiene la mappa (ref_3 già legato con la stessa etichetta)
     assert.equal(refsOf(ws).ref_3, SEL, `${envId} ${tool} ${JSON.stringify(ti)}: ${JSON.stringify(refsOf(ws))}`);
     assert.equal(refsOf(ws).ref_1 ?? null, null);
     if (envId === "preprod") assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), `${tool}: click di Claude negato dalla decisione WP08`);
@@ -210,9 +209,9 @@ test("I-A (aggiornato, esplorazione libera): DevTools e Playwright — una lettu
       post(ws, DT + "take_snapshot", {}, dtPage(url));
       assert.equal(refsOf(ws)["1_5"], SEL, `${envId} DevTools completo: ${JSON.stringify(refsOf(ws))}`);
       post(ws, DT + "take_snapshot", { uid: "1_5" }, dtPage(url));
-      // chiavi non previste = chiamata non classificata: mappa nuova con i soli ref del pezzo (rilievo 4); in produzione
-      // un pezzo non lega
-      assert.equal(refsOf(ws)["1_5"], envId === "prod" ? null : SEL, `${envId} DevTools ristretto: ${JSON.stringify(refsOf(ws))}`);
+      // chiavi non previste = chiamata non classificata: mappa nuova con i soli ref del pezzo (rilievo 4); in un piano un
+      // pezzo non lega (correzione 6 dopo la revisione, 27/10/2026)
+      assert.equal(refsOf(ws)["1_5"], null, `${envId} DevTools ristretto: ${JSON.stringify(refsOf(ws))}`);
       // le chiavi non previste azzerano l'origine osservata (regola invariata): niente click finché non si conferma
       assert.ok(!allowed(guards(ws, DT + "click", { uid: "1_5" }, { transcript_path: tr })));
       post(ws, DT + "take_snapshot", { verbose: true }, dtPage(url));
@@ -225,7 +224,6 @@ test("I-A (aggiornato, esplorazione libera): DevTools e Playwright — una lettu
       post(ws, PW + "browser_snapshot", {}, pwPage(url));
       assert.equal(refsOf(ws).e5, SEL, `${envId} Playwright completo: ${JSON.stringify(refsOf(ws))}`);
       post(ws, PW + op, ti, body(url));
-      if (op === "browser_find") { assert.deepEqual(refsOf(ws), {}, "browser_find: pagina mai confermata ⇒ mappa svuotata"); continue; }
       assert.equal(refsOf(ws).e5, SEL, `${envId} Playwright ${op} ${JSON.stringify(ti)}: ${JSON.stringify(refsOf(ws))}`);
       if (op !== "browser_find") assert.equal(readSession(ws).browser.snapshot.partial, true, `${envId} ${op}`);
     }

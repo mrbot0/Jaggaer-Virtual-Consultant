@@ -65,20 +65,23 @@ const PIECE_MENU = `navigation "Menu" [ref_2]\n link "Elenco richieste" [ref_3]\
 const PIECE_FORM = `textbox "Descrizione" [ref_20]\nbutton "Annulla" [ref_21]`;
 const PIECE_BAR = `button "Salva bozza" [ref_40]${TRUNC}`;
 
-test("punto 1: i pezzi della stessa pagina si sommano (ref_id, depth) e il ref legato al SEL si clicca; un pezzo troncato non aggiunge ref (revisione di sicurezza, finding 2) (sandbox, browser di Claude)", async () => {
+// correzione 6 dopo la revisione (27/10/2026): in un piano i pezzi non legano al SEL, solo le letture complete: i pezzi si sommano (ref e nomi) ma in un piano non legano; la lettura completa sì
+test("punto 1 (aggiornato): i pezzi della stessa pagina si sommano (ref_id, depth); un pezzo troncato non aggiunge ref; in un piano il SEL lo lega solo una lettura completa (sandbox, browser di Claude)", async () => {
   const { ws, tr, url } = await planWs("sandbox");
   nav(ws, url);
   R(ws, PIECE_MENU, url, { tabId: 101, ref_id: "ref_2" });
-  assert.equal(refsOf(ws).ref_3, SEL, `pezzo 1: ${JSON.stringify(refsOf(ws))}`);
+  assert.ok(Object.hasOwn(refsOf(ws), "ref_3") && refsOf(ws).ref_3 === null, `pezzo 1: ${JSON.stringify(refsOf(ws))}`);
   R(ws, PIECE_FORM, url, { tabId: 101, depth: 4 });
   R(ws, PIECE_BAR, url);
   const s = snapOf(ws);
-  assert.equal(s.refs.ref_3, SEL, `la mappa non deve azzerarsi: ${JSON.stringify(s.refs)}`);
-  for (const r of ["ref_4", "ref_20", "ref_21"]) assert.ok(Object.hasOwn(s.refs, r), `${r} assente: ${JSON.stringify(s.refs)}`);
+  for (const r of ["ref_3", "ref_4", "ref_20", "ref_21"]) assert.ok(Object.hasOwn(s.refs, r), `${r} assente: ${JSON.stringify(s.refs)}`);
   assert.ok(!Object.hasOwn(s.refs, "ref_40") && !Object.hasOwn(s.names, "ref_40"), "pezzo troncato: nessun ref nuovo");
   assert.equal(s.names.ref_21, "Annulla");
   assert.equal(s.names.ref_3, "Elenco richieste");
   assert.equal(s.partial, true, "mappa fatta di letture parziali marcata");
+  assert.ok(!allowed(clClick(ws, tr, "ref_3")), "in un piano un pezzo non lega");
+  R(ws, `${PIECE_MENU}\n${PIECE_FORM}\n\nViewport: 490x417`, url);
+  assert.equal(refsOf(ws).ref_3, SEL, JSON.stringify(refsOf(ws)));
   const res = clClick(ws, tr, "ref_3");
   assert.ok(allowed(res), why(res));
   assert.ok(!allowed(clClick(ws, tr, "ref_21")), "Annulla non è il SEL del passo");
@@ -112,11 +115,11 @@ test("punto 1: le regole del legame valgono anche per i pezzi — etichetta dive
     assert.equal(refsOf(ws).ref_1 ?? null, null, JSON.stringify(refsOf(ws)));
     assert.ok(!allowed(clClick(ws, tr, "ref_1")));
   }
-  // un ref già legato in un pezzo e poi mostrato con un'altra etichetta in un altro pezzo ⇒ slegato
+  // un ref legato da una lettura completa e poi mostrato con un'altra etichetta in un pezzo ⇒ fuori dalla mappa
   {
     const { ws, tr, url } = await planWs("sandbox");
     nav(ws, url);
-    R(ws, PIECE_MENU, url, { tabId: 101, ref_id: "ref_2" });
+    R(ws, `${PIECE_MENU}\n\nViewport: 490x417`, url);
     assert.equal(refsOf(ws).ref_3, SEL);
     R(ws, `button "Invia" [ref_3]`, url, { tabId: 101, depth: 2 });
     assert.equal(refsOf(ws).ref_3 ?? null, null, JSON.stringify(refsOf(ws)));
@@ -132,17 +135,15 @@ test("punto 1: le regole del legame valgono anche per i pezzi — etichetta dive
   }
 });
 
-test("punto 1 (dopo la revisione di sicurezza, rilievo 4): un find non conferma mai la pagina (testo derivato dalla pagina, origin-markers) ⇒ non aggiunge ref e svuota la mappa, come prima del brief", async () => {
+// correzione 7 dopo la revisione (27/10/2026): il find non svuota più la mappa; aggiunge solo ref già visti con la stessa etichetta
+test("punto 1 (aggiornato): un find tiene la mappa, non aggiunge ref nuovi né lega ref nuovi", async () => {
   const { ws, tr, url } = await planWs("sandbox");
   nav(ws, url);
-  R(ws, PIECE_MENU, url, { tabId: 101, ref_id: "ref_2" });
+  R(ws, `${PIECE_MENU}\n\nViewport: 490x417`, url);
   post(ws, CL + "find", { tabId: 101, query: "elenco o salva" }, blocks(`Found 2 matching elements\n- link "Elenco richieste" [ref_3]\n- button "Salva" [ref_77]`, url));
   const s = snapOf(ws);
-  assert.deepEqual(s.refs, {}, JSON.stringify(s));
-  assert.deepEqual(s.names ?? {}, {});
-  assert.ok(!allowed(clClick(ws, tr, "ref_3")));
-  // una lettura del pezzo dopo il find ricostruisce la mappa
-  R(ws, PIECE_MENU, url, { tabId: 101, ref_id: "ref_2" });
+  assert.equal(s.refs.ref_3, SEL, JSON.stringify(s));
+  assert.ok(!Object.hasOwn(s.refs, "ref_77") && !Object.hasOwn(s.names ?? {}, "ref_77"));
   assert.ok(allowed(clClick(ws, tr, "ref_3")));
   // primo find su una pagina: niente di coerente ⇒ nessun ref legato
   const w2 = await planWs("sandbox");
@@ -158,7 +159,7 @@ test("punto 1: in produzione i pezzi aggiungono i nomi ma non legano al SEL (pro
     nav(ws, url);
     R(ws, PIECE_MENU, url, { tabId: 101, ref_id: "ref_2" });
     assert.ok(Object.hasOwn(refsOf(ws), "ref_3"), JSON.stringify(refsOf(ws)));
-    assert.equal(refsOf(ws).ref_3, null, "produzione: un pezzo non lega");
+    assert.equal(refsOf(ws).ref_3, null, "produzione (e piano): un pezzo non lega");
     assert.equal(snapOf(ws).names.ref_3, "Elenco richieste");
   }
   const pw = (url, line) => `### Page\n- Page URL: ${url}\n- Page Title: ACME\n### Snapshot\n\`\`\`yaml\n${line}\n\`\`\``;
@@ -166,10 +167,10 @@ test("punto 1: in produzione i pezzi aggiungono i nomi ma non legano al SEL (pro
     const { ws, tr, url } = await planWs("preprod", null);
     post(ws, PW + "browser_snapshot", { target: "e2" }, pw(url, `- link "Elenco richieste" [ref=e5]`));
     post(ws, PW + "browser_snapshot", { target: "e9" }, pw(url, `- button "Annulla" [ref=e10]`));
-    assert.equal(refsOf(ws).e5, SEL, JSON.stringify(refsOf(ws)));
-    assert.ok(Object.hasOwn(refsOf(ws), "e10"));
-    const res = guards(ws, PW + "browser_click", { ref: "e5", element: "Elenco richieste" }, { transcript_path: tr });
-    assert.ok(allowed(res), why(res));
+    assert.ok(Object.hasOwn(refsOf(ws), "e5") && Object.hasOwn(refsOf(ws), "e10"), JSON.stringify(refsOf(ws)));
+    // correzione 6 dopo la revisione (27/10/2026): in un piano i pezzi non legano al SEL, solo le letture complete
+    assert.equal(refsOf(ws).e5, null);
+    assert.ok(!allowed(guards(ws, PW + "browser_click", { ref: "e5", element: "Elenco richieste" }, { transcript_path: tr })));
   }
   {
     // DevTools non ha letture ristrette: "parziale" è un take_snapshot con chiavi non previste, cioè una chiamata non
@@ -178,7 +179,7 @@ test("punto 1: in produzione i pezzi aggiungono i nomi ma non legano al SEL (pro
     const { ws, tr, url } = await planWs("preprod", null);
     const dt = (line) => `## Latest page snapshot\nuid=1_0 RootWebArea "ACME" url="${url}"\n  ${line}\n`;
     post(ws, DT + "take_snapshot", { uid: "1_2" }, dt(`uid=1_5 link "Elenco richieste"`));
-    assert.equal(refsOf(ws)["1_5"], SEL, JSON.stringify(refsOf(ws)));
+    assert.ok(Object.hasOwn(refsOf(ws), "1_5") && refsOf(ws)["1_5"] === null, JSON.stringify(refsOf(ws)));
     post(ws, DT + "take_snapshot", { uid: "1_8" }, dt(`uid=1_9 button "Annulla"`));
     assert.deepEqual(Object.keys(refsOf(ws)), ["1_9"], JSON.stringify(refsOf(ws)));
     assert.ok(!allowed(guards(ws, DT + "click", { uid: "1_5" }, { transcript_path: tr })), "origine non confermata");
