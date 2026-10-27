@@ -311,6 +311,9 @@ export function nextBinding(b, hist, opts) {
   const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null, names = null, verified = null, find = false, sig = null,
     confirmedUrl = null, sessionMode = null, pieceSig = null, pieceH1 = false, limits = {} } = opts;
   const out = { ...b };
+  // N5 (verifica del 27/10/2026): che cosa ha fatto un pezzo — merged: si è sommato alla mappa precedente; afterAction:
+  // ha aperto una mappa nuova della stessa pagina perché in mezzo c'è stata un'azione (il registro lo marca)
+  let piece = null;
   delete out.ref_labels;   // storia del giro 4 (un solo posto in session.json): sostituita dal file per scheda
   const tab = asked != null ? String(asked) : null;
   const fam = call.family ?? null;
@@ -371,6 +374,7 @@ export function nextBinding(b, hist, opts) {
       const { rs: merged, ns: mergedNames, unv } = samePage ? kept(prev) : { rs: {}, ns: {}, unv: [] };
       addPiece(merged, mergedNames, unv);
       const sigOut = samePage ? prev.sig ?? pieceSig : pieceH1 ? pieceSig : (prev && prev.url === pageUrl && typeof prev.sig === "string" ? prev.sig : null) ?? pieceSig ?? sig;
+      piece = { merged: samePage, afterAction: !samePage && mapOk(prev) && prev.url === pageUrl && (prev.tab ?? null) === tab && (prev.family ?? null) === fam && (acted || prev.after_action === true) };
       out.snapshot = { obs, url: pageUrl, tab, ts, refs: merged, family: fam, hist_keys: keys, partial: true, sig: sigOut, names: mergedNames, ...(unv.length ? { unverified: unv } : {}) };
     } else {
       out.snapshot = { obs, url: pageUrl, tab, ts, refs: bound, family: fam, hist_keys: keys, sig };
@@ -406,7 +410,7 @@ export function nextBinding(b, hist, opts) {
   if (!unusable && mapOk(out.snapshot) && JSON.stringify(out.snapshot).length > mapBytes) unusable = out.snapshot.partial === true ? "pieces" : "map";
   if (unusable && out.snapshot) out.snapshot = { obs: out.snapshot.obs ?? obs, url: out.snapshot.url ?? null, tab: out.snapshot.tab ?? null, ts, refs: {}, names: {}, unusable: true, unusable_reason: unusable };
   const browser = key ? settlePending(out, key, cleared.flatMap((c) => c.pend)) : out;
-  return { browser, hist: h };
+  return { browser, hist: h, piece };
 }
 
 function writeDb(ws, customer, scope, doc, errors, now) {
@@ -558,6 +562,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   // 3. registro di sessione: ultima osservazione, spreco (snapshot ripetuti senza azione)
   let waste = false;
   let newSnap = null;
+  let pieceInfo = null;
   const key = callKey(input);
   // storia del browser del cliente (sopravvive alla sessione: la mappa dei ref dell'estensione sopravvive a lei)
   const histFile = historyFile(join(st.ws, "customers", st.customer, ".sessions"));
@@ -585,6 +590,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     s.browser = withFileLock(`${histFile}.lock`, () => {
       const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names, verified, find, sig: doc.page_signature ?? null, confirmedUrl, sessionMode: s.mode ?? null, pieceSig: pSig, pieceH1 });
       newSnap = r.browser.snapshot ?? null;
+      pieceInfo = r.piece ?? null;
       if (labels.length || cleared.length || labelLoc?.url) saveHistory(histFile, r.hist);
       // WP08: il marcatore del cliente si chiude qui, sotto gli stessi lock (ordine: session.json → storia → marcatore)
       withFileLock(`${pendFile}.lock`, () => {
@@ -648,12 +654,14 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     // esplorazione libera (26/10/2026): anche un pezzo della pagina (non un find: risultati di una ricerca) scrive un record
     // marcato partial, con la firma della mappa a cui si somma; atlas-build unisce i pezzi consecutivi in una visita
     const piece = state === "ok" && mode === "partial" && !find && pageUrl && page && newSnap?.partial && newSnap.obs === code;
-    if (piece) full = appendAtlasLog(file, pageRecord(page, { pageSig: pieceSig() ?? doc.page_signature, profile: doc.redaction.profile, env: envS, ts: doc.ts, partial: true })) === "full" || full;
+    // N5: un pezzo che apre una mappa nuova dopo un'azione è marcato after_action: atlas-build non lo unisce alla visita di prima
+    if (piece) full = appendAtlasLog(file, pageRecord(page, { pageSig: pieceSig() ?? doc.page_signature, profile: doc.redaction.profile, env: envS, ts: doc.ts, partial: true, afterAction: pieceInfo?.afterAction === true })) === "full" || full;
     // ogni snapshot che lega i ref (lettura completa o risposta di un'azione con la pagina intera) aggiorna i ref dei record;
     // un pezzo che si somma alla mappa aggiunge i suoi a quelli della mappa
     if (state === "ok" && page && refs && pageUrl && (mode !== "partial" || newSnap?.obs === code)) {
       let base = [];
-      const merged = mode === "partial" && newSnap?.partial && prevSnap?.obs && prevSnap.url === newSnap.url && (prevSnap.tab ?? null) === (newSnap.tab ?? null) && (prevSnap.family ?? null) === (newSnap.family ?? null);
+      // N5: solo se il pezzo si è davvero sommato alla mappa precedente (mai dopo un'azione)
+      const merged = mode === "partial" && pieceInfo?.merged === true && newSnap?.partial && prevSnap?.obs && prevSnap.url === newSnap.url && (prevSnap.tab ?? null) === (newSnap.tab ?? null) && (prevSnap.family ?? null) === (newSnap.family ?? null);
       if (merged) {
         try { const lp0 = JSON.parse(readFileSync(lastPage, "utf8")); if (lp0?.obs === prevSnap.obs && prevSnap.url === newSnap.url) base = Array.isArray(lp0.record_refs) ? lp0.record_refs : []; } catch { base = []; }
       }

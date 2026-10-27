@@ -2,7 +2,7 @@
 // partial: esplorazione libera, 26/10/2026), SOLA STRUTTURA —
 // ruoli, nomi redatti, obblighi — e i click fra le pagine. Mai valori dei campi, mai record di tabelle (righe e celle,
 // salvo le intestazioni di colonna), URL senza query. Lo scrive solo observe-append (guard-scope lo protegge).
-//   pageRecord(page, { pageSig, profile, env, ts, partial }) · clickRecord({ fromSig, name, ts })
+//   pageRecord(page, { pageSig, profile, env, ts, partial, afterAction }) · clickRecord({ fromSig, name, ts })
 //   appendAtlasLog(file, rec, { maxBytes }) → "written" | "full" · atlasLogFile(ws, customer, sid)
 import { appendFileSync, mkdirSync, statSync, existsSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -37,7 +37,9 @@ const sampleOk = (e) => !SECRET_HINT.test(`${e.name ?? ""} ${e.description ?? ""
 // sola lettura, non valido, testo lungo, destinazione dei link, valori di esempio dei campi), poi le RIGHE delle tabelle
 // (al più 20 per tabella), marcate record: dati, non struttura.
 // Tutti i testi passano dalla redazione del profilo dell'ambiente (e-mail, codici fiscali, IBAN, telefoni, codici cliente…).
-export function pageRecord(page, { pageSig, profile = "strict", env = process.env, ts = new Date().toISOString(), partial = false } = {}) {
+// N5 (verifica del 27/10/2026): afterAction ⇒ after_action: true su un pezzo che apre una mappa nuova dopo un'azione (atlas-build
+// non lo unisce alla visita di prima dell'azione: dopo un salvataggio o un reload la pagina può essere un'altra)
+export function pageRecord(page, { pageSig, profile = "strict", env = process.env, ts = new Date().toISOString(), partial = false, afterAction = false } = {}) {
   const els = Array.isArray(page?.elements) ? page.elements : [];
   const nodes = Array.isArray(page?.nodes) ? page.nodes : [];
   const byId = new Map(nodes.map((n) => [String(n.id), n]));
@@ -118,7 +120,7 @@ export function pageRecord(page, { pageSig, profile = "strict", env = process.en
   const hasChild = new Set(nodes.map((n) => String(n.parent)));
   const iframes = nodes.filter((n) => /^iframe$/i.test(String(n.role)) && !hasChild.has(String(n.id))).length;
   const messages = (page?.messages ?? []).map((m) => clip(red(m.text), 200)).filter(Boolean).slice(0, 20);
-  return { kind: "page", ts, ...(partial ? { partial: true } : {}), url_path: urlPath(page?.url, profile, env), ...(iframes ? { iframes } : {}), page_sig: pageSig ?? null,
+  return { kind: "page", ts, ...(partial ? { partial: true } : {}), ...(partial && afterAction ? { after_action: true } : {}), url_path: urlPath(page?.url, profile, env), ...(iframes ? { iframes } : {}), page_sig: pageSig ?? null,
     title: page?.title ? red(page.title) : null, elements: kept, ...(messages.length ? { messages } : {}) };
 }
 

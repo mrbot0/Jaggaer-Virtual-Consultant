@@ -124,8 +124,9 @@ export function buildDrafts(lines, { knownModules = new Map() } = {}) {
     for (const e of openEffects) e.to = l.page_sig;
     pendingClick = null;
     openEffects = [];
-    // un pezzo (record parziale) della stessa pagina della riga di pagina precedente si unisce a quella visita
-    const merge = l.partial === true && lastSig === l.page_sig && pages.has(l.page_sig);
+    // un pezzo (record parziale) della stessa pagina della riga di pagina precedente si unisce a quella visita; N5 (verifica
+    // del 27/10/2026): mai un pezzo marcato after_action (letto dopo un'azione: è una visita nuova)
+    const merge = l.partial === true && l.after_action !== true && lastSig === l.page_sig && pages.has(l.page_sig);
     lastSig = l.page_sig;
     const els = merge ? mergeVisit(pages.get(l.page_sig).visits.at(-1) ?? [], l.elements ?? []) : l.elements ?? [];
     // nome della pagina = titolo principale (h1), come il document dei suoi FLD: il percorso "Percorso: <nome>" e i campi

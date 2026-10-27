@@ -69,3 +69,56 @@ test("N3: mappa completa oltre il limite in byte — motivo registrato e messagg
   assert.doesNotMatch(reason("pieces"), /rileggila/);
   assert.match(reason("history"), /naviga/, "la storia si azzera con una navigazione");
 });
+
+// N5 ------------------------------------------------------------------------------------------------------------------
+import { readFileSync, existsSync } from "node:fs";
+import { buildDrafts } from "../../scripts/kb/atlas-build.mjs";
+
+const PW = "mcp__plugin_playwright_playwright__";
+const PURL = "https://acme-pre.jaggaer.com/p2p/req/1";
+const pwBody = (body) => `### Page\n- Page URL: ${PURL}\n- Page Title: ACME\n### Snapshot\n\`\`\`yaml\n${body}\n\`\`\``;
+let seqN5 = 0;
+const postN5 = (ws, tool, ti, text) => {
+  const i = { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: tool, tool_input: ti, tool_use_id: `toolu_n5_${++seqN5}`, tool_response: [{ type: "text", text }] };
+  runHook("browser-origin", i, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
+  return runHook("observe-append", i, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
+};
+const atlasDir = (ws) => join(ws, "customers/ACME/.sessions/sess-1/atlas");
+const pagesOf = (ws) => { const f = join(atlasDir(ws), "pages.jsonl"); return existsSync(f) ? readFileSync(f, "utf8").trim().split("\n").map((l) => JSON.parse(l)).filter((l) => l.kind === "page") : []; };
+
+test("N5: un pezzo letto dopo un'azione è marcato after_action nel registro e non eredita i ref dei record della visita di prima", () => {
+  const { ws, g } = explore("preprod", "ESPLORA PREPROD");
+  postN5(ws, PW + "browser_snapshot", { target: "e1" }, pwBody(`- table "Fornitori" [ref=e4]:\n  - row "Fornitore A" [ref=e5]:\n    - cell "Fornitore A" [ref=e6]\n- link "Ordini" [ref=e13]`));
+  postN5(ws, PW + "browser_snapshot", { target: "e2" }, pwBody(`- button "Nuovo" [ref=e14]`));
+  const before = pagesOf(ws);
+  assert.equal(before.length, 2);
+  assert.ok(before.every((p) => p.partial === true && p.after_action === undefined), JSON.stringify(before));
+  const lp0 = JSON.parse(readFileSync(join(atlasDir(ws), "last-page.json"), "utf8"));
+  assert.ok(lp0.record_refs.includes("e6"), "pezzi della stessa mappa: record_refs sommati");
+  assert.ok(decisionOf(g(PW + "browser_click", { ref: "e13", element: "Ordini" })) !== "deny");
+  postN5(ws, PW + "browser_click", { ref: "e13", element: "Ordini" }, "### Ran Playwright code\n```js\nawait page.click();\n```");
+  postN5(ws, PW + "browser_snapshot", { target: "e20" }, pwBody(`- button "Salva" [ref=e21]`));
+  const after = pagesOf(ws);
+  assert.equal(after.length, 3);
+  assert.equal(after[2].after_action, true, JSON.stringify(after[2]));
+  const lp = JSON.parse(readFileSync(join(atlasDir(ws), "last-page.json"), "utf8"));
+  assert.deepEqual(lp.record_refs, [], "i ref dei record della visita di prima dell'azione non passano alla mappa nuova");
+  // un altro pezzo della stessa mappa nuova (senza azioni in mezzo) si somma: non è marcato
+  postN5(ws, PW + "browser_snapshot", { target: "e22" }, pwBody(`- button "Invia" [ref=e23]`));
+  assert.equal(pagesOf(ws)[3].after_action, undefined);
+});
+
+test("N5: atlas-build non unisce alla visita di prima un pezzo marcato after_action (con o senza click registrato in mezzo)", () => {
+  const sig = "p2p/req#richiesta-1";
+  const rec = (els, extra = {}) => ({ kind: "page", partial: true, page_sig: sig, title: "Richiesta 1", url_path: "/p2p/req/1", elements: els.map((e, i) => ({ i, parent: null, ...e })), ...extra });
+  const p1 = rec([{ role: "heading", name: "Richiesta 1", level: 1 }, { role: "button", name: "Salva", ref: "e3" }]);
+  const p2 = rec([{ role: "button", name: "Invia", ref: "e9" }], { after_action: true });
+  for (const lines of [[p1, { kind: "click", from_sig: sig, target: { name: "Salva" }, effect: true }, p2], [p1, p2]]) {
+    const d = buildDrafts(lines);
+    assert.equal(d.pages.get(sig).visits.length, 2, JSON.stringify(d.pages.get(sig).visits));
+    assert.deepEqual(d.pages.get(sig).visits[1].map((e) => e.name), ["Invia"]);
+  }
+  // senza marca (registri precedenti o pezzi della stessa mappa): una visita sola, come prima
+  const { after_action: _a, ...p2plain } = p2;
+  assert.equal(buildDrafts([p1, p2plain]).pages.get(sig).visits.length, 1);
+});
