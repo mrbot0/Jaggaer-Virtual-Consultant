@@ -67,7 +67,9 @@ export function pageRecord(page, { pageSig, profile = "strict", env = process.en
     return null;
   };
   const push = (e, extra = {}) => {
-    const rec = { i: kept.length, parent: parentOf(e), role: e.role, name: red(e.name), ...extra };
+    // correzione 4 (27/10/2026): il ref dell'elemento (identificativo dello strumento, non un dato della pagina) serve ad
+    // atlas-build per riconoscere lo stesso elemento in due pezzi della pagina
+    const rec = { i: kept.length, parent: parentOf(e), role: e.role, name: red(e.name), ...(e.ref != null && e.ref !== "" ? { ref: String(e.ref) } : {}), ...extra };
     if (e.required) rec.required = true;
     if (e.disabled) rec.disabled = true;
     if (e.checked !== undefined) rec.checked = e.checked;

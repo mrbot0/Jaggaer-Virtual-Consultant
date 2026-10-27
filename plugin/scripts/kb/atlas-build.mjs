@@ -71,6 +71,10 @@ function fieldTypeOf(e) {
 // (normalizzato) e marca di record uguali e lo stesso genitore (già unito); la radice del pezzo (senza genitore) si
 // riconosce dal solo ruolo+nome. Ogni elemento della visita vale per al più un elemento del pezzo (due "Salva" distinti
 // nello stesso pezzo restano due). Un elemento ritrovato prende le informazioni che il pezzo aggiunge (obbligo, aiuto…).
+// Correzione 4 dopo la revisione (27/10/2026): quando i due elementi hanno il ref (record scritti da observe-append), lo
+// stesso elemento è lo stesso ref con lo stesso ruolo e nome; ref diversi ⇒ elementi diversi (due pulsanti omonimi in
+// pezzi diversi, o figli di contenitori non registrati, restano distinti). Il confronto per ruolo+nome resta per i record
+// senza ref (registri precedenti).
 const ENRICH = ["required", "disabled", "checked", "level", "help", "placeholder", "readonly", "invalid", "multiline", "href", "sample"];
 const ownKey = (e) => `${e.role}|${normLabel(e.name ?? "")}|${e.record ? 1 : 0}`;
 export function mergeVisit(base, add) {
@@ -82,7 +86,8 @@ export function mergeVisit(base, add) {
   add.forEach((e, j) => {
     const idx = e.i ?? j;
     const par = e.parent != null && map.has(e.parent) ? map.get(e.parent) : null;
-    const hit = (byKey.get(ownKey(e)) ?? []).find((i) => !used.has(i) && (e.parent == null || (out[i].parent ?? null) === par));
+    const hit = (byKey.get(ownKey(e)) ?? []).find((i) => !used.has(i) && (e.ref != null && out[i].ref != null ? out[i].ref === e.ref
+      : e.parent == null || (out[i].parent ?? null) === par));
     if (hit !== undefined) {
       used.add(hit);
       map.set(idx, hit);

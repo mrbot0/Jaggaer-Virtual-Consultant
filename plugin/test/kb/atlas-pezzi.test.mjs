@@ -95,3 +95,32 @@ test("atlas-build: un pezzo dopo la lettura completa della stessa pagina la comp
   assert.ok(r.written.some((w) => /Dettaglio/.test(JSON.stringify(w))), JSON.stringify(r.written));
 });
 
+
+// Correzione 4 dopo la revisione (27/10/2026, merge.mjs): pulsanti omonimi in pezzi diversi restano distinti; i figli non
+// si attaccano a un genitore sbagliato. I record portano il ref dell'elemento: due elementi con ref diversi sono diversi.
+test("correzione 4: mergeVisit usa il ref — omonimi con ref diversi restano due, lo stesso ref è uno solo, i figli restano sotto il loro genitore", () => {
+  const sig = "p/x";
+  const page = (partial, elements) => ({ kind: "page", ...(partial ? { partial: true } : {}), page_sig: sig, title: "X", url_path: "/x", elements });
+  const p1 = page(true, [{ i: 0, parent: null, role: "button", name: "Salva", ref: "ref_10" }, { i: 1, parent: null, role: "link", name: "Ordini", ref: "ref_11" }]);
+  const p2 = page(true, [{ i: 0, parent: null, role: "group", name: "Sezione B", ref: "ref_20" }, { i: 1, parent: 0, role: "button", name: "Salva", ref: "ref_21" },
+    { i: 2, parent: null, role: "link", name: "Ordini", ref: "ref_11" },
+    // figlio di un contenitore non strutturale: senza genitore nel record, come la radice del pezzo
+    { i: 3, parent: null, role: "button", name: "Salva", ref: "ref_22" }]);
+  const v = buildDrafts([p1, p2]).pages.get(sig).visits[0];
+  const salva = v.filter((e) => e.name === "Salva");
+  assert.equal(salva.length, 3, JSON.stringify(v));
+  const second = salva.find((e) => e.ref === "ref_21");
+  assert.equal(v[second.parent]?.name, "Sezione B", "il figlio resta sotto il suo genitore");
+  assert.equal(v.filter((e) => e.name === "Ordini").length, 1, "stesso ref ⇒ un solo elemento");
+  // stesso ref ma un'altra etichetta (ref riusato dopo un reload) ⇒ due elementi
+  const p3 = page(true, [{ i: 0, parent: null, role: "button", name: "Invia", ref: "ref_10" }]);
+  assert.equal(buildDrafts([p1, p3]).pages.get(sig).visits[0].length, 3);
+  // un pulsante "Salva" ripetuto in due sezioni diverse resta ambiguo (nessun SEL), come in una lettura completa
+  const d = buildDrafts([p1, p2]);
+  assert.ok(!d.sels.some((s) => s.label === "Salva"), "etichetta ripetuta ⇒ ambigua");
+});
+
+test("correzione 4: pageRecord porta il ref degli elementi", () => {
+  const r = pageRecord(parseSnapshot(`uid=3_0 RootWebArea "X" url="https://h/x"\n  uid=3_1 button "Salva"\n`), { pageSig: "x", profile: "standard", env: {} });
+  assert.equal(r.elements.find((e) => e.name === "Salva").ref, "3_1");
+});
