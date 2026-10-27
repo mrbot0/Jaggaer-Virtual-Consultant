@@ -109,10 +109,43 @@ export const roleCompatible = (a, b) => !a || !b || a === b || (ROLE_GROUP[a] &&
 
 // Voce dell'Atlas che corrisponde a un elemento osservato (etichetta uguale, ruolo compatibile). Con la firma della pagina
 // (soluzione A: la stessa etichetta può stare su più pagine) preferisce la voce di quella pagina, poi una senza pagina.
-export function atlasMatch(atlas, el, { page = null } = {}) {
-  const n = normLabel(el.name);
+// N1 (27/10/2026): indice delle voci per etichetta normalizzata, costruito una volta per elenco (pagine di decine di
+// migliaia di elementi × migliaia di SEL); stesso ordine delle voci dell'elenco ⇒ stesso risultato del filtro lineare.
+// L'indice si ricostruisce se l'elenco cambia lunghezza (gli elenchi di atlasIndex non si modificano dopo la lettura).
+const LABEL_INDEX = new WeakMap();
+export function atlasLabelIndex(atlas) {
+  if (!Array.isArray(atlas)) return new Map();
+  const c = LABEL_INDEX.get(atlas);
+  if (c && c.n === atlas.length) return c.idx;
+  const idx = new Map();
+  for (const a of atlas) {
+    if (!a?.label) continue;
+    const k = normLabel(a.label);
+    const l = idx.get(k);
+    if (l) l.push(a); else idx.set(k, [a]);
+  }
+  LABEL_INDEX.set(atlas, { n: atlas.length, idx });
+  return idx;
+}
+// Codice → voce (prima occorrenza, come Array.find), con la stessa cache per elenco.
+const CODE_INDEX = new WeakMap();
+export function atlasByCode(atlas, code) {
+  if (!Array.isArray(atlas)) return undefined;
+  let c = CODE_INDEX.get(atlas);
+  if (!c || c.n !== atlas.length) {
+    const idx = new Map();
+    for (const a of atlas) if (a && !idx.has(a.code)) idx.set(a.code, a);
+    c = { n: atlas.length, idx };
+    CODE_INDEX.set(atlas, c);
+  }
+  return c.idx.get(code);
+}
+
+// `norm`: etichetta dell'elemento già normalizzata (normLabel(el.name)) da chi la calcola una volta per elemento.
+export function atlasMatch(atlas, el, { page = null, norm = undefined } = {}) {
+  const n = norm !== undefined ? norm : normLabel(el.name);
   if (!n) return null;
-  const hits = (atlas ?? []).filter((a) => a.label && normLabel(a.label) === n && roleCompatible(a.role, el.role));
+  const hits = (atlasLabelIndex(atlas).get(n) ?? []).filter((a) => roleCompatible(a.role, el.role));
   if (!hits.length) return null;
   // con la pagina nota, una voce di un'altra pagina non si lega mai (seconda revisione: più stretto, fail-closed)
   if (page) return hits.find((a) => a.page === page) ?? hits.find((a) => !a.page) ?? null;

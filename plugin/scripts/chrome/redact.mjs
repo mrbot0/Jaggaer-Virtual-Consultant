@@ -22,6 +22,14 @@ function envSecrets(env) {
   for (const [k, v] of Object.entries(env ?? {})) if (ENV_NAME.test(k) && typeof v === "string" && v.length >= 4) out.push(v);
   return out.sort((a, b) => b.length - a.length);
 }
+// N1 (27/10/2026): le sole variabili da segreto dell'ambiente, in un oggetto semplice: chi redige migliaia di testi in una
+// chiamata (observe-append sulle pagine pesanti) lo calcola una volta e lo passa come `env` (stesso risultato: redactText
+// considera solo queste variabili; leggere process.env a ogni testo costa).
+export function secretEnv(env = process.env) {
+  const out = {};
+  for (const [k, v] of Object.entries(env ?? {})) if (ENV_NAME.test(k) && typeof v === "string" && v.length >= 4) out[k] = v;
+  return out;
+}
 
 // [nome, regex, sostituto]; l'ordine conta (IBAN prima della P.IVA, telefoni dopo i codici).
 const BASE = [

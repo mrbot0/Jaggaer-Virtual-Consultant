@@ -33,19 +33,38 @@ export function targetOf(ref, resolve) {
   return { label: ref, role: null, code: null };
 }
 
+// N1 (27/10/2026): nome normalizzato di ogni elemento, calcolato una volta per elenco di elementi (pagine di decine di
+// migliaia di elementi: findElement, novità ed elementi visti non lo ricalcolano a ogni confronto). Si ricalcola se
+// l'elenco cambia lunghezza.
+const NORMS = new WeakMap();
+export function elementNorms(page) {
+  const els = Array.isArray(page?.elements) ? page.elements : null;
+  if (!els) return [];
+  const c = NORMS.get(els);
+  if (c && c.length === els.length) return c;
+  const out = els.map((e) => normLabel(e?.name));
+  NORMS.set(els, out);
+  return out;
+}
+
 export function findElement(page, t) {
   if (!t?.label) return null;
   const n = normLabel(t.label);
   const els = page?.elements ?? [];
-  return els.find((e) => normLabel(e.name) === n && roleCompatible(t.role, e.role))
-    ?? els.find((e) => normLabel(e.name) === n)
-    ?? null;
+  const ns = elementNorms(page);
+  let any = null;
+  for (let i = 0; i < els.length; i++) {
+    if (ns[i] !== n) continue;
+    if (roleCompatible(t.role, els[i].role)) return els[i];
+    any ??= els[i];
+  }
+  return any;
 }
 const findMessage = (page, label) => {
   const n = normLabel(label);
   if (!n) return null;
   return (page?.messages ?? []).find((m) => normLabel(m.text).includes(n))
-    ?? (page?.elements ?? []).find((e) => MESSAGE_LIKE.has(e.role) && normLabel(e.name).includes(n)) ?? null;
+    ?? (() => { const els = page?.elements ?? []; const ns = elementNorms(page); const i = els.findIndex((e, j) => MESSAGE_LIKE.has(e.role) && ns[j].includes(n)); return i >= 0 ? els[i] : null; })();
 };
 const observedValue = (e) => (e.role === "checkbox" || e.role === "switch" || e.role === "radio" ? String(e.checked === true) : String(e.value ?? ""));
 const sameValue = (exp, obs) => normLabel(String(exp)) === normLabel(String(obs));
@@ -154,7 +173,7 @@ export function compareExpect(step, page, { resolve = () => null, atlas = null, 
   if (limit != null && took != null && took > limit) add({ kind: "tempo-fuori-norma", what: "timing", expected: limit, observed: took });
 
   // would_change_my_mind (§17.5): l'osservazione che ribalterebbe la decisione ⇒ sorpresa prioritaria
-  const pool = [...(page?.elements ?? []).map((e) => e.name), ...observed, ...(page?.texts ?? [])].map(normLabel);
+  const pool = [...elementNorms(page), ...[...observed, ...(page?.texts ?? [])].map(normLabel)];
   for (const entry of Array.isArray(why?.would_change_my_mind) ? why.would_change_my_mind : []) {
     const hit = wcmTokens(entry, resolve).map(normLabel).find((tok) => tok.length >= 4 && pool.some((p) => p.includes(tok)));
     if (hit) {
@@ -164,26 +183,35 @@ export function compareExpect(step, page, { resolve = () => null, atlas = null, 
   }
 
   // novità (§13.5): campi mai menzionati — né nell'expect né nell'Atlas dello scope
+  // N1: un solo passaggio sugli elementi con il nome normalizzato una volta; le novità per etichetta in un Set
+  const els = page?.elements ?? [];
+  const ns = elementNorms(page);
   const novelties = [];
+  const novel = new Set();
   if (Array.isArray(atlas)) {
-    for (const e of page?.elements ?? []) {
+    for (let i = 0; i < els.length; i++) {
+      const e = els[i];
       if (!FIELD_ROLES.has(e.role) || !e.name) continue;
-      if (expectedLabels.has(normLabel(e.name)) || atlasMatch(atlas, e)) continue;
+      if (expectedLabels.has(ns[i]) || atlasMatch(atlas, e, { norm: ns[i] })) continue;
       novelties.push({ role: e.role, label: e.name });
+      novel.add(ns[i]);
     }
   }
 
-  const elements_seen = (page?.elements ?? []).filter((e) => SEEN_ROLES.has(e.role) && e.name).map((e) => {
-    const m = Array.isArray(atlas) ? atlasMatch(atlas, e) : null;
-    const d = perLabel.get(normLabel(e.name));
+  const elements_seen = [];
+  for (let i = 0; i < els.length; i++) {
+    const e = els[i];
+    if (!SEEN_ROLES.has(e.role) || !e.name) continue;
+    const m = Array.isArray(atlas) ? atlasMatch(atlas, e, { norm: ns[i] }) : null;
+    const d = perLabel.get(ns[i]);
     const o = { role: e.role, label: e.name };
     for (const a of ATTRS) if (e[a] !== undefined) o[a] = e[a];
     if (e.value !== undefined) o.value = e.value;
     o.atlas_match = m?.code ?? null;
     if (d) { o.expected = d.expected; o.surprise = true; o.divergence = d.kind; }
-    if (novelties.some((n) => normLabel(n.label) === normLabel(e.name))) o.novelty = true;
-    return o;
-  });
+    if (novel.has(ns[i])) o.novelty = true;
+    elements_seen.push(o);
+  }
 
   const primary = divergences.find((d) => d.priority) ?? [...divergences].sort((a, b) => SEVERITY.indexOf(a.kind) - SEVERITY.indexOf(b.kind))[0] ?? null;
   return { page_signature: pageSignature(page, { profile }), unverified, divergences, novelties, confirmations, elements_seen, messages_seen: observed, primary };

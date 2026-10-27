@@ -19,10 +19,10 @@ import { isPageTextOp } from "./origin-markers.mjs";
 import { updateSessionFile } from "./session-state.mjs";
 import { writeFileAtomic, withFileLock } from "./fsx.mjs";
 import { parseSnapshot, responseText, responseHasImage, normLabel } from "../../scripts/chrome/snapshot-parse.mjs";
-import { compareExpect } from "../../scripts/chrome/expect-compare.mjs";
-import { resolveSel, atlasIndex, atlasMatch, fieldSensitivity } from "../../scripts/chrome/atlas.mjs";
+import { compareExpect, elementNorms } from "../../scripts/chrome/expect-compare.mjs";
+import { resolveSel, atlasIndex, atlasMatch, atlasByCode, fieldSensitivity } from "../../scripts/chrome/atlas.mjs";
 import { detectErrors } from "../../scripts/chrome/errors.mjs";
-import { profileFor, redactText, freeText } from "../../scripts/chrome/redact.mjs";
+import { profileFor, redactText, freeText, secretEnv } from "../../scripts/chrome/redact.mjs";
 import { toYaml } from "../../scripts/lib/yaml-lite.mjs";
 import { pageRecord, clickRecord, appendAtlasLog, atlasLogFile, recordRefs, fullWarningOnce } from "./atlas-log.mjs";
 import { EFFECT_LABEL } from "./effect-labels.mjs";
@@ -125,7 +125,9 @@ function tokenCounts(str) {
 }
 
 // Costruisce l'OBS (senza codice) dalla chiamata: pura rispetto al file system tranne Atlas e piano.
-export async function buildObservation({ ws, customer, session, call, state, resp, ti = null, env = process.env, now = new Date() }) {
+export async function buildObservation({ ws, customer, session, call, state, resp, ti = null, env: env0 = process.env, now = new Date() }) {
+  // N1: le variabili da segreto si leggono una volta per chiamata (stessa redazione)
+  const env = secretEnv(env0);
   const text = responseText(resp);
   const kind = obsKind(call, state, text);
   const profile = profileFor({ envType: session.env?.type ?? null });
@@ -157,7 +159,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
   const masks = new Set();
   const ft = (s) => { const r = freeText(s, { profile, env }); r.masks.forEach((x) => masks.add(x)); return r.text; };
   const seen = (cmp?.elements_seen ?? (hasPage ? compareExpect({ expect: {} }, page, { atlas, profile }).elements_seen : [])).map((e) => {
-    const m = e.atlas_match ? atlas.find((a) => a.code === e.atlas_match) : atlasMatch(atlas, { name: e.label, role: e.role });
+    const m = e.atlas_match ? atlasByCode(atlas, e.atlas_match) : atlasMatch(atlas, { name: e.label, role: e.role });
     const o = { ...e, label: ft(e.label) };
     if (e.value !== undefined) {
       if (sensitive(m)) { o.value = "[riservato]"; masks.add("fld-sensitivity"); } else o.value = ft(e.value);
@@ -249,11 +251,13 @@ export async function buildObservation({ ws, customer, session, call, state, res
       return quoted.some((q) => { re.lastIndex = 0; return re.test(q); });
     };
     refs = {};
-    for (const e of page.elements) {
+    const ns = elementNorms(page);
+    for (let i = 0; i < page.elements.length; i++) {
+      const e = page.elements[i];
       if (!e.ref) continue;
       const bad = page.formatMismatch || unbound(String(e.ref));
       if (!bad && !unsafePiece) verified.push(String(e.ref));
-      refs[String(e.ref)] = bad ? null : atlasMatch(atlas, e, { page: doc.page_signature })?.code ?? null;
+      refs[String(e.ref)] = bad ? null : atlasMatch(atlas, e, { page: doc.page_signature, norm: ns[i] })?.code ?? null;
     }
   }
   // correzione 5: firma di un pezzo — percorso, più l'h1 solo se il pezzo lo mostra (mai il primo titolo qualunque)
@@ -603,6 +607,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   // 4. soluzione A (spec §A1): registro di sola struttura per atlas-build — fail-open, mai un blocco
   try {
     const file = atlasLogFile(st.ws, st.customer, st.sid);
+    const envS = secretEnv(env);
     const lastPage = join(dirname(file), "last-page.json");
     let full = false;
     // prima i click (si riferiscono alla pagina precedente), poi la pagina di questa risposta; revisione finale (I4): un
@@ -633,12 +638,12 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       full = appendAtlasLog(file, clickRecord({ fromSig: prevSig, name: a.kind === "dialog" ? "(conferma del dialogo)" : "(Invio)", ts: doc.ts, effect: true, uncertain: !ok })) === "full" || full;
     }
     if (state === "ok" && mode === "complete" && pageUrl && page) {
-      full = appendAtlasLog(file, pageRecord(page, { pageSig: doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts })) === "full" || full;
+      full = appendAtlasLog(file, pageRecord(page, { pageSig: doc.page_signature, profile: doc.redaction.profile, env: envS, ts: doc.ts })) === "full" || full;
     }
     // esplorazione libera (26/10/2026): anche un pezzo della pagina (non un find: risultati di una ricerca) scrive un record
     // marcato partial, con la firma della mappa a cui si somma; atlas-build unisce i pezzi consecutivi in una visita
     const piece = state === "ok" && mode === "partial" && !find && pageUrl && page && newSnap?.partial && newSnap.obs === code;
-    if (piece) full = appendAtlasLog(file, pageRecord(page, { pageSig: pieceSig() ?? doc.page_signature, profile: doc.redaction.profile, env, ts: doc.ts, partial: true })) === "full" || full;
+    if (piece) full = appendAtlasLog(file, pageRecord(page, { pageSig: pieceSig() ?? doc.page_signature, profile: doc.redaction.profile, env: envS, ts: doc.ts, partial: true })) === "full" || full;
     // ogni snapshot che lega i ref (lettura completa o risposta di un'azione con la pagina intera) aggiorna i ref dei record;
     // un pezzo che si somma alla mappa aggiunge i suoi a quelli della mappa
     if (state === "ok" && page && refs && pageUrl && (mode !== "partial" || newSnap?.obs === code)) {
