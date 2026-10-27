@@ -66,11 +66,47 @@ function fieldTypeOf(e) {
   return base;
 }
 
+// Esplorazione libera (26/10/2026): un record parziale (un pezzo di una pagina pesante) si unisce alla visita precedente
+// della stessa page_sig. Unione senza doppioni: un elemento del pezzo è lo stesso di uno della visita se ha ruolo, nome
+// (normalizzato) e marca di record uguali e lo stesso genitore (già unito); la radice del pezzo (senza genitore) si
+// riconosce dal solo ruolo+nome. Ogni elemento della visita vale per al più un elemento del pezzo (due "Salva" distinti
+// nello stesso pezzo restano due). Un elemento ritrovato prende le informazioni che il pezzo aggiunge (obbligo, aiuto…).
+// Correzione 4 dopo la revisione (27/10/2026): quando i due elementi hanno il ref (record scritti da observe-append), lo
+// stesso elemento è lo stesso ref con lo stesso ruolo e nome; ref diversi ⇒ elementi diversi (due pulsanti omonimi in
+// pezzi diversi, o figli di contenitori non registrati, restano distinti). Il confronto per ruolo+nome resta per i record
+// senza ref (registri precedenti).
+const ENRICH = ["required", "disabled", "checked", "level", "help", "placeholder", "readonly", "invalid", "multiline", "href", "sample"];
+const ownKey = (e) => `${e.role}|${normLabel(e.name ?? "")}|${e.record ? 1 : 0}`;
+export function mergeVisit(base, add) {
+  const out = base.map((e) => ({ ...e }));
+  const byKey = new Map();
+  out.forEach((e, i) => { const k = ownKey(e); if (!byKey.has(k)) byKey.set(k, []); byKey.get(k).push(i); });
+  const used = new Set();
+  const map = new Map();   // indice dell'elemento nel pezzo → indice nella visita
+  add.forEach((e, j) => {
+    const idx = e.i ?? j;
+    const par = e.parent != null && map.has(e.parent) ? map.get(e.parent) : null;
+    const hit = (byKey.get(ownKey(e)) ?? []).find((i) => !used.has(i) && (e.ref != null && out[i].ref != null ? out[i].ref === e.ref
+      : e.parent == null || (out[i].parent ?? null) === par));
+    if (hit !== undefined) {
+      used.add(hit);
+      map.set(idx, hit);
+      for (const f of ENRICH) if (e[f] !== undefined && out[hit][f] === undefined) out[hit][f] = e[f];
+      return;
+    }
+    const { i: _i, parent: _p, ...rest } = e;
+    map.set(idx, out.length);
+    out.push({ i: out.length, parent: par, ...rest });
+  });
+  return out;
+}
+
 export function buildDrafts(lines, { knownModules = new Map() } = {}) {
   const pages = new Map();
   const edges = [];
   const effects = [];
   let pendingClick = null;
+  let lastSig = null;
   // revisione 05/10/2026 (I5): ogni azione con effetto entra subito nell'elenco; la pagina successiva ne completa il
   // risultato (anche di più azioni di fila); quelle in coda restano con risultato null
   let openEffects = [];
@@ -88,15 +124,19 @@ export function buildDrafts(lines, { knownModules = new Map() } = {}) {
     for (const e of openEffects) e.to = l.page_sig;
     pendingClick = null;
     openEffects = [];
-    const els = l.elements ?? [];
+    // un pezzo (record parziale) della stessa pagina della riga di pagina precedente si unisce a quella visita; N5 (verifica
+    // del 27/10/2026): mai un pezzo marcato after_action (letto dopo un'azione: è una visita nuova)
+    const merge = l.partial === true && l.after_action !== true && lastSig === l.page_sig && pages.has(l.page_sig);
+    lastSig = l.page_sig;
+    const els = merge ? mergeVisit(pages.get(l.page_sig).visits.at(-1) ?? [], l.elements ?? []) : l.elements ?? [];
     // nome della pagina = titolo principale (h1), come il document dei suoi FLD: il percorso "Percorso: <nome>" e i campi
     // devono coincidere perché compose-plan li trovi insieme (il titolo della scheda ha spesso il nome del tenant)
     const document = els.find((e) => e.role === "heading" && e.level === 1 && e.name)?.name ?? l.title ?? l.page_sig;
     const p = pages.get(l.page_sig) ?? { title: l.title, document, url_path: l.url_path, visits: [], unlabeled: 0, iframes: 0, masked: false };
-    p.visits.push(els);
+    if (merge) p.visits[p.visits.length - 1] = els; else p.visits.push(els);
     // seconda revisione: lo stato "da fare" viene dall'ULTIMA visita (così l'elenco si svuota quando l'agente rimedia)
     p.unlabeled = els.filter((e) => FIELD_TYPE[e.role] && !e.name).length;
-    p.iframes = Number(l.iframes) || 0;
+    p.iframes = merge ? Math.max(p.iframes, Number(l.iframes) || 0) : Number(l.iframes) || 0;
     p.masked = els.some((e) => MASK.test(String(e.name ?? "")));
     pages.set(l.page_sig, p);
   }

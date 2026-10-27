@@ -44,11 +44,12 @@ test("pageRecord: solo struttura — niente valori, niente righe di tabella salv
   assert.equal(r.elements[opt.parent].role, "combobox", "parent = indice dell'antenato conservato");
 });
 
-test("pageRecord: nomi redatti; al più 300 elementi", () => {
+// esplorazione libera (26/10/2026): tolto il tetto di 300 elementi per pagina (le pagine pesanti si registravano troncate)
+test("pageRecord: nomi redatti; nessun tetto di elementi per pagina", () => {
   const pii = `uid=8_0 RootWebArea "X" url="https://h/x"\n  uid=8_1 link "Scrivi a mario.rossi@example.com"\n`;
   assert.ok(!JSON.stringify(pageRecord(parseSnapshot(pii), { pageSig: "x", profile: "strict", env: {} })).includes("mario.rossi"));
   const many = `uid=9_0 RootWebArea "X" url="https://h/x"\n${Array.from({ length: 400 }, (_, i) => `  uid=9_${i + 1} button "B${i}"`).join("\n")}\n`;
-  assert.equal(pageRecord(parseSnapshot(many), { pageSig: "x", profile: "standard", env: {} }).elements.length, 300);
+  assert.equal(pageRecord(parseSnapshot(many), { pageSig: "x", profile: "standard", env: {} }).elements.length, 400);
 });
 
 test("appendAtlasLog: righe jsonl; oltre il limite 'full' senza scrivere", () => {

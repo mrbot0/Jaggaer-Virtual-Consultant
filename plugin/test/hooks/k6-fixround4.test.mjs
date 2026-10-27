@@ -14,6 +14,10 @@
 //     browser_snapshot con target/depth e browser_find);
 //   - in prod e preprod un ref si lega solo se ruolo+nome corrispondono alla voce dell'Atlas del SEL in DUE letture
 //     complete consecutive della stessa pagina.
+//  Esplorazione libera (brief del 26/10/2026, approvato dall'utente) — test aggiornati: i pezzi della stessa pagina si
+//  SOMMANO alla mappa (stessi controlli del legame, storia della scheda; un find aggiunge solo i ref coerenti con la
+//  storia; in produzione un pezzo non crea legami) e una lettura completa basta in ogni ambiente (catena delle due letture
+//  tolta: le azioni con effetto di Claude fuori dalla sandbox restano negate dalla decisione WP08).
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { writeFileSync, mkdirSync, mkdtempSync, appendFileSync } from "node:fs";
@@ -86,9 +90,9 @@ test("I-A (ia_live): read_page ristretto (ref_id) con virgolette bilanciate nel 
     const refs = refsOf(ws);
     assert.notEqual(refs.ref_1, SEL, `${envId}: ${JSON.stringify(refs)}`);
     assert.ok(!allowed(clClick(ws, tr, "ref_1")), `${envId}: click su ref_1 (Invia in approvazione) consentito`);
-    // un find in mezzo non ripristina nulla (e azzera la mappa della pagina)
+    // un find in mezzo non ripristina nulla (esplorazione libera: aggiunge solo ref coerenti con la storia, ref_1 non lo è)
     post(ws, CL + "find", { tabId: 101, query: "Invia" }, claude(`Found 1 matching element\n- button "Invia in approvazione" [ref_1]`, url));
-    assert.deepEqual(refsOf(ws), {}, `${envId}: find non ha azzerato la mappa`);
+    assert.notEqual(refsOf(ws).ref_1, SEL, `${envId}: find ha legato ref_1`);
     assert.ok(!allowed(clClick(ws, tr, "ref_1")));
   }
 });
@@ -98,7 +102,9 @@ test("I-A (ia): tutte le varianti (virgolette pari/dispari, attributo fra apici,
     const { ws, tr, url } = await readPlanWs(envId);
     post(ws, CL + "read_page", { tabId: 101, filter: "all" }, claude(LEGIT, url));
     post(ws, CL + "read_page", c.ti, claude(c.body, url));
-    assert.notEqual(refsOf(ws)[c.click], SEL, `${envId}/${name}: ${JSON.stringify(refsOf(ws))}`);
+    // esplorazione libera: con una sola lettura un ref MAI assegnato dall'estensione (ref_7) può legarsi (indistinguibile
+    // da una pagina legittima, vedi rr4 G); il vero ref_1, già visto con un'altra etichetta, mai
+    if (c.click === "ref_1") assert.notEqual(refsOf(ws)[c.click], SEL, `${envId}/${name}: ${JSON.stringify(refsOf(ws))}`);
     assert.ok(!allowed(clClick(ws, tr, c.click)), `${envId}/${name}: click consentito prima del find`);
     // la stessa pagina riletta (pagina statica dell'attaccante: seconda lettura identica) ⇒ il vero ref_1, già visto
     // come "Invia in approvazione", resta negato. (Un ref_7 mai assegnato dall'estensione può legarsi dopo due letture
@@ -109,22 +115,20 @@ test("I-A (ia): tutte le varianti (virgolette pari/dispari, attributo fra apici,
       assert.ok(!allowed(clClick(ws, tr, c.click)), `${envId}/${name}: click consentito dopo due letture`);
     }
     post(ws, CL + "find", { tabId: 101, query: "Invia" }, claude(`Found 1 matching element\n- button "Invia in approvazione" [${c.click}]`, url));
-    assert.deepEqual(refsOf(ws), {}, `${envId}/${name}: find non ha azzerato la mappa`);
+    if (c.click === "ref_1") assert.notEqual(refsOf(ws)[c.click], SEL, `${envId}/${name}: il find ha legato ${c.click}`);
     assert.ok(!allowed(clClick(ws, tr, c.click)), `${envId}/${name}: click consentito dopo il find`);
   }
 });
 
-test("I-A: legame legittimo dopo DUE letture complete consecutive in preprod ⇒ il click voluto è consentito; una sola lettura non basta in prod/preprod; in sandbox basta una", async () => {
+test("I-A (aggiornato, esplorazione libera): una sola lettura completa lega in prod, preprod e sandbox; il click di Claude fuori dalla sandbox resta negato (WP08)", async () => {
   const PAGE = `heading "Richieste" [ref_9]\nlink "Elenco richieste" [ref_3]\nbutton "Invia in approvazione" [ref_1]\n\nViewport: 490x417`;
   for (const envId of ["prod", "preprod"]) {
     const { ws, tr, url } = await readPlanWs(envId);
     post(ws, CL + "read_page", { tabId: 101 }, claude(PAGE, url));
-    assert.equal(refsOf(ws).ref_3 ?? null, null, `${envId}: legato dopo una sola lettura`);
-    assert.ok(!allowed(clClick(ws, tr, "ref_3")));
-    post(ws, CL + "read_page", { tabId: 101, filter: "all" }, claude(PAGE, url));
     assert.equal(refsOf(ws).ref_3, SEL, `${envId}: ${JSON.stringify(refsOf(ws))}`);
     assert.equal(refsOf(ws).ref_1, null);
-    if (envId === "preprod") assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "preprod: legato dopo due letture; il click di Claude è negato dalla decisione WP08 (usa DevTools)");
+    if (envId === "preprod") assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "preprod: legato; il click di Claude è negato dalla decisione WP08 (usa DevTools)");
+    assert.ok(!allowed(clClick(ws, tr, "ref_3")));
     assert.ok(!allowed(clClick(ws, tr, "ref_1")));
   }
   const { ws, tr, url } = await readPlanWs("sandbox");
@@ -133,7 +137,7 @@ test("I-A: legame legittimo dopo DUE letture complete consecutive in preprod ⇒
   assert.ok(allowed(clClick(ws, tr, "ref_3")), "sandbox: il click legittimo è negato");
 });
 
-test("I-A: letture parziali di Claude (ref_id, depth, filter interactive, troncata, in un browser_batch) e find non legano e azzerano la mappa; la catena delle due letture riparte", async () => {
+test("I-A (aggiornato, esplorazione libera): letture parziali di Claude (ref_id, depth, filter interactive, troncata, in un browser_batch) si SOMMANO alla mappa della stessa pagina; un find (pagina mai confermata) la svuota; un pezzo che mostra il ref con un'altra etichetta lo slega", async () => {
   const PAGE = `link "Elenco richieste" [ref_3]\nbutton "Invia in approvazione" [ref_1]`;
   const partial = [
     [CL + "read_page", { tabId: 101, ref_id: "ref_3" }, PAGE],
@@ -144,19 +148,19 @@ test("I-A: letture parziali di Claude (ref_id, depth, filter interactive, tronca
     [CL + "browser_batch", { actions: [{ name: "read_page", input: { tabId: 101 } }] }, PAGE],
     [CL + "find", { tabId: 101, query: "elenco" }, `Found 1 match(es) for "elenco":\n- link "Elenco richieste" [ref_3]`],
   ];
-  for (const [tool, ti, body] of partial) {
-    const { ws, tr, url } = await readPlanWs("preprod");
+  for (const envId of ["preprod", "prod"]) for (const [tool, ti, body] of partial) {
+    const { ws, tr, url } = await readPlanWs(envId);
     post(ws, CL + "read_page", { tabId: 101 }, claude(PAGE, url));
-    post(ws, CL + "read_page", { tabId: 101 }, claude(PAGE, url));
-    assert.equal(refsOf(ws).ref_3, SEL, "controllo: due letture complete legano");
+    assert.equal(refsOf(ws).ref_3, SEL, "controllo: una lettura completa lega");
     post(ws, tool, ti, claude(body, url));
-    assert.deepEqual(refsOf(ws), {}, `${tool} ${JSON.stringify(ti)}: ${JSON.stringify(refsOf(ws))}`);
-    assert.ok(!allowed(clClick(ws, tr, "ref_3")), `${tool} ${JSON.stringify(ti)}: click consentito`);
-    // la catena riparte: una lettura completa non basta, due sì
-    post(ws, CL + "read_page", { tabId: 101 }, claude(PAGE, url));
-    assert.equal(refsOf(ws).ref_3 ?? null, null, `${tool}: legato con una sola lettura dopo l'azzeramento`);
-    post(ws, CL + "read_page", { tabId: 101 }, claude(PAGE, url));
-    assert.equal(refsOf(ws).ref_3, SEL);
+    // correzione 7 dopo la revisione (27/10/2026): un find tiene la mappa (ref_3 già legato con la stessa etichetta)
+    assert.equal(refsOf(ws).ref_3, SEL, `${envId} ${tool} ${JSON.stringify(ti)}: ${JSON.stringify(refsOf(ws))}`);
+    assert.equal(refsOf(ws).ref_1 ?? null, null);
+    if (envId === "preprod") assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), `${tool}: click di Claude negato dalla decisione WP08`);
+    assert.ok(!allowed(clClick(ws, tr, "ref_1")), `${tool} ${JSON.stringify(ti)}: click su ref_1 consentito`);
+    // un pezzo che mostra ref_3 con un'altra etichetta ⇒ slegato
+    post(ws, CL + "read_page", { tabId: 101, ref_id: "ref_2" }, claude(`button "Invia" [ref_3]`, url));
+    assert.equal(refsOf(ws).ref_3 ?? null, null, `${envId} ${tool}: ${JSON.stringify(refsOf(ws))}`);
   }
 });
 
@@ -195,7 +199,7 @@ test("I-A: un ref già visto sulla stessa pagina con ruolo o nome diversi resta 
   assert.ok(allowed(clClick(ws, tr, "ref_7")));
 });
 
-test("I-A: DevTools e Playwright — una lettura ristretta (take_snapshot con uid, browser_snapshot con target o depth, browser_find) non lega e azzera; le letture complete restano come prima", async () => {
+test("I-A (aggiornato, esplorazione libera): DevTools e Playwright — una lettura ristretta (take_snapshot con uid, browser_snapshot con target o depth, browser_find) si somma alla mappa della stessa pagina; le letture complete restano come prima", async () => {
   const dtPage = (url) => `## Latest page snapshot\nuid=1_0 RootWebArea "ACME" url="${url}"\n  uid=1_5 link "Elenco richieste"\n  uid=1_6 button "Invia in approvazione"\n`;
   const pwPage = (url) => `### Page\n- Page URL: ${url}\n- Page Title: ACME\n### Snapshot\n\`\`\`yaml\n- link "Elenco richieste" [ref=e5]\n- button "Invia in approvazione" [ref=e6]\n\`\`\``;
   for (const envId of ["prod", "preprod"]) {
@@ -205,7 +209,10 @@ test("I-A: DevTools e Playwright — una lettura ristretta (take_snapshot con ui
       post(ws, DT + "take_snapshot", {}, dtPage(url));
       assert.equal(refsOf(ws)["1_5"], SEL, `${envId} DevTools completo: ${JSON.stringify(refsOf(ws))}`);
       post(ws, DT + "take_snapshot", { uid: "1_5" }, dtPage(url));
-      assert.deepEqual(refsOf(ws), {}, `${envId} DevTools ristretto`);
+      // chiavi non previste = chiamata non classificata: mappa nuova con i soli ref del pezzo (rilievo 4); in un piano un
+      // pezzo non lega (correzione 6 dopo la revisione, 27/10/2026)
+      assert.equal(refsOf(ws)["1_5"], null, `${envId} DevTools ristretto: ${JSON.stringify(refsOf(ws))}`);
+      // le chiavi non previste azzerano l'origine osservata (regola invariata): niente click finché non si conferma
       assert.ok(!allowed(guards(ws, DT + "click", { uid: "1_5" }, { transcript_path: tr })));
       post(ws, DT + "take_snapshot", { verbose: true }, dtPage(url));
       assert.equal(refsOf(ws)["1_5"], SEL, `${envId} DevTools verbose (completo)`);
@@ -217,8 +224,8 @@ test("I-A: DevTools e Playwright — una lettura ristretta (take_snapshot con ui
       post(ws, PW + "browser_snapshot", {}, pwPage(url));
       assert.equal(refsOf(ws).e5, SEL, `${envId} Playwright completo: ${JSON.stringify(refsOf(ws))}`);
       post(ws, PW + op, ti, body(url));
-      assert.deepEqual(refsOf(ws), {}, `${envId} Playwright ${op} ${JSON.stringify(ti)}`);
-      assert.ok(!allowed(guards(ws, PW + "browser_click", { ref: "e5", element: "Elenco richieste" }, { transcript_path: tr })));
+      assert.equal(refsOf(ws).e5, SEL, `${envId} Playwright ${op} ${JSON.stringify(ti)}: ${JSON.stringify(refsOf(ws))}`);
+      if (op !== "browser_find") assert.equal(readSession(ws).browser.snapshot.partial, true, `${envId} ${op}`);
     }
   }
 });

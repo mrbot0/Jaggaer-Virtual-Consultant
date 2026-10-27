@@ -97,33 +97,15 @@ export function snapshotCovers(entry, step) {
   return !!area && entry.source === "observe-append" && Array.isArray(entry.areas) && entry.areas.includes(area);
 }
 
-// Nessun piano attivo (giro di correzione 1, I2): ogni azione con effetto è
-// negata in ogni ambiente. Unica eccezione la modalità `esplorazione` (use mode),
-// solo in sandbox: click e input consentiti e in audit; invio, salvataggio,
-// upload, conferma di dialog, script e strumenti non classificati mai.
-// Soluzione B (30/09/2026, richiesta dell'utente): in pre-produzione, con ESPLORA PREPROD, solo click e solo su
-// elementi dell'ultimo snapshot completo della pagina corrente il cui nome non è un'azione con effetto.
+// Nessun piano attivo (giro di correzione 1, I2): ogni azione con effetto è negata in ogni ambiente. Unica eccezione la
+// modalità `esplorazione` (use mode), aperta dalla frase dell'utente, in sandbox e pre-produzione.
+// Esplorazione libera (brief del 26/10/2026, approvato dall'utente): un'unica esplorazione — ESPLORA SANDBOX ed ESPLORA
+// PREPROD valgono come le varianti COMPLETA (sinonime): sempre fullExploreRefusal. Tolte la soluzione B del 30/09/2026
+// (in pre-produzione solo click senza effetto) e l'esplorazione semplice in sandbox (click e input, mai invio).
 import { EFFECT_LABEL, DELETE_LABEL, isDeleteLabel, isDeleteQuestion } from "../effect-labels.mjs";
 export { EFFECT_LABEL, DELETE_LABEL };
-function preprodClickRefusal(ctx) {
-  const snap = ctx.session?.browser?.snapshot;
-  for (const a of ctx.actions.filter(isEffectful)) {
-    if (a.kind !== "click" || a.submits) return `esplorazione in pre-produzione: consentiti solo click, mai input, invio, salvataggio, upload, conferma di dialog, script (${a.op ?? a.tool ?? ctx.tool})`;
-    const refs = Array.isArray(a.targets) ? a.targets : [];
-    if (!refs.length || a.untargeted) return `esplorazione in pre-produzione: click senza uid dell'ultimo snapshot (${a.op ?? a.tool ?? ctx.tool})`;
-    if (!snap || !snap.names || typeof snap.names !== "object") return "esplorazione in pre-produzione: nessuno snapshot completo della pagina: esegui take_snapshot prima del click";
-    if (!ctx.session.browser.current_url || snap.url !== ctx.session.browser.current_url) return "esplorazione in pre-produzione: l'ultimo snapshot non è della pagina corrente: rifai take_snapshot";
-    if (String(snap.tab ?? "") !== String(a.tab ?? "")) return "esplorazione in pre-produzione: l'ultimo snapshot è di un'altra scheda: rifai take_snapshot";
-    for (const r of refs) {
-      const name = Object.hasOwn(snap.names, r) ? String(snap.names[r] ?? "") : null;
-      if (!name || !name.trim()) return `esplorazione in pre-produzione: l'elemento ${r} non ha un nome nell'ultimo snapshot (assente o senza etichetta): non si può verificare che sia senza effetto`;
-      if (EFFECT_LABEL.test(name)) return `esplorazione in pre-produzione: "${name}" è un'azione con effetto (salva, invia, conferma, approva…): mai senza un piano approvato`;
-    }
-  }
-  return null;
-}
 
-// Esplorazione completa (ESPLORA <AMBIENTE> COMPLETA, sandbox e pre-produzione): click, input (valori di prova), invio,
+// Esplorazione (ESPLORA <AMBIENTE> [COMPLETA], sandbox e pre-produzione): click, input (valori di prova), invio,
 // salvataggio, conferma dei dialoghi; MAI cancellazioni (etichetta dell'ultimo snapshot), upload di file, script o
 // strumenti non classificati. Un click deve avere un uid con nome nell'ultimo snapshot della pagina corrente (un'icona
 // senza nome potrebbe essere un cestino).
@@ -131,12 +113,21 @@ function preprodClickRefusal(ctx) {
 // del dialogo e finestre di conferma di una cancellazione; I6 osservazioni del browser non registrate ⇒ nessuna azione.
 const YES = /^\s*(s[iì]|yes|ok)\s*$/i;
 const SAFE_EXIT = /^\s*(annulla|no|chiudi|indietro|cancel|close|back|x)\s*$/i;
+// N3 (verifica del 27/10/2026): mai un invito a rileggere per intero una pagina la cui mappa completa supera il limite (darebbe
+// lo stesso esito, all'infinito): si dice che la pagina è troppo grande per essere mappata e cosa fare (pezzi o sezioni)
+const UNUSABLE_MSG = {
+  map: "la pagina è troppo grande per essere mappata per intero: la sua mappa completa supera il limite in byte dello stato della sessione, e rileggerla per intero darà lo stesso esito (non ripetere la lettura completa). Leggila a pezzi con le letture ristrette del browser che le ha (i pezzi della stessa pagina si sommano alla mappa; legano solo in esplorazione, mai in un piano) oppure lavora per sezioni: riduci ciò che la pagina mostra (filtra l'elenco, apri il dettaglio, la scheda o la sezione che ti serve, chiudi i pannelli) e rileggi quella vista più piccola",
+  pieces: "i pezzi letti di questa pagina, sommati, superano il limite in byte dello stato della sessione: la mappa riparte dal prossimo pezzo. Leggi solo la sezione che ti serve (pezzi più piccoli; legano solo in esplorazione, mai in un piano) oppure lavora per sezioni: riduci ciò che la pagina mostra (filtra l'elenco, apri il dettaglio o la sezione) e rileggi quella vista",
+  history: "la storia dei ref di questa scheda supera il limite in byte dello stato della sessione: la scheda resta senza legami finché non navighi a un nuovo documento (navigate); poi rileggi la pagina (se la sua mappa completa supera il limite, leggila a pezzi o per sezioni)",
+};
+const unusableRefusal = (snap) => UNUSABLE_MSG[snap?.unusable_reason] ?? UNUSABLE_MSG.map;
 function fullExploreRefusal(ctx) {
   const b = ctx.session?.browser ?? {};
   const snap = b.snapshot;
   const names = snap?.names && typeof snap.names === "object" ? snap.names : null;
   const deleteQuestion = names ? Object.values(names).some((n) => isDeleteQuestion(n)) : false;
   for (const a of ctx.actions.filter(isEffectful)) {
+    if (snap?.unusable === true) return unusableRefusal(snap);
     if (["upload", "script", "other"].includes(a.kind)) return `esplorazione completa: ${a.kind === "upload" ? "il caricamento di file" : a.kind === "script" ? "gli script nella pagina" : "gli strumenti non classificati"} restano vietati (${a.op ?? a.tool ?? ctx.tool})`;
     ctx.pendingFile ??= loadPending(pendingFile(join(ctx.ws, "customers", ctx.customer, ".sessions")));
     const pend = pendingRefusal(mergedPending(b, ctx.pendingFile), a.family ?? ctx.call?.family, a.tab);
@@ -155,7 +146,10 @@ function fullExploreRefusal(ctx) {
       if (!b.current_url || snap.url !== b.current_url) return "esplorazione completa: l'ultimo snapshot non è della pagina corrente: rifai take_snapshot";
       if (String(snap.tab ?? "") !== String(a.tab ?? "")) return "esplorazione completa: l'ultimo snapshot è di un'altra scheda: rifai take_snapshot";
     }
+    const unverified = Array.isArray(snap?.unverified) ? snap.unverified : [];
     for (const r of refs) {
+      // revisione di sicurezza (rilievo 1): un ref non verificato nella mappa (ripetuto, o dentro un valore fra virgolette)
+      if (unverified.includes(String(r))) return `esplorazione: l'elemento ${r} non è verificato nell'ultimo snapshot (ref ripetuto o dentro un valore fra virgolette): non si clicca né si compila`;
       const name = names && Object.hasOwn(names, r) ? String(names[r] ?? "") : null;
       if (a.kind === "click" && (!name || !name.trim())) return `esplorazione completa: l'elemento ${r} non ha un nome nell'ultimo snapshot: potrebbe essere un'icona di cancellazione, non si clicca`;
       if (name && isDeleteLabel(name)) return `esplorazione completa: "${name}" è una cancellazione: vietata anche in esplorazione completa`;
@@ -167,42 +161,28 @@ function fullExploreRefusal(ctx) {
 
 function noPlan(ctx, no) {
   const s = ctx.session;
-  const bad = ctx.actions.filter(isEffectful).find((a) => !["click", "input"].includes(a.kind) || a.submits);
   const explore = s.mode === "esplorazione" && ["sandbox", "preprod"].includes(s.env?.type);
-  // K5 giro 2 (N2): la modalità vale solo se l'ha aperta l'utente con ESPLORA SANDBOX
-  // (record nella catena, consumato dal cambio di modalità, per questo ambiente,
-  // confermato nel transcript).
+  // K5 giro 2 (N2): la modalità vale solo se l'ha aperta l'utente con ESPLORA SANDBOX|PREPROD (record nella catena,
+  // consumato dal cambio di modalità, per questo ambiente, confermato nel transcript).
   if (explore) {
     const reg = readApprovals(approvalsFile(ctx.ws, ctx.customer, ctx.sid));
     const found = reg.ok ? exploreRecord(reg.records, s.mode_approval, s.env.id) : null;
     const rec = found && (found.env_type ?? "sandbox") === s.env.type ? found : null;
-    const phrase = `${s.env.type === "preprod" ? "ESPLORA PREPROD" : EXPLORE_PHRASE}[ COMPLETA]`;
+    const phrase = s.env.type === "preprod" ? "ESPLORA PREPROD" : EXPLORE_PHRASE;
     if (!rec) return no(`modalità esplorazione non aperta dall'utente: serve la sua frase \`${phrase}\`, poi /use mode esplorazione (registro ${reg.ok ? "senza il record" : `corrotto: ${reg.reason}`})`);
     const conf = confirmInTranscript(ctx.input.transcript_path, [rec]);
     if (!conf.ok) return no(`modalità esplorazione non confermata dal transcript dell'utente (${conf.reason})`);
-    if (rec.full === true) {
-      const refusal = fullExploreRefusal(ctx);
-      if (refusal) return no(refusal);
-      try {
-        appendAudit(ctx.ws, { session: ctx.sid, customer: ctx.customer, scope: s.scope ?? null, kind: "decision", actor: `hook:${G}`,
-          payload: { decision: "allow", mode: "esplorazione-completa", tool: ctx.tool, kinds: ctx.actions.map((a) => a.kind) } });
-      } catch { /* l'audit non cambia la decisione */ }
-      return null;
-    }
-    if (s.env.type === "preprod") {
-      const refusal = preprodClickRefusal(ctx);
-      if (refusal) return no(refusal);
-    }
-  }
-  if (explore && !bad) {
+    // esplorazione libera: con o senza COMPLETA le stesse regole (salvataggi e invii con valori di prova sì;
+    // cancellazioni, upload, script, strumenti non classificati no)
+    const refusal = fullExploreRefusal(ctx);
+    if (refusal) return no(refusal);
     try {
       appendAudit(ctx.ws, { session: ctx.sid, customer: ctx.customer, scope: s.scope ?? null, kind: "decision", actor: `hook:${G}`,
         payload: { decision: "allow", mode: "esplorazione", tool: ctx.tool, kinds: ctx.actions.map((a) => a.kind) } });
     } catch { /* l'audit non cambia la decisione */ }
     return null;
   }
-  if (explore) return no(`esplorazione senza piano: consentiti solo click e input, mai invio, salvataggio, upload, conferma di dialog, script (${bad.tool ?? ctx.tool})`);
-  return no(`nessun piano attivo: ogni azione con effetto sul browser richiede un piano attivo (step-check)${s.mode === "esplorazione" ? "; la modalità esplorazione vale solo in sandbox" : "; per esplorare in sandbox: /use mode esplorazione"}`);
+  return no(`nessun piano attivo: ogni azione con effetto sul browser richiede un piano attivo (step-check)${s.mode === "esplorazione" ? "; la modalità esplorazione vale solo in sandbox e pre-produzione" : "; per esplorare in sandbox o pre-produzione: la frase dell'utente ESPLORA SANDBOX|PREPROD, poi /use mode esplorazione"}`);
 }
 
 // spec 2026-10-06 §3.8: si carica solo il file compilato del run attivo, con l'impronta dichiarata nel passo UPLOAD.
@@ -267,6 +247,7 @@ export function bindingRefusal(ctx, step) {
     const pend = pendingRefusal(mergedPending(b, ctx.pendingFile), a.family ?? ctx.call?.family, a.tab);
     if (pend) return pend;
     const snap = b.snapshot;
+    if (snap?.unusable === true) return unusableRefusal(snap);
     if (!snap || !snap.refs || typeof snap.refs !== "object") return "nessuno snapshot osservato della pagina: esegui take_snapshot / read_page / browser_snapshot prima dell'azione";
     if (!b.current_url || snap.url !== b.current_url) return "l'ultimo snapshot osservato non è della pagina corrente: rifai lo snapshot";
     if ((snap.tab ?? null) !== (a.tab ?? null)) return "l'ultimo snapshot osservato è di un'altra scheda: rifai lo snapshot in questa scheda";
@@ -289,6 +270,8 @@ export function deleteInstanceRefusal(ctx, step, clicks = (ctx.actions ?? []).fi
   if (clicks.length > 1) return "più click nella stessa chiamata: un passo DELETE cancella un solo elemento";
   const refs = ctx.session?.browser?.snapshot?.refs;
   if (!refs || typeof refs !== "object") return "nessuno snapshot osservato: non si può verificare l'istanza da cancellare";
+  // esplorazione libera (26/10/2026): una mappa fatta di pezzi (letture parziali sommate) non mostra tutte le istanze
+  if (ctx.session.browser.snapshot.partial === true) return "la mappa della pagina viene da letture parziali (pezzi): per una cancellazione serve una lettura completa della pagina, che mostri tutte le istanze del SEL";
   const n = Object.values(refs).filter((v) => v === step.target).length;
   if (n !== 1) return `istanza ambigua: ${n} elementi dell'ultimo snapshot corrispondono al SEL ${step.target} (una cancellazione vale per UN elemento: usa uno snapshot in cui il SEL è un solo elemento)`;
   return null;

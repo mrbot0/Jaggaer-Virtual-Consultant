@@ -8,6 +8,8 @@ Ultimo aggiornamento: 29/09/2026 22:45 — **sviluppo completato: tutti i 17 pac
 ## Avanzamento complessivo
 
 > **Ops veloce** (autonomia, import con template, produzione, cancellazioni): 15 task su 15 = **100 %**, vedi la sezione dedicata più sotto. Le percentuali di questa sezione e la tabella dei pacchetti riguardano lo sviluppo originale (17 pacchetti) e non cambiano.
+>
+> **Esplorazione libera** (brief del 26/10/2026, ramo `feature/esplorazione-libera`): 5 punti su 5 = **100 %** — letture a pezzi che si sommano (con la revisione di sicurezza dei quattro rilievi), una sola lettura completa, registro senza tetto per pagina con pezzi uniti da atlas-build, un'unica esplorazione (salvataggi e invii con valori di prova), documenti. Rapporto: `.superpowers/sdd/2026-10-26-esplorazione-libera/report.md`.
 
 **100 % dello sviluppo** (stima pesata sullo sforzo) · 17 pacchetti su 17 chiusi, review finale inclusa.
 

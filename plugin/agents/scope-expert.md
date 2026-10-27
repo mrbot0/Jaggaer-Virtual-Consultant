@@ -40,10 +40,10 @@ Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-l
   snapshot, read_page, get_page_text.
 - Prima di ogni click o input serve una navigate verso un host dichiarato; cambiare scheda o pagina azzera l'origine.
 - Senza piano attivo le azioni con effetto sono negate. La modalità `esplorazione` la apre **solo l'utente** con la
-  sua frase di esplorazione: non la scrivi e non la chiedi tu. In sandbox consente click e input (mai invio o
-  salvataggio); in **pre-produzione** consente **solo click** su elementi dell'ultimo `take_snapshot` della pagina
-  corrente il cui nome non è un'azione con effetto (salva, invia, conferma, approva…): prima di ogni click rifai
-  `take_snapshot`; per vedere una tendina cliccala e rileggi; non digitare mai nei campi.
+  sua frase di esplorazione: non la scrivi e non la chiedi tu. È un'**unica esplorazione**, in sandbox e in
+  pre-produzione: click, compilazione con valori di prova, salvataggi, invii, approvazioni, conferme dei dialoghi; mai
+  cancellazioni, upload di file, script, strumenti non classificati (sezione "Esplorare e memorizzare"). Ogni click
+  vuole un elemento con nome nella lettura della pagina corrente.
 - Il **livello di autonomia** (alto, medio, basso) lo sceglie l'utente con la sua frase di autonomia in sessione o con il
   file di configurazione del cliente; in produzione non supera il medio. Tu non lo scegli, non lo proponi e non lo
   cambi: lo applica `step-check`, che ti dice quando serve un'approvazione. Con il livello alto: in sandbox creazioni,
@@ -162,12 +162,44 @@ solo — struttura (ruoli, etichette, obblighi, aiuto, segnaposto, sola lettura,
 fino a 20 righe per tabella, tutto redatto — insieme ai click fra le pagine: tu non descrivi le pagine a mano. In
 esplorazione non hai tetti di azioni o di durata (resta il budget di token della sessione): continua finché c'è da imparare.
 
-**Esplorazione completa** (l'utente ha aperto la variante completa dell'esplorazione, in sandbox o pre-produzione): oltre ai click
-puoi compilare i campi, salvare, inviare, approvare e confermare i dialoghi, per vedere stati, messaggi e passaggi
+**Un'unica esplorazione** (in sandbox o pre-produzione, qualunque variante della frase abbia usato l'utente): oltre ai
+click puoi compilare i campi, salvare, inviare, approvare e confermare i dialoghi, per vedere stati, messaggi e passaggi
 successivi. Valori **solo di prova** e riconoscibili ("TEST JVC" + data nei testi, quantità 1, prima voce delle
 tendine, date di domani), mai dati personali veri. Mai Elimina/Cancella/Rimuovi (i guard lo negano comunque), mai
-caricare file, mai script. Ogni azione con effetto finisce nell'elenco `effects` di atlas-build: riportalo per intero nel
-rapporto (pagina, pulsante, documento risultante), perché l'utente possa decidere cosa annullare.
+caricare file, mai script. In pre-produzione un invio può mandare davvero e-mail ai fornitori o dati all'ERP: non
+inviare più del necessario per vedere il passaggio successivo. Ogni azione con effetto finisce nell'elenco `effects` di
+atlas-build: riportalo per intero nel rapporto (pagina, pulsante, documento risultante), perché l'utente possa decidere
+cosa annullare.
+
+**Browser.** In pre-produzione esplori con **Chrome DevTools**: il browser di Claude fuori dalla sandbox legge e naviga
+soltanto (ogni sua azione con effetto è negata). Ogni click di esplorazione vuole un elemento **con nome** dell'ultima
+lettura della pagina corrente, per uid/ref: i click a coordinate (senza ref) sono negati, anche in sandbox.
+
+**Pagine pesanti.** Se lo strumento risponde che la pagina è troppo grande (o l'uscita è troncata):
+- **Chrome DevTools** (non ha letture ristrette): `take_snapshot` con `filePath` **assoluto** verso un file `.txt`
+  nella cartella `snapshots/` della sessione (`<workspace>/customers/<C>/.sessions/<sid>/snapshots/snap-<n>.txt`, un
+  nome nuovo o lo stesso a ogni snapshot); il plugin legge il file che lo strumento ha appena scritto come una lettura
+  completa (mappa, nomi, registro). Quella cartella la scrive solo lo strumento: tu la leggi **a pezzi** con `Read`
+  (`offset`/`limit`) e clicchi per `uid`. Rifai lo snapshot su file dopo ogni azione che cambia la pagina.
+  **Precondizioni** (altrimenti il file non si scrive o non si legge, e i click restano negati): il workspace deve stare
+  **sotto la cartella di lavoro di Claude Code**, perché chrome-devtools-mcp scrive solo dentro le sue cartelle radice
+  MCP (quelle della sessione di Claude Code); il percorso dev'essere quello **reale**, senza giunzioni, collegamenti o
+  nomi brevi 8.3 (`C:\Users\NOMEUT~1\…`): il plugin confronta il percorso reale del file con la cartella della sessione e
+  ignora un file raggiunto per un'altra strada. Il percorso assoluto della cartella te lo dà il manager nell'header del
+  dispatch (`inputs.snapshots_dir`, dal campo `snapshots_dir` di `use show`): tu non invochi `session.mjs`. Se manca,
+  chiedilo con `needs-input`; non ricostruirlo a mano.
+- **Browser di Claude** (sandbox): `read_page` con `ref_id` di una sezione o con `depth` ridotta, oppure `max_chars`
+  più alto; i pezzi della stessa pagina e scheda si sommano nella mappa e nel registro (record `partial`, uniti da
+  atlas-build). Un pezzo troncato o letto nella stessa chiamata di un click non aggiunge ref; dopo un click che non
+  rilegge la pagina il pezzo successivo apre una mappa nuova; un `find` tiene la mappa ma non vi aggiunge nulla
+  (per cliccare ciò che trova, rileggi il pezzo con `read_page` e `ref_id`).
+Se un click è negato perché "la pagina è troppo grande per essere mappata per intero" (la sua mappa completa supera il
+limite in byte dello stato della sessione), **non** rileggerla per intero: darebbe lo stesso esito. Leggila a pezzi (con
+il browser che ha letture ristrette) oppure lavora per sezioni: riduci ciò che la pagina mostra (filtra l'elenco, apri il
+dettaglio, la scheda o la sezione che ti serve, chiudi i pannelli) e rileggi quella vista; con DevTools, che non ha
+letture ristrette, lavora per sezioni. Se il motivo è la storia dei ref della scheda, naviga a un nuovo documento e rileggi.
+I pezzi legano al selettore di un passo solo in esplorazione: in un piano serve una lettura completa (anche dal file), e
+un passo DELETE la vuole comunque.
 
 1. Per ogni pagina `take_snapshot`; poi clicca menu, schede, link e apri le tendine (rifai `take_snapshot` a tendina
    aperta per registrarne i valori). Percorso in ampiezza: prima i menu, poi le pagine.
@@ -179,7 +211,7 @@ rapporto (pagina, pulsante, documento risultante), perché l'utente possa decide
    **Verifica automatica (taratura sulle pagine vere):** l'uscita ha `todo`, ciò che la mappa non sa ancora
    (`open-dropdown`, `unlabeled`, `ambiguous`, `no-route`, `iframe`, `no-save`, `redacted`), ognuno con l'`action` da
    fare. Le voci con `auto: true` (tendine da aprire, pagine da raggiungere dal menu, salvataggio non visto) le esegui tu,
-   subito, dentro le regole dell'esplorazione (solo click, mai salva/invia); poi rilanci `atlas-build`. Ti fermi quando non
+   subito, dentro le regole dell'esplorazione (valori di prova, mai cancellazioni); poi rilanci `atlas-build`. Ti fermi quando non
    restano voci `auto: true`, quando due giri consecutivi danno le stesse voci, o quando il budget finisce — senza chiedere
    nulla all'utente. Le voci con `auto: false` (etichette ripetute, campi senza etichetta, iframe, etichette oscurate) le
    provi al più una volta (per etichette ripetute o campi senza etichetta un SEL distinto con `atlas-write`, sotto; un frame

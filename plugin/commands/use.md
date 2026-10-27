@@ -33,12 +33,22 @@ tetto dell'ambiente), budget usato/totale, pendenze. Regole:
 - Sul browser (giro di correzione 1): prima di ogni click o input serve una navigate verso un host
   dichiarato (l'origine viene registrata; cambiare scheda o pagina la azzera); gli script nella pagina
   sono negati ovunque: si legge con snapshot, read_page, get_page_text. Senza piano attivo le azioni
-  con effetto sono negate; `mode esplorazione` (in audit) in sandbox consente click e input, mai
-  invio, salvataggio, upload o conferma di dialog; in pre-produzione **solo click** su elementi senza
-  effetto (mai salva, invia, conferma, approva…). La sceglie solo l'utente: serve che abbia appena
-  scritto `ESPLORA SANDBOX` (sandbox) o `ESPLORA PREPROD` (pre-produzione), oppure la variante completa
-  `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA` (compila, salva, invia, approva con valori di prova; mai
-  cancellazioni, upload o script; nessun tetto di azioni per agente) (frase registrata da
+  con effetto sono negate; `mode esplorazione` (in audit, sandbox e pre-produzione) è un'**unica
+  esplorazione**: clicca tutto, compila con valori di prova, salva, invia, approva, conferma i dialoghi; mai
+  cancellazioni, upload di file, script nella pagina, strumenti non classificati, produzione; nessun tetto di
+  azioni per agente. Ogni click vuole un elemento con nome dell'ultima lettura (i click a coordinate sono negati). In
+  pre-produzione si esplora con Chrome DevTools (il browser di Claude fuori dalla sandbox legge soltanto). Le pagine
+  pesanti ("pagina troppo grande") si leggono **a pezzi**: con DevTools `take_snapshot` con `filePath` assoluto
+  nella cartella `snapshots/` della sessione (il plugin legge il file appena scritto dallo strumento come lettura
+  completa; l'agente lo legge a pezzi con Read). Precondizioni di DevTools: il workspace sta sotto la cartella di
+  lavoro di Claude Code (cartelle radice MCP di chrome-devtools-mcp) e si usa il percorso reale, senza giunzioni,
+  collegamenti o nomi brevi 8.3; `show` riporta il workspace assoluto (`workspace`) e la cartella `snapshots_dir`
+  della sessione (il manager la passa allo scope-expert in `inputs.snapshots_dir`; nel riassunto di `show` la mappa
+  della pagina compare solo come conteggi); col browser di
+  Claude read_page con ref_id o depth, e i pezzi della stessa pagina si sommano. Rischio da dire all'utente: in
+  pre-produzione un invio può mandare davvero e-mail ai fornitori o dati all'ERP. La sceglie solo l'utente:
+  serve che abbia appena scritto `ESPLORA SANDBOX` (sandbox) o `ESPLORA PREPROD` (pre-produzione) — le varianti
+  `ESPLORA SANDBOX COMPLETA` / `ESPLORA PREPROD COMPLETA` sono sinonime — (frase registrata da
   approval-capture, vale per un solo cambio di modalità entro 10 minuti); altrimenti exit 3 — riportalo
   e attendi, non scrivere tu la frase.
 - exit 1: mostra l'errore e la sintassi corretta (`customer <ID> [--new]`, `env <id>`, `scope <ID>`,

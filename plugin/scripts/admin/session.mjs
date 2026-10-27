@@ -2,7 +2,7 @@
 // scrittura atomica validata, cella consentita (§31.4) e CLI `use`.
 // Nessun import pesante in testa: gli hook importano questo modulo e non
 // devono caricare better-sqlite3 (solo `use customer --new` apre il DB).
-import { existsSync, readFileSync, mkdirSync, writeFileSync, readdirSync, copyFileSync } from "node:fs";
+import { existsSync, readFileSync, mkdirSync, writeFileSync, readdirSync, copyFileSync, realpathSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
@@ -324,7 +324,8 @@ async function useMode(ws, sid, raw, { actor }) {
   // ESPLORA SANDBOX registrata da approval-capture (monouso, solo in sandbox).
   let approval = null;
   if (m === "esplorazione") {
-    // soluzione B (30/09/2026): anche in pre-produzione, con ESPLORA PREPROD (solo click senza effetto: config-scope)
+    // soluzione B (30/09/2026): anche in pre-produzione, con ESPLORA PREPROD; esplorazione libera (26/10/2026): stesse regole
+    // in sandbox e pre-produzione, con o senza COMPLETA (config-scope, fullExploreRefusal)
     if (!["sandbox", "preprod"].includes(before.env?.type)) throw new CliError(3, `la modalità esplorazione vale solo in sandbox o in pre-produzione (ambiente ${before.env ? `${before.env.id}: ${before.env.type}` : "non dichiarato"})`);
     const { consumeExplore, approvalsFile, EXPLORE_PHRASES, EXPLORE_WINDOW_MS } = await import("./approvals.mjs");
     const phrase = EXPLORE_PHRASES[before.env.type];
@@ -426,8 +427,10 @@ Azioni (§56.2):
                               Rifiuta il cambio se il cliente precedente ha
                               compensazioni pendenti (exit 3, le elenca).
   use scope <ID>              cella attiva (${SCOPES.join(" ")}); ricalcola allowed_paths
-  use mode <m>                nrt | config | ops | diag | esplorazione (solo sandbox:
-                              click/input senza piano, in audit; mai invio/salvataggio)
+  use mode <m>                nrt | config | ops | diag | esplorazione (sandbox o
+                              pre-produzione, dopo la frase ESPLORA SANDBOX|PREPROD
+                              dell'utente: clic, valori di prova, salvataggi e invii
+                              senza piano, in audit; mai cancellazioni, upload, script)
   use env <id>                ambiente dichiarato da customers/<C>/config/environments.yaml
                               (§51.2): verified:false finché env-check non lo verifica;
                               cambiarlo azzera la verifica. RF2 & c. ⇒ exit 3
@@ -448,6 +451,18 @@ Opzioni: --session <id> (default: $JVC_SESSION_ID, poi .jvc/current-session)
          --json --help
 
 Exit code: 0 ok · 1 errore utente · 2 errore di sistema · 3 violazione di policy.`;
+
+// N4 (verifica del 27/10/2026): `use show` dà il workspace ASSOLUTO (percorso reale: niente giunzioni né nomi 8.3) e la
+// cartella snapshots/ della sessione, dove take_snapshot di Chrome DevTools scrive il file (filePath assoluto) che il plugin
+// legge come lettura completa; la mappa della pagina (megabyte su una pagina pesante) compare solo riassunta.
+function realWs(ws) { try { return realpathSync.native(ws); } catch { return ws; } }
+function showSession(session) {
+  const snap = session?.browser?.snapshot;
+  if (!snap || typeof snap !== "object" || Array.isArray(snap)) return session;
+  const { refs, names, unverified, ...rest } = snap;
+  const count = (o) => (o && typeof o === "object" ? Object.keys(o).length : 0);
+  return { ...session, browser: { ...session.browser, snapshot: { ...rest, refs_count: count(refs), names_count: count(names), ...(Array.isArray(unverified) ? { unverified_count: unverified.length } : {}) } } };
+}
 
 function summary(session) {
   if (!session) return "nessun cliente attivo";
@@ -473,7 +488,9 @@ export async function run(argv, env = process.env) {
       const { readApprovals, approvalsFile } = await import("./approvals.mjs");
       const reg = readApprovals(approvalsFile(ws, session.customer, sid));
       const autonomy = autonomyLevel({ ws, customer: session.customer, records: reg.ok ? reg.records : [], envType: session.env?.type ?? "sandbox" });
-      result = { session_id: sid, pointer, session, autonomy };
+      const workspace = realWs(ws);
+      result = { session_id: sid, pointer, session: showSession(session), autonomy, workspace,
+        ...(session?.customer ? { snapshots_dir: join(workspace, "customers", session.customer, ".sessions", sid, "snapshots") } : {}) };
     } else if (action === "use" && what === "customer") result = await useCustomer(ws, sid, value, { create: !!opts.new, actor });
     else if (action === "use" && what === "scope") result = useScope(ws, sid, value, { actor });
     else if (action === "use" && what === "mode") result = await useMode(ws, sid, value, { actor });
@@ -483,7 +500,7 @@ export async function run(argv, env = process.env) {
     else if (action === "use" && what === "paths") result = usePaths(ws, sid, { agent: opts.agent, grant: !!opts.grant, restore: !!opts.restore }, { actor });
     else throw new CliError(1, `azione sconosciuta: ${positional.join(" ")}`);
     if (asJson) console.log(JSON.stringify({ ok: true, ...result }));
-    else console.log(summary(result.session));
+    else console.log(summary(result.session) + (result.snapshots_dir ? `\nworkspace ${result.workspace}\ncartella degli snapshot su file (Chrome DevTools, filePath assoluto): ${result.snapshots_dir}` : ""));
     return 0;
   } catch (err) {
     if (err instanceof CliError) return fail(asJson, err.code, err.message, err.extra);

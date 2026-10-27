@@ -54,17 +54,20 @@ ora per installazione, login e primi aggiustamenti. Il plugin non è ancora stat
 
 ## 3. Esplorare e memorizzare
 
-1. Scrivi tu, da sola nel messaggio: `ESPLORA PREPROD` (solo click), oppure `ESPLORA PREPROD COMPLETA` per imparare tutto:
-   compila con valori di prova, salva, invia, approva — mai cancellare. Con la completa verifica prima col cliente che
-   la pre-produzione non invii davvero e-mail ai fornitori o dati all'ERP.
+1. Scrivi tu, da sola nel messaggio: `ESPLORA PREPROD` (`ESPLORA PREPROD COMPLETA` è un sinonimo). È un'unica
+   esplorazione che impara tutto: compila con valori di prova, salva, invia, approva — mai cancellare. Verifica prima col
+   cliente il rischio: in pre-produzione un invio può mandare davvero e-mail ai fornitori o dati all'ERP.
 2. Entro 10 minuti: `/jaggaer-virtual-consultant:use mode esplorazione`
 3. Poi, per esempio: `/jaggaer-virtual-consultant:ops esplora ordini` (oppure a parole: "esplora il modulo ordini e
    memorizza pagine, pulsanti e campi del nuovo ordine").
 
-Cosa fa: clicca menu, schede, link, record e apre i moduli "Nuovo/Crea", apre le tendine per leggerne i valori. Con
-`ESPLORA PREPROD` **non preme mai** Salva, Invia, Conferma, Approva, né scrive nei campi; con la completa sì, sempre con
-valori di prova, e a fine giro ti mostra l'elenco di ciò che ha creato o modificato (puoi chiedere di annullarlo).
-Elimina e affini restano sempre vietati. Registra struttura, valori di esempio dei campi e fino a 20 righe per tabella,
+Cosa fa: clicca menu, schede, link, record e apre i moduli "Nuovo/Crea", apre le tendine per leggerne i valori,
+compila, salva, invia, approva e conferma i dialoghi, sempre con valori di prova, e a fine giro ti mostra l'elenco di ciò
+che ha creato o modificato (puoi chiedere di annullarlo). Elimina e affini, caricamento di file e script restano sempre
+vietati. In pre-produzione l'agente esplora con Chrome DevTools (il browser di Claude lì legge soltanto) e clicca solo
+elementi con un nome nell'ultima lettura della pagina, mai a coordinate. Se lo strumento risponde che la pagina è troppo
+grande, l'agente la legge a pezzi: con DevTools salva lo snapshot in un file della sessione (`take_snapshot` con
+`filePath`), che il plugin legge per intero, e lo scorre a pezzi; i click restano possibili su tutta la pagina. Registra struttura, valori di esempio dei campi e fino a 20 righe per tabella,
 con e-mail, codici e altri dati riconoscibili oscurati. Ogni pagina viene
 registrata da sola e, a fine giro, trasformata in mappa con `kb atlas-build` in `customers/<CODICE>/kb/scopes/<SCOPE>/selectors|fields/` (scope P2P per gli
 ordini, CON per i contratti). Per vedere cosa ha imparato: `/jaggaer-virtual-consultant:kb find --type SEL --scope P2P --customer <CODICE>`.
@@ -117,9 +120,9 @@ alla volta, dopo aver salvato la lettura completa dell'oggetto; mai in produzion
 
 ## Limiti da conoscere
 
-- Il blocco dei pulsanti con effetto in esplorazione riconosce le **etichette** (italiano e inglese; anche "OK").
-  Un elemento senza nome è bloccato; un pulsante che salva con un nome insolito ("Vai", "Fatto") no: in caso di
-  dubbio `PAUSA TUTTI`.
+- Il blocco delle cancellazioni in esplorazione riconosce le **etichette** (italiano e inglese) e le domande di
+  conferma di una cancellazione; un elemento senza nome è bloccato. Salvataggi e invii sono permessi: in caso di dubbio
+  `PAUSA TUTTI`.
 - In alcuni moduli JAGGAER aprire "Nuovo" crea già una bozza vuota: controlla e chiudila a mano se serve.
 - La memoria dell'esplorazione è marcata "osservata, non validata": la qualità dipende da quanto bene l'agente
   descrive le pagine.

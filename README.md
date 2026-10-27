@@ -13,7 +13,7 @@ guard di sicurezza che sanno in quale ambiente si trovano e chiedono le approvaz
 | **Collaudo NRT** | Test di non regressione delle release: casi deterministici ed esplorativi, evidenze, risultati e difetti su Xray/Jira |
 | **Configurazione** | Procedure standard di configurazione adattate al custom del cliente, eseguite su Chrome con istantanea prima, verifica dopo e approvazione |
 | **Operatività** | Ordini, contratti, richieste, fornitori, documenti, query Analytics su richiesta, con un piano verificabile passo per passo |
-| **Esplorazione** | Impara il tenant navigandolo: registra pagine, campi, pulsanti e percorsi e costruisce la mappa del cliente (`ESPLORA SANDBOX` / `ESPLORA PREPROD`, anche in versione `COMPLETA`) |
+| **Esplorazione** | Impara il tenant navigandolo: clicca, compila, salva e invia con valori di prova (mai cancellazioni, upload, script, produzione), registra pagine, campi, pulsanti e percorsi e costruisce la mappa del cliente (`ESPLORA SANDBOX` / `ESPLORA PREPROD`; `COMPLETA` è un sinonimo). Le pagine pesanti si leggono a pezzi e i pezzi si sommano. Rischio: in pre-produzione un invio può mandare davvero e-mail ai fornitori o dati all'ERP |
 | **Import massivi** | Impara i template di caricamento (`kb template-learn`), li compila da script (`template-fill`), li carica e legge l'esito (`import-result`); per creare molti elementi insieme è la via preferita |
 | **Conoscenza dai documenti** | Ingest di manuali, specifiche, matrici di campi e procedure (PDF, DOCX, XLSX, HTML, XML…) in unità revisionabili, poi digestione e promozione nella conoscenza |
 | **Apprendimento** | Esiti, lezioni e calibrazione delle tabelle di decisione migliorano le scelte successive |
@@ -103,7 +103,7 @@ confrontando ogni pagina con ciò che si aspetta.
 | Configurazione | con `APPROVO PIANO` | con `APPROVO PIANO` | piano + passo (+ seconda persona), istantanea prima |
 | Import massivi | sì | sì | come le scritture; per la configurazione serve l'istantanea dei dati attuali |
 | Cancellazioni | un elemento per passo, lettura salvata prima | idem | **mai** |
-| Esplorazione | sì | sì (semplice: solo click) | no |
+| Esplorazione | sì | sì (salva e invia con valori di prova) | no |
 
 Principi: i guard sono **fail-closed** (nel dubbio negano); le frasi le scrive solo l'utente e ogni approvazione è
 confermata nella conversazione e legata all'impronta del piano; ogni click è legato al selettore del passo; prima di

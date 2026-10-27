@@ -58,6 +58,11 @@ Da sapere prima di installare:
 
 Primo uso su un tenant reale (esplorare e memorizzare, poi creare ordini e contratti): [guida passo passo](docs/GUIDA-PRIMO-USO.md).
 
+**Esplorazione**: un'unica esplorazione senza piano (`ESPLORA SANDBOX` · `ESPLORA PREPROD`, con `COMPLETA` come sinonimo)
+che clicca, compila, salva e invia con valori di prova — mai cancellazioni, upload, script né produzione. Le pagine
+pesanti si leggono a pezzi e i pezzi si sommano. Rischio: in pre-produzione un invio può mandare davvero e-mail ai
+fornitori o dati all'ERP.
+
 ```
 1  Installare il plugin (marketplace privato o cartella locale); nella cartella del plugin: npm ci
 2  Clonare il repository di conoscenza e aprirlo come workspace di Claude Code

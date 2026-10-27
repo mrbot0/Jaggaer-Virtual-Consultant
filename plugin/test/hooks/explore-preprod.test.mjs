@@ -46,7 +46,8 @@ test("pre-produzione: senza la frase dell'utente l'esplorazione non si apre e i 
   assert.ok(denied(c(`${DT}click`, { uid: "1_1", pageId: 1 })));
 });
 
-test("pre-produzione con ESPLORA PREPROD: click di navigazione consentiti e in audit; salva/invia/conferma, input, invio, dialog, upload negati", () => {
+// esplorazione libera (brief del 26/10/2026): un'unica esplorazione, la frase semplice vale come COMPLETA (tolta la soluzione B: solo click senza effetto)
+test("pre-produzione con ESPLORA PREPROD (aggiornato): click, salva, invia, conferma, input, Invio e dialog consentiti e in audit; upload negato; elemento senza nome negato", () => {
   const { ws, tr, c, snap } = setup();
   say(ws, tr, "ESPLORA PREPROD");
   const r = runSessionCli(["use", "mode", "esplorazione", "--session", "sess-1"], { JVC_WORKSPACE: ws });
@@ -54,14 +55,11 @@ test("pre-produzione con ESPLORA PREPROD: click di navigazione consentiti e in a
   snap();
   assert.ok(silent(c(`${DT}click`, { uid: "1_1", pageId: 1 })), "menu Ordini");
   assert.ok(silent(c(`${DT}click`, { uid: "1_2", pageId: 1 })), "apre il modulo Nuovo ordine");
-  for (const uid of ["1_3", "1_4", "1_6", "1_7"]) {
-    const d = c(`${DT}click`, { uid, pageId: 1 });
-    assert.ok(denied(d), NAMES[uid]); assert.match(reasonOf(d), /effetto/i);
-  }
+  for (const uid of ["1_3", "1_4", "1_6", "1_7"]) assert.ok(silent(c(`${DT}click`, { uid, pageId: 1 })), NAMES[uid]);
   const unknown = c(`${DT}click`, { uid: "9_9", pageId: 1 });
   assert.ok(denied(unknown), "elemento non presente nell'ultimo snapshot"); assert.match(reasonOf(unknown), /snapshot/);
-  for (const [t, i] of [[`${DT}fill`, { uid: "1_5", value: "x", pageId: 1 }], [`${DT}press_key`, { key: "Enter", pageId: 1 }], [`${DT}handle_dialog`, { action: "accept", pageId: 1 }],
-    [`${DT}upload_file`, { uid: "1_5", filePath: "x", pageId: 1 }]]) assert.ok(denied(c(t, i)), t);
+  for (const [t, i] of [[`${DT}fill`, { uid: "1_5", value: "x", pageId: 1 }], [`${DT}press_key`, { key: "Enter", pageId: 1 }], [`${DT}handle_dialog`, { action: "accept", pageId: 1 }]]) assert.ok(silent(c(t, i)), t);
+  assert.ok(denied(c(`${DT}upload_file`, { uid: "1_5", filePath: "x", pageId: 1 })), "upload");
   // lo snapshot deve essere della pagina corrente
   patchSession(ws, (s) => { s.browser.current_url = "https://acme-pre.jaggaer.com/altro"; });
   assert.ok(denied(c(`${DT}click`, { uid: "1_1", pageId: 1 })));

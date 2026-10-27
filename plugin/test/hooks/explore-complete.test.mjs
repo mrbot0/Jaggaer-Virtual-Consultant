@@ -58,11 +58,13 @@ test("pre-produzione completa: salva, invia, approva, compila, Invio, conferma d
   assert.ok(denied(c(`${DT}evaluate_script`, { function: "() => 1", pageId: 1 })), "script");
 });
 
-test("pre-produzione con ESPLORA PREPROD semplice: invariato (solo click senza effetto)", () => {
+// esplorazione libera (brief del 26/10/2026): un'unica esplorazione, la frase semplice vale come COMPLETA
+test("pre-produzione con ESPLORA PREPROD (aggiornato): come COMPLETA — salva e compila sì, Elimina no", () => {
   const { c } = setup("preprod", "ESPLORA PREPROD");
   assert.ok(silent(c(`${DT}click`, { uid: "1_1", pageId: 1 })));
-  assert.ok(denied(c(`${DT}click`, { uid: "1_3", pageId: 1 })), "Salva resta negato senza COMPLETA");
-  assert.ok(denied(c(`${DT}fill`, { uid: "1_5", value: "x", pageId: 1 })));
+  assert.ok(silent(c(`${DT}click`, { uid: "1_3", pageId: 1 })), "Salva");
+  assert.ok(silent(c(`${DT}fill`, { uid: "1_5", value: "x", pageId: 1 })));
+  assert.ok(denied(c(`${DT}click`, { uid: "1_6", pageId: 1 })), "Elimina bozza");
 });
 
 test("sandbox completa: anche Invio e salvataggio; produzione mai", () => {

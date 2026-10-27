@@ -15,6 +15,10 @@
 //   5. observe-append fallito o scaduto su una chiamata del browser ⇒ la scheda è inaffidabile e nulla si lega finché non
 //      naviga: il marcatore lo scrive browser-origin (hook leggero), così vale anche se observe-append muore;
 //   6. restano le due letture complete consecutive in prod/preprod e tutto il comportamento dei giri 1..4.
+//  Esplorazione libera (brief del 26/10/2026, approvato dall'utente) — test aggiornati: regola 4 vale ancora per il find,
+//  non più per i pezzi verificati (lettura ristretta, troncata, batch: una occorrenza, fuori dalle virgolette, pagina
+//  confermata), che si registrano con la loro etichetta e si sommano alla mappa; regola 6: una lettura completa basta in
+//  ogni ambiente (le azioni con effetto di Claude fuori dalla sandbox restano negate dalla decisione WP08).
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { writeFileSync, mkdirSync, mkdtempSync, appendFileSync, rmSync, existsSync, readFileSync } from "node:fs";
@@ -98,7 +102,9 @@ test("I-A' (rr4 A..F): scheda, find, lettura ristretta, cambio di URL nello stes
   for (const envId of ["prod", "preprod"]) for (const [name, s] of Object.entries(SCEN)) {
     const { ws, tr, url } = await readPlanWs(envId);
     s.run(ws, url);
-    assert.notEqual(refsOf(ws)[s.ref], SEL, `${envId}/${name}: ${JSON.stringify(refsOf(ws))}`);
+    // F (una sola lettura forgiata di un ref mai assegnato): con una lettura che basta il ref si lega (indistinguibile da
+    // una pagina legittima, come rr4 G); il click resta negato dalla decisione WP08
+    if (name !== "F_one_read_only") assert.notEqual(refsOf(ws)[s.ref], SEL, `${envId}/${name}: ${JSON.stringify(refsOf(ws))}`);
     assert.ok(!allowed(clClick(ws, tr, s.ref)), `${envId}/${name}: click su ${s.ref} consentito`);
   }
 });
@@ -112,9 +118,17 @@ test("I-A' (rr4 G, controllo): un ref mai assegnato dall'estensione in due lettu
   }
 });
 
-test("I-A' regola 4: un ref visto la prima volta in un find o in una lettura ristretta resta contaminato anche se le letture complete lo mostrano con la STESSA etichetta", async () => {
+test("I-A' regola 4 (aggiornata, esplorazione libera): un ref visto la prima volta in un find resta contaminato anche se le letture complete lo mostrano con la STESSA etichetta; visto in un pezzo verificato (lettura ristretta, batch) si lega", async () => {
   for (const envId of ["prod", "preprod", "sandbox"]) {
-    for (const first of ["find", "scoped", "batch"]) {
+    for (const first of ["scoped", "batch"]) {
+      const { ws, url } = await readPlanWs(envId);
+      if (first === "scoped") R(ws, `link "Elenco richieste" [ref_9]\n\nViewport: 490x417`, url, { tabId: 101, ref_id: "ref_8" });
+      else post(ws, CL + "browser_batch", { actions: [{ name: "read_page", input: { tabId: 101 } }] }, blocks(`link "Elenco richieste" [ref_9]`, url));
+      const page = `link "Elenco richieste" [ref_9]\nbutton "Annulla" [ref_3]\n\nViewport: 490x417`;
+      R(ws, page, url);
+      assert.equal(refsOf(ws).ref_9, SEL, `${envId}/${first}: ${JSON.stringify(refsOf(ws))}`);
+    }
+    for (const first of ["find"]) {
       const { ws, tr, url } = await readPlanWs(envId);
       if (first === "find") post(ws, CL + "find", { tabId: 101, query: "elenco" }, findResp(`link "Elenco richieste" [ref_9]`, url));
       else if (first === "scoped") R(ws, `link "Elenco richieste" [ref_9]\n\nViewport: 490x417`, url, { tabId: 101, ref_id: "ref_8" });
@@ -154,8 +168,7 @@ test("I-A' positivo: in preprod navigate, due letture complete, click sull'eleme
   const PAGE = `heading "Richieste" [ref_9]\nlink "Elenco richieste" [ref_3]\nbutton "Invia in approvazione" [ref_1]\n\nViewport: 490x417`;
   nav(ws, url);
   R(ws, PAGE, url);
-  assert.ok(!allowed(clClick(ws, tr, "ref_3")), "una sola lettura non basta in preprod");
-  R(ws, PAGE, url);
+  // esplorazione libera: una sola lettura completa basta anche in preprod
   assert.equal(refsOf(ws).ref_3, SEL, JSON.stringify(refsOf(ws)));
   assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "preprod: legato; click di Claude negato dalla decisione WP08");
   assert.ok(!allowed(clClick(ws, tr, "ref_1")));
@@ -296,10 +309,10 @@ test("I-A': storia illeggibile ⇒ nessuna scheda lega finché non naviga; navig
   assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "dopo il navigate il legame torna; click negato dalla decisione WP08");
 });
 
-test("I-A' unit.mjs: con una sola lettura completa di Claude legano solo sandbox e dev (prod, preprod, ignoto, 'qa', 'SANDBOX' no)", async () => {
+test("I-A' unit.mjs (aggiornato, esplorazione libera): una sola lettura completa di Claude lega in ogni ambiente (niente catena di due letture)", async () => {
   const { nextBinding } = await import("../../hooks/lib/observe-append.mjs");
   const call = classify(CL + "read_page", { tabId: 101 });
-  for (const [envType, want] of [["prod", null], ["preprod", null], [null, null], ["qa", null], ["SANDBOX", null], ["sandbox", "SEL"], ["dev", "SEL"]]) {
+  for (const [envType, want] of [["prod", "SEL"], ["preprod", "SEL"], [null, "SEL"], ["qa", "SEL"], ["SANDBOX", "SEL"], ["sandbox", "SEL"], ["dev", "SEL"]]) {
     const r = nextBinding({}, { v: 1, tabs: {} }, { call, obs: "O1", ts: "t", envType, mode: "complete", refs: { ref_3: "SEL" }, pageUrl: "https://u", labels: [["ref_3", "k"]], labelLoc: { url: "https://u", tab: "101" }, asked: 101, key: "u:x" });
     assert.equal(r.browser.snapshot.refs.ref_3, want, String(envType));
     assert.deepEqual(r.hist.tabs["cl|101"].l, { ref_3: "k" });
