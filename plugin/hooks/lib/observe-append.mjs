@@ -357,11 +357,12 @@ export function nextBinding(b, hist, opts) {
     }
   };
   if (find && partial && !claudeNav) {
-    // un find: la mappa resta, ricontrollata sulla storia; nessun ref, nome o legame aggiunto (sicurezza 3)
+    // un find: la mappa resta, ricontrollata sulla storia; nessun ref, nome o legame aggiunto (sicurezza 3); N2 (verifica
+    // del 27/10/2026): se la stessa chiamata ha agito (browser_batch [click, find]) la mappa è marcata after_action
     if (mapOk(prev)) {
       const { rs, ns, unv } = kept(prev);
       const { unverified: _u, ...rest } = prev;
-      out.snapshot = { ...rest, refs: rs, names: ns, ...(unv.length ? { unverified: unv } : {}) };
+      out.snapshot = { ...rest, refs: rs, names: ns, ...(unv.length ? { unverified: unv } : {}), ...(acted ? { after_action: true } : {}) };
     }
   } else if (refs && pageUrl && !(partial && claudeNav)) {
     const bound = { ...refs };
@@ -393,13 +394,17 @@ export function nextBinding(b, hist, opts) {
   // sicurezza 2: limiti in byte di mappa e storia (mai troncate: oltre il limite la mappa è inutilizzabile)
   const mapBytes = limits.mapBytes ?? MAP_MAX_BYTES;
   const histBytes = limits.histBytes ?? HISTORY_MAX_BYTES;
-  let unusable = false;
+  // N3 (verifica del 27/10/2026): il motivo resta nella mappa (unusable_reason) perché il guard dica cosa serve davvero —
+  // "map": la lettura completa della pagina supera il limite (rileggerla per intero darebbe lo stesso esito: pezzi o sezioni);
+  // "pieces": la somma dei pezzi lo supera (la mappa riparte dal prossimo pezzo); "history": la storia della scheda (si
+  // azzera con una navigazione a un nuovo documento)
+  let unusable = null;
   if (JSON.stringify(h).length > histBytes) {
     for (const k of keys) h.tabs[k] = { l: {}, full: true };
-    unusable = true;
+    unusable = "history";
   }
-  if (mapOk(out.snapshot) && JSON.stringify(out.snapshot).length > mapBytes) unusable = true;
-  if (unusable && out.snapshot) out.snapshot = { obs: out.snapshot.obs ?? obs, url: out.snapshot.url ?? null, tab: out.snapshot.tab ?? null, ts, refs: {}, names: {}, unusable: true };
+  if (!unusable && mapOk(out.snapshot) && JSON.stringify(out.snapshot).length > mapBytes) unusable = out.snapshot.partial === true ? "pieces" : "map";
+  if (unusable && out.snapshot) out.snapshot = { obs: out.snapshot.obs ?? obs, url: out.snapshot.url ?? null, tab: out.snapshot.tab ?? null, ts, refs: {}, names: {}, unusable: true, unusable_reason: unusable };
   const browser = key ? settlePending(out, key, cleared.flatMap((c) => c.pend)) : out;
   return { browser, hist: h };
 }
