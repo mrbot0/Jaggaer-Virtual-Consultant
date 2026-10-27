@@ -8,8 +8,10 @@
 // Marcatore di osservazione mancante (regola 5): browser-origin (hook leggero) scrive in session.browser.obs_pending
 // una voce per OGNI chiamata del browser; observe-append la toglie nella stessa scrittura che aggiorna storia e legami.
 // Se observe-append fallisce, scade o non parte, la voce resta e i guard non legano nulla in quella scheda finché
-// observe-append non vede una navigazione della scheda a un nuovo documento. I due hook corrono in parallelo: chi
-// arriva secondo trova la voce dell'altro (obs_done, ultime OBS_DONE_MAX) e la chiude.
+// observe-append non vede (27/10/2026: il marcatore guarisce, niente più stallo sulle pagine con URL a frammento) una
+// lettura COMPLETA riuscita della stessa famiglia e scheda (la mappa si ricostruisce da lì), una navigazione della scheda a
+// un nuovo documento o un navigate riuscito a un URL diverso (anche solo nel frammento: chiude le voci, non la storia).
+// I due hook corrono in parallelo: chi arriva secondo trova la voce dell'altro (obs_done, ultime OBS_DONE_MAX) e la chiude.
 // Solo moduli built-in: browser-origin e guard-config-scope sono sul percorso caldo.
 import { readFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
@@ -72,7 +74,7 @@ export function pendingRefusal(b, family, tab) {
     if (famOf(k) !== fam) continue;
     const t = tabOfKey(k);
     if (t === "?" || tab == null || t === String(tab)) {
-      return `una chiamata precedente del browser su questa scheda non è stata registrata da observe-append (fallito o scaduto): nessun legame ref ↔ SEL finché la scheda non naviga a un nuovo documento (navigate)`;
+      return `una chiamata precedente del browser su questa scheda non è stata registrata da observe-append (fallito o scaduto): nessun legame ref ↔ SEL finché non rileggi la pagina per intero (take_snapshot, read_page o browser_snapshot completo della stessa scheda) o la scheda non naviga a un altro URL`;
     }
   }
   return null;
@@ -132,7 +134,10 @@ const CLOSE_OPS = { "claude-browser": new Set(["tabs_close", "tabs_close_mcp"]),
 // [{ key: scheda della storia, pend: [schede delle voci obs_pending da chiudere] }]. Un navigate che non nomina la
 // scheda chiude anche le voci a scheda ignota della famiglia (browser-origin le registra con la scheda chiesta).
 // Un cambio di scheda NON azzera: il documento (e la mappa dei ref dell'estensione) resta.
-export function clearedBy(call, { ok, landedTab = null, landed = () => false }) {
+// 27/10/2026: un navigate riuscito che non è (con certezza) un nuovo documento — URL con frammento — ma arriva su un URL
+// diverso da quello noto della scheda (moved) chiude le voci obs_pending della scheda senza azzerarne la storia
+// ({ key: null, pend }): la mappa dei ref dell'estensione può essere la stessa, le etichette viste restano.
+export function clearedBy(call, { ok, landedTab = null, landed = () => false, moved = () => false }) {
   if (!ok) return [];
   const out = [];
   for (const a of call.actions ?? [call]) {
@@ -140,9 +145,11 @@ export function clearedBy(call, { ok, landedTab = null, landed = () => false }) 
     const op = String(a.op ?? "");
     if (CLOSE_OPS[fam]?.has(op) && a.tab != null) out.push({ key: tabKey(fam, a.tab), pend: [tabKey(fam, a.tab)] });
     else if (fam === "playwright" && op === "browser_close") out.push({ key: "pw|*", pend: ["pw|*"] });
-    else if (a.kind === "navigate" && !a.switches && newDocument(a) && landed(a)) {
+    else if (a.kind === "navigate" && !a.switches && landed(a)) {
       const key = tabKey(fam, a.tab ?? landedTab);
-      out.push({ key, pend: a.tab == null ? [key, tabKey(fam, null)] : [key] });
+      const pend = a.tab == null ? [key, tabKey(fam, null)] : [key];
+      if (newDocument(a)) out.push({ key, pend });
+      else if (moved(a, key)) out.push({ key: null, pend });
     }
   }
   return out;
@@ -156,6 +163,7 @@ export function clearedBy(call, { ok, landedTab = null, landed = () => false }) 
 export function updateHistory(h0, { cleared = [], keys = [], labels = [], complete = false, firstOk = null, url = null }) {
   const h = { ...h0, tabs: { ...(h0.tabs ?? {}) } };
   for (const k of cleared) {
+    if (k == null) continue;
     if (k === "pw|*") { for (const t of Object.keys(h.tabs)) if (famOf(t) === "pw") h.tabs[t] = { l: {}, nav: true }; continue; }
     h.tabs[k] = { l: {}, nav: true };
   }

@@ -18,7 +18,7 @@ import { nextObserved, observedLocation } from "./observed-origin.mjs";
 import { isPageTextOp } from "./origin-markers.mjs";
 import { updateSessionFile } from "./session-state.mjs";
 import { writeFileAtomic, withFileLock } from "./fsx.mjs";
-import { parseSnapshot, responseText, responseHasImage, normLabel } from "../../scripts/chrome/snapshot-parse.mjs";
+import { parseSnapshot, responseText, responseHasImage, normLabel, stripDataUris, stripResponseDataUris } from "../../scripts/chrome/snapshot-parse.mjs";
 import { compareExpect, elementNorms } from "../../scripts/chrome/expect-compare.mjs";
 import { resolveSel, atlasIndex, atlasMatch, atlasByCode, fieldSensitivity } from "../../scripts/chrome/atlas.mjs";
 import { detectErrors } from "../../scripts/chrome/errors.mjs";
@@ -99,7 +99,7 @@ export const isFindRead = (call) => (call.actions ?? [call]).some((a) => FIND_OP
 // Etichetta di un ref per la storia della pagina (ruolo + nome normalizzato), compatta.
 const labelKey = (e) => sha(`${e.role ?? ""}\u0001${normLabel(e.name ?? "")}`).slice(0, 16);
 // Correzioni dopo la revisione (27/10/2026, decisione dell'utente): nessun tetto sul numero di elementi, ref, nomi o
-// etichette di una lettura o di una mappa (restano solo i limiti in byte dei file).
+// etichette di una lettura o di una mappa; tolti anche i limiti in byte (guard sulla grandezza, 27/10/2026).
 // Ambienti in cui un pezzo lega al SEL, e solo in modalità esplorazione (in un piano legano solo le letture complete):
 // produzione e ambiente ignoto mai (i pezzi vi aggiungono solo i nomi).
 const PARTIAL_BIND_ENVS = new Set(["sandbox", "dev", "preprod"]);
@@ -136,9 +136,15 @@ export async function buildObservation({ ws, customer, session, call, state, res
   const scope = session.scope ?? "XSC";
   const atlas = hasPage ? atlasIndex(ws, customer, session.scope) : [];
   const ap = session.active_plan ?? null;
+  // robustezza (27/10/2026): le parti di sola registrazione (confronto con l'expect e novità, elementi visti, errori della
+  // piattaforma, testi redatti dell'OBS) non devono mai impedire la scrittura della mappa e la chiusura del marcatore:
+  // un loro guasto si annota in `soft` (avviso dell'hook) e l'OBS esce senza quella parte. Il legame (parser, Atlas, firma
+  // della pagina, conteggi dei ref) resta com'è: un suo guasto fa fallire l'hook (marcatore aperto, nessun legame).
+  const soft = [];
+  const tryOr = (f, fb, what) => { try { return f(); } catch (err) { soft.push(`${what} (${String(err?.message ?? err).slice(0, 80)})`); return fb; } };
   let cmp = null;
   let cfgObject = null;
-  if (hasPage && kind === "snapshot" && ap) {
+  if (hasPage && kind === "snapshot" && ap) try {
     const st = await activeStep(ws, customer, ap);
     if (st) cmp = compareExpect(st.step, page, { resolve: (c) => resolveSel(ws, c, customer), atlas, profile });
     // §28.1: lo snapshot della pagina durante un passo ACT-CFG-CHANGE è lo snapshot dell'oggetto governato
@@ -149,7 +155,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
     // l'unica voce di sola area che guard-config-scope accetta (quella di kb snapshot no).
     if (st?.step?.action_class === "ACT-CFG-CHANGE" && (st.step.config?.object || st.step.config?.area) && state === "ok" && typeof st.step.target === "string"
       && (cmp?.elements_seen ?? []).some((e) => e?.atlas_match === st.step.target)) cfgObject = st.step.config.object ? { objects: [st.step.config.object] } : { objects: [], areas: [st.step.config.area] };
-  }
+  } catch (err) { cmp = null; cfgObject = null; soft.push(`confronto con l'expect non fatto (${String(err?.message ?? err).slice(0, 80)})`); }
   const sensitiveCache = new Map();
   const sensitive = (m) => {
     if (!m?.field) return false;
@@ -158,15 +164,15 @@ export async function buildObservation({ ws, customer, session, call, state, res
   };
   const masks = new Set();
   const ft = (s) => { const r = freeText(s, { profile, env }); r.masks.forEach((x) => masks.add(x)); return r.text; };
-  const seen = (cmp?.elements_seen ?? (hasPage ? compareExpect({ expect: {} }, page, { atlas, profile }).elements_seen : [])).map((e) => {
+  const seen = tryOr(() => (cmp?.elements_seen ?? (hasPage ? compareExpect({ expect: {} }, page, { atlas, profile }).elements_seen : [])).map((e) => {
     const m = e.atlas_match ? atlasByCode(atlas, e.atlas_match) : atlasMatch(atlas, { name: e.label, role: e.role });
     const o = { ...e, label: ft(e.label) };
     if (e.value !== undefined) {
       if (sensitive(m)) { o.value = "[riservato]"; masks.add("fld-sensitivity"); } else o.value = ft(e.value);
     }
     return o;
-  });
-  const errors = hasPage ? detectErrors(page).map((e) => ({ ...e, message: redactText(e.message, { profile, env }).text })) : [];
+  }), [], "elementi visti non registrati");
+  const errors = tryOr(() => (hasPage ? detectErrors(page).map((e) => ({ ...e, message: redactText(e.message, { profile, env }).text })) : []), [], "errori della pagina non registrati");
   const doc = {
     type: "OBS",
     session: session.session_code ?? session.session_id,
@@ -175,20 +181,20 @@ export async function buildObservation({ ws, customer, session, call, state, res
     tool: call.tool, family: call.family, kind,
     url: cleanUrl(page?.url, profile),
     page_signature: cmp?.page_signature ?? (hasPage ? (await import("../../scripts/chrome/snapshot-parse.mjs")).pageSignature(page, { profile }) : null),
-    title: page?.title ? ft(page.title) : null,
+    title: tryOr(() => (page?.title ? ft(page.title) : null), null, "titolo non registrato"),
     elements_seen: seen,
-    messages_seen: (page?.messages ?? []).map((m) => ft(m.text)),
+    messages_seen: tryOr(() => (page?.messages ?? []).map((m) => ft(m.text)), [], "messaggi non registrati"),
     // testo libero della pagina (fuori da elementi e messaggi): redatto e troncato a 40 caratteri (§54.2)
-    texts_seen: [...new Set((page?.texts ?? []).filter((t) => t && !(page.messages ?? []).some((m) => m.text.includes(t))))].slice(0, 20).map(ft),
-    divergences: (cmp?.divergences ?? []).map((d) => ({ kind: d.kind, what: d.what, ...(d.target ? { target: ft(d.target) } : {}), ...(d.priority ? { priority: true } : {}) })),
-    surprise: cmp?.divergences.length ?? 0,
-    novelty: cmp?.novelties.length ?? 0,
+    texts_seen: tryOr(() => [...new Set((page?.texts ?? []).filter((t) => t && !(page.messages ?? []).some((m) => m.text.includes(t))))].slice(0, 20).map(ft), [], "testi non registrati"),
+    divergences: tryOr(() => (cmp?.divergences ?? []).map((d) => ({ kind: d.kind, what: d.what, ...(d.target ? { target: ft(d.target) } : {}), ...(d.priority ? { priority: true } : {}) })), [], "divergenze non registrate"),
+    surprise: cmp?.divergences?.length ?? 0,
+    novelty: cmp?.novelties?.length ?? 0,
     errors: [],
     image: responseHasImage(resp),
     redaction: { profile, masks: [] },
     ts: now.toISOString(),
   };
-  if (kind === "error") doc.error_text = ft(text || "risposta d'errore dello strumento");
+  if (kind === "error") doc.error_text = tryOr(() => ft(text || "risposta d'errore dello strumento"), "risposta d'errore dello strumento", "testo dell'errore non registrato");
   doc.redaction.masks = [...masks].sort();
   // Solo da uno snapshot la cui pagina è confermata dal marcatore del server (stesse regole dell'origine) e mai da
   // uno strumento che restituisce testo della pagina; un ref che compare due volte (riga forgiata) vale null.
@@ -266,7 +272,7 @@ export async function buildObservation({ ws, customer, session, call, state, res
     const { pageSignature } = await import("../../scripts/chrome/snapshot-parse.mjs");
     pieceSig = pageSignature({ ...page, headings: (page.headings ?? []).filter((h) => h.level === 1) }, { profile });
   }
-  return { doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find, confirmedUrl: loc?.url ?? null, pieceSig, pieceH1: !!pieceSig && pieceSig.includes("#") };
+  return { soft, doc, errors, scope, profile, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find, confirmedUrl: loc?.url ?? null, pieceSig, pieceH1: !!pieceSig && pieceSig.includes("#") };
 }
 
 // Nuovo stato del legame ref ↔ SEL in session.browser e della storia dei ref dopo la chiamata (puro: copie).
@@ -299,17 +305,18 @@ export async function buildObservation({ ws, customer, session, call, state, res
 //    mostra, altrimenti la firma dell'ultima mappa dello stesso URL (lettura completa), altrimenti il solo percorso;
 //  - un find (pagina mai confermata) non svuota la mappa e non vi aggiunge nulla: la tiene, ricontrollata sulla storia
 //    (un ref che il find mostra con un'altra etichetta esce); non crea legami e non riscrive i nomi (sicurezza 3);
-//  - stato limitato in byte, mai troncato (sicurezza 2; nessun tetto sul numero di elementi per decisione dell'utente):
-//    mappa oltre limits.mapBytes o storia oltre limits.histBytes ⇒ mappa inutilizzabile (unusable: i guard negano i click
-//    con il motivo) e, per la storia, le schede della chiamata senza legami fino alla prossima navigazione.
+//  - mappa e storia mai troncate; guard sulla grandezza tolto (27/10/2026, decisione dell'utente: «rimuoviamo il Guard
+//    sulla grandezza, risulta bloccante e inutile»): nessun limite in byte, nessuna mappa "inutilizzabile".
+// Marcatore che guarisce (27/10/2026): una lettura COMPLETA riuscita (pagina confermata dal marcatore del server) ricostruisce
+// la mappa della scheda: chiude anche le voci obs_pending rimaste di chiamate precedenti della stessa famiglia e scheda
+// (quella chiesta, quella del marcatore del server e, se la lettura non nomina la scheda, la scheda ignota). `settled`:
+// schede le cui voci si chiudono (navigazioni, chiusure, letture complete), per il marcatore del cliente.
 // Firma del giro 4 nextBinding(b, opts) → browser ancora accettata (storia vuota); altrimenti → { browser, hist }.
 const ACT_KINDS = new Set(["click", "input", "upload", "dialog", "script", "other"]);
-export const MAP_MAX_BYTES = 8 * 1024 * 1024;
-export const HISTORY_MAX_BYTES = 16 * 1024 * 1024;
 export function nextBinding(b, hist, opts) {
   if (opts === undefined && hist && typeof hist === "object" && "call" in hist) return nextBinding(b, null, hist).browser;
   const { call, obs, ts, envType, mode, refs, pageUrl, labels = [], labelLoc = null, asked = null, cleared = [], key = null, names = null, verified = null, find = false, sig = null,
-    confirmedUrl = null, sessionMode = null, pieceSig = null, pieceH1 = false, limits = {} } = opts;
+    confirmedUrl = null, sessionMode = null, pieceSig = null, pieceH1 = false } = opts;
   const out = { ...b };
   // N5 (verifica del 27/10/2026): che cosa ha fatto un pezzo — merged: si è sommato alla mappa precedente; afterAction:
   // ha aperto una mappa nuova della stessa pagina perché in mezzo c'è stata un'azione (il registro lo marca)
@@ -328,7 +335,7 @@ export function nextBinding(b, hist, opts) {
   const complete = !partial && !!(refs && pageUrl);
   const okSet = new Set(Array.isArray(verified) ? verified : []);
   const firstOk = partial && !find && !claudeNav && refs && pageUrl ? okSet : null;
-  const h = updateHistory(hist ?? { v: 1, tabs: {} }, { cleared: cleared.map((c) => c.key), keys, labels, complete, firstOk, url: labelLoc?.url ?? null });
+  const h = updateHistory(hist ?? { v: 1, tabs: {} }, { cleared: cleared.map((c) => c.key).filter((k) => k != null), keys, labels, complete, firstOk, url: labelLoc?.url ?? null });
   const mapOk = (m) => m && m.refs && typeof m.refs === "object" && !Array.isArray(m.refs);
   const pieceUrl = pageUrl ?? confirmedUrl;
   const sameMap = (m) => !claudeNav && !acted && mapOk(m) && m.after_action !== true && (m.tab ?? null) === tab && (m.family ?? null) === fam;
@@ -395,22 +402,11 @@ export function nextBinding(b, hist, opts) {
     // un'azione che non ha riletto la pagina: la mappa resta per i guard, ma un pezzo successivo non vi si somma
     out.snapshot = { ...prev, after_action: true };
   }
-  // sicurezza 2: limiti in byte di mappa e storia (mai troncate: oltre il limite la mappa è inutilizzabile)
-  const mapBytes = limits.mapBytes ?? MAP_MAX_BYTES;
-  const histBytes = limits.histBytes ?? HISTORY_MAX_BYTES;
-  // N3 (verifica del 27/10/2026): il motivo resta nella mappa (unusable_reason) perché il guard dica cosa serve davvero —
-  // "map": la lettura completa della pagina supera il limite (rileggerla per intero darebbe lo stesso esito: pezzi o sezioni);
-  // "pieces": la somma dei pezzi lo supera (la mappa riparte dal prossimo pezzo); "history": la storia della scheda (si
-  // azzera con una navigazione a un nuovo documento)
-  let unusable = null;
-  if (JSON.stringify(h).length > histBytes) {
-    for (const k of keys) h.tabs[k] = { l: {}, full: true };
-    unusable = "history";
-  }
-  if (!unusable && mapOk(out.snapshot) && JSON.stringify(out.snapshot).length > mapBytes) unusable = out.snapshot.partial === true ? "pieces" : "map";
-  if (unusable && out.snapshot) out.snapshot = { obs: out.snapshot.obs ?? obs, url: out.snapshot.url ?? null, tab: out.snapshot.tab ?? null, ts, refs: {}, names: {}, unusable: true, unusable_reason: unusable };
-  const browser = key ? settlePending(out, key, cleared.flatMap((c) => c.pend)) : out;
-  return { browser, hist: h, piece };
+  // marcatore che guarisce: lettura completa riuscita della scheda ⇒ voci rimaste della stessa famiglia e scheda chiuse
+  const healed = mode === "complete" && refs && pageUrl && !claudeNav ? [...keys, ...(tab == null ? [tabKey(call.family, null)] : [])] : [];
+  const settled = [...new Set([...cleared.flatMap((c) => c.pend), ...healed])];
+  const browser = key ? settlePending(out, key, settled) : out;
+  return { browser, hist: h, piece, settled };
 }
 
 function writeDb(ws, customer, scope, doc, errors, now) {
@@ -476,9 +472,9 @@ function writeErrFile(ws, e, doc, scope, now) {
 // in QUESTA chiamata — filePath assoluto, .txt, nella cartella customers/<C>/.sessions/<sid>/snapshots/ (che Write, Edit e la
 // shell non possono scrivere: guard-scope) dopo il realpath; risposta riuscita che nomina esattamente quel file ("Saved
 // snapshot to <file>.", chrome-devtools-mcp); marcatore della chiamata scritto da guard-environment in PreToolUse
-// (session.browser.snapshot_calls[<tool_use_id>]: percorso, ora, mtime precedente) e file modificato dopo; al più
-// SNAPSHOT_FILE_MAX_BYTES. Ogni discordanza ⇒ la risposta resta quella dello strumento: nessuna lettura, nessun legame.
-export const SNAPSHOT_FILE_MAX_BYTES = 32 * 1024 * 1024;
+// (session.browser.snapshot_calls[<tool_use_id>]: percorso, ora, mtime precedente) e file modificato dopo;
+// nessun limite in byte (guard sulla grandezza tolto il 27/10/2026, decisione dell'utente: i data URI in base64 del file
+// si tolgono alla lettura). Ogni discordanza ⇒ la risposta resta quella dello strumento: nessuna lettura, nessun legame.
 export const snapshotsDir = (ws, customer, sid) => join(ws, "customers", customer, ".sessions", sid, "snapshots");
 const SELECTED_NOTE = /^Note: there is a selected element[^\n]*\n[^\n]*\n\n/;
 const WINFS = process.platform === "win32";
@@ -503,11 +499,11 @@ export function snapshotFileResponse({ ws, customer, sid, call, resp, state = "o
   if (!foldP(real).startsWith(foldP(dir.endsWith(sep) ? dir : dir + sep))) return null;
   let st;
   try { st = statSync(real); } catch { return null; }
-  if (!st.isFile() || st.size > SNAPSHOT_FILE_MAX_BYTES) return null;
+  if (!st.isFile()) return null;
   if (st.mtimeMs < marker.ts - 1000 || (Number.isFinite(marker.before) && st.mtimeMs <= marker.before) || st.mtimeMs - now > 60000) return null;
   let body;
   try { body = readFileSync(real, "utf8"); } catch { return null; }
-  body = body.replace(/^\s*## Latest page snapshot\s*\n/, "").replace(SELECTED_NOTE, "");
+  body = stripDataUris(body).replace(/^\s*## Latest page snapshot\s*\n/, "").replace(SELECTED_NOTE, "");
   const block = { type: "text", text: `## Latest page snapshot\n${body}` };
   if (Array.isArray(resp)) return [...resp, block];
   if (resp && typeof resp === "object" && Array.isArray(resp.content)) return { ...resp, content: [...resp.content, block] };
@@ -529,6 +525,10 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     try { st0 = responseState(resp); } catch { st0 = "unknown"; }
     resp = snapshotFileResponse({ ws: st.ws, customer: st.customer, sid: st.sid, call, resp, state: st0, marker, now: now.getTime() }) ?? resp;
   } catch { resp = input.tool_response; }
+  // guard sulla grandezza tolto (27/10/2026): data URI in base64 sostituiti PRIMA di ogni lettura (origine, parser,
+  // redazione, legame, registro, OBS); i controlli del legame (conteggi dei token, valori fra virgolette) si fanno sullo
+  // stesso testo. La chiave della chiamata (callKey) resta quella dell'input originale, come in browser-origin.
+  try { resp = stripResponseDataUris(resp); } catch { /* risposta com'è */ }
   let state;
   try { state = responseState(resp); } catch { state = "unknown"; }
   const warn = [];
@@ -552,12 +552,22 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   }
 
   // 2. osservazione
-  const { doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find, confirmedUrl, pieceSig: pSig, pieceH1 } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
-  const { code, errs, payload } = await writeDb(st.ws, st.customer, scope, doc, errors, now);
-  const dir = join(st.ws, "customers", st.customer, "observations");
-  mkdirSync(dir, { recursive: true });
-  writeFileAtomic(join(dir, `${code}.yaml`), toYaml({ id: code, ...doc }));
-  for (const e of errs) writeErrFile(st.ws, e, doc, scope, now);
+  const { soft, doc, errors, scope, cfgObject, refs, pageUrl, mode, labels, labelLoc, asked, text, names, page, verified, find, confirmedUrl, pieceSig: pSig, pieceH1 } = await buildObservation({ ws: st.ws, customer: st.customer, session: st.session, call, state, resp, ti: input.tool_input, env, now });
+  if (soft.length) warn.push(`OBS incompleta: ${soft.join("; ")}`);
+  // robustezza (27/10/2026): un guasto del DB delle OBS o dei file dell'OBS non lascia il marcatore aperto né la mappa
+  // vuota (fail-open solo per la registrazione): la mappa prende un identificativo locale della chiamata (nr:<chiave>),
+  // l'anello delle OBS e il ledger non registrano un codice che il DB non ha
+  let code = null;
+  let errs = [];
+  let payload = null;
+  try {
+    ({ code, errs, payload } = await writeDb(st.ws, st.customer, scope, doc, errors, now));
+    const dir = join(st.ws, "customers", st.customer, "observations");
+    mkdirSync(dir, { recursive: true });
+    writeFileAtomic(join(dir, `${code}.yaml`), toYaml({ id: code, ...doc }));
+    for (const e of errs) writeErrFile(st.ws, e, doc, scope, now);
+  } catch (err) { warn.push(`OBS non registrata${code ? ` per intero (${code})` : ""} (${String(err?.message ?? err).slice(0, 80)})`); }
+  const obsId = code ?? `nr:${callKey0}`;
 
   // 3. registro di sessione: ultima osservazione, spreco (snapshot ripetuti senza azione)
   let waste = false;
@@ -569,16 +579,28 @@ export async function record(input, env = process.env, { now = new Date() } = {}
   const pendFile = pendingFile(join(st.ws, "customers", st.customer, ".sessions"));
   // schede azzerate: navigate riuscito (marcatore positivo di arrivo) a un nuovo documento, o chiusura della scheda
   const cleared = clearedBy(call, { ok: state === "ok", landedTab: labelLoc?.tab ?? observedLocation(call.family, text, { asked, resp })?.tab ?? null,
-    landed: (a) => !!landedUrl(call.family, text, { asked: a.tab ?? null, resp }) });
+    landed: (a) => !!landedUrl(call.family, text, { asked: a.tab ?? null, resp }),
+    // 27/10/2026: navigate riuscito a un URL diverso da quello noto della scheda (storia della scheda, mappa della stessa
+    // famiglia e scheda; nessuno noto ⇒ diverso) ⇒ le voci obs_pending della scheda si chiudono anche con un frammento
+    moved: (a, k) => {
+      const href = (u) => { try { return new URL(String(u)).href; } catch { return null; } };
+      const to = href(landedUrl(call.family, text, { asked: a.tab ?? null, resp }));
+      if (!to) return false;
+      let known = [];
+      try { known.push(loadHistory(histFile).tabs?.[k]?.url); } catch { /* storia illeggibile: nessun URL noto */ }
+      if (prevSnap && (prevSnap.family ?? null) === call.family && tabKey(call.family, prevSnap.tab ?? null) === k) known.push(prevSnap.url);
+      known = known.map(href).filter(Boolean);
+      return !known.includes(to);
+    } });
   const obsKindForLedger = doc.kind === "navigate" || doc.kind === "action" ? "action" : doc.kind;
   // esplorazione libera: un pezzo della pagina porta la firma della mappa a cui si somma (i click che seguono partono da lì)
-  const pieceSig = () => (mode === "partial" && newSnap?.partial && newSnap.obs === code && typeof newSnap.sig === "string" ? newSnap.sig : null);
+  const pieceSig = () => (mode === "partial" && newSnap?.partial && newSnap.obs === obsId && typeof newSnap.sig === "string" ? newSnap.sig : null);
   updateSessionFile(st.sessionFile, (s) => {
     const o = s.ledger.observe ?? {};
     if (doc.kind === "snapshot" && doc.page_signature) {
       if (o.snapshot_sig === doc.page_signature) {
         waste = true;
-        s.ledger.waste = [...(Array.isArray(s.ledger.waste) ? s.ledger.waste : []), { kind: "repeated-snapshot", page_sig: doc.page_signature, obs: code, at: doc.ts, ...(doc.at_step ? { plan: doc.at_step.plan, step: doc.at_step.n } : {}) }];
+        s.ledger.waste = [...(Array.isArray(s.ledger.waste) ? s.ledger.waste : []), { kind: "repeated-snapshot", page_sig: doc.page_signature, obs: obsId, at: doc.ts, ...(doc.at_step ? { plan: doc.at_step.plan, step: doc.at_step.n } : {}) }];
       }
       o.snapshot_sig = doc.page_signature;
     } else if (obsKindForLedger === "action" || doc.kind === "error") o.snapshot_sig = null;
@@ -588,21 +610,21 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     // obs_pending di questa chiamata (se questa scrittura non avviene, la voce resta e i guard non legano)
     // lock della storia dentro quello di session.json (stesso ordine per tutte le sessioni del cliente)
     s.browser = withFileLock(`${histFile}.lock`, () => {
-      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: code, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names, verified, find, sig: doc.page_signature ?? null, confirmedUrl, sessionMode: s.mode ?? null, pieceSig: pSig, pieceH1 });
+      const r = nextBinding(s.browser ?? {}, loadHistory(histFile), { call, obs: obsId, ts: doc.ts, envType: s.env?.type ?? null, mode, refs, pageUrl, labels, labelLoc, asked, cleared, key, names, verified, find, sig: doc.page_signature ?? null, confirmedUrl, sessionMode: s.mode ?? null, pieceSig: pSig, pieceH1 });
       newSnap = r.browser.snapshot ?? null;
       pieceInfo = r.piece ?? null;
       if (labels.length || cleared.length || labelLoc?.url) saveHistory(histFile, r.hist);
       // WP08: il marcatore del cliente si chiude qui, sotto gli stessi lock (ordine: session.json → storia → marcatore)
       withFileLock(`${pendFile}.lock`, () => {
         const p = loadPending(pendFile);
-        savePending(pendFile, settlePending(p.corrupt ? { obs_pending: {}, obs_done: [] } : p, key, cleared.flatMap((c) => c.pend)));
+        savePending(pendFile, settlePending(p.corrupt ? { obs_pending: {}, obs_done: [] } : p, key, r.settled));
       });
       return r.browser;
     });
-    if (cfgObject) s.snapshots = [...(Array.isArray(s.snapshots) ? s.snapshots : []), { ...cfgObject, ts: doc.ts, obs: code, source: "observe-append", ...(doc.url ? { page: doc.url } : {}) }].slice(-20);
+    if (cfgObject && code) s.snapshots = [...(Array.isArray(s.snapshots) ? s.snapshots : []), { ...cfgObject, ts: doc.ts, obs: code, source: "observe-append", ...(doc.url ? { page: doc.url } : {}) }].slice(-20);
     // WP09b giro 2: anello delle OBS di questa sessione (prova di autenticità per kb snapshot): session.json è protetto,
     // il DB no; una riga del DB vale solo se codice, page_sig, ts e sha256 del payload coincidono con una voce qui
-    s.obs_ring = [...(Array.isArray(s.obs_ring) ? s.obs_ring : []), { code, page_sig: doc.page_signature ?? null, ts: doc.ts, sha256: sha(payload) }].slice(-OBS_RING_MAX);
+    if (code && payload != null) s.obs_ring = [...(Array.isArray(s.obs_ring) ? s.obs_ring : []), { code, page_sig: doc.page_signature ?? null, ts: doc.ts, sha256: sha(payload) }].slice(-OBS_RING_MAX);
     s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: pieceSig() ?? doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
     // il marcatore del file di snapshot vale una volta sola
     if (s.browser?.snapshot_calls && Object.hasOwn(s.browser.snapshot_calls, callKey0)) {
@@ -612,7 +634,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     return s;
   });
   try {
-    appendFileSync(join(sessionDir(st.ws, st.customer, st.sid), "observations.jsonl"), `${JSON.stringify({ kind: obsKindForLedger, page_sig: doc.page_signature, obs: code, ts: doc.ts })}\n`);
+    appendFileSync(join(sessionDir(st.ws, st.customer, st.sid), "observations.jsonl"), `${JSON.stringify({ kind: obsKindForLedger, page_sig: doc.page_signature, obs: obsId, ts: doc.ts })}\n`);
   } catch { /* il registro jsonl è di comodo per self-check --observations */ }
 
   // 4. soluzione A (spec §A1): registro di sola struttura per atlas-build — fail-open, mai un blocco
@@ -653,25 +675,25 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     }
     // esplorazione libera (26/10/2026): anche un pezzo della pagina (non un find: risultati di una ricerca) scrive un record
     // marcato partial, con la firma della mappa a cui si somma; atlas-build unisce i pezzi consecutivi in una visita
-    const piece = state === "ok" && mode === "partial" && !find && pageUrl && page && newSnap?.partial && newSnap.obs === code;
+    const piece = state === "ok" && mode === "partial" && !find && pageUrl && page && newSnap?.partial && newSnap.obs === obsId;
     // N5: un pezzo che apre una mappa nuova dopo un'azione è marcato after_action: atlas-build non lo unisce alla visita di prima
     if (piece) full = appendAtlasLog(file, pageRecord(page, { pageSig: pieceSig() ?? doc.page_signature, profile: doc.redaction.profile, env: envS, ts: doc.ts, partial: true, afterAction: pieceInfo?.afterAction === true })) === "full" || full;
     // ogni snapshot che lega i ref (lettura completa o risposta di un'azione con la pagina intera) aggiorna i ref dei record;
     // un pezzo che si somma alla mappa aggiunge i suoi a quelli della mappa
-    if (state === "ok" && page && refs && pageUrl && (mode !== "partial" || newSnap?.obs === code)) {
+    if (state === "ok" && page && refs && pageUrl && (mode !== "partial" || newSnap?.obs === obsId)) {
       let base = [];
       // N5: solo se il pezzo si è davvero sommato alla mappa precedente (mai dopo un'azione)
       const merged = mode === "partial" && pieceInfo?.merged === true && newSnap?.partial && prevSnap?.obs && prevSnap.url === newSnap.url && (prevSnap.tab ?? null) === (newSnap.tab ?? null) && (prevSnap.family ?? null) === (newSnap.family ?? null);
       if (merged) {
         try { const lp0 = JSON.parse(readFileSync(lastPage, "utf8")); if (lp0?.obs === prevSnap.obs && prevSnap.url === newSnap.url) base = Array.isArray(lp0.record_refs) ? lp0.record_refs : []; } catch { base = []; }
       }
-      writeFileAtomic(lastPage, JSON.stringify({ obs: code, record_refs: [...new Set([...base, ...recordRefs(page)])] }));
+      writeFileAtomic(lastPage, JSON.stringify({ obs: obsId, record_refs: [...new Set([...base, ...recordRefs(page)])] }));
     }
     if (full && fullWarningOnce(dirname(file))) warn.push("registro dell'esplorazione pieno (20 MB): pagine non registrate da qui in poi");
   } catch (err) { warn.push(`registro dell'esplorazione non scritto (${String(err?.message ?? err).slice(0, 80)})`); }
 
   const errTag = errs.length ? errs.map((e) => e.code ?? e.raw_id).join(",") : "—";
-  const line = `OBS ${code} · surprise:${doc.surprise} novelty:${doc.novelty} · ERR:${errTag}${waste ? " · spreco: snapshot ripetuto della stessa pagina senza azione" : ""}`;
+  const line = `OBS ${code ?? "non registrata"} · surprise:${doc.surprise} novelty:${doc.novelty} · ERR:${errTag}${waste ? " · spreco: snapshot ripetuto della stessa pagina senza azione" : ""}`;
   return { hookSpecificOutput: { hookEventName: "PostToolUse", additionalContext: line }, ...(warn.length ? { systemMessage: `[jvc:observe-append] avviso: ${warn.join("; ")}` } : {}) };
 }
 

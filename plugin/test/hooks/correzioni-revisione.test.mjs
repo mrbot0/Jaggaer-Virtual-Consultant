@@ -217,7 +217,7 @@ test("sicurezza 1: la cartella snapshots/ della sessione non si scrive con gli s
   }
 });
 
-test("sicurezza 2 (decisione dell'utente: nessun tetto di elementi): stato limitato in byte — mappa o storia oltre il limite ⇒ mappa inutilizzabile, click negati con un messaggio chiaro, mai troncata", async () => {
+test("sicurezza 2 (decisione dell'utente: nessun tetto di elementi; guard sulla grandezza tolto il 27/10/2026): la mappa non è mai troncata né resa inutilizzabile per la sua dimensione", async () => {
   const { nextBinding } = await import("../../hooks/lib/observe-append.mjs");
   const { classify } = await import("../../hooks/lib/browser-tools.mjs");
   const call = classify(DT + "take_snapshot", {});
@@ -227,16 +227,9 @@ test("sicurezza 2 (decisione dell'utente: nessun tetto di elementi): stato limit
   const base = { call, obs: "O1", ts: "t", envType: "preprod", mode: "complete", refs, pageUrl: "https://u", labels, labelLoc: { url: "https://u" }, names, verified: Object.keys(refs), key: "u:x" };
   const okMap = nextBinding({}, { v: 1, tabs: {} }, base).browser.snapshot;
   assert.equal(Object.keys(okMap.names).length, 50, "nessun tetto di elementi");
-  const big = nextBinding({}, { v: 1, tabs: {} }, { ...base, limits: { mapBytes: 500 } });
-  assert.equal(big.browser.snapshot.unusable, true);
-  assert.deepEqual(big.browser.snapshot.names, {}, "mai una mappa troncata");
-  const hist = nextBinding({}, { v: 1, tabs: {} }, { ...base, limits: { histBytes: 500 } });
-  assert.equal(hist.browser.snapshot.unusable, true);
-  assert.ok(Object.values(hist.hist.tabs).every((t) => t.full === true), "storia oltre il limite: scheda senza legami fino alla navigazione");
-  // il guard dell'esplorazione nega con il motivo
-  const { ws, g } = explore("preprod", "ESPLORA PREPROD");
-  patchSession(ws, (x) => { x.browser.snapshot = { obs: "x", url: x.browser.current_url, tab: null, ts: "t", refs: {}, names: {}, unusable: true }; });
-  const r = g(DT + "click", { uid: "1_2" });
-  assert.equal(decisionOf(r), "deny");
-  assert.match(reasonOf(r), /troppo grande/);
+  // i vecchi limiti (opzione limits) non esistono più: ignorati
+  const big = nextBinding({}, { v: 1, tabs: {} }, { ...base, limits: { mapBytes: 500, histBytes: 500 } });
+  assert.equal(big.browser.snapshot.unusable, undefined);
+  assert.equal(Object.keys(big.browser.snapshot.names).length, 50, "mai una mappa troncata");
+  assert.ok(Object.values(big.hist.tabs).every((t) => t.full !== true));
 });

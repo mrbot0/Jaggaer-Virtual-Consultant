@@ -252,6 +252,28 @@ export function parseSnapshot(text, { family = null } = {}) {
 }
 
 // Testo di una tool_response MCP: stringa, array di blocchi { type: "text", text } o { content: [...] }.
+// Guard sulla grandezza tolto (27/10/2026, decisione dell'utente): le pagine con miniature in base64 (Analytics Launchpad)
+// davano snapshot di decine di MB e un valore fra virgolette di oltre ~10 MB faceva esplodere le regex dei valori
+// (Maximum call stack size exceeded) ⇒ observe-append falliva e il marcatore della chiamata restava aperto. Ogni data URI
+// in base64 si sostituisce con un segnaposto PRIMA di ogni lettura (parser, redazione, legame, registro, OBS).
+// Solo i caratteri del base64 (niente spazi né a capo: una riga successiva non si tocca mai); una sequenza che contiene
+// un token di ref (uid=… dopo un carattere non di parola) non è base64 e resta com'è (i controlli del legame la vedono).
+export const DATA_URI_PLACEHOLDER = "data:…(base64 omesso)";
+const DATA_URI = /data:[\w.+/-]*(?:;[\w.+-]+=[\w.+%-]*)*;base64,[A-Za-z0-9+/=]+/gi;
+const REF_TOKEN = /[^\w]uid=\w/;
+export function stripDataUris(text) {
+  if (typeof text !== "string" || !/;base64,/i.test(text)) return text;
+  return text.replace(DATA_URI, (m) => (REF_TOKEN.test(m) ? m : DATA_URI_PLACEHOLDER));
+}
+// Stessa sostituzione sui blocchi di testo di una risposta MCP (stringa, elenco di blocchi o { content }).
+export function stripResponseDataUris(resp) {
+  const blocks = (bs) => bs.map((b) => (b && typeof b === "object" && b.type === "text" && typeof b.text === "string" ? { ...b, text: stripDataUris(b.text) } : b));
+  if (typeof resp === "string") return stripDataUris(resp);
+  if (Array.isArray(resp)) return blocks(resp);
+  if (resp && typeof resp === "object" && Array.isArray(resp.content)) return { ...resp, content: blocks(resp.content) };
+  return resp;
+}
+
 export function responseText(resp) {
   if (typeof resp === "string") return resp;
   const blocks = Array.isArray(resp) ? resp : resp && typeof resp === "object" && Array.isArray(resp.content) ? resp.content : [];

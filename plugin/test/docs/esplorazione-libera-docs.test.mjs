@@ -63,12 +63,16 @@ test("documenti (sicurezza dopo la revisione): snapshot su file nella cartella s
   assert.match(read("docs/MANUAL.md"), /troppo grande/);
 });
 
-test("documenti (N3, verifica del 27/10/2026): pagina troppo grande per essere mappata ⇒ pezzi o sezioni, mai rileggere per intero in loop", () => {
+// N3 superato dal guard sulla grandezza tolto (27/10/2026, decisione dell'utente): nessuna "pagina troppo grande per essere
+// mappata"; il base64 delle immagini si toglie alla lettura; il marcatore di una chiamata non registrata guarisce con una
+// lettura completa della scheda.
+test("documenti (guard sulla grandezza tolto, 27/10/2026): niente limite in byte della mappa; base64 omesso; il marcatore guarisce con una lettura completa", () => {
   for (const p of ["agents/scope-expert.md", "docs/MANUAL.md"]) {
     const t = read(p);
-    assert.match(t, /troppo grande per essere mappata/, p);
-    assert.match(t, /per sezioni/, p);
-    assert.doesNotMatch(t, /naviga(re)? di nuovo alla pagina/i, p);
+    assert.doesNotMatch(t, /troppo grande per essere mappata/, p);
+    assert.match(t, /base64 omesso/, p);
+    assert.match(t, /non è stata\s+registrata/, p);
+    assert.match(t, /per intero/, p);
   }
 });
 
