@@ -71,3 +71,15 @@ test("documenti (N3, verifica del 27/10/2026): pagina troppo grande per essere m
     assert.doesNotMatch(t, /naviga(re)? di nuovo alla pagina/i, p);
   }
 });
+
+test("documenti (N4, verifica del 27/10/2026): precondizioni dello snapshot su file di DevTools e percorso assoluto da use show", () => {
+  for (const p of ["agents/scope-expert.md", "commands/use.md", "docs/MANUAL.md"]) {
+    const t = read(p);
+    assert.match(t, /cartella\s+di\s+lavoro\s+di\s+Claude\s+Code/, `${p}: workspace sotto la cartella di lavoro`);
+    assert.match(t, /radice\s+MCP/, `${p}: cartelle radice MCP di chrome-devtools-mcp`);
+    assert.match(t, /giunzioni/, `${p}: niente giunzioni`);
+    assert.match(t, /8\.3/, `${p}: niente nomi 8.3`);
+    assert.match(t, /snapshots_dir/, `${p}: percorso assoluto da use show`);
+  }
+  assert.match(read("skills/agent-manager/SKILL.md"), /inputs\.snapshots_dir/);
+});

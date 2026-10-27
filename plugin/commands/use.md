@@ -40,7 +40,11 @@ tetto dell'ambiente), budget usato/totale, pendenze. Regole:
   pre-produzione si esplora con Chrome DevTools (il browser di Claude fuori dalla sandbox legge soltanto). Le pagine
   pesanti ("pagina troppo grande") si leggono **a pezzi**: con DevTools `take_snapshot` con `filePath` assoluto
   nella cartella `snapshots/` della sessione (il plugin legge il file appena scritto dallo strumento come lettura
-  completa; l'agente lo legge a pezzi con Read); col browser di
+  completa; l'agente lo legge a pezzi con Read). Precondizioni di DevTools: il workspace sta sotto la cartella di
+  lavoro di Claude Code (cartelle radice MCP di chrome-devtools-mcp) e si usa il percorso reale, senza giunzioni,
+  collegamenti o nomi brevi 8.3; `show` riporta il workspace assoluto (`workspace`) e la cartella `snapshots_dir`
+  della sessione (il manager la passa allo scope-expert in `inputs.snapshots_dir`; nel riassunto di `show` la mappa
+  della pagina compare solo come conteggi); col browser di
   Claude read_page con ref_id o depth, e i pezzi della stessa pagina si sommano. Rischio da dire all'utente: in
   pre-produzione un invio può mandare davvero e-mail ai fornitori o dati all'ERP. La sceglie solo l'utente:
   serve che abbia appena scritto `ESPLORA SANDBOX` (sandbox) o `ESPLORA PREPROD` (pre-produzione) — le varianti

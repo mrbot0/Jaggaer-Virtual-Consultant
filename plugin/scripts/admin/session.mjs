@@ -2,7 +2,7 @@
 // scrittura atomica validata, cella consentita (§31.4) e CLI `use`.
 // Nessun import pesante in testa: gli hook importano questo modulo e non
 // devono caricare better-sqlite3 (solo `use customer --new` apre il DB).
-import { existsSync, readFileSync, mkdirSync, writeFileSync, readdirSync, copyFileSync } from "node:fs";
+import { existsSync, readFileSync, mkdirSync, writeFileSync, readdirSync, copyFileSync, realpathSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
@@ -452,6 +452,18 @@ Opzioni: --session <id> (default: $JVC_SESSION_ID, poi .jvc/current-session)
 
 Exit code: 0 ok · 1 errore utente · 2 errore di sistema · 3 violazione di policy.`;
 
+// N4 (verifica del 27/10/2026): `use show` dà il workspace ASSOLUTO (percorso reale: niente giunzioni né nomi 8.3) e la
+// cartella snapshots/ della sessione, dove take_snapshot di Chrome DevTools scrive il file (filePath assoluto) che il plugin
+// legge come lettura completa; la mappa della pagina (megabyte su una pagina pesante) compare solo riassunta.
+function realWs(ws) { try { return realpathSync.native(ws); } catch { return ws; } }
+function showSession(session) {
+  const snap = session?.browser?.snapshot;
+  if (!snap || typeof snap !== "object" || Array.isArray(snap)) return session;
+  const { refs, names, unverified, ...rest } = snap;
+  const count = (o) => (o && typeof o === "object" ? Object.keys(o).length : 0);
+  return { ...session, browser: { ...session.browser, snapshot: { ...rest, refs_count: count(refs), names_count: count(names), ...(Array.isArray(unverified) ? { unverified_count: unverified.length } : {}) } } };
+}
+
 function summary(session) {
   if (!session) return "nessun cliente attivo";
   return `cliente ${session.customer}${session.session_code ? ` · sessione ${session.session_code}` : ""} · ambiente ${session.env ? `${session.env.id} (${session.env.type}${session.env.verified ? ", verificato" : ", non verificato"})` : "—"} · scope ${session.scope ?? "—"} · modalità ${session.mode} · budget ${session.budget.used}/${session.budget.tokens}`;
@@ -476,7 +488,9 @@ export async function run(argv, env = process.env) {
       const { readApprovals, approvalsFile } = await import("./approvals.mjs");
       const reg = readApprovals(approvalsFile(ws, session.customer, sid));
       const autonomy = autonomyLevel({ ws, customer: session.customer, records: reg.ok ? reg.records : [], envType: session.env?.type ?? "sandbox" });
-      result = { session_id: sid, pointer, session, autonomy };
+      const workspace = realWs(ws);
+      result = { session_id: sid, pointer, session: showSession(session), autonomy, workspace,
+        ...(session?.customer ? { snapshots_dir: join(workspace, "customers", session.customer, ".sessions", sid, "snapshots") } : {}) };
     } else if (action === "use" && what === "customer") result = await useCustomer(ws, sid, value, { create: !!opts.new, actor });
     else if (action === "use" && what === "scope") result = useScope(ws, sid, value, { actor });
     else if (action === "use" && what === "mode") result = await useMode(ws, sid, value, { actor });
@@ -486,7 +500,7 @@ export async function run(argv, env = process.env) {
     else if (action === "use" && what === "paths") result = usePaths(ws, sid, { agent: opts.agent, grant: !!opts.grant, restore: !!opts.restore }, { actor });
     else throw new CliError(1, `azione sconosciuta: ${positional.join(" ")}`);
     if (asJson) console.log(JSON.stringify({ ok: true, ...result }));
-    else console.log(summary(result.session));
+    else console.log(summary(result.session) + (result.snapshots_dir ? `\nworkspace ${result.workspace}\ncartella degli snapshot su file (Chrome DevTools, filePath assoluto): ${result.snapshots_dir}` : ""));
     return 0;
   } catch (err) {
     if (err instanceof CliError) return fail(asJson, err.code, err.message, err.extra);

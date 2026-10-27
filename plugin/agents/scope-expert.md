@@ -181,6 +181,13 @@ lettura della pagina corrente, per uid/ref: i click a coordinate (senza ref) son
   nome nuovo o lo stesso a ogni snapshot); il plugin legge il file che lo strumento ha appena scritto come una lettura
   completa (mappa, nomi, registro). Quella cartella la scrive solo lo strumento: tu la leggi **a pezzi** con `Read`
   (`offset`/`limit`) e clicchi per `uid`. Rifai lo snapshot su file dopo ogni azione che cambia la pagina.
+  **Precondizioni** (altrimenti il file non si scrive o non si legge, e i click restano negati): il workspace deve stare
+  **sotto la cartella di lavoro di Claude Code**, perché chrome-devtools-mcp scrive solo dentro le sue cartelle radice
+  MCP (quelle della sessione di Claude Code); il percorso dev'essere quello **reale**, senza giunzioni, collegamenti o
+  nomi brevi 8.3 (`C:\Users\NOMEUT~1\…`): il plugin confronta il percorso reale del file con la cartella della sessione e
+  ignora un file raggiunto per un'altra strada. Il percorso assoluto della cartella te lo dà il manager nell'header del
+  dispatch (`inputs.snapshots_dir`, dal campo `snapshots_dir` di `use show`): tu non invochi `session.mjs`. Se manca,
+  chiedilo con `needs-input`; non ricostruirlo a mano.
 - **Browser di Claude** (sandbox): `read_page` con `ref_id` di una sezione o con `depth` ridotta, oppure `max_chars`
   più alto; i pezzi della stessa pagina e scheda si sommano nella mappa e nel registro (record `partial`, uniti da
   atlas-build). Un pezzo troncato o letto nella stessa chiamata di un click non aggiunge ref; dopo un click che non

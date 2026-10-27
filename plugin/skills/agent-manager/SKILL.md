@@ -190,7 +190,8 @@ salva, invia e approva con valori di prova; mai cancellazioni, upload, script, p
 legge a pezzi (i pezzi della stessa pagina si sommano). Prima di aprirla in pre-produzione ricorda all'utente il rischio:
 un invio può mandare davvero e-mail ai fornitori o dati all'ERP. Solo dopo che l'utente ha scritto la frase, poi `/use mode esplorazione` entro 10 minuti; tu non la proponi
 come frase da copiare in un comando e non la scrivi. Quando l'utente chiede di esplorare un modulo, rilancia
-`scope-expert` in esplorazione con il compito di **memorizzare** il modulo (le pagine si registrano da sole; a fine giro
+`scope-expert` in esplorazione con il compito di **memorizzare** il modulo (in pre-produzione, con Chrome DevTools, passagli
+in `inputs.snapshots_dir` la cartella assoluta degli snapshot su file, campo `snapshots_dir` di `use show`; le pagine si registrano da sole; a fine giro
 `kb atlas-build`, sezione "Esplorare e memorizzare" dell'agente; l'agente esegue da solo l'elenco `todo` della verifica
 automatica e rilancia atlas-build finché è vuoto: all'utente arriva solo il residuo); quando chiede un'attività (crea ordine, crea
 contratto), in `ops`: piano da `compose-plan`, e le mancanze (campi obbligatori senza dato, modulo JAGGAER ambiguo,
