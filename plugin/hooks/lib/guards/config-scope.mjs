@@ -113,12 +113,14 @@ export { EFFECT_LABEL, DELETE_LABEL };
 // del dialogo e finestre di conferma di una cancellazione; I6 osservazioni del browser non registrate ⇒ nessuna azione.
 const YES = /^\s*(s[iì]|yes|ok)\s*$/i;
 const SAFE_EXIT = /^\s*(annulla|no|chiudi|indietro|cancel|close|back|x)\s*$/i;
+const UNUSABLE = "la mappa della pagina è troppo grande per lo stato della sessione (limite in byte): naviga di nuovo alla pagina (navigate) e rileggila";
 function fullExploreRefusal(ctx) {
   const b = ctx.session?.browser ?? {};
   const snap = b.snapshot;
   const names = snap?.names && typeof snap.names === "object" ? snap.names : null;
   const deleteQuestion = names ? Object.values(names).some((n) => isDeleteQuestion(n)) : false;
   for (const a of ctx.actions.filter(isEffectful)) {
+    if (snap?.unusable === true) return UNUSABLE;
     if (["upload", "script", "other"].includes(a.kind)) return `esplorazione completa: ${a.kind === "upload" ? "il caricamento di file" : a.kind === "script" ? "gli script nella pagina" : "gli strumenti non classificati"} restano vietati (${a.op ?? a.tool ?? ctx.tool})`;
     ctx.pendingFile ??= loadPending(pendingFile(join(ctx.ws, "customers", ctx.customer, ".sessions")));
     const pend = pendingRefusal(mergedPending(b, ctx.pendingFile), a.family ?? ctx.call?.family, a.tab);
@@ -238,6 +240,7 @@ export function bindingRefusal(ctx, step) {
     const pend = pendingRefusal(mergedPending(b, ctx.pendingFile), a.family ?? ctx.call?.family, a.tab);
     if (pend) return pend;
     const snap = b.snapshot;
+    if (snap?.unusable === true) return UNUSABLE;
     if (!snap || !snap.refs || typeof snap.refs !== "object") return "nessuno snapshot osservato della pagina: esegui take_snapshot / read_page / browser_snapshot prima dell'azione";
     if (!b.current_url || snap.url !== b.current_url) return "l'ultimo snapshot osservato non è della pagina corrente: rifai lo snapshot";
     if ((snap.tab ?? null) !== (a.tab ?? null)) return "l'ultimo snapshot osservato è di un'altra scheda: rifai lo snapshot in questa scheda";

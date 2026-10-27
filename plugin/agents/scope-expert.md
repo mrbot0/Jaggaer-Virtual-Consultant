@@ -176,15 +176,17 @@ soltanto (ogni sua azione con effetto è negata). Ogni click di esplorazione vuo
 lettura della pagina corrente, per uid/ref: i click a coordinate (senza ref) sono negati, anche in sandbox.
 
 **Pagine pesanti.** Se lo strumento risponde che la pagina è troppo grande (o l'uscita è troncata):
-- **Chrome DevTools** (non ha letture ristrette): `take_snapshot` con `filePath` verso un file nella cartella della
-  sessione (`customers/<C>/.sessions/<sid>/`, per esempio `snap-<n>.txt`); il plugin legge quel file come una lettura
-  completa (mappa, nomi, registro). Leggi il file **a pezzi** con `Read` (`offset`/`limit`) e clicca per `uid`.
-  Rifai lo snapshot su file dopo ogni azione che cambia la pagina.
+- **Chrome DevTools** (non ha letture ristrette): `take_snapshot` con `filePath` **assoluto** verso un file `.txt`
+  nella cartella `snapshots/` della sessione (`<workspace>/customers/<C>/.sessions/<sid>/snapshots/snap-<n>.txt`, un
+  nome nuovo o lo stesso a ogni snapshot); il plugin legge il file che lo strumento ha appena scritto come una lettura
+  completa (mappa, nomi, registro). Quella cartella la scrive solo lo strumento: tu la leggi **a pezzi** con `Read`
+  (`offset`/`limit`) e clicchi per `uid`. Rifai lo snapshot su file dopo ogni azione che cambia la pagina.
 - **Browser di Claude** (sandbox): `read_page` con `ref_id` di una sezione o con `depth` ridotta, oppure `max_chars`
   più alto; i pezzi della stessa pagina e scheda si sommano nella mappa e nel registro (record `partial`, uniti da
   atlas-build). Un pezzo troncato o letto nella stessa chiamata di un click non aggiunge ref; dopo un click che non
-  rilegge la pagina il pezzo successivo apre una mappa nuova; un `find` tiene la mappa e vi aggiunge solo ref già
-  visti con la stessa etichetta.
+  rilegge la pagina il pezzo successivo apre una mappa nuova; un `find` tiene la mappa ma non vi aggiunge nulla
+  (per cliccare ciò che trova, rileggi il pezzo con `read_page` e `ref_id`).
+Se un click è negato perché "la mappa della pagina è troppo grande", naviga di nuovo alla pagina e rileggila.
 I pezzi legano al selettore di un passo solo in esplorazione: in un piano serve una lettura completa (anche dal file), e
 un passo DELETE la vuole comunque.
 

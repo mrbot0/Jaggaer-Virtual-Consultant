@@ -21,7 +21,9 @@
 // Server MCP non da browser (I5): con un ambiente dichiarato, ogni mcp__* il cui
 // server non è in hooks/lib/mcp-allowlist.json (file del plugin) ⇒ deny.
 // Consentito = nessun output (un allow esplicito scavalcherebbe i permessi).
-import { readFileSync } from "node:fs";
+import { readFileSync, statSync, mkdirSync } from "node:fs";
+import { isAbsolute, resolve as resolvePath, join as joinPath } from "node:path";
+import { callKey } from "../ref-history.mjs";
 import { guardContext, denyAudited } from "./common.mjs";
 import { browserGuarded, declaredEnv, urlRefusal, outputRefusal, SCRIPT_DENIED, claudeEffectRefusal } from "./browser.mjs";
 import { isBrowserTool, mcpServer } from "../browser-tools.mjs";
@@ -82,8 +84,32 @@ const browser = browserGuarded(G, (ctx, no) => {
   // (PostToolUse) vede il navigate riuscito.
   const cur = ctx.session.browser ?? {};
   if (st.changed && (cur.current_url != null || cur.tab != null)) updateSessionFile(ctx.sessionFile, (s) => { s.browser = { ...(s.browser ?? {}), current_url: null, tab: null, updated_by: G }; });
+  snapshotFileMarker(ctx);
   return null;
 });
+
+// Sicurezza 1 (27/10/2026): take_snapshot di DevTools con filePath assoluto — marcatore della chiamata (tool_use_id) con il
+// percorso, l'ora e l'mtime precedente del file: observe-append legge il file solo se lo strumento l'ha scritto DOPO questo
+// momento (un file scritto prima, o senza marcatore, non vale). Crea la cartella snapshots/ della sessione. Un guasto qui
+// non nega la chiamata: senza marcatore il file semplicemente non si legge (fail-closed per il legame).
+const SNAPSHOT_CALLS_MAX = 16;
+function snapshotFileMarker(ctx) {
+  try {
+    const a = ctx.actions.length === 1 ? ctx.actions[0] : null;
+    if (!a || (a.family ?? ctx.call?.family) !== "chrome-devtools" || a.op !== "take_snapshot" || !Array.isArray(a.outputs) || a.outputs.length !== 1) return;
+    const raw = a.outputs[0];
+    if (typeof raw !== "string" || !isAbsolute(raw)) return;
+    const path = resolvePath(raw);
+    let before = null;
+    try { before = statSync(path).mtimeMs; } catch { before = null; }
+    try { mkdirSync(joinPath(ctx.ws, "customers", ctx.customer, ".sessions", ctx.sid, "snapshots"), { recursive: true }); } catch { /* lo crea lo strumento */ }
+    const key = callKey(ctx.input);
+    updateSessionFile(ctx.sessionFile, (s) => {
+      const calls = { ...(s.browser?.snapshot_calls ?? {}), [key]: { path, ts: Date.now(), before } };
+      s.browser = { ...(s.browser ?? {}), snapshot_calls: Object.fromEntries(Object.entries(calls).slice(-SNAPSHOT_CALLS_MAX)) };
+    });
+  } catch { /* nessun marcatore */ }
+}
 
 function mcpOther(input, env) {
   const ctx = guardContext(input, env);

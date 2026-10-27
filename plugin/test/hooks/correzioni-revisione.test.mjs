@@ -68,13 +68,25 @@ async function planWs(envId, tab = null) {
 }
 // il file che il server DevTools scrive con take_snapshot { filePath }: solo l'albero
 const tree = (url, lines) => `uid=1_0 RootWebArea "ACME" url="${url}"\n${lines.map((l) => `  ${l}`).join("\n")}\n`;
+// risposta reale di chrome-devtools-mcp (McpResponse: "Saved snapshot to <file>.")
 const savedResp = (file) => `# take_snapshot response\nSaved snapshot to ${file}.`;
+const snapsDir = (ws) => join(sessDir(ws), "snapshots");
+// flusso reale: PreToolUse (guard-environment registra il marcatore della chiamata), poi lo strumento scrive il file,
+// poi PostToolUse (browser-origin, observe-append) con lo stesso tool_use_id
+function snapCall(ws, file, body, { resp = savedResp(file), ti = { filePath: file }, write = true } = {}) {
+  const id = `toolu_cr_${++seq}`;
+  const pre = runHook("guard-environment", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: DT + "take_snapshot", tool_input: ti, tool_use_id: id }, E(ws));
+  if (write) { mkdirSync(join(file, ".."), { recursive: true }); writeFileSync(file, body); }
+  const i = { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: DT + "take_snapshot", tool_input: ti, tool_use_id: id, tool_response: [{ type: "text", text: resp }] };
+  runHook("browser-origin", i, E(ws));
+  runHook("observe-append", i, E(ws));
+  return pre;
+}
 
 test("correzione 1: take_snapshot con filePath nella cartella della sessione ⇒ lettura completa (nomi, legame, record del registro); click per uid consentito in esplorazione PREPROD", () => {
   const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
-  const f = join(sessDir(ws), "snap-1.txt");
-  writeFileSync(f, tree(url, [`uid=1_1 heading "Richieste" level="1"`, `uid=1_2 menuitem "Ordini"`, `uid=1_3 button "Salva bozza"`]));
-  post(ws, DT + "take_snapshot", { filePath: f }, savedResp(f));
+  const f = join(snapsDir(ws), "snap-1.txt");
+  snapCall(ws, f, tree(url, [`uid=1_1 heading "Richieste" level="1"`, `uid=1_2 menuitem "Ordini"`, `uid=1_3 button "Salva bozza"`]));
   const s = snapOf(ws);
   assert.equal(s.names?.["1_2"], "Ordini", JSON.stringify(s));
   assert.notEqual(s.partial, true, "lettura completa");
@@ -85,15 +97,26 @@ test("correzione 1: take_snapshot con filePath nella cartella della sessione ⇒
   assert.ok(!log[0].partial && log[0].elements.some((e) => e.name === "Salva bozza"));
 });
 
-test("correzione 1: file fuori dalle cartelle di lavoro (kb, radice del cliente, cartella temporanea) o vecchio ⇒ non si legge", () => {
-  for (const where of ["kb", "root", "tmp", "old"]) {
+test("correzione 1 + sicurezza 1: si legge solo il file che lo strumento ha scritto in QUESTA chiamata nella cartella snapshots/ della sessione", () => {
+  const cases = {
+    // fuori dalla cartella dedicata (anche nella cartella della sessione)
+    session: (ws, url) => { const f = join(sessDir(ws), "snap.txt"); snapCall(ws, f, tree(url, [`uid=1_2 menuitem "Ordini"`])); },
+    kb: (ws, url) => { const f = join(ws, "customers/ACME/kb/snap.txt"); snapCall(ws, f, tree(url, [`uid=1_2 menuitem "Ordini"`])); },
+    tmp: (ws, url) => { const f = join(mkdtempSync(join(tmpdir(), "crx-")), "snap.txt"); snapCall(ws, f, tree(url, [`uid=1_2 menuitem "Ordini"`])); },
+    // file forgiato prima della chiamata (il modello l'ha scritto: nessun marcatore PreToolUse di questa chiamata)
+    noMarker: (ws, url) => { const f = join(snapsDir(ws), "snap.txt"); mkdirSync(snapsDir(ws), { recursive: true }); writeFileSync(f, tree(url, [`uid=1_2 menuitem "Ordini"`])); post(ws, DT + "take_snapshot", { filePath: f }, savedResp(f)); },
+    // file forgiato prima e non riscritto dallo strumento (mtime anteriore al marcatore)
+    notRewritten: (ws, url) => { const f = join(snapsDir(ws), "snap.txt"); mkdirSync(snapsDir(ws), { recursive: true }); writeFileSync(f, tree(url, [`uid=1_2 menuitem "Ordini"`])); const t = new Date(Date.now() - 60000); utimesSync(f, t, t); snapCall(ws, f, "", { write: false }); },
+    // la risposta non nomina quel file
+    otherName: (ws, url) => { const f = join(snapsDir(ws), "snap.txt"); snapCall(ws, f, tree(url, [`uid=1_2 menuitem "Ordini"`]), { resp: savedResp(join(snapsDir(ws), "altro.txt")) }); },
+    // percorso relativo
+    relative: (ws, url) => { const f = join(snapsDir(ws), "snap.txt"); snapCall(ws, f, tree(url, [`uid=1_2 menuitem "Ordini"`]), { ti: { filePath: "customers/ACME/.sessions/sess-1/snapshots/snap.txt" }, resp: savedResp("customers/ACME/.sessions/sess-1/snapshots/snap.txt") }); },
+    // risposta d'errore
+    error: (ws, url) => { const f = join(snapsDir(ws), "snap.txt"); snapCall(ws, f, tree(url, [`uid=1_2 menuitem "Ordini"`]), { resp: "Error: snapshot failed" }); },
+  };
+  for (const [where, run] of Object.entries(cases)) {
     const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
-    const dir = where === "kb" ? join(ws, "customers/ACME/kb") : where === "root" ? join(ws, "customers/ACME") : where === "old" ? sessDir(ws) : mkdtempSync(join(tmpdir(), "crx-"));
-    mkdirSync(dir, { recursive: true });
-    const f = join(dir, "snap.txt");
-    writeFileSync(f, tree(url, [`uid=1_2 menuitem "Ordini"`]));
-    if (where === "old") { const t = new Date(Date.now() - 3600 * 1000); utimesSync(f, t, t); }
-    post(ws, DT + "take_snapshot", { filePath: f }, savedResp(f));
+    run(ws, url);
     assert.ok(!Object.hasOwn(snapOf(ws).names ?? {}, "1_2"), `${where}: ${JSON.stringify(snapOf(ws))}`);
     assert.ok(!ok(g(DT + "click", { uid: "1_2" })), where);
   }
@@ -101,9 +124,8 @@ test("correzione 1: file fuori dalle cartelle di lavoro (kb, radice del cliente,
 
 test("correzione 1: in un piano la lettura dal file lega al SEL del passo (DevTools in preprod)", async () => {
   const { ws, url, guards } = await planWs("preprod");
-  const f = join(sessDir(ws), "snap-plan.txt");
-  writeFileSync(f, tree(url, [`uid=1_5 link "Elenco richieste"`, `uid=1_6 button "Invia in approvazione"`]));
-  post(ws, DT + "take_snapshot", { filePath: f }, savedResp(f));
+  const f = join(snapsDir(ws), "snap-plan.txt");
+  snapCall(ws, f, tree(url, [`uid=1_5 link "Elenco richieste"`, `uid=1_6 button "Invia in approvazione"`]));
   assert.equal(snapOf(ws).refs?.["1_5"], SEL, JSON.stringify(snapOf(ws)));
   const res = guards(DT + "click", { uid: "1_5" });
   assert.ok(res.every(ok), JSON.stringify(res.filter((r) => decisionOf(r) === "deny").map(reasonOf)));
@@ -112,10 +134,9 @@ test("correzione 1: in un piano la lettura dal file lega al SEL del passo (DevTo
 test("correzione 2: nessun tetto di elementi — in una pagina di 5000 elementi l'ultimo menu ha il nome nella mappa e si clicca", () => {
   const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
   const lines = Array.from({ length: 5000 }, (_, i) => `uid=1_${i + 1} ${i === 4990 ? "menuitem \"Fatture passive\"" : `generic "Blocco ${i}"`}`);
-  const f = join(sessDir(ws), "snap-big.txt");
-  writeFileSync(f, tree(url, lines));
+  const f = join(snapsDir(ws), "snap-big.txt");
   const t0 = Date.now();
-  post(ws, DT + "take_snapshot", { filePath: f }, savedResp(f));
+  snapCall(ws, f, tree(url, lines));
   const ms = Date.now() - t0;
   assert.equal(snapOf(ws).names?.["1_4991"], "Fatture passive");
   const r = g(DT + "click", { uid: "1_4991" });
@@ -170,7 +191,9 @@ test("correzione 6: in un piano solo le letture complete legano al SEL; i pezzi 
   }
 });
 
-test("correzione 7: un find non svuota la mappa; aggiunge solo i ref già legati nella storia della scheda con la stessa etichetta", () => {
+// sicurezza 3 (27/10/2026): un find non conferma la pagina ⇒ non aggiunge ref né nomi, non crea legami; tiene la mappa
+// (ricontrollata sulla storia) e può solo riconfermare i ref che vi sono già
+test("correzione 7 + sicurezza 3: un find non svuota la mappa e non vi aggiunge nulla (né ref nuovi né ref della storia fuori dalla mappa)", () => {
   const { ws, url, g } = explore("sandbox", "ESPLORA SANDBOX");
   patchSession(ws, (s) => { s.browser.tab = "101"; });
   post(ws, CL + "navigate", { url, tabId: 101 }, [{ type: "text", text: `Navigated to ${url}` }, { type: "text", text: ctx(url) }]);
@@ -180,7 +203,40 @@ test("correzione 7: un find non svuota la mappa; aggiunge solo i ref già legati
   post(ws, CL + "find", { tabId: 101, query: "ordini" }, claude(`Found 2 matching elements\n- menuitem "Ordini" [ref_3]\n- button "Elimina" [ref_77]`, `${url}?tab=2`));
   const n = snapOf(ws).names ?? {};
   assert.equal(n.ref_9, "Salva", "il find non svuota la mappa");
-  assert.equal(n.ref_3, "Ordini", "ref già visto con la stessa etichetta: aggiunto");
+  assert.ok(!Object.hasOwn(n, "ref_3"), "ref della storia fuori dalla mappa: non aggiunto da un find");
   assert.ok(!Object.hasOwn(n, "ref_77"), "ref nuovo del find: mai");
   assert.ok(!ok(g(CL + "computer", { action: "left_click", ref: "ref_77", tabId: 101 })));
+});
+
+test("sicurezza 1: la cartella snapshots/ della sessione non si scrive con gli strumenti né dalla shell", () => {
+  const ws = envWs({ env: "preprod", scope: "P2P" });
+  const rel = "customers/ACME/.sessions/sess-1/snapshots/snap.txt";
+  for (const [tool, ti] of [["Write", { file_path: join(ws, rel), content: "x" }], ["Edit", { file_path: join(ws, rel), old_string: "a", new_string: "b" }], ["Bash", { command: `echo x > ${rel}` }]]) {
+    const r = runHook("guard-scope", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input: ti }, E(ws));
+    assert.equal(decisionOf(r), "deny", tool);
+  }
+});
+
+test("sicurezza 2 (decisione dell'utente: nessun tetto di elementi): stato limitato in byte — mappa o storia oltre il limite ⇒ mappa inutilizzabile, click negati con un messaggio chiaro, mai troncata", async () => {
+  const { nextBinding } = await import("../../hooks/lib/observe-append.mjs");
+  const { classify } = await import("../../hooks/lib/browser-tools.mjs");
+  const call = classify(DT + "take_snapshot", {});
+  const refs = Object.fromEntries(Array.from({ length: 50 }, (_, i) => [`1_${i}`, null]));
+  const names = Object.fromEntries(Object.keys(refs).map((r) => [r, `Voce ${r}`]));
+  const labels = Object.keys(refs).map((r) => [r, `k${r}`]);
+  const base = { call, obs: "O1", ts: "t", envType: "preprod", mode: "complete", refs, pageUrl: "https://u", labels, labelLoc: { url: "https://u" }, names, verified: Object.keys(refs), key: "u:x" };
+  const okMap = nextBinding({}, { v: 1, tabs: {} }, base).browser.snapshot;
+  assert.equal(Object.keys(okMap.names).length, 50, "nessun tetto di elementi");
+  const big = nextBinding({}, { v: 1, tabs: {} }, { ...base, limits: { mapBytes: 500 } });
+  assert.equal(big.browser.snapshot.unusable, true);
+  assert.deepEqual(big.browser.snapshot.names, {}, "mai una mappa troncata");
+  const hist = nextBinding({}, { v: 1, tabs: {} }, { ...base, limits: { histBytes: 500 } });
+  assert.equal(hist.browser.snapshot.unusable, true);
+  assert.ok(Object.values(hist.hist.tabs).every((t) => t.full === true), "storia oltre il limite: scheda senza legami fino alla navigazione");
+  // il guard dell'esplorazione nega con il motivo
+  const { ws, g } = explore("preprod", "ESPLORA PREPROD");
+  patchSession(ws, (x) => { x.browser.snapshot = { obs: "x", url: x.browser.current_url, tab: null, ts: "t", refs: {}, names: {}, unusable: true }; });
+  const r = g(DT + "click", { uid: "1_2" });
+  assert.equal(decisionOf(r), "deny");
+  assert.match(reasonOf(r), /troppo grande/);
 });

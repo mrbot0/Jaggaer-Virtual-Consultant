@@ -55,3 +55,10 @@ test("documenti (correzioni dopo la revisione): pagine pesanti con DevTools via 
   assert.match(manual, /max_chars/);
   assert.doesNotMatch(manual, /un pezzo troncato o un find non aggiungono elementi\)/);
 });
+
+test("documenti (sicurezza dopo la revisione): snapshot su file nella cartella snapshots/ con percorso assoluto; il find non aggiunge nulla", () => {
+  for (const p of ["agents/scope-expert.md", "docs/MANUAL.md", "commands/use.md"]) assert.match(read(p), /snapshots\//, p);
+  assert.match(read("agents/scope-expert.md"), /assoluto/);
+  assert.doesNotMatch(read("agents/scope-expert.md"), /vi aggiunge solo ref/);
+  assert.match(read("docs/MANUAL.md"), /troppo grande/);
+});
