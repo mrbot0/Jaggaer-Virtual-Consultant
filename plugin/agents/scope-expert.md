@@ -193,11 +193,10 @@ lettura della pagina corrente, per uid/ref: i click a coordinate (senza ref) son
   atlas-build). Un pezzo troncato o letto nella stessa chiamata di un click non aggiunge ref; dopo un click che non
   rilegge la pagina il pezzo successivo apre una mappa nuova; un `find` tiene la mappa ma non vi aggiunge nulla
   (per cliccare ciò che trova, rileggi il pezzo con `read_page` e `ref_id`).
-Se un click è negato perché "la pagina è troppo grande per essere mappata per intero" (la sua mappa completa supera il
-limite in byte dello stato della sessione), **non** rileggerla per intero: darebbe lo stesso esito. Leggila a pezzi (con
-il browser che ha letture ristrette) oppure lavora per sezioni: riduci ciò che la pagina mostra (filtra l'elenco, apri il
-dettaglio, la scheda o la sezione che ti serve, chiudi i pannelli) e rileggi quella vista; con DevTools, che non ha
-letture ristrette, lavora per sezioni. Se il motivo è la storia dei ref della scheda, naviga a un nuovo documento e rileggi.
+Nessun limite in byte della mappa o del file dello snapshot; le immagini in base64 della pagina (miniature) compaiono come
+`data:…(base64 omesso)`. Se un click è negato perché "una chiamata precedente del browser su questa scheda non è stata
+registrata", rileggi la pagina **per intero** nella stessa scheda (`take_snapshot`, anche su file): la lettura completa
+riuscita chiude il marcatore; una lettura parziale non basta.
 I pezzi legano al selettore di un passo solo in esplorazione: in un piano serve una lettura completa (anche dal file), e
 un passo DELETE la vuole comunque.
 
