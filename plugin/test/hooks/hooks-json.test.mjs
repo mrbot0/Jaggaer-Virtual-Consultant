@@ -43,7 +43,7 @@ const EXPECTED = [
 
 const entries = () => Object.entries(HOOKS.hooks).flatMap(([event, groups]) => groups.flatMap((g) => g.hooks.map((h) => ({ event, matcher: g.matcher, ...h }))));
 
-test("hooks.json: struttura del formato plugin, comandi node su ${CLAUDE_PLUGIN_ROOT}, timeout 5–10 s", () => {
+test("hooks.json: struttura del formato plugin, comandi node su ${CLAUDE_PLUGIN_ROOT}, timeout 5–10 s (observe-append 60 s)", () => {
   assert.equal(typeof HOOKS.hooks, "object");
   for (const [event, groups] of Object.entries(HOOKS.hooks)) {
     assert.ok(["SessionStart", "PreToolUse", "PostToolUse", "SubagentStop", "PreCompact", "Stop", "UserPromptSubmit"].includes(event), event);
@@ -53,7 +53,9 @@ test("hooks.json: struttura del formato plugin, comandi node su ${CLAUDE_PLUGIN_
       for (const h of g.hooks) {
         assert.equal(h.type, "command");
         assert.match(h.command, /^node "\$\{CLAUDE_PLUGIN_ROOT\}\/hooks\/scripts\/[a-z-]+\.mjs"$/);
-        assert.ok(h.timeout >= 5 && h.timeout <= 10, `${h.command} timeout ${h.timeout}`);
+        // guard sulla grandezza tolto (27/10/2026): observe-append riceve snapshot di decine di MB ⇒ 60 s
+        if (h.command.includes("/observe-append.mjs")) assert.equal(h.timeout, 60, h.command);
+        else assert.ok(h.timeout >= 5 && h.timeout <= 10, `${h.command} timeout ${h.timeout}`);
       }
     }
   }

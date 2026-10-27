@@ -40,34 +40,23 @@ function explore(env, phrase) {
   return { ws, g: (tool, ti) => browserCall("guard-config-scope", ws, tool, ti, { transcript_path: tr }) };
 }
 
-test("N3: mappa completa oltre il limite in byte — motivo registrato e messaggio che non rimanda a rileggere per intero", () => {
+// N3 superato (27/10/2026, decisione dell'utente: «rimuoviamo il Guard sulla grandezza, risulta bloccante e inutile»): nessun
+// limite in byte della mappa, dei pezzi o della storia; nessun motivo "inutilizzabile" né il suo messaggio nel guard.
+test("N3 (guard sulla grandezza tolto): mappa completa, pezzi e storia grandi restano usabili; il guard non ha più il messaggio della pagina troppo grande", () => {
   const call = classify(DT + "take_snapshot", {});
   const refs = Object.fromEntries(Array.from({ length: 50 }, (_, i) => [`1_${i}`, null]));
   const names = Object.fromEntries(Object.keys(refs).map((r) => [r, `Voce ${r}`]));
   const base = { call, obs: "O1", ts: "t", envType: "preprod", mode: "complete", refs, pageUrl: URL0, labels: Object.keys(refs).map((r) => [r, `k${r}`]), labelLoc: { url: URL0 }, names, verified: Object.keys(refs), key: "u:x" };
-  assert.equal(nextBinding({}, { v: 1, tabs: {} }, { ...base, limits: { mapBytes: 500 } }).browser.snapshot.unusable_reason, "map");
-  assert.equal(nextBinding({}, { v: 1, tabs: {} }, { ...base, limits: { histBytes: 500 } }).browser.snapshot.unusable_reason, "history");
+  assert.equal(nextBinding({}, { v: 1, tabs: {} }, { ...base, limits: { mapBytes: 500 } }).browser.snapshot.unusable_reason, undefined);
+  assert.equal(nextBinding({}, { v: 1, tabs: {} }, { ...base, limits: { histBytes: 500 } }).browser.snapshot.unusable_reason, undefined);
   const pw = classify("mcp__plugin_playwright_playwright__browser_snapshot", { target: "e1" });
-  assert.equal(nextBinding({}, { v: 1, tabs: {} }, { ...base, call: pw, mode: "partial", sessionMode: "esplorazione", limits: { mapBytes: 500 } }).browser.snapshot.unusable_reason, "pieces");
-
-  const reason = (why) => {
-    const { ws, g } = explore("preprod", "ESPLORA PREPROD");
-    patchSession(ws, (x) => { x.browser.snapshot = { obs: "x", url: x.browser.current_url, tab: null, ts: "t", refs: {}, names: {}, unusable: true, ...(why ? { unusable_reason: why } : {}) }; });
-    const r = g(DT + "click", { uid: "1_2" });
-    assert.equal(decisionOf(r), "deny");
-    return reasonOf(r);
-  };
-  for (const why of ["map", null]) {
-    const m = reason(why);
-    assert.match(m, /troppo grande per essere mappata/, m);
-    assert.match(m, /a pezzi/);
-    assert.match(m, /sezion/);
-    assert.match(m, /solo in esplorazione/);
-    assert.doesNotMatch(m, /naviga di nuovo|rileggila/, "nessun invito a rileggere per intero: darebbe lo stesso esito");
-  }
-  assert.match(reason("pieces"), /pezzi/);
-  assert.doesNotMatch(reason("pieces"), /rileggila/);
-  assert.match(reason("history"), /naviga/, "la storia si azzera con una navigazione");
+  assert.equal(nextBinding({}, { v: 1, tabs: {} }, { ...base, call: pw, mode: "partial", sessionMode: "esplorazione", limits: { mapBytes: 500 } }).browser.snapshot.unusable_reason, undefined);
+  // una mappa lasciata "inutilizzabile" da una versione precedente (refs e nomi vuoti) nega comunque il click: nessun nome
+  const { ws, g } = explore("preprod", "ESPLORA PREPROD");
+  patchSession(ws, (x) => { x.browser.snapshot = { obs: "x", url: x.browser.current_url, tab: null, ts: "t", refs: {}, names: {}, unusable: true, unusable_reason: "map" }; });
+  const r = g(DT + "click", { uid: "1_2" });
+  assert.equal(decisionOf(r), "deny");
+  assert.doesNotMatch(reasonOf(r), /troppo grande/);
 });
 
 // N5 ------------------------------------------------------------------------------------------------------------------

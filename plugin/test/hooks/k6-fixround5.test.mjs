@@ -192,34 +192,38 @@ test("I-A' positivo: in preprod navigate, due letture complete, click sull'eleme
   assert.ok(claudeRuling(clClick(ws, tr, "ref_2")));
 });
 
-test("I-A' regola 5: observe-append fallito o scaduto (solo browser-origin) ⇒ nulla si lega in quella scheda finché non naviga; l'ordine dei due hook non conta; un'altra scheda non è toccata", async () => {
+// Guard sulla grandezza tolto (27/10/2026, decisione dell'utente): il marcatore guarisce — una lettura COMPLETA riuscita della
+// stessa famiglia e scheda (la mappa si ricostruisce da lì) o un navigate a un altro URL lo chiude; prima di allora nulla si
+// lega. Compromesso accettato: la lettura completa che guarisce non sa che cosa mostrava la chiamata persa (un ref visto
+// solo lì con un'altra etichetta non è nella storia); un guasto della sola registrazione (DB) non lascia più il marcatore
+// aperto e la storia della chiamata si aggiorna comunque.
+test("I-A' regola 5: observe-append fallito o scaduto (solo browser-origin) ⇒ nulla si lega in quella scheda finché una lettura completa riuscita (non un pezzo) non chiude il marcatore; l'ordine dei due hook non conta; un'altra scheda non è toccata", async () => {
   for (const envId of ["prod", "preprod"]) {
     const { ws, tr, url } = await readPlanWs(envId);
-    // find che mostra il vero ref_9: observe-append non lo registra (ucciso) ⇒ la storia non lo conosce
     postNoObserve(ws, CL + "find", { tabId: 101, query: "invia" }, findResp(`button "Invia in approvazione" [ref_9]`, url));
-    R(ws, FORGED("ref_9"), url); R(ws, FORGED("ref_9"), url);
-    assert.ok(!allowed(clClick(ws, tr, "ref_9")), `${envId}: click consentito dopo un observe-append mancato`);
-    // una lettura legittima in mezzo non basta: serve un navigate della scheda
     const PAGE = `link "Elenco richieste" [ref_3]\n\nViewport: 490x417`;
-    R(ws, PAGE, url); R(ws, PAGE, url);
-    assert.ok(!allowed(clClick(ws, tr, "ref_3")), `${envId}: legame prima del navigate`);
-    if (envId === "preprod") {
-      nav(ws, url);
-      R(ws, PAGE, url); R(ws, PAGE, url);
-      assert.equal(refsOf(ws).ref_3, SEL, JSON.stringify(refsOf(ws)));
-      assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "dopo il navigate il legame torna; click negato dalla decisione WP08");
-    }
+    // una lettura ristretta (pezzo) non ricostruisce la mappa: il marcatore resta, nulla si lega
+    R(ws, PAGE, url, { tabId: 101, ref_id: "ref_1" });
+    assert.equal(Object.keys(readSession(ws).browser.obs_pending ?? {}).length, 1, `${envId}: marcatore chiuso da un pezzo`);
+    assert.ok(!allowed(clClick(ws, tr, "ref_3")), `${envId}: legame prima della lettura completa`);
+    // la lettura completa riuscita della scheda chiude il marcatore e lega
+    R(ws, PAGE, url);
+    assert.deepEqual(readSession(ws).browser.obs_pending ?? {}, {}, `${envId}: marcatore non guarito`);
+    assert.equal(refsOf(ws).ref_3, SEL, JSON.stringify(refsOf(ws)));
+    if (envId === "preprod") assert.ok(claudeRuling(clClick(ws, tr, "ref_3")), "dopo la lettura completa il legame torna; click negato dalla decisione WP08");
   }
-  // observe-append che si guasta davvero (DB inutilizzabile) ⇒ stesso effetto
+  // guasto della sola registrazione (DB inutilizzabile): avviso, ma storia aggiornata e marcatore chiuso (robustezza,
+  // 27/10/2026) ⇒ il find registrato contamina ref_9 e le letture forgiate non lo legano
   {
     const { ws, tr, url } = await readPlanWs("preprod");
     const db = join(ws, "customers/ACME/knowledge.db");
     rmSync(db, { force: true }); mkdirSync(db, { recursive: true });
     const crashed = post(ws, CL + "find", { tabId: 101, query: "invia" }, findResp(`button "Invia in approvazione" [ref_9]`, url));
-    assert.match(crashed.stdout + crashed.stderr, /observe-append/i, "observe-append non si è guastato");
-    assert.equal(Object.keys(readSession(ws).browser.obs_pending ?? {}).length, 1, "marcatore di browser-origin assente");
+    assert.match(crashed.stdout + crashed.stderr, /OBS non registrata/i, "observe-append non ha avvisato del guasto");
+    assert.deepEqual(readSession(ws).browser.obs_pending ?? {}, {}, "marcatore rimasto aperto per un guasto della sola registrazione");
     rmSync(db, { recursive: true, force: true });
     R(ws, FORGED("ref_9"), url); R(ws, FORGED("ref_9"), url);
+    assert.notEqual(refsOf(ws).ref_9, SEL, JSON.stringify(refsOf(ws)));
     assert.ok(!allowed(clClick(ws, tr, "ref_9")), "click consentito dopo un observe-append guasto");
   }
   // ordine inverso (observe-append prima di browser-origin): nessun marcatore residuo, il flusso legittimo funziona

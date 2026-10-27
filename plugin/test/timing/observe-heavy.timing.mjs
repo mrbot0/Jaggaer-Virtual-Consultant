@@ -1,12 +1,16 @@
 // N1 (verifica del 27/10/2026): observe-append su una pagina davvero pesante, senza tetti sul numero di elementi
-// (decisione dell'utente), deve chiudere ben sotto il timeout dell'hook (10 s, hooks/hooks.json): se l'hook scade il
-// marcatore della chiamata resta aperto e i click sulla scheda sono negati.
+// (decisione dell'utente), deve chiudere ben sotto il timeout dell'hook (60 s dal 27/10/2026, hooks/hooks.json): se l'hook
+// scade il marcatore della chiamata resta aperto e i click sulla scheda sono negati (finché una lettura completa riuscita
+// della scheda non lo chiude).
 // Pagina di 20 000 elementi (campi, pulsanti, link, contenitori) con una mappa di ~1000 SEL dello scope popolata: un
 // take_snapshot di DevTools in linea e uno con filePath (file scritto dallo strumento nella cartella snapshots/ della
 // sessione, con il marcatore di guard-environment) — processo completo dell'hook < 5 s ciascuno, fino a 3 tentativi.
+// Guard sulla grandezza tolto (27/10/2026): la stessa pagina con 400 miniature in base64 da 20 KB e un'anteprima da 12 MB
+// (Analytics Launchpad: prima faceva fallire l'hook) — il base64 si toglie prima della lettura, stesso risultato.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
+import { randomBytes } from "node:crypto";
 import { join } from "node:path";
 import { envWs, writeSel, readSession } from "../helpers/env-fixture.mjs";
 import { runHook, ROOT } from "../helpers/hook-env.mjs";
@@ -40,6 +44,15 @@ function inline(ws) {
   runHook("browser-origin", i, E(ws));
   return runHook("observe-append", i, E(ws));
 }
+const B64 = randomBytes(9 * 1024 * 1024).toString("base64");
+const thumbs = () => [...Array.from({ length: 400 }, (_, i) => `  uid=1_${200000 + i} image "Miniatura ${i}" url="data:image/png;base64,${B64.slice(i, i + 20480)}"`),
+  `  uid=1_200999 image "Anteprima" url="data:image/png;base64,${B64.slice(0, 12 * 1024 * 1024)}"`].join("\n");
+function withThumbs(ws) {
+  const i = { session_id: "sess-1", cwd: ws, hook_event_name: "PostToolUse", tool_name: DT + "take_snapshot", tool_input: {}, tool_use_id: `toolu_heavy_${++seq}`,
+    tool_response: [{ type: "text", text: `# take_snapshot response\n## Latest page snapshot\n${tree()}${thumbs()}\n` }] };
+  runHook("browser-origin", i, E(ws));
+  return runHook("observe-append", i, E(ws));
+}
 function viaFile(ws) {
   const id = `toolu_heavy_${++seq}`;
   const file = join(ws, "customers/ACME/.sessions/sess-1/snapshots", `heavy-${seq}.txt`);
@@ -53,7 +66,7 @@ function viaFile(ws) {
   return runHook("observe-append", i, E(ws));
 }
 
-for (const [name, run] of [["in linea", inline], ["con filePath", viaFile]]) {
+for (const [name, run] of [["in linea", inline], ["con filePath", viaFile], ["con miniature base64", withThumbs]]) {
   test(`N1: observe-append su una pagina di ${N} elementi con ${NSEL} SEL (${name}) < ${LIMIT} ms, risultato completo`, { concurrency: false, timeout: 300000 }, () => {
     let best = Infinity;
     for (let a = 0; a < ATTEMPTS && best >= LIMIT; a++) {

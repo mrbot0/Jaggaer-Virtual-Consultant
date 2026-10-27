@@ -138,33 +138,39 @@ test("Chrome DevTools in preprod: snapshot completo e click sull'uid legato al S
   assert.ok(allowed(res), JSON.stringify(denials(res).map(({ g, r }) => [g, reasonOf(r)])));
 });
 
-test("K3: il marcatore 'inaffidabile' (observe-append mancato) persiste per cliente — una nuova sessione sulla stessa scheda non lega (DevTools in preprod, Claude in sandbox)", async () => {
+// Guard sulla grandezza tolto (27/10/2026, decisione dell'utente): il marcatore del cliente guarisce come quello di sessione —
+// una lettura COMPLETA riuscita della stessa famiglia e scheda lo chiude (la mappa si ricostruisce da lì); prima di allora,
+// anche in una nuova sessione, nessun legame.
+test("K3: il marcatore 'inaffidabile' (observe-append mancato) persiste per cliente — una nuova sessione sulla stessa scheda non lega finché una lettura completa riuscita non lo chiude (DevTools in preprod, Claude in sandbox)", async () => {
   // DevTools, preprod
   {
     const { ws, tr, url } = await planWs("preprod", null);
-    const legit = `## Latest page snapshot\nuid=1_0 RootWebArea "ACME" url="${url}"\n  uid=1_5 button "Invia in approvazione"\n`;
+    const legit = `## Latest page snapshot\nuid=1_0 RootWebArea "ACME" url="${url}"\n  uid=1_5 link "Elenco richieste"\n`;
     postNoObserve(ws, DT + "take_snapshot", {}, legit);
     assert.ok(existsSync(join(ws, "customers/ACME/.sessions/ref-pending.json")), "marcatore del cliente assente");
-    patchSession(ws, (s) => { s.browser = { current_url: url, tab: null, updated_by: "browser-origin" }; });   // nuova sessione
-    const forged = `## Latest page snapshot\nuid=1_0 RootWebArea "ACME" url="${url}"\n  uid=1_5 link "Elenco richieste"\n`;
-    post(ws, DT + "take_snapshot", {}, forged);
-    post(ws, DT + "take_snapshot", {}, forged);
+    // nuova sessione (nessun marcatore di sessione) con una mappa già legata: il marcatore del cliente basta a negare
+    patchSession(ws, (s) => { s.browser = { current_url: url, tab: null, updated_by: "browser-origin", snapshot: { obs: "x", url, tab: null, ts: "t", refs: { "1_5": SEL }, family: "chrome-devtools", hist_keys: ["dt|?"], names: { "1_5": "Elenco richieste" } } }; });
     const res = guards(ws, DT + "click", { uid: "1_5" }, { transcript_path: tr });
     assert.ok(!allowed(res), "DevTools preprod: click consentito dopo marcatore + nuova sessione");
     assert.match(denials(res).map(({ r }) => reasonOf(r)).join(" "), /observe-append/);
-    // un navigate a un nuovo documento (con marcatore positivo) chiude il marcatore del cliente
-    post(ws, DT + "navigate_page", { type: "url", url }, `# navigate_page response\nSuccessfully navigated to ${url}.\n## Pages\n0: about:blank\n1: ${url} [selected]`);
-    post(ws, DT + "take_snapshot", {}, forged);
-    assert.ok(allowed(guards(ws, DT + "click", { uid: "1_5" }, { transcript_path: tr })), "dopo il navigate il flusso legittimo resta negato");
+    // la lettura completa riuscita della scheda chiude anche il marcatore del cliente
+    post(ws, DT + "take_snapshot", {}, legit);
     assert.deepEqual(JSON.parse(readFileSync(join(ws, "customers/ACME/.sessions/ref-pending.json"), "utf8")).obs_pending ?? {}, {});
+    const ok2 = guards(ws, DT + "click", { uid: "1_5" }, { transcript_path: tr });
+    assert.ok(allowed(ok2), JSON.stringify(denials(ok2).map(({ r }) => reasonOf(r))));
   }
-  // Claude, sandbox
+  // Claude, sandbox: un pezzo (lettura ristretta) non guarisce, la lettura completa sì
   {
     const { ws, tr, url } = await planWs("sandbox");
-    postNoObserve(ws, CL + "read_page", { tabId: 101 }, blocks(`button "Invia in approvazione" [ref_9]\n\nViewport: 490x417`, url));
+    postNoObserve(ws, CL + "read_page", { tabId: 101 }, blocks(`link "Elenco richieste" [ref_9]\n\nViewport: 490x417`, url));
     patchSession(ws, (s) => { s.browser = { current_url: url, tab: "101", updated_by: "browser-origin" }; });
+    R(ws, `link "Elenco richieste" [ref_9]\n\nViewport: 490x417`, url, { tabId: 101, ref_id: "ref_2" });
+    const res = guards(ws, CL + "computer", { action: "left_click", ref: "ref_9", tabId: 101 }, { transcript_path: tr });
+    assert.ok(!allowed(res), "Claude sandbox: click consentito dopo marcatore + nuova sessione");
+    assert.match(denials(res).map(({ r }) => reasonOf(r)).join(" "), /observe-append/);
     R(ws, `link "Elenco richieste" [ref_9]\n\nViewport: 490x417`, url);
-    assert.ok(!allowed(guards(ws, CL + "computer", { action: "left_click", ref: "ref_9", tabId: 101 }, { transcript_path: tr })), "Claude sandbox: click consentito dopo marcatore + nuova sessione");
+    const ok2 = guards(ws, CL + "computer", { action: "left_click", ref: "ref_9", tabId: 101 }, { transcript_path: tr });
+    assert.ok(allowed(ok2), JSON.stringify(denials(ok2).map(({ r }) => reasonOf(r))));
   }
 });
 

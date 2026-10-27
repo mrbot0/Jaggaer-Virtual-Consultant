@@ -59,7 +59,9 @@ async function auditErrorDeny(input, name, reason) {
   });
 }
 
-export async function runHook(fn, { name = "hook", failClosed = false } = {}) {
+// stdinTimeoutMs: attesa massima dello stdin (3 s per i guard; observe-append, che riceve snapshot di decine di MB e ha 60 s
+// in hooks/hooks.json, ne attende di più: guard sulla grandezza tolto il 27/10/2026).
+export async function runHook(fn, { name = "hook", failClosed = false, stdinTimeoutMs = 3000 } = {}) {
   let finished = false;
   let parsed = null;
   const onError = (err) => {
@@ -85,7 +87,7 @@ export async function runHook(fn, { name = "hook", failClosed = false } = {}) {
   process.on("uncaughtException", onError);
   process.on("unhandledRejection", onError);
   try {
-    const raw = await readStdin();
+    const raw = await readStdin(stdinTimeoutMs);
     const input = raw.trim() ? JSON.parse(raw) : {};
     if (!input || typeof input !== "object" || Array.isArray(input)) throw new Error("input dell'hook non è un oggetto JSON");
     parsed = input;

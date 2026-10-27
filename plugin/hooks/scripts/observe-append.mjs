@@ -13,4 +13,4 @@ runHook(async (input) => {
   let m;
   try { m = await import("../lib/observe-append.mjs"); } catch (err) { await localReset(input); throw err; }
   try { return await m.record(input); } catch (err) { m.resetOnFailure(input); throw err; }
-}, { name: "observe-append", failClosed: false });
+}, { name: "observe-append", failClosed: false, stdinTimeoutMs: 50000 });
