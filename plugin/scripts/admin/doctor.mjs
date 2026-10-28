@@ -58,7 +58,13 @@ export function checkDeps(plugin) {
   for (const d of DEPS) {
     try {
       const m = req(d);
-      if (d === "better-sqlite3") new m(":memory:").close();
+      if (d === "better-sqlite3") {
+        try { new m(":memory:").close(); } catch (err) {
+          // 28/10/2026: senza il binario nativo il plugin usa node:sqlite (scripts/kb/sqlite.mjs): non è una dipendenza mancante
+          if (!/bindings file|better_sqlite3|NODE_MODULE_VERSION|was compiled against/i.test(String(err?.message ?? err))) throw err;
+          req("node:sqlite");
+        }
+      }
     } catch (err) { missing.push(`${d} (${String(err.code ?? err.message).slice(0, 60)})`); }
   }
   return missing.length
@@ -69,7 +75,7 @@ export function checkDeps(plugin) {
 function pluginManifest(plugin) { return readJson(join(plugin, ".claude-plugin", "plugin.json")); }
 
 async function openReadonly(file) {
-  const Database = (await import("better-sqlite3")).default;
+  const Database = (await import("../kb/sqlite.mjs")).default;
   return new Database(file, { readonly: true, fileMustExist: true });
 }
 

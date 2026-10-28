@@ -2,7 +2,7 @@
 // in schema_migrations (nome, sha256, orario), porta knowledge_version al massimo dichiarato dal plugin
 // (plugin.json metadata.knowledge_version_max) e, con --root, ricostruisce l'indice (reindex). Un DB con
 // knowledge_version PIÙ NUOVA del plugin non si tocca (exit 3): va aggiornato il plugin, non la conoscenza.
-import Database from "better-sqlite3";
+import Database from "./sqlite.mjs";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";

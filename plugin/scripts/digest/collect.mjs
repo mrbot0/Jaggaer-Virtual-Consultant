@@ -3,7 +3,7 @@
 // DEC + esiti della settimana, forme epistemiche, sessioni (sorprese, budget) e check. Il DB si apre in sola lettura
 // (mai openDb: applicherebbe le migrazioni), i file si leggono e basta. I valori restano in memoria: escono dal
 // cliente solo pseudonimizzati (pseudonymize.mjs), nel report e nei candidati.
-import Database from "better-sqlite3";
+import Database from "../kb/sqlite.mjs";
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join } from "node:path";
 import YAML from "yaml";
