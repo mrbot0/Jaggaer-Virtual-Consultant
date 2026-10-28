@@ -516,10 +516,18 @@ function pluginScript(cmd, ctx) {
 // sola lettura in coda (solo `head`/`tail` con argomento numerico e `wc -l`: sort, uniq, grep ecc. hanno opzioni che scrivono file). Il resto del comando non
 // cambia: ogni altra forma resta soggetta agli stessi divieti di prima.
 const SAFE_TAIL = /\s*(?:\|\s*(?:(?:head|tail)(?:\s+-n\s*\d+|\s+-\d+)?|wc\s+-l)|2>&1)\s*$/i;
-const CD_HEAD = /^\s*cd\s+(?:"[^"\r\n]*"|'[^'\r\n]*'|[^\s&;|"'`$()<>]+)\s*(?:&&|;)\s*/i;
+const CD_HEAD = /^\s*cd\s+("[^"\r\n]*"|'[^'\r\n]*'|[^\s&;|"'`$()<>]+)\s*(?:&&|;)\s*/i;
+// Rilievi di sicurezza: la variabile si espande solo nella sintassi della shell dello strumento ($VAR/${VAR} in Bash,
+// $env:VAR in PowerShell; mai %VAR%), e un `cd` iniziale si toglie solo se punta già alla cartella corrente (altrimenti i
+// percorsi relativi si risolverebbero altrove da come li legge il guard).
+const trimSep = (p) => p.replace(/[\\/]+$/, "").toLowerCase();
+const sameDir = (t, cwd) => { try { return trimSep(resolve(String(cwd), t.replace(/^["']|["']$/g, ""))) === trimSep(resolve(String(cwd))); } catch { return false; } };
 export function normalizePluginCmd(cmd, ctx) {
-  let c = String(cmd).replace(/\$\{CLAUDE_PLUGIN_ROOT\}|\$CLAUDE_PLUGIN_ROOT|%CLAUDE_PLUGIN_ROOT%|\$env:CLAUDE_PLUGIN_ROOT/g, String(ctx.plugin ?? "").replace(/\\/g, "/"));
-  c = c.replace(CD_HEAD, "");
+  const root = String(ctx.plugin ?? "").replace(/\\/g, "/");
+  const VAR = ctx.tool === "PowerShell" ? /\$env:CLAUDE_PLUGIN_ROOT\b/gi : ctx.tool === "Bash" ? /\$\{CLAUDE_PLUGIN_ROOT\}|\$CLAUDE_PLUGIN_ROOT\b/g : null;
+  let c = VAR ? String(cmd).replace(VAR, root) : String(cmd);
+  const m = CD_HEAD.exec(c);
+  if (m && sameDir(m[1], ctx.cwd)) c = c.slice(m[0].length);
   for (let i = 0; i < 4 && SAFE_TAIL.test(c); i++) c = c.replace(SAFE_TAIL, "");
   return c.trim();
 }

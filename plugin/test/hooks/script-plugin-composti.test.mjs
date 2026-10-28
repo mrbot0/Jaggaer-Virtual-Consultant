@@ -33,6 +33,8 @@ test("restano negate le forme pericolose", () => {
     `node "${R}/scripts/admin/approvals.mjs" status --db .claude/settings.json 2>&1 | head`,
     `node "${R}/scripts/admin/approvals.mjs" status | sort -o "${ws}/customers/ACME/.sessions/sess-1/session.json"`,
     `node "${R}/scripts/admin/approvals.mjs" status | uniq - "${ws}/customers/ACME/.sessions/sess-1/session.json"`,
+    `cd /tmp && node "${R}/scripts/admin/approvals.mjs" status --root product`,
+    `node "%CLAUDE_PLUGIN_ROOT%/scripts/admin/approvals.mjs" status`,
     `node -e "1" 2>&1 | head -5 # ${R}/hooks`,
   ]) assert.equal(decisionOf(g(ws, c)), "deny", c);
 });
