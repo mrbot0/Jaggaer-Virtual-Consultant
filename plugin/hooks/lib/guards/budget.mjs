@@ -124,10 +124,14 @@ function checkSubAgentShell(ctx, cmd, refs) {
   if (refs.glob) return no("nome con caratteri jolly");
   if (refs.opaque) return no("riferimento non risolvibile");
   if (!refs.literal.length) return null;
-  // 28/10/2026: gli agenti di manutenzione generano il workspace (use customer --new, use env, show); il budget resta
-  // solo dell'utente
-  if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) return /\buse\s+budget\b|\bbudget\b/i.test(refs.flat) ? no("il budget lo alza solo l'utente") : null;
   if (EVAL.test(refs.flat)) return no("esecuzione di codice con node -e/import()");
+  // 28/10/2026: gli agenti di manutenzione generano il workspace con session.mjs, solo use customer|env|scope e show;
+  // budget, modalità e letture trasversali restano dell'utente
+  if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) {
+    if (/\b(budget|mode|paths|close-stale)\b/i.test(refs.flat)) return no("budget, modalità e permessi li cambia solo l'utente");
+    if (USE_VERB.test(refs.flat) && !/\buse\s+(customer|env|scope|show)\b/i.test(refs.flat)) return no("verbo use non ammesso per gli agenti di manutenzione");
+    return null;
+  }
   if (USE_VERB.test(refs.flat)) return no("verbo use");
   const plugin = join(ctx.plugin, "scripts", "admin", TARGET);
   const cwds = candidateCwds(ctx, cmd);
@@ -164,7 +168,13 @@ export const decide = guarded(G, (ctx) => {
   const { session, ti } = ctx;
   // 28/10/2026 (decisione dell'utente): gli agenti di manutenzione del workspace e della KB (workspace-manager,
   // health-keeper) partono anche senza cliente attivo né header del dispatch: generano e riparano il workspace
-  if (KEEPER_AGENTS.has(pluginAgentType(ti?.subagent_type))) return null;
+  // (revisione di sicurezza: restano le regole di orchestrazione — mai da un sub-agente, pausa e stop dell'utente)
+  if (KEEPER_AGENTS.has(pluginAgentType(ti?.subagent_type))) {
+    if (!session) return ctx.agentId ? denyAudited(ctx, G, "un sub-agente non invoca altri agenti (§42 M1)") : null;
+    const kh = { ...(parsePromptHeader(ti.prompt) ?? {}), task_id: `keeper:${pluginAgentType(ti.subagent_type)}`, scope: "__manutenzione__", customer: session.customer };
+    const orch = dispatchRefusal(ctx, kh);
+    return orch ? denyAudited(ctx, G, orch) : null;
+  }
   if (!session) return denyAudited(ctx, G, "nessuna sessione con cliente attivo: esegui /jaggaer-virtual-consultant:use customer <ID> prima di invocare sub-agenti");
   const h = parsePromptHeader(ti.prompt);
   if (!h) return denyAudited(ctx, G, "prompt senza header agent-prompt (§46.1): servono task_id, customer, scope, allowed_paths — componi il prompt da templates/agent-prompt.md");

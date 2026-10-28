@@ -9,6 +9,8 @@ import { updateSessionFile } from "./session-state.mjs";
 export async function refreshEnv({ ws, customer, sessionFile, session }) {
   const old = session?.env;
   if (!old?.id) return { reason: "nessun ambiente dichiarato: /use env <id>" };
+  // revisione di sicurezza: in produzione policy, approvazioni e host non si adottano da un file modificato in sessione
+  if (old.type === "prod") return { reason: "environments.yaml è cambiato dopo /use env: in produzione serve /use env dell'utente" };
   let v;
   try { v = await import("../../scripts/kb/validate-env.mjs"); } catch (err) { return { reason: `ricarica dell'ambiente non riuscita (${String(err?.message ?? err).slice(0, 80)})` }; }
   let envs;
@@ -22,7 +24,9 @@ export async function refreshEnv({ ws, customer, sessionFile, session }) {
   const n = v.normalizeEnvironment(decl);
   // il tipo non cambia senza /use env (sandbox → prod cambierebbe tutte le regole a metà sessione)
   if (n.type !== old.type) return { reason: `il tipo dell'ambiente ${old.id} è cambiato (${old.type} → ${n.type}): /use env ${old.id}` };
-  const env = { ...old, label: n.label ?? null, base_url: n.base_url, allowed_hosts: n.allowed_hosts, policy: n.policy,
+  // revisione di sicurezza: host o URL di base cambiati ⇒ la verifica dell'impronta va rifatta (env-check)
+  const sameTarget = old.base_url === n.base_url && JSON.stringify([...(old.allowed_hosts ?? [])].sort()) === JSON.stringify([...(n.allowed_hosts ?? [])].sort());
+  const env = { ...old, ...(sameTarget ? {} : { verified: false, verified_at: null }), label: n.label ?? null, base_url: n.base_url, allowed_hosts: n.allowed_hosts, policy: n.policy,
     source_sha256: envs.sha256, remediation: remediation.doc, remediation_sha256: remediation.sha256, refreshed_at: new Date().toISOString() };
   try {
     updateSessionFile(sessionFile, (s) => { if (s.env?.id === old.id) s.env = env; return s; });

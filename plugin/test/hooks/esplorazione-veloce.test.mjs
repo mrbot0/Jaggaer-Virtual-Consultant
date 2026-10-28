@@ -85,6 +85,36 @@ test("fuori dall'esplorazione nessuna cattura", () => {
   assert.equal(existsSync(join(ws, "customers/ACME/explore")), false);
 });
 
+test("revisione di sicurezza: in produzione environments.yaml cambiato non si ricarica (serve /use env); host cambiati azzerano la verifica", () => {
+  const ws = envWs({ env: "prod", scope: "ADM" });
+  const f = join(ws, "customers/ACME/config/environments.yaml");
+  appendFileSync(f, "\n# modificato\n");
+  const r = browserCall("guard-environment", ws, DT + "take_snapshot", {});
+  assert.ok(denied(r));
+  assert.match(reasonOf(r), /produzione serve \/use env/);
+  const sb = envWs({ env: "sandbox", scope: "ADM" });
+  const g = join(sb, "customers/ACME/config/environments.yaml");
+  writeFileSync(g, readFileSync(g, "utf8").replace('"cdn.jaggaer.com"]', '"cdn.jaggaer.com", "nuovo.acme.it"]'));
+  browserCall("guard-environment", sb, DT + "take_snapshot", {});
+  assert.equal(readSession(sb).env.verified, false);
+});
+
+test("revisione di sicurezza: agenti di manutenzione con session.mjs solo use customer|env|scope|show; mai node -e né budget", () => {
+  const ws = envWs({ env: "sandbox", scope: "ADM" });
+  const S = `${ROOT.replace(/\\/g, "/")}/scripts/admin/session.mjs`;
+  const sh = (command) => runHook("guard-budget", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: "Bash", tool_input: { command },
+    agent_id: "k1", agent_type: "jaggaer-virtual-consultant:workspace-manager" }, E(ws));
+  assert.ok(!denied(sh(`node "${S}" use customer ACME --json`)));
+  assert.ok(!denied(sh(`node "${S}" use env sandbox --json`)));
+  assert.ok(denied(sh(`node "${S}" use budget 999999999 --json`)));
+  assert.ok(denied(sh(`node "${S}" use mode esplorazione --json`)));
+  assert.ok(denied(sh(`node -e "import('${S}')"`)));
+  // un sub-agente non invoca gli agenti di manutenzione
+  const a = runHook("guard-budget", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: "Agent", agent_id: "x1",
+    tool_input: { subagent_type: "jaggaer-virtual-consultant:health-keeper", prompt: "x" } }, E(ws));
+  assert.ok(denied(a));
+});
+
 test("agenti di manutenzione: dispatch anche senza cliente attivo e senza header; gli altri agenti no", () => {
   const ws = mkWs();
   const a = (type) => runHook("guard-budget", { session_id: "sess-x", cwd: ws, hook_event_name: "PreToolUse", tool_name: "Agent", tool_input: { subagent_type: type, prompt: "controlla il workspace" } }, E(ws));

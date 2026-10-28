@@ -37,7 +37,8 @@ export const WEEKLY_READ = ["lessons", "decisions", "outcomes", "observations", 
 // L'isolamento fra clienti resta (guard-customer) e le aree protette sopra (WRITE_DENY) valgono come prima.
 export const KEEPER_AGENTS = new Set(["workspace-manager", "health-keeper"]);
 function freeCell(ctx, p) {
-  if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) return true;
+  // agenti di manutenzione: il cliente attivo e product/ (senza cliente attivo: tutto il workspace, per generarlo)
+  if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) return !ctx.customerLc || p === `customers/${ctx.customerLc}` || p.startsWith(`customers/${ctx.customerLc}/`) || p === "product" || p.startsWith("product/");
   return ctx.session?.mode === "esplorazione" && !!ctx.customerLc && (p === `customers/${ctx.customerLc}` || p.startsWith(`customers/${ctx.customerLc}/`));
 }
 
