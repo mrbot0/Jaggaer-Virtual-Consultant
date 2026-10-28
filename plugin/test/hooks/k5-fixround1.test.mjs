@@ -136,7 +136,7 @@ test("I2: nessun piano attivo ⇒ azioni con effetto negate in ogni ambiente; es
   runHook("approval-capture", { session_id: "sess-1", cwd: ws, hook_event_name: "UserPromptSubmit", prompt: "ESPLORA SANDBOX", transcript_path: tr }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
   assert.equal(runSessionCli(["use", "mode", "esplorazione", "--session", "sess-1"], { JVC_WORKSPACE: ws }).status, 0);
   // esplorazione libera (brief del 26/10/2026): un'unica esplorazione, la frase semplice vale come COMPLETA: click su un elemento con nome nella mappa della pagina corrente; invio, Invio e dialoghi sì; upload no
-  assert.ok(denied(c(`${DT}click`, { uid: "1_2" })), "click senza snapshot della pagina");
+  assert.ok(silent(c(`${DT}click`, { uid: "1_2" })), "28/10/2026: click senza snapshot consentito in esplorazione");
   patchSession(ws, (s) => { s.browser = { ...(s.browser ?? {}), current_url: "https://acme-sbx.jaggaer.com/home", tab: null, snapshot: { obs: "x", url: "https://acme-sbx.jaggaer.com/home", tab: null, ts: new Date().toISOString(), refs: { "1_2": null }, names: { "1_2": "Ordini" } } }; });
   assert.ok(silent(c(`${DT}click`, { uid: "1_2" })));
   assert.ok(silent(c(`${DT}fill`, { uid: "1", value: "x" })));

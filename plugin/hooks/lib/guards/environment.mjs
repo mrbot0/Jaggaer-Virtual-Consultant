@@ -60,9 +60,14 @@ function check(ctx, env, a, st) {
   }
   // storia della scheda e azioni con effetto
   if (!env.verified) return `ambiente ${env.id} dichiarato ma non verificato: esegui env-check (impronta a ≥ 2 segnali) prima di azioni diverse da navigazione verso un URL e lettura (§51.2)`;
+  // 28/10/2026 (decisione dell'utente: in prep niente blocchi sui click, solo sulle cancellazioni; revisione di sicurezza:
+  // l'ambiente resta vincolato): l'URL corrente deve essere noto (e di un host dichiarato, sopra) in ogni caso; in
+  // esplorazione (sandbox e pre-produzione) una scheda diversa da quella della navigazione non nega più l'azione.
   if (!st.url) return NAVIGATE_FIRST;
-  if (tab !== (st.tab ?? null)) return `scheda diversa da quella della navigazione registrata (${tab ?? "scheda attiva"} ≠ ${st.tab ?? "scheda attiva"}): naviga prima in questa scheda`;
   if (a.kind === "navigate" && a.history && a.historyKind !== "reload") { st.url = null; st.changed = true; }
+  // solo l'esplorazione vera: modalità esplorazione, sandbox o pre-produzione, nessun piano attivo
+  if (ctx.session?.mode === "esplorazione" && !ctx.session.active_plan && ["sandbox", "preprod"].includes(env.type)) return null;
+  if (tab !== (st.tab ?? null)) return `scheda diversa da quella della navigazione registrata (${tab ?? "scheda attiva"} ≠ ${st.tab ?? "scheda attiva"}): naviga prima in questa scheda`;
   return null;
 }
 

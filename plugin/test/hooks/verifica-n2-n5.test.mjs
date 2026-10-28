@@ -55,7 +55,7 @@ test("N3 (guard sulla grandezza tolto): mappa completa, pezzi e storia grandi re
   const { ws, g } = explore("preprod", "ESPLORA PREPROD");
   patchSession(ws, (x) => { x.browser.snapshot = { obs: "x", url: x.browser.current_url, tab: null, ts: "t", refs: {}, names: {}, unusable: true, unusable_reason: "map" }; });
   const r = g(DT + "click", { uid: "1_2" });
-  assert.equal(decisionOf(r), "deny");
+  assert.notEqual(decisionOf(r), "deny");   // 28/10/2026: nessun nome non blocca più il click in esplorazione
   assert.doesNotMatch(reasonOf(r), /troppo grande/);
 });
 

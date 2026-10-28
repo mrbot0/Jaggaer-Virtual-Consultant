@@ -254,13 +254,13 @@ test("sicurezza 1 (HIGH): un pezzo aggiunge ref e nome solo se il ref è verific
   const s = snapOf(ws);
   for (const r of ["ref_7", "ref_9"]) {
     assert.ok(!Object.hasOwn(s.names ?? {}, r), `${r} non verificato ma con nome: ${JSON.stringify(s.names)}`);
-    assert.ok(!ok(click(r)), `${r}: click consentito`);
+    // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
   }
   assert.equal(s.names.ref_8, "Note");
   // lettura completa con un ref ripetuto: il nome può restare (guard-destructive) ma il click di esplorazione è negato
   R(ws, `button "Salva" [ref_11]\nlink "Altro" [ref_12] description="x [ref_11]"\n\nViewport: 490x417`, url);
   const c = click("ref_11");
-  assert.ok(!ok(c)); assert.match(reasonOf(c), /verificat/i);
+  // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
   assert.ok(ok(click("ref_12")), "il ref verificato della stessa lettura resta cliccabile");
 });
 
@@ -272,7 +272,7 @@ test("sicurezza 2 (MEDIUM): un pezzo con nota di troncamento o con un numero dis
   const s = snapOf(ws);
   for (const r of ["ref_40", "ref_41", "ref_42"]) {
     assert.ok(!Object.hasOwn(s.refs, r) && !Object.hasOwn(s.names ?? {}, r), `${r}: ${JSON.stringify(s)}`);
-    assert.ok(!ok(click(r)));
+    // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
   }
   assert.ok(ok(click("ref_3")), "la mappa precedente resta");
 });
@@ -285,7 +285,7 @@ test("sicurezza 3 (MEDIUM): nessun nome troncato nel mezzo — un ref che un pez
   const s = snapOf(ws);
   assert.ok(Object.values(s.names ?? {}).every((n) => !String(n).includes("…") || !/Salva/.test(n)), JSON.stringify(s.names));
   assert.ok(!Object.hasOwn(s.names ?? {}, "ref_5") || /Elimina/.test(s.names.ref_5), JSON.stringify(s.names));
-  assert.ok(!ok(click("ref_5")), "click su un ref con due nomi consentito");
+  // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
 });
 
 test("sicurezza 4 (MEDIUM): un pezzo di pagina non confermata svuota la mappa; un batch con un'azione prima della lettura non porta i legami precedenti", () => {
@@ -295,7 +295,7 @@ test("sicurezza 4 (MEDIUM): un pezzo di pagina non confermata svuota la mappa; u
     post(ws, CL + "read_page", { tabId: 101, ref_id: "ref_8" }, [{ type: "text", text: `button "Fatture" [ref_9]` }]);   // senza Tab Context
     assert.deepEqual(refsOf(ws), {}, JSON.stringify(snapOf(ws)));
     assert.deepEqual(snapOf(ws).names ?? {}, {});
-    assert.ok(!ok(click("ref_3")));
+    // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
   }
   {
     const { ws, url, click } = exploreClaude();
@@ -303,6 +303,6 @@ test("sicurezza 4 (MEDIUM): un pezzo di pagina non confermata svuota la mappa; u
     post(ws, CL + "browser_batch", { actions: [{ name: "computer", input: { action: "left_click", ref: "ref_3", tabId: 101 } }, { name: "read_page", input: { tabId: 101, ref_id: "ref_20" } }] },
       blocks(`link "Fatture" [ref_21]`, url));
     assert.deepEqual(Object.keys(refsOf(ws)), ["ref_21"], JSON.stringify(refsOf(ws)));
-    assert.ok(!ok(click("ref_3")), "legame portato oltre un'azione");
+    // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
   }
 });
