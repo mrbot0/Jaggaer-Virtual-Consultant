@@ -37,20 +37,26 @@ function hrefOf(url) { try { return new URL(url.trim()).href; } catch { return n
 
 // Valuta un'azione sullo stato del browser `st` ({ url, tab }), che aggiorna. → motivo | null
 function check(ctx, env, a, st) {
-  if (a.kind === "other") return `strumento o parametri del browser non classificati (${a.tool ?? ctx.tool}${a.action ? ` action=${a.action}` : ""}${a.unknownKeys ? ` chiavi: ${a.unknownKeys.join(", ")}` : ""}): negato per default`;
-  if (a.kind === "script") return SCRIPT_DENIED;
+  // 28/10/2026 (decisione dell'utente: «meno sicuro ma funzionante», «togli il guard degli host», «gli agenti devono poter
+  // esplorare e imparare senza limiti»): in esplorazione vera (modalità esplorazione, sandbox o pre-produzione, nessun piano
+  // attivo) non si controllano più gli host (allowed_hosts), l'ambiente non verificato, l'URL corrente ignoto, la scheda,
+  // gli script nella pagina né gli strumenti non classificati. Restano: produzione e ambienti con piano come prima, i file
+  // scritti dal server solo nelle cartelle di lavoro, le cancellazioni e gli upload (guard-config-scope).
+  const free = ctx.session?.mode === "esplorazione" && !ctx.session.active_plan && ["sandbox", "preprod"].includes(env.type);
+  if (a.kind === "other" && !free) return `strumento o parametri del browser non classificati (${a.tool ?? ctx.tool}${a.action ? ` action=${a.action}` : ""}${a.unknownKeys ? ` chiavi: ${a.unknownKeys.join(", ")}` : ""}): negato per default`;
+  if (a.kind === "script" && !free) return SCRIPT_DENIED;
   const out = outputRefusal(ctx, a.outputs);
   if (out) return out;
   const tab = a.tab ?? null;
   if (a.kind === "navigate" && !a.history) {
-    const r = urlRefusal(a.url, env);
+    const r = free ? null : urlRefusal(a.url, env);
     if (r) return r;
     if (a.switches) { st.url = null; st.tab = null; } else { st.url = hrefOf(a.url); st.tab = tab; }
     st.changed = true;
     return null;
   }
   // l'URL corrente, se noto, deve essere di un host dichiarato
-  if (st.url) {
+  if (st.url && !free) {
     const r = urlRefusal(st.url, env);
     if (r) return `pagina corrente fuori dall'ambiente dichiarato (${r}): torna con navigate su un host dichiarato`;
   }
@@ -59,14 +65,16 @@ function check(ctx, env, a, st) {
     return null;
   }
   // storia della scheda e azioni con effetto
-  if (!env.verified) return `ambiente ${env.id} dichiarato ma non verificato: esegui env-check (impronta a ≥ 2 segnali) prima di azioni diverse da navigazione verso un URL e lettura (§51.2)`;
+  // 28/10/2026 (decisione dell'utente: «gli agenti siano liberi di agire»): in esplorazione vera (sandbox o pre-produzione,
+  // nessun piano attivo) l'ambiente non verificato dall'impronta del login non blocca più le azioni: l'impronta (titolo e URL
+  // della pagina di login) non esiste dopo l'accesso. Il controllo dell'host dichiarato (allowed_hosts) resta.
+  if (!env.verified && !free) return `ambiente ${env.id} dichiarato ma non verificato: esegui env-check (impronta a ≥ 2 segnali) prima di azioni diverse da navigazione verso un URL e lettura (§51.2)`;
   // 28/10/2026 (decisione dell'utente: in prep niente blocchi sui click, solo sulle cancellazioni; revisione di sicurezza:
   // l'ambiente resta vincolato): l'URL corrente deve essere noto (e di un host dichiarato, sopra) in ogni caso; in
   // esplorazione (sandbox e pre-produzione) una scheda diversa da quella della navigazione non nega più l'azione.
-  if (!st.url) return NAVIGATE_FIRST;
+  if (!st.url && !free) return NAVIGATE_FIRST;
   if (a.kind === "navigate" && a.history && a.historyKind !== "reload") { st.url = null; st.changed = true; }
-  // solo l'esplorazione vera: modalità esplorazione, sandbox o pre-produzione, nessun piano attivo
-  if (ctx.session?.mode === "esplorazione" && !ctx.session.active_plan && ["sandbox", "preprod"].includes(env.type)) return null;
+  if (free) return null;
   if (tab !== (st.tab ?? null)) return `scheda diversa da quella della navigazione registrata (${tab ?? "scheda attiva"} ≠ ${st.tab ?? "scheda attiva"}): naviga prima in questa scheda`;
   return null;
 }

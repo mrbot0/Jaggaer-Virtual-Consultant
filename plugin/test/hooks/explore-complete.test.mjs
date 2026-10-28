@@ -55,7 +55,7 @@ test("pre-produzione completa: salva, invia, approva, compila, Invio, conferma d
   const del = c(`${DT}click`, { uid: "1_6", pageId: 1 });
   assert.ok(denied(del), "Elimina"); assert.match(reasonOf(del), /elimin|cancell|delete/i);
   assert.ok(denied(c(`${DT}upload_file`, { uid: "1_5", filePath: "x.pdf", pageId: 1 })), "upload");
-  assert.ok(denied(c(`${DT}evaluate_script`, { function: "() => 1", pageId: 1 })), "script");
+  // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
 });
 
 // esplorazione libera (brief del 26/10/2026): un'unica esplorazione, la frase semplice vale come COMPLETA

@@ -121,7 +121,10 @@ function fullExploreRefusal(ctx) {
   const names = snap?.names && typeof snap.names === "object" ? snap.names : null;
   const deleteQuestion = names ? Object.values(names).some((n) => isDeleteQuestion(n)) : false;
   for (const a of ctx.actions.filter(isEffectful)) {
-    if (["upload", "script", "other"].includes(a.kind)) return `esplorazione completa: ${a.kind === "upload" ? "il caricamento di file" : a.kind === "script" ? "gli script nella pagina" : "gli strumenti non classificati"} restano vietati (${a.op ?? a.tool ?? ctx.tool})`;
+    // 28/10/2026 (decisione dell'utente: «esplorare e imparare senza limiti»): script nella pagina e strumenti non classificati
+    // passano in esplorazione; resta vietato il caricamento di file locali sul tenant.
+    if (a.kind === "upload") return `esplorazione completa: il caricamento di file resta vietato (${a.op ?? a.tool ?? ctx.tool})`;
+    if (a.kind === "script" || a.kind === "other") continue;
     // 28/10/2026 (decisione dell'utente: «a costo di abbattere il guard dei click»): in esplorazione il marcatore delle
     // chiamate non registrate da observe-append non nega più i click (bloccava l'esplorazione ogni pochi minuti); restano
     // i controlli sulle cancellazioni (nome dell'elemento nell'ultimo snapshot). Nei piani il marcatore vale ancora.
