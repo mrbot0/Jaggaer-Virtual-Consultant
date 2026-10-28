@@ -266,17 +266,22 @@ const REF_TOKEN = /[^\w]uid=\w/;
 // caratteri non è mai un nome né un ref: dal `data:` al prossimo apice doppio o a capo (stesso controllo dei ref).
 // Scansione a indici (non una regex: su valori di decine di MB una regex va in stack overflow).
 const DATA_HEAD = /^data:[\w.+/-]*[;,]/i;
+// Lineare: ogni carattere si esamina una volta (dopo uno span rifiutato si riparte da `end`, mai da i + 5). Dello span si
+// tiene in coda un suffisso di 40 caratteri: un'etichetta di cancellazione nascosta in fondo a un valore lungo resta
+// visibile ai guard (isDeleteLabel).
+const KEEP_TAIL = 40;
 function stripLongDataUris(text) {
+  const re = /data:/gi;
   let out = "";
   let from = 0;
-  let i = text.search(/data:/i);
-  while (i >= 0) {
-    const head = DATA_HEAD.exec(text.slice(i, i + 200));
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const i = m.index;
+    if (!DATA_HEAD.test(text.slice(i, i + 200))) continue;
     let end = i;
-    if (head) { while (end < text.length && text[end] !== '"' && text[end] !== "\n" && text[end] !== "\r") end++; }
-    if (head && end - i > 200 && !REF_TOKEN.test(text.slice(i, end))) { out += text.slice(from, i) + DATA_URI_PLACEHOLDER; from = end; i = text.slice(end).search(/data:/i); i = i < 0 ? -1 : end + i; continue; }
-    const next = text.slice(i + 5).search(/data:/i);
-    i = next < 0 ? -1 : i + 5 + next;
+    while (end < text.length && text[end] !== '"' && text[end] !== "\n" && text[end] !== "\r") end++;
+    if (end - i > 200 && !REF_TOKEN.test(text.slice(i, end))) { out += text.slice(from, i) + DATA_URI_PLACEHOLDER + text.slice(end - KEEP_TAIL, end); from = end; }
+    re.lastIndex = Math.max(end, i + 5);
   }
   return out + text.slice(from);
 }

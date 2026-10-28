@@ -134,21 +134,7 @@ test("1: data URI lunghi NON in base64 (svg percent-encoded, base64url) si omett
   const { stripDataUris } = await import("../../scripts/chrome/snapshot-parse.mjs");
   const svg = `data:image/svg+xml;utf8,${"%3Cpath%20d%3D%22M0%200L1%201%22%2F%3E".repeat(15000)}`;
   const out = stripDataUris(`uid=1_15 image "Logo" url="${svg}"\nuid=1_16 link "Vai"`);
-  assert.equal(out, `uid=1_15 image "Logo" url="data:…(base64 omesso)"\nuid=1_16 link "Vai"`);
-  assert.equal(stripDataUris(`uid=1_2 image "x" url="data:image/png;base64,${"A-_b".repeat(100)}"`), `uid=1_2 image "x" url="data:…(base64 omesso)"`);
-  assert.equal(stripDataUris(`uid=1_3 link "data:corto"`), `uid=1_3 link "data:corto"`);
-  const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
-  const r = post(ws, DT + "take_snapshot", {}, inline(`uid=1_0 RootWebArea "Analytics" url="${url}"\n  uid=1_15 image "Logo" url="${svg}"\n  uid=1_16 button "New Report"\n`));
-  assert.equal(r.status, 0, r.stderr);
-  assert.deepEqual(pendingOf(ws), {});
-  assert.ok(ok(g(DT + "click", { uid: "1_16" })));
-});
-
-test("1: data URI lunghi NON in base64 (svg percent-encoded, base64url) si omettono; il logo di una sola riga da ~555.000 caratteri non blocca", async () => {
-  const { stripDataUris } = await import("../../scripts/chrome/snapshot-parse.mjs");
-  const svg = `data:image/svg+xml;utf8,${"%3Cpath%20d%3D%22M0%200L1%201%22%2F%3E".repeat(15000)}`;
-  const out = stripDataUris(`uid=1_15 image "Logo" url="${svg}"\nuid=1_16 link "Vai"`);
-  assert.equal(out, `uid=1_15 image "Logo" url="data:…(base64 omesso)"\nuid=1_16 link "Vai"`);
+  assert.equal(out, `uid=1_15 image "Logo" url="data:…(base64 omesso)${svg.slice(-40)}"\nuid=1_16 link "Vai"`);
   assert.equal(stripDataUris(`uid=1_2 image "x" url="data:image/png;base64,${"A-_b".repeat(100)}"`), `uid=1_2 image "x" url="data:…(base64 omesso)"`);
   assert.equal(stripDataUris(`uid=1_3 link "data:corto"`), `uid=1_3 link "data:corto"`);
   const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
