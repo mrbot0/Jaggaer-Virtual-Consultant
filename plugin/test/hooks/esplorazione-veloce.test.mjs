@@ -105,7 +105,10 @@ test("revisione di sicurezza: agenti di manutenzione con session.mjs solo use cu
   const sh = (command) => runHook("guard-budget", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: "Bash", tool_input: { command },
     agent_id: "k1", agent_type: "jaggaer-virtual-consultant:workspace-manager" }, E(ws));
   assert.ok(!denied(sh(`node "${S}" use customer ACME --json`)));
-  assert.ok(!denied(sh(`node "${S}" use env sandbox --json`)));
+  assert.ok(!denied(sh(`node "${S}" show --json`)));
+  assert.ok(denied(sh(`node "${S}" use customer BETA --new --json`)), "cambio di cliente");
+  assert.ok(denied(sh(`node "${S}" use env prod --json`)), "l'ambiente lo dichiara la sessione principale");
+  assert.ok(denied(sh(`node "${S}" use scope P2P --json`)));
   assert.ok(denied(sh(`node "${S}" use budget 999999999 --json`)));
   assert.ok(denied(sh(`node "${S}" use mode esplorazione --json`)));
   assert.ok(denied(sh(`node -e "import('${S}')"`)));

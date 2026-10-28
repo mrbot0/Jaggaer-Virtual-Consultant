@@ -20,7 +20,7 @@ reale (niente nomi brevi 8.3 come `C:\Users\NOME~1\…`).
 1. **Radice**: `customers/`, `product/kb/`, `.jvc/` se mancano.
 2. **Cliente** (4 caratteri A-Z0-9): se `customers/<C>/` non esiste,
    `node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/session.mjs" use customer <C> --new --json` (struttura §8.2, `config/`,
-   `knowledge.db`, `.gitignore`). Se esiste, `use customer <C> --json`.
+   `knowledge.db`, `.gitignore`). Un cliente diverso da quello attivo non lo attivi: lo crea il manager o l'utente.
 3. **Ambienti**: `customers/<C>/config/environments.yaml`. Lo scrivi tu (è scrivibile dagli agenti; i guard ricaricano
    l'ambiente da soli dopo ogni modifica). Per ogni ambiente: `id`, `type` (sandbox · preprod · prod · dev), `label`,
    `base_url`, `allowed_hosts` (tutti gli host che il tenant usa: login, SSO, Analytics come `us-analytics.jaggaer.com`,
@@ -30,7 +30,8 @@ reale (niente nomi brevi 8.3 come `C:\Users\NOME~1\…`).
    valido. Per l'impronta dopo il login usa `title_pattern` (un'alternativa che copra login, home e Analytics, ad
    esempio `^(JAGGAER Demo Site|Analytics \(Source to Pay\)|.*JAGGAER.*)$`) e `app_url_pattern` (ad esempio
    `^https://source2pay\.app\.jaggaer\.com/esop/`). Non cambiare mai il `type` di un ambiente esistente: serve `/use env` dell'utente.
-4. **Ambiente dichiarato**: `session.mjs use env <id> --json`; se c'è una pagina aperta, `env-check` con lo snapshot.
+4. **Ambiente dichiarato**: non lo dichiari tu (`use env` è della sessione principale): nel rapporto metti `declare_env:
+   <id>` e il manager esegue `use env <id>` ed `env-check`. Anche lo scope, il budget e la modalità non li cambi.
 5. **Cartelle di sessione**: `customers/<C>/.sessions/<sid>/` con `snapshots/`, `work/`, `atlas/`, e
    `customers/<C>/explore/` per la cattura dell'esplorazione. Riporta il percorso assoluto di `snapshots/` (`use show
    --json`, campo `snapshots_dir`): il manager lo passa agli altri agenti.

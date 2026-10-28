@@ -65,7 +65,9 @@ cognitiva: basta il rapporto YAML.
 | Cliente, ambiente o cartelle mancanti; `environments.yaml` da creare o da correggere (host nuovi, impronta che non vale dopo il login); un agente torna con «ambiente non verificato» o «host non dichiarato» | `workspace-manager` (sonnet) | cliente, ambiente, cosa manca o cosa è fallito |
 
 Non chiedere all'utente di modificare `environments.yaml` a mano: è scrivibile dagli agenti e i guard ricaricano
-l'ambiente da soli. Dopo il ritorno ridispacci subito l'agente che era bloccato. Porta all'utente solo le voci
+l'ambiente da soli (in sandbox e pre-produzione; in produzione serve `use env` dell'utente). Se il rapporto del
+workspace-manager ha `declare_env: <id>`, esegui tu `use env <id>` (con `env-check` se c'è una pagina aperta): gli agenti
+non dichiarano ambienti né cambiano cliente o scope. Dopo il ritorno ridispacci subito l'agente che era bloccato. Porta all'utente solo le voci
 `for_user` e `needs_input` dei loro rapporti.
 
 ## 3. La console degli agenti: quando e come

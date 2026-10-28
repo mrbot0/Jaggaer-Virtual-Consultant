@@ -125,11 +125,17 @@ function checkSubAgentShell(ctx, cmd, refs) {
   if (refs.opaque) return no("riferimento non risolvibile");
   if (!refs.literal.length) return null;
   if (EVAL.test(refs.flat)) return no("esecuzione di codice con node -e/import()");
-  // 28/10/2026: gli agenti di manutenzione generano il workspace con session.mjs, solo use customer|env|scope e show;
-  // budget, modalità e letture trasversali restano dell'utente
+  // 28/10/2026: gli agenti di manutenzione generano il workspace con session.mjs: `show` e `use customer <C>` solo senza
+  // cliente attivo o per lo stesso cliente (creazione con --new). Ambiente, scope, budget, modalità e permessi restano della
+  // sessione principale e dell'utente (revisione di sicurezza: dichiarare un ambiente, anche di produzione, non è da agente).
   if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) {
-    if (/\b(budget|mode|paths|close-stale)\b/i.test(refs.flat)) return no("budget, modalità e permessi li cambia solo l'utente");
-    if (USE_VERB.test(refs.flat) && !/\buse\s+(customer|env|scope|show)\b/i.test(refs.flat)) return no("verbo use non ammesso per gli agenti di manutenzione");
+    if (/\b(budget|mode|paths|close-stale|env|scope)\b/i.test(refs.flat)) return no("ambiente, scope, budget, modalità e permessi li dichiara la sessione principale");
+    if (USE_VERB.test(refs.flat)) {
+      const m = /\buse\s+customer\s+([A-Za-z0-9]{4})\b/i.exec(refs.flat);
+      if (!m) return no("verbo use non ammesso per gli agenti di manutenzione (solo use customer <C> e show)");
+      const cur = ctx.session?.customer;
+      if (cur && m[1].toUpperCase() !== cur) return no(`cambio di cliente (${cur} → ${m[1].toUpperCase()}): solo l'utente`);
+    }
     return null;
   }
   if (USE_VERB.test(refs.flat)) return no("verbo use");
