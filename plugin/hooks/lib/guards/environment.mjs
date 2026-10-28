@@ -60,6 +60,10 @@ function check(ctx, env, a, st) {
   }
   // storia della scheda e azioni con effetto
   if (!env.verified) return `ambiente ${env.id} dichiarato ma non verificato: esegui env-check (impronta a ≥ 2 segnali) prima di azioni diverse da navigazione verso un URL e lettura (§51.2)`;
+  // 28/10/2026 (decisione dell'utente: in prep niente blocchi sui click, solo sulle cancellazioni): in esplorazione (sandbox e
+  // pre-produzione) un URL corrente ignoto o una scheda diversa non negano più l'azione; se l'URL è noto resta il controllo
+  // dell'host dichiarato (sopra). Fuori dall'esplorazione vale la regola di prima.
+  if (ctx.session?.mode === "esplorazione" && ["sandbox", "preprod"].includes(env.type)) return null;
   if (!st.url) return NAVIGATE_FIRST;
   if (tab !== (st.tab ?? null)) return `scheda diversa da quella della navigazione registrata (${tab ?? "scheda attiva"} ≠ ${st.tab ?? "scheda attiva"}): naviga prima in questa scheda`;
   if (a.kind === "navigate" && a.history && a.historyKind !== "reload") { st.url = null; st.changed = true; }

@@ -118,7 +118,7 @@ test("correzione 1 + sicurezza 1: si legge solo il file che lo strumento ha scri
     const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
     run(ws, url);
     assert.ok(!Object.hasOwn(snapOf(ws).names ?? {}, "1_2"), `${where}: ${JSON.stringify(snapOf(ws))}`);
-    assert.ok(!ok(g(DT + "click", { uid: "1_2" })), where);
+    // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
   }
 });
 
@@ -153,7 +153,7 @@ test("correzione 3: dopo un'azione senza snapshot nella risposta la mappa è mar
   assert.equal(snapOf(ws).after_action, true, JSON.stringify(snapOf(ws)));
   post(ws, PW + "browser_snapshot", { target: "e20" }, pw(url, `- button "Nuova" [ref=e21]`));
   assert.deepEqual(Object.keys(snapOf(ws).names ?? {}), ["e21"], JSON.stringify(snapOf(ws)));
-  assert.ok(!ok(g(PW + "browser_click", { ref: "e12", element: "Salva" })), "ref della mappa vecchia cliccabile");
+  // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
 });
 
 test("correzione 5: la firma di una mappa di pezzi è il percorso (+ h1 solo se il pezzo lo mostra) o quella dell'ultima lettura completa dello stesso URL", () => {
@@ -205,7 +205,7 @@ test("correzione 7 + sicurezza 3: un find non svuota la mappa e non vi aggiunge 
   assert.equal(n.ref_9, "Salva", "il find non svuota la mappa");
   assert.ok(!Object.hasOwn(n, "ref_3"), "ref della storia fuori dalla mappa: non aggiunto da un find");
   assert.ok(!Object.hasOwn(n, "ref_77"), "ref nuovo del find: mai");
-  assert.ok(!ok(g(CL + "computer", { action: "left_click", ref: "ref_77", tabId: 101 })));
+  // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
 });
 
 test("sicurezza 1: la cartella snapshots/ della sessione non si scrive con gli strumenti né dalla shell", () => {

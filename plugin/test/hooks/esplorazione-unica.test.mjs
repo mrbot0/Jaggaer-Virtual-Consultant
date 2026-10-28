@@ -41,7 +41,7 @@ for (const [env, phrase] of [["preprod", "ESPLORA PREPROD"], ["sandbox", "ESPLOR
     assert.ok(denied(c(`${DT}handle_dialog`, { action: "accept", promptText: "ELIMINA", pageId: 1 })), "dialogo di cancellazione");
     assert.ok(denied(c(`${DT}upload_file`, { uid: "1_5", filePath: "C:/x.pdf", pageId: 1 })), "upload");
     assert.ok(denied(c(`${DT}evaluate_script`, { function: "() => 1", pageId: 1 })), "script");
-    assert.ok(denied(c(`${DT}click`, { uid: "9_9", pageId: 1 })), "elemento senza nome nella mappa");
+    // 28/10/2026: blocco rimosso (decisione dell'utente): asserzione tolta
     assert.match(readFileSync(auditFile(ws, "ACME"), "utf8"), /esplorazione/);
   });
 }

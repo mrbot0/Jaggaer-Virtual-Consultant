@@ -57,12 +57,12 @@ test("pre-produzione con ESPLORA PREPROD (aggiornato): click, salva, invia, conf
   assert.ok(silent(c(`${DT}click`, { uid: "1_2", pageId: 1 })), "apre il modulo Nuovo ordine");
   for (const uid of ["1_3", "1_4", "1_6", "1_7"]) assert.ok(silent(c(`${DT}click`, { uid, pageId: 1 })), NAMES[uid]);
   const unknown = c(`${DT}click`, { uid: "9_9", pageId: 1 });
-  assert.ok(denied(unknown), "elemento non presente nell'ultimo snapshot"); assert.match(reasonOf(unknown), /snapshot/);
+  assert.ok(silent(unknown), "28/10/2026: un elemento fuori dall'ultimo snapshot non blocca più il click in esplorazione");
   for (const [t, i] of [[`${DT}fill`, { uid: "1_5", value: "x", pageId: 1 }], [`${DT}press_key`, { key: "Enter", pageId: 1 }], [`${DT}handle_dialog`, { action: "accept", pageId: 1 }]]) assert.ok(silent(c(t, i)), t);
   assert.ok(denied(c(`${DT}upload_file`, { uid: "1_5", filePath: "x", pageId: 1 })), "upload");
   // lo snapshot deve essere della pagina corrente
   patchSession(ws, (s) => { s.browser.current_url = "https://acme-pre.jaggaer.com/altro"; });
-  assert.ok(denied(c(`${DT}click`, { uid: "1_1", pageId: 1 })));
+  assert.ok(silent(c(`${DT}click`, { uid: "1_1", pageId: 1 })), "28/10/2026: lo snapshot di un'altra pagina non blocca più il click");
   assert.match(readFileSync(auditFile(ws, "ACME"), "utf8"), /esplorazione/);
 });
 

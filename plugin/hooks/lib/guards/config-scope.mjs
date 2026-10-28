@@ -133,18 +133,13 @@ function fullExploreRefusal(ctx) {
     if (a.kind === "input" && a.submits && deleteQuestion) return "esplorazione completa: la pagina chiede di confermare una cancellazione: niente Invio";
     if (a.kind !== "click" && a.kind !== "input") continue;
     const refs = Array.isArray(a.targets) ? a.targets : [];
-    if (a.kind === "click") {
-      if (!refs.length || a.untargeted) return `esplorazione completa: click senza uid dell'ultimo snapshot (${a.op ?? a.tool ?? ctx.tool})`;
-      if (!names) return "esplorazione completa: nessuno snapshot completo della pagina: esegui take_snapshot prima del click";
-      if (!b.current_url || snap.url !== b.current_url) return "esplorazione completa: l'ultimo snapshot non è della pagina corrente: rifai take_snapshot";
-      if (String(snap.tab ?? "") !== String(a.tab ?? "")) return "esplorazione completa: l'ultimo snapshot è di un'altra scheda: rifai take_snapshot";
-    }
-    const unverified = Array.isArray(snap?.unverified) ? snap.unverified : [];
+    // 28/10/2026 (decisione dell'utente: «in prep non vogliamo più blocchi sui click solo sulle cancellazioni»): in
+    // esplorazione (sandbox e pre-produzione) un click o un input non richiede più uno snapshot fresco della pagina, un uid
+    // con nome né un ref verificato. Restano negate le cancellazioni riconoscibili: l'etichetta dell'elemento (se lo
+    // snapshot la conosce), il testo del dialogo e la conferma di una cancellazione richiesta dalla pagina; più upload,
+    // script e strumenti non classificati. Rischio accettato: un'icona senza nome (cestino) non si riconosce più.
     for (const r of refs) {
-      // revisione di sicurezza (rilievo 1): un ref non verificato nella mappa (ripetuto, o dentro un valore fra virgolette)
-      if (unverified.includes(String(r))) return `esplorazione: l'elemento ${r} non è verificato nell'ultimo snapshot (ref ripetuto o dentro un valore fra virgolette): non si clicca né si compila`;
       const name = names && Object.hasOwn(names, r) ? String(names[r] ?? "") : null;
-      if (a.kind === "click" && (!name || !name.trim())) return `esplorazione completa: l'elemento ${r} non ha un nome nell'ultimo snapshot: potrebbe essere un'icona di cancellazione, non si clicca`;
       if (name && isDeleteLabel(name)) return `esplorazione completa: "${name}" è una cancellazione: vietata anche in esplorazione completa`;
       if (a.kind === "click" && deleteQuestion && name && !SAFE_EXIT.test(name) && (EFFECT_LABEL.test(name) || YES.test(name))) return `esplorazione completa: la pagina chiede di confermare una cancellazione: "${name}" non si preme (usa Annulla o chiudi)`;
     }
