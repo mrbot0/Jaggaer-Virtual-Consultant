@@ -18,6 +18,7 @@ import { dirname, join, resolve } from "node:path";
 import { allowWithInput } from "../io.mjs";
 import { invocationsFile, pluginAgentType } from "../workspace.mjs";
 import { KEEPER_AGENTS } from "./scope.mjs";
+import { simpleNodeCall } from "../exact-argv.mjs";
 import { skeleton } from "../paths.mjs";
 import { openInvocations } from "../state-summary.mjs";
 import { parsePromptHeader } from "../../../scripts/admin/agent-prompt.mjs";
@@ -129,13 +130,17 @@ function checkSubAgentShell(ctx, cmd, refs) {
   // cliente attivo o per lo stesso cliente (creazione con --new). Ambiente, scope, budget, modalità e permessi restano della
   // sessione principale e dell'utente (revisione di sicurezza: dichiarare un ambiente, anche di produzione, non è da agente).
   if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) {
-    if (/\b(budget|mode|paths|close-stale|env|scope)\b/i.test(refs.flat)) return no("ambiente, scope, budget, modalità e permessi li dichiara la sessione principale");
-    if (USE_VERB.test(refs.flat)) {
-      const m = /\buse\s+customer\s+([A-Za-z0-9]{4})\b/i.exec(refs.flat);
-      if (!m) return no("verbo use non ammesso per gli agenti di manutenzione (solo use customer <C> e show)");
-      const cur = ctx.session?.customer;
-      if (cur && m[1].toUpperCase() !== cur) return no(`cambio di cliente (${cur} → ${m[1].toUpperCase()}): solo l'utente`);
-    }
+    // revisione di sicurezza: tokenizzatore condiviso dei guard — una sola chiamata semplice (niente separatori né
+    // assegnazioni di variabili), lo script è session.mjs, argomenti esattamente `show` o `use customer <C> [--new]`
+    // (più --json); ogni altra opzione (--session, --workspace…) negata
+    const call = simpleNodeCall(cmd, ctx.cwd);
+    if (!call || !/(^|[\\/])session\.mjs$/i.test(call.scriptToken)) return no("per gli agenti di manutenzione session.mjs solo come chiamata semplice `node <plugin>/scripts/admin/session.mjs …`");
+    const a = call.args.filter((x) => x !== "--json");
+    const show = a.length === 1 && a[0] === "show";
+    const cust = a.length >= 3 && a.length <= 4 && a[0] === "use" && a[1] === "customer" && /^[A-Za-z0-9]{4}$/.test(a[2]) && (a.length === 3 || a[3] === "--new");
+    if (!show && !cust) return no("argomenti non ammessi per gli agenti di manutenzione (solo `show` o `use customer <C> [--new]`, più --json)");
+    const cur = ctx.session?.customer;
+    if (cust && cur && a[2].toUpperCase() !== cur) return no(`cambio di cliente (${cur} → ${a[2].toUpperCase()}): solo l'utente`);
     return null;
   }
   if (USE_VERB.test(refs.flat)) return no("verbo use");

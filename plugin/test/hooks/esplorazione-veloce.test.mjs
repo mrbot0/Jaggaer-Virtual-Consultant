@@ -109,6 +109,12 @@ test("revisione di sicurezza: agenti di manutenzione con session.mjs solo use cu
   assert.ok(denied(sh(`node "${S}" use customer BETA --new --json`)), "cambio di cliente");
   assert.ok(denied(sh(`node "${S}" use env prod --json`)), "l'ambiente lo dichiara la sessione principale");
   assert.ok(denied(sh(`node "${S}" use scope P2P --json`)));
+  // revisione di sicurezza: tokenizzazione, non regex sul testo
+  assert.ok(denied(sh(`node "${S}" use customer ACME use customer BETA --json`)), "due verbi use");
+  assert.ok(denied(sh(`node "${S}" use customer ACME --session altra --json`)), "--session");
+  assert.ok(denied(sh(`node "${S}" use customer ACME --workspace /tmp/altro --json`)), "--workspace");
+  assert.ok(denied(sh(`node "${S}" show && node "${S}" use customer BETA --new`)), "separatore");
+  assert.ok(denied(sh(`JVC_WORKSPACE=/tmp/altro node "${S}" use customer ACME`)), "variabile d'ambiente");
   assert.ok(denied(sh(`node "${S}" use budget 999999999 --json`)));
   assert.ok(denied(sh(`node "${S}" use mode esplorazione --json`)));
   assert.ok(denied(sh(`node -e "import('${S}')"`)));
