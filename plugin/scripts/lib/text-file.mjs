@@ -36,9 +36,11 @@ export function confinedPath(base, file) {
   if (typeof file !== "string" || !file.trim() || file.includes("\0")) return { error: "serve il percorso del file" };
   const root = real(resolve(base));
   const abs = resolve(root, file);
-  if (!inside(root, abs)) return { error: `file fuori dal workspace: ${file} (i file di ingresso stanno nel workspace, es. customers/<C>/.sessions/<sessione>/)` };
+  const lexical = inside(root, abs);
+  // un percorso assoluto nella forma corta di Windows (8.3: C:\Users\NOME~1\…) o via un collegamento che resta dentro il
+  // workspace non è "fuori": conta la forma reale (28/10/2026)
   const r = real(abs);
-  if (!inside(root, r)) return { error: `file fuori dal workspace tramite un collegamento: ${file}` };
+  if (!inside(root, r)) return { error: lexical ? `file fuori dal workspace tramite un collegamento: ${file}` : `file fuori dal workspace: ${file} (i file di ingresso stanno nel workspace, es. customers/<C>/.sessions/<sessione>/)` };
   return { abs: r };
 }
 

@@ -127,7 +127,7 @@ test("minore 4: con una frase che riduce la protezione non confermata, transcrip
   const ok = ctl(ws, tr, "a1");
   assert.ok(allowed(ok)); times.push(ok.ms);
   console.log(`guard-control con transcript di 40 MB: ${times.map((t) => t.toFixed(0)).join(" · ")} ms`);
-  assert.ok(times.every((t) => t < 1000), times.join(","));
+  assert.ok(times.every((t) => t < 3000), times.join(","));   // 28/10/2026: 3 s nella suite in parallelo (instabile a 1 s); la soglia stretta è in test/timing
   // incrementale: il record parte dalla dimensione del transcript alla cattura (meno un margine), la scansione ha
   // un offset in cache per percorso (file protetto) e arriva alla fine del transcript
   const size = readFileSync(tr).length;
