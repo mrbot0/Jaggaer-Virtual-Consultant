@@ -509,6 +509,21 @@ function pluginScript(cmd, ctx) {
   return { script: call.scriptToken, args: call.args, rest: call.args.join(" ") };   // K5 giro 3: gli argomenti si controllano a parte
 }
 
+// 28/10/2026 (blocco dal vivo: i sub-agenti non potevano eseguire gli script del plugin, installato sotto ~/.claude/plugins):
+// la forma abituale di una chiamata — `cd <cartella> && node <plugin>/scripts/… args 2>&1 | head -50`, o con
+// $CLAUDE_PLUGIN_ROOT — non era una chiamata "semplice" e cadeva nel divieto sul testo `.claude`. Prima dell'analisi si
+// riconducono alla chiamata semplice: espansione di CLAUDE_PLUGIN_ROOT, `cd <cartella> &&` iniziale, `2>&1` e filtri di
+// sola lettura in coda (head, tail, wc, sort, uniq, cat, grep, findstr) con argomenti semplici. Il resto del comando non
+// cambia: ogni altra forma resta soggetta agli stessi divieti di prima.
+const SAFE_TAIL = /\s*(?:\|\s*(?:head|tail|wc|sort|uniq|grep|findstr)(?:\s+[\w.\-+*=:/\\ ]*?)?|2>&1)\s*$/i;
+const CD_HEAD = /^\s*cd\s+(?:"[^"\r\n]*"|'[^'\r\n]*'|[^\s&;|"'`$()<>]+)\s*(?:&&|;)\s*/i;
+export function normalizePluginCmd(cmd, ctx) {
+  let c = String(cmd).replace(/\$\{CLAUDE_PLUGIN_ROOT\}|\$CLAUDE_PLUGIN_ROOT|%CLAUDE_PLUGIN_ROOT%|\$env:CLAUDE_PLUGIN_ROOT/g, String(ctx.plugin ?? "").replace(/\\/g, "/"));
+  c = c.replace(CD_HEAD, "");
+  for (let i = 0; i < 4 && SAFE_TAIL.test(c); i++) c = c.replace(SAFE_TAIL, "");
+  return c.trim();
+}
+
 // WP08 giro 1 (I1): i generatori del pacchetto (integrity build, build-deny-rules, build-session-validator,
 // build-error-patterns) riscrivono integrity.json o hooks/lib/generated/: mai da una sessione; restano ammessi
 // `integrity verify` e le verifiche --check / --help che non scrivono.
@@ -673,7 +688,7 @@ const protectWrites = guarded(G, (ctx) => {
   if (cmd.includes("\0")) throw new PathPolicyError("comando con byte NUL");
   if (CLAUDE_BIN.test(cmd) && CLAUDE_FLAGS.test(cmd)) return no("la CLI di Claude in modalità headless o di ripresa (-p/--print, -r/--resume, -c/--continue) non si invoca da una sessione JVC: produrrebbe prompt 'dell'utente'");
   if (CLAUDE_BIN.test(cmd) && CLAUDE_ADMIN.test(cmd)) return no(`i sottocomandi claude plugin|config|mcp cambiano plugin, impostazioni e server MCP — ${SETTINGS_WHY}`);
-  const script = pluginScript(cmd, ctx);
+  const script = pluginScript(normalizePluginCmd(cmd, ctx), ctx) || pluginScript(cmd, ctx);
   if (script && ctx.agentId && /(^|[\\/])step-check\.mjs$/i.test(script.script)) {
     const r = subAgentStepCheck(ctx, script.rest);
     if (r) return no(r);

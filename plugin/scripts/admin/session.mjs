@@ -135,7 +135,7 @@ async function readKnowledgeVersion(dbPath, { create }) {
     try { return db.prepare("select value from meta where key='knowledge_version'").get()?.value ?? null; } finally { db.close(); }
   }
   try {
-    const { default: Database } = await import("better-sqlite3");
+    const { default: Database } = await import("../kb/sqlite.mjs");
     const db = new Database(dbPath, { readonly: true, fileMustExist: true });
     try { return db.prepare("select value from meta where key='knowledge_version'").get()?.value ?? null; } finally { db.close(); }
   } catch { return null; }
