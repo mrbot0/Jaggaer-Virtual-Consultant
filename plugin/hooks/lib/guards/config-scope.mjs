@@ -513,9 +513,9 @@ function pluginScript(cmd, ctx) {
 // la forma abituale di una chiamata — `cd <cartella> && node <plugin>/scripts/… args 2>&1 | head -50`, o con
 // $CLAUDE_PLUGIN_ROOT — non era una chiamata "semplice" e cadeva nel divieto sul testo `.claude`. Prima dell'analisi si
 // riconducono alla chiamata semplice: espansione di CLAUDE_PLUGIN_ROOT, `cd <cartella> &&` iniziale, `2>&1` e filtri di
-// sola lettura in coda (head, tail, wc, sort, uniq, cat, grep, findstr) con argomenti semplici. Il resto del comando non
+// sola lettura in coda (solo `head`/`tail` con argomento numerico e `wc -l`: sort, uniq, grep ecc. hanno opzioni che scrivono file). Il resto del comando non
 // cambia: ogni altra forma resta soggetta agli stessi divieti di prima.
-const SAFE_TAIL = /\s*(?:\|\s*(?:head|tail|wc|sort|uniq|grep|findstr)(?:\s+[\w.\-+*=:/\\ ]*?)?|2>&1)\s*$/i;
+const SAFE_TAIL = /\s*(?:\|\s*(?:(?:head|tail)(?:\s+-n\s*\d+|\s+-\d+)?|wc\s+-l)|2>&1)\s*$/i;
 const CD_HEAD = /^\s*cd\s+(?:"[^"\r\n]*"|'[^'\r\n]*'|[^\s&;|"'`$()<>]+)\s*(?:&&|;)\s*/i;
 export function normalizePluginCmd(cmd, ctx) {
   let c = String(cmd).replace(/\$\{CLAUDE_PLUGIN_ROOT\}|\$CLAUDE_PLUGIN_ROOT|%CLAUDE_PLUGIN_ROOT%|\$env:CLAUDE_PLUGIN_ROOT/g, String(ctx.plugin ?? "").replace(/\\/g, "/"));

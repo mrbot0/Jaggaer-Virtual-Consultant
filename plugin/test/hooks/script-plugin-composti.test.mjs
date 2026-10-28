@@ -19,7 +19,8 @@ test("forme composte di una chiamata a uno script del plugin: consentite", () =>
     `node "${R}/scripts/admin/approvals.mjs" status --session sess-1 | tail -n 20`,
     `cd "${ws}" && node "${R}/scripts/admin/approvals.mjs" status --session sess-1 2>&1 | head -50`,
     `node "$CLAUDE_PLUGIN_ROOT/scripts/admin/approvals.mjs" status --session sess-1`,
-    `node "\${CLAUDE_PLUGIN_ROOT}/scripts/admin/approvals.mjs" status --session sess-1 | grep -i plan`,
+    `node "\${CLAUDE_PLUGIN_ROOT}/scripts/admin/approvals.mjs" status --session sess-1 | head -5`,
+    `node "${R}/scripts/admin/approvals.mjs" status | wc -l`,
   ]) assert.notEqual(decisionOf(g(ws, c)), "deny", c);
 });
 
@@ -30,6 +31,8 @@ test("restano negate le forme pericolose", () => {
     `node "${R}/scripts/admin/approvals.mjs" status && node -e "require('fs').writeFileSync('x','y')"`,
     `node "${R}/scripts/admin/approvals.mjs" status | tee "${ws}/customers/ACME/.sessions/sess-1/session.json"`,
     `node "${R}/scripts/admin/approvals.mjs" status --db .claude/settings.json 2>&1 | head`,
+    `node "${R}/scripts/admin/approvals.mjs" status | sort -o "${ws}/customers/ACME/.sessions/sess-1/session.json"`,
+    `node "${R}/scripts/admin/approvals.mjs" status | uniq - "${ws}/customers/ACME/.sessions/sess-1/session.json"`,
     `node -e "1" 2>&1 | head -5 # ${R}/hooks`,
   ]) assert.equal(decisionOf(g(ws, c)), "deny", c);
 });
