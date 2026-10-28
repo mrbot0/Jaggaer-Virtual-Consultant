@@ -16,7 +16,7 @@
 //  - altrimenti testo semplice (get_page_text): solo texts.
 
 import { redact } from "./redact.mjs";
-import { DELETE_LABEL } from "../../hooks/lib/effect-labels.mjs";
+import { DELETE_LABEL, normalizeLabel as normDel } from "../../hooks/lib/effect-labels.mjs";
 
 export const MESSAGE_ROLES = new Set(["alert", "status", "alertdialog", "dialog", "log", "marquee"]);
 export const FIELD_ROLES = new Set(["textbox", "searchbox", "spinbutton", "combobox", "listbox", "checkbox", "radio", "switch", "slider", "textarea"]);
@@ -284,7 +284,7 @@ function stripLongDataUris(text) {
     if (!DATA_HEAD.test(text.slice(i, i + 200))) continue;
     let end = i;
     while (end < text.length && text[end] !== '"' && text[end] !== "\n" && text[end] !== "\r") end++;
-    if (end - i > 200 && !REF_TOKEN.test(text.slice(i, end))) { out += text.slice(from, i) + DATA_URI_PLACEHOLDER + deleteWords(text.slice(i, end - KEEP_TAIL)) + text.slice(end - KEEP_TAIL, end); from = end; }
+    if (end - i > 200 && !REF_TOKEN.test(text.slice(i, end))) { out += text.slice(from, i) + DATA_URI_PLACEHOLDER + deleteWords(normDel(text.slice(i, end))) + text.slice(end - KEEP_TAIL, end); from = end; }
     re.lastIndex = Math.max(end, i + 5);
   }
   return out + text.slice(from);

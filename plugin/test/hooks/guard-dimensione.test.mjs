@@ -150,6 +150,9 @@ test("1: una parola di cancellazione nel mezzo di un data URI lungo non si perde
   const { isDeleteLabel } = await import("../../hooks/lib/effect-labels.mjs");
   const v = `data:text/plain,${"a".repeat(300)} Elimina ${"b".repeat(300)}`;
   assert.ok(isDeleteLabel(stripDataUris(`uid=1_2 button "${v}"`)));
+  // maiuscole/accenti e parola a cavallo fra span e coda
+  assert.ok(isDeleteLabel(stripDataUris(`uid=1_2 button "data:text/plain,${"a".repeat(300)} ELIMINA ${"b".repeat(300)}"`)));
+  assert.ok(isDeleteLabel(stripDataUris(`uid=1_2 button "data:text/plain,${"a".repeat(300)} ${"b".repeat(25)} Elimina ${"c".repeat(5)}"`)));
 });
 
 test("2: marcatore rimasto da una chiamata non registrata ⇒ click negato; una lettura completa riuscita della stessa scheda lo chiude ⇒ click consentito (anche il marcatore del cliente)", () => {
