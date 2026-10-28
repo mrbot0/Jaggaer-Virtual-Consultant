@@ -16,6 +16,7 @@
 //  - altrimenti testo semplice (get_page_text): solo texts.
 
 import { redact } from "./redact.mjs";
+import { DELETE_LABEL } from "../../hooks/lib/effect-labels.mjs";
 
 export const MESSAGE_ROLES = new Set(["alert", "status", "alertdialog", "dialog", "log", "marquee"]);
 export const FIELD_ROLES = new Set(["textbox", "searchbox", "spinbutton", "combobox", "listbox", "checkbox", "radio", "switch", "slider", "textarea"]);
@@ -270,6 +271,9 @@ const DATA_HEAD = /^data:[\w.+/-]*[;,]/i;
 // tiene in coda un suffisso di 40 caratteri: un'etichetta di cancellazione nascosta in fondo a un valore lungo resta
 // visibile ai guard (isDeleteLabel).
 const KEEP_TAIL = 40;
+// Rilievo di sicurezza (28/10/2026): una parola di cancellazione nel mezzo dello span omesso non si perde: resta nel segnaposto.
+const DEL_RE = new RegExp(DELETE_LABEL.source, "gi");
+const deleteWords = (span) => { const w = [...new Set((span.match(DEL_RE) ?? []).map((x) => x.toLowerCase()))].slice(0, 5); return w.length ? ` [${w.join(" ")}]` : ""; };
 function stripLongDataUris(text) {
   const re = /data:/gi;
   let out = "";
@@ -280,7 +284,7 @@ function stripLongDataUris(text) {
     if (!DATA_HEAD.test(text.slice(i, i + 200))) continue;
     let end = i;
     while (end < text.length && text[end] !== '"' && text[end] !== "\n" && text[end] !== "\r") end++;
-    if (end - i > 200 && !REF_TOKEN.test(text.slice(i, end))) { out += text.slice(from, i) + DATA_URI_PLACEHOLDER + text.slice(end - KEEP_TAIL, end); from = end; }
+    if (end - i > 200 && !REF_TOKEN.test(text.slice(i, end))) { out += text.slice(from, i) + DATA_URI_PLACEHOLDER + deleteWords(text.slice(i, end - KEEP_TAIL)) + text.slice(end - KEEP_TAIL, end); from = end; }
     re.lastIndex = Math.max(end, i + 5);
   }
   return out + text.slice(from);

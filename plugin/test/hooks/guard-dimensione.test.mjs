@@ -145,6 +145,13 @@ test("1: data URI lunghi NON in base64 (svg percent-encoded, base64url) si omett
 });
 
 // 2 ----------------------------------------------------------------------------------------------------------------------
+test("1: una parola di cancellazione nel mezzo di un data URI lungo non si perde", async () => {
+  const { stripDataUris } = await import("../../scripts/chrome/snapshot-parse.mjs");
+  const { isDeleteLabel } = await import("../../hooks/lib/effect-labels.mjs");
+  const v = `data:text/plain,${"a".repeat(300)} Elimina ${"b".repeat(300)}`;
+  assert.ok(isDeleteLabel(stripDataUris(`uid=1_2 button "${v}"`)));
+});
+
 test("2: marcatore rimasto da una chiamata non registrata ⇒ click negato; una lettura completa riuscita della stessa scheda lo chiude ⇒ click consentito (anche il marcatore del cliente)", () => {
   const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
   const tree = `uid=1_0 RootWebArea "Analytics Launchpad" url="${url}"\n  uid=1_1 link "Report 1"\n  uid=1_2 button "Nuovo report"\n`;
