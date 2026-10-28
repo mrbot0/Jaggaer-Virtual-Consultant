@@ -521,11 +521,21 @@ const CD_HEAD = /^\s*cd\s+("[^"\r\n]*"|'[^'\r\n]*'|[^\s&;|"'`$()<>]+)\s*(?:&&|;)
 // $env:VAR in PowerShell; mai %VAR%), e un `cd` iniziale si toglie solo se punta già alla cartella corrente (altrimenti i
 // percorsi relativi si risolverebbero altrove da come li legge il guard).
 const trimSep = (p) => p.replace(/[\\/]+$/, "").toLowerCase();
-const sameDir = (t, cwd) => { try { return trimSep(resolve(String(cwd), t.replace(/^["']|["']$/g, ""))) === trimSep(resolve(String(cwd))); } catch { return false; } };
+// Secondo giro: il `cd` si toglie solo se il bersaglio è un letterale (nessuna espansione, nessun `..`) identico alla cartella
+// corrente o `.`; altrimenti il comando resta com'è e non prende la via rapida degli script del plugin.
+const sameDir = (t, cwd) => {
+  const lit = t.replace(/^["']|["']$/g, "");
+  if (/[$`()%]|\.\./.test(lit)) return false;
+  if (lit === ".") return true;
+  return trimSep(lit.replace(/\\/g, "/")) === trimSep(String(cwd).replace(/\\/g, "/"));
+};
 export function normalizePluginCmd(cmd, ctx) {
   const root = String(ctx.plugin ?? "").replace(/\\/g, "/");
   const VAR = ctx.tool === "PowerShell" ? /\$env:CLAUDE_PLUGIN_ROOT\b/gi : ctx.tool === "Bash" ? /\$\{CLAUDE_PLUGIN_ROOT\}|\$CLAUDE_PLUGIN_ROOT\b/g : null;
-  let c = VAR ? String(cmd).replace(VAR, root) : String(cmd);
+  // la variabile non si espande se il comando ha apici singoli, backtick o un escape davanti a `$`: dove la shell non
+  // espande (o espande altrimenti) il testo potrebbe leggersi diversamente dal guard
+  const risky = /'|`|\\[$"]/.test(String(cmd));
+  let c = VAR && !risky ? String(cmd).replace(VAR, root) : String(cmd);
   const m = CD_HEAD.exec(c);
   if (m && sameDir(m[1], ctx.cwd)) c = c.slice(m[0].length);
   for (let i = 0; i < 4 && SAFE_TAIL.test(c); i++) c = c.replace(SAFE_TAIL, "");
