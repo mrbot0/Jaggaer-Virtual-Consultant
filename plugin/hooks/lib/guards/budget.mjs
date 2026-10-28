@@ -16,7 +16,8 @@
 import { appendFileSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { allowWithInput } from "../io.mjs";
-import { invocationsFile } from "../workspace.mjs";
+import { invocationsFile, pluginAgentType } from "../workspace.mjs";
+import { KEEPER_AGENTS } from "./scope.mjs";
 import { skeleton } from "../paths.mjs";
 import { openInvocations } from "../state-summary.mjs";
 import { parsePromptHeader } from "../../../scripts/admin/agent-prompt.mjs";
@@ -123,6 +124,9 @@ function checkSubAgentShell(ctx, cmd, refs) {
   if (refs.glob) return no("nome con caratteri jolly");
   if (refs.opaque) return no("riferimento non risolvibile");
   if (!refs.literal.length) return null;
+  // 28/10/2026: gli agenti di manutenzione generano il workspace (use customer --new, use env, show); il budget resta
+  // solo dell'utente
+  if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) return /\buse\s+budget\b|\bbudget\b/i.test(refs.flat) ? no("il budget lo alza solo l'utente") : null;
   if (EVAL.test(refs.flat)) return no("esecuzione di codice con node -e/import()");
   if (USE_VERB.test(refs.flat)) return no("verbo use");
   const plugin = join(ctx.plugin, "scripts", "admin", TARGET);
@@ -158,13 +162,17 @@ export const decide = guarded(G, (ctx) => {
   if (SHELL_TOOLS.has(ctx.tool)) return checkShell(ctx);
   if (!AGENT_TOOLS.has(ctx.tool)) return null;
   const { session, ti } = ctx;
+  // 28/10/2026 (decisione dell'utente): gli agenti di manutenzione del workspace e della KB (workspace-manager,
+  // health-keeper) partono anche senza cliente attivo né header del dispatch: generano e riparano il workspace
+  if (KEEPER_AGENTS.has(pluginAgentType(ti?.subagent_type))) return null;
   if (!session) return denyAudited(ctx, G, "nessuna sessione con cliente attivo: esegui /jaggaer-virtual-consultant:use customer <ID> prima di invocare sub-agenti");
   const h = parsePromptHeader(ti.prompt);
   if (!h) return denyAudited(ctx, G, "prompt senza header agent-prompt (§46.1): servono task_id, customer, scope, allowed_paths — componi il prompt da templates/agent-prompt.md");
   const missing = REQUIRED.filter((k) => h[k] == null || h[k] === "" || (k === "allowed_paths" && !Array.isArray(h[k])));
   if (missing.length) return denyAudited(ctx, G, `header agent-prompt incompleto: mancano ${missing.join(", ")}`);
   if (String(h.customer) !== session.customer) return denyAudited(ctx, G, `il prompt è per il cliente ${h.customer} ma la sessione è sul cliente ${session.customer}`);
-  if (String(h.scope) !== session.scope) return denyAudited(ctx, G, `scope del prompt ${h.scope} ≠ scope di sessione ${session.scope ?? "—"}: esegui use scope ${h.scope} prima del dispatch (i guard leggono session.json)`);
+  // 28/10/2026: in esplorazione un dispatch può lavorare su uno scope diverso da quello di sessione (l'esplorazione li attraversa)
+  if (String(h.scope) !== session.scope && session.mode !== "esplorazione") return denyAudited(ctx, G, `scope del prompt ${h.scope} ≠ scope di sessione ${session.scope ?? "—"}: esegui use scope ${h.scope} prima del dispatch (i guard leggono session.json)`);
   // WP10d (D2, D8): regole di orchestrazione applicate dal codice — sub-agente che invoca Agent, controllo
   // dell'utente (pausa/stop), vigilanza cognitiva per scope, handoff via agent-manager con contratto HND
   const orch = dispatchRefusal(ctx, h);

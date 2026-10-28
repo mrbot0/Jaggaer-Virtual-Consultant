@@ -52,7 +52,7 @@ export function reachable(shape, { risk, mode, depth }) {
 }
 
 test("esempi dei rapporti: la coppia (forma, strategia) di ogni agente è una che strategy-select può dare con i parametri del corpo", () => {
-  const files = readdirSync(AGENTS).filter((f) => f.endsWith(".md")).sort();
+  const files = readdirSync(AGENTS).filter((f) => f.endsWith(".md") && !["health-keeper", "workspace-manager"].includes(f.slice(0, -3))).sort();   // 28/10/2026: esclusi gli agenti di manutenzione
   assert.equal(files.length, 15, "i 15 agenti foglia");
   const errs = [];
   for (const f of files) {

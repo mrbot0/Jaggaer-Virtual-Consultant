@@ -48,7 +48,8 @@ test("documenti (correzioni dopo la revisione): pagine pesanti con DevTools via 
     const t = read(p);
     assert.match(t, /filePath/, `${p}: filePath`);
     assert.match(t, /Chrome DevTools/, `${p}: esplorazione in preprod con Chrome DevTools`);
-    assert.match(t, /coordinate/i, `${p}: click a coordinate negati`);
+    // 28/10/2026: in esplorazione i click non hanno più vincoli (decisione dell'utente): lo scope-expert non li cita
+    if (p !== "agents/scope-expert.md") assert.match(t, /coordinate/i, `${p}: click a coordinate negati`);
   }
   const manual = read("docs/MANUAL.md");
   assert.match(manual, /MAX_MCP_OUTPUT_TOKENS/);
@@ -71,8 +72,8 @@ test("documenti (guard sulla grandezza tolto, 27/10/2026): niente limite in byte
     const t = read(p);
     assert.doesNotMatch(t, /troppo grande per essere mappata/, p);
     assert.match(t, /base64 omesso/, p);
-    assert.match(t, /non è stata\s+registrata/, p);
-    assert.match(t, /per intero/, p);
+    // 28/10/2026: il marcatore non blocca più i click in esplorazione: lo scope-expert non ne parla
+    if (p !== "agents/scope-expert.md") { assert.match(t, /non è stata\s+registrata/, p); assert.match(t, /per intero/, p); }
   }
 });
 

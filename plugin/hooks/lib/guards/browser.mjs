@@ -45,6 +45,18 @@ export function declaredEnv(ctx, { withRemediation = false } = {}) {
   return { env };
 }
 
+// 28/10/2026 (file di ambiente scrivibili dagli agenti): environments.yaml o remediation-scope.yaml cambiati dopo `use env`
+// ⇒ si ricarica la voce dello stesso ambiente (hooks/lib/env-refresh.mjs) invece di negare; ogni altro motivo resta.
+const CHANGED = /è cambiato dopo \/use env/;
+export async function declaredEnvFresh(ctx, opts = {}) {
+  const r = declaredEnv(ctx, opts);
+  if (r.env || !CHANGED.test(r.reason ?? "")) return r;
+  const { refreshEnv } = await import("../env-refresh.mjs");
+  const f = await refreshEnv({ ws: ctx.ws, customer: ctx.customer, sessionFile: ctx.sessionFile, session: ctx.session });
+  if (f.env) ctx.session = { ...ctx.session, env: f.env };
+  return f;
+}
+
 const IPV4 = /^\d{1,3}(\.\d{1,3}){3}$/;
 const allowList = (env) => (env.allowed_hosts ?? []).map((h) => {
   const n = normalizeHost(h);

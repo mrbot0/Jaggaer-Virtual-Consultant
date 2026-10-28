@@ -14,7 +14,7 @@ import { ROOT, cleanEnv } from "../helpers/hook-env.mjs";
 import { simpleArgv } from "../../hooks/lib/exact-argv.mjs";
 import { classify } from "../../hooks/lib/browser-tools.mjs";
 import { commandLines, renderLine } from "../helpers/commands.mjs";
-import { LEAF_AGENTS, AGENTS_DIR, EXPECT, KB_READERS, ALM_PATTERN, WP10C_SKILLS, agentFiles, parseAgent, toolList, section, skillRefs, scriptRefs } from "../helpers/agents-md.mjs";
+import { MAINTENANCE_AGENTS, LEAF_AGENTS, AGENTS_DIR, EXPECT, KB_READERS, ALM_PATTERN, WP10C_SKILLS, agentFiles, parseAgent, toolList, section, skillRefs, scriptRefs } from "../helpers/agents-md.mjs";
 
 const FORBIDDEN = ["Agent", "Task", "AskUserQuestion", "WebFetch", "WebSearch"];
 const agents = () => Object.entries(agentFiles()).map(([name, text]) => ({ name, text, ...parseAgent(text) }));
@@ -24,7 +24,7 @@ const flat = (s) => (s == null ? s : s.replace(/\s+/g, " "));
 test("agents/: esattamente le 15 definizioni foglia, nessun agents/agent-manager.md (il manager è la skill agent-manager, M1)", () => {
   assert.ok(existsSync(AGENTS_DIR), "manca agents/");
   const files = readdirSync(AGENTS_DIR).sort();
-  assert.deepEqual(files, LEAF_AGENTS.map((a) => `${a}.md`).sort());
+  assert.deepEqual(files, [...LEAF_AGENTS, ...MAINTENANCE_AGENTS].map((a) => `${a}.md`).sort());   // 28/10/2026: più i due agenti di manutenzione
   assert.ok(!existsSync(join(AGENTS_DIR, "agent-manager.md")));
 });
 

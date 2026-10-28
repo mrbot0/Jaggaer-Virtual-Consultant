@@ -25,7 +25,7 @@ import { readFileSync, statSync, mkdirSync } from "node:fs";
 import { isAbsolute, resolve as resolvePath, join as joinPath } from "node:path";
 import { callKey } from "../ref-history.mjs";
 import { guardContext, denyAudited } from "./common.mjs";
-import { browserGuarded, declaredEnv, urlRefusal, outputRefusal, SCRIPT_DENIED, claudeEffectRefusal } from "./browser.mjs";
+import { browserGuarded, declaredEnvFresh, urlRefusal, outputRefusal, SCRIPT_DENIED, claudeEffectRefusal } from "./browser.mjs";
 import { isBrowserTool, mcpServer } from "../browser-tools.mjs";
 import { updateSessionFile } from "../session-state.mjs";
 
@@ -79,8 +79,8 @@ function check(ctx, env, a, st) {
   return null;
 }
 
-const browser = browserGuarded(G, (ctx, no) => {
-  const { env, reason } = declaredEnv(ctx);
+const browser = browserGuarded(G, async (ctx, no) => {
+  const { env, reason } = await declaredEnvFresh(ctx);
   if (!env) return no(reason);
   // WP08 (decisione del controllore su WP07): effetti del browser di Claude solo in sandbox
   const ce = claudeEffectRefusal(ctx, env.type);

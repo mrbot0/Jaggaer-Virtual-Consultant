@@ -28,7 +28,7 @@ import { PHRASE_DENY_PATTERN, USER_PHRASE_PATTERN, approvalRegex, CROSS_READ_ROL
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const EVALS = join(ROOT, "evals");
-const AGENTS = readdirSync(join(ROOT, "agents")).filter((f) => f.endsWith(".md")).map((f) => f.slice(0, -3)).sort();
+const AGENTS = readdirSync(join(ROOT, "agents")).filter((f) => f.endsWith(".md")).map((f) => f.slice(0, -3)).filter((a) => !["health-keeper", "workspace-manager"].includes(a)).sort();   // 28/10/2026: esclusi gli agenti di manutenzione
 // Blocchi della parte 2 (dispatch separati): A, B e C scritti — tutti i 15 ruoli, 300 casi. Un ruolo presente deve avere 20 casi.
 const BLOCK_A = ["scope-expert", "scope-extractor", "scope-digester", "customer-profiler", "process-mapper"];
 const BLOCK_B = ["cluster-validator", "weekly-digest", "root-cause-analyst", "config-designer", "lesson-validator"];

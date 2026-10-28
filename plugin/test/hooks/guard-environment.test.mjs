@@ -104,12 +104,12 @@ test("dichiarato ma non verificato: solo navigate verso host dichiarati e lettur
   assert.ok(denied(nav(ws, "https://evil.io/")));
 });
 
-test("ambiente sconosciuto: environments.yaml cambiato o sparito dopo use env ⇒ deny", () => {
+test("environments.yaml cambiato dopo use env ⇒ ambiente ricaricato (28/10/2026); sparito ⇒ deny", () => {
   const ws = envWs();
   const f = join(ws, "customers/ACME/config/environments.yaml");
   appendFileSync(f, "\n# modificato\n");
   const r = nav(ws, "https://acme-sbx.jaggaer.com/");
-  assert.ok(denied(r)); assert.match(reasonOf(r), /environments\.yaml/);
+  assert.ok(!denied(r), reasonOf(r));
   unlinkSync(f);
   assert.ok(denied(call(ws, `${DT}take_snapshot`, {})));
 });

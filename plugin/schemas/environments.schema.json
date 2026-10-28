@@ -62,12 +62,15 @@
           }
         },
         "login_url_pattern": { "type": "string", "minLength": 1 },
+        "app_url_pattern": { "type": "string", "minLength": 1, "description": "URL delle pagine dopo il login (es. ^https://host/esop/): segnale app_url" },
         "absence_required": { "type": "array", "items": { "type": "string", "minLength": 1 } }
       },
       "anyOf": [
         { "required": ["title_pattern", "banner"], "properties": { "banner": { "type": "object" } } },
         { "required": ["title_pattern", "tenant_id"], "properties": { "tenant_id": { "type": "object" } } },
         { "required": ["title_pattern", "login_url_pattern"] },
+        { "required": ["title_pattern", "app_url_pattern"] },
+        { "required": ["login_url_pattern", "app_url_pattern"] },
         { "required": ["banner", "tenant_id"], "properties": { "banner": { "type": "object" }, "tenant_id": { "type": "object" } } },
         { "required": ["banner", "login_url_pattern"], "properties": { "banner": { "type": "object" } } },
         { "required": ["tenant_id", "login_url_pattern"], "properties": { "tenant_id": { "type": "object" } } }

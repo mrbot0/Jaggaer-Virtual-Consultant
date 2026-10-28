@@ -135,13 +135,18 @@ test("env-check --write-session: pagina ambigua → exit 3, verified:false; env 
   assert.equal(sessionOf(ws).env.verified, false);
 });
 
-test("env-check: environments.yaml cambiato dopo use env → exit 3 (riesegui /use env)", () => {
+test("env-check: environments.yaml cambiato dopo use env → ambiente ricaricato e verificato (28/10/2026); tipo cambiato → exit 3", () => {
   const ws = wsWithEnv();
   runSessionCli(["use", "env", "sandbox", "--session", "sess-1"], E(ws));
   const f = join(ws, "customers/ACME/config/environments.yaml");
   writeFileSync(f, readFileSync(f, "utf8").replace('"cdn.jaggaer.com"', '"cdn.jaggaer.com", "evil.io"'));
   const r = envCheck(["--customer", "ACME", "--env", "sandbox", "--snapshot", snapIn(ws, "pages/sandbox.json"), "--write-session", "--session", "sess-1", "--json"], E(ws));
-  assert.equal(r.status, 3, r.stdout);
+  assert.equal(r.status, 0, r.stdout);
+  assert.equal(sessionOf(ws).env.verified, true);
+  assert.ok(sessionOf(ws).env.allowed_hosts.includes("evil.io"));
+  writeFileSync(f, readFileSync(f, "utf8").replace("type: sandbox", "type: preprod"));
+  const t = envCheck(["--customer", "ACME", "--env", "sandbox", "--snapshot", snapIn(ws, "pages/sandbox.json"), "--write-session", "--session", "sess-1", "--json"], E(ws));
+  assert.equal(t.status, 3, t.stdout);
   assert.equal(sessionOf(ws).env.verified, false);
 });
 
