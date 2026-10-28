@@ -259,11 +259,31 @@ export function parseSnapshot(text, { family = null } = {}) {
 // Solo i caratteri del base64 (niente spazi né a capo: una riga successiva non si tocca mai); una sequenza che contiene
 // un token di ref (uid=… dopo un carattere non di parola) non è base64 e resta com'è (i controlli del legame la vedono).
 export const DATA_URI_PLACEHOLDER = "data:…(base64 omesso)";
-const DATA_URI = /data:[\w.+/-]*(?:;[\w.+-]+=[\w.+%-]*)*;base64,[A-Za-z0-9+/=]+/gi;
+const DATA_URI = /data:[\w.+/-]*(?:;[\w.+-]+=[\w.+%-]*)*;base64,[A-Za-z0-9+/=_-]+/gi;
 const REF_TOKEN = /[^\w]uid=\w/;
+// 28/10/2026 (blocco dal vivo: logo di Analytics, una sola riga di ~555.000 caratteri, il click restava negato): anche i
+// data URI lunghi NON in base64 (svg percent-encoded, base64url, parametri insoliti) si sostituiscono. Un data URI oltre 200
+// caratteri non è mai un nome né un ref: dal `data:` al prossimo apice doppio o a capo (stesso controllo dei ref).
+// Scansione a indici (non una regex: su valori di decine di MB una regex va in stack overflow).
+const DATA_HEAD = /^data:[\w.+/-]*[;,]/i;
+function stripLongDataUris(text) {
+  let out = "";
+  let from = 0;
+  let i = text.search(/data:/i);
+  while (i >= 0) {
+    const head = DATA_HEAD.exec(text.slice(i, i + 200));
+    let end = i;
+    if (head) { while (end < text.length && text[end] !== '"' && text[end] !== "\n" && text[end] !== "\r") end++; }
+    if (head && end - i > 200 && !REF_TOKEN.test(text.slice(i, end))) { out += text.slice(from, i) + DATA_URI_PLACEHOLDER; from = end; i = text.slice(end).search(/data:/i); i = i < 0 ? -1 : end + i; continue; }
+    const next = text.slice(i + 5).search(/data:/i);
+    i = next < 0 ? -1 : i + 5 + next;
+  }
+  return out + text.slice(from);
+}
 export function stripDataUris(text) {
-  if (typeof text !== "string" || !/;base64,/i.test(text)) return text;
-  return text.replace(DATA_URI, (m) => (REF_TOKEN.test(m) ? m : DATA_URI_PLACEHOLDER));
+  if (typeof text !== "string" || !/data:/i.test(text)) return text;
+  const sub = (m) => (REF_TOKEN.test(m) ? m : DATA_URI_PLACEHOLDER);
+  return stripLongDataUris(/;base64,/i.test(text) ? text.replace(DATA_URI, sub) : text);
 }
 // Stessa sostituzione sui blocchi di testo di una risposta MCP (stringa, elenco di blocchi o { content }).
 export function stripResponseDataUris(resp) {

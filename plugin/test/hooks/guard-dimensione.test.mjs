@@ -130,6 +130,34 @@ test("1: i data URI si tolgono senza toccare i ref (uid, [ref], token nascosti d
   assert.equal(stripDataUris("a data:x;base64,QUJD\n  uid=1_4 b"), "a data:…(base64 omesso)\n  uid=1_4 b");
 });
 
+test("1: data URI lunghi NON in base64 (svg percent-encoded, base64url) si omettono; il logo di una sola riga da ~555.000 caratteri non blocca", async () => {
+  const { stripDataUris } = await import("../../scripts/chrome/snapshot-parse.mjs");
+  const svg = `data:image/svg+xml;utf8,${"%3Cpath%20d%3D%22M0%200L1%201%22%2F%3E".repeat(15000)}`;
+  const out = stripDataUris(`uid=1_15 image "Logo" url="${svg}"\nuid=1_16 link "Vai"`);
+  assert.equal(out, `uid=1_15 image "Logo" url="data:…(base64 omesso)"\nuid=1_16 link "Vai"`);
+  assert.equal(stripDataUris(`uid=1_2 image "x" url="data:image/png;base64,${"A-_b".repeat(100)}"`), `uid=1_2 image "x" url="data:…(base64 omesso)"`);
+  assert.equal(stripDataUris(`uid=1_3 link "data:corto"`), `uid=1_3 link "data:corto"`);
+  const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
+  const r = post(ws, DT + "take_snapshot", {}, inline(`uid=1_0 RootWebArea "Analytics" url="${url}"\n  uid=1_15 image "Logo" url="${svg}"\n  uid=1_16 button "New Report"\n`));
+  assert.equal(r.status, 0, r.stderr);
+  assert.deepEqual(pendingOf(ws), {});
+  assert.ok(ok(g(DT + "click", { uid: "1_16" })));
+});
+
+test("1: data URI lunghi NON in base64 (svg percent-encoded, base64url) si omettono; il logo di una sola riga da ~555.000 caratteri non blocca", async () => {
+  const { stripDataUris } = await import("../../scripts/chrome/snapshot-parse.mjs");
+  const svg = `data:image/svg+xml;utf8,${"%3Cpath%20d%3D%22M0%200L1%201%22%2F%3E".repeat(15000)}`;
+  const out = stripDataUris(`uid=1_15 image "Logo" url="${svg}"\nuid=1_16 link "Vai"`);
+  assert.equal(out, `uid=1_15 image "Logo" url="data:…(base64 omesso)"\nuid=1_16 link "Vai"`);
+  assert.equal(stripDataUris(`uid=1_2 image "x" url="data:image/png;base64,${"A-_b".repeat(100)}"`), `uid=1_2 image "x" url="data:…(base64 omesso)"`);
+  assert.equal(stripDataUris(`uid=1_3 link "data:corto"`), `uid=1_3 link "data:corto"`);
+  const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
+  const r = post(ws, DT + "take_snapshot", {}, inline(`uid=1_0 RootWebArea "Analytics" url="${url}"\n  uid=1_15 image "Logo" url="${svg}"\n  uid=1_16 button "New Report"\n`));
+  assert.equal(r.status, 0, r.stderr);
+  assert.deepEqual(pendingOf(ws), {});
+  assert.ok(ok(g(DT + "click", { uid: "1_16" })));
+});
+
 // 2 ----------------------------------------------------------------------------------------------------------------------
 test("2: marcatore rimasto da una chiamata non registrata ⇒ click negato; una lettura completa riuscita della stessa scheda lo chiude ⇒ click consentito (anche il marcatore del cliente)", () => {
   const { ws, url, g } = explore("preprod", "ESPLORA PREPROD");
@@ -139,9 +167,9 @@ test("2: marcatore rimasto da una chiamata non registrata ⇒ click negato; una 
   lost(ws, DT + "take_snapshot", {});
   lost(ws, DT + "take_snapshot", {});
   assert.equal(Object.keys(pendingOf(ws)).length, 2);
+  // 28/10/2026: in esplorazione il marcatore non nega più il click (decisione dell'utente)
   const d = g(DT + "click", { uid: "1_1" });
-  assert.ok(!ok(d));
-  assert.match(reasonOf(d), /non è stata registrata/);
+  assert.ok(ok(d), reasonOf(d));
   post(ws, DT + "take_snapshot", {}, inline(tree));
   assert.deepEqual(pendingOf(ws), {}, "marcatori della scheda chiusi dalla lettura completa");
   assert.deepEqual(customerPending(ws), {}, "anche quelli del cliente");
@@ -159,11 +187,10 @@ test("2: la guarigione vale solo per la famiglia e la scheda lette — le altre 
   assert.ok(ok(g(CL + "computer", { action: "left_click", ref: "ref_3", tabId: 101 })));
   lost(ws, CL + "read_page", { tabId: 101 }, page(101));
   lost(ws, CL + "read_page", { tabId: 202 }, page(202));
-  assert.ok(!ok(g(CL + "computer", { action: "left_click", ref: "ref_3", tabId: 101 })));
+  assert.ok(ok(g(CL + "computer", { action: "left_click", ref: "ref_3", tabId: 101 })), "28/10/2026: il marcatore non nega più il click in esplorazione");
   // una lettura ristretta (parziale) non ricostruisce la mappa: il marcatore resta
   post(ws, CL + "read_page", { tabId: 101, ref_id: "ref_1" }, [{ type: "text", text: `menuitem "Ordini" [ref_3]` }, { type: "text", text: ctx(101) }]);
   assert.ok(Object.values(pendingOf(ws)).some((v) => v.tab === "cl|101"), JSON.stringify(pendingOf(ws)));
-  assert.ok(!ok(g(CL + "computer", { action: "left_click", ref: "ref_3", tabId: 101 })));
   post(ws, CL + "read_page", { tabId: 101 }, page(101));
   const left = Object.values(pendingOf(ws)).map((v) => v.tab);
   assert.deepEqual(left, ["cl|202"], "resta solo il marcatore dell'altra scheda");
