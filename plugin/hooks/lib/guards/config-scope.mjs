@@ -122,9 +122,9 @@ function fullExploreRefusal(ctx) {
   const deleteQuestion = names ? Object.values(names).some((n) => isDeleteQuestion(n)) : false;
   for (const a of ctx.actions.filter(isEffectful)) {
     if (["upload", "script", "other"].includes(a.kind)) return `esplorazione completa: ${a.kind === "upload" ? "il caricamento di file" : a.kind === "script" ? "gli script nella pagina" : "gli strumenti non classificati"} restano vietati (${a.op ?? a.tool ?? ctx.tool})`;
-    ctx.pendingFile ??= loadPending(pendingFile(join(ctx.ws, "customers", ctx.customer, ".sessions")));
-    const pend = pendingRefusal(mergedPending(b, ctx.pendingFile), a.family ?? ctx.call?.family, a.tab);
-    if (pend) return `esplorazione completa: ${pend}`;
+    // 28/10/2026 (decisione dell'utente: «a costo di abbattere il guard dei click»): in esplorazione il marcatore delle
+    // chiamate non registrate da observe-append non nega più i click (bloccava l'esplorazione ogni pochi minuti); restano
+    // i controlli sulle cancellazioni (nome dell'elemento nell'ultimo snapshot). Nei piani il marcatore vale ancora.
     if (a.kind === "dialog") {
       if (isDeleteLabel(ctx.ti?.promptText)) return "esplorazione completa: il testo del dialogo conferma una cancellazione: vietato";
       if (a.submits && deleteQuestion) return "esplorazione completa: la pagina chiede di confermare una cancellazione: non si accetta il dialogo";

@@ -16,6 +16,7 @@
 //  - altrimenti testo semplice (get_page_text): solo texts.
 
 import { redact } from "./redact.mjs";
+import { DELETE_LABEL, normalizeLabel as normDel } from "../../hooks/lib/effect-labels.mjs";
 
 export const MESSAGE_ROLES = new Set(["alert", "status", "alertdialog", "dialog", "log", "marquee"]);
 export const FIELD_ROLES = new Set(["textbox", "searchbox", "spinbutton", "combobox", "listbox", "checkbox", "radio", "switch", "slider", "textarea"]);
@@ -259,11 +260,39 @@ export function parseSnapshot(text, { family = null } = {}) {
 // Solo i caratteri del base64 (niente spazi né a capo: una riga successiva non si tocca mai); una sequenza che contiene
 // un token di ref (uid=… dopo un carattere non di parola) non è base64 e resta com'è (i controlli del legame la vedono).
 export const DATA_URI_PLACEHOLDER = "data:…(base64 omesso)";
-const DATA_URI = /data:[\w.+/-]*(?:;[\w.+-]+=[\w.+%-]*)*;base64,[A-Za-z0-9+/=]+/gi;
+const DATA_URI = /data:[\w.+/-]*(?:;[\w.+-]+=[\w.+%-]*)*;base64,[A-Za-z0-9+/=_-]+/gi;
 const REF_TOKEN = /[^\w]uid=\w/;
+// 28/10/2026 (blocco dal vivo: logo di Analytics, una sola riga di ~555.000 caratteri, il click restava negato): anche i
+// data URI lunghi NON in base64 (svg percent-encoded, base64url, parametri insoliti) si sostituiscono. Un data URI oltre 200
+// caratteri non è mai un nome né un ref: dal `data:` al prossimo apice doppio o a capo (stesso controllo dei ref).
+// Scansione a indici (non una regex: su valori di decine di MB una regex va in stack overflow).
+const DATA_HEAD = /^data:[\w.+/-]*[;,]/i;
+// Lineare: ogni carattere si esamina una volta (dopo uno span rifiutato si riparte da `end`, mai da i + 5). Dello span si
+// tiene in coda un suffisso di 40 caratteri: un'etichetta di cancellazione nascosta in fondo a un valore lungo resta
+// visibile ai guard (isDeleteLabel).
+const KEEP_TAIL = 40;
+// Rilievo di sicurezza (28/10/2026): una parola di cancellazione nel mezzo dello span omesso non si perde: resta nel segnaposto.
+const DEL_RE = new RegExp(DELETE_LABEL.source, "gi");
+const deleteWords = (span) => { const w = [...new Set((span.match(DEL_RE) ?? []).map((x) => x.toLowerCase()))].slice(0, 5); return w.length ? ` [${w.join(" ")}]` : ""; };
+function stripLongDataUris(text) {
+  const re = /data:/gi;
+  let out = "";
+  let from = 0;
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const i = m.index;
+    if (!DATA_HEAD.test(text.slice(i, i + 200))) continue;
+    let end = i;
+    while (end < text.length && text[end] !== '"' && text[end] !== "\n" && text[end] !== "\r") end++;
+    if (end - i > 200 && !REF_TOKEN.test(text.slice(i, end))) { out += text.slice(from, i) + DATA_URI_PLACEHOLDER + deleteWords(normDel(text.slice(i, end))) + text.slice(end - KEEP_TAIL, end); from = end; }
+    re.lastIndex = Math.max(end, i + 5);
+  }
+  return out + text.slice(from);
+}
 export function stripDataUris(text) {
-  if (typeof text !== "string" || !/;base64,/i.test(text)) return text;
-  return text.replace(DATA_URI, (m) => (REF_TOKEN.test(m) ? m : DATA_URI_PLACEHOLDER));
+  if (typeof text !== "string" || !/data:/i.test(text)) return text;
+  const sub = (m) => (REF_TOKEN.test(m) ? m : DATA_URI_PLACEHOLDER);
+  return stripLongDataUris(/;base64,/i.test(text) ? text.replace(DATA_URI, sub) : text);
 }
 // Stessa sostituzione sui blocchi di testo di una risposta MCP (stringa, elenco di blocchi o { content }).
 export function stripResponseDataUris(resp) {
