@@ -27,8 +27,10 @@ export const ADVICE = Object.freeze({
 });
 
 // Motivo normalizzato: stesso motivo con bersagli diversi (file, URL, uid, numero di passo, piano) ⇒ stessa chiave.
+// revisione di sicurezza: il motivo si redige e si tronca PRIMA delle regex (niente segreti nelle chiavi del contatore e
+// della console, tempo limitato su un motivo lungo)
 export function normalizeReason(reason, max = 120) {
-  const s = String(reason ?? "")
+  const s = redact(String(reason ?? "").slice(0, 1000))
     .replace(/^\[[\w:-]+\]\s*/, "")                                   // prefisso [guard] di deny()
     .replace(/\s*\(negato \d+ volte: [^()]*\)\s*$/, "")                // suggerimento già aggiunto
     .replace(/\b[a-z][a-z0-9+.-]*:\/\/[^\s"'«»<>()]+/gi, "<url>")
