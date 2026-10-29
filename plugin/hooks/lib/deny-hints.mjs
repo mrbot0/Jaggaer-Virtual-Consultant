@@ -13,6 +13,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { writeFileAtomic, withFileLock } from "./fsx.mjs";
 import { sessionDir, isSafeSessionId, CUSTOMER_RE } from "./workspace.mjs";
+import { redact } from "./redact.mjs";
 
 // Dinieghi uguali già registrati nella sessione oltre i quali il motivo porta il suggerimento (il terzo in poi).
 export const HINT_AFTER = 2;
