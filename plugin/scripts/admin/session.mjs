@@ -1,7 +1,7 @@
 // Stato di sessione (§45.1, §56.2): risoluzione della sessione, lettura,
 // scrittura atomica validata, cella consentita (§31.4) e CLI `use`.
 // Nessun import pesante in testa: gli hook importano questo modulo e non
-// devono caricare better-sqlite3 (solo `use customer --new` apre il DB).
+// devono caricare il modulo del DB (node:sqlite; solo `use customer --new` apre il DB).
 import { existsSync, readFileSync, mkdirSync, writeFileSync, readdirSync, copyFileSync, realpathSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { parseArgs, fail } from "../lib/args.mjs";

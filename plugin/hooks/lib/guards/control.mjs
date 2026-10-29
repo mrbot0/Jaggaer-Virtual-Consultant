@@ -26,6 +26,8 @@ import { summarizeInput } from "../tool-summary.mjs";
 import { readJsonl } from "../state-summary.mjs";
 import { invocationType, sessionTtlMs } from "../invocations.mjs";
 import { withFileLock, writeFileAtomic } from "../fsx.mjs";
+import { allows } from "../policy.mjs";
+import { bumpDenyCount, denyHint, HINT_AFTER } from "../deny-hints.mjs";
 import { controlFile, agentsDir, agentStateFile, readControl, confirmPending, controlState, transcriptCandidates, ALL, safeName } from "../control.mjs";
 
 const G = "guard-control";
@@ -35,11 +37,17 @@ const TASK_RE = /^task_id:\s*["']?([A-Za-z0-9][A-Za-z0-9._:-]{0,127})/m;
 function readJson(f) { try { return JSON.parse(readFileSync(f, "utf8")); } catch { return null; } }
 
 function denyA(st, input, reason, extra = {}) {
+  // giro 1 di bug fixing (29/10/2026): anche i dinieghi di guard-control contano e ricevono il suggerimento al terzo uguale
+  let n = null;
+  try { n = bumpDenyCount({ ws: st.ws, customer: st.customer, sid: st.sid, guard: G, reason }); } catch { n = null; }
+  const repeated = Number.isInteger(n) && n > HINT_AFTER;
   try {
     appendAudit(st.ws, { session: st.sid, customer: st.customer, scope: st.session?.scope ?? null, kind: "guard", actor: `hook:${G}`, correlation: { task: extra.task ?? null },
       payload: { decision: "deny", tool: String(input.tool_name ?? ""), reason, input_summary: summarizeInput(input.tool_name, input.tool_input), agent_type: baseAgentType(input.agent_type), agent_id: String(input.agent_id) } });
   } catch { /* l'audit non cambia la decisione */ }
-  return deny(`[${G}] ${reason}`);
+  let hint = "";
+  try { if (repeated) hint = denyHint(reason, n); } catch { hint = ""; }
+  return deny(`[${G}] ${reason}${hint}`);
 }
 
 // ---- legame agent_id → compito ----
@@ -262,7 +270,7 @@ export async function decide(input, env = process.env) {
 // e durata (si impara il più possibile; resta il budget di token della sessione, PAUSA/FERMA dell'utente); i limiti
 // dichiarati dall'utente con LIMITI DISPATCH valgono sempre; fuori esplorazione i predefiniti e i minuti dell'header.
 export function effectiveLimits(limits, session, inv) {
-  if (session?.mode === "esplorazione" && !limits?.set_at) return { calls: Infinity, minutes: Infinity };
+  if (allows(session, "limiti_dispatch_illimitati") && !limits?.set_at) return { calls: Infinity, minutes: Infinity };
   const headerMin = typeof inv?.minutes === "number" && inv.minutes > 0 ? inv.minutes : Infinity;
   return { calls: limits.calls, minutes: Math.min(limits.minutes, headerMin) };
 }

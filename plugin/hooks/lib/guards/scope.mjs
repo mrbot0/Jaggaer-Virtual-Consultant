@@ -22,6 +22,7 @@ import { resolve } from "node:path";
 import { createRequire } from "node:module";
 import { intersects, subset, resolveTarget, PathPolicyError } from "../paths.mjs";
 import { pluginAgentType } from "../workspace.mjs";
+import { allows } from "../policy.mjs";
 import { guarded, denyAudited, targetsOf, allRels, shellPaths, shellWriteTargets, subtree, PATH_TOOLS, WRITE_TOOLS, READ_TOOLS, SHELL_TOOLS } from "./common.mjs";
 
 const G = "guard-scope";
@@ -39,7 +40,7 @@ export const KEEPER_AGENTS = new Set(["workspace-manager", "health-keeper"]);
 function freeCell(ctx, p) {
   // agenti di manutenzione: il cliente attivo e product/ (senza cliente attivo: tutto il workspace, per generarlo)
   if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) return !ctx.customerLc || p === `customers/${ctx.customerLc}` || p.startsWith(`customers/${ctx.customerLc}/`) || p === "product" || p.startsWith("product/");
-  return ctx.session?.mode === "esplorazione" && !!ctx.customerLc && (p === `customers/${ctx.customerLc}` || p.startsWith(`customers/${ctx.customerLc}/`));
+  return allows(ctx.session, "celle_cliente") && !!ctx.customerLc && (p === `customers/${ctx.customerLc}` || p.startsWith(`customers/${ctx.customerLc}/`));
 }
 
 // WP10b (ruling del controller 2): lettura trasversale concessa dalla sessione principale in session.cross_read

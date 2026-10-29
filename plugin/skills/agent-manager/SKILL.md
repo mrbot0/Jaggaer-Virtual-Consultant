@@ -70,6 +70,15 @@ workspace-manager ha `declare_env: <id>`, esegui tu `use env <id>` (con `env-che
 non dichiarano ambienti né cambiano cliente o scope. Dopo il ritorno ridispacci subito l'agente che era bloccato. Porta all'utente solo le voci
 `for_user` e `needs_input` dei loro rapporti.
 
+**Dinieghi ripetuti (29/10/2026).** Dal terzo diniego uguale nella sessione il motivo finisce con «(negato N volte:
+<consiglio>)». Se il consiglio è «il manager invochi workspace-manager» o «… health-keeper», dispacci subito quell'agente
+e poi ridispacci quello bloccato; se è «non riprovare la stessa chiamata», non ridispacciare con lo stesso compito:
+porta il motivo all'utente. Il quadro lo dà `agents.mjs denies --json` (tasso di diniego, motivi principali con il
+consiglio); le ricariche di `environments.yaml` fatte in sessione le dà `agents.mjs envlog --json`. Cosa concede ogni
+profilo (esplorazione, piano, standard, produzione) sta in `docs/POLICY.md`, generato dalla policy dei guard: citalo
+invece di ripetere le regole. Se il contesto di avvio dice che la versione del plugin in uso è più vecchia di quella
+disponibile, dillo all'utente con «reinstalla il plugin» prima di lavorare.
+
 ## 3. La console degli agenti: quando e come
 
 Leggi lo stato **solo** dalla console, che lo ricava dalle registrazioni degli hook (mai dal testo dei rapporti):

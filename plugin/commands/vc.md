@@ -23,11 +23,14 @@ argomenti, secondo la prima parola di `$ARGUMENTS`:
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" status --session "${CLAUDE_SESSION_ID}" --json            (agents senza argomenti)
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" show <task_id> --session "${CLAUDE_SESSION_ID}" --json    (cronologia completa di un compito)
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" history --session "${CLAUDE_SESSION_ID}" --json           (aggiungi --scope / --last se richiesti)
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" denies --session "${CLAUDE_SESSION_ID}" --json            (dinieghi dei guard: tasso, motivi, consiglio; --last <N>)
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" envlog --session "${CLAUDE_SESSION_ID}" --json            (ricariche di environments.yaml in sessione)
 
   Riporta una riga per agente (task_id, tipo, scope, tier, stato, durata, budget/usato, ultima azione, sorprese,
   domande aperte) e la sintesi; segnala in evidenza gli agenti `incoerente` (rapporto diverso dalle registrazioni),
   gli scope bloccati dalla vigilanza, la catena di audit interrotta e gli avvisi sul manager (quota R5, comandi di
-  dominio senza dispatch). Per seguire gli agenti mentre lavorano, l'utente usa un terminale separato (sola lettura,
+  dominio senza dispatch), il tasso di diniego dei guard con i motivi principali e il loro consiglio (se dice di invocare
+  workspace-manager o health-keeper, fallo invece di far riprovare la stessa chiamata) e le ricariche dell'ambiente. Per seguire gli agenti mentre lavorano, l'utente usa un terminale separato (sola lettura,
   senza modello):
 
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" watch --session <SES.C.AAAAMMGG.NNN> --interval 5
@@ -51,6 +54,10 @@ argomenti, secondo la prima parola di `$ARGUMENTS`:
   chiamata). `plugin-root` giallo = la sostituzione di `${CLAUDE_PLUGIN_ROOT}` con il percorso letterale nei comandi non
   è ancora provata (nessun comando del plugin in audit: si riesegue dopo un altro comando) o non avviene (segnaposto
   rimasto nei comandi eseguiti: le operazioni a forma esatta — purge, retention, promozione — sono negate; manuale §58).
+  `plugin-version` giallo = il marketplace installato ha una versione più nuova di quella in uso (Claude Code tiene i
+  plugin in cache per versione): l'utente reinstalla il plugin da `/plugin` e riavvia Claude Code; giallo «non
+  verificabile» = marketplace o `integrity.json` non trovati; rosso = `plugin.json` e `integrity.json` discordi, si
+  reinstalla.
 - `watch <SES.C.AAAAMMGG.NNN>` (sola lettura, anche da un'altra sessione):
 
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/workflow.mjs" watch <codice> --json

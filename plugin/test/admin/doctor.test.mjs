@@ -74,7 +74,7 @@ test("integrity: manifesto allineato verde; file alterato rosso", async () => {
 test("db: apribile in WAL con migrazioni applicate verde; file non SQLite rosso; migrazioni mancanti giallo", async () => {
   const ws = demoWorkspace();
   assert.equal(await status(ws, "db:ACME"), "green");
-  const Database = (await import("better-sqlite3")).default;
+  const Database = (await import("../../scripts/kb/sqlite.mjs")).default;
   const d = new Database(join(ws, "customers/ACME/knowledge.db"));
   d.exec("DROP TABLE reports");
   d.close();

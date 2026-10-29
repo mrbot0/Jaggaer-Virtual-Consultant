@@ -10,7 +10,12 @@
 //                                                    passi Chrome, traccia cognitiva, token e durata, coerenza
 //   agents history [--scope <S>] [--last <N>] [--json]
 //   agents watch [--interval <s>] [--count <n>]      aggiorna la console ogni N secondi (terminale separato)
+//   agents denies [--last <N>] [--json]              dinieghi dei guard: chiamate registrate, negate, tasso, motivi
+//                                                    principali per guard e motivo normalizzato con il consiglio, ultimi N
+//   agents envlog [--json]                           ricariche dell'ambiente (environments.yaml cambiato in sessione)
 // Opzioni comuni: --session <id|SES.C.AAAAMMGG.NNN> · --workspace <dir>
+// 29/10/2026 (decisione dell'utente, punti 3 e 10 del piano): `status` riporta anche la sintesi dei dinieghi (nessuno
+// leggeva le statistiche: 82 chiamate negate su 205 in una sessione reale) e le ricariche dell'ambiente.
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import YAML from "yaml";
@@ -23,6 +28,7 @@ import { redact, truncate } from "../../hooks/lib/redact.mjs";
 import { readJsonl } from "../../hooks/lib/state-summary.mjs";
 import { readMonitor, agentRows, summarize, summaryLine, blockedScopes, STATES, managerWatch as watchManager, R5_LIMIT, R5_MIN_TOTAL } from "../../hooks/lib/agents-model.mjs";
 import { reduce as reduceWorkflow, readEvents, workflowFile } from "./workflow.mjs";
+import { normalizeReason, denyFamily, ADVICE } from "../../hooks/lib/deny-hints.mjs";
 
 export { R5_LIMIT, R5_MIN_TOTAL };
 // Sorveglianza del manager (D6): logica condivisa con gli hook (hooks/lib/agents-model.mjs), su tutto l'audit della sessione.
@@ -166,6 +172,103 @@ export function coherence(row, rep, act) {
   return { incoerente: flags.length > 0, flags, notes };
 }
 
+// ---- dinieghi dei guard (29/10/2026, punto 3) ----
+// Chiamate registrate = eseguite (eventi `tool` di audit-append, PostToolUse) + negate (righe `guard` con decision deny;
+// più guard che negano la stessa chiamata in parallelo scrivono più righe: stessa chiamata = stesso strumento, riassunto
+// dell'input e agente entro 3 s). Motivi raggruppati per guard e motivo normalizzato (hooks/lib/deny-hints.mjs: senza
+// uid, ref, numeri, percorsi), con il consiglio della famiglia — lo stesso che i guard aggiungono al terzo diniego uguale.
+const SAME_CALL_MS = 3000;
+export function denyStats(events, { top = 5, last = 20 } = {}) {
+  const executed = events.filter((e) => e?.kind === "tool").length;
+  const rows = events.filter((e) => e?.kind === "guard" && e.payload?.decision === "deny");
+  const seen = new Map();
+  let denied = 0;
+  const groups = new Map();
+  for (const e of rows) {
+    const p = e.payload ?? {};
+    const call = `${p.tool ?? ""}\u0001${p.input_summary ?? ""}\u0001${p.agent_id ?? ""}`;
+    const t = Date.parse(e.ts);
+    const prev = seen.get(call);
+    if (!(Number.isFinite(prev) && Number.isFinite(t) && t - prev <= SAME_CALL_MS)) denied++;
+    seen.set(call, t);
+    const guard = String(e.actor ?? "hook:?").replace(/^hook:/, "");
+    const reason = normalizeReason(p.reason);
+    const k = `${guard}\t${reason}`;
+    if (!groups.has(k)) {
+      const family = denyFamily(p.reason);
+      groups.set(k, { guard, reason: truncate(redact(reason), 140), count: 0, family, advice: ADVICE[family], tools: new Set(), last_ts: null });
+    }
+    const g = groups.get(k);
+    g.count++;
+    if (p.tool) g.tools.add(String(p.tool));
+    g.last_ts = e.ts ?? g.last_ts;
+  }
+  const total = executed + denied;
+  const ranked = [...groups.values()].sort((a, b) => b.count - a.count || String(b.last_ts).localeCompare(String(a.last_ts))).map((g) => ({ ...g, tools: [...g.tools].sort() }));
+  const list = (last == null ? rows : Number.isInteger(last) && last > 0 ? rows.slice(-last) : []).map((e) => {
+    const p = e.payload ?? {};
+    return { ts: e.ts ?? null, guard: String(e.actor ?? "hook:?").replace(/^hook:/, ""), tool: p.tool ?? null, agent_type: p.agent_type ?? null, agent_id: p.agent_id ?? null,
+      reason: truncate(redact(String(p.reason ?? "")), 240), repeat: Number.isInteger(p.repeat) ? p.repeat : null, advice: ADVICE[denyFamily(p.reason)] };
+  });
+  return { calls_total: total, calls_executed: executed, calls_denied: denied, deny_rows: rows.length, rate: total ? denied / total : null, groups: ranked.length, top: ranked.slice(0, top), last: list };
+}
+const pct = (r) => (r == null ? "n/d" : `${Math.round(r * 100)}%`);
+export const denyLine = (d) => `DINIEGHI: ${d.calls_total} chiamate registrate (${d.calls_executed} eseguite, ${d.calls_denied} negate) · tasso di diniego ${pct(d.rate)}${d.deny_rows ? ` — motivi principali (guard, motivo normalizzato → consiglio):` : " · nessun diniego"}`;
+const groupLine = (g) => `  ×${g.count} ${g.guard} «${g.reason}» → ${g.advice}`;
+
+export function renderDenies(c, d) {
+  const s = c.session;
+  const out = [`DINIEGHI  ${s.session_code ?? s.session_id} · cliente ${s.customer}`, denyLine(d)];
+  for (const g of d.top) out.push(groupLine(g));
+  if (d.groups > d.top.length) out.push(`  … altri ${d.groups - d.top.length} motivi`);
+  if (d.last.length) {
+    out.push("", d.last.length === 1 ? "Ultimo diniego:" : `Ultimi ${d.last.length} dinieghi:`);
+    for (const x of d.last) out.push(`  ${hhmmss(x.ts)} ${x.guard} ${x.tool ?? ""}${x.agent_id ? ` [${x.agent_type ?? "agente"} ${x.agent_id}]` : " [manager]"}: ${x.reason}${x.repeat ? ` (${x.repeat}ª volta → ${x.advice})` : ""}`);
+  }
+  return `${out.join("\n")}\n`;
+}
+
+// ---- ricariche dell'ambiente (29/10/2026, punto 10) ----
+// Righe di audit di hooks/lib/env-refresh.mjs (kind session, actor hook:env-refresh): environments.yaml o
+// remediation-scope.yaml cambiati dopo /use env e ricaricati dai guard. Righe precedenti senza riassunto: campi vuoti.
+export function envLog(events) {
+  return events.filter((e) => e?.kind === "session" && e.actor === "hook:env-refresh" && e.payload?.action === "env-refresh").map((e) => {
+    const p = e.payload;
+    const arr = (v) => (Array.isArray(v) ? v.map(String) : []);
+    return { ts: e.ts ?? null, env: p.env ?? null, from: typeof p.from === "string" ? p.from.slice(0, 12) : null, to: typeof p.to === "string" ? p.to.slice(0, 12) : null,
+      hosts_added: arr(p.hosts_added), hosts_removed: arr(p.hosts_removed), base_url_changed: p.base_url_changed === true, policy_changed: arr(p.policy_changed),
+      verified_reset: p.verified_reset === true, remediation_changed: p.remediation_changed === true, summarized: "hosts_added" in p };
+  });
+}
+const changeParts = (x) => {
+  const parts = [];
+  if (x.hosts_added.length) parts.push(`+host ${x.hosts_added.join(", ")}`);
+  if (x.hosts_removed.length) parts.push(`-host ${x.hosts_removed.join(", ")}`);
+  if (x.base_url_changed) parts.push("URL di base cambiato");
+  if (x.policy_changed.length) parts.push(`policy: ${x.policy_changed.join(", ")}`);
+  if (x.remediation_changed) parts.push("remediation-scope cambiato");
+  if (x.verified_reset) parts.push("verifica azzerata (env-check da rifare)");
+  return parts;
+};
+export function envLogLine(log) {
+  if (!log.length) return null;
+  const u = (k) => [...new Set(log.flatMap((x) => x[k]))].sort();
+  const all = { hosts_added: u("hosts_added"), hosts_removed: u("hosts_removed"), policy_changed: u("policy_changed"),
+    base_url_changed: log.some((x) => x.base_url_changed), verified_reset: log.some((x) => x.verified_reset), remediation_changed: log.some((x) => x.remediation_changed) };
+  const parts = changeParts(all);
+  return `AMBIENTE: ambiente ricaricato ${log.length} ${log.length === 1 ? "volta" : "volte"}: ${parts.length ? parts.join(", ") : "nessun cambiamento di host, URL o policy"} (agents envlog)`;
+}
+export function renderEnvLog(c, log) {
+  const s = c.session;
+  const out = [`RICARICHE DELL'AMBIENTE  ${s.session_code ?? s.session_id} · cliente ${s.customer}`];
+  if (!log.length) out.push("(nessuna ricarica in questa sessione)");
+  for (const x of log) {
+    const parts = changeParts(x);
+    out.push(`${x.ts?.slice(0, 19).replace("T", " ") ?? "?"} ${x.env ?? "?"} ${x.from ?? "?"} → ${x.to ?? "?"}: ${parts.length ? parts.join(" · ") : x.summarized ? "nessun cambiamento di host, URL o policy" : "riassunto non registrato"}`);
+  }
+  return `${out.join("\n")}\n`;
+}
+
 // ---- vista completa ----
 export function buildConsole(ws, customer, sid, session, { now = Date.now() } = {}) {
   const m = readMonitor(ws, customer, sid, session, { now });
@@ -196,13 +299,15 @@ export function buildConsole(ws, customer, sid, session, { now = Date.now() } = 
     session: { session_id: sid, session_code: session?.session_code ?? null, customer, scope: session?.scope ?? null, mode: session?.mode ?? null },
     summary: sum, rows, vigilance: blockedScopes(m), control: { ok: m.controlOk, reason: m.controlReason, limits: m.control.limits, all_paused: !!m.control.allPaused },
     workflow: cur ? { step: cur.n, state: cur.state, agent: cur.agent, class: cur.cls, desc: cur.desc } : null,
-    audit_chain: { ok: audit.chain_ok, files: audit.chain }, manager: managerWatch(m, audit.events), _m: m, _act: act, _bb: bb,
+    audit_chain: { ok: audit.chain_ok, files: audit.chain }, manager: managerWatch(m, audit.events),
+    denies: denyStats(audit.events, { last: 0 }), env_refresh: envLog(audit.events), _m: m, _act: act, _bb: bb, _events: audit.events,
   };
 }
 
 const pad = (s, n) => { const t = String(s ?? "—"); return t.length > n ? `${t.slice(0, n - 1)}…` : t.padEnd(n); };
 const dur = (ms) => (ms == null ? "—" : ms < 60000 ? `${Math.round(ms / 1000)}s` : ms < 3600000 ? `${Math.round(ms / 60000)}m` : `${(ms / 3600000).toFixed(1)}h`);
 const hhmm = (ts) => (typeof ts === "string" && ts.length >= 16 ? ts.slice(11, 16) : "--:--");
+const hhmmss = (ts) => (typeof ts === "string" && ts.length >= 19 ? ts.slice(11, 19) : "--:--:--");
 
 export function renderStatus(c) {
   const s = c.session;
@@ -218,6 +323,9 @@ export function renderStatus(c) {
   }
   if (!c.rows.length) out.push("(nessun sub-agente in questa sessione)");
   if (c.vigilance.length) out.push("", `VIGILANZA: ${c.vigilance.map((v) => `${v.scope} bloccato (${v.streak} compiti consecutivi fermati per sorprese): «il modello di questo scope va rifatto prima di continuare» — sblocco solo dall'utente: SBLOCCA SCOPE ${v.scope}`).join(" · ")}`);
+  if (c.denies) { out.push("", denyLine(c.denies)); for (const g of c.denies.top) out.push(groupLine(g)); }
+  const envLine = envLogLine(c.env_refresh ?? []);
+  if (envLine) out.push(envLine);
   const mg = c.manager;
   out.push("", `MANAGER: quota token ${mg.share == null ? "n/d" : `${Math.round(mg.share * 100)}%`} (R5 ≤ ${mg.r5_limit * 100}%) · comandi di dominio senza dispatch: ${mg.domain_count}${mg.warnings.length ? ` · AVVISO: ${mg.warnings.join(" · ")}` : ""}`);
   return `${out.join("\n")}\n`;
@@ -314,17 +422,22 @@ export function history(c, { scope = null, last = null } = {}) {
 }
 export const renderHistory = (h) => `${h.length ? h.map((r) => `#${r.seq} ${r.started?.slice(0, 16) ?? "?"} ${pad(r.task_id, 22)} ${pad(r.type, 16)} ${pad(r.scope, 5)} ${pad(r.tier, 4)} ${pad(r.state, 16)} sorprese ${r.surprises ?? "—"} · chiamate ${r.calls} · token ${r.tokens ?? "—"} · lezione ${r.lesson ?? "—"}${r.flag ? " · INCOERENTE" : ""}`).join("\n") : "(nessun compito)"}\n`;
 
-const strip = (c) => { const { _m, _act, _bb, ...rest } = c; return rest; };
+const strip = (c) => { const { _m, _act, _bb, _events, ...rest } = c; return rest; };
 
 const HELP = `uso: node scripts/admin/agents.mjs status [--json]
        node scripts/admin/agents.mjs show <task_id> [--json]
        node scripts/admin/agents.mjs history [--scope <S>] [--last <N>] [--json]
        node scripts/admin/agents.mjs watch [--interval <secondi>] [--count <n>]
+       node scripts/admin/agents.mjs denies [--last <N>] [--json]
+       node scripts/admin/agents.mjs envlog [--json]
        Opzioni: --session <id|SES.C.AAAAMMGG.NNN> · --workspace <dir> · --help
 
 Console degli agenti (monitor indipendente): lo stato di ogni sub-agente ricavato solo dalle registrazioni degli
 hook (audit per agent_id, invocations, blackboard, workflow, controllo dell'utente), mai dal testo del manager.
 Sola lettura. \`watch\` si usa da un terminale separato mentre gli agenti lavorano (Ctrl+C per uscire).
+\`denies\`: chiamate registrate, negate e tasso di diniego della sessione, motivi principali per guard e motivo
+normalizzato con il consiglio (workspace-manager, health-keeper o non riprovare), ultimi N dinieghi (default 20).
+\`envlog\`: ricariche dell'ambiente dopo modifiche a environments.yaml (host, URL di base, policy, verifica azzerata).
 Exit: 0 · 1 argomenti o sessione · 2 errore di sistema.`;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -334,7 +447,7 @@ export async function run(argv, env = process.env) {
   const asJson = !!opts.json;
   if (opts.help) { console.log(HELP); return 0; }
   const [cmd, arg] = positional;
-  if (!["status", "show", "history", "watch"].includes(cmd ?? "status") ) { console.log(HELP); return 1; }
+  if (!["status", "show", "history", "watch", "denies", "envlog"].includes(cmd ?? "status") ) { console.log(HELP); return 1; }
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   try {
     const r = resolveMonitorSession(ws, opts.session, env);
@@ -367,6 +480,17 @@ export async function run(argv, env = process.env) {
       if (last != null && !(Number.isInteger(last) && last > 0)) return fail(asJson, 1, "--last: intero positivo");
       const h = history(c, { scope: opts.scope ?? null, last });
       if (asJson) console.log(JSON.stringify({ ok: true, history: h })); else process.stdout.write(renderHistory(h));
+      return 0;
+    }
+    if (action === "denies") {
+      const last = opts.last != null ? Number(opts.last) : 20;
+      if (!(Number.isInteger(last) && last > 0)) return fail(asJson, 1, "--last: intero positivo");
+      const d = denyStats(c._events, { top: 10, last });
+      if (asJson) console.log(JSON.stringify({ ok: true, session: c.session, denies: d })); else process.stdout.write(renderDenies(c, d));
+      return 0;
+    }
+    if (action === "envlog") {
+      if (asJson) console.log(JSON.stringify({ ok: true, session: c.session, env_refresh: c.env_refresh })); else process.stdout.write(renderEnvLog(c, c.env_refresh));
       return 0;
     }
     if (asJson) console.log(JSON.stringify({ ok: true, ...strip(c), states: STATES, warning: r.warning }));

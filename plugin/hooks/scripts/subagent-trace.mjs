@@ -16,6 +16,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, openSync } from "no
 import { dirname, join } from "node:path";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { allows } from "../lib/policy.mjs";
 import YAML from "yaml";
 import { runHook, block } from "../lib/io.mjs";
 import { loadHookState, baseAgentType, invocationsFile, sessionDir } from "../lib/workspace.mjs";
@@ -262,10 +263,15 @@ export function handle(input, env = process.env) {
   // 28/10/2026 (decisione dell'utente: imparare il più possibile per una seconda run veloce): a fine compito in esplorazione
   // atlas-build trasforma il registro della sessione in FLD, SEL e percorsi della conoscenza, in background (processo
   // staccato: non rallenta la chiusura); idempotente, i doppioni non si riscrivono. Esito in atlas/auto-build.json.
-  if (outcome.decision !== "block" && session.mode === "esplorazione") {
+  if (outcome.decision !== "block" && allows(session, "apprendimento_automatico")) {
     try {
       const log = join(sessionDir(st.ws, st.customer, st.sid), "atlas", "pages.jsonl");
-      if (existsSync(log)) {
+      // giro 2: un solo atlas-build alla volta per sessione (lock con l'ora: scade dopo 10 minuti)
+      const lock = join(dirname(log), "auto-build.lock");
+      let busy = false;
+      try { busy = Date.now() - Number(readFileSync(lock, "utf8")) < 600000; } catch { busy = false; }
+      if (existsSync(log) && !busy) {
+        writeFileSync(lock, String(Date.now()));
         const out = openSync(join(dirname(log), "auto-build.json"), "w");
         const script = fileURLToPath(new URL("../../scripts/kb/atlas-build.mjs", import.meta.url));
         spawn(process.execPath, [script, "--session", st.sid, "--customer", st.customer, "--workspace", st.ws, "--json"], { detached: true, stdio: ["ignore", out, out], windowsHide: true }).unref();

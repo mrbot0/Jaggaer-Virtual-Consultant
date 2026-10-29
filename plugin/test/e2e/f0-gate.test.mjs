@@ -10,11 +10,12 @@ import { mkWs, seedSession, runHook, decisionOf, reasonOf, cleanEnv, ROOT } from
 import { envWs, patchSession } from "../helpers/env-fixture.mjs";
 import { demoWorkspace, DEMO_ENV } from "../helpers/demo-workspace.mjs";
 import { appendAudit } from "../../hooks/lib/audit.mjs";
+import { hooksView } from "../helpers/hooks-view.mjs";
 
 const E = (ws) => ({ JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
 const pre = (ws, tool, tool_input, extra = {}) => ({ session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input, ...extra });
 // tutti i guard che hooks.json registra per lo strumento (matcher come regex ancorata), nell'ordine
-const HOOKS = JSON.parse(readFileSync(join(ROOT, "hooks/hooks.json"), "utf8")).hooks.PreToolUse;
+const HOOKS = hooksView().hooks.PreToolUse;   // 29/10/2026: tabella del dispatcher
 function preToolUse(ws, tool, ti, extra = {}) {
   const names = HOOKS.filter((g) => new RegExp(`^(?:${g.matcher})$`).test(tool)).flatMap((g) => g.hooks.map((h) => /scripts\/([a-z-]+)\.mjs/.exec(h.command)[1]));
   return [...new Set(names)].map((g) => ({ g, r: runHook(g, pre(ws, tool, ti, extra), E(ws)) }));

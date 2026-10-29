@@ -48,7 +48,7 @@ Code a ogni installazione): la conoscenza cresce fuori da esso, in `knowledge/`,
 
 - **Claude Code** (desktop o CLI) e un browser: Chrome con **Chrome DevTools MCP** (necessario per le azioni con effetto
   fuori dalla sandbox) oppure il browser di Claude.
-- **Node 22** o successivo, git.
+- **Node 22.13** o successivo (il DB usa `node:sqlite`, nessuna dipendenza nativa), git.
 - Nella cartella `plugin/`: **`npm ci`** (mai `npm install`: `package-lock.json` è sotto integrità).
 - Le variabili d'ambiente del cliente dal vault (`NRT_<ENV>_*`, `XRAY_*`, `JIRA_*`), solo quelle dell'ambiente su cui si
   lavora, con utenze di collaudo a privilegi minimi.

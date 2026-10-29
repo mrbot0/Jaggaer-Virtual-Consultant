@@ -1,0 +1,24 @@
+#!/bin/sh
+# post-checkout del repository JVC (29/10/2026, decisione dell'utente: «quando viene creato un nuovo branch alza la versione in
+# plugin/.claude-plugin/plugin.json»). Claude Code tiene i plugin in cache per versione: senza aumento la copia installata
+# non si rinnova. Attivazione (una volta per clone, la fa l'utente): git config core.hooksPath .githooks
+# Argomenti di git: $1 HEAD precedente, $2 HEAD nuovo, $3 = 1 se è un cambio di branch.
+[ "$3" = "1" ] || exit 0
+# giro 2 di bug fixing: niente confronto $1 = $2 (un branch creato da un altro commit, git switch -c x main o
+# git worktree add -b, non lo soddisfa); vale il reflog del branch: una sola voce "branch: Created from …"
+branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || exit 0
+[ "$branch" = "HEAD" ] && exit 0                # HEAD staccato
+case "$branch" in main|master) exit 0 ;; esac
+seen=$(git rev-parse --git-path jvc-bumped-branches)
+[ -f "$seen" ] && grep -qxF "$branch" "$seen" && exit 0
+log=$(git reflog show --format=%gs "refs/heads/$branch" -- 2>/dev/null)
+[ "$(printf '%s\n' "$log" | grep -c .)" -eq 1 ] || exit 0          # branch con storia: non nuovo
+printf '%s\n' "$log" | grep -q '^branch: Created' || exit 0
+root=$(git rev-parse --show-toplevel)
+if node "$root/plugin/scripts/admin/bump-version.mjs" minor --branch "$branch"; then
+  echo "$branch" >> "$seen"
+  echo "[jvc] versione del plugin alzata per il nuovo branch $branch: completa la voce in plugin/CHANGELOG.md e committa."
+else
+  echo "[jvc] aumento della versione non riuscito: node plugin/scripts/admin/bump-version.mjs minor"
+fi
+exit 0

@@ -78,6 +78,25 @@ test("esplorazione: testo integrale delle pagine, mappa del sito con l'arco del 
   assert.ok(Object.values(m.pages).some((p) => p.elements.some(([r, n]) => r === "button" && n === "New Report")));
 });
 
+// 29/10/2026 (punto 4 del piano approvato): storia corta delle letture con hash stabile, attraverso observe-append
+test("esplorazione: la stessa pagina riletta con uid nuovi ha lo stesso sha256 (changed false); un elemento in più ⇒ changed true", () => {
+  const ws = explore();
+  const home = (p, extra = []) => snap("https://acme-sbx.jaggaer.com/home", "Home", [`  uid=${p}_1 heading "Cruscotto" level="1"`, `  uid=${p}_2 button "Analytics"`, ...extra]);
+  const page = () => Object.values(JSON.parse(readFileSync(join(ws, "customers/ACME/explore/sitemap.json"), "utf8")).pages);
+  post(ws, DT + "take_snapshot", {}, home(1));
+  post(ws, DT + "take_snapshot", {}, home(5));
+  let [p] = page();
+  assert.equal(page().length, 1);
+  assert.equal(p.history.length, 2);
+  assert.equal(p.history[1].sha256, p.history[0].sha256);
+  assert.equal(p.changed, false);
+  post(ws, DT + "take_snapshot", {}, home(9, [`  uid=9_3 button "Esporta"`]));
+  [p] = page();
+  assert.equal(p.history.length, 3);
+  assert.equal(p.changed, true);
+  assert.equal(p.history[2].elements, p.history[1].elements + 1);
+});
+
 test("fuori dall'esplorazione nessuna cattura", () => {
   const ws = envWs({ env: "sandbox", scope: "P2P" });
   patchSession(ws, (s) => { s.browser = { current_url: "https://acme-sbx.jaggaer.com/home", tab: null, updated_by: "browser-origin" }; });

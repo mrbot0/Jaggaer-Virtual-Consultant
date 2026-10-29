@@ -1,0 +1,50 @@
+{
+  "v": 1,
+  "note": "Profili di policy dei guard (29/10/2026, decisione dell'utente: una sola policy dichiarativa invece di condizioni sparse nei guard). Fonte unica: i guard la interrogano con hooks/lib/policy.mjs, docs/POLICY.md si genera da qui (scripts/admin/policy-doc.mjs). Si modifica solo nel repository del plugin, mai in sessione.",
+  "capabilities": {
+    "navigazione_libera": "navigare verso qualunque host, anche fuori da allowed_hosts dell'ambiente",
+    "ambiente_non_verificato": "agire anche se env-check non ha verificato l'impronta dell'ambiente",
+    "url_ignoto": "agire anche se l'URL della pagina corrente non è noto",
+    "scheda_diversa": "agire in una scheda diversa da quella della navigazione registrata",
+    "script_nella_pagina": "eseguire script nella pagina (evaluate_script, javascript_tool)",
+    "strumenti_non_classificati": "usare strumenti o parametri del browser non classificati",
+    "click_liberi": "cliccare e compilare senza snapshot fresco, uid con nome o ref verificato",
+    "celle_cliente": "leggere e scrivere la conoscenza di tutti gli scope del cliente attivo (non solo la cella)",
+    "dispatch_altro_scope": "invocare un sub-agente su uno scope diverso da quello di sessione",
+    "limiti_dispatch_illimitati": "nessun tetto di chiamate o durata per dispatch (salvo LIMITI DISPATCH dell'utente)",
+    "cattura_integrale": "salvare il testo di ogni pagina e la mappa del sito in customers/<C>/explore/",
+    "apprendimento_automatico": "atlas-build automatico a fine compito",
+    "cancellazioni": "cancellare (Elimina, Cancella, Rimuovi, dialoghi di conferma) senza un passo DELETE del piano",
+    "caricamento_file": "caricare file locali sul tenant senza un passo UPLOAD del piano"
+  },
+  "profiles": {
+    "esplorazione": {
+      "quando": "modalità esplorazione aperta dall'utente, ambiente sandbox o pre-produzione, nessun piano attivo",
+      "navigazione_libera": true, "ambiente_non_verificato": true, "url_ignoto": true, "scheda_diversa": true,
+      "script_nella_pagina": true, "strumenti_non_classificati": true, "click_liberi": true, "celle_cliente": true,
+      "dispatch_altro_scope": true, "limiti_dispatch_illimitati": true, "cattura_integrale": true, "apprendimento_automatico": true,
+      "cancellazioni": false, "caricamento_file": false
+    },
+    "piano": {
+      "quando": "un piano attivo (step-check) in sandbox, sviluppo o pre-produzione",
+      "navigazione_libera": false, "ambiente_non_verificato": false, "url_ignoto": false, "scheda_diversa": false,
+      "script_nella_pagina": false, "strumenti_non_classificati": false, "click_liberi": false, "celle_cliente": false,
+      "dispatch_altro_scope": false, "limiti_dispatch_illimitati": false, "cattura_integrale": false, "apprendimento_automatico": false,
+      "cancellazioni": false, "caricamento_file": false
+    },
+    "standard": {
+      "quando": "nessun piano attivo, modalità diversa da esplorazione (nrt, config, ops, diag)",
+      "navigazione_libera": false, "ambiente_non_verificato": false, "url_ignoto": false, "scheda_diversa": false,
+      "script_nella_pagina": false, "strumenti_non_classificati": false, "click_liberi": false, "celle_cliente": false,
+      "dispatch_altro_scope": false, "limiti_dispatch_illimitati": false, "cattura_integrale": false, "apprendimento_automatico": false,
+      "cancellazioni": false, "caricamento_file": false
+    },
+    "produzione": {
+      "quando": "ambiente dichiarato di tipo prod, con o senza piano",
+      "navigazione_libera": false, "ambiente_non_verificato": false, "url_ignoto": false, "scheda_diversa": false,
+      "script_nella_pagina": false, "strumenti_non_classificati": false, "click_liberi": false, "celle_cliente": false,
+      "dispatch_altro_scope": false, "limiti_dispatch_illimitati": false, "cattura_integrale": false, "apprendimento_automatico": false,
+      "cancellazioni": false, "caricamento_file": false
+    }
+  }
+}

@@ -6,7 +6,9 @@ import { ROOT } from "../helpers/hook-env.mjs";
 import { BROWSER_MATCHER } from "../../hooks/lib/browser-tools.mjs";
 import { ALM_MATCHER } from "../../hooks/lib/alm.mjs";
 
-const HOOKS = JSON.parse(readFileSync(join(ROOT, "hooks/hooks.json"), "utf8"));
+import { hooksView } from "../helpers/hooks-view.mjs";
+// 29/10/2026 (punto 5): i guard di PreToolUse stanno in hooks/lib/dispatch-table.json, eseguiti da pre-dispatch
+const HOOKS = hooksView();
 
 // Registrazioni attese: evento → [matcher, script] (le fasi successive aggiungono voci).
 const EXPECTED = [

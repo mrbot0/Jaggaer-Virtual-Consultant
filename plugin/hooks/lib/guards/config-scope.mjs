@@ -39,6 +39,7 @@ import { confirmedAutonomyLevel } from "../autonomy.mjs";
 import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
 import { pendingRefusal, mergedPending, loadPending, pendingFile } from "../ref-history.mjs";
 import { simpleNodeCall } from "../exact-argv.mjs";
+import { allows, profileOf } from "../policy.mjs";
 
 const G = "guard-config-scope";
 export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD", "DELETE"]);
@@ -121,13 +122,12 @@ function fullExploreRefusal(ctx) {
   const names = snap?.names && typeof snap.names === "object" ? snap.names : null;
   const deleteQuestion = names ? Object.values(names).some((n) => isDeleteQuestion(n)) : false;
   for (const a of ctx.actions.filter(isEffectful)) {
-    // 28/10/2026 (decisione dell'utente: «esplorare e imparare senza limiti»): script nella pagina e strumenti non classificati
-    // passano in esplorazione; resta vietato il caricamento di file locali sul tenant.
-    if (a.kind === "upload") return `esplorazione completa: il caricamento di file resta vietato (${a.op ?? a.tool ?? ctx.tool})`;
-    if (a.kind === "script" || a.kind === "other") continue;
-    // 28/10/2026 (decisione dell'utente: «a costo di abbattere il guard dei click»): in esplorazione il marcatore delle
-    // chiamate non registrate da observe-append non nega più i click (bloccava l'esplorazione ogni pochi minuti); restano
-    // i controlli sulle cancellazioni (nome dell'elemento nell'ultimo snapshot). Nei piani il marcatore vale ancora.
+    // policy unica (hooks/lib/policy.mjs): capacità del profilo esplorazione; il marcatore delle chiamate non registrate e
+    // il legame snapshot ↔ pagina non bloccano (click_liberi); restano le cancellazioni riconoscibili
+    if (a.kind === "upload" && !allows(ctx.session, "caricamento_file")) return `esplorazione completa: il caricamento di file resta vietato (${a.op ?? a.tool ?? ctx.tool})`;
+    if (a.kind === "script" && allows(ctx.session, "script_nella_pagina")) continue;
+    if (a.kind === "other" && allows(ctx.session, "strumenti_non_classificati")) continue;
+    if (a.kind === "script" || a.kind === "other") return `esplorazione completa: ${a.kind === "script" ? "gli script nella pagina" : "gli strumenti non classificati"} non sono concessi dal profilo (${a.op ?? a.tool ?? ctx.tool})`;
     if (a.kind === "dialog") {
       if (isDeleteLabel(ctx.ti?.promptText)) return "esplorazione completa: il testo del dialogo conferma una cancellazione: vietato";
       if (a.submits && deleteQuestion) return "esplorazione completa: la pagina chiede di confermare una cancellazione: non si accetta il dialogo";
@@ -143,7 +143,7 @@ function fullExploreRefusal(ctx) {
     // script e strumenti non classificati. Rischio accettato: un'icona senza nome (cestino) non si riconosce più.
     for (const r of refs) {
       const name = names && Object.hasOwn(names, r) ? String(names[r] ?? "") : null;
-      if (name && isDeleteLabel(name)) return `esplorazione completa: "${name}" è una cancellazione: vietata anche in esplorazione completa`;
+      if (name && isDeleteLabel(name) && !allows(ctx.session, "cancellazioni")) return `esplorazione completa: "${name}" è una cancellazione: vietata anche in esplorazione completa`;
       if (a.kind === "click" && deleteQuestion && name && !SAFE_EXIT.test(name) && (EFFECT_LABEL.test(name) || YES.test(name))) return `esplorazione completa: la pagina chiede di confermare una cancellazione: "${name}" non si preme (usa Annulla o chiudi)`;
     }
   }
@@ -152,7 +152,7 @@ function fullExploreRefusal(ctx) {
 
 function noPlan(ctx, no) {
   const s = ctx.session;
-  const explore = s.mode === "esplorazione" && ["sandbox", "preprod"].includes(s.env?.type);
+  const explore = profileOf(s) === "esplorazione";
   // K5 giro 2 (N2): la modalità vale solo se l'ha aperta l'utente con ESPLORA SANDBOX|PREPROD (record nella catena,
   // consumato dal cambio di modalità, per questo ambiente, confermato nel transcript).
   if (explore) {
@@ -497,6 +497,9 @@ const PROTECTED = [
   ["customers/*/.sessions/*/agents/**", "lo stato degli agenti (legame al compito, chiamate) lo scrive solo guard-control"],
   // giro 1: offset della scansione incrementale del transcript (spostarlo avanti impedirebbe una conferma dell'utente)
   ["customers/*/.sessions/*/control-scan.json", "l'offset di scansione del transcript lo scrivono solo gli hook del plugin (conferma dei controlli dell'utente)"],
+  // giro 2 di bug fixing (29/10/2026): la cattura dell'esplorazione la scrivono solo observe-append e gli script del plugin
+  // (retention): una mappa o una pagina falsificata guiderebbe la seconda run su percorsi inesistenti
+  ["customers/*/explore/**", "la cattura dell'esplorazione (pagine e sitemap.json) la scrivono solo l'hook observe-append e gli script del plugin"],
 ];
 const TREE = PROTECTED.map(([a, why]) => [a === "**/session.json" ? "customers/*/.sessions/*/session.json" : a === "**/approvals.jsonl" ? "customers/*/.sessions/*/approvals.jsonl" : a, why]);
 const WRITE_FILE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit"]);
@@ -549,7 +552,8 @@ export function normalizePluginCmd(cmd, ctx) {
 // `integrity verify` e le verifiche --check / --help che non scrivono.
 // WP10a giro 1 (minore 4): per nome — ogni build-*.mjs è un generatore del pacchetto (deny di default, anche uno nuovo non
 // ancora classificato) salvo quelli dichiarati NON generatori (producono report e payload del workspace).
-export const GENERATOR_NAMES = Object.freeze(["build-deny-rules.mjs", "build-session-validator.mjs", "build-error-patterns.mjs"]);
+// giro 1 di bug fixing (29/10/2026): bump-version.mjs riscrive versione e integrity.json (si esegue solo nel repository del plugin)
+export const GENERATOR_NAMES = Object.freeze(["build-deny-rules.mjs", "build-session-validator.mjs", "build-error-patterns.mjs", "bump-version.mjs"]);
 export const NON_GENERATORS = Object.freeze(["build-report.mjs", "build-payload.mjs"]);
 export const isGenerator = (name) => GENERATOR_NAMES.includes(name) || (/^build-[\w-]+\.mjs$/.test(name) && !NON_GENERATORS.includes(name));
 const GENERATORS = { has: isGenerator };
