@@ -362,7 +362,9 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       const url = pageUrl ?? confirmedUrl ?? page?.url ?? null;
       if (state === "ok" && page && !find && (mode === "complete" || mode === "partial" || (mode === null && refs)) && url) {
         const sig = pieceSig() ?? doc.page_signature ?? url;
-        const file = cap.capturePage({ ws: st.ws, customer: st.customer, sig, url, title: page.title ?? null, page, text, partial: mode === "partial", ts: doc.ts });
+        // policy.explore_capture dell'ambiente ("integrale", predefinito, o "redatto" per una pre-produzione con dati reali)
+        const policy = { explore_capture: st.session.env?.policy?.explore_capture ?? "integrale", profile: doc.redaction.profile, env: secretEnv(env) };
+        const file = cap.capturePage({ ws: st.ws, customer: st.customer, sig, url, title: page.title ?? null, page, text, partial: mode === "partial", ts: doc.ts, policy });
         // riassunto: per le letture da file (il modello non deve rileggerle a pezzi) e per le pagine grandi in linea
         if (mode !== "partial" && (fromFile || text.length > 20000)) {
           digest = cap.pageDigest(page, { file: file ? `customers/${st.customer}/${file}` : null });
