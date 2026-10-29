@@ -1,6 +1,6 @@
 # JAGGAER Virtual Consultant — Manuale integrato
 
-Manuale d'uso del plugin per Claude Code (versione 0.1.0). Rende la Parte X della specifica (v8.0, §55–§59 e §61) con
+Manuale d'uso del plugin per Claude Code (versione 0.2.0). Rende la Parte X della specifica (v8.0, §55–§59 e §61) con
 lo stato reale del plugin: i comandi, le frasi e i controlli descritti qui sono quelli del codice. L'allineamento fra
 questo manuale e i comandi è verificato da test automatici (`test/docs/manual-alignment.test.mjs`: le azioni di ogni
 famiglia in §56 coincidono con l'`argument-hint` del file in `commands/`; `test/docs/phrases-coverage.test.mjs`: ogni
@@ -23,10 +23,10 @@ Indice: [55 Installazione e primo avvio](#55-installazione-e-primo-avvio) ·
   **Chrome DevTools MCP**. Fuori dalla sandbox (pre-produzione, produzione, sviluppo) il browser di Claude può solo
   leggere e navigare: ogni azione con effetto (click, testo, upload, invio) si esegue con **Chrome DevTools MCP**, che
   va quindi installato per configurare o operare in pre-produzione. In sandbox vanno bene entrambi.
-- **Node 22** o successivo, **git**, accesso al repository di conoscenza, le variabili d'ambiente del cliente dal vault
+- **Node 22.13** o successivo (il DB usa `node:sqlite`, incluso in Node: nessuna dipendenza nativa), **git**, accesso al repository di conoscenza, le variabili d'ambiente del cliente dal vault
   (credenziali `NRT_<ENV>_*`, `XRAY_*`, `JIRA_*`; per la digestione settimanale e i ticket anche `JVC_PSEUDO_SALT`).
 - **`npm ci` nella cartella del plugin** (non nel workspace; non `npm install`): i guard di sicurezza importano le
-  dipendenze di runtime (`ajv`, `ajv-formats`, `better-sqlite3`, `yaml`) e senza di esse negano ogni chiamata (sono
+  dipendenze di runtime (`ajv`, `ajv-formats`, `yaml`) e senza di esse negano ogni chiamata (sono
   fail-closed). `npm ci` installa esattamente le versioni di `package-lock.json`, che è nel perimetro d'integrità:
   `npm install` può riscrivere il lockfile e allora il controllo d'integrità fallisce e i guard negano tutto
   (`node_modules` resta fuori dal perimetro, §55.1.2). `doctor` segnala le dipendenze mancanti con il controllo `deps`
@@ -140,8 +140,11 @@ impone da solo quanto segue. Ogni voce dice cosa fare.
 6  /jaggaer-virtual-consultant:vc doctor         → deve essere tutto verde prima di continuare
 ```
 
-`doctor` verifica: versione di Node e dipendenze del plugin (`deps`), versione del plugin e della conoscenza,
-integrità del pacchetto, DB apribili, `environments.yaml` valido (regole di produzione comprese), host raggiungibili e
+`doctor` verifica: versione di Node e dipendenze del plugin (`deps`, con il motore `node:sqlite`), versione del plugin e
+della conoscenza, integrità del pacchetto, versione del plugin in uso rispetto a `integrity.json` e al marketplace
+installato (`plugin-version`: giallo se il marketplace ha una versione più nuova — reinstallare il plugin e riavviare
+Claude Code, perché Claude Code tiene i plugin in cache per versione; rosso se `plugin.json` e `integrity.json` non
+concordano), DB apribili, `environments.yaml` valido (regole di produzione comprese), host raggiungibili e
 solo quelli (`--network`), credenziali presenti (solo i nomi, mai i valori), browser (sempre giallo: il plugin non può
 sondarlo, si verifica in sessione con `use env`), Jira raggiungibile o coda offline abilitata, compensazioni pendenti da
 sessioni precedenti, checklist di hardening, catena dell'audit, sostituzione di `${CLAUDE_PLUGIN_ROOT}`
@@ -767,7 +770,7 @@ precedenti del workspace portino davvero alla strategia attesa.
 
 1. Requisiti: Claude Code ≥ 2.1.269, git ≥ 2.31. I casi concedono Bash agli agenti: su Windows, quando si concede
    Bash (o PowerShell), `claude plugin eval` richiede WSL2 — usare WSL2 (o Linux/macOS), con una copia del plugin su
-   cui si è eseguito `npm ci` in quell'ambiente (better-sqlite3 è un modulo nativo). Non c'è un requisito sulla
+   cui si è eseguito `npm ci` in quell'ambiente. Non c'è un requisito sulla
    posizione del plugin. Per i casi di `weekly-digest` la variabile `JVC_PSEUDO_SALT` deve essere nell'ambiente della
    run (il sale della pseudonimizzazione non sta mai in un file): senza, la pipeline esce con 3 e i casi che la
    eseguono si chiudono `blocked`, come previsto dai loro grader.

@@ -1,6 +1,7 @@
 // doctor (F0.4, §48.1, §55.2, §54.7, §58): prima di lavorare, "deve essere tutto verde". Ogni controllo è
-// { id, status: green|yellow|red, detail, fix }. Controlli: versione di Node, dipendenze installate e importabili,
-// versione del plugin rispetto a knowledge_version dei DB, integrità del pacchetto, DB per cliente (WAL, migrazioni),
+// { id, status: green|yellow|red, detail, fix }. Controlli: versione di Node, dipendenze installate e importabili (e il
+// motore node:sqlite), versione del plugin rispetto a knowledge_version dei DB, integrità del pacchetto, versione del
+// plugin in uso rispetto a integrity.json e al marketplace installato (plugin-version), DB per cliente (WAL, migrazioni),
 // environments.yaml (regole di produzione comprese), credenziali per prefisso (solo i NOMI, mai i valori), server del
 // browser (non sondabili dal plugin ⇒ giallo), ALM/Jira (coda offline o raggiungibilità con --network), compensazioni
 // pendenti di sessioni precedenti, prod_allowed_red (§52.2), checklist di hardening §54.7, catena dell'audit del mese
@@ -14,11 +15,14 @@ import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { verifyPackage, devMode } from "../../hooks/lib/integrity.mjs";
 import { verifyChain } from "../../hooks/lib/audit.mjs";
+import { pluginVersionStatus } from "../../hooks/lib/plugin-version.mjs";
+import { engine as sqliteEngine } from "../kb/sqlite.mjs";
 import { NETWORK_CATEGORIES, parseNetworkMd } from "../lib/network-md.mjs";
 
 export const PLUGIN_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const CUSTOMER_RE = /^[A-Z0-9]{4}$/;
-const DEPS = ["ajv", "ajv-formats", "yaml", "better-sqlite3"];
+// 29/10/2026 (decisione dell'utente): niente più better-sqlite3 — il DB usa node:sqlite, incluso in Node (vedi checkDeps)
+const DEPS = ["ajv", "ajv-formats", "yaml"];
 const BROWSER_SERVER = /chrome|browser|playwright|puppeteer|selenium|devtools/i;
 // Host che il plugin contatta per costruzione (§53.2) oltre a quelli dichiarati dal cliente; NETWORK.md li estende.
 const DEFAULT_ALLOW = ["*.atlassian.net", "*.getxray.app", "registry.npmjs.org", "api.anthropic.com"];
@@ -52,24 +56,23 @@ export function checkNode(version = process.versions.node) {
   return major >= 22 ? C("node", "green", `Node ${version}`) : C("node", "red", `Node ${version}: serve Node ≥ 22`, "installare Node 22 LTS o successivo (§55.1)");
 }
 
-export function checkDeps(plugin) {
+// 29/10/2026: il DB usa sempre node:sqlite (scripts/kb/sqlite.mjs), che dipende dalla versione di Node e non da npm:
+// senza flag da Node 22.13 / 23.4 (da 22.5 a 22.12 serve --experimental-sqlite, che gli hook non passano).
+export function checkDeps(plugin, { sqlite = sqliteEngine, nodeVersion = process.versions.node } = {}) {
   const req = createRequire(join(plugin, "package.json"));
   const missing = [];
   for (const d of DEPS) {
-    try {
-      const m = req(d);
-      if (d === "better-sqlite3") {
-        try { new m(":memory:").close(); } catch (err) {
-          // 28/10/2026: senza il binario nativo il plugin usa node:sqlite (scripts/kb/sqlite.mjs): non è una dipendenza mancante
-          if (!/bindings file|better_sqlite3|NODE_MODULE_VERSION|was compiled against/i.test(String(err?.message ?? err))) throw err;
-          req("node:sqlite");
-        }
-      }
-    } catch (err) { missing.push(`${d} (${String(err.code ?? err.message).slice(0, 60)})`); }
+    try { req(d); } catch (err) { missing.push(`${d} (${String(err.code ?? err.message).slice(0, 60)})`); }
   }
-  return missing.length
-    ? C("deps", "red", `dipendenze non installate o non importabili: ${missing.join(", ")} — senza di esse ogni guard nega (fail-closed)`, `npm ci nel plugin (cd "${plugin}" && npm ci): installa esattamente le versioni di package-lock.json, che è sotto integrità — npm install può riscriverlo e far fallire il controllo d'integrità`)
-    : C("deps", "green", `dipendenze importabili: ${DEPS.join(", ")}`);
+  let eng = null;
+  try { eng = sqlite(); } catch { eng = null; }
+  const problems = [missing.length ? `dipendenze non installate o non importabili: ${missing.join(", ")} — senza di esse ogni guard nega (fail-closed)` : null,
+    eng ? null : `node:sqlite non disponibile in Node ${nodeVersion}: il DB del cliente non si apre`].filter(Boolean);
+  const fixes = [missing.length ? `npm ci nel plugin (cd "${plugin}" && npm ci): installa esattamente le versioni di package-lock.json, che è sotto integrità — npm install può riscriverlo e far fallire il controllo d'integrità` : null,
+    eng ? null : "aggiornare Node a 22.13 o successivo (node:sqlite senza flag; §55.1)"].filter(Boolean);
+  return problems.length
+    ? C("deps", "red", problems.join("; "), fixes.join("; "))
+    : C("deps", "green", `dipendenze importabili: ${DEPS.join(", ")}; SQLite: ${eng} (Node ${nodeVersion})`);
 }
 
 function pluginManifest(plugin) { return readJson(join(plugin, ".claude-plugin", "plugin.json")); }
@@ -108,6 +111,13 @@ export function checkIntegrity(plugin, env) {
   const what = [v.reason, v.mismatched.length ? `alterati: ${v.mismatched.slice(0, 5).join(", ")}` : null, v.missing.length ? `mancanti: ${v.missing.slice(0, 5).join(", ")}` : null,
     v.extra.length ? `in più: ${v.extra.slice(0, 5).join(", ")}` : null, v.signature !== "ok" && v.key_present ? `firma ${v.signature}` : v.signature === "invalid" ? "firma invalida" : null].filter(Boolean).join("; ");
   return C("integrity", "red", `integrità del pacchetto fallita (${what || v.status})${devMode(env) ? "; JVC_DEV attivo" : ": i guard negano tutto"}`, "reinstallare dalla release firmata; non operare (§58)");
+}
+
+// 29/10/2026 (punto 1 del piano): versione in uso vs integrity.json (rosso se discordi) e vs marketplace installato
+// (giallo se lì è più nuova: reinstallare); file assenti ⇒ giallo «non verificabile» (hooks/lib/plugin-version.mjs).
+export function checkPluginVersion(plugin, env = process.env) {
+  const v = pluginVersionStatus(plugin, env);
+  return C("plugin-version", v.status, v.detail, v.fix ?? null);
 }
 
 function migrationTables(plugin) {
@@ -392,6 +402,7 @@ export async function runChecks({ ws, plugin = PLUGIN_ROOT, env = process.env, n
   checks.push(await safe("version", () => checkVersion(ws, plugin, custs)));
   const integrity = checkIntegrity(plugin, env);
   checks.push(integrity);
+  checks.push(await safe("plugin-version", () => checkPluginVersion(plugin, env)));
   const envDocs = {};
   const xrays = {};
   for (const c of custs) {
@@ -431,8 +442,10 @@ export function renderTable(checks) {
 
 const HELP = `uso: node scripts/admin/doctor.mjs [--network] [--workspace <dir>] [--session <id>] [--json] [--help]
 
-Controlli (§55.2, §48.1, §54.7): node, deps, version (plugin.json metadata.knowledge_version_min/max vs DB),
-integrity, db:<C>, environments:<C>, credentials (solo i nomi delle variabili NRT_<ENV>_*, XRAY_*, JIRA_*),
+Controlli (§55.2, §48.1, §54.7): node, deps (ajv, ajv-formats, yaml; motore node:sqlite), version (plugin.json
+metadata.knowledge_version_min/max vs DB), integrity, plugin-version (versione in uso vs integrity.json e vs il
+marketplace installato in ~/.claude/plugins o $CLAUDE_CONFIG_DIR/plugins: più nuova lì ⇒ reinstallare), db:<C>,
+environments:<C>, credentials (solo i nomi delle variabili NRT_<ENV>_*, XRAY_*, JIRA_*),
 browser (non sondabile: giallo, da verificare in sessione), alm:<C> (coda offline o Jira raggiungibile),
 compensations (pendenze di sessioni precedenti), prod_allowed_red, hardening (checklist §54.7: voci automatiche e
 manuali), audit (catena del mese corrente), plugin-root (\${CLAUDE_PLUGIN_ROOT} sostituito dal percorso letterale nei

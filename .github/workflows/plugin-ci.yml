@@ -14,13 +14,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: "22" }
+      # --ignore-scripts blocca gli install script di TUTTE le dipendenze per sicurezza. 29/10/2026 (decisione
+      # dell'utente): tolta better-sqlite3, il DB usa node:sqlite incluso in Node — nessuna dipendenza nativa da
+      # ricompilare, quindi niente più "npm rebuild better-sqlite3".
       - run: npm ci --ignore-scripts
-      # Ruling del controller: --ignore-scripts blocca gli install script di
-      # TUTTE le dipendenze per sicurezza; better-sqlite3 è l'unica di cui ci
-      # fidiamo esplicitamente per il proprio script nativo, quindi la si
-      # ricompila one-off qui invece di rimuovere --ignore-scripts (che
-      # riabiliterebbe gli script di ogni dipendenza, non solo di questa).
-      - run: npm rebuild better-sqlite3
       - run: npm test
       # Revisione finale: le soglie di tempo (guard, observe-append, kb fields, SessionStart, audit-append) girano da
       # sole, dopo la suite e senza concorrenza (--test-concurrency=1), con riscaldamento, baseline node -e 0 e

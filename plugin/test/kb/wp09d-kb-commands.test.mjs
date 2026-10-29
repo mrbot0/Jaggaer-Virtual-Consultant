@@ -4,7 +4,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { join } from "node:path";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import Database from "better-sqlite3";
+import Database from "../../scripts/kb/sqlite.mjs";
 import YAML from "yaml";
 import { openDb } from "../../scripts/kb/db.mjs";
 import { reindex } from "../../scripts/kb/reindex.mjs";
