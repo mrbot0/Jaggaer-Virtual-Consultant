@@ -9,10 +9,11 @@ import { spawnSync } from "node:child_process";
 import { mkWs, seedSession, runHook, decisionOf, reasonOf, cleanEnv, pinXray, ROOT } from "../helpers/hook-env.mjs";
 import { envWs, patchSession, writeSel, writePlan, sealActivePlan } from "../helpers/env-fixture.mjs";
 import { copyPlugin } from "../helpers/plugin-copy.mjs";
+import { hooksView } from "../helpers/hooks-view.mjs";
 
 const E = (ws, extra = {}) => ({ JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT, ...extra });
 const pre = (ws, tool, tool_input, extra = {}) => ({ session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input, ...extra });
-const HOOKS = JSON.parse(readFileSync(join(ROOT, "hooks/hooks.json"), "utf8")).hooks.PreToolUse;
+const HOOKS = hooksView().hooks.PreToolUse;   // 29/10/2026: tabella del dispatcher
 function chain(ws, tool, ti, { extra = {}, env = {} } = {}) {
   const names = HOOKS.filter((g) => new RegExp(`^(?:${g.matcher})$`).test(tool)).flatMap((g) => g.hooks.map((h) => /scripts\/([a-z-]+)\.mjs/.exec(h.command)[1]));
   return [...new Set(names)].map((g) => ({ g, r: runHook(g, pre(ws, tool, ti, extra), E(ws, env)) }));

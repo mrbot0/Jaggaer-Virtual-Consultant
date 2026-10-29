@@ -10,6 +10,7 @@ import YAML from "yaml";
 import { mkWs, seedSession, ROOT } from "../helpers/hook-env.mjs";
 import { startMcp, initialized } from "../helpers/mcp-client.mjs";
 import { isBrowserTool, classify } from "../../hooks/lib/browser-tools.mjs";
+import { hooksView } from "../helpers/hooks-view.mjs";
 
 const SEVEN = ["alm_create_defect", "alm_create_execution", "alm_find_tests", "alm_get_test", "alm_import_results", "alm_link", "alm_queue_status"];
 const RUN = "RUN.ACME.20260929.1000.P2P";
@@ -133,7 +134,7 @@ test(".mcp.json: alm (server del plugin), chrome-devtools pinnato a chrome-devto
   for (const k of ["chrome-devtools", "playwright"]) assert.equal(m[k].env?.JVC_MCP_OPTIONAL, "1", `${k} facoltativo`);
   const allow = JSON.parse(readFileSync(join(ROOT, "hooks/lib/mcp-allowlist.json"), "utf8")).servers;
   assert.ok(allow.includes("alm") && allow.includes("plugin_jaggaer-virtual-consultant_alm"));
-  const hooks = JSON.parse(readFileSync(join(ROOT, "hooks/hooks.json"), "utf8")).hooks.PreToolUse;
+  const hooks = hooksView().hooks.PreToolUse;   // 29/10/2026: tabella del dispatcher
   const almMatcher = hooks.find((h) => h.hooks.some((x) => /guard-alm-write/.test(x.command))).matcher;
   for (const p of ["mcp__alm__", "mcp__plugin_jaggaer-virtual-consultant_alm__"]) for (const t of SEVEN) assert.ok(new RegExp(`^(?:${almMatcher})$`).test(p + t), p + t);
   for (const p of ["mcp__chrome-devtools__", "mcp__plugin_jaggaer-virtual-consultant_chrome-devtools__"]) { assert.ok(isBrowserTool(`${p}take_snapshot`)); assert.equal(classify(`${p}take_snapshot`, {}).family, "chrome-devtools"); }

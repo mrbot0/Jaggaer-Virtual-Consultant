@@ -26,6 +26,7 @@ import { summarizeInput } from "../tool-summary.mjs";
 import { readJsonl } from "../state-summary.mjs";
 import { invocationType, sessionTtlMs } from "../invocations.mjs";
 import { withFileLock, writeFileAtomic } from "../fsx.mjs";
+import { allows } from "../policy.mjs";
 import { controlFile, agentsDir, agentStateFile, readControl, confirmPending, controlState, transcriptCandidates, ALL, safeName } from "../control.mjs";
 
 const G = "guard-control";
@@ -262,7 +263,7 @@ export async function decide(input, env = process.env) {
 // e durata (si impara il più possibile; resta il budget di token della sessione, PAUSA/FERMA dell'utente); i limiti
 // dichiarati dall'utente con LIMITI DISPATCH valgono sempre; fuori esplorazione i predefiniti e i minuti dell'header.
 export function effectiveLimits(limits, session, inv) {
-  if (session?.mode === "esplorazione" && !limits?.set_at) return { calls: Infinity, minutes: Infinity };
+  if (allows(session, "limiti_dispatch_illimitati") && !limits?.set_at) return { calls: Infinity, minutes: Infinity };
   const headerMin = typeof inv?.minutes === "number" && inv.minutes > 0 ? inv.minutes : Infinity;
   return { calls: limits.calls, minutes: Math.min(limits.minutes, headerMin) };
 }

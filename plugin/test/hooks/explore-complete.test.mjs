@@ -79,7 +79,7 @@ test("sandbox completa: anche Invio e salvataggio; produzione mai", () => {
 
 test("limiti per agente: in esplorazione nessun tetto se l'utente non ne ha dichiarati; i suoi restano; fuori esplorazione i predefiniti", () => {
   const def = { calls: 200, minutes: 30, set_at: null };
-  assert.deepEqual(effectiveLimits(def, { mode: "esplorazione" }, null), { calls: Infinity, minutes: Infinity });
+  assert.deepEqual(effectiveLimits(def, { mode: "esplorazione", env: { type: "preprod" } }, null), { calls: Infinity, minutes: Infinity });   // 29/10/2026: policy unica, esplorazione solo in sandbox/pre-produzione
   assert.deepEqual(effectiveLimits({ calls: 900, minutes: 120, set_at: "t" }, { mode: "esplorazione" }, null), { calls: 900, minutes: 120 });
   assert.deepEqual(effectiveLimits(def, { mode: "ops" }, { minutes: 10 }), { calls: 200, minutes: 10 });
 });

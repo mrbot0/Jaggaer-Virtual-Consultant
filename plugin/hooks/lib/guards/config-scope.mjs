@@ -39,6 +39,7 @@ import { confirmedAutonomyLevel } from "../autonomy.mjs";
 import { updateSessionFile as updateSessionFast } from "../session-state.mjs";
 import { pendingRefusal, mergedPending, loadPending, pendingFile } from "../ref-history.mjs";
 import { simpleNodeCall } from "../exact-argv.mjs";
+import { allows, profileOf } from "../policy.mjs";
 
 const G = "guard-config-scope";
 export const COMMIT_VERBS = new Set(["SAVE", "SUBMIT", "TOGGLE", "UPLOAD", "DELETE"]);
@@ -121,13 +122,12 @@ function fullExploreRefusal(ctx) {
   const names = snap?.names && typeof snap.names === "object" ? snap.names : null;
   const deleteQuestion = names ? Object.values(names).some((n) => isDeleteQuestion(n)) : false;
   for (const a of ctx.actions.filter(isEffectful)) {
-    // 28/10/2026 (decisione dell'utente: «esplorare e imparare senza limiti»): script nella pagina e strumenti non classificati
-    // passano in esplorazione; resta vietato il caricamento di file locali sul tenant.
-    if (a.kind === "upload") return `esplorazione completa: il caricamento di file resta vietato (${a.op ?? a.tool ?? ctx.tool})`;
-    if (a.kind === "script" || a.kind === "other") continue;
-    // 28/10/2026 (decisione dell'utente: «a costo di abbattere il guard dei click»): in esplorazione il marcatore delle
-    // chiamate non registrate da observe-append non nega più i click (bloccava l'esplorazione ogni pochi minuti); restano
-    // i controlli sulle cancellazioni (nome dell'elemento nell'ultimo snapshot). Nei piani il marcatore vale ancora.
+    // policy unica (hooks/lib/policy.mjs): capacità del profilo esplorazione; il marcatore delle chiamate non registrate e
+    // il legame snapshot ↔ pagina non bloccano (click_liberi); restano le cancellazioni riconoscibili
+    if (a.kind === "upload" && !allows(ctx.session, "caricamento_file")) return `esplorazione completa: il caricamento di file resta vietato (${a.op ?? a.tool ?? ctx.tool})`;
+    if (a.kind === "script" && allows(ctx.session, "script_nella_pagina")) continue;
+    if (a.kind === "other" && allows(ctx.session, "strumenti_non_classificati")) continue;
+    if (a.kind === "script" || a.kind === "other") return `esplorazione completa: ${a.kind === "script" ? "gli script nella pagina" : "gli strumenti non classificati"} non sono concessi dal profilo (${a.op ?? a.tool ?? ctx.tool})`;
     if (a.kind === "dialog") {
       if (isDeleteLabel(ctx.ti?.promptText)) return "esplorazione completa: il testo del dialogo conferma una cancellazione: vietato";
       if (a.submits && deleteQuestion) return "esplorazione completa: la pagina chiede di confermare una cancellazione: non si accetta il dialogo";
@@ -152,7 +152,7 @@ function fullExploreRefusal(ctx) {
 
 function noPlan(ctx, no) {
   const s = ctx.session;
-  const explore = s.mode === "esplorazione" && ["sandbox", "preprod"].includes(s.env?.type);
+  const explore = profileOf(s) === "esplorazione";
   // K5 giro 2 (N2): la modalità vale solo se l'ha aperta l'utente con ESPLORA SANDBOX|PREPROD (record nella catena,
   // consumato dal cambio di modalità, per questo ambiente, confermato nel transcript).
   if (explore) {

@@ -19,6 +19,7 @@ import { allowWithInput } from "../io.mjs";
 import { invocationsFile, pluginAgentType } from "../workspace.mjs";
 import { KEEPER_AGENTS } from "./scope.mjs";
 import { simpleNodeCall } from "../exact-argv.mjs";
+import { allows } from "../policy.mjs";
 import { skeleton } from "../paths.mjs";
 import { openInvocations } from "../state-summary.mjs";
 import { parsePromptHeader } from "../../../scripts/admin/agent-prompt.mjs";
@@ -193,7 +194,7 @@ export const decide = guarded(G, (ctx) => {
   if (missing.length) return denyAudited(ctx, G, `header agent-prompt incompleto: mancano ${missing.join(", ")}`);
   if (String(h.customer) !== session.customer) return denyAudited(ctx, G, `il prompt è per il cliente ${h.customer} ma la sessione è sul cliente ${session.customer}`);
   // 28/10/2026: in esplorazione un dispatch può lavorare su uno scope diverso da quello di sessione (l'esplorazione li attraversa)
-  if (String(h.scope) !== session.scope && session.mode !== "esplorazione") return denyAudited(ctx, G, `scope del prompt ${h.scope} ≠ scope di sessione ${session.scope ?? "—"}: esegui use scope ${h.scope} prima del dispatch (i guard leggono session.json)`);
+  if (String(h.scope) !== session.scope && !allows(session, "dispatch_altro_scope")) return denyAudited(ctx, G, `scope del prompt ${h.scope} ≠ scope di sessione ${session.scope ?? "—"}: esegui use scope ${h.scope} prima del dispatch (i guard leggono session.json)`);
   // WP10d (D2, D8): regole di orchestrazione applicate dal codice — sub-agente che invoca Agent, controllo
   // dell'utente (pausa/stop), vigilanza cognitiva per scope, handoff via agent-manager con contratto HND
   const orch = dispatchRefusal(ctx, h);
