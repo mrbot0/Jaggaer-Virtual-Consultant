@@ -137,6 +137,7 @@ export function capturePage({ ws, customer, sig, url, title, page, text, partial
       p.history = history;
       p.changed = p.changed === true;
     }
+    p.file = `pages/${name}`;   // anche dopo la retention, che toglie il riferimento a un file scaduto
     m.pages[sig] = p;
     // un click in attesa da un'altra pagina diventa un arco della mappa
     if (m.pending && m.pending.from && m.pending.from !== sig) {

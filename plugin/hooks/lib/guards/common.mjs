@@ -9,6 +9,7 @@ import { appendAudit } from "../audit.mjs";
 import { summarizeInput } from "../tool-summary.mjs";
 import { scriptWriteTargets } from "./script-writes.mjs";
 import { simpleArgv } from "../exact-argv.mjs";
+import { bumpDenyCount, denyHint, adviceFor, HINT_AFTER } from "../deny-hints.mjs";
 
 export { PathPolicyError };
 export const FILE_TOOLS = new Set(["Read", "Write", "Edit", "MultiEdit", "NotebookEdit"]);
@@ -54,16 +55,27 @@ export function targetsOf(ctx) {
 // Tutti i relativi da valutare con le regole del workspace: dentro + fuori.
 export const allRels = (T) => [...T.ws, ...(T.outside ?? [])];
 
+// 29/10/2026 (decisione dell'utente, punto 3 del piano): lo stesso guard che nega per la terza volta (o oltre) lo stesso
+// motivo normalizzato nella sessione aggiunge IN CODA al motivo un suggerimento azionabile — «(negato N volte: il
+// manager invochi workspace-manager | health-keeper | non riprovare …)» — perché l'agente smetta di riprovare la stessa
+// chiamata (hooks/lib/deny-hints.mjs). Il motivo originale resta all'inizio, invariato; in audit resta il motivo senza
+// suggerimento (con repeat e hint a parte). Contatore fail-open: un guasto non cambia la decisione né il motivo.
 export function denyAudited(ctx, guard, reason) {
+  let n = null;
+  if (ctx.jvc) n = bumpDenyCount({ ws: ctx.ws, customer: ctx.customer, sid: ctx.sid, guard, reason });
+  const repeated = Number.isInteger(n) && n > HINT_AFTER;
   try {
     if (ctx.jvc) {
       appendAudit(ctx.ws, {
         session: ctx.sid, customer: ctx.customer, scope: ctx.session?.scope ?? null, kind: "guard", actor: `hook:${guard}`,
-        payload: { decision: "deny", tool: ctx.tool, reason, input_summary: summarizeInput(ctx.tool, ctx.ti), agent_type: ctx.agentType, agent_id: ctx.agentId },
+        payload: { decision: "deny", tool: ctx.tool, reason, input_summary: summarizeInput(ctx.tool, ctx.ti), agent_type: ctx.agentType, agent_id: ctx.agentId,
+          ...(repeated ? { repeat: n, hint: adviceFor(reason) } : {}) },
       });
     }
   } catch { /* l'audit non cambia la decisione: si nega comunque */ }
-  return deny(`[${guard}] ${reason}`);
+  let hint = "";
+  try { if (repeated) hint = denyHint(reason, n); } catch { hint = ""; }
+  return deny(`[${guard}] ${reason}${hint}`);
 }
 
 // ---- lo session.mjs del plugin ----

@@ -163,10 +163,17 @@ i click fra le pagine in `customers/<C>/explore/sitemap.json`, struttura nel reg
 pagine a mano. In esplorazione non hai tetti di azioni o di durata (resta il budget di token): continua finché c'è da
 imparare.
 
-**Prima di partire (seconda run e successive):** leggi `customers/<C>/explore/sitemap.json` e la mappa della conoscenza
-(percorsi `FLW "Percorso: <pagina>"`, SEL). Per una pagina già nota vai **diretto** con `navigate_page` al suo URL (o
-segui gli archi `edges`: da quale pagina, con quale etichetta); per sapere cosa c'è leggi il file in `pages/` invece di
-riesplorare. Riesplori solo le pagine nuove o cambiate.
+**Prima di partire (seconda run e successive):** chiedi alla mappa cosa sai già, invece di riesplorare:
+
+    node "${CLAUDE_PLUGIN_ROOT}/scripts/explore/explore.mjs" status --json
+    node "${CLAUDE_PLUGIN_ROOT}/scripts/explore/explore.mjs" route --to "<pagina o funzione>" --json
+    node "${CLAUDE_PLUGIN_ROOT}/scripts/explore/explore.mjs" show "<pagina>" --json
+
+`status` dice quali pagine sono cambiate all'ultima lettura, quali non rivedi da giorni e quali si raggiungono solo per
+URL; `route` dà l'URL per andarci **diretto** con `navigate_page` oppure la sequenza più corta di click; `show` la scheda
+della pagina (elementi, archi, file del testo integrale). Riesplori solo le pagine nuove, cambiate o vecchie. Cosa ti è
+concesso in ogni profilo (esplorazione, piano, standard, produzione) lo dice `docs/POLICY.md`, generato dalla policy
+dei guard: se una regola qui sotto e quel file non coincidono, vale il file.
 
 **Cosa puoi fare** (sandbox e pre-produzione, modalità esplorazione, nessun piano attivo): navigare verso qualunque host,
 cliccare qualunque elemento, compilare, salvare, inviare, approvare, confermare i dialoghi, usare script nella pagina per
