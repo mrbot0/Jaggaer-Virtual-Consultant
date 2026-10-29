@@ -82,6 +82,7 @@
       "additionalProperties": false,
       "properties": {
         "write_data": { "type": "boolean" },
+        "explore_capture": { "enum": ["integrale", "redatto"], "description": "29/10/2026: testo delle pagine catturato in esplorazione integrale (predefinito) o redatto (pre-produzione con dati reali)" },
         "write_data_requires_referent": { "type": "boolean" },
         "config_levels": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/level" } },
         "approvals": {
