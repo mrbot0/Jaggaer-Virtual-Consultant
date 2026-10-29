@@ -18,8 +18,20 @@ import { stateLine, pendingLine, surprisesLine } from "../lib/state-summary.mjs"
 import { checkSessionText } from "../lib/session-state.mjs";
 import { isMain } from "../../scripts/lib/is-main.mjs";
 import { contextBrief } from "../lib/agents-model.mjs";
+import { pluginVersionStatus } from "../lib/plugin-version.mjs";
 
 const PLUGIN = "jaggaer-virtual-consultant";
+
+// 29/10/2026 (punto 1 del piano): la versione del plugin in uso nel contesto, con l'avviso quando doctor plugin-version
+// non sarebbe verde (marketplace con una versione più nuova ⇒ reinstallare; plugin.json e integrity.json discordi).
+// Solo letture di pochi JSON piccoli: nessun costo apprezzabile sul SessionStart.
+export function versionLine(env = process.env) {
+  let v;
+  try { v = pluginVersionStatus(pluginRoot(env), env); } catch (err) { return `Versione del plugin in uso: non verificabile (${String(err?.message ?? err).slice(0, 120)}).`; }
+  const head = `Versione del plugin in uso: ${v.running ?? "sconosciuta"}`;
+  if (v.status === "green") return `${head}.`;
+  return `${head}. ${v.status === "red" ? "ATTENZIONE" : "Avviso"} (doctor plugin-version ${v.status === "red" ? "rosso" : "giallo"}): ${v.detail}${v.fix ? ` → ${v.fix}` : ""}.`;
+}
 
 // F0.3 (§53.1): verifica dell'integrità del pacchetto a ogni avvio di sessione (cache sugli mtime/ctime/dimensione in
 // <workspace>/.jvc/integrity-cache.json, < 2 s). Lo stato va in <workspace>/.jvc/integrity.json e, con un cliente, in
@@ -91,7 +103,7 @@ export function handle(input, env = process.env) {
   } catch (err) { notes.push(`Audit: eventi persi non ancora registrati (${err.message}).`); }
 
   const integrity = checkIntegrity(ws, sid, pointer.customer ? sessionFile(ws, pointer.customer, sid) : null, env);
-  const lines = [`[${PLUGIN}] sessione ${sid} (${input.source ?? "startup"})`,
+  const lines = [`[${PLUGIN}] sessione ${sid} (${input.source ?? "startup"})`, versionLine(env),
     "Carica la skill agent-manager: sei il manager (sessione principale). Instradi con Agent verso sub-agenti foglia, non fai lavoro di dominio; lo stato è in session.json e lo cambiano solo /use e gli hook."];
   if (!pointer.customer) {
     lines.push(`Nessun cliente attivo: esegui /${PLUGIN}:use customer <ID> (aggiungi --new per crearlo). Finché non c'è un cliente, customers/** è negato.`);

@@ -6,7 +6,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import YAML from "yaml";
-import Database from "better-sqlite3";
+import Database from "../../scripts/kb/sqlite.mjs";
 import { envWs, patchSession, writePlan, ROOT } from "../helpers/env-fixture.mjs";
 import { cleanEnv } from "../helpers/hook-env.mjs";
 import { demoPlan, PLAN } from "../helpers/k6-fixture.mjs";

@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import YAML from "yaml";
-import Database from "better-sqlite3";
+import Database from "../../scripts/kb/sqlite.mjs";
 import { envWs, readSession, patchSession, writePlan, sealActivePlan, ROOT } from "../helpers/env-fixture.mjs";
 import { runHook } from "../helpers/hook-env.mjs";
 import { snap, demoAtlas, demoPlan, PLAN } from "../helpers/k6-fixture.mjs";

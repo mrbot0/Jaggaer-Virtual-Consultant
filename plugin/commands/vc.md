@@ -54,6 +54,10 @@ argomenti, secondo la prima parola di `$ARGUMENTS`:
   chiamata). `plugin-root` giallo = la sostituzione di `${CLAUDE_PLUGIN_ROOT}` con il percorso letterale nei comandi non
   è ancora provata (nessun comando del plugin in audit: si riesegue dopo un altro comando) o non avviene (segnaposto
   rimasto nei comandi eseguiti: le operazioni a forma esatta — purge, retention, promozione — sono negate; manuale §58).
+  `plugin-version` giallo = il marketplace installato ha una versione più nuova di quella in uso (Claude Code tiene i
+  plugin in cache per versione): l'utente reinstalla il plugin da `/plugin` e riavvia Claude Code; giallo «non
+  verificabile» = marketplace o `integrity.json` non trovati; rosso = `plugin.json` e `integrity.json` discordi, si
+  reinstalla.
 - `watch <SES.C.AAAAMMGG.NNN>` (sola lettura, anche da un'altra sessione):
 
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/workflow.mjs" watch <codice> --json
