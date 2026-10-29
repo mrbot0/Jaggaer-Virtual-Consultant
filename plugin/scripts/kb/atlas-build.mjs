@@ -3,8 +3,8 @@
 // "Percorso: <pagina>") nella conoscenza del cliente, tramite writeDraft di atlas-write (validazione, doppioni, codici).
 //   kb atlas-build --session <sid> [--scope <S>] [--customer <C>] [--workspace <dir>] [--json]
 // Exit: 0 ok · 1 uso o registro assente · 2 sistema · 3 cliente diverso dalla sessione.
-import { readFileSync, readdirSync, existsSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { readFileSync, readdirSync, existsSync, appendFileSync } from "node:fs";
+import { join, resolve, dirname } from "node:path";
 import YAML from "yaml";
 import { writeDraft, enrichField, AtlasWriteError } from "./atlas-write.mjs";
 import { SCOPES } from "./codes.mjs";
@@ -243,16 +243,22 @@ export function atlasBuild({ ws, customer, scope, sid }) {
   const d = buildDrafts(readLog(file), { knownModules });
   const written = [];
   const skipped = [];
-  const add = (r) => { written.push(...r.written); skipped.push(...r.skipped); };
+  // 30/10/2026 (decisione dell'utente: «quando va in errore non si deve bloccare subito ma deve fare quello che può e
+  // tracciare l'errore»): ogni pagina e ogni item in modalità tollerante; un errore si registra in `errors` (e nel file
+  // atlas/build-errors.jsonl della sessione) e il resto prosegue
+  const errors = [];
+  const add = (r, page = null) => { written.push(...r.written); skipped.push(...r.skipped); errors.push(...(r.errors ?? []).map((e) => ({ page, ...e }))); };
+  const guard = (page, what, fn) => { try { return fn(); } catch (err) { errors.push({ page, type: what, label: null, error: String(err?.message ?? err).slice(0, 300) }); return null; } };
   const updated = [];
   for (const sig of new Set(d.fields.map((f) => f.page_sig))) {
     const items = d.fields.filter((f) => f.page_sig === sig).map(({ page_sig, person_list, ...f }) => f);
-    const r = writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items } });
-    add(r);
+    const r = guard(sig, "FLD", () => writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items }, tolerant: true }));
+    if (!r) continue;
+    add(r, sig);
     // un campo già memorizzato (sessione precedente) si arricchisce con ciò che questa sessione ha visto in più
     for (const sk of r.skipped.filter((x) => x.type === "FLD" && /\.FLD\.\d{4}/.test(String(x.existing)))) {
       const it = items.find((i) => i.label === sk.label);
-      if (it && enrichField({ ws, customer, scope, code: sk.existing, options: it.options ?? [], mandatory: it.mandatory, ambiguous: !!it.ambiguous })) updated.push(sk.existing);
+      if (it && guard(sig, "FLD-arricchimento", () => enrichField({ ws, customer, scope, code: sk.existing, options: it.options ?? [], mandatory: it.mandatory, ambiguous: !!it.ambiguous }))) updated.push(sk.existing);
     }
   }
   const flds = scopeItems(ws, customer, scope, "fields");
@@ -267,7 +273,8 @@ export function atlasBuild({ ws, customer, scope, sid }) {
       const code = fieldLabel ? fldCode(fieldLabel, document, s.module) : null;
       return code ? { ...s, field: code } : s;
     });
-    add(writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items } }));
+    const r = guard(sig, "SEL", () => writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items }, tolerant: true }));
+    if (r) add(r, sig);
   }
   const sels = scopeItems(ws, customer, scope, "selectors");
   const selCode = (name, sig) => sels.find((s) => normLabel(s.label) === normLabel(name) && (!s.page || s.page === sig))?.id;
@@ -289,9 +296,12 @@ export function atlasBuild({ ws, customer, scope, sid }) {
     if (ok) flws.push({ type: "FLW", title, trigger: "navigazione", steps, ...(r.module ? { module: r.module } : {}) });
     else skipped.push({ type: "FLW", label: title, existing: "passo senza selettore" });
   }
-  if (flws.length) add(writeDraft({ ws, customer, scope, draft: { items: flws } }));
+  if (flws.length) { const r = guard(null, "FLW", () => writeDraft({ ws, customer, scope, draft: { items: flws }, tolerant: true })); if (r) add(r); }
   const todo = atlasTodo(d);
-  return { pages: d.pages.size, written, skipped, updated, todo, modules: moduleSummary(d, todo), effects: d.effects };
+  if (errors.length) {
+    try { appendFileSync(join(dirname(file), "build-errors.jsonl"), `${errors.map((e) => JSON.stringify({ ts: new Date().toISOString(), ...e })).join("\n")}\n`); } catch { /* la traccia resta nell'uscita */ }
+  }
+  return { pages: d.pages.size, written, skipped, updated, errors, todo, modules: moduleSummary(d, todo), effects: d.effects };
 }
 
 // Verifica automatica della mappa (taratura sulle pagine vere): ciò che la mappa non sa ancora, come azioni che l'agente
@@ -362,7 +372,7 @@ export async function main(argv, env = process.env) {
     if (session?.customer && customer !== session.customer) return fail(asJson, 3, `--customer ${customer} diverso dal cliente della sessione (${session.customer})`);
     const scope = String(opts.scope ?? session?.scope ?? "").toUpperCase();
     const r = atlasBuild({ ws, customer, scope, sid: String(sid) });
-    console.log(JSON.stringify({ ok: true, customer, scope, pages: r.pages, written: r.written.length, skipped: r.skipped.length, updated: r.updated.length, modules: r.modules, effects: r.effects, todo: r.todo, ...(asJson ? { written_items: r.written, skipped_items: r.skipped } : {}) }));
+    console.log(JSON.stringify({ ok: true, customer, scope, pages: r.pages, written: r.written.length, skipped: r.skipped.length, updated: r.updated.length, errors: r.errors, modules: r.modules, effects: r.effects, todo: r.todo, ...(asJson ? { written_items: r.written, skipped_items: r.skipped } : {}) }));
     return 0;
   } catch (err) {
     if (err instanceof AtlasWriteError) return fail(asJson, err.code, err.message);

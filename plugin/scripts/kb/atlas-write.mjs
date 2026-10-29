@@ -94,7 +94,7 @@ function buildFld(it, draft) {
   const extra = [it.help ? `aiuto: ${clip(red(String(it.help)), 200)}` : null, it.placeholder ? `segnaposto: ${clip(red(String(it.placeholder)), 120)}` : null,
     it.readonly ? "sola lettura" : null, samples.length ? `valori di esempio: ${samples.join(" · ")}` : null].filter(Boolean);
   return (code) => ({
-    id: code, type: "FLD", title: clip(`Campo ${label} (${document})`, 140), summary: clip(`Campo ${ft} "${label}" del documento ${document}, osservato in esplorazione.`, 400),
+    id: code, type: "FLD", title: clip(`Campo ${label} (${document})`, 140), summary: fldSummary(ft, label, document),
     document, label: { it: label }, section: clip(it.section ?? "principale", 80), field_type: ft, ...(it.module ? { module: clip(red(String(it.module)), 120) } : {}),
     ...(it.technical_name ? { technical_name: String(it.technical_name) } : {}),
     mandatory: { kind: it.mandatory ?? "undocumented" },
@@ -145,8 +145,27 @@ function existingFld(ws, customer, scope, label, document, module = null) {
   return hit?.id ?? null;
 }
 
-// → { written: [{code, type, label}], skipped: [{type, label, existing}] }
-export function writeDraft({ ws, customer, scope, draft }) {
+// Riassunto di un FLD entro le 20 parole di validate-fld (R4) per costruzione (30/10/2026: un'etichetta lunga, ad esempio
+// "End Date for Buyer Replies to Messages Visible to Supplier", con un titolo di pagina lungo superava il limite e fermava
+// atlas-build). Se il testo pieno non ci sta: l'etichetta si accorcia a 10 parole al più, il documento a quelle che restano
+// (4 parole fisse: "Campo", il tipo, "del", "documento"), con … in coda alla parola tagliata (nessuna parola in più).
+export const FLD_SUMMARY_WORDS = 20;
+const wordsOf = (s) => String(s ?? "").trim().split(/\s+/).filter(Boolean);
+const cutWords = (s, n) => { const w = wordsOf(s); return w.length <= n ? w.join(" ") : `${w.slice(0, Math.max(1, n)).join(" ")}…`; };
+export function fldSummary(ft, label, document) {
+  const full = `Campo ${ft} "${label}" del documento ${document}, osservato in esplorazione.`;
+  if (wordsOf(full).length <= FLD_SUMMARY_WORDS) return clip(full, 400);
+  const lw = Math.min(wordsOf(label).length, 10);
+  const dw = Math.max(1, FLD_SUMMARY_WORDS - 4 - lw);
+  return clip(`Campo ${ft} "${cutWords(label, lw)}" del documento ${cutWords(document, dw)}.`, 400);
+}
+
+// → { written: [{code, type, label}], skipped: [{type, label, existing}], errors: [{type, label, error}] }
+// tolerant (30/10/2026, decisione dell'utente: «quando va in errore non si deve bloccare subito ma deve fare quello che può e
+// tracciare l'errore»): un item che non si costruisce o non supera la validazione si scarta con il motivo in `errors`, gli
+// altri si scrivono (ognuno nel suo savepoint: un item scartato non consuma il codice). Senza tolerant (bozze scritte a mano
+// con atlas-write) il primo errore ferma tutto, come prima.
+export function writeDraft({ ws, customer, scope, draft, tolerant = false }) {
   if (!/^[A-Z0-9]{4}$/.test(String(customer ?? ""))) throw E1("--customer <C> (4 caratteri) obbligatorio");
   if (!SCOPES.has(scope)) throw E1(`scope non valido: ${scope}`);
   if (!existsSync(join(ws, "customers", customer))) throw E1(`il cliente ${customer} non esiste nel workspace`);
@@ -156,8 +175,10 @@ export function writeDraft({ ws, customer, scope, draft }) {
   const atlas = atlasIndex(ws, customer, scope);
   const builders = [];
   const skipped = [];
+  const errors = [];
   const seen = new Set();
-  for (const it of items) {
+  const fail = (it, err) => { if (!tolerant) throw err; errors.push({ type: String(it?.type ?? "").toUpperCase() || null, label: clip(String(it?.label ?? it?.title ?? ""), 120), error: String(err?.message ?? err).slice(0, 300) }); };
+  for (const it of items) try {
     const type = String(it?.type ?? "").toUpperCase();
     if (type === "SEL") {
       const b = buildSel(it, draft);
@@ -178,10 +199,10 @@ export function writeDraft({ ws, customer, scope, draft }) {
     } else if (type === "FLW") {
       builders.push({ type, label: clip(it.title, 140), b: buildFlw(it, draft) });
     } else throw E1(`tipo non ammesso nella bozza: ${it?.type} (SEL, FLD, FLW)`);
-  }
+  } catch (err) { fail(it, err); }
   const db = openDb(join(ws, "customers", customer, "knowledge.db"));
   try {
-    const written = db.transaction(() => builders.map(({ type, label, b }) => {
+    const one = ({ type, label, b }) => {
       const key = { level: "C", customer, scope, type };
       const code = formatCode({ ...key, seq: assignSeq(db, key) });
       if (!isValidCode(code)) throw E1(`codice ${code} non valido per il registro`);
@@ -193,9 +214,17 @@ export function writeDraft({ ws, customer, scope, draft }) {
       const text = YAML.stringify(obj, { lineWidth: 0 });
       indexItemFile(db, join(ws, "customers", customer), file, text);
       return { code, type, label, file, text };
-    }))();
+    };
+    const written = db.transaction(() => {
+      const out = [];
+      for (const x of builders) {
+        if (!tolerant) { out.push(one(x)); continue; }
+        try { out.push(db.transaction(() => one(x))()); } catch (err) { errors.push({ type: x.type, label: x.label, error: String(err?.message ?? err).slice(0, 300) }); }
+      }
+      return out;
+    })();
     for (const w of written) { mkdirSync(dirname(w.file), { recursive: true }); writeFileSync(w.file, w.text); }
-    return { written: written.map(({ code, type, label }) => ({ code, type, label })), skipped };
+    return { written: written.map(({ code, type, label }) => ({ code, type, label })), skipped, errors };
   } finally { db.close(); }
 }
 

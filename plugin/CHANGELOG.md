@@ -6,6 +6,11 @@ Le versioni seguono `x.y.z`. Claude Code tiene i plugin in cache per versione
 aggiunge qui la sua voce. `doctor` (controllo `plugin-version`) e il contesto di avvio della sessione avvisano quando il
 marketplace installato ha una versione più nuova di quella in uso.
 
+## 0.3.0 — 2026-10-29
+
+- atlas-build non si ferma più al primo errore: ogni pagina e ogni item in modalità tollerante; gli errori sono nell'uscita (`errors`) e in `.sessions/<sid>/atlas/build-errors.jsonl`, il resto entra nella conoscenza.
+- Riassunto dei campi (FLD) entro le 20 parole di validate-fld per costruzione: etichette e titoli di pagina lunghi si accorciano invece di bloccare (blocco dal vivo su AVVA: 51 pagine esplorate non registrate).
+
 ## 0.2.0 — 2026-10-29
 
 - **Esplorazione libera in sandbox e pre-produzione**: niente blocchi su host, ambiente non verificato, URL ignoto e
