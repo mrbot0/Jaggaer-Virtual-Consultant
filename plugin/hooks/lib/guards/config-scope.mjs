@@ -549,7 +549,8 @@ export function normalizePluginCmd(cmd, ctx) {
 // `integrity verify` e le verifiche --check / --help che non scrivono.
 // WP10a giro 1 (minore 4): per nome — ogni build-*.mjs è un generatore del pacchetto (deny di default, anche uno nuovo non
 // ancora classificato) salvo quelli dichiarati NON generatori (producono report e payload del workspace).
-export const GENERATOR_NAMES = Object.freeze(["build-deny-rules.mjs", "build-session-validator.mjs", "build-error-patterns.mjs"]);
+// giro 1 di bug fixing (29/10/2026): bump-version.mjs riscrive versione e integrity.json (si esegue solo nel repository del plugin)
+export const GENERATOR_NAMES = Object.freeze(["build-deny-rules.mjs", "build-session-validator.mjs", "build-error-patterns.mjs", "bump-version.mjs"]);
 export const NON_GENERATORS = Object.freeze(["build-report.mjs", "build-payload.mjs"]);
 export const isGenerator = (name) => GENERATOR_NAMES.includes(name) || (/^build-[\w-]+\.mjs$/.test(name) && !NON_GENERATORS.includes(name));
 const GENERATORS = { has: isGenerator };
