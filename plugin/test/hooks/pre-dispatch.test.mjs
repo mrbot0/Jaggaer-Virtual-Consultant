@@ -7,7 +7,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT, runHook, decisionOf } from "../helpers/hook-env.mjs";
 import { envWs } from "../helpers/env-fixture.mjs";
-import { guardsFor } from "../../hooks/scripts/pre-dispatch.mjs";
+import { guardsFor, dispatch } from "../../hooks/lib/dispatch.mjs";
 
 const E = (ws) => ({ JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
 
@@ -46,4 +46,17 @@ test("equivalenza: la decisione del dispatcher è quella dei guard eseguiti uno 
     const got = decisionOf(runHook("pre-dispatch", input, E(ws)));
     assert.equal(got === "deny" ? "deny" : null, expected, `${tool}: ${single.join(",")} → ${got}`);
   }
+});
+
+test("giro 2: guard-control e guard-config-scope per ultimi (token monouso); oltre il tempo massimo si nega", async () => {
+  const click = guardsFor("mcp__chrome-devtools__click");
+  assert.deepEqual(click.slice(-2), ["guard-control", "guard-config-scope"]);
+  const r = await dispatch({ tool_name: "Read" }, { budgetMs: 20, runner: () => new Promise(() => {}) });
+  assert.equal(decisionOf({ json: r }), "deny");
+});
+
+test("giro 2: lo script avvia runHook sempre (nessun controllo isMain che spegnerebbe i guard)", () => {
+  const src = readFileSync(join(ROOT, "hooks/scripts/pre-dispatch.mjs"), "utf8");
+  assert.doesNotMatch(src, /import[^\n]*isMain/);
+  assert.match(src, /^runHook\(/m);
 });

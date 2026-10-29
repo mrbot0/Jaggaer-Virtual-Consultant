@@ -46,7 +46,7 @@ test("agents status: riga di sintesi dei dinieghi — chiamate registrate, negat
   assert.equal(d.calls_total, 13);
   assert.equal(Math.round(d.rate * 100), 46);
   assert.deepEqual(d.top.map((g) => [g.guard, g.count, g.family]), [
-    ["guard-environment", 3, "workspace"], ["guard-scope", 2, "other"], ["guard-budget", 1, "health"], ["guard-production", 1, "other"],
+    ["guard-environment", 3, "workspace"], ["guard-scope", 2, "other"], ["guard-budget", 1, "health"], ["guard-production", 1, "utente"],
   ]);
   assert.match(d.top[1].reason, /^fuori cella \(cella ACME×CAT\): <percorso>$/, "percorsi diversi, stesso motivo");
   assert.equal(d.top[0].advice, "il manager invochi workspace-manager");

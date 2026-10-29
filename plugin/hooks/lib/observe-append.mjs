@@ -355,16 +355,19 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     try {
       const cap = await import("./explore-capture.mjs");
       const acts0 = call.actions ?? [call];
-      for (const a of acts0.filter((x) => x.kind === "click" && Array.isArray(x.targets) && x.targets.length)) {
+      // giro 2: click in attesa per sessione e scheda; solo se la chiamata è riuscita; una navigazione per URL o un errore lo annullano
+      const ckey = `${st.sid}|${asked ?? "-"}`;
+      if (state !== "ok" || acts0.some((x) => x.kind === "navigate")) cap.clearClick({ ws: st.ws, customer: st.customer, key: ckey });
+      else for (const a of acts0.filter((x) => x.kind === "click" && Array.isArray(x.targets) && x.targets.length)) {
         const name = prevSnap?.names?.[String(a.targets[0])];
-        if (name) cap.captureClick({ ws: st.ws, customer: st.customer, fromSig: prevSig, name, ts: doc.ts });
+        if (name) cap.captureClick({ ws: st.ws, customer: st.customer, fromSig: prevSig, name, ts: doc.ts, key: ckey });
       }
       const url = pageUrl ?? confirmedUrl ?? page?.url ?? null;
       if (state === "ok" && page && !find && (mode === "complete" || mode === "partial" || (mode === null && refs)) && url) {
         const sig = pieceSig() ?? doc.page_signature ?? url;
         // policy.explore_capture dell'ambiente ("integrale", predefinito, o "redatto" per una pre-produzione con dati reali)
         const policy = { explore_capture: st.session.env?.policy?.explore_capture ?? "integrale", profile: doc.redaction.profile, env: secretEnv(env) };
-        const file = cap.capturePage({ ws: st.ws, customer: st.customer, sig, url, title: page.title ?? null, page, text, partial: mode === "partial", ts: doc.ts, policy });
+        const file = cap.capturePage({ ws: st.ws, customer: st.customer, sig, url, title: page.title ?? null, page, text, partial: mode === "partial", ts: doc.ts, policy, key: ckey });
         // riassunto: per le letture da file (il modello non deve rileggerle a pezzi) e per le pagine grandi in linea
         if (mode !== "partial" && (fromFile || text.length > 20000)) {
           digest = cap.pageDigest(page, { file: file ? `customers/${st.customer}/${file}` : null });

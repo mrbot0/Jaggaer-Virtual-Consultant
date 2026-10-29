@@ -266,7 +266,12 @@ export function handle(input, env = process.env) {
   if (outcome.decision !== "block" && allows(session, "apprendimento_automatico")) {
     try {
       const log = join(sessionDir(st.ws, st.customer, st.sid), "atlas", "pages.jsonl");
-      if (existsSync(log)) {
+      // giro 2: un solo atlas-build alla volta per sessione (lock con l'ora: scade dopo 10 minuti)
+      const lock = join(dirname(log), "auto-build.lock");
+      let busy = false;
+      try { busy = Date.now() - Number(readFileSync(lock, "utf8")) < 600000; } catch { busy = false; }
+      if (existsSync(log) && !busy) {
+        writeFileSync(lock, String(Date.now()));
         const out = openSync(join(dirname(log), "auto-build.json"), "w");
         const script = fileURLToPath(new URL("../../scripts/kb/atlas-build.mjs", import.meta.url));
         spawn(process.execPath, [script, "--session", st.sid, "--customer", st.customer, "--workspace", st.ws, "--json"], { detached: true, stdio: ["ignore", out, out], windowsHide: true }).unref();

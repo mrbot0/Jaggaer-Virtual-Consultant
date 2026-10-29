@@ -28,7 +28,7 @@
 //   pageDigest(page, { file, max }) → testo compatto: titolo, URL, intestazioni, elementi interattivi con il loro uid/ref
 //   normalizeForHash(text) · pageHash(text) → sha256 esadecimale · exploreDir(ws, customer) · sitemapFile(ws, customer)
 //   CAPTURE_POLICIES · HISTORY_MAX
-import { mkdirSync, readFileSync, appendFileSync } from "node:fs";
+import { mkdirSync, readFileSync, appendFileSync, renameSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { writeFileAtomic, withFileLock } from "./fsx.mjs";
@@ -71,9 +71,21 @@ export function normalizeForHash(text) {
 }
 export const pageHash = (text) => createHash("sha256").update(normalizeForHash(text)).digest("hex");
 
+// giro 2 di bug fixing (29/10/2026): solo un file assente è una mappa nuova; un JSON rovinato si mette da parte
+// (sitemap.json.corrupt-<ts>) prima di ripartire; ogni altro errore di lettura (EBUSY, EPERM su Windows) si rilancia
+// (observe-append avvisa) invece di sovrascrivere la mappa accumulata.
+const PENDING_TTL_MS = 120000;
 function loadSitemap(file) {
-  try { const m = JSON.parse(readFileSync(file, "utf8")); if (m && m.v === 1 && m.pages && Array.isArray(m.edges)) return m; } catch { /* nuova */ }
-  return { v: 1, pages: {}, edges: [], pending: null };
+  let text;
+  try { text = readFileSync(file, "utf8"); } catch (err) { if (err?.code === "ENOENT") return { v: 1, pages: {}, edges: [], pending: {} }; throw err; }
+  let m = null;
+  try { m = JSON.parse(text); } catch { m = null; }
+  if (m && m.v === 1 && m.pages && typeof m.pages === "object" && Array.isArray(m.edges)) {
+    if (!m.pending || typeof m.pending !== "object" || Array.isArray(m.pending) || "from" in m.pending) m.pending = {};   // forma vecchia: slot unico
+    return m;
+  }
+  try { renameSync(file, `${file}.corrupt-${Date.now()}`); } catch { /* resta com'è: la si riscrive */ }
+  return { v: 1, pages: {}, edges: [], pending: {} };
 }
 const update = (ws, customer, fn) => {
   const dir = exploreDir(ws, customer);
@@ -96,7 +108,7 @@ function redactorFor(policy) {
   return { red, redUrl };
 }
 
-export function capturePage({ ws, customer, sig, url, title, page, text, partial = false, ts, policy = null }) {
+export function capturePage({ ws, customer, sig, url, title, page, text, partial = false, ts, policy = null, key = "-" }) {
   if (!sig || typeof text !== "string" || !text.trim()) return null;
   const { red, redUrl } = redactorFor(policy);
   const dir = join(exploreDir(ws, customer), "pages");
@@ -139,19 +151,30 @@ export function capturePage({ ws, customer, sig, url, title, page, text, partial
     }
     p.file = `pages/${name}`;   // anche dopo la retention, che toglie il riferimento a un file scaduto
     m.pages[sig] = p;
-    // un click in attesa da un'altra pagina diventa un arco della mappa
-    if (m.pending && m.pending.from && m.pending.from !== sig) {
-      const { from, via } = m.pending;
+    // un click in attesa da un'altra pagina, della stessa sessione e scheda (key) e recente, diventa un arco della mappa
+    // (giro 2: prima uno slot unico condiviso fra agenti e sessioni dava archi falsi)
+    const pend = m.pending?.[key];
+    if (pend && pend.from && pend.from !== sig && Date.parse(ts) - Date.parse(pend.ts) <= PENDING_TTL_MS) {
+      const { from, via } = pend;
       if (!m.edges.some((x) => x.from === from && x.via === via && x.to === sig)) m.edges.push({ from, via, to: sig, ts });
     }
-    m.pending = null;
+    if (m.pending) delete m.pending[key];
   });
   return `explore/pages/${name}`;
 }
 
-export function captureClick({ ws, customer, fromSig, name, ts }) {
+// key: "<sessione>|<scheda>" (chi chiama la costruisce): i click di agenti, sessioni e schede diverse non si mescolano
+export function captureClick({ ws, customer, fromSig, name, ts, key = "-" }) {
   if (!fromSig || !name) return;
-  update(ws, customer, (m) => { m.pending = { from: fromSig, via: String(name).slice(0, 160), ts }; });
+  update(ws, customer, (m) => {
+    const now = Date.parse(ts);
+    for (const [k, v] of Object.entries(m.pending)) if (!(now - Date.parse(v?.ts) <= PENDING_TTL_MS)) delete m.pending[k];
+    m.pending[key] = { from: fromSig, via: String(name).slice(0, 160), ts };
+  });
+}
+// una navigazione per URL o un errore annullano il click in attesa della stessa sessione e scheda
+export function clearClick({ ws, customer, key = "-" }) {
+  try { update(ws, customer, (m) => { delete m.pending[key]; }); } catch { /* nulla da annullare */ }
 }
 
 // Riassunto compatto di una pagina per il modello: al posto dell'albero intero (centinaia di KB) gli elementi utili a

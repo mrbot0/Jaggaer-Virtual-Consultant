@@ -21,6 +21,7 @@ export const DENY_COUNTS = "deny-counts.json";
 const MAX_KEYS = 500;
 
 export const ADVICE = Object.freeze({
+  utente: "decide l'utente: non si aggira modificando environments.yaml o remediation-scope.yaml",
   workspace: "il manager invochi workspace-manager",
   health: "il manager invochi health-keeper",
   other: "non riprovare la stessa chiamata: riporta il motivo al manager",
@@ -49,8 +50,13 @@ export function normalizeReason(reason, max = 120) {
 const WORKSPACE = /\bambient[ei]\b|\bhosts?\b|allowed_hosts|impronta(?! diversa)|env-check|environments\.yaml|remediation-scope\.yaml|\bcartell[ae]\b(?! lo contiene)/i;
 const HEALTH_CS = /\b(?:DB|KB)\b/;
 const HEALTH = /knowledge\.db|\bdatabase\b|sqlite|\bdoctor\b|integrit[àa]|\block\b|\.lock\b/i;
+// giro 2 di bug fixing (29/10/2026): motivi di autorizzazione (write_data, livelli di configurazione, perimetro delle
+// correzioni, approvazioni, produzione) ⇒ decide l'utente; mai «invochi workspace-manager», che potrebbe allargare da sé
+// policy e perimetro riscrivendo i file di ambiente
+const USER = /write_data|config_levels|\blivello\b|perimetro|remediation|approv|APPROVO|produzione|prod_allowed_red|second_approver/i;
 export function denyFamily(reason) {
   const n = normalizeReason(reason, 400);
+  if (USER.test(n)) return "utente";
   if (WORKSPACE.test(n)) return "workspace";
   if (HEALTH_CS.test(n) || HEALTH.test(n)) return "health";
   return "other";

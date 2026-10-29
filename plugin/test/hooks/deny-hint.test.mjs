@@ -100,7 +100,9 @@ test("motivo normalizzato e famiglia del consiglio", () => {
   assert.notEqual(normalizeReason("fuori cella (cella ACME×CAT): a/b"), normalizeReason("budget di sessione esaurito (10/20)"));
   // famiglie
   assert.equal(denyFamily("ambiente sandbox dichiarato ma non verificato: esegui env-check (impronta a ≥ 2 segnali)"), "workspace");
-  assert.equal(denyFamily("environments.yaml è cambiato dopo /use env: in produzione serve /use env dell'utente"), "workspace");
+  assert.equal(denyFamily("environments.yaml è cambiato dopo /use env: in produzione serve /use env dell'utente"), "utente");   // giro 2: produzione ⇒ decide l'utente
+  assert.equal(denyFamily("l'ambiente prep ha policy.write_data: false (environments.yaml)"), "utente");
+  assert.equal(denyFamily("fuori perimetro di remediation-scope.yaml per il livello giallo"), "utente");
   assert.equal(denyFamily("host non dichiarato: x.example (ambiente sandbox)"), "workspace");
   assert.equal(denyFamily("il server del browser scriverebbe un file fuori dalle cartelle di lavoro della sessione"), "workspace");
   assert.equal(denyFamily("Integrità del pacchetto fallita: reinstallare dalla release firmata (§58); non operare. Consentiti solo `doctor`"), "health");

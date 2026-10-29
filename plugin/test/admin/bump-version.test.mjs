@@ -38,11 +38,12 @@ test("bump: plugin.json, package.json, package-lock.json, marketplace.json e voc
   assert.match(cl, /branch `feat\/x`/);
 });
 
-test("hook git post-checkout: chiama bump-version solo per un branch nuovo (stesso commit, mai visto), mai su main", () => {
+test("hook git post-checkout: chiama bump-version solo per un branch nuovo (reflog «branch: Created», mai visto), mai su main", () => {
   const hook = readFileSync(join(ROOT, "..", ".githooks", "post-checkout"), "utf8");
   assert.match(hook, /^#!\/bin\/sh/);
   assert.match(hook, /\[ "\$3" = "1" \] \|\| exit 0/);
-  assert.match(hook, /\[ "\$1" = "\$2" \] \|\| exit 0/);
+  assert.doesNotMatch(hook, /^\[ "\$1" = "\$2" \]/m);   // giro 2: anche i branch creati da un altro commit
+  assert.match(hook, /branch: Created/);
   assert.match(hook, /main\|master\) exit 0/);
   assert.match(hook, /bump-version\.mjs" minor --branch/);
   assert.match(hook, /jvc-bumped-branches/);
