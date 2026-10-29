@@ -38,12 +38,15 @@ export function bump({ plugin = PLUGIN, repo = REPO, kind = "minor", branch = nu
   set(pj, (f) => { const o = readJson(f); o.version = to; writeJson(f, o); });
   set(join(plugin, "package.json"), (f) => { const o = readJson(f); o.version = to; writeJson(f, o); });
   set(join(plugin, "package-lock.json"), (f) => { const o = readJson(f); o.version = to; if (o.packages?.[""]) o.packages[""].version = to; writeJson(f, o); });
-  set(join(repo, ".claude-plugin", "marketplace.json"), (f) => {
-    const o = readJson(f);
-    for (const p of Array.isArray(o.plugins) ? o.plugins : []) if (p && (p.name === manifest.name || p.source === "./plugin") && "version" in p) p.version = to;
-    if (o.metadata && "version" in o.metadata) o.metadata.version = to;
-    writeJson(f, o);
-  });
+  // marketplace.json si riscrive solo se ha davvero un campo versione (altrimenti cambierebbe solo la formattazione)
+  const mk = join(repo, ".claude-plugin", "marketplace.json");
+  if (existsSync(mk)) {
+    const o = readJson(mk);
+    let changed = false;
+    for (const p of Array.isArray(o.plugins) ? o.plugins : []) if (p && (p.name === manifest.name || p.source === "./plugin") && "version" in p) { p.version = to; changed = true; }
+    if (o.metadata && "version" in o.metadata) { o.metadata.version = to; changed = true; }
+    if (changed) set(mk, (f) => writeJson(f, o));
+  }
   const cl = join(plugin, "CHANGELOG.md");
   const entry = `## ${to} — ${today}\n\n- ${branch ? `branch \`${branch}\`: ` : ""}da completare con le modifiche del rilascio.\n`;
   if (!dryRun) {

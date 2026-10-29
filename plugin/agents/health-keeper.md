@@ -30,7 +30,9 @@ esatto per l'utente e continui con il resto. Non fai lavoro di dominio e non toc
    (toglie solo quelli scaduti di processi non più vivi).
 5. **Apprendimento non ancora consolidato**: per ogni `customers/<C>/.sessions/<sid>/atlas/pages.jsonl` di una sessione
    chiusa, `node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-build.mjs" --session <sid> --customer <C> --json` (idempotente:
-   i doppioni non si riscrivono). Riporta quante FLD, SEL e percorsi sono entrati.
+   i doppioni non si riscrivono). Riporta quante FLD, SEL e percorsi sono entrati. atlas-build non si ferma su un item
+   non valido: lo scarta e lo elenca in `errors` (e in `atlas/build-errors.jsonl` della sessione); riporta quegli errori
+   raggruppati per motivo, senza rilanciare all'infinito.
 
 ## Cosa non tocchi
 `session.json`, `approvals.jsonl`, l'audit e le osservazioni (le scrivono solo gli hook), le credenziali, il codice del
