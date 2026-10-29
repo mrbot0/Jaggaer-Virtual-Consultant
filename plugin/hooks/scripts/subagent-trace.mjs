@@ -12,8 +12,10 @@
 // stop_hook_active: si blocca di nuovo solo una continuazione causata da noi
 // (trace_blocks[agent_id] ≥ 1); il contatore garantisce la terminazione.
 // Fail-OPEN: un'eccezione non blocca mai (niente cicli), avvisa.
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, openSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { spawn } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import { runHook, block } from "../lib/io.mjs";
 import { loadHookState, baseAgentType, invocationsFile, sessionDir } from "../lib/workspace.mjs";
@@ -257,6 +259,19 @@ export function handle(input, env = process.env) {
       tokens: entry?.tokens ?? 0, usage_source: entry?.usage_source ?? null, missing: v.ok ? [] : v.missing, trace_errors: entry?.trace_errors ?? [], stop_hook_active: !!input.stop_hook_active,
     },
   });
+  // 28/10/2026 (decisione dell'utente: imparare il più possibile per una seconda run veloce): a fine compito in esplorazione
+  // atlas-build trasforma il registro della sessione in FLD, SEL e percorsi della conoscenza, in background (processo
+  // staccato: non rallenta la chiusura); idempotente, i doppioni non si riscrivono. Esito in atlas/auto-build.json.
+  if (outcome.decision !== "block" && session.mode === "esplorazione") {
+    try {
+      const log = join(sessionDir(st.ws, st.customer, st.sid), "atlas", "pages.jsonl");
+      if (existsSync(log)) {
+        const out = openSync(join(dirname(log), "auto-build.json"), "w");
+        const script = fileURLToPath(new URL("../../scripts/kb/atlas-build.mjs", import.meta.url));
+        spawn(process.execPath, [script, "--session", st.sid, "--customer", st.customer, "--workspace", st.ws, "--json"], { detached: true, stdio: ["ignore", out, out], windowsHide: true }).unref();
+      }
+    } catch { /* l'apprendimento si recupera con health-keeper */ }
+  }
   return outcome.decision === "block" ? block(outcome.reason) : null;
 }
 

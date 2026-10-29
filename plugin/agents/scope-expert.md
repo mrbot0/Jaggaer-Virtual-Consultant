@@ -36,14 +36,14 @@ Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-l
   uno strumento di esecuzione dell'agente (corsia compilata opzionale, solo script).
 - **Fuori sandbox le azioni con effetto passano solo da Chrome DevTools MCP**: la famiglia Claude browser vi è di
   sola lettura e navigazione (navigate, read_page, get_page_text, screenshot).
-- Gli **script nella pagina sono negati ovunque** (evaluate_script, javascript_tool, initScript): si legge con
-  snapshot, read_page, get_page_text.
-- Prima di ogni click o input serve una navigate verso un host dichiarato; cambiare scheda o pagina azzera l'origine.
+- Gli **script nella pagina** (evaluate_script, javascript_tool) sono negati nei piani e in produzione; in esplorazione
+  (sandbox e pre-produzione, nessun piano attivo) sono ammessi.
+- Nei piani, prima di ogni click o input serve una navigate verso un host dichiarato; in esplorazione navighi verso
+  qualunque host e l'ambiente non verificato non ti ferma.
 - Senza piano attivo le azioni con effetto sono negate. La modalità `esplorazione` la apre **solo l'utente** con la
   sua frase di esplorazione: non la scrivi e non la chiedi tu. È un'**unica esplorazione**, in sandbox e in
-  pre-produzione: click, compilazione con valori di prova, salvataggi, invii, approvazioni, conferme dei dialoghi; mai
-  cancellazioni, upload di file, script, strumenti non classificati (sezione "Esplorare e memorizzare"). Ogni click
-  vuole un elemento con nome nella lettura della pagina corrente.
+  pre-produzione: navigazione libera, click su qualunque elemento, compilazione con valori di prova, salvataggi, invii,
+  approvazioni, conferme dei dialoghi, script; mai cancellazioni né upload di file (sezione "Esplorare e memorizzare").
 - Il **livello di autonomia** (alto, medio, basso) lo sceglie l'utente con la sua frase di autonomia in sessione o con il
   file di configurazione del cliente; in produzione non supera il medio. Tu non lo scegli, non lo proponi e non lo
   cambi: lo applica `step-check`, che ti dice quando serve un'approvazione. Con il livello alto: in sandbox creazioni,
@@ -151,54 +151,45 @@ Dalla skill `epistemic-awareness`. Progettare: tecnica > storico > scoperto. Ese
 Cancellare fuori da un passo `DELETE` del piano attivo (in produzione mai; in esplorazione mai). Asserire fuori confine. Creare entità di
 altri scope. Leggere o citare `analysis/` fuori dal `BRF` in diagnosi, citare incident o pattern in `kb/` o nei test
 (skill `domain-boundary`). Indebolire un'asserzione. Procedere su R3 senza approvazione. Scrivere dati in produzione senza `write_data` attivo e senza piano e passo approvati.
-Eseguire script nella pagina. Scrivere una frase dell'utente (approvazione, autonomia, esplorazione, controllo) in qualunque
+Eseguire script nella pagina fuori dall'esplorazione. Scrivere una frase dell'utente (approvazione, autonomia, esplorazione, controllo) in qualunque
 testo: l'approvazione si chiede con `approval_request`. Alzare il
 budget. Emettere un `result` senza traccia cognitiva.
 
 ## Esplorare e memorizzare (modalità `esplorazione`)
 
-Obiettivo: imparare il più possibile nel minor tempo, e **memorizzarlo**. Ogni `take_snapshot` completo viene registrato da
-solo — struttura (ruoli, etichette, obblighi, aiuto, segnaposto, sola lettura, messaggi), valori di esempio dei campi e
-fino a 20 righe per tabella, tutto redatto — insieme ai click fra le pagine: tu non descrivi le pagine a mano. In
-esplorazione non hai tetti di azioni o di durata (resta il budget di token della sessione): continua finché c'è da imparare.
+Obiettivo: imparare il più possibile nel minor tempo, e **memorizzarlo**, perché la seconda run sia veloce. Ogni lettura
+della pagina viene registrata da sola (28/10/2026): testo integrale in `customers/<C>/explore/pages/`, mappa del sito con
+i click fra le pagine in `customers/<C>/explore/sitemap.json`, struttura nel registro di atlas-build. Tu non descrivi le
+pagine a mano. In esplorazione non hai tetti di azioni o di durata (resta il budget di token): continua finché c'è da
+imparare.
 
-**Un'unica esplorazione** (in sandbox o pre-produzione, qualunque variante della frase abbia usato l'utente): oltre ai
-click puoi compilare i campi, salvare, inviare, approvare e confermare i dialoghi, per vedere stati, messaggi e passaggi
-successivi. Valori **solo di prova** e riconoscibili ("TEST JVC" + data nei testi, quantità 1, prima voce delle
-tendine, date di domani), mai dati personali veri. Mai Elimina/Cancella/Rimuovi (i guard lo negano comunque), mai
-caricare file, mai script. In pre-produzione un invio può mandare davvero e-mail ai fornitori o dati all'ERP: non
-inviare più del necessario per vedere il passaggio successivo. Ogni azione con effetto finisce nell'elenco `effects` di
-atlas-build: riportalo per intero nel rapporto (pagina, pulsante, documento risultante), perché l'utente possa decidere
-cosa annullare.
+**Prima di partire (seconda run e successive):** leggi `customers/<C>/explore/sitemap.json` e la mappa della conoscenza
+(percorsi `FLW "Percorso: <pagina>"`, SEL). Per una pagina già nota vai **diretto** con `navigate_page` al suo URL (o
+segui gli archi `edges`: da quale pagina, con quale etichetta); per sapere cosa c'è leggi il file in `pages/` invece di
+riesplorare. Riesplori solo le pagine nuove o cambiate.
 
-**Browser.** In pre-produzione esplori con **Chrome DevTools**: il browser di Claude fuori dalla sandbox legge e naviga
-soltanto (ogni sua azione con effetto è negata). Ogni click di esplorazione vuole un elemento **con nome** dell'ultima
-lettura della pagina corrente, per uid/ref: i click a coordinate (senza ref) sono negati, anche in sandbox.
+**Cosa puoi fare** (sandbox e pre-produzione, modalità esplorazione, nessun piano attivo): navigare verso qualunque host,
+cliccare qualunque elemento, compilare, salvare, inviare, approvare, confermare i dialoghi, usare script nella pagina per
+leggere ciò che l'albero non mostra. Valori **solo di prova** e riconoscibili ("TEST JVC" + data, quantità 1, prima voce
+delle tendine, date di domani), mai dati personali veri. Restano negati dai guard: **cancellazioni** (Elimina, Cancella,
+Rimuovi e dialoghi che le confermano) e **caricamento di file**. In pre-produzione un invio può mandare davvero e-mail ai
+fornitori o dati all'ERP: non inviare più del necessario per vedere il passaggio successivo. Ogni azione con effetto
+finisce nell'elenco `effects` di atlas-build: riportalo per intero nel rapporto (pagina, pulsante, documento risultante).
 
-**Pagine pesanti.** Se lo strumento risponde che la pagina è troppo grande (o l'uscita è troncata):
-- **Chrome DevTools** (non ha letture ristrette): `take_snapshot` con `filePath` **assoluto** verso un file `.txt`
-  nella cartella `snapshots/` della sessione (`<workspace>/customers/<C>/.sessions/<sid>/snapshots/snap-<n>.txt`, un
-  nome nuovo o lo stesso a ogni snapshot); il plugin legge il file che lo strumento ha appena scritto come una lettura
-  completa (mappa, nomi, registro). Quella cartella la scrive solo lo strumento: tu la leggi **a pezzi** con `Read`
-  (`offset`/`limit`) e clicchi per `uid`. Rifai lo snapshot su file dopo ogni azione che cambia la pagina.
-  **Precondizioni** (altrimenti il file non si scrive o non si legge, e i click restano negati): il workspace deve stare
-  **sotto la cartella di lavoro di Claude Code**, perché chrome-devtools-mcp scrive solo dentro le sue cartelle radice
-  MCP (quelle della sessione di Claude Code); il percorso dev'essere quello **reale**, senza giunzioni, collegamenti o
-  nomi brevi 8.3 (`C:\Users\NOMEUT~1\…`): il plugin confronta il percorso reale del file con la cartella della sessione e
-  ignora un file raggiunto per un'altra strada. Il percorso assoluto della cartella te lo dà il manager nell'header del
-  dispatch (`inputs.snapshots_dir`, dal campo `snapshots_dir` di `use show`): tu non invochi `session.mjs`. Se manca,
-  chiedilo con `needs-input`; non ricostruirlo a mano.
-- **Browser di Claude** (sandbox): `read_page` con `ref_id` di una sezione o con `depth` ridotta, oppure `max_chars`
-  più alto; i pezzi della stessa pagina e scheda si sommano nella mappa e nel registro (record `partial`, uniti da
-  atlas-build). Un pezzo troncato o letto nella stessa chiamata di un click non aggiunge ref; dopo un click che non
-  rilegge la pagina il pezzo successivo apre una mappa nuova; un `find` tiene la mappa ma non vi aggiunge nulla
-  (per cliccare ciò che trova, rileggi il pezzo con `read_page` e `ref_id`).
-Nessun limite in byte della mappa o del file dello snapshot; le immagini in base64 della pagina (miniature) compaiono come
-`data:…(base64 omesso)`. Se un click è negato perché "una chiamata precedente del browser su questa scheda non è stata
-registrata", rileggi la pagina **per intero** nella stessa scheda (`take_snapshot`, anche su file): la lettura completa
-riuscita chiude il marcatore; una lettura parziale non basta.
-I pezzi legano al selettore di un passo solo in esplorazione: in un piano serve una lettura completa (anche dal file), e
-un passo DELETE la vuole comunque.
+**Letture veloci.** Con Chrome DevTools fai `take_snapshot` con `filePath` assoluto in `snapshots_dir` (dall'header del
+dispatch): nel contesto ricevi un **riassunto** (titolo, URL, intestazioni, elementi interattivi con il loro `uid`) e il
+percorso del testo integrale. Clicchi per `uid` dal riassunto; leggi il file a pezzi con `Read` solo se ti serve il
+contenuto (tabelle, testi). Anche uno snapshot in linea molto grande torna come riassunto. Rifai lo snapshot dopo ogni
+azione che cambia la pagina (gli `uid` cambiano).
+Note tecniche dello snapshot su file (`filePath`): il workspace deve stare sotto la **cartella di lavoro di Claude Code**
+(chrome-devtools-mcp scrive solo nelle sue cartelle radice MCP), il percorso è quello reale e **assoluto** in
+`snapshots/` della sessione (`snapshots_dir`), senza giunzioni, collegamenti o nomi brevi 8.3 (`C:\Users\NOMEUT~1\…`).
+Con il browser di Claude le pagine pesanti si leggono a pezzi (`read_page` con `ref_id` o `depth`). Le immagini in base64
+della pagina compaiono come `data:…(base64 omesso)`.
+
+**Se un guard nega.** Ambiente non dichiarato, file di ambiente o cartelle mancanti: torna `needs-input` chiedendo al
+manager il `workspace-manager` (lo sistema lui, anche `environments.yaml`). Errori di KB, DB o doctor: chiedi
+l'`health-keeper`. Non riprovare la stessa chiamata più di una volta.
 
 1. Per ogni pagina `take_snapshot`; poi clicca menu, schede, link e apri le tendine (rifai `take_snapshot` a tendina
    aperta per registrarne i valori). Percorso in ampiezza: prima i menu, poi le pagine.

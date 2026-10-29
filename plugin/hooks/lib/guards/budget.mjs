@@ -16,7 +16,9 @@
 import { appendFileSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { allowWithInput } from "../io.mjs";
-import { invocationsFile } from "../workspace.mjs";
+import { invocationsFile, pluginAgentType } from "../workspace.mjs";
+import { KEEPER_AGENTS } from "./scope.mjs";
+import { simpleNodeCall } from "../exact-argv.mjs";
 import { skeleton } from "../paths.mjs";
 import { openInvocations } from "../state-summary.mjs";
 import { parsePromptHeader } from "../../../scripts/admin/agent-prompt.mjs";
@@ -124,6 +126,23 @@ function checkSubAgentShell(ctx, cmd, refs) {
   if (refs.opaque) return no("riferimento non risolvibile");
   if (!refs.literal.length) return null;
   if (EVAL.test(refs.flat)) return no("esecuzione di codice con node -e/import()");
+  // 28/10/2026: gli agenti di manutenzione generano il workspace con session.mjs: `show` e `use customer <C>` solo senza
+  // cliente attivo o per lo stesso cliente (creazione con --new). Ambiente, scope, budget, modalità e permessi restano della
+  // sessione principale e dell'utente (revisione di sicurezza: dichiarare un ambiente, anche di produzione, non è da agente).
+  if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) {
+    // revisione di sicurezza: tokenizzatore condiviso dei guard — una sola chiamata semplice (niente separatori né
+    // assegnazioni di variabili), lo script è session.mjs, argomenti esattamente `show` o `use customer <C> [--new]`
+    // (più --json); ogni altra opzione (--session, --workspace…) negata
+    const call = simpleNodeCall(cmd, ctx.cwd);
+    if (!call || !/(^|[\\/])session\.mjs$/i.test(call.scriptToken)) return no("per gli agenti di manutenzione session.mjs solo come chiamata semplice `node <plugin>/scripts/admin/session.mjs …`");
+    const a = call.args.filter((x) => x !== "--json");
+    const show = a.length === 1 && a[0] === "show";
+    const cust = a.length >= 3 && a.length <= 4 && a[0] === "use" && a[1] === "customer" && /^[A-Za-z0-9]{4}$/.test(a[2]) && (a.length === 3 || a[3] === "--new");
+    if (!show && !cust) return no("argomenti non ammessi per gli agenti di manutenzione (solo `show` o `use customer <C> [--new]`, più --json)");
+    const cur = ctx.session?.customer;
+    if (cust && cur && a[2].toUpperCase() !== cur) return no(`cambio di cliente (${cur} → ${a[2].toUpperCase()}): solo l'utente`);
+    return null;
+  }
   if (USE_VERB.test(refs.flat)) return no("verbo use");
   const plugin = join(ctx.plugin, "scripts", "admin", TARGET);
   const cwds = candidateCwds(ctx, cmd);
@@ -158,13 +177,23 @@ export const decide = guarded(G, (ctx) => {
   if (SHELL_TOOLS.has(ctx.tool)) return checkShell(ctx);
   if (!AGENT_TOOLS.has(ctx.tool)) return null;
   const { session, ti } = ctx;
+  // 28/10/2026 (decisione dell'utente): gli agenti di manutenzione del workspace e della KB (workspace-manager,
+  // health-keeper) partono anche senza cliente attivo né header del dispatch: generano e riparano il workspace
+  // (revisione di sicurezza: restano le regole di orchestrazione — mai da un sub-agente, pausa e stop dell'utente)
+  if (KEEPER_AGENTS.has(pluginAgentType(ti?.subagent_type))) {
+    if (!session) return ctx.agentId ? denyAudited(ctx, G, "un sub-agente non invoca altri agenti (§42 M1)") : null;
+    const kh = { ...(parsePromptHeader(ti.prompt) ?? {}), task_id: `keeper:${pluginAgentType(ti.subagent_type)}`, scope: "__manutenzione__", customer: session.customer };
+    const orch = dispatchRefusal(ctx, kh);
+    return orch ? denyAudited(ctx, G, orch) : null;
+  }
   if (!session) return denyAudited(ctx, G, "nessuna sessione con cliente attivo: esegui /jaggaer-virtual-consultant:use customer <ID> prima di invocare sub-agenti");
   const h = parsePromptHeader(ti.prompt);
   if (!h) return denyAudited(ctx, G, "prompt senza header agent-prompt (§46.1): servono task_id, customer, scope, allowed_paths — componi il prompt da templates/agent-prompt.md");
   const missing = REQUIRED.filter((k) => h[k] == null || h[k] === "" || (k === "allowed_paths" && !Array.isArray(h[k])));
   if (missing.length) return denyAudited(ctx, G, `header agent-prompt incompleto: mancano ${missing.join(", ")}`);
   if (String(h.customer) !== session.customer) return denyAudited(ctx, G, `il prompt è per il cliente ${h.customer} ma la sessione è sul cliente ${session.customer}`);
-  if (String(h.scope) !== session.scope) return denyAudited(ctx, G, `scope del prompt ${h.scope} ≠ scope di sessione ${session.scope ?? "—"}: esegui use scope ${h.scope} prima del dispatch (i guard leggono session.json)`);
+  // 28/10/2026: in esplorazione un dispatch può lavorare su uno scope diverso da quello di sessione (l'esplorazione li attraversa)
+  if (String(h.scope) !== session.scope && session.mode !== "esplorazione") return denyAudited(ctx, G, `scope del prompt ${h.scope} ≠ scope di sessione ${session.scope ?? "—"}: esegui use scope ${h.scope} prima del dispatch (i guard leggono session.json)`);
   // WP10d (D2, D8): regole di orchestrazione applicate dal codice — sub-agente che invoca Agent, controllo
   // dell'utente (pausa/stop), vigilanza cognitiva per scope, handoff via agent-manager con contratto HND
   const orch = dispatchRefusal(ctx, h);

@@ -525,6 +525,7 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     try { st0 = responseState(resp); } catch { st0 = "unknown"; }
     resp = snapshotFileResponse({ ws: st.ws, customer: st.customer, sid: st.sid, call, resp, state: st0, marker, now: now.getTime() }) ?? resp;
   } catch { resp = input.tool_response; }
+  const fromFile = resp !== input.tool_response;
   // guard sulla grandezza tolto (27/10/2026): data URI in base64 sostituiti PRIMA di ogni lettura (origine, parser,
   // redazione, legame, registro, OBS); i controlli del legame (conteggi dei token, valori fra virgolette) si fanno sullo
   // stesso testo. La chiave della chiamata (callKey) resta quella dell'input originale, come in browser-origin.
@@ -637,6 +638,31 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     appendFileSync(join(sessionDir(st.ws, st.customer, st.sid), "observations.jsonl"), `${JSON.stringify({ kind: obsKindForLedger, page_sig: doc.page_signature, obs: obsId, ts: doc.ts })}\n`);
   } catch { /* il registro jsonl è di comodo per self-check --observations */ }
 
+  // 3bis. cattura integrale dell'esplorazione (28/10/2026): testo di ogni pagina, mappa del sito con i click, riassunto
+  // compatto per il modello (hooks/lib/explore-capture.mjs) — fail-open, solo in modalità esplorazione
+  let digest = null;
+  let digestReplace = false;
+  if (st.session.mode === "esplorazione") {
+    try {
+      const cap = await import("./explore-capture.mjs");
+      const acts0 = call.actions ?? [call];
+      for (const a of acts0.filter((x) => x.kind === "click" && Array.isArray(x.targets) && x.targets.length)) {
+        const name = prevSnap?.names?.[String(a.targets[0])];
+        if (name) cap.captureClick({ ws: st.ws, customer: st.customer, fromSig: prevSig, name, ts: doc.ts });
+      }
+      const url = pageUrl ?? confirmedUrl ?? page?.url ?? null;
+      if (state === "ok" && page && !find && (mode === "complete" || mode === "partial" || (mode === null && refs)) && url) {
+        const sig = pieceSig() ?? doc.page_signature ?? url;
+        const file = cap.capturePage({ ws: st.ws, customer: st.customer, sig, url, title: page.title ?? null, page, text, partial: mode === "partial", ts: doc.ts });
+        // riassunto: per le letture da file (il modello non deve rileggerle a pezzi) e per le pagine grandi in linea
+        if (mode !== "partial" && (fromFile || text.length > 20000)) {
+          digest = cap.pageDigest(page, { file: file ? `customers/${st.customer}/${file}` : null });
+          digestReplace = !fromFile && text.length > 60000;
+        }
+      }
+    } catch (err) { warn.push(`cattura dell'esplorazione non scritta (${String(err?.message ?? err).slice(0, 80)})`); }
+  }
+
   // 4. soluzione A (spec §A1): registro di sola struttura per atlas-build — fail-open, mai un blocco
   try {
     const file = atlasLogFile(st.ws, st.customer, st.sid);
@@ -694,7 +720,9 @@ export async function record(input, env = process.env, { now = new Date() } = {}
 
   const errTag = errs.length ? errs.map((e) => e.code ?? e.raw_id).join(",") : "—";
   const line = `OBS ${code ?? "non registrata"} · surprise:${doc.surprise} novelty:${doc.novelty} · ERR:${errTag}${waste ? " · spreco: snapshot ripetuto della stessa pagina senza azione" : ""}`;
-  return { hookSpecificOutput: { hookEventName: "PostToolUse", additionalContext: line }, ...(warn.length ? { systemMessage: `[jvc:observe-append] avviso: ${warn.join("; ")}` } : {}) };
+  // pagina grande in linea: l'uscita dello strumento MCP diventa il riassunto (il testo integrale è nel file della cattura)
+  const hso = { hookEventName: "PostToolUse", additionalContext: digest ? `${line}\n${digest}` : line, ...(digestReplace ? { updatedMCPToolOutput: [{ type: "text", text: digest }] } : {}) };
+  return { hookSpecificOutput: hso, ...(warn.length ? { systemMessage: `[jvc:observe-append] avviso: ${warn.join("; ")}` } : {}) };
 }
 
 export function resetOrigin(file) {

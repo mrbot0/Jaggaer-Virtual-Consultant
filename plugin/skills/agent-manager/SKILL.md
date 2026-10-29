@@ -53,6 +53,23 @@ qui.
 | **Vigilanza cognitiva** | Rifiuti un `result` senza le tracce del ciclo (§10.1): lo tratti come `partial`. Conti le sorprese. Al terzo compito consecutivo fermato per sorprese sullo stesso scope lo dici all'utente con la frase esatta «il modello di questo scope va rifatto prima di continuare» e proponi il giro di osservazioni R0 mirate (il blocco lo applica il codice). |
 | **Diario** | A fine sessione scrivi la **tua** lezione a otto sezioni (sez. 10). |
 
+## 2bis. Agenti di manutenzione: workspace-manager e health-keeper (28/10/2026)
+
+Due agenti tengono in ordine il terreno perché gli altri non si fermino. Partono **anche senza cliente attivo** e senza
+header del dispatch (guard-budget li lascia passare), non hanno celle di scope e non devono chiudere con la traccia
+cognitiva: basta il rapporto YAML.
+
+| Quando | Chi | Prompt |
+|--------|-----|--------|
+| All'avvio della sessione, prima di un'esplorazione, quando un agente torna con un errore di KB, DB, doctor, integrità o cartelle | `health-keeper` (sonnet) | cliente e scope attivi, se ci sono |
+| Cliente, ambiente o cartelle mancanti; `environments.yaml` da creare o da correggere (host nuovi, impronta che non vale dopo il login); un agente torna con «ambiente non verificato» o «host non dichiarato» | `workspace-manager` (sonnet) | cliente, ambiente, cosa manca o cosa è fallito |
+
+Non chiedere all'utente di modificare `environments.yaml` a mano: è scrivibile dagli agenti e i guard ricaricano
+l'ambiente da soli (in sandbox e pre-produzione; in produzione serve `use env` dell'utente). Se il rapporto del
+workspace-manager ha `declare_env: <id>`, esegui tu `use env <id>` (con `env-check` se c'è una pagina aperta): gli agenti
+non dichiarano ambienti né cambiano cliente o scope. Dopo il ritorno ridispacci subito l'agente che era bloccato. Porta all'utente solo le voci
+`for_user` e `needs_input` dei loro rapporti.
+
 ## 3. La console degli agenti: quando e come
 
 Leggi lo stato **solo** dalla console, che lo ricava dalle registrazioni degli hook (mai dal testo dei rapporti):

@@ -90,6 +90,9 @@ export function check(envDecl, page) {
     if ([page.url, page.login_url].some((u) => typeof u === "string" && re.test(u))) matched.push("login_url");
   }
 
+  // 28/10/2026: segnale valido dopo il login (l'impronta del solo login lasciava l'ambiente "unknown" su ogni pagina interna)
+  if (typeof fp.app_url_pattern === "string" && typeof page.url === "string" && tryRe(fp.app_url_pattern).test(page.url)) matched.push("app_url");
+
   for (const w of fp.absence_required ?? []) if (wordRe(w, "i").test(allText)) contrary.push(`presente "${w}" (absence_required)`);
 
   if (typeof page.url === "string") {
@@ -150,7 +153,12 @@ export async function run(argv, env = process.env) {
       const cur = active.session.env;
       if (!cur) refused = "nessun ambiente dichiarato: esegui /use env <id>";
       else if (cur.id !== decl.id) refused = `ambiente dichiarato ${cur.id}, non ${decl.id}: si verifica solo l'ambiente dichiarato`;
-      else if (cur.source_sha256 !== envs.sha256) refused = "environments.yaml è cambiato dopo /use env: riesegui /use env";
+      else if (cur.source_sha256 !== envs.sha256) {
+        // 28/10/2026: file di ambiente scrivibili dagli agenti ⇒ si ricarica la voce invece di rifiutare (stesso tipo)
+        const { refreshEnv } = await import("../../hooks/lib/env-refresh.mjs");
+        const f = await refreshEnv({ ws, customer, sessionFile: active.file, session: active.session });
+        if (f.reason) refused = f.reason;
+      }
       const at = new Date().toISOString();
       updateSession(active.file, (s) => {
         if (!s.env) return;

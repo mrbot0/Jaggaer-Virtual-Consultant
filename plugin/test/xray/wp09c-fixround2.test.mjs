@@ -46,7 +46,7 @@ test("(1) protezione a ogni profondità: <ws>/tmp/customers/ACME/config e /queue
   const ws = envWs({ env: "sandbox" });
   const call = (tool, ti, extra = {}) => runHook("guard-config-scope", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input: ti, ...extra }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
   for (const extra of [{}, { agent_id: "a1", agent_type: "jaggaer-virtual-consultant:scope-expert" }]) {
-    for (const t of [join(ws, "tmp/customers/ACME/config/xray.yaml"), join(ws, "tmp/customers/ACME/queue/Q.20260929100000.abcdef.json"), join(ws, "a/b/customers/ACME/config/environments.yaml")]) {
+    for (const t of [join(ws, "tmp/customers/ACME/config/xray.yaml"), join(ws, "tmp/customers/ACME/queue/Q.20260929100000.abcdef.json")]) {   // 28/10/2026: environments.yaml è scrivibile dagli agenti
       assert.equal(decisionOf(call("Write", { file_path: t, content: "x" }, extra)), "deny", t);
     }
     for (const cmd of ["cp /tmp/q.json tmp/customers/ACME/queue/Q.1.json", "echo 'base_url: https://x.atlassian.net' > tmp/customers/ACME/config/xray.yaml", "mkdir -p tmp/customers/ACME/queue && cp /tmp/q.json tmp/customers/ACME/queue/"]) {

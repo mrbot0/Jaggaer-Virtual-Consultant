@@ -30,7 +30,7 @@ import { readFileSync, statSync, realpathSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { intersects, resolveTarget, bases, PathPolicyError } from "../paths.mjs";
 import { guarded, denyAudited, targetsOf, allRels, shellWriteTargets, subtree, SHELL_TOOLS } from "./common.mjs";
-import { browserGuarded, declaredEnv, claudeEffectRefusal } from "./browser.mjs";
+import { browserGuarded, declaredEnvFresh, claudeEffectRefusal } from "./browser.mjs";
 import { activeStep } from "./plan-step.mjs";
 import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
 import { approvalsFile, readApprovals, windowState, confirmInTranscript, consumeStepToken, phraseOf, exploreRecord, EXPLORE_PHRASE } from "../../../scripts/admin/approvals.mjs";
@@ -347,7 +347,7 @@ async function browserDecideCore(ctx, no) {
   if (!COMMIT_VERBS.has(step.verb) && !GUARDED_CLASSES.has(cls)) return null;
   const at = `passo ${step.n} (${step.verb}, ${cls ?? "senza classe"}) del piano ${ap.plan_id}`;
   if (ctx.actions.some((a) => a.kind === "script" || a.kind === "other")) return no(`script o strumento non classificato durante il ${at}: non verificabile, negato`);
-  const { env, reason } = declaredEnv(ctx, { withRemediation: true });
+  const { env, reason } = await declaredEnvFresh(ctx, { withRemediation: true });
   if (!env) return no(reason);
   const info = ACT[cls];
   if (!info) return no(`${at}: classe di azione fuori catalogo`);
@@ -460,7 +460,11 @@ async function browserDecideCore(ctx, no) {
 const ALM_CONFIG_WHY = "la configurazione del cliente (customers/<C>/config/**: environments, xray, remediation-scope…) la modifica solo l'utente, a mano, fuori sessione: decide host, credenziali e deroghe";
 const ALM_FILES_WHY = "la configurazione del cliente la modifica solo l'utente; payload, esecuzioni e pubblicazioni Xray (runs/**/xray-*.json) e la coda offline (customers/<C>/queue/**) li scrivono solo gli script del plugin";
 // WP09c giro 1: testo in minuscolo con le barre normalizzate (interpreti, script eseguiti, codice scritto)
-const ALM_TEXT = /customers\/[^\s'"`]*\/(config|queue)(\/|['"`\s]|$)|\/queue\/q\.|xray-(payload|published|executions)\.json|(^|[/'"`\s])(xray|environments|remediation-scope)\.ya?ml/;
+// 28/10/2026 (decisione dell'utente: «anche i file di ambienti devono essere scrivibili dagli agenti»): environments.yaml e
+// remediation-scope.yaml escono dalla protezione (i guard ricaricano l'ambiente da soli, hooks/lib/env-refresh.mjs); il resto
+// di config/ (xray, credenziali ALM) e la coda restano protetti.
+const ENV_FILES = /(^|\/)customers\/[^/]+\/config\/(environments|remediation-scope)\.ya?ml$/;
+const ALM_TEXT = /customers\/[^\s'"`]*\/(config(?!\/(environments|remediation-scope)\.ya?ml)|queue)(\/|['"`\s]|$)|\/queue\/q\.|xray-(payload|published|executions)\.json|(^|[/'"`\s])xray\.ya?ml/;
 const PROTECTED = [
   ["**/approvals.jsonl", "il registro delle approvazioni lo scrive solo l'hook approval-capture (dalle frasi dell'utente)"],
   ["**/session.json", "session.json si modifica solo con /use, env-check e gli hook del plugin"],
@@ -622,7 +626,7 @@ function checkTarget(ctx, T, tree, tr) {
     if (CONFIG_ABS.test(a)) return `${SETTINGS_WHY}: ${a}`;
   }
   for (const p of allRels(T)) {
-    for (const [area, why] of PROTECTED) if (intersects(p, area)) return `${why}: ${p}`;
+    for (const [area, why] of PROTECTED) if (intersects(p, area) && !(area === "**/customers/*/config/**" && ENV_FILES.test(p))) return `${why}: ${p}`;
     if (tree) for (const [area, why] of TREE) if (intersects(subtree(p), area)) return `${why} (la cartella lo contiene): ${p || "."}`;
   }
   for (const a of T.abs) {

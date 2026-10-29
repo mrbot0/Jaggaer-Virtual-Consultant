@@ -44,10 +44,14 @@ export const WP10C_SKILLS = ["reasoning-cycle", "epistemic-awareness", "preceden
   "integration-testing", "nrt-authoring", "selector-strategy", "evidence-and-xray", "data-safety", "doc-ingestion", "failure-forensics", "jaggaer-configuration",
   "domain-boundary", "scope-discipline", "customer-isolation"];
 
+// 28/10/2026: agenti di manutenzione del workspace e della KB (decisione dell'utente). Non sono foglie di dominio: niente
+// ciclo a sei passi, cella, evals né traccia cognitiva; li verifica test/docs/agents-maintenance.test.mjs.
+export const MAINTENANCE_AGENTS = ["health-keeper", "workspace-manager"];
+
 export function agentFiles() {
   const out = {};
   if (!existsSync(AGENTS_DIR)) return out;
-  for (const f of readdirSync(AGENTS_DIR).filter((x) => x.endsWith(".md")).sort()) out[f.slice(0, -3)] = lf(readFileSync(join(AGENTS_DIR, f), "utf8"));
+  for (const f of readdirSync(AGENTS_DIR).filter((x) => x.endsWith(".md") && !MAINTENANCE_AGENTS.includes(x.slice(0, -3))).sort()) out[f.slice(0, -3)] = lf(readFileSync(join(AGENTS_DIR, f), "utf8"));
   return out;
 }
 

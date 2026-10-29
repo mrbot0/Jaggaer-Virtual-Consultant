@@ -31,6 +31,17 @@ export const GOVERNED = [
 ];
 export const WEEKLY_READ = ["lessons", "decisions", "outcomes", "observations", "kb"].map((d) => `customers/*/${d}/**`);
 
+// 28/10/2026 (decisione dell'utente: «gli agenti devono poter esplorare e imparare senza limiti»): niente celle di scope
+//  - in esplorazione, per tutta la conoscenza del cliente attivo (tutti gli scope: l'esplorazione li attraversa);
+//  - per gli agenti di manutenzione (workspace-manager, health-keeper), su tutto il workspace.
+// L'isolamento fra clienti resta (guard-customer) e le aree protette sopra (WRITE_DENY) valgono come prima.
+export const KEEPER_AGENTS = new Set(["workspace-manager", "health-keeper"]);
+function freeCell(ctx, p) {
+  // agenti di manutenzione: il cliente attivo e product/ (senza cliente attivo: tutto il workspace, per generarlo)
+  if (KEEPER_AGENTS.has(pluginAgentType(ctx.input?.agent_type))) return !ctx.customerLc || p === `customers/${ctx.customerLc}` || p.startsWith(`customers/${ctx.customerLc}/`) || p === "product" || p.startsWith("product/");
+  return ctx.session?.mode === "esplorazione" && !!ctx.customerLc && (p === `customers/${ctx.customerLc}` || p.startsWith(`customers/${ctx.customerLc}/`));
+}
+
 // WP10b (ruling del controller 2): lettura trasversale concessa dalla sessione principale in session.cross_read
 // (`session.mjs use paths --agent <tipo> --grant`, tolta con --restore). Vale solo per il tipo di agente nominato,
 // solo per Read/Glob/Grep, fino a expires_at; mai analysis/; per process-mapper mai altri clienti (anche se il
@@ -161,6 +172,7 @@ function checkShell(ctx) {
       for (const p of rels) {
         const sp = subtree(p);
         if (!GOVERNED.some((a) => intersects(sp, a))) continue;
+        if (freeCell(ctx, sp)) continue;
         if (weekly && WEEKLY_READ.some((q) => subset(sp, q))) continue;
         if (allowed.some((q) => subset(sp, q))) continue;
         const cell = ctx.session?.scope ? `${ctx.session.customer}×${ctx.session.scope}` : "nessuno scope attivo";
@@ -193,6 +205,7 @@ export const decide = guarded(G, (ctx) => {
   let handoff;
   for (const p of rels) {
     if (!GOVERNED.some((a) => intersects(p, a))) continue;
+    if (freeCell(ctx, p)) continue;
     if (weekly && WEEKLY_READ.some((q) => subset(p, q))) continue;
     if (allowed.some((q) => subset(p, q))) continue;
     if (cross.some((q) => subset(p, q))) continue;

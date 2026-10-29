@@ -19,7 +19,7 @@ test("C1 a / I1 — configurazione del cliente, payload/mappa/pubblicazioni Xray
   const ws = envWs({ env: "sandbox" });
   const call = (tool, tool_input, extra = {}) => runHook("guard-config-scope", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input, ...extra }, { JVC_WORKSPACE: ws, CLAUDE_PLUGIN_ROOT: ROOT });
   const X = join(ws, "customers/ACME/config/xray.yaml");
-  const targets = [X, join(ws, "customers/ACME/config/environments.yaml"), join(ws, "customers/ACME/runs", RUN, "xray-executions.json"), join(ws, "customers/ACME/runs", RUN, "xray-published.json"),
+  const targets = [X, join(ws, "customers/ACME/runs", RUN, "xray-executions.json"), join(ws, "customers/ACME/runs", RUN, "xray-published.json"),
     join(ws, "customers/ACME/runs", RUN, "xray-payload.json"), join(ws, "customers/ACME/queue/Q.20260929100000.abcdef.json")];
   for (const extra of [{}, SUB]) {
     for (const t of targets) {
