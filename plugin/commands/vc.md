@@ -23,11 +23,14 @@ argomenti, secondo la prima parola di `$ARGUMENTS`:
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" status --session "${CLAUDE_SESSION_ID}" --json            (agents senza argomenti)
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" show <task_id> --session "${CLAUDE_SESSION_ID}" --json    (cronologia completa di un compito)
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" history --session "${CLAUDE_SESSION_ID}" --json           (aggiungi --scope / --last se richiesti)
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" denies --session "${CLAUDE_SESSION_ID}" --json            (dinieghi dei guard: tasso, motivi, consiglio; --last <N>)
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" envlog --session "${CLAUDE_SESSION_ID}" --json            (ricariche di environments.yaml in sessione)
 
   Riporta una riga per agente (task_id, tipo, scope, tier, stato, durata, budget/usato, ultima azione, sorprese,
   domande aperte) e la sintesi; segnala in evidenza gli agenti `incoerente` (rapporto diverso dalle registrazioni),
   gli scope bloccati dalla vigilanza, la catena di audit interrotta e gli avvisi sul manager (quota R5, comandi di
-  dominio senza dispatch). Per seguire gli agenti mentre lavorano, l'utente usa un terminale separato (sola lettura,
+  dominio senza dispatch), il tasso di diniego dei guard con i motivi principali e il loro consiglio (se dice di invocare
+  workspace-manager o health-keeper, fallo invece di far riprovare la stessa chiamata) e le ricariche dell'ambiente. Per seguire gli agenti mentre lavorano, l'utente usa un terminale separato (sola lettura,
   senza modello):
 
       node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/agents.mjs" watch --session <SES.C.AAAAMMGG.NNN> --interval 5

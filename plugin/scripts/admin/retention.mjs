@@ -1,6 +1,7 @@
 // admin retention (§54.4, §48.2, §56.8) — WP09d. Le retention del cliente:
 //   osservazioni, evidenze, sessioni   90 giorni (configurabile: customers/<C>/config/retention.yaml, minimo 30)
 //   run e report                       12 mesi (configurabile, minimo 1 mese)
+//   esplorazione (explore/pages/)      30 giorni (configurabile, minimo 7): testo integrale delle pagine, non redatto
 //   audit                              ≥ 24 mesi: MAI rimosso da qui; oltre i 24 mesi è solo segnalato come archiviabile
 //                                      fuori dal repository (§54.4)
 //   conoscenza (kb/, lessons, decisions, outcomes, analysis/, product/, digest, contradictions, config)   MAI
@@ -13,9 +14,15 @@
 // deprecazione); --apply rimuove solo i percorsi già deprecati e ancora scaduti, sotto il knowledge.lock del cliente;
 // nessun collegamento (link o giunzione) e nessun percorso che risolve fuori dal cliente, verificato di nuovo prima di
 // ogni rimozione; il guard conferma l'approvazione nel transcript.
+// 29/10/2026 (decisione dell'utente, punto 10 del piano): customers/<C>/explore/ contiene il testo integrale delle pagine
+// catturate in esplorazione (hooks/lib/explore-capture.mjs), non redatto, che può contenere dati reali di pre-produzione:
+// categoria `explore` (explore_days, default 30, minimo 7) sui soli file di explore/pages/, per data di modifica.
+// sitemap.json NON si cancella mai: con --apply perde solo i riferimenti `file` delle pagine rimosse (sotto lo stesso
+// lock di explore-capture, scrittura atomica); la mappa del sito (URL, titoli, archi dei click) resta.
 // Forma esatta ammessa da guard-destructive (DR-OK-002): node <plugin>/scripts/admin/retention.mjs <C> [--apply --approval <token>]
 //   [--session <id>] [--json]. Il workspace viene dall'ambiente.
 import { readFileSync, writeFileSync, readdirSync, lstatSync, existsSync, mkdirSync, rmSync, realpathSync } from "node:fs";
+import { writeFileAtomic, withFileLock } from "../../hooks/lib/fsx.mjs";
 import { withLock } from "../kb/lock.mjs";
 import { join, resolve, relative, sep } from "node:path";
 import { createHash } from "node:crypto";
@@ -27,8 +34,8 @@ import { canonical } from "../digest/align.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 
-export const DEFAULTS = Object.freeze({ observations_days: 90, evidence_days: 90, sessions_days: 90, runs_months: 12, reports_months: 12, audit_months: 24 });
-const MIN = { observations_days: 30, evidence_days: 30, sessions_days: 30, runs_months: 1, reports_months: 1, audit_months: 24 };
+export const DEFAULTS = Object.freeze({ observations_days: 90, evidence_days: 90, sessions_days: 90, runs_months: 12, reports_months: 12, audit_months: 24, explore_days: 30 });
+const MIN = { observations_days: 30, evidence_days: 30, sessions_days: 30, runs_months: 1, reports_months: 1, audit_months: 24, explore_days: 7 };
 export class RetentionRefusal extends Error { constructor(m) { super(m); this.name = "RetentionRefusal"; } }
 const DAY = 86400000;
 const rel = (ws, p) => relative(ws, p).split(sep).join("/");
@@ -116,6 +123,12 @@ export function candidates(ws, c, { now = Date.now(), policy = policyFor(ws, c) 
     for (const p of entries(join(run, "evidence"))) push("evidence", p, policy.evidence_days);   // evidenze dei run: 90 giorni
   }
   for (const p of entries(join(root, "reports"))) push("reports", p, policy.reports_months * 30);
+  // esplorazione: solo i file delle pagine catturate (explore/pages/), mai sitemap.json; explore/ stessa non è un collegamento
+  const ex = join(root, "explore");
+  if (existsSync(ex) || isLink(ex)) {
+    contained(realRoot, ex);
+    for (const p of entries(join(ex, "pages"))) if (lstatSync(p).isFile()) push("explore", p, policy.explore_days);
+  }
   for (const p of entries(join(root, "audit"))) {
     const age = (now - newest(p)) / DAY;
     if (age >= policy.audit_months * 30) archivable.push({ category: "audit", path: rel(ws, p), age_days: Math.floor(age), action: "archiviare fuori dal repository (mai rimosso da retention)" });
@@ -177,7 +190,7 @@ async function applyRemoval({ ws, c, sid, now, file, grant, cand, pending, mfile
   mkdirSync(cdir, { recursive: true });
   const cfile = join(cdir, `${c}-${now.toISOString().replace(/[:.]/g, "-")}.json`);
   const cert = { kind: "retention", customer: c, executed_at: now.toISOString(), session: sid, approval: { hash: grant.hash, approver_declared: grant.approver_declared, ts: grant.ts },
-    policy: cand.policy, removed, archivable: cand.archivable, never: ["kb/", "lessons/", "decisions/", "outcomes/", "analysis/", "product/", "audit/"] };
+    policy: cand.policy, removed, archivable: cand.archivable, never: ["kb/", "lessons/", "decisions/", "outcomes/", "analysis/", "product/", "audit/", "explore/sitemap.json"] };
   cert.certificate_sha256 = sha(canonical(cert));
   writeFileSync(cfile, JSON.stringify(cert, null, 2) + "\n");
   // Scadenza: si rimuovono SOLO i percorsi elencati (dentro customers/<C>/, categorie ammesse)
@@ -188,6 +201,9 @@ async function applyRemoval({ ws, c, sid, now, file, grant, cand, pending, mfile
     contained(realRoot, abs);   // giro 1 (I3): di nuovo subito prima di rimuovere (nessun link, dentro il cliente)
     rmSync(abs, { recursive: true, force: true, maxRetries: 3 });
   }
+  // la mappa del sito resta: perde solo i riferimenti `file` alle pagine rimosse
+  let sitemap;
+  try { sitemap = unlinkSitemapPages(ws, c, cand.items.filter((x) => x.category === "explore").map((x) => x.path)); } catch (err) { sitemap = { error: String(err?.message ?? err).slice(0, 200) }; }
   // l'elenco di deprecazione perde ciò che è stato rimosso
   const left = Object.fromEntries(Object.entries(dep.items).filter(([k]) => !cand.items.some((x) => x.path === k)));
   writeFileSync(mfile, JSON.stringify({ customer: c, updated_at: now.toISOString(), items: left }, null, 2) + "\n");
@@ -209,13 +225,34 @@ async function applyRemoval({ ws, c, sid, now, file, grant, cand, pending, mfile
     appendAudit(ws, { session: sid, customer: c, kind: "decision", actor: "script:admin-retention",
       payload: { retention: c, removed: cand.items.length, certificate: rel(ws, cfile), certificate_sha256: cert.certificate_sha256 } });
   } catch { /* il certificato resta la prova */ }
-  return { dry_run: false, customer: c, removed: cand.items.length, pending_deprecation: pending, archivable: cand.archivable, certificate: cfile, certificate_sha256: cert.certificate_sha256 };
+  return { dry_run: false, customer: c, removed: cand.items.length, pending_deprecation: pending, sitemap, archivable: cand.archivable, certificate: cfile, certificate_sha256: cert.certificate_sha256 };
+}
+
+// explore/sitemap.json (formato di hooks/lib/explore-capture.mjs: { v: 1, pages: { <firma>: { file: "pages/<nome>", … } } }):
+// toglie `file` dalle pagine il cui file è stato rimosso. Stesso lock di explore-capture (sitemap.json.lock) e scrittura
+// atomica; mappa assente, collegata o non valida ⇒ non si riscrive. → { file, unlinked } | null
+export function unlinkSitemapPages(ws, c, removedPaths) {
+  if (!removedPaths.length) return null;
+  const file = join(ws, "customers", c, "explore", "sitemap.json");
+  if (!existsSync(file) || isLink(file)) return null;
+  const gone = new Set(removedPaths.map((p) => p.replace(/^customers\/[^/]+\/explore\//, "")));
+  return withFileLock(`${file}.lock`, () => {
+    let m;
+    try { m = JSON.parse(readFileSync(file, "utf8")); } catch { return null; }
+    if (!m || m.v !== 1 || !m.pages || typeof m.pages !== "object") return null;
+    let unlinked = 0;
+    for (const p of Object.values(m.pages)) if (p && typeof p === "object" && gone.has(p.file)) { delete p.file; unlinked++; }
+    if (unlinked) writeFileAtomic(file, JSON.stringify(m));
+    return { file: rel(ws, file), unlinked };
+  }, { timeoutMs: 10000, staleMs: 5000 });   // stesso staleMs di explore-capture (default di withFileLock)
 }
 
 export const HELP = `uso: node <plugin>/scripts/admin/retention.mjs <C> [--apply --approval <token>] [--session <id>] [--json]
 
-Retention (§54.4): osservazioni, evidenze e sessioni oltre 90 giorni; run e report oltre 12 mesi (customers/<C>/config/
-retention.yaml per cliente); l'audit non si rimuove mai (oltre 24 mesi: archiviabile fuori repo); la conoscenza mai.
+Retention (§54.4): osservazioni, evidenze e sessioni oltre 90 giorni; pagine catturate in esplorazione (explore/pages/)
+oltre 30 giorni (sitemap.json resta, senza i riferimenti alle pagine rimosse); run e report oltre 12 mesi
+(customers/<C>/config/retention.yaml per cliente); l'audit non si rimuove mai (oltre 24 mesi: archiviabile fuori repo);
+la conoscenza mai.
 Senza --apply: elenco degli scaduti. --apply: UNA approvazione con frase \`APPROVO RETENTION <C>\` (monouso),
 certificato in <workspace>/.jvc/retention-certificates/, rimozione dei soli percorsi scaduti.
 

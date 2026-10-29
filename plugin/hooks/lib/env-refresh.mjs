@@ -31,7 +31,29 @@ export async function refreshEnv({ ws, customer, sessionFile, session }) {
   try {
     updateSessionFile(sessionFile, (s) => { if (s.env?.id === old.id) s.env = env; return s; });
     appendAudit(ws, { session: session.session_id ?? null, customer, scope: session.scope ?? null, kind: "session", actor: "hook:env-refresh",
-      payload: { action: "env-refresh", env: old.id, from: old.source_sha256, to: envs.sha256 } });
+      payload: { action: "env-refresh", env: old.id, from: old.source_sha256, to: envs.sha256, ...envChanges(old, env, { sameTarget }) } });
   } catch { /* lo stato si riallinea alla prossima chiamata */ }
   return { env };
+}
+
+// 29/10/2026 (decisione dell'utente, punto 10 del piano): registro delle modifiche agli ambienti fatte durante la sessione.
+// Il riassunto del cambiamento rispetto al vecchio session.env va nel payload dell'audit (la console degli agenti lo
+// mostra: agents status, agents envlog): host aggiunti e tolti, URL di base cambiato, chiavi di policy cambiate (anche
+// annidate, per chiave di primo livello), verifica dell'impronta azzerata, remediation-scope.yaml cambiato.
+const canon = (v) => (Array.isArray(v) ? `[${v.map(canon).join(",")}]` : v && typeof v === "object" ? `{${Object.keys(v).sort().map((k) => `${JSON.stringify(k)}:${canon(v[k])}`).join(",")}}` : JSON.stringify(v ?? null));
+export function envChanges(old, env, { sameTarget = null } = {}) {
+  const hosts = (e) => new Set((e?.allowed_hosts ?? []).map((h) => String(h).toLowerCase()));
+  const before = hosts(old);
+  const after = hosts(env);
+  const pOld = old?.policy && typeof old.policy === "object" ? old.policy : {};
+  const pNew = env?.policy && typeof env.policy === "object" ? env.policy : {};
+  const same = sameTarget ?? (old?.base_url === env?.base_url && before.size === after.size && [...before].every((h) => after.has(h)));
+  return {
+    hosts_added: [...after].filter((h) => !before.has(h)).sort(),
+    hosts_removed: [...before].filter((h) => !after.has(h)).sort(),
+    base_url_changed: (old?.base_url ?? null) !== (env?.base_url ?? null),
+    policy_changed: [...new Set([...Object.keys(pOld), ...Object.keys(pNew)])].filter((k) => canon(pOld[k]) !== canon(pNew[k])).sort(),
+    verified_reset: !same && old?.verified === true,
+    remediation_changed: (old?.remediation_sha256 ?? null) !== (env?.remediation_sha256 ?? null),
+  };
 }
