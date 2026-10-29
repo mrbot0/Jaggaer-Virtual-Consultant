@@ -120,11 +120,11 @@ test("doctor deps: non cerca più better-sqlite3, riporta il motore node:sqlite 
   assert.match(r.fix, /22\.13/);
 });
 
-test("nessuna dipendenza da better-sqlite3: né in package.json né negli import di hooks/ e scripts/; engines.node ≥ 22.5", () => {
+test("nessuna dipendenza da better-sqlite3: né in package.json né negli import di hooks/ e scripts/; engines.node ≥ 22.13", () => {
   const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8"));
   assert.equal(pkg.dependencies?.["better-sqlite3"], undefined);
   assert.ok(!Object.keys(pkg.allowScripts ?? {}).some((k) => k.startsWith("better-sqlite3")));
-  assert.equal(pkg.engines?.node, ">=22.5");
+  assert.equal(pkg.engines?.node, ">=22.13");   // node:sqlite senza flag da 22.13
   const lock = JSON.parse(readFileSync(join(ROOT, "package-lock.json"), "utf8"));
   assert.ok(!Object.keys(lock.packages ?? {}).some((k) => /better-sqlite3/.test(k)), "package-lock.json senza better-sqlite3");
   const hits = [];

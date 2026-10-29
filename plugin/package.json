@@ -8,6 +8,8 @@
   },
   "scripts": {
     "test": "node --test \"test/**/*.test.mjs\"",
+    "test:contract": "node --test test/contract/*.test.mjs test/hooks/guard-production.test.mjs test/hooks/prod-writes.test.mjs test/hooks/guard-destructive.test.mjs test/hooks/delete-step.test.mjs test/hooks/guard-alm-write.test.mjs",
+    "test:fast": "node --test test/contract/policy-contract.test.mjs test/explore/explore.test.mjs test/docs/agents-maintenance.test.mjs test/kb/sqlite-ripiego.test.mjs test/admin/bump-version.test.mjs test/admin/plugin-version.test.mjs test/hooks/pre-dispatch.test.mjs test/manifest.test.mjs",
     "test:timing": "node --test --test-concurrency=1 \"test/timing/*.timing.mjs\""
   },
   "dependencies": {
