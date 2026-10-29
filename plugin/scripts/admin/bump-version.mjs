@@ -3,7 +3,7 @@
 // installata non si rinnova. Alza la versione (semver) in plugin/.claude-plugin/plugin.json, plugin/package.json,
 // plugin/package-lock.json (radice e pacchetto "") e nella voce del plugin di .claude-plugin/marketplace.json alla radice del
 // repository (se c'è), aggiunge in testa a plugin/CHANGELOG.md una voce da completare e rigenera integrity.json.
-//   node scripts/admin/bump-version.mjs [patch|minor|major] [--branch <nome>] [--dry-run] [--json] [--help]
+//   node scripts/admin/bump-version.mjs [patch|minor|major] [--branch <nome>] [--dry-run|--check] [--json] [--help]
 // Lo chiama l'hook git .githooks/post-checkout alla creazione di un branch (core.hooksPath = .githooks).
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -66,7 +66,8 @@ if (isMain(import.meta.url)) {
   const kind = ["patch", "minor", "major"].find((k) => args.includes(k)) ?? "minor";
   const bi = args.indexOf("--branch");
   try {
-    const r = bump({ kind, branch: bi >= 0 ? args[bi + 1] : null, dryRun: args.includes("--dry-run") });
+    // --check (l'unico argomento che guard-config-scope ammette per un generatore in sessione) = prova a secco: non scrive mai
+    const r = bump({ kind, branch: bi >= 0 ? args[bi + 1] : null, dryRun: args.includes("--dry-run") || args.includes("--check") });
     console.log(args.includes("--json") ? JSON.stringify(r) : `versione del plugin: ${r.from} → ${r.to}${r.dry_run ? " (prova a secco)" : ""}\n${r.files.join("\n")}`);
   } catch (err) { console.error(String(err.message ?? err)); process.exit(1); }
 }

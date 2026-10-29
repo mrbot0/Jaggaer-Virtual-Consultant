@@ -47,3 +47,12 @@ test("hook git post-checkout: chiama bump-version solo per un branch nuovo (stes
   assert.match(hook, /bump-version\.mjs" minor --branch/);
   assert.match(hook, /jvc-bumped-branches/);
 });
+
+test("--check non scrive mai (è l'unico argomento che il guard ammette per un generatore in sessione)", async () => {
+  const { spawnSync } = await import("node:child_process");
+  const before = readFileSync(join(ROOT, ".claude-plugin/plugin.json"), "utf8");
+  const r = spawnSync(process.execPath, [join(ROOT, "scripts/admin/bump-version.mjs"), "--check"], { encoding: "utf8" });
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /prova a secco/);
+  assert.equal(readFileSync(join(ROOT, ".claude-plugin/plugin.json"), "utf8"), before);
+});
