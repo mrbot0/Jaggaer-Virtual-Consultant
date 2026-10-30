@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { bump, nextVersion } from "../../scripts/admin/bump-version.mjs";
+import { bump, nextVersion, explicitVersion } from "../../scripts/admin/bump-version.mjs";
 import { ROOT } from "../helpers/hook-env.mjs";
 
 test("nextVersion: patch, minor, major; versione non semver ⇒ errore", () => {
@@ -56,4 +56,11 @@ test("--check non scrive mai (è l'unico argomento che il guard ammette per un g
   assert.equal(r.status, 0, r.stderr);
   assert.match(r.stdout, /prova a secco/);
   assert.equal(readFileSync(join(ROOT, ".claude-plugin/plugin.json"), "utf8"), before);
+});
+
+test("--set: versione esplicita solo se semver e maggiore di quella attuale", () => {
+  assert.equal(explicitVersion("0.3.0", "3.0.0"), "3.0.0");
+  assert.throws(() => explicitVersion("0.3.0", "0.2.9"), /non è maggiore/);
+  assert.throws(() => explicitVersion("0.3.0", "0.3.0"), /non è maggiore/);
+  assert.throws(() => explicitVersion("0.3.0", "3"), /non semver/);
 });
