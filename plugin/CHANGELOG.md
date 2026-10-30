@@ -6,6 +6,14 @@ Le versioni seguono `x.y.z`. Claude Code tiene i plugin in cache per versione
 aggiunge qui la sua voce. `doctor` (controllo `plugin-version`) e il contesto di avvio della sessione avvisano quando il
 marketplace installato ha una versione più nuova di quella in uso.
 
+## 3.0.0 — 2026-10-30
+
+- Versione principale 3 (richiesta dell'utente, 30/10/2026): raccoglie le 0.2.0 e 0.3.0 — policy unica per profilo,
+  dispatcher dei guard, esplorazione libera con cattura e mappa del sito, agenti workspace-manager e health-keeper,
+  node:sqlite senza dipendenze native, atlas-build che non si ferma al primo errore. Con il numero nuovo la cache di
+  Claude Code installa sicuramente la copia aggiornata.
+- bump-version: `--set <x.y.z>` per una versione esplicita (sempre maggiore di quella attuale).
+
 ## 0.3.0 — 2026-10-29
 
 - atlas-build non si ferma più al primo errore: ogni pagina e ogni item in modalità tollerante; gli errori sono nell'uscita (`errors`) e in `.sessions/<sid>/atlas/build-errors.jsonl`, il resto entra nella conoscenza.

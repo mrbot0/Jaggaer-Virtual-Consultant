@@ -3,7 +3,7 @@
 // installata non si rinnova. Alza la versione (semver) in plugin/.claude-plugin/plugin.json, plugin/package.json,
 // plugin/package-lock.json (radice e pacchetto "") e nella voce del plugin di .claude-plugin/marketplace.json alla radice del
 // repository (se c'è), aggiunge in testa a plugin/CHANGELOG.md una voce da completare e rigenera integrity.json.
-//   node scripts/admin/bump-version.mjs [patch|minor|major] [--branch <nome>] [--dry-run|--check] [--json] [--help]
+//   node scripts/admin/bump-version.mjs [patch|minor|major | --set <x.y.z>] [--branch <nome>] [--dry-run|--check] [--json] [--help]
 // Lo chiama l'hook git .githooks/post-checkout alla creazione di un branch (core.hooksPath = .githooks).
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -25,14 +25,22 @@ export function nextVersion(v, kind = "minor") {
   throw new Error(`tipo di aumento ignoto: ${kind} (patch, minor, major)`);
 }
 
+const cmp = (a, b) => { const x = SEMVER.exec(a).slice(1).map(Number); const y = SEMVER.exec(b).slice(1).map(Number); for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] - y[i]; return 0; };
+export function explicitVersion(from, set) {
+  const v = String(set ?? "").trim();
+  if (!SEMVER.test(v)) throw new Error(`versione non semver: ${set} (x.y.z)`);
+  if (!SEMVER.test(String(from)) || cmp(v, from) <= 0) throw new Error(`la versione ${v} non è maggiore di quella attuale ${from}`);
+  return v;
+}
 const readJson = (f) => JSON.parse(readFileSync(f, "utf8"));
 const writeJson = (f, o) => writeFileSync(f, `${JSON.stringify(o, null, 2)}\n`);
 
-export function bump({ plugin = PLUGIN, repo = REPO, kind = "minor", branch = null, dryRun = false, integrity = true, today = new Date().toISOString().slice(0, 10) } = {}) {
+export function bump({ plugin = PLUGIN, repo = REPO, kind = "minor", version = null, branch = null, dryRun = false, integrity = true, today = new Date().toISOString().slice(0, 10) } = {}) {
   const pj = join(plugin, ".claude-plugin", "plugin.json");
   const manifest = readJson(pj);
   const from = manifest.version;
-  const to = nextVersion(from, kind);
+  // --set x.y.z (30/10/2026, richiesta dell'utente: «alla versione 3»): versione esplicita, sempre maggiore di quella attuale
+  const to = version == null ? nextVersion(from, kind) : explicitVersion(from, version);
   const files = [];
   const set = (file, fn) => { if (!existsSync(file)) return; if (!dryRun) fn(file); files.push(file); };
   set(pj, (f) => { const o = readJson(f); o.version = to; writeJson(f, o); });
@@ -63,14 +71,15 @@ export function bump({ plugin = PLUGIN, repo = REPO, kind = "minor", branch = nu
 if (isMain(import.meta.url)) {
   const args = process.argv.slice(2);
   if (args.includes("--help")) {
-    console.log("uso: node scripts/admin/bump-version.mjs [patch|minor|major] [--branch <nome>] [--dry-run] [--json]\n\nAlza la versione del plugin (plugin.json, package.json, package-lock.json, marketplace.json), aggiunge la voce in CHANGELOG.md e rigenera integrity.json. Default: minor.");
+    console.log("uso: node scripts/admin/bump-version.mjs [patch|minor|major | --set <x.y.z>] [--branch <nome>] [--dry-run] [--json]\n\nAlza la versione del plugin (plugin.json, package.json, package-lock.json, marketplace.json), aggiunge la voce in CHANGELOG.md e rigenera integrity.json. Default: minor.");
     process.exit(0);
   }
   const kind = ["patch", "minor", "major"].find((k) => args.includes(k)) ?? "minor";
   const bi = args.indexOf("--branch");
+  const si = args.indexOf("--set");
   try {
     // --check (l'unico argomento che guard-config-scope ammette per un generatore in sessione) = prova a secco: non scrive mai
-    const r = bump({ kind, branch: bi >= 0 ? args[bi + 1] : null, dryRun: args.includes("--dry-run") || args.includes("--check") });
+    const r = bump({ kind, version: si >= 0 ? args[si + 1] ?? "" : null, branch: bi >= 0 ? args[bi + 1] : null, dryRun: args.includes("--dry-run") || args.includes("--check") });
     console.log(args.includes("--json") ? JSON.stringify(r) : `versione del plugin: ${r.from} → ${r.to}${r.dry_run ? " (prova a secco)" : ""}\n${r.files.join("\n")}`);
   } catch (err) { console.error(String(err.message ?? err)); process.exit(1); }
 }
