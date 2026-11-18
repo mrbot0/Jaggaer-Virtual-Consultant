@@ -6,6 +6,15 @@ Le versioni seguono `x.y.z`. Claude Code tiene i plugin in cache per versione
 aggiunge qui la sua voce. `doctor` (controllo `plugin-version`) e il contesto di avvio della sessione avvisano quando il
 marketplace installato ha una versione più nuova di quella in uso.
 
+## 3.1.0 — 2026-11-18
+
+- Digestione T1 sbloccata (ENEL: 2449 grezzi, 1973 da completare, 0 digeriti dai grezzi; prodotto XSC: 5828 grezzi, 0 digeriti).
+  Nuovo `scripts/ingest/complete.mjs` (status, next, apply, ready, mark): lo scope-extractor completa a lotti con il testo
+  delle unità senza riscrivere i file grezzi; lo scope-digester prende solo i grezzi pronti e li segna digeriti.
+- guard-control non nega più la consegna del rapporto di un sub-agente (SubagentHandback) dopo limiti, pausa o stop: il
+  digester si fermava senza consegnare nulla.
+- T0 scrive i grezzi senza ancore YAML (oltre 100 alias i lettori si fermavano con «Excessive alias count»).
+
 ## 3.0.0 — 2026-10-30
 
 - Versione principale 3 (richiesta dell'utente, 30/10/2026): raccoglie le 0.2.0 e 0.3.0 — policy unica per profilo,

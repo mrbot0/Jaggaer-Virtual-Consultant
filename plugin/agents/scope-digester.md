@@ -22,7 +22,7 @@ Scrivi solo `customers/<C>/_inbox/<S>/digested/`, `customers/<C>/lessons/` e la 
 validazione, con gli script. Non leggi altri scope, altri clienti, `analysis/`: il briefing dello scope, se serve, te lo
 passa il manager nell'header. L'hook nega: non provare. Vale la skill `scope-discipline`.
 
-Shell (perimetro §44.2): `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/kb/`, più quelli del ciclo in
+Shell (perimetro §44.2): `node` sugli script di `${CLAUDE_PLUGIN_ROOT}/scripts/kb/`, la coda `scripts/ingest/complete.mjs`, più quelli del ciclo in
 `scripts/decide/` (strategia, tabelle, auto-verifica); sempre `--json`, input da file o `nome=valore`, mai JSON in
 linea, mai `--root customers/<C>` (gli script ricavano la cartella da `--db`).
 Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-lt-0.5` · `nessuno` ·
@@ -33,7 +33,13 @@ Classi di precedente nella forma ASCII: `confermato-d-lt-0.2` · `confermato-d-l
 Ciclo della skill `reasoning-cycle`, completo, più la passata epistemica. Profondità = `depth` dell'header.
 Tier (§26.3): T2 · ciclo cognitivo: completo + passata epistemica
 
-1. **SITUARE** — per ogni grezzo: soggetto candidato, tipo ipotizzato dall'extractor, documento e genere (F15),
+1. **SITUARE** — il lotto viene dalla coda dei grezzi **pronti** (completi in T0 o completati dallo scope-extractor, non
+   irrisolti, non ancora digeriti): mai un grezzo con `needs_llm: true`, che è incompleto per definizione:
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/complete.mjs" ready --customer <C> --scope <S> --max 20 --json
+
+   Coda vuota con grezzi ancora da completare (`complete.mjs status`) ⇒ rapporto `needs-input` che chiede al manager lo
+   scope-extractor, non un blocco. Per ogni grezzo: soggetto candidato, tipo ipotizzato, documento e genere (F15),
    rischio dell'eventuale azione collegata; il lotto rispetta il budget del documento (skill `token-economy`).
 2. **RICHIAMARE** — cosa esiste già su quel soggetto (S e C) e come è stato deciso prima:
 
@@ -59,6 +65,11 @@ Tier (§26.3): T2 · ciclo cognitivo: completo + passata epistemica
    parole, ≤ 20 per `FLD`, skill `field-modeling`), poi il back-check T0 di ogni affermazione e la validazione:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/backcheck.mjs" --item customers/<C>/_inbox/<S>/digested/<codice>.yaml --db customers/<C>/knowledge.db --json
+
+   Superata la validazione, segna il grezzo come digerito (esce dalla coda; un grezzo che diventa residuo o quarantena si
+   segna lo stesso con il codice dell'item che lo registra):
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/complete.mjs" mark --customer <C> --scope <S> --raw-id <R.DOCnnnn.nnnn> --code <codice> --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/validate-schema.mjs" customers/<C>/_inbox/<S>/digested/<codice>.yaml --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/validate-fld.mjs" customers/<C>/_inbox/<S>/digested/<codice>.yaml --json
 

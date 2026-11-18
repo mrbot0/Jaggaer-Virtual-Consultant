@@ -18,7 +18,7 @@ const MIN = ["Read", "Bash"];
 export const EXPECT = {
   "scope-expert": { model: "sonnet", tools: BASE, mcp: "browser", tier: "per compito (haiku T0 · sonnet T1 · opus T2)", cycle: "completo", perimeter: null },
   "scope-extractor": { model: "haiku", tools: BASE, mcp: null, tier: "T0/T1", cycle: "ridotto (1-2-6)", perimeter: ["scripts/ingest/", "scripts/decide/self-check.mjs"] },
-  "scope-digester": { model: "opus", tools: BASE, mcp: null, tier: "T2", cycle: "completo + passata epistemica", perimeter: ["scripts/kb/", "scripts/decide/"] },
+  "scope-digester": { model: "opus", tools: BASE, mcp: null, tier: "T2", cycle: "completo + passata epistemica", perimeter: ["scripts/kb/", "scripts/decide/", "scripts/ingest/complete.mjs"] },
   "customer-profiler": { model: "opus", tools: BASE, mcp: null, tier: "T2", cycle: "completo", perimeter: null },
   "process-mapper": { model: "opus", tools: BASE, mcp: null, tier: "T2", cycle: "completo, lettura trasversale", perimeter: null },
   "cluster-validator": { model: "opus", tools: BASE, mcp: null, tier: "T2", cycle: "2-4-6", perimeter: null },

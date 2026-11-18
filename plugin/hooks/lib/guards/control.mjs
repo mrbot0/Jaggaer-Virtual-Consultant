@@ -233,8 +233,15 @@ function countCall(f, now) {
   });
 }
 
+// 18/11/2026 (blocco dal vivo: lo scope-digester si è fermato due volte senza consegnare nulla): Claude Code fa consegnare
+// il rapporto di un sub-agente con lo strumento SubagentHandback, e questo guard — dopo un limite, una pausa o uno stop —
+// negava anche quella chiamata mentre il suo stesso messaggio diceva «restituisci subito il rapporto». La consegna del
+// rapporto non agisce su nulla: passa sempre (resta negata ogni altra chiamata).
+export const HANDBACK_TOOLS = new Set(["SubagentHandback"]);
+
 export async function decide(input, env = process.env) {
   if (!input.agent_id) return null;                       // sessione principale: nessuna opinione, nessuna lettura
+  if (HANDBACK_TOOLS.has(String(input.tool_name ?? ""))) return null;
   const st = loadHookState(input, env);
   if (!st.jvc || !st.customer || !st.session) return null;
   const now = Date.now();

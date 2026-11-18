@@ -325,7 +325,7 @@ export function writeRaw(inboxScopeDir, docCode, result, { scope } = {}) {
   const dir = join(inboxScopeDir, "raw");
   mkdirSync(dir, { recursive: true });
   const file = join(dir, `${docIdToken(docCode)}.yaml`);
-  writeFileSync(file, YAML.stringify({ doc: docCode, scope: scope ?? null, extracted_at: new Date().toISOString(), tier: "T0", stats: result.stats, llm_plan: { ...result.llm_plan, sessions: result.llm_plan.sessions.map(({ batch_items, ...s }) => ({ ...s, batch_items })) }, items: result.items }, { lineWidth: 0 }));
+  writeFileSync(file, YAML.stringify({ doc: docCode, scope: scope ?? null, extracted_at: new Date().toISOString(), tier: "T0", stats: result.stats, llm_plan: { ...result.llm_plan, sessions: result.llm_plan.sessions.map(({ batch_items, ...s }) => ({ ...s, batch_items })) }, items: result.items }, { lineWidth: 0, aliasDuplicateObjects: false }));   // 18/11/2026: niente ancore YAML (oltre 100 alias i lettori si fermavano)
   return file;
 }
 
