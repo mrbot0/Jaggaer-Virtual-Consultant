@@ -9,7 +9,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import YAML from "yaml";
-import { status, next, applyCompletions, ready, mark } from "../../scripts/ingest/complete.mjs";
+import { status, next, applyCompletions, ready, mark, cellRefusal } from "../../scripts/ingest/complete.mjs";
 import { envWs } from "../helpers/env-fixture.mjs";
 import { ROOT, runHook, decisionOf } from "../helpers/hook-env.mjs";
 
@@ -95,3 +95,18 @@ test("guard-control: con il registro di controllo illeggibile ogni chiamata del 
   assert.equal(decisionOf(g("Read")), "deny");
   assert.notEqual(decisionOf(g("SubagentHandback")), "deny");
 });
+
+test("revisione di sicurezza: con una sessione attiva solo il suo cliente e il suo scope; il file dei completamenti confinato", () => {
+  const S = { customer: "ENEL", scope: "XSC", mode: "nrt", env: { type: "sandbox" } };
+  assert.equal(cellRefusal(null, { customer: "ACME", scope: "CAT" }), null);
+  assert.equal(cellRefusal(S, { customer: "ENEL", scope: "XSC" }), null);
+  assert.match(cellRefusal(S, { customer: "ACME", scope: "XSC" }), /cliente ACME diverso/);
+  assert.match(cellRefusal(S, { customer: "ENEL", scope: "CAT" }), /scope CAT diverso/);
+  assert.equal(cellRefusal({ ...S, mode: "esplorazione" }, { customer: "ENEL", scope: "CAT" }), null);
+  assert.match(cellRefusal(S, { customer: null, scope: "XSC" }), /livello prodotto/);
+  const ws = fixture(2);
+  const r = spawnSync(process.execPath, [join(ROOT, "scripts/ingest/complete.mjs"), "apply", "--customer", "ENEL", "--scope", "XSC", "--workspace", ws, "--file", "../fuori.yaml", "--json"], { encoding: "utf8" });
+  assert.equal(r.status, 1, r.stdout);
+  assert.match(JSON.parse(r.stdout).error, /fuori dal workspace/);
+});
+

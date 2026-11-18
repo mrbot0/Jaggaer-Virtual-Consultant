@@ -20,7 +20,9 @@ import { join } from "node:path";
 import YAML from "yaml";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
-import { inputBase, inputFile } from "../lib/text-file.mjs";
+import { inputBase, confinedPath, INPUT_FILE_MAX } from "../lib/text-file.mjs";
+import { readCurrentSession, readPointer, sessionFile, isSafeSessionId } from "../../hooks/lib/workspace.mjs";
+import { allows } from "../../hooks/lib/policy.mjs";
 import { SCOPES } from "../kb/codes.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 
@@ -153,6 +155,25 @@ export function mark(ws, opts, rawId, code) {
   return { raw_id: rawId, digested_as: code };
 }
 
+// revisione di sicurezza: con una sessione attiva nel workspace si lavora solo sul suo cliente e sul suo scope (tutti gli scope
+// del cliente nel profilo esplorazione, policy celle_cliente); il livello prodotto solo senza un cliente attivo
+function activeSession(ws, env) {
+  try {
+    const sid = isSafeSessionId(String(env.JVC_SESSION_ID ?? "")) ? env.JVC_SESSION_ID : readCurrentSession(ws);
+    if (!sid) return null;
+    const customer = readPointer(ws, sid)?.customer;
+    if (!customer) return null;
+    return JSON.parse(readFileSync(sessionFile(ws, customer, sid), "utf8"));
+  } catch { return null; }
+}
+export function cellRefusal(session, lvl) {
+  if (!session?.customer) return null;
+  if (lvl.customer == null) return `livello prodotto non ammesso con il cliente ${session.customer} attivo`;
+  if (lvl.customer !== session.customer) return `cliente ${lvl.customer} diverso da quello della sessione (${session.customer})`;
+  if (session.scope && lvl.scope !== session.scope && !allows(session, "celle_cliente")) return `scope ${lvl.scope} diverso da quello della sessione (${session.scope})`;
+  return null;
+}
+
 const HELP = `uso: node scripts/ingest/complete.mjs <status|next|apply|ready|mark> (--customer <C> | --product) --scope <S> [opzioni] [--json]
 
 Ponte T0 → T1 della digestione: lo scope-extractor completa i grezzi needs_llm a lotti senza riscrivere i file, lo
@@ -173,6 +194,8 @@ export function main(argv, env = process.env) {
   const ws = opts.workspace ? String(opts.workspace) : inputBase(env);
   if (!opts.product && !opts.customer) return fail(json, 1, "serve --customer <C> oppure --product");
   const lvl = { customer: opts.product ? null : String(opts.customer), scope: String(opts.scope ?? "").toUpperCase() };
+  const cell = cellRefusal(activeSession(ws, env), lvl);
+  if (cell) return fail(json, 1, cell);
   const num = (v, d) => { if (v === undefined) return d; const n = Number(v); return Number.isInteger(n) && n > 0 ? n : NaN; };
   try {
     let r;
@@ -181,9 +204,11 @@ export function main(argv, env = process.env) {
     else if (cmd === "ready") { const max = num(opts.max, 20); if (Number.isNaN(max)) return fail(json, 1, "--max: intero positivo"); r = ready(ws, lvl, { max }); }
     else if (cmd === "apply") {
       if (!opts.file) return fail(json, 1, "apply: serve --file <completamenti.yaml>");
-      const f = opts.workspace ? { abs: join(ws, String(opts.file)) } : inputFile(String(opts.file), { env });
+      // il file dei completamenti sta sempre nel workspace (confinato, anche con --workspace) e ha un limite di dimensione
+      const f = confinedPath(ws, String(opts.file));
       if (f.error) return fail(json, 1, f.error);
       if (!existsSync(f.abs) || !statSync(f.abs).isFile()) return fail(json, 1, `file inesistente: ${opts.file}`);
+      if (statSync(f.abs).size > INPUT_FILE_MAX) return fail(json, 1, `file dei completamenti troppo grande: ${opts.file}`);
       let list;
       try { list = YAML.parse(readFileSync(f.abs, "utf8")); } catch (err) { return fail(json, 1, `file dei completamenti illeggibile: ${err.message}`); }
       r = applyCompletions(ws, lvl, Array.isArray(list) ? list : list?.completions);
