@@ -9,7 +9,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import YAML from "yaml";
-import { status, next, applyCompletions, ready, mark, cellRefusal } from "../../scripts/ingest/complete.mjs";
+import { status, next, applyCompletions, ready, mark, cellRefusal, activeSessions } from "../../scripts/ingest/complete.mjs";
 import { envWs } from "../helpers/env-fixture.mjs";
 import { ROOT, runHook, decisionOf } from "../helpers/hook-env.mjs";
 
@@ -108,5 +108,16 @@ test("revisione di sicurezza: con una sessione attiva solo il suo cliente e il s
   const r = spawnSync(process.execPath, [join(ROOT, "scripts/ingest/complete.mjs"), "apply", "--customer", "ENEL", "--scope", "XSC", "--workspace", ws, "--file", "../fuori.yaml", "--json"], { encoding: "utf8" });
   assert.equal(r.status, 1, r.stdout);
   assert.match(JSON.parse(r.stdout).error, /fuori dal workspace/);
+});
+
+test("seconda revisione: la sessione corrente vale anche se JVC_SESSION_ID dice altro; identificativi e puntatori non validi negano", () => {
+  const ws = envWs({ env: "sandbox", scope: "XSC" });
+  const cur = activeSessions(ws, {});
+  assert.equal(cur.sessions[0].customer, "ACME");
+  assert.equal(activeSessions(ws, { JVC_SESSION_ID: "inventata" }).sessions[0].customer, "ACME", "la sessione corrente resta");
+  assert.match(activeSessions(ws, { JVC_SESSION_ID: "../fuori" }).error, /non valido/);
+  const r = spawnSync(process.execPath, [join(ROOT, "scripts/ingest/complete.mjs"), "status", "--customer", "ENEL", "--scope", "XSC", "--json"], { encoding: "utf8", env: { ...process.env, JVC_WORKSPACE: ws, JVC_SESSION_ID: "inventata" } });
+  assert.equal(r.status, 1, r.stdout);
+  assert.match(JSON.parse(r.stdout).error, /cliente ENEL diverso/);
 });
 

@@ -157,14 +157,19 @@ export function mark(ws, opts, rawId, code) {
 
 // revisione di sicurezza: con una sessione attiva nel workspace si lavora solo sul suo cliente e sul suo scope (tutti gli scope
 // del cliente nel profilo esplorazione, policy celle_cliente); il livello prodotto solo senza un cliente attivo
-function activeSession(ws, env) {
-  try {
-    const sid = isSafeSessionId(String(env.JVC_SESSION_ID ?? "")) ? env.JVC_SESSION_ID : readCurrentSession(ws);
-    if (!sid) return null;
-    const customer = readPointer(ws, sid)?.customer;
-    if (!customer) return null;
-    return JSON.parse(readFileSync(sessionFile(ws, customer, sid), "utf8"));
-  } catch { return null; }
+// Fail-closed (seconda revisione): valgono la sessione corrente del workspace E quella di JVC_SESSION_ID, se diversa; un
+// identificativo non valido, un puntatore o un session.json illeggibili ⇒ { error }.
+export function activeSessions(ws, env) {
+  const ids = [...new Set([readCurrentSession(ws), env.JVC_SESSION_ID ?? null].filter((x) => x != null && x !== ""))];
+  const out = [];
+  for (const sid of ids) {
+    if (!isSafeSessionId(String(sid))) return { error: `identificativo di sessione non valido: ${String(sid).slice(0, 40)}` };
+    let p;
+    try { p = readPointer(ws, sid); } catch (err) { return { error: `puntatore della sessione illeggibile (${err.message})` }; }
+    if (!p?.customer) continue;
+    try { out.push(JSON.parse(readFileSync(sessionFile(ws, p.customer, sid), "utf8"))); } catch (err) { return { error: `session.json della sessione ${sid} illeggibile (${err.code ?? err.message})` }; }
+  }
+  return { sessions: out };
 }
 export function cellRefusal(session, lvl) {
   if (!session?.customer) return null;
@@ -194,8 +199,9 @@ export function main(argv, env = process.env) {
   const ws = opts.workspace ? String(opts.workspace) : inputBase(env);
   if (!opts.product && !opts.customer) return fail(json, 1, "serve --customer <C> oppure --product");
   const lvl = { customer: opts.product ? null : String(opts.customer), scope: String(opts.scope ?? "").toUpperCase() };
-  const cell = cellRefusal(activeSession(ws, env), lvl);
-  if (cell) return fail(json, 1, cell);
+  const act = activeSessions(ws, env);
+  if (act.error) return fail(json, 1, act.error);
+  for (const sess of act.sessions) { const cell = cellRefusal(sess, lvl); if (cell) return fail(json, 1, cell); }
   const num = (v, d) => { if (v === undefined) return d; const n = Number(v); return Number.isInteger(n) && n > 0 ? n : NaN; };
   try {
     let r;
