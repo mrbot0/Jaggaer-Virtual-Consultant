@@ -223,11 +223,17 @@ export function segmentUnits(doc, { docCode = null, previous = [], maxWords = MA
     for (const r of s.revisions ?? []) push(sec, { type: "nota", text: `Revisione (${r.kind === "insert" ? "inserito" : "cancellato"}${r.author ? ` da ${r.author}` : ""}${r.date ? `, ${String(r.date).slice(0, 10)}` : ""}): ${r.text}`, source_kind: "revisione", revision: { kind: r.kind, author: r.author ?? null, date: r.date ?? null } });
   }
   // limite di parole: si spezza sul confine di frase
+  // 18/11/2026 (ciclo di bug fixing): le righe di un blocco di tabella stanno solo nella prima parte di un'unità spezzata.
+  // Prima ogni parte ne portava una copia intera: un blocco di 40 righe di una tabella larga (centinaia di colonne)
+  // diventava centinaia di parti da 160 KB l'una (ENEL: un xlsx di 580 KB ⇒ 834 unità e 129 MB su disco, 3 minuti a
+  // documento fra redazione e YAML). Il resto (una riga di campi, ≤ 15 passi, un record) è limitato e resta per lo schema
+  // delle unità; extract non ne fa un secondo grezzo. Testo, hash e codici delle unità non cambiano.
+  const continuation = (u) => (u.table ? { ...u, table: { ...u.table, rows: [], continued: true } } : u);
   const sized = [];
   for (const u of raw) {
     if (wc(u.text) <= maxWords) { sized.push(u); continue; }
     const parts = splitByWords(u.text, maxWords);
-    parts.forEach((t, i) => sized.push({ ...u, text: t, part: { n: i + 1, of: parts.length } }));
+    parts.forEach((t, i) => sized.push({ ...(i === 0 ? u : continuation(u)), text: t, part: { n: i + 1, of: parts.length } }));
   }
   // revisione finale (T3, scripts/ingest/redact.mjs): la redazione dopo la segmentazione e PRIMA dell'hash e della
   // scrittura, così i codici restano stabili fra versioni (l'hash è quello del testo redatto)
