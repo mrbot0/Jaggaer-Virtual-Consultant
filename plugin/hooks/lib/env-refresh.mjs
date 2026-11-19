@@ -28,6 +28,9 @@ export async function refreshEnv({ ws, customer, sessionFile, session }) {
   const sameTarget = old.base_url === n.base_url && JSON.stringify([...(old.allowed_hosts ?? [])].sort()) === JSON.stringify([...(n.allowed_hosts ?? [])].sort());
   const env = { ...old, ...(sameTarget ? {} : { verified: false, verified_at: null }), label: n.label ?? null, base_url: n.base_url, allowed_hosts: n.allowed_hosts, policy: n.policy,
     source_sha256: envs.sha256, remediation: remediation.doc, remediation_sha256: remediation.sha256, refreshed_at: new Date().toISOString() };
+  // 18/11/2026 (ciclo di bug fixing): senza etichetta niente `label: null` (session.schema vuole una stringa): la scrittura
+  // falliva in silenzio e ogni chiamata successiva ricaricava di nuovo il file
+  if (typeof env.label !== "string") delete env.label;
   try {
     updateSessionFile(sessionFile, (s) => { if (s.env?.id === old.id) s.env = env; return s; });
     appendAudit(ws, { session: session.session_id ?? null, customer, scope: session.scope ?? null, kind: "session", actor: "hook:env-refresh",

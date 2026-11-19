@@ -4,7 +4,7 @@
 // session.json e inietta lo stato compatto + l'istruzione di caricare la skill
 // agent-manager (§42 M1, §45.2). Con source=compact reinietta il riassunto
 // scritto da precompact-save (§45.7, ruling del controller).
-import { appendFileSync, existsSync, readFileSync, unlinkSync, mkdirSync } from "node:fs";
+import { appendFileSync, existsSync, readFileSync, unlinkSync, mkdirSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { runHook, context, warning } from "../lib/io.mjs";
 import {
@@ -93,7 +93,12 @@ export function handle(input, env = process.env) {
   if (!isJvcWorkspace(ws, env) && !env.JVC_WORKSPACE) return null;
   const sid = input.session_id;
   if (!isSafeSessionId(sid)) return warning(`[${PLUGIN}] session_id non valido: stato di sessione non caricato.`);
-  const pointer = readPointer(ws, sid) ?? writePointer(ws, sid, null);
+  // 18/11/2026 (ciclo di bug fixing): un puntatore illeggibile faceva fallire l'hook (solo «avviso: hook non riuscito»):
+  // né l'istruzione di caricare agent-manager né current-session né la via di riparazione. Ora si prosegue senza
+  // cliente e il contesto dice cosa fare (i guard negano finché `use customer` non lo ripara).
+  let pointer;
+  let pointerError = null;
+  try { pointer = readPointer(ws, sid) ?? writePointer(ws, sid, null); } catch (err) { pointerError = String(err?.message ?? err).slice(0, 160); pointer = { session_id: sid, customer: null }; }
   writeCurrentSession(ws, sid);
   if (env.CLAUDE_ENV_FILE) appendFileSync(env.CLAUDE_ENV_FILE, `export JVC_SESSION_ID=${sid}\n`);
   const notes = [];
@@ -105,7 +110,11 @@ export function handle(input, env = process.env) {
   const integrity = checkIntegrity(ws, sid, pointer.customer ? sessionFile(ws, pointer.customer, sid) : null, env);
   const lines = [`[${PLUGIN}] sessione ${sid} (${input.source ?? "startup"})`, versionLine(env),
     "Carica la skill agent-manager: sei il manager (sessione principale). Instradi con Agent verso sub-agenti foglia, non fai lavoro di dominio; lo stato è in session.json e lo cambiano solo /use e gli hook."];
-  if (!pointer.customer) {
+  if (pointerError) {
+    let known = [];
+    try { known = readdirSync(join(ws, "customers")).filter((c) => /^[A-Z0-9]{4}$/.test(c)).slice(0, 8); } catch { known = []; }
+    lines.push(`Puntatore di sessione illeggibile (${pointerError}): i guard negano tutto finché non esegui /${PLUGIN}:use customer <ID>${known.length ? ` (clienti nel workspace: ${known.join(", ")})` : ""}, che lo ripara (ne resta una copia .corrupt-<data>).`);
+  } else if (!pointer.customer) {
     lines.push(`Nessun cliente attivo: esegui /${PLUGIN}:use customer <ID> (aggiungi --new per crearlo). Finché non c'è un cliente, customers/** è negato.`);
   } else {
     const file = sessionFile(ws, pointer.customer, sid);

@@ -16,6 +16,12 @@ La radice è `$JVC_WORKSPACE`, altrimenti `$CLAUDE_PROJECT_DIR`, altrimenti la c
 cartella di lavoro di Claude Code** (chrome-devtools-mcp scrive i file degli snapshot solo lì). Usa sempre il percorso
 reale (niente nomi brevi 8.3 come `C:\Users\NOME~1\…`).
 
+## Come esegui i comandi
+Uno script del plugin per chiamata Bash, nella forma scritta qui, e le cartelle con un `mkdir -p …` **a parte** (o con
+Write): il plugin installato sta sotto `~/.claude/plugins`, e un comando composto che crea file e cita quel percorso
+(`mkdir -p … && node "…/.claude/plugins/…/validate-env.mjs" …`) è negato da guard-config-scope come scrittura nelle
+impostazioni di Claude Code (sessione reale ENEL, 17/11/2026). Non riprovare la stessa catena: separala.
+
 ## Cosa generi, nell'ordine
 1. **Radice**: `customers/`, `product/kb/`, `.jvc/` se mancano.
 2. **Cliente** (4 caratteri A-Z0-9): se `customers/<C>/` non esiste,

@@ -156,7 +156,8 @@ export function suggestedActions(s) {
   if (x.pending?.approvals) add("la frase di approvazione richiesta (APPROVO PIANO / PROVA / PASSO, oppure sì)", `${x.pending.approvals} approvazioni in attesa`);
   if (x.pending?.questions) add("rispondere alle domande aperte", `${x.pending.questions} domande in attesa della risposta dell'utente`);
   if (!x.env) add("/jaggaer-virtual-consultant:use env <sandbox|preprod|prod>", "nessun ambiente dichiarato: senza non si agisce sul browser");
-  else if (!x.env.verified) add(`/jaggaer-virtual-consultant:use env ${x.env.id}`, "impronta dell'ambiente non verificata: solo navigazione e lettura finché env-check non la verifica");
+  // 18/11/2026 (ciclo di bug fixing): ridichiarare l'ambiente non lo verifica (azzera la verifica): l'azione è env-check
+  else if (!x.env.verified) add(`verifica l'ambiente ${x.env.id}: navigate su base_url, snapshot in un file della sessione, poi env-check --env ${x.env.id} --snapshot <file> --write-session (commands/use.md)`, "impronta dell'ambiente non verificata: solo navigazione e lettura finché env-check non la verifica");
   if (!x.scope) add("/jaggaer-virtual-consultant:use scope <ID>", "nessuno scope attivo");
   if (x.kb?.quarantine_debt?.count) add("/jaggaer-virtual-consultant:kb review --only quarantena", `${x.kb.quarantine_debt.count} item in quarantena da oltre ${x.kb.quarantine_debt.over_days ?? 14} giorni`);
   if (x.xray_queue?.pending || x.xray_queue?.failed) add("/jaggaer-virtual-consultant:nrt push-xray --retry-queued", `coda Xray: ${x.xray_queue.pending ?? 0} in attesa, ${x.xray_queue.failed ?? 0} fallite`);
@@ -175,7 +176,8 @@ export function render(s) {
     L.push(`Pendenze: compensazioni ${x.pending.compensations} · approvazioni ${x.pending.approvals} · domande ${x.pending.questions} · esiti attesi ${x.pending.expected_outcomes}`);
     if (x.active_plan) L.push(`Piano attivo: ${x.active_plan.plan_id} al passo ${x.active_plan.step ?? "?"}`);
     L.push(`Ultime decisioni: ${x.last_decisions.map((d) => `${d.code} ${d.tbl}→${d.outcome}${d.result ? ` (${d.result})` : ""}`).join(" · ") || "—"}`);
-    L.push(`Ultime sorprese: ${x.last_surprises.map((z) => z?.kind ?? z?.what ?? JSON.stringify(z)).join(" · ") || "—"}`);
+    // 18/11/2026 (ciclo di bug fixing): le sorprese di subagent-trace hanno `item` e `task` (prima uscivano come JSON grezzo)
+    L.push(`Ultime sorprese: ${x.last_surprises.map((z) => z?.kind ?? z?.what ?? (z?.item ? `${z.item}${z.task ? ` (${z.task})` : ""}` : JSON.stringify(z))).join(" · ") || "—"}`);
     if (x.kb) L.push(`Conoscenza: ${x.kb.items} item (${Object.entries(x.kb.by_status).map(([k, v]) => `${k} ${v}`).join(", ")}) · quarantena ${x.kb.quarantine}, di cui oltre ${x.kb.quarantine_debt.over_days} giorni: ${x.kb.quarantine_debt.count}`);
     L.push(`Coda Xray: in attesa ${x.xray_queue.pending} · fallite ${x.xray_queue.failed} · inviate ${x.xray_queue.sent}`);
   }

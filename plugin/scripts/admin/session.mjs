@@ -159,7 +159,8 @@ export const actorOf = (env = process.env) => (env.CLAUDECODE === "1" ? "main-se
 // Stato illeggibile ⇒ errore utente (exit 1) con la via di riparazione (#16).
 function loadOrExplain(ws, sid) {
   try { return loadSession(ws, sid); } catch (err) {
-    throw new CliError(1, `stato di sessione illeggibile (${err.message}): riparalo con \`use customer <ID>\` (ne resta una copia .corrupt-<data>)`);
+    const why = String(err.message).replace(/^stato di sessione illeggibile:\s*/, "");
+    throw new CliError(1, `stato di sessione illeggibile (${why}): riparalo con \`use customer <ID>\` (ne resta una copia .corrupt-<data>)`);
   }
 }
 
@@ -262,7 +263,7 @@ async function useCustomer(ws, sid, id, { create, actor }) {
   }
   if (comps.length) {
     const from = toCheck.map((x) => x.customer).join(", ");
-    throw new CliError(3, `il cliente ${from} ha ${comps.length} compensazioni pendenti: chiudile prima di cambiare cliente`, { pending_compensations: comps });
+    throw new CliError(3, `il cliente ${from} ha ${comps.length} compensazioni pendenti: chiudile prima di cambiare cliente («compensa tutto» o «lascia <entità>», elenco con /jaggaer-virtual-consultant:vc status)`, { pending_compensations: comps });
   }
   refuseOpenTasks(open, "cliente");
   if (create) createCustomerSkeleton(custDir);
@@ -409,14 +410,20 @@ async function useEnv(ws, sid, raw, { actor }) {
   const decl = envs.doc.environments.find((e) => e.id === id);
   if (!decl) throw new CliError(1, `ambiente inesistente: ${id} (${envs.doc.environments.map((e) => e.id).join(", ")})`);
   const n = normalizeEnvironment(decl);
+  // 18/11/2026 (ciclo di bug fixing): `label` è facoltativo in environments.yaml ma, se c'è, stringa in session.json:
+  // `label: null` faceva fallire la validazione (errore di sistema, exit 2) su ogni ambiente senza etichetta
   const env = {
-    id: n.id, type: n.type, label: n.label ?? null, base_url: n.base_url, allowed_hosts: n.allowed_hosts, policy: n.policy,
+    id: n.id, type: n.type, ...(typeof n.label === "string" ? { label: n.label } : {}), base_url: n.base_url, allowed_hosts: n.allowed_hosts, policy: n.policy,
     source_sha256: envs.sha256, remediation: remediation.doc, remediation_sha256: remediation.sha256,
     declared_at: new Date().toISOString(), verified: false, verified_at: null, signals: {},
   };
-  const session = updateSession(file, (s) => { s.env = env; s.browser = { ...(s.browser ?? {}), current_url: null }; });
-  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "session", actor, payload: { action: "use-env", from: before.env?.id ?? null, to: id, type: n.type, source_sha256: envs.sha256 } });
-  return { session };
+  // 18/11/2026 (ciclo di bug fixing): la frase ESPLORA vale per l'ambiente in cui l'ha scritta l'utente. Cambiando ambiente
+  // la modalità esplorazione restava in session.json e i guard negavano ogni azione chiedendo «ESPLORA SANDBOX» anche in
+  // produzione: si torna a nrt e il risultato lo dice (nel nuovo ambiente serve di nuovo la frase).
+  const exploreReset = before.mode === "esplorazione" && before.env?.id !== id;
+  const session = updateSession(file, (s) => { s.env = env; s.browser = { ...(s.browser ?? {}), current_url: null }; if (exploreReset) { s.mode = "nrt"; s.mode_approval = null; } });
+  appendAudit(ws, { session: sid, customer: session.customer, scope: session.scope, kind: "session", actor, payload: { action: "use-env", from: before.env?.id ?? null, to: id, type: n.type, source_sha256: envs.sha256, ...(exploreReset ? { mode_reset: { from: "esplorazione", to: "nrt" } } : {}) } });
+  return { session, ...(exploreReset ? { note: `modalità esplorazione chiusa con il cambio di ambiente (${before.env?.id ?? "—"} → ${id}): ora nrt; per esplorare ${id} servono di nuovo la frase dell'utente e use mode esplorazione` } : {}) };
 }
 
 const HELP = `uso: node scripts/admin/session.mjs <azione> [opzioni]
@@ -484,6 +491,15 @@ export async function run(argv, env = process.env) {
     // `use show`: commands/use.md antepone sempre `use` agli argomenti (#10).
     if (action === "show" || (action === "use" && what === "show")) {
       const { pointer, session } = loadOrExplain(ws, sid);
+      // 18/11/2026 (ciclo di bug fixing): senza cliente attivo `show` dava «errore di sistema: Cannot read properties of null»
+      // (exit 2); è lo stato normale di una sessione appena aperta: exit 0 con l'indicazione di cosa fare
+      if (!session) {
+        result = { session_id: sid, pointer, session: null, autonomy: null, workspace: realWs(ws),
+          hint: pointer?.customer ? `session.json assente per il cliente ${pointer.customer}: riesegui \`use customer ${pointer.customer}\`` : "nessun cliente attivo: `use customer <ID>` (aggiungi --new per crearlo)" };
+        if (asJson) console.log(JSON.stringify({ ok: true, ...result }));
+        else console.log(`${result.hint}\nworkspace ${result.workspace}`);
+        return 0;
+      }
       const { autonomyLevel } = await import("../../hooks/lib/autonomy.mjs");
       const { readApprovals, approvalsFile } = await import("./approvals.mjs");
       const reg = readApprovals(approvalsFile(ws, session.customer, sid));
@@ -498,9 +514,9 @@ export async function run(argv, env = process.env) {
     else if (action === "use" && what === "env") result = await useEnv(ws, sid, value, { actor });
     else if (action === "use" && what === "close-stale") result = useCloseStale(ws, sid, { actor });
     else if (action === "use" && what === "paths") result = usePaths(ws, sid, { agent: opts.agent, grant: !!opts.grant, restore: !!opts.restore }, { actor });
-    else throw new CliError(1, `azione sconosciuta: ${positional.join(" ")}`);
+    else throw new CliError(1, `azione sconosciuta: ${positional.join(" ")} (use customer <ID> [--new] · use env <id> · use scope <ID> · use mode <m> · use budget <n> · use close-stale · use paths · show; --help)`);
     if (asJson) console.log(JSON.stringify({ ok: true, ...result }));
-    else console.log(summary(result.session) + (result.snapshots_dir ? `\nworkspace ${result.workspace}\ncartella degli snapshot su file (Chrome DevTools, filePath assoluto): ${result.snapshots_dir}` : ""));
+    else console.log(summary(result.session) + (result.note ? `\n${result.note}` : "") + (result.snapshots_dir ? `\nworkspace ${result.workspace}\ncartella degli snapshot su file (Chrome DevTools, filePath assoluto): ${result.snapshots_dir}` : ""));
     return 0;
   } catch (err) {
     if (err instanceof CliError) return fail(asJson, err.code, err.message, err.extra);

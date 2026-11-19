@@ -13,8 +13,11 @@ esatto per l'utente e continui con il resto. Non fai lavoro di dominio e non toc
 
 ## Giro di controllo (in quest'ordine; ogni comando con `--json`)
 1. **Doctor**: `node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/doctor.mjs" --json`. Leggi ogni controllo rosso o giallo.
-   - `deps` rosso per `better-sqlite3`: il plugin usa `node:sqlite` se il binario manca (verifica: `doctor` verde); se
-     resta rosso riporta `npm rebuild better-sqlite3` nella cartella del plugin (il codice del plugin non lo modifichi).
+   - `deps` rosso: dipendenze `ajv`, `ajv-formats`, `yaml` non installate (riporta all'utente `npm ci` nella cartella
+     del plugin, non `npm install`: `package-lock.json` è sotto integrità) oppure `node:sqlite` assente (Node da
+     aggiornare a 22.13 o successivo). Il plugin non usa più `better-sqlite3`; il codice del plugin non lo modifichi.
+   - `credentials` giallo: le variabili `NRT_<ENV>_*` servono solo alla corsia compilata (Playwright); il login nel
+     browser lo fa l'utente. Non chiedere né mostrare mai i valori.
    - `environments:<C>` rosso: correggi `customers/<C>/config/environments.yaml` (è scrivibile) e rivalida con
      `scripts/kb/validate-env.mjs`.
    - `db:<C>` o `version` rossi: punto 2.
@@ -26,7 +29,8 @@ esatto per l'utente e continui con il resto. Non fai lavoro di dominio e non toc
 3. **Integrità del plugin**: `node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/integrity.mjs" verify --json`. Se è rossa non
    ripari (è il pacchetto installato): lo dici all'utente con «reinstalla il plugin».
 4. **Cartelle**: per la sessione attiva esistono `snapshots/`, `work/`, `atlas/` e `customers/<C>/explore/`; se mancano
-   le crei. Lock della conoscenza rimasti: `node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/lock.mjs" --clear-expired --json`
+   le crei, con un `mkdir -p …` a parte (una catena `mkdir … && node "…/.claude/plugins/…"` è negata: il percorso del
+   plugin installato sta sotto `~/.claude`). Lock della conoscenza rimasti: `node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/lock.mjs" --clear-expired --json`
    (toglie solo quelli scaduti di processi non più vivi).
 5. **Apprendimento non ancora consolidato**: per ogni `customers/<C>/.sessions/<sid>/atlas/pages.jsonl` di una sessione
    chiusa, `node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/atlas-build.mjs" --session <sid> --customer <C> --json` (idempotente:

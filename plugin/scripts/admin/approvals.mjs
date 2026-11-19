@@ -91,6 +91,11 @@ export function parseApprovalPrompt(prompt) {
   if (bare === EXPLORE_PREPROD_PHRASE) return { kind: "explore", env_type: "preprod" };
   if (bare === EXPLORE_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "sandbox", full: true };
   if (bare === EXPLORE_PREPROD_PHRASE + EXPLORE_FULL_SUFFIX) return { kind: "explore", env_type: "preprod", full: true };
+  // 18/11/2026 (ciclo di bug fixing): «esplora sandbox» in minuscolo non registrava nulla e non diceva nulla (senza piani in
+  // attesa): la frase quasi giusta riceve la forma esatta, come per l'autonomia. Solo la frase intera: «esplora la pagina
+  // degli ordini» resta una richiesta normale.
+  const ex = /^esplora\s+(sandbox|preprod)(\s+completa)?$/iu.exec(bare);
+  if (ex) return { kind: "attempt", explore: `ESPLORA ${ex[1].toUpperCase()}${ex[2] ? EXPLORE_FULL_SUFFIX : ""}` };
   if (/\bESPLORA\b/iu.test(s)) return { kind: "attempt" };
   // revisione finale (minore): una frase d'autonomia scritta male ("autonomia bassa", "Autonomia Alta per favore") è un
   // tentativo d'autonomia: la risposta indica la frase esatta (il livello riconosciuto, o le tre), anche senza piani in attesa
@@ -430,6 +435,7 @@ export async function capture(input, env = process.env) {
     const want = p.autonomy === "?" ? ["AUTONOMIA ALTA", "AUTONOMIA MEDIA", "AUTONOMIA BASSA"] : [`AUTONOMIA ${p.autonomy}`];
     return reject(want, "il livello di autonomia si cambia con la frase esatta, in maiuscolo e da sola nel messaggio");
   }
+  if (p.kind === "attempt" && p.explore) return reject([p.explore], "la frase di esplorazione si scrive esattamente così, in maiuscolo e da sola nel messaggio");
   if (p.kind === "attempt") return known.size ? reject(expectedFor(null), "la frase non è quella richiesta") : null;
 
   let rec;
@@ -563,8 +569,10 @@ export async function run(argv, env = process.env) {
     const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
     const sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
     if (!sid) return fail(asJson, 1, "nessuna sessione risolvibile: --session <id>");
-    const { session } = loadSession(ws, sid);
-    if (!session) return fail(asJson, 1, "nessun cliente attivo");
+    // 18/11/2026 (ciclo di bug fixing): stato illeggibile = errore utente con la via di riparazione (era exit 2 «errore di sistema»)
+    let session;
+    try { ({ session } = loadSession(ws, sid)); } catch (err) { return fail(asJson, 1, `${String(err?.message ?? err)} — riparalo con /jaggaer-virtual-consultant:use customer <ID> (ne resta una copia .corrupt-<data>)`); }
+    if (!session) return fail(asJson, 1, "nessun cliente attivo: /jaggaer-virtual-consultant:use customer <ID>");
     const file = approvalsFile(ws, session.customer, sid);
     const reg = readApprovals(file);
     if (action === "verify") {

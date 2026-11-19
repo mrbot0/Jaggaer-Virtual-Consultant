@@ -57,9 +57,15 @@ const textOf = (m) => (Array.isArray(m?.content) ? m.content.filter((c) => c?.ty
 // messaggio ripetono lo stesso usage), input + output + cache_creation.
 // `firstPrompt`: il testo del primo messaggio user = il prompt scritto dal
 // dispatcher (con l'header che guard-budget ha verificato).
+// 18/11/2026 (ciclo di bug fixing, sessione reale ENEL): il sub-agente consegna il rapporto con lo strumento
+// SubagentHandback ({ message }), che chiude la sua esecuzione; il testo dell'ultimo messaggio non lo contiene. Senza
+// leggerlo il rapporto risultava «mancante»: due blocchi, poi nessuna chiusura nel ledger (console: «scaduto, nessun
+// rapporto»), token non contati. `handback`: il messaggio dell'ultimo SubagentHandback del transcript.
+const isHandback = (c) => c?.type === "tool_use" && typeof c.name === "string" && /(^|__)SubagentHandback$/.test(c.name) && typeof c.input?.message === "string";
 export function transcriptUsage(file) {
   const byId = new Map();
   let lastText = null;
+  let handback = null;
   let firstPrompt = null;
   readJsonl(file).forEach((ev, i) => {
     if (firstPrompt == null && ev?.type === "user" && ev.message) { const t = textOf(ev.message); if (t.trim()) firstPrompt = t; }
@@ -68,6 +74,7 @@ export function transcriptUsage(file) {
     if (m.usage) byId.set(m.id ?? `line-${i}`, { usage: m.usage, model: m.model });
     const text = Array.isArray(m.content) ? m.content.filter((c) => c?.type === "text").map((c) => c.text).join("\n") : typeof m.content === "string" ? m.content : "";
     if (text.trim()) lastText = text;
+    if (Array.isArray(m.content)) for (const c of m.content) if (isHandback(c) && c.input.message.trim()) handback = c.input.message;
   });
   const by_model = {};
   let total = 0;
@@ -78,7 +85,7 @@ export function transcriptUsage(file) {
     by_model[k] = (by_model[k] ?? 0) + n;
     total += n;
   }
-  return { total, by_model, source: "transcript", lastText, firstPrompt };
+  return { total, by_model, source: "transcript", lastText, handback, firstPrompt };
 }
 
 function selfDeclared(report) {
@@ -101,7 +108,9 @@ export function handle(input, env = process.env) {
   const agentType = baseAgentType(input.agent_type);
   const tfile = agentTranscript(input);
   const measuredT = tfile ? transcriptUsage(tfile) : null;
-  const text = typeof input.last_assistant_message === "string" && input.last_assistant_message.trim() ? input.last_assistant_message : measuredT?.lastText ?? "";
+  const lam = typeof input.last_assistant_message === "string" && input.last_assistant_message.trim() ? input.last_assistant_message : null;
+  // il rapporto dell'ultimo messaggio, se c'è; altrimenti quello consegnato con SubagentHandback; altrimenti l'ultimo testo
+  const text = (lam && extractReport(lam)) || !measuredT?.handback ? lam ?? measuredT?.lastText ?? "" : measuredT.handback;
   const report = extractReport(text);
   const v0 = validateReport(report);
   const measured = measuredT && measuredT.total > 0 ? measuredT : selfDeclared(report);
@@ -191,7 +200,7 @@ export function handle(input, env = process.env) {
     if (enforce && !v.ok && blocks < MAX_BLOCKS && continuationOfOurs && entry.closed_by !== "user-stop") {
       s.ledger.trace_blocks[agentId] = blocks + 1;
       entry.blocks = blocks + 1;
-      outcome = { decision: "block", reason: `completa la traccia: mancano ${missingList(v)}. Il tuo ultimo messaggio deve essere solo il rapporto YAML (§46.2) con cognitive_trace e lesson. Blocco ${blocks + 1}/${MAX_BLOCKS}.`, blocks: blocks + 1, match };
+      outcome = { decision: "block", reason: `completa la traccia: mancano ${missingList(v)}. Il tuo ultimo messaggio (o il message di SubagentHandback, se lo usi) deve essere solo il rapporto YAML (§46.2) con cognitive_trace e lesson. Blocco ${blocks + 1}/${MAX_BLOCKS}.`, blocks: blocks + 1, match };
       return;
     }
     const reclassified = [...(v.reclassified ?? [])];

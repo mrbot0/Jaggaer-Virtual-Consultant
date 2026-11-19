@@ -74,9 +74,16 @@ if (isMain(import.meta.url)) {
     console.log("uso: node scripts/admin/bump-version.mjs [patch|minor|major | --set <x.y.z>] [--branch <nome>] [--dry-run] [--json]\n\nAlza la versione del plugin (plugin.json, package.json, package-lock.json, marketplace.json), aggiunge la voce in CHANGELOG.md e rigenera integrity.json. Default: minor.");
     process.exit(0);
   }
-  const kind = ["patch", "minor", "major"].find((k) => args.includes(k)) ?? "minor";
   const bi = args.indexOf("--branch");
   const si = args.indexOf("--set");
+  // 18/11/2026 (ciclo di bug fixing): un argomento sconosciuto (es. «pacth») alzava in silenzio la minor; ora si rifiuta
+  const KNOWN = new Set(["patch", "minor", "major", "--branch", "--set", "--dry-run", "--check", "--json"]);
+  const values = new Set([bi, si].filter((i) => i >= 0).map((i) => i + 1));
+  const unknown = args.filter((a, i) => !KNOWN.has(a) && !values.has(i));
+  if (unknown.length) { console.error(`argomenti sconosciuti: ${unknown.join(" ")} (patch | minor | major | --set <x.y.z>, --branch <nome>, --dry-run | --check, --json)`); process.exit(1); }
+  const kinds = ["patch", "minor", "major"].filter((k) => args.some((a, i) => a === k && !values.has(i)));
+  if (kinds.length > 1) { console.error(`un solo tipo di aumento: ${kinds.join(", ")}`); process.exit(1); }
+  const kind = kinds[0] ?? "minor";
   try {
     // --check (l'unico argomento che guard-config-scope ammette per un generatore in sessione) = prova a secco: non scrive mai
     const r = bump({ kind, version: si >= 0 ? args[si + 1] ?? "" : null, branch: bi >= 0 ? args[bi + 1] : null, dryRun: args.includes("--dry-run") || args.includes("--check") });
