@@ -183,3 +183,13 @@ test("revisione 3: un backslash di escape fra virgolette doppie nega (cat \"\\\"
   const g = (command) => runHook("guard-budget", { session_id: "sess-1", cwd: S.ws, hook_event_name: "PreToolUse", tool_name: "Bash", tool_input: { command }, ...ag }, E(S.ws));
   assert.equal(decisionOf(g(`cat "\\" "; n"o"de scripts/admin/sess*.mjs show #"`)), "deny");
 });
+
+// Quarta revisione: le virgolette tipografiche sono virgolette per PowerShell ⇒ si nega.
+test("revisione 4: virgolette tipografiche (PowerShell) negano", () => {
+  for (const c of ["ls \"a“; node x #\"", "ls 'a’; node x #'", "cat “file”", "cat „file”", "cat ‘f’"]) assert.equal(shellSegments(c), null, JSON.stringify(c));
+  assert.equal(readOnlyShell("ls \"a“; node x #\""), false);
+  const S = explore("sandbox");
+  const ag = { agent_id: "ag-4", agent_type: "jaggaer-virtual-consultant:scope-expert" };
+  const g = (command) => runHook("guard-budget", { session_id: "sess-1", cwd: S.ws, hook_event_name: "PreToolUse", tool_name: "PowerShell", tool_input: { command }, ...ag }, E(S.ws));
+  assert.equal(decisionOf(g("ls \"a“; n\"o\"de scripts/admin/sess*.mjs show #\"")), "deny");
+});

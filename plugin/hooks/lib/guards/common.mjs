@@ -25,6 +25,9 @@ export const PATH_TOOLS = new Set([...FILE_TOOLS, ...SEARCH_TOOLS]);
 // null (fail-closed) se il comando ha sostituzioni (`…`, $(…), <(…), >(…)) o virgolette non chiuse.
 export function shellSegments(cmd) {
   const s = String(cmd ?? "");
+  // revisione di sicurezza (4): PowerShell tratta le virgolette tipografiche come virgolette vere (“ chiude una stringa aperta
+  // con ", ‘ una aperta con ') ⇒ `ls "a“; node x #"` esegue node in PowerShell: fail-closed
+  if (/[‘’‚‛“”„]/.test(s)) return null;
   const segs = [];
   let words = [], w = "", has = false, q = null, skipTarget = false;
   const endWord = () => { if (has) { if (skipTarget) skipTarget = false; else words.push(w); } w = ""; has = false; };
