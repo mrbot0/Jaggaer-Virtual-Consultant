@@ -14,7 +14,7 @@ import { segmentUnits } from "../../scripts/ingest/segment.mjs";
 import { extractDocument, carryOverT1 } from "../../scripts/ingest/extract.mjs";
 import { newDoc, newSection, finishDoc } from "../../scripts/ingest/lib/parsed.mjs";
 import { validateWith } from "../../scripts/lib/schemas.mjs";
-import { parseEmail } from "../../scripts/ingest/parse-email.mjs";
+import { parseEmail, htmlToText, HTML_MAX } from "../../scripts/ingest/parse-email.mjs";
 import { assignDocCode } from "../../scripts/ingest/profile-doc.mjs";
 import { openDb } from "../../scripts/kb/db.mjs";
 import { status, next, applyCompletions, ready, mark } from "../../scripts/ingest/complete.mjs";
@@ -282,4 +282,25 @@ test("e-mail Outlook: intestazioni lunghe, multipart annidato, quoted-printable 
   const unitsDir = join(ws, "customers", "ENEL", "sources", "units");
   const all = readdirSync(unitsDir, { recursive: true }).filter((f) => f.endsWith(".yaml")).map((f) => readFileSync(join(unitsDir, f), "utf8")).join("\n");
   assert.ok(!/mario\.ro|ssi@example/.test(all), "nessun frammento dell'indirizzo nelle unità");
+});
+
+// Revisione di sicurezza (19/11/2026): le regex che toglievano commenti e blocchi style/head/script (e i marcatori) da un
+// corpo HTML ripartivano da ogni apertura senza chiusura fino in fondo al corpo: O(n²) con migliaia di aperture non chiuse.
+test("HTML di un'e-mail: 200 KB di <!-- e <style non chiusi in meno di 1 s; testo, a capo ed entità come prima", () => {
+  for (const evil of ["<!--".repeat(50000), "<style".repeat(34000), "<!--<style<head<script ".repeat(9000), "<".repeat(200000), `<p>testo</p>${"<a".repeat(100000)}`]) {
+    assert.ok(evil.length >= 190000);
+    const t0 = Date.now();
+    const out = htmlToText(evil);
+    assert.ok(Date.now() - t0 < 1000, `${evil.slice(0, 12)}…: ${Date.now() - t0} ms`);
+    assert.ok(out.length < evil.length);
+  }
+  const html = "<html><head><title>x</title><style>p { font-family: Calibri }</style></head><body><!-- nota --><p>Ciao&nbsp;Laura,</p>"
+    + "<p>il campo <b>Centro di costo</b> &#232; obbligatorio &amp; visibile.<br>Seconda riga</p><script>alert(1)</script><div>Fine</div></body></html>";
+  const text = htmlToText(html);
+  assert.equal(text.split("\n").filter(Boolean).join("|"), "Ciao Laura,|il campo Centro di costo è obbligatorio & visibile.|Seconda riga|Fine");
+  assert.doesNotMatch(text, /Calibri|nota|alert|<|>/);
+  // apertura senza chiusura: il resto del corpo si taglia (niente CSS o script nel testo)
+  assert.equal(htmlToText("<p>prima</p><style>p { color: red }").trim(), "prima");
+  assert.equal(htmlToText("<p>a</p><!-- commento senza fine <p>b</p>").trim(), "a");
+  assert.ok(htmlToText("x".repeat(HTML_MAX + 10)).length <= HTML_MAX, "corpo HTML limitato");
 });

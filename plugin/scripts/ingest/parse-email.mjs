@@ -46,17 +46,56 @@ export function decodeWords(s) {
     } catch { return m; }
   });
 }
+// HTML → testo con scansioni lineari (revisione di sicurezza, 19/11/2026): le regex /<!--[\s\S]*?-->/ e
+// /<(style|…)[\s\S]*?<\/\1>/ (come /<[^>]+>/) ripartivano da ogni apertura senza chiusura fino in fondo al corpo, O(n²) con
+// migliaia di "<!--" o "<style" non chiusi. Ogni apertura cerca la sua chiusura UNA volta, a partire da sé; senza chiusura
+// il resto del corpo si taglia, senza riprovare le aperture successive. Corpo HTML limitato a HTML_MAX caratteri.
+export const HTML_MAX = 2 * 1024 * 1024;
+const BLOCK_OPEN = /<!--|<(head|style|script)\b/g;
+function stripBlocks(s) {
+  const low = s.toLowerCase();
+  let out = "", i = 0;
+  while (i < s.length) {
+    BLOCK_OPEN.lastIndex = i;
+    const m = BLOCK_OPEN.exec(low);
+    if (!m) { out += s.slice(i); break; }
+    out += `${s.slice(i, m.index)} `;
+    const close = m[1] ? `</${m[1]}` : "-->";
+    const j = low.indexOf(close, m.index + m[0].length);
+    if (j < 0) break;                                                    // nessuna chiusura: si taglia fino in fondo
+    const end = m[1] ? low.indexOf(">", j + close.length) : j + 2;
+    if (end < 0) break;
+    i = end + 1;
+  }
+  return out;
+}
+const BR = /^<br\b/i;
+const BLOCK_END = /^<\/(?:p|div|tr|li|h\d)\s*>$/i;
+function stripTags(s) {
+  let out = "", i = 0;
+  while (i < s.length) {
+    const lt = s.indexOf("<", i);
+    if (lt < 0) { out += s.slice(i); break; }
+    const gt = s.indexOf(">", lt + 1);
+    if (gt < 0) { out += s.slice(i, lt); break; }                        // marcatore non chiuso: si taglia
+    const tag = s.slice(lt, gt + 1);
+    out += s.slice(i, lt) + (BR.test(tag) ? "\n" : BLOCK_END.test(tag) ? "\n\n" : " ");
+    i = gt + 1;
+  }
+  return out;
+}
+export function htmlToText(html) {
+  const s = String(html ?? "").slice(0, HTML_MAX);
+  return decodeEntities(stripTags(stripBlocks(s)).replace(/&nbsp;/g, " "))
+    .split("\n").map((l) => l.replace(/[ \t ]+/g, " ").trim()).join("\n");
+}
 function decodeBody(body, headers) {
   const enc = (headers["content-transfer-encoding"] ?? "").toLowerCase().trim();
   const cs = charsetOf(headers["content-type"]);
   let b = body;
   if (enc === "base64") b = decodeBytes(Buffer.from(b.replace(/\s+/g, ""), "base64"), cs);
   else if (enc === "quoted-printable") b = decodeBytes(Buffer.from(qp(b), "latin1"), cs);
-  if (/text\/html/i.test(headers["content-type"] ?? "")) {
-    b = decodeEntities(b.replace(/<!--[\s\S]*?-->/g, " ").replace(/<(head|style|script)\b[\s\S]*?<\/\1\s*>/gi, " ")
-      .replace(/<br\s*\/?>/gi, "\n").replace(/<\/(p|div|tr|li|h\d)\s*>/gi, "\n\n").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " "))
-      .split("\n").map((l) => l.replace(/[ \t ]+/g, " ").trim()).join("\n");
-  }
+  if (/text\/html/i.test(headers["content-type"] ?? "")) b = htmlToText(b);
   return b;
 }
 
