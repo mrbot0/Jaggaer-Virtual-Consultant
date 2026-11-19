@@ -12,7 +12,7 @@
     "session": { "type": "string", "minLength": 1 },
     "task": { "type": "string", "minLength": 1 },
     "scope": { "enum": ["CAT", "SRC", "VEN", "CON", "P2P", "INV", "QLT", "ANL", "ADM", "XSC"] },
-    "mode": { "enum": ["nrt", "config", "ops", "diag", "NRT", "CONFIG", "OPS", "DIAG"] },
+    "mode": { "enum": ["nrt", "config", "ops", "diag", "esplorazione", "NRT", "CONFIG", "OPS", "DIAG", "ESPLORAZIONE"], "description": "modalità della sessione (schemas/session.schema.json; esplorazione dal 26/10/2026, ammessa il 18/11/2026: le lezioni delle esplorazioni erano rifiutate per forma)" },
     "decision_refs": { "type": "array", "items": { "$ref": "#/$defs/dec" } },
     "strategy": { "type": "string", "pattern": "^(STR-[A-Z]+(-[A-Z]+)*|nessuna)$" },
     "epistemic_before": { "$ref": "#/$defs/shape" },

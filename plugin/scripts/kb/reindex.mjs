@@ -114,13 +114,36 @@ export function upsertClusters(db, dir) {
   return stats;
 }
 
+// 18/11/2026 (ciclo di bug fixing): il catalogo dei cluster del plugin entrava nel DB solo con reindex. Sui DB reali mai
+// reindicizzati (ENEL, AVVA, prodotto: clusters 0) `kb clusters` era vuoto e `cluster.mjs admit` rispondeva «cluster
+// inesistente» per ogni CL del catalogo, cioè il cluster-validator non poteva ammettere nulla. ensureClusters carica (o
+// riallinea) il catalogo quando la tabella è vuota o quando manca il codice cercato; lo stato fuso/deprecato del DB resta.
+export function ensureClusters(db, { code = null, dir = DEFAULT_CLUSTERS_DIR } = {}) {
+  const missing = code ? !db.prepare("select 1 from clusters where code = ?").get(code) : !db.prepare("select 1 from clusters limit 1").get();
+  if (!missing || !dir || !existsSync(dir)) return { clusters_upserted: 0, clusters_invalid: 0 };
+  return db.transaction(() => upsertClusters(db, dir))();
+}
+
 // recompute: ricalcola confidenza/peso/qualità anche degli item invariati. Senza,
 // si ricalcolano solo gli invariati ancora senza punteggio (confidenza 0: DB scritti da K0).
+// 18/11/2026 (ciclo di bug fixing, decisione dell'utente: «quando va in errore non si deve bloccare subito ma deve fare
+// quello che può e tracciare l'errore»): un file YAML illeggibile non ferma più l'indice (prima YAML.parse lanciava e la
+// transazione annullava TUTTO il reindex) e un item non valido non resta senza motivo: entrambi finiscono in `errors`
+// (file, codice, motivo; al più MAX_ERRORS voci) e il loro item già indicizzato NON si depreca (il file c'è ancora: va
+// corretto, non è sparito). Ogni file nel suo savepoint: un errore del DB su un file non annulla gli altri. Il DB si chiude.
+const MAX_ERRORS = 50;
+const codeOfFile = (file) => { const m = /([SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(?:\.v\d+)?)\.ya?ml$/.exec(file); return m ? m[1] : null; };
 export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, recompute = false } = {}) {
   const db = openDb(dbPath);
-  const stats = { scanned: 0, upserted: 0, unchanged: 0, rescored: 0, deprecated: 0, invalid: 0 };
+  try { return reindexDb(db, root, { clustersDir, recompute }); } finally { db.close(); }
+}
+
+function reindexDb(db, root, { clustersDir, recompute }) {
+  const stats = { scanned: 0, upserted: 0, unchanged: 0, rescored: 0, deprecated: 0, invalid: 0, errors: [] };
+  const trace = (file, code, error) => { if (stats.errors.length < MAX_ERRORS) stats.errors.push({ file: relative(root, file), code, error: String(error).slice(0, 300) }); };
   const seen = new Set();
-  const get = db.prepare("select hash, confidence from items where code=?");
+  const get = db.prepare("select hash, confidence, updated_at from items where code=?");
+  const touchItem = db.prepare("update items set updated_at=? where code=?");
   const rescore = db.prepare("update items set confidence=@confidence, weight=@weight, quality=@quality where code=@code");
   const upsert = db.prepare(`insert into items(code,level,customer,scope,type,version,title,summary,facets,confidence,quality,weight,status,path,hash,updated_at,verified_at,release_ref)
     values (@code,@level,@customer,@scope,@type,@version,@title,@summary,@facets,@confidence,@quality,@weight,@status,@path,@hash,@updated_at,@verified_at,@release_ref)
@@ -140,31 +163,79 @@ export function reindex(root, dbPath, { clustersDir = DEFAULT_CLUSTERS_DIR, reco
   const unitStats = indexUnits(db, join(root, "sources", "units"), { root });
   const unitDocSt = db.prepare("select doc from units where code=?");
   const unitDoc = (code) => unitDocSt.get(code)?.doc ?? null;
-  db.transaction(() => {
-    for (const file of walk(kbDir)) {
+  // 18/11/2026: i file si leggono e si validano FUORI dalla transazione, a lotti; ogni lotto si scrive in una transazione
+  // breve (prima: una sola transazione per tutta la scansione ⇒ blocco di scrittura tenuto per minuti sui kb grandi, AVVA
+  // 12759 item, e hook e agenti fermi su «database is locked»). La deprecazione degli spariti resta alla fine, dopo tutto.
+  const BATCH = 500;
+  const files = [...walk(kbDir)];
+  // 19/11/2026 (ciclo 5, segnalazione del coordinatore: reindex di AVVA, 12759 item invariati, ~140 s; learn digest-weekly
+  // oltre i 2 minuti del timeout di Bash): reindex incrementale. Un file con lo stesso percorso e la stessa data della sua
+  // riga (updated_at = mtime del file, come lo scrive l'upsert), con punteggio e modello dei campi già indicizzati e non
+  // deprecato, è invariato e NON si rilegge né si rianalizza. Un file con la data cambiata si rilegge: contenuto uguale ⇒
+  // la riga prende la data del file (la volta dopo si salta), contenuto diverso ⇒ upsert. --recompute rilegge tutto.
+  const iso = (ms) => new Date(ms).toISOString();
+  const slash = (p) => String(p ?? "").split("\\").join("/");
+  const indexed = new Map(db.prepare("select code, type, path, confidence, status, updated_at from items").all().map((r) => [slash(r.path), r]));
+  const fieldRow = db.prepare("select 1 from fields where code=?");
+  const lineageRow = db.prepare("select 1 from field_lineage where source_code=? limit 1");
+  const fieldModelReady = (r) => !FIELD_MODEL_TYPES.has(r.type) || !!(r.type === "FLD" ? fieldRow.get(r.code) : lineageRow.get(r.code));
+  for (let b = 0; b < files.length; b += BATCH) {
+    const entries = [];
+    for (const file of files.slice(b, b + BATCH)) {
       stats.scanned++;
-      const text = readFileSync(file, "utf8");
-      const hash = createHash("sha256").update(text).digest("hex");
-      const obj = YAML.parse(text);
-      if (obj?.type === "TPL") continue;   // template di caricamento (§3.8): voce di kb/ non indicizzata, validata da template-learn
-      if (!validateItem(obj).ok) { stats.invalid++; continue; }
-      const c = parseCode(obj.id); seen.add(obj.id);
-      const prev = get.get(obj.id);
-      if (prev?.hash === hash) {
-        stats.unchanged++;
-        if (recompute || !prev.confidence) { rescore.run({ code: obj.id, ...scoreItem(obj, { docReliability, unitDoc }) }); stats.rescored++; }
-        if (FIELD_MODEL_TYPES.has(obj.type) && needsFieldIndex(db, obj)) indexFieldModel(db, obj);   // DB precedente a 0004-fld
+      const row = recompute ? null : indexed.get(slash(relative(root, file)));
+      if (row && row.confidence && row.status !== "deprecato" && row.code === codeOfFile(file)) {
+        let mt = null;
+        try { mt = statSync(file).mtimeMs; } catch { /* letto sotto */ }
+        if (mt !== null && row.updated_at === iso(mt) && fieldModelReady(row)) { seen.add(row.code); stats.unchanged++; continue; }
+      }
+      const fileCode = codeOfFile(file);
+      let text, obj;
+      try { text = readFileSync(file, "utf8"); obj = YAML.parse(text); } catch (err) {
+        stats.invalid++;
+        if (fileCode) seen.add(fileCode);
+        trace(file, fileCode, `file illeggibile: ${err?.message ?? err}`);
         continue;
       }
-      upsert.run({ code: obj.id, level: c.level, customer: c.customer, scope: c.scope, type: c.type, version: c.version, title: obj.title,
-        summary: obj.summary, facets: JSON.stringify(obj.facets), ...scoreItem(obj, { docReliability, unitDoc }), status: obj.facets.F12, path: relative(root, file), hash,
-        updated_at: new Date(statSync(file).mtimeMs).toISOString(), verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
-      ftsDel.run(obj.id); ftsIns.run(obj.id, obj.title, obj.summary);
-      if (FIELD_MODEL_TYPES.has(obj.type)) indexFieldModel(db, obj);
-      const su = sourceUnits(obj);
-      if (su.length) linkSubjectUnits(db, obj.id, su);
-      stats.upserted++;
+      const hash = createHash("sha256").update(text).digest("hex");
+      if (obj?.type === "TPL") continue;   // template di caricamento (§3.8): voce di kb/ non indicizzata, validata da template-learn
+      const v = validateItem(obj);
+      if (!v.ok) {
+        stats.invalid++;
+        if (fileCode) seen.add(fileCode);
+        if (typeof obj?.id === "string") seen.add(obj.id);
+        trace(file, obj?.id ?? fileCode, `item non valido: ${v.errors.slice(0, 3).join("; ")}`);
+        continue;
+      }
+      let mtimeMs = Date.now();
+      try { mtimeMs = statSync(file).mtimeMs; } catch { /* sparito durante la scansione: l'ora corrente */ }
+      entries.push({ file, obj, hash, mtimeMs });
     }
+    db.transaction(() => { for (const { file, obj, hash, mtimeMs } of entries) {
+      try {
+        db.transaction(() => {
+          const c = parseCode(obj.id); seen.add(obj.id);
+          const prev = get.get(obj.id);
+          if (prev?.hash === hash) {
+            stats.unchanged++;
+            if (prev.updated_at !== iso(mtimeMs)) touchItem.run(iso(mtimeMs), obj.id);
+            if (recompute || !prev.confidence) { rescore.run({ code: obj.id, ...scoreItem(obj, { docReliability, unitDoc }) }); stats.rescored++; }
+            if (FIELD_MODEL_TYPES.has(obj.type) && needsFieldIndex(db, obj)) indexFieldModel(db, obj);   // DB precedente a 0004-fld
+            return;
+          }
+          upsert.run({ code: obj.id, level: c.level, customer: c.customer, scope: c.scope, type: c.type, version: c.version, title: obj.title,
+            summary: obj.summary, facets: JSON.stringify(obj.facets), ...scoreItem(obj, { docReliability, unitDoc }), status: obj.facets.F12, path: relative(root, file), hash,
+            updated_at: new Date(mtimeMs).toISOString(), verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
+          ftsDel.run(obj.id); ftsIns.run(obj.id, obj.title, obj.summary);
+          if (FIELD_MODEL_TYPES.has(obj.type)) indexFieldModel(db, obj);
+          const su = sourceUnits(obj);
+          if (su.length) linkSubjectUnits(db, obj.id, su);
+          stats.upserted++;
+        })();
+      } catch (err) { stats.invalid++; trace(file, obj.id, `errore di indicizzazione: ${err?.message ?? err}`); }
+    } })();
+  }
+  db.transaction(() => {
     const dep = db.prepare("update items set status='deprecato' where code=?");
     for (const { code } of db.prepare("select code from items where status<>'deprecato'").all()) if (!seen.has(code)) { dep.run(code); stats.deprecated++; }
     Object.assign(stats, upsertClusters(db, clustersDir));
@@ -194,6 +265,12 @@ export function indexItemFile(db, root, file, text = readFileSync(file, "utf8"))
     verified_at: obj.facets.F13?.verified_at ?? null, release_ref: obj.facets.F13?.release ?? null });
   db.prepare("delete from items_fts where code=?").run(obj.id);
   db.prepare("insert into items_fts(code,title,summary) values (?,?,?)").run(obj.id, obj.title, obj.summary);
+  // 18/11/2026 (ciclo di bug fixing): come reindex, anche il modello dei campi (fields, archi lineage) e le unità sorgente.
+  // Prima un FLD scritto da atlas-write (o promosso) entrava solo in items: su AVVA 820 FLD e `kb fields` vuoto (fields 0)
+  // fino a un reindex completo; identity e impact non li trovavano.
+  if (FIELD_MODEL_TYPES.has(obj.type)) indexFieldModel(db, obj);
+  const su = sourceUnits(obj);
+  if (su.length) linkSubjectUnits(db, obj.id, su);
   return obj;
 }
 

@@ -110,10 +110,14 @@ export function recordAnswers(db, { subject, type, answers = [], level = null })
       if (us.length) linkSubjectUnits(db, subject, us);
     }
   })();
-  if (unknown.length) throw new DigestInputError(`attributi non attesi per ${type}: ${unknown.join(", ")}`);
+  // 18/11/2026 (ciclo di bug fixing): un attributo fuori dal registro del tipo lanciava DOPO il commit delle risposte valide
+  // (registrate, ma l'agente riceveva solo exit 1 senza copertura né completezza). Ora le risposte valide restano, il
+  // calcolo si fa, e gli attributi sconosciuti sono tracciati in `errors` con gli attesi (nessuna risposta valida ⇒ errore).
+  if (unknown.length && !answers.some((a) => expected.includes(a.attribute))) throw new DigestInputError(`attributi non attesi per ${type}: ${unknown.join(", ")} (attesi: ${expected.join(", ")})`);
   const lvl = level ?? parseCode(subject)?.level ?? "S";
   const cov = coverage({ type, attrs }, { obsConfirmations: 0, execWithOutcome: 0, userStatements: 0, freshness: 1, openContradictions: contradictions.length });
-  return { subject, type, attrs, coverage: cov, gaps: cov.gaps, contradictions, completeness: completeness(type, attrs, { level: lvl }) };
+  return { subject, type, attrs, coverage: cov, gaps: cov.gaps, contradictions, completeness: completeness(type, attrs, { level: lvl }),
+    ...(unknown.length ? { errors: unknown.map((a) => ({ attribute: a, error: `attributo non atteso per ${type} (attesi: ${expected.join(", ")}): risposta non registrata` })) } : {}) };
 }
 
 const HELP = `uso: node scripts/kb/digest-plan.mjs plan --db <file> --type <TIPO> --subject <codice> [--label <etichetta>] [--doc <DOC>] [--top 5] [--out <file>] [--json]

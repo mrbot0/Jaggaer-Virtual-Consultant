@@ -17,8 +17,9 @@
 //  13  spreco: snapshot della stessa pagina senza azione in mezzo        blocco ("Controllo fallito")
 // Profondità rapida (§10.4): auto-verifica ridotta ai controlli 1, 3, 9 (più #11, obbligatorio per §29.6).
 import { readFileSync } from "node:fs";
+import { dirname, resolve as resolvePath } from "node:path";
 import YAML from "yaml";
-import { parseLesson, sectionEmpty, ITEM_CODE_RE } from "../kb/lesson.mjs";
+import { parseLesson, sectionEmpty, ITEM_CODE_RE, kbExistsFromDb } from "../kb/lesson.mjs";
 import { parseCode } from "../kb/codes.mjs";
 import { extractReport } from "../admin/agent-report.mjs";
 import { matchGlob } from "../../hooks/lib/paths.mjs";
@@ -296,8 +297,12 @@ export function run(argv) {
   } catch (e) { return fail(asJson, 1, `input illeggibile: ${e.message ?? e}`); }
   try {
     {
-      const stmts = ["items", "decisions", "lessons", "observations", "contradictions", "reports"].map((t) => db.prepare(`select 1 from ${t} where code=?`));
-      input.kbExists = (c) => stmts.some((s) => s.get(c));
+      // 18/11/2026 (ciclo di bug fixing, rapporto reale del customer-profiler su ENEL): il controllo 1 bloccava codici che
+      // esistono — i DOC profilati (doc_profiles, non ancora in items), la bozza che il compito ha appena scritto in
+      // _inbox/<S>/digested/ (kb/ lo scrivono gli script solo dopo la validazione) e la lezione dell'agente in lessons/.
+      // Un codice esiste anche se il suo file c'è nella cartella del cliente del --db (mai altrove): lo stesso predicato
+      // della validazione delle lezioni.
+      input.kbExists = kbExistsFromDb(db, dirname(resolvePath(opts.db)), { tables: ["items", "decisions", "lessons", "observations", "contradictions", "reports", "doc_profiles"] });
       const dec = db.prepare(`select d.table_code, d.strategy, c.effects from decisions d left join decision_context c on c.decision_code=d.code where d.code=?`);
       input.getDecision = (c) => {
         const r = dec.get(c);
@@ -308,7 +313,7 @@ export function run(argv) {
     const r = selfCheck(input);
     console.log(JSON.stringify(asJson ? { ok: !r.blocked, ...r } : r));
     return r.blocked ? 3 : 0;
-  } catch (e) { return fail(asJson, 2, `errore di sistema: ${e.message ?? e}`); } finally { db?.close(); }
+  } catch (e) { return fail(asJson, 2, `errore di sistema: ${e.message ?? e}`); } finally { input?.kbExists?.close?.(); db?.close(); }
 }
 
 if (isMain(import.meta.url)) process.exit(run(process.argv.slice(2)));

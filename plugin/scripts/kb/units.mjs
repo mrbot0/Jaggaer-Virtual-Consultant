@@ -77,25 +77,43 @@ export function upsertUnits(db, list, { root = null, unitsDir = null } = {}) {
   return n;
 }
 
+// 18/11/2026 (ciclo di bug fixing): reindex rileggeva e analizzava OGNI file di unità a ogni esecuzione anche senza
+// modifiche (ENEL: 17578 unità, 335 MB; sul disco dell'utente decine di minuti, oltre il timeout di Bash degli agenti).
+// Un file non più recente della sua riga (mtime ≤ updated_at, stesso codice) è invariato e non si rilegge; un file più
+// recente si rilegge e, se il contenuto è lo stesso, la riga prende l'ora della verifica (la volta dopo si salta).
 export function indexUnits(db, unitsDir, { root = null } = {}) {
   const stats = { units_scanned: 0, units_upserted: 0, units_unchanged: 0 };
   if (!unitsDir || !existsSync(unitsDir)) return stats;
   const s = stmts(db);
-  db.transaction(() => {
-    for (const d of readdirSync(unitsDir, { withFileTypes: true })) {
-      if (!d.isDirectory()) continue;
-      const dir = join(unitsDir, d.name);
-      for (const f of readdirSync(dir)) {
-        if (!/^U\..+\.ya?ml$/.test(f)) continue;
-        stats.units_scanned++;
-        const file = join(dir, f);
-        let u;
-        try { u = YAML.parse(readFileSync(file, "utf8")); } catch { continue; }
-        if (!u?.id || !u?.hash || !u?.text) continue;
-        if (upsertOne(s, u, root ? relative(root, file) : file)) stats.units_upserted++; else stats.units_unchanged++;
-      }
+  const seenAt = new Map(db.prepare("select code, updated_at from units").all().map((r) => [r.code, Date.parse(r.updated_at ?? "") || 0]));
+  const touch = db.prepare("update units set updated_at=? where code=?");
+  // lettura dei file FUORI dalla transazione (la lettura di migliaia di file è lenta: tenere intanto il blocco di scrittura
+  // fermava hook e agenti con «database is locked»), poi le scritture a lotti brevi
+  const pending = [];
+  const touched = [];
+  for (const d of readdirSync(unitsDir, { withFileTypes: true })) {
+    if (!d.isDirectory()) continue;
+    const dir = join(unitsDir, d.name);
+    for (const f of readdirSync(dir)) {
+      if (!/^U\..+\.ya?ml$/.test(f)) continue;
+      stats.units_scanned++;
+      const file = join(dir, f);
+      const known = seenAt.get(f.replace(/\.ya?ml$/, ""));
+      let mtime = Infinity;
+      try { mtime = statSync(file).mtimeMs; } catch { /* letto sotto */ }
+      if (known && mtime <= known) { stats.units_unchanged++; continue; }
+      let u;
+      try { u = YAML.parse(readFileSync(file, "utf8")); } catch { continue; }
+      if (!u?.id || !u?.hash || !u?.text) continue;
+      const prev = s.get.get(u.id);
+      if (prev?.hash === u.hash && prev?.doc === u.doc) { stats.units_unchanged++; touched.push(u.id); continue; }
+      pending.push({ u, path: root ? relative(root, file) : file });
     }
-  })();
+  }
+  const BATCH = 500;
+  for (let i = 0; i < pending.length; i += BATCH) db.transaction(() => { for (const p of pending.slice(i, i + BATCH)) if (upsertOne(s, p.u, p.path)) stats.units_upserted++; else stats.units_unchanged++; })();
+  const now = new Date().toISOString();
+  for (let i = 0; i < touched.length; i += BATCH) db.transaction(() => { for (const c of touched.slice(i, i + BATCH)) touch.run(now, c); })();
   return stats;
 }
 

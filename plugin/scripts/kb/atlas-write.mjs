@@ -26,7 +26,8 @@ import { assignSeq, formatCode } from "./assign-seq.mjs";
 import { validateItem } from "./validate-schema.mjs";
 import { indexItemFile } from "./reindex.mjs";
 import { itemFile } from "../lib/kb-items.mjs";
-import { atlasIndex, atlasMatch } from "../chrome/atlas.mjs";
+import { atlasIndex, atlasLabelIndex, roleCompatible } from "../chrome/atlas.mjs";
+import { normLabel } from "../chrome/snapshot-parse.mjs";
 import { redactText } from "../chrome/redact.mjs";
 import { EFFECT_LABEL } from "../../hooks/lib/guards/config-scope.mjs";
 import { confineInputs } from "../lib/text-file.mjs";
@@ -127,18 +128,20 @@ function buildFlw(it, draft) {
   });
 }
 
-function existingFld(ws, customer, scope, label, document, module = null) {
+// I FLD dello scope del cliente (gli oggetti dei file, nell'ordine della cartella): la base del confronto dei doppioni.
+export function scopeFields(ws, customer, scope) {
   const dir = join(ws, "customers", customer, "kb", "scopes", scope, "fields");
   let files = [];
-  try { files = readdirSync(dir).filter((f) => f.endsWith(".yaml")); } catch { return null; }
+  try { files = readdirSync(dir).filter((f) => f.endsWith(".yaml")); } catch { return []; }
+  const out = [];
+  for (const f of files) { try { const o = YAML.parse(readFileSync(join(dir, f), "utf8")); if (o) out.push(o); } catch { /* file illeggibile: non è un doppione */ } }
+  return out;
+}
+
+// 18/11/2026 (ciclo di bug fixing): `fields` = l'elenco già letto (indice di atlas-build); senza, la cartella si legge qui.
+function existingFld(ws, customer, scope, label, document, module = null, fields = null) {
   const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "").replace(/[\s:*]+$/g, "").trim();
-  const same = [];
-  for (const f of files) {
-    try {
-      const o = YAML.parse(readFileSync(join(dir, f), "utf8"));
-      if (norm(o?.label?.it) === norm(label) && norm(o?.document) === norm(document)) same.push(o);
-    } catch { /* file illeggibile: non è un doppione */ }
-  }
+  const same = (fields ?? scopeFields(ws, customer, scope)).filter((o) => norm(o?.label?.it) === norm(label) && norm(o?.document) === norm(document));
   // stesso campo = stessa etichetta e documento; con i moduli: prima lo stesso modulo, poi un campo senza modulo
   // (item precedenti); un campo di un altro modulo non è un doppione
   const hit = same.find((o) => (o.module ?? null) === (module ?? null)) ?? same.find((o) => !o.module) ?? (!module ? same.find((o) => o.module) : null);
@@ -165,14 +168,19 @@ export function fldSummary(ft, label, document) {
 // tracciare l'errore»): un item che non si costruisce o non supera la validazione si scarta con il motivo in `errors`, gli
 // altri si scrivono (ognuno nel suo savepoint: un item scartato non consuma il codice). Senza tolerant (bozze scritte a mano
 // con atlas-write) il primo errore ferma tutto, come prima.
-export function writeDraft({ ws, customer, scope, draft, tolerant = false }) {
+// index (18/11/2026, ciclo di bug fixing): { atlas, fields } già letti da chi scrive molte bozze di fila (atlas-build, una
+// per pagina). Misurato su AVVA (registro reale di 2117 righe, 230 pagine, 9860 SEL e 820 FLD nello scope): ogni bozza
+// rileggeva tutto l'Atlas (~47 s per lettura su quel disco) e, per ogni FLD, tutta la cartella dei campi ⇒ ore, e
+// atlas-build non finiva mai. Con l'indice si legge una volta sola; gli item scritti si aggiungono all'indice (le bozze
+// successive li vedono come doppioni, come prima rileggendo i file).
+export function writeDraft({ ws, customer, scope, draft, tolerant = false, index = null }) {
   if (!/^[A-Z0-9]{4}$/.test(String(customer ?? ""))) throw E1("--customer <C> (4 caratteri) obbligatorio");
   if (!SCOPES.has(scope)) throw E1(`scope non valido: ${scope}`);
   if (!existsSync(join(ws, "customers", customer))) throw E1(`il cliente ${customer} non esiste nel workspace`);
   const items = Array.isArray(draft?.items) ? draft.items : null;
   if (!items || !items.length) throw E1("la bozza non ha items");
   if (items.length > 300) throw E1("al più 300 item per bozza");
-  const atlas = atlasIndex(ws, customer, scope);
+  const atlas = index?.atlas ?? atlasIndex(ws, customer, scope);
   const builders = [];
   const skipped = [];
   const errors = [];
@@ -183,7 +191,8 @@ export function writeDraft({ ws, customer, scope, draft, tolerant = false }) {
     if (type === "SEL") {
       const b = buildSel(it, draft);
       const probe = { role: String(it.role).toLowerCase(), name: clip(it.label, 120) };
-      const hits = atlas.filter((a) => atlasMatch([a], probe));
+      // stesso esito di atlas.filter((a) => atlasMatch([a], probe)), dall'indice per etichetta (non un passaggio su tutto l'Atlas per SEL)
+      const hits = (atlasLabelIndex(atlas).get(normLabel(probe.name)) ?? []).filter((a) => roleCompatible(a.role, probe.role));
       const hit = hits.find((h) => (h.page ?? null) === (draft.page?.signature ?? null)) ?? null;
       const k = `SEL|${probe.role}|${probe.name.toLowerCase()}|${draft.page?.signature ?? ""}`;
       if (hit || seen.has(k)) { skipped.push({ type, label: probe.name, existing: hit?.code ?? "nella bozza" }); continue; }
@@ -192,7 +201,7 @@ export function writeDraft({ ws, customer, scope, draft, tolerant = false }) {
       const b = buildFld(it, draft);
       const doc = clip(it.document ?? draft.page?.title ?? "", 80);
       const mod = it.module ? clip(red(String(it.module)), 120) : null;   // confronto sul valore che si memorizza
-      const ex = existingFld(ws, customer, scope, it.label, doc, mod);
+      const ex = existingFld(ws, customer, scope, it.label, doc, mod, index?.fields ?? null);
       const k = `FLD|${clip(it.label, 120).toLowerCase()}|${doc.toLowerCase()}|${mod ?? ""}`;
       if (ex || seen.has(k)) { skipped.push({ type, label: clip(it.label, 120), existing: ex ?? "nella bozza" }); continue; }
       seen.add(k); builders.push({ type, label: clip(it.label, 120), b });
@@ -213,7 +222,7 @@ export function writeDraft({ ws, customer, scope, draft, tolerant = false }) {
       if (existsSync(file)) throw E1(`il file ${code} esiste già`);
       const text = YAML.stringify(obj, { lineWidth: 0 });
       indexItemFile(db, join(ws, "customers", customer), file, text);
-      return { code, type, label, file, text };
+      return { code, type, label, file, text, obj };
     };
     const written = db.transaction(() => {
       const out = [];
@@ -224,6 +233,13 @@ export function writeDraft({ ws, customer, scope, draft, tolerant = false }) {
       return out;
     })();
     for (const w of written) { mkdirSync(dirname(w.file), { recursive: true }); writeFileSync(w.file, w.text); }
+    if (index) for (const { type, obj } of written) {
+      if (type === "SEL") {
+        if (Array.isArray(index.atlas)) index.atlas.push({ code: obj.id, role: obj.role ?? null, label: obj.label ?? null, effect: obj.effect ?? null, field: obj.field ?? null, stability: obj.stability ?? null, page: obj.page ?? null, strategies: obj.strategies ?? [] });
+        if (Array.isArray(index.selectors)) index.selectors.push(obj);
+      } else if (type === "FLD" && Array.isArray(index.fields)) index.fields.push(obj);
+      else if (type === "FLW" && Array.isArray(index.flows)) index.flows.push(obj);
+    }
     return { written: written.map(({ code, type, label }) => ({ code, type, label })), skipped, errors };
   } finally { db.close(); }
 }

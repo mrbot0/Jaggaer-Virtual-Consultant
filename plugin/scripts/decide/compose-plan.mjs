@@ -7,6 +7,7 @@ import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from 
 import { join, resolve, dirname } from "node:path";
 import YAML from "yaml";
 import { normLabel } from "../chrome/snapshot-parse.mjs";
+import { parseSelText } from "../chrome/atlas.mjs";
 import { validatePlan } from "./validate-plan.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
@@ -49,6 +50,20 @@ export function tplMatch(obj, goal) {
 const UPLOAD_LABEL = /\b(carica|upload|sfoglia|browse|scegli file|choose file|seleziona file)\b/i;
 const START_LABEL = /\b(importa|import|avvia|start|conferma|confirm|carica|upload)\b/i;
 
+// SEL del cliente con la lettura leggera dell'Atlas (parseSelText: id, ruolo, etichetta, effetto, campo, pagina; niente YAML)
+function selectorsOf(ws, customer, scope) {
+  const d = join(ws, "customers", customer, "kb", "scopes", scope, "selectors");
+  if (!existsSync(d)) return [];
+  const out = [];
+  for (const f of readdirSync(d).filter((x) => x.endsWith(".yaml"))) {
+    let text;
+    try { text = readFileSync(join(d, f), "utf8"); } catch { continue; }
+    const s = parseSelText(text);
+    if (s.id) out.push(s);
+  }
+  return out;
+}
+
 function items(ws, customer, scope, dir) {
   const d = join(ws, "customers", customer, "kb", "scopes", scope, dir);
   if (!existsSync(d)) return [];
@@ -63,7 +78,7 @@ function items(ws, customer, scope, dir) {
 // (kind config, o assente nelle voci vecchie: fail-closed) in PRODUZIONE richiede l'istantanea dei dati attuali
 // (runs/<RUN>/evidence/<file>, es. l'export scaricato prima) ⇒ compensazioni restore con quel ref, piano config_import: true,
 // che gateStep verifica come per DELETE. In sandbox e pre-produzione l'istantanea è facoltativa.
-function bulkPlan({ ws, tpl, sels, flws, filled, planId, customer, env, goal, snapshot = null }) {
+function bulkPlan({ ws, tpl, sels: getSels, flws: getFlws, filled, planId, customer, env, goal, snapshot = null }) {
   // minore della revisione finale: senza la pagina di import il TPL non porta a percorso e pulsanti (gap preciso)
   if (typeof tpl.page !== "string" || !tpl.page.trim()) return { gaps: [{ kind: "tpl-no-page", what: tpl.id, hint: `la voce ${tpl.id} non ha la pagina di import: reimpara il template con kb template-learn --file <xlsx> --object "${tpl.object}" --scope <S> --page <firma della pagina di import>` }] };
   const isConfig = tpl.kind !== "data";
@@ -73,6 +88,8 @@ function bulkPlan({ ws, tpl, sels, flws, filled, planId, customer, env, goal, sn
   if (!filled) return { gaps: [{ kind: "fill-template", what: tpl.id, hint: `compila con template-fill --tpl ${tpl.id} e ripassa --filled <path>:<sha256>:<righe>` }] };
   const gaps = [];
   const page = tpl.page;
+  const flws = getFlws();
+  const sels = getSels();
   const route = page ? flws.find((f) => String(f.title ?? "").startsWith("Percorso:") && String((f.steps ?? []).at(-1)?.expect?.page_sig ?? "") === pathOf(page)) : null;
   const onPage = sels.filter((s) => s.page === page);
   const uploads = onPage.filter((s) => UPLOAD_LABEL.test(s.label));
@@ -102,23 +119,27 @@ export function composePlan({ ws, customer, scope, env, goal, data = {}, until =
   // revisione finale (C1): cliente e scope diventano percorsi: mai senza validazione
   if (!/^[A-Z0-9]{4}$/.test(String(customer ?? ""))) throw new Error(`cliente non valido: ${customer}`);
   if (!SCOPES.has(scope)) throw new Error(`scope non valido: ${scope}`);
+  // 18/11/2026 (ciclo di bug fixing): su AVVA (ADM: 9860 SEL, 820 FLD) compose-plan impiegava 484 s per rispondere «no-form»
+  // (oltre il timeout di Bash degli agenti): leggeva e analizzava con YAML ogni SEL prima di sapere se serviva. I SEL ora
+  // si leggono solo quando servono (campi del modulo, pagina di import) e con la lettura leggera dell'Atlas.
+  let selCache = null;
+  const getSels = () => (selCache ??= selectorsOf(ws, customer, scope));
   // spec 2026-10-06 §3.8: con un template di caricamento per l'oggetto la via massiva è sempre preferita, anche per un record
   // più TPL possibili: quello il cui match comincia prima; a parità, l'oggetto più lungo
   const hits = items(ws, customer, scope, "templates").filter((t) => t.object && String(t.object).trim()).map((t) => ({ t, at: tplMatch(t.object, goal) })).filter((h) => h.at >= 0)
     .sort((a, b) => a.at - b.at || String(b.t.object).length - String(a.t.object).length);
   const tpl = hits[0]?.t;
-  if (tpl) return bulkPlan({ ws, tpl, sels: items(ws, customer, scope, "selectors"), flws: items(ws, customer, scope, "flows"), filled, planId, customer, env, goal, snapshot });
+  if (tpl) return bulkPlan({ ws, tpl, sels: getSels, flws: () => items(ws, customer, scope, "flows"), filled, planId, customer, env, goal, snapshot });
   // con un file compilato ma nessun template per l'obiettivo non si compone di nascosto il piano a maschera
   if (filled) return { gaps: [{ kind: "no-template", what: goal, hint: "nessun template di caricamento per l'oggetto dell'obiettivo (verbo di creazione/import + oggetto del TPL): togli --filled o impara il template" }] };
   const obj = OBJECTS.find(([, re]) => re.test(goal));
   if (!obj) return { gaps: [{ kind: "no-form", what: goal, hint: "obiettivo non riconosciuto: ordine, contratto, richiesta, fornitore, evento" }] };
   const [object, , syn] = obj;
   const flds = items(ws, customer, scope, "fields");
-  const sels = items(ws, customer, scope, "selectors");
   const flws = items(ws, customer, scope, "flows");
   const gaps = [];
   const dataKeys = Object.keys(data ?? {});
-  const selsForField = (id) => sels.filter((s) => s.field === id);
+  const selsForField = (id) => getSels().filter((s) => s.field === id);
   const has = (text) => syn.some((w) => normLabel(text).includes(w));
   // modulo richiesto (--modulo): per livelli ("Acquisti" vale per "Acquisti › Ordini", non per "Acquisti di servizi"); se
   // nessun item ha quel modulo si usano quelli senza modulo (item precedenti), mai quelli di un altro modulo
@@ -185,7 +206,7 @@ export function composePlan({ ws, customer, scope, env, goal, data = {}, until =
       if (cands.length !== 1) { gaps.push({ kind: cands.length ? "ambiguous" : "unknown-field", what: f.label.it, hint: cands.length ? "più elementi per lo stesso campo: indica quale" : "campo senza elemento nella mappa: esplora la pagina" }); continue; }
       fills.push({ verb: f.field_type === "list" ? "CHOOSE" : "FILL", action_class: "ACT-CREATE", target: cands[0].id, data: data[k], expect: { elements: [{ sel: cands[0].id, value: data[k] }] } });
     }
-    const onForm = sels.filter((s) => s.page && s.page === formSig);
+    const onForm = getSels().filter((s) => s.page && s.page === formSig);
     const saves = onForm.filter((s) => s.effect === "write" && SAVE.test(s.label) && !SEND.test(s.label));
     const drafts = saves.filter((s) => DRAFT.test(s.label));
     const pick = drafts.length ? drafts : saves;

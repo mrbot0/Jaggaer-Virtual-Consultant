@@ -41,6 +41,9 @@ function plain(row) {
   return o;
 }
 
+// SQLITE_BUSY (5) e le sue varianti estese (BUSY_SNAPSHOT 517, BUSY_RECOVERY 261…): codice primario negli 8 bit bassi
+export const isBusy = (err) => (Number.isInteger(err?.errcode) && (err.errcode & 0xff) === 5) || /\bdatabase is locked\b|SQLITE_BUSY/i.test(String(err?.message ?? ""));
+
 const isNamed = (v) => v !== null && typeof v === "object" && !Array.isArray(v) && !ArrayBuffer.isView(v);
 const unprefixed = (k) => k.replace(/^[:@$]/, "");
 
@@ -105,8 +108,14 @@ export default class Database {
   }
   exec(sql) { this.#db.exec(sql); return this; }
   prepare(sql) { return new Statement(this.#db.prepare(sql)); }
+  // 18/11/2026 (ciclo di bug fixing, prova con tre processi che scrivono DEC insieme sullo stesso DB: 37 % di «database is
+  // locked»): una transazione DEFERRED che prima legge (assignSeq: max SEQ) e poi scrive non può promuovere il suo blocco se
+  // un altro processo ha scritto nel frattempo (SQLITE_BUSY immediato, il busy_timeout non vale per la promozione). Hook,
+  // agenti e script scrivono nello stesso knowledge.db in parallelo. Una transazione esterna DEFERRED che fallisce con
+  // SQLITE_BUSY si annulla e si riesegue una volta come IMMEDIATE (che il busy_timeout fa aspettare). Il BUSY arriva alla
+  // prima scrittura, prima degli effetti sui file che le funzioni del plugin fanno dopo le scritture nel DB.
   transaction(fn) {
-    const wrap = (mode) => (...args) => {
+    const run = (mode, args) => {
       const nested = this.inTransaction;
       const sp = `jvc_sp_${this.#depth}`;
       const undo = () => { try { this.#db.exec(nested ? `ROLLBACK TO ${sp}; RELEASE ${sp}` : "ROLLBACK"); } catch { /* già annullata da SQLite */ } };
@@ -118,6 +127,10 @@ export default class Database {
       // un COMMIT non riuscito (es. SQLITE_BUSY) annulla la transazione, come better-sqlite3
       try { this.#db.exec(nested ? `RELEASE ${sp}` : "COMMIT"); } catch (err) { undo(); throw err; }
       return r;
+    };
+    const wrap = (mode) => (...args) => {
+      if (mode !== "DEFERRED" || this.inTransaction || this.#readonly) return run(mode, args);
+      try { return run(mode, args); } catch (err) { if (!isBusy(err)) throw err; return run("IMMEDIATE", args); }
     };
     const f = wrap("DEFERRED");
     f.deferred = f;

@@ -27,7 +27,18 @@ const STOP = new Set(["della", "delle", "dello", "degli", "nella", "nelle", "son
   "tutti", "tutte", "essere", "stato", "stata", "come", "dove", "quale", "quali", "their", "there", "these", "those", "which", "where", "when", "with", "from", "that",
   "this", "have", "been", "will", "into", "only", "also", "each", "must", "should", "deve", "devono", "campo", "field", "valore", "value"]);
 const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
-const flat = (v) => (v === null || v === undefined ? "" : typeof v === "object" ? (Array.isArray(v) ? v.map(flat).join(" ") : Object.values(v).map(flat).join(" ")) : String(v));
+// 18/11/2026 (ciclo di bug fixing, digestione reale ENEL): il testo di un'affermazione strutturata conteneva anche la sua
+// provenienza e la sua classificazione. FLD `mandatory: { kind: always, source: { doc: C.ENEL.XSC.DOC.0013, section: … } }`
+// diventava "always C.ENEL.XSC.DOC.0013 …": il codice del DOC (mai scritto nel testo della fonte) e la parola del
+// vocabolario (always, in un documento italiano) rendevano NON supportato un obbligo citato correttamente, e l'item si
+// bloccava. Non sono affermazioni della fonte: si tolgono le chiavi di provenienza (source, confirmed_by, genre, …), le
+// chiavi di classificazione (kind, modality: valori di vocabolario, li controlla lo schema), i booleani e i codici interni
+// della conoscenza (item, unità, cluster: riferimenti del digester, non testo citato).
+const PROVENANCE_KEYS = new Set(["source", "sources", "confirmed_by", "genre", "citation", "verified_at", "observed_at", "recorded_at", "kind", "modality"]);
+const flat = (v) => (v === null || v === undefined || typeof v === "boolean" ? "" : typeof v === "object"
+  ? (Array.isArray(v) ? v.map(flat).join(" ") : Object.entries(v).filter(([k]) => !PROVENANCE_KEYS.has(k)).map(([, x]) => flat(x)).join(" ")) : String(v));
+export const INTERNAL_CODE_RE = /\b(?:[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}(?:\.v\d+)?(?:\.[A-Z0-9_]+)?|U\.[A-Z0-9]+\.\d{4,}|CL-[A-Z]+(?:-[A-Z]+)*-\d{3})\b/g;
+export const claimTextOf = (v) => flat(v).replace(INTERNAL_CODE_RE, " ").replace(/\s+/g, " ").trim();
 
 // WP09b (carry WP09a): (1) il segno meno di un numero fa parte del token ("-5" ≠ "5"), riconosciuto solo quando il
 // trattino non è interno a una parola; (2) un codice unito da trattini, punti o barre (REQ-CC-1, E-51-B, E1EDK01/BELNR)
@@ -95,9 +106,9 @@ export function claimsOf(item) {
   const claims = [];
   for (const a of expected) {
     if (item[a] === undefined || item[a] === null) continue;
-    claims.push({ attribute: a, text: flat(item[a]), units: [...new Set([...(perAttr.get(a) ?? []), ...(perAttr.has(a) ? [] : general)])], derived: item.derived?.[a] ?? null });
+    claims.push({ attribute: a, text: claimTextOf(item[a]), units: [...new Set([...(perAttr.get(a) ?? []), ...(perAttr.has(a) ? [] : general)])], derived: item.derived?.[a] ?? null });
   }
-  for (const c of item?.claims ?? []) claims.push({ attribute: c.attribute ?? "claim", text: String(c.text ?? ""), units: [].concat(c.units ?? []), derived: c.derived ?? null });
+  for (const c of item?.claims ?? []) claims.push({ attribute: c.attribute ?? "claim", text: String(c.text ?? "").replace(INTERNAL_CODE_RE, " ").replace(/s+/g, " ").trim(), units: [].concat(c.units ?? []), derived: c.derived ?? null });
   return claims;
 }
 
@@ -113,6 +124,9 @@ export function backcheck(item, lookup) {
     const absent = c.units.filter((u, i) => texts[i] === null || texts[i] === undefined);
     if (absent.length === c.units.length) { results.push({ attribute: c.attribute, verdict: "non-supportata", units: c.units, reason: `unità citate inesistenti: ${absent.join(", ")}` }); continue; }
     const s = supportOf(c.text, texts.filter((t) => t !== null && t !== undefined));
+    // 18/11/2026: un'affermazione citata ma senza nulla di verificabile nel testo (solo vocabolario, riferimenti interni o
+    // booleani: `mandatory: { kind: always }`, `custom: false`) non è smentita dalla fonte: parziale, con il motivo, non blocca
+    if (!s.key_terms && !s.codes.length) { results.push({ attribute: c.attribute, verdict: "parziale", units: c.units, ratio: null, reason: "nessun termine verificabile nel testo (vocabolario, riferimenti o booleani): da rivedere", ...(absent.length ? { missing_units: absent } : {}) }); continue; }
     results.push({ attribute: c.attribute, verdict: s.verdict, units: c.units, ratio: s.ratio, ...(s.missing_codes.length ? { missing_codes: s.missing_codes } : {}), ...(absent.length ? { missing_units: absent } : {}) });
   }
   const counts = { supportata: 0, parziale: 0, "non-supportata": 0, derived: 0 };
@@ -120,9 +134,12 @@ export function backcheck(item, lookup) {
   return { item: item?.id ?? null, results, counts, blocked: counts["non-supportata"] > 0, outcome: counts["non-supportata"] > 0 ? "bloccato" : "passa" };
 }
 
+// 18/11/2026: il testo citato comprende l'intestazione della sezione dell'unità (è ciò che la fonte dice in quel punto):
+// la `section` di un FLD è proprio quell'intestazione e prima risultava non supportata perché si confrontava solo il corpo.
+const withSection = (section, text) => (text === null || text === undefined ? null : section ? `${section}\n${text}` : text);
 export function dbLookup(db) {
-  const st = db.prepare("select text from units where code=?");
-  return (code) => st.get(code)?.text ?? null;
+  const st = db.prepare("select text, section from units where code=?");
+  return (code) => { const r = st.get(code); return r ? withSection(r.section, r.text) : null; };
 }
 export function dirLookup(unitsDir) {
   const cache = new Map();
@@ -130,7 +147,8 @@ export function dirLookup(unitsDir) {
     if (cache.has(code)) return cache.get(code);
     const token = /^U\.([A-Z0-9]+)\./.exec(code)?.[1];
     const file = token ? join(unitsDir, token, `${code}.yaml`) : null;
-    const t = file && existsSync(file) ? YAML.parse(readFileSync(file, "utf8"))?.text ?? null : null;
+    const u = file && existsSync(file) ? YAML.parse(readFileSync(file, "utf8")) : null;
+    const t = withSection(u?.context?.section ?? null, u?.text ?? null);
     cache.set(code, t);
     return t;
   };
