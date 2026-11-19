@@ -45,7 +45,10 @@ Tier (§26.3): T2 · ciclo cognitivo: completo + passata epistemica
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" find --scope <S> --type <TIPO> --top 8 --db customers/<C>/knowledge.db --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" precedents <codice> --top 3 --customer <C> --db customers/<C>/knowledge.db --json
-       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" units --doc <DOC> --near <codice> --question <TIPO>.impacts --top 5 --db customers/<C>/knowledge.db --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" units --doc <DOC> --near <codice> --question <TIPO>.<attributo> --top 5 --db customers/<C>/knowledge.db --json
+
+   (`<attributo>` è uno degli attributi attesi del tipo, `schemas/expected-attributes.yaml`: `CFG.impacts`, `FLD.mandatory`…;
+   un attributo che il tipo non ha esce con 1.)
 
 3. **VALUTARE** — forma epistemica del soggetto prima della digestione; concordanza fra S, C e il grezzo; una
    divergenza S/C è un `C.*` con `deviates_from`, una fonte contro un'altra è una `CTR` (skill `belief-revision`):
@@ -61,8 +64,14 @@ Tier (§26.3): T2 · ciclo cognitivo: completo + passata epistemica
 
    Tipo ambiguo → al validatore con i due tipi candidati. Attributo critico mancante → `quarantena`, mai inventato.
 5. **AGIRE** — scrivi l'item digerito in `customers/<C>/_inbox/<S>/digested/<codice>.yaml` (codice §5, skill
-   `coding-system`: il SEQ lo assegna il DB, mai inventato; faccette e pesi, skill `faceting-and-weights`; summary ≤ 60
-   parole, ≤ 20 per `FLD`, skill `field-modeling`), poi il back-check T0 di ogni affermazione e la validazione:
+   `coding-system`: il SEQ lo assegna il DB, mai inventato — chiedilo prima di scrivere le bozze, uno per bozza; faccette e
+   pesi, skill `faceting-and-weights`; summary ≤ 60 parole, ≤ 20 per `FLD`, skill `field-modeling`):
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/kb.mjs" next-code --scope <S> --type <TIPO> --customer <C> --count <n> --db customers/<C>/knowledge.db --json
+
+   In `sources[]` ogni unità dichiara gli attributi che sostiene (`attributes: [...]`); la provenienza (`source`,
+   `confirmed_by`) e le classificazioni (`kind`) non sono affermazioni da citare. Poi il back-check T0 di ogni
+   affermazione e la validazione:
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/backcheck.mjs" --item customers/<C>/_inbox/<S>/digested/<codice>.yaml --db customers/<C>/knowledge.db --json
 

@@ -16,7 +16,7 @@ import YAML from "yaml";
 import { openDb } from "./db.mjs";
 import { coverage } from "./epistemic.mjs";
 import { identityCoverage } from "./identity.mjs";
-import { SCOPES } from "./codes.mjs";
+import { SCOPES, parseCode } from "./codes.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 
@@ -46,7 +46,14 @@ export function subjectsOf(db, scope, { customer = null } = {}) {
 // Stessa fonte del report per scope: EPI dal DB (tabella epistemic), altrimenti la copertura della digestione guidata,
 // altrimenti ignoto con tutti i gap. Codice inesistente ⇒ Error "non trovato".
 export function subjectProfile(db, code) {
-  const it = db.prepare("select code, type, scope, customer, status from items where code=?").get(code);
+  let it = db.prepare("select code, type, scope, customer, status from items where code=?").get(code);
+  // 18/11/2026 (ciclo di bug fixing): il soggetto in digestione (bozza in _inbox, non ancora in items) con la copertura già
+  // registrata da digest-plan record-answers ha un profilo: la forma dopo la digestione (shape_after della traccia) si
+  // legge da lì. Prima: «soggetto non trovato». Un codice senza item né copertura resta non trovato.
+  if (!it && db.prepare("select 1 from attribute_coverage where subject_code=? limit 1").get(code)) {
+    const p = parseCode(code);
+    if (p) it = { code, type: p.type, scope: p.scope, customer: p.customer, status: "in digestione" };
+  }
   if (!it) throw new Error(`soggetto non trovato: ${code}`);
   const expected = EXPECTED[it.type];
   if (!expected) throw new Error(`il tipo ${it.type} non ha attributi attesi: nessuna copertura epistemica per ${code}`);
@@ -58,7 +65,14 @@ export function subjectProfile(db, code) {
     p = { k_tech: e.k_tech ?? 0, k_use: e.k_use ?? 0, k_obs: e.k_obs ?? 0, k_exec: e.k_exec ?? 0, k_user: e.k_user ?? null, k_level: e.k_level ?? null, shape: e.shape,
       open_contradictions: e.open_contradictions ?? 0, gaps: rows.length ? expected.filter((a) => !answered.has(a)) : [], source: "epistemic", computed_at: e.computed_at ?? null };
   } else {
-    const s = subjectsOf(db, it.scope).find((x) => x.code === code) ?? { k_tech: 0, k_use: 0, k_obs: 0, k_exec: 0, shape: "ignoto", gaps: [...expected], source: "nessuna" };
+    const fromRows = () => {
+      if (!rows.length) return null;
+      const attrs = {};
+      for (const r of rows.filter((x) => x.answered)) attrs[r.attribute] = r.genre ? (r.genre.includes(",") ? r.genre.split(",") : r.genre) : "tecnica";
+      const c = coverage({ type: it.type, attrs }, { obsConfirmations: 0, execWithOutcome: 0, userStatements: 0, freshness: 1, openContradictions: rows.filter((x) => x.contradiction).length });
+      return { k_tech: c.k_tech, k_use: c.k_use, k_obs: c.k_obs, k_exec: c.k_exec, shape: c.shape, gaps: c.gaps, source: "digestione" };
+    };
+    const s = (it.status === "in digestione" ? fromRows() : subjectsOf(db, it.scope).find((x) => x.code === code)) ?? { k_tech: 0, k_use: 0, k_obs: 0, k_exec: 0, shape: "ignoto", gaps: [...expected], source: "nessuna" };
     p = { k_tech: s.k_tech, k_use: s.k_use, k_obs: s.k_obs, k_exec: s.k_exec, shape: s.shape, open_contradictions: rows.filter((x) => x.contradiction).length,
       gaps: s.gaps.length || s.source !== "nessuna" ? s.gaps : [...expected], source: s.source };
   }

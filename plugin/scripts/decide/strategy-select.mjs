@@ -17,8 +17,12 @@ import { parseArgs, fail } from "../lib/args.mjs";
 import { confineInputs } from "../lib/text-file.mjs";
 
 export const STRATEGIES_DIR = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "strategies");
-export const MODES = ["nrt", "config", "ops", "diag"];
-const MODE_ALIASES = { configurazione: "config", configuration: "config", operativa: "ops", operations: "ops", diagnosi: "diag", diagnosis: "diag", collaudo: "nrt" };
+// 18/11/2026 (ciclo di bug fixing): anche "esplorazione", modalità di sessione dal 26/10/2026 (schemas/session.schema.json):
+// il cluster-validator e lo scope-expert passano --mode <modalità della sessione> e prima ricevevano exit 1 («modalità
+// sconosciuta»). Come nrt e ops non tocca gli input di DT-017 (solo diag e config li cambiano).
+export const MODES = ["nrt", "config", "ops", "diag", "esplorazione"];
+const MODE_ALIASES = { configurazione: "config", configuration: "config", operativa: "ops", operations: "ops", diagnosi: "diag", diagnosis: "diag", collaudo: "nrt",
+  exploration: "esplorazione", explore: "esplorazione", esplora: "esplorazione" };
 // Le classi del precedente vengono dal dominio di DT-017 (WP10c giro 1): sulla riga di comando anche nella forma ASCII
 // (confermato-d-lt-0.2 …, regola di asciiAlias in dt-eval), riportata qui al valore canonico.
 const PRECEDENT_DOMAIN = loadTable("DT-017").inputs.find((i) => i.name === "precedent").domain;
@@ -90,7 +94,7 @@ export function loadStrategies(dir = STRATEGIES_DIR) {
 }
 
 const HELP = `uso: node scripts/decide/strategy-select.mjs --shape <forma> --risk R0..R3 [--precedent <classe>|--precedents file.json]
-       [--surprises N] [--mode nrt|config|ops|diag] [--divergence-unknown] [--has-hypotheses]
+       [--surprises N] [--mode nrt|config|ops|diag|esplorazione] [--divergence-unknown] [--has-hypotheses]
        [--depth rapida|standard|profonda] [--preferred-prior 0.7] [--input file.json] [--plan] [--json] [--help]
 
 Sceglie la strategia (§14.3) con DT-017 e stampa { strategy, then?, combine, score, rule }.

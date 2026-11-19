@@ -55,7 +55,10 @@ Tier (§26.3): T2 · ciclo cognitivo: 2-4-6
 
    Poi DT-005 con i priori (skill `clustering-rules`, `decision-tables`): tutti i criteri di inclusione
    veri e nessuno di esclusione → ammesso; uno falso → rigettato (motivato, torna al digester); nel dubbio non entra,
-   il dubbio è registrato. Lo script scrive la DEC:
+   il dubbio è registrato. Lo script scrive la DEC; il codice può essere quello di una bozza del digester
+   (`_inbox/<S>/digested/<codice>.yaml`, validata con lo schema prima del giudizio): ammessa, lo script la porta in `kb/`
+   con F12 `clusterizzato` e la indicizza (`materialized` nell'uscita); rifiutata o in quarantena, resta in `_inbox`
+   (la quarantena scrive F12 nella bozza, per la revisione umana):
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/cluster.mjs" admit <CL> <codice> --customer <C> --db customers/<C>/knowledge.db --json
        node "${CLAUDE_PLUGIN_ROOT}/scripts/kb/cluster.mjs" reject <CL> <codice> --reason "<motivo>" --db customers/<C>/knowledge.db --json

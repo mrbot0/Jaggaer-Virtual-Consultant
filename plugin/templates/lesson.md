@@ -4,7 +4,7 @@ agent: <agente>
 session: <SES.CLIENTE.AAAAMMGG.NNN>
 task: "<il compito in una riga>"
 scope: <SCOPE>
-mode: <nrt|config|ops|diag>
+mode: <nrt|config|ops|diag|esplorazione>
 decision_refs: []            # [L.<C>.<S>.DEC.nnnn, …] — le DEC prese nel compito
 strategy: <STR-…>
 epistemic_before: <forma>    # consolidato · libresco · empirico · ignoto · contraddittorio

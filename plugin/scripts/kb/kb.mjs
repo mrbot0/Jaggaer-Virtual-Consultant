@@ -1,4 +1,5 @@
 import { openDb } from "./db.mjs";
+import { ensureClusters } from "./reindex.mjs";
 import { find, InvalidFacetError } from "./find.mjs";
 import { resolve } from "./resolve.mjs";
 import { precedents } from "./precedents.mjs";
@@ -17,7 +18,10 @@ import { main as snapshotMain } from "./snapshot.mjs";
 import { main as kbCoverageMain } from "./coverage.mjs";
 import { related, facetCount, clusters, contradictions, scopes, handoffs, validateHandoffs, graph } from "./registries.mjs";
 import { rates } from "../digest/outcomes-rates.mjs";
-import { join, dirname } from "node:path";
+import { join, dirname, basename } from "node:path";
+import { SCOPES, isValidCode } from "./codes.mjs";
+import { nextCodes } from "./assign-seq.mjs";
+import { TYPE_DIRS } from "../lib/kb-items.mjs";
 import { existsSync } from "node:fs";
 
 const HELP = `uso: node scripts/kb/kb.mjs <comando> [opzioni]
@@ -37,6 +41,9 @@ Comandi:
             cosa si rompe a valle (mapping INT obbligatori, campi che lo richiedono, campi obbligatori a valle)
   identity  <codice FLD> | --doc <documento> --missing <blocco>
             carta d'identità compatta (§19.20) · i campi del documento senza il blocco
+  next-code --scope <S> --type <TIPO> --customer <C> [--level C|L|S] [--count 1]
+            i prossimi codici liberi per le bozze della digestione (SEQ dal DB, oltre le bozze in _inbox/<S>/digested
+            e i file di kb/ non ancora indicizzati): il codice di una bozza non si inventa
   units     [--doc <DOC>] [--near <soggetto>] [--query "<domanda>" | --query-file <file> | --question CFG.impacts]
             [--type <tipo di unità>] [--top 5]
             unità di significato (§19.9) per la digestione guidata (§19.11): FTS + prossimità di sezione del
@@ -102,7 +109,7 @@ export function run(argv) {
   if (cmd === "coverage") return { exitCode: kbCoverageMain(rest) };
   const { opt, facet, positional } = parseArgs(rest);
   const dbPath = opt("db", "knowledge.db");
-  if (!["find", "resolve", "summary", "get", "precedents", "fields", "impact", "identity", "units",
+  if (!["find", "resolve", "summary", "get", "precedents", "fields", "impact", "identity", "units", "next-code",
     "related", "facet-count", "graph", "scopes", "handoffs", "clusters", "contradictions", "outcomes"].includes(cmd)) {
     const msg = `comando sconosciuto: ${cmd}`;
     console.log(asJson ? JSON.stringify({ ok: false, error: msg }) : `errore: ${msg}\n${HELP}`);
@@ -182,7 +189,26 @@ export function run(argv) {
     } else if (cmd === "facet-count") {
       const r = facetCount(db, { facet: opt("facet"), scope: opt("scope"), type: opt("type"), level: opt("level"), customer: opt("customer"), status: opt("status") });
       return out(r);
+    } else if (cmd === "next-code") {
+      // 18/11/2026: i prossimi codici liberi per le bozze del digester (SEQ dal DB, più bozze e file di kb/ non indicizzati)
+      const level = String(opt("level", "C")).toUpperCase();
+      const scope = String(opt("scope", "")).toUpperCase();
+      const type = String(opt("type", "")).toUpperCase();
+      const customer = level === "S" ? "STD" : String(opt("customer", "")).toUpperCase();
+      if (!["C", "L", "S"].includes(level)) throw new InvalidInputError("--level C|L|S");
+      if (!SCOPES.has(scope)) throw new InvalidInputError(`--scope non valido: ${scope || "(assente)"}`);
+      if (!/^[A-Z0-9]{4}$/.test(customer) && customer !== "STD") throw new InvalidInputError("--customer <C> (4 caratteri) obbligatorio per i livelli C e L");
+      const count = Number(opt("count", 1));
+      if (!Number.isInteger(count) || count < 1 || count > 50) throw new InvalidInputError("--count fra 1 e 50");
+      const probe = `${level}.${customer}.${scope}.${type}.0001`;
+      if (!/^[A-Z]{3}$/.test(type) || !isValidCode(probe)) throw new InvalidInputError(`--type non valido per il registro: ${type || "(assente)"}`);
+      const root = dirname(dbPath);
+      const inbox = basename(root) === "product" ? join(dirname(root), "_inbox") : join(root, "_inbox");
+      const kbDir = join(root, "kb", ...(type === "HND" ? ["handoffs"] : ["scopes", scope, TYPE_DIRS[type] ?? type.toLowerCase()]));
+      const codes = nextCodes(db, { level, customer, scope, type }, { inbox, kbDir, count });
+      return out({ codes, next: codes[0] ?? null });
     } else if (cmd === "clusters") {
+      ensureClusters(db);   // 18/11/2026: DB mai reindicizzato ⇒ il catalogo del plugin si carica qui (prima: elenco vuoto)
       const r = clusters(db, { family: opt("family"), status: opt("status"), top: Number(opt("top", 200)) });
       return out(r);
     } else if (cmd === "contradictions") {
