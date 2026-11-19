@@ -55,7 +55,9 @@ Tier (§26.3): T0/T1 · ciclo cognitivo: ridotto (1-2-6)
        node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/complete.mjs" next --customer <C> --scope <S> --max 12 --json
 
    `next` dà per ogni grezzo `missing` (i soli campi da completare), l'estrazione T0 e il **testo dell'unità** con quello
-   delle vicine: non serve cercare le unità. Scrivi i completamenti in
+   delle vicine: non serve cercare le unità. I candidati di documento (`R.DOCnnnn.C001` parametro di un export di
+   configurazione, `F001` workflow, `I001` integrazione) citano solo l'unità d'ingresso della sezione: se il testo dato non
+   dice ciò che manca, `unresolved` con il motivo (mai dedurlo dal nome del parametro). Scrivi i completamenti in
    `customers/<C>/.sessions/<sid>/work/<task>/lotto-<n>.yaml` — un elenco di `{ raw_id, fields: { <campo>: valore },
    citation: { unit, section } }`, con `unresolved: "<motivo>"` quando l'unità non dice ciò che manca (mai inventare) —
    e applicali:

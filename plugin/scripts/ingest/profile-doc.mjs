@@ -11,8 +11,9 @@
 //   internalConsistency(units) → { value, contradictions, rules }
 //   profileDoc(doc, units, { code, origin, level, currentRelease?, releases?, corroboration?, kind?, genre?, scope?, residue?, overflow? })
 //       → item DOC (item.base + doc.schema.json); summary ≤ 60 parole; facets F1..F15 dal genere e dall'origine
-//   assignDocCode(db, { level, customer, doc, source, sha256 }) → { code, version, existing }   (SEQ dal DB, §5):
+//   assignDocCode(db, { level, customer, doc, source, sha256, dir? }) → { code, version, existing }   (SEQ dal DB, §5):
 //       stesso doc_key e stesso sha256 ⇒ stesso codice; stesso doc_key e contenuto diverso ⇒ nuova versione .vN
+//       (con `dir`, cartella del percorso redatto: solo se il documento precedente è nella stessa cartella)
 //   recordProfile(db, profile, { path }) → upsert in doc_profiles
 // CLI: node scripts/ingest/profile-doc.mjs --parsed <doc.json> --root <workspace> [--customer C] [--origin vendor|cliente|partner|interno]
 //        [--scope XSC] [--kind K] [--current-release R] [--json]
@@ -240,14 +241,26 @@ export function validateProfile(p) {
   return { ok: base.ok && spec.ok, errors: [...base.errors, ...spec.errors] };
 }
 
-export function assignDocCode(db, { level = "S", customer = "STD", source, sha256, key: givenKey = null }) {
+// 18/11/2026 (ciclo di bug fixing): doc_key viene dal solo nome del file, quindi "MATRICE/AWARDING/BACKUP/20-09-22.xlsx" e
+// "MATRICE/STRATEGY/BACKUP/20-09-22.xlsx" (o cinque LEGGIMI.txt di cartelle diverse) diventavano versioni dello stesso
+// documento: su ENEL 55 dei 248 documenti, con raw/DOCnnnn.yaml e il report della versione precedente sovrascritti
+// (grezzi persi per il ponte T0 → T1) e un doc-diff fra documenti estranei. Con `dir` (la cartella del percorso redatto,
+// come doc_profiles.source) una versione è dello stesso nome NELLA STESSA CARTELLA, o in una cartella che ne è il suffisso
+// (stessa cartella ingerita da una radice diversa); altrove è un documento nuovo. Stesso contenuto ⇒ stesso codice ovunque.
+const folderOf = (s) => { const t = String(s ?? "").replace(/\\/g, "/"); const i = t.lastIndexOf("/"); return i < 0 ? "" : t.slice(0, i); };
+const sameFolder = (a, b) => a === b || (!!a && !!b && (a.endsWith(`/${b}`) || b.endsWith(`/${a}`)));
+export function assignDocCode(db, { level = "S", customer = "STD", source, sha256, key: givenKey = null, dir = undefined }) {
   const key = givenKey ?? docKey(source);
-  const rows = db.prepare("select code, sha256 from doc_profiles where doc_key=? order by profiled_at").all(key);
-  const same = rows.find((r) => r.sha256 === sha256);
+  const all = db.prepare("select code, sha256, source from doc_profiles where doc_key=? order by profiled_at").all(key);
+  const same = all.find((r) => r.sha256 === sha256);
   if (same) return { code: same.code, existing: true, version: parseCode(same.code)?.version ?? 1 };
+  let rows = all;
+  if (dir !== undefined) { const d = String(dir ?? "").replace(/\\/g, "/").replace(/\/+$/, ""); rows = all.filter((r) => r.source == null || sameFolder(folderOf(r.source), d)); }
   if (rows.length) {
     const p = parseCode(rows[0].code);
-    const version = Math.max(...rows.map((r) => parseCode(r.code)?.version ?? 1)) + 1;
+    // il numero di versione sull'intera linea del codice base (nei workspace già ingeriti più cartelle condividono lo stesso
+    // DOC.nnnn con .v2, .v3…: una nuova versione non deve riprendere il codice di un altro documento)
+    const version = Math.max(...all.filter((r) => parseCode(r.code)?.seq === p.seq).map((r) => parseCode(r.code)?.version ?? 1)) + 1;
     return { code: formatCode({ ...p, version }), existing: false, version, previous: rows.at(-1).code };
   }
   const k = { level, customer, scope: "XSC", type: "DOC" };

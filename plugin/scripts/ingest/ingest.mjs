@@ -9,8 +9,8 @@
 //   ingestDoc(ctx, doc, entry) → per-documento { code, units, items, residue, llm, fields, batches, report }
 // CLI: node scripts/ingest/ingest.mjs --input <cartella> --root <workspace> [--scope XSC] [--customer ACME]
 //        [--origin vendor|cliente|partner|interno] [--genre tecnica|d'uso|empirica|testimoniale] [--current-release R] [--json]
-import { writeFileSync, mkdirSync, existsSync, readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { writeFileSync, mkdirSync, existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { join, posix } from "node:path";
 import YAML from "yaml";
 import { harvest } from "./harvest.mjs";
 import { segmentUnits, docIdToken } from "./segment.mjs";
@@ -47,7 +47,9 @@ export function ingestDoc(ctx, doc, entry) {
   const redactor = makeUnitRedactor({ profile: red.profile, names: redaction?.names ?? [] });
   // identità del documento dal percorso grezzo, conservata solo redatta (+ impronta) se il nome contiene dati da redigere
   const docKeyStored = safeDocKey(entry.path, (x) => redactPath(redactor, x));
-  const assigned = assignDocCode(db, { level: paths.level, customer: paths.customer, source: entry.path, sha256: entry.sha256, key: docKeyStored });
+  // 18/11/2026: versione solo nella stessa cartella (stesso nome in cartelle diverse = documenti diversi); la cartella è
+  // quella del percorso redatto, come doc_profiles.source
+  const assigned = assignDocCode(db, { level: paths.level, customer: paths.customer, source: entry.path, sha256: entry.sha256, key: docKeyStored, dir: posix.dirname(redactPath(redactor, entry.path)).replace(/^\.$/, "") });
   const code = assigned.code;
   // nuova versione dello stesso documento: le unità con hash invariato conservano il codice (§19.16)
   const prevCode = assigned.previous ?? (assigned.existing ? code : null);
@@ -109,6 +111,7 @@ export function ingestDoc(ctx, doc, entry) {
     llm: { estimated_tokens: llm.estimated_tokens, sessions: llm.sessions.map((s) => s.tokens), over_unit_budget: llm.over_unit_budget.length },
     fields, overflow_rows: report.overflow_rows, diff, consistent: report.units === report.sourced + report.residue_total,
     text_tokens: units.reduce((a, u) => a + Math.ceil(u.text.length / 4), 0), candidates: extraction.stats.by_candidate,
+    t1_carried: extraction.stats.t1_carried ?? 0,   // grezzi che conservano il lavoro di T1 alla re-ingestion (writeRaw)
   };
 }
 
@@ -122,7 +125,7 @@ export function ingestFolder(input, { root, scope = "XSC", customer = null, orig
   if (kind && !KINDS.includes(kind)) throw new UsageError(`tipo di documento non valido: ${kind} (ammessi: ${KINDS.join(", ")})`);
   const t0 = Date.now();
   const paths = ensureWorkspace(workspacePaths({ root, customer }));
-  const h = harvest(input, { root, scope, customer });
+  if (!existsSync(input) || !statSync(input).isDirectory()) throw new UsageError(`cartella di input assente: ${input}`);
   const db = openDb(paths.db);
   const docs = [];
   const errors = [];
@@ -131,14 +134,16 @@ export function ingestFolder(input, { root, scope = "XSC", customer = null, orig
     const redaction = { profile: ingestionProfile({ level: paths.level, customer: paths.customer }), names: knownCustomers(paths.root ?? root).filter((c) => c !== paths.customer) };
     const pathRedactor = makeUnitRedactor({ profile: redaction.profile, names: redaction.names });   // nomi di file negli errori
     const ctx = { db, paths, scope, origin: origin ?? (paths.level === "S" ? "vendor" : "cliente"), genre, kind, currentRelease, today, redaction };
-    const byId = new Map(h.manifest.filter((m) => m.status === "parsed").map((m) => [m.doc_id, m]));
-    for (const doc of h.docs) {
+    // 18/11/2026 (ciclo di bug fixing): ogni documento passa alla pipeline appena letto (harvest onParsed) invece di tenere
+    // in memoria tutta la cartella fino alla fine della harvest (ENEL: oltre 2 GB di heap a metà harvest); stesso ordine e
+    // stessi errori per documento, che non fermano gli altri
+    const h = harvest(input, { root, scope, customer, onParsed: (doc, entry) => {
       try {
-        const r = ingestDoc(ctx, doc, byId.get(doc.id));
+        const r = ingestDoc(ctx, doc, entry);
         docs.push(r);
         if (onDoc) onDoc(r);
       } catch (e) { errors.push({ doc: doc.id, source: redactPath(pathRedactor, doc.meta?.source), error: redactPath(pathRedactor, String(e?.message ?? e)) }); }
-    }
+    } });
     // proposte di alias dai campi grezzi (mai scritte in kb/ dalla pipeline: la promozione le valida)
     const rawRows = [];
     const fieldsDir = join(paths.inbox(scope), "fields");

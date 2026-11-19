@@ -27,8 +27,12 @@ import { SCOPES } from "../kb/codes.mjs";
 import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 
 const DOC_RE = /^DOC\d{4}$/;
-const RAW_ID = /^R\.(DOC\d{4})\.\d{4}$/;
-const UNIT_RE = /^U\.DOC\d{4}\.\d{4}$/;
+// 18/11/2026 (ciclo di bug fixing): anche i candidati di documento di extract.documentCandidates (R.DOCnnnn.C001 parametro
+// di configurazione, F001 workflow, I001 integrazione: tutti needs_llm) e le unità oltre la 9999 (segment numera con
+// padStart(4), U.DOCnnnn.10000). Prima apply e mark li rifiutavano come «raw_id non valido»: su ENEL 9 documenti avevano
+// grezzi che restavano «da completare» per sempre e `remaining` non arrivava mai a 0.
+const RAW_ID = /^R\.(DOC\d{4})\.(?:\d{4,}|[A-Z]\d{3,})$/;
+const UNIT_RE = /^U\.DOC\d{4}\.\d{4,}$/;
 const now = () => new Date().toISOString();
 
 export function paths(ws, { customer = null, scope }) {
@@ -89,7 +93,7 @@ export function applyCompletions(ws, opts, completions, { by = "scope-extractor"
   const byDoc = new Map();
   for (const c of Array.isArray(completions) ? completions : []) {
     const m = RAW_ID.exec(String(c?.raw_id ?? ""));
-    if (!m) { errors.push({ raw_id: c?.raw_id ?? null, error: "raw_id non valido (R.DOCnnnn.nnnn)" }); continue; }
+    if (!m) { errors.push({ raw_id: c?.raw_id ?? null, error: "raw_id non valido (R.DOCnnnn.nnnn o, per un candidato di documento, R.DOCnnnn.C001)" }); continue; }
     if (!byDoc.has(m[1])) byDoc.set(m[1], []);
     byDoc.get(m[1]).push(c);
   }
@@ -142,7 +146,7 @@ export function ready(ws, opts, { max = 20 } = {}) {
 
 export function mark(ws, opts, rawId, code) {
   const m = RAW_ID.exec(String(rawId ?? ""));
-  if (!m) throw new Error("raw_id non valido (R.DOCnnnn.nnnn)");
+  if (!m) throw new Error("raw_id non valido (R.DOCnnnn.nnnn o, per un candidato di documento, R.DOCnnnn.C001)");
   if (!/^[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.[A-Z]{3}\.\d{4}$/.test(String(code ?? ""))) throw new Error(`codice non valido: ${code}`);
   const p = paths(ws, opts);
   const file = join(p.raw, `${m[1]}.yaml`);
@@ -187,7 +191,7 @@ scope-digester prende la coda dei grezzi pronti e li segna digeriti.
   next [--doc DOCnnnn] [--max 12] prossimo lotto da completare, con il testo dell'unità e delle vicine
   apply --file <completamenti.yaml> [{ raw_id, fields: { <campo mancante>: valore }, citation?: { unit, section }, unresolved?: motivo }]
   ready [--max 20]               grezzi pronti per il digester, non ancora digeriti
-  mark --raw-id <R.DOCnnnn.nnnn> --code <codice dell'item digerito>
+  mark --raw-id <R.DOCnnnn.nnnn | R.DOCnnnn.C001> --code <codice dell'item digerito>
 Opzioni: --workspace <dir> (default: $JVC_WORKSPACE, poi la cartella del progetto).
 Exit code: 0 ok · 1 errore d'uso · 2 errore di sistema.`;
 
