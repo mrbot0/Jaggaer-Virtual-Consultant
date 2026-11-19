@@ -34,6 +34,9 @@ export function shellSegments(cmd) {
     if (q) {
       if (c === q) q = null;
       else if (q === '"' && (c === "`" || (c === "$" && s[i + 1] === "("))) return null;
+      // revisione di sicurezza (3): fra virgolette doppie bash tratta `\"`, `\\`, `\$`, `` \` `` e `\<a capo>` come escape,
+      // PowerShell e cmd no ⇒ i confini delle virgolette differiscono (`cat "\" "; node x #"` in bash esegue node): fail-closed
+      else if (q === '"' && c === "\\" && /["\\$`\n\r]/.test(s[i + 1] ?? "")) return null;
       else w += c;
       continue;
     }

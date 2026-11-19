@@ -173,3 +173,13 @@ test("revisione 2: escape davanti ai separatori negano (PowerShell divide dove b
   const g = (command) => runHook("guard-budget", { session_id: "sess-1", cwd: S.ws, hook_event_name: "PreToolUse", tool_name: "Bash", tool_input: { command }, ...ag }, E(S.ws));
   for (const c of ["ls \\; node scripts/admin/sess*.mjs show", "ls ^; node scripts/admin/sess*.mjs show", "grep -l node scripts/admin/sess*"]) assert.equal(decisionOf(g(c)), "deny", c);
 });
+
+// Terza revisione: fra virgolette doppie `\"` è un escape per bash e non per PowerShell/cmd ⇒ confini diversi, si nega.
+test("revisione 3: un backslash di escape fra virgolette doppie nega (cat \"\\\" \"; node x #\")", () => {
+  for (const c of [`cat "\\" "; node x #"`, `cat "a\\\\" b`, `echo "\\$(node x)"`, `cat "a\\\nb"`]) assert.equal(shellSegments(c), null, JSON.stringify(c));
+  assert.deepEqual(shellSegments(`grep -n "C:\\Users\\x" f`), [["grep", "-n", "C:\\Users\\x", "f"]], "un backslash davanti a una lettera resta testo");
+  const S = explore("sandbox");
+  const ag = { agent_id: "ag-3", agent_type: "jaggaer-virtual-consultant:scope-expert" };
+  const g = (command) => runHook("guard-budget", { session_id: "sess-1", cwd: S.ws, hook_event_name: "PreToolUse", tool_name: "Bash", tool_input: { command }, ...ag }, E(S.ws));
+  assert.equal(decisionOf(g(`cat "\\" "; n"o"de scripts/admin/sess*.mjs show #"`)), "deny");
+});
