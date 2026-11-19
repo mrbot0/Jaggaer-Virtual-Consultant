@@ -111,6 +111,9 @@ export function run(argv, env = process.env) {
     writeFileAtomic(json, `${JSON.stringify(atlas, null, 2)}\n`);
     const files = [json];
     const warnings = [];
+    // 18/11/2026 (ciclo di bug fixing): uno scope senza SEL non è un successo muto: i page object sono vuoti e la corsia
+    // compilata non ha resolver (prima l'esito era ok con 0 selettori, senza alcun avviso)
+    if (!Object.keys(atlas.selectors).length) warnings.push(`nessun SEL utilizzabile per lo scope ${opts.scope}${atlas.skipped.length ? ` (${atlas.skipped.length} esclusi)` : ""}: page object vuoti — prima l'Atlas (esplorazione e atlas-build) dello scope`);
     if (opts.ts) { const ts = join(dir, `${opts.scope}.po.ts`); writeFileAtomic(ts, toPlaywright(atlas, { warnings })); files.push(ts); }
     for (const w of warnings) console.error(`avviso: ${w}`);
     console.log(asJson ? JSON.stringify({ ok: true, files, selectors: Object.keys(atlas.selectors).length, skipped: atlas.skipped, warnings }) : `${Object.keys(atlas.selectors).length} SEL → ${files.join(", ")}${atlas.skipped.length ? ` (esclusi: ${atlas.skipped.map((s) => s.code).join(", ")})` : ""}`);

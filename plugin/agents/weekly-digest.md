@@ -73,7 +73,9 @@ Tier (§26.3): T2 · ciclo cognitivo: completo
 
        node "${CLAUDE_PLUGIN_ROOT}/scripts/digest/learn.mjs" digest-weekly --json
 
-   exit 3 = sale assente o lock attivo → `blocked` con il motivo, non ritentare a vuoto.
+   exit 3 = sale assente o lock attivo → `blocked` con il motivo, non ritentare a vuoto. `errors` non vuoto nel JSON
+   (cliente pseudonimizzato, passo, errore: per esempio un `knowledge.db` illeggibile) = quei clienti sono stati saltati
+   in quel passo e gli altri digeriti → `status: partial` con l'elenco, mai un successo pieno.
 6. **RIFLETTERE** — auto-verifica e lezione a otto sezioni (skill `self-check-and-lesson`): la sezione DECISIONI del
    report (smentite, sorprese per compito, strategie) è il materiale della lezione.
 

@@ -145,11 +145,28 @@ const HELP = `uso: node scripts/xray/defect.mjs (--finding <file.yaml> | case=<N
 
 Costruisce il Defect dal finding (mai un Incident): evidenze strict, passi minimi, riferimento documentale, "regression
 of <KEY> (fixed in <R>)" se il precedente è fixed, etichetta scope:<id>. Scrive runs/<RUN>/defects/<id>.json;
---publish lo apre (rete giù ⇒ coda offline). --summary-file: il summary da un file relativo al workspace (≤ 64 KB,
+--publish lo apre (rete giù ⇒ coda offline), una volta sola per finding: già aperto o in coda ⇒ la stessa chiave o voce. --summary-file: il summary da un file relativo al workspace (≤ 64 KB,
 confinato; vince su summary=), per non
 mettere testo non fidato nella riga di comando.
 
 Exit code: 0 ok · 1 argomenti · 2 errore di sistema · 3 rifiuto (classe, dominio, ALM).`;
+
+// Pubblicazione precedente dello stesso finding (file del Defect nel dossier): la chiave aperta, oppure la voce della
+// coda offline ancora pendente (o già inviata: allora la sua chiave). null ⇒ si pubblica ora.
+export function priorPublication(file, queue) {
+  let prev = null;
+  try { prev = JSON.parse(readFileSync(file, "utf8")); } catch { return null; }
+  const p = prev?.published;
+  if (!p || typeof p !== "object") return null;
+  if (typeof p.key === "string" && ISSUE_KEY.test(p.key)) return { key: p.key, existing: true };
+  if (p.queued && typeof p.id === "string") {
+    let entry = null;
+    try { entry = queue?.list().find((e) => e.id === p.id) ?? null; } catch { entry = null; }
+    if (entry?.status === "sent" && typeof entry.key === "string") return { key: entry.key, existing: true, via: p.id };
+    if (entry && entry.status !== "failed") return { queued: true, id: p.id, existing: true };
+  }
+  return null;   // voce fallita o sparita: si ripubblica
+}
 
 export async function run(argv, env = process.env) {
   const { opts, positional } = parseArgs(argv, { flags: ["publish"] });
@@ -164,14 +181,23 @@ export async function run(argv, env = process.env) {
     const abs = join(c.ws, "customers", c.customer, d.file);
     mkdirSync(join(abs, ".."), { recursive: true });
     let published = null;
-    if (opts.publish) {
+    // 18/11/2026 (ciclo di bug fixing): --publish è idempotente per finding (runs/<RUN>/defects/<id>.json): un Defect già
+    // aperto non si riapre, una voce già in coda non si riaccoda (prima ogni --publish ripetuto, per esempio dopo un
+    // timeout, apriva un secondo Defect nell'ALM o una seconda voce che retry-queued avrebbe inviato due volte)
+    const prior = priorPublication(abs, c.queue);
+    if (prior && opts.publish) published = prior;
+    else if (opts.publish) {
       const { materializeAttachments } = await import("../../mcp/alm-server/payload.mjs");
       const attachments = await materializeAttachments(c.ws, c.customer, d.defect.attachments);
       published = await withQueue(c.config, c.queue, async () => { await c.adapter.authenticate(); return c.adapter.createDefect({ ...d.defect, attachments }); }, { op: "defect", run: d.run, payload: { defect: d.defect } });
       if (published.key) await recordCreated(c.ws, env, published.key, "defect", "xray-defect");
       await audit(c.ws, env, c.customer, { action: "xray-defect", run: d.run, case: d.case, scope: d.defect.scope, key: published.key ?? null, queued: !!published.queued }, "xray-defect");
     }
-    writeFileAtomic(abs, `${JSON.stringify({ id: d.id, run: d.run, case: d.case, defect: d.defect, warnings: d.warnings, ...(published ? { published } : {}) }, null, 2)}\n`);
+    // senza --publish la ricostruzione non dimentica la pubblicazione precedente (altrimenti il --publish dopo riaprirebbe)
+    if (prior && !opts.publish) published = prior;
+    if (prior) d.warnings.push(prior.key ? `Defect già aperto per questo finding: ${prior.key} (nessun secondo Defect)` : `Defect già in coda offline per questo finding: ${prior.id} (retry-queued lo invierà una volta sola)`);
+    const keep = (({ existing, ...rest }) => rest)(published ?? {});
+    writeFileAtomic(abs, `${JSON.stringify({ id: d.id, run: d.run, case: d.case, defect: d.defect, warnings: d.warnings, ...(published ? { published: keep } : {}) }, null, 2)}\n`);
     console.log(asJson ? JSON.stringify({ ok: true, file: d.file, summary: d.defect.summary, attachments: d.defect.attachments.length, warnings: d.warnings, ...(published ? { published } : {}) })
       : [`${d.file}: ${d.defect.summary}`, published ? (published.queued ? `  in coda offline (${published.id})` : `  aperto ${published.key}`) : "  costruito (non aperto: --publish)", ...d.warnings.map((w) => `  avviso: ${w}`)].join("\n"));
     return 0;
