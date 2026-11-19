@@ -10,7 +10,7 @@ argomenti, secondo la prima parola di `$ARGUMENTS`:
 
 - `status [--metrics]` (§56.1, §48.2; anche senza argomenti):
 
-      node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/status.mjs" --json            (aggiungi --metrics solo se l'utente l'ha chiesto)
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/status.mjs" --session "${CLAUDE_SESSION_ID}" --json            (aggiungi --metrics solo se l'utente l'ha chiesto)
 
   Riporta cliente, ambiente, scope, modalità, budget, pendenze, piano attivo, ultime 5 decisioni, ultime 3 sorprese,
   salute della conoscenza (quarantene oltre 2 settimane) e coda Xray; con --metrics le metriche di §35. **Senza
@@ -43,13 +43,17 @@ argomenti, secondo la prima parola di `$ARGUMENTS`:
   (sono negate in ogni input di strumento) e non aggirare un agente in pausa o fermato.
 - `doctor [--network]` (§55.2, §58):
 
-      node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/doctor.mjs" --json            (aggiungi --network solo se l'utente l'ha chiesto)
+      node "${CLAUDE_PLUGIN_ROOT}/scripts/admin/doctor.mjs" --session "${CLAUDE_SESSION_ID}" --json            (aggiungi --network solo se l'utente l'ha chiesto)
+
+  (`--session`: con più sessioni aperte nello stesso workspace `.jvc/current-session` indica l'ultima avviata, non
+  necessariamente questa.)
 
   Riporta una riga per controllo non verde (stato, controllo, dettaglio, correzione) e l'esito. exit 3 = almeno un
   rosso: **non si continua** finché non è corretto (deve essere tutto verde prima di lavorare). Il controllo `browser`
   è sempre giallo (il plugin non può sondare il browser): si verifica in sessione con `/use env <id>` ed env-check.
   `integrity` rosso = pacchetto manomesso: i guard negano tutto, si reinstalla dalla release firmata e non si opera.
-  Le credenziali compaiono solo per NOME: non chiedere né mostrare mai i valori. `deps` rosso = dipendenze non
+  Le credenziali compaiono solo per NOME: non chiedere né mostrare mai i valori; `credentials` giallo = mancano le
+  `NRT_<ENV>_*`, che servono solo alla corsia compilata (Playwright): il login nel browser lo fa l'utente. `deps` rosso = dipendenze non
   installate: l'utente esegue `npm ci` nella cartella del plugin (non `npm install`: `package-lock.json` è sotto integrità) (i guard le importano e senza negano ogni
   chiamata). `plugin-root` giallo = la sostituzione di `${CLAUDE_PLUGIN_ROOT}` con il percorso letterale nei comandi non
   è ancora provata (nessun comando del plugin in audit: si riesegue dopo un altro comando) o non avviene (segnaposto

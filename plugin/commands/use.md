@@ -27,7 +27,9 @@ tetto dell'ambiente), budget usato/totale, pendenze. Regole:
   2. esegui `node "${CLAUDE_PLUGIN_ROOT}/scripts/chrome/env-check.mjs" --env <id> --snapshot <file> --write-session --session "${CLAUDE_SESSION_ID}" --json`;
   3. exit 0 = verificato (≥ 2 segnali); exit 3 = `unknown` o rifiutato: riporta segnali e motivo
      (§58 "Ambiente non riconosciuto"), **non forzare** e non ripetere con un altro snapshot.
-  Cambiare ambiente azzera la verifica. exit 3 su `use env` = environments.yaml viola le regole di
+  Cambiare ambiente azzera la verifica e chiude la modalità esplorazione (torna `nrt`: nel nuovo ambiente servono di
+  nuovo la frase dell'utente e `mode esplorazione`; il campo `note` lo dice). Senza cliente attivo `show` risponde con
+  `session: null` e `hint` (exit 0). exit 3 su `use env` = environments.yaml viola le regole di
   produzione (es. `type: prod` con tre approvazioni mancanti o con il livello rosso in `config_levels`; `write_data` in
   produzione è un interruttore dell'utente, vero o falso, e non dà exit 3): si corregge il file fuori sessione.
 - Sul browser (giro di correzione 1): prima di ogni click o input serve una navigate verso un host

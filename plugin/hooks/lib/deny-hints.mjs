@@ -54,8 +54,12 @@ const HEALTH = /knowledge\.db|\bdatabase\b|sqlite|\bdoctor\b|integrit[àa]|\bloc
 // correzioni, approvazioni, produzione) ⇒ decide l'utente; mai «invochi workspace-manager», che potrebbe allargare da sé
 // policy e perimetro riscrivendo i file di ambiente
 const USER = /write_data|config_levels|\blivello\b|perimetro|remediation|approv|APPROVO|produzione|prod_allowed_red|second_approver/i;
+// 18/11/2026 (ciclo di bug fixing, sessione reale ENEL): «server MCP ccd_turn non ammesso con un ambiente dichiarato»
+// finiva fra i problemi di workspace («invochi workspace-manager»), che non può ammettere uno strumento non classificato
+const UNCLASSIFIED_TOOL = /\bserver MCP\b.*\bnon ammesso\b|strumento non classificato/i;
 export function denyFamily(reason) {
   const n = normalizeReason(reason, 400);
+  if (UNCLASSIFIED_TOOL.test(n)) return "other";
   if (USER.test(n)) return "utente";
   if (WORKSPACE.test(n)) return "workspace";
   if (HEALTH_CS.test(n) || HEALTH.test(n)) return "health";

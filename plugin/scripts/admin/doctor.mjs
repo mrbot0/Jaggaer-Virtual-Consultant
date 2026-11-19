@@ -165,10 +165,13 @@ export function checkCredentials(env, cur, envDocs, almCustomers) {
   let status = "green";
   const active = cur.session?.env;
   const activePrefix = active && cur.customer ? envDocs[cur.customer]?.doc?.environments?.find((e) => e.id === active.id)?.credentials_prefix : null;
+  // 18/11/2026 (ciclo di bug fixing): le NRT_<ENV>_* servono solo alla corsia compilata (Playwright), opzionale
+  // (MANUALE-UTENTE, tabella delle variabili): il login nel browser lo fa l'utente e il plugin non inserisce mai
+  // credenziali. Mancanti per l'ambiente attivo ⇒ giallo, non rosso (il rosso fermava ogni lavoro su AVVA ed ENEL).
   if (activePrefix) {
     const found = has(activePrefix);
     if (found.length) parts.push(`ambiente attivo ${active.id}: ${found.join(", ")}`);
-    else { status = "red"; parts.push(`ambiente attivo ${active.id}: nessuna variabile ${activePrefix}*`); }
+    else { status = "yellow"; parts.push(`ambiente attivo ${active.id}: nessuna variabile ${activePrefix}* (servono solo alla corsia compilata Playwright: il login nel browser lo fai tu)`); }
   }
   for (const [c, d] of Object.entries(envDocs)) {
     for (const e of d.doc?.environments ?? []) {
@@ -240,7 +243,9 @@ export function checkProdRed(envDocs) {
     : C("prod_allowed_red", "green", "nessun oggetto rosso configurabile in produzione");
 }
 
-const SIGNALS = (fp = {}) => [fp.title_pattern, fp.banner && (fp.banner.text_pattern || fp.banner.selector), fp.tenant_id && (fp.tenant_id.value || fp.tenant_id.selector), fp.login_url_pattern].filter(Boolean).length;
+// 18/11/2026 (ciclo di bug fixing): anche app_url_pattern è un segnale (env-check lo conta dal 28/10/2026, lo schema lo
+// ammette in coppia): senza, l'impronta login_url + app_url di ENEL dava "1 segnali" e hardening rosso su un workspace sano
+const SIGNALS = (fp = {}) => [fp.title_pattern, fp.banner && (fp.banner.text_pattern || fp.banner.selector), fp.tenant_id && (fp.tenant_id.value || fp.tenant_id.selector), fp.login_url_pattern, fp.app_url_pattern].filter(Boolean).length;
 function settingsItem(ws, plugin) {
   let tpl;
   try { tpl = readJson(join(plugin, "templates", "settings.template.json")); } catch { return { status: "yellow", detail: "template dei settings assente nel plugin" }; }
@@ -273,8 +278,9 @@ export function checkHardening(ws, plugin, envDocs, custs, { integrity, network,
     I(7, "profilo di redazione strict verificato su una schermata con dati reali (in pre-produzione)", "manual"),
     I(8, "retention configurata e concordata con il cliente", custs.length && custs.every((c) => existsSync(join(ws, "customers", c, "config", "retention.yaml"))) ? "green" : "yellow",
       custs.filter((c) => !existsSync(join(ws, "customers", c, "config", "retention.yaml"))).map((c) => `${c}: config/retention.yaml assente`).join(", ")),
-    I(9, "second_approver_required deciso con il cliente", !prods.length ? "yellow" : prods.every((x) => typeof x.e.policy?.second_approver_required === "boolean") ? "green" : "yellow",
-      prods.filter((x) => typeof x.e.policy?.second_approver_required !== "boolean").map((x) => `${x.c}/${x.e.id}: non esplicito (default true)`).join(", ")),
+    // 18/11/2026 (ciclo di bug fixing): senza produzione dichiarata la voce non si applica (era giallo senza dettaglio)
+    I(9, "second_approver_required deciso con il cliente", !prods.length ? "green" : prods.every((x) => typeof x.e.policy?.second_approver_required === "boolean") ? "green" : "yellow",
+      !prods.length ? "non applicabile: nessun ambiente di produzione dichiarato" : prods.filter((x) => typeof x.e.policy?.second_approver_required !== "boolean").map((x) => `${x.c}/${x.e.id}: non esplicito (default true)`).join(", ")),
     I(10, "prod_allowed_red vuoto, salvo decisione scritta", prods.every((x) => !(x.e.policy?.prod_allowed_red ?? []).length) ? "green" : "yellow"),
     I(11, "backup di audit/ fuori repository attivo", "manual"),
     I(12, "procedura di purge provata su un cliente di test", "manual"),
