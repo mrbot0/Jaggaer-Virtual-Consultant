@@ -520,7 +520,9 @@ function pluginScript(cmd, ctx) {
 // riconducono alla chiamata semplice: espansione di CLAUDE_PLUGIN_ROOT, `cd <cartella> &&` iniziale, `2>&1` e filtri di
 // sola lettura in coda (solo `head`/`tail` con argomento numerico e `wc -l`: sort, uniq, grep ecc. hanno opzioni che scrivono file). Il resto del comando non
 // cambia: ogni altra forma resta soggetta agli stessi divieti di prima.
-const SAFE_TAIL = /\s*(?:\|\s*(?:(?:head|tail)(?:\s+-n\s*\d+|\s+-\d+)?|wc\s+-l)|2>&1)\s*$/i;
+// 18/11/2026 (ciclo di bug fixing): anche `head -c N` / `tail -c N` (conteggio in byte, la forma più usata dai modelli nelle
+// sessioni reali di AVVA: `… --json | head -c 600`); head e tail non hanno opzioni che scrivono file
+const SAFE_TAIL = /\s*(?:\|\s*(?:(?:head|tail)(?:\s+-[nc]\s*\d+|\s+-\d+)?|wc\s+-l)|2>&1)\s*$/i;
 const CD_HEAD = /^\s*cd\s+("[^"\r\n]*"|'[^'\r\n]*'|[^\s&;|"'`$()<>]+)\s*(?:&&|;)\s*/i;
 // Rilievi di sicurezza: la variabile si espande solo nella sintassi della shell dello strumento ($VAR/${VAR} in Bash,
 // $env:VAR in PowerShell; mai %VAR%), e un `cd` iniziale si toglie solo se punta già alla cartella corrente (altrimenti i
@@ -596,6 +598,28 @@ function mentionsPlugin(ctx, text) {
   return /claude_plugin_root/.test(f) || bases(ctx.plugin).some((b) => f.includes(b));
 }
 const underPlugin = (ctx, abs) => bases(ctx.plugin).some((b) => abs === b || abs.startsWith(`${b}/`));
+// 18/11/2026 (ciclo di bug fixing): Claude Code installa il plugin sotto ~/.claude/plugins/…: ogni comando che nominava un file
+// del plugin (cat del template, script del plugin seguito da `; echo`) cadeva nel divieto sul testo ".claude" delle
+// impostazioni. Per quel controllo si tolgono dal testo le menzioni della radice del plugin (seguite da un separatore); le
+// scritture, gli interpreti e i cambi di permessi o attributi (META) sul codice del plugin restano negati dalla regola del
+// plugin (mentionsPlugin), che vede il testo intero.
+// 19/11/2026 (falsi positivi segnalati dal ciclo 3): contano come impostazioni solo i file di impostazioni veri. Si tolgono
+// anche i prefissi delle worktree del repository (.claude/worktrees/<nome>: codice, non impostazioni; un .claude/ DENTRO la
+// worktree resta) e, per i comandi di sola lettura (nessuna scrittura, interprete o cambio di permessi), .claude/plugins/
+// (codice e manifesti dei plugin installati): scriverci resta negato, un hook di un altro plugin girerebbe fuori dai guard.
+const META = /\b(chmod|chown|chgrp|chattr|setfacl|setfattr|attrib|icacls|cacls|takeown|set-acl|set-itemproperty|truncate|touch)\b/i;
+const WORKTREE = /\/\.claude\/worktrees\/[^/\s'"`;|&()<>]+(?=$|[/\s'"`;|&)(,:])/g;
+const withoutWorktree = (p) => p.replace(WORKTREE, "/<worktree>");
+function withoutPluginRoot(ctx, text) {
+  let f = flatOf(text);
+  for (const b of bases(ctx.plugin)) {
+    const esc = b.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    f = f.replace(new RegExp(`${esc}(?=$|[/\\s'"\`;|&)(,:])`, "g"), "<plugin>");
+  }
+  f = withoutWorktree(f);
+  if (!WRITE_ANY.test(text) && !META.test(text) && !INTERP.test(text)) f = f.replace(/(^|[^\w.-])\.claude\/plugins(?=\/|$|[\s'"`;|&)(,:])/g, "$1<plugins>");
+  return f;
+}
 
 // Script locali eseguiti da un interprete (node x.mjs, python x.py, pwsh x.ps1, …):
 // il guard legge il file (≤ 256 KB) e applica gli stessi controlli del contenuto
@@ -627,7 +651,7 @@ function checkTarget(ctx, T, tree, tr) {
   if (T.plugin?.size) return `${PLUGIN_WHY}: ${[...T.plugin][0] || "."}`;
   for (const a of T.abs) {
     if (underPlugin(ctx, a) || (tree && bases(ctx.plugin).some((b) => b.startsWith(`${a}/`)))) return `${PLUGIN_WHY}: ${a}`;
-    if (CONFIG_ABS.test(a)) return `${SETTINGS_WHY}: ${a}`;
+    if (CONFIG_ABS.test(withoutWorktree(a))) return `${SETTINGS_WHY}: ${a}`;
   }
   for (const p of allRels(T)) {
     for (const [area, why] of PROTECTED) if (intersects(p, area) && !(area === "**/customers/*/config/**" && ENV_FILES.test(p))) return `${why}: ${p}`;
@@ -724,8 +748,10 @@ const protectWrites = guarded(G, (ctx) => {
     if (CONFIG_TEXT.test(script.rest)) return no(`argomento verso le impostazioni di Claude Code — ${SETTINGS_WHY}`);
     return null;
   }
-  if (CONFIG_TEXT.test(cmd)) return no(`il comando cita le impostazioni di Claude Code (.claude, ~/.claude.json, .mcp.json) — ${SETTINGS_WHY}; si leggono con Read`);
-  if (mentionsPlugin(ctx, cmd) && (INTERP.test(cmd) || WRITE_ANY.test(cmd))) return no(`il comando cita il plugin insieme a un interprete o a una primitiva di scrittura — ${PLUGIN_WHY}`);
+  if (CONFIG_TEXT.test(withoutPluginRoot(ctx, cmd))) return no(`il comando cita le impostazioni di Claude Code (.claude, ~/.claude.json, .mcp.json) — ${SETTINGS_WHY}; si leggono con Read`);
+  // 18/11/2026 (ciclo di bug fixing): nelle sessioni reali il motivo arrivava soprattutto su due script del plugin in fila
+  // (`…; echo; node …`) o con una redirezione: il motivo dice ora la forma ammessa
+  if (mentionsPlugin(ctx, cmd) && (INTERP.test(cmd) || WRITE_ANY.test(cmd) || META.test(cmd))) return no(`il comando cita il plugin insieme a un interprete o a una primitiva di scrittura — ${PLUGIN_WHY}. Per eseguire uno script del plugin: una sola chiamata per comando, \`node "<plugin>/scripts/…" argomenti\` (ammessi in testa \`cd <cartella corrente> &&\`, in coda \`2>&1\`, \`| head\` o \`| tail\` con un numero, \`| wc -l\`), senza \`;\` o \`&&\` verso altri comandi né redirezioni: più script, più chiamate`);
   const sc = scriptContentRefusal(ctx, cmd);
   if (sc) return no(sc);
   const flat = cmd.replace(/\\/g, "/").toLowerCase();

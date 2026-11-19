@@ -59,13 +59,22 @@ export function devtoolsPageUrl(text, { asked = null, resp = null } = {}) {
   const m = /\((\S+)\)$/.exec(body) ?? /^(\S+)$/.exec(body);
   return m ? hrefOf(m[1]) : null;
 }
-// URL della radice dello snapshot: la riga subito dopo l'unica "## Latest page snapshot", unica RootWebArea.
+const SELECTED_NOTE_LINES = [/^Note: there is a selected element in the DevTools Elements panel but it is not included into the current a11y tree snapshot\.$/,
+  /^Get a verbose snapshot to include all elements if you are interested in the selected element\.$/, /^$/];
+// URL della radice dello snapshot: la riga subito dopo l'unica "## Latest page snapshot", unica RootWebArea a colonna 0.
+// 18/11/2026 (ciclo di bug fixing): le RootWebArea annidate (indentate) sono i documenti degli iframe — un cruscotto di
+// JAGGAER su cinque ne ha almeno uno — e non contano: prima rendevano ignota ogni pagina con un iframe (nessun legame né
+// nomi: in esplorazione il click su «Elimina» passava, nei piani ogni click era negato). L'URL si prende comunque solo dalla
+// riga subito dopo l'intestazione; una seconda radice a colonna 0 (riga iniettata dal testo della pagina) resta ambigua.
 export function devtoolsRootUrl(text) {
   const L = String(text ?? "").split("\n");
   const h = idx(L, (l) => l === "## Latest page snapshot");
   if (h.length !== 1) return null;
-  const roots = idx(L, (l) => /^\s*uid=\S+ RootWebArea\b/.test(l));
-  if (roots.length !== 1 || roots[0] !== h[0] + 1) return null;
+  const roots = idx(L, (l) => /^uid=\S+ RootWebArea\b/.test(l));
+  // 18/11/2026: la nota del server sull'elemento selezionato nel pannello Elements (DevTools aperto dall'utente) precede la
+  // radice; si accetta solo nella forma esatta di chrome-devtools-mcp, come fa lo snapshot su file (observe/snapshot-file.mjs)
+  const at = SELECTED_NOTE_LINES.every((re, i) => re.test(L[h[0] + 1 + i] ?? "")) ? h[0] + 1 + SELECTED_NOTE_LINES.length : h[0] + 1;
+  if (roots.length !== 1 || roots[0] !== at) return null;
   const line = L[roots[0]];
   if (BAD_LINE.test(line)) return null;
   const m = /\surl="([^"]*)"\s*$/.exec(line);

@@ -274,7 +274,10 @@ function statusText(customer, s) {
   list("Cambiate all'ultima lettura", s.changed, (x) => `${label(x)} (${x.last_seen ?? "?"})`);
   list(`Non rivisitate da più di ${s.stale_days} giorni`, s.stale, (x) => `${label(x)} (${x.days ?? "?"} giorni)`);
   list("Orfane (solo per URL)", s.orphans, (x) => `${label(x)}${x.url ? ` ${x.url}` : ""}`);
-  if (s.pending) L.push(`Click in attesa: "${s.pending.via}" da ${s.pending.from}`);
+  // 18/11/2026 (ciclo di bug fixing): i click in attesa sono una mappa per sessione e scheda ("<sid>|<scheda>" → { from, via, ts }),
+  // non più uno slot unico (forma vecchia ancora letta): prima si stampava «Click in attesa: "undefined" da undefined»
+  const pend = (!s.pending || typeof s.pending !== "object" ? [] : "from" in s.pending ? [s.pending] : Object.values(s.pending)).filter((p) => p && typeof p === "object" && p.via && p.from);
+  for (const p of pend) L.push(`Click in attesa: "${p.via}" da ${p.from}`);
   return L.join("\n");
 }
 function showText(r) {

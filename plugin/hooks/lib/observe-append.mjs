@@ -335,7 +335,12 @@ export async function record(input, env = process.env, { now = new Date() } = {}
     // WP09b giro 2: anello delle OBS di questa sessione (prova di autenticità per kb snapshot): session.json è protetto,
     // il DB no; una riga del DB vale solo se codice, page_sig, ts e sha256 del payload coincidono con una voce qui
     if (code && payload != null) s.obs_ring = [...(Array.isArray(s.obs_ring) ? s.obs_ring : []), { code, page_sig: doc.page_signature ?? null, ts: doc.ts, sha256: sha(payload) }].slice(-OBS_RING_MAX);
-    s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: pieceSig() ?? doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
+    // 18/11/2026 (ciclo di bug fixing): la pagina di partenza dei click (archi della mappa del sito, registro per atlas-build)
+    // la cambiano solo le letture della pagina, le azioni e gli errori; una lettura senza pagina propria (find: risultati di
+    // una ricerca; get_page_text; screenshot, console, attese senza snapshot) la lascia com'è — prima la sostituiva con una
+    // firma senza titolo (arco da una pagina che la mappa non ha) o con null (arco perso)
+    const keepSig = ["read", "screenshot", "snapshot"].includes(doc.kind) && (find || mode === "nobind" || !doc.page_signature);
+    s.ledger.observe = { ...o, last_obs: code, last_kind: doc.kind, last_page_sig: keepSig ? o.last_page_sig ?? null : pieceSig() ?? doc.page_signature ?? null, count: (o.count ?? 0) + 1 };
     // il marcatore del file di snapshot vale una volta sola
     if (s.browser?.snapshot_calls && Object.hasOwn(s.browser.snapshot_calls, callKey0)) {
       const { [callKey0]: _m, ...restCalls } = s.browser.snapshot_calls;
@@ -358,9 +363,16 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       // giro 2: click in attesa per sessione e scheda; solo se la chiamata è riuscita; una navigazione per URL o un errore lo annullano
       const ckey = `${st.sid}|${asked ?? "-"}`;
       if (state !== "ok" || acts0.some((x) => x.kind === "navigate")) cap.clearClick({ ws: st.ws, customer: st.customer, key: ckey });
-      else for (const a of acts0.filter((x) => x.kind === "click" && Array.isArray(x.targets) && x.targets.length)) {
-        const name = prevSnap?.names?.[String(a.targets[0])];
-        if (name) cap.captureClick({ ws: st.ws, customer: st.customer, fromSig: prevSig, name, ts: doc.ts, key: ckey });
+      else {
+        // 18/11/2026: il secondo click di una sequenza senza lettura in mezzo (anche nello stesso browser_batch) allunga il
+        // percorso in attesa; un click su un elemento che l'ultima lettura non nomina lo annulla (il percorso non è più noto)
+        let from = prevSig;
+        for (const a of acts0.filter((x) => x.kind === "click" && Array.isArray(x.targets) && x.targets.length)) {
+          const name = prevSnap?.names?.[String(a.targets[0])];
+          if (name) cap.captureClick({ ws: st.ws, customer: st.customer, fromSig: from, name, ts: doc.ts, key: ckey });
+          else cap.clearClick({ ws: st.ws, customer: st.customer, key: ckey });
+          from = null;
+        }
       }
       const url = pageUrl ?? confirmedUrl ?? page?.url ?? null;
       if (state === "ok" && page && !find && (mode === "complete" || mode === "partial" || (mode === null && refs)) && url) {
@@ -427,6 +439,9 @@ export async function record(input, env = process.env, { now = new Date() } = {}
       if (merged) {
         try { const lp0 = JSON.parse(readFileSync(lastPage, "utf8")); if (lp0?.obs === prevSnap.obs && prevSnap.url === newSnap.url) base = Array.isArray(lp0.record_refs) ? lp0.record_refs : []; } catch { base = []; }
       }
+      // 18/11/2026 (ciclo di bug fixing): la cartella atlas/ la crea appendAtlasLog, che non scrive nulla se la prima lettura
+      // che lega è la risposta di un'azione (browser_navigate di Playwright, click con snapshot): prima ENOENT e avviso
+      mkdirSync(dirname(lastPage), { recursive: true });
       writeFileAtomic(lastPage, JSON.stringify({ obs: obsId, record_refs: [...new Set([...base, ...recordRefs(page)])] }));
     }
     if (full && fullWarningOnce(dirname(file))) warn.push("registro dell'esplorazione pieno (20 MB): pagine non registrate da qui in poi");
