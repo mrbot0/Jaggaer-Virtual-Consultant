@@ -121,9 +121,23 @@ function candidateCwds(ctx, cmd) {
   return cwds;
 }
 
+// 19/11/2026 (falsi positivi segnalati dal ciclo 3): un nome con caratteri jolly che può espandersi in session.mjs conta solo
+// se il comando può ESEGUIRE uno script — un interprete, source/., xargs, find -exec, start/call/eval, o il jolly come nome
+// del comando —: `wc -c raw/*` o l'espressione regolare di un grep (`00(3[7-9]|4[0-2])`, `[^/]*`) non eseguono nulla.
+const RUNNER = /(^|[\s;&|(`'"\\/])(node|nodejs|deno|bun|tsx|ts-node|npx|python3?|py|perl|ruby|php|sh|bash|zsh|dash|ksh|fish|pwsh|powershell|cmd|source|xargs|eval|call|start|iex|invoke-expression|-exec|-execdir|-ok)(\.exe)?(?=$|[\s;&|)`'"])|(^|[\s;&|])\.\s/i;
+function globHead(cmd) {
+  for (const seg of cmd.replace(/["'`]/g, "").split(/&&|\|\||[;|&\r\n]/)) {
+    const words = seg.trim().split(/\s+/).filter(Boolean);
+    const head = words[0] === "." ? words[1] : words[0];
+    const base = String(head ?? "").split(/[\\/]/).pop().toLowerCase();
+    if (GLOB_CH.test(base)) { const re = globRe(base); if (!re || re.test(TARGET)) return true; }
+  }
+  return false;
+}
+
 function checkSubAgentShell(ctx, cmd, refs) {
   const no = (why) => denyAudited(ctx, G, `un sub-agente non invoca session.mjs (${why}): cliente, scope, modalità e budget li cambia solo l'utente, con /use nella sessione principale (§29.10)`);
-  if (refs.glob) return no("nome con caratteri jolly");
+  if (refs.glob && (RUNNER.test(cmd.replace(/["'`]/g, " ")) || globHead(cmd))) return no("nome con caratteri jolly in un comando che esegue script");
   if (refs.opaque) return no("riferimento non risolvibile");
   if (!refs.literal.length) return null;
   if (EVAL.test(refs.flat)) return no("esecuzione di codice con node -e/import()");

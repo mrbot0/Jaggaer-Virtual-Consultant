@@ -69,12 +69,16 @@ function checkShell(ctx) {
   // Senza cliente: solo `node <plugin>/scripts/admin/session.mjs use customer …` (fix round 1 #13).
   if (!ctx.customerLc) { const sc = pluginSessionCommand(cmd, { cwd: ctx.cwd, plugin: ctx.plugin }); if (sc?.action === "use" && sc.what === "customer") return null; }
   const refs = new Set();
+  // 18/11/2026 (ciclo di bug fixing): nella variante con le virgolette la virgoletta che chiude il percorso o l'argomento
+  // finiva nel nome (`ls ".../customers/AVVA"` ⇒ «AVVA"», `--customer "AVVA"`) e il cliente attivo risultava un altro: si
+  // tolgono le virgolette ai bordi del nome catturato (le altre varianti, senza virgolette, restano come prima)
+  const name = (x) => String(x ?? "").replace(/^["'`]+|["'`]+$/g, "").toLowerCase();
   for (const v of shellVariants(cmd)) {
-    for (const m of v.matchAll(/--customer(?:=|\s+)([^\s;|&<>()]+)/gi)) refs.add(m[1].toLowerCase());
+    for (const m of v.matchAll(/--customer(?:=|\s+)([^\s;|&<>()]+)/gi)) refs.add(name(m[1]));
     for (const tok of v.split(/[\s;|&<>()=,]+/)) {
       if (!tok) continue;
       const t = tok.replace(/\\/g, "/");
-      if (/customers/i.test(t)) for (const m of posix.normalize(t).matchAll(CUST_IN_PATH)) refs.add((m[1] ?? "").toLowerCase());
+      if (/customers/i.test(t)) for (const m of posix.normalize(t).matchAll(CUST_IN_PATH)) refs.add(name(m[1]));
     }
   }
   for (const x of refs) {

@@ -164,12 +164,19 @@ export function capturePage({ ws, customer, sig, url, title, page, text, partial
 }
 
 // key: "<sessione>|<scheda>" (chi chiama la costruisce): i click di agenti, sessioni e schede diverse non si mescolano
+// 18/11/2026 (ciclo di bug fixing): un click senza pagina di partenza nota (nessuna lettura della pagina dopo l'azione
+// precedente: menu aperto, poi voce del menu) allunga il percorso in attesa ("Other Action Menu › Audit Trail") invece di
+// lasciare il solo primo click, che dava archi falsi nella mappa reale (il click sul menu "portava" alla pagina della voce)
+export const VIA_SEP = " › ";
+const VIA_MAX = 480;
 export function captureClick({ ws, customer, fromSig, name, ts, key = "-" }) {
-  if (!fromSig || !name) return;
+  if (!name) return;
   update(ws, customer, (m) => {
     const now = Date.parse(ts);
     for (const [k, v] of Object.entries(m.pending)) if (!(now - Date.parse(v?.ts) <= PENDING_TTL_MS)) delete m.pending[k];
-    m.pending[key] = { from: fromSig, via: String(name).slice(0, 160), ts };
+    const via = String(name).slice(0, 160);
+    if (fromSig) m.pending[key] = { from: fromSig, via, ts };
+    else if (m.pending[key]?.from) m.pending[key] = { from: m.pending[key].from, via: `${m.pending[key].via}${VIA_SEP}${via}`.slice(0, VIA_MAX), ts };
   });
 }
 // una navigazione per URL o un errore annullano il click in attesa della stessa sessione e scheda

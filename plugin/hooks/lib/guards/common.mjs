@@ -147,6 +147,7 @@ export function guarded(guard, fn, { tools } = {}) {
 // [{ rels: Set<rel>, cd: boolean }]. Euristica: variabili, sostituzioni di
 // comando e script restano fuori (rischio residuo documentato).
 const CD = /^(cd|pushd|chdir|set-location|sl|push-location)$/i;
+const foldDir = (d) => { const s = String(d).replace(/\\/g, "/").replace(/\/+$/, ""); return process.platform === "win32" ? s.toLowerCase() : s; };
 export function shellPaths(ctx, cmd, { bareWords = false, maxTokens = 256 } = {}) {
   const out = [];
   const add = (raw, cwd, cd) => {
@@ -163,6 +164,11 @@ export function shellPaths(ctx, cmd, { bareWords = false, maxTokens = 256 } = {}
       const arg = words.slice(1).find((w) => !w.startsWith("-"));
       if (!arg) continue;
       const next = cwds.map((d) => resolve(d, arg.replace(/\\/g, "/")));
+      // 18/11/2026 (ciclo di bug fixing): un cd che non cambia cartella (`cd . &&`, `cd "<cartella corrente>" &&`, la forma
+      // abituale dei modelli) non apre nulla che il comando senza cd non apra già: prima guard-scope lo leggeva come accesso
+      // a tutto il workspace («cd verso . copre percorsi non in allowed_paths», nove dinieghi nelle sessioni reali di AVVA)
+      const known = new Set(cwds.map(foldDir));
+      if (next.every((n) => known.has(foldDir(n)))) continue;
       for (const n of next) { spend(); add(n, ctx.cwd, true); }
       cwds = [...new Set([...cwds, ...next])].slice(0, 16);
       continue;

@@ -103,7 +103,10 @@ export function outputRefusal(ctx, outputs) {
     try { T = resolveTarget(raw, { cwd: ctx.cwd, ws: ctx.ws }); } catch (err) { return `percorso di output negato: ${err.message}`; }
     const rels = [...T.ws];
     const ok = ctx.customer && ctx.sid && rels.length > 0 && rels.every((p) => OUTPUT_OK(ctx.customer, ctx.sid).some((g) => subset(p, g)) && !OUTPUT_NO.test(p));
-    if (!ok) return `il server del browser scriverebbe un file fuori dalle cartelle di lavoro della sessione (customers/<C>/.sessions/<sid>/, evidence/, runs/) o su un file di stato: ${raw}`;
+    // 18/11/2026 (ciclo di bug fixing): il motivo dice la cartella ASSOLUTA da usare (nelle sessioni reali l'agente scriveva
+    // lo snapshot nella sua cartella temporanea, con il nome breve 8.3, e il motivo con <C>/<sid> non bastava a correggersi)
+    const where = ctx.customer && ctx.sid ? `; usa un percorso assoluto in ${join(ctx.ws, "customers", ctx.customer, ".sessions", ctx.sid, "snapshots")} (take_snapshot) o altrove in ${join(ctx.ws, "customers", ctx.customer, ".sessions", ctx.sid)}, con il nome lungo delle cartelle (niente nomi brevi 8.3 né collegamenti)` : "";
+    if (!ok) return `il server del browser scriverebbe un file fuori dalle cartelle di lavoro della sessione (customers/<C>/.sessions/<sid>/, evidence/, runs/) o su un file di stato: ${raw}${where}`;
   }
   return null;
 }
