@@ -10,6 +10,7 @@ import { parseArgs } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { readPayload, readPublished } from "../../mcp/alm-server/queue.mjs";
 import { XrayError, xrayContext, failWith } from "./common.mjs";
+import { runRefusal } from "../lib/run-code.mjs";
 
 export function compare(expected, actual) {
   const mismatches = [];
@@ -27,10 +28,19 @@ export function compare(expected, actual) {
 }
 
 export async function verify(c, { run, scope = null }) {
+  // 18/11/2026 (ciclo di bug fixing): --run è un codice RUN sotto runs/ (prima un --run con risalita leggeva fuori)
+  const badRun = runRefusal(c.ws, c.customer, run);
+  if (badRun) throw new XrayError(1, badRun);
   const pub = readPublished(c.ws, c.customer, run);
   const doc = readPayload(c.ws, c.customer, run);
   const scopes = Object.entries(pub.scopes ?? {}).filter(([S, p]) => (!scope || S === scope) && p.execution_key && p.imported_at);
-  if (!scopes.length || !doc) throw new XrayError(1, `nulla di pubblicato per ${run}${scope ? ` (scope ${scope})` : ""}: xray publish prima`);
+  if (!scopes.length || !doc) {
+    // pubblicazione in coda offline (Jira giù): lo si dice, invece di "publish prima"
+    let queued = 0;
+    try { queued = c.queue.list().filter((e) => e.status === "pending" && e.run === run && (!scope || e.scope === scope)).length; } catch { queued = 0; }
+    if (queued) throw new XrayError(1, `pubblicazione di ${run}${scope ? ` (scope ${scope})` : ""} in coda offline (${queued} voci pendenti): retry-queued quando Jira/Xray tornano raggiungibili, poi verify`);
+    throw new XrayError(1, `nulla di pubblicato per ${run}${scope ? ` (scope ${scope})` : ""}: xray publish prima`);
+  }
   if (typeof c.adapter.getExecution !== "function") throw new XrayError(1, "l'adattatore non legge le esecuzioni");
   await c.adapter.authenticate();
   const out = [];

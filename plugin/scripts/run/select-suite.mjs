@@ -26,12 +26,19 @@ import { confineInputs } from "../lib/text-file.mjs";
 export class SuiteError extends Error { constructor(code, msg) { super(msg); this.code = code; } }
 export const SUITES = ["smoke", "full", "delta"];
 
-export function loadCases(ws, customer, scope) {
+// 18/11/2026 (ciclo di bug fixing): un file di caso illeggibile o senza id non sparisce in silenzio: va in `invalid`
+// (file e motivo) e selectSuite lo riporta fra gli esclusi del manifest.
+export function loadCases(ws, customer, scope, { invalid = null } = {}) {
   const dir = join(ws, "customers", customer, "tests", "cases", scope);
   if (!existsSync(dir)) return [];
   const out = [];
   for (const f of readdirSync(dir).filter((x) => /^NRT\..+\.ya?ml$/.test(x)).sort()) {
-    try { const c = YAML.parse(readFileSync(join(dir, f), "utf8")); if (c?.id) out.push({ case: c, file: relative(join(ws, "customers", customer), join(dir, f)).replace(/\\/g, "/") }); } catch { /* illeggibile: escluso */ }
+    const file = relative(join(ws, "customers", customer), join(dir, f)).replace(/\\/g, "/");
+    try {
+      const c = YAML.parse(readFileSync(join(dir, f), "utf8"));
+      if (c?.id) out.push({ case: c, file });
+      else invalid?.push({ file, reason: "caso senza id: escluso dal run (correggere il file)" });
+    } catch (err) { invalid?.push({ file, reason: `caso illeggibile: ${String(err?.message ?? err).split("\n")[0].slice(0, 160)} — escluso dal run` }); }
   }
   return out;
 }
@@ -63,13 +70,14 @@ export function selectSuite(ws, { customer, scope, suite, release = null, shadow
     changedSet = new Set(YAML.parse(readFileSync(f, "utf8"))?.changed ?? []);
   }
   const states = new Set(["promoted", ...(shadow ? ["shadow"] : [])]);
-  const all = loadCases(ws, customer, scope);
+  const invalid = [];
+  const all = loadCases(ws, customer, scope, { invalid });
   const coverage = new Map();
   for (const { case: c } of all) if (c.state === "promoted") { const s = c.derivation?.from?.[0]; if (s) coverage.set(s, (coverage.get(s) ?? 0) + 1); }
   const defs = defects ?? (() => { const f = join(ws, "customers", customer, "tests", "defect-density.yaml"); try { return YAML.parse(readFileSync(f, "utf8")) ?? {}; } catch { return {}; } })();
   const table = loadTable("DT-012");
   const cases = [];
-  const excluded = [];
+  const excluded = [...invalid.map((x) => ({ id: null, file: x.file, reason: x.reason }))];
   for (const { case: c, file } of all) {
     if (c.scope !== scope) { excluded.push({ id: c.id, reason: `scope ${c.scope}` }); continue; }
     if (!states.has(c.state)) { excluded.push({ id: c.id, reason: `stato ${c.state}` }); continue; }

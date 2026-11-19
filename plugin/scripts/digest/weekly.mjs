@@ -75,10 +75,16 @@ export async function weekly({ ws, now = new Date(), env = process.env, customer
     const outcomeRates = {};
     // 9 CALIBRAZIONE: proposte per cliente (≥ 10 DEC verificate per tabella), nella cartella del cliente
     const calibration = [];
+    // 18/11/2026 (ciclo di bug fixing): errori per cliente (raccolta, esiti e calibrazione, reindex) tracciati e
+    // pseudonimizzati; il cliente in errore è saltato in quel passo, gli altri proseguono (prima: exit 2 per tutti)
+    const failedIn = new Set(data.errors.map((e) => e.customer));
+    const errors = data.errors.map((e) => ({ customer: tok(e.customer), step: e.step, error: ps.text(e.error) }));
     for (const c of customers) {
-      const db = openReadonly(join(ws, "customers", c, "knowledge.db"));
-      if (!db) continue;
+      if (failedIn.has(c)) continue;
+      let db = null;
       try {
+        db = openReadonly(join(ws, "customers", c, "knowledge.db"));
+        if (!db) continue;
         let tables = [];
         try { tables = db.prepare("select distinct table_code as t from decisions where table_code is not null order by t").all().map((r) => r.t); } catch { tables = []; }
         outcomeRates[tok(c)] = Object.fromEntries(tables.map((t) => [t, rates(db, { table: t })]));
@@ -86,7 +92,8 @@ export async function weekly({ ws, now = new Date(), env = process.env, customer
           const r = calibrate(db, { outDir: join(ws, "customers", c, "digest", week.id, "calibration"), at: now.toISOString() });
           for (const p of r.proposals) calibration.push({ ...p, customer: tok(c), supporting_decs: p.supporting_decs.map((x) => ps.text(x)), file: undefined, filters: undefined });
         }
-      } finally { db.close(); }
+      } catch (err) { errors.push({ customer: tok(c), step: "esiti e calibrazione", error: ps.text(String(err?.message ?? err)) }); }
+      finally { try { db?.close(); } catch { /* già chiuso */ } }
     }
     // 6 PROMOZIONE: candidati in attesa di approvazione
     const cand = promoteCandidates(groups, { openCtr, week: week.id });
@@ -95,7 +102,7 @@ export async function weekly({ ws, now = new Date(), env = process.env, customer
     // REPORT (pseudonimizzato)
     const allDecs = Object.values(data.customers).flatMap((d) => d.decisions);
     const report = buildReport({
-      week: week.id,
+      week: week.id, errors,
       candidates: cand.candidates.map((c) => ({ id: c.id, key: ps.text(c.key), class: c.class, p: c.p, condition: cond(c.condition), customers: [...new Set(c.members.map((m) => tok(m.customer)))] })),
       ctr, clusters_new: clustersNew, decay: { items: dec.items, clusters: dec.clusters },
       epistemic: Object.values(data.customers).flatMap((d) => d.epistemic), decisions: allDecs, previous_disproved_pct: previousDisproved(ws, week.id),
@@ -122,16 +129,31 @@ export async function weekly({ ws, now = new Date(), env = process.env, customer
     }
     // 7 CLUSTER (contatori delle digestioni vuote) e 12 REINDEX
     const reindexed = {};
+    const before = errors.length;
     for (const [name, root] of [["product", join(ws, "product")], ...customers.map((c) => [c, join(ws, "customers", c)])]) {
       const dbf = join(root, "knowledge.db");
       if (!existsSync(dbf) && !existsSync(join(root, "kb"))) continue;
-      const db = openDb(dbf);
-      try { recordDigest(db, { now: now.toISOString() }); } finally { db.close(); }
-      const st = reindex(root, dbf);
-      reindexed[name === "product" ? name : tok(name)] = { scanned: st.scanned, upserted: st.upserted, deprecated: st.deprecated };
+      const key = name === "product" ? name : tok(name);
+      if (name !== "product" && failedIn.has(name)) { reindexed[key] = { skipped: "raccolta non riuscita" }; continue; }
+      try {
+        const db = openDb(dbf);
+        try { recordDigest(db, { now: now.toISOString() }); } finally { db.close(); }
+        const st = reindex(root, dbf);
+        reindexed[key] = { scanned: st.scanned, upserted: st.upserted, deprecated: st.deprecated };
+      } catch (err) {
+        reindexed[key] = { error: true };
+        errors.push({ customer: key, step: "reindex", error: ps.text(String(err?.message ?? err)) });
+      }
+    }
+    // errori del reindex: il report (già scritto) si aggiorna perché li riporti
+    let out = text;
+    if (errors.length > before) {
+      out = renderReport(report);
+      writeFileSync(join(pdir, "competence-report.md"), out);
+      writeFileSync(join(pdir, "report.json"), JSON.stringify({ ...report, outcome_rates: outcomeRates, excluded: cand.excluded.map((e) => ({ key: ps.text(e.key), reason: ps.text(e.reason) })) }, null, 2) + "\n");
     }
     return { week: week.id, customers: customers.map(tok), groups: groups.length, multi_customer_groups: multi.length, candidates: report.promotions_pending, excluded: cand.excluded.length,
-      ctr: ctr.length, calibration: calibration.length, decay: { items: dec.items, clusters: dec.clusters.length }, report_file: join(pdir, "competence-report.md"), reindexed, text };
+      ctr: ctr.length, calibration: calibration.length, decay: { items: dec.items, clusters: dec.clusters.length }, report_file: join(pdir, "competence-report.md"), reindexed, errors, text: out };
   });
 }
 
@@ -170,6 +192,8 @@ export async function runReport(argv, env = process.env) {
   const ws = resolve(opts.workspace || env.JVC_WORKSPACE || env.CLAUDE_PROJECT_DIR || process.cwd());
   const dir = join(ws, "product", "digest");
   const weeks = existsSync(dir) ? readdirSync(dir).filter((x) => /^\d{4}-W\d{2}$/.test(x)).sort() : [];
+  // 18/11/2026 (ciclo di bug fixing): --week è una settimana ISO, non un percorso (prima join(dir, --week) leggeva fuori)
+  if (opts.week != null && !/^\d{4}-W\d{2}$/.test(String(opts.week))) return fail(asJson, 1, `settimana non valida: ${opts.week} (AAAA-Www, es. 2026-W47)`);
   const week = opts.week ?? weeks.at(-1);
   if (!week || !existsSync(join(dir, week, "report.json"))) return fail(asJson, 1, "nessun competence report: esegui learn digest-weekly");
   if (asJson) console.log(JSON.stringify({ ok: true, week, report: JSON.parse(readFileSync(join(dir, week, "report.json"), "utf8")) }));

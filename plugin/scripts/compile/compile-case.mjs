@@ -32,6 +32,7 @@ import { loadRegistry, resolveCaseFixtures, entityPrefix } from "../run/fixtures
 import { COMMIT_VERBS } from "../../hooks/lib/guards/config-scope.mjs";
 import { caseFingerprint } from "../lib/fingerprint.mjs";
 import { confineInputs } from "../lib/text-file.mjs";
+import { runRefusal } from "../lib/run-code.mjs";
 
 export class CompileError extends Error { constructor(code, msg, extra = {}) { super(msg); this.code = code; Object.assign(this, extra); } }
 export const COMP_CLASSES = new Set(["ACT-CREATE", "ACT-UPDATE", "ACT-SUBMIT"]);
@@ -91,6 +92,9 @@ export function compileCase(ws, caso, { customer = null, env = "sandbox", envTyp
   const cust = idCust === "STD" ? customer : idCust;
   if (!cust) throw new CompileError(1, `caso standard ${caso.id}: serve --customer`);
   if (customer && idCust !== "STD" && customer !== idCust) throw new CompileError(1, `il caso è del cliente ${idCust}, non di ${customer}`);
+  // 18/11/2026 (ciclo di bug fixing): --run è un codice RUN del cliente del caso la cui cartella sta sotto runs/ — è la
+  // cartella dove si scrive il piano; prima un codice malformato dava exit 2 e un --run con risalita scriveva fuori
+  if (run != null) { const bad = runRefusal(ws, cust, run); if (bad) throw new CompileError(1, bad); }
   const warnings = [];
   const reg = registry ?? loadRegistry(ws, cust);
   const fx = resolveCaseFixtures(caso, reg, { env });
