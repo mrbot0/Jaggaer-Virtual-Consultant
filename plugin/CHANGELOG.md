@@ -50,6 +50,7 @@ Cinque cicli di ricerca e bug fixing sui dati reali (ENEL, AVVA), uniti nel ramo
   - casi esclusi dichiarati nel manifest.
 - **Unione e revisione di sicurezza**:
   - `shellSegments` e `readOnlyShell` leggono il comando come lo esegue la shell (`n"o"de` ⇒ node). I jolly su `session.mjs` e l'esclusione di `.claude/plugins` valgono solo per comandi di sola lettura;
+  - `\` e `^` davanti a un separatore, una virgoletta o un a capo negano, perché bash, PowerShell e cmd dividono il comando in modi diversi; `uniq` e `file` non contano come comandi di sola lettura; un jolly su `session.mjs` insieme al nome di un interprete nega anche fra letture;
   - con `..` non si tolgono i prefissi di worktree o del plugin;
   - l'elenco MCP ammette singoli strumenti (`tools`): capitoli sì, `spawn_task` e `ccd_directory` no;
   - back-check:

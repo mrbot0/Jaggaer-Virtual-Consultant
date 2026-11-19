@@ -160,3 +160,16 @@ test("learn tickets: intestazioni tipiche degli export ServiceNow e Jira riconos
   const jira = mapColumns(["Issue key", "Summary", "Status", "Resolution", "Component/s", "Created", "Reporter", "Assignee"]);
   for (const k of ["id", "summary", "status", "resolution", "module", "created", "reporter", "assignee"]) assert.ok(jira[k] !== undefined, `Jira: ${k}`);
 });
+
+// Seconda revisione di sicurezza: `\` e `^` sono escape solo in alcune shell (bash / cmd) ⇒ davanti a un separatore, una
+// virgoletta o un a capo il comando si nega; uniq e file non sono di sola lettura; jolly + nome di interprete nega.
+test("revisione 2: escape davanti ai separatori negano (PowerShell divide dove bash no); uniq e file non sono letture", () => {
+  for (const c of ["ls \\; node x", "ls ^; node x", "ls \\\nnode x", "ls ^& node x", "ls \\| node x", "echo \\\"x"]) assert.equal(shellSegments(c), null, JSON.stringify(c));
+  assert.equal(readOnlyShell("uniq a.txt b.txt"), false);
+  assert.equal(readOnlyShell("file -C -m x"), false);
+  assert.equal(readOnlyShell(`ls C:\\Users\\x\\raw | head -n 5`), true, "i percorsi di Windows senza escape davanti ai separatori restano letture");
+  const S = explore("sandbox");
+  const ag = { agent_id: "ag-2", agent_type: "jaggaer-virtual-consultant:scope-expert" };
+  const g = (command) => runHook("guard-budget", { session_id: "sess-1", cwd: S.ws, hook_event_name: "PreToolUse", tool_name: "Bash", tool_input: { command }, ...ag }, E(S.ws));
+  for (const c of ["ls \\; node scripts/admin/sess*.mjs show", "ls ^; node scripts/admin/sess*.mjs show", "grep -l node scripts/admin/sess*"]) assert.equal(decisionOf(g(c)), "deny", c);
+});

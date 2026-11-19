@@ -40,7 +40,13 @@ export function shellSegments(cmd) {
     if (c === "'" || c === '"') { q = c; has = true; continue; }
     if (c === "`") return null;
     if ((c === "$" || c === "<" || c === ">") && s[i + 1] === "(") return null;
-    if (c === "\\" || c === "^") { if (i + 1 < s.length) { w += s[++i]; has = true; } continue; }
+    // revisione di sicurezza (2): `\` è un escape in bash ma un carattere qualunque in PowerShell, `^` lo è solo in cmd. Davanti
+    // a un separatore, una virgoletta o un a capo le shell dividono il comando in modi diversi (`ls \; node x` in PowerShell
+    // esegue node) ⇒ fail-closed
+    if (c === "\\" || c === "^") {
+      if (i + 1 >= s.length || /[;&|()<>\n\r"'`]/.test(s[i + 1])) return null;
+      w += s[++i]; has = true; continue;
+    }
     if (c === ">" || c === "<") {
       if (has && /^\d+$/.test(w)) { w = ""; has = false; } else endWord();
       while (s[i + 1] === ">" || s[i + 1] === "<") i++;
@@ -56,8 +62,9 @@ export function shellSegments(cmd) {
   return segs;
 }
 // Comandi che leggono soltanto: non eseguono altri programmi né scrivono file con le loro opzioni (esclusi sort, rg, awk,
-// sed, tar, less, xargs, env: hanno opzioni che eseguono o scrivono). find solo senza le azioni che eseguono o scrivono.
-const READ_ONLY_HEADS = new Set(["cat", "ls", "dir", "head", "tail", "wc", "grep", "egrep", "fgrep", "stat", "file", "du", "cut", "tr", "uniq",
+// sed, tar, less, xargs, env: hanno opzioni che eseguono o scrivono; e uniq e file: `uniq in out` e `file -C` scrivono).
+// find solo senza le azioni che eseguono o scrivono.
+const READ_ONLY_HEADS = new Set(["cat", "ls", "dir", "head", "tail", "wc", "grep", "egrep", "fgrep", "stat", "du", "cut", "tr",
   "echo", "printf", "pwd", "cd", "type", "true", "find", "get-content", "gc", "get-childitem", "gci", "select-string", "sls", "measure-object",
   "test-path", "resolve-path"]);
 const FIND_ACTS = /^-(exec|execdir|ok|okdir|delete|fprint0?|fprintf|fls)$/i;
