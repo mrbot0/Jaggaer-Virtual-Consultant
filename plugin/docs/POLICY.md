@@ -20,6 +20,7 @@ Il profilo della sessione lo decide il codice (`hooks/lib/policy.mjs`): produzio
 | `script_nella_pagina` — eseguire script nella pagina (evaluate_script, javascript_tool) | sì | no | no | no |
 | `strumenti_non_classificati` — usare strumenti o parametri del browser non classificati | sì | no | no | no |
 | `click_liberi` — cliccare e compilare senza snapshot fresco, uid con nome o ref verificato | sì | no | no | no |
+| `browser_claude_fuori_sandbox` — azioni con effetto del browser di Claude (click, testo, script) anche fuori dalla sandbox; le cancellazioni e i caricamenti restano negati | sì | no | no | no |
 | `celle_cliente` — leggere e scrivere la conoscenza di tutti gli scope del cliente attivo (non solo la cella) | sì | no | no | no |
 | `dispatch_altro_scope` — invocare un sub-agente su uno scope diverso da quello di sessione | sì | no | no | no |
 | `limiti_dispatch_illimitati` — nessun tetto di chiamate o durata per dispatch (salvo LIMITI DISPATCH dell'utente) | sì | no | no | no |

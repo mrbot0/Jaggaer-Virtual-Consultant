@@ -84,6 +84,9 @@ export function computeAllowedPaths(customer, scope, { sessionId } = {}) {
     );
   }
   for (const d of CUSTOMER_DIRS) out.push(`customers/${C}/${d}/**`);
+  // 19/11/2026 (ciclo 4: customer-profiler legge l'ambiente, il self-check falliva il controllo 2; decisione dell'utente: i
+  // file di ambiente sono scrivibili dagli agenti): il resto di config/ resta protetto da guard-config-scope
+  out.push(`customers/${C}/config/environments.yaml`);
   if (sessionId) out.push(`customers/${C}/.sessions/${sessionId}/**`);
   return [...new Set(out)];
 }

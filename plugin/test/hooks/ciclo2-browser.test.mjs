@@ -278,14 +278,17 @@ test("ciclo 3 (3): guard-budget — caratteri jolly ed espressioni regolari in c
   }
 });
 
-test("ciclo 3 (4): strumenti dell'app desktop (ccd_turn, ccd_session, ccd_directory, viste) ammessi con un ambiente dichiarato; impostazioni e altre sessioni no", () => {
+// Revisione di sicurezza (19/11/2026): elenco ristretto — server interi solo per turno, viste e finestre; per strumento i
+// capitoli e le letture della barra laterale; negati le attività che avviano sessioni e il cambio di cartella di lavoro.
+test("ciclo 3 (4): strumenti dell'app desktop innocui (turno, capitoli, viste) ammessi con un ambiente dichiarato; altre sessioni, cartella di lavoro e impostazioni no", () => {
   const ws = envWs({ env: "preprod", scope: "ADM" });
   const g = (tool) => runHook("guard-environment", { session_id: "sess-1", cwd: ws, hook_event_name: "PreToolUse", tool_name: tool, tool_input: {} }, E(ws));
-  for (const t of ["mcp__ccd_turn__wrap_up", "mcp__ccd_session__mark_chapter", "mcp__ccd_session__spawn_task", "mcp__ccd_directory__request_directory", "mcp__ccd_directory__change_directory", "mcp__ccd_view__show_pane", "mcp__ccd_window__get_window_layout", "mcp__ccd_sidebar__list_groups"]) {
+  for (const t of ["mcp__ccd_turn__wrap_up", "mcp__ccd_session__mark_chapter", "mcp__ccd_view__show_pane", "mcp__ccd_window__get_window_layout", "mcp__ccd_sidebar__list_groups"]) {
     const r = g(t);
     assert.equal(decisionOf(r), null, `${t}: ${reasonOf(r)}`);
   }
-  for (const t of ["mcp__ccd_settings__set_setting", "mcp__ccd_session_mgmt__send_message", "mcp__ccd_session_mgmt__set_session_permission_mode", "mcp__ccd_connectors__set_session_connector_enabled", "mcp__ccd_host__discard_kept_worktree", "mcp__ccd_pr__set_auto_merge"]) {
+  for (const t of ["mcp__ccd_session__spawn_task", "mcp__ccd_session__dismiss_task", "mcp__ccd_directory__request_directory", "mcp__ccd_directory__change_directory", "mcp__ccd_sidebar__delete_group",
+    "mcp__ccd_settings__set_setting", "mcp__ccd_session_mgmt__send_message", "mcp__ccd_session_mgmt__set_session_permission_mode", "mcp__ccd_connectors__set_session_connector_enabled", "mcp__ccd_host__discard_kept_worktree", "mcp__ccd_pr__set_auto_merge"]) {
     assert.equal(decisionOf(g(t)), "deny", t);
   }
 });

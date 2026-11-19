@@ -11,19 +11,24 @@ import { customerNames } from "../kb/lifecycle.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 
+// 19/11/2026 (ciclo 5: un export ServiceNow reale falliva con «nessuna colonna di sintomo»): anche le intestazioni tipiche
+// degli export Jira (Issue key, Component/s, Created) e ServiceNow (Number, Short description, State, Close notes, Caller).
 export const COLUMNS = Object.freeze({
-  id: ["id", "ticket", "ticket id", "ticket_id", "numero", "numero ticket", "n.", "key", "chiave", "incident", "case"],
-  summary: ["summary", "titolo", "oggetto", "subject", "title", "sintomo", "symptom", "problema"],
-  description: ["description", "descrizione", "dettaglio", "details", "testo"],
-  module: ["module", "modulo", "componente", "component", "area", "applicazione"],
+  id: ["id", "ticket", "ticket id", "ticket_id", "numero", "numero ticket", "n.", "key", "chiave", "incident", "case",
+    "issue key", "issue id", "number", "incident number", "case number"],
+  summary: ["summary", "titolo", "oggetto", "subject", "title", "sintomo", "symptom", "problema",
+    "short description", "short_description", "breve descrizione", "descrizione breve", "issue summary"],
+  description: ["description", "descrizione", "dettaglio", "details", "testo", "long description", "descrizione estesa"],
+  module: ["module", "modulo", "componente", "component", "area", "applicazione",
+    "component/s", "components", "configuration item", "cmdb_ci", "category", "categoria", "service", "business service"],
   error_code: ["error code", "error_code", "codice errore", "codice", "errore", "error"],
   immediate_cause: ["cause", "causa", "causa immediata", "immediate cause", "immediate_cause"],
-  root_cause: ["root cause", "root_cause", "causa radice", "causa principale", "causa root"],
-  resolution: ["resolution", "risoluzione", "soluzione", "fix", "workaround"],
-  status: ["status", "stato"],
-  created: ["created", "created at", "data apertura", "aperto il", "opened", "data"],
-  reporter: ["reporter", "segnalante", "opened by", "richiedente", "requester", "utente"],
-  assignee: ["assignee", "assegnatario", "assigned to", "owner", "incaricato"],
+  root_cause: ["root cause", "root_cause", "causa radice", "causa principale", "causa root", "root cause analysis"],
+  resolution: ["resolution", "risoluzione", "soluzione", "fix", "workaround", "close notes", "close_notes", "resolution notes", "note di chiusura"],
+  status: ["status", "stato", "state", "incident state", "status category"],
+  created: ["created", "created at", "data apertura", "aperto il", "opened", "data", "opened at", "opened_at", "created on", "sys_created_on", "created date"],
+  reporter: ["reporter", "segnalante", "opened by", "richiedente", "requester", "utente", "caller", "caller id", "caller_id", "reported by"],
+  assignee: ["assignee", "assegnatario", "assigned to", "owner", "incaricato", "assigned_to"],
   scope: ["scope"],
 });
 const PEOPLE_COLS = ["reporter", "assignee"];

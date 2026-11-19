@@ -125,6 +125,11 @@ export function handle(input, env = process.env) {
   try { recordedSurprises = stepCheckSurprises(auditTail(st.ws, st.customer, st.sid, { bytes: 4 * 1024 * 1024 })).get(agentId) ?? 0; } catch { recordedSurprises = 0; }
   let bound = null;
   try { bound = JSON.parse(readFileSync(agentStateFile(st.ws, st.customer, st.sid, agentId), "utf8")); } catch { bound = null; }
+  // 19/11/2026 (ciclo 3, sessione ENEL reale: 27 voci vuote nel ledger): lo stop di un agente che non è del plugin (tipo
+  // estraneo o assente, nessun rapporto, nessun header di dispatch né legame di guard-control, nessuna voce già aperta) non
+  // è un'invocazione JVC: non entra nel ledger, non conta token né apre atlas-build.
+  const known = (st.session.ledger?.invocations ?? []).some((i) => i?.agent_id === agentId);
+  if (!PLUGIN_AGENTS.has(agentType) && !report && !hdrTask && !Number.isInteger(bound?.inv_seq) && !known) return null;
   let outcome = null;
   let v = v0;
   const session = updateSession(st.sessionFile, (s) => {

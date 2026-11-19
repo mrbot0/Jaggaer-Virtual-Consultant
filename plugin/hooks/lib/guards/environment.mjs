@@ -31,7 +31,11 @@ import { updateSessionFile } from "../session-state.mjs";
 import { allows } from "../policy.mjs";
 
 const G = "guard-environment";
-const ALLOW = new Set(JSON.parse(readFileSync(new URL("../mcp-allowlist.json", import.meta.url), "utf8")).servers);
+const ALLOW_FILE = JSON.parse(readFileSync(new URL("../mcp-allowlist.json", import.meta.url), "utf8"));
+const ALLOW = new Set(ALLOW_FILE.servers);
+// 19/11/2026 (revisione di sicurezza): strumenti singoli ammessi (nome esatto mcp__<server>__<strumento>) per i server di cui
+// solo alcuni strumenti sono innocui (ccd_session: capitoli sì, attività che avviano altre sessioni no)
+const ALLOW_TOOLS = new Set(ALLOW_FILE.tools ?? []);
 const NAVIGATE_FIRST = "URL della pagina corrente ignoto (nessuna navigazione registrata, o scheda/pagina cambiata): esegui prima navigate verso un host dichiarato dell'ambiente";
 
 function hrefOf(url) { try { return new URL(url.trim()).href; } catch { return null; } }
@@ -121,7 +125,7 @@ function mcpOther(input, env) {
   const ctx = guardContext(input, env);
   if (!ctx.jvc || !ctx.session?.env) return null;
   const server = mcpServer(ctx.tool);
-  if (server && ALLOW.has(server)) return null;
+  if ((server && ALLOW.has(server)) || ALLOW_TOOLS.has(ctx.tool)) return null;
   return denyAudited(ctx, G, `server MCP ${server ?? ctx.tool} non ammesso con un ambiente dichiarato: non è una famiglia del browser classificata né è in hooks/lib/mcp-allowlist.json del plugin (uno strumento non classificato può agire sul tenant)`);
 }
 

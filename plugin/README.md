@@ -15,8 +15,8 @@ Tutto il resto è nel manuale integrato: [docs/MANUAL.md](docs/MANUAL.md).
 ## Prerequisiti
 
 - Claude Code (desktop o CLI) con un browser: il browser di Claude oppure **Chrome DevTools MCP**. Fuori dalla sandbox
-  il browser di Claude può solo leggere e navigare: le azioni con effetto (click, testo, invio) richiedono Chrome
-  DevTools MCP.
+  il browser di Claude agisce solo in esplorazione senza piano (pre-produzione; cancellazioni e caricamenti negati); per
+  i piani e in produzione le azioni con effetto (click, testo, invio) richiedono Chrome DevTools MCP.
 - Node 22.13 o successivo (il DB usa `node:sqlite`), git, accesso al repository di conoscenza, variabili d'ambiente del cliente dal vault
   (`NRT_<ENV>_*`, `XRAY_*`, `JIRA_*`; `JVC_PSEUDO_SALT` per la digestione settimanale e i ticket).
 - **`npm ci` nella cartella del plugin** (non `npm install`: `package-lock.json` è sotto integrità e `npm install` può

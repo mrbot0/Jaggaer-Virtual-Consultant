@@ -19,6 +19,62 @@ export const READ_TOOLS = new Set(["Read", "Glob", "Grep"]);
 export const SHELL_TOOLS = new Set(["Bash", "PowerShell"]);
 export const PATH_TOOLS = new Set([...FILE_TOOLS, ...SEARCH_TOOLS]);
 
+// 19/11/2026 (revisione di sicurezza dei cinque cicli): i segmenti di un comando di shell come li eseguirà la shell — parole
+// senza virgolette, escape (\ di POSIX, ^ di cmd) tolti, separatori fra virgolette ignorati (`grep -E "a|b"` è un solo
+// comando), redirezioni e loro bersagli esclusi —, così il nome del comando non si maschera (n"o"de, no\de, n^ode ⇒ node).
+// null (fail-closed) se il comando ha sostituzioni (`…`, $(…), <(…), >(…)) o virgolette non chiuse.
+export function shellSegments(cmd) {
+  const s = String(cmd ?? "");
+  const segs = [];
+  let words = [], w = "", has = false, q = null, skipTarget = false;
+  const endWord = () => { if (has) { if (skipTarget) skipTarget = false; else words.push(w); } w = ""; has = false; };
+  const endSeg = () => { endWord(); skipTarget = false; if (words.length) segs.push(words); words = []; };
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (q) {
+      if (c === q) q = null;
+      else if (q === '"' && (c === "`" || (c === "$" && s[i + 1] === "("))) return null;
+      else w += c;
+      continue;
+    }
+    if (c === "'" || c === '"') { q = c; has = true; continue; }
+    if (c === "`") return null;
+    if ((c === "$" || c === "<" || c === ">") && s[i + 1] === "(") return null;
+    if (c === "\\" || c === "^") { if (i + 1 < s.length) { w += s[++i]; has = true; } continue; }
+    if (c === ">" || c === "<") {
+      if (has && /^\d+$/.test(w)) { w = ""; has = false; } else endWord();
+      while (s[i + 1] === ">" || s[i + 1] === "<") i++;
+      if (s[i + 1] === "&") { i++; while (/[\d-]/.test(s[i + 1] ?? "")) i++; } else skipTarget = true;
+      continue;
+    }
+    if (c === "\n" || c === "\r" || c === ";" || c === "&" || c === "|" || c === "(" || c === ")") { endSeg(); continue; }
+    if (/\s/.test(c)) { endWord(); continue; }
+    w += c; has = true;
+  }
+  if (q) return null;
+  endSeg();
+  return segs;
+}
+// Comandi che leggono soltanto: non eseguono altri programmi né scrivono file con le loro opzioni (esclusi sort, rg, awk,
+// sed, tar, less, xargs, env: hanno opzioni che eseguono o scrivono). find solo senza le azioni che eseguono o scrivono.
+const READ_ONLY_HEADS = new Set(["cat", "ls", "dir", "head", "tail", "wc", "grep", "egrep", "fgrep", "stat", "file", "du", "cut", "tr", "uniq",
+  "echo", "printf", "pwd", "cd", "type", "true", "find", "get-content", "gc", "get-childitem", "gci", "select-string", "sls", "measure-object",
+  "test-path", "resolve-path"]);
+const FIND_ACTS = /^-(exec|execdir|ok|okdir|delete|fprint0?|fprintf|fls)$/i;
+// true se ogni segmento è un comando di sola lettura chiamato per nome (mai un percorso: ./ls può essere uno script).
+export function readOnlyShell(cmd) {
+  const segs = shellSegments(cmd);
+  if (!segs?.length) return false;
+  for (const words of segs) {
+    const head = String(words[0] ?? "");
+    if (!head || /[\\/]/.test(head)) return false;
+    const name = head.toLowerCase().replace(/\.exe$/, "");
+    if (!READ_ONLY_HEADS.has(name)) return false;
+    if (name === "find" && words.some((x) => FIND_ACTS.test(x))) return false;
+  }
+  return true;
+}
+
 export function guardContext(input, env = process.env) {
   const st = loadHookState(input, env);
   return {

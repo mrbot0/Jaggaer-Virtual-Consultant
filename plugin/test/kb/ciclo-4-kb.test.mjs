@@ -149,6 +149,7 @@ test("back-check: obbligo citato con source (codice DOC) e kind del vocabolario 
     assert.equal(r.blocked, false, JSON.stringify(r.results));
     assert.equal(v.section, "supportata", "l'intestazione della sezione dell'unità è testo citato");
     assert.equal(v.mandatory, "parziale", "solo vocabolario: da rivedere, non smentito");
+    assert.ok(r.review.includes("mandatory"), "revisione di sicurezza: non passa in silenzio, va alla revisione umana");
     const wrong = backcheck(fldDraft({ mandatory: { kind: "conditional", when: "anno 2019" } }), dbLookup(db));
     assert.equal(wrong.blocked, true, "un numero che il testo non dice resta non supportato");
     const uncited = backcheck(fldDraft({ sources: [{ unit: "U.DOC0013.0039", attributes: ["document", "section", "mandatory"] }] }), dbLookup(db));

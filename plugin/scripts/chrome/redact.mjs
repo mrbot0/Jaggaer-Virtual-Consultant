@@ -39,7 +39,9 @@ const BASE = [
   ["iban", /\b[A-Z]{2}\d{2}(?:[ ]?[A-Z0-9]{4}){3,7}(?:[ ]?[A-Z0-9]{1,3})?\b/g, "[iban]"],
   ["codice-fiscale", /\b[A-Z]{6}[0-9LMNPQRSTUV]{2}[A-EHLMPR-T][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]\b/gi, "[cf]"],
   ["partita-iva", /\b(?:IT[ ]?)?\d{11}\b/g, "[piva]"],
-  ["telefono", /(?:\+|\b00)39[ .-]?\d{2,4}(?:[ .-]?\d{2,4}){2,3}\b|\b3\d{2}[ .-]?\d{3}[ .-]?\d{3,4}\b|\b0\d{1,3}[ .-]?\d{5,8}\b/g, "[tel]"],
+  // 19/11/2026 (ciclo 1, nomi di file reali): un orario dopo una data («2026-09-09 161136») e le dimensioni in byte
+  // («345678901 byte») non sono telefoni — niente numero subito dopo una cifra e un separatore di data, né prima di byte/B
+  ["telefono", /(?:\+|\b00)39[ .-]?\d{2,4}(?:[ .-]?\d{2,4}){2,3}\b|(?<!\d[-./:])\b3\d{2}[ .-]?\d{3}[ .-]?\d{3,4}\b(?!\s?(?:bytes?|B)\b)|(?<!\d[-./:])\b0\d{1,3}[ .-]?\d{5,8}\b(?!\s?(?:bytes?|B)\b)/g, "[tel]"],
 ];
 const AMOUNT = ["importo", /(?:€|EUR|USD|CHF|£|\$)[ ]?\d{1,3}(?:[.,' ]\d{3})*(?:[.,]\d{1,2})?|\b\d{1,3}(?:[.,' ]\d{3})*(?:[.,]\d{1,2})?[ ]?(?:€|EUR|euro|USD|CHF|£)(?![A-Za-z])/gi, "[importo]"];
 
@@ -48,9 +50,9 @@ export function redactText(text, { profile = "strict", env = process.env } = {})
   if (typeof text !== "string" || !text) return { text, masks: [] };
   let s = text;
   const masks = new Set();
+  // 19/11/2026 (ciclo 1: ~1 s per documento pesante): nessuna RegExp per segreto e per stringa, sostituzione letterale
   for (const v of envSecrets(env)) {
-    const re = new RegExp(esc(v), "g");
-    if (re.test(s)) { masks.add("env"); s = s.replace(re, "[segreto]"); }
+    if (s.includes(v)) { masks.add("env"); s = s.split(v).join("[segreto]"); }
   }
   for (const [name, re, rep] of profile === "strict" ? [...BASE, AMOUNT] : BASE) {
     re.lastIndex = 0;

@@ -29,7 +29,7 @@ import { dirname, resolve, join, basename, sep, isAbsolute } from "node:path";
 import { readFileSync, statSync, realpathSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { intersects, resolveTarget, bases, PathPolicyError } from "../paths.mjs";
-import { guarded, denyAudited, targetsOf, allRels, shellWriteTargets, subtree, SHELL_TOOLS } from "./common.mjs";
+import { guarded, denyAudited, targetsOf, allRels, shellWriteTargets, subtree, SHELL_TOOLS, readOnlyShell } from "./common.mjs";
 import { browserGuarded, declaredEnvFresh, claudeEffectRefusal } from "./browser.mjs";
 import { activeStep } from "./plan-step.mjs";
 import { ACT, envColumn, stepLevel, stepRisk } from "../act-classes.mjs";
@@ -608,16 +608,22 @@ const underPlugin = (ctx, abs) => bases(ctx.plugin).some((b) => abs === b || abs
 // worktree resta) e, per i comandi di sola lettura (nessuna scrittura, interprete o cambio di permessi), .claude/plugins/
 // (codice e manifesti dei plugin installati): scriverci resta negato, un hook di un altro plugin girerebbe fuori dai guard.
 const META = /\b(chmod|chown|chgrp|chattr|setfacl|setfattr|attrib|icacls|cacls|takeown|set-acl|set-itemproperty|truncate|touch)\b/i;
-const WORKTREE = /\/\.claude\/worktrees\/[^/\s'"`;|&()<>]+(?=$|[/\s'"`;|&)(,:])/g;
-const withoutWorktree = (p) => p.replace(WORKTREE, "/<worktree>");
+// Revisione di sicurezza (19/11/2026): fail-closed sulle risalite — un segmento `.` o `..` non è un nome di worktree, e con un
+// `..` in qualunque punto del testo non si toglie alcun prefisso (`…/worktrees/x/../../settings.json` è l'impostazione
+// vera); .claude/plugins si toglie solo per comandi di sola lettura chiamati per nome (readOnlyShell), non per assenza di
+// primitive di scrittura note.
+const DOTDOT = /(^|[/\s'"`=:(])\.\.(?=$|[/\s'"`;|&)(,:])/;
+const WORKTREE = /\/\.claude\/worktrees\/(?!\.\.?(?=$|[/\s'"`;|&)(,:]))[^/\s'"`;|&()<>]+(?=$|[/\s'"`;|&)(,:])/g;
+const withoutWorktree = (p) => (DOTDOT.test(p) ? p : p.replace(WORKTREE, "/<worktree>"));
 function withoutPluginRoot(ctx, text) {
   let f = flatOf(text);
+  if (DOTDOT.test(f)) return f;
   for (const b of bases(ctx.plugin)) {
     const esc = b.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     f = f.replace(new RegExp(`${esc}(?=$|[/\\s'"\`;|&)(,:])`, "g"), "<plugin>");
   }
   f = withoutWorktree(f);
-  if (!WRITE_ANY.test(text) && !META.test(text) && !INTERP.test(text)) f = f.replace(/(^|[^\w.-])\.claude\/plugins(?=\/|$|[\s'"`;|&)(,:])/g, "$1<plugins>");
+  if (!WRITE_ANY.test(text) && !META.test(text) && !INTERP.test(text) && readOnlyShell(text)) f = f.replace(/(^|[^\w.-])\.claude\/plugins(?=\/|$|[\s'"`;|&)(,:])/g, "$1<plugins>");
   return f;
 }
 

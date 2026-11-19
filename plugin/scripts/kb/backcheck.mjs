@@ -108,7 +108,9 @@ export function claimsOf(item) {
     if (item[a] === undefined || item[a] === null) continue;
     claims.push({ attribute: a, text: claimTextOf(item[a]), units: [...new Set([...(perAttr.get(a) ?? []), ...(perAttr.has(a) ? [] : general)])], derived: item.derived?.[a] ?? null });
   }
-  for (const c of item?.claims ?? []) claims.push({ attribute: c.attribute ?? "claim", text: String(c.text ?? "").replace(INTERNAL_CODE_RE, " ").replace(/s+/g, " ").trim(), units: [].concat(c.units ?? []), derived: c.derived ?? null });
+  // 19/11/2026 (revisione di sicurezza): stessa normalizzazione degli attributi (prima /s+/ toglieva le «s» dal testo
+  // libero); un'affermazione libera resta rigorosa: senza termini verificabili non è supportata (free)
+  for (const c of item?.claims ?? []) claims.push({ attribute: c.attribute ?? "claim", text: claimTextOf(String(c.text ?? "")), units: [].concat(c.units ?? []), derived: c.derived ?? null, free: true });
   return claims;
 }
 
@@ -125,13 +127,16 @@ export function backcheck(item, lookup) {
     if (absent.length === c.units.length) { results.push({ attribute: c.attribute, verdict: "non-supportata", units: c.units, reason: `unità citate inesistenti: ${absent.join(", ")}` }); continue; }
     const s = supportOf(c.text, texts.filter((t) => t !== null && t !== undefined));
     // 18/11/2026: un'affermazione citata ma senza nulla di verificabile nel testo (solo vocabolario, riferimenti interni o
-    // booleani: `mandatory: { kind: always }`, `custom: false`) non è smentita dalla fonte: parziale, con il motivo, non blocca
-    if (!s.key_terms && !s.codes.length) { results.push({ attribute: c.attribute, verdict: "parziale", units: c.units, ratio: null, reason: "nessun termine verificabile nel testo (vocabolario, riferimenti o booleani): da rivedere", ...(absent.length ? { missing_units: absent } : {}) }); continue; }
+    // booleani: `mandatory: { kind: always }`, `custom: false`) non è smentita dalla fonte: parziale, con il motivo, non blocca.
+    // 19/11/2026 (revisione di sicurezza): non passa in silenzio — needs_review e l'elenco `review` dell'esito la portano alla
+    // revisione umana (/kb review); vale solo per gli attributi strutturati, non per le affermazioni libere
+    if (!s.key_terms && !s.codes.length && !c.free) { results.push({ attribute: c.attribute, verdict: "parziale", units: c.units, ratio: null, needs_review: true, reason: "nessun termine verificabile nel testo (vocabolario, riferimenti o booleani): da rivedere", ...(absent.length ? { missing_units: absent } : {}) }); continue; }
     results.push({ attribute: c.attribute, verdict: s.verdict, units: c.units, ratio: s.ratio, ...(s.missing_codes.length ? { missing_codes: s.missing_codes } : {}), ...(absent.length ? { missing_units: absent } : {}) });
   }
   const counts = { supportata: 0, parziale: 0, "non-supportata": 0, derived: 0 };
   for (const r of results) counts[r.verdict]++;
-  return { item: item?.id ?? null, results, counts, blocked: counts["non-supportata"] > 0, outcome: counts["non-supportata"] > 0 ? "bloccato" : "passa" };
+  const review = results.filter((r) => r.needs_review).map((r) => r.attribute);
+  return { item: item?.id ?? null, results, counts, review, blocked: counts["non-supportata"] > 0, outcome: counts["non-supportata"] > 0 ? "bloccato" : "passa" };
 }
 
 // 18/11/2026: il testo citato comprende l'intestazione della sezione dell'unità (è ciò che la fonte dice in quel punto):
@@ -158,6 +163,7 @@ export function formatReport(r) {
   const lines = [`back-check ${r.item}`];
   for (const x of r.results) lines.push(`  ${x.attribute.padEnd(18)}← ${(x.units ?? []).join(", ") || x.rule || "—"}   ${x.verdict}${x.reason ? ` (${x.reason})` : ""}${x.missing_codes ? ` codici assenti: ${x.missing_codes.join(", ")}` : ""}`);
   lines.push(`  esito: ${r.counts.supportata} supportate, ${r.counts.parziale} parziali, ${r.counts.derived} derivate, ${r.counts["non-supportata"]} non supportate → ${r.outcome}`);
+  if (r.review?.length) lines.push(`  da rivedere (nessun termine verificabile): ${r.review.join(", ")}`);
   return lines.join("\n");
 }
 

@@ -39,7 +39,8 @@ tetto dell'ambiente), budget usato/totale, pendenze. Regole:
   esplorazione**: clicca tutto, compila con valori di prova, salva, invia, approva, conferma i dialoghi; mai
   cancellazioni, upload di file, script nella pagina, strumenti non classificati, produzione; nessun tetto di
   azioni per agente. Ogni click vuole un elemento con nome dell'ultima lettura (i click a coordinate sono negati). In
-  pre-produzione si esplora con Chrome DevTools (il browser di Claude fuori dalla sandbox legge soltanto). Le pagine
+  pre-produzione si esplora con Chrome DevTools o con il browser di Claude (fuori dalla sandbox agisce solo in
+  esplorazione senza piano; cancellazioni e caricamenti negati). Le pagine
   pesanti ("pagina troppo grande") si leggono **a pezzi**: con DevTools `take_snapshot` con `filePath` assoluto
   nella cartella `snapshots/` della sessione (il plugin legge il file appena scritto dallo strumento come lettura
   completa; l'agente lo legge a pezzi con Read). Precondizioni di DevTools: il workspace sta sotto la cartella di
