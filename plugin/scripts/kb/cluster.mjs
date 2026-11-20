@@ -6,12 +6,15 @@
 // e nessuno di esclusione; nel dubbio non entra, e il dubbio è registrato
 // (cluster_events). La decisione è di DT-005 valutata da dt-eval, sugli esiti
 // dei criteri calcolati da cluster-rules. Transazioni brevi, output JSON.
-import { readFileSync, existsSync, readdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync, existsSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
+import { join, dirname, relative, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import YAML from "yaml";
 import { openDb } from "./db.mjs";
+import { ensureClusters, indexItemFile } from "./reindex.mjs";
+import { validateItem } from "./validate-schema.mjs";
+import { TYPE_DIRS } from "../lib/kb-items.mjs";
 import { rootFromDb } from "../lib/root-from-db.mjs";
 import { evaluateCriterion, matchesSignature, jaccard, checkCluster, validateCluster } from "./cluster-rules.mjs";
 import { evaluate, loadTable, writeDecision } from "../decide/dt-eval.mjs";
@@ -69,7 +72,10 @@ function logEvent(db, { at, op, cluster = null, item = null, reason = null, deci
     .run(at, op, cluster, item, reason, decision, payload === null ? null : JSON.stringify(payload));
 }
 export function loadCluster(db, code) {
-  const r = db.prepare("select c.*, d.domain, d.depth, d.parent, d.empty_digests, d.merged_into from clusters c left join cluster_details d on d.code = c.code where c.code = ?").get(code);
+  const q = () => db.prepare("select c.*, d.domain, d.depth, d.parent, d.empty_digests, d.merged_into from clusters c left join cluster_details d on d.code = c.code where c.code = ?").get(code);
+  let r = q();
+  // DB mai reindicizzato (o catalogo del plugin più nuovo): il catalogo si carica qui (ensureClusters), poi si riprova
+  if (!r && ensureClusters(db, { code }).clusters_upserted) r = q();
   if (!r) throw new NotFoundError(`cluster inesistente: ${code}`);
   return { ...r, inclusion: JSON.parse(r.inclusion), exclusion: JSON.parse(r.exclusion), facet_signature: JSON.parse(r.facet_signature ?? "{}"),
     portability: JSON.parse(r.portability ?? "{}") };
@@ -92,12 +98,48 @@ const members = (db, code) => db.prepare("select item_code from cluster_members 
 // valutazione). Il codice DEC è registrato nel membro e nell'evento.
 // `root` = cartella del cliente (item YAML e decisions/); `customer` serve per
 // gli item S (il codice DEC è sempre di livello L con un cliente, §5).
+// 18/11/2026 (ciclo di bug fixing, digestione reale): il ciclo di §19.5 «digester → cluster-validator → validato+
+// clusterizzato» non arrivava mai in kb/. Il digester scrive la bozza in _inbox/<S>/digested/<codice>.yaml (mai kb/), ma
+// admit cercava l'item solo nel DB ⇒ «item inesistente» per ogni bozza, e nessuno script portava la bozza in kb/ (né
+// metteva F12 clusterizzato: nessun item diventava promuovibile). Ora: item non nel DB ⇒ il file in kb/ non ancora
+// indicizzato, altrimenti la bozza del digester (validata con lo schema prima del giudizio). Ammessa ⇒ la bozza entra in
+// kb/ al suo posto canonico con F12 clusterizzato, indicizzata (items, FTS, campi) nella transazione della DEC; un item di
+// kb/ digerito o validato passa a clusterizzato (file e DB, come la quarantena). Rifiutata ⇒ DEC scritta, bozza dov'è.
+export const ADMITTED_STATUS = "clusterizzato";
+const PROMOTE_ON_ADMIT = new Set(["digerito", "validato"]);
+export function draftFile(root, code) { const c = parseCode(code); return c ? join(root, "_inbox", c.scope, "digested", `${code}.yaml`) : null; }
+export function kbItemFile(root, code) {
+  const c = parseCode(code);
+  if (!c) return null;
+  return join(root, "kb", c.type === "HND" ? "handoffs" : join("scopes", c.scope, TYPE_DIRS[c.type] ?? c.type.toLowerCase()), `${code}.yaml`);
+}
+function draftItem(db, root, itemCode) {
+  // solo bozze di livello C/L nella cartella del cliente: un item S nasce in product/ (promozione), mai qui
+  const pc = parseCode(itemCode);
+  if (!pc || pc.level === "S" || (/^[A-Z0-9]{4}$/.test(basename(root)) && basename(root) !== pc.customer)) return null;
+  if (db.prepare("select 1 from items where code = ?").get(itemCode)) return null;
+  const kbf = kbItemFile(root, itemCode);
+  if (kbf && existsSync(kbf)) {
+    try { db.transaction(() => indexItemFile(db, root, kbf))(); } catch (e) { throw new UsageError(`file ${itemCode} in kb/ non indicizzabile: ${e.message}`); }
+    return null;
+  }
+  const df = draftFile(root, itemCode);
+  if (!df || !existsSync(df)) return null;   // loadItem dirà «item inesistente»
+  let obj;
+  try { obj = YAML.parse(readFileSync(df, "utf8")); } catch (e) { throw new UsageError(`bozza illeggibile _inbox/${parseCode(itemCode).scope}/digested/${itemCode}.yaml: ${e.message}`); }
+  if (obj?.id !== itemCode) throw new UsageError(`la bozza _inbox/${parseCode(itemCode).scope}/digested/${itemCode}.yaml ha id ${obj?.id ?? "assente"}, non ${itemCode}`);
+  const v = validateItem(obj);
+  if (!v.ok) throw new PolicyError(`bozza ${itemCode} non valida (validate-schema): ${v.errors.slice(0, 4).join("; ")}`);
+  return { obj, file: kbf };
+}
+
 export function admit(db, clusterCode, itemCode, { root, customer, agent = "cluster-validator", session = null, priors = {}, now } = {}) {
   const at = nowIso(now);
   if (!root) throw new UsageError("admit richiede root (cartella del cliente: item e decisions/)");
   const cluster = loadCluster(db, clusterCode);
   if (["fuso", "deprecato"].includes(cluster.status)) throw new PolicyError(`cluster ${clusterCode} non ammette membri (stato ${cluster.status})`);
-  const item = loadItem(db, itemCode, { root });
+  const draft = draftItem(db, root, itemCode);
+  const item = draft ? { ...draft.obj, id: itemCode, facets: { ...(draft.obj.facets ?? {}) } } : loadItem(db, itemCode, { root });
   const code = parseCode(itemCode);
   const cust = customer ?? (code && code.level !== "S" ? code.customer : null);
   if (!cust) throw new UsageError(`admit di ${itemCode}: serve customer (4 caratteri) per il codice della DEC`);
@@ -111,9 +153,30 @@ export function admit(db, clusterCode, itemCode, { root, customer, agent = "clus
   }
   const j = judgeAdmission(cluster, item, { priors });
   let decCode = null;
+  let materialized = null;
+  let status = item.facets?.F12 ?? null;
   db.transaction(() => {
     decCode = writeDecision(db, { customer: cust, scope: code.scope, root, result: j.dtResult, agent, session, subject: itemCode, cluster: clusterCode, at });
     if (j.verdict === "ammesso") {
+      if (draft) {
+        if (existsSync(draft.file)) throw new PolicyError(`il file ${itemCode} esiste già in kb/: la bozza non lo sovrascrive`);
+        const text = YAML.stringify({ ...draft.obj, facets: { ...(draft.obj.facets ?? {}), F12: ADMITTED_STATUS } }, { lineWidth: 0 });
+        indexItemFile(db, root, draft.file, text);
+        mkdirSync(dirname(draft.file), { recursive: true });
+        writeFileSync(draft.file, text, { flag: "wx" });
+        materialized = relative(root, draft.file).replace(/\\/g, "/");
+        status = ADMITTED_STATUS;
+      } else if (PROMOTE_ON_ADMIT.has(status)) {
+        const row = db.prepare("select path from items where code = ?").get(itemCode);
+        const file = row?.path ? join(root, row.path) : null;
+        db.prepare("update items set status = ? where code = ?").run(ADMITTED_STATUS, itemCode);
+        if (file && existsSync(file)) {
+          const doc = YAML.parseDocument(readFileSync(file, "utf8"));
+          doc.setIn(["facets", "F12"], ADMITTED_STATUS);
+          writeFileSync(file, doc.toString());
+        }
+        status = ADMITTED_STATUS;
+      }
       db.prepare("insert or ignore into cluster_members(cluster_code,item_code,admitted_at,decision_code) values (?,?,?,?)").run(clusterCode, itemCode, at, decCode);
       logEvent(db, { at, op: "admit", cluster: clusterCode, item: itemCode, decision: decCode, payload: { dt: j.dt } });
     } else {
@@ -125,7 +188,7 @@ export function admit(db, clusterCode, itemCode, { root, customer, agent = "clus
     err.dec_code = decCode;
     throw err;
   }
-  return { ok: true, verdict: j.verdict, rule: j.rule, cluster: clusterCode, item: itemCode, dec_code: decCode, dt: j.dt };
+  return { ok: true, verdict: j.verdict, rule: j.rule, cluster: clusterCode, item: itemCode, dec_code: decCode, dt: j.dt, status, ...(materialized ? { materialized } : {}) };
 }
 
 export function reject(db, clusterCode, itemCode, { reason, now } = {}) {
@@ -191,6 +254,19 @@ export function quarantine(db, itemCode, reason, { root, now } = {}) {
   if (!reason || !String(reason).trim()) throw new PolicyError("la quarantena richiede un motivo (il dubbio è registrato)");
   if (!root) throw new UsageError("quarantine richiede root (cartella del cliente con il file dell'item)");
   const row = db.prepare("select path from items where code = ?").get(itemCode);
+  // 18/11/2026: la bozza del digester (non ancora in kb/) va in quarantena nel suo file di _inbox: la coda della revisione
+  // umana (review.mjs) la legge da lì. Prima: «item inesistente».
+  const df = row ? null : draftFile(root, itemCode);
+  if (df && existsSync(df)) {
+    const at = nowIso(now);
+    db.transaction(() => {
+      logEvent(db, { at, op: "quarantine", item: itemCode, reason, payload: { draft: true } });
+      const doc = YAML.parseDocument(readFileSync(df, "utf8"));
+      doc.setIn(["facets", "F12"], "quarantena");
+      writeFileSync(df, doc.toString());
+    })();
+    return { ok: true, item: itemCode, status: "quarantena", reason, file: relative(root, df).replace(/\\/g, "/"), draft: true };
+  }
   if (!row) throw new NotFoundError(`item inesistente: ${itemCode}`);
   const file = join(root, row.path);
   if (!existsSync(file)) throw new NotFoundError(`file dell'item non trovato: ${file}`);

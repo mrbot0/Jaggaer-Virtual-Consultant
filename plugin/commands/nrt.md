@@ -40,7 +40,8 @@ effetto si eseguono con Chrome DevTools MCP (il browser di Claude lì legge e na
 
       node "${CLAUDE_PLUGIN_ROOT}/scripts/xray/defect.mjs" --finding <finding.yaml> --customer <C> --json
 
-  (`--publish` solo dopo che l'utente ha visto il Defect). Un test-defect va a `heal`, un errore d'ambiente mai a Defect.
+  (`--publish` solo dopo che l'utente ha visto il Defect; ripeterlo sullo stesso finding restituisce la stessa chiave o la
+  stessa voce di coda, mai un secondo Defect). Un test-defect va a `heal`, un errore d'ambiente mai a Defect.
 - `heal [--apply]` — riparazione dei selettori e dei casi fragili: `Agent(test-mechanic, sonnet)` (linter
   anti-indebolimento, `lint-spec --against`). Senza `--apply` propone la patch; con `--apply` apre una PR che richiede la
   **review umana**: nessun merge automatico, mai.
@@ -69,7 +70,9 @@ effetto si eseguono con Chrome DevTools MCP (il browser di Claude lì legge e na
       node "${CLAUDE_PLUGIN_ROOT}/scripts/xray/retry-queued.mjs" --customer <C> --json
 
   `--dry-run`: aggiungi `--dry-run` alla prima (solo il payload). Jira irraggiungibile ⇒ coda offline, exit 0: la run non
-  fallisce; più tardi `--retry-queued` (la terza). Le credenziali restano nelle variabili d'ambiente: mai stamparle.
+  fallisce; più tardi `--retry-queued` (la terza). Exit 3 con `failed`: quegli scope non sono pubblicati (motivo
+  nell'esito dello scope), gli altri sì — riportalo e, corretta la causa, ripeti la prima con `--scope <S>`. Le
+  credenziali restano nelle variabili d'ambiente: mai stamparle.
 - `report [<RUN>]` — report di test (RPT, §29.8): verdetto per scope, fallimenti con classificazione e azione:
 
       node "${CLAUDE_PLUGIN_ROOT}/scripts/report/build-report.mjs" --kind test --run <RUN> --payload-file customers/<C>/.sessions/<sessione>/report.yaml --json

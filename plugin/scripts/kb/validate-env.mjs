@@ -73,7 +73,11 @@ export class EnvFileError extends Error { constructor(code, msg, extra = {}) { s
 // EnvFileError con code 1 (assente, YAML o schema) o 3 (policy di produzione).
 export function loadEnvironmentsFile(file) {
   let text;
-  try { text = readFileSync(file, "utf8"); } catch (err) { throw new EnvFileError(1, `environments.yaml illeggibile: ${file} (${err.code ?? err.message})`); }
+  // 18/11/2026 (ciclo di bug fixing): file assente ⇒ il messaggio dice cosa fare (prima solo «illeggibile (ENOENT)»)
+  try { text = readFileSync(file, "utf8"); } catch (err) {
+    if (err.code === "ENOENT") throw new EnvFileError(1, `environments.yaml assente: ${file} — dichiara gli ambienti del cliente (agente workspace-manager, oppure a mano secondo schemas/environments.schema.json: id, type, base_url, allowed_hosts, fingerprint con ≥ 2 segnali, policy), validalo con validate-env --customer <C>, poi use env <id>`);
+    throw new EnvFileError(1, `environments.yaml illeggibile: ${file} (${err.code ?? err.message})`);
+  }
   let doc;
   try { doc = YAML.parse(text); } catch (err) { throw new EnvFileError(1, `environments.yaml: YAML non valido (${err.message.split("\n")[0]})`); }
   const r = validateEnvironments(doc);

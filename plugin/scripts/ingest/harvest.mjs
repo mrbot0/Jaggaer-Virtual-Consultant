@@ -5,7 +5,9 @@
 //
 //   detectFormat(path, head) → { parser, format } | { residue: { class, reason } } | { sidecar: true }
 //   parseFile(path, { id, relPath }) → { doc } | { residue }
-//   harvest(input, { root, scope = "XSC", customer?, write = true, onFile? }) → { manifest[], docs[], stats }
+//   harvest(input, { root, scope = "XSC", customer?, write = true, onFile?, onParsed?, maxFileBytes? }) → { manifest[], docs[], stats }
+//     onParsed(doc, entry): ogni documento passa subito al chiamante e docs[] resta vuoto (ingest in flusso);
+//     file illeggibili, oltre maxFileBytes (256 MB) e sottocartelle illeggibili → residuo con motivo (read_error)
 //     manifest[i]: { path, doc_id, format, parser, status: parsed|residue|sidecar, sha256, size, residue?, duplicate_of?, parser_error?, ms }
 //     parser_error: eccezione inattesa del parser (difetto, non formato): il test sul corpus ne esige zero
 //     i file con lo stesso sha256 di un file già visto → residuo duplicate (duplicate_of)
@@ -118,15 +120,23 @@ export function parseFile(path, { id, relPath, buffer = null }) {
   }
 }
 
-export function* walkFiles(dir) {
-  for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+// onError(dir, err): una sottocartella illeggibile è saltata e segnalata (la radice illeggibile resta un errore)
+export function* walkFiles(dir, onError = null, depth = 0) {
+  let list;
+  try { list = readdirSync(dir, { withFileTypes: true }); } catch (e) { if (!onError || depth === 0) throw e; onError(dir, e); return; }
+  for (const e of list.sort((a, b) => a.name.localeCompare(b.name))) {
     const p = join(dir, e.name);
-    if (e.isDirectory()) { if (!e.name.startsWith(".") && e.name !== "_inbox" && e.name !== "node_modules") yield* walkFiles(p); }
+    if (e.isDirectory()) { if (!e.name.startsWith(".") && e.name !== "_inbox" && e.name !== "node_modules") yield* walkFiles(p, onError, depth + 1); }
     else if (e.isFile()) yield p;
   }
 }
 
-export function harvest(input, { root, scope = "XSC", customer = null, write = true, onFile = null } = {}) {
+// 18/11/2026: tetto per file, come quelli dei parser (zip: 256 MB in totale; pdf: 256 MB di flussi): oltre, residuo senza
+// leggerlo (un video di 3 GB nella cartella di progetto non va caricato in memoria solo per l'impronta)
+export const MAX_FILE_BYTES = 256 * 1024 * 1024;
+
+// onParsed(doc, entry): ogni documento letto passa alla pipeline appena scritto (docs[] resta vuoto)
+export function harvest(input, { root, scope = "XSC", customer = null, write = true, onFile = null, onParsed = null, maxFileBytes = MAX_FILE_BYTES } = {}) {
   if (!existsSync(input) || !statSync(input).isDirectory()) throw new UsageError(`cartella di input assente: ${input}`);
   if (!SCOPES.has(scope)) throw new UsageError(`scope sconosciuto: ${scope}`);
   if (root && write) assertOutsidePlugin(root);   // giro 1 (M14)
@@ -140,12 +150,28 @@ export function harvest(input, { root, scope = "XSC", customer = null, write = t
   const docs = [];
   const seen = new Map();
   const residue = [];
-  for (const file of walkFiles(input)) {
+  let parsedDoc = null;
+  const skip = (entry, t0) => { entry.ms = Date.now() - t0; residue.push(entry.residue); manifest.push(entry); if (onFile) onFile(entry); };
+  for (const file of walkFiles(input, (dir, e) => {
+    const rel = relative(input, dir).replace(/\\/g, "/");
+    skip({ path: `${rel}/`, doc_id: null, sha256: null, size: null, status: "residue", format: null, parser: null, read_error: true, residue: residueEntry({ class: "deferred", reason: `cartella illeggibile (${e?.code ?? e?.message ?? e}): i suoi file non sono stati letti`, file: `${rel}/` }) }, Date.now());
+  })) {
     const rel = relative(input, file).replace(/\\/g, "/");
     const t0 = Date.now();
-    const buf = readFileSync(file);
-    const hash = `sha256:${createHash("sha256").update(buf).digest("hex")}`;
     const id = docIdFor(rel, redactor ? { redact: (s) => redactPath(redactor, s) } : {});
+    // 18/11/2026 (ciclo di bug fixing): un file illeggibile (aperto in esclusiva, segnaposto del cloud non scaricato, permessi,
+    // sparito durante la lettura) o enorme fermava l'intera harvest con exit 2 (readFileSync fuori da ogni try; oltre 2 GB
+    // ERR_FS_FILE_TOO_LARGE): ora è un residuo tracciato e la cartella prosegue
+    let buf;
+    try {
+      const size = statSync(file).size;
+      if (size > maxFileBytes) { skip({ path: rel, doc_id: id, sha256: null, size, status: "residue", format: null, parser: null, residue: residueEntry({ class: "unsupported", reason: `file di ${Math.round(size / 1048576)} MB oltre il limite di ${Math.round(maxFileBytes / 1048576)} MB: dividerlo o esportarne la parte da ingerire`, file: rel }) }, t0); continue; }
+      buf = readFileSync(file);
+    } catch (e) {
+      skip({ path: rel, doc_id: id, sha256: null, size: null, status: "residue", format: null, parser: null, read_error: true, residue: residueEntry({ class: "deferred", reason: `file illeggibile (${e?.code ?? e?.message ?? e}): chiuso da un altro programma, non scaricato dal cloud o senza permessi; rilanciare quando è accessibile`, file: rel }) }, t0);
+      continue;
+    }
+    const hash = `sha256:${createHash("sha256").update(buf).digest("hex")}`;
     const entry = { path: rel, doc_id: id, sha256: hash, size: buf.length };
     if (seen.has(hash) && !/\.(ocr\.txt|layout\.json)$/i.test(file)) {
       Object.assign(entry, { status: "residue", format: null, parser: null, duplicate_of: seen.get(hash), residue: residueEntry({ class: "duplicate", reason: `stesso contenuto di ${seen.get(hash)}`, file: rel }) });
@@ -156,8 +182,13 @@ export function harvest(input, { root, scope = "XSC", customer = null, write = t
       else {
         seen.set(hash, rel);
         Object.assign(entry, { status: "parsed", format: r.format, parser: r.parser, sections: r.doc.sections.length, warnings: r.doc.warnings ?? [], scanned: r.doc.scanned ?? false });
-        docs.push(r.doc);
-        if (write && outDir) writeFileSync(join(outDir, `${id}.json`), JSON.stringify(redactDoc(r.doc, redactor)));
+        if (onParsed) parsedDoc = r.doc; else docs.push(r.doc);
+        // un documento normalizzato non scrivibile (stringa JSON oltre il limite di V8, disco) non ferma la cartella: resta
+        // in memoria per la pipeline, con l'avviso nel manifesto
+        if (write && outDir) {
+          try { writeFileSync(join(outDir, `${id}.json`), JSON.stringify(redactDoc(r.doc, redactor))); }
+          catch (e) { entry.warnings = [...entry.warnings, `documento normalizzato non scritto in parsed/ (${e?.code ?? e?.message ?? e})`]; entry.parsed_written = false; }
+        }
       }
       if (!seen.has(hash) && entry.status !== "sidecar") seen.set(hash, rel);
     }
@@ -165,6 +196,9 @@ export function harvest(input, { root, scope = "XSC", customer = null, write = t
     if (entry.residue) residue.push(entry.residue);
     manifest.push(entry);
     if (onFile) onFile(entry);
+    // 18/11/2026: con onParsed il documento passa subito alla pipeline e non resta in memoria (ENEL: 855 MB di documenti
+    // normalizzati, oltre 2 GB di heap a metà harvest; una cartella più grande finiva in «heap out of memory» senza riepilogo)
+    if (parsedDoc) { const d = parsedDoc; parsedDoc = null; onParsed(d, entry); }
   }
   const stats = {
     files: manifest.length,

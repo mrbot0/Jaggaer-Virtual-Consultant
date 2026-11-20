@@ -10,7 +10,7 @@
 // CLI: node scripts/evidence/contact-sheet.mjs --release <R> --run <RUN> [--run <RUN>…] [--desk <dir>] [--customer C]
 //      [--workspace <dir>] [--json]      desk di default: customers/<C>/evidence/desk
 // Exit: 0 ok · 1 argomenti · 2 errore di sistema.
-import { existsSync, mkdirSync, copyFileSync } from "node:fs";
+import { mkdirSync, copyFileSync } from "node:fs";
 import { join, resolve as resolvePath, extname, relative } from "node:path";
 import YAML from "yaml";
 import { parseArgs, fail } from "../lib/args.mjs";
@@ -19,6 +19,7 @@ import { writeFileAtomic } from "../../hooks/lib/fsx.mjs";
 import { selectEvidence, EvidenceError } from "./select.mjs";
 import { workspaceCustomer } from "../run/fixtures.mjs";
 import { loadTemplate, fillOrWarn } from "../lib/templates.mjs";
+import { evidencePath } from "../../mcp/alm-server/payload.mjs";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const safe = (s) => String(s ?? "").replace(/[^A-Za-z0-9._-]/g, "_").slice(0, 80) || "x";
@@ -58,6 +59,7 @@ export function buildDesk(ws, { customer, release, runs, desk = null }) {
   const relDir = join(root, safe(release));
   const tree = {};
   let images = 0;
+  const warnings = [];
   for (const run of runs) {
     const sel = selectEvidence(ws, { customer, run });
     for (const [caseId, c] of Object.entries(sel.cases)) {
@@ -65,8 +67,14 @@ export function buildDesk(ws, { customer, release, runs, desk = null }) {
       mkdirSync(dir, { recursive: true });
       const node = ((tree[c.scope] ??= {})[caseId] ??= []);
       for (const e of c.desk) {
-        const src = join(ws, e.file);
-        if (!existsSync(src)) continue;
+        // 18/11/2026 (ciclo di bug fixing): il file dell'evidenza viene dai metadati EVD (dati, non argomenti visti dai
+        // guard): si copia nel desk — il sink pubblicabile — solo se sta sotto customers/<C>/runs/ (realpath, niente
+        // collegamenti), come per Xray; un file mancante o fuori si segnala, invece di sparire in silenzio
+        let src;
+        try { src = evidencePath(ws, customer, e.file); } catch (err) {
+          warnings.push(`${run} ${caseId} ${e.id}: ${/inesistente/.test(err.message) ? "evidenza inesistente (file mancante nel dossier)" : "evidenza fuori da runs/ (o dietro un collegamento): non copiata nel desk"} — ${e.file}`);
+          continue;
+        }
         const name = `${safe(run)}-${safe(e.id)}${extname(src).toLowerCase()}`;
         copyFileSync(src, join(dir, name));
         images++;
@@ -76,7 +84,6 @@ export function buildDesk(ws, { customer, release, runs, desk = null }) {
   }
   const index = join(relDir, "index.html");
   mkdirSync(relDir, { recursive: true });
-  const warnings = [];
   writeFileAtomic(index, renderContactSheet({ release, customer, runs, tree }, { warnings }));
   writeFileAtomic(join(relDir, "index.yaml"), YAML.stringify({ release, customer, runs, tree }));
   return { index, cases: Object.values(tree).reduce((a, s) => a + Object.keys(s).length, 0), images, warnings };

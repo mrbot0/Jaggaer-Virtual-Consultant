@@ -6,7 +6,8 @@
 import { readFileSync, readdirSync, existsSync, appendFileSync } from "node:fs";
 import { join, resolve, dirname } from "node:path";
 import YAML from "yaml";
-import { writeDraft, enrichField, AtlasWriteError } from "./atlas-write.mjs";
+import { writeDraft, enrichField, scopeFields, AtlasWriteError } from "./atlas-write.mjs";
+import { atlasIndex } from "../chrome/atlas.mjs";
 import { SCOPES } from "./codes.mjs";
 import { isSafeSessionId } from "../../hooks/lib/workspace.mjs";
 import { EFFECT_LABEL } from "../../hooks/lib/guards/config-scope.mjs";
@@ -17,6 +18,7 @@ import { isMain } from "../lib/is-main.mjs";
 const SEL_ROLES = new Set(["button", "link", "menuitem", "tab", "checkbox", "radio", "combobox", "textbox", "searchbox", "spinbutton", "switch", "textarea"]);
 const FIELD_TYPE = { textbox: "text", textarea: "text", spinbutton: "number", combobox: "list", listbox: "list", checkbox: "flag", switch: "flag", searchbox: "lookup" };
 const SECTION_ROLES = new Set(["group", "region", "form", "tabpanel"]);
+const DRAFT_MAX = 300;   // il limite di writeDraft per bozza
 const sigPath = (sig) => String(sig ?? "").split("#")[0];
 
 export function readLog(file) {
@@ -231,6 +233,36 @@ function scopeItems(ws, customer, scope, dir) {
   return readdirSync(d).filter((f) => f.endsWith(".yaml")).map((f) => { try { return YAML.parse(readFileSync(join(d, f), "utf8")); } catch { return null; } }).filter(Boolean);
 }
 
+// Voce dell'Atlas (forma di atlasIndex) da un SEL già letto: stessi campi e stessi ripieghi sulle strategie.
+const SEL_CODE = /^[SCL]\.[A-Z0-9]{3,4}\.[A-Z0-9]{3}\.SEL\.\d{4}(\.v\d+)?$/;
+const str = (v) => (v === null || v === undefined ? null : String(v));
+function atlasEntry(code, o) {
+  const s = Array.isArray(o.strategies) ? o.strategies : [];
+  const label = str(o.label) ?? str(s.find((x) => x?.name)?.name) ?? str(s.find((x) => x?.kind === "label")?.value) ?? str(s.find((x) => x?.kind === "text")?.value);
+  const role = str(o.role) ?? str(s.find((x) => x?.kind === "role")?.value);
+  return { code, role, label, effect: str(o.effect), field: str(o.field), stability: str(o.stability), page: str(o.page), strategies: s };
+}
+
+// 18/11/2026 (ciclo di bug fixing): l'indice dello scope letto UNA volta per tutta la costruzione (prima ogni pagina
+// rileggeva l'Atlas e ogni FLD la cartella dei campi: su AVVA, 230 pagine × 9860 SEL, ore). I SEL del cliente si leggono
+// una volta (oggetti per moduli e percorsi, voci dell'Atlas per i doppioni); quelli del prodotto con atlasIndex.
+export function buildIndex(ws, customer, scope) {
+  const selectors = [];
+  const atlas = atlasIndex(ws, null, scope);
+  const d = join(ws, "customers", customer, "kb", "scopes", scope, "selectors");
+  if (existsSync(d)) {
+    for (const f of readdirSync(d).filter((x) => x.endsWith(".yaml"))) {
+      const code = f.slice(0, -5);
+      let o;
+      try { o = YAML.parse(readFileSync(join(d, f), "utf8")); } catch { continue; }
+      if (!o || typeof o !== "object") continue;
+      selectors.push(o);
+      if (SEL_CODE.test(code) && o.id === code) atlas.push(atlasEntry(code, o));
+    }
+  }
+  return { atlas, selectors, fields: scopeFields(ws, customer, scope), flows: scopeItems(ws, customer, scope, "flows") };
+}
+
 export function atlasBuild({ ws, customer, scope, sid }) {
   // revisione finale (C1): mai un percorso costruito da valori non validati (sessione, cliente, scope)
   if (!isSafeSessionId(String(sid ?? ""))) throw new AtlasWriteError(1, `sessione non valida: ${sid}`);
@@ -238,8 +270,9 @@ export function atlasBuild({ ws, customer, scope, sid }) {
   if (!SCOPES.has(scope)) throw new AtlasWriteError(1, `scope non valido: ${scope}`);
   const file = join(ws, "customers", customer, ".sessions", sid, "atlas", "pages.jsonl");
   if (!existsSync(file)) throw new AtlasWriteError(1, `nessun registro dell'esplorazione per la sessione ${sid}`);
+  const index = buildIndex(ws, customer, scope);
   // moduli già memorizzati per pagina (dai SEL esistenti): una pagina raggiunta per un'altra strada non cambia modulo
-  const knownModules = new Map(scopeItems(ws, customer, scope, "selectors").filter((s) => s.page && s.module).map((s) => [s.page, s.module]));
+  const knownModules = new Map(index.selectors.filter((s) => s.page && s.module).map((s) => [s.page, s.module]));
   const d = buildDrafts(readLog(file), { knownModules });
   const written = [];
   const skipped = [];
@@ -250,9 +283,23 @@ export function atlasBuild({ ws, customer, scope, sid }) {
   const add = (r, page = null) => { written.push(...r.written); skipped.push(...r.skipped); errors.push(...(r.errors ?? []).map((e) => ({ page, ...e }))); };
   const guard = (page, what, fn) => { try { return fn(); } catch (err) { errors.push({ page, type: what, label: null, error: String(err?.message ?? err).slice(0, 300) }); return null; } };
   const updated = [];
+  // 18/11/2026 (ciclo di bug fixing): una pagina con più di 300 elementi (su AVVA «formsearch», 300+ SEL) era rifiutata per
+  // intero da writeDraft («al più 300 item per bozza») a ogni esecuzione e non si memorizzava mai: si scrive a lotti da 300
+  // (i doppioni fra un lotto e l'altro li vede l'indice, aggiornato a ogni lotto). Un lotto che fallisce non ferma gli altri.
+  const pageDraft = (sig, what, items) => {
+    const out = { written: [], skipped: [], errors: [] };
+    let any = false;
+    for (let i = 0; i < items.length; i += DRAFT_MAX) {
+      const r = guard(sig, what, () => writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items: items.slice(i, i + DRAFT_MAX) }, tolerant: true, index }));
+      if (!r) continue;
+      any = true;
+      out.written.push(...r.written); out.skipped.push(...r.skipped); out.errors.push(...(r.errors ?? []));
+    }
+    return any ? out : null;
+  };
   for (const sig of new Set(d.fields.map((f) => f.page_sig))) {
     const items = d.fields.filter((f) => f.page_sig === sig).map(({ page_sig, person_list, ...f }) => f);
-    const r = guard(sig, "FLD", () => writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items }, tolerant: true }));
+    const r = pageDraft(sig, "FLD", items);
     if (!r) continue;
     add(r, sig);
     // un campo già memorizzato (sessione precedente) si arricchisce con ciò che questa sessione ha visto in più
@@ -261,10 +308,12 @@ export function atlasBuild({ ws, customer, scope, sid }) {
       if (it && guard(sig, "FLD-arricchimento", () => enrichField({ ws, customer, scope, code: sk.existing, options: it.options ?? [], mandatory: it.mandatory, ambiguous: !!it.ambiguous }))) updated.push(sk.existing);
     }
   }
-  const flds = scopeItems(ws, customer, scope, "fields");
+  // campi per etichetta e documento normalizzati, nell'ordine dell'elenco (stesso esito del filtro su tutti i campi per ogni SEL)
+  const fldByKey = new Map();
+  for (const f of index.fields) { const k = `${normLabel(f.label?.it)}|${normLabel(f.document)}`; if (!fldByKey.has(k)) fldByKey.set(k, []); fldByKey.get(k).push(f); }
   // stesso campo = stessa etichetta, stesso documento e stesso modulo (un campo senza modulo vale per ogni modulo)
   const fldCode = (label, document, module) => {
-    const same = flds.filter((f) => normLabel(f.label?.it) === normLabel(label) && normLabel(f.document) === normLabel(document));
+    const same = fldByKey.get(`${normLabel(label)}|${normLabel(document)}`) ?? [];
     // prima lo stesso modulo, poi un campo senza modulo (item precedenti), mai il campo di un altro modulo
     return (same.find((f) => (f.module ?? null) === (module ?? null)) ?? same.find((f) => !f.module) ?? (!module ? same[0] : null))?.id;
   };
@@ -273,12 +322,13 @@ export function atlasBuild({ ws, customer, scope, sid }) {
       const code = fieldLabel ? fldCode(fieldLabel, document, s.module) : null;
       return code ? { ...s, field: code } : s;
     });
-    const r = guard(sig, "SEL", () => writeDraft({ ws, customer, scope, draft: { page: { signature: sig, title: d.pages.get(sig)?.title }, items }, tolerant: true }));
+    const r = pageDraft(sig, "SEL", items);
     if (r) add(r, sig);
   }
-  const sels = scopeItems(ws, customer, scope, "selectors");
-  const selCode = (name, sig) => sels.find((s) => normLabel(s.label) === normLabel(name) && (!s.page || s.page === sig))?.id;
-  const haveTitles = new Set(scopeItems(ws, customer, scope, "flows").map((f) => `${f.title}|${moduleKey(f.module)}`));
+  const selByLabel = new Map();
+  for (const s of index.selectors) { const k = normLabel(s.label); if (!selByLabel.has(k)) selByLabel.set(k, []); selByLabel.get(k).push(s); }
+  const selCode = (name, sig) => (selByLabel.get(normLabel(name)) ?? []).find((s) => !s.page || s.page === sig)?.id;
+  const haveTitles = new Set(index.flows.map((f) => `${f.title}|${moduleKey(f.module)}`));
   const flws = [];
   for (const r of d.routes) {
     const title = `Percorso: ${r.title}`.slice(0, 140);
@@ -296,7 +346,7 @@ export function atlasBuild({ ws, customer, scope, sid }) {
     if (ok) flws.push({ type: "FLW", title, trigger: "navigazione", steps, ...(r.module ? { module: r.module } : {}) });
     else skipped.push({ type: "FLW", label: title, existing: "passo senza selettore" });
   }
-  if (flws.length) { const r = guard(null, "FLW", () => writeDraft({ ws, customer, scope, draft: { items: flws }, tolerant: true })); if (r) add(r); }
+  for (let i = 0; i < flws.length; i += DRAFT_MAX) { const r = guard(null, "FLW", () => writeDraft({ ws, customer, scope, draft: { items: flws.slice(i, i + DRAFT_MAX) }, tolerant: true, index })); if (r) add(r); }
   const todo = atlasTodo(d);
   if (errors.length) {
     try { appendFileSync(join(dirname(file), "build-errors.jsonl"), `${errors.map((e) => JSON.stringify({ ts: new Date().toISOString(), ...e })).join("\n")}\n`); } catch { /* la traccia resta nell'uscita */ }

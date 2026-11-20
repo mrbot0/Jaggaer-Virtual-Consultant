@@ -23,7 +23,8 @@ import { allows } from "../policy.mjs";
 import { skeleton } from "../paths.mjs";
 import { openInvocations } from "../state-summary.mjs";
 import { parsePromptHeader } from "../../../scripts/admin/agent-prompt.mjs";
-import { guarded, denyAudited, sameFile, SHELL_TOOLS } from "./common.mjs";
+import { guarded, denyAudited, sameFile, SHELL_TOOLS, readOnlyShell, shellSegments } from "./common.mjs";
+const INTERP_WORD = /^(?:.*[\\/])?(node|nodejs|deno|bun|tsx|ts-node|npx|python3?|py|perl|ruby|php|sh|bash|zsh|dash|ksh|fish|pwsh|powershell|cmd)(\.exe)?$/i;
 import { checkRemaining, enforceClass, estimateTask } from "../../../scripts/decide/budget.mjs";
 import { withFileLock } from "../fsx.mjs";
 import { planFilePath } from "../../../scripts/admin/approvals.mjs";
@@ -121,9 +122,16 @@ function candidateCwds(ctx, cmd) {
   return cwds;
 }
 
+// 19/11/2026 (falsi positivi segnalati dal ciclo 3): un nome con caratteri jolly che può espandersi in session.mjs non conta
+// se il comando non può eseguire nulla: `wc -c raw/*` o l'espressione regolare di un grep (`00(3[7-9]|4[0-2])`, `[^/]*`).
+// Revisione di sicurezza: fail-closed — il jolly passa solo se OGNI segmento è un comando di sola lettura chiamato per nome
+// (readOnlyShell: virgolette ed escape tolti come li toglie la shell, quindi n"o"de, no\de e n^ode restano node e negano).
 function checkSubAgentShell(ctx, cmd, refs) {
   const no = (why) => denyAudited(ctx, G, `un sub-agente non invoca session.mjs (${why}): cliente, scope, modalità e budget li cambia solo l'utente, con /use nella sessione principale (§29.10)`);
-  if (refs.glob) return no("nome con caratteri jolly");
+  // difesa in profondità (revisione di sicurezza 2): anche fra comandi di sola lettura, un jolly su session.mjs insieme al
+  // nome di un interprete come parola del comando nega
+  if (refs.glob && (shellSegments(cmd) ?? []).flat().some((x) => INTERP_WORD.test(x))) return no("nome con caratteri jolly insieme al nome di un interprete");
+  if (refs.glob && !readOnlyShell(cmd)) return no("nome con caratteri jolly in un comando che può eseguire script (con i jolly sono ammessi solo comandi di sola lettura: ls, cat, grep, wc, head, tail, find senza -exec…)");
   if (refs.opaque) return no("riferimento non risolvibile");
   if (!refs.literal.length) return null;
   if (EVAL.test(refs.flat)) return no("esecuzione di codice con node -e/import()");

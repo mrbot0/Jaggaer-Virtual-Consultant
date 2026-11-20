@@ -62,6 +62,9 @@ export function buildReport(input) {
       stopped_tasks: stopped, calibration: input.calibration ?? [] },
     checks: input.checks ?? { total: 0, new: 0 },
     economy: { tokens, by_model: byModel },
+    // 18/11/2026 (ciclo di bug fixing): clienti saltati in un passo (token, passo, errore pseudonimizzato); stesso array
+    // della digestione, così gli errori del reindex (dopo la prima scrittura) entrano nella riscrittura del report
+    errors: input.errors ?? [],
   };
 }
 
@@ -91,5 +94,9 @@ export function renderReport(r) {
   L.push("ECONOMIA");
   const models = Object.entries(r.economy.by_model).filter(([, v]) => v).map(([k, v]) => `${k} ${v}`).join(" · ");
   L.push(`  token: ${r.economy.tokens}${models ? ` · per modello: ${models}` : ""}`);
+  if (r.errors?.length) {
+    L.push("", `${pad("ERRORI (clienti saltati in un passo)", 47)}${r.errors.length}`);
+    for (const e of r.errors) L.push(`  ${e.customer} · ${e.step}: ${String(e.error).slice(0, 200)}`);
+  }
   return L.join("\n") + "\n";
 }

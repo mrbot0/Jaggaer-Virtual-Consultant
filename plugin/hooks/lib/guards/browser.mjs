@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { guardContext, denyAudited } from "./common.mjs";
+import { allows } from "../policy.mjs";
 import { resolveTarget, subset } from "../paths.mjs";
 import { classify, isBrowserTool, normalizeHost } from "../browser-tools.mjs";
 
@@ -103,7 +104,10 @@ export function outputRefusal(ctx, outputs) {
     try { T = resolveTarget(raw, { cwd: ctx.cwd, ws: ctx.ws }); } catch (err) { return `percorso di output negato: ${err.message}`; }
     const rels = [...T.ws];
     const ok = ctx.customer && ctx.sid && rels.length > 0 && rels.every((p) => OUTPUT_OK(ctx.customer, ctx.sid).some((g) => subset(p, g)) && !OUTPUT_NO.test(p));
-    if (!ok) return `il server del browser scriverebbe un file fuori dalle cartelle di lavoro della sessione (customers/<C>/.sessions/<sid>/, evidence/, runs/) o su un file di stato: ${raw}`;
+    // 18/11/2026 (ciclo di bug fixing): il motivo dice la cartella ASSOLUTA da usare (nelle sessioni reali l'agente scriveva
+    // lo snapshot nella sua cartella temporanea, con il nome breve 8.3, e il motivo con <C>/<sid> non bastava a correggersi)
+    const where = ctx.customer && ctx.sid ? `; usa un percorso assoluto in ${join(ctx.ws, "customers", ctx.customer, ".sessions", ctx.sid, "snapshots")} (take_snapshot) o altrove in ${join(ctx.ws, "customers", ctx.customer, ".sessions", ctx.sid)}, con il nome lungo delle cartelle (niente nomi brevi 8.3 né collegamenti)` : "";
+    if (!ok) return `il server del browser scriverebbe un file fuori dalle cartelle di lavoro della sessione (customers/<C>/.sessions/<sid>/, evidence/, runs/) o su un file di stato: ${raw}${where}`;
   }
   return null;
 }
@@ -119,6 +123,10 @@ const EFFECT_KINDS = new Set(["input", "click", "upload", "script", "other"]);
 const effectful = (a) => EFFECT_KINDS.has(a.kind) || (a.kind === "dialog" && a.submits) || a.submits === true;
 export function claudeEffectRefusal(ctx, envType) {
   if (envType === "sandbox") return null;
+  // 19/11/2026 (decisione dell'utente: «in prep non vogliamo più blocchi sui click solo sulle cancellazioni»): in esplorazione
+  // senza piano (sandbox o pre-produzione) anche il browser di Claude agisce; cancellazioni e caricamenti li nega lo stesso
+  // guard dell'esplorazione per tutte le famiglie. Produzione e piani attivi restano come da WP08.
+  if (allows(ctx.session, "browser_claude_fuori_sandbox", envType)) return null;
   const bad = (ctx.actions ?? []).find((a) => (a.family ?? ctx.call?.family) === "claude-browser" && effectful(a));
   if (!bad) return null;
   return `azione con effetto del browser di Claude (${bad.op ?? ctx.tool}${bad.action ? ` ${bad.action}` : ""}) negata in ${envType ? `ambiente ${envType}` : "ambiente ignoto"}: `

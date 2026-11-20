@@ -155,7 +155,18 @@ export async function buildPayload(ws, { customer, run, scope = null, outcomes =
     x.results = { info: { ...(cfg.project ? { project: cfg.project } : {}), summary, description, ...(testPlanKey ? { testPlanKey } : {}), labels: [`scope:${S}`] }, tests: x._tests };
     delete x._tests;
   }
-  const doc = { run, customer, generated_at: now.toISOString(), executions, skipped, warnings };
+  // 18/11/2026 (ciclo di bug fixing): con --scope si riscrive solo la voce di quello scope; le altre restano come sono
+  // (prima il file perdeva gli altri scope, e una voce della coda offline che li citava non era più inviabile)
+  let all = executions;
+  let allSkipped = skipped;
+  if (scope) {
+    let prev = null;
+    try { prev = JSON.parse(readFileSync(payloadFile(ws, customer, run), "utf8")); } catch { prev = null; }
+    const others = Object.fromEntries(Object.entries(prev?.executions ?? {}).filter(([S]) => S !== scope));
+    all = { ...others, ...executions };
+    allSkipped = [...(Array.isArray(prev?.skipped) ? prev.skipped.filter((x) => CASE_RE.exec(String(x?.case ?? ""))?.[2] !== scope) : []), ...skipped];
+  }
+  const doc = { run, customer, generated_at: now.toISOString(), executions: all, skipped: allSkipped, warnings };
   writeFileAtomic(payloadFile(ws, customer, run), `${JSON.stringify(doc, null, 2)}\n`);
   return { file: `runs/${run}/xray-payload.json`, ...doc };
 }

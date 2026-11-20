@@ -138,6 +138,13 @@ export function validateHandoffs(list) {
 // known: codici esistenti altrove (es. il DB di prodotto per gli S citati da un DB cliente).
 export function graph(db, { root = null, scope = null, known = null, top = 50 } = {}) {
   const all = new Map(db.prepare("select code, status, type, scope from items").all().map((r) => [r.code, r]));
+  // 18/11/2026 (ciclo di bug fixing): un item che cita il suo DOC profilato (doc_profiles: il DOC entra in items solo con la
+  // promozione), la DEC che l'ha deciso, un'OBS o una lezione non ha un riferimento pendente: prima `graph` usciva con 3
+  // (incoerente) per ogni item digerito dalle fonti (ENEL: FLD → C.ENEL.XSC.DOC.0013 «dangling»).
+  const registered = new Set();
+  for (const t of ["doc_profiles", "decisions", "observations", "lessons"]) {
+    try { for (const r of db.prepare(`select code from ${t}`).all()) registered.add(r.code); } catch { /* tabella assente in un DB vecchio */ }
+  }
   const hasS = [...all.keys()].some((c) => c.startsWith("S."));
   const items = db.prepare(`select code, scope, type, path from items where status <> 'deprecato'${scope ? " and scope = ?" : ""} order by code`).all(...(scope ? [scope] : []));
   const rel = db.prepare("select to_code from relations where from_code = ?");
@@ -168,7 +175,7 @@ export function graph(db, { root = null, scope = null, known = null, top = 50 } 
       const base = to.replace(/\.v\d+$/, "");
       const hit = all.get(to) ?? all.get(base);
       if (!hit) {
-        if (known?.has(to) || known?.has(base)) { /* esiste nell'altro DB */ } else if (to.startsWith("S.") && !hasS && !known) unverified.push({ from: r.code, to });
+        if (known?.has(to) || known?.has(base)) { /* esiste nell'altro DB */ } else if (registered.has(to) || registered.has(base)) { /* DOC profilato, DEC, OBS, LSN: esiste */ } else if (to.startsWith("S.") && !hasS && !known) unverified.push({ from: r.code, to });
         else dangling.push({ from: r.code, to });
       } else if (hit.status === "deprecato") deprecated.push({ from: r.code, to });
       const toScope = to.split(".")[2];

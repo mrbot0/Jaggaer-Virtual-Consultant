@@ -88,7 +88,7 @@ test("computeAllowedPaths: la cella di §31.4 per cliente × scope", () => {
   for (const e of [
     "product/kb/scopes/CAT/**", "customers/ACME/kb/scopes/CAT/**", "customers/ACME/kb/handoffs/*CAT*",
     "customers/ACME/kb/scopes/XSC/integrations/**", "customers/ACME/tests/**/CAT/**", "customers/ACME/.sessions/sess-1/**",
-    "customers/ACME/_inbox/CAT/**",
+    "customers/ACME/_inbox/CAT/**", "customers/ACME/config/environments.yaml",
     ...["lessons", "decisions", "outcomes", "observations", "epistemic", "contradictions", "runs", "reports", "evidence"].map((d) => `customers/ACME/${d}/**`),
   ]) assert.ok(p.includes(e), `manca ${e}`);
   assert.ok(!p.some((x) => /ADM|BETA|analysis/.test(x)), "niente altri scope, clienti o analysis");

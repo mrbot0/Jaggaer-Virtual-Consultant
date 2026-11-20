@@ -91,6 +91,8 @@ export function collectCustomer(ws, customer, window = {}) {
   const db = openReadonly(join(root, "knowledge.db"));
   if (!db) return out;
   try {
+    // un DB illeggibile si dichiara qui (le letture sotto, protette una per una, lo farebbero sembrare solo vuoto)
+    db.prepare("select count(*) as n from sqlite_master").get();
     out.releases = safe(() => parseJson(db.prepare("select value from meta where key='releases'").get()?.value, []), []);
     const members = new Map();
     for (const m of safe(() => db.prepare("select cluster_code, item_code from cluster_members").all(), [])) {
@@ -119,6 +121,15 @@ export function collectCustomer(ws, customer, window = {}) {
   return out;
 }
 
+// 18/11/2026 (ciclo di bug fixing): un cliente illeggibile (knowledge.db corrotto, file bloccato) non ferma la raccolta
+// degli altri: i suoi dati restano vuoti e l'errore va in `errors` ({ customer, step, error }), che la digestione riporta.
+const emptyCustomer = (customer) => ({ customer, items: [], lessons: [], contradictions: [], ctr_items: [], observations: [], decisions: [], epistemic: [],
+  checks: { total: 0, new: 0 }, sessions: [], releases: [], cluster_decay: [], all_items: [] });
 export function collect(ws, { customers = listCustomers(ws), window = {} } = {}) {
-  return { window, customers: Object.fromEntries(customers.map((c) => [c, collectCustomer(ws, c, window)])) };
+  const errors = [];
+  const out = {};
+  for (const c of customers) {
+    try { out[c] = collectCustomer(ws, c, window); } catch (err) { errors.push({ customer: c, step: "raccolta", error: String(err?.message ?? err) }); out[c] = emptyCustomer(c); }
+  }
+  return { window, customers: out, errors };
 }

@@ -47,6 +47,10 @@ export function record(ws, { customer, caseId, observed, tolerances = null, decl
 }
 
 export function compare(ws, { customer, caseId, observed, tolerances = null }) {
+  // 18/11/2026 (ciclo di bug fixing): come record, il caso è un codice NRT (il nome del file della baseline: niente
+  // risalite fuori da tests/baselines/) e l'osservato è richiesto (prima: lettura fuori cartella, o crash del diff)
+  if (!NRT_RE.test(String(caseId ?? ""))) throw new BaselineError(1, `codice del caso non valido: ${caseId}`);
+  if (observed === undefined || observed === null || typeof observed !== "object") throw new BaselineError(1, "comportamento osservato mancante (--observed <file.yaml>)");
   const b = loadBaseline(ws, customer, caseId);
   if (!b) throw new BaselineError(1, `nessuna baseline registrata per ${caseId} (baseline record)`);
   const r = diffPayload(b.observed, observed, tolerances ?? b.tolerances ?? {});

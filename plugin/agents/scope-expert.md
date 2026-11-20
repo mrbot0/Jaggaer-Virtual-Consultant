@@ -170,8 +170,11 @@ imparare.
     node "${CLAUDE_PLUGIN_ROOT}/scripts/explore/explore.mjs" show "<pagina>" --json
 
 `status` dice quali pagine sono cambiate all'ultima lettura, quali non rivedi da giorni e quali si raggiungono solo per
-URL; `route` dà l'URL per andarci **diretto** con `navigate_page` oppure la sequenza più corta di click; `show` la scheda
-della pagina (elementi, archi, file del testo integrale). Riesplori solo le pagine nuove, cambiate o vecchie. Cosa ti è
+URL; `route` dà l'URL per andarci **diretto** con `navigate_page` oppure la sequenza più corta di click (un arco con
+`›`, come `"Other Action Menu › Audit Trail"`, sono click consecutivi senza lettura in mezzo: menu, poi voce); `show` la scheda
+della pagina (elementi, archi, file del testo integrale). Riesplori solo le pagine nuove, cambiate o vecchie. Ogni script
+del plugin si esegue in una chiamata Bash a sé (`node "…/scripts/…" argomenti`, al più `2>&1` e `| head -c N` in coda):
+due script in fila con `;` o `&&` sono negati. Cosa ti è
 concesso in ogni profilo (esplorazione, piano, standard, produzione) lo dice `docs/POLICY.md`, generato dalla policy
 dei guard: se una regola qui sotto e quel file non coincidono, vale il file.
 

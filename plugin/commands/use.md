@@ -27,7 +27,9 @@ tetto dell'ambiente), budget usato/totale, pendenze. Regole:
   2. esegui `node "${CLAUDE_PLUGIN_ROOT}/scripts/chrome/env-check.mjs" --env <id> --snapshot <file> --write-session --session "${CLAUDE_SESSION_ID}" --json`;
   3. exit 0 = verificato (≥ 2 segnali); exit 3 = `unknown` o rifiutato: riporta segnali e motivo
      (§58 "Ambiente non riconosciuto"), **non forzare** e non ripetere con un altro snapshot.
-  Cambiare ambiente azzera la verifica. exit 3 su `use env` = environments.yaml viola le regole di
+  Cambiare ambiente azzera la verifica e chiude la modalità esplorazione (torna `nrt`: nel nuovo ambiente servono di
+  nuovo la frase dell'utente e `mode esplorazione`; il campo `note` lo dice). Senza cliente attivo `show` risponde con
+  `session: null` e `hint` (exit 0). exit 3 su `use env` = environments.yaml viola le regole di
   produzione (es. `type: prod` con tre approvazioni mancanti o con il livello rosso in `config_levels`; `write_data` in
   produzione è un interruttore dell'utente, vero o falso, e non dà exit 3): si corregge il file fuori sessione.
 - Sul browser (giro di correzione 1): prima di ogni click o input serve una navigate verso un host
@@ -37,7 +39,8 @@ tetto dell'ambiente), budget usato/totale, pendenze. Regole:
   esplorazione**: clicca tutto, compila con valori di prova, salva, invia, approva, conferma i dialoghi; mai
   cancellazioni, upload di file, script nella pagina, strumenti non classificati, produzione; nessun tetto di
   azioni per agente. Ogni click vuole un elemento con nome dell'ultima lettura (i click a coordinate sono negati). In
-  pre-produzione si esplora con Chrome DevTools (il browser di Claude fuori dalla sandbox legge soltanto). Le pagine
+  pre-produzione si esplora con Chrome DevTools o con il browser di Claude (fuori dalla sandbox agisce solo in
+  esplorazione senza piano; cancellazioni e caricamenti negati). Le pagine
   pesanti ("pagina troppo grande") si leggono **a pezzi**: con DevTools `take_snapshot` con `filePath` assoluto
   nella cartella `snapshots/` della sessione (il plugin legge il file appena scritto dallo strumento come lettura
   completa; l'agente lo legge a pezzi con Read). Precondizioni di DevTools: il workspace sta sotto la cartella di

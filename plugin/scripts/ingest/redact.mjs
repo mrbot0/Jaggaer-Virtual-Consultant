@@ -22,7 +22,7 @@
 // Exit: 0 ok · 1 argomenti o file.
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
-import { redactText, PROFILES } from "../chrome/redact.mjs";
+import { redactText, secretEnv, PROFILES } from "../chrome/redact.mjs";
 import { parseArgs, fail } from "../lib/args.mjs";
 import { isMain } from "../lib/is-main.mjs";
 import { readTextFile, inputBase } from "../lib/text-file.mjs";
@@ -53,6 +53,11 @@ export function makeUnitRedactor({ profile = "strict", names = [], env = process
   if (!PROFILES.includes(profile)) throw new Error(`profilo di redazione sconosciuto: ${profile} (${PROFILES.join(" · ")})`);
   const nameRes = [...new Set(names.filter((n) => typeof n === "string" && n.length >= 3))].sort((a, b) => b.length - a.length)
     .map((n) => new RegExp(`(?<![A-Za-z0-9_])${esc(n)}(?![A-Za-z0-9_])`, COMMON_WORD_CODES.has(n.toUpperCase()) ? "g" : "gi"));
+  // 18/11/2026 (ciclo di bug fixing): le variabili da segreto si leggono UNA volta per redattore. redactText con
+  // process.env lo rilegge a ogni stringa (su Windows ogni accesso è una chiamata al sistema): su ENEL un xlsx di 330k celle
+  // costava 6 minuti di harvest e la pipeline intera 12 ore (17 s contro 0,05 s su 300 righe per foglio). Stesso risultato:
+  // redactText considera solo queste variabili.
+  const secrets = secretEnv(env);
   return (unit) => {
     const masks = new Set();
     // strict: autori dell'unità (comment/revision/decision) e, a livello di sezione (redactDoc), di commenti e revisioni
@@ -68,7 +73,7 @@ export function makeUnitRedactor({ profile = "strict", names = [], env = process
       let out = s;
       for (const re of authorRes) { re.lastIndex = 0; if (re.test(out)) { masks.add("autore"); out = out.replace(re, "[autore]"); } }
       for (const re of nameRes) { re.lastIndex = 0; if (re.test(out)) { masks.add("cliente"); out = out.replace(re, "[cliente]"); } }
-      const r = redactText(out, { profile, env });
+      const r = redactText(out, { profile, env: secrets });
       for (const m of r.masks) masks.add(m);
       return r.text;
     };

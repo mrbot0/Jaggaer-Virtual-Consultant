@@ -1,7 +1,16 @@
 {
-  "description": "Server MCP NON da browser ammessi quando la sessione ha un ambiente dichiarato (giro di correzione 1, I5). Ogni altro server mcp__* che non è una famiglia del browser classificata (Chrome DevTools, Claude browser / Claude in Chrome, Playwright) è negato da guard-environment. File del plugin, non del cliente: si estende solo con una release del plugin. Nomi esatti del server (mcp__<server>__<strumento>).",
+  "description": "Server MCP NON da browser ammessi quando la sessione ha un ambiente dichiarato (giro di correzione 1, I5). Ogni altro server mcp__* che non è una famiglia del browser classificata (Chrome DevTools, Claude browser / Claude in Chrome, Playwright) è negato da guard-environment. File del plugin, non del cliente: si estende solo con una release del plugin. `servers`: nomi esatti del server (mcp__<server>__<strumento>), ammessi per intero; `tools`: nomi esatti di singoli strumenti. 19/11/2026 (falsi positivi segnalati dal ciclo 3, ristretti dalla revisione di sicurezza): dell'app desktop di Claude Code sono ammessi per intero solo i server che non toccano il tenant, le impostazioni, la cartella di lavoro né altre sessioni — chiusura del turno (ccd_turn), viste e finestre (ccd_view, ccd_window) —; per strumento i capitoli e la lettura dei widget (ccd_session) e le sole letture della barra laterale. Restano negati ccd_session__spawn_task e dismiss_task (avviano o ritirano altre sessioni), ccd_directory (cambia la cartella di lavoro), le modifiche della barra laterale, ccd_settings, ccd_session_mgmt (altre sessioni, modalità dei permessi), ccd_connectors, ccd_host (worktree), ccd_pr (merge automatico).",
   "servers": [
     "alm",
-    "plugin_jaggaer-virtual-consultant_alm"
+    "plugin_jaggaer-virtual-consultant_alm",
+    "ccd_turn",
+    "ccd_view",
+    "ccd_window"
+  ],
+  "tools": [
+    "mcp__ccd_session__mark_chapter",
+    "mcp__ccd_session__read_widget_context",
+    "mcp__ccd_sidebar__list_groups",
+    "mcp__ccd_sidebar__list_sections"
   ]
 }

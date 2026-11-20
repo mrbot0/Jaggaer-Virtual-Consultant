@@ -97,15 +97,18 @@ test("environments: valido verde; prod con write_data: true (spec 2026-10-06 §3
   assert.equal(c.status, "red");
 });
 
-test("credentials: variabili per prefisso dell'ambiente attivo presenti verde (solo nomi); assenti rosso", async () => {
+// 18/11/2026 (ciclo di bug fixing): assenti ⇒ giallo, non più rosso — le NRT_<ENV>_* servono solo alla corsia compilata
+// (Playwright, opzionale; il login nel browser lo fa l'utente): il rosso bloccava ogni lavoro sui workspace reali
+test("credentials: variabili per prefisso dell'ambiente attivo presenti verde (solo nomi); assenti giallo (solo corsia compilata)", async () => {
   const ws = demoWorkspace();
   const g = byId(await run(ws), "credentials");
   assert.equal(g.status, "green");
   assert.match(g.detail, /NRT_SBX_USER/);
   assert.ok(!g.detail.includes("demo"));
   const r = byId(await runChecks({ ws, plugin: ROOT, env: {} }), "credentials");
-  assert.equal(r.status, "red");
+  assert.equal(r.status, "yellow");
   assert.match(r.detail, /NRT_SBX_/);
+  assert.match(r.detail, /corsia compilata/);
 });
 
 test("browser: server del browser non sondabili dal plugin ⇒ giallo 'verificare in sessione'; .mcp.json illeggibile rosso", async () => {
@@ -198,7 +201,10 @@ test("CLI: tabella di testo e --json; exit 0 senza rossi, 3 con un rosso, 0 con 
   const t = cli([]);
   assert.equal(t.status, 0);
   assert.match(t.stdout, /STATO\s+CONTROLLO/);
-  assert.equal(cli([], {}).status, 3, "credenziali mancanti ⇒ rosso");
+  // 18/11/2026 (ciclo di bug fixing): credenziali mancanti ⇒ giallo (exit 0); il rosso di prova è un environments.yaml rotto
+  assert.equal(cli([], {}).status, 0, "credenziali mancanti ⇒ giallo");
+  writeFileSync(join(ws, "customers/ACME/config/environments.yaml"), "environments: [\n");
+  assert.equal(cli([]).status, 3, "environments.yaml non valido ⇒ rosso");
   assert.equal(cli(["--help"]).status, 0);
   assert.equal(cli(["frobnicate"]).status, 1);
 });

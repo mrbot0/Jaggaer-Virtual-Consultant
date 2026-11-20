@@ -24,7 +24,7 @@
 //   planLlm(items, { budget = 80000, unitBudget = 3000, batchMax = 20 }) → sessioni di lotti ≤ budget (§29.10)
 //   writeRaw(inboxScopeDir, docCode, result) → _inbox/<scope>/raw/<DOCID>.yaml (solo _inbox, §29.6)
 // CLI: node scripts/ingest/extract.mjs --units <units.json> --doc <parsed.json> --profile <DOC.yaml> --root <ws> [--scope S] [--customer C] [--json]
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import YAML from "yaml";
 import { parseRule } from "./deontic.mjs";
@@ -88,8 +88,12 @@ function rawBase(unit, ctx) {
     page: unit.context?.page ?? null, lang: unit.lang, facets: { F1: ctx.f1 ?? null, F15: ctx.genre ?? null } };
 }
 
+// le parti successive alla prima di un'unità strutturata spezzata (stessi passi, stessa riga di campi, stesso record della
+// prima) non sono un secondo item: restano contesto (18/11/2026, prima davano un grezzo duplicato per parte)
+const STRUCTURED = new Set(["procedura", "riga-tabella-campi", "tracciato", "schermata"]);
 export function extractUnit(unit, ctx = {}) {
   if (!EXTRACTABLE.has(unit.type)) return null;
+  if (STRUCTURED.has(unit.type) && unit.part?.n > 1) return null;
   const b = rawBase(unit, ctx);
   const missing = [];
   let extraction;
@@ -273,7 +277,7 @@ export function documentCandidates(doc, units, raw, { profile = null } = {}) {
       const h = u.table?.headers ?? [];
       const ci = h.findIndex((x) => /^(code|codice|error code|status|http status)$/i.test(String(x).trim()));
       const di = h.findIndex((x) => /^(description|descrizione|message|messaggio|meaning)$/i.test(String(x).trim()));
-      if (ci >= 0 && di >= 0) for (const row of u.table.rows) if (row[ci]) errors.push({ code: String(row[ci]), description: String(row[di] ?? ""), source_unit: u.id });
+      if (ci >= 0 && di >= 0) for (const row of u.table?.rows ?? []) if (row[ci]) errors.push({ code: String(row[ci]), description: String(row[di] ?? ""), source_unit: u.id });
     }
     out.push({ raw_id: intId, candidates: ["INT"], doc: docCode, section: null, source_unit: units[0]?.id ?? null, facets,
       extraction: { title: doc.title, protocol, endpoints, operations, mappings, error_catalog: errors.slice(0, 200) },
@@ -321,11 +325,49 @@ export function extractDocument(doc, units, { profile = null } = {}) {
   return { items: all, stats, llm_plan: planLlm(all) };
 }
 
+// 18/11/2026 (ciclo di bug fixing): la re-ingestion della stessa cartella (o una nuova versione) riscriveva raw/DOCnnnn.yaml
+// da T0 e cancellava il lavoro di T1 (completamenti di complete.mjs apply, irrisolti, digested_as del digester): tutto
+// tornava «da completare» e i grezzi già digeriti rientravano nella coda dei pronti. Un grezzo con lo stesso raw_id, la
+// stessa unità e la stessa estrazione T0 (a meno dei campi mancanti, i soli che T1 scrive) eredita i campi completati, t1
+// e digested_as; un'estrazione T0 cambiata riparte da capo. Vale anche per i completamenti scritti a mano prima del ponte
+// (campo `completion`, needs_llm false: 5 documenti di ENEL). → { items, carried }
+const stableJson = (v) => JSON.stringify(v, (k, x) => (x && typeof x === "object" && !Array.isArray(x) ? Object.fromEntries(Object.keys(x).sort().map((kk) => [kk, x[kk]])) : x));
+const filledValue = (v) => v !== null && v !== undefined && String(v).trim() !== "";
+export function carryOverT1(prevItems, items) {
+  const prev = new Map((Array.isArray(prevItems) ? prevItems : []).filter((p) => p?.raw_id && (p.t1 || p.digested_as || p.completion)).map((p) => [p.raw_id, p]));
+  let carried = 0;
+  const out = items.map((it) => {
+    const p = prev.get(it.raw_id);
+    if (!p || (p.source_unit ?? null) !== (it.source_unit ?? null)) return it;
+    const missing = Array.isArray(it.missing) ? it.missing : [];
+    const base = (e) => stableJson(Object.fromEntries(Object.entries(e ?? {}).filter(([k]) => !missing.includes(k))));
+    if (base(p.extraction) !== base(it.extraction)) return it;
+    const extraction = { ...it.extraction };
+    for (const k of missing) if (filledValue(p.extraction?.[k])) extraction[k] = p.extraction[k];
+    const still = missing.filter((k) => !filledValue(extraction[k]));
+    carried++;
+    const { missing: _m, ...rest } = it;
+    return { ...rest, extraction, needs_llm: still.length > 0 && p.t1?.status !== "unresolved", ...(still.length ? { missing: still } : { missing: [] }), ...(p.t1 ? { t1: p.t1 } : {}), ...(p.completion ? { completion: p.completion } : {}), ...(p.digested_as ? { digested_as: p.digested_as } : {}) };
+  });
+  return { items: out, carried };
+}
+
 export function writeRaw(inboxScopeDir, docCode, result, { scope } = {}) {
   const dir = join(inboxScopeDir, "raw");
   mkdirSync(dir, { recursive: true });
   const file = join(dir, `${docIdToken(docCode)}.yaml`);
-  writeFileSync(file, YAML.stringify({ doc: docCode, scope: scope ?? null, extracted_at: new Date().toISOString(), tier: "T0", stats: result.stats, llm_plan: { ...result.llm_plan, sessions: result.llm_plan.sessions.map(({ batch_items, ...s }) => ({ ...s, batch_items })) }, items: result.items }, { lineWidth: 0 }));
+  if (existsSync(file)) {
+    let prev = null;
+    try { prev = YAML.parse(readFileSync(file, "utf8"), { maxAliasCount: 100000 })?.items; } catch { /* grezzo precedente illeggibile: si riscrive da T0 */ }
+    const c = carryOverT1(prev, result.items);
+    if (c.carried) {
+      // il piano e le statistiche seguono lo stato ereditato (needs_llm), così llm_plan resta coerente con i grezzi
+      result.items = c.items;
+      result.llm_plan = planLlm(c.items);
+      result.stats = { ...result.stats, needs_llm: c.items.filter((r) => r.needs_llm).length, t0_complete: c.items.filter((r) => !r.needs_llm).length, t1_carried: c.carried };
+    }
+  }
+  writeFileSync(file, YAML.stringify({ doc: docCode, scope: scope ?? null, extracted_at: new Date().toISOString(), tier: "T0", stats: result.stats, llm_plan: { ...result.llm_plan, sessions: result.llm_plan.sessions.map(({ batch_items, ...s }) => ({ ...s, batch_items })) }, items: result.items }, { lineWidth: 0, aliasDuplicateObjects: false }));   // 18/11/2026: niente ancore YAML (oltre 100 alias i lettori si fermavano)
   return file;
 }
 

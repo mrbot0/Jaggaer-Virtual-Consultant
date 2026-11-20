@@ -47,8 +47,26 @@ Tier (§26.3): T0/T1 · ciclo cognitivo: ridotto (1-2-6)
 3. **VALUTARE** — non si applica nel ciclo ridotto: la forma epistemica la calcola il digester.
 4. **DECIDERE** — non si applica: niente tabelle. Un'unità ambigua (doppia negazione, "dovrebbe… salvo…") va nel
    residuo `ambiguous` senza `mandatory` (skill `doc-ingestion`, `field-modeling`).
-5. **AGIRE** — solo scrittura: per ogni grezzo completi i campi mancanti con la citazione (unità, pagina/sezione),
-   l'ipotesi di tipo (`type_hypothesis`, mai il tipo definitivo) e il testo verbatim; ≤ 50 campi per lotto.
+5. **AGIRE** — a lotti, con lo script del ponte T0 → T1 (18/11/2026): **non riscrivi mai a mano i file grezzi**
+   (`raw/DOCnnnn.yaml` contiene decine di item: una riscrittura li corrompe). Il ciclo, finché `remaining` è 0 o il
+   budget finisce:
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/complete.mjs" status --customer <C> --scope <S> --json
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/complete.mjs" next --customer <C> --scope <S> --max 12 --json
+
+   `next` dà per ogni grezzo `missing` (i soli campi da completare), l'estrazione T0 e il **testo dell'unità** con quello
+   delle vicine: non serve cercare le unità. I candidati di documento (`R.DOCnnnn.C001` parametro di un export di
+   configurazione, `F001` workflow, `I001` integrazione) citano solo l'unità d'ingresso della sezione: se il testo dato non
+   dice ciò che manca, `unresolved` con il motivo (mai dedurlo dal nome del parametro). Scrivi i completamenti in
+   `customers/<C>/.sessions/<sid>/work/<task>/lotto-<n>.yaml` — un elenco di `{ raw_id, fields: { <campo>: valore },
+   citation: { unit, section } }`, con `unresolved: "<motivo>"` quando l'unità non dice ciò che manca (mai inventare) —
+   e applicali:
+
+       node "${CLAUDE_PLUGIN_ROOT}/scripts/ingest/complete.mjs" apply --customer <C> --scope <S> --file customers/<C>/.sessions/<sid>/work/<task>/lotto-<n>.yaml --json
+
+   Lo script scrive solo i campi mancanti (un campo non mancante è un errore del lotto, non del documento), segna
+   `needs_llm: false` e la citazione, e riporta in `errors` i grezzi rifiutati: correggi solo quelli. Valori solo dal
+   testo dell'unità, l'ipotesi di tipo resta un'ipotesi (`type_hypothesis`, mai il tipo definitivo); ≤ 50 campi per lotto.
 6. **RIFLETTERE** — auto-verifica sulla bozza del rapporto, poi la lezione (skill `self-check-and-lesson`) in
    `customers/<C>/lessons/<LSN>.md` da `${CLAUDE_PLUGIN_ROOT}/templates/lesson.md` (codice da `inputs.lesson_code`):
 

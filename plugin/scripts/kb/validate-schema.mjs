@@ -154,16 +154,14 @@ if (isMain(import.meta.url)) {
   const files = args.filter((a) => !a.startsWith("--"));
   let failed = 0;
   const results = [];
-  try {
-    for (const f of files) {
-      const r = validateItem(YAML.parse(readFileSync(f, "utf8")));
-      results.push({ file: f, ...r });
-      if (!r.ok) { failed++; if (!asJson) console.error(`✗ ${f}\n  ${r.errors.join("\n  ")}`); }
-    }
-  } catch (err) {
-    if (asJson) console.log(JSON.stringify({ ok: false, error: String(err?.message ?? err) }));
-    else console.error(`errore di sistema: ${err?.message ?? err}`);
-    process.exit(2);
+  // 19/11/2026 (ciclo di bug fixing): un file assente o con YAML malformato (una bozza scritta male dal digester) fermava
+  // tutta la validazione con exit 2 «errore di sistema» e nessun risultato per gli altri file. Ora è un item non valido
+  // (exit 1) con il motivo, e gli altri file si validano, come in validate-fld.
+  for (const f of files) {
+    let r;
+    try { r = validateItem(YAML.parse(readFileSync(f, "utf8"))); } catch (err) { r = { ok: false, errors: [`file illeggibile: ${String(err?.message ?? err).slice(0, 300)}`] }; }
+    results.push({ file: f, ...r });
+    if (!r.ok) { failed++; if (!asJson) console.error(`✗ ${f}\n  ${r.errors.join("\n  ")}`); }
   }
   if (asJson) console.log(JSON.stringify({ ok: failed === 0, results }));
   process.exit(failed ? 1 : 0);

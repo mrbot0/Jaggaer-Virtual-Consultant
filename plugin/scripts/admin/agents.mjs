@@ -65,13 +65,14 @@ export function resolveMonitorSession(ws, arg, env = process.env) {
     sid = pick(arg) ?? pick(env.JVC_SESSION_ID) ?? readCurrentSession(ws);
     if (!isSafeSessionId(sid)) return { error: "nessuna sessione risolvibile: --session <id|SES…>" };
     let p;
-    try { p = readPointer(ws, sid); } catch (err) { return { error: `puntatore di sessione illeggibile: ${err.message}` }; }
+    // 18/11/2026 (ciclo di bug fixing): ogni errore recuperabile dice come uscirne
+    try { p = readPointer(ws, sid); } catch (err) { return { error: `puntatore di sessione illeggibile: ${err.message} — riparalo con /jaggaer-virtual-consultant:use customer <ID> (ne resta una copia .corrupt-<data>)` }; }
     customer = p?.customer ?? null;
     if (!customer) { const f = findByCode(ws, sid); if (f) customer = f.customer; }
-    if (!customer) return { error: `nessun cliente attivo nella sessione ${sid}` };
+    if (!customer) return { error: `nessun cliente attivo nella sessione ${sid}: /jaggaer-virtual-consultant:use customer <ID> (aggiungi --new per crearlo)` };
   }
   let text;
-  try { text = readFileSync(sessionFile(ws, customer, sid), "utf8"); } catch { return { error: `session.json assente per ${customer}/${sid}` }; }
+  try { text = readFileSync(sessionFile(ws, customer, sid), "utf8"); } catch { return { error: `session.json assente per ${customer}/${sid}: riesegui /jaggaer-virtual-consultant:use customer ${customer}` }; }
   const r = checkSessionText(text, { customer, sid });
   if (r.ok) return { customer, sid, session: r.session, warning: null };
   // stato non valido: il monitor mostra comunque ciò che può, con l'avviso

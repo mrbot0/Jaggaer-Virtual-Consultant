@@ -19,6 +19,75 @@ export const READ_TOOLS = new Set(["Read", "Glob", "Grep"]);
 export const SHELL_TOOLS = new Set(["Bash", "PowerShell"]);
 export const PATH_TOOLS = new Set([...FILE_TOOLS, ...SEARCH_TOOLS]);
 
+// 19/11/2026 (revisione di sicurezza dei cinque cicli): i segmenti di un comando di shell come li eseguirà la shell — parole
+// senza virgolette, escape (\ di POSIX, ^ di cmd) tolti, separatori fra virgolette ignorati (`grep -E "a|b"` è un solo
+// comando), redirezioni e loro bersagli esclusi —, così il nome del comando non si maschera (n"o"de, no\de, n^ode ⇒ node).
+// null (fail-closed) se il comando ha sostituzioni (`…`, $(…), <(…), >(…)) o virgolette non chiuse.
+export function shellSegments(cmd) {
+  const s = String(cmd ?? "");
+  // revisione di sicurezza (4): PowerShell tratta le virgolette tipografiche come virgolette vere (“ chiude una stringa aperta
+  // con ", ‘ una aperta con ') ⇒ `ls "a“; node x #"` esegue node in PowerShell: fail-closed
+  if (/[‘’‚‛“”„]/.test(s)) return null;
+  const segs = [];
+  let words = [], w = "", has = false, q = null, skipTarget = false;
+  const endWord = () => { if (has) { if (skipTarget) skipTarget = false; else words.push(w); } w = ""; has = false; };
+  const endSeg = () => { endWord(); skipTarget = false; if (words.length) segs.push(words); words = []; };
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (q) {
+      if (c === q) q = null;
+      else if (q === '"' && (c === "`" || (c === "$" && s[i + 1] === "("))) return null;
+      // revisione di sicurezza (3): fra virgolette doppie bash tratta `\"`, `\\`, `\$`, `` \` `` e `\<a capo>` come escape,
+      // PowerShell e cmd no ⇒ i confini delle virgolette differiscono (`cat "\" "; node x #"` in bash esegue node): fail-closed
+      else if (q === '"' && c === "\\" && /["\\$`\n\r]/.test(s[i + 1] ?? "")) return null;
+      else w += c;
+      continue;
+    }
+    if (c === "'" || c === '"') { q = c; has = true; continue; }
+    if (c === "`") return null;
+    if ((c === "$" || c === "<" || c === ">") && s[i + 1] === "(") return null;
+    // revisione di sicurezza (2): `\` è un escape in bash ma un carattere qualunque in PowerShell, `^` lo è solo in cmd. Davanti
+    // a un separatore, una virgoletta o un a capo le shell dividono il comando in modi diversi (`ls \; node x` in PowerShell
+    // esegue node) ⇒ fail-closed
+    if (c === "\\" || c === "^") {
+      if (i + 1 >= s.length || /[;&|()<>\n\r"'`]/.test(s[i + 1])) return null;
+      w += s[++i]; has = true; continue;
+    }
+    if (c === ">" || c === "<") {
+      if (has && /^\d+$/.test(w)) { w = ""; has = false; } else endWord();
+      while (s[i + 1] === ">" || s[i + 1] === "<") i++;
+      if (s[i + 1] === "&") { i++; while (/[\d-]/.test(s[i + 1] ?? "")) i++; } else skipTarget = true;
+      continue;
+    }
+    if (c === "\n" || c === "\r" || c === ";" || c === "&" || c === "|" || c === "(" || c === ")") { endSeg(); continue; }
+    if (/\s/.test(c)) { endWord(); continue; }
+    w += c; has = true;
+  }
+  if (q) return null;
+  endSeg();
+  return segs;
+}
+// Comandi che leggono soltanto: non eseguono altri programmi né scrivono file con le loro opzioni (esclusi sort, rg, awk,
+// sed, tar, less, xargs, env: hanno opzioni che eseguono o scrivono; e uniq e file: `uniq in out` e `file -C` scrivono).
+// find solo senza le azioni che eseguono o scrivono.
+const READ_ONLY_HEADS = new Set(["cat", "ls", "dir", "head", "tail", "wc", "grep", "egrep", "fgrep", "stat", "du", "cut", "tr",
+  "echo", "printf", "pwd", "cd", "type", "true", "find", "get-content", "gc", "get-childitem", "gci", "select-string", "sls", "measure-object",
+  "test-path", "resolve-path"]);
+const FIND_ACTS = /^-(exec|execdir|ok|okdir|delete|fprint0?|fprintf|fls)$/i;
+// true se ogni segmento è un comando di sola lettura chiamato per nome (mai un percorso: ./ls può essere uno script).
+export function readOnlyShell(cmd) {
+  const segs = shellSegments(cmd);
+  if (!segs?.length) return false;
+  for (const words of segs) {
+    const head = String(words[0] ?? "");
+    if (!head || /[\\/]/.test(head)) return false;
+    const name = head.toLowerCase().replace(/\.exe$/, "");
+    if (!READ_ONLY_HEADS.has(name)) return false;
+    if (name === "find" && words.some((x) => FIND_ACTS.test(x))) return false;
+  }
+  return true;
+}
+
 export function guardContext(input, env = process.env) {
   const st = loadHookState(input, env);
   return {
@@ -147,6 +216,7 @@ export function guarded(guard, fn, { tools } = {}) {
 // [{ rels: Set<rel>, cd: boolean }]. Euristica: variabili, sostituzioni di
 // comando e script restano fuori (rischio residuo documentato).
 const CD = /^(cd|pushd|chdir|set-location|sl|push-location)$/i;
+const foldDir = (d) => { const s = String(d).replace(/\\/g, "/").replace(/\/+$/, ""); return process.platform === "win32" ? s.toLowerCase() : s; };
 export function shellPaths(ctx, cmd, { bareWords = false, maxTokens = 256 } = {}) {
   const out = [];
   const add = (raw, cwd, cd) => {
@@ -163,6 +233,11 @@ export function shellPaths(ctx, cmd, { bareWords = false, maxTokens = 256 } = {}
       const arg = words.slice(1).find((w) => !w.startsWith("-"));
       if (!arg) continue;
       const next = cwds.map((d) => resolve(d, arg.replace(/\\/g, "/")));
+      // 18/11/2026 (ciclo di bug fixing): un cd che non cambia cartella (`cd . &&`, `cd "<cartella corrente>" &&`, la forma
+      // abituale dei modelli) non apre nulla che il comando senza cd non apra già: prima guard-scope lo leggeva come accesso
+      // a tutto il workspace («cd verso . copre percorsi non in allowed_paths», nove dinieghi nelle sessioni reali di AVVA)
+      const known = new Set(cwds.map(foldDir));
+      if (next.every((n) => known.has(foldDir(n)))) continue;
       for (const n of next) { spend(); add(n, ctx.cwd, true); }
       cwds = [...new Set([...cwds, ...next])].slice(0, 16);
       continue;

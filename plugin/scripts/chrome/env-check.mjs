@@ -132,8 +132,9 @@ export async function run(argv, env = process.env) {
     if (opts["write-session"]) {
       sid = resolveSessionId({ workspace: ws, arg: opts.session, env });
       if (!sid) throw new CliError(1, "nessuna sessione risolvibile: passa --session <id>");
-      try { active = loadSession(ws, sid); } catch (err) { throw new CliError(1, `stato di sessione illeggibile: ${err.message}`); }
-      if (!active.session) throw new CliError(1, "nessun cliente attivo: esegui prima use customer <ID>");
+      // 18/11/2026 (ciclo di bug fixing): con la via di riparazione (e senza ripetere «stato di sessione illeggibile»)
+      try { active = loadSession(ws, sid); } catch (err) { throw new CliError(1, `${String(err.message).startsWith("stato di sessione illeggibile") ? err.message : `stato di sessione illeggibile: ${err.message}`} — riparalo con use customer <ID>, poi use env ${opts.env}`); }
+      if (!active.session) throw new CliError(1, `nessun cliente attivo: esegui prima use customer <ID>, poi use env ${opts.env}`);
       if (customer && customer !== active.session.customer) throw new CliError(3, `la sessione è sul cliente ${active.session.customer}, non ${customer}`);
       customer = active.session.customer;
     }
@@ -169,9 +170,14 @@ export async function run(argv, env = process.env) {
       });
       appendAudit(ws, { session: sid, customer, scope: active.session.scope, kind: "session", actor: actorOf(env), payload: { action: "env-check", env: decl.id, detected: result.env, verified: !refused && result.verified, matched: result.signals_matched, contrary: result.signals_contrary, refused } });
     }
-    const out = { ok: !refused && result.verified, ...result, ...(refused ? { refused } : {}) };
+    // 18/11/2026 (ciclo di bug fixing): pochi segnali e nessun segnale contrario è un'impronta da completare, non un
+    // ambiente sbagliato: lo si dice (con l'impronta login_url + app_url di ENEL una pagina interna ha un solo segnale)
+    const hint = !refused && !result.verified && !result.signals_contrary.length
+      ? `impronta incompleta per questa pagina (${result.signals_matched.join(", ") || "nessun segnale"}): non forzare con un altro snapshot; il manager invochi workspace-manager per aggiungere a environments.yaml un segnale valido anche dopo il login (title_pattern, app_url_pattern), poi use env e env-check`
+      : null;
+    const out = { ok: !refused && result.verified, ...result, ...(refused ? { refused } : {}), ...(hint ? { hint } : {}) };
     if (asJson) console.log(JSON.stringify(out));
-    else console.log(refused ? `rifiutato: ${refused}` : result.verified ? `ambiente ${result.env} verificato (${result.signals_matched.join(", ")})` : `ambiente non riconosciuto (${result.signals_matched.length} segnali su 2${result.signals_contrary.length ? `; contrari: ${result.signals_contrary.join("; ")}` : ""})`);
+    else console.log(refused ? `rifiutato: ${refused}` : result.verified ? `ambiente ${result.env} verificato (${result.signals_matched.join(", ")})` : `ambiente non riconosciuto (${result.signals_matched.length} segnali su 2${result.signals_contrary.length ? `; contrari: ${result.signals_contrary.join("; ")}` : ""})${hint ? `\n${hint}` : ""}`);
     return out.ok ? 0 : 3;
   } catch (err) {
     if (err instanceof CliError || err instanceof EnvFileError) return fail(asJson, err.code, err.message, err.extra);

@@ -70,7 +70,10 @@ export async function buildReport(opts) {
   mkdirSync(join(ws, "customers", C), { recursive: true });
   const db = openDb(join(ws, "customers", C, "knowledge.db"));
   try {
-    const errors = opts.errors ?? sessionErrors(db, sesCode);
+    // 18/11/2026 (ciclo di bug fixing): una sola voce d'errore scritta come mappa (report.yaml dell'agente) vale come
+    // elenco di una voce; prima errors.map mandava in crash il report (exit 2)
+    const given = opts.errors ?? sessionErrors(db, sesCode);
+    const errors = Array.isArray(given) ? given.filter((e) => e && typeof e === "object") : given && typeof given === "object" ? [given] : [];
     // revisione finale (minore B#6): un passo fermato (✗) da una sorpresa incompatibile registrata da step-check
     const stopped = new Set(steps.filter((s) => s.state === "✗").map((s) => s.n));
     const bs = (Array.isArray(session.surprises) ? session.surprises : []).find((x) => x && x.compat === "incompatibile" && stopped.has(x.step) && (!plan || x.plan === plan.plan_id));
@@ -211,7 +214,7 @@ export async function run(argv, env = process.env) {
     const r = await buildReport({ ws, sid, kind: opts.kind, planFile: opts.plan ?? null, title: str(f.title) ?? opts.title ?? "Report", intent: str(f.intent) ?? opts.intent ?? null,
       run: str(f.run) ?? opts.run ?? null, release: str(f.release) ?? opts.release ?? null,
       expected: f.expected !== undefined ? obj("expected", f.expected) : j(opts.expected, {}), observed: f.observed !== undefined ? obj("observed", f.observed) : j(opts.observed, {}),
-      errors: f.errors !== undefined ? obj("errors", f.errors) : j(opts.errors, null), understoodError: !!opts.understood,
+      errors: f.errors !== undefined ? obj("errors", f.errors) : (() => { const e = j(opts.errors, null); return e === null ? null : obj("errors", e); })(), understoodError: !!opts.understood,
       assumption: str(f.assumption) ?? opts.assumption ?? null, userAbort: !!opts["user-abort"], policyAbort: !!opts["policy-abort"], lesson: str(f.lesson) ?? opts.lesson ?? null,
       next, estimated: opts.estimated ? Number(opts.estimated) : null });
     console.log(asJson ? JSON.stringify({ ok: true, code: r.code, outcome: r.outcome, xray: r.xray, files: r.files }) : `${r.code} · ${r.outcome}`);

@@ -11,6 +11,8 @@
 // La lezione la scrive l'agente; lo stato lo cambia solo questo script (§29.6).
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
+import { fileURLToPath } from "node:url";
+import Database from "./sqlite.mjs";
 import { sessionDir, isSafeSessionId } from "../../hooks/lib/workspace.mjs";
 import { checkSessionText } from "../../hooks/lib/session-state.mjs";
 import YAML from "yaml";
@@ -173,9 +175,62 @@ export function validateLesson(lesson, { kbExists = () => true, sessionSurprises
 }
 
 // ——— CLI: learn validate ———
-function kbExistsFromDb(db) {
-  const stmts = ["items", "decisions", "lessons", "observations", "contradictions"].map((t) => db.prepare(`select 1 from ${t} where code=?`));
-  return (code) => stmts.some((s) => s.get(code));
+// 18/11/2026 (ciclo di bug fixing, lezione reale ENEL L.ENEL.XSC.LSN.0001 rifiutata per «forma: codici inesistenti:
+// C.ENEL.XSC.PRF.0001»): un codice esiste anche se è un DOC profilato (doc_profiles, in items solo dopo la promozione), la
+// bozza del compito in _inbox/<S>/digested/ (kb/ lo scrivono gli script dopo la validazione), una lezione in lessons/ o
+// una DEC in decisions/ della cartella del cliente `root` (mai altrove). Stesso predicato per self-check (controllo 1).
+// 19/11/2026 (ciclo 5, segnalazione del coordinatore): un codice S (conoscenza standard) non sta nel DB del cliente: si
+// cerca nel kb di prodotto del plugin (product/kb, es. S.STD.ADM.CHK.0019 citato da L.AVVA.ADM.LSN.0001, prima «codici
+// inesistenti»), nel kb di prodotto del workspace e nell'indice del prodotto (product/knowledge.db, sola lettura).
+const PLUGIN_PRODUCT_KB = fileURLToPath(new URL("../../product/kb", import.meta.url));
+const filesUnder = (dir, out = new Set()) => {
+  let es = [];
+  try { es = readdirSync(dir, { withFileTypes: true }); } catch { return out; }
+  for (const e of es) { if (e.isDirectory()) filesUnder(join(dir, e.name), out); else if (/\.ya?ml$/.test(e.name)) out.add(e.name.replace(/\.ya?ml$/, "")); }
+  return out;
+};
+function productLookup(root) {
+  const up = root ? dirname(root) : null;
+  const ws = !root ? null : basename(root) === "product" ? up : basename(up ?? "").toLowerCase() === "customers" ? dirname(up) : null;
+  const kbs = [PLUGIN_PRODUCT_KB, ...(ws ? [join(ws, "product", "kb")] : [])];
+  const cache = new Map();
+  let pdb;
+  const productDb = () => {
+    if (pdb !== undefined) return pdb;
+    pdb = null;
+    const f = ws ? join(ws, "product", "knowledge.db") : null;
+    if (f && existsSync(f)) { try { pdb = new Database(f, { readonly: true, fileMustExist: true }); } catch { pdb = null; } }
+    return pdb;
+  };
+  const has = (code) => {
+    const m = /^S\.[A-Z0-9]{3,4}\.([A-Z0-9]{3})\.([A-Z]{3})\.\d{4}(?:\.v\d+)?$/.exec(code);
+    if (!m) return false;
+    for (const kb of kbs) {
+      const dir = m[2] === "HND" ? join(kb, "handoffs") : join(kb, "scopes", m[1]);
+      if (!cache.has(dir)) cache.set(dir, filesUnder(dir));
+      if (cache.get(dir).has(code)) return true;
+    }
+    try { return !!productDb()?.prepare("select 1 from items where code=?").get(code); } catch { return false; }
+  };
+  has.close = () => { try { pdb?.close(); } catch { /* già chiuso */ } };
+  return has;
+}
+
+export function kbExistsFromDb(db, root = null, { tables = ["items", "decisions", "lessons", "observations", "contradictions", "doc_profiles"] } = {}) {
+  const stmts = tables.map((t) => db.prepare(`select 1 from ${t} where code=?`));
+  const inbox = root ? (basename(root) === "product" ? join(dirname(root), "_inbox") : join(root, "_inbox")) : null;
+  const inProduct = productLookup(root);
+  const onDisk = (c) => {
+    if (c.startsWith("S.") && inProduct(c)) return true;
+    const m = root ? /^[SCL]\.[A-Z0-9]{3,4}\.([A-Z0-9]{3})\.([A-Z]{3})\.\d{4}(?:\.v\d+)?$/.exec(c) : null;
+    if (!m) return false;
+    if (m[2] === "LSN") return existsSync(join(root, "lessons", `${c}.md`));
+    if (m[2] === "DEC") return existsSync(join(root, "decisions", `${c}.yaml`));
+    return existsSync(join(inbox, m[1], "digested", `${c}.yaml`));
+  };
+  const exists = (code) => stmts.some((s) => s.get(code)) || onDisk(code);
+  exists.close = inProduct.close;
+  return exists;
 }
 
 export function serializeLesson(fm, body) {
@@ -220,7 +275,37 @@ export function resolveLessonSession(root, ref, { customer } = {}) {
   if (existsSync(hfile)) {
     try { hypotheses = YAML.parse(readFileSync(hfile, "utf8")); } catch (e) { return { error: `registro delle ipotesi della sessione ${found.sid} illeggibile: ${e.message}` }; }
   }
-  return { sid: found.sid, surprises: (session.surprises ?? []).length, hypotheses };
+  // compiti di ogni tipo di agente nella sessione (customers/<C>/.sessions/<sid>/agents/<agent_id>.json, scritti dagli hook)
+  const tasksByAgent = new Map();
+  try {
+    for (const f of readdirSync(join(base, found.sid, "agents")).filter((x) => x.endsWith(".json"))) {
+      try {
+        const a = JSON.parse(readFileSync(join(base, found.sid, "agents", f), "utf8"));
+        if (typeof a?.agent_type === "string" && typeof a?.task_id === "string") {
+          const t = a.agent_type.replace(/^.*:/, "");
+          if (!tasksByAgent.has(t)) tasksByAgent.set(t, new Set());
+          tasksByAgent.get(t).add(a.task_id);
+        }
+      } catch { /* voce illeggibile: non restringe */ }
+    }
+  } catch { /* nessun registro degli agenti */ }
+  const list = Array.isArray(session.surprises) ? session.surprises : [];
+  return { sid: found.sid, surprises: list.length, surprise_list: list, tasks_by_agent: tasksByAgent, hypotheses };
+}
+
+// 18/11/2026 (ciclo di bug fixing, lezione reale ENEL del customer-profiler rifiutata «non fondata: la sessione ha registrato
+// 16 sorprese, la lezione ne dichiara 4»): le 16 sorprese erano di un altro compito (TSK.ENEL.XSC.DIG.0001, il giorno dopo).
+// Una sessione ospita i compiti di più agenti: contano le sorprese dei compiti dell'agente della lezione (dal registro degli
+// agenti della sessione; quelli citati nella lezione, se ne cita); una sorpresa senza compito conta sempre; senza registro
+// degli agenti contano tutte (come prima, per prudenza).
+export function lessonSurpriseCount(ctx, fm, text = "") {
+  const list = Array.isArray(ctx?.surprise_list) ? ctx.surprise_list : null;
+  if (!list) return Number(ctx?.surprises) || 0;
+  const own = ctx.tasks_by_agent?.get(String(fm?.agent ?? "")) ?? null;
+  if (!own?.size) return list.length;
+  const named = [...own].filter((t) => String(text).includes(t));
+  const tasks = new Set(named.length ? named : own);
+  return list.filter((s) => !s?.task || tasks.has(s.task)).length;
 }
 
 export function validateLessons(db, root, { session, at = new Date().toISOString(), by = "lesson-validator" } = {}) {
@@ -228,7 +313,7 @@ export function validateLessons(db, root, { session, at = new Date().toISOString
   const files = existsSync(dir) ? readdirSync(dir).filter((f) => /^L\..*\.LSN\.\d{4}(\.v\d+)?\.md$/.test(f)).sort() : [];
   const parsed = files.map((f) => ({ file: join(dir, f), lesson: parseLesson(readFileSync(join(dir, f), "utf8")) }));
   const validated = parsed.filter((p) => p.lesson.frontmatter?.status === "validated").map((p) => p.lesson);
-  const kbExists = kbExistsFromDb(db);
+  const kbExists = kbExistsFromDb(db, root);
   const effectsStmt = db.prepare("select effects from decision_context where decision_code=?");
   // effetti ignoti (NULL: dt-eval senza --effects) contano come effetti: serve l'esito atteso.
   const hasEffects = (dec) => effectsStmt.get(dec)?.effects !== 0;
@@ -238,8 +323,13 @@ export function validateLessons(db, root, { session, at = new Date().toISOString
     const fm = p.lesson.frontmatter;
     if (!fm || (fm.status ?? "proposed") !== "proposed") continue;
     if (session && fm.session !== session) continue;
+    // 19/11/2026 (ciclo 5, segnalazione del coordinatore): `code:` al posto di `id:` (AVVA L.AVVA.ANL.LSN.0001/0002) finiva
+    // nella tabella lessons con il PERCORSO del file come codice. `code` vale come `id` (la validazione prosegue e, se la
+    // forma è sbagliata, lo dice); senza nessuno dei due vale il codice del nome del file, mai il percorso.
+    if (fm.id === undefined && typeof fm.code === "string" && fm.code.trim()) { fm.id = fm.code.trim(); delete fm.code; }
+    const lessonCode = fm.id ?? basename(p.file).replace(/\.md$/, "");
     const ctx = resolveLessonSession(root, fm.session, { customer: parseCode(fm.id ?? "")?.customer });
-    const r = validateLesson(p.lesson, { kbExists, sessionSurprises: ctx.surprises ?? 0, hypotheses: ctx.hypotheses ?? null, sessionError: ctx.error ?? null,
+    const r = validateLesson(p.lesson, { kbExists, sessionSurprises: lessonSurpriseCount(ctx, fm, `${YAML.stringify(fm)}\n${p.lesson.body ?? ""}`), hypotheses: ctx.hypotheses ?? null, sessionError: ctx.error ?? null,
       validatedLessons: validated, hasEffects });
     const own = parseCode(fm.id ?? "");
     let decCode = null;
@@ -252,7 +342,7 @@ export function validateLessons(db, root, { session, at = new Date().toISOString
     db.transaction(() => {
       db.prepare(`insert into lessons(code,agent,session,scope,status,payload,validated_by) values (?,?,?,?,?,?,?)
         on conflict(code) do update set status=excluded.status, payload=excluded.payload, validated_by=excluded.validated_by`)
-        .run(fm.id ?? p.file, fm.agent ?? null, fm.session ?? null, fm.scope ?? null, r.status, JSON.stringify(newFm), by);
+        .run(lessonCode, fm.agent ?? null, fm.session ?? null, fm.scope ?? null, r.status, JSON.stringify(newFm), by);
       if (r.status === "validated") {
         for (const e of fm.expected_outcomes ?? []) declareExpected(db, { dec: e.decision, expect: e.expect, lesson: fm.id, session: fm.session ?? null, release, at });
         validated.push({ ...p.lesson, frontmatter: newFm });
@@ -266,8 +356,9 @@ export function validateLessons(db, root, { session, at = new Date().toISOString
       }
       writeFileSync(p.file, serializeLesson(newFm, p.lesson.body));
     })();
-    results.push({ code: fm.id, status: r.status, reason: r.reason, inert: r.inert, merged_into: r.merged_into, decision: decCode });
+    results.push({ code: lessonCode, status: r.status, reason: r.reason, inert: r.inert, merged_into: r.merged_into, decision: decCode });
   }
+  kbExists.close?.();
   return results;
 }
 
